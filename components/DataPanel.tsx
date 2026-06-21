@@ -329,9 +329,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         >
           <span>📋</span>
           Generate Full Report
-          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(72,168,100,0.18)', color: 'var(--emerald-bright)', fontSize: 12 }}>{siteData.areaHa} ha</span>}
-          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.18)', color: 'var(--blue)', fontSize: 12 }}>💧 {waterData.estVolumeKL.toLocaleString()} kL</span>}
-          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.15)', color: 'var(--blue)', fontSize: 12 }}>📷</span>}
+          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(72,168,100,0.18)', color: 'var(--emerald-bright)', fontSize: 13.5 }}>{siteData.areaHa} ha</span>}
+          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.18)', color: 'var(--blue)', fontSize: 13.5 }}>💧 {waterData.estVolumeKL.toLocaleString()} kL</span>}
+          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.15)', color: 'var(--blue)', fontSize: 13.5 }}>📷</span>}
           <span style={{ opacity: 0.6 }}>→</span>
         </button>
       </div>
@@ -519,7 +519,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
                         }}
                       />
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      <span style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                         {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
                       </span>
                     </div>
