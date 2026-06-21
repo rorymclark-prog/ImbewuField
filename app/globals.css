@@ -10,13 +10,13 @@
    Mono:    data values, coords, code
    ═══════════════════════════════════════════════════════ */
 :root {
-  /* sizes */
-  --type-display: 22px;
-  --type-lg: 16px;
-  --type-base: 13px;
-  --type-sm: 12px;
-  --type-xs: 11px;
-  --type-label: 10px;
+  /* sizes — bumped for on-phone legibility */
+  --type-display: 24px;
+  --type-lg: 18px;
+  --type-base: 15px;
+  --type-sm: 14px;
+  --type-xs: 12px;
+  --type-label: 11px;
 
   /* weights */
   --weight-bold: 700;

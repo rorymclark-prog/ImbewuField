@@ -14,22 +14,23 @@ export default function AccountButton() {
     const label = user.displayName?.split(' ')[0] ?? user.email ?? 'Account';
     return (
       <div
-        className="flex items-center gap-2 px-3 py-2 rounded-full flex-shrink-0"
+        className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
         style={{
           background: 'rgba(22,37,20,0.6)',
           border: '1px solid var(--border)',
+          minHeight: 44,
         }}
       >
         <span
-          className="text-sm font-display"
-          style={{ color: 'var(--text-secondary)' }}
+          className="font-display"
+          style={{ color: 'var(--text-secondary)', fontSize: 15 }}
         >
           {label}
         </span>
         <button
           onClick={signOutUser}
-          className="text-xs font-mono transition-opacity hover:opacity-80"
-          style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          className="font-mono transition-opacity hover:opacity-80"
+          style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 13 }}
           aria-label="Sign out"
         >
           Sign out
@@ -41,12 +42,14 @@ export default function AccountButton() {
   return (
     <Link
       href="/login"
-      className="flex items-center px-3 py-2 rounded-full text-sm font-display transition-opacity hover:opacity-80 flex-shrink-0"
+      className="flex items-center px-3.5 rounded-full font-display transition-opacity hover:opacity-80 flex-shrink-0"
       style={{
         background: 'rgba(22,37,20,0.6)',
         border: '1px solid var(--border)',
         color: 'var(--emerald-bright)',
         textDecoration: 'none',
+        minHeight: 44,
+        fontSize: 15,
       }}
     >
       Sign in

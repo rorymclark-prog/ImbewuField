@@ -105,7 +105,7 @@ function HomeInner() {
         <header
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto overflow-y-hidden"
           style={{
-            height: 60,
+            height: 64,
             background: 'var(--header-bg)',
             borderBottom: '1px solid var(--border)',
             backdropFilter: 'blur(12px)',
@@ -114,15 +114,17 @@ function HomeInner() {
         >
           <BrandLogo />
 
-          <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
+          <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
           <span className="text-xs hidden sm:block font-display" style={{ color: 'var(--text-muted)' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
-          <Link href="/facilitator" className="flex items-center gap-1 px-3 py-2 rounded-full text-sm font-display transition-all flex-shrink-0"
+          {/* Design-map + role switcher are power-user navigation — desktop only.
+              On a phone they cluttered the bar into tiny icons; reach them via the home hub (tap the logo). */}
+          <Link href="/facilitator" className="hidden md:flex items-center gap-1 px-3 py-2 rounded-full text-sm font-display transition-all flex-shrink-0"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
-            <span style={{ fontSize: 16 }}>✎</span> <span className="hidden md:inline">Design map</span>
+            <span style={{ fontSize: 16 }}>✎</span> <span>Design map</span>
           </Link>
-          <RoleSwitcher current="farmer" />
+          <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
           <LangSwitcher />
           <AccountButton />
 
