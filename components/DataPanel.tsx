@@ -260,6 +260,25 @@ function Skeleton() {
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, appLang }: Props) {
   const [tab, setTab] = useState<Tab>('Overview');
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
+  const [placeSaved, setPlaceSaved] = useState(false);
+  useEffect(() => { setPlaceSaved(false); }, [coords]);
+
+  // One-tap save of the current location (prominent, vs the Places tab form).
+  const quickSavePlace = () => {
+    if (!data || !coords) return;
+    const name = data.biome.name !== 'Outside South Africa'
+      ? `${data.biome.name} site`
+      : `${Math.abs(coords.lat).toFixed(3)}°S ${coords.lon.toFixed(3)}°E`;
+    savePlace({
+      id: generateId(), name,
+      lat: coords.lat, lon: coords.lon,
+      biome: data.biome.name,
+      rainfall: data.rainfall.annual,
+      elevation: data.elevation.elevation,
+      savedAt: new Date().toISOString(),
+    });
+    setPlaceSaved(true);
+  };
 
   useEffect(() => {
     if (forcedTab && TABS.includes(forcedTab as Tab)) {
@@ -316,11 +335,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         </div>
       </div>
 
-      {/* ── Report button ─────────────────────── */}
-      <div className="flex-shrink-0 px-4 py-2" style={{ borderBottom: '1px solid var(--border)', background: 'rgba(6,16,10,0.3)' }}>
+      {/* ── Save + Report buttons ─────────────────────── */}
+      <div className="flex-shrink-0 px-4 py-2 flex gap-2" style={{ borderBottom: '1px solid var(--border)', background: 'rgba(6,16,10,0.3)' }}>
+        <button
+          onClick={quickSavePlace}
+          disabled={placeSaved}
+          className="flex-shrink-0 py-2 px-3 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-1.5 transition-all"
+          style={placeSaved
+            ? { background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.3)', color: 'var(--text-muted)' }
+            : { background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)' }}
+          title="Save this place"
+        >
+          {placeSaved ? '✓ Saved' : '★ Save'}
+        </button>
         <button
           onClick={() => onOpenReport(photoAnalysis)}
-          className="w-full py-2 rounded-xl text-xs font-display font-semibold flex flex-wrap items-center justify-center gap-1.5 md:gap-2 transition-all"
+          className="flex-1 py-2 rounded-xl text-xs font-display font-semibold flex flex-wrap items-center justify-center gap-1.5 md:gap-2 transition-all"
           style={{
             background: 'linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.06))',
             border: '1px solid rgba(212,168,83,0.35)',
