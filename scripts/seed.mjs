@@ -1,5 +1,5 @@
 /**
- * FieldProof — Firestore seed script
+ * ImbewuField — Firestore seed script
  * Mirrors the sample data from components/NgoDashboard.tsx exactly.
  *
  * Usage:
@@ -136,13 +136,13 @@ function parseDate(dateStr) {
 // ── Main seed ──────────────────────────────────────────────────────────────
 
 async function seed() {
-  console.log('FieldProof Firestore seed starting...\n');
+  console.log('ImbewuField Firestore seed starting...\n');
 
   // 1. Organisation
   console.log('[1/5] Writing organisation...');
   const orgRef = db.collection('organizations').doc();
   await orgRef.set({
-    name: 'FieldProof NGO',
+    name: 'ImbewuField NGO',
     kind: 'ngo',
     created_at: FieldValue.serverTimestamp(),
   });

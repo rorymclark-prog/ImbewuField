@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// FieldProof — Firebase Storage rules. Photos (produce/grower/garden) are
+// ImbewuField — Firebase Storage rules. Photos (produce/grower/garden) are
 // publicly readable (so they show in reports/dashboards) and writable by any
 // signed-in user under their own folder.
 service firebase.storage {
