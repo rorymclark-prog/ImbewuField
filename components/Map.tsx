@@ -188,14 +188,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const fillColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#5B9ED4', '#48A864'] as unknown as string;
     const strokeColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#7FC4F0', '#5DCF80'] as unknown as string;
 
+    // Touch screens need much bigger, easier-to-grab corner dots than a mouse. On a phone
+    // a finger covers ~44px, so tiny 8px vertices are nearly impossible to drag accurately —
+    // this was the #1 complaint vs Google Earth. Bump the visual size AND the invisible
+    // hit area (touchBuffer) so a roughly-aimed tap still grabs the nearest corner.
+    const vtxRadius = IS_COARSE ? 13 : 8;       // draggable corner dots
+    const midRadius = IS_COARSE ? 10 : 7;       // "add a corner here" mid-dots
+
     const draw = new MapboxDraw({
       displayControlsDefault: false,
+      // How close a click/tap must land to grab a vertex. Defaults (2 / 25) are too tight
+      // for fingers — widen the touch buffer so corners are easy to catch on a phone.
+      clickBuffer: 4,
+      touchBuffer: 40,
       styles: [
         { id: 'gl-draw-polygon-fill', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.18 } },
         { id: 'gl-draw-polygon-stroke-active', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2.5, 'line-dasharray': [2, 1] } },
         { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2, 'line-dasharray': [2, 1] } },
-        { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': 8, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 } },
-        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': 7, 'circle-color': fillColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.5 } },
+        { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': vtxRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2.5 } },
+        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': fillColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.85 } },
         { id: 'gl-draw-polygon-fill-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.14 } },
         { id: 'gl-draw-polygon-stroke-static', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2 } },
       ],
@@ -1000,7 +1011,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-display"
                 style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32 }}>
-                ↔ Drag the dots to move corners · drag a small mid-dot to add one
+                ↔ Drag a big dot to move a corner · drag a faint mid-dot to add one · pinch to zoom in for accuracy
               </div>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
