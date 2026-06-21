@@ -136,6 +136,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
+  const [toolbarMin, setToolbarMin] = useState(false);  // collapse the whole toolbar to see the map
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
   // onto the crosshair, move the map, tap Place to drop it. ──
@@ -1178,7 +1179,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         Hidden entirely while drawing/editing so it can't overlap the instruction
         banner or crowd the map — the bottom action bar is all you need then.
       */}
-      {!pinDraw && !editPin && !activeDraw && (
+      {!pinDraw && !editPin && !activeDraw && toolbarMin && (
+        <button
+          onClick={() => setToolbarMin(false)}
+          aria-label="Show map tools"
+          className="absolute top-3 left-3 flex items-center justify-center rounded-xl transition-all active:scale-95"
+          style={{
+            zIndex: 10, minWidth: TOUCH_H + 10, minHeight: TOUCH_H,
+            background: 'rgba(6,16,10,0.92)', border: '1px solid rgba(58,104,48,0.5)',
+            backdropFilter: 'blur(12px)', boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
+            color: 'var(--emerald-bright)', fontSize: TOUCH_FS, gap: 6, padding: '0 12px',
+          }}
+        >
+          <span style={{ fontSize: TOUCH_FS + 4 }}>☰</span> Tools
+        </button>
+      )}
+
+      {!pinDraw && !editPin && !activeDraw && !toolbarMin && (
       <div
         className="absolute top-3 left-3 flex flex-col gap-2 p-2.5 rounded-xl"
         style={{
@@ -1192,6 +1209,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           boxSizing: 'border-box',
         }}
       >
+        {/* Collapse header — hide the whole panel to see the map */}
+        <button
+          onClick={() => setToolbarMin(true)}
+          aria-label="Hide map tools"
+          className="flex items-center justify-center gap-2 rounded-lg transition-all active:scale-95"
+          style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
+            color: 'var(--text-muted)', minHeight: 36, fontSize: TOUCH_FS - 2 }}
+        >
+          ▲ Hide panel
+        </button>
+
         {/* Search row */}
         <div className="relative">
         <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }} className="flex gap-1.5">
