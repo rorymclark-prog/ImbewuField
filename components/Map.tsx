@@ -117,6 +117,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
+  // Search autofill: live suggestions as the user types (Mapbox geocoding)
+  const [suggestions, setSuggestions] = useState<Array<{ name: string; lon: number; lat: number }>>([]);
+  const suggestTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Hillshade / terrain relief overlay — shows hills, valleys & slope direction across the map
+  const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
@@ -656,6 +661,37 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setSearching(false);
   }, [onLocationSelect]);
 
+  // ── Autofill: debounced place suggestions while typing (Mapbox geocoding) ──
+  const fetchSuggestions = useCallback((q: string) => {
+    if (suggestTimer.current) clearTimeout(suggestTimer.current);
+    const query = q.trim();
+    // Don't suggest for very short or coordinate-looking input
+    if (query.length < 3 || /^-?\d/.test(query)) { setSuggestions([]); return; }
+    suggestTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json` +
+          `?access_token=${TOKEN}&autocomplete=true&limit=5&language=en&country=ZA&proximity=25,-29` +
+          `&types=place,locality,district,region,address,neighborhood,poi`
+        );
+        const json = await res.json();
+        const list = (json.features ?? []).map((f: { place_name?: string; text?: string; center: [number, number] }) => ({
+          name: f.place_name ?? f.text ?? '',
+          lon: f.center[0], lat: f.center[1],
+        }));
+        setSuggestions(list);
+      } catch { setSuggestions([]); }
+    }, 250);
+  }, []);
+
+  const selectSuggestion = useCallback((s: { name: string; lon: number; lat: number }) => {
+    setSearchQuery(s.name.split(',').slice(0, 2).join(','));
+    setSuggestions([]);
+    setSearchError('');
+    mapRef.current?.flyTo({ center: [s.lon, s.lat], zoom: 14, duration: 1600 });
+    onLocationSelect(s.lat, s.lon);
+  }, [onLocationSelect]);
+
   const goToMyLocation = useCallback(() => {
     if (!navigator.geolocation) return;
     setLocating(true);
@@ -865,6 +901,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         <ScaleControl position="bottom-right" maxWidth={120} unit="metric" />
         <Source id="mapbox-dem" {...terrainSource} />
 
+        {/* Hillshade relief — shades hills/valleys so slope shape & direction read at a glance */}
+        {hillshade && (
+          <Source id="hillshade-dem" type="raster-dem" url="mapbox://mapbox.mapbox-terrain-dem-v1" tileSize={512} maxzoom={14}>
+            <Layer id="hillshade-layer" type="hillshade"
+              paint={{ 'hillshade-exaggeration': 0.55, 'hillshade-shadow-color': '#08120a', 'hillshade-highlight-color': '#eef3df', 'hillshade-accent-color': '#1a2e16' }} />
+          </Source>
+        )}
 
         {/* Esri World Imagery — alternative high-res satellite (often sharper than Maxar in rural areas) */}
         {hdImagery && (
@@ -1135,11 +1178,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         }}
       >
         {/* Search row */}
-        <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }} className="flex gap-1.5">
+        <div className="relative">
+        <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }} className="flex gap-1.5">
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setSearchError(''); setSearchResult(''); }}
+            onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); fetchSuggestions(v); }}
+            onBlur={() => setTimeout(() => setSuggestions([]), 150)}
             placeholder="Search a town…"
             className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
@@ -1166,6 +1211,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {searching ? '⟳' : '↵'}
           </button>
         </form>
+        {/* Autofill dropdown */}
+        {suggestions.length > 0 && (
+          <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
+            style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
+            {suggestions.map((s, i) => (
+              <button key={i}
+                onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s); }}
+                className="flex items-start gap-2 w-full text-left transition-all"
+                style={{ padding: '11px 12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
+                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.3 }}>
+                <span style={{ opacity: 0.6 }}>📍</span>
+                <span style={{ minWidth: 0 }}>{s.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        </div>
         {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
         {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
@@ -1213,6 +1275,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
               ~ Contours
+            </button>
+            <button onClick={() => setHillshade(!hillshade)}
+              title="Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible"
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(hillshade
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              🌄 Relief
             </button>
             <button
               onClick={() => {
