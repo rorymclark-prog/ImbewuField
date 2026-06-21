@@ -1069,7 +1069,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
             style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
-            <span className="text-xs font-display" style={{ color: draftStroke }}>
+            <span className="text-sm font-display" style={{ color: draftStroke }}>
               {draftPoints.length === 0
                 ? (IS_COARSE
                     ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point · or ✗ Cancel to exit`
@@ -1094,7 +1094,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 ? { flex: '0 0 78px', padding: '10px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
                 : { flex: '0 0 72px', padding: '10px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
-              <span style={{ fontSize: 11, marginTop: 2 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
@@ -1102,7 +1102,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>↶</span>
-              <span style={{ fontSize: 11, marginTop: 2 }}>Undo</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>Undo</span>
             </button>
 
             {/* Primary: drop a corner under the crosshair */}
@@ -1119,7 +1119,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 background: draftPoints.length < 3 ? 'rgba(10,18,12,0.94)' : 'rgba(72,168,100,0.92)',
                 border: '1.5px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 11, marginTop: 2 }}>Finish</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>Finish</span>
             </button>
           </div>
         </>
@@ -1132,7 +1132,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
             style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
-            <span className="text-xs font-display" style={{ color: draftStroke }}>
+            <span className="text-sm font-display" style={{ color: draftStroke }}>
               {selCorner == null
                 ? `Press and drag any corner to move it${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
                 : `Corner ${selCorner + 1} selected — drag to move, or 🗑 Remove · ${editAreaHa ?? ''} ha`}
@@ -1145,14 +1145,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Cancel</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>Cancel</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 0 72px', padding: '10px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
                 background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>🗑</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Remove</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>Remove</span>
             </button>
             <button onClick={addEditCorner}
               className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
@@ -1163,7 +1163,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
               style={{ flex: '0 0 80px', padding: '10px 0', background: 'rgba(72,168,100,0.92)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Done</span>
+              <span style={{ fontSize: 12, marginTop: 3 }}>Done</span>
             </button>
           </div>
         </>
@@ -1322,7 +1322,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {layersOpen && (
           <div>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.45)', marginBottom: 5 }}>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.6)', marginBottom: 5 }}>
               Edit tool (try both)
             </div>
             <div className="flex gap-1.5">
@@ -1347,7 +1347,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Actions row — always wraps */}
         <div>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.45)', marginBottom: 5 }}>
+          <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.6)', marginBottom: 5 }}>
             Tools
           </div>
           <div className="flex gap-1.5 flex-wrap">
