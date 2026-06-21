@@ -21,6 +21,10 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 const IS_COARSE = typeof window !== 'undefined' &&
   ((window.matchMedia?.('(pointer: coarse)').matches ?? false) || 'ontouchstart' in window || navigator.maxTouchPoints > 0);
 
+// Touch-friendly control height: ~46px on phones (Apple/Google min target), compact on desktop.
+const TOUCH_H = IS_COARSE ? 46 : 34;
+const TOUCH_FS = IS_COARSE ? 14 : 12; // button font-size
+
 const terrainSource = { type: 'raster-dem' as const, url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 };
 
 // Minor contours (10m interval) — fade in at zoom 12, fully visible at 14
@@ -96,6 +100,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [contours, setContours] = useState(true);
   const [terrain3d, setTerrain3d] = useState(true);
   const [zoom, setZoom] = useState(5.2);
+  // Map-view toggles (Sat/Topo/HD/Contours/3D) live behind a "Layers" expander so the
+  // toolbar stays uncluttered on phones — collapsed by default.
+  const [layersOpen, setLayersOpen] = useState(false);
   const drawTypeRef = useRef<'site' | 'water'>('site');
   const [activeDraw, setActiveDraw] = useState<null | 'site' | 'water'>(null); // currently drawing
   const [editingFeatureId, setEditingFeatureId] = useState<string | null>(null);
@@ -112,6 +119,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [searchError, setSearchError] = useState('');
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
+  // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
+  // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
+  // onto the crosshair, move the map, tap Place to drop it. ──
+  const [editPin, setEditPin] = useState<null | { id: string; type: 'site' | 'water' }>(null);
+  const [editPoints, setEditPoints] = useState<[number, number][]>([]); // working ring (open — no closing dup)
+  const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
+  const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
 
   // Saved-place pins: load + keep in sync with the Places tab
   useEffect(() => {
@@ -188,14 +202,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const fillColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#5B9ED4', '#48A864'] as unknown as string;
     const strokeColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#7FC4F0', '#5DCF80'] as unknown as string;
 
+    // Touch screens need much bigger, easier-to-grab corner dots than a mouse. On a phone
+    // a finger covers ~44px, so tiny 8px vertices are nearly impossible to drag accurately —
+    // this was the #1 complaint vs Google Earth. Bump the visual size AND the invisible
+    // hit area (touchBuffer) so a roughly-aimed tap still grabs the nearest corner.
+    const vtxRadius = IS_COARSE ? 13 : 8;       // draggable corner dots
+    const midRadius = IS_COARSE ? 10 : 7;       // "add a corner here" mid-dots
+
     const draw = new MapboxDraw({
       displayControlsDefault: false,
+      // How close a click/tap must land to grab a vertex. Defaults (2 / 25) are too tight
+      // for fingers — widen the touch buffer so corners are easy to catch on a phone.
+      clickBuffer: 4,
+      touchBuffer: 40,
       styles: [
         { id: 'gl-draw-polygon-fill', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.18 } },
         { id: 'gl-draw-polygon-stroke-active', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2.5, 'line-dasharray': [2, 1] } },
         { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2, 'line-dasharray': [2, 1] } },
-        { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': 8, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 } },
-        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': 7, 'circle-color': fillColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.5 } },
+        { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': vtxRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2.5 } },
+        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': fillColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.85 } },
         { id: 'gl-draw-polygon-fill-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.14 } },
         { id: 'gl-draw-polygon-stroke-static', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2 } },
       ],
@@ -263,16 +288,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = drawRef.current;
     if (draw) try { draw.changeMode('simple_select'); } catch {}
     setEditingFeatureId(null);
-  }, []);
-
-  // editPolygon: enter direct_select on a specific feature by ID.
-  // Used by the per-shape "✎ Edit" buttons in the toolbar.
-  const editPolygonById = useCallback((featureId: string) => {
-    const draw = drawRef.current;
-    if (!draw) return;
-    try { draw.changeMode('direct_select', { featureId }); } catch {}
-    setEditingFeatureId(featureId);
-    setActiveDraw(null);
   }, []);
 
   // ── Reticle drawing: pan/zoom the map under a fixed crosshair, tap ＋ to drop a corner ──
@@ -346,15 +361,142 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setDraftPoints([]);
     unlockRotation();
     recompute();
-    // Drop straight into vertex-edit so corners can be fine-tuned
-    if (id != null) {
-      const fid = id;
-      setTimeout(() => {
-        try { draw.changeMode('direct_select', { featureId: fid }); } catch {}
-        setEditingFeatureId(fid);
-      }, 120);
-    }
+    // Leave the finished shape placed. Refining is done via "✎ Edit", which uses the
+    // same crosshair motion as drawing — no tiny-dot dragging.
   }, [ensureDraw, draftPoints, recompute, unlockRotation]);
+
+  // ── Reticle EDIT helpers ──────────────────────────────────────────────────
+  // Read the live crosshair (screen-centre) position as [lng, lat].
+  const crosshairLngLat = useCallback((): [number, number] | null => {
+    const map = mapRef.current?.getMap();
+    if (!map) return null;
+    const cont = map.getContainer();
+    const p = map.unproject([cont.clientWidth / 2, cont.clientHeight / 2]);
+    return [p.lng, p.lat];
+  }, []);
+
+  // Enter reticle-edit for an existing polygon: pull its corners into editPoints and
+  // render our own overlay (we remove it from MapboxDraw while editing, re-add on Done).
+  const startReticleEdit = useCallback((featureId: string, type: 'site' | 'water') => {
+    const draw = ensureDraw();
+    if (!draw) return;
+    const f = draw.get(featureId) as GeoJSON.Feature<GeoJSON.Polygon> | undefined;
+    if (!f || f.geometry?.type !== 'Polygon') return;
+    const ring = (f.geometry.coordinates[0] as [number, number][]).map((c) => [c[0], c[1]] as [number, number]);
+    // Drop the closing duplicate vertex so we edit an open ring
+    if (ring.length > 1) {
+      const a = ring[0], b = ring[ring.length - 1];
+      if (Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9) ring.pop();
+    }
+    editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
+    try { draw.delete(featureId); } catch {}
+    const map = mapRef.current?.getMap();
+    if (map) {
+      map.easeTo({ pitch: 0, bearing: 0, duration: 200 });
+      try { map.dragRotate.disable(); map.touchZoomRotate.disableRotation(); } catch {}
+      // Centre the view on the shape so its corners are on-screen and reachable
+      const lngs = ring.map((c) => c[0]); const lats = ring.map((c) => c[1]);
+      const ctr: [number, number] = [(Math.min(...lngs) + Math.max(...lngs)) / 2, (Math.min(...lats) + Math.max(...lats)) / 2];
+      map.easeTo({ center: ctr, duration: 300 });
+    }
+    drawTypeRef.current = type;
+    setActiveDraw(null);
+    setPinDraw(null);
+    setEditingFeatureId(null);
+    setDraftPoints([]);
+    setEditPoints(ring);
+    setSelCorner(null);
+    setEditPin({ id: featureId, type });
+  }, [ensureDraw]);
+
+  // Tap a corner: lift it onto the crosshair (select) — or, if already lifted, drop it (deselect).
+  const toggleCorner = useCallback((i: number) => {
+    setSelCorner((cur) => {
+      if (cur === i) return null;            // tapping the lifted corner again drops it
+      // Snap the map so the crosshair sits on the corner we just picked up
+      const map = mapRef.current?.getMap();
+      setEditPoints((pts) => {
+        const p = pts[i];
+        if (map && p) map.easeTo({ center: p, duration: 250 });
+        return pts;
+      });
+      return i;
+    });
+  }, []);
+
+  // Drop the lifted corner where it currently sits (under the crosshair)
+  const placeCorner = useCallback(() => setSelCorner(null), []);
+
+  // Insert a new corner at the crosshair, on the longest edge, and lift it for positioning
+  const addEditCorner = useCallback(() => {
+    const at = crosshairLngLat();
+    if (!at) return;
+    setEditPoints((pts) => {
+      if (pts.length < 2) { setSelCorner(pts.length); return [...pts, at]; }
+      // find the edge whose midpoint is nearest the crosshair → insert there
+      let best = 0, bestD = Infinity;
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[i], b = pts[(i + 1) % pts.length];
+        const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+        const d = (mx - at[0]) ** 2 + (my - at[1]) ** 2;
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      const next = [...pts.slice(0, best + 1), at, ...pts.slice(best + 1)];
+      setSelCorner(best + 1);
+      return next;
+    });
+  }, [crosshairLngLat]);
+
+  // Remove the lifted corner (kept ≥3 so it stays a polygon)
+  const removeEditCorner = useCallback(() => {
+    setEditPoints((pts) => {
+      if (selCorner == null || pts.length <= 3) return pts;
+      return pts.filter((_, i) => i !== selCorner);
+    });
+    setSelCorner(null);
+  }, [selCorner]);
+
+  // Commit the edited ring back into MapboxDraw and recompute stats
+  const finishReticleEdit = useCallback(() => {
+    const draw = ensureDraw();
+    const edit = editPin;
+    if (!draw || !edit || editPoints.length < 3) return;
+    const ring = [...editPoints.map((c) => [c[0], c[1]]), [editPoints[0][0], editPoints[0][1]]];
+    const feature: GeoJSON.Feature<GeoJSON.Polygon> = {
+      type: 'Feature', properties: {},
+      geometry: { type: 'Polygon', coordinates: [ring] },
+    };
+    let id: string | null = null;
+    try { const ids = draw.add(feature); id = ids?.[0] ?? null; } catch { id = null; }
+    if (id != null) draw.setFeatureProperty(id, 'featureType', edit.type);
+    setEditPin(null);
+    setEditPoints([]);
+    setSelCorner(null);
+    editOriginal.current = null;
+    unlockRotation();
+    recompute();
+  }, [ensureDraw, editPin, editPoints, recompute, unlockRotation]);
+
+  // Abandon edits — restore the original shape unchanged
+  const cancelReticleEdit = useCallback(() => {
+    const draw = ensureDraw();
+    const edit = editPin;
+    const orig = editOriginal.current;
+    if (draw && edit && orig && orig.length >= 3) {
+      const ring = [...orig.map((c) => [c[0], c[1]]), [orig[0][0], orig[0][1]]];
+      try {
+        const ids = draw.add({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [ring] } } as GeoJSON.Feature<GeoJSON.Polygon>);
+        const id = ids?.[0];
+        if (id != null) draw.setFeatureProperty(id, 'featureType', edit.type);
+      } catch {}
+    }
+    setEditPin(null);
+    setEditPoints([]);
+    setSelCorner(null);
+    editOriginal.current = null;
+    unlockRotation();
+    recompute();
+  }, [ensureDraw, editPin, recompute, unlockRotation]);
 
   // Remove only the polygons of one type
   const clearType = useCallback((type: 'site' | 'water') => {
@@ -384,10 +526,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setActiveDraw(null);
   }, [onSiteDrawn, onWaterDrawn]);
 
+  // Keep the latest edit-cancel reachable from the (once-registered) Escape handler.
+  const cancelEditRef = useRef(cancelReticleEdit);
+  cancelEditRef.current = cancelReticleEdit;
+  const editPinRef = useRef(editPin);
+  editPinRef.current = editPin;
+
   // Escape key cancels an in-progress draw (fix 2: Escape-to-cancel)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        // Cancel reticle-edit if active (restores the original shape)
+        if (editPinRef.current) cancelEditRef.current();
         // Cancel reticle-draw if active
         setPinDraw((prev) => { if (prev !== null) setDraftPoints([]); return prev !== null ? null : prev; });
         // Cancel draw mode if active
@@ -540,7 +690,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB)
-  useEffect(() => { onDrawingChange?.(pinDraw !== null); }, [pinDraw, onDrawingChange]);
+  useEffect(() => { onDrawingChange?.(pinDraw !== null || editPin !== null); }, [pinDraw, editPin, onDrawingChange]);
 
   // Reset the Cancel-confirm whenever a draw session ends
   useEffect(() => { if (!pinDraw) setCancelArmed(false); }, [pinDraw]);
@@ -565,16 +715,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       setDraftPoints((prev) => pushCorner(prev, e.lngLat.lng, e.lngLat.lat));
       return;
     }
-    if (activeDraw || editingFeatureId) return;
+    if (activeDraw || editingFeatureId || editPin) return;
     // A tap on the map ANALYSES that point (NASA/soil/topo). Editing a drawn shape is done
     // via its ✎ Edit button — NOT by tapping the map, otherwise a tap inside the boundary
     // would re-enter vertex-edit and the farmer could never analyse the inside of their land.
     onLocationSelect(e.lngLat.lat, e.lngLat.lng);
-  }, [onLocationSelect, activeDraw, editingFeatureId, pinDraw]);
+  }, [onLocationSelect, activeDraw, editingFeatureId, pinDraw, editPin]);
 
-  // Reticle-draw colours
-  const draftColor = pinDraw === 'water' ? '#5B9ED4' : '#48A864';
-  const draftStroke = pinDraw === 'water' ? '#7FC4F0' : '#5DCF80';
+  // Reticle colours — shared by draw (pinDraw) and edit (editPin)
+  const reticleType = pinDraw ?? editPin?.type ?? null;
+  const draftColor = reticleType === 'water' ? '#5B9ED4' : '#48A864';
+  const draftStroke = reticleType === 'water' ? '#7FC4F0' : '#5DCF80';
   // Project committed corners to screen pixels for the SVG preview overlay.
   // mapCenter changes on every map move → component re-renders → these recompute, staying in sync.
   // A screen-space SVG (not a GL source) works with 3D terrain on — no draping crash.
@@ -587,6 +738,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const reticleScreen: [number, number] = container
     ? [container.clientWidth / 2, container.clientHeight / 2]
     : [0, 0];
+  // Edit overlay: project the working ring to screen pixels (closed outline, terrain-safe SVG)
+  const editScreen: Array<{ x: number; y: number; i: number }> = (editPin && map)
+    ? editPoints.map((p, i) => { const q = map.project(p as [number, number]); return { x: q.x, y: q.y, i }; })
+    : [];
+  // Live area readout while editing (m² / ha)
+  const editAreaHa = (editPin && editPoints.length >= 3)
+    ? Math.round((turfArea({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[...editPoints, editPoints[0]]] } }) / 10000) * 100) / 100
+    : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
   const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number }> => {
@@ -676,13 +835,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         onMouseLeave={() => setHoverElevation(null)}
         onZoom={(e) => setZoom(e.viewState.zoom)}
         onMove={(e) => {
-          if (!pinDraw || movePending.current) return;
+          if ((!pinDraw && !editPin) || movePending.current) return;
           // Defer out of render phase (react-map-gl can fire onMove mid-render) + coalesce to 1/frame
           const { longitude, latitude } = e.viewState;
           movePending.current = true;
-          requestAnimationFrame(() => { movePending.current = false; setMapCenter([longitude, latitude]); });
+          requestAnimationFrame(() => {
+            movePending.current = false;
+            setMapCenter([longitude, latitude]);
+            // While editing, a lifted corner tracks the crosshair (map centre, pitch locked to 0)
+            if (editPin && selCorner != null) {
+              setEditPoints((pts) => {
+                if (selCorner >= pts.length) return pts;
+                const next = pts.slice();
+                next[selCorner] = [longitude, latitude];
+                return next;
+              });
+            }
+          });
         }}
-        cursor={pinDraw ? 'grab' : !activeDraw ? (loading ? 'wait' : 'crosshair') : 'default'}
+        cursor={(pinDraw || editPin) ? 'grab' : !activeDraw ? (loading ? 'wait' : 'crosshair') : 'default'}
         style={{ width: '100%', height: '100%' }}
       >
         <NavigationControl position="top-right" showCompass />
@@ -751,6 +922,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div style={{ width: 13, height: 13, borderRadius: '50%', background: draftStroke, border: '2px solid #fff', boxShadow: '0 1px 4px rgba(0,0,0,0.55)' }} />
           </Marker>
         ))}
+
+        {/* Edit mode: big tappable corner handles. Tap one to lift it onto the crosshair;
+            the lifted corner is hidden here (it rides the crosshair instead). */}
+        {editPin && editPoints.map((p, i) => (
+          selCorner === i ? null : (
+            <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center">
+              <button
+                onClick={(e) => { e.stopPropagation(); toggleCorner(i); }}
+                aria-label={`Corner ${i + 1}`}
+                style={{
+                  width: 30, height: 30, borderRadius: '50%', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: draftColor, border: '2.5px solid #fff', color: '#06160a',
+                  fontSize: 12, fontWeight: 700, lineHeight: 1,
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.55)',
+                }}>
+                {i + 1}
+              </button>
+            </Marker>
+          )
+        ))}
       </ReactMapGL>
 
       {/* ── Reticle-draw preview overlay (screen-space SVG — terrain-safe, no GL source) ── */}
@@ -769,8 +961,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </svg>
       )}
 
-      {/* ── Reticle crosshair (fixed at map centre while drawing) ── */}
-      {pinDraw && (
+      {/* ── Edit overlay: closed outline of the working ring (terrain-safe screen SVG) ── */}
+      {editPin && editScreen.length >= 2 && (
+        <svg className="absolute inset-0 pointer-events-none" width="100%" height="100%" style={{ zIndex: 7 }}>
+          <polygon
+            points={editScreen.map(({ x, y }) => `${x},${y}`).join(' ')}
+            fill={draftColor} fillOpacity={0.18} stroke={draftStroke} strokeWidth={2.5} strokeLinejoin="round" />
+        </svg>
+      )}
+
+      {/* ── Reticle crosshair (fixed at map centre while drawing OR editing) ── */}
+      {(pinDraw || editPin) && (
         <div className="absolute left-1/2 top-1/2 pointer-events-none"
           style={{ transform: 'translate(-50%, -50%)', zIndex: 8 }}>
           <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
@@ -847,12 +1048,74 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </>
       )}
 
+      {/* ── Reticle EDIT action bar (same crosshair motion as drawing) ── */}
+      {editPin && (
+        <>
+          {/* Top hint */}
+          <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
+            style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+              background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
+            <span className="text-xs font-display" style={{ color: draftStroke }}>
+              {selCorner == null
+                ? `Tap a numbered corner to pick it up${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
+                : `Move the map so the crosshair is where you want corner ${selCorner + 1}, then tap ✓ Place`}
+            </span>
+          </div>
+
+          <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-2"
+            style={{ bottom: 'calc(20px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(460px, calc(100vw - 24px))' }}>
+            {selCorner == null ? (
+              <>
+                {/* Done / Cancel / Add-corner when nothing is lifted */}
+                <button onClick={cancelReticleEdit}
+                  className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
+                  style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+                  <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
+                  <span style={{ fontSize: 10, marginTop: 2 }}>Cancel</span>
+                </button>
+                <button onClick={addEditCorner}
+                  className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
+                  style={{ flex: 1, padding: '10px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
+                  <span style={{ fontSize: 20, lineHeight: 1 }}>＋</span> Add corner
+                </button>
+                <button onClick={finishReticleEdit}
+                  className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
+                  style={{ flex: '0 0 80px', padding: '10px 0', background: 'rgba(72,168,100,0.92)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a' }}>
+                  <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
+                  <span style={{ fontSize: 10, marginTop: 2 }}>Done</span>
+                </button>
+              </>
+            ) : (
+              <>
+                {/* A corner is lifted: Remove it, or Place it at the crosshair */}
+                <button onClick={removeEditCorner} disabled={editPoints.length <= 3}
+                  className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
+                  style={{ flex: '0 0 72px', padding: '10px 0', opacity: editPoints.length <= 3 ? 0.4 : 1,
+                    background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+                  <span style={{ fontSize: 18, lineHeight: 1 }}>🗑</span>
+                  <span style={{ fontSize: 10, marginTop: 2 }}>Remove</span>
+                </button>
+                <button onClick={placeCorner}
+                  className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
+                  style={{ flex: 1, padding: '10px 0', background: draftColor, color: '#06160a',
+                    boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 16 }}>
+                  <span style={{ fontSize: 20, lineHeight: 1 }}>✓</span> Place corner {selCorner + 1}
+                </button>
+              </>
+            )}
+          </div>
+        </>
+      )}
+
       {/* ── Unified toolbar ────────────────────── */}
       {/*
         On mobile: constrained to screen width minus a small right margin so the
         zoom slider (right:12px, width ~36px) doesn't overlap. We cap at calc(100vw - 56px).
         On desktop: max-width 380px keeps the original appearance.
+        Hidden entirely while drawing/editing so it can't overlap the instruction
+        banner or crowd the map — the bottom action bar is all you need then.
       */}
+      {!pinDraw && !editPin && !activeDraw && (
       <div
         className="absolute top-3 left-3 flex flex-col gap-2 p-2.5 rounded-xl"
         style={{
@@ -872,25 +1135,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             type="text"
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setSearchError(''); setSearchResult(''); }}
-            placeholder="Town or -33.9, 18.4"
-            className="flex-1 text-xs font-mono rounded-lg px-2.5 py-1.5 outline-none min-w-0"
+            placeholder="Search a town…"
+            className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
               background: 'rgba(22,37,20,0.8)',
               border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(58,104,48,0.6)'}`,
               color: 'var(--text-primary)',
               fontSize: 16,
+              minHeight: TOUCH_H,
             }}
           />
           <button
             type="submit"
             disabled={searching || !searchQuery.trim()}
-            className="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all flex-shrink-0"
+            className="px-4 rounded-lg font-mono font-semibold transition-all flex-shrink-0"
             style={{
               background: searching ? 'rgba(22,37,20,0.6)' : 'rgba(72,168,100,0.25)',
               border: '1px solid rgba(72,168,100,0.5)',
               color: searching ? 'var(--text-muted)' : 'var(--emerald-bright)',
-              minHeight: 36,
-              minWidth: 44,
+              minHeight: TOUCH_H,
+              minWidth: TOUCH_H,
+              fontSize: 18,
             }}
           >
             {searching ? '⟳' : '↵'}
@@ -899,63 +1164,69 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
         {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
-        {/* Map style row — wraps on narrow screens */}
-        <div>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.45)', marginBottom: 5 }}>
-            Map view
-          </div>
+        {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
+            so the toolbar isn't a wall of tiny buttons on a phone. */}
+        <button onClick={() => setLayersOpen((o) => !o)}
+          className="flex items-center justify-between rounded-lg font-mono transition-all"
+          style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
+            color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 14px' }}>
+          <span>🗺 Map layers</span>
+          <span style={{ transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+        </button>
+
+        {layersOpen && (
           <div className="flex gap-1.5 flex-wrap">
-          {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
-            <button key={s} onClick={() => setStyle(s)}
-              className="py-1 px-2 rounded-lg text-xs font-mono font-medium transition-all"
+            {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
+              <button key={s} onClick={() => setStyle(s)}
+                className="rounded-lg font-mono font-medium transition-all"
+                style={{
+                  ...(style === s
+                    ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                    : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
+                  minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+                }}>
+                {['🛰 Satellite', '⛰ Topo'][i]}
+              </button>
+            ))}
+            <button onClick={() => setHdImagery(!hdImagery)}
+              title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
+              className="rounded-lg font-mono font-medium transition-all"
               style={{
-                ...(style === s
-                  ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                ...(hdImagery
+                  ? { background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)' }
                   : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-                minHeight: 32,
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
-              {['🛰 Sat', '⛰ Topo'][i]}
+              ✦ HD
             </button>
-          ))}
-          <button onClick={() => setHdImagery(!hdImagery)}
-            title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
-            className="py-1 px-2 rounded-lg text-xs font-mono font-medium transition-all"
-            style={{
-              ...(hdImagery
-                ? { background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)' }
-                : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ✦ HD
-          </button>
-          <button onClick={() => setContours(!contours)}
-            className="py-1 px-2 rounded-lg text-xs font-mono transition-all"
-            style={{
-              ...(contours
-                ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
-                : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ~ Ctr
-          </button>
-          <button
-            onClick={() => {
-              const next = !terrain3d;
-              setTerrain3d(next);
-              if (!next) mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
-            }}
-            title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
-            className="py-1 px-2 rounded-lg text-xs font-mono transition-all"
-            style={{
-              ...(terrain3d
-                ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
-                : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ⛰ 3D
-          </button>
+            <button onClick={() => setContours(!contours)}
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(contours
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              ~ Contours
+            </button>
+            <button
+              onClick={() => {
+                const next = !terrain3d;
+                setTerrain3d(next);
+                if (!next) mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
+              }}
+              title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(terrain3d
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              ⛰ 3D
+            </button>
           </div>
-        </div>
+        )}
 
         {/* thin separator */}
         <div style={{ height: 1, background: 'rgba(58,104,48,0.3)' }} />
@@ -968,11 +1239,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="flex gap-1.5 flex-wrap">
           {/* My location */}
           <button onClick={goToMyLocation} disabled={locating}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
+            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
             style={{
               background: 'rgba(77,173,160,0.18)', border: '1px solid rgba(77,173,160,0.5)',
               color: locating ? 'var(--text-muted)' : 'var(--teal)',
-              minHeight: 32,
+              minHeight: TOUCH_H, fontSize: TOUCH_FS,
             }}>
             {locating ? <span className="animate-spin inline-block">⟳</span> : '📍'} Locate
           </button>
@@ -1000,7 +1271,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-display"
                 style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32 }}>
-                ↔ Drag the dots to move corners · drag a small mid-dot to add one
+                ↔ Drag a big dot to move a corner · drag a faint mid-dot to add one · pinch to zoom in for accuracy
               </div>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
@@ -1018,7 +1289,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           )}
 
           {/* ── Site / Land parcel section ── */}
-          {!activeDraw && !editingFeatureId && !pinDraw && (
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (
             <>
               {siteStats ? (
                 <div className="w-full flex flex-col gap-1">
@@ -1053,7 +1324,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
                       <span style={{ color: 'var(--emerald-bright)' }}>Parcel {idx + 1}</span>
                       <span style={{ color: 'var(--text-muted)' }}>{sf.areaHa} ha</span>
-                      <button onClick={() => editPolygonById(sf.id)}
+                      <button onClick={() => startReticleEdit(sf.id, 'site')}
                         className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                         style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
                         title="Edit this parcel's corners">✎ Edit</button>
@@ -1068,16 +1339,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
               ) : (
                 <button onClick={() => startPinDraw('site')}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-                  style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)', color: 'var(--gold)', minHeight: 32 }}>
-                  ✏ Boundary
+                  className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
+                  style={{ background: 'rgba(212,168,83,0.22)', border: '1px solid rgba(212,168,83,0.6)', color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
+                  ✏ Draw boundary
                 </button>
               )}
             </>
           )}
 
           {/* ── Water storage section ── */}
-          {!activeDraw && !editingFeatureId && !pinDraw && (waterStats ? (
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (waterStats ? (
             <div className="w-full flex flex-col gap-1">
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
                 style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
@@ -1093,7 +1364,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
                   <span style={{ color: 'var(--blue)' }}>Store {idx + 1}</span>
                   <span style={{ color: 'var(--text-muted)' }}>~{wf.estVolumeKL.toLocaleString()} kL</span>
-                  <button onClick={() => editPolygonById(wf.id)}
+                  <button onClick={() => startReticleEdit(wf.id, 'water')}
                     className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                     style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
                     title="Edit this store's corners">✎ Edit</button>
@@ -1108,8 +1379,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </div>
           ) : (
             <button onClick={() => startPinDraw('water')}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: 32 }}>
+              className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
+              style={{ background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.6)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
               💧 Water
             </button>
           ))}
@@ -1124,8 +1395,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 catch { onMapCapture(canvas.toDataURL().split(',')[1]); }
                 onCaptureClick?.();
               }}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: 32 }}>
+              className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
               📸 AI
             </button>
           )}
@@ -1143,6 +1414,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
       </div>
+      )}
 
       {/* ── Zoom control — big +/− buttons + a non-interactive fill bar.
            (A rotated range input is undraggable on touch, the device farmers use.) ── */}

@@ -6,5 +6,6 @@ out/
 serviceAccount.json
 
 .env*
+!.env.example
 .vercel
 *.tsbuildinfo
