@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
   Source, Layer, Marker, NavigationControl, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
@@ -447,9 +447,32 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     else startReticleEdit(featureId, type);
   }, [editEngine, startNativeEdit, startReticleEdit]);
 
-  // Custom-engine: tap a corner to select it (highlights it for the 🗑 Remove button).
-  // Moving a corner is done by dragging it — no tap-to-lift step.
-  const selectCorner = useCallback((i: number) => setSelCorner((cur) => (cur === i ? null : i)), []);
+  // Custom-engine corner dragging via raw pointer events — grabs INSTANTLY (no
+  // tap-and-hold delay that the library's built-in marker drag has on touch).
+  // Quick tap (down+up, no move) just selects the corner; press+move drags it.
+  const dragRef = useRef<{ i: number; pointerId: number } | null>(null);
+  const onCornerPointerDown = useCallback((i: number, e: ReactPointerEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setSelCorner(i);
+    dragRef.current = { i, pointerId: e.pointerId };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+  }, []);
+  const onCornerPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    const rect = map.getContainer().getBoundingClientRect();
+    const ll = map.unproject([e.clientX - rect.left, e.clientY - rect.top]);
+    setEditPoints((pts) => { const n = pts.slice(); n[d.i] = [ll.lng, ll.lat]; return n; });
+  }, []);
+  const onCornerPointerUp = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (d && d.pointerId === e.pointerId) {
+      try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+      dragRef.current = null;
+    }
+  }, []);
 
   // Insert a new corner at the crosshair, on the longest edge, and lift it for positioning
   const addEditCorner = useCallback(() => {
@@ -975,16 +998,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Marker>
         ))}
 
-        {/* Custom-engine edit: big draggable corner handles — press and drag a corner to move
-            it. Tapping a corner selects it (gold ring) for the 🗑 Remove button. */}
+        {/* Custom-engine edit: big corner handles — grab and drag INSTANTLY (raw pointer
+            events, no hold delay). Quick tap selects (gold ring) for the 🗑 Remove button. */}
         {editPin && editPoints.map((p, i) => (
-          <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center" draggable
-            onDragStart={() => setSelCorner(i)}
-            onDrag={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
-            onDragEnd={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
-          >
+          <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center">
             <div
-              onClick={() => selectCorner(i)}
+              onPointerDown={(e) => onCornerPointerDown(i, e)}
+              onPointerMove={onCornerPointerMove}
+              onPointerUp={onCornerPointerUp}
+              onPointerCancel={onCornerPointerUp}
               aria-label={`Corner ${i + 1}`}
               style={{
                 width: 40, height: 40, borderRadius: '50%', cursor: 'grab',
