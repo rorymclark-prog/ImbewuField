@@ -17,7 +17,7 @@ export default function RoleSwitcher({ current }: { current: string }) {
       style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       {ROLES.map((r) => {
         const active = r.key === current;
-        const base = 'flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-display transition-all whitespace-nowrap';
+        const base = 'flex items-center gap-1 px-2.5 py-1.5 rounded-full text-sm font-display transition-all whitespace-nowrap';
         const style = active
           ? { background: 'var(--badge-bg)', border: '1px solid var(--emerald)', color: 'var(--emerald-bright)' }
           : r.ready
@@ -27,14 +27,14 @@ export default function RoleSwitcher({ current }: { current: string }) {
         if (!r.ready) {
           return (
             <span key={r.key} className={base} style={style} title="Coming soon">
-              <span style={{ fontSize: 10 }}>{r.icon}</span>
+              <span style={{ fontSize: 17 }}>{r.icon}</span>
               <span className="hidden md:inline">{r.label}</span>
             </span>
           );
         }
         return (
           <Link key={r.key} href={r.href} className={base} style={style}>
-            <span style={{ fontSize: 10 }}>{r.icon}</span>
+            <span style={{ fontSize: 17 }}>{r.icon}</span>
             <span className="hidden md:inline">{r.label}</span>
           </Link>
         );

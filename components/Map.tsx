@@ -392,12 +392,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     try { draw.delete(featureId); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
-      map.easeTo({ pitch: 0, bearing: 0, duration: 200 });
       try { map.dragRotate.disable(); map.touchZoomRotate.disableRotation(); } catch {}
-      // Centre the view on the shape so its corners are on-screen and reachable
+      // Zoom to FIT the whole shape (flat, top-down) so every corner handle is on-screen
+      // and reachable — a big parcel previously left corners off the edge of the map.
       const lngs = ring.map((c) => c[0]); const lats = ring.map((c) => c[1]);
-      const ctr: [number, number] = [(Math.min(...lngs) + Math.max(...lngs)) / 2, (Math.min(...lats) + Math.max(...lats)) / 2];
-      map.easeTo({ center: ctr, duration: 300 });
+      const sw: [number, number] = [Math.min(...lngs), Math.min(...lats)];
+      const ne: [number, number] = [Math.max(...lngs), Math.max(...lats)];
+      try {
+        map.fitBounds([sw, ne], { padding: { top: 90, bottom: 140, left: 60, right: 60 }, pitch: 0, bearing: 0, duration: 400, maxZoom: 18 });
+      } catch {
+        map.easeTo({ center: [(sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2], pitch: 0, bearing: 0, duration: 300 });
+      }
     }
     drawTypeRef.current = type;
     setActiveDraw(null);
@@ -932,11 +937,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 onClick={(e) => { e.stopPropagation(); toggleCorner(i); }}
                 aria-label={`Corner ${i + 1}`}
                 style={{
-                  width: 30, height: 30, borderRadius: '50%', cursor: 'pointer',
+                  width: 38, height: 38, borderRadius: '50%', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: draftColor, border: '2.5px solid #fff', color: '#06160a',
-                  fontSize: 12, fontWeight: 700, lineHeight: 1,
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.55)',
+                  background: draftColor, border: '3px solid #fff', color: '#06160a',
+                  fontSize: 15, fontWeight: 800, lineHeight: 1,
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.6)',
                 }}>
                 {i + 1}
               </button>

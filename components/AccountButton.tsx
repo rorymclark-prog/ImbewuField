@@ -14,14 +14,14 @@ export default function AccountButton() {
     const label = user.displayName?.split(' ')[0] ?? user.email ?? 'Account';
     return (
       <div
-        className="flex items-center gap-2 px-2.5 py-1 rounded-full"
+        className="flex items-center gap-2 px-3 py-2 rounded-full flex-shrink-0"
         style={{
           background: 'rgba(22,37,20,0.6)',
           border: '1px solid var(--border)',
         }}
       >
         <span
-          className="text-xs font-display"
+          className="text-sm font-display"
           style={{ color: 'var(--text-secondary)' }}
         >
           {label}
@@ -41,7 +41,7 @@ export default function AccountButton() {
   return (
     <Link
       href="/login"
-      className="flex items-center px-2.5 py-1 rounded-full text-xs font-display transition-opacity hover:opacity-80"
+      className="flex items-center px-3 py-2 rounded-full text-sm font-display transition-opacity hover:opacity-80 flex-shrink-0"
       style={{
         background: 'rgba(22,37,20,0.6)',
         border: '1px solid var(--border)',
