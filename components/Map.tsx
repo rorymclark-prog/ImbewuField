@@ -154,7 +154,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   const MIN_ZOOM = 4;
-  const MAX_ZOOM = 20; // Esri imagery tops out at z19; allow 1 level of overzoom (soft, not blank). Past this = useless blur.
+  const MAX_ZOOM = 22; // Allow zooming right in for small-plot design. Beyond ~z19 the
+  // satellite imagery is upscaled (a bit soft) but stays usable for placing precise corners.
 
   const WATER_AVG_DEPTH = 1.5; // m — assumed average depth for capacity estimate
 
@@ -417,7 +418,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       const sw: [number, number] = [Math.min(...lngs), Math.min(...lats)];
       const ne: [number, number] = [Math.max(...lngs), Math.max(...lats)];
       try {
-        map.fitBounds([sw, ne], { padding: { top: 90, bottom: 140, left: 60, right: 60 }, pitch: 0, bearing: 0, duration: 400, maxZoom: 18 });
+        map.fitBounds([sw, ne], { padding: { top: 90, bottom: 140, left: 60, right: 60 }, pitch: 0, bearing: 0, duration: 400, maxZoom: 21 });
       } catch {
         map.easeTo({ center: [(sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2], pitch: 0, bearing: 0, duration: 300 });
       }
