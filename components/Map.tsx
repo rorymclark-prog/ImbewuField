@@ -129,8 +129,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
   // Search autofill: live suggestions as the user types (Mapbox geocoding)
-  const [suggestions, setSuggestions] = useState<Array<{ name: string; lon: number; lat: number }>>([]);
+  type Place = { name: string; lon: number; lat: number };
+  const [suggestions, setSuggestions] = useState<Place[]>([]);
   const suggestTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Recent searches — shown when the (empty) search box is focused
+  const [recents, setRecents] = useState<Place[]>([]);
+  const [showRecents, setShowRecents] = useState(false);
+  useEffect(() => {
+    try { const r = JSON.parse(localStorage.getItem('imbewu-recent-searches') ?? '[]'); if (Array.isArray(r)) setRecents(r); } catch {}
+  }, []);
+  const pushRecent = useCallback((p: Place) => {
+    setRecents((prev) => {
+      const next = [p, ...prev.filter((q) => q.name !== p.name)].slice(0, 6);
+      try { localStorage.setItem('imbewu-recent-searches', JSON.stringify(next)); } catch {}
+      return next;
+    });
+  }, []);
   // Hillshade / terrain relief overlay — shows hills, valleys & slope direction across the map
   const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
@@ -651,6 +665,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       mapRef.current?.flyTo({ center: [lon, lat], zoom: 13, duration: 1600 });
       onLocationSelect(lat, lon);
       setSearchResult(name);
+      pushRecent({ name, lon, lat });
     };
 
     // 2. Nominatim first — OSM has far better coverage of SA game reserves, farms, nature areas
@@ -727,10 +742,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const selectSuggestion = useCallback((s: { name: string; lon: number; lat: number }) => {
     setSearchQuery(s.name.split(',').slice(0, 2).join(','));
     setSuggestions([]);
+    setShowRecents(false);
     setSearchError('');
+    pushRecent({ name: s.name.split(',').slice(0, 2).join(','), lon: s.lon, lat: s.lat });
     mapRef.current?.flyTo({ center: [s.lon, s.lat], zoom: 14, duration: 1600 });
     onLocationSelect(s.lat, s.lon);
-  }, [onLocationSelect]);
+  }, [onLocationSelect, pushRecent]);
 
   const goToMyLocation = useCallback(() => {
     if (!navigator.geolocation) return;
@@ -1226,8 +1243,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); fetchSuggestions(v); }}
-            onBlur={() => setTimeout(() => setSuggestions([]), 150)}
+            onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
+            onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
+            onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
             placeholder="Search a town…"
             className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
@@ -1262,10 +1280,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <button key={i}
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s); }}
                 className="flex items-start gap-2 w-full text-left transition-all"
-                style={{ padding: '11px 12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
-                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.3 }}>
+                style={{ padding: '12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
+                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 16, lineHeight: 1.3 }}>
                 <span style={{ opacity: 0.6 }}>📍</span>
                 <span style={{ minWidth: 0 }}>{s.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        {/* Recent searches — shown when the empty search box is focused */}
+        {showRecents && suggestions.length === 0 && recents.length > 0 && (
+          <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
+            style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
+            <div style={{ padding: '8px 12px', fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>Recent</div>
+            {recents.map((r, i) => (
+              <button key={i}
+                onMouseDown={(e) => { e.preventDefault(); selectSuggestion(r); }}
+                className="flex items-center gap-2 w-full text-left transition-all"
+                style={{ padding: '12px', borderBottom: i < recents.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
+                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 16, lineHeight: 1.3 }}>
+                <span style={{ opacity: 0.6 }}>🕘</span>
+                <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.name}</span>
               </button>
             ))}
           </div>
