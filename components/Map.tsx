@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
-  Source, Layer, Marker, NavigationControl, ScaleControl,
+  Source, Layer, Marker, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
 } from 'react-map-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -926,7 +926,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         cursor={pinDraw ? 'grab' : !activeDraw ? (loading ? 'wait' : 'crosshair') : 'default'}
         style={{ width: '100%', height: '100%' }}
       >
-        <NavigationControl position="top-right" showCompass />
         <ScaleControl position="bottom-right" maxWidth={120} unit="metric" />
         <Source id="mapbox-dem" {...terrainSource} />
 
@@ -1596,12 +1595,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       </div>
       )}
 
-      {/* ── Zoom control — big +/− buttons + a non-interactive fill bar.
-           (A rotated range input is undraggable on touch, the device farmers use.) ── */}
+      {/* ── Zoom control — big +/− buttons + a non-interactive fill bar, bottom-right
+           above the Details button. (A rotated range input is undraggable on touch.) ── */}
       <div
         className="absolute flex flex-col items-center gap-2 select-none"
         style={{
-          right: 12, top: '50%', transform: 'translateY(-50%)',
+          right: 12, bottom: 'calc(96px + env(safe-area-inset-bottom))',
           background: 'rgba(6,16,10,0.92)', border: '1px solid rgba(58,104,48,0.5)',
           borderRadius: 16, padding: '10px 7px', boxShadow: '0 6px 20px rgba(0,0,0,0.45)',
           zIndex: 5,
