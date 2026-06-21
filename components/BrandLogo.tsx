@@ -15,7 +15,7 @@ export default function BrandLogo({ icon = '🌿' }: { icon?: string }) {
       style={{ textDecoration: 'none' }}
     >
       <div
-        className="w-7 h-7 rounded-lg flex items-center justify-center text-base"
+        className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
         style={{
           background: 'linear-gradient(135deg, rgba(72,168,100,0.25), rgba(72,168,100,0.08))',
           border: '1px solid rgba(72,168,100,0.4)',
@@ -23,7 +23,7 @@ export default function BrandLogo({ icon = '🌿' }: { icon?: string }) {
       >
         {icon}
       </div>
-      <span className="hidden sm:inline font-display font-bold text-sm tracking-tight text-gradient">ImbewuField</span>
+      <span className="hidden sm:inline font-display font-bold text-base tracking-tight text-gradient">ImbewuField</span>
     </Link>
   );
 }

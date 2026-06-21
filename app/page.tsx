@@ -103,12 +103,13 @@ function HomeInner() {
 
         {/* ── Header ────────────────────────────── */}
         <header
-          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4"
+          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto overflow-y-hidden"
           style={{
-            height: 52,
+            height: 60,
             background: 'var(--header-bg)',
             borderBottom: '1px solid var(--border)',
             backdropFilter: 'blur(12px)',
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           <BrandLogo />
@@ -117,9 +118,9 @@ function HomeInner() {
           <span className="text-xs hidden sm:block font-display" style={{ color: 'var(--text-muted)' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
-          <Link href="/facilitator" className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all flex-shrink-0"
+          <Link href="/facilitator" className="flex items-center gap-1 px-3 py-2 rounded-full text-sm font-display transition-all flex-shrink-0"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
-            ✎ <span className="hidden md:inline">Design map</span>
+            <span style={{ fontSize: 16 }}>✎</span> <span className="hidden md:inline">Design map</span>
           </Link>
           <RoleSwitcher current="farmer" />
           <LangSwitcher />
@@ -153,11 +154,11 @@ function HomeInner() {
             title="Appearance"
             className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all"
             style={{
-              width: 30, height: 30,
+              width: 42, height: 42,
               background: 'var(--bg-2)',
               border: '1px solid var(--border)',
               color: 'var(--text-muted)',
-              fontSize: 15,
+              fontSize: 20,
               cursor: 'pointer',
             }}
           >

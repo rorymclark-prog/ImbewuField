@@ -100,6 +100,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [contours, setContours] = useState(true);
   const [terrain3d, setTerrain3d] = useState(true);
   const [zoom, setZoom] = useState(5.2);
+  // Boundary-edit engine: 'native' = Mapbox's built-in mapbox-gl-draw vertex editing;
+  // 'custom' = big press-and-drag numbered handles. Toggleable so they can be compared.
+  const [editEngine, setEditEngine] = useState<'native' | 'custom'>('custom');
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? window.localStorage.getItem('imbewu-edit-engine') : null;
+    if (saved === 'native' || saved === 'custom') setEditEngine(saved);
+  }, []);
+  const chooseEngine = useCallback((e: 'native' | 'custom') => {
+    setEditEngine(e);
+    try { window.localStorage.setItem('imbewu-edit-engine', e); } catch {}
+  }, []);
   // Map-view toggles (Sat/Topo/HD/Contours/3D) live behind a "Layers" expander so the
   // toolbar stays uncluttered on phones — collapsed by default.
   const [layersOpen, setLayersOpen] = useState(false);
@@ -117,6 +128,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
+  // Search autofill: live suggestions as the user types (Mapbox geocoding)
+  const [suggestions, setSuggestions] = useState<Array<{ name: string; lon: number; lat: number }>>([]);
+  const suggestTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Hillshade / terrain relief overlay — shows hills, valleys & slope direction across the map
+  const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
@@ -392,12 +408,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     try { draw.delete(featureId); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
-      map.easeTo({ pitch: 0, bearing: 0, duration: 200 });
       try { map.dragRotate.disable(); map.touchZoomRotate.disableRotation(); } catch {}
-      // Centre the view on the shape so its corners are on-screen and reachable
+      // Zoom to FIT the whole shape (flat, top-down) so every corner handle is on-screen
+      // and reachable — a big parcel previously left corners off the edge of the map.
       const lngs = ring.map((c) => c[0]); const lats = ring.map((c) => c[1]);
-      const ctr: [number, number] = [(Math.min(...lngs) + Math.max(...lngs)) / 2, (Math.min(...lats) + Math.max(...lats)) / 2];
-      map.easeTo({ center: ctr, duration: 300 });
+      const sw: [number, number] = [Math.min(...lngs), Math.min(...lats)];
+      const ne: [number, number] = [Math.max(...lngs), Math.max(...lats)];
+      try {
+        map.fitBounds([sw, ne], { padding: { top: 90, bottom: 140, left: 60, right: 60 }, pitch: 0, bearing: 0, duration: 400, maxZoom: 18 });
+      } catch {
+        map.easeTo({ center: [(sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2], pitch: 0, bearing: 0, duration: 300 });
+      }
     }
     drawTypeRef.current = type;
     setActiveDraw(null);
@@ -409,23 +430,26 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setEditPin({ id: featureId, type });
   }, [ensureDraw]);
 
-  // Tap a corner: lift it onto the crosshair (select) — or, if already lifted, drop it (deselect).
-  const toggleCorner = useCallback((i: number) => {
-    setSelCorner((cur) => {
-      if (cur === i) return null;            // tapping the lifted corner again drops it
-      // Snap the map so the crosshair sits on the corner we just picked up
-      const map = mapRef.current?.getMap();
-      setEditPoints((pts) => {
-        const p = pts[i];
-        if (map && p) map.easeTo({ center: p, duration: 250 });
-        return pts;
-      });
-      return i;
-    });
-  }, []);
+  // Enter Mapbox's NATIVE built-in editing (mapbox-gl-draw direct_select): drag vertices,
+  // native midpoints to add a corner, native delete. Uses the enlarged dots + touchBuffer.
+  const startNativeEdit = useCallback((featureId: string) => {
+    const draw = ensureDraw();
+    if (!draw) return;
+    setEditPin(null); setEditPoints([]); setSelCorner(null);
+    setActiveDraw(null); setPinDraw(null);
+    try { draw.changeMode('direct_select', { featureId }); } catch {}
+    setEditingFeatureId(featureId);
+  }, [ensureDraw]);
 
-  // Drop the lifted corner where it currently sits (under the crosshair)
-  const placeCorner = useCallback(() => setSelCorner(null), []);
+  // Router: the ✎ Edit buttons call this; it picks the chosen engine.
+  const startEdit = useCallback((featureId: string, type: 'site' | 'water') => {
+    if (editEngine === 'native') startNativeEdit(featureId);
+    else startReticleEdit(featureId, type);
+  }, [editEngine, startNativeEdit, startReticleEdit]);
+
+  // Custom-engine: tap a corner to select it (highlights it for the 🗑 Remove button).
+  // Moving a corner is done by dragging it — no tap-to-lift step.
+  const selectCorner = useCallback((i: number) => setSelCorner((cur) => (cur === i ? null : i)), []);
 
   // Insert a new corner at the crosshair, on the longest edge, and lift it for positioning
   const addEditCorner = useCallback(() => {
@@ -651,6 +675,37 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setSearching(false);
   }, [onLocationSelect]);
 
+  // ── Autofill: debounced place suggestions while typing (Mapbox geocoding) ──
+  const fetchSuggestions = useCallback((q: string) => {
+    if (suggestTimer.current) clearTimeout(suggestTimer.current);
+    const query = q.trim();
+    // Don't suggest for very short or coordinate-looking input
+    if (query.length < 3 || /^-?\d/.test(query)) { setSuggestions([]); return; }
+    suggestTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json` +
+          `?access_token=${TOKEN}&autocomplete=true&limit=5&language=en&country=ZA&proximity=25,-29` +
+          `&types=place,locality,district,region,address,neighborhood,poi`
+        );
+        const json = await res.json();
+        const list = (json.features ?? []).map((f: { place_name?: string; text?: string; center: [number, number] }) => ({
+          name: f.place_name ?? f.text ?? '',
+          lon: f.center[0], lat: f.center[1],
+        }));
+        setSuggestions(list);
+      } catch { setSuggestions([]); }
+    }, 250);
+  }, []);
+
+  const selectSuggestion = useCallback((s: { name: string; lon: number; lat: number }) => {
+    setSearchQuery(s.name.split(',').slice(0, 2).join(','));
+    setSuggestions([]);
+    setSearchError('');
+    mapRef.current?.flyTo({ center: [s.lon, s.lat], zoom: 14, duration: 1600 });
+    onLocationSelect(s.lat, s.lon);
+  }, [onLocationSelect]);
+
   const goToMyLocation = useCallback(() => {
     if (!navigator.geolocation) return;
     setLocating(true);
@@ -836,30 +891,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         onZoom={(e) => setZoom(e.viewState.zoom)}
         onMove={(e) => {
           if ((!pinDraw && !editPin) || movePending.current) return;
-          // Defer out of render phase (react-map-gl can fire onMove mid-render) + coalesce to 1/frame
+          // Defer out of render phase (react-map-gl can fire onMove mid-render) + coalesce to 1/frame.
+          // Keeps the draft/edit SVG overlay reprojected as the map pans. Corners move by dragging
+          // their markers directly, so nothing tracks the map centre here.
           const { longitude, latitude } = e.viewState;
           movePending.current = true;
-          requestAnimationFrame(() => {
-            movePending.current = false;
-            setMapCenter([longitude, latitude]);
-            // While editing, a lifted corner tracks the crosshair (map centre, pitch locked to 0)
-            if (editPin && selCorner != null) {
-              setEditPoints((pts) => {
-                if (selCorner >= pts.length) return pts;
-                const next = pts.slice();
-                next[selCorner] = [longitude, latitude];
-                return next;
-              });
-            }
-          });
+          requestAnimationFrame(() => { movePending.current = false; setMapCenter([longitude, latitude]); });
         }}
-        cursor={(pinDraw || editPin) ? 'grab' : !activeDraw ? (loading ? 'wait' : 'crosshair') : 'default'}
+        cursor={pinDraw ? 'grab' : !activeDraw ? (loading ? 'wait' : 'crosshair') : 'default'}
         style={{ width: '100%', height: '100%' }}
       >
         <NavigationControl position="top-right" showCompass />
         <ScaleControl position="bottom-right" maxWidth={120} unit="metric" />
         <Source id="mapbox-dem" {...terrainSource} />
 
+        {/* Hillshade relief — shades hills/valleys so slope shape & direction read at a glance */}
+        {hillshade && (
+          <Source id="hillshade-dem" type="raster-dem" url="mapbox://mapbox.mapbox-terrain-dem-v1" tileSize={512} maxzoom={14}>
+            <Layer id="hillshade-layer" type="hillshade"
+              paint={{ 'hillshade-exaggeration': 0.55, 'hillshade-shadow-color': '#08120a', 'hillshade-highlight-color': '#eef3df', 'hillshade-accent-color': '#1a2e16' }} />
+          </Source>
+        )}
 
         {/* Esri World Imagery — alternative high-res satellite (often sharper than Maxar in rural areas) */}
         {hdImagery && (
@@ -923,25 +975,28 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Marker>
         ))}
 
-        {/* Edit mode: big tappable corner handles. Tap one to lift it onto the crosshair;
-            the lifted corner is hidden here (it rides the crosshair instead). */}
+        {/* Custom-engine edit: big draggable corner handles — press and drag a corner to move
+            it. Tapping a corner selects it (gold ring) for the 🗑 Remove button. */}
         {editPin && editPoints.map((p, i) => (
-          selCorner === i ? null : (
-            <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center">
-              <button
-                onClick={(e) => { e.stopPropagation(); toggleCorner(i); }}
-                aria-label={`Corner ${i + 1}`}
-                style={{
-                  width: 30, height: 30, borderRadius: '50%', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: draftColor, border: '2.5px solid #fff', color: '#06160a',
-                  fontSize: 12, fontWeight: 700, lineHeight: 1,
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.55)',
-                }}>
-                {i + 1}
-              </button>
-            </Marker>
-          )
+          <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center" draggable
+            onDragStart={() => setSelCorner(i)}
+            onDrag={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
+            onDragEnd={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
+          >
+            <div
+              onClick={() => selectCorner(i)}
+              aria-label={`Corner ${i + 1}`}
+              style={{
+                width: 40, height: 40, borderRadius: '50%', cursor: 'grab',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: draftColor, color: '#06160a',
+                border: selCorner === i ? '3px solid var(--gold)' : '3px solid #fff',
+                fontSize: 15, fontWeight: 800, lineHeight: 1, touchAction: 'none',
+                boxShadow: selCorner === i ? '0 0 0 3px rgba(212,168,83,0.4), 0 2px 8px rgba(0,0,0,0.6)' : '0 2px 8px rgba(0,0,0,0.6)',
+              }}>
+              {i + 1}
+            </div>
+          </Marker>
         ))}
       </ReactMapGL>
 
@@ -970,8 +1025,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </svg>
       )}
 
-      {/* ── Reticle crosshair (fixed at map centre while drawing OR editing) ── */}
-      {(pinDraw || editPin) && (
+      {/* ── Reticle crosshair (fixed at map centre while drawing) ── */}
+      {pinDraw && (
         <div className="absolute left-1/2 top-1/2 pointer-events-none"
           style={{ transform: 'translate(-50%, -50%)', zIndex: 8 }}>
           <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
@@ -1048,7 +1103,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </>
       )}
 
-      {/* ── Reticle EDIT action bar (same crosshair motion as drawing) ── */}
+      {/* ── Custom-engine EDIT action bar (press & drag the corners) ── */}
       {editPin && (
         <>
           {/* Top hint */}
@@ -1057,52 +1112,37 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
             <span className="text-xs font-display" style={{ color: draftStroke }}>
               {selCorner == null
-                ? `Tap a numbered corner to pick it up${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
-                : `Move the map so the crosshair is where you want corner ${selCorner + 1}, then tap ✓ Place`}
+                ? `Press and drag any corner to move it${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
+                : `Corner ${selCorner + 1} selected — drag to move, or 🗑 Remove · ${editAreaHa ?? ''} ha`}
             </span>
           </div>
 
           <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-2"
             style={{ bottom: 'calc(20px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(460px, calc(100vw - 24px))' }}>
-            {selCorner == null ? (
-              <>
-                {/* Done / Cancel / Add-corner when nothing is lifted */}
-                <button onClick={cancelReticleEdit}
-                  className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-                  style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
-                  <span style={{ fontSize: 10, marginTop: 2 }}>Cancel</span>
-                </button>
-                <button onClick={addEditCorner}
-                  className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
-                  style={{ flex: 1, padding: '10px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
-                  <span style={{ fontSize: 20, lineHeight: 1 }}>＋</span> Add corner
-                </button>
-                <button onClick={finishReticleEdit}
-                  className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-                  style={{ flex: '0 0 80px', padding: '10px 0', background: 'rgba(72,168,100,0.92)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a' }}>
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-                  <span style={{ fontSize: 10, marginTop: 2 }}>Done</span>
-                </button>
-              </>
-            ) : (
-              <>
-                {/* A corner is lifted: Remove it, or Place it at the crosshair */}
-                <button onClick={removeEditCorner} disabled={editPoints.length <= 3}
-                  className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-                  style={{ flex: '0 0 72px', padding: '10px 0', opacity: editPoints.length <= 3 ? 0.4 : 1,
-                    background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>🗑</span>
-                  <span style={{ fontSize: 10, marginTop: 2 }}>Remove</span>
-                </button>
-                <button onClick={placeCorner}
-                  className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
-                  style={{ flex: 1, padding: '10px 0', background: draftColor, color: '#06160a',
-                    boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 16 }}>
-                  <span style={{ fontSize: 20, lineHeight: 1 }}>✓</span> Place corner {selCorner + 1}
-                </button>
-              </>
-            )}
+            <button onClick={cancelReticleEdit}
+              className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
+              style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
+              <span style={{ fontSize: 10, marginTop: 2 }}>Cancel</span>
+            </button>
+            <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
+              className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
+              style={{ flex: '0 0 72px', padding: '10px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
+                background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>🗑</span>
+              <span style={{ fontSize: 10, marginTop: 2 }}>Remove</span>
+            </button>
+            <button onClick={addEditCorner}
+              className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
+              style={{ flex: 1, padding: '10px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
+              <span style={{ fontSize: 20, lineHeight: 1 }}>＋</span> Add corner
+            </button>
+            <button onClick={finishReticleEdit}
+              className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
+              style={{ flex: '0 0 80px', padding: '10px 0', background: 'rgba(72,168,100,0.92)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a' }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
+              <span style={{ fontSize: 10, marginTop: 2 }}>Done</span>
+            </button>
           </div>
         </>
       )}
@@ -1130,11 +1170,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         }}
       >
         {/* Search row */}
-        <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }} className="flex gap-1.5">
+        <div className="relative">
+        <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }} className="flex gap-1.5">
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setSearchError(''); setSearchResult(''); }}
+            onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); fetchSuggestions(v); }}
+            onBlur={() => setTimeout(() => setSuggestions([]), 150)}
             placeholder="Search a town…"
             className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
@@ -1161,6 +1203,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {searching ? '⟳' : '↵'}
           </button>
         </form>
+        {/* Autofill dropdown */}
+        {suggestions.length > 0 && (
+          <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
+            style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
+            {suggestions.map((s, i) => (
+              <button key={i}
+                onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s); }}
+                className="flex items-start gap-2 w-full text-left transition-all"
+                style={{ padding: '11px 12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
+                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.3 }}>
+                <span style={{ opacity: 0.6 }}>📍</span>
+                <span style={{ minWidth: 0 }}>{s.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        </div>
         {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
         {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
@@ -1209,6 +1268,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}>
               ~ Contours
             </button>
+            <button onClick={() => setHillshade(!hillshade)}
+              title="Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible"
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(hillshade
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              🌄 Relief
+            </button>
             <button
               onClick={() => {
                 const next = !terrain3d;
@@ -1225,6 +1295,28 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}>
               ⛰ 3D
             </button>
+          </div>
+        )}
+
+        {layersOpen && (
+          <div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.45)', marginBottom: 5 }}>
+              Edit tool (try both)
+            </div>
+            <div className="flex gap-1.5">
+              {([['custom', '✋ Big handles'], ['native', '🅼 Mapbox tool']] as const).map(([key, label]) => (
+                <button key={key} onClick={() => chooseEngine(key)}
+                  className="flex-1 rounded-lg font-mono transition-all"
+                  style={{
+                    ...(editEngine === key
+                      ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                      : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
+                    minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 10px',
+                  }}>
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
@@ -1324,7 +1416,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
                       <span style={{ color: 'var(--emerald-bright)' }}>Parcel {idx + 1}</span>
                       <span style={{ color: 'var(--text-muted)' }}>{sf.areaHa} ha</span>
-                      <button onClick={() => startReticleEdit(sf.id, 'site')}
+                      <button onClick={() => startEdit(sf.id, 'site')}
                         className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                         style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
                         title="Edit this parcel's corners">✎ Edit</button>
@@ -1364,7 +1456,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
                   <span style={{ color: 'var(--blue)' }}>Store {idx + 1}</span>
                   <span style={{ color: 'var(--text-muted)' }}>~{wf.estVolumeKL.toLocaleString()} kL</span>
-                  <button onClick={() => startReticleEdit(wf.id, 'water')}
+                  <button onClick={() => startEdit(wf.id, 'water')}
                     className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                     style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
                     title="Edit this store's corners">✎ Edit</button>
