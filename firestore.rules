@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// FieldProof — Firestore security rules (role-based).
+// ImbewuField — Firestore security rules (role-based).
 // Each user has a /profiles/{uid} doc with { role, org_id }. Staff = ngo/funder/admin.
 // Oversight queries rely on org_id being denormalised onto gardens & logs.
 service cloud.firestore {

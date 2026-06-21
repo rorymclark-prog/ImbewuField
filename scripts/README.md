@@ -1,4 +1,4 @@
-# FieldProof — Firebase Setup & Seed
+# ImbewuField — Firebase Setup & Seed
 
 ## Prerequisites
 
