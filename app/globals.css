@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════
+   TYPE SCALE — four tiers for consistent hierarchy
+   Display: big numbers, heroes, section titles
+   Label:   tiny caps, field names, section heads
+   Body:    readable paragraphs, card content
+   Mono:    data values, coords, code
+   ═══════════════════════════════════════════════════════ */
+:root {
+  /* sizes */
+  --type-display: 22px;
+  --type-lg: 16px;
+  --type-base: 13px;
+  --type-sm: 12px;
+  --type-xs: 11px;
+  --type-label: 10px;
+
+  /* weights */
+  --weight-bold: 700;
+  --weight-semibold: 600;
+  --weight-medium: 500;
+  --weight-normal: 400;
+
+  /* line heights */
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* tracking */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.10em;
+}
+
+/* ═══════════════════════════════════════════════════════
+   EARTH LIGHT  (default)
+   ═══════════════════════════════════════════════════════ */
+html[data-theme="earth"] {
+  --bg-0: #FDFAF6;
+  --bg-1: #F5F0E8;
+  --bg-2: #EDE7DB;
+  --bg-3: #E2D8CB;
+  --bg-4: #D3C8B5;
+  --bg-5: #C3B5A0;
+
+  --border: #DDD2C0;
+  --border-bright: #C5B5A0;
+  --border-glow: rgba(90,148,45,0.35);
+
+  --text-primary: #261B10;
+  --text-secondary: #6A5040;
+  --text-muted: #9A8268;
+
+  --emerald: #3A7518;
+  --emerald-bright: #5CA030;
+  --gold: #9E5C08;
+  --gold-dim: #7A4408;
+  --blue: #1C5A9E;
+  --orange: #B83A18;
+  --teal: #1A7868;
+
+  --header-bg: rgba(253,250,246,0.97);
+  --glass-bg: rgba(245,240,232,0.88);
+  --glass-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  --glass-border: rgba(180,160,135,0.45);
+  --badge-bg: rgba(58,117,24,0.1);
+
+  --gradient-from: #3A7518;
+  --gradient-mid: #5CA030;
+  --gradient-to: #9E5C08;
+}
+
+/* ═══════════════════════════════════════════════════════
+   EARTH DARK
+   ═══════════════════════════════════════════════════════ */
+html[data-theme="earth"].dark {
+  --bg-0: #0D0A06;
+  --bg-1: #181208;
+  --bg-2: #22190E;
+  --bg-3: #2C2114;
+  --bg-4: #382A1A;
+  --bg-5: #453320;
+
+  --border: #2C2114;
+  --border-bright: #483618;
+  --border-glow: rgba(140,192,60,0.3);
+
+  --text-primary: #EEE4D0;
+  --text-secondary: #A8906C;
+  --text-muted: #685040;
+
+  --emerald: #82C844;
+  --emerald-bright: #A8E860;
+  --gold: #D8A840;
+  --gold-dim: #8C6C20;
+  --blue: #58A0DC;
+  --orange: #E07850;
+  --teal: #58B8A0;
+
+  --header-bg: rgba(13,10,6,0.97);
+  --glass-bg: rgba(24,18,8,0.88);
+  --glass-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
+  --glass-border: rgba(80,60,30,0.5);
+  --badge-bg: rgba(130,200,68,0.1);
+
+  --gradient-from: #A8E860;
+  --gradient-mid: #82C844;
+  --gradient-to: #D8A840;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SLATE LIGHT
+   ═══════════════════════════════════════════════════════ */
+html[data-theme="slate"] {
+  --bg-0: #FFFFFF;
+  --bg-1: #F8FAFC;
+  --bg-2: #F1F5F9;
+  --bg-3: #E8EDF5;
+  --bg-4: #D8E0EC;
+  --bg-5: #C4CEDC;
+
+  --border: #E2E8F2;
+  --border-bright: #CBD5E4;
+  --border-glow: rgba(20,155,115,0.3);
+
+  --text-primary: #0C1526;
+  --text-secondary: #445266;
+  --text-muted: #8898AA;
+
+  --emerald: #0D6B52;
+  --emerald-bright: #199870;
+  --gold: #AA5C08;
+  --gold-dim: #7A4008;
+  --blue: #1555AA;
+  --orange: #C03C18;
+  --teal: #0A6E6A;
+
+  --header-bg: rgba(255,255,255,0.97);
+  --glass-bg: rgba(248,250,252,0.9);
+  --glass-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  --glass-border: rgba(160,180,205,0.5);
+  --badge-bg: rgba(13,107,82,0.08);
+
+  --gradient-from: #0D6B52;
+  --gradient-mid: #199870;
+  --gradient-to: #AA5C08;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SLATE DARK
+   ═══════════════════════════════════════════════════════ */
+html[data-theme="slate"].dark {
+  --bg-0: #060A12;
+  --bg-1: #0C1526;
+  --bg-2: #1A2540;
+  --bg-3: #22304E;
+  --bg-4: #2E3E5C;
+  --bg-5: #3A4E70;
+
+  --border: #1A2540;
+  --border-bright: #2E3E5C;
+  --border-glow: rgba(20,155,115,0.3);
+
+  --text-primary: #DCE4F0;
+  --text-secondary: #8898AA;
+  --text-muted: #4A5A6E;
+
+  --emerald: #18A878;
+  --emerald-bright: #50CCA0;
+  --gold: #E8A030;
+  --gold-dim: #9A6818;
+  --blue: #4890DC;
+  --orange: #DC7050;
+  --teal: #40A8A4;
+
+  --header-bg: rgba(6,10,18,0.97);
+  --glass-bg: rgba(12,21,38,0.88);
+  --glass-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  --glass-border: rgba(30,50,80,0.6);
+  --badge-bg: rgba(24,168,120,0.1);
+
+  --gradient-from: #50CCA0;
+  --gradient-mid: #18A878;
+  --gradient-to: #E8A030;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════ */
+html, body {
+  height: 100%;
+  background: var(--bg-0);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-5); border-radius: 2px; }
+
+/* ── Font helpers ──────────────────────────────────────── */
+:root {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* ── Text gradient (logo, headings) ────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-mid) 55%, var(--gradient-to) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass card ────────────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-hover:hover {
+  border-color: var(--border-bright);
+  box-shadow: var(--glass-shadow), 0 0 0 1px var(--border-glow);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(72, 168, 100, 0.2);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Mapbox overrides ──────────────────────────────────── */
+.mapboxgl-ctrl-group {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--border) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.mapboxgl-ctrl-group button {
+  border-bottom-color: var(--border) !important;
+}
+.mapboxgl-ctrl-group button .mapboxgl-ctrl-icon {
+  filter: invert(0.7) sepia(0.4) hue-rotate(80deg);
+}
+.mapboxgl-ctrl-attrib {
+  background: var(--glass-bg) !important;
+  border-radius: 6px !important;
+}
+.mapboxgl-ctrl-attrib a { color: var(--text-muted) !important; font-size: 10px; }
+.mapboxgl-ctrl-scale {
+  background: var(--glass-bg) !important;
+  border-color: var(--text-muted) !important;
+  color: var(--text-muted) !important;
+  font-size: 10px !important;
+  border-radius: 4px;
+}

@@ -1,0 +1,18 @@
+rules_version = '2';
+
+// FieldProof — Firebase Storage rules. Photos (produce/grower/garden) are
+// publicly readable (so they show in reports/dashboards) and writable by any
+// signed-in user under their own folder.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /photos/{folder}/{uid}/{file=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+                   && request.resource.size < 8 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+    match /photos/{allPaths=**} {
+      allow read: if true;
+    }
+  }
+}

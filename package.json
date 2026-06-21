@@ -1,0 +1,38 @@
+{
+  "name": "permamap-sa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4242",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
+    "@mapbox/mapbox-gl-draw": "^1.5.1",
+    "@turf/area": "^7.3.5",
+    "@turf/length": "^7.3.5",
+    "firebase": "^12.15.0",
+    "konva": "^10.3.0",
+    "mapbox-gl": "^3.8.0",
+    "next": "14.2.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-konva": "^18.2.16",
+    "react-map-gl": "^7.1.8",
+    "recharts": "^2.14.1"
+  },
+  "devDependencies": {
+    "@types/mapbox__mapbox-gl-draw": "^1.4.9",
+    "@types/mapbox-gl": "^3.4.1",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "firebase-admin": "^14.0.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}

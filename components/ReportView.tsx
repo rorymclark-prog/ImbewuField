@@ -1,0 +1,845 @@
+'use client';
+
+import { useState, useRef, useCallback } from 'react';
+import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import RainfallChart from './RainfallChart';
+
+const ALL_SECTIONS = [
+  'Executive Summary',
+  'Site Conditions',
+  'Natural Vegetation & Biome',
+  'Water Harvesting',
+  'Irrigation Plan',
+  'Soil Strategy',
+  'Planting Calendar',
+  'Year-Round Food Production',
+  'Fruit, Nut & Berry Trees',
+  'Indigenous Trees',
+  'Crop Rotation',
+  'Animals & Livestock',
+  'Sun & Solar',
+  'Wind & Windbreaks',
+  'Fire & Hazards',
+  'Economic Opportunities',
+  'Plant Guilds',
+  'Zone Design',
+  'Seasonal Calendar',
+  '5-Year Vision',
+  'Year 1 Priorities',
+] as const;
+
+// Sections most useful to a small-scale SA farmer (used by the "Farmer essentials" preset)
+const FARMER_ESSENTIALS = [
+  'Executive Summary',
+  'Natural Vegetation & Biome',
+  'Water Harvesting',
+  'Irrigation Plan',
+  'Soil Strategy',
+  'Planting Calendar',
+  'Year-Round Food Production',
+  'Fruit, Nut & Berry Trees',
+  'Indigenous Trees',
+  'Crop Rotation',
+  'Animals & Livestock',
+  'Sun & Solar',
+  'Wind & Windbreaks',
+  'Fire & Hazards',
+  'Economic Opportunities',
+  'Zone Design',
+  'Year 1 Priorities',
+];
+
+const LANGUAGE_OPTIONS = [
+  { code: 'en', label: 'English' },
+  { code: 'zu', label: 'isiZulu' },
+  { code: 'xh', label: 'isiXhosa' },
+  { code: 'af', label: 'Afrikaans' },
+  { code: 'st', label: 'Sesotho' },
+  { code: 'nso', label: 'Sepedi' },
+  { code: 'tn', label: 'Setswana' },
+  { code: 'ts', label: 'Xitsonga' },
+  { code: 've', label: 'Tshivenda' },
+  { code: 'ss', label: 'siSwati' },
+  { code: 'nr', label: 'isiNdebele' },
+] as const;
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const BIOME_COLORS: Record<string, string> = {
+  SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
+  NK: '#B89040', DE: '#C8A842', AT: '#5A8B4A', IOCB: '#3A9A7A', FOR: '#2D7A5C',
+};
+
+interface Props {
+  locationData: LocationData;
+  photoAnalysis?: string;
+  siteData?: SiteData;
+  waterData?: WaterData;
+  mapCapture?: string | null;
+  appLang?: string;
+  onClose: () => void;
+}
+
+function renderReport(text: string) {
+  const lines = text.split('\n');
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) { i++; continue; }
+
+    if (line.startsWith('## ')) {
+      const heading = line.replace('## ', '');
+      const headingId = heading.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      const isExecSummary = heading === 'Executive Summary';
+      elements.push(
+        isExecSummary ? (
+          <div key={i} className="report-h2 rounded-xl p-4 my-6"
+               style={{ background: 'var(--badge-bg)', border: '1px solid var(--border-glow)' }}>
+            <div className="font-display font-bold text-lg mb-1" style={{ color: 'var(--emerald-bright)' }}>
+              Executive Summary
+            </div>
+          </div>
+        ) : (
+          <h2 key={i} id={headingId} className="report-h2 font-display font-bold text-xl mt-10 mb-3 pt-4 pb-2 flex items-center gap-3"
+              style={{ color: 'var(--emerald-bright)', borderBottom: '1px solid var(--border)' }}>
+            <span style={{ display: 'inline-block', width: 3, height: 20, borderRadius: 2, background: 'var(--emerald)', flexShrink: 0 }} />
+            {heading}
+          </h2>
+        )
+      );
+    } else if (line.startsWith('### ')) {
+      elements.push(
+        <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: 'var(--gold)' }}>
+          {line.replace('### ', '')}
+        </h3>
+      );
+    } else if (line.startsWith('**') && line.endsWith('**')) {
+      elements.push(
+        <p key={i} className="font-display font-semibold text-sm mt-3 mb-1" style={{ color: 'var(--text-primary)' }}>
+          {line.replace(/\*\*/g, '')}
+        </p>
+      );
+    } else if (line.startsWith('| ')) {
+      // Table — collect all rows
+      const tableRows: string[] = [];
+      while (i < lines.length && lines[i].startsWith('|')) {
+        tableRows.push(lines[i]);
+        i++;
+      }
+      const [header, , ...body] = tableRows;
+      const headers = header.split('|').filter(h => h.trim());
+      const rows = body.map(r => r.split('|').filter(c => c.trim()));
+      elements.push(
+        <div key={`table-${i}`} className="overflow-x-auto my-4">
+          <table className="w-full text-xs font-display border-collapse">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-bright)' }}>
+                {headers.map((h, j) => (
+                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--text-muted)' }}>
+                    {h.trim()}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, ri) => (
+                <tr key={ri} style={{ borderBottom: '1px solid var(--border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(22,37,20,0.3)' }}>
+                  {row.map((cell, ci) => (
+                    <td key={ci} className="py-2 px-3 leading-relaxed" style={{ color: ci === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+                      {cell.trim().replace(/\*\*/g, '')}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      continue;
+    } else if (line.match(/^\d+\. \*\*/)) {
+      const match = line.match(/^(\d+)\. \*\*(.+?)\*\*(.*)$/);
+      if (match) {
+        elements.push(
+          <div key={i} className="flex gap-3 my-2">
+            <span className="font-display font-bold text-sm flex-shrink-0 w-5 text-right" style={{ color: 'var(--gold)' }}>{match[1]}.</span>
+            <div>
+              <span className="font-display font-semibold text-sm" style={{ color: 'var(--emerald-bright)' }}>{match[2]}</span>
+              {match[3] && <span className="font-display text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{match[3]}</span>}
+            </div>
+          </div>
+        );
+      }
+    } else if (line.match(/^\d+\./)) {
+      elements.push(
+        <div key={i} className="flex gap-3 my-1.5">
+          <span className="font-display font-semibold text-sm flex-shrink-0 w-5 text-right" style={{ color: 'var(--gold)' }}>
+            {line.match(/^\d+/)?.[0]}.
+          </span>
+          <p className="font-display text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+            {line.replace(/^\d+\.\s*/, '').replace(/\*\*/g, '')}
+          </p>
+        </div>
+      );
+    } else if (line.startsWith('- ') || line.startsWith('• ')) {
+      elements.push(
+        <div key={i} className="flex gap-2 my-1">
+          <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--emerald)' }}>›</span>
+          <p className="font-display text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+            {line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}
+          </p>
+        </div>
+      );
+    } else {
+      elements.push(
+        <p key={i} className="font-display text-sm leading-relaxed my-1.5" style={{ color: 'var(--text-secondary)' }}>
+          {line.replace(/\*\*/g, '')}
+        </p>
+      );
+    }
+    i++;
+  }
+  return elements;
+}
+
+export default function ReportView({ locationData: d, photoAnalysis, siteData, waterData, mapCapture, appLang, onClose }: Props) {
+  const [selected, setSelected] = useState<Set<string>>(new Set(FARMER_ESSENTIALS));
+  const [report, setReport] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [generated, setGenerated] = useState(false);
+  const [language, setLanguage] = useState(appLang ?? 'en');
+  const [bilingual, setBilingual] = useState(false);
+  const [tone, setTone] = useState<'simple' | 'professional'>('simple');
+  const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>('standard');
+  const abortRef = useRef<AbortController | null>(null);
+  const reportRef = useRef<HTMLDivElement>(null);
+
+  const bColor = BIOME_COLORS[d.biome.code] ?? '#6BA84F';
+
+  const generate = useCallback(async () => {
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
+    setReport('');
+    setError('');
+    setLoading(true);
+    setGenerated(false);
+
+    try {
+      const res = await fetch('/api/generate-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locationData: d,
+          photoAnalysis: photoAnalysis || undefined,
+          siteData: siteData || undefined,
+          waterData: waterData || undefined,
+          sections: Array.from(selected),
+          language,
+          bilingual,
+          tone,
+          length,
+        }),
+        signal: abortRef.current.signal,
+      });
+      if (!res.ok) throw new Error(`${res.status}`);
+      const reader = res.body!.getReader();
+      const dec = new TextDecoder();
+      let text = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        text += dec.decode(value, { stream: true });
+        setReport(text);
+      }
+      setGenerated(true);
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [d, photoAnalysis, siteData, waterData, selected, language, bilingual, tone, length]);
+
+  function printReport() {
+    window.print();
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: 'var(--bg-0)' }}>
+
+      {/* ── Toolbar ──────────────────────────────── */}
+      <div
+        className="no-print flex-shrink-0 flex items-center gap-3 px-6 py-3"
+        style={{ background: 'var(--bg-2)', borderBottom: '1px solid var(--border)' }}
+      >
+        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all"
+                style={{ color: 'var(--text-muted)', background: 'var(--bg-3)', border: '1px solid var(--border)' }}>
+          ← Back
+        </button>
+
+        <div className="text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>
+          Site Analysis Report
+        </div>
+        <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          {d.biome.name} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
+        </div>
+
+        <div className="flex-1" />
+
+        {generated && (
+          <button
+            onClick={printReport}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+            style={{
+              background: 'linear-gradient(135deg, rgba(212,168,83,0.2), rgba(212,168,83,0.08))',
+              border: '1px solid rgba(212,168,83,0.4)',
+              color: 'var(--gold)',
+            }}
+          >
+            ↓ Export PDF
+          </button>
+        )}
+
+        <button
+          onClick={generate}
+          disabled={loading || selected.size === 0}
+          className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
+          style={
+            loading
+              ? { background: 'var(--bg-4)', color: 'var(--text-muted)', border: '1px solid var(--border)' }
+              : {
+                  background: 'linear-gradient(135deg, rgba(72,168,100,0.25), rgba(72,168,100,0.1))',
+                  border: '1px solid rgba(72,168,100,0.45)',
+                  color: 'var(--emerald-bright)',
+                  boxShadow: '0 0 16px rgba(72,168,100,0.15)',
+                }
+          }
+        >
+          {loading ? <><span className="animate-spin">⟳</span> Generating…</> : generated ? '↺ Regenerate' : '✦ Generate report'}
+        </button>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+
+        {/* ── Section controls sidebar ─────────── */}
+        <div className="no-print flex-shrink-0 overflow-y-auto py-4 px-3"
+             style={{ width: 232, background: 'var(--bg-1)', borderRight: '1px solid var(--border)' }}>
+
+          {/* Language */}
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Language</div>
+          <select
+            value={language}
+            onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
+            className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
+            style={{ background: 'var(--bg-3)', border: '1px solid var(--border-bright)', color: 'var(--text-primary)' }}
+          >
+            {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+          </select>
+          {language !== 'en' && (
+            <button
+              onClick={() => setBilingual(!bilingual)}
+              className="w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
+              style={bilingual
+                ? { background: 'rgba(77,173,160,0.15)', border: '1px solid rgba(77,173,160,0.4)', color: 'var(--teal)' }
+                : { background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
+            >
+              <span>+ English alongside</span>
+              <span>{bilingual ? '◉' : '○'}</span>
+            </button>
+          )}
+
+          {/* Tone */}
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Wording</div>
+          <div className="flex gap-1.5 mb-4">
+            {([['simple', '🌱 Simple'], ['professional', '🎓 Detailed']] as const).map(([val, label]) => (
+              <button key={val} onClick={() => setTone(val)}
+                className="flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
+                style={tone === val
+                  ? { background: 'rgba(72,168,100,0.2)', border: '1px solid rgba(72,168,100,0.45)', color: 'var(--emerald-bright)' }
+                  : { background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* Length */}
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Length</div>
+          <div className="flex flex-col gap-1.5 mb-4">
+            {([['one-pager', '📄 One pager'], ['standard', '📑 Standard'], ['comprehensive', '📚 Comprehensive']] as const).map(([val, label]) => (
+              <button key={val} onClick={() => setLength(val)}
+                className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
+                style={length === val
+                  ? { background: 'rgba(212,168,83,0.15)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }
+                  : { background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Sections</div>
+            <div className="flex gap-1">
+              <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
+                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                style={{ color: 'var(--emerald)', background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.2)' }}
+                title="Select the sections most useful to a small-scale farmer">
+                Farmer
+              </button>
+              <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
+                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                style={{ color: 'var(--text-muted)', background: 'var(--bg-3)', border: '1px solid var(--border)' }}
+                title="Select all sections">
+                All
+              </button>
+            </div>
+          </div>
+          <div className="space-y-1">
+            {ALL_SECTIONS.map((s) => (
+              <button
+                key={s}
+                onClick={() => setSelected(prev => {
+                  const next = new Set(prev);
+                  next.has(s) ? next.delete(s) : next.add(s);
+                  return next;
+                })}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
+                style={
+                  selected.has(s)
+                    ? { background: 'rgba(72,168,100,0.12)', border: '1px solid rgba(72,168,100,0.3)', color: 'var(--text-secondary)' }
+                    : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-muted)' }
+                }
+              >
+                <span style={{ color: selected.has(s) ? 'var(--emerald)' : 'var(--text-muted)', fontSize: 10 }}>
+                  {selected.has(s) ? '✓' : '○'}
+                </span>
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {photoAnalysis && (
+            <div className="mt-4 p-2.5 rounded-lg" style={{ background: 'rgba(72,168,100,0.08)', border: '1px solid rgba(72,168,100,0.2)' }}>
+              <div className="text-xs font-display font-medium mb-0.5" style={{ color: 'var(--emerald)' }}>📷 Photos included</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Photo analysis will inform the report</div>
+            </div>
+          )}
+          {/* Generated TOC — appears once the report has content */}
+          {report && (() => {
+            const tocItems = report.split('\n')
+              .filter(l => l.startsWith('## ') && !l.includes('Executive Summary'))
+              .map(l => {
+                const title = l.replace('## ', '');
+                return { title, id: title.toLowerCase().replace(/[^a-z0-9]+/g, '-') };
+              });
+            if (!tocItems.length) return null;
+            return (
+              <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
+                  In this report
+                </div>
+                <div className="space-y-0.5">
+                  {tocItems.map(({ title, id }) => (
+                    <button
+                      key={id}
+                      onClick={() => {
+                        const el = reportRef.current?.querySelector(`#${id}`);
+                        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }}
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
+                      style={{ color: 'var(--text-muted)', background: 'transparent', border: '1px solid transparent' }}
+                      onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--text-secondary)'; (e.target as HTMLButtonElement).style.background = 'var(--bg-2)'; }}
+                      onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--text-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
+                    >
+                      {title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* ── Report content ────────────────────── */}
+        <div className="flex-1 overflow-y-auto relative" ref={reportRef}>
+          {report && (
+            <div
+              style={{
+                position: 'sticky', top: 0, left: 0, right: 0, height: 2,
+                background: 'var(--border)', zIndex: 10,
+              }}
+            >
+              <div style={{
+                height: '100%',
+                background: 'linear-gradient(90deg, var(--emerald), var(--teal))',
+                width: loading ? '60%' : '100%',
+                transition: 'width 1s ease',
+              }} />
+            </div>
+          )}
+          <div className="max-w-3xl mx-auto px-8 py-8">
+
+            {/* Print header */}
+            <div className="print-header mb-8 pb-6" style={{ borderBottom: '2px solid var(--border)' }}>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="font-display font-bold text-3xl text-gradient mb-1" style={{ letterSpacing: '-0.02em' }}>
+                    ImbewuField
+                  </div>
+                  <div className="font-display text-base" style={{ color: 'var(--text-secondary)' }}>
+                    Permaculture Site Analysis Report
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                    {new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Site summary bar */}
+              <div className={`mt-5 grid gap-3 ${['', '', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4', 'grid-cols-5', 'grid-cols-6'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0)]}`}>
+                {[
+                  { label: 'Biome', value: d.biome.name, color: bColor },
+                  { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: 'var(--blue)' },
+                  { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
+                  { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? 'var(--orange)' : 'var(--teal)' },
+                  ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
+                  ...(siteData ? [{ label: 'Site Area', value: `${siteData.areaHa} ha`, color: 'var(--emerald-bright)' }] : []),
+                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL`, color: 'var(--blue)' }] : []),
+                ].map(({ label, value, color }) => (
+                  <div key={label} className="p-3 rounded-xl" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}>
+                    <div className="text-xs font-mono mb-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                    <div className="text-sm font-display font-semibold" style={{ color: color ?? 'var(--text-primary)' }}>{value}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Coords */}
+              <div className="mt-3 text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · Köppen {d.climate.koppen} ({d.climate.koppenDesc}) ·
+                {d.rainfall.pattern} rainfall · {d.rainfall.wetSeason} wet / {d.rainfall.drySeason} dry ·
+                {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
+              </div>
+            </div>
+
+            {/* Captured satellite view */}
+            {mapCapture && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
+                  Site Satellite View
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`data:image/jpeg;base64,${mapCapture}`}
+                  alt="Captured satellite view of the site"
+                  className="w-full rounded-lg"
+                  style={{ border: '1px solid var(--border)' }}
+                />
+                <div className="text-xs font-mono mt-2" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+                  Maxar satellite imagery · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
+                </div>
+              </div>
+            )}
+
+            {/* Rainfall chart in report */}
+            <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}>
+              <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
+                Monthly Rainfall Pattern
+              </div>
+              <RainfallChart rainfall={d.rainfall} />
+            </div>
+
+            {/* Loading shimmer */}
+            {loading && !report && (
+              <div className="space-y-3 animate-pulse">
+                {[60,90,75,50,85,70,40,95,65].map((w, i) => (
+                  <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'var(--bg-4)', animationDelay: `${i*50}ms` }} />
+                ))}
+              </div>
+            )}
+
+            {error && (
+              <div className="text-sm font-display p-4 rounded-xl" style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--orange)' }}>
+                {error}
+              </div>
+            )}
+
+            {/* Generated report */}
+            {report && (
+              <div className="report-body">
+                {renderReport(report)}
+                {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--emerald-bright)' }} />}
+                {/* Print-only footer — hidden on screen */}
+                <div className="print-footer" aria-hidden="true">
+                  Generated by ImbewuField &mdash; fieldproof.vercel.app
+                </div>
+              </div>
+            )}
+
+            {/* Placeholder before generation */}
+            {!report && !loading && !error && (
+              <div className="text-center py-16">
+                <div className="text-4xl mb-4">📋</div>
+                <p className="font-display text-base mb-2" style={{ color: 'var(--text-secondary)' }}>
+                  Select your sections and click Generate
+                </p>
+                <p className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>
+                  {selected.size} section{selected.size !== 1 ? 's' : ''} selected
+                  {photoAnalysis ? ' · photos included' : ''}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Print stylesheet */}
+      <style jsx global>{`
+        /* ── Screen: hide the print-only footer ──────────────────────────── */
+        .print-footer {
+          display: none;
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           PRINT / PDF STYLES
+           These fire when the user clicks "Export PDF" → window.print()
+        ══════════════════════════════════════════════════════════════════ */
+        @media print {
+
+          /* Page geometry */
+          @page {
+            size: A4 portrait;
+            margin: 18mm 16mm 20mm 16mm;
+          }
+
+          /* ── Global resets ─────────────────────────────────────────────── */
+          *,
+          *::before,
+          *::after {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+          }
+
+          html,
+          body {
+            background: #ffffff !important;
+            color: #1a1a1a !important;
+            font-size: 11pt !important;
+          }
+
+          /* ── Hide ALL interactive chrome ──────────────────────────────── */
+          /* Toolbar row */
+          .no-print,
+          /* Any stray fixed/sticky UI that might not carry .no-print */
+          [class*="toolbar"],
+          [class*="sidebar"],
+          [class*="language"],
+          [class*="animate-spin"],
+          [class*="animate-pulse"] {
+            display: none !important;
+          }
+
+          /* ── Layout: let the report fill the page ─────────────────────── */
+          /* The outer fixed-inset shell */
+          .fixed,
+          [style*="position: fixed"],
+          [style*="position:fixed"] {
+            position: static !important;
+            overflow: visible !important;
+            height: auto !important;
+            width: auto !important;
+            inset: unset !important;
+          }
+
+          /* Make the flex layout collapse sensibly */
+          .flex-1,
+          .overflow-y-auto,
+          .overflow-hidden {
+            overflow: visible !important;
+            height: auto !important;
+          }
+
+          /* The centred report column */
+          .max-w-3xl {
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+
+          /* ── Colour corrections for white paper ───────────────────────── */
+          /* CSS custom properties resolve to dark-mode values in the DOM;
+             we override every token that appears in the report content. */
+          :root {
+            --bg-0: #ffffff !important;
+            --bg-1: #ffffff !important;
+            --bg-2: #ffffff !important;
+            --bg-3: #f5f5f5 !important;
+            --bg-4: #ececec !important;
+            --border: #d0d0d0 !important;
+            --border-bright: #b0b0b0 !important;
+            --text-primary: #111111 !important;
+            --text-secondary: #2a2a2a !important;
+            --text-muted: #555555 !important;
+            --emerald-bright: #1a5c30 !important;
+            --emerald: #1a5c30 !important;
+            --teal: #0d5c52 !important;
+            --gold: #7a5500 !important;
+            --blue: #1a3a6a !important;
+            --orange: #8a3500 !important;
+          }
+
+          /* Gradient brand title → solid dark green */
+          .text-gradient {
+            background: none !important;
+            -webkit-text-fill-color: #1a5c30 !important;
+            color: #1a5c30 !important;
+          }
+
+          /* Report body text */
+          .report-body,
+          .report-body p,
+          .report-body span,
+          .report-body div {
+            color: #1a1a1a !important;
+          }
+
+          /* Headings */
+          h2.report-h2 {
+            color: #1a5c30 !important;
+            border-bottom: 2px solid #c0c0c0 !important;
+            font-size: 14pt !important;
+            margin-top: 18pt !important;
+            margin-bottom: 6pt !important;
+          }
+
+          h3 {
+            color: #7a5500 !important;
+            font-size: 12pt !important;
+            margin-top: 12pt !important;
+            margin-bottom: 4pt !important;
+          }
+
+          /* Prose paragraphs */
+          .report-body > p,
+          .report-body .font-display {
+            color: #1a1a1a !important;
+            font-size: 10.5pt !important;
+            line-height: 1.55 !important;
+          }
+
+          /* Bullet / numbered list row items */
+          .report-body .flex {
+            color: #1a1a1a !important;
+          }
+
+          /* Tables */
+          table {
+            font-size: 9.5pt !important;
+          }
+          thead tr {
+            border-bottom: 1.5px solid #b0b0b0 !important;
+          }
+          th {
+            color: #444444 !important;
+            font-weight: 700 !important;
+          }
+          td {
+            color: #1a1a1a !important;
+          }
+          /* Alternate-row tint → very light grey, no dark bg */
+          tbody tr:nth-child(even) {
+            background: #f2f2f2 !important;
+          }
+          tbody tr:nth-child(odd) {
+            background: #ffffff !important;
+          }
+
+          /* Site summary cards */
+          .print-header .rounded-xl {
+            background: #f0f0f0 !important;
+            border: 1px solid #cccccc !important;
+          }
+
+          /* Satellite image + rainfall chart containers */
+          .mb-6.rounded-xl {
+            background: #f5f5f5 !important;
+            border: 1px solid #cccccc !important;
+            break-inside: avoid !important;
+          }
+
+          /* ── Page-break rules ─────────────────────────────────────────── */
+
+          /* Prevent headings from sitting alone at the bottom of a page */
+          h2.report-h2,
+          h3 {
+            break-after: avoid !important;
+            page-break-after: avoid !important;
+          }
+
+          /* Prevent headings from breaking inside (shouldn't happen but safety) */
+          h2.report-h2,
+          h3 {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* Keep list items together; a single item is rarely more than 2 lines */
+          .report-body .flex {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* Tables should never split mid-row; small tables avoid breaking at all */
+          table {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* The overflow wrapper around each table */
+          .overflow-x-auto {
+            overflow: visible !important;
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* Print-header block stays on the first page */
+          .print-header {
+            break-after: avoid !important;
+            page-break-after: avoid !important;
+          }
+
+          /* ── Images: rainfall chart + satellite ───────────────────────── */
+          img {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            object-fit: contain !important;
+          }
+
+          /* Constrain the rainfall chart SVG */
+          svg,
+          canvas {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+
+          /* ── Print-only footer ────────────────────────────────────────── */
+          .print-footer {
+            display: block !important;
+            margin-top: 32pt !important;
+            padding-top: 8pt !important;
+            border-top: 1px solid #cccccc !important;
+            font-family: var(--font-mono), monospace !important;
+            font-size: 8pt !important;
+            color: #888888 !important;
+            text-align: center !important;
+            break-inside: avoid !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}

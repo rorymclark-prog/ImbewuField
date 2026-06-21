@@ -1,0 +1,10 @@
+.next/
+node_modules/
+.env.local
+out/
+.vercel
+serviceAccount.json
+
+.env*
+.vercel
+*.tsbuildinfo

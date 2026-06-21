@@ -1,0 +1,78 @@
+rules_version = '2';
+
+// FieldProof — Firestore security rules (role-based).
+// Each user has a /profiles/{uid} doc with { role, org_id }. Staff = ngo/funder/admin.
+// Oversight queries rely on org_id being denormalised onto gardens & logs.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function prof()     { return get(/databases/$(database)/documents/profiles/$(request.auth.uid)).data; }
+    function myRole()   { return signedIn() ? prof().role : 'none'; }
+    function myOrg()    { return signedIn() ? prof().org_id : null; }
+    function isStaff()  { return myRole() in ['ngo','funder','admin']; }
+    function owns(d)    { return signedIn() && d.profile_id == request.auth.uid; }
+    function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
+
+    match /profiles/{uid} {
+      allow read:   if signedIn() && (uid == request.auth.uid || (isStaff() && resource.data.org_id == myOrg()));
+      allow create: if signedIn() && uid == request.auth.uid;
+      allow update: if signedIn() && uid == request.auth.uid;
+    }
+
+    match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isStaff()); }
+    match /programmes/{id}    { allow read: if signedIn() && resource.data.org_id == myOrg(); }
+
+    match /gardens/{gid} {
+      allow read: if signedIn() && (
+        (isStaff() && resource.data.org_id == myOrg()) ||
+        resource.data.supervisor_id == request.auth.uid ||
+        exists(/databases/$(database)/documents/gardens/$(gid)/members/$(request.auth.uid))
+      );
+      allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
+
+      match /members/{pid} {
+        allow read:  if signedIn();
+        allow write: if signedIn() && (isStaff() ||
+          get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid);
+      }
+    }
+
+    // Collection-group read so staff can resolve a gardener's plot across gardens
+    // (getGardenerProfile uses collectionGroup('members')).
+    match /{path=**}/members/{pid} {
+      allow read: if signedIn();
+    }
+
+    match /production_logs/{id} {
+      allow read:          if owns(resource.data) || isStaff(); // TODO multi-org: re-scope to org_id (needs composite index profile_id+org_id)
+      allow create:        if signedIn() && request.resource.data.profile_id == request.auth.uid;
+      allow update, delete:if owns(resource.data);
+    }
+    match /sales_logs/{id} {
+      allow read:          if owns(resource.data) || isStaff(); // TODO multi-org: re-scope to org_id (needs composite index profile_id+org_id)
+      allow create:        if signedIn() && request.resource.data.profile_id == request.auth.uid;
+      allow update, delete:if owns(resource.data);
+    }
+
+    match /designs/{id} {
+      allow read:          if ownsField(resource.data, 'owner_id') || ownsField(resource.data, 'shared_with') || isStaff();
+      allow create:        if signedIn() && request.resource.data.owner_id == request.auth.uid;
+      allow update, delete:if ownsField(resource.data, 'owner_id');
+    }
+    match /reports/{id} {
+      allow read:          if ownsField(resource.data, 'owner_id') || isStaff(); // TODO multi-org: re-scope to org_id
+      allow create:        if signedIn() && request.resource.data.owner_id == request.auth.uid;
+      allow update, delete:if ownsField(resource.data, 'owner_id');
+    }
+
+    match /saved_places/{id} {
+      allow read, delete:  if owns(resource.data);
+      allow create:        if signedIn() && request.resource.data.profile_id == request.auth.uid;
+    }
+    match /course_progress/{id} {
+      allow read:   if owns(resource.data) || isStaff() || myRole() == 'trainer';
+      allow write:  if signedIn() && request.resource.data.profile_id == request.auth.uid;
+    }
+  }
+}
