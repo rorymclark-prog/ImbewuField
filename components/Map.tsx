@@ -135,6 +135,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
+  const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
   // onto the crosshair, move the map, tap Place to drop it. ──
@@ -1361,6 +1362,43 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             }}>
             {locating ? <span className="animate-spin inline-block">⟳</span> : '📍'} Locate
           </button>
+
+          {/* Quick-jump to a saved place */}
+          <button onClick={() => setPlacesOpen((o) => !o)}
+            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+            style={{
+              ...(placesOpen
+                ? { background: 'rgba(212,168,83,0.28)', border: '1px solid rgba(212,168,83,0.7)' }
+                : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)' }),
+              color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS,
+            }}>
+            📍 Places{savedPins.length ? ` (${savedPins.length})` : ''}
+          </button>
+
+          {/* Saved-places quick list — tap one to fly there */}
+          {placesOpen && (
+            <div className="w-full flex flex-col gap-1" style={{ marginTop: 2 }}>
+              {savedPins.length === 0 ? (
+                <div className="px-3 py-2 rounded-lg font-mono"
+                  style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: TOUCH_FS }}>
+                  No saved places yet — tap a spot, open Results, and save it.
+                </div>
+              ) : savedPins.map((p) => (
+                <button key={p.id}
+                  onClick={() => {
+                    mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
+                    onLocationSelect(p.lat, p.lon);
+                    setPlacesOpen(false);
+                  }}
+                  className="flex items-center gap-2 px-3 rounded-lg font-mono text-left transition-all"
+                  style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.35)', color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
+                  <span>📍</span>
+                  <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
+                  <span style={{ color: 'var(--text-muted)', fontSize: TOUCH_FS - 3 }}>{p.elevation}m</span>
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Drawing in progress */}
           {activeDraw && (
