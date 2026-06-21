@@ -38,6 +38,17 @@
 }
 
 /* ═══════════════════════════════════════════════════════
+   LEGIBILITY — enlarge the smallest text utilities app-wide.
+   These come after @tailwind utilities so they win by source order.
+   (Elements with an inline fontSize keep their own size.)
+   ═══════════════════════════════════════════════════════ */
+.text-xs { font-size: 15px !important; line-height: 1.45 !important; }
+.text-sm { font-size: 16.5px !important; line-height: 1.5 !important; }
+.text-base { font-size: 18px !important; }
+.text-lg { font-size: 20px !important; }
+body { font-size: 16px; }
+
+/* ═══════════════════════════════════════════════════════
    EARTH LIGHT  (default)
    ═══════════════════════════════════════════════════════ */
 html[data-theme="earth"] {
