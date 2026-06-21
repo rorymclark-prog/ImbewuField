@@ -15,7 +15,7 @@ export default function BrandLogo({ icon = '🌿' }: { icon?: string }) {
       style={{ textDecoration: 'none' }}
     >
       <div
-        className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
+        className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
         style={{
           background: 'linear-gradient(135deg, rgba(72,168,100,0.25), rgba(72,168,100,0.08))',
           border: '1px solid rgba(72,168,100,0.4)',

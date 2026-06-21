@@ -105,7 +105,7 @@ function HomeInner() {
         <header
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto overflow-y-hidden"
           style={{
-            height: 64,
+            height: 74,
             background: 'var(--header-bg)',
             borderBottom: '1px solid var(--border)',
             backdropFilter: 'blur(12px)',
@@ -156,11 +156,11 @@ function HomeInner() {
             title="Appearance"
             className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all"
             style={{
-              width: 42, height: 42,
+              width: 54, height: 54,
               background: 'var(--bg-2)',
               border: '1px solid var(--border)',
               color: 'var(--text-muted)',
-              fontSize: 20,
+              fontSize: 26,
               cursor: 'pointer',
             }}
           >

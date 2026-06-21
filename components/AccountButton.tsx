@@ -18,19 +18,19 @@ export default function AccountButton() {
         style={{
           background: 'rgba(22,37,20,0.6)',
           border: '1px solid var(--border)',
-          minHeight: 44,
+          minHeight: 56,
         }}
       >
         <span
           className="font-display"
-          style={{ color: 'var(--text-secondary)', fontSize: 15 }}
+          style={{ color: 'var(--text-secondary)', fontSize: 20 }}
         >
           {label}
         </span>
         <button
           onClick={signOutUser}
           className="font-mono transition-opacity hover:opacity-80"
-          style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 13 }}
+          style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
           aria-label="Sign out"
         >
           Sign out
@@ -48,8 +48,8 @@ export default function AccountButton() {
         border: '1px solid var(--border)',
         color: 'var(--emerald-bright)',
         textDecoration: 'none',
-        minHeight: 44,
-        fontSize: 15,
+        minHeight: 56,
+        fontSize: 20,
       }}
     >
       Sign in
