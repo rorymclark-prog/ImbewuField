@@ -1072,8 +1072,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <span className="text-xs font-display" style={{ color: draftStroke }}>
               {draftPoints.length === 0
                 ? (IS_COARSE
-                    ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point`
-                    : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋`)
+                    ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point · or ✗ Cancel to exit`
+                    : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋ · ✗ Cancel to exit`)
                 : draftPoints.length < 3
                 ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} · ${IS_COARSE ? 'keep adding corners' : 'keep clicking corners'} — need at least 3`
                 : `${draftPoints.length} corners · tap ✓ Finish when the shape is closed`}
@@ -1091,18 +1091,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={cancelArmed
-                ? { flex: '0 0 72px', padding: '10px 0', background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
-                : { flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+                ? { flex: '0 0 78px', padding: '10px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
+                : { flex: '0 0 72px', padding: '10px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.4 : 1,
-                background: 'rgba(22,37,20,0.75)', border: '1px solid rgba(58,104,48,0.5)', color: 'var(--text-secondary)' }}>
+              style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
+                background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>↶</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Undo</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>Undo</span>
             </button>
 
             {/* Primary: drop a corner under the crosshair */}
@@ -1115,11 +1115,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
             <button onClick={finishPinDraw} disabled={draftPoints.length < 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.4 : 1,
-                background: draftPoints.length < 3 ? 'rgba(22,37,20,0.75)' : 'rgba(72,168,100,0.92)',
-                border: '1px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
+              style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
+                background: draftPoints.length < 3 ? 'rgba(10,18,12,0.94)' : 'rgba(72,168,100,0.92)',
+                border: '1.5px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Finish</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>Finish</span>
             </button>
           </div>
         </>
