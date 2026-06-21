@@ -1112,7 +1112,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         On mobile: constrained to screen width minus a small right margin so the
         zoom slider (right:12px, width ~36px) doesn't overlap. We cap at calc(100vw - 56px).
         On desktop: max-width 380px keeps the original appearance.
+        Hidden entirely while drawing/editing so it can't overlap the instruction
+        banner or crowd the map — the bottom action bar is all you need then.
       */}
+      {!pinDraw && !editPin && !activeDraw && (
       <div
         className="absolute top-3 left-3 flex flex-col gap-2 p-2.5 rounded-xl"
         style={{
@@ -1411,6 +1414,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
       </div>
+      )}
 
       {/* ── Zoom control — big +/− buttons + a non-interactive fill bar.
            (A rotated range input is undraggable on touch, the device farmers use.) ── */}
