@@ -329,9 +329,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         >
           <span>📋</span>
           Generate Full Report
-          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(72,168,100,0.18)', color: 'var(--emerald-bright)', fontSize: 10 }}>{siteData.areaHa} ha</span>}
-          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.18)', color: 'var(--blue)', fontSize: 10 }}>💧 {waterData.estVolumeKL.toLocaleString()} kL</span>}
-          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.15)', color: 'var(--blue)', fontSize: 10 }}>📷</span>}
+          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(72,168,100,0.18)', color: 'var(--emerald-bright)', fontSize: 12 }}>{siteData.areaHa} ha</span>}
+          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.18)', color: 'var(--blue)', fontSize: 12 }}>💧 {waterData.estVolumeKL.toLocaleString()} kL</span>}
+          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.15)', color: 'var(--blue)', fontSize: 12 }}>📷</span>}
           <span style={{ opacity: 0.6 }}>→</span>
         </button>
       </div>
@@ -356,14 +356,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
                 color: tab === t ? 'var(--emerald-bright)' : 'var(--text-muted)',
-                fontSize: 12,
+                fontSize: 13.5,
                 fontFamily: 'var(--font-display)',
                 fontWeight: tab === t ? 600 : 400,
                 whiteSpace: 'nowrap',
                 cursor: 'pointer',
               }}
             >
-              <span style={{ fontSize: 13, lineHeight: 1 }}>{TAB_ICONS[t]}</span>
+              <span style={{ fontSize: 15, lineHeight: 1 }}>{TAB_ICONS[t]}</span>
               {t}
             </button>
           ))}
@@ -519,7 +519,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
                         }}
                       />
-                      <span style={{ fontSize: 8, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                         {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
                       </span>
                     </div>
