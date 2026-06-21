@@ -21,6 +21,10 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 const IS_COARSE = typeof window !== 'undefined' &&
   ((window.matchMedia?.('(pointer: coarse)').matches ?? false) || 'ontouchstart' in window || navigator.maxTouchPoints > 0);
 
+// Touch-friendly control height: ~46px on phones (Apple/Google min target), compact on desktop.
+const TOUCH_H = IS_COARSE ? 46 : 34;
+const TOUCH_FS = IS_COARSE ? 14 : 12; // button font-size
+
 const terrainSource = { type: 'raster-dem' as const, url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 };
 
 // Minor contours (10m interval) — fade in at zoom 12, fully visible at 14
@@ -96,6 +100,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [contours, setContours] = useState(true);
   const [terrain3d, setTerrain3d] = useState(true);
   const [zoom, setZoom] = useState(5.2);
+  // Map-view toggles (Sat/Topo/HD/Contours/3D) live behind a "Layers" expander so the
+  // toolbar stays uncluttered on phones — collapsed by default.
+  const [layersOpen, setLayersOpen] = useState(false);
   const drawTypeRef = useRef<'site' | 'water'>('site');
   const [activeDraw, setActiveDraw] = useState<null | 'site' | 'water'>(null); // currently drawing
   const [editingFeatureId, setEditingFeatureId] = useState<string | null>(null);
@@ -1125,25 +1132,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             type="text"
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setSearchError(''); setSearchResult(''); }}
-            placeholder="Town or -33.9, 18.4"
-            className="flex-1 text-xs font-mono rounded-lg px-2.5 py-1.5 outline-none min-w-0"
+            placeholder="Search a town…"
+            className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
               background: 'rgba(22,37,20,0.8)',
               border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(58,104,48,0.6)'}`,
               color: 'var(--text-primary)',
               fontSize: 16,
+              minHeight: TOUCH_H,
             }}
           />
           <button
             type="submit"
             disabled={searching || !searchQuery.trim()}
-            className="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all flex-shrink-0"
+            className="px-4 rounded-lg font-mono font-semibold transition-all flex-shrink-0"
             style={{
               background: searching ? 'rgba(22,37,20,0.6)' : 'rgba(72,168,100,0.25)',
               border: '1px solid rgba(72,168,100,0.5)',
               color: searching ? 'var(--text-muted)' : 'var(--emerald-bright)',
-              minHeight: 36,
-              minWidth: 44,
+              minHeight: TOUCH_H,
+              minWidth: TOUCH_H,
+              fontSize: 18,
             }}
           >
             {searching ? '⟳' : '↵'}
@@ -1152,63 +1161,69 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
         {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
-        {/* Map style row — wraps on narrow screens */}
-        <div>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.45)', marginBottom: 5 }}>
-            Map view
-          </div>
+        {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
+            so the toolbar isn't a wall of tiny buttons on a phone. */}
+        <button onClick={() => setLayersOpen((o) => !o)}
+          className="flex items-center justify-between rounded-lg font-mono transition-all"
+          style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
+            color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 14px' }}>
+          <span>🗺 Map layers</span>
+          <span style={{ transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+        </button>
+
+        {layersOpen && (
           <div className="flex gap-1.5 flex-wrap">
-          {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
-            <button key={s} onClick={() => setStyle(s)}
-              className="py-1 px-2 rounded-lg text-xs font-mono font-medium transition-all"
+            {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
+              <button key={s} onClick={() => setStyle(s)}
+                className="rounded-lg font-mono font-medium transition-all"
+                style={{
+                  ...(style === s
+                    ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                    : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
+                  minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+                }}>
+                {['🛰 Satellite', '⛰ Topo'][i]}
+              </button>
+            ))}
+            <button onClick={() => setHdImagery(!hdImagery)}
+              title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
+              className="rounded-lg font-mono font-medium transition-all"
               style={{
-                ...(style === s
-                  ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                ...(hdImagery
+                  ? { background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)' }
                   : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-                minHeight: 32,
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
-              {['🛰 Sat', '⛰ Topo'][i]}
+              ✦ HD
             </button>
-          ))}
-          <button onClick={() => setHdImagery(!hdImagery)}
-            title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
-            className="py-1 px-2 rounded-lg text-xs font-mono font-medium transition-all"
-            style={{
-              ...(hdImagery
-                ? { background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)' }
-                : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ✦ HD
-          </button>
-          <button onClick={() => setContours(!contours)}
-            className="py-1 px-2 rounded-lg text-xs font-mono transition-all"
-            style={{
-              ...(contours
-                ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
-                : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ~ Ctr
-          </button>
-          <button
-            onClick={() => {
-              const next = !terrain3d;
-              setTerrain3d(next);
-              if (!next) mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
-            }}
-            title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
-            className="py-1 px-2 rounded-lg text-xs font-mono transition-all"
-            style={{
-              ...(terrain3d
-                ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
-                : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-              minHeight: 32,
-            }}>
-            ⛰ 3D
-          </button>
+            <button onClick={() => setContours(!contours)}
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(contours
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              ~ Contours
+            </button>
+            <button
+              onClick={() => {
+                const next = !terrain3d;
+                setTerrain3d(next);
+                if (!next) mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
+              }}
+              title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
+              className="rounded-lg font-mono transition-all"
+              style={{
+                ...(terrain3d
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
+                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
+              }}>
+              ⛰ 3D
+            </button>
           </div>
-        </div>
+        )}
 
         {/* thin separator */}
         <div style={{ height: 1, background: 'rgba(58,104,48,0.3)' }} />
@@ -1221,11 +1236,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="flex gap-1.5 flex-wrap">
           {/* My location */}
           <button onClick={goToMyLocation} disabled={locating}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
+            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
             style={{
               background: 'rgba(77,173,160,0.18)', border: '1px solid rgba(77,173,160,0.5)',
               color: locating ? 'var(--text-muted)' : 'var(--teal)',
-              minHeight: 32,
+              minHeight: TOUCH_H, fontSize: TOUCH_FS,
             }}>
             {locating ? <span className="animate-spin inline-block">⟳</span> : '📍'} Locate
           </button>
@@ -1321,9 +1336,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
               ) : (
                 <button onClick={() => startPinDraw('site')}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-                  style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)', color: 'var(--gold)', minHeight: 32 }}>
-                  ✏ Boundary
+                  className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
+                  style={{ background: 'rgba(212,168,83,0.22)', border: '1px solid rgba(212,168,83,0.6)', color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
+                  ✏ Draw boundary
                 </button>
               )}
             </>
@@ -1361,8 +1376,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </div>
           ) : (
             <button onClick={() => startPinDraw('water')}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: 32 }}>
+              className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
+              style={{ background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.6)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
               💧 Water
             </button>
           ))}
@@ -1377,8 +1392,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 catch { onMapCapture(canvas.toDataURL().split(',')[1]); }
                 onCaptureClick?.();
               }}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: 32 }}>
+              className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
               📸 AI
             </button>
           )}
