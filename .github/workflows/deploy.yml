@@ -1,0 +1,54 @@
+name: Deploy ImbewuField
+
+# Push to main → deploy to the existing Vercel project (fieldproof) and re-point both
+# domains, so the live URLs never change. Add a repo secret VERCEL_TOKEN to enable.
+# org/project IDs are public; build env (Mapbox/Anthropic/Firebase) comes from `vercel pull`.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_7BrNEJFlmUBuWXhpUGXMs3cl
+      VERCEL_PROJECT_ID: prj_YIOnoi39oQlq6r0pDecV8wPHn4EP
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::warning::Add VERCEL_TOKEN secret to enable auto-deploy."
+            echo "HAS=false" >> "$GITHUB_ENV"
+          else
+            echo "HAS=true" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/setup-node@v4
+        if: env.HAS == 'true'
+        with:
+          node-version: '20'
+      - name: Install Vercel CLI
+        if: env.HAS == 'true'
+        run: npm install -g vercel@latest
+      - name: Pull + build + deploy
+        if: env.HAS == 'true'
+        id: deploy
+        run: |
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed → $url"
+      - name: Point both domains at the new deployment
+        if: env.HAS == 'true'
+        run: |
+          url="${{ steps.deploy.outputs.url }}"
+          vercel alias set "$url" fieldproof.vercel.app  --token="$VERCEL_TOKEN"
+          vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
