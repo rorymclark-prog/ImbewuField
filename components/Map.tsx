@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
   Source, Layer, Marker, NavigationControl, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
@@ -447,9 +447,32 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     else startReticleEdit(featureId, type);
   }, [editEngine, startNativeEdit, startReticleEdit]);
 
-  // Custom-engine: tap a corner to select it (highlights it for the 🗑 Remove button).
-  // Moving a corner is done by dragging it — no tap-to-lift step.
-  const selectCorner = useCallback((i: number) => setSelCorner((cur) => (cur === i ? null : i)), []);
+  // Custom-engine corner dragging via raw pointer events — grabs INSTANTLY (no
+  // tap-and-hold delay that the library's built-in marker drag has on touch).
+  // Quick tap (down+up, no move) just selects the corner; press+move drags it.
+  const dragRef = useRef<{ i: number; pointerId: number } | null>(null);
+  const onCornerPointerDown = useCallback((i: number, e: ReactPointerEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setSelCorner(i);
+    dragRef.current = { i, pointerId: e.pointerId };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+  }, []);
+  const onCornerPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    const rect = map.getContainer().getBoundingClientRect();
+    const ll = map.unproject([e.clientX - rect.left, e.clientY - rect.top]);
+    setEditPoints((pts) => { const n = pts.slice(); n[d.i] = [ll.lng, ll.lat]; return n; });
+  }, []);
+  const onCornerPointerUp = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (d && d.pointerId === e.pointerId) {
+      try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+      dragRef.current = null;
+    }
+  }, []);
 
   // Insert a new corner at the crosshair, on the longest edge, and lift it for positioning
   const addEditCorner = useCallback(() => {
@@ -975,16 +998,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Marker>
         ))}
 
-        {/* Custom-engine edit: big draggable corner handles — press and drag a corner to move
-            it. Tapping a corner selects it (gold ring) for the 🗑 Remove button. */}
+        {/* Custom-engine edit: big corner handles — grab and drag INSTANTLY (raw pointer
+            events, no hold delay). Quick tap selects (gold ring) for the 🗑 Remove button. */}
         {editPin && editPoints.map((p, i) => (
-          <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center" draggable
-            onDragStart={() => setSelCorner(i)}
-            onDrag={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
-            onDragEnd={(e) => setEditPoints((pts) => { const n = pts.slice(); n[i] = [e.lngLat.lng, e.lngLat.lat]; return n; })}
-          >
+          <Marker key={i} longitude={p[0]} latitude={p[1]} anchor="center">
             <div
-              onClick={() => selectCorner(i)}
+              onPointerDown={(e) => onCornerPointerDown(i, e)}
+              onPointerMove={onCornerPointerMove}
+              onPointerUp={onCornerPointerUp}
+              onPointerCancel={onCornerPointerUp}
               aria-label={`Corner ${i + 1}`}
               style={{
                 width: 40, height: 40, borderRadius: '50%', cursor: 'grab',
@@ -1050,8 +1072,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <span className="text-xs font-display" style={{ color: draftStroke }}>
               {draftPoints.length === 0
                 ? (IS_COARSE
-                    ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point`
-                    : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋`)
+                    ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point · or ✗ Cancel to exit`
+                    : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋ · ✗ Cancel to exit`)
                 : draftPoints.length < 3
                 ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} · ${IS_COARSE ? 'keep adding corners' : 'keep clicking corners'} — need at least 3`
                 : `${draftPoints.length} corners · tap ✓ Finish when the shape is closed`}
@@ -1069,18 +1091,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={cancelArmed
-                ? { flex: '0 0 72px', padding: '10px 0', background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
-                : { flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+                ? { flex: '0 0 78px', padding: '10px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
+                : { flex: '0 0 72px', padding: '10px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.4 : 1,
-                background: 'rgba(22,37,20,0.75)', border: '1px solid rgba(58,104,48,0.5)', color: 'var(--text-secondary)' }}>
+              style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
+                background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>↶</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Undo</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>Undo</span>
             </button>
 
             {/* Primary: drop a corner under the crosshair */}
@@ -1093,11 +1115,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
             <button onClick={finishPinDraw} disabled={draftPoints.length < 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.4 : 1,
-                background: draftPoints.length < 3 ? 'rgba(22,37,20,0.75)' : 'rgba(72,168,100,0.92)',
-                border: '1px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
+              style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
+                background: draftPoints.length < 3 ? 'rgba(10,18,12,0.94)' : 'rgba(72,168,100,0.92)',
+                border: '1.5px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 10, marginTop: 2 }}>Finish</span>
+              <span style={{ fontSize: 11, marginTop: 2 }}>Finish</span>
             </button>
           </div>
         </>
