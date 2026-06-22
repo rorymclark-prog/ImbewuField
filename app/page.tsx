@@ -250,8 +250,8 @@ function HomeInner() {
           <div
             className="md:hidden fixed left-0 right-0 bottom-0 z-30 flex flex-col overflow-hidden"
             style={{
-              height: sheetOpen ? '70vh' : 0,
-              maxHeight: '80vh',
+              height: sheetOpen ? '85dvh' : 0,
+              maxHeight: '90dvh',
               background: 'var(--bg-1)',
               borderTop: '1px solid var(--border)',
               borderRadius: '18px 18px 0 0',
