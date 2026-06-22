@@ -46,9 +46,10 @@ jobs:
           url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed → $url"
-      - name: Point both domains at the new deployment
+      - name: Point all domains at the new deployment
         if: env.HAS == 'true'
         run: |
           url="${{ steps.deploy.outputs.url }}"
+          vercel alias set "$url" imbewufield.vercel.app --token="$VERCEL_TOKEN"
           vercel alias set "$url" fieldproof.vercel.app  --token="$VERCEL_TOKEN"
           vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
