@@ -202,6 +202,7 @@ function HomeInner() {
               jumpTo={jumpTo}
               onJumpComplete={() => setJumpTo(null)}
               onDrawingChange={setDrawing}
+              locationData={data}
             />
           </div>
 

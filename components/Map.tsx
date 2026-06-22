@@ -10,8 +10,8 @@ import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import type { SiteData, WaterData } from '@/lib/types';
-import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
+import type { SiteData, WaterData, LocationData } from '@/lib/types';
+import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -87,9 +87,10 @@ interface Props {
   jumpTo?: { lat: number; lon: number } | null;
   onJumpComplete?: () => void;
   onDrawingChange?: (active: boolean) => void;
+  locationData?: LocationData | null;   // analysis of the selected point — saved with the place
 }
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData }: Props) {
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -98,7 +99,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // grey tile, so it's opt-in via the HD toggle, not the default.
   const [hdImagery, setHdImagery] = useState(false);
   const [contours, setContours] = useState(true);
-  const [terrain3d, setTerrain3d] = useState(true);
+  const [terrain3d, setTerrain3d] = useState(false);  // flat by default — 3D can block close-zoom needed to draw boundaries
+  const [show3dWarning, setShow3dWarning] = useState(false);
+  const [placeSaved, setPlaceSaved] = useState(false);  // "✓ Saved" feedback for the Save-place tool
   const [zoom, setZoom] = useState(5.2);
   // Boundary-edit engine: 'native' = Mapbox's built-in mapbox-gl-draw vertex editing;
   // 'custom' = big press-and-drag numbered handles. Toggleable so they can be compared.
@@ -166,6 +169,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     window.addEventListener('permamap-places-changed', refresh);
     return () => window.removeEventListener('permamap-places-changed', refresh);
   }, []);
+
+  // Save the currently selected point as a place (right from the map tools).
+  const saveCurrentPlace = useCallback(() => {
+    if (!selectedLocation) return;
+    const { lat, lon } = selectedLocation;
+    const coords = `${lat.toFixed(3)}, ${lon.toFixed(3)}`;
+    savePlace({
+      id: generateId(),
+      name: locationData?.biome?.name ? `${locationData.biome.name} (${coords})` : `Place (${coords})`,
+      lat, lon,
+      biome: locationData?.biome?.name ?? '',
+      rainfall: locationData?.rainfall?.annual ?? 0,
+      elevation: locationData?.elevation?.elevation ?? 0,
+      savedAt: new Date().toISOString(),
+    });
+    setPlaceSaved(true);
+    setTimeout(() => setPlaceSaved(false), 2500);
+  }, [selectedLocation, locationData]);
 
   const MIN_ZOOM = 4;
   const MAX_ZOOM = 24; // Max mapbox allows — zoom right in for small-plot design. Beyond ~z19
@@ -1373,7 +1394,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               onClick={() => {
                 const next = !terrain3d;
                 setTerrain3d(next);
-                if (!next) mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
+                if (!next) {
+                  setShow3dWarning(false);
+                  mapRef.current?.easeTo({ pitch: 0, bearing: 0, duration: 400 });
+                } else {
+                  setShow3dWarning(true);
+                  setTimeout(() => setShow3dWarning(false), 7000);
+                }
               }}
               title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
               className="rounded-lg font-mono transition-all"
@@ -1385,6 +1412,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}>
               ⛰ 3D
             </button>
+          </div>
+        )}
+
+        {/* Heads-up: 3D tilts the map and can stop you zooming in close enough to draw */}
+        {layersOpen && show3dWarning && (
+          <div className="rounded-lg font-mono"
+            style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
+              color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
+            ⚠ In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.
           </div>
         )}
 
@@ -1430,6 +1466,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {locating ? <span className="animate-spin inline-block">⟳</span> : '📍'} Locate
           </button>
 
+          {/* Save the current spot as a place */}
+          <button onClick={saveCurrentPlace} disabled={!selectedLocation}
+            title={selectedLocation ? 'Save this spot to your Places' : 'Tap a spot on the map first'}
+            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+            style={{
+              ...(placeSaved
+                ? { background: 'rgba(72,168,100,0.3)', border: '1px solid rgba(72,168,100,0.7)', color: 'var(--emerald-bright)' }
+                : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)', color: 'var(--gold)' }),
+              minHeight: TOUCH_H, fontSize: TOUCH_FS,
+              opacity: selectedLocation ? 1 : 0.5,
+            }}>
+            {placeSaved ? '✓ Saved' : '⭐ Save place'}
+          </button>
+
           {/* Quick-jump to a saved place */}
           <button onClick={() => setPlacesOpen((o) => !o)}
             className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
@@ -1448,7 +1498,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               {savedPins.length === 0 ? (
                 <div className="px-3 py-2 rounded-lg font-mono"
                   style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: TOUCH_FS }}>
-                  No saved places yet — tap a spot, open Results, and save it.
+                  No saved places yet — tap a spot, then “⭐ Save place” above.
                 </div>
               ) : savedPins.map((p) => (
                 <button key={p.id}
