@@ -12,8 +12,9 @@ const LANG_NAMES: Record<string, string> = {
 const SYSTEM = `You are ImbewuField's farm assistant — a knowledgeable, friendly advisor for a specific South African grower, working ONLY within these areas:
 - Permaculture, organic & regenerative agriculture, agroecology — both for THIS farmer's specific site and in general.
 - Sustainable living, water harvesting, soil building, indigenous/climate-appropriate species, food forests, companion planting, natural pest & disease management.
-- The economics & financials of THIS farm — crop value, gross margins, viability, market opportunities, what's most profitable to grow — grounded in the farmer's own production records when provided.
+- The economics & financials of THIS farm — crop value, gross margins, viability, market opportunities, what's most profitable to grow — grounded in the farmer's own production AND sales records when provided. Use real rand figures from their sales.
 - Their project, contracts, funding and programme participation, at a practical level.
+- Diagnosing plants, pests, diseases, weeds and soil from PHOTOS the farmer sends — identify the issue and give organic/regenerative remedies (companion planting, natural sprays, soil/biological fixes). Never a chemical-pesticide recommendation.
 
 Hard rules:
 - You are this farmer's assistant about THEIR site, crops, reports, finances and project. Do NOT re-introduce yourself or ask "what are we talking about" — you already have their context below; use it directly.
@@ -30,6 +31,7 @@ interface Ctx {
   language?: string;
   reports?: { name: string; savedAt: string; text?: string }[];
   production?: { crop: string; kg: number }[];
+  sales?: { crop: string; kg: number; amount: number }[];
 }
 
 function buildContext(ctx?: Ctx): string {
@@ -56,6 +58,19 @@ Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.org
     parts.push(`--- THIS FARMER'S PRODUCTION RECORDS ---\n${lines}`);
   }
 
+  if (ctx.sales && ctx.sales.length) {
+    const byCrop = new Map<string, { kg: number; amount: number }>();
+    for (const s of ctx.sales) {
+      const cur = byCrop.get(s.crop) ?? { kg: 0, amount: 0 };
+      byCrop.set(s.crop, { kg: cur.kg + (s.kg || 0), amount: cur.amount + (s.amount || 0) });
+    }
+    const totalIncome = ctx.sales.reduce((sum, s) => sum + (s.amount || 0), 0);
+    const lines = Array.from(byCrop.entries())
+      .map(([c, v]) => `${c}: ${Math.round(v.kg)}kg sold for R${Math.round(v.amount)} (≈R${(v.amount / Math.max(1, v.kg)).toFixed(2)}/kg)`)
+      .join('\n');
+    parts.push(`--- THIS FARMER'S SALES / INCOME ---\nTotal income: R${Math.round(totalIncome)}\n${lines}`);
+  }
+
   if (ctx.reports && ctx.reports.length) {
     const list = ctx.reports.map((r) => `• ${r.name} (saved ${new Date(r.savedAt).toLocaleDateString()})`).join('\n');
     let block = `--- THIS FARMER'S SAVED REPORTS ---\n${list}`;
@@ -80,10 +95,22 @@ export async function POST(req: NextRequest) {
 
   const system = SYSTEM + langLine + (ctxBlock ? `\n\n${ctxBlock}` : '');
 
-  const clean = messages
+  const clean: Anthropic.MessageParam[] = messages
     .filter((m) => (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
     .slice(-20)
     .map((m) => ({ role: m.role, content: m.content }));
+
+  // Optional photo on the latest user turn → multimodal diagnosis
+  const image = body.image as { data: string; mediaType: string } | undefined;
+  if (image?.data && clean.length) {
+    const last = clean[clean.length - 1];
+    if (last.role === 'user' && typeof last.content === 'string') {
+      last.content = [
+        { type: 'image', source: { type: 'base64', media_type: (image.mediaType || 'image/jpeg') as 'image/jpeg', data: image.data } },
+        { type: 'text', text: last.content || 'Please look at this photo and diagnose it (plant, pest, disease, weed or soil) with organic/regenerative remedies.' },
+      ];
+    }
+  }
 
   if (clean.length === 0) {
     return new Response('Ask me anything about your site, crops, finances or project.', { status: 200 });
