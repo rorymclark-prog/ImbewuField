@@ -13,6 +13,7 @@ import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import type { SavedReport } from '@/lib/saved-reports';
 
 const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
 
@@ -38,6 +39,12 @@ function HomeInner() {
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
   const [showReport, setShowReport] = useState(false);
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
+  const [savedReportView, setSavedReportView] = useState<SavedReport | null>(null);
+
+  const handleViewReport = useCallback((r: SavedReport) => {
+    setSavedReportView(r);
+    setShowReport(true);
+  }, []);
 
   // Mobile bottom-sheet state — open/closed
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -87,15 +94,16 @@ function HomeInner() {
     <>
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
 
-      {showReport && data && (
+      {showReport && (data || savedReportView) && (
         <ReportView
-          locationData={data}
+          locationData={data ?? savedReportView!.location}
           photoAnalysis={reportPhotoAnalysis}
           siteData={siteData ?? undefined}
           waterData={waterData ?? undefined}
           mapCapture={mapCapture}
           appLang={lang}
-          onClose={() => setShowReport(false)}
+          savedReport={savedReportView ?? undefined}
+          onClose={() => { setShowReport(false); setSavedReportView(null); }}
         />
       )}
 
@@ -206,6 +214,7 @@ function HomeInner() {
               forcedTab={forcedTab}
               onTabChange={() => setForcedTab(null)}
               onOpenReport={handleOpenReport}
+              onViewReport={handleViewReport}
               onJumpTo={handleJumpTo}
               appLang={lang}
             />
@@ -288,6 +297,7 @@ function HomeInner() {
                 forcedTab={forcedTab}
                 onTabChange={() => setForcedTab(null)}
                 onOpenReport={handleOpenReport}
+                onViewReport={handleViewReport}
                 onJumpTo={handleJumpTo}
                 appLang={lang}
               />

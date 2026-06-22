@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
+import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -77,6 +78,7 @@ interface Props {
   mapCapture?: string | null;
   appLang?: string;
   onClose: () => void;
+  savedReport?: SavedReport;   // when opening a previously-saved report
 }
 
 function renderReport(text: string) {
@@ -202,18 +204,58 @@ function renderReport(text: string) {
   return elements;
 }
 
-export default function ReportView({ locationData: d, photoAnalysis, siteData, waterData, mapCapture, appLang, onClose }: Props) {
+export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, mapCapture, appLang, onClose, savedReport }: Props) {
+  // When viewing a saved report, its snapshot overrides the live props so charts/header match.
+  const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
+  const d = activeSaved?.location ?? locationData;
+  const siteData = activeSaved?.siteData ?? liveSite;
+  const waterData = activeSaved?.waterData ?? liveWater;
+
   const [selected, setSelected] = useState<Set<string>>(new Set(FARMER_ESSENTIALS));
-  const [report, setReport] = useState('');
+  const [report, setReport] = useState(savedReport?.report ?? '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [generated, setGenerated] = useState(false);
-  const [language, setLanguage] = useState(appLang ?? 'en');
+  const [generated, setGenerated] = useState(!!savedReport);
+  const [language, setLanguage] = useState(savedReport?.lang ?? appLang ?? 'en');
   const [bilingual, setBilingual] = useState(false);
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>('standard');
   const abortRef = useRef<AbortController | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
+
+  // Saved reports (for the in-screen list) + save-button feedback
+  const [savedList, setSavedList] = useState<SavedReport[]>([]);
+  const [justSaved, setJustSaved] = useState(false);
+  useEffect(() => {
+    const refresh = () => setSavedList(loadReports());
+    refresh();
+    window.addEventListener('imbewu-reports-changed', refresh);
+    return () => window.removeEventListener('imbewu-reports-changed', refresh);
+  }, []);
+
+  const handleSaveReport = useCallback(() => {
+    if (!report) return;
+    saveReport({
+      id: activeSaved?.id ?? reportId(),
+      name: `${d.biome.name} · ${new Date().toLocaleDateString()}`,
+      savedAt: new Date().toISOString(),
+      lang: language,
+      report,
+      location: d,
+      siteData: siteData ?? undefined,
+      waterData: waterData ?? undefined,
+    });
+    setJustSaved(true);
+    setTimeout(() => setJustSaved(false), 2500);
+  }, [report, activeSaved, d, siteData, waterData, language]);
+
+  const openSaved = useCallback((r: SavedReport) => {
+    setActiveSaved(r);
+    setReport(r.report);
+    setLanguage(r.lang);
+    setGenerated(true);
+    setError('');
+  }, []);
 
   const bColor = BIOME_COLORS[d.biome.code] ?? '#6BA84F';
 
@@ -288,6 +330,18 @@ export default function ReportView({ locationData: d, photoAnalysis, siteData, w
 
         {generated && (
           <button
+            onClick={handleSaveReport}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+            style={justSaved
+              ? { background: 'rgba(72,168,100,0.25)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)' }
+              : { background: 'rgba(72,168,100,0.12)', border: '1px solid rgba(72,168,100,0.35)', color: 'var(--emerald-bright)' }}
+          >
+            {justSaved ? '✓ Saved in app' : '💾 Save report'}
+          </button>
+        )}
+
+        {generated && (
+          <button
             onClick={printReport}
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
             style={{
@@ -324,6 +378,26 @@ export default function ReportView({ locationData: d, photoAnalysis, siteData, w
         {/* ── Section controls sidebar ─────────── */}
         <div className="no-print flex-shrink-0 overflow-y-auto py-4 px-3"
              style={{ width: 232, background: 'var(--bg-1)', borderRight: '1px solid var(--border)' }}>
+
+          {/* Saved reports — reopen a past report without regenerating */}
+          {savedList.length > 0 && (
+            <div className="mb-4">
+              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>📄 Saved reports</div>
+              <div className="flex flex-col gap-1.5">
+                {savedList.map((r) => (
+                  <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}>
+                    <button onClick={() => openSaved(r)}
+                      className="flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
+                      style={{ color: activeSaved?.id === r.id ? 'var(--emerald-bright)' : 'var(--text-secondary)' }}>
+                      <div className="text-xs font-display truncate">{r.name}</div>
+                    </button>
+                    <button onClick={() => deleteReport(r.id)} title="Delete"
+                      className="px-2 py-1.5 text-xs" style={{ color: 'var(--text-muted)' }}>🗑</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Language */}
           <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Language</div>
