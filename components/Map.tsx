@@ -150,7 +150,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
-  const [toolbarMin, setToolbarMin] = useState(false);  // collapse the whole toolbar to see the map
+  const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
   // onto the crosshair, move the map, tap Place to drop it. ──

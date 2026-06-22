@@ -32,6 +32,14 @@ interface Ctx {
   reports?: { name: string; savedAt: string; text?: string }[];
   production?: { crop: string; kg: number }[];
   sales?: { crop: string; kg: number; amount: number }[];
+  project?: {
+    programme: string; funder: string; ngo?: string;
+    contractValue?: number; disbursed?: number; currency?: string;
+    garden?: string; plotSizeM2?: number; supervisor?: string;
+    startDate?: string; endDate?: string;
+    obligations?: string[];
+    milestones?: { name: string; due: string; status: string }[];
+  };
 }
 
 function buildContext(ctx?: Ctx): string {
@@ -69,6 +77,19 @@ Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.org
       .map(([c, v]) => `${c}: ${Math.round(v.kg)}kg sold for R${Math.round(v.amount)} (≈R${(v.amount / Math.max(1, v.kg)).toFixed(2)}/kg)`)
       .join('\n');
     parts.push(`--- THIS FARMER'S SALES / INCOME ---\nTotal income: R${Math.round(totalIncome)}\n${lines}`);
+  }
+
+  if (ctx.project) {
+    const p = ctx.project;
+    const cur = p.currency ?? 'R';
+    const lines = [`Programme: ${p.programme}`, `Funder: ${p.funder}${p.ngo ? ` (via ${p.ngo})` : ''}`];
+    if (p.contractValue != null) lines.push(`Contract value: ${cur}${p.contractValue.toLocaleString()}${p.disbursed != null ? ` (${cur}${p.disbursed.toLocaleString()} disbursed, ${cur}${(p.contractValue - p.disbursed).toLocaleString()} outstanding)` : ''}`);
+    if (p.garden) lines.push(`Garden: ${p.garden}${p.plotSizeM2 ? `, plot ${p.plotSizeM2} m²` : ''}`);
+    if (p.supervisor) lines.push(`Supervisor: ${p.supervisor}`);
+    if (p.startDate || p.endDate) lines.push(`Term: ${p.startDate ?? '?'} → ${p.endDate ?? '?'}`);
+    if (p.obligations?.length) lines.push(`Contract obligations:\n${p.obligations.map((o) => `  - ${o}`).join('\n')}`);
+    if (p.milestones?.length) lines.push(`Milestones:\n${p.milestones.map((m) => `  - ${m.name} (due ${m.due}): ${m.status}`).join('\n')}`);
+    parts.push(`--- THIS FARMER'S PROJECT / FUNDING / CONTRACT ---\n${lines.join('\n')}`);
   }
 
   if (ctx.reports && ctx.reports.length) {

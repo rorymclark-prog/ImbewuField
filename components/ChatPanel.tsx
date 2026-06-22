@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback, type ChangeEvent } from 'reac
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { loadReports } from '@/lib/saved-reports';
 import { myProduction } from '@/lib/db/queries';
-import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, hasSampleData } from '@/lib/demo-data';
+import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, getLocalProject, hasSampleData } from '@/lib/demo-data';
 import { getLastSite } from '@/lib/last-site';
 
 interface Msg { role: 'user' | 'assistant'; content: string; image?: string }
@@ -19,7 +19,7 @@ interface Props {
 const SUGGESTIONS = [
   'What should I plant on my site this season?',
   'Which of my crops makes the most money per kg?',
-  'How do I build my soil naturally here?',
+  'What are my contract obligations and am I on track?',
   'Natural ways to deal with pests & disease?',
   'How do I harvest and store rainwater here?',
 ];
@@ -94,6 +94,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
       language: appLang ?? (typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined),
       production: prod.length ? prod : undefined,
       sales: sales.length ? sales : undefined,
+      project: getLocalProject() ?? undefined,
       reports: reports.length ? reports.map((r, i) => ({ name: r.name, savedAt: r.savedAt, text: i === 0 ? r.report : undefined })) : undefined,
     };
   }, [locationData, siteData, waterData, appLang, production]);
