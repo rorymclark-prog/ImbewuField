@@ -4,7 +4,7 @@ import Link from 'next/link';
 import SettingsButton from '@/components/SettingsButton';
 
 const ROLES: { href: string; icon: string; label: string; desc: string; tint: string }[] = [
-  { href: '/',            icon: '🌱', label: 'Farmer',         desc: 'Analyse a site — climate, soil, water, AI reports', tint: 'var(--emerald)' },
+  { href: '/farmer',      icon: '🌱', label: 'Farmer',         desc: 'Analyse a site — climate, soil, water, AI reports', tint: 'var(--emerald)' },
   { href: '/facilitator', icon: '✎',  label: 'Supervisor',    desc: 'Design gardens & bills of quantities', tint: 'var(--emerald)' },
   { href: '/ngo',         icon: '📊', label: 'NGO',           desc: 'Programme dashboard & M&E roll-up', tint: 'var(--gold)' },
   { href: '/funder',      icon: '🏛', label: 'Funder',        desc: 'Read-only impact oversight', tint: 'var(--blue)' },

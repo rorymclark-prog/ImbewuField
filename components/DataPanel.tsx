@@ -147,12 +147,6 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
 /* ── Empty state ──────────────────────────────────── */
 function EmptyState() {
   const { t } = useLanguage();
-  const features = [
-    { icon: '🛰', label: 'NASA 30yr climate', color: 'var(--emerald)' },
-    { icon: '🌱', label: 'ISRIC soil data', color: 'var(--teal)' },
-    { icon: '⛰', label: 'Contours + 3D terrain', color: 'var(--blue)' },
-    { icon: '✦', label: 'Claude AI insights', color: 'var(--gold)' },
-  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -208,36 +202,6 @@ function EmptyState() {
           <span className="font-display font-medium">{t('clickAnalyse')}</span>
         </div>
 
-        {/* Divider */}
-        <div className="w-full flex items-center gap-3 mb-6">
-          <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-          <span className="text-xs font-mono uppercase" style={{ color: 'var(--text-muted)' }}>{t('dataSources')}</span>
-          <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-        </div>
-
-        {/* Feature grid */}
-        <div className="grid grid-cols-2 gap-2 w-full">
-          {features.map(({ icon, label, color }) => (
-            <div
-              key={label}
-              className="flex items-center gap-2.5 p-3 rounded-xl"
-              style={{
-                background: 'var(--bg-2)',
-                border: '1px solid var(--border)',
-              }}
-            >
-              <span className="text-base">{icon}</span>
-              <span className="font-display text-xs leading-tight" style={{ color: 'var(--text-secondary)' }}>{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Footer note */}
-      <div className="px-6 py-3 text-center" style={{ borderTop: '1px solid var(--border)' }}>
-        <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
-          South Africa · 9 biomes · all free APIs
-        </p>
       </div>
     </div>
   );

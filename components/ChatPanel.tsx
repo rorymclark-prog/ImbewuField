@@ -5,6 +5,7 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { loadReports } from '@/lib/saved-reports';
 import { myProduction } from '@/lib/db/queries';
 import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, hasSampleData } from '@/lib/demo-data';
+import { getLastSite } from '@/lib/last-site';
 
 interface Msg { role: 'user' | 'assistant'; content: string; image?: string }
 
@@ -83,11 +84,14 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
     const localProd = getLocalProduction().map((p) => ({ crop: p.crop, kg: p.kg }));
     const sales = getLocalSales().map((s) => ({ crop: s.crop, kg: s.kg, amount: s.amount }));
     const prod = [...production, ...localProd];
+    // Live site (from the map) takes priority; otherwise fall back to the last
+    // analysed site so the assistant stays site-aware on any page.
+    const last = locationData ? null : getLastSite();
     return {
-      locationData: locationData ?? undefined,
-      siteData: siteData ?? undefined,
-      waterData: waterData ?? undefined,
-      language: appLang,
+      locationData: locationData ?? last?.locationData ?? undefined,
+      siteData: siteData ?? last?.siteData ?? undefined,
+      waterData: waterData ?? last?.waterData ?? undefined,
+      language: appLang ?? (typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined),
       production: prod.length ? prod : undefined,
       sales: sales.length ? sales : undefined,
       reports: reports.length ? reports.map((r, i) => ({ name: r.name, savedAt: r.savedAt, text: i === 0 ? r.report : undefined })) : undefined,
