@@ -23,7 +23,7 @@ export default function NgoPage() {
         <BackButton />
         <BrandLogo icon="📊" />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: 'var(--text-muted)' }}>NGO · programme overview</span>
+        <span className="text-xs hidden sm:block font-display" style={{ color: '#cfe0cd' }}>NGO · programme overview</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>demo data</span>
         <div className="flex-1" />
         <SettingsButton />

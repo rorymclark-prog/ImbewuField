@@ -85,16 +85,16 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Place name…"
-              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
-              style={{ background: 'rgba(22,37,20,0.8)', border: '1px solid rgba(58,104,48,0.6)', color: 'var(--text-primary)' }}
+              className="dark-input w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
+              style={{ background: 'rgba(22,37,20,0.8)', border: '1px solid rgba(58,104,48,0.6)', color: '#e8f0e6' }}
             />
             <textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
               placeholder="Notes (optional)…"
               rows={2}
-              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
-              style={{ background: 'rgba(22,37,20,0.8)', border: '1px solid rgba(58,104,48,0.4)', color: 'var(--text-secondary)' }}
+              className="dark-input w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
+              style={{ background: 'rgba(22,37,20,0.8)', border: '1px solid rgba(58,104,48,0.4)', color: '#dce8da' }}
             />
             <div className="flex gap-2">
               <button

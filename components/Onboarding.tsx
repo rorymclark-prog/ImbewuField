@@ -40,10 +40,10 @@ export default function Onboarding() {
         <div className="grid grid-cols-3 gap-2 mb-3">
           {APP_LANGS.map((l) => (
             <button key={l.code} onClick={() => setPicked(l.code)}
-              className="py-2 px-2 rounded-lg text-xs font-display transition-all"
+              className="py-2 px-2 rounded-lg font-display transition-all"
               style={picked === l.code
-                ? { background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)' }
-                : { background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+                ? { fontSize: 15, background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)' }
+                : { fontSize: 15, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
               {l.native}
             </button>
           ))}
