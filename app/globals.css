@@ -49,6 +49,10 @@
 .text-xl { font-size: 30px !important; }
 body { font-size: 21px; }
 
+/* The map toolbar is always dark, so its search field needs a light placeholder
+   regardless of the (possibly light) app theme. */
+.map-search-input::placeholder { color: rgba(232,240,230,0.5); }
+
 /* ═══════════════════════════════════════════════════════
    EARTH LIGHT  (default)
    ═══════════════════════════════════════════════════════ */

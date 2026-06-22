@@ -168,8 +168,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   const MIN_ZOOM = 4;
-  const MAX_ZOOM = 22; // Allow zooming right in for small-plot design. Beyond ~z19 the
-  // satellite imagery is upscaled (a bit soft) but stays usable for placing precise corners.
+  const MAX_ZOOM = 24; // Max mapbox allows — zoom right in for small-plot design. Beyond ~z19
+  // the satellite imagery is upscaled (soft, no new detail) but zoom still works for placing corners.
 
   const WATER_AVG_DEPTH = 1.5; // m — assumed average depth for capacity estimate
 
@@ -1247,11 +1247,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
             placeholder="Search a town…"
-            className="flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
+            className="map-search-input flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
               background: 'rgba(22,37,20,0.8)',
               border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(58,104,48,0.6)'}`,
-              color: 'var(--text-primary)',
+              color: '#e8f0e6',
               fontSize: 20,
               minHeight: TOUCH_H,
             }}
@@ -1281,7 +1281,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(s); }}
                 className="flex items-start gap-2 w-full text-left transition-all"
                 style={{ padding: '12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
-                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 16, lineHeight: 1.3 }}>
+                  background: 'transparent', color: '#dce8da', fontSize: 16, lineHeight: 1.3 }}>
                 <span style={{ opacity: 0.6 }}>📍</span>
                 <span style={{ minWidth: 0 }}>{s.name}</span>
               </button>
@@ -1292,13 +1292,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {showRecents && suggestions.length === 0 && recents.length > 0 && (
           <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
             style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
-            <div style={{ padding: '8px 12px', fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>Recent</div>
+            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>Recent</div>
             {recents.map((r, i) => (
               <button key={i}
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(r); }}
                 className="flex items-center gap-2 w-full text-left transition-all"
                 style={{ padding: '12px', borderBottom: i < recents.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
-                  background: 'transparent', color: 'var(--text-secondary)', fontSize: 16, lineHeight: 1.3 }}>
+                  background: 'transparent', color: '#dce8da', fontSize: 16, lineHeight: 1.3 }}>
                 <span style={{ opacity: 0.6 }}>🕘</span>
                 <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.name}</span>
               </button>
