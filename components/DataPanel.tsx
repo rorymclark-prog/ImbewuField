@@ -11,6 +11,7 @@ import PhotoUpload from './PhotoUpload';
 import SiteDesign from './SiteDesign';
 import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
+import ChatPanel from './ChatPanel';
 import { useLanguage } from '@/lib/i18n';
 
 interface Props {
@@ -28,7 +29,7 @@ interface Props {
   appLang?: string;
 }
 
-const TABS = ['Overview', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
+const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
 type Tab = typeof TABS[number];
 
 const BIOME_COLORS: Record<string, string> = {
@@ -95,7 +96,7 @@ const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water:
 };
 
 const TAB_ICONS: Record<string, string> = {
-  Overview: '◎', Water: '◈', Soil: '◉', Climate: '◑', Area: '🏘', Photos: '◧', Design: '📐', AI: '✦', Places: '★', Reports: '📄', Farm: '🧺',
+  Overview: '◎', Ask: '💬', Water: '◈', Soil: '◉', Climate: '◑', Area: '🏘', Photos: '◧', Design: '📐', AI: '✦', Places: '★', Reports: '📄', Farm: '🧺',
 };
 
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
@@ -600,6 +601,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {tab === 'Area' && <AreaPanel coords={coords} />}
 
         {tab === 'AI' && <InsightsPanel locationData={data} />}
+
+        {/* ASK — site-aware permaculture / organic / finance chat assistant */}
+        {tab === 'Ask' && <ChatPanel locationData={data} siteData={siteData} waterData={waterData} appLang={appLang} />}
 
         {/* PLACES */}
         {tab === 'Places' && (
