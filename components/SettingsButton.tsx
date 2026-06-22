@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ThemePanel from './ThemePanel';
 
 /**
- * Self-contained settings control: a ⚙ gear that opens the appearance/settings
+ * Self-contained settings control: a gear icon that opens the appearance/settings
  * panel. Drop into any page header — it manages its own open state and renders
  * the panel, so every page gets the settings section without extra wiring.
  */
@@ -18,9 +18,9 @@ export default function SettingsButton() {
         title="Settings"
         className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
         style={{
-          background: 'var(--bg-2)',
-          border: '1px solid var(--border)',
-          color: 'var(--text-secondary)',
+          background: '#FBF6EC',
+          border: '1px solid #E2D8C4',
+          color: '#20190F',
           cursor: 'pointer',
         }}
       >

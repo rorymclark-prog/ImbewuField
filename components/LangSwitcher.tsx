@@ -1,5 +1,6 @@
 'use client';
 
+import { Globe } from 'lucide-react';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 
 export default function LangSwitcher() {
@@ -7,17 +8,17 @@ export default function LangSwitcher() {
 
   return (
     <div className="flex items-center gap-1.5 px-3.5 rounded-full flex-shrink-0"
-      style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid var(--border)', minHeight: 56 }}>
-      <span className="text-lg" style={{ opacity: 0.7 }}>🌍</span>
+      style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid #E2D8C4', minHeight: 56 }}>
+      <Globe size={18} style={{ color: '#5C5040' }} />
       <select
         value={lang}
         onChange={(e) => setLang(e.target.value)}
         aria-label="App language"
         className="font-mono outline-none cursor-pointer"
-        style={{ background: 'transparent', color: 'var(--text-secondary)', border: 'none', fontSize: 20 }}
+        style={{ background: 'transparent', color: '#20190F', border: 'none', fontSize: 20 }}
       >
         {APP_LANGS.map((l) => (
-          <option key={l.code} value={l.code} style={{ background: 'var(--bg-2)', color: 'var(--text-primary)' }}>
+          <option key={l.code} value={l.code} style={{ background: '#FBF6EC', color: '#20190F' }}>
             {l.native}
           </option>
         ))}

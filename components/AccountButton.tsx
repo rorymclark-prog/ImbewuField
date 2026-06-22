@@ -17,20 +17,20 @@ export default function AccountButton() {
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
         style={{
           background: 'rgba(22,37,20,0.6)',
-          border: '1px solid var(--border)',
+          border: '1px solid #E2D8C4',
           minHeight: 56,
         }}
       >
         <span
           className="font-display"
-          style={{ color: 'var(--text-secondary)', fontSize: 20 }}
+          style={{ color: '#20190F', fontSize: 20 }}
         >
           {label}
         </span>
         <button
           onClick={signOutUser}
           className="font-mono transition-opacity hover:opacity-80"
-          style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
+          style={{ color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
           aria-label="Sign out"
         >
           Sign out
@@ -45,8 +45,8 @@ export default function AccountButton() {
       className="flex items-center px-3.5 rounded-full font-display transition-opacity hover:opacity-80 flex-shrink-0"
       style={{
         background: 'rgba(22,37,20,0.6)',
-        border: '1px solid var(--border)',
-        color: 'var(--emerald-bright)',
+        border: '1px solid #E2D8C4',
+        color: '#2D6B3C',
         textDecoration: 'none',
         minHeight: 56,
         fontSize: 20,

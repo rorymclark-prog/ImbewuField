@@ -19,9 +19,9 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
       title="Back"
       className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
       style={{
-        background: 'var(--bg-2)',
-        border: '1px solid var(--border)',
-        color: 'var(--text-secondary)',
+        background: '#FBF6EC',
+        border: '1px solid #E2D8C4',
+        color: '#20190F',
         cursor: 'pointer',
       }}
     >

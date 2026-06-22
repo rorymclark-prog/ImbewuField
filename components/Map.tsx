@@ -12,6 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1016,7 +1017,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
                 ★ {p.name}
               </span>
-              <span style={{ fontSize: 20, filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.6))', lineHeight: 1 }}>📍</span>
+              <MapPin size={22} style={{ color: '#C07A1E', fill: '#C07A1E', filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
             </button>
           </Marker>
         ))}
@@ -1191,7 +1192,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 0 72px', padding: '10px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
                 background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>🗑</span>
+              <Trash2 size={18} />
               <span style={{ fontSize: 18, marginTop: 3 }}>Remove</span>
             </button>
             <button onClick={addEditCorner}
@@ -1201,7 +1202,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 0 80px', padding: '10px 0', background: 'rgba(72,168,100,0.92)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a' }}>
+              style={{ flex: '0 0 80px', padding: '10px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
               <span style={{ fontSize: 18, marginTop: 3 }}>Done</span>
             </button>
@@ -1259,7 +1260,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
             color: 'var(--text-muted)', minHeight: 36, fontSize: TOUCH_FS - 2 }}
         >
-          ▲ Hide panel
+          <ChevronUp size={14} className="inline mr-1" /> Hide panel
         </button>
 
         {/* Search row */}
@@ -1294,7 +1295,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               fontSize: 18,
             }}
           >
-            {searching ? '⟳' : '↵'}
+            {searching ? <Loader2 size={16} className="animate-spin" /> : '↵'}
           </button>
         </form>
         {/* Autofill dropdown */}
@@ -1307,7 +1308,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 className="flex items-start gap-2 w-full text-left transition-all"
                 style={{ padding: '12px', borderBottom: i < suggestions.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
                   background: 'transparent', color: '#dce8da', fontSize: 16, lineHeight: 1.3 }}>
-                <span style={{ opacity: 0.6 }}>📍</span>
+                <MapPin size={14} style={{ opacity: 0.6, flexShrink: 0 }} />
                 <span style={{ minWidth: 0 }}>{s.name}</span>
               </button>
             ))}
@@ -1340,8 +1341,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           className="flex items-center justify-between rounded-lg font-mono transition-all"
           style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
             color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 14px' }}>
-          <span>🗺 Map layers</span>
-          <span style={{ transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+          <span className="flex items-center gap-1.5"><Layers size={14} /> Map layers</span>
+          <ChevronDown size={16} style={{ transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
         </button>
 
         {layersOpen && (
@@ -1420,7 +1421,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="rounded-lg font-mono"
             style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
               color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
-            ⚠ In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.
+            <AlertTriangle size={13} className="inline mr-1" /> In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.
           </div>
         )}
 
@@ -1463,7 +1464,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               color: locating ? 'var(--text-muted)' : 'var(--teal)',
               minHeight: TOUCH_H, fontSize: TOUCH_FS,
             }}>
-            {locating ? <span className="animate-spin inline-block">⟳</span> : '📍'} Locate
+            {locating ? <Loader2 size={16} className="animate-spin" /> : <LocateFixed size={16} />} Locate
           </button>
 
           {/* Save the current spot as a place */}
@@ -1489,7 +1490,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)' }),
               color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS,
             }}>
-            📍 Places{savedPins.length ? ` (${savedPins.length})` : ''}
+            <MapPin size={14} className="inline mr-1" /> Places{savedPins.length ? ` (${savedPins.length})` : ''}
           </button>
 
           {/* Saved-places quick list — tap one to fly there */}
@@ -1509,7 +1510,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   }}
                   className="flex items-center gap-2 px-3 rounded-lg font-mono text-left transition-all"
                   style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.35)', color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-                  <span>📍</span>
+                  <MapPin size={14} style={{ flexShrink: 0 }} />
                   <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
                   <span style={{ color: 'var(--text-muted)', fontSize: TOUCH_FS - 3 }}>{p.elevation}m</span>
                 </button>
@@ -1547,11 +1548,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
-                {pendingDelete === editingFeatureId ? '🗑 Tap again to delete' : '🗑 Delete shape'}
+                <Trash2 size={13} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Tap again to delete' : 'Delete shape'}
               </button>
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: 'rgba(72,168,100,0.9)', border: '1px solid rgba(72,168,100,0.6)', color: '#06160a', minHeight: 32 }}>
+                style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
                 ✓ Done
               </button>
             </>
@@ -1602,7 +1603,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         style={pendingDelete === sf.id
                           ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
                           : { background: 'rgba(212,110,66,0.14)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)' }}
-                        title="Delete this parcel">{pendingDelete === sf.id ? 'Sure?' : '🗑'}</button>
+                        title="Delete this parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={13} />}</button>
                     </div>
                   ))}
                 </div>
