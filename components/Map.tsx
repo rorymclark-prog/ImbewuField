@@ -1224,6 +1224,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           maxWidth: 'min(380px, calc(100vw - 60px))',
           width: '100%',
           boxSizing: 'border-box',
+          // Never taller than the map — scroll inside the panel so nothing spills off-screen.
+          maxHeight: 'calc(100% - 24px)',
+          overflowY: 'auto',
+          overscrollBehavior: 'contain',
         }}
       >
         {/* Collapse header — hide the whole panel to see the map */}
