@@ -1,72 +1,244 @@
 'use client';
 
 import Link from 'next/link';
-import SettingsButton from '@/components/SettingsButton';
+import {
+  Sprout,
+  PenLine,
+  BarChart3,
+  Building2,
+  BookOpen,
+  GraduationCap,
+  ChevronRight,
+  Settings,
+} from 'lucide-react';
+import { useState } from 'react';
+import ThemePanel from '@/components/ThemePanel';
 
-const ROLES: { href: string; icon: string; label: string; desc: string; tint: string }[] = [
-  { href: '/farmer',      icon: '🌱', label: 'Farmer',         desc: 'Analyse a site — climate, soil, water, AI reports', tint: 'var(--emerald)' },
-  { href: '/facilitator', icon: '✎',  label: 'Supervisor',    desc: 'Design gardens & bills of quantities', tint: 'var(--emerald)' },
-  { href: '/ngo',         icon: '📊', label: 'NGO',           desc: 'Programme dashboard & M&E roll-up', tint: 'var(--gold)' },
-  { href: '/funder',      icon: '🏛', label: 'Funder',        desc: 'Read-only impact oversight', tint: 'var(--blue)' },
-  { href: '/trainer',     icon: '📚', label: 'Trainer',       desc: 'Run the 9-month programme', tint: 'var(--teal)' },
-  { href: '/student',     icon: '🎓', label: 'Student',       desc: 'Learn permaculture, step by step', tint: 'var(--orange)' },
+const ROLES: {
+  href: string;
+  Icon: React.ElementType;
+  label: string;
+  desc: string;
+}[] = [
+  { href: '/farmer',      Icon: Sprout,        label: 'Farmer',      desc: 'Analyse a site — climate, soil, water, AI reports' },
+  { href: '/facilitator', Icon: PenLine,        label: 'Supervisor',  desc: 'Design gardens & bills of quantities' },
+  { href: '/ngo',         Icon: BarChart3,      label: 'NGO',         desc: 'Programme dashboard & M&E roll-up' },
+  { href: '/funder',      Icon: Building2,      label: 'Funder',      desc: 'Read-only impact oversight' },
+  { href: '/trainer',     Icon: BookOpen,       label: 'Trainer',     desc: 'Run the 9-month programme' },
+  { href: '/student',     Icon: GraduationCap,  label: 'Student',     desc: 'Learn permaculture, step by step' },
 ];
 
+function getDayDate() {
+  const now = new Date();
+  const day = now.toLocaleDateString('en-GB', { weekday: 'long' });
+  const date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+  return `${day} · ${date}`;
+}
+
 export default function HomeLanding() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
-    <div className="h-[100dvh] flex flex-col overflow-hidden" style={{ background: 'var(--bg-0)' }}>
-      {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-5 gap-3"
-        style={{ height: 56, borderBottom: '1px solid var(--border)' }}>
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-            style={{ fontSize: 20, background: 'linear-gradient(135deg, rgba(72,168,100,0.25), rgba(72,168,100,0.08))', border: '1px solid rgba(72,168,100,0.4)' }}>
-            🌿
-          </div>
-          <span className="font-display font-bold tracking-tight text-gradient" style={{ fontSize: 18 }}>ImbewuField</span>
+    <div
+      className="min-h-[100dvh] flex flex-col font-sans"
+      style={{ background: '#F7F2E9', color: '#20190F' }}
+    >
+      {/* ── Header ── */}
+      <header
+        className="flex-shrink-0 flex items-center justify-between px-5"
+        style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}
+      >
+        <div className="flex flex-col justify-center">
+          {/* Overline: day + date */}
+          <span
+            className="uppercase tracking-widest font-sans"
+            style={{ fontSize: 10, color: '#C07A1E', letterSpacing: '0.12em', lineHeight: 1 }}
+          >
+            {getDayDate()}
+          </span>
+          {/* Title */}
+          <span
+            className="font-display font-bold"
+            style={{ fontSize: 22, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}
+          >
+            ImbewuField
+          </span>
         </div>
-        <div className="flex-1" />
-        <SettingsButton />
+
+        {/* Settings trigger */}
+        <button
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Settings"
+          className="flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
+          style={{
+            width: 36,
+            height: 36,
+            background: 'rgba(32,25,15,0.06)',
+            border: '1px solid #E2D8C4',
+            color: '#5C5040',
+            cursor: 'pointer',
+          }}
+        >
+          <Settings size={16} strokeWidth={1.6} />
+        </button>
       </header>
 
-      {/* Hero + role grid — sized to fit one screen, no scrolling */}
-      <main className="flex-1 min-h-0 flex flex-col items-center justify-center px-4 py-4">
-        <div className="w-full max-w-3xl">
-          <div className="text-center mb-5">
-            <div style={{ fontSize: 40, lineHeight: 1, marginBottom: 6 }}>🌿</div>
-            <h1 className="font-display font-bold text-gradient" style={{ fontSize: 30, letterSpacing: '-0.03em', marginBottom: 4 }}>
-              ImbewuField
-            </h1>
-            <p className="font-display" style={{ fontSize: 14, color: 'var(--text-muted)' }}>
-              Choose where to go
-            </p>
+      {/* ── Main content ── */}
+      <main className="flex-1 flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
+
+        {/* ── Analyse a site — CTA card ── */}
+        <Link
+          href="/farmer"
+          style={{
+            display: 'block',
+            background: '#1F4D2B',
+            backgroundImage:
+              'repeating-radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 40px), ' +
+              'repeating-radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 60px)',
+            borderRadius: 20,
+            padding: '22px 20px 20px',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(31,77,43,0.35)',
+          }}
+        >
+          {/* Icon + overline row */}
+          <div className="flex items-center gap-2 mb-2">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#EAF3E2"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ width: 20, height: 20, flexShrink: 0 }}
+            >
+              <path d="M12 21V11" />
+              <path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" />
+              <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
+            </svg>
+            <span
+              className="uppercase tracking-widest font-sans"
+              style={{ fontSize: 10, color: 'rgba(234,243,226,0.65)', letterSpacing: '0.12em' }}
+            >
+              Lima suggests
+            </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5">
-            {ROLES.map((r) => (
+          {/* Heading */}
+          <h2
+            className="font-display"
+            style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}
+          >
+            Survey a new site
+          </h2>
+
+          {/* Sub text */}
+          <p
+            className="font-sans"
+            style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}
+          >
+            Drop a pin and I&rsquo;ll read its climate, soil and water.
+          </p>
+
+          {/* CTA button */}
+          <span
+            className="inline-flex items-center font-sans font-semibold"
+            style={{
+              background: '#F7F2E9',
+              color: '#1F4D2B',
+              borderRadius: 100,
+              padding: '8px 16px',
+              fontSize: 13,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            Open the map&nbsp;&rarr;
+          </span>
+        </Link>
+
+        {/* ── Roles section ── */}
+        <section>
+          {/* Section overline */}
+          <span
+            className="uppercase tracking-widest font-sans"
+            style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', display: 'block', marginBottom: 10 }}
+          >
+            Go to
+          </span>
+
+          {/* Ledger rows */}
+          <div
+            style={{
+              background: '#FBF6EC',
+              borderRadius: 16,
+              border: '1px solid #E2D8C4',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(32,25,15,0.06)',
+            }}
+          >
+            {ROLES.map((r, i) => (
               <Link
                 key={r.href}
                 href={r.href}
-                className="glass glass-hover rounded-2xl flex items-start gap-2.5 transition-all"
-                style={{ borderLeft: `3px solid ${r.tint}`, textDecoration: 'none', padding: 12 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 14,
+                  padding: '13px 16px',
+                  textDecoration: 'none',
+                  borderBottom: i < ROLES.length - 1 ? '1px solid #E2D8C4' : 'none',
+                  transition: 'background 0.12s',
+                }}
+                className="hover:bg-[rgba(32,25,15,0.03)]"
               >
-                <div className="rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ width: 38, height: 38, fontSize: 19, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                  {r.icon}
+                {/* Role icon */}
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 10,
+                    background: 'rgba(31,77,43,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    color: '#1F4D2B',
+                  }}
+                >
+                  <r.Icon size={17} strokeWidth={1.6} />
                 </div>
-                <div className="min-w-0">
-                  <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{r.label}</div>
-                  <div className="leading-snug" style={{ fontSize: 12.5, marginTop: 2, color: 'var(--text-muted)' }}>{r.desc}</div>
+
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                  <div
+                    className="font-display"
+                    style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}
+                  >
+                    {r.label}
+                  </div>
+                  <div
+                    className="font-sans truncate"
+                    style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}
+                  >
+                    {r.desc}
+                  </div>
                 </div>
+
+                {/* Chevron */}
+                <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
               </Link>
             ))}
           </div>
+        </section>
 
-          <p className="text-center font-mono" style={{ fontSize: 11.5, marginTop: 16, color: 'var(--text-muted)', opacity: 0.7 }}>
-            NASA POWER · ISRIC soil · SANBI veg · Claude AI
-          </p>
-        </div>
+        {/* ── Footer ── */}
+        <footer className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62', opacity: 0.7, paddingBottom: 8 }}>
+          NASA POWER · ISRIC soil · SANBI veg · Claude AI
+        </footer>
       </main>
+
+      {/* Settings panel */}
+      <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 }

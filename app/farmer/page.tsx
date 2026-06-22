@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect } from 'react';
+import { Settings, AlertTriangle, PenLine, ChevronUp } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
 import ReportView from '@/components/ReportView';
 import Onboarding from '@/components/Onboarding';
@@ -113,30 +114,29 @@ function HomeInner() {
         />
       )}
 
-      <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+      <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
 
         {/* ── Header ────────────────────────────── */}
         <header
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto overflow-y-hidden"
           style={{
             height: 74,
-            background: 'var(--header-bg)',
-            borderBottom: '1px solid var(--border)',
-            backdropFilter: 'blur(12px)',
+            background: '#FBF6EC',
+            borderBottom: '1px solid #E2D8C4',
             WebkitOverflowScrolling: 'touch',
           }}
         >
           <BrandLogo />
 
-          <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-          <span className="text-xs hidden sm:block font-display" style={{ color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
+          <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           {/* Design-map + role switcher are power-user navigation — desktop only.
               On a phone they cluttered the bar into tiny icons; reach them via the home hub (tap the logo). */}
           <Link href="/facilitator" className="hidden md:flex items-center gap-1 px-3 py-2 rounded-full text-sm font-display transition-all flex-shrink-0"
-            style={{ background: 'var(--bg-2)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
-            <span style={{ fontSize: 16 }}>✎</span> <span>Design map</span>
+            style={{ background: 'rgba(226,216,196,0.4)', border: '1px solid #E2D8C4', color: '#C07A1E' }}>
+            <PenLine size={14} /> <span>Design map</span>
           </Link>
           <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
           <LangSwitcher />
@@ -150,7 +150,7 @@ function HomeInner() {
               { dot: 'var(--gold)', label: 'Claude AI' },
             ].map(({ dot, label }) => (
               <div key={label} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs"
-                   style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                   style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: dot }} />
                 {label}
               </div>
@@ -158,9 +158,9 @@ function HomeInner() {
           </div>
 
           {error && (
-            <span className="text-xs px-3 py-1 rounded-full font-mono flex-shrink-0"
+            <span className="text-xs px-3 py-1 rounded-full font-mono flex-shrink-0 flex items-center"
                   style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>
-              ⚠ {error}
+              <AlertTriangle size={13} className="inline mr-1" /> {error}
             </span>
           )}
 
@@ -171,14 +171,13 @@ function HomeInner() {
             className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all"
             style={{
               width: 54, height: 54,
-              background: 'var(--bg-2)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-muted)',
-              fontSize: 26,
+              background: 'rgba(226,216,196,0.35)',
+              border: '1px solid #E2D8C4',
+              color: '#5C5040',
               cursor: 'pointer',
             }}
           >
-            ⚙
+            <Settings size={20} />
           </button>
         </header>
 
@@ -209,7 +208,7 @@ function HomeInner() {
           {/* ── Desktop side panel (md+) ── */}
           <div
             className="hidden md:flex flex-shrink-0 overflow-hidden flex-col"
-            style={{ width: 390, background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
+            style={{ width: 390, background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
           >
             <DataPanel
               data={data}
@@ -233,10 +232,10 @@ function HomeInner() {
             className="md:hidden fixed bottom-5 right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
             style={{
               background: sheetOpen
-                ? 'rgba(22,37,20,0.95)'
-                : 'linear-gradient(135deg, rgba(72,168,100,0.9), rgba(56,140,80,0.85))',
-              border: '1px solid rgba(72,168,100,0.6)',
-              color: sheetOpen ? 'var(--text-muted)' : '#fff',
+                ? 'rgba(31,77,43,0.9)'
+                : 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
+              border: '1px solid rgba(31,77,43,0.6)',
+              color: '#fff',
               boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
               backdropFilter: 'blur(10px)',
               // hide when sheet open (drag-handle closes) or while the draw action bar is up
@@ -247,9 +246,9 @@ function HomeInner() {
             onClick={() => setSheetOpen(true)}
             aria-label="Open details panel"
           >
-            <span style={{ fontSize: 16 }}>▲</span>
+            <ChevronUp size={16} />
             {(data || loading) ? 'Results' : 'Details'}
-            {loading && <span className="animate-spin inline-block text-xs">⟳</span>}
+            {loading && <span className="animate-spin inline-block text-xs">...</span>}
           </button>
 
           {/* ── Mobile: bottom sheet overlay ── */}
@@ -268,10 +267,10 @@ function HomeInner() {
             style={{
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
-              background: 'var(--bg-1)',
-              borderTop: '1px solid var(--border)',
-              borderRadius: '18px 18px 0 0',
-              boxShadow: '0 -8px 40px rgba(0,0,0,0.55)',
+              background: '#F7F2E9',
+              borderTop: '1px solid #E2D8C4',
+              borderRadius: '20px 20px 0 0',
+              boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
               transition: 'height 0.32s cubic-bezier(0.32, 0.72, 0, 1)',
               willChange: 'height',
             }}
@@ -285,9 +284,9 @@ function HomeInner() {
             >
               <div
                 className="rounded-full"
-                style={{ width: 40, height: 4, background: 'var(--border-bright)', opacity: 0.7 }}
+                style={{ width: 40, height: 4, background: '#E2D8C4', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-mono" style={{ color: '#8C7A62', opacity: 0.6, letterSpacing: '0.05em' }}>
                 tap to close
               </span>
             </button>

@@ -13,6 +13,7 @@ import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import { useLanguage } from '@/lib/i18n';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2 } from 'lucide-react';
 
 interface Props {
   data: LocationData | null;
@@ -95,15 +96,32 @@ const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water:
   },
 };
 
-const TAB_ICONS: Record<string, string> = {
-  Overview: '◎', Ask: '💬', Water: '◈', Soil: '◉', Climate: '◑', Area: '🏘', Photos: '◧', Design: '📐', AI: '✦', Places: '★', Reports: '📄', Farm: '🧺',
+const TAB_ICONS: Record<string, JSX.Element> = {
+  Overview: <MapPin size={16} />,
+  Ask: <MessageCircle size={16} />,
+  Water: <Droplets size={16} />,
+  Soil: <Layers size={16} />,
+  Climate: <Sun size={16} />,
+  Area: <Ruler size={16} />,
+  Photos: <Camera size={16} />,
+  Design: <Compass size={16} />,
+  AI: <Sparkles size={16} />,
+  Places: <Bookmark size={16} />,
+  Reports: <FileText size={16} />,
+  Farm: <Wheat size={16} />,
 };
 
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
   return (
     <div
-      className={`rounded-xl p-4 transition-all duration-200 glass glass-hover ${className}`}
-      style={accent ? { borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' } : {}}
+      className={`rounded-xl transition-all duration-200 ${className}`}
+      style={{
+        backgroundColor: '#FBF6EC',
+        border: '1px solid #E2D8C4',
+        borderRadius: 12,
+        padding: 16,
+        ...(accent ? { borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' } : {}),
+      }}
     >
       {children}
     </div>
@@ -112,7 +130,7 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
       {children}
     </div>
   );
@@ -124,22 +142,22 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
       <Label>{label}</Label>
       <div
         className="font-display font-bold leading-none mt-1"
-        style={{ fontSize: 29, color: color ?? 'var(--text-primary)', letterSpacing: '-0.02em' }}
+        style={{ fontSize: 29, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
       >
         {value}
       </div>
       {contextPct !== undefined && (
-        <div style={{ height: 3, background: 'var(--bg-4)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
+        <div style={{ height: 3, background: 'rgba(226,216,196,0.6)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${Math.min(100, Math.max(4, contextPct))}%`,
-            background: color ?? 'var(--emerald)',
+            background: color ?? '#1F4D2B',
             borderRadius: 2,
             transition: 'width 0.8s cubic-bezier(0.4,0,0.2,1)',
           }} />
         </div>
       )}
-      {sub && <div className="text-xs mt-1.5 font-mono" style={{ color: 'var(--text-muted)' }}>{sub}</div>}
+      {sub && <div className="text-xs mt-1.5 font-mono" style={{ color: '#5C5040' }}>{sub}</div>}
     </Card>
   );
 }
@@ -159,17 +177,17 @@ function EmptyState() {
         <div className="relative mb-6">
           <div
             className="absolute inset-0 rounded-full blur-2xl opacity-30"
-            style={{ background: 'radial-gradient(circle, var(--emerald-bright), transparent 70%)', transform: 'scale(2.5)' }}
+            style={{ background: 'radial-gradient(circle, rgba(31,77,43,0.2), transparent 70%)', transform: 'scale(2.5)' }}
           />
           <div
-            className="relative w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
+            className="relative w-16 h-16 rounded-2xl flex items-center justify-center"
             style={{
-              background: 'linear-gradient(135deg, rgba(72,168,100,0.2), rgba(72,168,100,0.05))',
-              border: '1px solid rgba(72,168,100,0.35)',
-              boxShadow: '0 8px 32px rgba(72,168,100,0.2), inset 0 1px 0 rgba(255,255,255,0.06)',
+              background: 'linear-gradient(135deg, rgba(31,77,43,0.2), rgba(31,77,43,0.05))',
+              border: '1px solid rgba(31,77,43,0.35)',
+              boxShadow: '0 8px 32px rgba(31,77,43,0.2), inset 0 1px 0 rgba(255,255,255,0.06)',
             }}
           >
-            🌍
+            <Sprout size={32} style={{ color: '#1F4D2B' }} />
           </div>
         </div>
 
@@ -179,7 +197,7 @@ function EmptyState() {
         >
           ImbewuField
         </h1>
-        <p className="font-display text-sm leading-relaxed mb-8" style={{ color: 'var(--text-muted)', maxWidth: 260 }}>
+        <p className="font-display text-sm leading-relaxed mb-8" style={{ color: '#5C5040', maxWidth: 260 }}>
           {t('heroSub')}
         </p>
 
@@ -187,17 +205,17 @@ function EmptyState() {
         <div
           className="flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-10"
           style={{
-            background: 'rgba(72,168,100,0.08)',
-            border: '1px solid rgba(72,168,100,0.2)',
-            color: 'var(--emerald-bright)',
+            background: 'rgba(31,77,43,0.2)',
+            border: '1px solid rgba(31,77,43,0.2)',
+            color: '#1F4D2B',
           }}
         >
           <span className="relative flex h-2 w-2">
             <span
               className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-              style={{ background: 'var(--emerald-bright)' }}
+              style={{ background: '#1F4D2B' }}
             />
-            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--emerald-bright)' }} />
+            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#1F4D2B' }} />
           </span>
           <span className="font-display font-medium">{t('clickAnalyse')}</span>
         </div>
@@ -211,14 +229,14 @@ function EmptyState() {
 function Skeleton() {
   return (
     <div className="p-5 space-y-3">
-      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'var(--bg-4)' }} />
-      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'var(--bg-3)' }} />
+      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
+      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
       <div className="grid grid-cols-2 gap-2 mt-4">
         {[1,2,3,4].map(i => (
-          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'var(--bg-3)', animationDelay: `${i*80}ms` }} />
+          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'rgba(226,216,196,0.5)', animationDelay: `${i*80}ms` }} />
         ))}
       </div>
-      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'var(--bg-3)' }} />
+      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'rgba(226,216,196,0.5)' }} />
     </div>
   );
 }
@@ -273,18 +291,18 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Biome header ──────────────────────────── */}
       <div
         className="flex-shrink-0 px-5 pt-5 pb-4"
-        style={{ borderBottom: '1px solid var(--border)' }}
+        style={{ borderBottom: '1px solid #E2D8C4' }}
       >
         <div className="flex items-start gap-3">
           <div
-            className="w-11 h-11 rounded-xl flex-shrink-0 flex items-center justify-center text-xl"
+            className="w-11 h-11 rounded-xl flex-shrink-0 flex items-center justify-center"
             style={{
               background: `linear-gradient(135deg, ${bColor}28, ${bColor}10)`,
               border: `1px solid ${bColor}44`,
               boxShadow: `0 4px 16px ${bColor}18`,
             }}
           >
-            🌿
+            <Sprout size={20} style={{ color: bColor }} />
           </div>
           <div className="min-w-0 flex-1">
             <div
@@ -293,16 +311,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             >
               {data.biome.name}
             </div>
-            <div className="text-xs leading-snug truncate" style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-display)' }}>
+            <div className="text-xs leading-snug truncate" style={{ color: '#5C5040', fontFamily: 'var(--font-display)' }}>
               {data.biome.description}
             </div>
             {data.vegetation && (
-              <div className="text-xs mt-1 leading-snug font-display" style={{ color: bColor, opacity: 0.95 }}
+              <div className="text-xs mt-1 leading-snug font-display flex items-center gap-1" style={{ color: bColor, opacity: 0.95 }}
                    title={`SANBI 2018 vegetation unit · ${data.vegetation.bioregion}`}>
-                🌾 {data.vegetation.vegUnit}
+                <Leaf size={12} /> {data.vegetation.vegUnit}
               </div>
             )}
-            <div className="text-xs mt-1 font-mono" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+            <div className="text-xs mt-1 font-mono" style={{ color: '#5C5040', opacity: 0.7 }}>
               {Math.abs(data.lat).toFixed(4)}°S &nbsp;{data.lon.toFixed(4)}°E
             </div>
           </div>
@@ -310,32 +328,32 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       </div>
 
       {/* ── Save + Report buttons ─────────────────────── */}
-      <div className="flex-shrink-0 px-4 py-2 flex gap-2" style={{ borderBottom: '1px solid var(--border)', background: 'rgba(6,16,10,0.3)' }}>
+      <div className="flex-shrink-0 px-4 py-2 flex gap-2" style={{ borderBottom: '1px solid #E2D8C4', background: '#F7F2E9' }}>
         <button
           onClick={quickSavePlace}
           disabled={placeSaved}
           className="flex-shrink-0 py-2 px-3 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-1.5 transition-all"
           style={placeSaved
-            ? { background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.3)', color: 'var(--text-muted)' }
-            : { background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)' }}
+            ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#5C5040' }
+            : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
           title="Save this place"
         >
-          {placeSaved ? '✓ Saved' : '★ Save'}
+          {placeSaved ? '✓ Saved' : <><Bookmark size={13} /> Save</>}
         </button>
         <button
           onClick={() => onOpenReport(photoAnalysis)}
           className="flex-1 py-2 rounded-xl text-xs font-display font-semibold flex flex-wrap items-center justify-center gap-1.5 md:gap-2 transition-all"
           style={{
-            background: 'linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.06))',
-            border: '1px solid rgba(212,168,83,0.35)',
-            color: 'var(--gold)',
+            background: 'rgba(192,122,30,0.12)',
+            border: '1px solid rgba(192,122,30,0.3)',
+            color: '#C07A1E',
           }}
         >
-          <span>📋</span>
+          <FileText size={14} />
           Generate Full Report
-          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(72,168,100,0.18)', color: 'var(--emerald-bright)', fontSize: 18 }}>{siteData.areaHa} ha</span>}
-          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.18)', color: 'var(--blue)', fontSize: 18 }}>💧 {waterData.estVolumeKL.toLocaleString()} kL</span>}
-          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(91,158,212,0.15)', color: 'var(--blue)', fontSize: 18 }}>📷</span>}
+          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(31,77,43,0.1)', color: '#1F4D2B', fontSize: 11 }}>{siteData.areaHa} ha</span>}
+          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono flex items-center gap-0.5" style={{ background: 'rgba(35,94,134,0.12)', color: '#235E86', fontSize: 11 }}><Droplets size={11} /> {waterData.estVolumeKL.toLocaleString()} kL</span>}
+          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono flex items-center gap-0.5" style={{ background: 'rgba(35,94,134,0.12)', color: '#235E86', fontSize: 11 }}><Camera size={11} /></span>}
           <span style={{ opacity: 0.6 }}>→</span>
         </button>
       </div>
@@ -343,7 +361,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Tabs (wrap so all are always visible) ──── */}
       <div
         className="flex-shrink-0"
-        style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
+        style={{ borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}
       >
         <div
           className="flex overflow-x-auto"
@@ -356,18 +374,18 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               className="flex items-center gap-1.5 flex-shrink-0 transition-all duration-150"
               style={{
                 padding: '10px 14px',
-                borderBottom: tab === t ? '2px solid var(--emerald)' : '2px solid transparent',
+                borderBottom: tab === t ? '2px solid #C07A1E' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
-                color: tab === t ? 'var(--emerald-bright)' : 'var(--text-muted)',
-                fontSize: 18,
+                color: tab === t ? '#C07A1E' : '#5C5040',
+                fontSize: 13,
                 fontFamily: 'var(--font-display)',
                 fontWeight: tab === t ? 600 : 400,
                 whiteSpace: 'nowrap',
                 cursor: 'pointer',
               }}
             >
-              <span style={{ fontSize: 20, lineHeight: 1 }}>{TAB_ICONS[t]}</span>
+              <span style={{ display: 'flex', alignItems: 'center' }}>{TAB_ICONS[t]}</span>
               {t}
             </button>
           ))}
@@ -384,13 +402,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div className="grid grid-cols-2 gap-2.5">
               <Stat label="Elevation" value={`${data.elevation.elevation}m`} sub="above sea level"
                 contextPct={Math.min(100, (data.elevation.elevation / 2800) * 100)} />
-              <Stat label="Annual Rain" value={`${data.rainfall.annual}mm`} sub={data.rainfall.pattern} color="var(--blue)"
+              <Stat label="Annual Rain" value={`${data.rainfall.annual}mm`} sub={data.rainfall.pattern} color="#235E86"
                 contextPct={Math.min(100, (data.rainfall.annual / 1400) * 100)} />
               <Stat
                 label="Slope / Aspect"
                 value={`${data.elevation.slopeDeg}°`}
                 sub={`${data.elevation.slopePct}% · ${data.elevation.aspectLabel}-facing`}
-                color={data.elevation.slopeDeg > 8 ? 'var(--orange)' : undefined}
+                color={data.elevation.slopeDeg > 8 ? '#D4922A' : undefined}
                 contextPct={Math.min(100, (data.elevation.slopeDeg / 30) * 100)}
               />
               <Stat label="Mean Temp" value={`${data.climate.meanTemp}°C`} sub={`${data.climate.minTemp}–${data.climate.maxTemp}°C range`}
@@ -405,9 +423,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
                     style={{
-                      background: 'rgba(72,168,100,0.1)',
-                      border: '1px solid rgba(72,168,100,0.2)',
-                      color: 'var(--text-secondary)',
+                      background: 'rgba(31,77,43,0.1)',
+                      border: '1px solid rgba(31,77,43,0.2)',
+                      color: '#1F4D2B',
                     }}
                   >
                     {s}
@@ -420,8 +438,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>Main challenges</Label>
               <div className="space-y-1.5">
                 {data.biome.challenges.slice(0, 4).map((c, i) => (
-                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--orange)' }}>⚠</span>
+                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+                    <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#D4922A' }}><AlertTriangle size={12} /></span>
                     {c}
                   </div>
                 ))}
@@ -437,12 +455,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <RainfallChart rainfall={data.rainfall} />
             </Card>
             <div className="grid grid-cols-2 gap-2.5">
-              <Stat label="Solar" value={`${data.climate.solarRadiation} kWh`} sub="m²/day avg" color="var(--gold)" />
-              <Stat label="ETo est." value={`${(data.climate.solarRadiation * 1.1).toFixed(1)}mm`} sub="evapotransp/day" color="var(--orange)" />
+              <Stat label="Solar" value={`${data.climate.solarRadiation} kWh`} sub="m²/day avg" color="#C07A1E" />
+              <Stat label="ETo est." value={`${(data.climate.solarRadiation * 1.1).toFixed(1)}mm`} sub="evapotransp/day" color="#D4922A" />
             </div>
             <Card>
               <Label>Water harvesting strategy</Label>
-              <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
                 {data.biome.waterStrategy}
               </p>
             </Card>
@@ -458,13 +476,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 label="pH"
                 value={data.soil.ph.toString()}
                 sub={data.soil.ph < 5.5 ? 'Acidic — add lime' : data.soil.ph > 7.5 ? 'Alkaline — add sulphur' : 'Near-neutral ✓'}
-                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? 'var(--orange)' : 'var(--teal)'}
+                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C'}
               />
               <Stat
                 label="Organic Carbon"
                 value={`${data.soil.organicCarbon}%`}
                 sub={data.soil.organicCarbon < 1.5 ? 'Low — target 2–3%' : 'Acceptable'}
-                color={data.soil.organicCarbon < 1.5 ? 'var(--orange)' : 'var(--emerald)'}
+                color={data.soil.organicCarbon < 1.5 ? '#D4922A' : '#1F4D2B'}
               />
               <Stat label="Bulk Density" value={`${data.soil.bulkDensity} g/cm³`} sub={data.soil.bulkDensity > 1.4 ? 'Compacted' : 'OK'} />
             </div>
@@ -472,16 +490,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>Texture composition</Label>
               <div className="space-y-2.5">
                 {[
-                  { name: 'Sand', pct: data.soil.sand, color: 'var(--gold)' },
-                  { name: 'Silt', pct: data.soil.silt, color: 'var(--emerald)' },
-                  { name: 'Clay', pct: data.soil.clay, color: 'var(--teal)' },
+                  { name: 'Sand', pct: data.soil.sand, color: '#C07A1E' },
+                  { name: 'Silt', pct: data.soil.silt, color: '#1F4D2B' },
+                  { name: 'Clay', pct: data.soil.clay, color: '#2D6B3C' },
                 ].map(({ name, pct, color }) => (
                   <div key={name}>
-                    <div className="flex justify-between text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>
+                    <div className="flex justify-between text-xs font-mono mb-1" style={{ color: '#5C5040' }}>
                       <span>{name}</span>
                       <span style={{ color }}>{pct}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--bg-4)' }}>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(226,216,196,0.6)' }}>
                       <div
                         className="h-full rounded-full transition-all duration-700"
                         style={{ width: `${pct}%`, background: color, opacity: 0.8 }}
@@ -493,7 +511,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </Card>
             <Card>
               <Label>Soil strategy</Label>
-              <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
                 {data.biome.soilStrategy}
               </p>
             </Card>
@@ -504,10 +522,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {tab === 'Climate' && (
           <>
             <div className="grid grid-cols-2 gap-2.5">
-              <Stat label="Köppen" value={data.climate.koppen} sub={data.climate.koppenDesc} color="var(--gold)" />
-              <Stat label="Solar" value={`${data.climate.solarRadiation}`} sub="kWh/m²/day" color="var(--gold)" />
+              <Stat label="Köppen" value={data.climate.koppen} sub={data.climate.koppenDesc} color="#C07A1E" />
+              <Stat label="Solar" value={`${data.climate.solarRadiation}`} sub="kWh/m²/day" color="#C07A1E" />
               <Stat label="Summer max" value={`${data.climate.maxTemp}°C`} />
-              <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? '⚠ Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? 'var(--blue)' : undefined} />
+              <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? '⚠ Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? '#235E86' : undefined} />
             </div>
             <Card>
               <Label>Monthly temperature (°C)</Label>
@@ -524,7 +542,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
                         }}
                       />
-                      <span style={{ fontSize: 18, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      <span style={{ fontSize: 9, color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
                         {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
                       </span>
                     </div>
@@ -534,13 +552,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </Card>
             <Card>
               <Label>Rainfall timing</Label>
-              <p className="text-sm font-display font-medium capitalize mb-1" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-sm font-display font-medium capitalize mb-1" style={{ color: '#20190F' }}>
                 {data.rainfall.pattern} rainfall
               </p>
-              <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-xs font-display" style={{ color: '#5C5040' }}>
                 Wet: {data.rainfall.wetSeason} &nbsp;·&nbsp; Dry: {data.rainfall.drySeason}
               </p>
-              <p className="text-xs font-mono mt-2" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-xs font-mono mt-2" style={{ color: '#5C5040' }}>
                 → Earthworks before first rains: {data.biome.rainfallPattern === 'winter' ? 'Apr–May' : 'Aug–Sep'}
               </p>
             </Card>
@@ -581,27 +599,27 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* REPORTS — saved permaculture reports, reopen without regenerating */}
         {tab === 'Reports' && (
           <div className="space-y-3">
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
               Saved Reports
             </div>
             {savedReports.length === 0 ? (
-              <div className="rounded-xl p-4 text-sm" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
-                No saved reports yet. Open <span style={{ color: 'var(--gold)' }}>Generate Full Report</span>, then tap <span style={{ color: 'var(--emerald-bright)' }}>💾 Save report</span> to keep it here.
+              <div className="rounded-xl p-4 text-sm" style={{ background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                No saved reports yet. Open <span style={{ color: '#C07A1E' }}>Generate Full Report</span>, then tap <span style={{ color: '#1F4D2B' }}>Save report</span> to keep it here.
               </div>
             ) : (
               savedReports.map((r) => (
-                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
                   <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
-                    <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{r.name}</div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                    <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{r.name}</div>
+                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
                       {new Date(r.savedAt).toLocaleDateString()} · {Math.abs(r.location.lat).toFixed(3)}°S {r.location.lon.toFixed(3)}°E
                     </div>
                   </button>
                   <button onClick={() => onViewReport?.(r)} className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-                    style={{ background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.45)', color: 'var(--emerald-bright)' }}>
+                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
                     Open
                   </button>
-                  <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 text-sm flex-shrink-0" style={{ color: 'var(--text-muted)' }}>🗑</button>
+                  <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 flex-shrink-0 flex items-center" style={{ color: '#5C5040' }}><Trash2 size={14} /></button>
                 </div>
               ))
             )}
