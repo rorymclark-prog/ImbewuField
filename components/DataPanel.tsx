@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { savePlace, generateId } from '@/lib/saved-places';
+import { loadReports, deleteReport, type SavedReport } from '@/lib/saved-reports';
 import InsightsPanel from './InsightsPanel';
 import AreaPanel from './AreaPanel';
 import PhotoUpload from './PhotoUpload';
@@ -23,10 +24,11 @@ interface Props {
   onTabChange?: () => void;
   onOpenReport: (analysis?: string) => void;
   onJumpTo: (lat: number, lon: number) => void;
+  onViewReport?: (r: SavedReport) => void;
   appLang?: string;
 }
 
-const TABS = ['Overview', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
+const TABS = ['Overview', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
 type Tab = typeof TABS[number];
 
 const BIOME_COLORS: Record<string, string> = {
@@ -93,7 +95,7 @@ const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water:
 };
 
 const TAB_ICONS: Record<string, string> = {
-  Overview: '◎', Water: '◈', Soil: '◉', Climate: '◑', Area: '🏘', Photos: '◧', Design: '📐', AI: '✦', Places: '★', Farm: '🧺',
+  Overview: '◎', Water: '◈', Soil: '◉', Climate: '◑', Area: '🏘', Photos: '◧', Design: '📐', AI: '✦', Places: '★', Reports: '📄', Farm: '🧺',
 };
 
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
@@ -257,7 +259,14 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, appLang }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang }: Props) {
+  const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
+  useEffect(() => {
+    const refresh = () => setSavedReports(loadReports());
+    refresh();
+    window.addEventListener('imbewu-reports-changed', refresh);
+    return () => window.removeEventListener('imbewu-reports-changed', refresh);
+  }, []);
   const [tab, setTab] = useState<Tab>('Overview');
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
   const [placeSaved, setPlaceSaved] = useState(false);
@@ -599,6 +608,36 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             coords={coords}
             onJumpTo={onJumpTo}
           />
+        )}
+
+        {/* REPORTS — saved permaculture reports, reopen without regenerating */}
+        {tab === 'Reports' && (
+          <div className="space-y-3">
+            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+              Saved Reports
+            </div>
+            {savedReports.length === 0 ? (
+              <div className="rounded-xl p-4 text-sm" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                No saved reports yet. Open <span style={{ color: 'var(--gold)' }}>Generate Full Report</span>, then tap <span style={{ color: 'var(--emerald-bright)' }}>💾 Save report</span> to keep it here.
+              </div>
+            ) : (
+              savedReports.map((r) => (
+                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                  <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
+                    <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{r.name}</div>
+                    <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                      {new Date(r.savedAt).toLocaleDateString()} · {Math.abs(r.location.lat).toFixed(3)}°S {r.location.lon.toFixed(3)}°E
+                    </div>
+                  </button>
+                  <button onClick={() => onViewReport?.(r)} className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+                    style={{ background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.45)', color: 'var(--emerald-bright)' }}>
+                    Open
+                  </button>
+                  <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 text-sm flex-shrink-0" style={{ color: 'var(--text-muted)' }}>🗑</button>
+                </div>
+              ))
+            )}
+          </div>
         )}
 
         {/* FARM — the farmer's own production & sales records */}
