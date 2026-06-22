@@ -63,11 +63,11 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
+      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
       style={{
         background: 'rgba(22,37,20,0.6)',
         border: '1px solid var(--border)',
-        color: 'var(--text-primary)',
+        color: '#e8f0e6',
         ...props.style,
       }}
     />
