@@ -191,8 +191,8 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
         <div key={i} className={m.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
           <div className="px-3.5 py-2.5 text-sm"
             style={m.role === 'user'
-              ? { maxWidth: '85%', background: 'rgba(31,77,43,0.09)', color: '#20190F', borderRadius: 16, whiteSpace: 'pre-wrap' }
-              : { maxWidth: '92%', background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', borderRadius: 16, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
+              ? { maxWidth: '85%', background: '#1F4D2B', color: '#F2EBDD', borderRadius: '16px 4px 16px 16px', whiteSpace: 'pre-wrap' }
+              : { maxWidth: '92%', background: '#FBF6EC', border: '1px solid #E7DDC9', color: '#20190F', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
               ? <span style={{ color: '#D4922A' }}>{m.content}</span>

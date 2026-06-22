@@ -755,21 +755,21 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   const tile = (active: boolean) => ({
-    background: active ? 'rgba(72,168,100,0.22)' : 'rgba(22,37,20,0.6)',
-    border: `1px solid ${active ? 'rgba(72,168,100,0.55)' : 'var(--border)'}`,
-    color: active ? 'var(--emerald-bright)' : 'var(--text-secondary)',
+    background: active ? 'rgba(31,77,43,0.14)' : 'rgba(22,37,20,0.6)',
+    border: `1px solid ${active ? 'rgba(31,77,43,0.40)' : '#E2D8C4'}`,
+    color: active ? '#2D6B3C' : 'var(--text-secondary)',
   });
 
   return (
     <div className="flex h-full overflow-hidden relative">
       {/* ── Palette ── (static column on desktop; slide-in drawer on mobile) */}
       <div
-        className={`flex-shrink-0 overflow-y-auto p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
-        style={{ width: 150, background: 'var(--bg-1)', borderRight: '1px solid var(--border)' }}
+        className={`flex-shrink-0 overflow-y-auto p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-lg' : '-translate-x-full md:translate-x-0'}`}
+        style={{ width: 150, background: '#FBF6EC', borderRight: '1px solid #E2D8C4' }}
       >
         {/* Base map */}
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>Base map</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Base map</div>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => loadImage(e.target.files?.[0])} />
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all" style={tile(false)}>
             🖼 Import garden map
@@ -777,12 +777,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           {bg && (
             <div className="mt-1.5 space-y-1">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>fade</span>
+                <span className="text-xs font-mono" style={{ color: '#5C5040' }}>fade</span>
                 <input type="range" min={0.15} max={1} step={0.05} value={bg.opacity}
                   onChange={(e) => setBg((b) => b ? { ...b, opacity: parseFloat(e.target.value) } : b)}
-                  className="flex-1" style={{ accentColor: '#48A864' }} />
+                  className="flex-1" style={{ accentColor: '#1F4D2B' }} />
               </div>
-              <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>remove</button>
+              <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>remove</button>
             </div>
           )}
           <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); }}
@@ -790,7 +790,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             📏 Set scale
           </button>
           <div className="flex items-center justify-between mt-1.5">
-            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>1 m = {pxPerM.toFixed(0)} px</span>
+            <span className="text-xs font-mono" style={{ color: '#5C5040' }}>1 m = {pxPerM.toFixed(0)} px</span>
             <div className="flex gap-1">
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
@@ -801,7 +801,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         {/* Element groups */}
         {GROUPS.map((g) => (
           <div key={g.name}>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{g.name}</div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>{g.name}</div>
             <div className="grid grid-cols-2 gap-1.5">
               {g.types.map((type) => (
                 <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); }}
@@ -816,7 +816,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
         {/* Lines */}
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>Lines</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Lines</div>
           <div className="grid grid-cols-2 gap-1.5">
             {(Object.keys(LINES) as LineKind[]).map((kind) => (
               <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); }}
@@ -831,12 +831,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       {/* ── Canvas ── */}
       <div ref={wrapRef} className="relative flex-1" style={{ background: '#0d1a0d', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
         <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
-          style={{ background: 'rgba(6,16,10,0.82)', border: '1px solid var(--border)' }}>
-          <span className="text-xs font-mono" style={{ color: 'var(--emerald-bright)' }}>N ↑</span>
+          style={{ background: 'rgba(6,16,10,0.82)', border: '1px solid #E2D8C4' }}>
+          <span className="text-xs font-mono" style={{ color: '#2D6B3C' }}>N ↑</span>
         </div>
         {armed && (
           <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-display"
-            style={{ background: 'rgba(72,168,100,0.9)', color: '#06160a' }}>
+            style={{ background: '#1F4D2B', color: '#F7F2E9' }}>
             {scaleMode ? (draftPt ? 'Tap the end of the known distance' : 'Tap the start of a known distance')
               : lineKind ? (draftPt ? `Tap to end the ${LINES[lineKind].label.toLowerCase()}` : `Tap to start the ${LINES[lineKind].label.toLowerCase()}`)
               : `Tap on the map to place ${placeType ? CATALOG[placeType].label : ''}`} · Esc to cancel
@@ -900,7 +900,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               enabledAnchors={selectedIsCircle
                 ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
                 : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']}
-              anchorSize={8} anchorStroke="#48A864" anchorFill="rgba(72,168,100,0.7)"
+              anchorSize={8} anchorStroke="#1F4D2B" anchorFill="rgba(31,77,43,0.30)"
               borderEnabled={false}
               boundBoxFunc={(o, n) => (n.width < 8 || n.height < 8 ? o : n)} />
           </Layer>
@@ -909,82 +909,82 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
       {/* ── Right panel ── (static column on desktop; slide-in drawer on mobile) */}
       <div
-        className={`flex-shrink-0 overflow-y-auto absolute inset-y-0 right-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'props' ? 'translate-x-0 shadow-2xl' : 'translate-x-full md:translate-x-0'}`}
-        style={{ width: 252, maxWidth: '85vw', background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
+        className={`flex-shrink-0 overflow-y-auto absolute inset-y-0 right-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'props' ? 'translate-x-0 shadow-lg' : 'translate-x-full md:translate-x-0'}`}
+        style={{ width: 252, maxWidth: '85vw', background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
       >
         <div className="p-3 space-y-3">
           {/* Properties */}
           {selected ? (
-            <div className="rounded-xl p-2.5 space-y-2" style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.25)' }}>
+            <div className="rounded-xl p-2.5 space-y-2" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.20)' }}>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-display font-semibold" style={{ color: 'var(--emerald-bright)' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
+                <span className="text-xs font-display font-semibold" style={{ color: '#2D6B3C' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
                 <div className="flex gap-1">
-                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>⧉</button>
-                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>✕</button>
+                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>⧉</button>
+                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: '#D4922A' }}>✕</button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <label className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+                <label className="text-xs font-mono" style={{ color: '#5C5040' }}>
                   {selectedIsCircle ? 'diameter m' : 'width m'}
                   <input type="number" step={0.1} min={0.2} value={selected.wM.toFixed(1)}
                     onChange={(e) => { const v = Math.max(0.2, parseFloat(e.target.value) || 0.2); updateSel(selectedIsCircle ? { wM: v, hM: v } : { wM: v }); }}
-                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
                 {!selectedIsCircle && (
-                  <label className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>length m
+                  <label className="text-xs font-mono" style={{ color: '#5C5040' }}>length m
                     <input type="number" step={0.1} min={0.2} value={selected.hM.toFixed(1)}
                       onChange={(e) => updateSel({ hM: Math.max(0.2, parseFloat(e.target.value) || 0.2) })}
-                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
+                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
                   </label>
                 )}
                 {selected.litres !== undefined && (
-                  <label className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>litres
+                  <label className="text-xs font-mono" style={{ color: '#5C5040' }}>litres
                     <input type="number" step={500} min={0} value={selected.litres}
                       onChange={(e) => updateSel({ litres: Math.max(0, parseInt(e.target.value) || 0) })}
-                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
+                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
                   </label>
                 )}
-                <label className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>rotate °
+                <label className="text-xs font-mono" style={{ color: '#5C5040' }}>rotate °
                   <input type="number" step={5} value={Math.round(selected.rotation)}
                     onChange={(e) => updateSel({ rotation: parseFloat(e.target.value) || 0 })}
-                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
               </div>
             </div>
           ) : (
-            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
+            <p className="text-xs font-display" style={{ color: '#5C5040' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
           )}
 
           {/* BOQ */}
           <div>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>Bill of quantities</div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Bill of quantities</div>
             {boq.length || lineTotals.length ? (
               <div className="space-y-1">
                 {boq.map((b) => (
-                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(22,37,20,0.5)' }}>
+                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
                     <span style={{ color: 'var(--text-secondary)' }}>{b.icon} {b.label}</span>
-                    <span className="font-mono" style={{ color: 'var(--text-primary)' }}>×{b.count}{b.litres ? ` · ${b.litres.toLocaleString()}L` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                    <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${b.litres.toLocaleString()}L` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
                   </div>
                 ))}
                 {lineTotals.map((l) => (
-                  <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(22,37,20,0.5)' }}>
-                    <span style={{ color: 'var(--blue)' }}>{l.icon} {l.label}</span>
-                    <span className="font-mono" style={{ color: 'var(--text-primary)' }}>~{l.m.toFixed(1)} m</span>
+                  <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
+                    <span style={{ color: '#235E86' }}>{l.icon} {l.label}</span>
+                    <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
                   </div>
                 ))}
               </div>
-            ) : <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Quantities tally here as you place things.</p>}
+            ) : <p className="text-xs font-display" style={{ color: '#5C5040' }}>Quantities tally here as you place things.</p>}
           </div>
 
           {(bedArea > 0 || totalLitres > 0) && (
             <div className="grid grid-cols-2 gap-2">
-              <div className="p-2 rounded-lg" style={{ background: 'rgba(72,168,100,0.08)', border: '1px solid rgba(72,168,100,0.2)' }}>
-                <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Growing area</div>
-                <div className="text-sm font-display font-semibold" style={{ color: 'var(--emerald-bright)' }}>{bedArea.toFixed(0)} m²</div>
+              <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.14)' }}>
+                <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Growing area</div>
+                <div className="text-sm font-display font-semibold" style={{ color: '#2D6B3C' }}>{bedArea.toFixed(0)} m²</div>
               </div>
               <div className="p-2 rounded-lg" style={{ background: 'rgba(91,158,212,0.08)', border: '1px solid rgba(91,158,212,0.2)' }}>
-                <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Water store</div>
-                <div className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{(totalLitres / 1000).toFixed(1)} kL</div>
+                <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Water store</div>
+                <div className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{(totalLitres / 1000).toFixed(1)} kL</div>
               </div>
             </div>
           )}
@@ -993,10 +993,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <div className="flex gap-2">
             <button onClick={runReview} disabled={reviewing || !items.length}
               className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
-              style={reviewing || !items.length ? { background: 'var(--bg-4)', border: '1px solid var(--border)', color: 'var(--text-muted)' } : { background: 'linear-gradient(135deg, rgba(72,168,100,0.22), rgba(72,168,100,0.08))', border: '1px solid rgba(72,168,100,0.45)', color: 'var(--emerald-bright)' }}>
+              style={reviewing || !items.length ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' } : { background: '#1F4D2B', color: '#F7F2E9', border: '1px solid #1F4D2B' }}>
               {reviewing ? <span className="flex items-center justify-center gap-1.5"><span className="animate-spin inline-block">⟳</span> Reviewing…</span> : '✦ AI review'}
             </button>
-            <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }} title="Export PNG">↓ PNG</button>
+            <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }} title="Export PNG">↓ PNG</button>
           </div>
 
           {/* Save button */}
@@ -1006,8 +1006,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               disabled={!items.length && !lines.length}
               className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
               style={!items.length && !lines.length
-                ? { background: 'var(--bg-4)', border: '1px solid var(--border)', color: 'var(--text-muted)' }
-                : { background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.35)', color: 'var(--emerald-bright)' }}>
+                ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' }
+                : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.22)', color: '#2D6B3C' }}>
               {savedMsg || '↓ Save design'}
             </button>
           </div>
@@ -1016,16 +1016,16 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <div className="relative">
             <button onClick={() => { setShareOpen((o) => !o); setSharedTo(null); }} disabled={!items.length && !lines.length}
               className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
-              style={{ background: 'rgba(91,158,212,0.14)', border: '1px solid rgba(91,158,212,0.4)', color: 'var(--blue)' }}>
+              style={{ background: 'rgba(91,158,212,0.14)', border: '1px solid rgba(91,158,212,0.4)', color: '#235E86' }}>
               ↗ Share this design with a farmer
             </button>
             {shareOpen && !sharedTo && (
-              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: 'var(--bg-2)', border: '1px solid var(--border-bright)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: 'var(--text-muted)' }}>
+              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
+                <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#5C5040' }}>
                   {farmersLoading ? 'Loading…' : 'Send to'}
                 </div>
                 {farmersLoading && (
-                  <div className="text-xs font-display px-2 py-1" style={{ color: 'var(--text-muted)' }}>
+                  <div className="text-xs font-display px-2 py-1" style={{ color: '#5C5040' }}>
                     <span className="animate-spin inline-block mr-1">⟳</span> Fetching farmers…
                   </div>
                 )}
@@ -1034,28 +1034,28 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                     onClick={() => { if (f.profile) { sendDesignToFarmer(f.profile); } else { setSharedTo(f.name); setShareOpen(false); } }}
                     disabled={sharing}
                     className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-display transition-all"
-                    style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+                    style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }}>
                     {sharing ? <span className="animate-spin inline-block mr-1">⟳</span> : '🌱'} {f.name}
                   </button>
                 ))}
               </div>
             )}
             {sharedTo && (
-              <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display" style={{ background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.3)', color: 'var(--emerald-bright)' }}>
+              <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: '#2D6B3C' }}>
                 ✓ Sent to {sharedTo} — opens on their phone
               </div>
             )}
           </div>
 
           {review && (
-            <div className="rounded-xl p-3 space-y-1" style={{ background: 'rgba(72,168,100,0.04)', border: '1px solid rgba(72,168,100,0.15)' }}>
+            <div className="rounded-xl p-3 space-y-1" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid rgba(31,77,43,0.12)' }}>
               {review.split('\n').map((line, i) => {
                 if (!line.trim()) return null;
-                if (line.startsWith('## ')) return <h4 key={i} className="text-xs font-display font-semibold mt-2 mb-1" style={{ color: 'var(--gold)' }}>{line.replace('## ', '')}</h4>;
-                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}><span style={{ color: 'var(--emerald)' }}>›</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
+                if (line.startsWith('## ')) return <h4 key={i} className="text-xs font-display font-semibold mt-2 mb-1" style={{ color: '#C07A1E' }}>{line.replace('## ', '')}</h4>;
+                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}><span style={{ color: '#1F4D2B' }}>›</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
                 return <p key={i} className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{line.replace(/\*\*/g, '')}</p>;
               })}
-              {reviewing && <span className="inline-block w-1.5 h-3 rounded-sm animate-pulse" style={{ background: 'var(--emerald-bright)' }} />}
+              {reviewing && <span className="inline-block w-1.5 h-3 rounded-sm animate-pulse" style={{ background: '#2D6B3C' }} />}
             </div>
           )}
         </div>
@@ -1069,12 +1069,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       <div className="md:hidden absolute bottom-4 left-0 right-0 z-40 flex justify-between px-4 pointer-events-none">
         <button onClick={() => setMobilePanel((p) => (p === 'palette' ? null : 'palette'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: 'rgba(22,37,20,0.96)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--emerald-bright)', boxShadow: '0 4px 16px rgba(0,0,0,0.55)' }}>
+          style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.40)', color: '#2D6B3C', boxShadow: '0 2px 8px rgba(31,77,43,0.15)' }}>
           {mobilePanel === 'palette' ? '✕ Close' : '🧩 Elements'}
         </button>
         <button onClick={() => setMobilePanel((p) => (p === 'props' ? null : 'props'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: 'rgba(22,37,20,0.96)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', boxShadow: '0 4px 16px rgba(0,0,0,0.55)' }}>
+          style={{ background: '#FBF6EC', border: '1px solid rgba(91,158,212,0.5)', color: '#235E86', boxShadow: '0 2px 8px rgba(35,94,134,0.15)' }}>
           {mobilePanel === 'props' ? '✕ Close' : '📋 Plan'}
         </button>
       </div>

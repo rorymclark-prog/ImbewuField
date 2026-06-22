@@ -41,7 +41,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="text-xs font-mono uppercase tracking-wider mb-2"
-      style={{ color: 'var(--text-muted)' }}
+      style={{ color: '#5C5040' }}
     >
       {children}
     </div>
@@ -52,7 +52,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
     <label
       className="block text-xs font-mono uppercase tracking-wider mb-1"
-      style={{ color: 'var(--text-muted)' }}
+      style={{ color: '#5C5040' }}
     >
       {children}
     </label>
@@ -65,9 +65,9 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
       {...props}
       className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
       style={{
-        background: 'rgba(22,37,20,0.6)',
-        border: '1px solid var(--border)',
-        color: '#e8f0e6',
+        background: '#FBF6EC',
+        border: '1px solid #E2D8C4',
+        color: '#20190F',
         ...props.style,
       }}
     />
@@ -88,10 +88,10 @@ function SubmitBtn({
       className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
       style={{
         background: loading
-          ? 'rgba(72,168,100,0.06)'
-          : 'linear-gradient(135deg, rgba(72,168,100,0.18), rgba(72,168,100,0.07))',
-        border: '1px solid rgba(72,168,100,0.3)',
-        color: loading ? 'var(--text-muted)' : 'var(--emerald-bright)',
+          ? 'rgba(31,77,43,0.06)'
+          : '#1F4D2B',
+        border: '1px solid rgba(31,77,43,0.20)',
+        color: loading ? '#5C5040' : '#F7F2E9',
         cursor: loading ? 'not-allowed' : 'pointer',
       }}
     >
@@ -99,7 +99,7 @@ function SubmitBtn({
         <>
           <span
             className="inline-block w-3 h-3 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: 'var(--emerald) transparent transparent transparent' }}
+            style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
           />
           Saving…
         </>
@@ -111,7 +111,7 @@ function SubmitBtn({
 }
 
 function Divider() {
-  return <div className="h-px my-4" style={{ background: 'var(--border)' }} />;
+  return <div className="h-px my-4" style={{ background: '#E2D8C4' }} />;
 }
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
@@ -132,8 +132,9 @@ function SignInPrompt() {
       <div
         className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl"
         style={{
-          background: 'linear-gradient(135deg, rgba(72,168,100,0.15), rgba(72,168,100,0.04))',
-          border: '1px solid rgba(72,168,100,0.25)',
+          background: '#1F4D2B',
+          color: '#F7F2E9',
+          border: '1px solid rgba(31,77,43,0.14)',
         }}
       >
         🌱
@@ -141,11 +142,11 @@ function SignInPrompt() {
       <div>
         <p
           className="font-display font-semibold text-base mb-1"
-          style={{ color: 'var(--text-primary)' }}
+          style={{ color: '#20190F' }}
         >
           Sign in to keep your own records
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: '#5C5040' }}>
           Track what you grow and sell — your data stays with you.
         </p>
       </div>
@@ -153,9 +154,9 @@ function SignInPrompt() {
         href="/login"
         className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
         style={{
-          background: 'linear-gradient(135deg, rgba(72,168,100,0.2), rgba(72,168,100,0.07))',
-          border: '1px solid rgba(72,168,100,0.35)',
-          color: 'var(--emerald-bright)',
+          background: '#1F4D2B',
+          border: '1px solid rgba(31,77,43,0.22)',
+          color: '#F7F2E9',
         }}
       >
         Go to sign in →
@@ -232,7 +233,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="var(--emerald)">
+    <Card accent="#1F4D2B">
       <SectionLabel>Log production</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
@@ -272,7 +273,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   if (fileRef.current) fileRef.current.value = '';
                 }}
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
-                style={{ background: 'rgba(0,0,0,0.6)', color: 'var(--text-primary)' }}
+                style={{ background: 'rgba(0,0,0,0.35)', color: '#F7F2E9' }}
               >
                 ✕
               </button>
@@ -281,9 +282,9 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <label
             className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={{
-              background: 'rgba(22,37,20,0.6)',
-              border: '1px dashed var(--border)',
-              color: 'var(--text-muted)',
+              background: '#FBF6EC',
+              border: '1px dashed #E2D8C4',
+              color: '#5C5040',
             }}
           >
             <span>📷</span>
@@ -299,7 +300,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--orange)' }}>
+          <p className="text-xs font-mono" style={{ color: '#D4922A' }}>
             {form.error}
           </p>
         )}
@@ -359,7 +360,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="var(--gold)">
+    <Card accent="#C07A1E">
       <SectionLabel>Log sale</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
@@ -407,7 +408,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--orange)' }}>
+          <p className="text-xs font-mono" style={{ color: '#D4922A' }}>
             {form.error}
           </p>
         )}
@@ -422,7 +423,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
         No harvests logged yet.
       </p>
     );
@@ -434,8 +435,8 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
           style={{
-            background: 'rgba(22,37,20,0.5)',
-            border: '1px solid var(--border)',
+            background: 'rgba(226,216,196,0.35)',
+            border: '1px solid #E2D8C4',
           }}
         >
           {item.photo_url ? (
@@ -450,7 +451,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           ) : (
             <div
               className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
-              style={{ background: 'rgba(72,168,100,0.1)', border: '1px solid rgba(72,168,100,0.15)' }}
+              style={{ background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.12)' }}
             >
               🌿
             </div>
@@ -458,17 +459,17 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: 'var(--text-primary)' }}
+              style={{ color: '#20190F' }}
             >
               {item.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
               {fmtDate(item.logged_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: 'var(--emerald-bright)' }}
+            style={{ color: '#2D6B3C' }}
           >
             {item.kg} kg
           </div>
@@ -483,7 +484,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
         No sales logged yet.
       </p>
     );
@@ -495,8 +496,8 @@ function SalesList({ items }: { items: SalesLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: 'rgba(22,37,20,0.5)',
-            border: '1px solid var(--border)',
+            background: 'rgba(226,216,196,0.35)',
+            border: '1px solid #E2D8C4',
           }}
         >
           <div
@@ -508,22 +509,22 @@ function SalesList({ items }: { items: SalesLog[] }) {
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: 'var(--text-primary)' }}
+              style={{ color: '#20190F' }}
             >
               {item.crop}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
+                <span className="font-normal" style={{ color: '#5C5040' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: 'var(--gold)' }}
+            style={{ color: '#C07A1E' }}
           >
             R {item.amount.toFixed(2)}
           </div>
@@ -538,7 +539,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
 function SharedDesignsList({ items }: { items: Design[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
         No designs shared with you yet.
       </p>
     );
@@ -550,8 +551,8 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           key={design.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: 'rgba(22,37,20,0.5)',
-            border: '1px solid var(--border)',
+            background: 'rgba(226,216,196,0.35)',
+            border: '1px solid #E2D8C4',
           }}
         >
           <div
@@ -563,11 +564,11 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: 'var(--text-primary)' }}
+              style={{ color: '#20190F' }}
             >
               {design.title || 'Untitled design'}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
               Shared {fmtDate(design.created_at)}
             </p>
           </div>
@@ -579,7 +580,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             style={{
               background: 'rgba(91,158,212,0.08)',
               border: '1px solid rgba(91,158,212,0.2)',
-              color: 'var(--blue)',
+              color: '#235E86',
               opacity: 0.7,
               cursor: 'default',
             }}
@@ -656,7 +657,7 @@ export default function MyRecords() {
           <div
             key={i}
             className="h-24 rounded-xl animate-pulse"
-            style={{ background: 'var(--bg-3)', animationDelay: `${i * 80}ms` }}
+            style={{ background: 'rgba(226,216,196,0.55)', animationDelay: `${i * 80}ms` }}
           />
         ))}
       </div>
@@ -680,18 +681,18 @@ export default function MyRecords() {
         <div>
           <h2
             className="font-display font-bold text-base leading-tight"
-            style={{ color: 'var(--text-primary)' }}
+            style={{ color: '#20190F' }}
           >
             My Records
           </h2>
-          <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+          <p className="font-display text-xs mt-0.5" style={{ color: '#5C5040' }}>
             What you grow · what you sell · designs from your supervisor
           </p>
         </div>
         {dataLoading && (
           <span
             className="inline-block w-3.5 h-3.5 rounded-full border-2 animate-spin"
-            style={{ borderColor: 'var(--emerald) transparent transparent transparent' }}
+            style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
           />
         )}
       </div>
@@ -726,7 +727,7 @@ export default function MyRecords() {
       <Divider />
 
       {/* ── Shared designs ──────────────────────────── */}
-      <Card accent="var(--blue)">
+      <Card accent="#235E86">
         <SectionLabel>Shared with me</SectionLabel>
         <SharedDesignsList items={designs} />
       </Card>

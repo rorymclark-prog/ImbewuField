@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import ThemePanel from '@/components/ThemePanel';
+import LimaBar from '@/components/LimaBar';
+import TabBar from '@/components/TabBar';
 
 const ROLES: {
   href: string;
@@ -40,7 +42,7 @@ export default function HomeLanding() {
 
   return (
     <div
-      className="min-h-[100dvh] flex flex-col font-sans"
+      className="h-[100dvh] flex flex-col font-sans overflow-hidden"
       style={{ background: '#F7F2E9', color: '#20190F' }}
     >
       {/* ── Header ── */}
@@ -84,7 +86,7 @@ export default function HomeLanding() {
       </header>
 
       {/* ── Main content ── */}
-      <main className="flex-1 flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
+      <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
 
         {/* ── Analyse a site — CTA card ── */}
         <Link
@@ -236,6 +238,12 @@ export default function HomeLanding() {
           NASA POWER · ISRIC soil · SANBI veg · Claude AI
         </footer>
       </main>
+
+      {/* ── Persistent Lima ask-bar ── */}
+      <LimaBar />
+
+      {/* ── Bottom tab bar ── */}
+      <TabBar />
 
       {/* Settings panel */}
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
