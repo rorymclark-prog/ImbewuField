@@ -263,10 +263,44 @@ html, body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--bg-5); border-radius: 2px; }
 
-/* ── Font helpers ──────────────────────────────────────── */
+/* ── Font helpers + almanac default theme aliases ─────── */
+/* These :root values are the almanac defaults — overridden by
+   html[data-theme] selectors when a named theme is active.    */
 :root {
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-sans:    'Public Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Almanac palette aliased into the legacy var names so any
+     component still using var(--bg-0) / var(--emerald) / etc.
+     automatically gets almanac colours without a per-file edit. */
+  --bg-0: #F7F2E9;
+  --bg-1: #FBF6EC;
+  --bg-2: rgba(226,216,196,0.35);
+  --bg-3: rgba(226,216,196,0.55);
+  --bg-4: rgba(226,216,196,0.70);
+  --bg-5: rgba(226,216,196,0.85);
+  --border:        #E2D8C4;
+  --border-bright: #E2D8C4;
+  --border-glow:   rgba(31,77,43,0.25);
+  --text-primary:  #20190F;
+  --text-secondary:#20190F;
+  --text-muted:    #5C5040;
+  --emerald:       #1F4D2B;
+  --emerald-bright:#2D6B3C;
+  --gold:          #C07A1E;
+  --gold-dim:      #9A6018;
+  --blue:          #235E86;
+  --orange:        #D4922A;
+  --teal:          #2D6B3C;
+  --header-bg:     #FBF6EC;
+  --glass-bg:      rgba(251,246,236,0.94);
+  --glass-shadow:  0 2px 12px rgba(32,25,15,0.08);
+  --glass-border:  #E2D8C4;
+  --badge-bg:      rgba(31,77,43,0.08);
+  --gradient-from: #1F4D2B;
+  --gradient-mid:  #2D6B3C;
+  --gradient-to:   #C07A1E;
 }
 .font-display { font-family: var(--font-display); }
 .font-mono    { font-family: var(--font-mono); }
@@ -282,14 +316,13 @@ html, body {
 /* ── Glass card ────────────────────────────────────────── */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(6px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
 }
 
 .glass-hover:hover {
   border-color: var(--border-bright);
-  box-shadow: var(--glass-shadow), 0 0 0 1px var(--border-glow);
+  background: var(--bg-1);
 }
 
 .glow-emerald {
