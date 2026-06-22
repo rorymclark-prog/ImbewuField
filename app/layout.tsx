@@ -1,20 +1,21 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Newsreader, Public_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
 import ChatWidget from '@/components/ChatWidget';
 
-const spaceGrotesk = Space_Grotesk({
+const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-display',
   weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const publicSans = Public_Sans({
   subsets: ['latin'],
-  variable: '--font-mono',
-  weight: ['400', '500'],
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -37,8 +38,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body className="h-screen overflow-hidden">
+    <html lang="en" className={newsreader.variable + ' ' + publicSans.variable}>
+      <body className="h-screen overflow-hidden bg-paper text-ink font-sans">
         <ThemeProvider>
           <AuthProvider>
             {children}

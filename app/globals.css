@@ -1,3 +1,44 @@
+/* ImbewuField Almanac Design System */
+:root {
+  --color-forest: #1F4D2B;
+  --color-forest-light: #2D6B3C;
+  --color-forest-dark: #163820;
+  --color-ochre: #C07A1E;
+  --color-ochre-light: #D4922A;
+  --color-ochre-dark: #9A6018;
+  --color-water: #235E86;
+  --color-paper: #F7F2E9;
+  --color-card: #FBF6EC;
+  --color-ink: #20190F;
+  --color-ink-muted: #5C5040;
+  --color-ink-faint: #8C7A62;
+  --color-hairline: #E2D8C4;
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-sans: 'Public Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --shadow-card: 0 1px 3px rgba(32,25,15,0.08),0 1px 2px rgba(32,25,15,0.06);
+  --shadow-panel: 0 4px 16px rgba(32,25,15,0.12);
+  --shadow-float: 0 8px 32px rgba(32,25,15,0.16);
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
