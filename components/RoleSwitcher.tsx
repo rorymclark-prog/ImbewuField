@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 const ROLES = [
-  { key: 'farmer', label: 'Farmer', icon: '🌱', href: '/', ready: true },
+  { key: 'farmer', label: 'Farmer', icon: '🌱', href: '/farmer', ready: true },
   { key: 'facilitator', label: 'Supervisor', icon: '✎', href: '/facilitator', ready: true },
   { key: 'trainer', label: 'Trainer', icon: '📚', href: '/trainer', ready: true },
   { key: 'student', label: 'Student', icon: '🎓', href: '/student', ready: true },

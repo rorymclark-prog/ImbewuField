@@ -14,7 +14,7 @@ export default function GatePage() {
       const res = await fetch('/api/gate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) });
       if (res.ok) {
         const params = new URLSearchParams(window.location.search);
-        window.location.href = params.get('from') || '/';
+        window.location.href = params.get('from') || '/home';
       } else { setError(true); setLoading(false); }
     } catch { setError(true); setLoading(false); }
   }

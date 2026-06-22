@@ -35,7 +35,7 @@ export default function LoginPage() {
       if (err) {
         setError(err);
       } else {
-        router.push('/');
+        router.push('/home');
       }
     } finally {
       setLoading(false);
@@ -198,7 +198,7 @@ export default function LoginPage() {
         {/* Back link */}
         <div className="text-center mt-4">
           <a
-            href="/"
+            href="/home"
             className="text-xs font-mono transition-opacity hover:opacity-80"
             style={{ color: 'var(--text-muted)' }}
           >

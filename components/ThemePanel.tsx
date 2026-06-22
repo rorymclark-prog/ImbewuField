@@ -243,6 +243,29 @@ export default function ThemePanel({ open, onClose }: Props) {
               Auto follows your device setting.
             </div>
           </div>
+
+          {/* Data sources */}
+          <div style={{ marginTop: 28 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              Data sources
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {[
+                { icon: '🛰', label: 'NASA 30yr climate' },
+                { icon: '🌱', label: 'ISRIC soil data' },
+                { icon: '⛰', label: 'Contours + 3D terrain' },
+                { icon: '✦', label: 'Claude AI insights' },
+              ].map((s) => (
+                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                  <span style={{ fontSize: 15 }}>{s.icon}</span>
+                  <span style={{ fontSize: 12, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', lineHeight: 1.2 }}>{s.label}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
+              South Africa · 9 biomes · all free APIs.
+            </div>
+          </div>
         </div>
 
         {/* Footer */}
