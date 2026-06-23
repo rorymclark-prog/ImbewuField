@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle, Undo2 } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -105,10 +105,11 @@ interface Props {
   jumpTo?: { lat: number; lon: number } | null;
   onJumpComplete?: () => void;
   onDrawingChange?: (active: boolean) => void;
-  locationData?: LocationData | null;   // analysis of the selected point — saved with the place
+  locationData?: LocationData | null;
+  onPlaceSelect?: (name: string | null) => void;
 }
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect }: Props) {
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -181,6 +182,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
   const editNameRef = useRef<{ name?: string; category?: string } | null>(null); // name/category snapshot across edit
+  const nativeEditBackupRef = useRef<GeoJSON.Feature | null>(null);      // snapshot for native-edit Undo
 
   // Saved-place pins: load + keep in sync with the Places tab
   useEffect(() => {
@@ -390,17 +392,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     map.on('draw.update', recompute);
     map.on('draw.delete', recompute);
 
-    // Clear editingFeatureId whenever we leave direct_select.
+    // Track native entry/exit of direct_select so the edit bar appears even when the
+    // user taps a shape directly (without going through our Edit button).
     map.on('draw.modechange', (e: { mode: string }) => {
-      if (e.mode !== 'direct_select') setEditingFeatureId(null);
-      // Entering direct_select: wait for selectionchange (fired by onSetup after setSelected runs)
-    });
-
-    // selectionchange fires after direct_select.onSetup calls setSelected — reliably after modechange.
-    map.on('draw.selectionchange', () => {
-      if (draw.getMode() === 'direct_select') {
-        const ids = draw.getSelectedIds();
-        if (ids.length > 0) setEditingFeatureId(ids[0]);
+      if (e.mode === 'direct_select') {
+        // Use a short delay: selectionchange fires after modechange, so getSelectedIds()
+        // isn't populated yet at the moment this event fires.
+        setTimeout(() => {
+          const ids = draw.getSelectedIds();
+          if (ids.length > 0) {
+            const f = draw.get(ids[0]);
+            nativeEditBackupRef.current = f ? (JSON.parse(JSON.stringify(f)) as GeoJSON.Feature) : null;
+            setEditingFeatureId(ids[0]);
+          }
+        }, 60);
+      } else {
+        setEditingFeatureId(null);
       }
     });
 
@@ -631,6 +638,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const startNativeEdit = useCallback((featureId: string) => {
     const draw = ensureDraw();
     if (!draw) return;
+    const f = draw.get(featureId);
+    nativeEditBackupRef.current = f ? (JSON.parse(JSON.stringify(f)) as GeoJSON.Feature) : null;
     setEditPin(null); setEditPoints([]); setSelCorner(null);
     setActiveDraw(null); setPinDraw(null);
     try { draw.changeMode('direct_select', { featureId }); } catch {}
@@ -1034,7 +1043,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // via its ✎ Edit button — NOT by tapping the map, otherwise a tap inside the boundary
     // would re-enter vertex-edit and the farmer could never analyse the inside of their land.
     onLocationSelect(e.lngLat.lat, e.lngLat.lng);
-  }, [onLocationSelect, activeDraw, editingFeatureId, pinDraw, editPin]);
+    onPlaceSelect?.(null);
+  }, [onLocationSelect, onPlaceSelect, activeDraw, editingFeatureId, pinDraw, editPin]);
 
   // Reticle colours — shared by draw (pinDraw) and edit (editPin)
   const reticleType = pinDraw ?? editPin?.type ?? null;
@@ -1239,6 +1249,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 e.stopPropagation();
                 mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 16, duration: 1400 });
                 onLocationSelect(p.lat, p.lon);
+                onPlaceSelect?.(p.name);
               }}
               title={p.name}
               className="flex flex-col items-center group"
@@ -1791,6 +1802,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         onClick={() => {
                           mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
                           onLocationSelect(p.lat, p.lon);
+                          onPlaceSelect?.(p.name);
                           setPlacesOpen(false);
                         }}
                         className="flex-1 flex items-center gap-1.5 pr-1 font-sans text-left transition-all min-w-0"
@@ -1833,10 +1845,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {/* Vertex editing */}
           {editingFeatureId && !activeDraw && (
             <>
-              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg font-display"
-                style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32, fontSize: 11.5 }}>
-                Drag a corner dot to move it · mid-dot adds a corner · pinch to zoom
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-display"
+                style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)', minHeight: 32, fontSize: 11 }}>
+                Drag dots to reshape · mid-dot adds a corner
               </div>
+              <button onClick={() => {
+                  const draw = drawRef.current;
+                  const backup = nativeEditBackupRef.current;
+                  if (!draw || !backup) return;
+                  const id = backup.id as string;
+                  try {
+                    draw.delete(id);
+                    draw.add(backup);
+                    draw.changeMode('direct_select', { featureId: id });
+                    setEditingFeatureId(id);
+                  } catch { /* ignore */ }
+                  recompute();
+                }}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 32, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
+                <Undo2 size={12} className="inline mr-1" />Undo
+              </button>
               <button onClick={() => {
                   const f = drawRef.current?.get(editingFeatureId);
                   const type = f?.properties?.featureType === 'water' ? 'water' : 'site';
@@ -1851,12 +1880,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
-                <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Tap again to delete' : 'Delete'}
+                <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Confirm delete' : 'Delete'}
               </button>
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
-                <Check size={12} className="inline mr-1" />Done
+                <Check size={12} className="inline mr-1" />Save
               </button>
             </>
           )}

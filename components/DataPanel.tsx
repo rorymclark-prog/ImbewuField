@@ -28,6 +28,7 @@ interface Props {
   onJumpTo: (lat: number, lon: number) => void;
   onViewReport?: (r: SavedReport) => void;
   appLang?: string;
+  placeName?: string | null;
 }
 
 const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
@@ -242,7 +243,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName }: Props) {
   const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
   useEffect(() => {
     const refresh = () => setSavedReports(loadReports());
@@ -320,11 +321,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* Name + suitability badge */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="font-display font-semibold leading-tight" style={{ fontSize: 18, color: '#20190F', letterSpacing: '-0.01em' }}>
-              {data.biome.name}
-            </div>
+            {placeName ? (
+              <>
+                <div className="font-display font-semibold leading-tight" style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.01em' }}>
+                  {placeName}
+                </div>
+                <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#5C5040' }}>
+                  {data.biome.name}
+                </div>
+              </>
+            ) : (
+              <div className="font-display font-semibold leading-tight" style={{ fontSize: 18, color: '#20190F', letterSpacing: '-0.01em' }}>
+                {data.biome.name}
+              </div>
+            )}
             {data.vegetation && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: placeName ? '#94876F' : '#5C5040' }}>
                 {data.vegetation.vegUnit}
               </div>
             )}

@@ -51,6 +51,7 @@ function HomeInner() {
     return null;
   });
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
+  const [activePlaceName, setActivePlaceName] = useState<string | null>(null);
   const [showReport, setShowReport] = useState(false);
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
   const [savedReportView, setSavedReportView] = useState<SavedReport | null>(null);
@@ -210,6 +211,7 @@ function HomeInner() {
               onJumpComplete={() => setJumpTo(null)}
               onDrawingChange={setDrawing}
               locationData={data}
+              onPlaceSelect={setActivePlaceName}
             />
           </div>
 
@@ -231,6 +233,7 @@ function HomeInner() {
               onViewReport={handleViewReport}
               onJumpTo={handleJumpTo}
               appLang={lang}
+              placeName={activePlaceName}
             />
           </div>
 
@@ -316,6 +319,7 @@ function HomeInner() {
                 onViewReport={handleViewReport}
                 onJumpTo={handleJumpTo}
                 appLang={lang}
+                placeName={activePlaceName}
               />
             </div>
           </div>
