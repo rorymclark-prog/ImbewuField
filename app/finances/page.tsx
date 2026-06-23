@@ -422,7 +422,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
                   className="inline-block w-3 h-3 rounded-full border-2 animate-spin"
                   style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
                 />
-                Saving…
+                Saving...
               </>
             ) : (
               'Log sale'

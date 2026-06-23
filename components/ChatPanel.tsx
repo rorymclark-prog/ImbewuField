@@ -196,7 +196,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
               ? <span style={{ color: '#D4922A' }}>{m.content}</span>
-              : m.content || (loading && i === messages.length - 1 ? <span className="animate-pulse">…</span> : '')}
+              : m.content || (loading && i === messages.length - 1 ? <span className="animate-pulse">...</span> : '')}
           </div>
         </div>
       ))}
@@ -223,7 +223,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Lima anything…"
+            placeholder="Ask Lima anything..."
             className="flex-1 rounded-xl px-3 outline-none min-w-0 font-display"
             style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 16, minHeight: 46, borderRadius: 12 }}
           />

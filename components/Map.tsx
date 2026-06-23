@@ -1272,7 +1272,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
-            placeholder="Search a town…"
+            placeholder="Search a town..."
             className="map-search-input flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
             style={{
               background: 'rgba(22,37,20,0.8)',

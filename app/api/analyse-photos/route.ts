@@ -57,8 +57,8 @@ What's already working that a permaculture design should build on.
 
 ## 📸 Photos That Would Help
 ${source === 'satellite'
-  ? `From this satellite view there are things you cannot judge from above. List 3–5 SPECIFIC ground photos the farmer should take to sharpen the design — each as a plain instruction starting with "Take a photo of…", naming WHERE on the site and WHY it helps (e.g. "Take a photo of the low wet corner in the north-east — to see if it stays soggy and could become a pond"). Base each request on what you actually see in this image.`
-  : `List 2–3 more photos that would fill the biggest gaps for the design, each starting with "Take a photo of…" and saying why.`}
+  ? `From this satellite view there are things you cannot judge from above. List 3–5 SPECIFIC ground photos the farmer should take to sharpen the design — each as a plain instruction starting with "Take a photo of...", naming WHERE on the site and WHY it helps (e.g. "Take a photo of the low wet corner in the north-east — to see if it stays soggy and could become a pond"). Base each request on what you actually see in this image.`
+  : `List 2–3 more photos that would fill the biggest gaps for the design, each starting with "Take a photo of..." and saying why.`}
 
 Be direct and concise. This feeds into a full design report.`,
     },

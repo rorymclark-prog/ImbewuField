@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       type: 'text' as const,
       text: `You are an expert permaculture designer. The farmer has uploaded a hand-drawn (or rough) sketch of their property. Read the sketch carefully — note everything they have marked: the house/buildings, boundaries, slopes, water (rivers, dams, taps), existing trees, roads/paths, a north arrow if present, and anything else.
 
-Produce a practical permaculture DESIGN laid out on THEIR sketch — refer to the actual features they drew ("near the house you marked top-left…", "along the slope running down to the stream…"). Make it buildable for a small-scale farmer.
+Produce a practical permaculture DESIGN laid out on THEIR sketch — refer to the actual features they drew ("near the house you marked top-left...", "along the slope running down to the stream..."). Make it buildable for a small-scale farmer.
 
 SITE DATA
 Biome: ${d.biome.name}${d.vegetation ? ` · exact vegetation: ${d.vegetation.vegUnit}` : ''}

@@ -148,7 +148,7 @@ export default function PlanPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && addCrop()}
-              placeholder="Add a crop (e.g. Kale, Garlic…)"
+              placeholder="Add a crop (e.g. Kale, Garlic...)"
               className="flex-1 text-sm font-display outline-none rounded-xl px-3 py-2.5"
               style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
             />

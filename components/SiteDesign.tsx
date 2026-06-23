@@ -154,7 +154,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
           style={loading
             ? { background: 'var(--bg-4)', border: '1px solid #E2D8C4', color: '#5C5040' }
             : { background: 'linear-gradient(135deg, rgba(212,168,83,0.22), rgba(212,168,83,0.08))', border: '1px solid rgba(212,168,83,0.45)', color: '#C07A1E' }}>
-          {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site…</span> : <><Ruler size={14} className="inline mr-1" />Generate design</>}
+          {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site...</span> : <><Ruler size={14} className="inline mr-1" />Generate design</>}
         </button>
       )}
 

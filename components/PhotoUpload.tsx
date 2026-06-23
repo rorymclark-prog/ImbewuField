@@ -145,7 +145,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             }}
           >
             {loading
-              ? <span className="flex items-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing…</span>
+              ? <span className="flex items-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing...</span>
               : 'Analyse'}
           </button>
         </div>
@@ -160,7 +160,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           <Loader2 size={20} className="animate-spin flex-shrink-0" style={{ color: '#235E86' }} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>
-              {analysis ? 'Claude is analysing the imagery…' : 'Sending to Claude Vision…'}
+              {analysis ? 'Claude is analysing the imagery...' : 'Sending to Claude Vision...'}
             </div>
             <div className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>
               Reads vegetation, water, terrain &amp; assets · ~15–30s
@@ -220,7 +220,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             }}
           >
             {loading
-              ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing photos…</span>
+              ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing photos...</span>
               : `Analyse ${imageData.length} photo${imageData.length > 1 ? 's' : ''}`}
           </button>
           <button

@@ -17,7 +17,7 @@ const MONTH_ABBR = [
 ];
 
 // 'B' = best time, 'P' = possible/transitional, '' = not recommended
-// Index: 0=Jan … 11=Dec
+// Index: 0=Jan ... 11=Dec
 type PlantMark = 'B' | 'P' | '';
 
 interface CropRow {

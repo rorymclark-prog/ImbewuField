@@ -114,7 +114,7 @@ export default function AreaPanel({ coords }: Props) {
             ? { background: '#FBF6EC', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
             : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: '#C07A1E' }}>
           {loading
-            ? <><Loader2 size={14} className="animate-spin" /> Loading…</>
+            ? <><Loader2 size={14} className="animate-spin" /> Loading...</>
             : <><RefreshCw size={14} /> Refresh</>}
         </button>
       </div>

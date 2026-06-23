@@ -132,7 +132,7 @@ export default function InsightsPanel({ locationData }: Props) {
           }
         >
           {loading ? (
-            <><Loader2 size={14} className="animate-spin" /> Analysing…</>
+            <><Loader2 size={14} className="animate-spin" /> Analysing...</>
           ) : insights ? (
             <>↺ Regenerate</>
           ) : (

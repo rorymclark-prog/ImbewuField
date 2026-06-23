@@ -1027,7 +1027,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 </div>
                 {farmersLoading && (
                   <div className="text-xs font-display px-2 py-1" style={{ color: '#5C5040' }}>
-                    <Loader2 size={14} className="animate-spin inline-block mr-1" /> Fetching farmers…
+                    <Loader2 size={14} className="animate-spin inline-block mr-1" /> Fetching farmers...
                   </div>
                 )}
                 {!farmersLoading && displayFarmers.map((f) => (

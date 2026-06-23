@@ -84,14 +84,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
-              placeholder="Place name…"
+              placeholder="Place name..."
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
               style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
             />
             <textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
-              placeholder="Notes (optional)…"
+              placeholder="Notes (optional)..."
               rows={2}
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
               style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
