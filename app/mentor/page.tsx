@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { listTrainees, getCourseProgress, logTrainerVisit } from '@/lib/db/queries';
+import { listTrainees, getCourseProgress, logMentorVisit } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
 import type { Profile, CourseProgress } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
@@ -44,8 +44,8 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
   );
 }
 
-function TraineeCard({ trainee, progress, doneIds, isLive }: {
-  trainee: Profile; progress: CourseProgress[]; doneIds: Set<string>; isLive: boolean;
+function TraineeCard({ trainee, doneIds, isLive }: {
+  trainee: Profile; doneIds: Set<string>; isLive: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [logging, setLogging] = useState(false);
@@ -56,7 +56,7 @@ function TraineeCard({ trainee, progress, doneIds, isLive }: {
   async function handleLog() {
     if (!notes.trim()) return;
     setSaving(true);
-    if (isLive) await logTrainerVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
+    if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
     setSaving(false); setSaved(true); setNotes('');
     setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
   }
@@ -81,7 +81,7 @@ function TraineeCard({ trainee, progress, doneIds, isLive }: {
 
       {open && (
         <div className="px-4 pb-4" style={{ borderTop: '1px solid #E2D8C4' }}>
-          <div className="text-xs font-mono uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>Modules</div>
+          <div className="text-xs font-mono uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>Module sign-off</div>
           {COURSE_MODULES.map((mod) => {
             const done = doneIds.has(mod.id);
             return (
@@ -114,7 +114,7 @@ function TraineeCard({ trainee, progress, doneIds, isLive }: {
           ) : (
             <div className="mt-3 space-y-2">
               <textarea value={notes} onChange={(e) => setNotes(e.target.value)}
-                placeholder="What was covered in this session?"
+                placeholder="What was covered on this visit?"
                 rows={3} className="w-full text-sm font-sans outline-none rounded-xl px-3 py-2.5 resize-none"
                 style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               <div className="flex gap-2">
@@ -140,7 +140,7 @@ function TraineeCard({ trainee, progress, doneIds, isLive }: {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function TrainerPage() {
+export default function MentorPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
@@ -185,18 +185,18 @@ export default function TrainerPage() {
       <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Trainer Hub</span>
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
         <div className="flex-1" />
         <SettingsButton />
       </header>
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
-        {/* Stats */}
+        {/* Cohort at a glance */}
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Trainees',      value: trainees.length, color: '#235E86' },
-            { label: 'Fully trained', value: totalFull,        color: '#1F4D2B' },
+            { label: 'Learners',      value: trainees.length, color: '#235E86' },
+            { label: 'Graduated',     value: totalFull,        color: '#1F4D2B' },
             { label: 'In progress',   value: totalPartial,     color: '#C07A1E' },
           ].map(({ label, value, color }) => (
             <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
@@ -228,7 +228,7 @@ export default function TrainerPage() {
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#8C7A62' }} />
           <input value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search trainees..."
+            placeholder="Search learners..."
             className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }} />
         </div>
@@ -242,21 +242,20 @@ export default function TrainerPage() {
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
             <Users size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
             <p className="text-sm font-display" style={{ color: '#5C5040' }}>
-              {search ? 'No trainees match that search.' : 'Trainees will appear here once they sign up.'}
+              {search ? 'No learners match that search.' : 'Learners will appear here once they enrol.'}
             </p>
           </div>
         ) : (
           <div className="space-y-3">
             {filtered.map((t) => (
-              <TraineeCard key={t.id} trainee={t} progress={progressMap[t.id] ?? []}
-                doneIds={doneIdsFor(t.id)} isLive={isLive} />
+              <TraineeCard key={t.id} trainee={t} doneIds={doneIdsFor(t.id)} isLive={isLive} />
             ))}
           </div>
         )}
 
         {!isLive && (
           <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            Sample data — connect Firebase to see live trainees
+            Sample data — connect Firebase to see live learners
           </p>
         )}
       </main>

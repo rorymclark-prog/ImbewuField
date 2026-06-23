@@ -11,13 +11,13 @@ service cloud.firestore {
     function myRole()      { return signedIn() ? prof().role : 'none'; }
     function myOrg()       { return signedIn() ? prof().org_id : null; }
     function isStaff()     { return myRole() in ['ngo', 'funder', 'admin']; }
-    function isTrainer()   { return myRole() == 'trainer'; }
+    function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
     function sameOrg(d)    { return isStaff() && d.org_id == myOrg(); }
 
     match /profiles/{uid} {
-      allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isTrainer());
+      allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
       allow create: if signedIn() && uid == request.auth.uid;
       allow update: if signedIn() && uid == request.auth.uid;
     }
@@ -29,7 +29,7 @@ service cloud.firestore {
       allow read: if signedIn() && (
         sameOrg(resource.data) ||
         resource.data.supervisor_id == request.auth.uid ||
-        isTrainer() ||
+        isMentor() ||
         exists(/databases/$(database)/documents/gardens/$(gid)/members/$(request.auth.uid))
       );
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
@@ -46,7 +46,7 @@ service cloud.firestore {
     }
 
     match /production_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || isTrainer();
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -55,7 +55,7 @@ service cloud.firestore {
     }
 
     match /sales_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || isTrainer();
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -71,7 +71,7 @@ service cloud.firestore {
     }
 
     match /reports/{id} {
-      allow read:   if ownsField(resource.data, 'owner_id') || sameOrg(resource.data) || isTrainer();
+      allow read:   if ownsField(resource.data, 'owner_id') || sameOrg(resource.data) || isMentor();
       allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid;
       allow update, delete: if ownsField(resource.data, 'owner_id');
     }
@@ -82,24 +82,24 @@ service cloud.firestore {
     }
 
     match /course_progress/{id} {
-      allow read:  if owns(resource.data) || isStaff() || isTrainer();
+      allow read:  if owns(resource.data) || isStaff() || isMentor();
       allow write: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.module is string
         && request.resource.data.done is bool;
     }
 
-    match /trainer_visits/{id} {
+    match /mentor_visits/{id} {
       allow read:   if signedIn() && (
-        resource.data.trainer_id == request.auth.uid ||
+        resource.data.mentor_id == request.auth.uid ||
         resource.data.trainee_id == request.auth.uid ||
         isStaff()
       );
       allow create: if signedIn()
-        && isTrainer()
-        && request.resource.data.trainer_id == request.auth.uid
+        && isMentor()
+        && request.resource.data.mentor_id == request.auth.uid
         && request.resource.data.notes is string;
-      allow update, delete: if signedIn() && resource.data.trainer_id == request.auth.uid;
+      allow update, delete: if signedIn() && resource.data.mentor_id == request.auth.uid;
     }
   }
 }

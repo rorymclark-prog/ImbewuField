@@ -65,10 +65,10 @@
       ]
     },
     {
-      "collectionGroup": "trainer_visits",
+      "collectionGroup": "mentor_visits",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "trainer_id", "order": "ASCENDING" },
+        { "fieldPath": "mentor_id", "order": "ASCENDING" },
         { "fieldPath": "trainee_id", "order": "ASCENDING" },
         { "fieldPath": "created_at", "order": "DESCENDING" }
       ]

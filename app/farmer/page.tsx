@@ -157,21 +157,6 @@ function HomeInner() {
           <LangSwitcher />
           <AccountButton />
 
-          <div className="hidden md:flex items-center gap-2">
-            {[
-              { dot: 'var(--emerald)', label: 'NASA POWER' },
-              { dot: 'var(--teal)', label: 'ISRIC Soil' },
-              { dot: 'var(--blue)', label: 'OpenTopo' },
-              { dot: 'var(--gold)', label: 'Claude AI' },
-            ].map(({ dot, label }) => (
-              <div key={label} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs"
-                   style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
-                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: dot }} />
-                {label}
-              </div>
-            ))}
-          </div>
-
           {error && (
             <span className="text-xs px-3 py-1 rounded-full font-mono flex-shrink-0 flex items-center"
                   style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>

@@ -13,7 +13,7 @@ import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Penci
 import type { UserRole } from '@/lib/db/types';
 
 const ROLE_LABELS: Record<UserRole, string> = {
-  farmer: 'Farmer', supervisor: 'Supervisor', trainer: 'Trainer',
+  farmer: 'Farmer', mentor: 'Mentor',
   student: 'Student', ngo: 'NGO coordinator', funder: 'Funder', admin: 'Admin',
 };
 

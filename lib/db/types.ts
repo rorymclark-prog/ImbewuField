@@ -1,7 +1,9 @@
 // ImbewuField data types — mirror the Postgres schema in supabase/schema.sql.
 // These are the contract the UI + data-access layer build against.
 
-export type UserRole = 'farmer' | 'supervisor' | 'trainer' | 'student' | 'ngo' | 'funder' | 'admin';
+// Mentor merges the former 'supervisor' (farm visits / design sign-off) and
+// 'trainer' (the 9-month course) into one field role, per the design handoff.
+export type UserRole = 'farmer' | 'mentor' | 'student' | 'ngo' | 'funder' | 'admin';
 export type GardenStatus = 'thriving' | 'establishing' | 'support';
 
 export interface Organization { id: string; name: string; kind: 'ngo' | 'funder'; created_at: string }
@@ -51,8 +53,8 @@ export interface SavedPlaceRow {
 
 export interface CourseProgress { id: string; profile_id: string; module: string; done: boolean; updated_at: string }
 
-export interface TrainerVisit {
-  id: string; trainer_id: string; trainee_id: string;
+export interface MentorVisit {
+  id: string; mentor_id: string; trainee_id: string;
   garden_id: string | null; notes: string; visited_at: string; created_at: string;
 }
 

@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Sprout, PenLine, BookOpen, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
+import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 
 const ROLES: { key: string; label: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
-  { key: 'farmer',      label: 'Farmer',     Icon: Sprout,         href: '/farmer',      ready: true },
-  { key: 'facilitator', label: 'Supervisor', Icon: PenLine,        href: '/facilitator', ready: true },
-  { key: 'trainer',     label: 'Trainer',    Icon: BookOpen,       href: '/trainer',     ready: true },
-  { key: 'student',     label: 'Student',    Icon: GraduationCap,  href: '/student',     ready: true },
-  { key: 'ngo',         label: 'NGO',        Icon: BarChart3,      href: '/ngo',         ready: true },
-  { key: 'funder',      label: 'Funder',     Icon: Building2,      href: '/funder',      ready: true },
+  { key: 'farmer',  label: 'Farmer',  Icon: Sprout,        href: '/farmer',  ready: true },
+  { key: 'mentor',  label: 'Mentor',  Icon: Users,         href: '/mentor',  ready: true },
+  { key: 'student', label: 'Student', Icon: GraduationCap, href: '/student', ready: true },
+  { key: 'ngo',     label: 'NGO',     Icon: BarChart3,     href: '/ngo',     ready: true },
+  { key: 'funder',  label: 'Funder',  Icon: Building2,     href: '/funder',  ready: true },
 ];
 
 export default function RoleSwitcher({ current }: { current: string }) {

@@ -3,18 +3,17 @@
 import Link from 'next/link';
 import {
   Sprout,
-  PenLine,
+  Users,
   BarChart3,
   Building2,
-  BookOpen,
   GraduationCap,
   ChevronRight,
+  ChevronDown,
   ArrowRight,
   Settings,
   Leaf,
   CalendarDays,
   Map,
-  TrendingUp,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -25,20 +24,20 @@ import { LanguageProvider } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 
+// The five field roles. Farmer is the default surface for everyone; the others
+// are dashboards reached through the quiet "Dashboards" disclosure below — the
+// home stays task-first, not role-first (per the design handoff).
 const ROLES: {
   href: string;
   Icon: React.ElementType;
   label: string;
   desc: string;
 }[] = [
-  { href: '/farmer',      Icon: Sprout,        label: 'Farmer',      desc: 'Analyse a site — climate, soil, water, AI reports' },
-  { href: '/facilitator', Icon: PenLine,        label: 'Supervisor',  desc: 'Design gardens & bills of quantities' },
-  { href: '/ngo',         Icon: BarChart3,      label: 'NGO',         desc: 'Programme dashboard & M&E roll-up' },
-  { href: '/funder',      Icon: Building2,      label: 'Funder',      desc: 'Read-only impact oversight' },
-  { href: '/trainer',     Icon: BookOpen,       label: 'Trainer',     desc: 'Run the 9-month programme' },
-  { href: '/student',     Icon: GraduationCap,  label: 'Student',     desc: 'Learn permaculture, step by step' },
-  { href: '/calendar',   Icon: CalendarDays,   label: 'Calendar',    desc: 'Seasonal planting guide' },
-  { href: '/finances',   Icon: TrendingUp,     label: 'Finances',    desc: 'Track crop sales & income' },
+  { href: '/farmer',  Icon: Sprout,        label: 'Farmer',  desc: 'Analyse a site — climate, soil, water, AI reports' },
+  { href: '/mentor',  Icon: Users,         label: 'Mentor',  desc: 'Run the course, visit farms, sign off progress' },
+  { href: '/student', Icon: GraduationCap, label: 'Student', desc: 'Learn permaculture, step by step' },
+  { href: '/ngo',     Icon: BarChart3,     label: 'NGO',     desc: 'Programme dashboard & M&E roll-up' },
+  { href: '/funder',  Icon: Building2,     label: 'Funder',  desc: 'Read-only impact oversight' },
 ];
 
 function getDayDate() {
@@ -86,6 +85,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
 
 function HomeLandingInner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
@@ -240,84 +240,84 @@ function HomeLandingInner() {
           ))}
         </div>
 
-        {/* ── Roles section ── */}
+        {/* ── Dashboards — a quiet disclosure, not a role-first launcher ── */}
         <section>
-          {/* Section overline */}
-          <span
-            className="uppercase tracking-widest font-sans"
-            style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', display: 'block', marginBottom: 10 }}
+          <button
+            onClick={() => setRolesOpen((o) => !o)}
+            className="w-full flex items-center justify-between"
+            aria-expanded={rolesOpen}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 2px' }}
           >
-            Go to
-          </span>
+            <span
+              className="uppercase tracking-widest font-sans"
+              style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em' }}
+            >
+              Dashboards
+            </span>
+            <span className="flex items-center gap-1 font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>
+              {rolesOpen ? 'Hide' : 'Farmer · Mentor · NGO · Funder · Student'}
+              <ChevronDown
+                size={14}
+                strokeWidth={1.7}
+                style={{ transform: rolesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+              />
+            </span>
+          </button>
 
-          {/* Ledger rows */}
-          <div
-            style={{
-              background: '#FBF6EC',
-              borderRadius: 16,
-              border: '1px solid #E2D8C4',
-              overflow: 'hidden',
-              boxShadow: '0 1px 3px rgba(32,25,15,0.06)',
-            }}
-          >
-            {ROLES.map((r, i) => (
-              <Link
-                key={r.href}
-                href={r.href}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  padding: '13px 16px',
-                  textDecoration: 'none',
-                  borderBottom: i < ROLES.length - 1 ? '1px solid #E2D8C4' : 'none',
-                  transition: 'background 0.12s',
-                }}
-                className="hover:bg-[rgba(32,25,15,0.03)]"
-              >
-                {/* Role icon */}
-                <div
+          {rolesOpen && (
+            <div
+              className="mt-2.5"
+              style={{
+                background: '#FBF6EC',
+                borderRadius: 16,
+                border: '1px solid #E2D8C4',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(32,25,15,0.06)',
+              }}
+            >
+              {ROLES.map((r, i) => (
+                <Link
+                  key={r.href}
+                  href={r.href}
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    background: 'rgba(31,77,43,0.08)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    color: '#1F4D2B',
+                    gap: 14,
+                    padding: '13px 16px',
+                    textDecoration: 'none',
+                    borderBottom: i < ROLES.length - 1 ? '1px solid #E2D8C4' : 'none',
+                    transition: 'background 0.12s',
                   }}
+                  className="hover:bg-[rgba(32,25,15,0.03)]"
                 >
-                  <r.Icon size={17} strokeWidth={1.6} />
-                </div>
-
-                {/* Text */}
-                <div className="flex-1 min-w-0">
                   <div
-                    className="font-display"
-                    style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}
+                    style={{
+                      width: 36, height: 36, borderRadius: 10,
+                      background: 'rgba(31,77,43,0.08)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0, color: '#1F4D2B',
+                    }}
                   >
-                    {r.label}
+                    <r.Icon size={17} strokeWidth={1.6} />
                   </div>
-                  <div
-                    className="font-sans truncate"
-                    style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}
-                  >
-                    {r.desc}
+                  <div className="flex-1 min-w-0">
+                    <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+                      {r.label}
+                    </div>
+                    <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>
+                      {r.desc}
+                    </div>
                   </div>
-                </div>
-
-                {/* Chevron */}
-                <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
-              </Link>
-            ))}
-          </div>
+                  <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
+                </Link>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* ── Footer ── */}
         <footer className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62', opacity: 0.7, paddingBottom: 8 }}>
-          NASA POWER · ISRIC soil · SANBI veg · Claude AI
+          ImbewuField · grown with you
         </footer>
       </main>
 

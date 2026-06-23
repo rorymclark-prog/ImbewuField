@@ -10,12 +10,11 @@ import type { UserRole } from '@/lib/db/types';
 type Mode = 'signin' | 'create' | 'reset';
 
 const SIGNUP_ROLES: { value: UserRole; label: string }[] = [
-  { value: 'farmer',     label: 'Farmer' },
-  { value: 'supervisor', label: 'Field supervisor' },
-  { value: 'trainer',    label: 'Trainer / extension officer' },
-  { value: 'student',    label: 'Student' },
-  { value: 'ngo',        label: 'NGO coordinator' },
-  { value: 'funder',     label: 'Funder / donor' },
+  { value: 'farmer',  label: 'Farmer' },
+  { value: 'mentor',  label: 'Mentor (trainer / field supervisor)' },
+  { value: 'student', label: 'Student' },
+  { value: 'ngo',     label: 'NGO coordinator' },
+  { value: 'funder',  label: 'Funder / donor' },
 ];
 
 // Google icon (verbatim SVG — no Lucide equivalent)

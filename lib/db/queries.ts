@@ -12,7 +12,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import { getFirebase } from '@/lib/firebase/init';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, Design, Report,
-  SavedPlaceRow, CourseProgress, GardenerProfile, TrainerVisit,
+  SavedPlaceRow, CourseProgress, GardenerProfile, MentorVisit,
 } from './types';
 
 const fb = () => getFirebase();
@@ -173,20 +173,20 @@ export async function setCourseProgress(module: string, done: boolean): Promise<
   });
 }
 
-// ---- trainer visits ----
-export async function logTrainerVisit(v: { trainee_id: string; garden_id?: string | null; notes: string; visited_at: string }): Promise<void> {
+// ---- mentor visits (farm visits + course sign-off) ----
+export async function logMentorVisit(v: { trainee_id: string; garden_id?: string | null; notes: string; visited_at: string }): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'trainer_visits'), { ...v, trainer_id: u, created_at: serverTimestamp() });
+  await addDoc(collection(f.db, 'mentor_visits'), { ...v, mentor_id: u, created_at: serverTimestamp() });
 }
-export async function myTrainerVisits(traineeId: string): Promise<TrainerVisit[]> {
+export async function myMentorVisits(traineeId: string): Promise<MentorVisit[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
   const s = await getDocs(query(
-    collection(f.db, 'trainer_visits'),
-    where('trainer_id', '==', u),
+    collection(f.db, 'mentor_visits'),
+    where('mentor_id', '==', u),
     where('trainee_id', '==', traineeId),
     orderBy('created_at', 'desc'),
   ));
-  return rows<TrainerVisit>(s);
+  return rows<MentorVisit>(s);
 }
 
 // ---- farmer / trainee directory ----
