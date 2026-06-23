@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Leaf, Sprout, Save, Ruler } from 'lucide-react';
+import { Leaf, Sprout, Save, Ruler, X, Camera } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -102,7 +102,7 @@ function SubmitBtn({
             className="inline-block w-3 h-3 rounded-full border-2 border-t-transparent animate-spin"
             style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
           />
-          Saving…
+          Saving...
         </>
       ) : (
         children
@@ -276,7 +276,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
                 style={{ background: 'rgba(0,0,0,0.35)', color: '#F7F2E9' }}
               >
-                ✕
+                <X size={10} />
               </button>
             </div>
           )}
@@ -288,8 +288,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
               color: '#5C5040',
             }}
           >
-            <span>📷</span>
-            <span>{form.photoFile ? form.photoFile.name : 'Choose photo…'}</span>
+            <Camera size={14} style={{ flexShrink: 0 }} />
+            <span>{form.photoFile ? form.photoFile.name : 'Choose photo'}</span>
             <input
               ref={fileRef}
               type="file"
