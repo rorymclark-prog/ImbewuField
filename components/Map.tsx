@@ -180,6 +180,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [editPoints, setEditPoints] = useState<[number, number][]>([]); // working ring (open — no closing dup)
   const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
+  const editNameRef = useRef<{ name?: string; category?: string } | null>(null); // name/category snapshot across edit
 
   // Saved-place pins: load + keep in sync with the Places tab
   useEffect(() => {
@@ -191,33 +192,47 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
+  // editingPlaceId: when non-null, the naming sheet is editing an existing saved place.
   const [namingPlace, setNamingPlace] = useState<{ lat: number; lon: number } | null>(null);
   const [placeName, setPlaceName] = useState('');
   const [placeLabel, setPlaceLabel] = useState<PlaceLabel>('field');
+  const [editingPlaceId, setEditingPlaceId] = useState<string | null>(null);
 
   const saveCurrentPlace = useCallback(() => {
     if (!selectedLocation) return;
+    setEditingPlaceId(null);
     setNamingPlace({ lat: selectedLocation.lat, lon: selectedLocation.lon });
     setPlaceName(locationData?.biome?.name ?? '');
     setPlaceLabel('field');
   }, [selectedLocation, locationData]);
 
+  // Open the naming sheet to edit an existing saved place (rename/recolour)
+  const startEditPlace = useCallback((p: SavedPlace) => {
+    setEditingPlaceId(p.id);
+    setNamingPlace({ lat: p.lat, lon: p.lon });
+    setPlaceName(p.name);
+    setPlaceLabel(p.label ?? 'field');
+  }, []);
+
   const confirmSavePlace = useCallback(() => {
     if (!namingPlace) return;
+    const existingId = editingPlaceId;
+    const existing = existingId ? savedPins.find((p) => p.id === existingId) : null;
     savePlace({
-      id: generateId(),
+      id: existingId ?? generateId(),
       name: placeName.trim() || 'My place',
       lat: namingPlace.lat, lon: namingPlace.lon,
-      biome: locationData?.biome?.name ?? '',
-      rainfall: locationData?.rainfall?.annual ?? 0,
-      elevation: locationData?.elevation?.elevation ?? 0,
+      biome: existing?.biome ?? locationData?.biome?.name ?? '',
+      rainfall: existing?.rainfall ?? locationData?.rainfall?.annual ?? 0,
+      elevation: existing?.elevation ?? locationData?.elevation?.elevation ?? 0,
       label: placeLabel,
-      savedAt: new Date().toISOString(),
+      savedAt: existing?.savedAt ?? new Date().toISOString(),
     });
+    setSavedPins(loadPlaces());
+    setEditingPlaceId(null);
     setNamingPlace(null);
-    setPlaceSaved(true);
-    setTimeout(() => setPlaceSaved(false), 2500);
-  }, [namingPlace, placeName, placeLabel, locationData]);
+    if (!existingId) { setPlaceSaved(true); setTimeout(() => setPlaceSaved(false), 2500); }
+  }, [namingPlace, placeName, placeLabel, locationData, editingPlaceId, savedPins]);
 
   // Lima coach-marks — a quick guide that auto-shows the first time the tools
   // panel is opened, and reopens any time via the "?" in the panel header.
@@ -245,8 +260,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     if (!draw) return;
     const all = draw.getAll();
     // Persist every shape change so a page refresh never loses the farmer's drawing.
-    // Skip while tearing down (unmount) — that path empties the store and would wipe storage.
-    if (!tearingDownRef.current) {
+    // Skip while tearing down (unmount) or before restore has run — either path could
+    // overwrite the saved collection with a partial/empty in-memory store.
+    if (!tearingDownRef.current && restoredRef.current) {
       try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
     }
     const polygons = all.features.filter(
@@ -269,6 +285,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         perimeterM: Math.round(totalPerimeterKm * 1000),
         perimeterKm: Math.round(totalPerimeterKm * 100) / 100,
         count: sitePolys.length,
+        features: sitePolys.map((f: GeoJSON.Feature) => ({
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
+        })),
       };
       setSiteStats(site);
       onSiteDrawn?.(site);
@@ -285,6 +306,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         areaM2: Math.round(areaM2),
         estVolumeKL: Math.round(areaM2 * WATER_AVG_DEPTH),
         avgDepthM: WATER_AVG_DEPTH,
+        features: waterPolys.map((f: GeoJSON.Feature) => ({
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
+        })),
       };
       setWaterStats(water);
       onWaterDrawn?.(water);
@@ -299,6 +325,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const map = mapRef.current?.getMap();
     if (!map) return null;
     if (drawRef.current) return drawRef.current;
+    // A remount (StrictMode double-invoke, route unmount/remount) needs a fresh
+    // teardown flag so this new instance can persist shapes again.
+    tearingDownRef.current = false;
 
     // Colour by featureType: water = blue, site/boundary = emerald
     const strokeColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#7FC4F0', '#5DCF80'] as unknown as string;
@@ -312,6 +341,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
     const draw = new MapboxDraw({
       displayControlsDefault: false,
+      userProperties: true, // required: exposes user_featureType to style filter expressions
       modes: { ...MapboxDraw.modes, static: StaticMode as unknown as typeof MapboxDraw.modes.simple_select },
       // How close a click/tap must land to grab a vertex. Defaults (2 / 25) are too tight
       // for fingers — widen the touch buffer so corners are easy to catch on a phone.
@@ -482,9 +512,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // on each corner of the land, tap, and walk to the next — no map-panning needed.
   const [gpsAdding, setGpsAdding] = useState(false);
   const [gpsError, setGpsError] = useState('');
+  const gpsErrTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showGpsError = useCallback((msg: string) => {
+    setGpsError(msg);
+    if (gpsErrTimer.current) clearTimeout(gpsErrTimer.current);
+    gpsErrTimer.current = setTimeout(() => setGpsError(''), 2000);
+  }, []);
   const addPinFromGPS = useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
-      setGpsError('GPS not available on this device.');
+      showGpsError('GPS not available on this device.');
       return;
     }
     setGpsAdding(true);
@@ -497,10 +533,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         if (map) map.easeTo({ center: [lng, lat], zoom: Math.max(map.getZoom(), 18), duration: 600 });
         setGpsAdding(false);
       },
-      () => { setGpsAdding(false); setGpsError('Could not get your location — allow GPS and try outside.'); },
+      () => { setGpsAdding(false); showGpsError('Could not get your location — allow GPS and try outside.'); },
       { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
     );
-  }, []);
+  }, [showGpsError]);
 
   const undoPin = useCallback(() => {
     setDraftPoints((prev) => prev.slice(0, -1));
@@ -564,6 +600,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9) ring.pop();
     }
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
+    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined };
     try { draw.delete(featureId); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
@@ -674,7 +711,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
     let id: string | null = null;
     try { const ids = draw.add(feature); id = ids?.[0] ?? null; } catch { id = null; }
-    if (id != null) draw.setFeatureProperty(id, 'featureType', edit.type);
+    if (id != null) {
+      draw.setFeatureProperty(id, 'featureType', edit.type);
+      const snap = editNameRef.current;
+      if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
+      if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
+    }
+    editNameRef.current = null;
     setEditPin(null);
     setEditPoints([]);
     setSelCorner(null);
@@ -693,9 +736,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       try {
         const ids = draw.add({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [ring] } } as GeoJSON.Feature<GeoJSON.Polygon>);
         const id = ids?.[0];
-        if (id != null) draw.setFeatureProperty(id, 'featureType', edit.type);
+        if (id != null) {
+          draw.setFeatureProperty(id, 'featureType', edit.type);
+          const snap = editNameRef.current;
+          if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
+          if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
+        }
       } catch {}
     }
+    editNameRef.current = null;
     setEditPin(null);
     setEditPoints([]);
     setSelCorner(null);
@@ -946,6 +995,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // Reset the Cancel-confirm whenever a draw session ends
   useEffect(() => { if (!pinDraw) setCancelArmed(false); }, [pinDraw]);
 
+  // Fade out the top instruction banner after 6 s so it doesn't block the view
+  const [hintFaded, setHintFaded] = useState(false);
+  const hintFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (hintFadeTimer.current) clearTimeout(hintFadeTimer.current);
+    if (pinDraw) {
+      setHintFaded(false);
+      hintFadeTimer.current = setTimeout(() => setHintFaded(true), 6000);
+    } else {
+      setHintFaded(false);
+    }
+    return () => { if (hintFadeTimer.current) clearTimeout(hintFadeTimer.current); };
+  }, [pinDraw]);
+
   const handleMouseMove = useCallback((e: MapMouseEvent) => {
     const map = mapRef.current?.getMap();
     if (!map) return;
@@ -1049,11 +1112,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
   const [shapeName, setShapeName] = useState('');
   const [shapeCategory, setShapeCategory] = useState('');
-  const openShapeNaming = useCallback((id: string, type: 'site' | 'water') => {
+  const openShapeNaming = useCallback((id: string, type: 'site' | 'water', overrideName?: string, overrideCat?: string) => {
     const draw = drawRef.current;
     const f = draw?.get(id);
-    setShapeName((f?.properties?.name as string) ?? '');
-    setShapeCategory((f?.properties?.category as string) ?? '');
+    setShapeName(overrideName !== undefined ? overrideName : (f?.properties?.name as string) ?? '');
+    setShapeCategory(overrideCat !== undefined ? overrideCat : (f?.properties?.category as string) ?? '');
     setShapeNaming({ id, type });
   }, []);
   const confirmShapeNaming = useCallback(() => {
@@ -1274,11 +1337,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Reticle-draw action bar (phone-first, big touch targets) ── */}
       {pinDraw && (
         <>
-          {/* Top hint */}
+          {/* Top hint — fades after 6 s so it stops blocking the view */}
           <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
             style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
-              background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
-            <span className="text-sm font-display" style={{ color: draftStroke }}>
+              background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)',
+              opacity: hintFaded ? 0 : 1, transition: 'opacity 1s' }}>
+            <span className="font-display" style={{ fontSize: 12, color: draftStroke }}>
               {draftPoints.length === 0
                 ? `Mark each corner of your ${pinDraw === 'water' ? 'water store' : 'land'} — tap the map, or centre the crosshair and tap Add corner`
                 : draftPoints.length < 3
@@ -1336,7 +1400,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={addPin}
               className="flex items-center justify-center gap-1.5 rounded-2xl font-display font-bold transition-all active:scale-95"
               style={{ flex: '1 1 0%', minWidth: 0, overflow: 'hidden', padding: '13px 8px', background: draftColor, color: '#06160a',
-                boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 15 }}>
+                boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 13 }}>
               <Plus size={20} strokeWidth={2.4} style={{ flexShrink: 0 }} />
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Add corner</span>
             </button>
@@ -1360,39 +1424,45 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
             style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
-            <span className="text-sm font-display" style={{ color: draftStroke }}>
+            <span className="font-display" style={{ fontSize: 12, color: draftStroke }}>
               {selCorner == null
-                ? `Press and drag any corner to move it${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
-                : `Corner ${selCorner + 1} selected — drag to move, or 🗑 Remove · ${editAreaHa ?? ''} ha`}
+                ? `Drag a corner to move it${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
+                : `Corner ${selCorner + 1} selected — drag or Remove · ${editAreaHa ?? ''} ha`}
             </span>
           </div>
 
           <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-1.5"
-            style={{ bottom: 'calc(78px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(440px, calc(100vw - 20px))' }}>
+            style={{ bottom: 'calc(78px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(480px, calc(100vw - 20px))' }}>
             <button onClick={cancelReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 1 54px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
               <X size={17} />
-              <span style={{ fontSize: 12.5, marginTop: 3 }}>Cancel</span>
+              <span style={{ fontSize: 11, marginTop: 3 }}>Cancel</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 1 58px', minWidth: 0, padding: '9px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
                 background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-              <Trash2 size={17} />
-              <span style={{ fontSize: 12.5, marginTop: 3 }}>Remove</span>
+              <Trash2 size={15} />
+              <span style={{ fontSize: 11, marginTop: 3 }}>Remove</span>
+            </button>
+            <button onClick={() => openShapeNaming(editPin.id, editPin.type, editNameRef.current?.name, editNameRef.current?.category)}
+              className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}66`, color: draftStroke }}>
+              <PenLine size={15} />
+              <span style={{ fontSize: 11, marginTop: 3 }}>Rename</span>
             </button>
             <button onClick={addEditCorner}
-              className="flex items-center justify-center gap-1.5 rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '1 1 0%', minWidth: 0, overflow: 'hidden', padding: '10px 8px', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
-              <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>＋</span>
+              className="flex items-center justify-center gap-1 rounded-2xl font-display font-bold transition-all active:scale-95"
+              style={{ flex: '1 1 0%', minWidth: 0, overflow: 'hidden', padding: '10px 6px', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 12 }}>
+              <span style={{ fontSize: 16, lineHeight: 1, flexShrink: 0 }}>＋</span>
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Add corner</span>
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 1 58px', minWidth: 0, padding: '9px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
               <Check size={17} />
-              <span style={{ fontSize: 12, marginTop: 3 }}>Done</span>
+              <span style={{ fontSize: 11, marginTop: 3 }}>Done</span>
             </button>
           </div>
         </>
@@ -1488,7 +1558,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
-            placeholder="Search a town..."
+            placeholder="Search town or address"
             className="map-search-input flex-1 font-sans outline-none min-w-0"
             style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
           />
@@ -1709,15 +1779,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {savedPins.map((p) => (
                     <div key={p.id} className="flex items-center gap-1.5 rounded-lg overflow-hidden"
                       style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.3)', minHeight: 40 }}>
+                      {/* Colour dot — tap to edit name/colour */}
+                      <button
+                        onClick={() => startEditPlace(p)}
+                        title="Edit name or colour"
+                        className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all"
+                        style={{ width: 36, minHeight: 40, background: 'transparent', border: 'none', borderRight: '1px solid rgba(234,243,226,0.1)', cursor: 'pointer' }}>
+                        <span style={{ width: 13, height: 13, borderRadius: '50%', background: placeColor(p.label), boxShadow: '0 0 0 2px rgba(6,16,10,0.5), 0 0 0 3.5px rgba(255,255,255,0.2)' }} />
+                      </button>
                       <button
                         onClick={() => {
                           mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
                           onLocationSelect(p.lat, p.lon);
                           setPlacesOpen(false);
                         }}
-                        className="flex-1 flex items-center gap-2 pl-2.5 pr-1 font-sans text-left transition-all min-w-0"
+                        className="flex-1 flex items-center gap-1.5 pr-1 font-sans text-left transition-all min-w-0"
                         style={{ color: 'var(--text-secondary)', minHeight: 40, fontSize: 13 }}>
-                        <span style={{ width: 11, height: 11, borderRadius: '50%', background: placeColor(p.label), flexShrink: 0, boxShadow: '0 0 0 2px rgba(6,16,10,0.4)' }} />
                         <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
                         <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{p.elevation}m</span>
                       </button>
@@ -1725,8 +1802,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
                         aria-label={`Delete ${p.name}`} title="Delete this place"
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 40, minHeight: 40, background: 'transparent', border: 'none', borderLeft: '1px solid rgba(212,110,66,0.25)', color: 'rgba(212,110,66,0.85)', cursor: 'pointer' }}>
-                        <Trash2 size={15} />
+                        style={{ width: 38, minHeight: 40, background: 'transparent', border: 'none', borderLeft: '1px solid rgba(212,110,66,0.25)', color: 'rgba(212,110,66,0.85)', cursor: 'pointer' }}>
+                        <Trash2 size={14} />
                       </button>
                     </div>
                   ))}
@@ -1756,21 +1833,30 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {/* Vertex editing */}
           {editingFeatureId && !activeDraw && (
             <>
-              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-display"
-                style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32 }}>
-                Drag a big dot to move a corner · drag a faint mid-dot to add one · pinch to zoom in for accuracy
+              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg font-display"
+                style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32, fontSize: 11.5 }}>
+                Drag a corner dot to move it · mid-dot adds a corner · pinch to zoom
               </div>
+              <button onClick={() => {
+                  const f = drawRef.current?.get(editingFeatureId);
+                  const type = f?.properties?.featureType === 'water' ? 'water' : 'site';
+                  openShapeNaming(editingFeatureId, type);
+                }}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: '#A8D88A', minHeight: 32 }}>
+                <PenLine size={12} className="inline mr-1" />Rename
+              </button>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
-                <Trash2 size={13} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Tap again to delete' : 'Delete shape'}
+                <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Tap again to delete' : 'Delete'}
               </button>
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
-                <Check size={13} className="inline mr-1" />Done
+                <Check size={12} className="inline mr-1" />Done
               </button>
             </>
           )}
@@ -1982,7 +2068,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
                 <MapPin size={16} style={{ color: placeColor(placeLabel) }} />
-                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>Save this place</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{editingPlaceId ? 'Edit place' : 'Save this place'}</span>
               </div>
               <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
                 placeholder="Name it — e.g. Home plot"

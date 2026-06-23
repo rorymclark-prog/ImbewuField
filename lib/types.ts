@@ -58,14 +58,16 @@ export interface SiteData {
   areaHa: number;
   perimeterM: number;
   perimeterKm: number;
-  count?: number;  // number of land parcels drawn (optional — report can ignore)
+  count?: number;
+  features?: Array<{ name?: string; category?: string; areaHa: number }>;
 }
 
 export interface WaterData {
-  count: number;        // number of storage features drawn
-  areaM2: number;       // total surface area
-  estVolumeKL: number;  // estimated capacity (area × ~1.5m avg depth), in kilolitres
-  avgDepthM: number;    // depth assumption used for the estimate
+  count: number;
+  areaM2: number;
+  estVolumeKL: number;
+  avgDepthM: number;
+  features?: Array<{ name?: string; category?: string; estVolumeKL: number }>;
 }
 
 export interface VegetationData {

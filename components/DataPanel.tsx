@@ -387,41 +387,69 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {(siteData || (waterData && waterData.count > 0)) && (
               <div className="space-y-2">
                 {siteData && (
-                  <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
-                    <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
-                      <Sprout size={16} style={{ color: '#A8D88A' }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
-                        Your land{siteData.count && siteData.count > 1 ? ` · ${siteData.count} parcels` : ''}
+                  <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
+                    <div className="flex items-center gap-3 px-3.5 py-2.5">
+                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
+                        <Sprout size={16} style={{ color: '#A8D88A' }} />
                       </div>
-                      <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                        {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} perimeter · {siteData.areaM2.toLocaleString()} m²
+                      <div className="flex-1 min-w-0">
+                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
+                          Your land{siteData.count && siteData.count > 1 ? ` · ${siteData.count} parcels` : ''}
+                        </div>
+                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                          {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} perimeter · {siteData.areaM2.toLocaleString()} m²
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
+                        <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
-                      <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div>
-                    </div>
+                    {siteData.features && siteData.features.some(f => f.name) && (
+                      <div className="px-3.5 pb-2.5 space-y-1">
+                        {siteData.features.map((f, i) => f.name ? (
+                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
+                            <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
+                            {f.category && <span style={{ color: '#94876F' }}>{f.category}</span>}
+                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.areaHa} ha</span>
+                          </div>
+                        ) : null)}
+                      </div>
+                    )}
                   </div>
                 )}
                 {waterData && waterData.count > 0 && (
-                  <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
-                    <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
-                      <Droplets size={16} style={{ color: '#CFE6F5' }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
-                        Water storage{waterData.count > 1 ? ` · ${waterData.count} stores` : ''}
+                  <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
+                    <div className="flex items-center gap-3 px-3.5 py-2.5">
+                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
+                        <Droplets size={16} style={{ color: '#CFE6F5' }} />
                       </div>
-                      <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                        {waterData.areaM2.toLocaleString()} m² surface · ~{waterData.avgDepthM} m deep
+                      <div className="flex-1 min-w-0">
+                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
+                          Water storage{waterData.count > 1 ? ` · ${waterData.count} stores` : ''}
+                        </div>
+                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                          {waterData.areaM2.toLocaleString()} m² surface · ~{waterData.avgDepthM} m deep
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
+                        <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
-                      <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
-                    </div>
+                    {waterData.features && waterData.features.some(f => f.name) && (
+                      <div className="px-3.5 pb-2.5 space-y-1">
+                        {waterData.features.map((f, i) => f.name ? (
+                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
+                            <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
+                            {f.category && <span style={{ color: '#94876F' }}>{f.category}</span>}
+                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.estVolumeKL.toLocaleString()} kL</span>
+                          </div>
+                        ) : null)}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
