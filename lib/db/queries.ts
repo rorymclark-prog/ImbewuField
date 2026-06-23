@@ -6,7 +6,7 @@
 
 import {
   collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-  addDoc, query, where, serverTimestamp,
+  addDoc, query, where, orderBy, serverTimestamp,
 } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirebase } from '@/lib/firebase/init';
@@ -87,7 +87,7 @@ export async function addSale(row: Partial<SalesLog>): Promise<void> {
 }
 export async function myProduction(): Promise<ProductionLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
-  const s = await getDocs(query(collection(f.db, 'production_logs'), where('profile_id', '==', u)));
+  const s = await getDocs(query(collection(f.db, 'production_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
   return rows<ProductionLog>(s);
 }
 
@@ -116,7 +116,7 @@ export async function saveReport(r: Partial<Report>): Promise<void> {
 // ---- saved places ----
 export async function listSavedPlaces(): Promise<SavedPlaceRow[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
-  const s = await getDocs(query(collection(f.db, 'saved_places'), where('profile_id', '==', u)));
+  const s = await getDocs(query(collection(f.db, 'saved_places'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
   return rows<SavedPlaceRow>(s);
 }
 export async function addSavedPlace(p: Partial<SavedPlaceRow>): Promise<void> {

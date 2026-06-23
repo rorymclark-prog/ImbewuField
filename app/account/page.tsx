@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { updateMyProfile } from '@/lib/db/queries';
+import { updateMyProfile, uploadPhoto } from '@/lib/db/queries';
 import { APP_LANGS } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
-import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, type LucideIcon } from 'lucide-react';
+import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 
 const ROLE_LABELS: Record<UserRole, string> = {
@@ -31,13 +31,21 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
 }
 
 export default function AccountPage() {
-  const { user, profile, signOutUser, loading } = useAuth();
+  const { user, profile, signOutUser, changePassword, refreshProfile, loading } = useAuth();
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', language: 'en' });
+  const [photoUploading, setPhotoUploading] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const [changingPw, setChangingPw] = useState(false);
+  const [pwForm, setPwForm] = useState({ current: '', next: '', confirm: '' });
+  const [pwError, setPwError] = useState<string | null>(null);
+  const [pwSuccess, setPwSuccess] = useState(false);
+  const [pwSaving, setPwSaving] = useState(false);
+  const [showPw, setShowPw] = useState(false);
 
   useEffect(() => {
     if (!loading && !user && isBackendConfigured()) router.replace('/login');
@@ -56,8 +64,32 @@ export default function AccountPage() {
   async function saveProfile() {
     setSaving(true);
     await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, language: form.language });
+    await refreshProfile();
     setSaving(false);
     setEditing(false);
+  }
+
+  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setPhotoUploading(true);
+    try {
+      const url = await uploadPhoto(file, 'avatars');
+      if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
+    } finally {
+      setPhotoUploading(false);
+      if (photoInputRef.current) photoInputRef.current.value = '';
+    }
+  }
+
+  async function handleChangePw() {
+    setPwError(null);
+    if (pwForm.next !== pwForm.confirm) { setPwError('New passwords do not match.'); return; }
+    if (pwForm.next.length < 6) { setPwError('Password must be at least 6 characters.'); return; }
+    setPwSaving(true);
+    const err = await changePassword(pwForm.current, pwForm.next);
+    setPwSaving(false);
+    if (err) { setPwError(err); } else { setPwSuccess(true); setPwForm({ current: '', next: '', confirm: '' }); setTimeout(() => { setPwSuccess(false); setChangingPw(false); }, 2000); }
   }
 
   if (loading || !user) {
@@ -95,9 +127,24 @@ export default function AccountPage() {
 
           {/* Avatar + name */}
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-            <div className="flex items-center justify-center rounded-full font-display font-bold flex-shrink-0"
-              style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#EAF3E2' }}>
-              {(displayName ?? user.email ?? '?')[0].toUpperCase()}
+            <div className="relative flex-shrink-0">
+              {profile?.photo_url ? (
+                <img src={profile.photo_url} alt={displayName ?? 'Avatar'}
+                  className="rounded-full object-cover"
+                  style={{ width: 64, height: 64 }} />
+              ) : (
+                <div className="flex items-center justify-center rounded-full font-display font-bold"
+                  style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#EAF3E2' }}>
+                  {(displayName ?? user.email ?? '?')[0].toUpperCase()}
+                </div>
+              )}
+              <button onClick={() => photoInputRef.current?.click()} disabled={photoUploading}
+                aria-label="Change photo"
+                className="absolute bottom-0 right-0 flex items-center justify-center rounded-full"
+                style={{ width: 22, height: 22, background: '#C07A1E', border: '2px solid #FBF6EC', cursor: photoUploading ? 'wait' : 'pointer' }}>
+                <Camera size={11} style={{ color: '#fff' }} />
+              </button>
+              <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: '#20190F' }}>
@@ -169,6 +216,60 @@ export default function AccountPage() {
               <Row icon={Phone} label="Phone" value={profile?.phone ?? null} />
               <Row icon={Globe} label="Language" value={langLabel} />
               <Row icon={User} label="Role" value={roleLabel} />
+            </div>
+          )}
+
+          {/* Change password */}
+          {!changingPw ? (
+            <button onClick={() => setChangingPw(true)}
+              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
+              <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#8C7A62' }} />Change password</span>
+              <ChevronRight size={16} style={{ color: '#8C7A62' }} />
+            </button>
+          ) : (
+            <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>Change password</div>
+
+              {pwSuccess ? (
+                <div className="flex items-center gap-2 py-2 text-sm font-display" style={{ color: '#1F4D2B' }}>
+                  <Check size={14} />Password updated successfully.
+                </div>
+              ) : (
+                <>
+                  {(['current', 'next', 'confirm'] as const).map((field) => (
+                    <div key={field} className="relative">
+                      <input
+                        type={showPw ? 'text' : 'password'}
+                        placeholder={field === 'current' ? 'Current password' : field === 'next' ? 'New password' : 'Confirm new password'}
+                        value={pwForm[field]}
+                        onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
+                        className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 pr-10"
+                        style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+                      {field === 'current' && (
+                        <button type="button" onClick={() => setShowPw((s) => !s)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2"
+                          style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                          {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  {pwError && <p className="text-xs font-sans" style={{ color: '#D4922A' }}>{pwError}</p>}
+                  <div className="flex gap-2 pt-1">
+                    <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
+                      style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
+                      <Lock size={13} />{pwSaving ? 'Updating...' : 'Update password'}
+                    </button>
+                    <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}
+                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
+                      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                      <X size={14} />Cancel
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
