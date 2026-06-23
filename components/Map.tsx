@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1597,7 +1597,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <button onClick={() => startEdit(sf.id, 'site')}
                         className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                         style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
-                        title="Edit this parcel's corners">✎ Edit</button>
+                        title="Edit this parcel's corners"><PenLine size={12} className="inline mr-1" />Edit</button>
                       <button onClick={() => requestDelete(sf.id)}
                         className="flex items-center px-2 py-1 rounded-md font-semibold"
                         style={pendingDelete === sf.id
@@ -1611,7 +1611,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <button onClick={() => startPinDraw('site')}
                   className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
                   style={{ background: 'rgba(212,168,83,0.22)', border: '1px solid rgba(212,168,83,0.6)', color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-                  ✏ Draw boundary
+                  <PenLine size={13} className="inline mr-1" />Draw boundary
                 </button>
               )}
             </>
@@ -1623,7 +1623,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
                 style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
                 <span style={{ color: 'var(--blue)' }}>
-                  💧 {waterStats.count} store{waterStats.count !== 1 ? 's' : ''} · ~{waterStats.estVolumeKL.toLocaleString()} kL
+                  <Droplets size={13} className="inline mr-1" />{waterStats.count} store{waterStats.count !== 1 ? 's' : ''} · ~{waterStats.estVolumeKL.toLocaleString()} kL
                 </span>
                 <button onClick={() => startPinDraw('water')} className="ml-auto font-bold" style={{ color: 'var(--blue)', fontSize: 14 }} title="Add another water store">＋</button>
                 <button onClick={() => clearType('water')} style={{ color: 'var(--text-muted)' }} title="Clear all water stores">✕</button>
@@ -1637,13 +1637,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <button onClick={() => startEdit(wf.id, 'water')}
                     className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
                     style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
-                    title="Edit this store's corners">✎ Edit</button>
+                    title="Edit this store's corners"><PenLine size={12} className="inline mr-1" />Edit</button>
                   <button onClick={() => requestDelete(wf.id)}
                     className="flex items-center px-2 py-1 rounded-md font-semibold"
                     style={pendingDelete === wf.id
                       ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
                       : { background: 'rgba(212,110,66,0.14)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)' }}
-                    title="Delete this store">{pendingDelete === wf.id ? 'Sure?' : '🗑'}</button>
+                    title="Delete this store">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={13} />}</button>
                 </div>
               ))}
             </div>
@@ -1651,7 +1651,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={() => startPinDraw('water')}
               className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
               style={{ background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.6)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-              💧 Water
+              <Droplets size={14} className="inline mr-1" />Water
             </button>
           ))}
 
