@@ -21,10 +21,13 @@ with the viewport (use `clamp()` or `md:`/`lg:` breakpoints).
 | Small / captions / map labels | 11–13 | 13 | 13 | Public Sans |
 | Tab-bar labels | 10 | 12 | 12 | Public Sans |
 
-Applied so far: the **farmer-map chrome** (the cited offender) — header 60px,
-settings 40px, RoleSwitcher nav 16/600 Public Sans, Design-map 15/700, tagline
-13px, DataPanel hero `clamp(24px,2.2vw,28px)`. STILL TODO on wide layouts:
-NgoDashboard (ngo/funder), facilitator canvas, financial sheet — same audit.
+Applied: the **farmer-map chrome** (header 60px, settings 40px, RoleSwitcher nav
+16/600 Public Sans, Design-map 15/700, tagline 13px, DataPanel hero
+`clamp(24px,2.2vw,28px)`) AND **NgoDashboard** (stat big-number →
+`clamp(24px,2.2vw,34px)`; also removed 6 stray emoji → Lucide icons + labels to
+Public Sans). Audited & confirmed already-on-spec (no change needed): the
+**facilitator** page chrome and the **finances** page (all text ≤16px, within
+the §0 desktop targets).
 
 ## Design system (frame 27 · design kit)
 
@@ -79,6 +82,11 @@ planting calendar → bill of quantities).
   from map → sun & slope → resources → goal → confirm beds), Lima sizes the beds
   (1.2 m × 8 m), then a six-week establishment plan you can slide + print. Saves
   to `imbewu_garden_survey`; beds seed from the planner crops (frame 29)
+- **Crop Plan** at `/cropplan` (Crop Planner → "Jobs") — task scheduler with four
+  zoom levels: Day (today's jobs), Week (Mon–Sun, 7-col grid on desktop), Month
+  (calendar w/ per-day job dots), Season (3-month focus). Jobs derive from the
+  beds (garden survey / planner crops) via a weekly rota; responsive type
+  throughout (frame 31)
 - AI permaculture report (frame 25); role dashboards NGO/Funder/Mentor/Student (frames 19/20)
 - Auth: email + Google + reset + change password; Firestore rules + indexes
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { MapPin, Check, Circle } from 'lucide-react';
+import { MapPin, Check, Circle, Map as MapIcon, FileText, Camera, User, BookOpen, ChevronLeft } from 'lucide-react';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -181,9 +181,10 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
 function Stat({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
     <div className="rounded-xl p-3 flex-1" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>{label}</div>
-      <div className="font-display font-bold text-2xl mt-0.5" style={{ color }}>{value}</div>
-      <div className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>{sub}</div>
+      <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#5C5040' }}>{label}</div>
+      {/* Big number scales up on desktop (handoff §0) — phone stays 24px */}
+      <div className="font-display font-bold mt-0.5" style={{ fontSize: 'clamp(24px, 2.2vw, 34px)', lineHeight: 1.1, color }}>{value}</div>
+      <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{sub}</div>
     </div>
   );
 }
@@ -440,7 +441,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ))}
             {gardener && (
               <Marker longitude={gardener.lon} latitude={gardener.lat} anchor="center">
-                <div className="rounded-full flex items-center justify-center" style={{ width: 26, height: 26, background: '#1F4D2B', border: '3px solid #fff', boxShadow: '0 0 0 6px rgba(31,77,43,0.22)', fontSize: 12 }}>👤</div>
+                <div className="rounded-full flex items-center justify-center" style={{ width: 26, height: 26, background: '#1F4D2B', border: '3px solid #fff', boxShadow: '0 0 0 6px rgba(31,77,43,0.22)' }}><User size={13} style={{ color: '#EAF3E2' }} /></div>
               </Marker>
             )}
           </ReactMapGL>
@@ -471,13 +472,13 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             {gardener && totals ? (
               /* ── LEVEL 3 — gardener profile ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGardener(null)} className="text-xs font-mono" style={{ color: '#5C5040' }}>← {garden.name}</button>
+                <button onClick={() => setGardener(null)} className="flex items-center gap-1 text-xs font-sans" style={{ color: '#5C5040' }}><ChevronLeft size={13} />{garden.name}</button>
 
                 {/* Identity */}
                 <div className="flex items-center gap-3">
                   <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.25)', color: '#2D6B3C', fontWeight: 600 }}>
                     {initials(gardener.name)}
-                    <span className="absolute -bottom-1 -right-1" style={{ fontSize: 10 }}>📷</span>
+                    <span className="absolute -bottom-1 -right-1 rounded-full flex items-center justify-center" style={{ width: 16, height: 16, background: '#FBF6EC', border: '1px solid #E2D8C4' }}><Camera size={9} style={{ color: '#5C5040' }} /></span>
                   </div>
                   <div className="min-w-0">
                     <div className="font-display font-bold text-base truncate" style={{ color: '#20190F' }}>{gardener.name}</div>
@@ -520,12 +521,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {/* Garden design + report */}
                     <div className="grid grid-cols-2 gap-2">
                       <div className="rounded-lg overflow-hidden" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}>
-                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(91,158,212,0.12)' }}><span style={{ fontSize: 22 }}>🗺</span></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-mono" style={{ color: '#235E86' }}>view</div></div>
+                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(91,158,212,0.12)' }}><MapIcon size={20} style={{ color: '#235E86' }} /></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-sans" style={{ color: '#235E86' }}>view</div></div>
                       </div>
                       <div className="rounded-lg overflow-hidden" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}>
-                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(212,168,83,0.12)' }}><span style={{ fontSize: 22 }}>📄</span></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-mono" style={{ color: '#C07A1E' }}>view</div></div>
+                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(212,168,83,0.12)' }}><FileText size={20} style={{ color: '#C07A1E' }} /></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-sans" style={{ color: '#C07A1E' }}>view</div></div>
                       </div>
                     </div>
 
@@ -548,7 +549,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Books — production */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>📒 Books — production</div>
+                      <div className="flex items-center gap-1.5 text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}><BookOpen size={12} />Books — production</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
                           <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1" style={{ color: '#20190F' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#5C5040' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#2D6B3C' }}>{p.kg}kg</span></div>
@@ -558,7 +559,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Books — sales */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>📒 Books — sales</div>
+                      <div className="flex items-center gap-1.5 text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}><BookOpen size={12} />Books — sales</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
                           <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1 truncate" style={{ color: '#20190F' }}>{p.kg}kg — {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#235E86' }}>R{p.rand}</span></div>
