@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, Bookmark, User } from 'lucide-react';
+import { Home, Map, BookOpen, User } from 'lucide-react';
 
 const TABS = [
   { href: '/home',   label: 'Home',    Icon: Home },
   { href: '/farmer', label: 'Map',     Icon: Map },
-  { href: '/farmer?panel=saved', label: 'Sites', Icon: Bookmark },
+  { href: '/journal', label: 'Journal', Icon: BookOpen },
   { href: '/account', label: 'Account', Icon: User },
 ];
 

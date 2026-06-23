@@ -10,6 +10,9 @@ import {
   GraduationCap,
   ChevronRight,
   Settings,
+  Leaf,
+  CalendarDays,
+  Map,
 } from 'lucide-react';
 import { useState } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -160,6 +163,33 @@ export default function HomeLanding() {
             Open the map&nbsp;&rarr;
           </span>
         </Link>
+
+        {/* ── Quick actions ── */}
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { href: '/journal', Icon: Leaf,         label: 'Field Journal', desc: 'Log harvests' },
+            { href: '/plan',    Icon: CalendarDays,  label: 'Crop Planner', desc: 'Plan the season' },
+            { href: '/farmer',  Icon: Map,           label: 'Map',          desc: 'Analyse a site' },
+          ].map((q) => (
+            <Link
+              key={q.href}
+              href={q.href}
+              className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
+              style={{ textDecoration: 'none', background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+            >
+              <div
+                className="flex items-center justify-center rounded-xl"
+                style={{ width: 44, height: 44, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B' }}
+              >
+                <q.Icon size={20} strokeWidth={1.6} />
+              </div>
+              <div>
+                <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', marginTop: 1 }}>{q.desc}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
 
         {/* ── Roles section ── */}
         <section>
