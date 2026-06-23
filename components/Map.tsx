@@ -16,6 +16,23 @@ import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle,
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
+// Drawn parcels + water are persisted here so a refresh never loses the farmer's
+// work (was the #1 complaint — "20 minutes of drawing gone on refresh").
+const FARM_KEY = 'imbewu_farm_shapes';
+
+// A "static" MapboxDraw mode: features are DISPLAYED but completely non-interactive
+// (no select, no vertex-drag). We switch into it while reticle-drawing/editing so
+// panning the map can't accidentally grab and move an existing boundary/water shape.
+const StaticMode = {
+  onSetup(this: { setActionableState?: () => void }) {
+    this.setActionableState?.();
+    return {};
+  },
+  toDisplayFeatures(_state: unknown, geojson: unknown, display: (g: unknown) => void) {
+    display(geojson);
+  },
+};
+
 // Touch / coarse-pointer device? On phones a "tap to add a corner" fires at the end of
 // every pan, dropping stray corners — so on touch the ONLY way to add a corner is the
 // big ＋ button (drops at the crosshair). Desktop mice keep click-to-place.
@@ -227,6 +244,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = drawRef.current;
     if (!draw) return;
     const all = draw.getAll();
+    // Persist every shape change so a page refresh never loses the farmer's drawing.
+    // Skip while tearing down (unmount) — that path empties the store and would wipe storage.
+    if (!tearingDownRef.current) {
+      try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
+    }
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
     );
@@ -279,7 +301,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     if (drawRef.current) return drawRef.current;
 
     // Colour by featureType: water = blue, site/boundary = emerald
-    const fillColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#5B9ED4', '#48A864'] as unknown as string;
     const strokeColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#7FC4F0', '#5DCF80'] as unknown as string;
 
     // Touch screens need much bigger, easier-to-grab corner dots than a mouse. On a phone
@@ -291,18 +312,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
     const draw = new MapboxDraw({
       displayControlsDefault: false,
+      modes: { ...MapboxDraw.modes, static: StaticMode as unknown as typeof MapboxDraw.modes.simple_select },
       // How close a click/tap must land to grab a vertex. Defaults (2 / 25) are too tight
       // for fingers — widen the touch buffer so corners are easy to catch on a phone.
       clickBuffer: 4,
       touchBuffer: 40,
+      // Fills are SPLIT by type and ordered land-then-water so the blue water fill always
+      // paints ON TOP of the green boundary (you can see the colour difference even where
+      // a dam sits inside a parcel). Water uses a higher opacity so it reads clearly.
       styles: [
-        { id: 'gl-draw-polygon-fill', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.18 } },
+        { id: 'gl-draw-polygon-fill-site', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static'], ['!=', 'user_featureType', 'water']], paint: { 'fill-color': '#48A864', 'fill-opacity': 0.18 } },
+        { id: 'gl-draw-polygon-fill-site-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static'], ['!=', 'user_featureType', 'water']], paint: { 'fill-color': '#48A864', 'fill-opacity': 0.16 } },
+        { id: 'gl-draw-polygon-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static'], ['==', 'user_featureType', 'water']], paint: { 'fill-color': '#5B9ED4', 'fill-opacity': 0.42 } },
+        { id: 'gl-draw-polygon-fill-water-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static'], ['==', 'user_featureType', 'water']], paint: { 'fill-color': '#5B9ED4', 'fill-opacity': 0.4 } },
         { id: 'gl-draw-polygon-stroke-active', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2.5, 'line-dasharray': [2, 1] } },
+        { id: 'gl-draw-polygon-stroke-static', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2 } },
         { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2, 'line-dasharray': [2, 1] } },
         { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': vtxRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2.5 } },
-        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': fillColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.85 } },
-        { id: 'gl-draw-polygon-fill-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'fill-color': fillColor, 'fill-opacity': 0.14 } },
-        { id: 'gl-draw-polygon-stroke-static', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2 } },
+        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.85 } },
       ],
     });
 
@@ -350,6 +377,42 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return draw;
   }, [recompute]);
 
+  // Restore persisted parcels + water once the map is ready (survives refresh).
+  const restoredRef = useRef(false);
+  // True while tearing down on unmount: deleteAll() fires draw.delete → recompute,
+  // and we must NOT let that persist an empty collection (it would wipe saved shapes
+  // every time the user navigates away from the map).
+  const tearingDownRef = useRef(false);
+  const restoreShapes = useCallback(() => {
+    if (restoredRef.current) return;
+    const draw = ensureDraw();
+    if (!draw) return;
+    try {
+      const raw = localStorage.getItem(FARM_KEY);
+      if (raw) {
+        const fc = JSON.parse(raw);
+        if (fc?.features?.length) { draw.set(fc); recompute(); }
+      }
+    } catch { /* ignore corrupt/blocked storage */ }
+    restoredRef.current = true;
+  }, [ensureDraw, recompute]);
+
+  // Poll for the map being ready, then restore saved shapes once. More reliable than
+  // onLoad (which can miss when the style is cached or the page bounces during nav).
+  useEffect(() => {
+    let tries = 0;
+    const iv = setInterval(() => {
+      tries += 1;
+      const map = mapRef.current?.getMap();
+      // The app's contour/terrain/hillshade sources keep isStyleLoaded() perpetually
+      // false, so don't gate on it — once the map exists and has had a beat to settle
+      // (≈1s), the draw control can be added and shapes restored.
+      if (map && (map.isStyleLoaded() || tries >= 5)) { restoreShapes(); clearInterval(iv); }
+      else if (tries > 50) clearInterval(iv); // ~10s safety cap
+    }, 200);
+    return () => clearInterval(iv);
+  }, [restoreShapes]);
+
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any
   // incomplete polygon (mapbox-gl-draw cleans it up automatically when < 3 vertices
@@ -373,8 +436,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // ── Reticle drawing: pan/zoom the map under a fixed crosshair, tap ＋ to drop a corner ──
   const startPinDraw = useCallback((type: 'site' | 'water') => {
     const draw = ensureDraw();
-    // Make sure mapbox-gl-draw isn't holding an in-progress polygon
-    if (draw) try { draw.changeMode('simple_select'); } catch {}
+    // Lock every existing parcel/water shape (static mode) so panning under the
+    // crosshair can't accidentally select or drag one — fixes "drawing water moved
+    // my boundary". The new shape is drawn as the reticle overlay, not in the draw store.
+    if (draw) try { draw.changeMode('static'); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
       const c = map.getCenter(); setMapCenter([c.lng, c.lat]);
@@ -442,6 +507,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   const cancelPinDraw = useCallback(() => {
+    // Release the static lock placed on existing shapes when drawing started.
+    try { drawRef.current?.changeMode('simple_select'); } catch {}
     setPinDraw(null);
     setDraftPoints([]);
     unlockRotation();
@@ -450,6 +517,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const finishPinDraw = useCallback(() => {
     const draw = ensureDraw();
     if (!draw || draftPoints.length < 3) return;
+    // Leave static lock so the freshly-added shape (and the others) are editable again.
+    try { draw.changeMode('simple_select'); } catch {}
     const type = drawTypeRef.current;
     const ring = [...draftPoints, draftPoints[0]]; // close the ring
     const feature: GeoJSON.Feature<GeoJSON.Polygon> = {
@@ -651,6 +720,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const map = mapRef.current?.getMap();
     const draw = drawRef.current;
     if (!map || !draw) return;
+    tearingDownRef.current = true; // don't let the deleteAll below wipe persisted shapes
     draw.deleteAll();
     map.removeControl(draw as unknown as mapboxgl.IControl);
     drawRef.current = null;

@@ -15,6 +15,7 @@ import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
+import { loadPlaces } from '@/lib/saved-places';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
 import { setLastSite } from '@/lib/last-site';
@@ -122,6 +123,7 @@ function HomeInner() {
           photoAnalysis={reportPhotoAnalysis}
           siteData={siteData ?? undefined}
           waterData={waterData ?? undefined}
+          savedPlaces={loadPlaces()}
           mapCapture={mapCapture}
           appLang={lang}
           savedReport={savedReportView ?? undefined}

@@ -47,6 +47,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-06-23 (drawing persistence + map fixes)
+- **Drawn parcels + water now PERSIST** (localStorage `imbewu_farm_shapes`) — the
+  big one: drawing was lost on refresh/navigation. Saved on every change, restored
+  when the map is ready (poll-based, since the contour/terrain sources keep
+  `isStyleLoaded()` perpetually false). Teardown guard stops the unmount `deleteAll()`
+  from wiping storage. Verified: survives refresh AND navigate-away-and-back.
+- **Existing shapes LOCKED while drawing** — switch MapboxDraw to a `static` mode
+  during reticle-draw so panning under the crosshair can't grab/move an existing
+  boundary (fixes "drawing water moved my land boundary").
+- **Water renders ON TOP of the boundary** — split the draw fills by type and order
+  them land-then-water (+ higher water opacity) so the blue is visible even where a
+  dam sits inside a parcel.
+- **Saved-place GPS points in the report** — ReportView now lists each saved place
+  with its label + lat/lon (5dp). Verified.
+- **STILL TODO from this feedback:** parcel naming/categorise popup + rename-on-Edit
+  (parcels are still auto-named "Parcel 1"); linking a drawn farm to a saved place;
+  a show/hide toggle for the drawn layer.
+
 ### 2026-06-23 (live-feedback fixes)
 - **Draw-bar tap bug fixed** — on phones the 5 draw controls (Cancel/Undo/GPS/Add
   corner/Finish) overflowed the viewport so Finish sat off-screen and only a sliver

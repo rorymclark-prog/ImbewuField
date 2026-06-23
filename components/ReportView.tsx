@@ -4,7 +4,8 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
-import { Loader2, Check, Circle, ChevronRight, Share2 } from 'lucide-react';
+import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
+import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -76,6 +77,7 @@ interface Props {
   photoAnalysis?: string;
   siteData?: SiteData;
   waterData?: WaterData;
+  savedPlaces?: SavedPlace[];  // saved pins → listed with their GPS points in the report
   mapCapture?: string | null;
   appLang?: string;
   onClose: () => void;
@@ -205,7 +207,7 @@ function renderReport(text: string) {
   return elements;
 }
 
-export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, mapCapture, appLang, onClose, savedReport }: Props) {
+export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport }: Props) {
   // When viewing a saved report, its snapshot overrides the live props so charts/header match.
   const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
   const d = activeSaved?.location ?? locationData;
@@ -622,6 +624,29 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
               </div>
             </div>
+
+            {/* Saved places — GPS points for the farm (home, fields, water) */}
+            {savedPlaces && savedPlaces.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
+                  Saved Places · GPS Points
+                </div>
+                <div className="space-y-1.5">
+                  {savedPlaces.map((p) => (
+                    <div key={p.id} className="flex items-center gap-2.5 text-sm" style={{ color: '#20190F' }}>
+                      <MapPin size={14} style={{ color: placeColor(p.label), flexShrink: 0 }} />
+                      <span className="font-display font-semibold flex-1 min-w-0 truncate">{p.name}</span>
+                      <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                        {PLACE_LABELS.find((l) => l.v === p.label)?.name ?? 'Place'}
+                      </span>
+                      <span className="font-mono text-xs" style={{ color: '#5C5040' }}>
+                        {Math.abs(p.lat).toFixed(5)}°S, {p.lon.toFixed(5)}°E
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Captured satellite view */}
             {mapCapture && (
