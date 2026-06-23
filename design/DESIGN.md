@@ -109,14 +109,26 @@ planting calendar → bill of quantities).
   `components/PopiaConsent.tsx`, 2-step first-login modal on /home (data agreement
   + goal), saves `imbewu_popia`; gates after the language picker.
 
-**Deferred — need camera/vision/OAuth/infra (NOT yet built):**
-- Lima photo-vision: photograph a bed → estimate crop, yield, time-in-ground (frame 13)
-- Weigh-by-photo: estimate harvest kg from a photo + known-size reference (frame 14)
-- **Photograph an expense slip → Lima reads & allocates it to a crop (frame 32 pt 1)** — needs OCR/vision
-- GPS boundary-walk capture (frame 05 frame 2) — geolocation tracking
-- Google Sheets mirror + Google Calendar task sync (frames 15/18) — OAuth
-- Invoice → auto-posts to ledger; yield-vs-planned (frame 32)
-- Site-analysis Q&A stepper (frame 04) — overlaps the built /survey garden wizard; low priority
-- Map tools MOBILE bottom-sheet (map-tools.html mobile variant) — NOT done: the
-  panel redesign applies on phone, but a bottom-sheet would collide with the
+- **Lima Vision** at `/vision` (frames 13/14) — photograph a bed → Claude
+  (`/api/lima-vision`, sonnet-4-6) estimates crop + yield kg + weeks-to-harvest;
+  "Weigh my harvest" mode estimates kg. Honest low-confidence handling. Linked
+  from home Dashboards.
+- **Expense-slip OCR** (frame 32 pt 1) — finances "Money out" form has a "Scan a
+  till slip" button → `/api/read-slip` (Claude) reads total/item/supplier and
+  pre-fills the cost fields with Lima's note to double-check.
+- **GPS boundary-walk** (frame 05) — a "GPS" button in the map's draw reticle
+  drops a corner at the farmer's `navigator.geolocation` position (reuses
+  pushCorner; no change to existing draw logic).
+
+**Deferred — the only thing genuinely blocked on external setup:**
+- Google Sheets mirror + Google Calendar task sync (frames 15/18) — needs a
+  Google Cloud OAuth client + consent screen the project owner must provision;
+  not buildable from code alone. (The desktop financial SHEET + CSV export and
+  the in-app calendar/cropplan are already built — only the live Google sync is out.)
+
+**Lower-priority / superseded:**
+- Site-analysis Q&A stepper (frame 04) — overlaps the built `/survey` garden wizard.
+- Invoice → auto-post to ledger; yield-vs-planned (frame 32) — nice-to-have.
+- Map tools MOBILE bottom-sheet (map-tools.html mobile variant) — the panel
+  redesign already applies on phone; a bottom-sheet would collide with the
   Details sheet + Lima FAB + TabBar already at the map's bottom edge.
