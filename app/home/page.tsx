@@ -15,6 +15,7 @@ import { useState } from 'react';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
+import { useAuth } from '@/lib/auth';
 
 const ROLES: {
   href: string;
@@ -39,6 +40,8 @@ function getDayDate() {
 
 export default function HomeLanding() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const { user } = useAuth();
+  const firstName = user?.displayName?.split(' ')[0] ?? null;
 
   return (
     <div
@@ -58,12 +61,12 @@ export default function HomeLanding() {
           >
             {getDayDate()}
           </span>
-          {/* Title */}
+          {/* Title — personalized if signed in */}
           <span
             className="font-display font-bold"
             style={{ fontSize: 22, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}
           >
-            ImbewuField
+            {firstName ? `Sawubona, ${firstName}` : 'ImbewuField'}
           </span>
         </div>
 

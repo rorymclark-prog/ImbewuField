@@ -2,7 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Settings, AlertTriangle, PenLine, ChevronUp } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
 import ReportView from '@/components/ReportView';
@@ -23,13 +24,16 @@ export default function Home() {
   return (
     <LanguageProvider>
       <Onboarding />
-      <HomeInner />
+      <Suspense>
+        <HomeInner />
+      </Suspense>
     </LanguageProvider>
   );
 }
 
 function HomeInner() {
   const { t, lang } = useLanguage();
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +41,13 @@ function HomeInner() {
   const [mapCapture, setMapCapture] = useState<string | null>(null);
   const [siteData, setSiteData] = useState<SiteData | null>(null);
   const [waterData, setWaterData] = useState<WaterData | null>(null);
-  const [forcedTab, setForcedTab] = useState<string | null>(null);
+  // Allow deep-link into a specific tab via ?panel=<tabname>
+  const [forcedTab, setForcedTab] = useState<string | null>(() => {
+    const panel = searchParams.get('panel');
+    if (panel === 'saved') return 'Saved';
+    if (panel === 'chat' || searchParams.get('chat') === '1') return 'Chat';
+    return null;
+  });
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
   const [showReport, setShowReport] = useState(false);
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
@@ -48,8 +58,12 @@ function HomeInner() {
     setShowReport(true);
   }, []);
 
-  // Mobile bottom-sheet state — open/closed
-  const [sheetOpen, setSheetOpen] = useState(false);
+  // Mobile bottom-sheet state — open/closed; auto-open if deep-linked to a panel
+  const [sheetOpen, setSheetOpen] = useState(() => {
+    const panel = searchParams.get('panel');
+    const chat = searchParams.get('chat');
+    return !!(panel || chat);
+  });
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [drawing, setDrawing] = useState(false); // boundary/water draw active → hide the Results FAB
 
