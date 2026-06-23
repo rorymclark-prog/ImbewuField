@@ -47,6 +47,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-06-23 (live-feedback fixes)
+- **Draw-bar tap bug fixed** — on phones the 5 draw controls (Cancel/Undo/GPS/Add
+  corner/Finish) overflowed the viewport so Finish sat off-screen and only a sliver
+  responded ("5% clickable"). Shrunk the button bases/gaps + the oversized 21px
+  "Add corner" font, added `minWidth:0`, raised the bar to clear the TabBar (now 20px
+  above it), and hid the Lima FAB during draw. Verified at 375px: all buttons 5/5
+  clickable, no overflow.
+- **Right panel fonts tightened** (the "too big" complaint) — applied the §0 scale
+  to the SITE REPORT panel: biome name 22→18, stat rows 56→46px / value 18→16,
+  Stat component 29→21, Lima card + buttons down a notch.
+- **Live "Your land" / "Water storage" card** in the panel Overview — shows area +
+  perimeter (+ parcel/store count, est. volume), updates live as a boundary is drawn.
+- **Saved places: delete + labels toggle + colour** — each place row now has a
+  colour dot (by label) + a red delete trash; a "Show names on map" toggle controls
+  always-on pin labels. Verified delete end-to-end (storage + list + badge + marker).
+
 ### 2026-06-23
 - **Lima coach-marks** — first-time map guide card; "?" in the tools-panel header.
 - **Map tools v2 corrections** (frame 33 / `MAP-TOOLS-CORRECTIONS.md`) — blue centred

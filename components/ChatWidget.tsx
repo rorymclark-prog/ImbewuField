@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
@@ -13,6 +13,14 @@ import ChatPanel from './ChatPanel';
 export default function ChatWidget() {
   const pathname = usePathname() || '';
   const [open, setOpen] = useState(false);
+  // Hide the FAB while the map is in boundary-draw mode (the draw bar owns the
+  // bottom-left corner). The farmer map broadcasts this via a window event.
+  const [drawing, setDrawing] = useState(false);
+  useEffect(() => {
+    const h = (e: Event) => setDrawing(!!(e as CustomEvent).detail);
+    window.addEventListener('imbewu-drawing', h);
+    return () => window.removeEventListener('imbewu-drawing', h);
+  }, []);
 
   // Skip on auth pages and home (which has LimaBar)
   if (pathname.startsWith('/gate') || pathname.startsWith('/login') || pathname.startsWith('/home')) return null;
@@ -22,7 +30,7 @@ export default function ChatWidget() {
   return (
     <>
       {/* Launcher FAB — bottom-left to avoid the map's bottom-right controls */}
-      {!open && (
+      {!open && !drawing && (
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Lima, your field guide"

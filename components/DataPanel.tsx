@@ -142,7 +142,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
       <Label>{label}</Label>
       <div
         className="font-display font-bold leading-none mt-1"
-        style={{ fontSize: 29, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
+        style={{ fontSize: 21, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
       >
         {value}
       </div>
@@ -320,22 +320,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* Name + suitability badge */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="font-display font-semibold leading-tight" style={{ fontSize: 22, color: '#20190F', letterSpacing: '-0.01em' }}>
+            <div className="font-display font-semibold leading-tight" style={{ fontSize: 18, color: '#20190F', letterSpacing: '-0.01em' }}>
               {data.biome.name}
             </div>
             {data.vegetation && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 13, color: '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#5C5040' }}>
                 {data.vegetation.vegUnit}
               </div>
             )}
-            <div className="font-mono mt-1" style={{ fontSize: 12, color: '#94876F' }}>
+            <div className="font-mono mt-1" style={{ fontSize: 11, color: '#94876F' }}>
               {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
             </div>
           </div>
           <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg flex-shrink-0"
                style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: suitability.dot, display: 'inline-block', flexShrink: 0 }} />
-            <span className="font-sans font-bold" style={{ fontSize: 13, color: suitability.text, whiteSpace: 'nowrap' }}>
+            <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>
               {suitability.label}
             </span>
           </div>
@@ -357,12 +357,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               onClick={() => setTab(t)}
               className="flex items-center gap-1.5 flex-shrink-0 transition-all duration-150"
               style={{
-                padding: '10px 14px',
+                padding: '9px 12px',
                 borderBottom: tab === t ? '2px solid #C07A1E' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
                 color: tab === t ? '#C07A1E' : '#5C5040',
-                fontSize: 13,
+                fontSize: 12.5,
                 fontFamily: 'var(--font-display)',
                 fontWeight: tab === t ? 600 : 400,
                 whiteSpace: 'nowrap',
@@ -383,46 +383,90 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* OVERVIEW */}
         {tab === 'Overview' && (
           <>
+            {/* Measured land / water — updates LIVE as a boundary is drawn or edited */}
+            {(siteData || (waterData && waterData.count > 0)) && (
+              <div className="space-y-2">
+                {siteData && (
+                  <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
+                    <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
+                      <Sprout size={16} style={{ color: '#A8D88A' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
+                        Your land{siteData.count && siteData.count > 1 ? ` · ${siteData.count} parcels` : ''}
+                      </div>
+                      <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                        {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} perimeter · {siteData.areaM2.toLocaleString()} m²
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
+                      <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div>
+                    </div>
+                  </div>
+                )}
+                {waterData && waterData.count > 0 && (
+                  <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
+                    <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
+                      <Droplets size={16} style={{ color: '#CFE6F5' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
+                        Water storage{waterData.count > 1 ? ` · ${waterData.count} stores` : ''}
+                      </div>
+                      <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                        {waterData.areaM2.toLocaleString()} m² surface · ~{waterData.avgDepthM} m deep
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
+                      <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Stats ledger — Screen 3 design */}
             <div style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
-              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
-                <Droplets size={20} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Annual rainfall</span>
-                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
-                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 13, color: '#94876F' }}> mm</span>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
+                <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Annual rainfall</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11.5, color: '#94876F' }}> mm</span>
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
-                <Layers size={20} style={{ color: '#C07A1E', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Soil texture</span>
-                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
+                <Layers size={18} style={{ color: '#C07A1E', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Soil texture</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
                   {data.soil.textureClass}
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
-                <Snowflake size={20} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Frost risk</span>
-                <span className="font-display font-semibold" style={{ fontSize: 18, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
+                <Snowflake size={18} style={{ color: '#235E86', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Frost risk</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
                   {frostLabel}
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-4" style={{ height: 56 }}>
-                <Mountain size={20} style={{ color: '#5C5040', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Elevation</span>
-                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
-                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 13, color: '#94876F' }}> m</span>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
+                <Mountain size={18} style={{ color: '#5C5040', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Elevation</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11.5, color: '#94876F' }}> m</span>
                 </span>
               </div>
             </div>
 
             {/* Lima contextual read card */}
-            <div className="flex gap-3 items-start" style={{ background: '#FBF6EC', borderRadius: 14, border: '1px solid #E7DDC9', padding: '14px 14px' }}>
-              <div className="flex items-center justify-center flex-shrink-0" style={{ width: 34, height: 34, borderRadius: 9, background: '#1F4D2B' }}>
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <div className="flex gap-3 items-start" style={{ background: '#FBF6EC', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
+              <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B' }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
               </div>
-              <p style={{ fontSize: 13.5, lineHeight: 1.55, color: '#4A3F2E', margin: 0 }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0 }}>
                 <span className="font-display font-semibold" style={{ color: '#1F4D2B' }}>Lima · </span>
                 {limaRead}
               </p>
@@ -432,9 +476,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <button
               onClick={() => onOpenReport(photoAnalysis)}
               className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
-              style={{ height: 52, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 14, border: 'none', fontSize: 15, letterSpacing: '-0.01em', cursor: 'pointer' }}
+              style={{ height: 46, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
             >
-              <Sprout size={18} />
+              <Sprout size={16} />
               Generate full report
               {siteData && <span className="font-mono font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteData.areaHa} ha</span>}
             </button>
@@ -445,9 +489,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               disabled={placeSaved}
               className="w-full flex items-center justify-center gap-2 font-sans font-semibold transition-opacity"
               style={{
-                height: 40, borderRadius: 12, border: '1px solid #E2D8C4', cursor: 'pointer',
+                height: 36, borderRadius: 11, border: '1px solid #E2D8C4', cursor: 'pointer',
                 background: placeSaved ? 'rgba(31,77,43,0.06)' : '#FBF6EC',
-                color: placeSaved ? '#5C5040' : '#1F4D2B', fontSize: 14,
+                color: placeSaved ? '#5C5040' : '#1F4D2B', fontSize: 13,
               }}
             >
               <Bookmark size={14} />

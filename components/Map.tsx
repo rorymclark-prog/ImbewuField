@@ -11,7 +11,7 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -154,6 +154,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
+  const [showLabels, setShowLabels] = useState(true);  // show place names on the map (toggle in Places)
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
@@ -857,8 +858,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
-  // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB)
-  useEffect(() => { onDrawingChange?.(pinDraw !== null || editPin !== null); }, [pinDraw, editPin, onDrawingChange]);
+  // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
+  // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
+  useEffect(() => {
+    const active = pinDraw !== null || editPin !== null;
+    onDrawingChange?.(active);
+    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-drawing', { detail: active }));
+    // On unmount (e.g. navigating away mid-draw), tell the world drawing stopped
+    // so the persistent Lima FAB (in the root layout) doesn't stay hidden forever.
+    return () => {
+      if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-drawing', { detail: false }));
+    };
+  }, [pinDraw, editPin, onDrawingChange]);
 
   // Reset the Cancel-confirm whenever a draw session ends
   useEffect(() => { if (!pinDraw) setCancelArmed(false); }, [pinDraw]);
@@ -1061,7 +1072,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center group"
               style={{ cursor: 'pointer', transform: 'translateY(2px)' }}
             >
-              <span className="px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              <span className={`px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5 transition-opacity ${showLabels ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: placeColor(p.label) }}>
                 {p.name}
               </span>
@@ -1178,8 +1189,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* Bottom controls — FIXED to the visible viewport (iOS Safari 100vh extends
               below the toolbar, so an absolute bottom bar lands off-screen). */}
-          <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-2"
-            style={{ bottom: 'calc(20px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(440px, calc(100vw - 24px))' }}>
+          <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-1.5"
+            style={{ bottom: 'calc(78px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(440px, calc(100vw - 20px))' }}>
             <button
               onClick={() => {
                 if (draftPoints.length >= 3 && !cancelArmed) { setCancelArmed(true); setTimeout(() => setCancelArmed(false), 3000); return; }
@@ -1187,44 +1198,46 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={cancelArmed
-                ? { flex: '0 0 78px', padding: '10px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
-                : { flex: '0 0 72px', padding: '10px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
-              <X size={18} />
-              <span style={{ fontSize: 18, marginTop: 3 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
+                ? { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
+                : { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
+              <X size={17} />
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 60px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
+              style={{ flex: '0 1 44px', minWidth: 0, padding: '9px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>↶</span>
-              <span style={{ fontSize: 18, marginTop: 3 }}>Undo</span>
+              <span style={{ fontSize: 16, lineHeight: 1 }}>↶</span>
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>Undo</span>
             </button>
 
             {/* Walk it with GPS — drop a corner at the farmer's actual position */}
             <button onClick={addPinFromGPS} disabled={gpsAdding}
               title="Stand on a corner of your land and tap to drop it here"
               className="flex flex-col items-center justify-center rounded-2xl font-sans transition-all active:scale-95"
-              style={{ flex: '0 0 60px', padding: '10px 0', cursor: gpsAdding ? 'wait' : 'pointer',
+              style={{ flex: '0 1 44px', minWidth: 0, padding: '9px 0', cursor: gpsAdding ? 'wait' : 'pointer',
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(168,216,138,0.6)', color: '#A8D88A' }}>
-              {gpsAdding ? <Loader2 size={18} className="animate-spin" /> : <LocateFixed size={18} />}
-              <span style={{ fontSize: 13, marginTop: 4, fontWeight: 600 }}>GPS</span>
+              {gpsAdding ? <Loader2 size={17} className="animate-spin" /> : <LocateFixed size={17} />}
+              <span style={{ fontSize: 12, marginTop: 3, fontWeight: 600 }}>GPS</span>
             </button>
 
-            {/* Primary: drop a corner under the crosshair */}
+            {/* Primary: drop a corner under the crosshair. Label ellipsizes (never spills
+                onto Finish) on very narrow phones; full text shows from ~360px up. */}
             <button onClick={addPin}
-              className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: 1, padding: '14px 0', background: draftColor, color: '#06160a',
-                boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 21 }}>
-<Plus size={24} strokeWidth={2.4} /> Add corner
+              className="flex items-center justify-center gap-1.5 rounded-2xl font-display font-bold transition-all active:scale-95"
+              style={{ flex: '1 1 0%', minWidth: 0, overflow: 'hidden', padding: '13px 8px', background: draftColor, color: '#06160a',
+                boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 15 }}>
+              <Plus size={20} strokeWidth={2.4} style={{ flexShrink: 0 }} />
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Add corner</span>
             </button>
 
             <button onClick={finishPinDraw} disabled={draftPoints.length < 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
+              style={{ flex: '0 1 56px', minWidth: 0, padding: '9px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
                 background: draftPoints.length < 3 ? 'rgba(22,37,20,0.7)' : '#1F4D2B',
                 border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : '#F7F2E9' }}>
-              <Check size={18} />
+              <Check size={17} />
               <span style={{ fontSize: 12, marginTop: 3 }}>Finish</span>
             </button>
           </div>
@@ -1245,30 +1258,31 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </span>
           </div>
 
-          <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-2"
-            style={{ bottom: 'calc(20px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(460px, calc(100vw - 24px))' }}>
+          <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-1.5"
+            style={{ bottom: 'calc(78px + env(safe-area-inset-bottom))', zIndex: 45, width: 'min(440px, calc(100vw - 20px))' }}>
             <button onClick={cancelReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-              <X size={18} />
-              <span style={{ fontSize: 18, marginTop: 3 }}>Cancel</span>
+              style={{ flex: '0 1 54px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
+              <X size={17} />
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>Cancel</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 72px', padding: '10px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
+              style={{ flex: '0 1 58px', minWidth: 0, padding: '9px 0', opacity: (selCorner == null || editPoints.length <= 3) ? 0.4 : 1,
                 background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-              <Trash2 size={18} />
-              <span style={{ fontSize: 18, marginTop: 3 }}>Remove</span>
+              <Trash2 size={17} />
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>Remove</span>
             </button>
             <button onClick={addEditCorner}
-              className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: 1, padding: '10px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
-              <span style={{ fontSize: 20, lineHeight: 1 }}>＋</span> Add corner
+              className="flex items-center justify-center gap-1.5 rounded-2xl font-display font-bold transition-all active:scale-95"
+              style={{ flex: '1 1 0%', minWidth: 0, overflow: 'hidden', padding: '10px 8px', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}99`, color: draftStroke, fontSize: 15 }}>
+              <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>＋</span>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Add corner</span>
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 0 80px', padding: '10px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
-              <Check size={18} />
+              style={{ flex: '0 1 58px', minWidth: 0, padding: '9px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
+              <Check size={17} />
               <span style={{ fontSize: 12, marginTop: 3 }}>Done</span>
             </button>
           </div>
@@ -1562,28 +1576,53 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {savedPins.length ? <span style={{ fontSize: 12, fontWeight: 700, color: '#1a1205', background: '#A8D88A', borderRadius: 999, minWidth: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 6px' }}>{savedPins.length}</span> : null}
           </button>
 
-          {/* Saved-places quick list — tap one to fly there */}
+          {/* Saved-places quick list — tap one to fly there; trash to delete */}
           {placesOpen && (
             <div className="w-full flex flex-col gap-1" style={{ marginTop: 2 }}>
               {savedPins.length === 0 ? (
-                <div className="px-3 py-2 rounded-lg font-mono"
-                  style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: TOUCH_FS }}>
+                <div className="px-3 py-2 rounded-lg font-sans"
+                  style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: 13 }}>
                   No saved places yet — tap a spot, then save it above.
                 </div>
-              ) : savedPins.map((p) => (
-                <button key={p.id}
-                  onClick={() => {
-                    mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
-                    onLocationSelect(p.lat, p.lon);
-                    setPlacesOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-3 rounded-lg font-mono text-left transition-all"
-                  style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.35)', color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-                  <MapPin size={14} style={{ flexShrink: 0 }} />
-                  <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: TOUCH_FS - 3 }}>{p.elevation}m</span>
-                </button>
-              ))}
+              ) : (
+                <>
+                  {/* Show labels on the map — toggle */}
+                  <button onClick={() => setShowLabels((v) => !v)}
+                    className="flex items-center gap-2 px-3 rounded-lg font-sans transition-all"
+                    style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.14)', color: 'var(--text-secondary)', minHeight: 38, fontSize: 13 }}>
+                    <span className="flex-1 text-left">Show names on map</span>
+                    <span className="flex items-center rounded-full transition-all flex-shrink-0"
+                      style={{ width: 38, height: 22, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.18)', justifyContent: showLabels ? 'flex-end' : 'flex-start' }}>
+                      <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff', display: 'block' }} />
+                    </span>
+                  </button>
+
+                  {savedPins.map((p) => (
+                    <div key={p.id} className="flex items-center gap-1.5 rounded-lg overflow-hidden"
+                      style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.3)', minHeight: 40 }}>
+                      <button
+                        onClick={() => {
+                          mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
+                          onLocationSelect(p.lat, p.lon);
+                          setPlacesOpen(false);
+                        }}
+                        className="flex-1 flex items-center gap-2 pl-2.5 pr-1 font-sans text-left transition-all min-w-0"
+                        style={{ color: 'var(--text-secondary)', minHeight: 40, fontSize: 13 }}>
+                        <span style={{ width: 11, height: 11, borderRadius: '50%', background: placeColor(p.label), flexShrink: 0, boxShadow: '0 0 0 2px rgba(6,16,10,0.4)' }} />
+                        <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
+                        <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{p.elevation}m</span>
+                      </button>
+                      <button
+                        onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
+                        aria-label={`Delete ${p.name}`} title="Delete this place"
+                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                        style={{ width: 40, minHeight: 40, background: 'transparent', border: 'none', borderLeft: '1px solid rgba(212,110,66,0.25)', color: 'rgba(212,110,66,0.85)', cursor: 'pointer' }}>
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           )}
 
