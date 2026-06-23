@@ -1157,8 +1157,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={finishPinDraw} disabled={draftPoints.length < 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
-                background: draftPoints.length < 3 ? 'rgba(10,18,12,0.94)' : 'rgba(72,168,100,0.92)',
-                border: '1.5px solid rgba(72,168,100,0.6)', color: draftPoints.length < 3 ? 'var(--text-muted)' : '#06160a' }}>
+                background: draftPoints.length < 3 ? 'rgba(22,37,20,0.7)' : '#1F4D2B',
+                border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : '#F7F2E9' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
               <span style={{ fontSize: 18, marginTop: 3 }}>Finish</span>
             </button>
@@ -1287,8 +1287,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             disabled={searching || !searchQuery.trim()}
             className="px-4 rounded-lg font-mono font-semibold transition-all flex-shrink-0"
             style={{
-              background: searching ? 'rgba(22,37,20,0.6)' : 'rgba(72,168,100,0.25)',
-              border: '1px solid rgba(72,168,100,0.5)',
+              background: searching ? 'rgba(22,37,20,0.6)' : 'rgba(31,77,43,0.25)',
+              border: '1px solid rgba(31,77,43,0.5)',
               color: searching ? 'var(--text-muted)' : 'var(--emerald-bright)',
               minHeight: TOUCH_H,
               minWidth: TOUCH_H,
@@ -1352,7 +1352,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 className="rounded-lg font-mono font-medium transition-all"
                 style={{
                   ...(style === s
-                    ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                    ? { background: 'rgba(31,77,43,0.22)', border: '1px solid rgba(31,77,43,0.55)', color: 'var(--emerald-bright)' }
                     : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
                   minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
                 }}>
@@ -1374,7 +1374,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="rounded-lg font-mono transition-all"
               style={{
                 ...(contours
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
                   : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
@@ -1385,7 +1385,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="rounded-lg font-mono transition-all"
               style={{
                 ...(hillshade
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
                   : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
@@ -1407,7 +1407,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="rounded-lg font-mono transition-all"
               style={{
                 ...(terrain3d
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(72,168,100,0.5)', color: 'var(--text-secondary)' }
+                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
                   : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
@@ -1436,7 +1436,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   className="flex-1 rounded-lg font-mono transition-all"
                   style={{
                     ...(editEngine === key
-                      ? { background: 'rgba(72,168,100,0.22)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)' }
+                      ? { background: 'rgba(31,77,43,0.22)', border: '1px solid rgba(31,77,43,0.55)', color: 'var(--emerald-bright)' }
                       : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
                     minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 10px',
                   }}>
@@ -1473,7 +1473,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
             style={{
               ...(placeSaved
-                ? { background: 'rgba(72,168,100,0.3)', border: '1px solid rgba(72,168,100,0.7)', color: 'var(--emerald-bright)' }
+                ? { background: 'rgba(31,77,43,0.3)', border: '1px solid rgba(31,77,43,0.7)', color: 'var(--emerald-bright)' }
                 : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)', color: 'var(--gold)' }),
               minHeight: TOUCH_H, fontSize: TOUCH_FS,
               opacity: selectedLocation ? 1 : 0.5,
@@ -1523,10 +1523,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
                 style={activeDraw === 'water'
-                  ? { background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)', minHeight: 32 }
-                  : { background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.55)', color: 'var(--emerald-bright)', minHeight: 32 }}>
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0" style={{ background: activeDraw === 'water' ? 'var(--blue)' : 'var(--emerald-bright)' }} />
-                {activeDraw === 'water' ? '💧' : '✏'} click points · dbl-click to finish · Esc to cancel
+                  ? { background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.55)', color: '#235E86', minHeight: 32 }
+                  : { background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.55)', color: '#2D6B3C', minHeight: 32 }}>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0" style={{ background: activeDraw === 'water' ? '#235E86' : '#2D6B3C' }} />
+                {activeDraw === 'water' ? 'Water' : 'Boundary'} · click points · dbl-click to finish · Esc to cancel
               </div>
               <button onClick={cancelDraw}
                 className="px-2 py-1 rounded-lg text-xs font-mono transition-all"
@@ -1565,7 +1565,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <div className="w-full flex flex-col gap-1">
                   {/* Totals summary row */}
                   <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
-                    style={{ background: 'rgba(72,168,100,0.18)', border: '1px solid rgba(72,168,100,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
+                    style={{ background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
                     <span style={{ color: 'var(--emerald-bright)' }}>
                       ⬟ {(siteStats.count ?? 1) > 1 ? `${siteStats.count} parcels · ` : ''}{siteStats.areaHa} ha
                     </span>
@@ -1732,7 +1732,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             zIndex: 15,
             bottom: 72,
             background: 'rgba(6,16,10,0.82)',
-            border: '1px solid rgba(72,168,100,0.3)',
+            border: '1px solid rgba(31,77,43,0.3)',
             backdropFilter: 'blur(8px)',
             boxShadow: '0 2px 12px rgba(0,0,0,0.45)',
             whiteSpace: 'nowrap',

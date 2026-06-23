@@ -13,7 +13,7 @@ import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import { useLanguage } from '@/lib/i18n';
-import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2 } from 'lucide-react';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2, Snowflake, Mountain } from 'lucide-react';
 
 interface Props {
   data: LocationData | null;
@@ -285,77 +285,61 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
   const bColor = BIOME_COLORS[data.biome.code] ?? '#6BA84F';
 
+  // Suitability badge — quick heuristic from rainfall + slope
+  const suitability = (() => {
+    const r = data.rainfall.annual;
+    const s = data.elevation.slopeDeg;
+    if (r >= 500 && s < 15) return { label: 'Good fit', bg: '#E7F0E0', border: '#BCD6B0', dot: '#1F4D2B', text: '#1F4D2B' };
+    if (r >= 300 && s < 25) return { label: 'Fair site', bg: 'rgba(192,122,30,0.1)', border: 'rgba(192,122,30,0.3)', dot: '#C07A1E', text: '#9A6018' };
+    return { label: 'Challenging', bg: 'rgba(212,110,66,0.1)', border: 'rgba(212,110,66,0.3)', dot: '#D4922A', text: '#B83A18' };
+  })();
+
+  // Frost label
+  const frostLabel = data.climate.minTemp < 2 ? 'Likely' : data.climate.minTemp < 5 ? 'Occasional' : 'Rare';
+
+  // Lima contextual read — one-line from actual data
+  const limaRead = (() => {
+    const r = data.rainfall.annual;
+    const soil = data.soil.textureClass.toLowerCase();
+    const crops = data.biome.keySpecies.slice(0, 2).join(' and ');
+    const waterNote = r < 400 ? `Only ${r}mm of rain so water harvesting is essential.` : `${r}mm of rain — enough for year-round production.`;
+    const frostNote = data.climate.minTemp < 2 ? ' Protect against frost in winter.' : '';
+    return `${waterNote} This ${soil} soil works well for ${crops || 'food trees and vegetables'}.${frostNote} Want a full planting plan?`;
+  })();
+
   return (
     <div className="h-full flex flex-col overflow-hidden">
 
-      {/* ── Biome header ──────────────────────────── */}
-      <div
-        className="flex-shrink-0 px-5 pt-5 pb-4"
-        style={{ borderBottom: '1px solid #E2D8C4' }}
-      >
-        <div className="flex items-start gap-3">
-          <div
-            className="w-11 h-11 rounded-xl flex-shrink-0 flex items-center justify-center"
-            style={{
-              background: `linear-gradient(135deg, ${bColor}28, ${bColor}10)`,
-              border: `1px solid ${bColor}44`,
-              boxShadow: `0 4px 16px ${bColor}18`,
-            }}
-          >
-            <Sprout size={20} style={{ color: bColor }} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div
-              className="font-display font-bold text-base leading-tight mb-0.5"
-              style={{ color: bColor }}
-            >
+      {/* ── Site report header (Screen 3 design) ─── */}
+      <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
+        {/* Overline */}
+        <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.16em' }}>
+          Site report
+        </div>
+
+        {/* Name + suitability badge */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="font-display font-semibold leading-tight" style={{ fontSize: 22, color: '#20190F', letterSpacing: '-0.01em' }}>
               {data.biome.name}
             </div>
-            <div className="text-xs leading-snug truncate" style={{ color: '#5C5040', fontFamily: 'var(--font-display)' }}>
-              {data.biome.description}
-            </div>
             {data.vegetation && (
-              <div className="text-xs mt-1 leading-snug font-display flex items-center gap-1" style={{ color: bColor, opacity: 0.95 }}
-                   title={`SANBI 2018 vegetation unit · ${data.vegetation.bioregion}`}>
-                <Leaf size={12} /> {data.vegetation.vegUnit}
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 13, color: '#5C5040' }}>
+                {data.vegetation.vegUnit}
               </div>
             )}
-            <div className="text-xs mt-1 font-mono" style={{ color: '#5C5040', opacity: 0.7 }}>
-              {Math.abs(data.lat).toFixed(4)}°S &nbsp;{data.lon.toFixed(4)}°E
+            <div className="font-mono mt-1" style={{ fontSize: 12, color: '#94876F' }}>
+              {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
             </div>
           </div>
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg flex-shrink-0"
+               style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: suitability.dot, display: 'inline-block', flexShrink: 0 }} />
+            <span className="font-sans font-bold" style={{ fontSize: 13, color: suitability.text, whiteSpace: 'nowrap' }}>
+              {suitability.label}
+            </span>
+          </div>
         </div>
-      </div>
-
-      {/* ── Save + Report buttons ─────────────────────── */}
-      <div className="flex-shrink-0 px-4 py-2 flex gap-2" style={{ borderBottom: '1px solid #E2D8C4', background: '#F7F2E9' }}>
-        <button
-          onClick={quickSavePlace}
-          disabled={placeSaved}
-          className="flex-shrink-0 py-2 px-3 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-1.5 transition-all"
-          style={placeSaved
-            ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#5C5040' }
-            : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
-          title="Save this place"
-        >
-          {placeSaved ? '✓ Saved' : <><Bookmark size={13} /> Save</>}
-        </button>
-        <button
-          onClick={() => onOpenReport(photoAnalysis)}
-          className="flex-1 py-2 rounded-xl text-xs font-display font-semibold flex flex-wrap items-center justify-center gap-1.5 md:gap-2 transition-all"
-          style={{
-            background: 'rgba(192,122,30,0.12)',
-            border: '1px solid rgba(192,122,30,0.3)',
-            color: '#C07A1E',
-          }}
-        >
-          <FileText size={14} />
-          Generate Full Report
-          {siteData && <span className="px-1.5 py-0.5 rounded-md font-mono" style={{ background: 'rgba(31,77,43,0.1)', color: '#1F4D2B', fontSize: 11 }}>{siteData.areaHa} ha</span>}
-          {waterData && <span className="px-1.5 py-0.5 rounded-md font-mono flex items-center gap-0.5" style={{ background: 'rgba(35,94,134,0.12)', color: '#235E86', fontSize: 11 }}><Droplets size={11} /> {waterData.estVolumeKL.toLocaleString()} kL</span>}
-          {photoAnalysis && <span className="px-1.5 py-0.5 rounded-md font-mono flex items-center gap-0.5" style={{ background: 'rgba(35,94,134,0.12)', color: '#235E86', fontSize: 11 }}><Camera size={11} /></span>}
-          <span style={{ opacity: 0.6 }}>→</span>
-        </button>
       </div>
 
       {/* ── Tabs (wrap so all are always visible) ──── */}
@@ -399,22 +383,78 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* OVERVIEW */}
         {tab === 'Overview' && (
           <>
-            <div className="grid grid-cols-2 gap-2.5">
-              <Stat label="Elevation" value={`${data.elevation.elevation}m`} sub="above sea level"
-                contextPct={Math.min(100, (data.elevation.elevation / 2800) * 100)} />
-              <Stat label="Annual Rain" value={`${data.rainfall.annual}mm`} sub={data.rainfall.pattern} color="#235E86"
-                contextPct={Math.min(100, (data.rainfall.annual / 1400) * 100)} />
-              <Stat
-                label="Slope / Aspect"
-                value={`${data.elevation.slopeDeg}°`}
-                sub={`${data.elevation.slopePct}% · ${data.elevation.aspectLabel}-facing`}
-                color={data.elevation.slopeDeg > 8 ? '#D4922A' : undefined}
-                contextPct={Math.min(100, (data.elevation.slopeDeg / 30) * 100)}
-              />
-              <Stat label="Mean Temp" value={`${data.climate.meanTemp}°C`} sub={`${data.climate.minTemp}–${data.climate.maxTemp}°C range`}
-                contextPct={Math.min(100, ((data.climate.meanTemp - 6) / 24) * 100)} />
+            {/* Stats ledger — Screen 3 design */}
+            <div style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
+              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
+                <Droplets size={20} style={{ color: '#235E86', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Annual rainfall</span>
+                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
+                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 13, color: '#94876F' }}> mm</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
+                <Layers size={20} style={{ color: '#C07A1E', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Soil texture</span>
+                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
+                  {data.soil.textureClass}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}>
+                <Snowflake size={20} style={{ color: '#235E86', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Frost risk</span>
+                <span className="font-display font-semibold" style={{ fontSize: 18, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
+                  {frostLabel}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-4" style={{ height: 56 }}>
+                <Mountain size={20} style={{ color: '#5C5040', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 14, color: '#5C5040' }}>Elevation</span>
+                <span className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>
+                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 13, color: '#94876F' }}> m</span>
+                </span>
+              </div>
             </div>
 
+            {/* Lima contextual read card */}
+            <div className="flex gap-3 items-start" style={{ background: '#FBF6EC', borderRadius: 14, border: '1px solid #E7DDC9', padding: '14px 14px' }}>
+              <div className="flex items-center justify-center flex-shrink-0" style={{ width: 34, height: 34, borderRadius: 9, background: '#1F4D2B' }}>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
+                </svg>
+              </div>
+              <p style={{ fontSize: 13.5, lineHeight: 1.55, color: '#4A3F2E', margin: 0 }}>
+                <span className="font-display font-semibold" style={{ color: '#1F4D2B' }}>Lima · </span>
+                {limaRead}
+              </p>
+            </div>
+
+            {/* Primary CTA */}
+            <button
+              onClick={() => onOpenReport(photoAnalysis)}
+              className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
+              style={{ height: 52, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 14, border: 'none', fontSize: 15, letterSpacing: '-0.01em', cursor: 'pointer' }}
+            >
+              <Sprout size={18} />
+              Generate full report
+              {siteData && <span className="font-mono font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteData.areaHa} ha</span>}
+            </button>
+
+            {/* Save place — secondary */}
+            <button
+              onClick={quickSavePlace}
+              disabled={placeSaved}
+              className="w-full flex items-center justify-center gap-2 font-sans font-semibold transition-opacity"
+              style={{
+                height: 40, borderRadius: 12, border: '1px solid #E2D8C4', cursor: 'pointer',
+                background: placeSaved ? 'rgba(31,77,43,0.06)' : '#FBF6EC',
+                color: placeSaved ? '#5C5040' : '#1F4D2B', fontSize: 14,
+              }}
+            >
+              <Bookmark size={14} />
+              {placeSaved ? 'Saved to places' : 'Save this place'}
+            </button>
+
+            {/* Key species */}
             <Card>
               <Label>Key species</Label>
               <div className="flex flex-wrap gap-1.5">
@@ -422,11 +462,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <span
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
-                    style={{
-                      background: 'rgba(31,77,43,0.1)',
-                      border: '1px solid rgba(31,77,43,0.2)',
-                      color: '#1F4D2B',
-                    }}
+                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B' }}
                   >
                     {s}
                   </span>
@@ -434,6 +470,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             </Card>
 
+            {/* Main challenges */}
             <Card>
               <Label>Main challenges</Label>
               <div className="space-y-1.5">
