@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
+import { Loader2 } from 'lucide-react';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -369,7 +370,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 }
           }
         >
-          {loading ? <><span className="animate-spin">⟳</span> Generating…</> : generated ? 'Regenerate' : 'Generate report'}
+          {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating…</> : generated ? 'Regenerate' : 'Generate report'}
         </button>
       </div>
 

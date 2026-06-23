@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { Leaf, Sprout, Save, Ruler } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -137,7 +138,7 @@ function SignInPrompt() {
           border: '1px solid rgba(31,77,43,0.14)',
         }}
       >
-        🌱
+        <Sprout size={20} style={{ color: '#1F4D2B' }} />
       </div>
       <div>
         <p
@@ -304,7 +305,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}>✦ Save harvest</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Save size={13} className="inline mr-1" />Save harvest</SubmitBtn>
       </form>
     </Card>
   );
@@ -412,7 +413,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}>✦ Save sale</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Save size={13} className="inline mr-1" />Save sale</SubmitBtn>
       </form>
     </Card>
   );
@@ -453,7 +454,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
               style={{ background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.12)' }}
             >
-              🌿
+              <Leaf size={16} style={{ color: '#1F4D2B' }} />
             </div>
           )}
           <div className="flex-1 min-w-0">
@@ -559,7 +560,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
             style={{ background: 'rgba(91,158,212,0.1)', border: '1px solid rgba(91,158,212,0.15)' }}
           >
-            📐
+            <Ruler size={20} style={{ color: '#235E86' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p

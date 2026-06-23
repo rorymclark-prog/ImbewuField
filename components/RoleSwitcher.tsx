@@ -1,21 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { PenLine } from 'lucide-react';
+import { Sprout, PenLine, BookOpen, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 
-const ROLES = [
-  { key: 'farmer', label: 'Farmer', icon: '🌱', href: '/farmer', ready: true },
-  { key: 'facilitator', label: 'Supervisor', icon: 'penline', href: '/facilitator', ready: true },
-  { key: 'trainer', label: 'Trainer', icon: '📚', href: '/trainer', ready: true },
-  { key: 'student', label: 'Student', icon: '🎓', href: '/student', ready: true },
-  { key: 'ngo', label: 'NGO', icon: '📊', href: '/ngo', ready: true },
-  { key: 'funder', label: 'Funder', icon: '🏛', href: '/funder', ready: true },
+const ROLES: { key: string; label: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
+  { key: 'farmer',      label: 'Farmer',     Icon: Sprout,         href: '/farmer',      ready: true },
+  { key: 'facilitator', label: 'Supervisor', Icon: PenLine,        href: '/facilitator', ready: true },
+  { key: 'trainer',     label: 'Trainer',    Icon: BookOpen,       href: '/trainer',     ready: true },
+  { key: 'student',     label: 'Student',    Icon: GraduationCap,  href: '/student',     ready: true },
+  { key: 'ngo',         label: 'NGO',        Icon: BarChart3,      href: '/ngo',         ready: true },
+  { key: 'funder',      label: 'Funder',     Icon: Building2,      href: '/funder',      ready: true },
 ];
-
-function RoleIcon({ icon }: { icon: string }) {
-  if (icon === 'penline') return <PenLine size={14} />;
-  return <span style={{ fontSize: 17 }}>{icon}</span>;
-}
 
 export default function RoleSwitcher({ current }: { current: string }) {
   return (
@@ -33,14 +28,14 @@ export default function RoleSwitcher({ current }: { current: string }) {
         if (!r.ready) {
           return (
             <span key={r.key} className={base} style={style} title="Coming soon">
-              <RoleIcon icon={r.icon} />
+              <r.Icon size={14} />
               <span className="hidden md:inline">{r.label}</span>
             </span>
           );
         }
         return (
           <Link key={r.key} href={r.href} className={base} style={style}>
-            <RoleIcon icon={r.icon} />
+            <r.Icon size={14} />
             <span className="hidden md:inline">{r.label}</span>
           </Link>
         );

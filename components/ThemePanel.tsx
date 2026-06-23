@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { Satellite, Sprout, Mountain, Sparkles } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 
 const THEMES: { key: ThemeName; label: string; desc: string; swatches: string[] }[] = [
@@ -251,13 +252,13 @@ export default function ThemePanel({ open, onClose }: Props) {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {[
-                { icon: '🛰', label: 'NASA 30yr climate' },
-                { icon: '🌱', label: 'ISRIC soil data' },
-                { icon: '⛰', label: 'Contours + 3D terrain' },
-                { icon: '✦', label: 'Claude AI insights' },
+                { Icon: Satellite, label: 'NASA 30yr climate' },
+                { Icon: Sprout,    label: 'ISRIC soil data' },
+                { Icon: Mountain,  label: 'Contours + 3D terrain' },
+                { Icon: Sparkles,  label: 'Claude AI insights' },
               ].map((s) => (
                 <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: 15 }}>{s.icon}</span>
+                  <s.Icon size={15} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
                   <span style={{ fontSize: 12, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', lineHeight: 1.2 }}>{s.label}</span>
                 </div>
               ))}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { MapPin } from 'lucide-react';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -424,9 +425,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
           <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: 'rgba(251,246,236,0.92)', border: '1px solid #E2D8C4' }}>
-            <span className="text-xs font-mono" style={{ color: '#5C5040' }}>
+            <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#5C5040' }}>
               {gardener
-                ? `📍 ${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`
+                ? <><MapPin size={12} className="inline flex-shrink-0" />{gardener.name} · {gardener.lat.toFixed(4)}, {gardener.lon.toFixed(4)}</>
                 : `Showing ${gardens.length} of ${TOTALS.gardens} gardens${isDemo ? ' · demo' : ''}`}
             </span>
           </div>
@@ -486,7 +487,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 </div>
                 <button onClick={() => mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 })}
                   className="w-full py-1.5 rounded-lg text-xs font-display transition-all" style={{ background: 'rgba(91,158,212,0.14)', border: '1px solid rgba(91,158,212,0.4)', color: '#235E86' }}>
-                  📍 Find this garden on the map
+                  <MapPin size={14} className="inline mr-1" />Find this garden on the map
                 </button>
 
                 {gardenerLoading ? (

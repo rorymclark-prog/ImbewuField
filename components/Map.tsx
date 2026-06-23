@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1356,7 +1356,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
                   minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
                 }}>
-                {['🛰 Satellite', '⛰ Topo'][i]}
+                {['Satellite', 'Topo'][i]}
               </button>
             ))}
             <button onClick={() => setHdImagery(!hdImagery)}
@@ -1368,7 +1368,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
-              ✦ HD
+              HD
             </button>
             <button onClick={() => setContours(!contours)}
               className="rounded-lg font-mono transition-all"
@@ -1411,7 +1411,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
                 minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
               }}>
-              ⛰ 3D
+              3D
             </button>
           </div>
         )}
@@ -1478,7 +1478,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               minHeight: TOUCH_H, fontSize: TOUCH_FS,
               opacity: selectedLocation ? 1 : 0.5,
             }}>
-            {placeSaved ? '✓ Saved' : '⭐ Save place'}
+            {placeSaved ? '✓ Saved' : <><Bookmark size={14} className="inline mr-1" />Save place</>}
           </button>
 
           {/* Quick-jump to a saved place */}
@@ -1499,7 +1499,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               {savedPins.length === 0 ? (
                 <div className="px-3 py-2 rounded-lg font-mono"
                   style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: TOUCH_FS }}>
-                  No saved places yet — tap a spot, then “⭐ Save place” above.
+                  No saved places yet — tap a spot, then save it above.
                 </div>
               ) : savedPins.map((p) => (
                 <button key={p.id}

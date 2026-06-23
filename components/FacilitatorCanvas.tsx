@@ -5,6 +5,7 @@ import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Image 
 import type Konva from 'konva';
 import { listFarmers, saveDesign, shareDesign } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
+import { Loader2, Sparkles, Sprout } from 'lucide-react';
 
 type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
@@ -54,7 +55,7 @@ const GROUPS: { name: string; types: ElType[] }[] = [
 const LINES: Record<LineKind, { label: string; icon: string; color: string; dash: number[]; width: number }> = {
   pipe:      { label: 'Pipe',       icon: '〰', color: '#5B9ED4', dash: [9, 5],   width: 3 },
   swale:     { label: 'Swale',      icon: '⌇', color: '#7AAA50', dash: [3, 5],   width: 4 },
-  windbreak: { label: 'Windbreak',  icon: '🌿', color: '#3A7A30', dash: [],       width: 8 },
+  windbreak: { label: 'Windbreak',  icon: '',    color: '#3A7A30', dash: [],       width: 8 },
   drip:      { label: 'Drip line',  icon: '·', color: '#4A9ED4', dash: [2, 4],   width: 1.5 },
   contour:   { label: 'Contour',    icon: '~', color: '#B89A60', dash: [6, 4],   width: 2 },
   fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],       width: 2.5 },
@@ -994,7 +995,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <button onClick={runReview} disabled={reviewing || !items.length}
               className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
               style={reviewing || !items.length ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' } : { background: '#1F4D2B', color: '#F7F2E9', border: '1px solid #1F4D2B' }}>
-              {reviewing ? <span className="flex items-center justify-center gap-1.5"><span className="animate-spin inline-block">⟳</span> Reviewing…</span> : '✦ AI review'}
+              {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin inline-block" /> Reviewing…</span> : <span className="flex items-center justify-center gap-1"><Sparkles size={14} className="inline mr-1" /> AI review</span>}
             </button>
             <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }} title="Export PNG">↓ PNG</button>
           </div>
@@ -1026,7 +1027,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 </div>
                 {farmersLoading && (
                   <div className="text-xs font-display px-2 py-1" style={{ color: '#5C5040' }}>
-                    <span className="animate-spin inline-block mr-1">⟳</span> Fetching farmers…
+                    <Loader2 size={14} className="animate-spin inline-block mr-1" /> Fetching farmers…
                   </div>
                 )}
                 {!farmersLoading && displayFarmers.map((f) => (
@@ -1035,7 +1036,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                     disabled={sharing}
                     className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-display transition-all"
                     style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }}>
-                    {sharing ? <span className="animate-spin inline-block mr-1">⟳</span> : '🌱'} {f.name}
+                    {sharing ? <Loader2 size={14} className="animate-spin inline-block mr-1" /> : <Sprout size={14} className="inline mr-1" />} {f.name}
                   </button>
                 ))}
               </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { Loader2, Ruler, ImagePlus } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -123,7 +124,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
           <img src={preview} alt="sketch" className="max-h-40 mx-auto rounded-lg" style={{ border: '1px solid var(--border-bright)' }} />
         ) : (
           <div>
-            <div className="text-2xl mb-1">✎</div>
+            <ImagePlus size={28} style={{ color: '#8C7A62', margin: '0 auto 4px' }} />
             <p className="text-xs font-display" style={{ color: '#5C5040' }}>Drop your site sketch here or click to upload</p>
             <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
           </div>
@@ -141,7 +142,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
           <button onClick={() => setTone(tone === 'simple' ? 'professional' : 'simple')}
             className="px-2.5 py-1.5 rounded-lg text-xs font-display transition-all"
             style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }}>
-            {tone === 'simple' ? '🌱 Simple' : '🎓 Detailed'}
+            {tone === 'simple' ? 'Simple' : 'Detailed'}
           </button>
         </div>
       )}
@@ -153,7 +154,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
           style={loading
             ? { background: 'var(--bg-4)', border: '1px solid #E2D8C4', color: '#5C5040' }
             : { background: 'linear-gradient(135deg, rgba(212,168,83,0.22), rgba(212,168,83,0.08))', border: '1px solid rgba(212,168,83,0.45)', color: '#C07A1E' }}>
-          {loading ? <span className="flex items-center justify-center gap-1.5"><span className="animate-spin inline-block">⟳</span> Designing your site…</span> : '📐 Generate design'}
+          {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site…</span> : <><Ruler size={14} className="inline mr-1" />Generate design</>}
         </button>
       )}
 

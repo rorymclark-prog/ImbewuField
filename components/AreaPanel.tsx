@@ -139,7 +139,7 @@ export default function AreaPanel({ coords }: Props) {
           {renderMarkdown(profile)}
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#C07A1E' }} />}
           <p className="text-xs font-mono mt-4 pt-2" style={{ color: '#5C5040', opacity: 0.6, borderTop: '1px solid #E2D8C4' }}>
-            ✦ AI estimate · municipality from OpenStreetMap · verify key figures locally
+            AI estimate · municipality from OpenStreetMap · verify key figures locally
           </p>
         </div>
       )}
