@@ -6,7 +6,6 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { addSale, myProduction } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog } from '@/lib/db/types';
-import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';

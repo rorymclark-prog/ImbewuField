@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import { Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
