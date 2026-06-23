@@ -11,7 +11,7 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
   loading: () => (
     <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-      <span className="text-sm font-display">Loading dashboard…</span>
+      <span className="text-sm font-display">Loading dashboard...</span>
     </div>
   ),
 });
