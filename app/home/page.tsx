@@ -20,6 +20,7 @@ import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import Onboarding from '@/components/Onboarding';
+import PopiaConsent from '@/components/PopiaConsent';
 import { LanguageProvider } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
@@ -337,6 +338,7 @@ export default function HomeLanding() {
   return (
     <LanguageProvider>
       <Onboarding />
+      <PopiaConsent />
       <HomeLandingInner />
     </LanguageProvider>
   );

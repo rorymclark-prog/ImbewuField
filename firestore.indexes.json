@@ -25,6 +25,14 @@
       ]
     },
     {
+      "collectionGroup": "expense_logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "profile_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "designs",
       "queryScope": "COLLECTION",
       "fields": [

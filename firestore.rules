@@ -64,6 +64,15 @@ service cloud.firestore {
       allow update, delete: if owns(resource.data);
     }
 
+    match /expense_logs/{id} {
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
+      allow create: if signedIn()
+        && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.amount is number && request.resource.data.amount >= 0
+        && request.resource.data.item is string && request.resource.data.item.size() > 0;
+      allow update, delete: if owns(resource.data);
+    }
+
     match /designs/{id} {
       allow read:   if ownsField(resource.data, 'owner_id') || ownsField(resource.data, 'shared_with') || isStaff();
       allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid;

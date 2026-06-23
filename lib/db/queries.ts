@@ -11,7 +11,7 @@ import {
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirebase } from '@/lib/firebase/init';
 import type {
-  Profile, Garden, GardenMember, ProductionLog, SalesLog, Design, Report,
+  Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   SavedPlaceRow, CourseProgress, GardenerProfile, MentorVisit,
 } from './types';
 
@@ -142,6 +142,17 @@ export async function mySales(): Promise<SalesLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
   const s = await getDocs(query(collection(f.db, 'sales_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
   return rows<SalesLog>(s);
+}
+
+// ---- expenses (costs) ----
+export async function addExpense(row: Partial<ExpenseLog>): Promise<void> {
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, created_at: serverTimestamp() });
+}
+export async function myExpenses(): Promise<ExpenseLog[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'expense_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
+  return rows<ExpenseLog>(s);
 }
 
 // ---- delete records ----

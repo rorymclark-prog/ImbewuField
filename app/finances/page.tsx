@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
-import { addSale, myProduction } from '@/lib/db/queries';
-import type { SalesLog, ProductionLog } from '@/lib/db/types';
+import { addSale, addExpense, myProduction, mySales, myExpenses } from '@/lib/db/queries';
+import type { SalesLog, ProductionLog, ExpenseLog } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -51,22 +51,33 @@ function Skeleton({ className = '', style }: { className?: string; style?: React
 interface SummaryProps {
   sales: SalesLog[];
   production: ProductionLog[];
+  expenses: ExpenseLog[];
   loading: boolean;
 }
 
-function SummaryCards({ sales, production, loading }: SummaryProps) {
+function SummaryCards({ sales, production, expenses, loading }: SummaryProps) {
   const thisMonthSales = sales.filter((s) => isThisMonth(s.sold_at));
   const totalRevenue = thisMonthSales.reduce((acc, s) => acc + (s.amount ?? 0), 0);
+  const totalSpent = expenses
+    .filter((x) => isThisMonth(x.spent_at))
+    .reduce((acc, x) => acc + (x.amount ?? 0), 0);
   const totalKg = production
     .filter((p) => isThisMonth(p.logged_at))
     .reduce((acc, p) => acc + (p.kg ?? 0), 0);
-  const txCount = thisMonthSales.length;
 
   const cards = [
     {
       icon: <TrendingUp size={16} />,
       label: 'Sold this month',
       value: fmtZAR(totalRevenue),
+      color: '#2E6B3A',
+      bg: 'rgba(46,107,58,0.08)',
+      border: 'rgba(46,107,58,0.18)',
+    },
+    {
+      icon: <Receipt size={16} />,
+      label: 'Spent this month',
+      value: totalSpent ? fmtZAR(totalSpent) : 'R 0',
       color: '#C07A1E',
       bg: 'rgba(192,122,30,0.08)',
       border: 'rgba(192,122,30,0.18)',
@@ -75,14 +86,6 @@ function SummaryCards({ sales, production, loading }: SummaryProps) {
       icon: <Scale size={16} />,
       label: 'Kg harvested',
       value: `${totalKg.toFixed(1)} kg`,
-      color: '#1F4D2B',
-      bg: 'rgba(31,77,43,0.08)',
-      border: 'rgba(31,77,43,0.18)',
-    },
-    {
-      icon: <Receipt size={16} />,
-      label: 'Transactions',
-      value: txCount.toString(),
       color: '#235E86',
       bg: 'rgba(35,94,134,0.08)',
       border: 'rgba(35,94,134,0.18)',
@@ -223,6 +226,7 @@ interface SaleFormState {
 
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const [open, setOpen] = useState(false);
+  const [kind, setKind] = useState<'in' | 'out'>('in');
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     kg: '',
@@ -232,25 +236,26 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     error: '',
   });
 
+  const isIn = kind === 'in';
+  const reset = () => setForm({ crop: '', kg: '', price: '', buyer: '', loading: false, error: '' });
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const crop = form.crop.trim();
-    const kg = parseFloat(form.kg);
+    const what = form.crop.trim();
     const amount = parseFloat(form.price);
-    if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
-      setForm((f) => ({ ...f, error: 'Crop name, kg, and price are required.' }));
+    const kg = parseFloat(form.kg);
+    if (!what || isNaN(amount) || amount < 0 || (isIn && (isNaN(kg) || kg <= 0))) {
+      setForm((f) => ({ ...f, error: isIn ? 'Crop, kg and price are required.' : 'Item and amount are required.' }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
-      await addSale({
-        crop,
-        kg,
-        amount,
-        buyer: form.buyer.trim() || null,
-        sold_at: new Date().toISOString(),
-      });
-      setForm({ crop: '', kg: '', price: '', buyer: '', loading: false, error: '' });
+      if (isIn) {
+        await addSale({ crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() });
+      } else {
+        await addExpense({ item: what, amount, supplier: form.buyer.trim() || null, spent_at: new Date().toISOString() });
+      }
+      reset();
       setOpen(false);
       onSaved();
     } catch {
@@ -264,169 +269,90 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         type="button"
         onClick={() => setOpen(true)}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-display font-semibold transition-all"
-        style={{
-          background: '#1F4D2B',
-          border: '1px solid rgba(31,77,43,0.22)',
-          color: '#F7F2E9',
-        }}
+        style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.22)', color: '#F7F2E9' }}
       >
         <Plus size={16} />
-        Log sale
+        New entry
       </button>
     );
   }
 
+  const accent = isIn ? '#2E6B3A' : '#C07A1E';
+
   return (
-    <div
-      className="rounded-2xl overflow-hidden"
-      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
-    >
-      <div
-        className="px-4 py-3 flex items-center gap-2"
-        style={{ borderBottom: '1px solid #E2D8C4' }}
-      >
-        <Plus size={14} style={{ color: '#5C5040' }} />
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
-          Log a sale
-        </span>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="px-4 pt-3 pb-2">
+        {/* Money in / out toggle */}
+        <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+          {([['in', 'Money in'], ['out', 'Money out']] as const).map(([k, label]) => (
+            <button key={k} type="button" onClick={() => { setKind(k); setForm((f) => ({ ...f, error: '' })); }}
+              className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
+              style={kind === k
+                ? { background: k === 'in' ? '#2E6B3A' : '#C07A1E', color: '#fff', fontSize: 13 }
+                : { color: '#5C5040', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
-      <form onSubmit={handleSubmit} className="p-4 space-y-3">
+      <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
         <div>
-          <label
-            className="block text-xs font-mono uppercase tracking-wider mb-1"
-            style={{ color: '#5C5040' }}
-          >
-            Crop
+          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
+            {isIn ? 'Crop' : 'What for'}
           </label>
-          <input
-            type="text"
-            placeholder="e.g. Spinach"
-            value={form.crop}
-            onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
+          <input type="text" placeholder={isIn ? 'e.g. Spinach' : 'e.g. Seedlings'}
+            value={form.crop} onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{
-              background: '#F7F2E9',
-              border: '1px solid #E2D8C4',
-              color: '#20190F',
-            }}
-          />
+            style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#20190F' }} />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label
-              className="block text-xs font-mono uppercase tracking-wider mb-1"
-              style={{ color: '#5C5040' }}
-            >
-              Kg sold
-            </label>
-            <input
-              type="number"
-              placeholder="0.0"
-              step="0.1"
-              min="0"
-              value={form.kg}
-              onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
+          {isIn && (
+            <div>
+              <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>Kg sold</label>
+              <input type="number" placeholder="0.0" step="0.1" min="0"
+                value={form.kg} onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
+                className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+                style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#20190F' }} />
+            </div>
+          )}
+          <div className={isIn ? '' : 'col-span-2'}>
+            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>Amount (R)</label>
+            <input type="number" placeholder="0.00" step="0.01" min="0"
+              value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-              style={{
-                background: '#F7F2E9',
-                border: '1px solid #E2D8C4',
-                color: '#20190F',
-              }}
-            />
-          </div>
-          <div>
-            <label
-              className="block text-xs font-mono uppercase tracking-wider mb-1"
-              style={{ color: '#5C5040' }}
-            >
-              Price (R)
-            </label>
-            <input
-              type="number"
-              placeholder="0.00"
-              step="0.01"
-              min="0"
-              value={form.price}
-              onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
-              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-              style={{
-                background: '#F7F2E9',
-                border: '1px solid #E2D8C4',
-                color: '#20190F',
-              }}
-            />
+              style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#20190F' }} />
           </div>
         </div>
 
         <div>
-          <label
-            className="block text-xs font-mono uppercase tracking-wider mb-1"
-            style={{ color: '#5C5040' }}
-          >
-            Buyer
-            <span className="ml-1 normal-case" style={{ color: '#8C7A62' }}>
-              (optional)
-            </span>
+          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
+            {isIn ? 'Buyer' : 'Supplier'}
+            <span className="ml-1 normal-case" style={{ color: '#8C7A62' }}>(optional)</span>
           </label>
-          <input
-            type="text"
-            placeholder="e.g. Local market"
-            value={form.buyer}
-            onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
+          <input type="text" placeholder={isIn ? 'e.g. Local market' : 'e.g. Agri Co-op'}
+            value={form.buyer} onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{
-              background: '#F7F2E9',
-              border: '1px solid #E2D8C4',
-              color: '#20190F',
-            }}
-          />
+            style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#20190F' }} />
         </div>
 
-        {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#D4922A' }}>
-            {form.error}
-          </p>
-        )}
+        {form.error && <p className="text-xs font-sans" style={{ color: '#D4922A' }}>{form.error}</p>}
 
         <div className="flex gap-2 pt-1">
-          <button
-            type="button"
-            onClick={() => {
-              setOpen(false);
-              setForm({ crop: '', kg: '', price: '', buyer: '', loading: false, error: '' });
-            }}
+          <button type="button" onClick={() => { setOpen(false); reset(); }}
             className="flex-1 py-2.5 rounded-xl text-sm font-display transition-all"
-            style={{
-              background: 'transparent',
-              border: '1px solid #E2D8C4',
-              color: '#5C5040',
-            }}
-          >
+            style={{ background: 'transparent', border: '1px solid #E2D8C4', color: '#5C5040' }}>
             Cancel
           </button>
-          <button
-            type="submit"
-            disabled={form.loading}
+          <button type="submit" disabled={form.loading}
             className="flex-1 py-2.5 rounded-xl text-sm font-display font-semibold flex items-center justify-center gap-2 transition-all"
-            style={{
-              background: form.loading ? 'rgba(31,77,43,0.06)' : '#1F4D2B',
-              border: '1px solid rgba(31,77,43,0.22)',
-              color: form.loading ? '#5C5040' : '#F7F2E9',
-              cursor: form.loading ? 'not-allowed' : 'pointer',
-            }}
-          >
+            style={{ background: form.loading ? 'rgba(31,77,43,0.06)' : accent, border: 'none', color: form.loading ? '#5C5040' : '#fff', cursor: form.loading ? 'not-allowed' : 'pointer' }}>
             {form.loading ? (
               <>
-                <span
-                  className="inline-block w-3 h-3 rounded-full border-2 animate-spin"
-                  style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
-                />
+                <span className="inline-block w-3 h-3 rounded-full border-2 animate-spin" style={{ borderColor: '#fff transparent transparent transparent' }} />
                 Saving...
               </>
-            ) : (
-              'Log sale'
-            )}
+            ) : (isIn ? 'Log sale' : 'Log cost')}
           </button>
         </div>
       </form>
@@ -490,7 +416,7 @@ function inPeriod(iso: string | null | undefined, period: Period, now: Date): bo
 
 interface LedgerRow { iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null }
 
-function FinancialSheet({ sales, production, name, loading }: { sales: SalesLog[]; production: ProductionLog[]; name: string; loading: boolean }) {
+function FinancialSheet({ sales, production, expenses, name, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; name: string; loading: boolean }) {
   const [period, setPeriod] = useState<Period>('month');
   const now = useMemo(() => new Date(), []);
 
@@ -498,15 +424,18 @@ function FinancialSheet({ sales, production, name, loading }: { sales: SalesLog[
     const saleRows: LedgerRow[] = sales
       .filter((s) => inPeriod(s.sold_at, period, now))
       .map((s) => ({ iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
+    const expenseRows: LedgerRow[] = expenses
+      .filter((x) => inPeriod(x.spent_at, period, now))
+      .map((x) => ({ iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: '—', inAmt: null, source: x.supplier || 'Cost', outAmt: x.amount ?? 0 }));
     const harvestRows: LedgerRow[] = production
       .filter((p) => inPeriod(p.logged_at, period, now))
       .map((p) => ({ iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
-    return [...saleRows, ...harvestRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
-  }, [sales, production, period, now]);
+    return [...saleRows, ...expenseRows, ...harvestRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
+  }, [sales, expenses, production, period, now]);
 
   const income = rows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
-  const expenses = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
-  const net = income - expenses;
+  const expenseTotal = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
+  const net = income - expenseTotal;
   const yieldKg = production.filter((p) => inPeriod(p.logged_at, period, now)).reduce((a, p) => a + (p.kg ?? 0), 0);
   const yieldLabel = yieldKg >= 1000 ? `${(yieldKg / 1000).toFixed(1)} t` : `${yieldKg.toFixed(0)} kg`;
 
@@ -522,7 +451,7 @@ function FinancialSheet({ sales, production, name, loading }: { sales: SalesLog[
 
   const stats = [
     { label: 'Income', value: fmtZAR(income), color: '#2E6B3A' },
-    { label: 'Expenses', value: expenses ? fmtZAR(expenses) : '—', color: '#C07A1E' },
+    { label: 'Expenses', value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: '#C07A1E' },
     { label: 'Net profit', value: fmtZAR(net), color: '#1F4D2B' },
     { label: 'Yield logged', value: yieldLabel, color: '#235E86' },
   ];
@@ -596,7 +525,7 @@ function FinancialSheet({ sales, production, name, loading }: { sales: SalesLog[
         </table>
       </div>
       <p className="font-sans mt-3" style={{ fontSize: 12, color: '#94876F' }}>
-        Mirrors your phone entries · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Expenses appear once cost logging is enabled.
+        Mirrors your phone entries · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Log a sale or cost with the New-entry button on your phone.
       </p>
     </div>
   );
@@ -608,6 +537,7 @@ export default function FinancesPage() {
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [sales, setSales] = useState<SalesLog[]>([]);
   const [production, setProduction] = useState<ProductionLog[]>([]);
+  const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
 
   // Auth: same pattern as MyRecords
@@ -626,31 +556,14 @@ export default function FinancesPage() {
   const loadData = useCallback(async () => {
     setDataLoading(true);
     try {
-      // myProduction is available in queries; sales use the same Firestore pattern
-      // but there's no mySales query exported yet — fetch via the same approach
-      const { getFirebase: gfb } = await import('@/lib/firebase/init');
-      const { getDocs, query, collection, where } = await import('firebase/firestore');
-      const fb = gfb();
-      if (!fb) return;
-      const uid = fb.auth.currentUser?.uid;
-      if (!uid) return;
-
-      const [prodResult, salesSnap] = await Promise.all([
+      const [prodResult, salesResult, expenseResult] = await Promise.all([
         myProduction(),
-        getDocs(
-          query(
-            collection(fb.db, 'sales_logs'),
-            where('profile_id', '==', uid)
-          )
-        ),
+        mySales(),
+        myExpenses(),
       ]);
-
       setProduction(prodResult);
-      const salesRows = salesSnap.docs.map((d) => ({
-        id: d.id,
-        ...(d.data() as object),
-      })) as unknown as SalesLog[];
-      setSales(salesRows);
+      setSales(salesResult);
+      setExpenses(expenseResult);
     } finally {
       setDataLoading(false);
     }
@@ -662,6 +575,7 @@ export default function FinancesPage() {
     } else if (user === null) {
       setSales([]);
       setProduction([]);
+      setExpenses([]);
     }
   }, [user, loadData]);
 
@@ -711,6 +625,7 @@ export default function FinancesPage() {
               <FinancialSheet
                 sales={sales}
                 production={production}
+                expenses={expenses}
                 name={user.displayName ?? 'My farm'}
                 loading={dataLoading}
               />
@@ -720,6 +635,7 @@ export default function FinancesPage() {
               <SummaryCards
                 sales={sales}
                 production={production}
+                expenses={expenses}
                 loading={dataLoading}
               />
               <SalesLedger sales={sales} loading={dataLoading} />

@@ -37,6 +37,11 @@ export interface SalesLog {
   amount: number; buyer: string | null; sold_at: string; created_at: string;
 }
 
+export interface ExpenseLog {
+  id: string; profile_id: string; garden_id: string | null; item: string;
+  amount: number; supplier: string | null; spent_at: string; created_at: string;
+}
+
 export interface Design {
   id: string; owner_id: string; garden_id: string | null; title: string;
   data: Record<string, unknown>; shared_with: string | null; created_at: string;
