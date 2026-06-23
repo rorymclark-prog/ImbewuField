@@ -110,5 +110,16 @@ service cloud.firestore {
         && request.resource.data.notes is string;
       allow update, delete: if signedIn() && resource.data.mentor_id == request.auth.uid;
     }
+
+    match /surveys/{id} {
+      allow read:   if signedIn();
+      allow create: if signedIn() && isStaff() && request.resource.data.created_by == request.auth.uid;
+      allow update, delete: if signedIn() && resource.data.created_by == request.auth.uid;
+    }
+
+    match /survey_responses/{id} {
+      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isStaff());
+      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
+    }
   }
 }

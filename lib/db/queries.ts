@@ -13,6 +13,7 @@ import { getFirebase } from '@/lib/firebase/init';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   SavedPlaceRow, CourseProgress, GardenerProfile, MentorVisit,
+  Survey, SurveyQuestion, SurveyResponse,
 } from './types';
 
 const fb = () => getFirebase();
@@ -198,6 +199,31 @@ export async function myMentorVisits(traineeId: string): Promise<MentorVisit[]> 
     orderBy('created_at', 'desc'),
   ));
   return rows<MentorVisit>(s);
+}
+
+// ---- surveys (NGO asks, farmers answer) ----
+export async function createSurvey(s: { org_name: string; title: string; questions: SurveyQuestion[] }): Promise<void> {
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await addDoc(collection(f.db, 'surveys'), { ...s, created_by: u, created_at: serverTimestamp() });
+}
+export async function listSurveys(): Promise<Survey[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'surveys'), orderBy('created_at', 'desc')));
+  return rows<Survey>(s);
+}
+export async function addSurveyResponse(survey_id: string, answers: Record<string, string>): Promise<void> {
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await addDoc(collection(f.db, 'survey_responses'), { survey_id, answers, profile_id: u, created_at: serverTimestamp() });
+}
+export async function listSurveyResponses(surveyId: string): Promise<SurveyResponse[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'survey_responses'), where('survey_id', '==', surveyId)));
+  return rows<SurveyResponse>(s);
+}
+export async function myRespondedSurveyIds(): Promise<string[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'survey_responses'), where('profile_id', '==', u)));
+  return rows<SurveyResponse>(s).map((r) => r.survey_id);
 }
 
 // ---- farmer / trainee directory ----

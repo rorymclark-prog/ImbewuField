@@ -14,6 +14,7 @@ import {
   Leaf,
   CalendarDays,
   LayoutGrid,
+  ClipboardList,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -312,6 +313,22 @@ function HomeLandingInner() {
                   <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
                 </Link>
               ))}
+
+              {/* Surveys — NGOs build, everyone can answer */}
+              <Link
+                href="/surveys"
+                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderTop: '1px solid #E2D8C4', transition: 'background 0.12s' }}
+                className="hover:bg-[rgba(32,25,15,0.03)]"
+              >
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(192,122,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#C07A1E' }}>
+                  <ClipboardList size={17} strokeWidth={1.6} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>Surveys</div>
+                  <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>Answer field surveys · NGOs build &amp; send</div>
+                </div>
+                <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              </Link>
             </div>
           )}
         </section>
