@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { ChevronLeft } from 'lucide-react';
 
 /**
  * A consistent "← Back" control for every sub-page header.
@@ -25,7 +26,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
         cursor: 'pointer',
       }}
     >
-      <span style={{ fontSize: 13, lineHeight: 1 }}>←</span>
+      <ChevronLeft size={14} strokeWidth={2} />
       <span className="hidden sm:inline">Back</span>
     </button>
   );

@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import TabBar from '@/components/TabBar';
-import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import ThemePanel from '@/components/ThemePanel';
+import { Settings } from 'lucide-react';
 import { Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 
@@ -59,6 +60,7 @@ export default function AccountPage() {
   const { user, profile, signOutUser, loading } = useAuth();
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user && isBackendConfigured()) {
@@ -98,7 +100,15 @@ export default function AccountPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Account</span>
         <div className="flex-1" />
-        <SettingsButton />
+        <button
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Settings"
+          className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
+          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}
+        >
+          <Settings size={13} strokeWidth={1.7} />
+          <span className="hidden sm:inline">Settings</span>
+        </button>
       </header>
 
       {/* Content */}
@@ -140,12 +150,7 @@ export default function AccountPage() {
 
           {/* Settings shortcut */}
           <button
-            onClick={() => {
-              // Fire the settings button — navigate to settings via the existing SettingsButton
-              // mechanism (ThemePanel is triggered globally)
-              const btn = document.querySelector<HTMLButtonElement>('[aria-label="Appearance settings"]');
-              btn?.click();
-            }}
+            onClick={() => setSettingsOpen(true)}
             className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}
           >
@@ -176,6 +181,7 @@ export default function AccountPage() {
       </div>
 
       <TabBar />
+      <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 }
