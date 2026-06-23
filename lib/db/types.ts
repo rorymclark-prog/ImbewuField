@@ -51,6 +51,11 @@ export interface SavedPlaceRow {
 
 export interface CourseProgress { id: string; profile_id: string; module: string; done: boolean; updated_at: string }
 
+export interface TrainerVisit {
+  id: string; trainer_id: string; trainee_id: string;
+  garden_id: string | null; notes: string; visited_at: string; created_at: string;
+}
+
 // Convenience view models the UI uses
 export interface GardenerProfile {
   profile: Profile;

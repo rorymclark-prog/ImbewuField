@@ -12,7 +12,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import { getFirebase } from '@/lib/firebase/init';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, Design, Report,
-  SavedPlaceRow, CourseProgress, GardenerProfile,
+  SavedPlaceRow, CourseProgress, GardenerProfile, TrainerVisit,
 } from './types';
 
 const fb = () => getFirebase();
@@ -137,9 +137,70 @@ export async function uploadPhoto(file: File, folder = 'produce'): Promise<strin
   return getDownloadURL(r);
 }
 
-// ---- farmer directory (supervisor use) ----
+// ---- sales ----
+export async function mySales(): Promise<SalesLog[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'sales_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
+  return rows<SalesLog>(s);
+}
+
+// ---- delete records ----
+export async function deleteProduction(id: string): Promise<void> {
+  const f = fb(); if (!f) return;
+  await deleteDoc(doc(f.db, 'production_logs', id));
+}
+export async function deleteSale(id: string): Promise<void> {
+  const f = fb(); if (!f) return;
+  await deleteDoc(doc(f.db, 'sales_logs', id));
+}
+
+// ---- course progress ----
+export async function myCourseProgress(): Promise<CourseProgress[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'course_progress'), where('profile_id', '==', u)));
+  return rows<CourseProgress>(s);
+}
+export async function getCourseProgress(profileId: string): Promise<CourseProgress[]> {
+  const f = fb(); if (!f) return [];
+  const s = await getDocs(query(collection(f.db, 'course_progress'), where('profile_id', '==', profileId)));
+  return rows<CourseProgress>(s);
+}
+export async function setCourseProgress(module: string, done: boolean): Promise<void> {
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  // Deterministic doc ID enables upsert without extra reads
+  await setDoc(doc(f.db, 'course_progress', `${u}_${module}`), {
+    profile_id: u, module, done, updated_at: serverTimestamp(),
+  });
+}
+
+// ---- trainer visits ----
+export async function logTrainerVisit(v: { trainee_id: string; garden_id?: string | null; notes: string; visited_at: string }): Promise<void> {
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await addDoc(collection(f.db, 'trainer_visits'), { ...v, trainer_id: u, created_at: serverTimestamp() });
+}
+export async function myTrainerVisits(traineeId: string): Promise<TrainerVisit[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(
+    collection(f.db, 'trainer_visits'),
+    where('trainer_id', '==', u),
+    where('trainee_id', '==', traineeId),
+    orderBy('created_at', 'desc'),
+  ));
+  return rows<TrainerVisit>(s);
+}
+
+// ---- farmer / trainee directory ----
 export async function listFarmers(): Promise<Profile[]> {
   const f = fb(); if (!f) return [];
   const s = await getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer')));
   return rows<Profile>(s);
+}
+export async function listTrainees(): Promise<Profile[]> {
+  const f = fb(); if (!f) return [];
+  // Returns farmers + students — the people a trainer works with
+  const [farmers, students] = await Promise.all([
+    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer'))),
+    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'student'))),
+  ]);
+  return [...rows<Profile>(farmers), ...rows<Profile>(students)];
 }

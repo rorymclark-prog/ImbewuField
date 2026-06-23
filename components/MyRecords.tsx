@@ -6,6 +6,7 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
   myProduction,
+  mySales,
   addProduction,
   addSale,
   designsSharedWithMe,
@@ -620,19 +621,16 @@ export default function MyRecords() {
   const loadData = useCallback(async () => {
     setDataLoading(true);
     try {
-      const [prod, des] = await Promise.all([
+      const [prod, salesData, des] = await Promise.all([
         myProduction(),
+        mySales(),
         designsSharedWithMe(),
       ]);
-      // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
-      const sortedProd = [...prod].sort((a, b) => {
-        return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
-      });
+      const sortedProd = [...prod].sort((a, b) =>
+        (b.logged_at ?? '').localeCompare(a.logged_at ?? ''));
       setProduction(sortedProd);
+      setSales(salesData);
       setDesigns(des);
-      // Sales: re-fetch via a separate call is not available in queries, so we
-      // keep the list that was accumulated via onSaved callbacks only.
-      // (myProduction covers the production side; sales appended below)
     } finally {
       setDataLoading(false);
     }

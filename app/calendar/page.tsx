@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -365,6 +365,20 @@ function Dot({ mark }: { mark: PlantMark }) {
 
 export default function CalendarPage() {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
+  const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('imbewu_planner_crops');
+      if (raw) setMyPlannerCrops(JSON.parse(raw) as string[]);
+    } catch { /* ignore */ }
+  }, []);
+
+  const visibleCrops = myPlannerCrops.length > 0
+    ? CROPS.filter((c) => myPlannerCrops.some((p) => p.toLowerCase() === c.name.toLowerCase()))
+    : CROPS;
+  const isFiltered = myPlannerCrops.length > 0;
+
   const monthData = MONTHLY_DATA[selectedMonth];
 
   return (
@@ -701,6 +715,16 @@ export default function CalendarPage() {
               </div>
             </div>
 
+            {/* Crop planner filter notice */}
+            {isFiltered && (
+              <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>Showing your {visibleCrops.length} planned crops</span>
+                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+                  Show all
+                </button>
+              </div>
+            )}
+
             {/* Scrollable table */}
             <div
               style={{
@@ -764,7 +788,7 @@ export default function CalendarPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {CROPS.map((crop, rowIdx) => (
+                  {visibleCrops.map((crop, rowIdx) => (
                     <tr
                       key={crop.name}
                       style={{
