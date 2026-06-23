@@ -185,8 +185,12 @@ function HomeInner() {
 
         {/* ── Main ──────────────────────────────── */}
         {/*
-          Desktop (md+): side-by-side — map flex-1, panel 390px fixed-width column.
-          Mobile (<md):  map fills full width; DataPanel is a bottom sheet overlay.
+          Wide / landscape (lg+, ≥1024 incl. landscape iPad): side-by-side — map
+            flex-1 + a persistent 390px panel column.
+          Phone & portrait tablet (<1024): map fills the width; DataPanel is a
+            bottom-sheet overlay reached via the "Details" button.
+          (A single 768px split used to drop portrait iPads into a cramped side
+           panel — handoff frame 26 "priority #2".)
         */}
         <div className="flex-1 flex overflow-hidden relative">
 
@@ -209,7 +213,7 @@ function HomeInner() {
 
           {/* ── Desktop side panel (md+) ── */}
           <div
-            className="hidden md:flex flex-shrink-0 overflow-hidden flex-col"
+            className="hidden lg:flex flex-shrink-0 overflow-hidden flex-col"
             style={{ width: 390, background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
           >
             <DataPanel
@@ -231,7 +235,7 @@ function HomeInner() {
           {/* ── Mobile: floating "Details" toggle button ── */}
           {/* Visible only below md, hidden when sheet is open or while drawing a boundary */}
           <button
-            className="md:hidden fixed right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
+            className="lg:hidden fixed right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
             style={{
               bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 16px)',
               background: sheetOpen
@@ -258,7 +262,7 @@ function HomeInner() {
           {/* Scrim — tap to close */}
           {sheetOpen && (
             <div
-              className="md:hidden fixed inset-0 z-20"
+              className="lg:hidden fixed inset-0 z-20"
               style={{ background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(2px)' }}
               onClick={() => setSheetOpen(false)}
               aria-hidden="true"
@@ -266,7 +270,7 @@ function HomeInner() {
           )}
 
           <div
-            className="md:hidden fixed left-0 right-0 z-30 flex flex-col overflow-hidden"
+            className="lg:hidden fixed left-0 right-0 z-30 flex flex-col overflow-hidden"
             style={{
               bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
               height: sheetOpen ? '85dvh' : 0,

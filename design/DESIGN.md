@@ -89,13 +89,24 @@ planting calendar → bill of quantities).
   throughout (frame 31)
 - AI permaculture report (frame 25); role dashboards NGO/Funder/Mentor/Student (frames 19/20)
 - Auth: email + Google + reset + change password; Firestore rules + indexes
+- **Desktop financial sheet** (frame 15) — at lg+ `/finances` shows the laptop
+  ledger: name · "Financial sheet" + Month/Season/Year toggle + CSV Export +
+  New-invoice link; stat row Income/Expenses/Net/Yield; table Date·Description·
+  Qty·In·Source·Out (sales=IN, harvests=yield rows). Phone keeps the card view.
+  (Expenses column is wired but reads — until cost logging exists.)
+- **iPad/tablet layout** (frame 26, "priority #2") — the farmer map/panel split
+  moved from the single 768px breakpoint to `lg:` (1024): landscape tablets +
+  desktop get the persistent 390px side panel; phone + **portrait** tablet keep
+  the full-width map + Details bottom-sheet. Map tools panel + Lima FAB on both.
+- Map tools panel redesign (calm/unified/ochre-primary) — see `design/mockups/map-tools.html`
 
 **Deferred — need camera/vision/OAuth/infra (NOT yet built):**
 - Lima photo-vision: photograph a bed → estimate crop, yield, time-in-ground (frame 13)
 - Weigh-by-photo: estimate harvest kg from a photo + known-size reference (frame 14)
 - **Photograph an expense slip → Lima reads & allocates it to a crop (frame 32 pt 1)** — needs OCR/vision
 - GPS boundary-walk capture (frame 05 frame 2) — geolocation tracking
-- Google Sheets mirror + Google Calendar task sync (frames 15/18)
+- Google Sheets mirror + Google Calendar task sync (frames 15/18) — OAuth (the
+  desktop sheet itself is built; only the live Sheets mirror is deferred)
 - Invoice → auto-posts to ledger; yield-vs-planned (frame 32); NGO surveys → farmer task (frame 21)
 - POPIA consent + "get to know you" onboarding (frames 23/24)
-- iPad/tablet dedicated layout — landscape persistent side-panel ("priority #2", frame 26)
+- Site-analysis Q&A stepper (frame 04); cost/expense logging (feeds the sheet's Expenses)

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText } from 'lucide-react';
+import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { addSale, myProduction } from '@/lib/db/queries';
@@ -468,6 +468,140 @@ function SignInPrompt() {
   );
 }
 
+/* ── Desktop financial sheet (lg+) — the laptop ledger workspace (handoff frame 15) ── */
+
+type Period = 'month' | 'season' | 'year';
+
+function saSeasonMonths(m: number): number[] {
+  if (m >= 8 && m <= 10) return [8, 9, 10];
+  if (m === 11 || m <= 1) return [11, 0, 1];
+  if (m >= 2 && m <= 4) return [2, 3, 4];
+  return [5, 6, 7];
+}
+function inPeriod(iso: string | null | undefined, period: Period, now: Date): boolean {
+  if (!iso) return false;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return false;
+  if (period === 'year') return d.getFullYear() === now.getFullYear();
+  if (d.getFullYear() !== now.getFullYear()) return false;
+  if (period === 'month') return d.getMonth() === now.getMonth();
+  return saSeasonMonths(now.getMonth()).includes(d.getMonth());
+}
+
+interface LedgerRow { iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null }
+
+function FinancialSheet({ sales, production, name, loading }: { sales: SalesLog[]; production: ProductionLog[]; name: string; loading: boolean }) {
+  const [period, setPeriod] = useState<Period>('month');
+  const now = useMemo(() => new Date(), []);
+
+  const rows: LedgerRow[] = useMemo(() => {
+    const saleRows: LedgerRow[] = sales
+      .filter((s) => inPeriod(s.sold_at, period, now))
+      .map((s) => ({ iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
+    const harvestRows: LedgerRow[] = production
+      .filter((p) => inPeriod(p.logged_at, period, now))
+      .map((p) => ({ iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
+    return [...saleRows, ...harvestRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
+  }, [sales, production, period, now]);
+
+  const income = rows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
+  const expenses = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
+  const net = income - expenses;
+  const yieldKg = production.filter((p) => inPeriod(p.logged_at, period, now)).reduce((a, p) => a + (p.kg ?? 0), 0);
+  const yieldLabel = yieldKg >= 1000 ? `${(yieldKg / 1000).toFixed(1)} t` : `${yieldKg.toFixed(0)} kg`;
+
+  function exportCsv() {
+    const head = ['Date', 'Description', 'Qty', 'In', 'Source', 'Out'];
+    const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '']);
+    const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = `imbewufield-financial-sheet-${period}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const stats = [
+    { label: 'Income', value: fmtZAR(income), color: '#2E6B3A' },
+    { label: 'Expenses', value: expenses ? fmtZAR(expenses) : '—', color: '#C07A1E' },
+    { label: 'Net profit', value: fmtZAR(net), color: '#1F4D2B' },
+    { label: 'Yield logged', value: yieldLabel, color: '#235E86' },
+  ];
+
+  return (
+    <div className="max-w-5xl mx-auto w-full">
+      {/* Title bar */}
+      <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
+        <div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#94876F', letterSpacing: '0.14em' }}>{name}</div>
+          <h1 className="font-display font-semibold" style={{ fontSize: 30, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Financial sheet</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+            {(['month', 'season', 'year'] as Period[]).map((p) => (
+              <button key={p} onClick={() => setPeriod(p)}
+                className="px-3 py-1.5 rounded-md font-sans font-semibold capitalize transition-all"
+                style={period === p ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 13 } : { color: '#5C5040', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                {p}
+              </button>
+            ))}
+          </div>
+          <button onClick={exportCsv} disabled={rows.length === 0}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: rows.length ? '#20190F' : '#94876F', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
+            <Download size={15} />Export
+          </button>
+          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', fontSize: 14, textDecoration: 'none' }}>
+            <FileText size={15} />New invoice
+          </Link>
+        </div>
+      </div>
+
+      {/* Stat row */}
+      <div className="grid grid-cols-4 gap-4 mb-5">
+        {stats.map((s) => (
+          <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#94876F', letterSpacing: '0.1em' }}>{s.label}</div>
+            <div className="font-display font-bold mt-1" style={{ fontSize: 28, color: s.color, letterSpacing: '-0.02em' }}>{loading ? '…' : s.value}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Ledger table */}
+      <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+        <table className="w-full" style={{ borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid #E2D8C4' }}>
+              {['Date', 'Description', 'Qty', 'In', 'Source', 'Out'].map((h, i) => (
+                <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
+                  style={{ fontSize: 11, color: '#94876F', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr><td colSpan={6} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>
+                No entries for this {period}. Log a sale on your phone or the Invoice tool, and it appears here.
+              </td></tr>
+            ) : rows.map((r, i) => (
+              <tr key={i} style={{ borderBottom: i < rows.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.date}</td>
+                <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: '#20190F' }}>{r.desc}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.qty}</td>
+                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#2E6B3A', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>{r.source}</td>
+                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#C07A1E', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="font-sans mt-3" style={{ fontSize: 12, color: '#94876F' }}>
+        Mirrors your phone entries · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Expenses appear once cost logging is enabled.
+      </p>
+    </div>
+  );
+}
+
 /* ── Main page ───────────────────────────────────────────────────────────── */
 
 export default function FinancesPage() {
@@ -554,7 +688,7 @@ export default function FinancesPage() {
       </header>
 
       {/* Content */}
-      <main className="flex-1 overflow-y-auto px-4 py-5 space-y-4">
+      <main className="flex-1 overflow-y-auto px-4 lg:px-8 py-5 lg:py-8 space-y-4">
         {user === 'loading' ? (
           <>
             <div className="grid grid-cols-3 gap-3">
@@ -572,13 +706,25 @@ export default function FinancesPage() {
           <SignInPrompt />
         ) : (
           <>
-            <SummaryCards
-              sales={sales}
-              production={production}
-              loading={dataLoading}
-            />
-            <SalesLedger sales={sales} loading={dataLoading} />
-            <LogSaleForm onSaved={loadData} />
+            {/* Wide / laptop: the financial-sheet ledger workspace (frame 15) */}
+            <div className="hidden lg:block">
+              <FinancialSheet
+                sales={sales}
+                production={production}
+                name={user.displayName ?? 'My farm'}
+                loading={dataLoading}
+              />
+            </div>
+            {/* Phone / tablet: the simple money view */}
+            <div className="lg:hidden space-y-4">
+              <SummaryCards
+                sales={sales}
+                production={production}
+                loading={dataLoading}
+              />
+              <SalesLedger sales={sales} loading={dataLoading} />
+              <LogSaleForm onSaved={loadData} />
+            </div>
           </>
         )}
       </main>
