@@ -9,6 +9,7 @@ import {
   BookOpen,
   GraduationCap,
   ChevronRight,
+  ArrowRight,
   Settings,
   Leaf,
   CalendarDays,
@@ -165,7 +166,7 @@ function HomeLandingInner() {
               letterSpacing: '-0.01em',
             }}
           >
-            Open the map&nbsp;&rarr;
+            <span className="flex items-center gap-1.5">Open the map<ArrowRight size={14} /></span>
           </span>
         </Link>
 
