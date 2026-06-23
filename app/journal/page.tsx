@@ -4,61 +4,24 @@ import MyRecords from '@/components/MyRecords';
 import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
-import { BookOpen } from 'lucide-react';
 
 export default function JournalPage() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100dvh',
-        overflow: 'hidden',
-        background: '#F7F2E9',
-      }}
-    >
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
       {/* Header */}
-      <header
-        style={{
-          background: '#FBF6EC',
-          borderBottom: '1px solid #E2D8C4',
-          height: 52,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 16px',
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <BookOpen size={18} color="#5C5040" strokeWidth={1.6} />
-          <span
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 18,
-              fontWeight: 500,
-              color: '#5C5040',
-              lineHeight: 1,
-            }}
-          >
-            Field Journal
-          </span>
-        </div>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        <BrandLogo />
+        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Field Journal</span>
+        <div className="flex-1" />
         <SettingsButton />
       </header>
 
       {/* Body */}
-      <main
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          background: '#F7F2E9',
-        }}
-      >
+      <main className="flex-1 overflow-y-auto" style={{ background: '#F7F2E9' }}>
         <MyRecords />
       </main>
 
-      {/* Tab Bar */}
       <TabBar />
     </div>
   );
