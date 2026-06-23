@@ -15,7 +15,10 @@
   --color-hairline: #E2D8C4;
   --font-display: 'Newsreader', Georgia, serif;
   --font-sans: 'Public Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Two-face system (design kit, frame 27): Newsreader + Public Sans only.
+     'mono' is aliased to Public Sans so the legacy .font-mono labels render as
+     Public Sans overlines — no code/mono typeface in the UI (frame 30 fix). */
+  --font-mono: 'Public Sans', system-ui, sans-serif;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
@@ -269,7 +272,7 @@ html, body {
 :root {
   --font-display: 'Newsreader', Georgia, serif;
   --font-sans:    'Public Sans', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-mono:    'Public Sans', system-ui, sans-serif; /* aliased to Public Sans — no mono in UI (frame 30) */
 
   /* Almanac palette aliased into the legacy var names so any
      component still using var(--bg-0) / var(--emerald) / etc.

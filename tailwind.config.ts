@@ -8,7 +8,7 @@ export default {
       fontFamily: {
         display: ['var(--font-display)', 'Newsreader', 'Georgia', 'serif'],
         sans: ['var(--font-sans)', 'Public Sans', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+        mono: ['var(--font-mono)', 'Public Sans', 'system-ui', 'sans-serif'], // aliased to Public Sans (frame 30)
       },
       colors: {
         forest: { DEFAULT: '#1F4D2B', light: '#2D6B3C', dark: '#163820' },

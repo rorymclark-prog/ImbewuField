@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { TrendingUp, Scale, Receipt, Plus, Sprout } from 'lucide-react';
+import Link from 'next/link';
+import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { addSale, myProduction } from '@/lib/db/queries';
@@ -544,6 +545,11 @@ export default function FinancesPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Finances</span>
         <div className="flex-1" />
+        <Link href="/invoice"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
+          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', textDecoration: 'none' }}>
+          <FileText size={13} />Invoice
+        </Link>
         <SettingsButton />
       </header>
 
