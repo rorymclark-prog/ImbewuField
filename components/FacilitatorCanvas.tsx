@@ -19,30 +19,30 @@ interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number
 
 const CATALOG: Record<ElType, Cat> = {
   // Water
-  tank:       { label: 'JoJo tank',    icon: '🛢',  shape: 'circle', w: 1.8, h: 1.8, spec: '5000 L', litres: 5000, fill: '#3E7BB0' },
-  pond:       { label: 'Pond / dam',   icon: '💧',  shape: 'circle', w: 6,   h: 6,   fill: '#2F6586' },
-  well:       { label: 'Well / bore',  icon: '⛲',  shape: 'circle', w: 1.2, h: 1.2, fill: '#3A3030' },
-  reedbed:    { label: 'Reed bed',     icon: '🌾',  shape: 'rect',   w: 3,   h: 2,   fill: '#4A6A30' },
+  tank:       { label: 'JoJo tank',    icon: 'TK', shape: 'circle', w: 1.8, h: 1.8, spec: '5000 L', litres: 5000, fill: '#3E7BB0' },
+  pond:       { label: 'Pond / dam',   icon: 'PD', shape: 'circle', w: 6,   h: 6,   fill: '#2F6586' },
+  well:       { label: 'Well / bore',  icon: 'WL', shape: 'circle', w: 1.2, h: 1.2, fill: '#3A3030' },
+  reedbed:    { label: 'Reed bed',     icon: 'RB', shape: 'rect',   w: 3,   h: 2,   fill: '#4A6A30' },
   // Beds & plants
-  bed:        { label: 'Veg bed',      icon: '🥬',  shape: 'rect',   w: 1,   h: 3,   fill: '#3F7A3C' },
-  hugel:      { label: 'Hugelkultur',  icon: '🪵',  shape: 'rect',   w: 2,   h: 5,   fill: '#6B4C2A' },
-  banana:     { label: 'Banana circle',icon: '🍌',  shape: 'circle', w: 3,   h: 3,   fill: '#2A5A1A' },
-  tree:       { label: 'Fruit tree',   icon: '🌳',  shape: 'circle', w: 4,   h: 4,   fill: '#2C5E33' },
-  foodforest: { label: 'Food forest',  icon: '🌲',  shape: 'circle', w: 8,   h: 8,   fill: '#1A3A18' },
-  herb:       { label: 'Herb spiral',  icon: '🌀',  shape: 'circle', w: 2,   h: 2,   fill: '#6E8B3D' },
-  shrub:      { label: 'Shrub',        icon: '🪴',  shape: 'circle', w: 1.5, h: 1.5, fill: '#4E8B4A' },
+  bed:        { label: 'Veg bed',      icon: 'VB', shape: 'rect',   w: 1,   h: 3,   fill: '#3F7A3C' },
+  hugel:      { label: 'Hugelkultur',  icon: 'HG', shape: 'rect',   w: 2,   h: 5,   fill: '#6B4C2A' },
+  banana:     { label: 'Banana circle',icon: 'BC', shape: 'circle', w: 3,   h: 3,   fill: '#2A5A1A' },
+  tree:       { label: 'Fruit tree',   icon: 'FT', shape: 'circle', w: 4,   h: 4,   fill: '#2C5E33' },
+  foodforest: { label: 'Food forest',  icon: 'FF', shape: 'circle', w: 8,   h: 8,   fill: '#1A3A18' },
+  herb:       { label: 'Herb spiral',  icon: 'HS', shape: 'circle', w: 2,   h: 2,   fill: '#6E8B3D' },
+  shrub:      { label: 'Shrub',        icon: 'SH', shape: 'circle', w: 1.5, h: 1.5, fill: '#4E8B4A' },
   // Structures
-  coop:       { label: 'Chicken coop', icon: '🐔',  shape: 'rect',   w: 2,   h: 3,   fill: '#9A6A34' },
-  compost:    { label: 'Compost',      icon: '♻',   shape: 'rect',   w: 1.5, h: 1.5, fill: '#5E4E32' },
-  greenhouse: { label: 'Greenhouse',   icon: '🏡',  shape: 'rect',   w: 4,   h: 8,   fill: '#6B8A9A' },
-  tunnel:     { label: 'Polytunnel',   icon: '⛺',  shape: 'rect',   w: 3,   h: 6,   fill: '#5E86A8' },
-  shed:       { label: 'Shed',         icon: '🏚',  shape: 'rect',   w: 2.5, h: 3,   fill: '#6E6757' },
-  beehive:    { label: 'Beehive',      icon: '🐝',  shape: 'circle', w: 1,   h: 1,   fill: '#8A5A14' },
-  biogas:     { label: 'Biogas',       icon: '⚗',   shape: 'circle', w: 2,   h: 2,   fill: '#5A4A7A' },
-  nursery:    { label: 'Nursery',      icon: '🌱',  shape: 'rect',   w: 3,   h: 4,   fill: '#3A5E30' },
+  coop:       { label: 'Chicken coop', icon: 'CH', shape: 'rect',   w: 2,   h: 3,   fill: '#9A6A34' },
+  compost:    { label: 'Compost',      icon: 'CP', shape: 'rect',   w: 1.5, h: 1.5, fill: '#5E4E32' },
+  greenhouse: { label: 'Greenhouse',   icon: 'GH', shape: 'rect',   w: 4,   h: 8,   fill: '#6B8A9A' },
+  tunnel:     { label: 'Polytunnel',   icon: 'TN', shape: 'rect',   w: 3,   h: 6,   fill: '#5E86A8' },
+  shed:       { label: 'Shed',         icon: 'SD', shape: 'rect',   w: 2.5, h: 3,   fill: '#6E6757' },
+  beehive:    { label: 'Beehive',      icon: 'BH', shape: 'circle', w: 1,   h: 1,   fill: '#8A5A14' },
+  biogas:     { label: 'Biogas',       icon: 'BG', shape: 'circle', w: 2,   h: 2,   fill: '#5A4A7A' },
+  nursery:    { label: 'Nursery',      icon: 'NS', shape: 'rect',   w: 3,   h: 4,   fill: '#3A5E30' },
   // Earthworks
-  swalew:     { label: 'Swale (berm)', icon: '〰',  shape: 'rect',   w: 8,   h: 1.5, fill: '#3A5A2A' },
-  firebreak:  { label: 'Firebreak',    icon: '🔥',  shape: 'rect',   w: 10,  h: 2,   fill: '#8A6040' },
+  swalew:     { label: 'Swale (berm)', icon: 'SW', shape: 'rect',   w: 8,   h: 1.5, fill: '#3A5A2A' },
+  firebreak:  { label: 'Firebreak',    icon: 'FB', shape: 'rect',   w: 10,  h: 2,   fill: '#8A6040' },
 };
 
 const GROUPS: { name: string; types: ElType[] }[] = [
@@ -53,13 +53,13 @@ const GROUPS: { name: string; types: ElType[] }[] = [
 ];
 
 const LINES: Record<LineKind, { label: string; icon: string; color: string; dash: number[]; width: number }> = {
-  pipe:      { label: 'Pipe',       icon: '〰', color: '#5B9ED4', dash: [9, 5],   width: 3 },
-  swale:     { label: 'Swale',      icon: '⌇', color: '#7AAA50', dash: [3, 5],   width: 4 },
-  windbreak: { label: 'Windbreak',  icon: '',    color: '#3A7A30', dash: [],       width: 8 },
-  drip:      { label: 'Drip line',  icon: '·', color: '#4A9ED4', dash: [2, 4],   width: 1.5 },
-  contour:   { label: 'Contour',    icon: '~', color: '#B89A60', dash: [6, 4],   width: 2 },
-  fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],       width: 2.5 },
-  path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],       width: 7 },
+  pipe:      { label: 'Pipe',       icon: '--', color: '#5B9ED4', dash: [9, 5],   width: 3 },
+  swale:     { label: 'Swale',      icon: '~',  color: '#7AAA50', dash: [3, 5],   width: 4 },
+  windbreak: { label: 'Windbreak',  icon: '|',  color: '#3A7A30', dash: [],       width: 8 },
+  drip:      { label: 'Drip line',  icon: '.',  color: '#4A9ED4', dash: [2, 4],   width: 1.5 },
+  contour:   { label: 'Contour',    icon: '~',  color: '#B89A60', dash: [6, 4],   width: 2 },
+  fence:     { label: 'Fence',      icon: '|',  color: '#C2A878', dash: [],       width: 2.5 },
+  path:      { label: 'Path',       icon: '..', color: '#C9B896', dash: [],       width: 7 },
 };
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number }
@@ -686,12 +686,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   async function handleSave() {
-    setSavedMsg('Saving…');
+    setSavedMsg('Saving...');
     try {
       await saveDesign({ title: siteText || 'Garden design', data: { items, lines, pxPerM } });
-      setSavedMsg('✓ Saved');
+      setSavedMsg('Saved');
     } catch {
-      setSavedMsg('✓ Saved');
+      setSavedMsg('Saved');
     }
     setTimeout(() => setSavedMsg(''), 3000);
   }
@@ -737,7 +737,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       if (!res.ok) throw new Error(`${res.status}`);
       const reader = res.body!.getReader(); const dec = new TextDecoder(); let text = '';
       while (true) { const { done, value } = await reader.read(); if (done) break; text += dec.decode(value, { stream: true }); setReview(text); }
-    } catch (e) { setReview(`⚠ ${e instanceof Error ? e.message : 'Review failed'}`); }
+    } catch (e) { setReview(`Error: ${e instanceof Error ? e.message : 'Review failed'}`); }
     finally { setReviewing(false); }
   }
 
@@ -773,7 +773,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Base map</div>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => loadImage(e.target.files?.[0])} />
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all" style={tile(false)}>
-            🖼 Import garden map
+            Import garden map
           </button>
           {bg && (
             <div className="mt-1.5 space-y-1">
@@ -788,7 +788,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           )}
           <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); }}
             className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(scaleMode)}>
-            📏 Set scale
+            Set scale
           </button>
           <div className="flex items-center justify-between mt-1.5">
             <span className="text-xs font-mono" style={{ color: '#5C5040' }}>1 m = {pxPerM.toFixed(0)} px</span>
@@ -807,7 +807,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               {g.types.map((type) => (
                 <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); }}
                   className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
-                  <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
+                  <span className="font-mono font-bold" style={{ fontSize: 10, letterSpacing: '0.04em', color: CATALOG[type].fill }}>{CATALOG[type].icon}</span>
                   <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
                 </button>
               ))}
@@ -866,7 +866,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                   <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
                   <Circle x={l.points[2]} y={l.points[3]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(2, e.target.x(), e.target.y())} />
                   <Group x={mx} y={my} onClick={() => setLines((prev) => prev.filter((q) => q.id !== l.id))} onTap={() => setLines((prev) => prev.filter((q) => q.id !== l.id))}>
-                    <Circle radius={7} fill="#0d1a0d" stroke="#D46E42" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#D46E42" x={-3} y={-4.5} />
+                    <Circle radius={7} fill="#0d1a0d" stroke="#D46E42" strokeWidth={1.3} /><Text text="x" fontSize={10} fill="#D46E42" x={-3} y={-5} />
                   </Group>
                 </Group>
               );
@@ -920,8 +920,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               <div className="flex items-center justify-between">
                 <span className="text-xs font-display font-semibold" style={{ color: '#2D6B3C' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
                 <div className="flex gap-1">
-                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>⧉</button>
-                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: '#D4922A' }}>✕</button>
+                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>Copy</button>
+                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: '#D4922A' }}>Del</button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -995,7 +995,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <button onClick={runReview} disabled={reviewing || !items.length}
               className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
               style={reviewing || !items.length ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' } : { background: '#1F4D2B', color: '#F7F2E9', border: '1px solid #1F4D2B' }}>
-              {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin inline-block" /> Reviewing…</span> : <span className="flex items-center justify-center gap-1"><Sparkles size={14} className="inline mr-1" /> AI review</span>}
+              {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin inline-block" /> Reviewing...</span> : <span className="flex items-center justify-center gap-1"><Sparkles size={14} className="inline mr-1" /> AI review</span>}
             </button>
             <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }} title="Export PNG">↓ PNG</button>
           </div>
@@ -1023,7 +1023,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             {shareOpen && !sharedTo && (
               <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
                 <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#5C5040' }}>
-                  {farmersLoading ? 'Loading…' : 'Send to'}
+                  {farmersLoading ? 'Loading...' : 'Send to'}
                 </div>
                 {farmersLoading && (
                   <div className="text-xs font-display px-2 py-1" style={{ color: '#5C5040' }}>
