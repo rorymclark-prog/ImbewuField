@@ -388,6 +388,30 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setDraftPoints((prev) => pushCorner(prev, p.lng, p.lat));
   }, []);
 
+  // "Walk it with GPS": drop a corner at the farmer's actual position. They stand
+  // on each corner of the land, tap, and walk to the next — no map-panning needed.
+  const [gpsAdding, setGpsAdding] = useState(false);
+  const [gpsError, setGpsError] = useState('');
+  const addPinFromGPS = useCallback(() => {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      setGpsError('GPS not available on this device.');
+      return;
+    }
+    setGpsAdding(true);
+    setGpsError('');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { longitude: lng, latitude: lat } = pos.coords;
+        setDraftPoints((prev) => pushCorner(prev, lng, lat));
+        const map = mapRef.current?.getMap();
+        if (map) map.easeTo({ center: [lng, lat], zoom: Math.max(map.getZoom(), 18), duration: 600 });
+        setGpsAdding(false);
+      },
+      () => { setGpsAdding(false); setGpsError('Could not get your location — allow GPS and try outside.'); },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
+    );
+  }, []);
+
   const undoPin = useCallback(() => {
     setDraftPoints((prev) => prev.slice(0, -1));
   }, []);
@@ -1121,6 +1145,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </span>
           </div>
 
+          {/* GPS error (e.g. permission denied) */}
+          {gpsError && (
+            <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
+              style={{ top: 56, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+                background: 'rgba(28,14,10,0.92)', border: '1px solid rgba(212,110,66,0.6)', backdropFilter: 'blur(8px)' }}>
+              <span className="text-xs font-sans" style={{ color: 'var(--orange)' }}>{gpsError}</span>
+            </div>
+          )}
+
           {/* Bottom controls — FIXED to the visible viewport (iOS Safari 100vh extends
               below the toolbar, so an absolute bottom bar lands off-screen). */}
           <div className="fixed left-1/2 -translate-x-1/2 flex items-stretch gap-2"
@@ -1140,10 +1173,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
-              style={{ flex: '0 0 64px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
+              style={{ flex: '0 0 60px', padding: '10px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
               <span style={{ fontSize: 18, lineHeight: 1 }}>↶</span>
               <span style={{ fontSize: 18, marginTop: 3 }}>Undo</span>
+            </button>
+
+            {/* Walk it with GPS — drop a corner at the farmer's actual position */}
+            <button onClick={addPinFromGPS} disabled={gpsAdding}
+              title="Stand on a corner of your land and tap to drop it here"
+              className="flex flex-col items-center justify-center rounded-2xl font-sans transition-all active:scale-95"
+              style={{ flex: '0 0 60px', padding: '10px 0', cursor: gpsAdding ? 'wait' : 'pointer',
+                background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(168,216,138,0.6)', color: '#A8D88A' }}>
+              {gpsAdding ? <Loader2 size={18} className="animate-spin" /> : <LocateFixed size={18} />}
+              <span style={{ fontSize: 13, marginTop: 4, fontWeight: 600 }}>GPS</span>
             </button>
 
             {/* Primary: drop a corner under the crosshair */}
