@@ -1,8 +1,30 @@
 # ImbewuField — Design source of truth
 
-The almanac-direction handoff. Mockups live in `design/handoff/` (26 frames).
-This file is the canonical reference; when the build and a mockup disagree, the
-mockup wins unless a newer decision is recorded here.
+The almanac-direction handoff. Mockups live in `design/handoff/` (27 frames);
+the authoritative build brief is `design/BUILD-INSTRUCTIONS.md`. When the build
+and a mockup disagree, the mockup wins unless a newer decision is recorded here.
+
+## ⚠️ #1 recurring mistake — RESPONSIVE FONT SIZES (BUILD-INSTRUCTIONS §0)
+
+Phone mockups are ~392px wide; their 24–26px text is correct **for phones only.**
+Do NOT reuse phone px on tablet/desktop — it renders ~2× too big. Font size scales
+with the viewport (use `clamp()` or `md:`/`lg:` breakpoints).
+
+| Role | Phone <768 | Tablet 768–1023 | Desktop ≥1024 | Font |
+|---|---|---|---|---|
+| Hero / big number | 24–25 | 34 | 40 / 600 | Newsreader |
+| Page H1 | 24 | 26 | 30 / 600 | Newsreader |
+| Section H2 | 17 | 20 | 22 / 600 | Newsreader |
+| Top-nav items | (hidden) | 16 | 16 / 600 | **Public Sans** |
+| Body | 15 | 16 | 16 / 400 | Public Sans |
+| Buttons | 15–16 | 15 | 15 / 700 | Public Sans |
+| Small / captions / map labels | 11–13 | 13 | 13 | Public Sans |
+| Tab-bar labels | 10 | 12 | 12 | Public Sans |
+
+Applied so far: the **farmer-map chrome** (the cited offender) — header 60px,
+settings 40px, RoleSwitcher nav 16/600 Public Sans, Design-map 15/700, tagline
+13px, DataPanel hero `clamp(24px,2.2vw,28px)`. STILL TODO on wide layouts:
+NgoDashboard (ngo/funder), facilitator canvas, financial sheet — same audit.
 
 ## Design system (frame 27 · design kit)
 

@@ -132,10 +132,12 @@ function HomeInner() {
       <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
 
         {/* ── Header ────────────────────────────── */}
+        {/* Heights/sizes scale down on wide screens — phone px must not be reused
+            on desktop (handoff §0). Mobile keeps the comfortable 60px bar. */}
         <header
-          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto overflow-y-hidden"
+          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto overflow-y-hidden"
           style={{
-            height: 74,
+            height: 60,
             background: '#FBF6EC',
             borderBottom: '1px solid #E2D8C4',
             WebkitOverflowScrolling: 'touch',
@@ -144,21 +146,21 @@ function HomeInner() {
           <BrandLogo />
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
-          <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>{t('tagline')}</span>
+          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#94876F' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           {/* Design-map + role switcher are power-user navigation — desktop only.
               On a phone they cluttered the bar into tiny icons; reach them via the home hub (tap the logo). */}
-          <Link href="/facilitator" className="hidden md:flex items-center gap-1 px-3 py-2 rounded-full text-sm font-display transition-all flex-shrink-0"
-            style={{ background: 'rgba(226,216,196,0.4)', border: '1px solid #E2D8C4', color: '#C07A1E' }}>
-            <PenLine size={14} /> <span>Design map</span>
+          <Link href="/facilitator" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+            style={{ fontSize: 15, background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }}>
+            <PenLine size={15} /> <span>Design map</span>
           </Link>
           <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
           <LangSwitcher />
           <AccountButton />
 
           {error && (
-            <span className="text-xs px-3 py-1 rounded-full font-mono flex-shrink-0 flex items-center"
+            <span className="text-xs px-3 py-1 rounded-full font-sans flex-shrink-0 flex items-center"
                   style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>
               <AlertTriangle size={13} className="inline mr-1" /> {error}
             </span>
@@ -170,14 +172,14 @@ function HomeInner() {
             title="Appearance"
             className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all"
             style={{
-              width: 54, height: 54,
+              width: 40, height: 40,
               background: 'rgba(226,216,196,0.35)',
               border: '1px solid #E2D8C4',
               color: '#5C5040',
               cursor: 'pointer',
             }}
           >
-            <Settings size={20} />
+            <Settings size={18} />
           </button>
         </header>
 

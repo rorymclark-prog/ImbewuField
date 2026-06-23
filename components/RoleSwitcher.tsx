@@ -17,7 +17,8 @@ export default function RoleSwitcher({ current }: { current: string }) {
       style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
       {ROLES.map((r) => {
         const active = r.key === current;
-        const base = 'flex items-center gap-1 px-2.5 py-1.5 rounded-full text-sm font-display transition-all whitespace-nowrap';
+        // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).
+        const base = 'flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-sans font-semibold text-[15px] lg:text-base transition-all whitespace-nowrap';
         const style = active
           ? { background: 'var(--badge-bg)', border: '1px solid #1F4D2B', color: '#2D6B3C' }
           : r.ready
@@ -27,14 +28,14 @@ export default function RoleSwitcher({ current }: { current: string }) {
         if (!r.ready) {
           return (
             <span key={r.key} className={base} style={style} title="Coming soon">
-              <r.Icon size={14} />
+              <r.Icon size={16} />
               <span className="hidden md:inline">{r.label}</span>
             </span>
           );
         }
         return (
           <Link key={r.key} href={r.href} className={base} style={style}>
-            <r.Icon size={14} />
+            <r.Icon size={16} />
             <span className="hidden md:inline">{r.label}</span>
           </Link>
         );

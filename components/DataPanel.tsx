@@ -192,12 +192,12 @@ function EmptyState() {
         </div>
 
         <h1
-          className="font-display font-bold text-3xl leading-tight text-gradient mb-2"
-          style={{ letterSpacing: '-0.03em' }}
+          className="font-display font-bold leading-tight text-gradient mb-2"
+          style={{ fontSize: 'clamp(24px, 2.2vw, 28px)', letterSpacing: '-0.03em' }}
         >
           ImbewuField
         </h1>
-        <p className="font-display text-sm leading-relaxed mb-8" style={{ color: '#5C5040', maxWidth: 260 }}>
+        <p className="font-sans leading-relaxed mb-8" style={{ fontSize: 14, color: '#5C5040', maxWidth: 272 }}>
           {t('heroSub')}
         </p>
 
