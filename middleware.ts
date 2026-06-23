@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
   // (icon + OG/Twitter image must be reachable so link previews render before login)
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/api/gate') || pathname.startsWith('/_next') ||
-    pathname === '/favicon.ico' || pathname.startsWith('/icon') ||
+    pathname === '/favicon.ico' || pathname === '/manifest.json' || pathname.startsWith('/icon') ||
     pathname.startsWith('/opengraph-image') || pathname.startsWith('/twitter-image')
   ) {
     return NextResponse.next();
