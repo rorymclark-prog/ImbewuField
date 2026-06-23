@@ -47,6 +47,20 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-06-23 (critical bug fixes + UX pass 2)
+- **BLOCKER fixed: water colour** — MapboxDraw missing `userProperties:true`; without
+  it `user_featureType` style filters never matched → all polygons green, no blue water.
+- **Persistence race fixed** — `recompute()` now guards persist behind `restoredRef`
+  so a fast first draw can't wipe saved shapes before restore runs.
+- **Name/category survives edit** — snapshot in `startReticleEdit`, restore in finish+cancel.
+- **GPS error auto-dismisses** after 2 s. **Draw hint banner** fades after 6 s.
+- **Rename in edit bars** — both custom and native edit modes have a Rename button.
+- **Place colour/name edit** — tap the colour dot in Places list; sheet re-titles "Edit place".
+- **Parcel names in right panel** — DataPanel "Your land"/"Water storage" cards now
+  list named parcels/stores under the aggregate total.
+- **Search placeholder** → "Search town or address".
+- **Draw bar** "Add corner" font reduced 15→13.
+
 ### 2026-06-23 (drawing persistence + map fixes)
 - **Drawn parcels + water now PERSIST** (localStorage `imbewu_farm_shapes`) — the
   big one: drawing was lost on refresh/navigation. Saved on every change, restored
