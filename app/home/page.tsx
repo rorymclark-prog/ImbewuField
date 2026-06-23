@@ -16,13 +16,14 @@ import {
   Map,
   TrendingUp,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import Onboarding from '@/components/Onboarding';
 import { LanguageProvider } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
+import { getLastSite, type LastSite } from '@/lib/last-site';
 
 const ROLES: {
   href: string;
@@ -47,10 +48,49 @@ function getDayDate() {
   return `${day} · ${date}`;
 }
 
+function LastSiteCard({ site }: { site: LastSite }) {
+  const d = site.locationData;
+  const stats = [
+    { label: 'Rain', value: `${d.rainfall.annual}mm/yr` },
+    { label: 'Temp', value: `${d.climate.meanTemp}°C avg` },
+    { label: 'Soil pH', value: String(d.soil.ph) },
+    { label: 'ASL', value: `${d.elevation.elevation}m` },
+  ];
+  return (
+    <Link href="/farmer" style={{ textDecoration: 'none' }}>
+      <div
+        className="rounded-2xl p-4"
+        style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>Last site</div>
+            <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{d.biome.name}</div>
+          </div>
+          <div className="flex items-center gap-1 text-xs font-display" style={{ color: '#1F4D2B' }}>
+            Reopen map<ChevronRight size={13} />
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          {stats.map((s) => (
+            <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
+              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{s.value}</div>
+              <div className="font-mono text-xs mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 function HomeLandingInner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [lastSite, setLastSite] = useState<LastSite | null>(null);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
+
+  useEffect(() => { setLastSite(getLastSite()); }, []);
 
   return (
     <div
@@ -99,6 +139,9 @@ function HomeLandingInner() {
 
       {/* ── Main content ── */}
       <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
+
+        {/* ── Last analysed site — returning farmer shortcut ── */}
+        {lastSite && <LastSiteCard site={lastSite} />}
 
         {/* ── Analyse a site — CTA card ── */}
         <Link
