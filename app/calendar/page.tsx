@@ -379,35 +379,11 @@ export default function CalendarPage() {
       }}
     >
       {/* Header */}
-      <header
-        style={{
-          background: '#FBF6EC',
-          borderBottom: '1px solid #E2D8C4',
-          height: 52,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 16px',
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <BackButton fallback="/home" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <Calendar size={18} color="#1F4D2B" strokeWidth={1.6} />
-            <span
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 18,
-                fontWeight: 500,
-                color: '#20190F',
-                lineHeight: 1,
-              }}
-            >
-              Planting Calendar
-            </span>
-          </div>
-        </div>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        <BrandLogo />
+        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Planting Calendar</span>
+        <div className="flex-1" />
         <SettingsButton />
       </header>
 

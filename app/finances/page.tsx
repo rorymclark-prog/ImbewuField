@@ -533,38 +533,23 @@ export default function FinancesPage() {
 
   return (
     <div
-      className="flex flex-col min-h-screen"
-      style={{ background: '#F7F2E9' }}
+      className="flex flex-col overflow-hidden"
+      style={{ height: '100dvh', background: '#F7F2E9' }}
     >
       {/* Header */}
       <header
-        className="flex items-center justify-between px-4 flex-shrink-0"
-        style={{
-          height: 52,
-          background: '#FBF6EC',
-          borderBottom: '1px solid #E2D8C4',
-        }}
+        className="flex-shrink-0 flex items-center px-4 gap-3"
+        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
       >
-        <BackButton fallback="/home" />
         <BrandLogo />
+        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Finances</span>
+        <div className="flex-1" />
         <SettingsButton />
       </header>
 
-      {/* Page title */}
-      <div className="px-4 pt-5 pb-2">
-        <h1
-          className="font-display font-bold text-xl leading-tight"
-          style={{ color: '#20190F' }}
-        >
-          Finances
-        </h1>
-        <p className="font-display text-xs mt-0.5" style={{ color: '#5C5040' }}>
-          Income from crop sales
-        </p>
-      </div>
-
       {/* Content */}
-      <main className="flex-1 px-4 pb-24 space-y-4">
+      <main className="flex-1 overflow-y-auto px-4 py-5 space-y-4">
         {user === 'loading' ? (
           <>
             <div className="grid grid-cols-3 gap-3">
