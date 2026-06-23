@@ -13,7 +13,7 @@ import {
   Settings,
   Leaf,
   CalendarDays,
-  Map,
+  LayoutGrid,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -218,7 +218,7 @@ function HomeLandingInner() {
           {[
             { href: '/journal', Icon: Leaf,         label: 'Field Journal', desc: 'Log harvests' },
             { href: '/plan',    Icon: CalendarDays,  label: 'Crop Planner', desc: 'Plan the season' },
-            { href: '/farmer',  Icon: Map,           label: 'Map',          desc: 'Analyse a site' },
+            { href: '/survey',  Icon: LayoutGrid,    label: 'Garden Survey', desc: 'Size your beds' },
           ].map((q) => (
             <Link
               key={q.href}

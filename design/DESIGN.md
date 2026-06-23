@@ -53,6 +53,10 @@ planting calendar → bill of quantities).
 - **Invoice builder** at `/invoice` (linked from Finances) — bill-to + line items
   (crop · qty · unit · price) → live preview → print (A4). Seq in `imbewu_invoice_seq`.
   Print reuses the ReportView `@media print` / `.no-print` pattern (frame 32 pt 2)
+- **Garden Survey** at `/survey` (home quick-action) — 5-step wizard (land known
+  from map → sun & slope → resources → goal → confirm beds), Lima sizes the beds
+  (1.2 m × 8 m), then a six-week establishment plan you can slide + print. Saves
+  to `imbewu_garden_survey`; beds seed from the planner crops (frame 29)
 - AI permaculture report (frame 25); role dashboards NGO/Funder/Mentor/Student (frames 19/20)
 - Auth: email + Google + reset + change password; Firestore rules + indexes
 
@@ -60,7 +64,6 @@ planting calendar → bill of quantities).
 - Lima photo-vision: photograph a bed → estimate crop, yield, time-in-ground (frame 13)
 - Weigh-by-photo: estimate harvest kg from a photo + known-size reference (frame 14)
 - **Photograph an expense slip → Lima reads & allocates it to a crop (frame 32 pt 1)** — needs OCR/vision
-- **Survey-the-unknowns flow → Lima-suggested bed sizes (frame 29)** — only asks rain tanks / electricity / slope etc. (land + water already known from the map); confirm beds, slide the weeks, print
 - GPS boundary-walk capture (frame 05 frame 2) — geolocation tracking
 - Google Sheets mirror + Google Calendar task sync (frames 15/18)
 - Invoice → auto-posts to ledger; yield-vs-planned (frame 32); NGO surveys → farmer task (frame 21)
