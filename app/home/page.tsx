@@ -19,6 +19,8 @@ import { useState } from 'react';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
+import Onboarding from '@/components/Onboarding';
+import { LanguageProvider } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 
 const ROLES: {
@@ -44,7 +46,7 @@ function getDayDate() {
   return `${day} · ${date}`;
 }
 
-export default function HomeLanding() {
+function HomeLandingInner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
@@ -284,5 +286,14 @@ export default function HomeLanding() {
       {/* Settings panel */}
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
+  );
+}
+
+export default function HomeLanding() {
+  return (
+    <LanguageProvider>
+      <Onboarding />
+      <HomeLandingInner />
+    </LanguageProvider>
   );
 }
