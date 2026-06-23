@@ -15,7 +15,7 @@ interface LimaBarProps {
  * Tapping the input routes to the Lima chat (farmer page with chat open).
  * The camera button routes to chat with the photo mode hinted.
  */
-export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'Ask Lima anything…' }: LimaBarProps) {
+export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'Ask Lima anything...' }: LimaBarProps) {
   const router = useRouter();
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -68,9 +68,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'As
             fontSize: 14,
             fontWeight: 500,
           }}
-          onFocus={() => {
-            if (!value.trim()) router.push(chatHref);
-          }}
+          onFocus={() => inputRef.current?.select()}
         />
         {value.trim() && (
           <button
