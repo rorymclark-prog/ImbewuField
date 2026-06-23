@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1136,12 +1136,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
             <span className="text-sm font-display" style={{ color: draftStroke }}>
               {draftPoints.length === 0
-                ? (IS_COARSE
-                    ? `Move the map so the crosshair sits on a ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner, then tap ＋ Add point · or ✗ Cancel to exit`
-                    : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋ · ✗ Cancel to exit`)
+                ? `Mark each corner of your ${pinDraw === 'water' ? 'water store' : 'land'} — tap the map, or centre the crosshair and tap Add corner`
                 : draftPoints.length < 3
-                ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} · ${IS_COARSE ? 'keep adding corners' : 'keep clicking corners'} — need at least 3`
-                : `${draftPoints.length} corners · tap Finish when the shape is closed`}
+                ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} marked — add ${3 - draftPoints.length} more, then tap Finish`
+                : `${draftPoints.length} corners marked — tap Finish to close the shape`}
             </span>
           </div>
 
@@ -1194,7 +1192,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex items-center justify-center gap-2 rounded-2xl font-display font-bold transition-all active:scale-95"
               style={{ flex: 1, padding: '14px 0', background: draftColor, color: '#06160a',
                 boxShadow: `0 6px 20px ${draftColor}66`, fontSize: 21 }}>
-              <span style={{ fontSize: 28, lineHeight: 1 }}>＋</span> Add point
+<Plus size={24} strokeWidth={2.4} /> Add corner
             </button>
 
             <button onClick={finishPinDraw} disabled={draftPoints.length < 3}
@@ -1390,8 +1388,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           className="flex items-center justify-between font-sans transition-all"
           style={{ background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.18)',
             borderRadius: 13, color: '#EAF3E2', height: 48, fontSize: 14.5, fontWeight: 600, padding: '0 15px' }}>
-          <span className="flex items-center gap-2.5"><Layers size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> Map layers</span>
-          <ChevronDown size={16} style={{ color: 'rgba(234,243,226,0.6)', transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
+          <span className="flex items-center gap-2.5 min-w-0">
+            <Layers size={19} strokeWidth={1.8} style={{ color: '#A8D88A', flexShrink: 0 }} />
+            {/* Collapsed: summarise the active layers (e.g. "Satellite · Contours") */}
+            <span className="truncate">{layersOpen ? 'Map layers' : [
+              style === 'satellite-streets-v12' ? 'Satellite' : 'Topo',
+              hdImagery ? 'HD' : null, contours ? 'Contours' : null,
+              hillshade ? 'Relief' : null, terrain3d ? '3D' : null,
+            ].filter(Boolean).join(' · ')}</span>
+          </span>
+          <ChevronDown size={16} style={{ color: 'rgba(234,243,226,0.6)', flexShrink: 0, transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
         </button>
 
         {layersOpen && (() => {
@@ -1589,56 +1595,46 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (
             <>
               {siteStats ? (
-                <div className="w-full flex flex-col gap-1">
-                  {/* Totals summary row */}
-                  <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
-                    style={{ background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
-                    <span style={{ color: 'var(--emerald-bright)' }}>
-                      {(siteStats.count ?? 1) > 1 ? `${siteStats.count} parcels · ` : ''}{siteStats.areaHa} ha
+                <div className="w-full flex flex-col gap-1.5">
+                  {/* Section label */}
+                  <div className="flex items-center justify-between" style={{ paddingLeft: 2 }}>
+                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                      Your land · {siteStats.count ?? 1} parcel{(siteStats.count ?? 1) !== 1 ? 's' : ''}
                     </span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>
-                      ({siteStats.areaM2.toLocaleString()} m²)
-                    </span>
-                    <span>·</span>
-                    <span>{siteStats.perimeterM}m perimeter</span>
-                    {/* ＋ Add another land parcel */}
-                    <button
-                      onClick={() => startPinDraw('site')}
-                      className="ml-auto font-bold"
-                      style={{ color: 'var(--emerald-bright)', fontSize: 14 }}
-                      title="Draw another land parcel"
-                    >＋</button>
-                    {/* Clear all site polygons */}
-                    <button
-                      onClick={() => clearType('site')}
-                      style={{ color: 'var(--text-muted)' }}
-                      title="Clear all land parcels"
-                    ><X size={12} /></button>
+                    <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>{siteStats.areaHa} ha total</span>
                   </div>
-                  {/* Per-parcel rows — edit or delete each one */}
+                  {/* Per-parcel rows — named, with labelled buttons */}
                   {siteFeatures.map((sf, idx) => (
-                    <div key={sf.id} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-display"
-                      style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
-                      <span style={{ color: 'var(--emerald-bright)' }}>Parcel {idx + 1}</span>
-                      <span style={{ color: 'var(--text-muted)' }}>{sf.areaHa} ha</span>
+                    <div key={sf.id} className="flex items-center gap-2 px-3 py-2 rounded-xl font-sans"
+                      style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
+                      <div className="flex-1 min-w-0">
+                        <div style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>Parcel {idx + 1}</div>
+                        <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>{sf.areaHa} ha</div>
+                      </div>
                       <button onClick={() => startEdit(sf.id, 'site')}
-                        className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
-                        style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
-                        title="Edit this parcel's corners"><PenLine size={12} className="inline mr-1" />Edit</button>
+                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg font-sans font-semibold"
+                        style={{ fontSize: 13, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.35)', color: '#A8D88A' }}>
+                        <PenLine size={13} />Edit shape</button>
                       <button onClick={() => requestDelete(sf.id)}
-                        className="flex items-center px-2 py-1 rounded-md font-semibold"
+                        className="flex items-center justify-center rounded-lg font-sans font-semibold flex-shrink-0"
                         style={pendingDelete === sf.id
-                          ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
-                          : { background: 'rgba(212,110,66,0.14)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)' }}
-                        title="Delete this parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={13} />}</button>
+                          ? { padding: '0 8px', height: 32, fontSize: 12, background: '#C0492A', border: '1px solid #C0492A', color: '#fff' }
+                          : { width: 32, height: 32, background: 'rgba(192,73,42,0.14)', border: '1px solid rgba(192,73,42,0.4)', color: '#D4926A' }}
+                        title="Delete parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={14} />}</button>
                     </div>
                   ))}
+                  {/* + Add another parcel — dashed, explicit */}
+                  <button onClick={() => startPinDraw('site')}
+                    className="w-full flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                    style={{ fontSize: 14, height: 44, borderRadius: 12, background: 'transparent', border: '1.5px dashed rgba(192,122,30,0.55)', color: '#C07A1E', cursor: 'pointer' }}>
+                    <Plus size={15} />Add another parcel
+                  </button>
                 </div>
               ) : (
                 <button onClick={() => startPinDraw('site')}
-                  className="flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
-                  style={{ width: '100%', height: 54, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 16, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
-                  <PenTool size={20} strokeWidth={2} />Draw boundary
+                  className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
+                  style={{ height: 52, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
+                  <PenTool size={19} strokeWidth={2} />Draw land boundary
                 </button>
               )}
             </>
@@ -1646,40 +1642,45 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* ── Water storage section ── */}
           {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (waterStats ? (
-            <div className="w-full flex flex-col gap-1">
-              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
-                style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
-                <span style={{ color: 'var(--blue)' }}>
-                  <Droplets size={13} className="inline mr-1" />{waterStats.count} store{waterStats.count !== 1 ? 's' : ''} · ~{waterStats.estVolumeKL.toLocaleString()} kL
+            <div className="w-full flex flex-col gap-1.5">
+              <div className="flex items-center justify-between" style={{ paddingLeft: 2 }}>
+                <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                  Water storage · {waterStats.count} store{waterStats.count !== 1 ? 's' : ''}
                 </span>
-                <button onClick={() => startPinDraw('water')} className="ml-auto font-bold" style={{ color: 'var(--blue)', fontSize: 14 }} title="Add another water store">＋</button>
-                <button onClick={() => clearType('water')} style={{ color: 'var(--text-muted)' }} title="Clear all water stores"><X size={12} /></button>
+                <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL total</span>
               </div>
-              {/* Per-store rows — edit or delete each one */}
+              {/* Per-store rows */}
               {waterFeatures.map((wf, idx) => (
-                <div key={wf.id} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-display"
-                  style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }}>
-                  <span style={{ color: 'var(--blue)' }}>Store {idx + 1}</span>
-                  <span style={{ color: 'var(--text-muted)' }}>~{wf.estVolumeKL.toLocaleString()} kL</span>
+                <div key={wf.id} className="flex items-center gap-2 px-3 py-2 rounded-xl font-sans"
+                  style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
+                  <div className="flex-1 min-w-0">
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>Store {idx + 1}</div>
+                    <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>~{wf.estVolumeKL.toLocaleString()} kL</div>
+                  </div>
                   <button onClick={() => startEdit(wf.id, 'water')}
-                    className="ml-auto flex items-center gap-1 px-2 py-1 rounded-md font-semibold"
-                    style={{ background: 'rgba(212,168,83,0.16)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}
-                    title="Edit this store's corners"><PenLine size={12} className="inline mr-1" />Edit</button>
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg font-sans font-semibold"
+                    style={{ fontSize: 13, background: 'rgba(143,199,232,0.16)', border: '1px solid rgba(143,199,232,0.4)', color: '#8FC7E8' }}>
+                    <PenLine size={13} />Edit</button>
                   <button onClick={() => requestDelete(wf.id)}
-                    className="flex items-center px-2 py-1 rounded-md font-semibold"
+                    className="flex items-center justify-center rounded-lg font-sans font-semibold flex-shrink-0"
                     style={pendingDelete === wf.id
-                      ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff' }
-                      : { background: 'rgba(212,110,66,0.14)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)' }}
-                    title="Delete this store">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={13} />}</button>
+                      ? { padding: '0 8px', height: 32, fontSize: 12, background: '#C0492A', border: '1px solid #C0492A', color: '#fff' }
+                      : { width: 32, height: 32, background: 'rgba(192,73,42,0.14)', border: '1px solid rgba(192,73,42,0.4)', color: '#D4926A' }}
+                    title="Delete store">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={14} />}</button>
                 </div>
               ))}
+              {/* + Add another water store — solid blue, explicit */}
+              <button onClick={() => startPinDraw('water')}
+                className="w-full flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                style={{ fontSize: 14, height: 44, borderRadius: 12, background: '#235E86', border: 'none', color: '#fff', cursor: 'pointer' }}>
+                <Plus size={15} />Add another water store
+              </button>
             </div>
           ) : (
             <button onClick={() => startPinDraw('water')}
-              className="flex items-center gap-2 font-sans transition-all active:scale-95"
-              style={{ width: '100%', background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
-                borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2' }}>
-              <Droplets size={19} strokeWidth={1.8} style={{ color: '#8FC7E8' }} />Draw water storage
+              className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
+              style={{ height: 52, borderRadius: 14, border: 'none', background: '#235E86', color: '#fff', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(35,94,134,0.6)', cursor: 'pointer' }}>
+              <Droplets size={19} strokeWidth={2} />Draw water storage
             </button>
           ))}
 
