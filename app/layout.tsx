@@ -22,6 +22,19 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://fieldproof.vercel.app'),
   title: 'ImbewuField — permaculture planning for South African farmers',
   description: 'Tap any spot in South Africa for a full, location-specific permaculture plan — climate, soil, water, planting calendar and AI garden design, in your language.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'ImbewuField',
+  },
+  icons: {
+    apple: '/icon-192.png',
+    icon: [
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: 'ImbewuField',
     description: 'Permaculture planning for South African farmers — climate, soil, water, planting calendars and AI garden design, in your language.',
