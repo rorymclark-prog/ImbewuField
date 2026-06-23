@@ -14,7 +14,8 @@ export default function ChatWidget() {
   const pathname = usePathname() || '';
   const [open, setOpen] = useState(false);
 
-  if (pathname.startsWith('/gate') || pathname.startsWith('/login')) return null;
+  // Skip on auth pages and home (which has LimaBar)
+  if (pathname.startsWith('/gate') || pathname.startsWith('/login') || pathname.startsWith('/home')) return null;
 
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 
@@ -25,7 +26,7 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Lima, your field guide"
-          className="fixed z-[60] bottom-4 left-4 flex items-center justify-center rounded-full w-14 h-14 shadow-lg transition-all"
+          className="fixed z-[60] bottom-[72px] left-4 flex items-center justify-center rounded-full w-14 h-14 shadow-lg transition-all"
           style={{
             backgroundColor: '#1F4D2B',
             boxShadow: '0 4px 16px rgba(32,25,15,0.20)',
