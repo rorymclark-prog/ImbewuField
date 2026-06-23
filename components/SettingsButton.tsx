@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Settings } from 'lucide-react';
 import ThemePanel from './ThemePanel';
 
 /**
@@ -24,7 +25,7 @@ export default function SettingsButton() {
           cursor: 'pointer',
         }}
       >
-        <span style={{ fontSize: 13, lineHeight: 1 }}>⚙</span>
+        <Settings size={13} strokeWidth={1.7} />
         <span className="hidden sm:inline">Settings</span>
       </button>
       <ThemePanel open={open} onClose={() => setOpen(false)} />
