@@ -1,8 +1,8 @@
 name: Deploy ImbewuField
 
-# Push to main → deploy to the existing Vercel project (fieldproof) and re-point both
-# domains, so the live URLs never change. Add a repo secret VERCEL_TOKEN to enable.
-# org/project IDs are public; build env (Mapbox/Anthropic/Firebase) comes from `vercel pull`.
+# Push to main → rename project to "imbewufield" (idempotent), deploy, alias domains.
+# Live URLs: imbewufield.vercel.app + permamap-sa.vercel.app
+# org/project IDs are public; build env comes from `vercel pull`.
 
 on:
   push:
@@ -30,6 +30,13 @@ jobs:
           else
             echo "HAS=true" >> "$GITHUB_ENV"
           fi
+      - name: Rename Vercel project to imbewufield
+        if: env.HAS == 'true'
+        run: |
+          curl -s -X PATCH "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"imbewufield"}' | grep -o '"name":"[^"]*"' | head -1
       - uses: actions/setup-node@v4
         if: env.HAS == 'true'
         with:
@@ -50,5 +57,5 @@ jobs:
         if: env.HAS == 'true'
         run: |
           url="${{ steps.deploy.outputs.url }}"
-          vercel alias set "$url" fieldproof.vercel.app  --token="$VERCEL_TOKEN"
+          vercel alias set "$url" imbewufield.vercel.app --token="$VERCEL_TOKEN"
           vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
