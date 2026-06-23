@@ -13,9 +13,9 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 type Status = 'thriving' | 'establishing' | 'support';
 const STATUS: Record<Status, { label: string; color: string }> = {
-  thriving: { label: 'Thriving', color: '#48A864' },
-  establishing: { label: 'Establishing', color: '#D4A853' },
-  support: { label: 'Needs support', color: '#D46E42' },
+  thriving: { label: 'Thriving', color: '#2D6B3C' },
+  establishing: { label: 'Establishing', color: '#C07A1E' },
+  support: { label: 'Needs support', color: '#C0512A' },
 };
 
 interface Garden { id: string; name: string; town: string; lat: number; lon: number; farmers: number; status: Status; produceKg: number; training: number; facilitator: string }

@@ -13,6 +13,7 @@ import {
   Leaf,
   CalendarDays,
   Map,
+  TrendingUp,
 } from 'lucide-react';
 import { useState } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -32,6 +33,8 @@ const ROLES: {
   { href: '/funder',      Icon: Building2,      label: 'Funder',      desc: 'Read-only impact oversight' },
   { href: '/trainer',     Icon: BookOpen,       label: 'Trainer',     desc: 'Run the 9-month programme' },
   { href: '/student',     Icon: GraduationCap,  label: 'Student',     desc: 'Learn permaculture, step by step' },
+  { href: '/calendar',   Icon: CalendarDays,   label: 'Calendar',    desc: 'Seasonal planting guide' },
+  { href: '/finances',   Icon: TrendingUp,     label: 'Finances',    desc: 'Track crop sales & income' },
 ];
 
 function getDayDate() {
