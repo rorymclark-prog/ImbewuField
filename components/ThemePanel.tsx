@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, type LucideIcon } from 'lucide-react';
+import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 
 const THEMES: { key: ThemeName; label: string; desc: string; swatches: string[] }[] = [
@@ -199,8 +199,8 @@ export default function ThemePanel({ open, onClose }: Props) {
                       <div style={{
                         width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
                         background: 'var(--emerald)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: '#fff', fontSize: 11,
-                      }}>✓</div>
+                        color: '#fff',
+                      }}><Check size={11} strokeWidth={3} /></div>
                     )}
                   </button>
                 );

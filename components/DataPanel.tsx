@@ -512,7 +512,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Stat
                 label="pH"
                 value={data.soil.ph.toString()}
-                sub={data.soil.ph < 5.5 ? 'Acidic — add lime' : data.soil.ph > 7.5 ? 'Alkaline — add sulphur' : 'Near-neutral ✓'}
+                sub={data.soil.ph < 5.5 ? 'Acidic — add lime' : data.soil.ph > 7.5 ? 'Alkaline — add sulphur' : 'Near-neutral'}
                 color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C'}
               />
               <Stat

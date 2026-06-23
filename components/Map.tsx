@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1015,7 +1015,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             >
               <span className="px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
-                ★ {p.name}
+                {p.name}
               </span>
               <MapPin size={22} style={{ color: '#C07A1E', fill: '#C07A1E', filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
             </button>
@@ -1117,7 +1117,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     : `Click each ${pinDraw === 'water' ? 'water-edge' : 'boundary'} corner on the map — or centre the crosshair and tap ＋ · ✗ Cancel to exit`)
                 : draftPoints.length < 3
                 ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} · ${IS_COARSE ? 'keep adding corners' : 'keep clicking corners'} — need at least 3`
-                : `${draftPoints.length} corners · tap ✓ Finish when the shape is closed`}
+                : `${draftPoints.length} corners · tap Finish when the shape is closed`}
             </span>
           </div>
 
@@ -1159,8 +1159,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               style={{ flex: '0 0 72px', padding: '10px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
                 background: draftPoints.length < 3 ? 'rgba(22,37,20,0.7)' : '#1F4D2B',
                 border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : '#F7F2E9' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 18, marginTop: 3 }}>Finish</span>
+              <Check size={18} />
+              <span style={{ fontSize: 12, marginTop: 3 }}>Finish</span>
             </button>
           </div>
         </>
@@ -1203,8 +1203,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
               style={{ flex: '0 0 80px', padding: '10px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>✓</span>
-              <span style={{ fontSize: 18, marginTop: 3 }}>Done</span>
+              <Check size={18} />
+              <span style={{ fontSize: 12, marginTop: 3 }}>Done</span>
             </button>
           </div>
         </>
@@ -1478,7 +1478,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               minHeight: TOUCH_H, fontSize: TOUCH_FS,
               opacity: selectedLocation ? 1 : 0.5,
             }}>
-            {placeSaved ? '✓ Saved' : <><Bookmark size={14} className="inline mr-1" />Save place</>}
+            {placeSaved ? <><Check size={14} className="inline mr-1" />Saved</> : <><Bookmark size={14} className="inline mr-1" />Save place</>}
           </button>
 
           {/* Quick-jump to a saved place */}
@@ -1553,7 +1553,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
-                ✓ Done
+                <Check size={13} className="inline mr-1" />Done
               </button>
             </>
           )}
@@ -1586,7 +1586,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       onClick={() => clearType('site')}
                       style={{ color: 'var(--text-muted)' }}
                       title="Clear all land parcels"
-                    >✕</button>
+                    ><X size={12} /></button>
                   </div>
                   {/* Per-parcel rows — edit or delete each one */}
                   {siteFeatures.map((sf, idx) => (
@@ -1626,7 +1626,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <Droplets size={13} className="inline mr-1" />{waterStats.count} store{waterStats.count !== 1 ? 's' : ''} · ~{waterStats.estVolumeKL.toLocaleString()} kL
                 </span>
                 <button onClick={() => startPinDraw('water')} className="ml-auto font-bold" style={{ color: 'var(--blue)', fontSize: 14 }} title="Add another water store">＋</button>
-                <button onClick={() => clearType('water')} style={{ color: 'var(--text-muted)' }} title="Clear all water stores">✕</button>
+                <button onClick={() => clearType('water')} style={{ color: 'var(--text-muted)' }} title="Clear all water stores"><X size={12} /></button>
               </div>
               {/* Per-store rows — edit or delete each one */}
               {waterFeatures.map((wf, idx) => (

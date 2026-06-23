@@ -29,7 +29,7 @@ function renderMarkdown(text: string) {
                 if (line.startsWith('- ') || line.startsWith('• ')) {
                   return (
                     <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                      <span className="flex-shrink-0 mt-0.5" style={{ color: '#1F4D2B' }}>›</span>
+                      <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: '#1F4D2B' }}>-</span>
                       <span>{line.replace(/^[-•]\s*/, '')}</span>
                     </div>
                   );

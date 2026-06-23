@@ -1043,7 +1043,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             )}
             {sharedTo && (
               <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: '#2D6B3C' }}>
-                ✓ Sent to {sharedTo} — opens on their phone
+                Sent to {sharedTo} — opens on their phone
               </div>
             )}
           </div>
@@ -1053,7 +1053,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               {review.split('\n').map((line, i) => {
                 if (!line.trim()) return null;
                 if (line.startsWith('## ')) return <h4 key={i} className="text-xs font-display font-semibold mt-2 mb-1" style={{ color: '#C07A1E' }}>{line.replace('## ', '')}</h4>;
-                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}><span style={{ color: '#1F4D2B' }}>›</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
+                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}><span style={{ color: '#1F4D2B', flexShrink: 0 }}>-</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
                 return <p key={i} className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{line.replace(/\*\*/g, '')}</p>;
               })}
               {reviewing && <span className="inline-block w-1.5 h-3 rounded-sm animate-pulse" style={{ background: '#2D6B3C' }} />}
@@ -1071,12 +1071,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         <button onClick={() => setMobilePanel((p) => (p === 'palette' ? null : 'palette'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
           style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.40)', color: '#2D6B3C', boxShadow: '0 2px 8px rgba(31,77,43,0.15)' }}>
-          {mobilePanel === 'palette' ? '✕ Close' : '🧩 Elements'}
+          {mobilePanel === 'palette' ? 'Close' : 'Elements'}
         </button>
         <button onClick={() => setMobilePanel((p) => (p === 'props' ? null : 'props'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
           style={{ background: '#FBF6EC', border: '1px solid rgba(91,158,212,0.5)', color: '#235E86', boxShadow: '0 2px 8px rgba(35,94,134,0.15)' }}>
-          {mobilePanel === 'props' ? '✕ Close' : '📋 Plan'}
+          {mobilePanel === 'props' ? 'Close' : 'Plan'}
         </button>
       </div>
     </div>

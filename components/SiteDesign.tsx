@@ -49,7 +49,7 @@ function renderDesign(text: string) {
     if (line.startsWith('- ') || line.startsWith('• ')) {
       return (
         <div key={i} className="flex gap-2 text-xs font-display leading-relaxed my-0.5" style={{ color: '#20190F' }}>
-          <span style={{ color: '#1F4D2B', flexShrink: 0 }}>›</span>
+          <span style={{ color: '#1F4D2B', flexShrink: 0, fontSize: 10 }}>-</span>
           <span>{line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}</span>
         </div>
       );
@@ -160,7 +160,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
 
       {photoAnalysis && (
         <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.12)', color: '#5C5040' }}>
-          ✓ Your photo analysis will be used in the design
+          Photo analysis added — will be used in the design
         </div>
       )}
 

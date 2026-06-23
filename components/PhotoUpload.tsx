@@ -104,7 +104,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               if (line.startsWith('- ') || line.startsWith('• ')) {
                 return (
                   <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                    <span style={{ color: '#1F4D2B', flexShrink: 0 }}>›</span>
+                    <span style={{ color: '#1F4D2B', flexShrink: 0, fontSize: 10 }}>-</span>
                     <span>{line.replace(/^[-•]\s*/, '')}</span>
                   </div>
                 );
@@ -228,7 +228,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#8C7A62' }}
           >
-            ✕
+            Clear
           </button>
         </div>
       )}
@@ -245,7 +245,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#1F4D2B' }} />}
           {!loading && (
             <div className="mt-3 pt-3 flex items-center gap-2" style={{ borderTop: '1px solid rgba(31,77,43,0.15)' }}>
-              <span style={{ color: '#1F4D2B' }}>✓</span>
+              <span style={{ color: '#1F4D2B', fontSize: 13, fontWeight: 700 }}>+</span>
               <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>
                 Added to your report — click <span style={{ color: '#C07A1E' }}>Generate Full Report</span> above
               </span>

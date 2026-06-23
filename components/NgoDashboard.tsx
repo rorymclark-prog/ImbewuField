@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, Check, Circle } from 'lucide-react';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -39,9 +39,9 @@ const TOTALS = { gardens: 142, farmers: 3012, produceT: 38.6, training: 78, depl
 
 const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki'];
 const CROPS = [
-  { n: 'Spinach', e: '🥬', c: '#3F7A3C' }, { n: 'Tomatoes', e: '🍅', c: '#B83C2E' }, { n: 'Cabbage', e: '🥬', c: '#6BA84F' },
-  { n: 'Carrots', e: '🥕', c: '#C97A2C' }, { n: 'Onions', e: '🧅', c: '#C2A05A' }, { n: 'Maize', e: '🌽', c: '#D9B23A' },
-  { n: 'Beans', e: '🫘', c: '#7A5230' }, { n: 'Pumpkin', e: '🎃', c: '#CC7A28' }, { n: 'Sweet potato', e: '🍠', c: '#A85E3C' }, { n: 'Green pepper', e: '🫑', c: '#3F8B3C' },
+  { n: 'Spinach',      c: '#3F7A3C' }, { n: 'Tomatoes',    c: '#B83C2E' }, { n: 'Cabbage',     c: '#6BA84F' },
+  { n: 'Carrots',      c: '#C97A2C' }, { n: 'Onions',      c: '#C2A05A' }, { n: 'Maize',       c: '#D9B23A' },
+  { n: 'Beans',        c: '#7A5230' }, { n: 'Pumpkin',     c: '#CC7A28' }, { n: 'Sweet potato', c: '#A85E3C' }, { n: 'Green pepper', c: '#3F8B3C' },
 ];
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
 const BUYERS = ['Local market', 'Spaza shop', 'School feeding', 'Bakkie trader', 'Neighbours'];
@@ -510,7 +510,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="grid grid-cols-2 gap-1">
                         {gardener.courses.map((c) => (
                           <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
-                            <span style={{ color: c.done ? '#1F4D2B' : '#5C5040', fontSize: 10 }}>{c.done ? '✓' : '○'}</span>
+                            <span style={{ color: c.done ? '#1F4D2B' : '#5C5040' }}>{c.done ? <Check size={10} /> : <Circle size={10} />}</span>
                             <span className="truncate" style={{ color: c.done ? '#20190F' : '#5C5040' }}>{c.name}</span>
                           </div>
                         ))}
@@ -540,7 +540,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img src={photoUrl} alt={c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><span style={{ fontSize: 20 }}>{c.e}</span><span className="font-mono" style={{ fontSize: 8, color: '#5C5040' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><span className="font-mono font-bold" style={{ fontSize: 10, color: c.c }}>{c.n.slice(0, 2).toUpperCase()}</span><span className="font-mono" style={{ fontSize: 7, color: '#5C5040', marginTop: 2 }}>{c.n}</span></div>
                           )
                         ))}
                       </div>
@@ -551,7 +551,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>📒 Books — production</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1" style={{ color: '#20190F' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#5C5040' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#2D6B3C' }}>{p.kg}kg</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1" style={{ color: '#20190F' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#5C5040' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#2D6B3C' }}>{p.kg}kg</span></div>
                         ))}
                       </div>
                     </div>
@@ -561,7 +561,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>📒 Books — sales</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1 truncate" style={{ color: '#20190F' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#235E86' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1 truncate" style={{ color: '#20190F' }}>{p.kg}kg — {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#235E86' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
