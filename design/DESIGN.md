@@ -99,14 +99,24 @@ planting calendar → bill of quantities).
   desktop get the persistent 390px side panel; phone + **portrait** tablet keep
   the full-width map + Details bottom-sheet. Map tools panel + Lima FAB on both.
 - Map tools panel redesign (calm/unified/ochre-primary) — see `design/mockups/map-tools.html`
+- **Cost/expense logging** — finances "New entry" has a Money in / Money out
+  toggle (frame 16); expenses (ExpenseLog / expense_logs) flow into the desktop
+  sheet's Out column + Expenses + Net stats, and the mobile "Spent this month" card.
+- **NGO surveys** at `/surveys` (frame 21) — staff build (title + Yes/No /
+  choice / text questions); farmers answer in-app (Answered badge, no re-answer).
+  surveys + survey_responses collections + rules + index. Linked from home Dashboards.
+- **POPIA consent + get-to-know-you onboarding** (frames 23/24) —
+  `components/PopiaConsent.tsx`, 2-step first-login modal on /home (data agreement
+  + goal), saves `imbewu_popia`; gates after the language picker.
 
 **Deferred — need camera/vision/OAuth/infra (NOT yet built):**
 - Lima photo-vision: photograph a bed → estimate crop, yield, time-in-ground (frame 13)
 - Weigh-by-photo: estimate harvest kg from a photo + known-size reference (frame 14)
 - **Photograph an expense slip → Lima reads & allocates it to a crop (frame 32 pt 1)** — needs OCR/vision
 - GPS boundary-walk capture (frame 05 frame 2) — geolocation tracking
-- Google Sheets mirror + Google Calendar task sync (frames 15/18) — OAuth (the
-  desktop sheet itself is built; only the live Sheets mirror is deferred)
-- Invoice → auto-posts to ledger; yield-vs-planned (frame 32); NGO surveys → farmer task (frame 21)
-- POPIA consent + "get to know you" onboarding (frames 23/24)
-- Site-analysis Q&A stepper (frame 04); cost/expense logging (feeds the sheet's Expenses)
+- Google Sheets mirror + Google Calendar task sync (frames 15/18) — OAuth
+- Invoice → auto-posts to ledger; yield-vs-planned (frame 32)
+- Site-analysis Q&A stepper (frame 04) — overlaps the built /survey garden wizard; low priority
+- Map tools MOBILE bottom-sheet (map-tools.html mobile variant) — NOT done: the
+  panel redesign applies on phone, but a bottom-sheet would collide with the
+  Details sheet + Lima FAB + TabBar already at the map's bottom edge.
