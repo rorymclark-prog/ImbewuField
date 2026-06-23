@@ -63,18 +63,36 @@ const LIMA_TIPS: Record<Season, string> = {
 };
 
 const DEFAULT_CROPS = ['Spinach', 'Tomatoes', 'Maize', 'Beans', 'Sweet potato', 'Swiss chard'];
+const LS_KEY = 'imbewu_planner_crops';
+
+function loadCrops(): string[] {
+  if (typeof window === 'undefined') return DEFAULT_CROPS;
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) return JSON.parse(raw) as string[];
+  } catch { /* ignore */ }
+  return DEFAULT_CROPS;
+}
 
 export default function PlanPage() {
   const month = new Date().getMonth();
   const { name: seasonName, months, Icon: SeasonIcon } = getSASeason(month);
-  const [crops, setCrops] = useState<string[]>(DEFAULT_CROPS);
+  const [crops, setCrops] = useState<string[]>(loadCrops);
   const [input, setInput] = useState('');
 
   function addCrop() {
     const name = input.trim();
     if (!name || crops.includes(name)) { setInput(''); return; }
-    setCrops((c) => [...c, name]);
+    const next = [...crops, name];
+    setCrops(next);
+    localStorage.setItem(LS_KEY, JSON.stringify(next));
     setInput('');
+  }
+
+  function removeCrop(crop: string) {
+    const next = crops.filter((x) => x !== crop);
+    setCrops(next);
+    localStorage.setItem(LS_KEY, JSON.stringify(next));
   }
 
   const sorted = [...crops].sort((a, b) => {
@@ -133,7 +151,7 @@ export default function PlanPage() {
                     <Leaf size={15} style={{ color: '#1F4D2B', flexShrink: 0, opacity: suit === 'off' ? 0.3 : 1 }} />
                     <span className="flex-1 font-display text-sm" style={{ color: suit === 'off' ? '#8C7A62' : '#20190F' }}>{crop}</span>
                     <span className="text-xs font-mono px-2 py-0.5 rounded-full" style={{ background: badge.bg, color: badge.color, flexShrink: 0 }}>{badge.label}</span>
-                    <button onClick={() => setCrops((c) => c.filter((x) => x !== crop))} className="opacity-30 hover:opacity-70 transition-opacity flex-shrink-0" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#5C5040' }} aria-label={`Remove ${crop}`}>
+                    <button onClick={() => removeCrop(crop)} className="opacity-30 hover:opacity-70 transition-opacity flex-shrink-0" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#5C5040' }} aria-label={`Remove ${crop}`}>
                       <Trash2 size={13} />
                     </button>
                   </div>
