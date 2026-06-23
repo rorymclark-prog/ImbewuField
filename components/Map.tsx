@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1134,7 +1134,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               style={cancelArmed
                 ? { flex: '0 0 78px', padding: '10px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
                 : { flex: '0 0 72px', padding: '10px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
+              <X size={18} />
               <span style={{ fontSize: 18, marginTop: 3 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
             </button>
 
@@ -1185,7 +1185,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button onClick={cancelReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 0 64px', padding: '10px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>✗</span>
+              <X size={18} />
               <span style={{ fontSize: 18, marginTop: 3 }}>Cancel</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
@@ -1222,29 +1222,33 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         <button
           onClick={() => setToolbarMin(false)}
           aria-label="Show map tools"
-          className="absolute top-3 left-3 flex items-center justify-center rounded-xl transition-all active:scale-95"
+          className="absolute top-3 left-3 flex items-center font-sans transition-all active:scale-95"
           style={{
-            zIndex: 10, minWidth: TOUCH_H + 10, minHeight: TOUCH_H,
-            background: 'rgba(6,16,10,0.92)', border: '1px solid rgba(58,104,48,0.5)',
-            backdropFilter: 'blur(12px)', boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
-            color: 'var(--emerald-bright)', fontSize: TOUCH_FS, gap: 6, padding: '0 12px',
+            zIndex: 10, height: 48, padding: '0 16px', gap: 9, borderRadius: 14,
+            background: 'rgba(22,30,18,0.86)', border: '1px solid rgba(234,243,226,0.12)',
+            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+            boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
+            color: '#F7F2E9', fontSize: 14.5, fontWeight: 600,
           }}
         >
-          <span style={{ fontSize: TOUCH_FS + 4 }}>☰</span> Tools
+          <span className="flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 8, background: '#1F4D2B', color: '#A8D88A' }}><Sprout size={15} strokeWidth={1.7} /></span>
+          Find your land
         </button>
       )}
 
       {!pinDraw && !editPin && !activeDraw && !toolbarMin && (
       <div
-        className="absolute top-3 left-3 flex flex-col gap-2 p-2.5 rounded-xl"
+        className="absolute top-3 left-3 flex flex-col gap-2.5 rounded-2xl"
         style={{
           zIndex: 10,
-          background: 'rgba(6,16,10,0.92)',
-          border: '1px solid rgba(58,104,48,0.5)',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
-          maxWidth: 'min(380px, calc(100vw - 60px))',
+          background: 'rgba(22,30,18,0.86)',
+          border: '1px solid rgba(234,243,226,0.12)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          boxShadow: '0 18px 50px -16px rgba(0,0,0,0.6)',
+          maxWidth: 'min(340px, calc(100vw - 60px))',
           width: '100%',
+          padding: 16,
           boxSizing: 'border-box',
           // Never taller than the map — scroll inside the panel so nothing spills off-screen.
           maxHeight: 'calc(100% - 24px)',
@@ -1252,20 +1256,32 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           overscrollBehavior: 'contain',
         }}
       >
-        {/* Collapse header — hide the whole panel to see the map */}
-        <button
-          onClick={() => setToolbarMin(true)}
-          aria-label="Hide map tools"
-          className="flex items-center justify-center gap-2 rounded-lg transition-all active:scale-95"
-          style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
-            color: 'var(--text-muted)', minHeight: 36, fontSize: TOUCH_FS - 2 }}
-        >
-          <ChevronUp size={14} className="inline mr-1" /> Hide panel
-        </button>
+        {/* Header — brand + collapse */}
+        <div className="flex items-center justify-between" style={{ marginBottom: 2 }}>
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-center" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B', color: '#A8D88A' }}>
+              <Sprout size={17} strokeWidth={1.7} />
+            </div>
+            <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>Find your land</span>
+          </div>
+          <button
+            onClick={() => setToolbarMin(true)}
+            aria-label="Hide map tools"
+            className="flex items-center gap-1 transition-all active:scale-95"
+            style={{ background: 'transparent', border: 'none', color: 'rgba(234,243,226,0.55)', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
+          >
+            Hide <ChevronUp size={14} />
+          </button>
+        </div>
 
         {/* Search row */}
         <div className="relative">
-        <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }} className="flex gap-1.5">
+        <form onSubmit={(e) => { e.preventDefault(); setSuggestions([]); handleSearch(searchQuery); }}
+          className="flex items-center gap-2.5"
+          style={{ height: 50, padding: '0 8px 0 15px', borderRadius: 13,
+            background: 'rgba(247,242,233,0.1)',
+            border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(234,243,226,0.18)'}` }}>
+          <Search size={19} style={{ color: 'rgba(234,243,226,0.55)', flexShrink: 0 }} strokeWidth={2} />
           <input
             type="text"
             value={searchQuery}
@@ -1273,29 +1289,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
             placeholder="Search a town..."
-            className="map-search-input flex-1 font-mono rounded-lg px-3 outline-none min-w-0"
-            style={{
-              background: 'rgba(22,37,20,0.8)',
-              border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(58,104,48,0.6)'}`,
-              color: '#e8f0e6',
-              fontSize: 20,
-              minHeight: TOUCH_H,
-            }}
+            className="map-search-input flex-1 font-sans outline-none min-w-0"
+            style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
           />
           <button
             type="submit"
             disabled={searching || !searchQuery.trim()}
-            className="px-4 rounded-lg font-mono font-semibold transition-all flex-shrink-0"
-            style={{
-              background: searching ? 'rgba(22,37,20,0.6)' : 'rgba(31,77,43,0.25)',
-              border: '1px solid rgba(31,77,43,0.5)',
-              color: searching ? 'var(--text-muted)' : 'var(--emerald-bright)',
-              minHeight: TOUCH_H,
-              minWidth: TOUCH_H,
-              fontSize: 18,
-            }}
+            aria-label="Search"
+            className="flex items-center justify-center transition-all flex-shrink-0 active:scale-95"
+            style={{ width: 34, height: 34, borderRadius: 9, border: 'none',
+              background: searching || !searchQuery.trim() ? 'rgba(46,107,58,0.5)' : '#2E6B3A',
+              color: '#fff', cursor: searchQuery.trim() ? 'pointer' : 'default' }}
           >
-            {searching ? <Loader2 size={16} className="animate-spin" /> : '↵'}
+            {searching ? <Loader2 size={16} className="animate-spin" /> : <CornerDownLeft size={17} strokeWidth={2.2} />}
           </button>
         </form>
         {/* Autofill dropdown */}
@@ -1325,7 +1331,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 className="flex items-center gap-2 w-full text-left transition-all"
                 style={{ padding: '12px', borderBottom: i < recents.length - 1 ? '1px solid rgba(58,104,48,0.25)' : 'none',
                   background: 'transparent', color: '#dce8da', fontSize: 16, lineHeight: 1.3 }}>
-                <span style={{ opacity: 0.6 }}>🕘</span>
+                <MapPin size={13} style={{ opacity: 0.5, flexShrink: 0 }} />
                 <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.name}</span>
               </button>
             ))}
@@ -1338,58 +1344,42 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
             so the toolbar isn't a wall of tiny buttons on a phone. */}
         <button onClick={() => setLayersOpen((o) => !o)}
-          className="flex items-center justify-between rounded-lg font-mono transition-all"
-          style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.4)',
-            color: 'var(--text-secondary)', minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 14px' }}>
-          <span className="flex items-center gap-1.5"><Layers size={14} /> Map layers</span>
-          <ChevronDown size={16} style={{ transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
+          className="flex items-center justify-between font-sans transition-all"
+          style={{ background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.18)',
+            borderRadius: 13, color: '#EAF3E2', height: 48, fontSize: 14.5, fontWeight: 600, padding: '0 15px' }}>
+          <span className="flex items-center gap-2.5"><Layers size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> Map layers</span>
+          <ChevronDown size={16} style={{ color: 'rgba(234,243,226,0.6)', transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
         </button>
 
-        {layersOpen && (
-          <div className="flex gap-1.5 flex-wrap">
+        {layersOpen && (() => {
+          // One consistent chip treatment for every layer toggle — green when on,
+          // calm paper-tint when off (replaces the old clashing teal/ochre/blue).
+          const chip = (on: boolean): React.CSSProperties => ({
+            ...(on
+              ? { background: 'rgba(168,216,138,0.16)', border: '1px solid rgba(168,216,138,0.45)', color: '#A8D88A' }
+              : { background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2' }),
+            borderRadius: 9, height: 40, padding: '0 13px', fontSize: 13, fontWeight: 600,
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+          });
+          return (
+          <div className="flex gap-1.5 flex-wrap font-sans">
             {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
-              <button key={s} onClick={() => setStyle(s)}
-                className="rounded-lg font-mono font-medium transition-all"
-                style={{
-                  ...(style === s
-                    ? { background: 'rgba(31,77,43,0.22)', border: '1px solid rgba(31,77,43,0.55)', color: 'var(--emerald-bright)' }
-                    : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-                  minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
-                }}>
-                {['Satellite', 'Topo'][i]}
+              <button key={s} onClick={() => setStyle(s)} className="transition-all" style={chip(style === s)}>
+                {style === s && <Check size={13} strokeWidth={2.4} />}{['Satellite', 'Topo'][i]}
               </button>
             ))}
             <button onClick={() => setHdImagery(!hdImagery)}
               title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
-              className="rounded-lg font-mono font-medium transition-all"
-              style={{
-                ...(hdImagery
-                  ? { background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.55)', color: 'var(--blue)' }
-                  : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
-              }}>
-              HD
+              className="transition-all" style={chip(hdImagery)}>
+              {hdImagery && <Check size={13} strokeWidth={2.4} />}HD
             </button>
-            <button onClick={() => setContours(!contours)}
-              className="rounded-lg font-mono transition-all"
-              style={{
-                ...(contours
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
-                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
-              }}>
-              ~ Contours
+            <button onClick={() => setContours(!contours)} className="transition-all" style={chip(contours)}>
+              {contours && <Check size={13} strokeWidth={2.4} />}Contours
             </button>
             <button onClick={() => setHillshade(!hillshade)}
               title="Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible"
-              className="rounded-lg font-mono transition-all"
-              style={{
-                ...(hillshade
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
-                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
-              }}>
-              🌄 Relief
+              className="transition-all" style={chip(hillshade)}>
+              <Mountain size={13} strokeWidth={1.9} />Relief
             </button>
             <button
               onClick={() => {
@@ -1404,17 +1394,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 }
               }}
               title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
-              className="rounded-lg font-mono transition-all"
-              style={{
-                ...(terrain3d
-                  ? { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--text-secondary)' }
-                  : { background: 'rgba(22,37,20,0.3)', border: '1px solid rgba(58,104,48,0.25)', color: 'var(--text-muted)' }),
-                minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 12px',
-              }}>
-              3D
+              className="transition-all" style={chip(terrain3d)}>
+              <Box size={13} strokeWidth={1.9} />3D
             </button>
           </div>
-        )}
+          );
+        })()}
 
         {/* Heads-up: 3D tilts the map and can stop you zooming in close enough to draw */}
         {layersOpen && show3dWarning && (
@@ -1427,20 +1412,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {layersOpen && (
           <div>
-            <div style={{ fontSize: 17, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.6)', marginBottom: 5 }}>
-              Edit tool (try both)
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.45)', marginBottom: 8, paddingLeft: 2 }}>
+              Edit tool · try both
             </div>
-            <div className="flex gap-1.5">
-              {([['custom', '✋ Big handles'], ['native', '🅼 Mapbox tool']] as const).map(([key, label]) => (
+            <div className="flex gap-2">
+              {([['custom', 'Big handles', Hand], ['native', 'Mapbox tool', PenTool]] as const).map(([key, label, Icon]) => (
                 <button key={key} onClick={() => chooseEngine(key)}
-                  className="flex-1 rounded-lg font-mono transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 font-sans transition-all"
                   style={{
                     ...(editEngine === key
-                      ? { background: 'rgba(31,77,43,0.22)', border: '1px solid rgba(31,77,43,0.55)', color: 'var(--emerald-bright)' }
-                      : { background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)' }),
-                    minHeight: TOUCH_H, fontSize: TOUCH_FS, padding: '0 10px',
+                      ? { background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.4)', color: '#A8D88A' }
+                      : { background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2' }),
+                    borderRadius: 11, minHeight: 44, fontSize: 13, fontWeight: 600,
                   }}>
-                  {label}
+                  <Icon size={16} strokeWidth={1.8} />{label}
                 </button>
               ))}
             </div>
@@ -1448,49 +1433,48 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         )}
 
         {/* thin separator */}
-        <div style={{ height: 1, background: 'rgba(58,104,48,0.3)' }} />
+        <div style={{ height: 1, background: 'rgba(234,243,226,0.1)' }} />
 
         {/* Actions row — always wraps */}
         <div>
-          <div style={{ fontSize: 17, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(140,192,100,0.6)', marginBottom: 5 }}>
+          <div style={{ fontSize: 11, fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.45)', marginBottom: 10, paddingLeft: 2 }}>
             Tools
           </div>
-          <div className="flex gap-1.5 flex-wrap">
+          <div className="flex gap-1.5 flex-wrap font-sans">
           {/* My location */}
           <button onClick={goToMyLocation} disabled={locating}
-            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+            className="flex items-center gap-2 transition-all active:scale-95"
             style={{
-              background: 'rgba(77,173,160,0.18)', border: '1px solid rgba(77,173,160,0.5)',
-              color: locating ? 'var(--text-muted)' : 'var(--teal)',
-              minHeight: TOUCH_H, fontSize: TOUCH_FS,
+              background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600,
+              color: locating ? 'rgba(234,243,226,0.5)' : '#EAF3E2',
             }}>
-            {locating ? <Loader2 size={16} className="animate-spin" /> : <LocateFixed size={16} />} Locate
+            {locating ? <Loader2 size={18} className="animate-spin" style={{ color: '#A8D88A' }} /> : <LocateFixed size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} />} Locate me
           </button>
 
           {/* Save the current spot as a place */}
           <button onClick={saveCurrentPlace} disabled={!selectedLocation}
             title={selectedLocation ? 'Save this spot to your Places' : 'Tap a spot on the map first'}
-            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+            className="flex items-center gap-2 transition-all active:scale-95"
             style={{
-              ...(placeSaved
-                ? { background: 'rgba(31,77,43,0.3)', border: '1px solid rgba(31,77,43,0.7)', color: 'var(--emerald-bright)' }
-                : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)', color: 'var(--gold)' }),
-              minHeight: TOUCH_H, fontSize: TOUCH_FS,
-              opacity: selectedLocation ? 1 : 0.5,
+              background: placeSaved ? 'rgba(168,216,138,0.16)' : 'rgba(247,242,233,0.07)',
+              border: `1px solid ${placeSaved ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600,
+              color: placeSaved ? '#A8D88A' : '#EAF3E2', opacity: selectedLocation ? 1 : 0.5,
             }}>
-            {placeSaved ? <><Check size={14} className="inline mr-1" />Saved</> : <><Bookmark size={14} className="inline mr-1" />Save place</>}
+            {placeSaved ? <Check size={18} strokeWidth={2.2} style={{ color: '#A8D88A' }} /> : <Bookmark size={18} strokeWidth={1.8} style={{ color: '#A8D88A' }} />}{placeSaved ? 'Saved' : 'Save place'}
           </button>
 
           {/* Quick-jump to a saved place */}
           <button onClick={() => setPlacesOpen((o) => !o)}
-            className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
+            className="flex items-center gap-2 transition-all active:scale-95"
             style={{
-              ...(placesOpen
-                ? { background: 'rgba(212,168,83,0.28)', border: '1px solid rgba(212,168,83,0.7)' }
-                : { background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.5)' }),
-              color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS,
+              background: placesOpen ? 'rgba(168,216,138,0.16)' : 'rgba(247,242,233,0.07)',
+              border: `1px solid ${placesOpen ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2',
             }}>
-            <MapPin size={14} className="inline mr-1" /> Places{savedPins.length ? ` (${savedPins.length})` : ''}
+            <MapPin size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> Places
+            {savedPins.length ? <span style={{ fontSize: 12, fontWeight: 700, color: '#1a1205', background: '#A8D88A', borderRadius: 999, minWidth: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 6px' }}>{savedPins.length}</span> : null}
           </button>
 
           {/* Saved-places quick list — tap one to fly there */}
@@ -1531,7 +1515,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <button onClick={cancelDraw}
                 className="px-2 py-1 rounded-lg text-xs font-mono transition-all"
                 style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
-                ✗ Cancel
+                <X size={13} className="inline mr-1" />Cancel
               </button>
             </>
           )}
@@ -1541,7 +1525,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-display"
                 style={{ background: 'rgba(212,168,83,0.18)', border: '1px solid rgba(212,168,83,0.55)', color: 'var(--gold)', minHeight: 32 }}>
-                ↔ Drag a big dot to move a corner · drag a faint mid-dot to add one · pinch to zoom in for accuracy
+                Drag a big dot to move a corner · drag a faint mid-dot to add one · pinch to zoom in for accuracy
               </div>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
@@ -1567,7 +1551,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
                     style={{ background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.45)', color: 'var(--text-secondary)', minHeight: 32 }}>
                     <span style={{ color: 'var(--emerald-bright)' }}>
-                      ⬟ {(siteStats.count ?? 1) > 1 ? `${siteStats.count} parcels · ` : ''}{siteStats.areaHa} ha
+                      {(siteStats.count ?? 1) > 1 ? `${siteStats.count} parcels · ` : ''}{siteStats.areaHa} ha
                     </span>
                     <span style={{ color: 'var(--text-muted)', fontSize: 17 }}>
                       ({siteStats.areaM2.toLocaleString()} m²)
@@ -1609,9 +1593,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
               ) : (
                 <button onClick={() => startPinDraw('site')}
-                  className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
-                  style={{ background: 'rgba(212,168,83,0.22)', border: '1px solid rgba(212,168,83,0.6)', color: 'var(--gold)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-                  <PenLine size={13} className="inline mr-1" />Draw boundary
+                  className="flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
+                  style={{ width: '100%', height: 54, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 16, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
+                  <PenTool size={20} strokeWidth={2} />Draw boundary
                 </button>
               )}
             </>
@@ -1649,9 +1633,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </div>
           ) : (
             <button onClick={() => startPinDraw('water')}
-              className="flex items-center gap-1.5 px-3 rounded-lg font-mono font-semibold transition-all"
-              style={{ background: 'rgba(91,158,212,0.22)', border: '1px solid rgba(91,158,212,0.6)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-              <Droplets size={14} className="inline mr-1" />Water
+              className="flex items-center gap-2 font-sans transition-all active:scale-95"
+              style={{ width: '100%', background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
+                borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2' }}>
+              <Droplets size={19} strokeWidth={1.8} style={{ color: '#8FC7E8' }} />Draw water storage
             </button>
           ))}
 
@@ -1665,9 +1650,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 catch { onMapCapture(canvas.toDataURL().split(',')[1]); }
                 onCaptureClick?.();
               }}
-              className="flex items-center gap-1.5 px-3 rounded-lg font-mono transition-all"
-              style={{ background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.5)', color: 'var(--blue)', minHeight: TOUCH_H, fontSize: TOUCH_FS }}>
-              📸 AI
+              className="flex items-center gap-2 font-sans transition-all active:scale-95"
+              style={{ background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2' }}>
+              <Sprout size={18} strokeWidth={1.8} style={{ color: '#A8D88A' }} />Ask Lima
             </button>
           )}
           </div>
@@ -1675,12 +1660,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Elevation readout */}
         {hoverElevation !== null && (
-          <div className="flex items-center gap-2 pt-1" style={{ borderTop: '1px solid rgba(58,104,48,0.3)' }}>
-            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>▲ elev</span>
-            <span className="text-xs font-mono font-semibold" style={{ color: 'var(--emerald-bright)' }}>
+          <div className="flex items-center gap-2 pt-1" style={{ borderTop: '1px solid rgba(234,243,226,0.1)' }}>
+            <Mountain size={12} style={{ color: 'rgba(234,243,226,0.5)' }} />
+            <span className="text-xs font-sans" style={{ color: 'rgba(234,243,226,0.55)' }}>elev</span>
+            <span className="text-xs font-sans font-semibold" style={{ color: '#A8D88A' }}>
               {hoverElevation}m
             </span>
-            <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>asl</span>
+            <span className="text-xs font-sans" style={{ color: 'rgba(234,243,226,0.4)' }}>asl</span>
           </div>
         )}
       </div>
@@ -1689,37 +1675,38 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Zoom control — big +/− buttons + a non-interactive fill bar, bottom-right
            above the Details button. (A rotated range input is undraggable on touch.) ── */}
       <div
-        className="absolute flex flex-col items-center gap-2 select-none"
+        className="absolute flex flex-col items-center gap-1.5 select-none"
         style={{
           right: 12, bottom: 'calc(96px + env(safe-area-inset-bottom))',
-          background: 'rgba(6,16,10,0.92)', border: '1px solid rgba(58,104,48,0.5)',
-          borderRadius: 16, padding: '10px 7px', boxShadow: '0 6px 20px rgba(0,0,0,0.45)',
+          background: 'rgba(22,30,18,0.86)', border: '1px solid rgba(234,243,226,0.12)',
+          backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+          borderRadius: 16, padding: '8px 6px', boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
           zIndex: 5,
         }}
       >
         <button
           onClick={() => mapRef.current?.zoomTo(Math.min(MAX_ZOOM, zoom + 1), { duration: 300 })}
-          className="rounded-lg flex items-center justify-center font-mono leading-none transition-all active:scale-90"
-          style={{ width: 40, height: 40, fontSize: 22, background: 'rgba(22,37,20,0.7)', border: '1px solid rgba(58,104,48,0.5)', color: 'var(--emerald-bright)' }}
+          className="rounded-lg flex items-center justify-center leading-none transition-all active:scale-90"
+          style={{ width: 40, height: 40, fontSize: 22, background: 'transparent', border: 'none', color: '#EAF3E2' }}
           title="Zoom in" aria-label="Zoom in"
         >+</button>
 
         {/* Vertical fill bar — shows current zoom, not draggable */}
-        <div className="relative rounded-full overflow-hidden" style={{ width: 5, height: 90, background: 'rgba(22,37,20,0.8)' }}>
+        <div className="relative rounded-full overflow-hidden" style={{ width: 5, height: 84, background: 'rgba(234,243,226,0.14)' }}>
           <div className="absolute left-0 right-0 bottom-0 rounded-full" style={{
             height: `${Math.round(((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100)}%`,
-            background: '#5DCF80',
+            background: '#A8D88A',
           }} />
         </div>
 
         <button
           onClick={() => mapRef.current?.zoomTo(Math.max(MIN_ZOOM, zoom - 1), { duration: 300 })}
-          className="rounded-lg flex items-center justify-center font-mono leading-none transition-all active:scale-90"
-          style={{ width: 40, height: 40, fontSize: 22, background: 'rgba(22,37,20,0.7)', border: '1px solid rgba(58,104,48,0.5)', color: 'var(--emerald-bright)' }}
+          className="rounded-lg flex items-center justify-center leading-none transition-all active:scale-90"
+          style={{ width: 40, height: 40, fontSize: 22, background: 'transparent', border: 'none', color: '#EAF3E2' }}
           title="Zoom out" aria-label="Zoom out"
         >−</button>
 
-        <span className="text-xs font-mono font-semibold" style={{ color: 'var(--text-secondary)' }}>
+        <span className="text-xs font-sans font-semibold" style={{ color: 'rgba(234,243,226,0.6)' }}>
           z{zoom.toFixed(1)}
         </span>
       </div>
@@ -1727,25 +1714,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── First-tap / click hint ──────────────── */}
       {!selectedLocation && !activeDraw && !pinDraw && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none flex items-center gap-2 px-4 py-2 rounded-full"
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none flex items-center gap-2.5 rounded-full"
           style={{
             zIndex: 15,
-            bottom: 72,
-            background: 'rgba(6,16,10,0.82)',
-            border: '1px solid rgba(31,77,43,0.3)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.45)',
+            bottom: 72, padding: '11px 18px',
+            background: 'rgba(22,30,18,0.86)',
+            border: '1px solid rgba(234,243,226,0.14)',
+            backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+            boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
             whiteSpace: 'nowrap',
           }}
         >
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span
               className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-70"
-              style={{ background: 'var(--emerald-bright)' }}
+              style={{ background: '#A8D88A' }}
             />
-            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--emerald-bright)' }} />
+            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#A8D88A' }} />
           </span>
-          <span className="text-xs font-display font-medium" style={{ color: 'var(--emerald-bright)' }}>
+          <span className="font-display italic" style={{ fontSize: 15, fontWeight: 500, color: '#EAF3E2' }}>
             Tap your area or search a town
           </span>
         </div>
