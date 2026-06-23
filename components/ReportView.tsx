@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
-import { Loader2, Check, Circle, ChevronRight } from 'lucide-react';
+import { Loader2, Check, Circle, ChevronRight, Share2 } from 'lucide-react';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -227,6 +227,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // Saved reports (for the in-screen list) + save-button feedback
   const [savedList, setSavedList] = useState<SavedReport[]>([]);
   const [justSaved, setJustSaved] = useState(false);
+  const [copied, setCopied] = useState(false);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -307,6 +308,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     window.print();
   }
 
+  async function shareReport() {
+    if (!d || !report) return;
+    const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
+    const text = `ImbewuField Site Analysis\n${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (fieldproof.vercel.app)`;
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try { await navigator.share({ title: 'ImbewuField Site Analysis', text }); return; } catch { /* user cancelled */ }
+    }
+    // Fallback: copy to clipboard
+    try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* ignore */ }
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#F7F2E9' }}>
 
@@ -352,6 +364,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             }}
           >
             Export PDF
+          </button>
+        )}
+
+        {generated && (
+          <button
+            onClick={shareReport}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+            style={{
+              background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
+              border: '1px solid rgba(35,94,134,0.3)',
+              color: '#235E86',
+            }}
+          >
+            <Share2 size={12} />{copied ? 'Copied!' : 'Share'}
           </button>
         )}
 
