@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download } from 'lucide-react';
+import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2 } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { addSale, addExpense, myProduction, mySales, myExpenses } from '@/lib/db/queries';
@@ -235,9 +235,54 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     loading: false,
     error: '',
   });
+  const [scanning, setScanning] = useState(false);
+  const [scanNote, setScanNote] = useState('');
+  const slipInputRef = useRef<HTMLInputElement>(null);
 
   const isIn = kind === 'in';
-  const reset = () => setForm({ crop: '', kg: '', price: '', buyer: '', loading: false, error: '' });
+  const reset = () => { setForm({ crop: '', kg: '', price: '', buyer: '', loading: false, error: '' }); setScanNote(''); };
+
+  // Lima reads a photographed till slip and pre-fills the cost fields.
+  async function handleScan(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (slipInputRef.current) slipInputRef.current.value = '';
+    if (!file) return;
+    setScanning(true);
+    setScanNote('');
+    setForm((f) => ({ ...f, error: '' }));
+    try {
+      const dataUrl: string = await new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result as string);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+      const data = dataUrl.split(',')[1] ?? '';
+      const mediaType = dataUrl.slice(5, dataUrl.indexOf(';')) || 'image/jpeg';
+      const resp = await fetch('/api/read-slip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: { data, mediaType } }),
+      });
+      const r = await resp.json();
+      if (r.ok) {
+        setForm((f) => ({
+          ...f,
+          crop: r.item || f.crop,
+          price: r.amount ? String(r.amount) : f.price,
+          buyer: r.supplier || f.buyer,
+          error: '',
+        }));
+        setScanNote(r.note || 'Read it — check the numbers before saving.');
+      } else {
+        setScanNote(r.error || 'Could not read the slip.');
+      }
+    } catch {
+      setScanNote('Could not read the slip — check your connection and try again.');
+    } finally {
+      setScanning(false);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -296,6 +341,25 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         </div>
       </div>
       <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
+        {/* Scan a till slip — Lima reads it and fills the cost in (Money out only) */}
+        {!isIn && (
+          <div>
+            <button type="button" onClick={() => slipInputRef.current?.click()} disabled={scanning}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
+              style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: scanning ? 'wait' : 'pointer' }}>
+              {scanning ? <Loader2 size={15} className="animate-spin" /> : <Camera size={15} />}
+              {scanning ? 'Lima is reading...' : 'Scan a till slip'}
+            </button>
+            <input ref={slipInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleScan} />
+            {scanNote && (
+              <p className="text-xs font-sans mt-2 flex items-start gap-1.5" style={{ color: '#5C5040' }}>
+                <Sprout size={13} style={{ color: '#1F4D2B', flexShrink: 0, marginTop: 1 }} />
+                <span><span style={{ fontStyle: 'italic' }}>Lima:</span> {scanNote}</span>
+              </p>
+            )}
+          </div>
+        )}
+
         <div>
           <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
             {isIn ? 'Crop' : 'What for'}
