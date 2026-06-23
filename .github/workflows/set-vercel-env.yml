@@ -1,0 +1,57 @@
+name: Set Vercel env
+
+# One-shot: push the app's env vars into the Vercel project (production +
+# preview + development) so `vercel pull`/`vercel build` bake them in.
+# Values come from GitHub repo secrets; this workflow never prints them.
+# Run manually:  gh workflow run set-vercel-env.yml
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  setenv:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      TEAM: team_7BrNEJFlmUBuWXhpUGXMs3cl
+      PROJECT: prj_YIOnoi39oQlq6r0pDecV8wPHn4EP
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+      NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - name: Check Vercel token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN secret is missing."; exit 1
+          fi
+      - name: Upsert env vars into the Vercel project
+        run: |
+          set -euo pipefail
+          upsert() {
+            key="$1"; val="$2"
+            if [ -z "$val" ]; then echo "::warning::skip $key (empty secret)"; return; fi
+            body=$(jq -n --arg k "$key" --arg v "$val" \
+              '{key:$k, value:$v, type:"encrypted", target:["production","preview","development"]}')
+            code=$(curl -s -o /tmp/resp.json -w '%{http_code}' -X POST \
+              "https://api.vercel.com/v10/projects/${PROJECT}/env?teamId=${TEAM}&upsert=true" \
+              -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "$body")
+            if [ "$code" -ge 400 ]; then
+              echo "::error::$key -> HTTP $code"; cat /tmp/resp.json; exit 1
+            fi
+            echo "$key -> HTTP $code OK"
+          }
+          for k in NEXT_PUBLIC_FIREBASE_API_KEY NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN \
+                   NEXT_PUBLIC_FIREBASE_PROJECT_ID NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET \
+                   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID NEXT_PUBLIC_FIREBASE_APP_ID \
+                   NEXT_PUBLIC_MAPBOX_TOKEN ANTHROPIC_API_KEY; do
+            eval "v=\${$k}"
+            upsert "$k" "$v"
+          done
+          echo "All env vars upserted into the Vercel project."
