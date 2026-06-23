@@ -534,6 +534,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setDraftPoints([]);
     unlockRotation();
     recompute();
+    // Immediately let the farmer name + categorise what they just drew.
+    if (id != null) openShapeNaming(id, type);
     // Leave the finished shape placed. Refining is done via "✎ Edit", which uses the
     // same crosshair motion as drawing — no tiny-dot dragging.
   }, [ensureDraw, draftPoints, recompute, unlockRotation]);
@@ -997,7 +999,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1010,27 +1012,64 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       .map((f: GeoJSON.Feature) => ({
         id: String(f.id),
         areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
+        name: f.properties?.name as string | undefined,
+        category: f.properties?.category as string | undefined,
       }));
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
       .filter((f: GeoJSON.Feature) =>
         (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon') &&
         f.properties?.featureType === 'water' && f.id != null)
-      .map((f: GeoJSON.Feature) => ({ id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH) }));
+      .map((f: GeoJSON.Feature) => ({
+        id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
+        name: f.properties?.name as string | undefined,
+        category: f.properties?.category as string | undefined,
+      }));
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
+
+  // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
+  // time via the row's name). Stored on the feature so it persists + shows in lists. ──
+  const SHAPE_CATEGORIES: Record<'site' | 'water', string[]> = {
+    site: ['Home plot', 'Field', 'Orchard', 'Grazing', 'Other'],
+    water: ['Dam', 'Tank', 'Reservoir', 'Borehole', 'Other'],
+  };
+  const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
+  const [shapeName, setShapeName] = useState('');
+  const [shapeCategory, setShapeCategory] = useState('');
+  const openShapeNaming = useCallback((id: string, type: 'site' | 'water') => {
+    const draw = drawRef.current;
+    const f = draw?.get(id);
+    setShapeName((f?.properties?.name as string) ?? '');
+    setShapeCategory((f?.properties?.category as string) ?? '');
+    setShapeNaming({ id, type });
+  }, []);
+  const confirmShapeNaming = useCallback(() => {
+    if (!shapeNaming) return;
+    const draw = drawRef.current;
+    if (draw) {
+      try {
+        draw.setFeatureProperty(shapeNaming.id, 'name', shapeName.trim() || undefined);
+        draw.setFeatureProperty(shapeNaming.id, 'category', shapeCategory || undefined);
+      } catch { /* feature may be gone */ }
+    }
+    setShapeNaming(null);
+    recompute();
+    setSiteFeatures(getSiteFeatures());
+    setWaterFeatures(getWaterFeatures());
+  }, [shapeNaming, shapeName, shapeCategory, recompute, getSiteFeatures, getWaterFeatures]);
 
   // Delete a single drawn feature by id (one parcel / one water store)
   const deleteFeature = useCallback((featureId: string) => {
@@ -1752,10 +1791,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {siteFeatures.map((sf, idx) => (
                     <div key={sf.id} className="flex items-center gap-2 px-3 py-2 rounded-xl font-sans"
                       style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
-                      <div className="flex-1 min-w-0">
-                        <div style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>Parcel {idx + 1}</div>
-                        <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>{sf.areaHa} ha</div>
-                      </div>
+                      <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" title="Tap to rename / categorise" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                        <div className="flex items-center gap-1.5" style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>
+                          <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
+                          <PenLine size={11} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
+                        </div>
+                        <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>{sf.category ? `${sf.category} · ` : ''}{sf.areaHa} ha</div>
+                      </button>
                       <button onClick={() => startEdit(sf.id, 'site')}
                         className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg font-sans font-semibold"
                         style={{ fontSize: 13, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.35)', color: '#A8D88A' }}>
@@ -1798,10 +1840,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               {waterFeatures.map((wf, idx) => (
                 <div key={wf.id} className="flex items-center gap-2 px-3 py-2 rounded-xl font-sans"
                   style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
-                  <div className="flex-1 min-w-0">
-                    <div style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>Store {idx + 1}</div>
-                    <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>~{wf.estVolumeKL.toLocaleString()} kL</div>
-                  </div>
+                  <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" title="Tap to rename / categorise" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                    <div className="flex items-center gap-1.5" style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>
+                      <span className="truncate">{wf.name || `Store ${idx + 1}`}</span>
+                      <PenLine size={11} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
+                    </div>
+                    <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</div>
+                  </button>
                   <button onClick={() => startEdit(wf.id, 'water')}
                     className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg font-sans font-semibold"
                     style={{ fontSize: 13, background: 'rgba(143,199,232,0.16)', border: '1px solid rgba(143,199,232,0.4)', color: '#8FC7E8' }}>
@@ -1964,6 +2009,55 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <button onClick={confirmSavePlace}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
                   <Check size={15} />Save place
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Name & categorise a drawn parcel / water store ── */}
+      {shapeNaming && (
+        <>
+          <div className="fixed inset-0 z-[70]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
+            onClick={() => setShapeNaming(null)} aria-hidden="true" />
+          <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+              <div className="flex items-center gap-2 mb-3">
+                {shapeNaming.type === 'water'
+                  ? <Droplets size={16} style={{ color: '#235E86' }} />
+                  : <PenTool size={16} style={{ color: '#1F4D2B' }} />}
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  Name your {shapeNaming.type === 'water' ? 'water store' : 'land'}
+                </span>
+              </div>
+              <input value={shapeName} onChange={(e) => setShapeName(e.target.value)} autoFocus
+                placeholder={shapeNaming.type === 'water' ? 'e.g. Main dam' : 'e.g. Home plot'}
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>What is it?</div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {SHAPE_CATEGORIES[shapeNaming.type].map((c) => {
+                  const on = shapeCategory === c;
+                  const accent = shapeNaming.type === 'water' ? '#235E86' : '#1F4D2B';
+                  return (
+                    <button key={c} onClick={() => setShapeCategory(on ? '' : c)}
+                      className="px-3 py-2 rounded-xl font-sans font-semibold transition-all"
+                      style={{ fontSize: 13, background: on ? accent : 'rgba(226,216,196,0.4)', color: on ? '#fff' : '#5C5040', border: `1px solid ${on ? accent : '#E2D8C4'}`, cursor: 'pointer' }}>
+                      {c}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => setShapeNaming(null)}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  Skip
+                </button>
+                <button onClick={confirmShapeNaming}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                  <Check size={15} />Save name
                 </button>
               </div>
             </div>
