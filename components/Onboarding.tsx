@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { APP_LANGS, useLanguage, translate } from '@/lib/i18n';
 
 export default function Onboarding() {
@@ -35,7 +36,7 @@ export default function Onboarding() {
         <button onClick={() => completeOnboarding(picked)}
           className="w-full py-3 rounded-xl text-base font-display font-semibold transition-all mb-5"
           style={{ background: '#1F4D2B', color: '#fff', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
-          {tp('start')} →
+          <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>
         </button>
 
         {/* Language grid — secondary, clearly labelled */}

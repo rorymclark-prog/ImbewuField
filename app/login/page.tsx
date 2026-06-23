@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { ArrowRight, ChevronLeft } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 
@@ -117,15 +118,15 @@ export default function LoginPage() {
               ? { background: 'rgba(226,216,196,0.6)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'not-allowed', fontSize: 15 }
               : { background: '#1F4D2B', color: '#F7F2E9', cursor: 'pointer', fontSize: 15 }}>
             {loading
-              ? mode === 'signin' ? 'Signing in…' : 'Creating account…'
-              : mode === 'signin' ? 'Sign in →' : 'Create account →'}
+              ? mode === 'signin' ? 'Signing in...' : 'Creating account...'
+              : <span className="flex items-center justify-center gap-1.5">{mode === 'signin' ? 'Sign in' : 'Create account'}<ArrowRight size={15} /></span>}
           </button>
         </form>
 
         {/* Back link */}
         <div className="text-center mt-4">
           <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: '#5C5040' }}>
-            ← Back to app
+            <span className="flex items-center gap-1"><ChevronLeft size={12} />Back to app</span>
           </a>
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 export default function GatePage() {
   const [password, setPassword] = useState('');
@@ -51,7 +52,7 @@ export default function GatePage() {
           style={loading
             ? { background: 'rgba(226,216,196,0.6)', border: '1px solid #E2D8C4', color: '#8C7A62', fontSize: 15 }
             : { background: '#1F4D2B', color: '#F7F2E9', fontSize: 15, opacity: !password ? 0.5 : 1 }}>
-          {loading ? 'Checking…' : 'Enter →'}
+          {loading ? 'Checking...' : <span className="flex items-center justify-center gap-1.5">Enter<ArrowRight size={15} /></span>}
         </button>
       </form>
     </div>

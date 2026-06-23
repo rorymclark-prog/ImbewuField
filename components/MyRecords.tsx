@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Leaf, Sprout, Save, Ruler, X, Camera } from 'lucide-react';
+import { Leaf, Sprout, Save, Ruler, X, Camera, ArrowRight } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -160,7 +160,7 @@ function SignInPrompt() {
           color: '#F7F2E9',
         }}
       >
-        Go to sign in →
+        <span className="flex items-center gap-1.5">Go to sign in<ArrowRight size={14} /></span>
       </a>
     </div>
   );
