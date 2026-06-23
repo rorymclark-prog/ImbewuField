@@ -6,6 +6,7 @@ import { useState, useCallback, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Settings, AlertTriangle, PenLine, ChevronUp } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
+import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
 import Onboarding from '@/components/Onboarding';
 import LangSwitcher from '@/components/LangSwitcher';
@@ -243,8 +244,9 @@ function HomeInner() {
           {/* ── Mobile: floating "Details" toggle button ── */}
           {/* Visible only below md, hidden when sheet is open or while drawing a boundary */}
           <button
-            className="md:hidden fixed bottom-5 right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
+            className="md:hidden fixed right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
             style={{
+              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 16px)',
               background: sheetOpen
                 ? 'rgba(31,77,43,0.9)'
                 : 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
@@ -277,8 +279,9 @@ function HomeInner() {
           )}
 
           <div
-            className="md:hidden fixed left-0 right-0 bottom-0 z-30 flex flex-col overflow-hidden"
+            className="md:hidden fixed left-0 right-0 z-30 flex flex-col overflow-hidden"
             style={{
+              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
               background: '#F7F2E9',
@@ -324,6 +327,8 @@ function HomeInner() {
             </div>
           </div>
         </div>
+
+        <TabBar />
       </div>
     </>
   );

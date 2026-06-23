@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check, Circle, ChevronRight } from 'lucide-react';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -187,7 +187,7 @@ function renderReport(text: string) {
     } else if (line.startsWith('- ') || line.startsWith('• ')) {
       elements.push(
         <div key={i} className="flex gap-2 my-1">
-          <span className="flex-shrink-0 mt-0.5" style={{ color: '#1F4D2B' }}>›</span>
+          <span className="flex-shrink-0 mt-0.5" style={{ color: '#1F4D2B' }}><ChevronRight size={12} /></span>
           <p className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>
             {line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}
           </p>
@@ -370,7 +370,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 }
           }
         >
-          {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating…</> : generated ? 'Regenerate' : 'Generate report'}
+          {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : generated ? 'Regenerate' : 'Generate report'}
         </button>
       </div>
 
@@ -419,7 +419,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 : { background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4', color: '#5C5040' }}
             >
               <span>+ English alongside</span>
-              <span>{bilingual ? '◉' : '○'}</span>
+              <span>{bilingual ? <Circle size={12} fill="currentColor" /> : <Circle size={12} />}</span>
             </button>
           )}
 
@@ -484,8 +484,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     : { background: 'transparent', border: '1px solid transparent', color: '#5C5040' }
                 }
               >
-                <span style={{ color: selected.has(s) ? '#1F4D2B' : '#5C5040', fontSize: 10 }}>
-                  {selected.has(s) ? '✓' : '○'}
+                <span style={{ color: selected.has(s) ? '#1F4D2B' : '#5C5040' }}>
+                  {selected.has(s) ? <Check size={10} /> : <Circle size={10} />}
                 </span>
                 {s}
               </button>
@@ -700,7 +700,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           html,
           body {
             background: #ffffff !important;
-            color: #1a1a1a !important;
+            color: #111111 !important;
             font-size: 11pt !important;
           }
 
@@ -770,7 +770,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           .report-body p,
           .report-body span,
           .report-body div {
-            color: #1a1a1a !important;
+            color: #111111 !important;
           }
 
           /* Headings */
@@ -792,14 +792,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           /* Prose paragraphs */
           .report-body > p,
           .report-body .font-display {
-            color: #1a1a1a !important;
+            color: #111111 !important;
             font-size: 10.5pt !important;
             line-height: 1.55 !important;
           }
 
           /* Bullet / numbered list row items */
           .report-body .flex {
-            color: #1a1a1a !important;
+            color: #111111 !important;
           }
 
           /* Tables */
@@ -814,7 +814,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             font-weight: 700 !important;
           }
           td {
-            color: #1a1a1a !important;
+            color: #111111 !important;
           }
           /* Alternate-row tint → very light grey, no dark bg */
           tbody tr:nth-child(even) {

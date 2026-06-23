@@ -4,6 +4,7 @@ import RoleSwitcher from './RoleSwitcher';
 import BackButton from './BackButton';
 import SettingsButton from './SettingsButton';
 import BrandLogo from './BrandLogo';
+import TabBar from './TabBar';
 
 interface Props {
   role: string;          // RoleSwitcher key, e.g. 'trainer'
@@ -16,13 +17,13 @@ interface Props {
 
 export default function RolePlaceholder({ role, icon, title, subtitle, blurb, features }: Props) {
   return (
-    <div className="h-screen flex flex-col" style={{ background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: 'linear-gradient(180deg, rgba(14,28,13,0.98), rgba(10,21,9,0.95))', borderBottom: '1px solid var(--border)' }}>
+        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton />
         <BrandLogo icon={icon} />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: '#cfe0cd' }}>{subtitle}</span>
+        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>{subtitle}</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>coming in the pilot</span>
         <div className="flex-1" />
         <SettingsButton />
@@ -51,6 +52,7 @@ export default function RolePlaceholder({ role, icon, title, subtitle, blurb, fe
         </div>
         </div>
       </div>
+      <TabBar />
     </div>
   );
 }

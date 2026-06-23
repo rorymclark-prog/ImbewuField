@@ -116,7 +116,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
-        style={{ background: 'rgba(22,37,20,0.4)', border: `1px dashed ${preview ? 'rgba(212,168,83,0.5)' : '#E2D8C4'}` }}
+        style={{ background: 'rgba(226,216,196,0.4)', border: `1px dashed ${preview ? 'rgba(212,168,83,0.5)' : '#E2D8C4'}` }}
       >
         <input ref={inputRef} type="file" accept="image/*" className="hidden"
           onChange={(e) => processFile(e.target.files?.[0])} />
