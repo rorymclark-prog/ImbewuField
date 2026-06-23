@@ -50,6 +50,5 @@ jobs:
         if: env.HAS == 'true'
         run: |
           url="${{ steps.deploy.outputs.url }}"
-          vercel alias set "$url" imbewufield.vercel.app --token="$VERCEL_TOKEN"
           vercel alias set "$url" fieldproof.vercel.app  --token="$VERCEL_TOKEN"
           vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
