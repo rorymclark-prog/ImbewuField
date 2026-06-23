@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -200,6 +200,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setPlaceSaved(true);
     setTimeout(() => setPlaceSaved(false), 2500);
   }, [namingPlace, placeName, placeLabel, locationData]);
+
+  // Lima coach-marks — a quick guide that auto-shows the first time the tools
+  // panel is opened, and reopens any time via the "?" in the panel header.
+  const [guideOpen, setGuideOpen] = useState(false);
+  const guideSeen = useRef(false);
+  useEffect(() => {
+    try { guideSeen.current = !!localStorage.getItem('imbewu_map_tips_seen'); } catch { /* ignore */ }
+  }, []);
+  const openPanel = useCallback(() => {
+    setToolbarMin(false);
+    if (!guideSeen.current) { setGuideOpen(true); guideSeen.current = true; try { localStorage.setItem('imbewu_map_tips_seen', '1'); } catch { /* ignore */ } }
+  }, []);
 
   const MIN_ZOOM = 4;
   const MAX_ZOOM = 24; // Max mapbox allows — zoom right in for small-plot design. Beyond ~z19
@@ -1273,7 +1285,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       */}
       {!pinDraw && !editPin && !activeDraw && toolbarMin && (
         <button
-          onClick={() => setToolbarMin(false)}
+          onClick={openPanel}
           aria-label="Show map tools"
           className="absolute top-3 left-3 flex items-center font-sans transition-all active:scale-95"
           style={{
@@ -1317,14 +1329,26 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </div>
             <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>Find your land</span>
           </div>
-          <button
-            onClick={() => setToolbarMin(true)}
-            aria-label="Hide map tools"
-            className="flex items-center gap-1 transition-all active:scale-95"
-            style={{ background: 'transparent', border: 'none', color: 'rgba(234,243,226,0.55)', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
-          >
-            Hide <ChevronUp size={14} />
-          </button>
+          <div className="flex items-center gap-1.5">
+            {/* Lima quick-guide — reopen the coach-marks any time */}
+            <button
+              onClick={() => setGuideOpen(true)}
+              aria-label="Lima's quick guide"
+              title="How the map tools work"
+              className="flex items-center justify-center rounded-full transition-all active:scale-95"
+              style={{ width: 26, height: 26, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.3)', color: '#A8D88A', cursor: 'pointer' }}
+            >
+              <HelpCircle size={15} strokeWidth={1.9} />
+            </button>
+            <button
+              onClick={() => setToolbarMin(true)}
+              aria-label="Hide map tools"
+              className="flex items-center gap-1 transition-all active:scale-95"
+              style={{ background: 'transparent', border: 'none', color: 'rgba(234,243,226,0.55)', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
+            >
+              Hide <ChevronUp size={14} />
+            </button>
+          </div>
         </div>
 
         {/* Search row */}
@@ -1833,6 +1857,59 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <Check size={15} />Save place
                 </button>
               </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Lima's quick guide (coach-marks) — plain-language tool tips ── */}
+      {guideOpen && (
+        <>
+          <div className="fixed inset-0 z-[72]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
+            onClick={() => setGuideOpen(false)} aria-hidden="true" />
+          <div className="fixed left-1/2 -translate-x-1/2 z-[73] w-full px-3"
+            style={{ top: '50%', transform: 'translate(-50%, -50%)', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+            <div className="rounded-2xl p-5 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(32,25,15,0.28)' }}>
+              {/* Lima header */}
+              <div className="flex items-center gap-2.5 mb-1">
+                <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 36, height: 36, background: '#1F4D2B' }}>
+                  <Sprout size={20} style={{ color: '#A8D88A' }} strokeWidth={1.7} />
+                </div>
+                <div>
+                  <div className="font-display italic font-semibold" style={{ fontSize: 16, color: '#20190F', lineHeight: 1.1 }}>Lima</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Your map guide</div>
+                </div>
+              </div>
+              <p className="font-sans mb-3" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>
+                Here&rsquo;s the map in a few taps — you can reopen this any time with the <strong>?</strong> button.
+              </p>
+
+              {/* Tool tips */}
+              <div className="space-y-2.5 mb-4">
+                {([
+                  [Search, 'Find your land', 'Search a town, or tap the map — I read its climate, soil and water.'],
+                  [PenTool, 'Draw land boundary', 'Mark each corner of your plot, or tap GPS to walk it. I measure the area.'],
+                  [Droplets, 'Draw water storage', 'Outline your dam or tank so I can work out your rainwater.'],
+                  [MapPin, 'Save place', 'Drop a coloured pin and name it — Home, Field or Water.'],
+                  [Layers, 'Map layers', 'Switch satellite / topo and toggle contours & relief.'],
+                ] as const).map(([Icon, title, desc], i) => (
+                  <div key={i} className="flex gap-3 items-start">
+                    <div className="flex items-center justify-center rounded-lg flex-shrink-0 mt-0.5" style={{ width: 30, height: 30, background: 'rgba(31,77,43,0.08)' }}>
+                      <Icon size={16} style={{ color: '#1F4D2B' }} strokeWidth={1.8} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>{title}</div>
+                      <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>{desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button onClick={() => setGuideOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-sans font-semibold"
+                style={{ fontSize: 15, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                <Check size={15} />Got it
+              </button>
             </div>
           </div>
         </>
