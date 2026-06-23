@@ -16,7 +16,7 @@ export default function AccountButton() {
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
         style={{
-          background: 'rgba(22,37,20,0.6)',
+          background: '#FBF6EC',
           border: '1px solid #E2D8C4',
           minHeight: 56,
         }}
@@ -44,7 +44,7 @@ export default function AccountButton() {
       href="/login"
       className="flex items-center px-3.5 rounded-full font-display transition-opacity hover:opacity-80 flex-shrink-0"
       style={{
-        background: 'rgba(22,37,20,0.6)',
+        background: '#FBF6EC',
         border: '1px solid #E2D8C4',
         color: '#2D6B3C',
         textDecoration: 'none',

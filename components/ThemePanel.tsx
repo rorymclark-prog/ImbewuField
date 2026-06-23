@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Satellite, Sprout, Mountain, Sparkles } from 'lucide-react';
+import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 
 const THEMES: { key: ThemeName; label: string; desc: string; swatches: string[] }[] = [
@@ -19,10 +19,10 @@ const THEMES: { key: ThemeName; label: string; desc: string; swatches: string[] 
   },
 ];
 
-const MODES: { key: ThemeMode; label: string; icon: string }[] = [
-  { key: 'light', label: 'Light', icon: '☀' },
-  { key: 'dark', label: 'Dark', icon: '☽' },
-  { key: 'system', label: 'Auto', icon: '⊙' },
+const MODES: { key: ThemeMode; label: string; Icon: LucideIcon }[] = [
+  { key: 'light', label: 'Light', Icon: Sun },
+  { key: 'dark', label: 'Dark', Icon: Moon },
+  { key: 'system', label: 'Auto', Icon: Monitor },
 ];
 
 interface Props {
@@ -232,7 +232,7 @@ export default function ThemePanel({ open, onClose }: Props) {
                       transition: 'all 0.15s ease',
                     }}
                   >
-                    <span style={{ fontSize: 20, color: active ? 'var(--emerald)' : 'var(--text-muted)' }}>{m.icon}</span>
+                    <m.Icon size={20} style={{ color: active ? 'var(--emerald)' : 'var(--text-muted)' }} />
                     <span style={{ fontSize: 13, fontWeight: 500, color: active ? 'var(--emerald)' : 'var(--text-secondary)', fontFamily: 'var(--font-display)' }}>
                       {m.label}
                     </span>

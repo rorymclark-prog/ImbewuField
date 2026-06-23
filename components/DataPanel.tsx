@@ -562,7 +562,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Stat label="Köppen" value={data.climate.koppen} sub={data.climate.koppenDesc} color="#C07A1E" />
               <Stat label="Solar" value={`${data.climate.solarRadiation}`} sub="kWh/m²/day" color="#C07A1E" />
               <Stat label="Summer max" value={`${data.climate.maxTemp}°C`} />
-              <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? '⚠ Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? '#235E86' : undefined} />
+              <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? 'Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? '#235E86' : undefined} />
             </div>
             <Card>
               <Label>Monthly temperature (°C)</Label>

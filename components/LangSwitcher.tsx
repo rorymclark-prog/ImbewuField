@@ -8,7 +8,7 @@ export default function LangSwitcher() {
 
   return (
     <div className="flex items-center gap-1.5 px-3.5 rounded-full flex-shrink-0"
-      style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid #E2D8C4', minHeight: 56 }}>
+      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', minHeight: 56 }}>
       <Globe size={18} style={{ color: '#5C5040' }} />
       <select
         value={lang}

@@ -8,7 +8,7 @@ const TABS = [
   { href: '/home',   label: 'Home',    Icon: Home },
   { href: '/farmer', label: 'Map',     Icon: Map },
   { href: '/farmer?panel=saved', label: 'Sites', Icon: Bookmark },
-  { href: '/login',  label: 'Account', Icon: User },
+  { href: '/account', label: 'Account', Icon: User },
 ];
 
 export default function TabBar() {
