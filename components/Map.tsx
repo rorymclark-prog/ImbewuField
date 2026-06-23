@@ -11,7 +11,7 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, generateId, type SavedPlace } from '@/lib/saved-places';
+import { loadPlaces, savePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -172,22 +172,34 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   // Save the currently selected point as a place (right from the map tools).
+  // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
+  const [namingPlace, setNamingPlace] = useState<{ lat: number; lon: number } | null>(null);
+  const [placeName, setPlaceName] = useState('');
+  const [placeLabel, setPlaceLabel] = useState<PlaceLabel>('field');
+
   const saveCurrentPlace = useCallback(() => {
     if (!selectedLocation) return;
-    const { lat, lon } = selectedLocation;
-    const coords = `${lat.toFixed(3)}, ${lon.toFixed(3)}`;
+    setNamingPlace({ lat: selectedLocation.lat, lon: selectedLocation.lon });
+    setPlaceName(locationData?.biome?.name ?? '');
+    setPlaceLabel('field');
+  }, [selectedLocation, locationData]);
+
+  const confirmSavePlace = useCallback(() => {
+    if (!namingPlace) return;
     savePlace({
       id: generateId(),
-      name: locationData?.biome?.name ? `${locationData.biome.name} (${coords})` : `Place (${coords})`,
-      lat, lon,
+      name: placeName.trim() || 'My place',
+      lat: namingPlace.lat, lon: namingPlace.lon,
       biome: locationData?.biome?.name ?? '',
       rainfall: locationData?.rainfall?.annual ?? 0,
       elevation: locationData?.elevation?.elevation ?? 0,
+      label: placeLabel,
       savedAt: new Date().toISOString(),
     });
+    setNamingPlace(null);
     setPlaceSaved(true);
     setTimeout(() => setPlaceSaved(false), 2500);
-  }, [selectedLocation, locationData]);
+  }, [namingPlace, placeName, placeLabel, locationData]);
 
   const MIN_ZOOM = 4;
   const MAX_ZOOM = 24; // Max mapbox allows — zoom right in for small-plot design. Beyond ~z19
@@ -1038,10 +1050,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               style={{ cursor: 'pointer', transform: 'translateY(2px)' }}
             >
               <span className="px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: 'var(--gold)' }}>
+                style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: placeColor(p.label) }}>
                 {p.name}
               </span>
-              <MapPin size={22} style={{ color: '#C07A1E', fill: '#C07A1E', filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
+              <MapPin size={22} style={{ color: placeColor(p.label), fill: placeColor(p.label), filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
             </button>
           </Marker>
         ))}
@@ -1780,6 +1792,50 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             Tap your area or search a town
           </span>
         </div>
+      )}
+
+      {/* ── Save-place naming sheet — name it + pick a label (sets the pin colour) ── */}
+      {namingPlace && (
+        <>
+          <div className="fixed inset-0 z-[70]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
+            onClick={() => setNamingPlace(null)} aria-hidden="true" />
+          <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+              <div className="flex items-center gap-2 mb-3">
+                <MapPin size={16} style={{ color: placeColor(placeLabel) }} />
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>Save this place</span>
+              </div>
+              <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
+                placeholder="Name it — e.g. Home plot"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>Label</div>
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {PLACE_LABELS.map((l) => {
+                  const on = placeLabel === l.v;
+                  return (
+                    <button key={l.v} onClick={() => setPlaceLabel(l.v)}
+                      className="flex flex-col items-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold transition-all"
+                      style={{ fontSize: 12, background: on ? l.color : 'rgba(226,216,196,0.4)', color: on ? '#fff' : '#5C5040', border: `1px solid ${on ? l.color : '#E2D8C4'}`, cursor: 'pointer' }}>
+                      <MapPin size={16} style={{ color: on ? '#fff' : l.color }} />{l.name}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => setNamingPlace(null)}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  Cancel
+                </button>
+                <button onClick={confirmSavePlace}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                  <Check size={15} />Save place
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
