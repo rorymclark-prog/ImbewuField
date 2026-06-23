@@ -99,6 +99,14 @@ planting calendar → bill of quantities).
   desktop get the persistent 390px side panel; phone + **portrait** tablet keep
   the full-width map + Details bottom-sheet. Map tools panel + Lima FAB on both.
 - Map tools panel redesign (calm/unified/ochre-primary) — see `design/mockups/map-tools.html`
+- **Map tools v2 corrections** (frame 33 + `MAP-TOOLS-CORRECTIONS.md`): Draw-water
+  button now blue/centred, paired under the ochre "Draw land boundary"; saved
+  parcel/water list rewritten (labelled sections + named rows + "Edit shape"/
+  "Edit" labelled buttons + explicit dashed/blue "Add another…" buttons); draw
+  bar progress pill ("N corners marked — add M more, then tap Finish") + "Add
+  corner"; "Map layers" collapses to an active-layer summary; desktop panel fonts
+  14–15px. **Save place drops a pin + naming sheet** (name + Home/Field/Water/
+  Other label → pin colour). GPS boundary-walk "GPS" button in the draw bar.
 - **Cost/expense logging** — finances "New entry" has a Money in / Money out
   toggle (frame 16); expenses (ExpenseLog / expense_logs) flow into the desktop
   sheet's Out column + Expenses + Net stats, and the mobile "Spent this month" card.
@@ -125,6 +133,14 @@ planting calendar → bill of quantities).
   Google Cloud OAuth client + consent screen the project owner must provision;
   not buildable from code alone. (The desktop financial SHEET + CSV export and
   the in-app calendar/cropplan are already built — only the live Google sync is out.)
+
+**Map corrections — one item left (needs a focused pass):**
+- Lima first-time **coach-marks** (`MAP-TOOLS-CORRECTIONS.md` §Lima coach-marks):
+  anchored hint bubble on first tap of each tool ("Got it" / "Don't show tips" /
+  tip counter) + a minimisable floating "?" Lima. Open design Qs: where the
+  persistent "?" sits without crowding the map's bottom edge (Lima FAB + Details
+  + zoom + TabBar already there), and how it coexists with the language + POPIA
+  first-run modals. Build as its own task.
 
 **Lower-priority / superseded:**
 - Site-analysis Q&A stepper (frame 04) — overlaps the built `/survey` garden wizard.
