@@ -1306,8 +1306,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center group"
               style={{ cursor: 'pointer', transform: 'translateY(2px)' }}
             >
-              <span className={`px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5 transition-opacity ${showLabels ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid var(--border-bright)', color: placeColor(p.label) }}>
+              <span className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showLabels ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${placeColor(p.label)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                 {p.name}
               </span>
               <MapPin size={22} style={{ color: placeColor(p.label), fill: placeColor(p.label), filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
@@ -2263,53 +2263,87 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </button>
       )}
 
-      {/* ── Floating shape chips — centred on each polygon, hidden when Labels off ── */}
-      {showLabels && !pinDraw && !editPin && map && (
-        <>
-          {siteFeatures.map((sf) => {
-            if (!sf.centroid) return null;
-            const px = map.project(sf.centroid as [number, number]);
-            return (
-              <div key={sf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
-                style={{
-                  left: px.x, top: px.y, transform: 'translate(-50%,-50%)',
-                  background: '#1F4D2B', border: '1.5px solid #9BE66B',
-                  borderRadius: 999, padding: '5px 12px 5px 5px',
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
-                  zIndex: 6, whiteSpace: 'nowrap',
-                }}>
-                <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                  style={{ width: 24, height: 24, background: 'rgba(46,107,58,0.9)' }}>
-                  <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
-                </span>
-                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{sf.name || 'Parcel'}</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{sf.areaHa} ha</span>
-              </div>
-            );
-          })}
-          {waterFeatures.map((wf) => {
-            if (!wf.centroid) return null;
-            const px = map.project(wf.centroid as [number, number]);
-            return (
-              <div key={wf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
-                style={{
-                  left: px.x, top: px.y, transform: 'translate(-50%,-50%)',
-                  background: '#235E86', border: '1.5px solid #7CC6F2',
-                  borderRadius: 999, padding: '5px 12px 5px 5px',
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
-                  zIndex: 6, whiteSpace: 'nowrap',
-                }}>
-                <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                  style={{ width: 24, height: 24, background: 'rgba(27,74,120,0.9)' }}>
-                  <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />
-                </span>
-                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{wf.name || 'Water'}</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{wf.estVolumeKL.toLocaleString()} kL</span>
-              </div>
-            );
-          })}
-        </>
-      )}
+      {/* ── Floating shape chips — offset above/below centroid with leader lines ── */}
+      {showLabels && !pinDraw && !editPin && map && (() => {
+        const LAND_DY = -42;  // chip center above centroid
+        const WATER_DY = 42;  // chip center below centroid
+        const LEADER = 28;    // gap between centroid dot and chip edge
+        return (
+          <>
+            {/* SVG leader lines — one canvas-sized overlay */}
+            <svg className="absolute inset-0 pointer-events-none w-full h-full" style={{ zIndex: 6 }}>
+              {siteFeatures.map((sf) => {
+                if (!sf.centroid) return null;
+                const px = map.project(sf.centroid as [number, number]);
+                return (
+                  <g key={sf.id}>
+                    <line x1={px.x} y1={px.y} x2={px.x} y2={px.y + LAND_DY + LEADER}
+                      stroke="rgba(155,230,107,0.55)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <circle cx={px.x} cy={px.y} r="4" fill="#9BE66B" stroke="#0d1f12" strokeWidth="1.5" />
+                  </g>
+                );
+              })}
+              {waterFeatures.map((wf) => {
+                if (!wf.centroid) return null;
+                const px = map.project(wf.centroid as [number, number]);
+                return (
+                  <g key={wf.id}>
+                    <line x1={px.x} y1={px.y} x2={px.x} y2={px.y + WATER_DY - LEADER}
+                      stroke="rgba(124,198,242,0.55)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <circle cx={px.x} cy={px.y} r="4" fill="#7CC6F2" stroke="#0d1f12" strokeWidth="1.5" />
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Land chips — floated above centroid */}
+            {siteFeatures.map((sf) => {
+              if (!sf.centroid) return null;
+              const px = map.project(sf.centroid as [number, number]);
+              return (
+                <div key={sf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                  style={{
+                    left: px.x, top: px.y + LAND_DY, transform: 'translate(-50%,-50%)',
+                    background: '#1F4D2B', border: '1.5px solid #9BE66B',
+                    borderRadius: 999, padding: '5px 12px 5px 5px',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                    zIndex: 7, whiteSpace: 'nowrap',
+                  }}>
+                  <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                    style={{ width: 24, height: 24, background: 'rgba(46,107,58,0.9)' }}>
+                    <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{sf.name || 'Parcel'}</span>
+                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{sf.areaHa} ha</span>
+                </div>
+              );
+            })}
+
+            {/* Water chips — floated below centroid */}
+            {waterFeatures.map((wf) => {
+              if (!wf.centroid) return null;
+              const px = map.project(wf.centroid as [number, number]);
+              return (
+                <div key={wf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                  style={{
+                    left: px.x, top: px.y + WATER_DY, transform: 'translate(-50%,-50%)',
+                    background: '#235E86', border: '1.5px solid #7CC6F2',
+                    borderRadius: 999, padding: '5px 12px 5px 5px',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                    zIndex: 7, whiteSpace: 'nowrap',
+                  }}>
+                  <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                    style={{ width: 24, height: 24, background: 'rgba(27,74,120,0.9)' }}>
+                    <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{wf.name || 'Water'}</span>
+                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{wf.estVolumeKL.toLocaleString()} kL</span>
+                </div>
+              );
+            })}
+          </>
+        );
+      })()}
 
       {/* ── Save-place naming sheet — name it + pick a label (sets the pin colour) ── */}
       {namingPlace && (
