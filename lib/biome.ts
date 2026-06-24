@@ -99,7 +99,7 @@ export const BIOMES: Record<string, SABiome> = {
     color: '#5B9E7C',
     rainfallPattern: 'year-round',
     meanRainfall: '700–1200mm',
-    keySpecies: ['Natal Wild Banana', 'Moringa', 'Strelitzia', 'Natal Mahogany', 'Fever Tree', 'Sycamore Fig'],
+    keySpecies: ['Natal Wild Banana', 'Wild Plum', 'Natal Mahogany', 'Pigeonwood', 'Fever Tree', 'Sycamore Fig', 'Forest Silver Oak'],
     soilType: 'Ferralitic red clays, leached, acidic pH 4.5–5.5',
     waterStrategy: 'High rainfall = flood management not collection. Swales to slow and spread water on steep KZN slopes. Raised beds prevent waterlogging. Keyline prevents landslides on clay. Downpipes into underground tanks.',
     soilStrategy: 'Leached, acidic — lime to pH 6.5. Nutrients leach rapidly: surface mulch + cover crops essential. Terra preta (biochar + compost) dramatically improves yields. Coffee, avocado, banana, sugar cane all productive here.',

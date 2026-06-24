@@ -271,6 +271,79 @@ Indigenous South African trees suited to ${d.biome.name} — these survive local
 
 Prioritise indigenous FRUIT and multi-purpose trees that grow naturally in or near the ${d.biome.name} biome. Name real species only.
 
+` : ''}${sections.includes('Agroecosystem Planting Guide') ? `## Agroecosystem Planting Guide
+
+A species reference and design framework for building a productive, biodiverse agroecosystem rooted in the natural plant communities of ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}. All species must be genuinely suited to this location: ${Math.abs(d.lat).toFixed(1)}°S, ${d.elevation.elevation}m elevation, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall, ${d.climate.minTemp}–${d.climate.maxTemp}°C.
+
+### Top 5 Indigenous Canopy Trees
+Trees that anchor the system: deep roots, long-lived, wildlife habitat, soil function. Indigenous only — no exotics.
+
+| Tree | Botanical name | Size | Key uses | Wildlife value |
+|------|---------------|------|----------|---------------|
+| [name] | [Genus species] | [Xm tall] | [food/timber/fodder/N-fix/medicine] | [birds/insects/mammals] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+
+### Top 5 Indigenous Shrubs & Sub-canopy
+The structural mid-layer: edge habitat, windbreak understorey, food forest guild fill, insect corridors.
+
+| Shrub | Botanical name | Size | Key uses | Wildlife value |
+|-------|---------------|------|----------|---------------|
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
+
+### Top 10 Fruit & Nut Trees for This Site
+Productive food-forest canopy and sub-canopy. Include indigenous fruiting species AND well-adapted exotics. Flag chill-hour requirements honestly (winter min here is ${d.climate.minTemp}°C).
+
+| Crop | Type | Chill hrs | First harvest | Water needs | Why it fits |
+|------|------|-----------|---------------|-------------|------------|
+| [name] | Fruit/Nut | [hrs] | [1–3 yrs etc] | [low/med/high] | [why] |
+| (×10 rows) | | | | | |
+
+### Agroecosystem Design — Layering for Balance
+
+**Food forest structure for ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}:**
+Describe the natural layering strategy for this specific vegetation unit — which canopy trees go where, how to set back the food forest from existing indigenous vegetation, and the succession sequence from pioneer to climax.
+
+**Windbreak & buffer composition:**
+Name 3–5 specific species for a multi-row windbreak on the ${d.climate.windFromSummer}/${d.climate.windFromWinter} side. Give the row order: tallest natives at back, fruiting sub-canopy in middle, dense shrubs at front. Include at least one nitrogen-fixer and one insect-attracting species.
+
+**Guild associations — what grows together naturally here:**
+Give 2 specific plant guilds based on what actually co-occurs in ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}: a canopy tree, its natural understorey companions, a ground cover or geophyte that belongs. Explain the ecological relationship (shade tolerance, soil chemistry, mycorrhizal networks).
+
+**Habitat corridors for birds and beneficial insects:**
+Which plantings most effectively attract:
+- Pollinators (bees, flies, butterflies) — name 3–4 flowering plants with peak bloom timing
+- Insectivorous birds (pest control) — which species, what habitat features they need
+- Seed dispersers (frugivorous birds) — which fruiting plants bring them in
+Give practical placement: where to put nectar strips, nest boxes, dense shrub patches relative to food production zones.
+
+---
+
+### Appendix — Extended Species Reference
+
+#### Nitrogen Fixers & Soil Builders
+List 6–8 indigenous or well-adapted nitrogen-fixing species for ${d.biome.name}. Include legume trees, shrubs, and ground-cover legumes. Note whether they are indigenous to this vegetation unit or introduced. Give 1-line practical use for each.
+
+#### Nectar & Pollinator Plants (Indigenous)
+List 8–10 indigenous plants that reliably attract pollinators at this location. For each: common name, flowering month(s), main pollinator attracted. Prioritise species with different bloom windows to cover the whole year.
+
+#### Ground Covers & Living Mulch
+List 6–8 ground covers or low-growing plants that suppress weeds, retain moisture, and provide habitat. Include at least 2 that also produce food or medicine. Note sun/shade requirements.
+
+#### Indigenous Climbers & Scrambling Plants
+List 4–5 indigenous climbers for trellises, fences, and forest edges. Note fruit/flower/habitat value. Flag any that become invasive in disturbed ground.
+
+#### Medicinal & Ethnobotanical Plants for This Area
+List 6–8 plants with documented traditional use in this biome — common name, use, and whether indigenous. These are excellent zone 1–2 additions: useful, low-maintenance, and culturally relevant.
+
+All species in this appendix must be genuinely appropriate to ${Math.abs(d.lat).toFixed(1)}°S at ${d.elevation.elevation}m in the ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}. Do not include species from different biomes or elevation bands.
+
 ` : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
 
 A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemicals, matched to the planting calendar and ${d.rainfall.pattern} rainfall.
