@@ -1491,7 +1491,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', zIndex: 30 }}>
             <button onClick={() => setDroppingWaterPoint(false)}
               className="flex items-center justify-center gap-1.5 font-sans font-semibold"
-              style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.18)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
+              style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
               <X size={15} />Cancel
             </button>
             <button onClick={() => {
@@ -1653,7 +1653,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           className="flex items-center gap-2.5"
           style={{ height: 50, padding: '0 8px 0 15px', borderRadius: 13,
             background: 'rgba(247,242,233,0.1)',
-            border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(234,243,226,0.18)'}` }}>
+            border: `1px solid ${searchError ? 'rgba(212,110,66,0.7)' : 'rgba(234,243,226,0.16)'}` }}>
           <Search size={19} style={{ color: 'rgba(234,243,226,0.55)', flexShrink: 0 }} strokeWidth={2} />
           <input
             type="text"
@@ -1718,7 +1718,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             so the toolbar isn't a wall of tiny buttons on a phone. */}
         <button onClick={() => setLayersOpen((o) => !o)}
           className="flex items-center justify-between font-sans transition-all"
-          style={{ background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.18)',
+          style={{ background: 'rgba(247,242,233,0.1)', border: '1px solid rgba(234,243,226,0.16)',
             borderRadius: 13, color: '#EAF3E2', height: 48, fontSize: 14.5, fontWeight: 600, padding: '0 15px' }}>
           <span className="flex items-center gap-2.5 min-w-0">
             <Layers size={19} strokeWidth={1.8} style={{ color: '#A8D88A', flexShrink: 0 }} />
@@ -1871,17 +1871,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {/* Show labels on the map — toggle */}
                   <button onClick={() => setShowLabels((v) => !v)}
                     className="flex items-center gap-2 px-3 rounded-lg font-sans transition-all"
-                    style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.14)', color: 'var(--text-secondary)', minHeight: 38, fontSize: 13 }}>
+                    style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: 'var(--text-secondary)', minHeight: 38, fontSize: 13 }}>
                     <span className="flex-1 text-left">Show names on map</span>
                     <span className="flex items-center rounded-full transition-all flex-shrink-0"
-                      style={{ width: 38, height: 22, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.18)', justifyContent: showLabels ? 'flex-end' : 'flex-start' }}>
+                      style={{ width: 38, height: 22, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.16)', justifyContent: showLabels ? 'flex-end' : 'flex-start' }}>
                       <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff', display: 'block' }} />
                     </span>
                   </button>
 
                   {savedPins.map((p) => (
                     <div key={p.id} className="flex items-center gap-3 font-sans"
-                      style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.13)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
+                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
                       {/* Coloured pin chip */}
                       <button onClick={() => startEditPlace(p)} title="Edit name or colour"
                         className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
@@ -1904,14 +1904,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       {/* Ghost edit */}
                       <button onClick={() => startEditPlace(p)} title="Edit name or colour"
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                         <PenLine size={15} style={{ color: 'rgba(234,243,226,0.55)' }} />
                       </button>
                       {/* Ghost delete */}
                       <button onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
                         aria-label={`Delete ${p.name}`} title="Delete this place"
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                         <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
                       </button>
                     </div>
@@ -2000,7 +2000,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </div>
                   {siteFeatures.map((sf, idx) => (
                     <div key={sf.id} className="flex items-center gap-3 font-sans"
-                      style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.13)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
+                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
                       <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#9BE66B' }} />
                       <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
@@ -2011,19 +2011,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       </button>
                       <button onClick={() => startEdit(sf.id, 'site')}
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
                         title="Edit shape"><PenLine size={15} style={{ color: '#A8D88A' }} /></button>
                       <button onClick={() => requestDelete(sf.id)}
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                         style={pendingDelete === sf.id
                           ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
-                          : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                          : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
                         title="Delete parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
                     </div>
                   ))}
                   <button onClick={() => startPinDraw('site')}
                     className="w-full flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                    style={{ fontSize: 14.5, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.18)', color: '#A8D88A', cursor: 'pointer' }}>
+                    style={{ fontSize: 14.5, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#A8D88A', cursor: 'pointer' }}>
                     <Plus size={17} />Add parcel
                   </button>
                 </div>
@@ -2048,7 +2048,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               {waterFeatures.map((wf, idx) => (
                 <div key={wf.id} className="flex items-center gap-3 font-sans"
-                  style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.13)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
+                  style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
                   <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#5BB4EC' }} />
                   <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                     <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
@@ -2059,13 +2059,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </button>
                   <button onClick={() => startEdit(wf.id, 'water')}
                     className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                    style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                    style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
                     title="Edit shape"><PenLine size={15} style={{ color: '#7CC6F2' }} /></button>
                   <button onClick={() => requestDelete(wf.id)}
                     className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                     style={pendingDelete === wf.id
                       ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
-                      : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                      : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
                     title="Delete area">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
                 </div>
               ))}
@@ -2075,7 +2075,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <div className="font-sans mb-1.5" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>Infrastructure</div>
                   {waterPoints.map((wp) => (
                     <div key={wp.id} className="flex items-center gap-3 font-sans mb-1.5"
-                      style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.13)', borderRadius: 14, padding: '10px 13px 10px 15px' }}>
+                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 13px 10px 15px' }}>
                       <div className="flex-shrink-0 rounded-full" style={{ width: 10, height: 10, background: categoryColor(wp.category) }} />
                       <div className="flex-1 min-w-0">
                         <div className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#EAF3E2' }}>{wp.name || wp.category || 'Water point'}</div>
@@ -2083,12 +2083,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       </div>
                       <button onClick={() => { setWaterPointNaming(wp); setWpName(wp.name); setWpCategory(wp.category); }}
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                         <PenLine size={15} style={{ color: '#7CC6F2' }} />
                       </button>
                       <button onClick={() => { deleteWaterPoint(wp.id); setWaterPoints(loadWaterPoints()); }}
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                         <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
                       </button>
                     </div>
@@ -2098,12 +2098,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <div className="flex gap-2">
                 <button onClick={() => startPinDraw('water')}
                   className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.18)', color: '#7CC6F2', cursor: 'pointer' }}>
+                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
                   <Plus size={16} />Harvesting area
                 </button>
                 <button onClick={() => setDroppingWaterPoint(true)}
                   className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.18)', color: '#7CC6F2', cursor: 'pointer' }}>
+                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
                   <Pipette size={16} />Water point
                 </button>
               </div>
@@ -2112,12 +2112,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="flex gap-2">
               <button onClick={() => startPinDraw('water')}
                 className="flex-1 flex items-center justify-center gap-2 font-sans font-bold transition-all active:scale-95"
-                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.18)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
+                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
                 <Droplets size={16} strokeWidth={2} />Harvesting area
               </button>
               <button onClick={() => setDroppingWaterPoint(true)}
                 className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.18)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
+                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
                 <Pipette size={16} />Water point
               </button>
             </div>
@@ -2182,7 +2182,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         >+</button>
 
         {/* Vertical fill bar — shows current zoom, not draggable */}
-        <div className="relative rounded-full overflow-hidden" style={{ width: 5, height: 84, background: 'rgba(234,243,226,0.14)' }}>
+        <div className="relative rounded-full overflow-hidden" style={{ width: 5, height: 84, background: 'rgba(234,243,226,0.16)' }}>
           <div className="absolute left-0 right-0 bottom-0 rounded-full" style={{
             height: `${Math.round(((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100)}%`,
             background: '#A8D88A',
@@ -2209,7 +2209,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             zIndex: 15,
             bottom: 72, padding: '11px 18px',
             background: 'rgba(22,30,18,0.86)',
-            border: '1px solid rgba(234,243,226,0.14)',
+            border: '1px solid rgba(234,243,226,0.16)',
             backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
             boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
             whiteSpace: 'nowrap',
