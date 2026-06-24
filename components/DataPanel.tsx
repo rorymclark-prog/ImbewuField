@@ -446,7 +446,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           Harvesting areas{waterData.count > 1 ? ` · ${waterData.count}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {waterData.areaM2.toLocaleString()} m² catchment · ~{waterData.avgDepthM} m storage depth
+                          {waterData.areaM2.toLocaleString()} m² catchment area
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
