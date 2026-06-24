@@ -15,6 +15,7 @@
     "@turf/length": "^7.3.5",
     "clsx": "^2.1.1",
     "firebase": "^12.15.0",
+    "jspdf": "^4.2.1",
     "konva": "^10.3.0",
     "lucide-react": "^1.21.0",
     "mapbox-gl": "^3.8.0",
