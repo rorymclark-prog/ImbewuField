@@ -1086,7 +1086,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1102,24 +1102,28 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         const centroid: [number, number] | null = n > 0
           ? [ring.reduce((s, c) => s + c[0], 0) / n, ring.reduce((s, c) => s + c[1], 0) / n]
           : null;
+        const lons = ring.map((c) => c[0]), lats = ring.map((c) => c[1]);
+        const bbox: [number, number, number, number] = n > 0
+          ? [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)]
+          : [0, 0, 0, 0];
         return {
           id: String(f.id),
           areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
-          centroid,
+          centroid, bbox,
         };
       });
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
@@ -1132,15 +1136,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         const centroid: [number, number] | null = n > 0
           ? [ring.reduce((s, c) => s + c[0], 0) / n, ring.reduce((s, c) => s + c[1], 0) / n]
           : null;
+        const lons = ring.map((c) => c[0]), lats = ring.map((c) => c[1]);
+        const bbox: [number, number, number, number] = n > 0
+          ? [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)]
+          : [0, 0, 0, 0];
         return {
           id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
-          centroid,
+          centroid, bbox,
         };
       });
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
@@ -2263,84 +2271,122 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </button>
       )}
 
-      {/* ── Floating shape chips — offset above/below centroid with leader lines ── */}
+      {/* ── Floating shape chips — smart placement: outside small shapes, inside large ── */}
       {showLabels && !pinDraw && !editPin && map && (() => {
-        const LAND_DY = -42;  // chip center above centroid
-        const WATER_DY = 42;  // chip center below centroid
-        const LEADER = 28;    // gap between centroid dot and chip edge
+        const CHIP_W = 160, CHIP_H = 34, PAD = 10;
+        const INSIDE_PX2 = 22000; // screen px² threshold for inside placement
+        const container = map.getContainer();
+        const CW = container?.clientWidth ?? 800;
+
+        // Build a unified list of chips with computed positions
+        const chips: Array<{
+          id: string; type: 'land' | 'water';
+          cx: number; cy: number;       // chip centre (screen px)
+          anchorX: number; anchorY: number;  // polygon centroid (screen px)
+          inside: boolean;              // no leader when inside
+          label: string; sub: string;
+        }> = [];
+
+        const placeChip = (
+          centroid: [number, number],
+          bbox: [number, number, number, number],
+          type: 'land' | 'water',
+          id: string, label: string, sub: string,
+        ) => {
+          const cp = map.project(centroid);
+          const sw = map.project([bbox[0], bbox[1]]);
+          const ne = map.project([bbox[2], bbox[3]]);
+          const bboxMinX = Math.min(sw.x, ne.x), bboxMaxX = Math.max(sw.x, ne.x);
+          const bboxMinY = Math.min(sw.y, ne.y), bboxMaxY = Math.max(sw.y, ne.y);
+          const bboxW = bboxMaxX - bboxMinX, bboxH = bboxMaxY - bboxMinY;
+          const screenArea = bboxW * bboxH;
+
+          let cx = cp.x, cy = cp.y, inside = false;
+
+          if (screenArea > INSIDE_PX2 && bboxW > CHIP_W + 8 && bboxH > CHIP_H + 8) {
+            // Large enough — label sits inside polygon at centroid
+            inside = true;
+          } else {
+            // Small shape — place chip outside, prefer right side
+            const rightCx = bboxMaxX + PAD + CHIP_W / 2;
+            const leftCx  = bboxMinX - PAD - CHIP_W / 2;
+            if (rightCx + CHIP_W / 2 < CW - 8) {
+              cx = rightCx;
+              cy = cp.y;
+            } else if (leftCx - CHIP_W / 2 > 8) {
+              cx = leftCx;
+              cy = cp.y;
+            } else {
+              // Fallback: land above, water below
+              cx = cp.x;
+              cy = type === 'land' ? bboxMinY - PAD - CHIP_H / 2 : bboxMaxY + PAD + CHIP_H / 2;
+            }
+          }
+          chips.push({ id, type, cx, cy, anchorX: cp.x, anchorY: cp.y, inside, label, sub });
+        };
+
+        for (const sf of siteFeatures) {
+          if (sf.centroid) placeChip(sf.centroid, sf.bbox, 'land', sf.id, sf.name || 'Parcel', `${sf.areaHa} ha`);
+        }
+        for (const wf of waterFeatures) {
+          if (wf.centroid) placeChip(wf.centroid, wf.bbox, 'water', wf.id, wf.name || 'Water', `${wf.estVolumeKL.toLocaleString()} kL`);
+        }
+
+        // Overlap resolution — push colliding chips apart vertically (3 passes)
+        chips.sort((a, b) => a.cy - b.cy);
+        for (let pass = 0; pass < 3; pass++) {
+          for (let i = 0; i < chips.length - 1; i++) {
+            const a = chips[i], b = chips[i + 1];
+            if (Math.abs(a.cx - b.cx) < CHIP_W + 6) {
+              const gap = b.cy - a.cy;
+              const needed = CHIP_H + 6;
+              if (gap < needed) {
+                const push = (needed - gap) / 2 + 1;
+                a.cy -= push;
+                b.cy += push;
+              }
+            }
+          }
+        }
+
         return (
           <>
-            {/* SVG leader lines — one canvas-sized overlay */}
+            {/* SVG leader lines (only for outside chips) */}
             <svg className="absolute inset-0 pointer-events-none w-full h-full" style={{ zIndex: 6 }}>
-              {siteFeatures.map((sf) => {
-                if (!sf.centroid) return null;
-                const px = map.project(sf.centroid as [number, number]);
-                return (
-                  <g key={sf.id}>
-                    <line x1={px.x} y1={px.y} x2={px.x} y2={px.y + LAND_DY + LEADER}
-                      stroke="rgba(155,230,107,0.55)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <circle cx={px.x} cy={px.y} r="4" fill="#9BE66B" stroke="#0d1f12" strokeWidth="1.5" />
-                  </g>
-                );
-              })}
-              {waterFeatures.map((wf) => {
-                if (!wf.centroid) return null;
-                const px = map.project(wf.centroid as [number, number]);
-                return (
-                  <g key={wf.id}>
-                    <line x1={px.x} y1={px.y} x2={px.x} y2={px.y + WATER_DY - LEADER}
-                      stroke="rgba(124,198,242,0.55)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <circle cx={px.x} cy={px.y} r="4" fill="#7CC6F2" stroke="#0d1f12" strokeWidth="1.5" />
-                  </g>
-                );
-              })}
+              {chips.filter(c => !c.inside).map(c => (
+                <g key={c.id}>
+                  <line
+                    x1={c.anchorX} y1={c.anchorY} x2={c.cx} y2={c.cy}
+                    stroke={c.type === 'land' ? 'rgba(155,230,107,0.5)' : 'rgba(124,198,242,0.5)'}
+                    strokeWidth="1.5" strokeDasharray="3 3"
+                  />
+                  <circle cx={c.anchorX} cy={c.anchorY} r="4"
+                    fill={c.type === 'land' ? '#9BE66B' : '#7CC6F2'} stroke="#0d1f12" strokeWidth="1.5" />
+                </g>
+              ))}
             </svg>
 
-            {/* Land chips — floated above centroid */}
-            {siteFeatures.map((sf) => {
-              if (!sf.centroid) return null;
-              const px = map.project(sf.centroid as [number, number]);
-              return (
-                <div key={sf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
-                  style={{
-                    left: px.x, top: px.y + LAND_DY, transform: 'translate(-50%,-50%)',
-                    background: '#1F4D2B', border: '1.5px solid #9BE66B',
-                    borderRadius: 999, padding: '5px 12px 5px 5px',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
-                    zIndex: 7, whiteSpace: 'nowrap',
-                  }}>
-                  <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                    style={{ width: 24, height: 24, background: 'rgba(46,107,58,0.9)' }}>
-                    <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
-                  </span>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{sf.name || 'Parcel'}</span>
-                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{sf.areaHa} ha</span>
-                </div>
-              );
-            })}
-
-            {/* Water chips — floated below centroid */}
-            {waterFeatures.map((wf) => {
-              if (!wf.centroid) return null;
-              const px = map.project(wf.centroid as [number, number]);
-              return (
-                <div key={wf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
-                  style={{
-                    left: px.x, top: px.y + WATER_DY, transform: 'translate(-50%,-50%)',
-                    background: '#235E86', border: '1.5px solid #7CC6F2',
-                    borderRadius: 999, padding: '5px 12px 5px 5px',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
-                    zIndex: 7, whiteSpace: 'nowrap',
-                  }}>
-                  <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                    style={{ width: 24, height: 24, background: 'rgba(27,74,120,0.9)' }}>
-                    <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />
-                  </span>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{wf.name || 'Water'}</span>
-                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{wf.estVolumeKL.toLocaleString()} kL</span>
-                </div>
-              );
-            })}
+            {/* Chip divs */}
+            {chips.map(c => (
+              <div key={c.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                style={{
+                  left: c.cx, top: c.cy, transform: 'translate(-50%,-50%)',
+                  background: c.type === 'land' ? '#1F4D2B' : '#235E86',
+                  border: `1.5px solid ${c.type === 'land' ? '#9BE66B' : '#7CC6F2'}`,
+                  borderRadius: 999, padding: '5px 12px 5px 5px',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                  zIndex: 7, whiteSpace: 'nowrap',
+                }}>
+                <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                  style={{ width: 24, height: 24, background: c.type === 'land' ? 'rgba(46,107,58,0.9)' : 'rgba(27,74,120,0.9)' }}>
+                  {c.type === 'land'
+                    ? <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
+                    : <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />}
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{c.label}</span>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{c.sub}</span>
+              </div>
+            ))}
           </>
         );
       })()}
