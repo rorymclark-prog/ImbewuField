@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { listTrainees, getCourseProgress, logMentorVisit } from '@/lib/db/queries';
@@ -11,6 +11,7 @@ import type { Profile, CourseProgress } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import ContactInbox from '@/components/ContactInbox';
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
@@ -145,6 +146,8 @@ export default function MentorPage() {
   const router = useRouter();
   const isLive = isBackendConfigured();
 
+  const [view, setView] = useState<'trainees' | 'messages'>('trainees');
+  const [msgUnread, setMsgUnread] = useState(0);
   const [trainees, setTrainees] = useState<Profile[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress[]>>({});
   const [fetching, setFetching] = useState(false);
@@ -190,7 +193,42 @@ export default function MentorPage() {
         <SettingsButton />
       </header>
 
+      {/* Tab strip */}
+      <div className="flex-shrink-0 flex" style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16, gap: 0 }}>
+        {([
+          { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
+          { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
+        ] as const).map(({ key, label, icon: Icon, badge }) => (
+          <button
+            key={key}
+            onClick={() => setView(key)}
+            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: view === key ? '#1F4D2B' : '#8C7A62',
+              borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
+              marginBottom: -1,
+            }}
+          >
+            <Icon size={13} />
+            {label}
+            {badge != null && badge > 0 && (
+              <span className="flex items-center justify-center rounded-full font-mono"
+                style={{ minWidth: 16, height: 16, fontSize: 9, padding: '0 4px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                {badge}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+
+        {view === 'messages' ? (
+          <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
+        ) : (<>
 
         {/* Cohort at a glance */}
         <div className="grid grid-cols-3 gap-3">
@@ -258,6 +296,7 @@ export default function MentorPage() {
             Sample data — connect Firebase to see live learners
           </p>
         )}
+        </>)}
       </main>
       <TabBar />
     </div>
