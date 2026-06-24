@@ -121,5 +121,13 @@ service cloud.firestore {
       allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isStaff());
       allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
     }
+
+    match /shared_sites/{code} {
+      allow read: if true;
+      allow create: if request.resource.data.code is string
+        && request.resource.data.code.size() == 6
+        && request.resource.data.geojson is map;
+      allow update, delete: if false;
+    }
   }
 }

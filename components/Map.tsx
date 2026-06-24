@@ -13,7 +13,8 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2 } from 'lucide-react';
+import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -177,6 +178,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [wpName, setWpName] = useState('');
   const [wpCategory, setWpCategory] = useState('');
   const [droppingWaterPoint, setDroppingWaterPoint] = useState(false);
+  const [shareState, setShareState] = useState<'idle'|'saving'|'copied'|'error'>('idle');
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
   const [showLabels, setShowLabels] = useState(true);  // show place names on the map (toggle in Places)
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
@@ -979,6 +981,30 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     );
   }, [onLocationSelect]);
 
+  const handleShare = async () => {
+    const draw = drawRef.current
+    const mapInst = mapRef.current
+    if (!draw || !mapInst) return
+    setShareState('saving')
+    try {
+      const center = mapInst.getCenter()
+      const code = await saveSharedSite({
+        geojson: draw.getAll() as GeoJSON.FeatureCollection,
+        places: loadPlaces(),
+        waterPoints: loadWaterPoints(),
+        mapCenter: [center.lng, center.lat],
+        mapZoom: mapInst.getZoom(),
+      })
+      const url = `${window.location.origin}/farmer?share=${code}`
+      await navigator.clipboard.writeText(url)
+      setShareState('copied')
+      setTimeout(() => setShareState('idle'), 3000)
+    } catch {
+      setShareState('error')
+      setTimeout(() => setShareState('idle'), 2500)
+    }
+  }
+
   // Fly to saved place
   useEffect(() => {
     if (!jumpTo) return;
@@ -1031,6 +1057,38 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }
     return () => { if (hintFadeTimer.current) clearTimeout(hintFadeTimer.current); };
   }, [pinDraw]);
+
+  // Restore a shared site from the ?share=<code> URL param once the map is ready.
+  // Uses the same polling approach as restoreShapes — mapRef is safe to read inside effects.
+  const shareRestored = useRef(false);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('share');
+    if (!code) return;
+    let tries = 0;
+    const iv = setInterval(() => {
+      tries += 1;
+      const mapInst = mapRef.current?.getMap();
+      if (mapInst && (mapInst.isStyleLoaded() || tries >= 5)) {
+        clearInterval(iv);
+        if (shareRestored.current) return;
+        shareRestored.current = true;
+        loadSharedSite(code).then((data) => {
+          if (!data) return;
+          const draw = drawRef.current;
+          if (draw) draw.set(data.geojson);
+          localStorage.setItem('imbewu_places', JSON.stringify(data.places));
+          window.dispatchEvent(new CustomEvent('imbewu-places-changed'));
+          localStorage.setItem('imbewu_water_points', JSON.stringify(data.waterPoints));
+          window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
+          setSavedPins(loadPlaces());
+          mapInst.flyTo({ center: data.mapCenter as [number, number], zoom: data.mapZoom });
+          history.replaceState(null, '', window.location.pathname);
+        }).catch(() => {/* silent on share-load fail */});
+      } else if (tries > 50) clearInterval(iv);
+    }, 200);
+    return () => clearInterval(iv);
+  }, []);
 
   const handleMouseMove = useCallback((e: MapMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -1650,6 +1708,45 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>Find your land</span>
           </div>
           <div className="flex items-center gap-1.5">
+            {/* Share this site — saves draw + places + water, copies URL */}
+            <button
+              onClick={handleShare}
+              disabled={shareState === 'saving'}
+              title="Share this site"
+              className="flex items-center justify-center flex-shrink-0 relative transition-all active:scale-90"
+              style={{
+                width: 38, height: 38, borderRadius: 11,
+                background: 'rgba(247,242,233,0.08)',
+                border: '1px solid rgba(234,243,226,0.16)',
+                cursor: shareState === 'saving' ? 'default' : 'pointer',
+              }}
+            >
+              {shareState === 'saving'
+                ? <Loader2 size={15} className="animate-spin" style={{ color: 'rgba(234,243,226,0.55)' }} />
+                : <Share2 size={15} style={{ color: shareState === 'copied' ? '#9BE66B' : 'rgba(234,243,226,0.55)' }} />}
+              {shareState === 'copied' && (
+                <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
+                  style={{
+                    top: 44, right: 0,
+                    background: '#F7F2E9', color: '#20190F',
+                    fontSize: 12, borderRadius: 8, padding: '5px 10px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
+                  }}>
+                  Link copied!
+                </span>
+              )}
+              {shareState === 'error' && (
+                <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
+                  style={{
+                    top: 44, right: 0,
+                    background: '#F7F2E9', color: '#C0492A',
+                    fontSize: 12, borderRadius: 8, padding: '5px 10px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
+                  }}>
+                  Share failed
+                </span>
+              )}
+            </button>
             {/* Lima quick-guide — reopen the coach-marks any time */}
             <button
               onClick={() => setGuideOpen(true)}
