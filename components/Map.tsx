@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -1086,7 +1086,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1096,35 +1096,51 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         f.properties?.featureType !== 'water' &&
         f.id != null
       )
-      .map((f: GeoJSON.Feature) => ({
-        id: String(f.id),
-        areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
-        name: f.properties?.name as string | undefined,
-        category: f.properties?.category as string | undefined,
-      }));
+      .map((f: GeoJSON.Feature) => {
+        const ring = (f.geometry as GeoJSON.Polygon).coordinates?.[0] ?? [];
+        const n = ring.length;
+        const centroid: [number, number] | null = n > 0
+          ? [ring.reduce((s, c) => s + c[0], 0) / n, ring.reduce((s, c) => s + c[1], 0) / n]
+          : null;
+        return {
+          id: String(f.id),
+          areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          centroid,
+        };
+      });
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
       .filter((f: GeoJSON.Feature) =>
         (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon') &&
         f.properties?.featureType === 'water' && f.id != null)
-      .map((f: GeoJSON.Feature) => ({
-        id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
-        name: f.properties?.name as string | undefined,
-        category: f.properties?.category as string | undefined,
-      }));
+      .map((f: GeoJSON.Feature) => {
+        const ring = (f.geometry as GeoJSON.Polygon).coordinates?.[0] ?? [];
+        const n = ring.length;
+        const centroid: [number, number] | null = n > 0
+          ? [ring.reduce((s, c) => s + c[0], 0) / n, ring.reduce((s, c) => s + c[1], 0) / n]
+          : null;
+        return {
+          id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          centroid,
+        };
+      });
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
@@ -2226,6 +2242,73 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             Tap your area or search a town
           </span>
         </div>
+      )}
+
+      {/* ── Labels toggle pill — top-right of map canvas ── */}
+      {(siteFeatures.length > 0 || waterFeatures.length > 0) && !pinDraw && !editPin && (
+        <button onClick={() => setShowLabels((v) => !v)}
+          className="absolute flex items-center gap-2 font-sans transition-all active:scale-95"
+          style={{
+            top: 14, right: 14, zIndex: 10,
+            background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
+            border: `1px solid ${showLabels ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
+            borderRadius: 999, padding: '7px 10px 7px 13px',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+          }}>
+          <span style={{ fontSize: 13.5, fontWeight: 700, color: showLabels ? '#EAF3E2' : 'rgba(234,243,226,0.45)' }}>Labels</span>
+          <span className="flex items-center rounded-full flex-shrink-0"
+            style={{ width: 32, height: 18, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.14)', justifyContent: showLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+            <span style={{ width: 14, height: 14, borderRadius: '50%', background: showLabels ? '#9BE66B' : 'rgba(234,243,226,0.7)', display: 'block', transition: 'all 0.2s' }} />
+          </span>
+        </button>
+      )}
+
+      {/* ── Floating shape chips — centred on each polygon, hidden when Labels off ── */}
+      {showLabels && !pinDraw && !editPin && map && (
+        <>
+          {siteFeatures.map((sf) => {
+            if (!sf.centroid) return null;
+            const px = map.project(sf.centroid as [number, number]);
+            return (
+              <div key={sf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                style={{
+                  left: px.x, top: px.y, transform: 'translate(-50%,-50%)',
+                  background: '#1F4D2B', border: '1.5px solid #9BE66B',
+                  borderRadius: 999, padding: '5px 12px 5px 5px',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                  zIndex: 6, whiteSpace: 'nowrap',
+                }}>
+                <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                  style={{ width: 24, height: 24, background: 'rgba(46,107,58,0.9)' }}>
+                  <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{sf.name || 'Parcel'}</span>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{sf.areaHa} ha</span>
+              </div>
+            );
+          })}
+          {waterFeatures.map((wf) => {
+            if (!wf.centroid) return null;
+            const px = map.project(wf.centroid as [number, number]);
+            return (
+              <div key={wf.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                style={{
+                  left: px.x, top: px.y, transform: 'translate(-50%,-50%)',
+                  background: '#235E86', border: '1.5px solid #7CC6F2',
+                  borderRadius: 999, padding: '5px 12px 5px 5px',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                  zIndex: 6, whiteSpace: 'nowrap',
+                }}>
+                <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                  style={{ width: 24, height: 24, background: 'rgba(27,74,120,0.9)' }}>
+                  <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{wf.name || 'Water'}</span>
+                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{wf.estVolumeKL.toLocaleString()} kL</span>
+              </div>
+            );
+          })}
+        </>
       )}
 
       {/* ── Save-place naming sheet — name it + pick a label (sets the pin colour) ── */}
