@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -579,22 +580,18 @@ function SharedDesignsList({ items }: { items: Design[] }) {
               Shared {fmtDate(design.created_at)}
             </p>
           </div>
-          {/* Placeholder open affordance — tab wiring happens in DataPanel */}
-          <button
-            type="button"
-            disabled
+          <Link
+            href="/farmer?panel=Design"
             className="text-xs font-display px-2.5 py-1 rounded-lg flex-shrink-0 flex items-center gap-1"
             style={{
               background: 'rgba(47,111,158,0.08)',
               border: '1px solid rgba(47,111,158,0.2)',
               color: '#2F6F9E',
-              opacity: 0.7,
-              cursor: 'default',
+              textDecoration: 'none',
             }}
-            title="Open in Design tab (coming soon)"
           >
             Open <ArrowRight size={14} />
-          </button>
+          </Link>
         </div>
       ))}
     </div>
@@ -704,6 +701,44 @@ export default function MyRecords() {
       {/* ── Log production ──────────────────────────── */}
       <LogProductionForm onSaved={loadData} />
 
+      {/* ── Harvest summary ─────────────────────────── */}
+      {production.length > 0 && (() => {
+        const totalKg = production.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const byCrop: Record<string, number> = {};
+        production.forEach((p) => { byCrop[p.crop] = (byCrop[p.crop] ?? 0) + (p.kg ?? 0); });
+        const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
+        const recent = production.slice(0, 12);
+        const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);
+        const W = 180; const H = 36; const pts = recent.map((p, i) => {
+          const x = (i / Math.max(recent.length - 1, 1)) * W;
+          const y = H - ((p.kg ?? 0) / maxKg) * H;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+        return (
+          <Card>
+            <div className="flex items-center justify-between gap-4 mb-3">
+              <div>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: '#1F4D2B', lineHeight: 1 }}>
+                  {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
+                </div>
+                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                  total harvested{topCrop ? ` · ${topCrop[0]} tops` : ''}
+                </div>
+              </div>
+              <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
+                <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="#1F4D2B" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                {recent.map((p, i) => {
+                  const x = (i / Math.max(recent.length - 1, 1)) * W;
+                  const y = H - ((p.kg ?? 0) / maxKg) * H;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F4D2B" />;
+                })}
+              </svg>
+            </div>
+          </Card>
+        );
+      })()}
+
       {/* ── Recent harvests ─────────────────────────── */}
       <Card>
         <SectionLabel>Recent harvests</SectionLabel>
@@ -721,6 +756,43 @@ export default function MyRecords() {
           void loadData();
         }}
       />
+
+      {/* ── Sales summary ────────────────────────────── */}
+      {sales.length > 0 && (() => {
+        const totalRev = sales.reduce((s, p) => s + (p.amount ?? 0), 0);
+        const totalKgSold = sales.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const recent = sales.slice(0, 12);
+        const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
+        const W = 180; const H = 36;
+        const pts = recent.map((p, i) => {
+          const x = (i / Math.max(recent.length - 1, 1)) * W;
+          const y = H - ((p.amount ?? 0) / maxAmt) * H;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+        return (
+          <Card>
+            <div className="flex items-center justify-between gap-4 mb-3">
+              <div>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: '#C07A1E', lineHeight: 1 }}>
+                  R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
+                </div>
+                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                  total revenue · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} kg sold
+                </div>
+              </div>
+              <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
+                <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="#C07A1E" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                {recent.map((p, i) => {
+                  const x = (i / Math.max(recent.length - 1, 1)) * W;
+                  const y = H - ((p.amount ?? 0) / maxAmt) * H;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#C07A1E" />;
+                })}
+              </svg>
+            </div>
+          </Card>
+        );
+      })()}
 
       {/* ── Recent sales ────────────────────────────── */}
       <Card>

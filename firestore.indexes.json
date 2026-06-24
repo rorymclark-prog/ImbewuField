@@ -88,6 +88,22 @@
         { "fieldPath": "survey_id", "order": "ASCENDING" },
         { "fieldPath": "created_at", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "contact_messages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "recipient", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "contact_replies",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "for_uid", "order": "ASCENDING" },
+        { "fieldPath": "replied_at", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": [
