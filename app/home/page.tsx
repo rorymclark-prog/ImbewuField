@@ -16,11 +16,16 @@ import {
   LayoutGrid,
   ClipboardList,
   Camera,
+  Menu,
+  DollarSign,
+  MessageCircle,
+  Wheat,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
+import NavDrawer from '@/components/NavDrawer';
 import Onboarding from '@/components/Onboarding';
 import PopiaConsent from '@/components/PopiaConsent';
 import { LanguageProvider } from '@/lib/i18n';
@@ -88,6 +93,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
 
 function HomeLandingInner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
   const { user } = useAuth();
@@ -102,21 +108,35 @@ function HomeLandingInner() {
     >
       {/* ── Header ── */}
       <header
-        className="flex-shrink-0 flex items-center justify-between px-5"
+        className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}
       >
-        <div className="flex flex-col justify-center">
-          {/* Overline: day + date */}
+        {/* Hamburger */}
+        <button
+          onClick={() => setNavOpen(true)}
+          aria-label="Open navigation"
+          className="flex items-center justify-center rounded-xl flex-shrink-0"
+          style={{
+            width: 36, height: 36,
+            background: 'rgba(32,25,15,0.06)',
+            border: '1px solid #E2D8C4',
+            color: '#5C5040', cursor: 'pointer',
+          }}
+        >
+          <Menu size={18} strokeWidth={1.7} />
+        </button>
+
+        {/* Title — personalized if signed in */}
+        <div className="flex flex-col justify-center flex-1">
           <span
             className="uppercase tracking-widest font-sans"
-            style={{ fontSize: 10, color: '#C07A1E', letterSpacing: '0.12em', lineHeight: 1 }}
+            style={{ fontSize: 9.5, color: '#C07A1E', letterSpacing: '0.12em', lineHeight: 1 }}
           >
             {getDayDate()}
           </span>
-          {/* Title — personalized if signed in */}
           <span
             className="font-display font-bold"
-            style={{ fontSize: 22, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}
+            style={{ fontSize: 20, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}
           >
             {firstName ? `Sawubona, ${firstName}` : 'ImbewuField'}
           </span>
@@ -126,14 +146,12 @@ function HomeLandingInner() {
         <button
           onClick={() => setSettingsOpen(true)}
           aria-label="Settings"
-          className="flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
+          className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{
-            width: 36,
-            height: 36,
+            width: 36, height: 36,
             background: 'rgba(32,25,15,0.06)',
             border: '1px solid #E2D8C4',
-            color: '#5C5040',
-            cursor: 'pointer',
+            color: '#5C5040', cursor: 'pointer',
           }}
         >
           <Settings size={16} strokeWidth={1.6} />
@@ -219,9 +237,12 @@ function HomeLandingInner() {
         {/* ── Quick actions ── */}
         <div className="grid grid-cols-3 gap-3">
           {[
-            { href: '/journal', Icon: Leaf,         label: 'Field Journal', desc: 'Log harvests' },
-            { href: '/plan',    Icon: CalendarDays,  label: 'Crop Planner', desc: 'Plan the season' },
-            { href: '/survey',  Icon: LayoutGrid,    label: 'Garden Survey', desc: 'Size your beds' },
+            { href: '/finances', Icon: DollarSign,  label: 'Finance',       desc: 'Income & costs',  color: '#C07A1E', bg: 'rgba(192,122,30,0.10)' },
+            { href: '/student',  Icon: GraduationCap, label: 'Study',       desc: 'Permaculture course', color: '#235E86', bg: 'rgba(35,94,134,0.10)' },
+            { href: '/contact',  Icon: MessageCircle, label: 'Contact',     desc: 'Mentor · NGO',    color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
+            { href: '/journal',  Icon: Leaf,          label: 'Journal',     desc: 'Log harvests',    color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
+            { href: '/plan',     Icon: CalendarDays,  label: 'Crop Planner', desc: 'Plan the season', color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
+            { href: '/farmer?panel=Farm', Icon: Wheat, label: 'My Records', desc: 'Crops & sales',  color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
           ].map((q) => (
             <Link
               key={q.href}
@@ -231,13 +252,13 @@ function HomeLandingInner() {
             >
               <div
                 className="flex items-center justify-center rounded-xl"
-                style={{ width: 44, height: 44, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B' }}
+                style={{ width: 44, height: 44, background: q.bg, color: q.color }}
               >
                 <q.Icon size={20} strokeWidth={1.6} />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', marginTop: 1 }}>{q.desc}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', marginTop: 1 }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -364,6 +385,9 @@ function HomeLandingInner() {
 
       {/* Settings panel */}
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+
+      {/* Navigation drawer */}
+      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
 }

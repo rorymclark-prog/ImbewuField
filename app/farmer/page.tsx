@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Settings, AlertTriangle, PenLine, ChevronUp } from 'lucide-react';
+import { Settings, AlertTriangle, PenLine, ChevronUp, Menu } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
@@ -14,6 +14,7 @@ import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
+import NavDrawer from '@/components/NavDrawer';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { loadPlaces } from '@/lib/saved-places';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -44,10 +45,13 @@ function HomeInner() {
   const [siteData, setSiteData] = useState<SiteData | null>(null);
   const [waterData, setWaterData] = useState<WaterData | null>(null);
   // Allow deep-link into a specific tab via ?panel=<tabname>
+  const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm'];
   const [forcedTab, setForcedTab] = useState<string | null>(() => {
     const panel = searchParams.get('panel');
-    if (panel === 'saved') return 'Saved';
-    if (panel === 'chat' || searchParams.get('chat') === '1') return 'Chat';
+    if (!panel) return searchParams.get('chat') === '1' ? 'Ask' : null;
+    if (VALID_PANELS.includes(panel)) return panel;
+    if (panel === 'saved') return 'Places';
+    if (panel === 'chat') return 'Ask';
     return null;
   });
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
@@ -68,6 +72,7 @@ function HomeInner() {
     return !!(panel || chat);
   });
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [drawing, setDrawing] = useState(false); // boundary/water draw active → hide the Results FAB
 
   const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
@@ -117,6 +122,7 @@ function HomeInner() {
   return (
     <>
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
 
       {showReport && (data || savedReportView) && (
         <ReportView
@@ -146,6 +152,21 @@ function HomeInner() {
             WebkitOverflowScrolling: 'touch',
           }}
         >
+          {/* Hamburger — visible on all screens */}
+          <button
+            onClick={() => setNavOpen(true)}
+            aria-label="Open navigation"
+            className="flex items-center justify-center rounded-xl flex-shrink-0"
+            style={{
+              width: 38, height: 38,
+              background: 'rgba(32,25,15,0.06)',
+              border: '1px solid #E2D8C4',
+              color: '#5C5040', cursor: 'pointer',
+            }}
+          >
+            <Menu size={18} strokeWidth={1.7} />
+          </button>
+
           <BrandLogo />
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />

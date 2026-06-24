@@ -323,15 +323,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           <div className="min-w-0">
             {placeName ? (
               <>
-                <div className="font-display font-semibold leading-tight" style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.01em' }}>
+                <div className="font-display font-semibold leading-tight" style={{ fontSize: 16, color: '#20190F', letterSpacing: '-0.01em' }}>
                   {placeName}
                 </div>
-                <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#5C5040' }}>
+                <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: '#5C5040' }}>
                   {data.biome.name}
                 </div>
               </>
             ) : (
-              <div className="font-display font-semibold leading-tight" style={{ fontSize: 18, color: '#20190F', letterSpacing: '-0.01em' }}>
+              <div className="font-display font-semibold leading-tight" style={{ fontSize: 15, color: '#20190F', letterSpacing: '-0.01em' }}>
                 {data.biome.name}
               </div>
             )}
@@ -471,30 +471,30 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Annual rainfall</span>
-                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
-                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11.5, color: '#94876F' }}> mm</span>
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Annual rainfall</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
+                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> mm</span>
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-                <Layers size={18} style={{ color: '#C07A1E', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Soil texture</span>
-                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                <Layers size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Soil texture</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                   {data.soil.textureClass}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-                <Snowflake size={18} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Frost risk</span>
-                <span className="font-display font-semibold" style={{ fontSize: 16, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
+                <Snowflake size={16} style={{ color: '#235E86', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Frost risk</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
                   {frostLabel}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
-                <Mountain size={18} style={{ color: '#5C5040', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 13, color: '#5C5040' }}>Elevation</span>
-                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
-                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11.5, color: '#94876F' }}> m</span>
+                <Mountain size={16} style={{ color: '#5C5040', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Elevation</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
+                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> m</span>
                 </span>
               </div>
             </div>

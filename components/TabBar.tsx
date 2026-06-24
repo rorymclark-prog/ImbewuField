@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, BookOpen, User } from 'lucide-react';
+import { Home, Map, DollarSign, User } from 'lucide-react';
 
 const TABS = [
-  { href: '/home',   label: 'Home',    Icon: Home },
-  { href: '/farmer', label: 'Map',     Icon: Map },
-  { href: '/journal', label: 'Journal', Icon: BookOpen },
-  { href: '/account', label: 'Account', Icon: User },
+  { href: '/home',     label: 'Home',    Icon: Home },
+  { href: '/farmer',   label: 'Map',     Icon: Map },
+  { href: '/finances', label: 'Finance', Icon: DollarSign },
+  { href: '/account',  label: 'Account', Icon: User },
 ];
 
 export default function TabBar() {
