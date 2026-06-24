@@ -81,7 +81,7 @@ function TraineeCard({ trainee, doneIds, isLive }: {
 
       {open && (
         <div className="px-4 pb-4" style={{ borderTop: '1px solid #E2D8C4' }}>
-          <div className="text-xs font-mono uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>Module sign-off</div>
+          <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>Module sign-off</div>
           {COURSE_MODULES.map((mod) => {
             const done = doneIds.has(mod.id);
             return (

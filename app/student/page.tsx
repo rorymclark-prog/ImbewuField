@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { myCourseProgress, setCourseProgress } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -25,6 +25,124 @@ function formatDuration(mins: number) {
   return `${Math.floor(mins / 60)}h ${mins % 60 > 0 ? `${mins % 60}m` : ''}`.trim();
 }
 
+// ── Quiz question ────────────────────────────────────────────────────────────
+
+function QuizQuestion({ q, options, correct }: { q: string; options: string[]; correct: number }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const revealed = selected !== null;
+
+  return (
+    <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
+      <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
+      <div className="space-y-2">
+        {options.map((opt, i) => {
+          const isSelected = selected === i;
+          const isCorrect = i === correct;
+
+          let bg = 'rgba(32,25,15,0.04)';
+          let border = '1px solid rgba(32,25,15,0.10)';
+          let textColor = '#5C5040';
+
+          if (revealed) {
+            if (isCorrect) {
+              bg = 'rgba(31,77,43,0.10)';
+              border = '1px solid rgba(31,77,43,0.35)';
+              textColor = '#1F4D2B';
+            } else if (isSelected) {
+              bg = 'rgba(180,30,30,0.08)';
+              border = '1px solid rgba(180,30,30,0.30)';
+              textColor = '#8B2020';
+            }
+          }
+
+          return (
+            <button
+              key={i}
+              onClick={() => { if (!revealed) setSelected(i); }}
+              disabled={revealed}
+              className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-sans leading-snug transition-all"
+              style={{ background: bg, border, color: textColor, cursor: revealed ? 'default' : 'pointer' }}
+            >
+              <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
+              {opt}
+              {revealed && isCorrect && (
+                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>Correct</span>
+              )}
+              {revealed && isSelected && !isCorrect && (
+                <span className="ml-2 text-xs font-semibold" style={{ color: '#8B2020' }}>
+                  Incorrect — see {String.fromCharCode(65 + correct)}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── Lesson accordion panel ───────────────────────────────────────────────────
+
+function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22` }}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+        style={{ background: open ? `${color}0F` : 'transparent' }}
+      >
+        <BookOpen size={14} style={{ color, flexShrink: 0 }} />
+        <span className="flex-1 font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>
+          {lesson.title}
+        </span>
+        {open
+          ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+          : <ChevronDown size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+      </button>
+
+      {open && (
+        <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
+          {/* Body */}
+          <div className="space-y-3 pt-4">
+            {lesson.body.split('\n\n').map((para, i) => (
+              <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                {para}
+              </p>
+            ))}
+          </div>
+
+          {/* Key points */}
+          <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>Key Points</p>
+            <ul className="space-y-1.5">
+              {lesson.keyPoints.map((kp, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Quiz */}
+          <div className="space-y-3">
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+              Check your understanding
+            </p>
+            {lesson.quiz.map((q, i) => (
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main page ────────────────────────────────────────────────────────────────
+
 export default function StudentPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -33,6 +151,7 @@ export default function StudentPage() {
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [fetching, setFetching] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
+  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user && isLive) router.replace('/login');
@@ -62,6 +181,10 @@ export default function StudentPage() {
       await setCourseProgress(moduleId, willBeDone);
       setToggling(null);
     }
+  }
+
+  function toggleExpand(moduleId: string) {
+    setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
   }
 
   const doneCount = doneIds.size;
@@ -117,7 +240,7 @@ export default function StudentPage() {
             <div className="font-display font-semibold text-base leading-tight" style={{ color: '#20190F' }}>
               {pct === 100 ? 'Course complete!' : doneCount === 0 ? 'Ready to start' : 'Keep going'}
             </div>
-            <div className="font-sans text-sm mt-1" style={{ color: '#5C5040' }}>
+            <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
               {doneCount} of {TOTAL_MODULES} modules complete
             </div>
             {pct < 100 && totalMins > 0 && (
@@ -145,10 +268,13 @@ export default function StudentPage() {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
             const color = CATEGORY_COLORS[mod.category];
+            const isExpanded = expandedModuleId === mod.id;
 
             return (
               <div key={mod.id} className="rounded-2xl overflow-hidden"
                 style={{ background: '#FBF6EC', border: `1px solid ${done ? '#1F4D2B30' : '#E2D8C4'}` }}>
+
+                {/* Module header row */}
                 <div className="flex items-start gap-3 px-4 py-3.5">
                   {/* Number / check */}
                   <div className="flex-shrink-0 flex items-center justify-center rounded-full mt-0.5"
@@ -163,8 +289,12 @@ export default function StudentPage() {
                       : <span className="font-mono text-xs font-bold" style={{ color: '#8C7A62' }}>{idx + 1}</span>}
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
+                  {/* Content — tap to expand lessons */}
+                  <button
+                    className="flex-1 min-w-0 text-left"
+                    onClick={() => toggleExpand(mod.id)}
+                    aria-expanded={isExpanded}
+                  >
                     <div className="flex items-start gap-2 flex-wrap">
                       <span className="font-display font-semibold text-sm leading-tight"
                         style={{ color: done ? '#5C5040' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
@@ -178,13 +308,25 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {mod.description}
                     </p>
-                    <div className="flex items-center gap-1.5 mt-2">
-                      <Clock size={11} style={{ color: '#8C7A62' }} />
-                      <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
+                    <div className="flex items-center gap-3 mt-2">
+                      <div className="flex items-center gap-1.5">
+                        <Clock size={11} style={{ color: '#8C7A62' }} />
+                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
+                      </div>
+                      {mod.lessons && mod.lessons.length > 0 && (
+                        <div className="flex items-center gap-1">
+                          <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                            {mod.lessons.length} {mod.lessons.length === 1 ? 'lesson' : 'lessons'}
+                          </span>
+                          {isExpanded
+                            ? <ChevronUp size={11} style={{ color: '#8C7A62' }} />
+                            : <ChevronDown size={11} style={{ color: '#8C7A62' }} />}
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  </button>
 
-                  {/* Toggle */}
+                  {/* Mark done toggle */}
                   <button
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
@@ -205,6 +347,18 @@ export default function StudentPage() {
                         : <><Circle size={12} />Mark done</>}
                   </button>
                 </div>
+
+                {/* Lessons panel */}
+                {isExpanded && mod.lessons && mod.lessons.length > 0 && (
+                  <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid #E2D8C4' }}>
+                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
+                      Lessons
+                    </p>
+                    {mod.lessons.map((lesson) => (
+                      <LessonPanel key={lesson.id} lesson={lesson} color={color} />
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}

@@ -153,7 +153,7 @@ function renderReport(text: string) {
               {rows.map((row, ri) => (
                 <tr key={ri} style={{ borderBottom: '1px solid #E2D8C4', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="py-2 px-3 leading-relaxed" style={{ color: '#20190F' }}>
+                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: '#20190F' }}>
                       {cell.trim().replace(/\*\*/g, '')}
                     </td>
                   ))}

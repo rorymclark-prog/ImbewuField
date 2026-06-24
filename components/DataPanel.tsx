@@ -131,7 +131,7 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
+    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: '#5C5040' }}>
       {children}
     </div>
   );
@@ -204,7 +204,7 @@ function EmptyState() {
 
         {/* Pulse click hint */}
         <div
-          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-10"
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-xs mb-10"
           style={{
             background: 'rgba(31,77,43,0.2)',
             border: '1px solid rgba(31,77,43,0.2)',
@@ -616,7 +616,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   { name: 'Clay', pct: data.soil.clay, color: '#2D6B3C' },
                 ].map(({ name, pct, color }) => (
                   <div key={name}>
-                    <div className="flex justify-between text-xs font-mono mb-1" style={{ color: '#5C5040' }}>
+                    <div className="flex justify-between text-xs font-sans mb-1" style={{ color: '#5C5040' }}>
                       <span>{name}</span>
                       <span style={{ color }}>{pct}%</span>
                     </div>
@@ -679,7 +679,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <p className="text-xs font-display" style={{ color: '#5C5040' }}>
                 Wet: {data.rainfall.wetSeason} &nbsp;·&nbsp; Dry: {data.rainfall.drySeason}
               </p>
-              <p className="text-xs font-mono mt-2" style={{ color: '#5C5040' }}>
+              <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
                 → Earthworks before first rains: {data.biome.rainfallPattern === 'winter' ? 'Apr–May' : 'Aug–Sep'}
               </p>
             </Card>

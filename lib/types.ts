@@ -20,6 +20,8 @@ export interface MonthlyRainfall {
   pattern: 'winter' | 'summer' | 'year-round';
   wetSeason: string;
   drySeason: string;
+  /** Which data source was used for rainfall figures: 'nasa-power' or 'open-meteo' */
+  rainfallSource?: string;
 }
 
 export interface ClimateData {

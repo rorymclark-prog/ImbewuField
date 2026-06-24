@@ -77,7 +77,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
               <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{s.value}</div>
-              <div className="font-mono text-xs mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{s.label}</div>
+              <div className="font-mono mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{s.label}</div>
             </div>
           ))}
         </div>

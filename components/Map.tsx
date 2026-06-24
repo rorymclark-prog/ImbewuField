@@ -1827,7 +1827,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {/* Drawing in progress */}
           {activeDraw && (
             <>
-              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-mono"
+              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-sans"
                 style={activeDraw === 'water'
                   ? { background: 'rgba(91,158,212,0.18)', border: '1px solid rgba(91,158,212,0.55)', color: '#235E86', minHeight: 32 }
                   : { background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.55)', color: '#2D6B3C', minHeight: 32 }}>
@@ -1835,7 +1835,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {activeDraw === 'water' ? 'Water' : 'Boundary'} · click points · dbl-click to finish · Esc to cancel
               </div>
               <button onClick={cancelDraw}
-                className="px-2 py-1 rounded-lg text-xs font-mono transition-all"
+                className="px-2 py-1 rounded-lg text-xs font-display transition-all"
                 style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
                 <X size={13} className="inline mr-1" />Cancel
               </button>
@@ -1845,7 +1845,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           {/* Vertex editing */}
           {editingFeatureId && !activeDraw && (
             <>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-display"
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-sans"
                 style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)', minHeight: 32, fontSize: 11 }}>
                 Drag dots to reshape · mid-dot adds a corner
               </div>
