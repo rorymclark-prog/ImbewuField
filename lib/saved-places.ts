@@ -53,6 +53,13 @@ export function deletePlace(id: string): SavedPlace[] {
   return updated;
 }
 
+export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
+  const updated = loadPlaces().map(p => p.id === id ? { ...p, lat, lon } : p);
+  localStorage.setItem(KEY, JSON.stringify(updated));
+  notify();
+  return updated;
+}
+
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }

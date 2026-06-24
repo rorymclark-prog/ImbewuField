@@ -11,9 +11,9 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2 } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -173,6 +173,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
+  const [activePin, setActivePin] = useState<string | null>(null);
   const [waterPoints, setWaterPoints] = useState<WaterPoint[]>([]);
   const [waterPointNaming, setWaterPointNaming] = useState<WaterPoint | null>(null);
   const [wpName, setWpName] = useState('');
@@ -1103,6 +1104,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   const handleClick = useCallback((e: MapMouseEvent) => {
+    setActivePin(null);
     if (pinDraw) {
       // Touch: only the ＋ button adds a corner — a map "click" also fires at the end of
       // a pan gesture, so click-to-add would scatter stray corners while panning.
@@ -1360,24 +1362,80 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Saved-place pins — click to fly in */}
         {!activeDraw && savedPins.map((p) => (
-          <Marker key={p.id} longitude={p.lon} latitude={p.lat} anchor="bottom">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 16, duration: 1400 });
-                onLocationSelect(p.lat, p.lon);
-                onPlaceSelect?.(p.name);
-              }}
-              title={p.name}
-              className="flex flex-col items-center group"
-              style={{ cursor: 'pointer', transform: 'translateY(2px)' }}
-            >
-              <span className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showLabels ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+          <Marker
+            key={p.id} longitude={p.lon} latitude={p.lat} anchor="bottom"
+            draggable
+            onDragStart={() => setActivePin(null)}
+            onDragEnd={(e) => {
+              updatePlacePosition(p.id, e.lngLat.lat, e.lngLat.lng);
+              setSavedPins(loadPlaces());
+            }}
+          >
+            <div className="flex flex-col items-center group" style={{ position: 'relative', transform: 'translateY(2px)' }}>
+              {/* Tap action popup */}
+              {activePin === p.id && (
+                <div className="absolute flex items-center font-sans"
+                  style={{
+                    bottom: 'calc(100% + 10px)',
+                    left: '50%', transform: 'translateX(-50%)',
+                    background: '#F7F2E9',
+                    border: '1px solid rgba(32,25,15,0.1)',
+                    borderRadius: 14,
+                    boxShadow: '0 6px 24px rgba(0,0,0,0.28)',
+                    zIndex: 30, whiteSpace: 'nowrap', overflow: 'hidden',
+                  }}>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.(p.name); setActivePin(null); }}
+                    className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
+                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
+                    <LocateFixed size={14} style={{ color: '#1F4D2B' }} />
+                    Go to
+                  </button>
+                  <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                  <button
+                    onClick={(e) => { e.stopPropagation(); startEditPlace(p); setActivePin(null); }}
+                    className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
+                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
+                    <PenLine size={14} style={{ color: '#1F4D2B' }} />
+                    Edit
+                  </button>
+                  <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                  <button
+                    onClick={(e) => { e.stopPropagation(); deletePlace(p.id); setSavedPins(loadPlaces()); setActivePin(null); }}
+                    className="flex items-center gap-1.5 active:bg-red-50 transition-colors"
+                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#C0492A', fontSize: 13, fontWeight: 600 }}>
+                    <Trash2 size={14} />
+                    Delete
+                  </button>
+                </div>
+              )}
+              {/* Drag hint shown when active */}
+              {activePin === p.id && (
+                <div className="flex items-center gap-1 font-sans mb-1"
+                  style={{ fontSize: 10, color: 'rgba(255,255,255,0.55)', background: 'rgba(0,0,0,0.45)', borderRadius: 6, padding: '2px 6px', pointerEvents: 'none' }}>
+                  <Move size={9} />
+                  drag to move
+                </div>
+              )}
+              {/* Name label */}
+              <span className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showLabels || activePin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${placeColor(p.label)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                 {p.name}
               </span>
-              <MapPin size={22} style={{ color: placeColor(p.label), fill: placeColor(p.label), filter: 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))' }} />
-            </button>
+              {/* Pin icon — tap to toggle action menu */}
+              <button
+                onClick={(e) => { e.stopPropagation(); setActivePin(prev => prev === p.id ? null : p.id); }}
+                style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex' }}>
+                <MapPin size={activePin === p.id ? 26 : 22}
+                  style={{
+                    color: placeColor(p.label), fill: placeColor(p.label),
+                    filter: activePin === p.id
+                      ? `drop-shadow(0 0 6px ${placeColor(p.label)}99) drop-shadow(0 1px 2px rgba(32,25,15,0.4))`
+                      : 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))',
+                    transition: 'all 0.15s',
+                  }} />
+              </button>
+            </div>
           </Marker>
         ))}
 
