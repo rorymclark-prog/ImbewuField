@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
-  Source, Layer, Marker, ScaleControl,
+  Source, Layer, Marker, Popup, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
 } from 'react-map-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -11,7 +11,7 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
@@ -174,6 +174,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
   const [activePin, setActivePin] = useState<string | null>(null);
+  const [movingPin, setMovingPin] = useState<string | null>(null);
+  const [customPlaceColor, setCustomPlaceColor] = useState('');
   const [waterPoints, setWaterPoints] = useState<WaterPoint[]>([]);
   const [waterPointNaming, setWaterPointNaming] = useState<WaterPoint | null>(null);
   const [wpName, setWpName] = useState('');
@@ -181,7 +183,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [droppingWaterPoint, setDroppingWaterPoint] = useState(false);
   const [shareState, setShareState] = useState<'idle'|'saving'|'copied'|'error'>('idle');
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
-  const [showLabels, setShowLabels] = useState(true);  // show place names on the map (toggle in Places)
+  const [showShapeLabels, setShowShapeLabels] = useState(true);
+  const [showPlaceLabels, setShowPlaceLabels] = useState(true);
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
@@ -231,6 +234,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setNamingPlace({ lat: p.lat, lon: p.lon });
     setPlaceName(p.name);
     setPlaceLabel(p.label ?? 'field');
+    setCustomPlaceColor(p.color ?? '');
   }, []);
 
   const confirmSavePlace = useCallback(() => {
@@ -245,13 +249,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       rainfall: existing?.rainfall ?? locationData?.rainfall?.annual ?? 0,
       elevation: existing?.elevation ?? locationData?.elevation?.elevation ?? 0,
       label: placeLabel,
+      color: customPlaceColor || undefined,
       savedAt: existing?.savedAt ?? new Date().toISOString(),
     });
     setSavedPins(loadPlaces());
     setEditingPlaceId(null);
     setNamingPlace(null);
     if (!existingId) { setPlaceSaved(true); setTimeout(() => setPlaceSaved(false), 2500); }
-  }, [namingPlace, placeName, placeLabel, locationData, editingPlaceId, savedPins]);
+  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins]);
 
   // Lima coach-marks — a quick guide that auto-shows the first time the tools
   // panel is opened, and reopens any time via the "?" in the panel header.
@@ -1360,77 +1365,50 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Marker>
         ))}
 
+        {/* ── "Move pin" drag bar — shown when movingPin is active ── */}
+        {movingPin && (() => {
+          const p = savedPins.find(pin => pin.id === movingPin);
+          if (!p) return null;
+          return (
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 font-sans z-[25]"
+              style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', background: 'rgba(16,22,14,0.9)', backdropFilter: 'blur(14px)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 14px' }}>
+              <Move size={16} style={{ color: 'rgba(234,243,226,0.55)', flexShrink: 0 }} />
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#EAF3E2' }}>Drag <span style={{ color: resolveColor(p) }}>{p.name}</span> to new spot</span>
+              <button onClick={() => setMovingPin(null)}
+                className="flex items-center justify-center active:scale-90 transition-all"
+                style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.18)', cursor: 'pointer' }}>
+                <Check size={14} style={{ color: '#9BE66B' }} />
+              </button>
+            </div>
+          );
+        })()}
+
         {/* Saved-place pins — click to fly in */}
         {!activeDraw && savedPins.map((p) => (
           <Marker
             key={p.id} longitude={p.lon} latitude={p.lat} anchor="bottom"
-            draggable
-            onDragStart={() => setActivePin(null)}
+            draggable={movingPin === p.id}
             onDragEnd={(e) => {
               updatePlacePosition(p.id, e.lngLat.lat, e.lngLat.lng);
               setSavedPins(loadPlaces());
+              setMovingPin(null);
             }}
           >
-            <div className="flex flex-col items-center group" style={{ position: 'relative', transform: 'translateY(2px)' }}>
-              {/* Tap action popup */}
-              {activePin === p.id && (
-                <div className="absolute flex items-center font-sans"
-                  style={{
-                    bottom: 'calc(100% + 10px)',
-                    left: '50%', transform: 'translateX(-50%)',
-                    background: '#F7F2E9',
-                    border: '1px solid rgba(32,25,15,0.1)',
-                    borderRadius: 14,
-                    boxShadow: '0 6px 24px rgba(0,0,0,0.28)',
-                    zIndex: 30, whiteSpace: 'nowrap', overflow: 'hidden',
-                  }}>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.(p.name); setActivePin(null); }}
-                    className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
-                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
-                    <LocateFixed size={14} style={{ color: '#1F4D2B' }} />
-                    Go to
-                  </button>
-                  <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
-                  <button
-                    onClick={(e) => { e.stopPropagation(); startEditPlace(p); setActivePin(null); }}
-                    className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
-                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
-                    <PenLine size={14} style={{ color: '#1F4D2B' }} />
-                    Edit
-                  </button>
-                  <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
-                  <button
-                    onClick={(e) => { e.stopPropagation(); deletePlace(p.id); setSavedPins(loadPlaces()); setActivePin(null); }}
-                    className="flex items-center gap-1.5 active:bg-red-50 transition-colors"
-                    style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#C0492A', fontSize: 13, fontWeight: 600 }}>
-                    <Trash2 size={14} />
-                    Delete
-                  </button>
-                </div>
-              )}
-              {/* Drag hint shown when active */}
-              {activePin === p.id && (
-                <div className="flex items-center gap-1 font-sans mb-1"
-                  style={{ fontSize: 10, color: 'rgba(255,255,255,0.55)', background: 'rgba(0,0,0,0.45)', borderRadius: 6, padding: '2px 6px', pointerEvents: 'none' }}>
-                  <Move size={9} />
-                  drag to move
-                </div>
-              )}
-              {/* Name label */}
-              <span className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showLabels || activePin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${placeColor(p.label)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+            <div className="flex flex-col items-center group" style={{ transform: 'translateY(2px)' }}>
+              <span className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showPlaceLabels || activePin === p.id || movingPin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${resolveColor(p)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                 {p.name}
               </span>
-              {/* Pin icon — tap to toggle action menu */}
               <button
-                onClick={(e) => { e.stopPropagation(); setActivePin(prev => prev === p.id ? null : p.id); }}
+                onClick={(e) => { e.stopPropagation(); if (movingPin) return; setActivePin(prev => prev === p.id ? null : p.id); }}
                 style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex' }}>
                 <MapPin size={activePin === p.id ? 26 : 22}
                   style={{
-                    color: placeColor(p.label), fill: placeColor(p.label),
+                    color: resolveColor(p), fill: resolveColor(p),
                     filter: activePin === p.id
-                      ? `drop-shadow(0 0 6px ${placeColor(p.label)}99) drop-shadow(0 1px 2px rgba(32,25,15,0.4))`
+                      ? `drop-shadow(0 0 6px ${resolveColor(p)}99) drop-shadow(0 1px 2px rgba(32,25,15,0.4))`
+                      : movingPin === p.id
+                      ? 'drop-shadow(0 0 8px rgba(255,255,255,0.5)) drop-shadow(0 1px 2px rgba(32,25,15,0.4))'
                       : 'drop-shadow(0 1px 2px rgba(32,25,15,0.4))',
                     transition: 'all 0.15s',
                   }} />
@@ -1438,6 +1416,51 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </div>
           </Marker>
         ))}
+
+        {/* ── Tap-action Popup for active place pin ── */}
+        {activePin && !movingPin && (() => {
+          const p = savedPins.find(pin => pin.id === activePin);
+          if (!p) return null;
+          return (
+            <Popup
+              longitude={p.lon} latitude={p.lat}
+              anchor="bottom" offset={50}
+              closeButton={false} closeOnClick={false}
+              onClose={() => setActivePin(null)}
+              style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}
+            >
+              <div className="flex items-center font-sans" style={{ background: '#F7F2E9', border: '1px solid rgba(32,25,15,0.1)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 6px 24px rgba(0,0,0,0.25)', whiteSpace: 'nowrap' }}>
+                <button
+                  onClick={() => { mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.(p.name); setActivePin(null); }}
+                  className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
+                  style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
+                  <LocateFixed size={14} style={{ color: '#1F4D2B' }} />Go to
+                </button>
+                <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                <button
+                  onClick={() => { startEditPlace(p); setActivePin(null); }}
+                  className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
+                  style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
+                  <PenLine size={14} style={{ color: '#1F4D2B' }} />Edit
+                </button>
+                <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                <button
+                  onClick={() => { setMovingPin(p.id); setActivePin(null); }}
+                  className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
+                  style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
+                  <Move size={14} style={{ color: '#1F4D2B' }} />Move
+                </button>
+                <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                <button
+                  onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); setActivePin(null); }}
+                  className="flex items-center gap-1.5 active:bg-red-50 transition-colors"
+                  style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#C0492A', fontSize: 13, fontWeight: 600 }}>
+                  <Trash2 size={14} />Delete
+                </button>
+              </div>
+            </Popup>
+          );
+        })()}
 
         {selectedLocation && !activeDraw && (
           <Marker longitude={selectedLocation.lon} latitude={selectedLocation.lat} anchor="bottom">
@@ -2047,13 +2070,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
               ) : (
                 <>
-                  {/* Show labels on the map — toggle */}
-                  <button onClick={() => setShowLabels((v) => !v)}
+                  {/* Show pin names on the map */}
+                  <button onClick={() => setShowPlaceLabels((v) => !v)}
                     className="flex items-center gap-2 px-3 rounded-lg font-sans transition-all"
                     style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: 'var(--text-secondary)', minHeight: 38, fontSize: 13 }}>
-                    <span className="flex-1 text-left">Show names on map</span>
+                    <span className="flex-1 text-left">Show pin names on map</span>
                     <span className="flex items-center rounded-full transition-all flex-shrink-0"
-                      style={{ width: 38, height: 22, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.16)', justifyContent: showLabels ? 'flex-end' : 'flex-start' }}>
+                      style={{ width: 38, height: 22, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.16)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start' }}>
                       <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff', display: 'block' }} />
                     </span>
                   </button>
@@ -2407,27 +2430,43 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </div>
       )}
 
-      {/* ── Labels toggle pill — top-right of map canvas ── */}
-      {(siteFeatures.length > 0 || waterFeatures.length > 0) && !pinDraw && !editPin && (
-        <button onClick={() => setShowLabels((v) => !v)}
-          className="absolute flex items-center gap-2 font-sans transition-all active:scale-95"
-          style={{
-            top: 14, right: 14, zIndex: 10,
-            background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
-            border: `1px solid ${showLabels ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
-            borderRadius: 999, padding: '7px 10px 7px 13px',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-          }}>
-          <span style={{ fontSize: 13.5, fontWeight: 700, color: showLabels ? '#EAF3E2' : 'rgba(234,243,226,0.45)' }}>Labels</span>
-          <span className="flex items-center rounded-full flex-shrink-0"
-            style={{ width: 32, height: 18, padding: 2, background: showLabels ? '#1F4D2B' : 'rgba(234,243,226,0.14)', justifyContent: showLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-            <span style={{ width: 14, height: 14, borderRadius: '50%', background: showLabels ? '#9BE66B' : 'rgba(234,243,226,0.7)', display: 'block', transition: 'all 0.2s' }} />
-          </span>
-        </button>
+      {/* ── Labels toggles — Plots and Pins, top-right below panel header ── */}
+      {!pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && (
+        <div className="absolute flex items-center gap-1 font-sans transition-all"
+          style={{ top: 58, right: 14, zIndex: 9, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
+          <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>Labels</span>
+          {(siteFeatures.length > 0 || waterFeatures.length > 0) && (
+            <button onClick={() => setShowShapeLabels((v) => !v)}
+              className="flex items-center gap-1 active:scale-95 transition-all"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+              <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Plots</span>
+              <span className="flex items-center rounded-full flex-shrink-0"
+                style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+              </span>
+            </button>
+          )}
+          {savedPins.length > 0 && (
+            <>
+              {(siteFeatures.length > 0 || waterFeatures.length > 0) && <div style={{ width: 1, height: 18, background: 'rgba(234,243,226,0.1)' }} />}
+              <button onClick={() => setShowPlaceLabels((v) => !v)}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+                <MapPin size={11} style={{ color: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: showPlaceLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Pins</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            </>
+          )}
+        </div>
       )}
 
       {/* ── Floating shape chips — smart placement: outside small shapes, inside large ── */}
-      {showLabels && !pinDraw && !editPin && map && (() => {
+      {showShapeLabels && !pinDraw && !editPin && map && (() => {
         const CHIP_W = 160, CHIP_H = 34, PAD = 10;
         const INSIDE_PX2 = 22000; // screen px² threshold for inside placement
         const container = map.getContainer();
@@ -2555,7 +2594,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
             <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
-                <MapPin size={16} style={{ color: placeColor(placeLabel) }} />
+                <MapPin size={16} style={{ color: resolveColor({ label: placeLabel, color: customPlaceColor || undefined }) }} />
                 <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{editingPlaceId ? 'Edit place' : 'Save this place'}</span>
               </div>
               <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
@@ -2563,17 +2602,33 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>Label</div>
-              <div className="grid grid-cols-4 gap-2 mb-4">
+              <div className="grid grid-cols-4 gap-2 mb-3">
                 {PLACE_LABELS.map((l) => {
-                  const on = placeLabel === l.v;
+                  const on = placeLabel === l.v && !customPlaceColor;
                   return (
-                    <button key={l.v} onClick={() => setPlaceLabel(l.v)}
+                    <button key={l.v} onClick={() => { setPlaceLabel(l.v); setCustomPlaceColor(''); }}
                       className="flex flex-col items-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold transition-all"
                       style={{ fontSize: 12, background: on ? l.color : 'rgba(226,216,196,0.4)', color: on ? '#fff' : '#5C5040', border: `1px solid ${on ? l.color : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <MapPin size={16} style={{ color: on ? '#fff' : l.color }} />{l.name}
                     </button>
                   );
                 })}
+              </div>
+              {/* Custom pin colour */}
+              <div className="flex items-center gap-2 mb-4">
+                <span style={{ fontSize: 12, color: '#8C7A62', fontWeight: 600 }}>Custom colour</span>
+                <label className="flex items-center gap-2 flex-1 rounded-xl cursor-pointer transition-all"
+                  style={{ padding: '6px 10px', background: customPlaceColor ? `${customPlaceColor}22` : 'rgba(226,216,196,0.3)', border: `1.5px solid ${customPlaceColor || '#E2D8C4'}` }}>
+                  <input type="color" value={customPlaceColor || placeColor(placeLabel)} onChange={(e) => setCustomPlaceColor(e.target.value)}
+                    className="w-6 h-6 rounded cursor-pointer" style={{ border: 'none', background: 'transparent', padding: 0 }} />
+                  <span style={{ fontSize: 12, fontWeight: 600, color: customPlaceColor ? '#20190F' : '#8C7A62' }}>
+                    {customPlaceColor ? customPlaceColor.toUpperCase() : 'Pick a colour'}
+                  </span>
+                  {customPlaceColor && (
+                    <button onClick={(e) => { e.preventDefault(); setCustomPlaceColor(''); }}
+                      style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62', fontSize: 18, lineHeight: 1 }}>×</button>
+                  )}
+                </label>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => setNamingPlace(null)}
