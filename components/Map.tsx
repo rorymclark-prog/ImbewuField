@@ -108,7 +108,7 @@ interface Props {
   onJumpComplete?: () => void;
   onDrawingChange?: (active: boolean) => void;
   locationData?: LocationData | null;
-  onPlaceSelect?: (name: string | null) => void;
+  onPlaceSelect?: (info: { name: string; id: string } | null) => void;
 }
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect }: Props) {
@@ -1469,7 +1469,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             >
               <div className="flex items-center font-sans" style={{ background: '#F7F2E9', border: '1px solid rgba(32,25,15,0.1)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 6px 24px rgba(0,0,0,0.25)', whiteSpace: 'nowrap' }}>
                 <button
-                  onClick={() => { mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.(p.name); setActivePin(null); }}
+                  onClick={() => { mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.({ name: p.name, id: p.id }); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
                   <LocateFixed size={14} style={{ color: '#1F4D2B' }} />Go to
@@ -2144,7 +2144,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         onClick={() => {
                           mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
                           onLocationSelect(p.lat, p.lon);
-                          onPlaceSelect?.(p.name);
+                          onPlaceSelect?.({ name: p.name, id: p.id });
                           setPlacesOpen(false);
                         }}
                         className="flex-1 min-w-0 text-left transition-all"

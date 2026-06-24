@@ -20,8 +20,12 @@ export interface SavedPlace {
   elevation: number;
   savedAt: string; // ISO date
   label?: PlaceLabel;
+  color?: string;  // custom hex — overrides label colour when set
   notes?: string;
 }
+
+export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string =>
+  p.color ?? placeColor(p.label);
 
 const KEY = 'permamap_saved_places';
 

@@ -3,6 +3,8 @@ import Anthropic from '@anthropic-ai/sdk';
 
 export const maxDuration = 300;
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import type { SiteSurvey } from '@/lib/site-survey';
+import { surveyToPrompt } from '@/lib/site-survey';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -45,11 +47,12 @@ const LANGUAGES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
-  const { locationData, photoAnalysis, siteData, waterData, sections, language, bilingual, tone, length }: {
+  const { locationData, photoAnalysis, siteData, waterData, surveyData, sections, language, bilingual, tone, length }: {
     locationData: LocationData;
     photoAnalysis?: string;
     siteData?: SiteData;
     waterData?: WaterData;
+    surveyData?: SiteSurvey;
     sections: string[];
     language?: string;
     bilingual?: boolean;
@@ -139,6 +142,7 @@ ${waterData.count} water storage feature(s) drawn — total surface area ${water
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
 Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
+${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
 ---
 
 ${withTitle ? `Begin with this title line exactly:\n# Permaculture Site Report\nthen a one-line subheading naming the biome and region, then the sections below.\n\n` : `Do NOT write any document title, introduction or preamble. Output ONLY the section(s) requested below, starting directly with the first "## " heading.\n\n`}Generate ONLY the sections listed here, in this order: ${sections.join(', ')}

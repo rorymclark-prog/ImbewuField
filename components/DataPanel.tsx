@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { loadSurvey } from '@/lib/site-survey';
+import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { savePlace, generateId } from '@/lib/saved-places';
@@ -29,6 +31,7 @@ interface Props {
   onViewReport?: (r: SavedReport) => void;
   appLang?: string;
   placeName?: string | null;
+  activePlaceId?: string;
 }
 
 const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
@@ -247,7 +250,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId }: Props) {
   const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
   useEffect(() => {
     const refresh = () => setSavedReports(loadReports());
@@ -256,6 +259,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return () => window.removeEventListener('imbewu-reports-changed', refresh);
   }, []);
   const [tab, setTab] = useState<Tab>('Overview');
+  const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
+  const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
   const [placeSaved, setPlaceSaved] = useState(false);
   useEffect(() => { setPlaceSaved(false); }, [coords]);
@@ -533,7 +538,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             {/* Primary CTA */}
             <button
-              onClick={() => onOpenReport(photoAnalysis)}
+              onClick={() => {
+                if (activePlaceId && !loadSurvey(activePlaceId)) {
+                  setSurveyPromptOpen(true);
+                } else {
+                  onOpenReport(photoAnalysis);
+                }
+              }}
               className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
               style={{ height: 46, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
             >
@@ -769,6 +780,48 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* FARM — the farmer's own production & sales records */}
         {tab === 'Farm' && <MyRecords />}
       </div>
+
+      {/* ── Pre-report survey prompt ── */}
+      {surveyPromptOpen && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: '#F7F2E9', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
+            <div className="flex items-start gap-3 mb-4">
+              <div style={{ width: 44, height: 44, borderRadius: 13, background: '#1F4D2B', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
+                </svg>
+              </div>
+              <div>
+                <div className="font-display font-semibold" style={{ fontSize: 17, color: '#20190F' }}>Want a sharper report?</div>
+                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
+                  The site questionnaire takes 2 minutes and gives Lima things the map can&apos;t: how many people work here, irrigation, goals, and challenges. The report becomes far more specific.
+                </div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <button onClick={() => { setSurveyPromptOpen(false); setSurveySheetOpen(true); }}
+                className="w-full flex items-center justify-center gap-2 font-sans font-bold"
+                style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: 'pointer' }}>
+                Fill in the questionnaire (2 min)
+              </button>
+              <button onClick={() => { setSurveyPromptOpen(false); onOpenReport(photoAnalysis); }}
+                className="w-full flex items-center justify-center font-sans font-semibold"
+                style={{ height: 40, borderRadius: 13, background: 'transparent', color: '#8C7A62', border: 'none', fontSize: 13, cursor: 'pointer' }}>
+                Skip for now, generate anyway
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Site survey sheet ── */}
+      {surveySheetOpen && activePlaceId && (
+        <SiteSurveySheet
+          placeId={activePlaceId}
+          onSaved={() => { setSurveySheetOpen(false); onOpenReport(photoAnalysis); }}
+          onClose={() => setSurveySheetOpen(false)}
+        />
+      )}
     </div>
   );
 }

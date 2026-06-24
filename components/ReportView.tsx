@@ -6,6 +6,7 @@ import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
+import { loadSurvey } from '@/lib/site-survey';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -84,6 +85,7 @@ interface Props {
   appLang?: string;
   onClose: () => void;
   savedReport?: SavedReport;   // when opening a previously-saved report
+  activePlaceId?: string;
 }
 
 function renderReport(text: string) {
@@ -209,7 +211,7 @@ function renderReport(text: string) {
   return elements;
 }
 
-export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport }: Props) {
+export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport, activePlaceId }: Props) {
   // When viewing a saved report, its snapshot overrides the live props so charts/header match.
   const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
   const d = activeSaved?.location ?? locationData;
@@ -282,6 +284,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           photoAnalysis: photoAnalysis || undefined,
           siteData: siteData || undefined,
           waterData: waterData || undefined,
+          surveyData: activePlaceId ? loadSurvey(activePlaceId) ?? undefined : undefined,
           sections: Array.from(selected),
           language,
           bilingual,
@@ -382,6 +385,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             }}
           >
             <Share2 size={12} />{copied ? 'Copied!' : 'Share'}
+          </button>
+        )}
+
+        {generated && (
+          <button onClick={generate}
+            disabled={loading}
+            className="flex items-center gap-1.5 font-sans font-semibold transition-all"
+            style={{ padding: '0 14px', height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', fontSize: 13, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.5 : 1 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+            </svg>
+            Regenerate
           </button>
         )}
 

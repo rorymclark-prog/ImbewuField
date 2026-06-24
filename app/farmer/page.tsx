@@ -57,6 +57,12 @@ function HomeInner() {
   });
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
   const [activePlaceName, setActivePlaceName] = useState<string | null>(null);
+  const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+
+  const handlePlaceSelect = useCallback((info: { name: string; id: string } | null) => {
+    setActivePlaceName(info?.name ?? null);
+    setActivePlaceId(info?.id ?? null);
+  }, []);
   const [showReport, setShowReport] = useState(false);
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
   const [savedReportView, setSavedReportView] = useState<SavedReport | null>(null);
@@ -134,6 +140,7 @@ function HomeInner() {
           savedPlaces={loadPlaces()}
           mapCapture={mapCapture}
           appLang={lang}
+          activePlaceId={activePlaceId ?? undefined}
           savedReport={savedReportView ?? undefined}
           onClose={() => { setShowReport(false); setSavedReportView(null); }}
         />
@@ -233,7 +240,7 @@ function HomeInner() {
               onJumpComplete={() => setJumpTo(null)}
               onDrawingChange={setDrawing}
               locationData={data}
-              onPlaceSelect={setActivePlaceName}
+              onPlaceSelect={handlePlaceSelect}
             />
           </div>
 
@@ -255,6 +262,7 @@ function HomeInner() {
               onViewReport={handleViewReport}
               onJumpTo={handleJumpTo}
               appLang={lang}
+              activePlaceId={activePlaceId ?? undefined}
               placeName={activePlaceName}
             />
           </div>
@@ -341,6 +349,7 @@ function HomeInner() {
                 onViewReport={handleViewReport}
                 onJumpTo={handleJumpTo}
                 appLang={lang}
+                activePlaceId={activePlaceId ?? undefined}
                 placeName={activePlaceName}
               />
             </div>
