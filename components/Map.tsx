@@ -12,7 +12,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, generateId, PLACE_LABELS, placeColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle, Undo2 } from 'lucide-react';
+import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette } from 'lucide-react';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -171,6 +172,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [hillshade, setHillshade] = useState(false);
   const [hoverElevation, setHoverElevation] = useState<number | null>(null);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
+  const [waterPoints, setWaterPoints] = useState<WaterPoint[]>([]);
+  const [waterPointNaming, setWaterPointNaming] = useState<WaterPoint | null>(null);
+  const [wpName, setWpName] = useState('');
+  const [wpCategory, setWpCategory] = useState('');
+  const [droppingWaterPoint, setDroppingWaterPoint] = useState(false);
   const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
   const [showLabels, setShowLabels] = useState(true);  // show place names on the map (toggle in Places)
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
@@ -190,6 +196,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     refresh();
     window.addEventListener('permamap-places-changed', refresh);
     return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
+
+  // Water infrastructure points: load + keep in sync
+  useEffect(() => {
+    const refresh = () => setWaterPoints(loadWaterPoints());
+    refresh();
+    window.addEventListener('imbewu-water-points-changed', refresh);
+    return () => window.removeEventListener('imbewu-water-points-changed', refresh);
   }, []);
 
   // Save the currently selected point as a place (right from the map tools).
@@ -1117,7 +1131,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // time via the row's name). Stored on the feature so it persists + shows in lists. ──
   const SHAPE_CATEGORIES: Record<'site' | 'water', string[]> = {
     site: ['Home plot', 'Field', 'Orchard', 'Grazing', 'Other'],
-    water: ['Dam', 'Tank', 'Reservoir', 'Borehole', 'Other'],
+    water: ['Roof', 'Swale', 'Contour bank', 'Road run-off', 'Earthwork', 'Other'],
   };
   const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
   const [shapeName, setShapeName] = useState('');
@@ -1241,6 +1255,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Source>
         )}
 
+        {/* Water infrastructure point markers */}
+        {!activeDraw && waterPoints.map((wp) => (
+          <Marker key={wp.id} longitude={wp.lon} latitude={wp.lat} anchor="center">
+            <button
+              onClick={(e) => { e.stopPropagation(); setWaterPointNaming(wp); setWpName(wp.name); setWpCategory(wp.category); }}
+              title={wp.name || wp.category || 'Water point'}
+              className="flex flex-col items-center group"
+              style={{ cursor: 'pointer' }}
+            >
+              <span className="opacity-0 group-hover:opacity-100 px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5"
+                style={{ background: 'rgba(6,16,10,0.9)', border: '1px solid rgba(91,158,212,0.5)', color: '#8FC7E8', transition: 'opacity 0.15s' }}>
+                {wp.name || wp.category || 'Water point'}
+              </span>
+              <div className="flex items-center justify-center rounded-full"
+                style={{ width: 20, height: 20, background: categoryColor(wp.category), border: '2px solid rgba(255,255,255,0.8)', boxShadow: '0 1px 4px rgba(6,16,10,0.5)' }}>
+                <Droplets size={10} style={{ color: '#fff' }} />
+              </div>
+            </button>
+          </Marker>
+        ))}
+
         {/* Saved-place pins — click to fly in */}
         {!activeDraw && savedPins.map((p) => (
           <Marker key={p.id} longitude={p.lon} latitude={p.lat} anchor="bottom">
@@ -1355,7 +1390,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               opacity: hintFaded ? 0 : 1, transition: 'opacity 1s' }}>
             <span className="font-display" style={{ fontSize: 12, color: draftStroke }}>
               {draftPoints.length === 0
-                ? `Mark each corner of your ${pinDraw === 'water' ? 'water store' : 'land'} — tap the map, or centre the crosshair and tap Add corner`
+                ? `Mark each corner of your ${pinDraw === 'water' ? 'harvesting area' : 'land'} — tap the map, or centre the crosshair and tap Add corner`
                 : draftPoints.length < 3
                 ? `${draftPoints.length} corner${draftPoints.length > 1 ? 's' : ''} marked — add ${3 - draftPoints.length} more, then tap Finish`
                 : `${draftPoints.length} corners marked — tap Finish to close the shape`}
@@ -1423,6 +1458,63 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : '#F7F2E9' }}>
               <Check size={17} />
               <span style={{ fontSize: 12, marginTop: 3 }}>Finish</span>
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* ── Water point drop mode: crosshair + Place here ── */}
+      {droppingWaterPoint && (
+        <>
+          {/* Top hint */}
+          <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
+            style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+              background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(35,94,134,0.5)', backdropFilter: 'blur(8px)' }}>
+            <span className="font-display" style={{ fontSize: 12, color: '#8FC7E8' }}>
+              Pan to the location, then tap Place here
+            </span>
+          </div>
+          {/* Blue crosshair */}
+          <div className="absolute left-1/2 top-1/2 pointer-events-none"
+            style={{ transform: 'translate(-50%, -50%)', zIndex: 8 }}>
+            <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+              <circle cx="27" cy="27" r="20" stroke="#5B9ED4" strokeWidth="2" opacity="0.5" />
+              <circle cx="27" cy="27" r="3.5" fill="#5B9ED4" stroke="#fff" strokeWidth="1.5" />
+              <line x1="27" y1="2" x2="27" y2="14" stroke="#5B9ED4" strokeWidth="2" />
+              <line x1="27" y1="40" x2="27" y2="52" stroke="#5B9ED4" strokeWidth="2" />
+              <line x1="2" y1="27" x2="14" y2="27" stroke="#5B9ED4" strokeWidth="2" />
+              <line x1="40" y1="27" x2="52" y2="27" stroke="#5B9ED4" strokeWidth="2" />
+            </svg>
+          </div>
+          {/* Action bar */}
+          <div className="absolute left-0 right-0 flex gap-2 px-3"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', zIndex: 30 }}>
+            <button onClick={() => setDroppingWaterPoint(false)}
+              className="flex items-center justify-center gap-1.5 font-sans font-semibold"
+              style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.18)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
+              <X size={15} />Cancel
+            </button>
+            <button onClick={() => {
+              const map = mapRef.current?.getMap();
+              if (!map) return;
+              const center = map.getCenter();
+              const newPoint: WaterPoint = {
+                id: generateWaterPointId(),
+                name: '',
+                category: '',
+                lat: center.lat,
+                lon: center.lng,
+                createdAt: new Date().toISOString(),
+              };
+              saveWaterPoint(newPoint);
+              setDroppingWaterPoint(false);
+              setWaterPointNaming(newPoint);
+              setWpName('');
+              setWpCategory('');
+            }}
+              className="flex-1 flex items-center justify-center gap-2 font-sans font-bold"
+              style={{ height: 48, borderRadius: 13, background: '#235E86', border: 'none', color: '#fff', fontSize: 15, cursor: 'pointer' }}>
+              <MapPin size={17} />Place here
             </button>
           </div>
         </>
@@ -1942,22 +2034,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </>
           )}
 
-          {/* ── Water storage section ── */}
-          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (waterStats ? (
+          {/* ── Water harvesting + infrastructure section ── */}
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && (waterStats ? (
             <div className="w-full flex flex-col gap-1.5">
               <div className="flex items-center justify-between" style={{ paddingLeft: 2 }}>
                 <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                  Water storage · {waterStats.count} store{waterStats.count !== 1 ? 's' : ''}
+                  Harvesting areas · {waterStats.count}
                 </span>
-                <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL total</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL collected</span>
               </div>
-              {/* Per-store rows */}
+              {/* Per-area rows */}
               {waterFeatures.map((wf, idx) => (
                 <div key={wf.id} className="flex items-center gap-2 px-3 py-2 rounded-xl font-sans"
                   style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
                   <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" title="Tap to rename / categorise" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                     <div className="flex items-center gap-1.5" style={{ fontSize: 14, fontWeight: 600, color: '#EAF3E2' }}>
-                      <span className="truncate">{wf.name || `Store ${idx + 1}`}</span>
+                      <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
                       <PenLine size={11} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                     </div>
                     <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)' }}>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</div>
@@ -1974,19 +2066,61 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     title="Delete store">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={14} />}</button>
                 </div>
               ))}
-              {/* + Add another water store — solid blue, explicit */}
-              <button onClick={() => startPinDraw('water')}
-                className="w-full flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
-                style={{ fontSize: 14, height: 44, borderRadius: 12, background: '#235E86', border: 'none', color: '#fff', cursor: 'pointer' }}>
-                <Plus size={15} />Add another water store
-              </button>
+              {/* Water infrastructure points list */}
+              {waterPoints.length > 0 && (
+                <div className="mt-0.5">
+                  <div className="font-sans mb-1" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>Infrastructure</div>
+                  {waterPoints.map((wp) => (
+                    <div key={wp.id} className="flex items-center gap-2 px-3 py-1.5 rounded-xl font-sans mb-1"
+                      style={{ background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.14)' }}>
+                      <span style={{ fontSize: 14, lineHeight: 1, color: categoryColor(wp.category) }}>●</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="truncate" style={{ fontSize: 13.5, fontWeight: 600, color: '#EAF3E2' }}>{wp.name || wp.category || 'Water point'}</div>
+                        {wp.category && wp.name && <div style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.5)' }}>{wp.category}</div>}
+                      </div>
+                      <button onClick={() => { deleteWaterPoint(wp.id); setWaterPoints(loadWaterPoints()); }}
+                        className="flex items-center justify-center rounded-lg flex-shrink-0"
+                        style={{ width: 28, height: 28, background: 'rgba(192,73,42,0.14)', border: '1px solid rgba(192,73,42,0.4)', color: '#D4926A', cursor: 'pointer' }}>
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="flex gap-2 mt-0.5">
+                <button onClick={() => startPinDraw('water')}
+                  className="flex-1 flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                  style={{ fontSize: 13, height: 40, borderRadius: 12, background: 'rgba(35,94,134,0.25)', border: '1px solid rgba(35,94,134,0.5)', color: '#8FC7E8', cursor: 'pointer' }}>
+                  <Plus size={14} />Harvesting area
+                </button>
+                <button onClick={() => setDroppingWaterPoint(true)}
+                  className="flex-1 flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                  style={{ fontSize: 13, height: 40, borderRadius: 12, background: 'rgba(92,80,64,0.25)', border: '1px solid rgba(92,80,64,0.4)', color: '#B8A898', cursor: 'pointer' }}>
+                  <Pipette size={14} />Water point
+                </button>
+              </div>
             </div>
           ) : (
-            <button onClick={() => startPinDraw('water')}
-              className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
-              style={{ height: 52, borderRadius: 14, border: 'none', background: '#235E86', color: '#fff', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(35,94,134,0.6)', cursor: 'pointer' }}>
-              <Droplets size={19} strokeWidth={2} />Draw water storage
-            </button>
+            <div className="flex flex-col gap-2">
+              <button onClick={() => startPinDraw('water')}
+                className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
+                style={{ height: 52, borderRadius: 14, border: 'none', background: '#235E86', color: '#fff', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(35,94,134,0.6)', cursor: 'pointer' }}>
+                <Droplets size={19} strokeWidth={2} />Draw harvesting area
+              </button>
+              {waterPoints.length > 0 ? (
+                <button onClick={() => setDroppingWaterPoint(true)}
+                  className="w-full flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                  style={{ fontSize: 14, height: 44, borderRadius: 12, background: 'rgba(92,80,64,0.25)', border: '1.5px dashed rgba(92,80,64,0.5)', color: '#B8A898', cursor: 'pointer' }}>
+                  <Pipette size={15} />Add water point
+                </button>
+              ) : (
+                <button onClick={() => setDroppingWaterPoint(true)}
+                  className="w-full flex items-center justify-center gap-2 font-sans font-semibold active:scale-95"
+                  style={{ fontSize: 14, height: 44, borderRadius: 12, background: 'transparent', border: '1.5px dashed rgba(92,80,64,0.45)', color: '#B8A898', cursor: 'pointer' }}>
+                  <Pipette size={15} />Add water point (dam, borehole…)
+                </button>
+              )}
+            </div>
           ))}
 
           {/* Capture */}
@@ -2144,11 +2278,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   ? <Droplets size={16} style={{ color: '#235E86' }} />
                   : <PenTool size={16} style={{ color: '#1F4D2B' }} />}
                 <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
-                  Name your {shapeNaming.type === 'water' ? 'water store' : 'land'}
+                  Name your {shapeNaming.type === 'water' ? 'harvesting area' : 'land'}
                 </span>
               </div>
               <input value={shapeName} onChange={(e) => setShapeName(e.target.value)} autoFocus
-                placeholder={shapeNaming.type === 'water' ? 'e.g. Main dam' : 'e.g. Home plot'}
+                placeholder={shapeNaming.type === 'water' ? 'e.g. Main roof, North swale' : 'e.g. Home plot'}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>What is it?</div>
@@ -2173,6 +2307,65 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <button onClick={confirmShapeNaming}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
                   <Check size={15} />Save name
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Water infrastructure point naming sheet ── */}
+      {waterPointNaming && (
+        <>
+          <div className="fixed inset-0 z-[70]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
+            onClick={() => setWaterPointNaming(null)} aria-hidden="true" />
+          <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Pipette size={16} style={{ color: '#235E86' }} />
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  Name your water point
+                </span>
+              </div>
+              <input value={wpName} onChange={(e) => setWpName(e.target.value)} autoFocus
+                placeholder="e.g. Main borehole, North dam"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>What type?</div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {WATER_POINT_CATEGORIES.map((c) => {
+                  const on = wpCategory === c.v;
+                  return (
+                    <button key={c.v} onClick={() => setWpCategory(on ? '' : c.v)}
+                      className="px-3 py-2 rounded-xl font-sans font-semibold transition-all"
+                      style={{ fontSize: 13, background: on ? c.color : 'rgba(226,216,196,0.4)', color: on ? '#fff' : '#5C5040', border: `1px solid ${on ? c.color : '#E2D8C4'}`, cursor: 'pointer' }}>
+                      {c.v}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => {
+                  deleteWaterPoint(waterPointNaming.id);
+                  setWaterPoints(loadWaterPoints());
+                  setWaterPointNaming(null);
+                }}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
+                  Delete
+                </button>
+                <button onClick={() => setWaterPointNaming(null)}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  Skip
+                </button>
+                <button onClick={() => {
+                  const updated: WaterPoint = { ...waterPointNaming, name: wpName.trim(), category: wpCategory as WaterPoint['category'] };
+                  saveWaterPoint(updated);
+                  setWaterPoints(loadWaterPoints());
+                  setWaterPointNaming(null);
+                }}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#235E86', border: 'none', color: '#fff', cursor: 'pointer' }}>
+                  <Check size={15} />Save
                 </button>
               </div>
             </div>
@@ -2207,7 +2400,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {([
                   [Search, 'Find your land', 'Search a town, or tap the map — I read its climate, soil and water.'],
                   [PenTool, 'Draw land boundary', 'Mark each corner of your plot, or tap GPS to walk it. I measure the area.'],
-                  [Droplets, 'Draw water storage', 'Outline your dam or tank so I can work out your rainwater.'],
+                  [Droplets, 'Draw harvesting area', 'Outline your roof, swale or earthwork — I calculate how much rain it collects.'],
+                  [Pipette, 'Add water point', 'Drop a pin on a borehole, spring, dam or tank — marks infrastructure on the map.'],
                   [MapPin, 'Save place', 'Drop a coloured pin and name it — Home, Field or Water.'],
                   [Layers, 'Map layers', 'Switch satellite / topo and toggle contours & relief.'],
                 ] as const).map(([Icon, title, desc], i) => (

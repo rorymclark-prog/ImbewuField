@@ -443,10 +443,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
-                          Water storage{waterData.count > 1 ? ` · ${waterData.count} stores` : ''}
+                          Harvesting areas{waterData.count > 1 ? ` · ${waterData.count}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {waterData.areaM2.toLocaleString()} m² surface · ~{waterData.avgDepthM} m deep
+                          {waterData.areaM2.toLocaleString()} m² catchment · ~{waterData.avgDepthM} m storage depth
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
