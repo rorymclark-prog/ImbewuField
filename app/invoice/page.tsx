@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, Printer, FileText } from 'lucide-react';
+import { Plus, Trash2, Printer, FileText, MessageCircle, FilePlus2, Clock, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import {
+  loadCustomers, addCustomer, loadProducts, addProduct,
+  loadInvoices, saveInvoice, deleteInvoice, invoiceId, type SavedInvoice,
+} from '@/lib/invoices';
 
 interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
 
@@ -20,28 +24,49 @@ function todayLong() {
 export default function InvoicePage() {
   const { user, profile } = useAuth();
 
-  const [seq, setSeq] = useState(44);
+  const [seq, setSeq] = useState(44);          // next NEW invoice number
+  const [currentNo, setCurrentNo] = useState(44); // number shown on the current doc
+  const [currentId, setCurrentId] = useState<string | null>(null); // set when reprinting a saved one
   const [billTo, setBillTo] = useState('');
   const [items, setItems] = useState<LineItem[]>([
     { id: 1, desc: '', qty: 1, unit: 'bags', price: 0 },
   ]);
   const [nextId, setNextId] = useState(2);
 
+  // Remembered customers / item presets / past invoices
+  const [customers, setCustomers] = useState<string[]>([]);
+  const [products, setProducts] = useState<{ desc: string; unit: string; price: number }[]>([]);
+  const [saved, setSaved] = useState<SavedInvoice[]>([]);
+  const [showSaved, setShowSaved] = useState(false);
+
   useEffect(() => {
     try {
       const raw = localStorage.getItem(SEQ_KEY);
-      if (raw) setSeq(parseInt(raw, 10) || 44);
+      if (raw) { const n = parseInt(raw, 10) || 44; setSeq(n); setCurrentNo(n); }
     } catch { /* ignore */ }
+    const refresh = () => { setCustomers(loadCustomers()); setProducts(loadProducts()); setSaved(loadInvoices()); };
+    refresh();
+    window.addEventListener('imbewu-invoices-changed', refresh);
+    return () => window.removeEventListener('imbewu-invoices-changed', refresh);
   }, []);
 
   const sellerName = profile?.full_name ?? user?.displayName ?? 'Your name';
   const sellerPhone = profile?.phone ?? '';
-  const invoiceNo = `#${String(seq).padStart(4, '0')}`;
+  const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
   const total = items.reduce((s, it) => s + it.qty * it.price, 0);
   const valid = billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
 
   function updateItem(id: number, patch: Partial<LineItem>) {
-    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...patch } : it)));
+    setItems((prev) => prev.map((it) => {
+      if (it.id !== id) return it;
+      const next = { ...it, ...patch };
+      // Typing/picking a known item name auto-fills its saved unit & price
+      if (patch.desc !== undefined) {
+        const match = products.find((p) => p.desc.toLowerCase() === patch.desc!.trim().toLowerCase());
+        if (match && it.price === 0) { next.unit = match.unit; next.price = match.price; }
+      }
+      return next;
+    }));
   }
   function addItem() {
     setItems((prev) => [...prev, { id: nextId, desc: '', qty: 1, unit: 'bags', price: 0 }]);
@@ -51,11 +76,62 @@ export default function InvoicePage() {
     setItems((prev) => (prev.length > 1 ? prev.filter((it) => it.id !== id) : prev));
   }
 
+  // Persist the customer, item presets and the invoice record. Returns its id.
+  function persist(): string {
+    const id = currentId ?? invoiceId();
+    addCustomer(billTo);
+    items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
+    saveInvoice({
+      id, no: currentNo, billTo: billTo.trim(),
+      items: items.filter((it) => it.desc.trim()).map(({ desc, qty, unit, price }) => ({ desc, qty, unit, price })),
+      total, dateISO: new Date().toISOString(),
+    });
+    if (currentId === null) {
+      const nextSeq = currentNo + 1;
+      setSeq(nextSeq);
+      try { localStorage.setItem(SEQ_KEY, String(nextSeq)); } catch { /* ignore */ }
+    }
+    setCurrentId(id);
+    return id;
+  }
+
   function printInvoice() {
-    // Bump the invoice number for next time, then print.
-    const next = seq + 1;
-    try { localStorage.setItem(SEQ_KEY, String(next)); } catch { /* ignore */ }
+    if (valid) persist();
     window.print();
+  }
+
+  function shareWhatsApp() {
+    if (valid) persist();
+    const lines = items
+      .filter((it) => it.desc.trim())
+      .map((it) => `• ${it.desc.trim()} · ${it.qty} ${it.unit} — ${money(it.qty * it.price)}`)
+      .join('\n');
+    const text =
+      `*Invoice ${invoiceNo}* · ${todayLong()}\n` +
+      `From: ${sellerName}${sellerPhone ? ` (${sellerPhone})` : ''}\n` +
+      `Bill to: ${billTo.trim()}\n\n` +
+      `${lines}\n\n` +
+      `*Total: ${money(total)}*\n\n` +
+      `Generated by ImbewuField`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  }
+
+  function newInvoice() {
+    setCurrentId(null);
+    setCurrentNo(seq);
+    setBillTo('');
+    setItems([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
+    setNextId(2);
+    setShowSaved(false);
+  }
+
+  function openSaved(inv: SavedInvoice) {
+    setCurrentId(inv.id);
+    setCurrentNo(inv.no);
+    setBillTo(inv.billTo);
+    setItems(inv.items.map((it, i) => ({ id: i + 1, ...it })));
+    setNextId(inv.items.length + 1);
+    setShowSaved(false);
   }
 
   const money = (n: number) => `R${n.toLocaleString('en-ZA')}`;
@@ -69,6 +145,15 @@ export default function InvoicePage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Invoice</span>
         <div className="flex-1" />
+        <button
+          onClick={shareWhatsApp}
+          disabled={!valid}
+          aria-label="Share via WhatsApp"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
+          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+        >
+          <MessageCircle size={13} />Share
+        </button>
         <button
           onClick={printInvoice}
           disabled={!valid}
@@ -141,10 +226,59 @@ export default function InvoicePage() {
 
           {/* ── Editor (screen only) ───────────────────────────────────── */}
           <div className="no-print space-y-4">
+
+            {/* Autocomplete sources — remembered customers & item presets */}
+            <datalist id="customers-list">{customers.map((c) => <option key={c} value={c} />)}</datalist>
+            <datalist id="products-list">{products.map((p) => <option key={p.desc} value={p.desc} />)}</datalist>
+
+            {/* New invoice + recall past invoices */}
+            <div className="flex items-center gap-2">
+              <button onClick={newInvoice}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
+                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                <FilePlus2 size={14} />New invoice
+              </button>
+              <button onClick={() => setShowSaved((s) => !s)}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                <Clock size={14} />Saved{saved.length ? ` (${saved.length})` : ''}
+              </button>
+              {currentId && (
+                <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>Editing {invoiceNo}</span>
+              )}
+            </div>
+
+            {/* Saved-invoices list — tap to reopen/reprint */}
+            {showSaved && (
+              <div className="rounded-xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                {saved.length === 0 ? (
+                  <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
+                    No saved invoices yet — Print or Share one and it&apos;s kept here.
+                  </div>
+                ) : saved.map((inv) => (
+                  <div key={inv.id} className="flex items-center gap-2 px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
+                    <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer' }}>
+                      <div className="font-display text-sm" style={{ color: '#20190F' }}>
+                        #{String(inv.no).padStart(4, '0')} · {inv.billTo || 'No buyer'}
+                      </div>
+                      <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+                        {new Date(inv.dateISO).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} · {money(inv.total)}
+                      </div>
+                    </button>
+                    <button onClick={() => deleteInvoice(inv.id)} aria-label="Delete invoice"
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
+                      <X size={15} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Bill to */}
             <label className="block">
               <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>Bill to</div>
               <input value={billTo} onChange={(e) => setBillTo(e.target.value)}
+                list="customers-list" autoComplete="off"
                 placeholder="e.g. Spar Nquthu (wholesale)"
                 className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                 style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }} />
@@ -157,6 +291,7 @@ export default function InvoicePage() {
                 <div key={it.id} className="rounded-xl p-3 space-y-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
                   <div className="flex items-center gap-2">
                     <input value={it.desc} onChange={(e) => updateItem(it.id, { desc: e.target.value })}
+                      list="products-list" autoComplete="off"
                       placeholder="Crop / item (e.g. Amadumbe)"
                       className="flex-1 text-sm font-display outline-none rounded-lg px-2.5 py-2"
                       style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' }} />
@@ -195,11 +330,18 @@ export default function InvoicePage() {
               </button>
             </div>
 
-            <button onClick={printInvoice} disabled={!valid}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-              style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
-              <Printer size={15} />Preview &amp; print invoice
-            </button>
+            <div className="flex gap-2">
+              <button onClick={shareWhatsApp} disabled={!valid}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                <MessageCircle size={15} />WhatsApp
+              </button>
+              <button onClick={printInvoice} disabled={!valid}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                <Printer size={15} />Print
+              </button>
+            </div>
 
             {!valid && (
               <p className="text-center text-xs font-sans flex items-center justify-center gap-1.5" style={{ color: '#8C7A62' }}>

@@ -34,7 +34,7 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Lima, your field guide"
-          className="fixed z-[60] bottom-[72px] left-4 flex items-center justify-center rounded-full w-14 h-14 shadow-lg transition-all"
+          className="no-print fixed z-[60] bottom-[72px] left-4 flex items-center justify-center rounded-full w-14 h-14 shadow-lg transition-all"
           style={{
             backgroundColor: '#1F4D2B',
             boxShadow: '0 4px 16px rgba(32,25,15,0.20)',
@@ -47,13 +47,13 @@ export default function ChatWidget() {
       {open && (
         <>
           <div
-            className="fixed inset-0 z-[60]"
+            className="no-print fixed inset-0 z-[60]"
             style={{ background: 'rgba(226,216,196,0.5)', backdropFilter: 'blur(2px)' }}
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
           <div
-            className="fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
+            className="no-print fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
             style={{
               height: '82dvh',
               maxHeight: 720,

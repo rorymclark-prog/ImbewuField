@@ -376,3 +376,9 @@ html, body {
   font-size: 10px !important;
   border-radius: 4px;
 }
+
+/* Global print safety: anything marked .no-print never reaches paper.
+   Covers the global Lima chat FAB / nav so they don't spill onto a 2nd page. */
+@media print {
+  .no-print { display: none !important; }
+}
