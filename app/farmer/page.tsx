@@ -19,6 +19,8 @@ import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { loadPlaces } from '@/lib/saved-places';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
+
+const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm'];
 import { setLastSite } from '@/lib/last-site';
 
 const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
@@ -45,7 +47,6 @@ function HomeInner() {
   const [siteData, setSiteData] = useState<SiteData | null>(null);
   const [waterData, setWaterData] = useState<WaterData | null>(null);
   // Allow deep-link into a specific tab via ?panel=<tabname>
-  const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm'];
   const [forcedTab, setForcedTab] = useState<string | null>(() => {
     const panel = searchParams.get('panel');
     if (!panel) return searchParams.get('chat') === '1' ? 'Ask' : null;

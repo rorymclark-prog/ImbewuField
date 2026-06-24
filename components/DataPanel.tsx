@@ -33,6 +33,10 @@ interface Props {
 
 const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
 type Tab = typeof TABS[number];
+// Farm and Reports live on the home screen quick actions and are reached via
+// deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
+// but hide them from the scrollable tab strip to reduce clutter.
+const VISIBLE_TABS = TABS.filter((t) => t !== 'Farm' && t !== 'Reports');
 
 const BIOME_COLORS: Record<string, string> = {
   SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
@@ -363,7 +367,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           className="flex overflow-x-auto"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {TABS.map((t) => (
+          {VISIBLE_TABS.map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -475,6 +479,21 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                   {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> mm</span>
                 </span>
+                {data.rainfall.rainfallSource && (
+                  <span
+                    className="font-sans ml-2"
+                    style={{
+                      fontSize: 9, letterSpacing: '0.04em', padding: '1px 5px', borderRadius: 4,
+                      background: data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.10)' : 'rgba(32,25,15,0.06)',
+                      color: data.rainfall.rainfallSource === 'open-meteo' ? '#235E86' : '#8C7A62',
+                      border: `1px solid ${data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.25)' : '#E2D8C4'}`,
+                      whiteSpace: 'nowrap',
+                    }}
+                    title={data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5-Land 9km grid (Open-Meteo)' : 'NASA POWER 50km grid'}
+                  >
+                    {data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5' : 'NASA'}
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Layers size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />

@@ -42,7 +42,7 @@ function Card({
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="text-xs font-mono uppercase tracking-wider mb-2"
+      className="text-xs font-sans font-semibold uppercase tracking-wide mb-2"
       style={{ color: '#5C5040' }}
     >
       {children}
@@ -53,7 +53,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
     <label
-      className="block text-xs font-mono uppercase tracking-wider mb-1"
+      className="block text-xs font-sans font-semibold uppercase tracking-wide mb-1"
       style={{ color: '#5C5040' }}
     >
       {children}
