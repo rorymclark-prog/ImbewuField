@@ -1850,9 +1850,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <button onClick={() => setPlacesOpen((o) => !o)}
             className="flex items-center gap-2 transition-all active:scale-95"
             style={{
-              background: placesOpen ? 'rgba(168,216,138,0.16)' : 'rgba(247,242,233,0.07)',
-              border: `1px solid ${placesOpen ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
-              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2',
+              background: placesOpen ? 'rgba(168,216,138,0.32)' : 'rgba(247,242,233,0.07)',
+              border: `1.5px solid ${placesOpen ? 'rgba(168,216,138,0.7)' : 'rgba(234,243,226,0.16)'}`,
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: placesOpen ? '#A8D88A' : '#EAF3E2',
             }}>
             <MapPin size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> Places
             {savedPins.length ? <span style={{ fontSize: 12, fontWeight: 700, color: '#1a1205', background: '#A8D88A', borderRadius: 999, minWidth: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 6px' }}>{savedPins.length}</span> : null}
