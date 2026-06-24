@@ -1880,16 +1880,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </button>
 
                   {savedPins.map((p) => (
-                    <div key={p.id} className="flex items-center gap-1.5 rounded-lg overflow-hidden"
-                      style={{ background: 'rgba(22,37,20,0.6)', border: '1px solid rgba(212,168,83,0.3)', minHeight: 40 }}>
-                      {/* Colour dot — tap to edit name/colour */}
-                      <button
-                        onClick={() => startEditPlace(p)}
-                        title="Edit name or colour"
-                        className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all"
-                        style={{ width: 36, minHeight: 40, background: 'transparent', border: 'none', borderRight: '1px solid rgba(234,243,226,0.1)', cursor: 'pointer' }}>
-                        <span style={{ width: 13, height: 13, borderRadius: '50%', background: placeColor(p.label), boxShadow: '0 0 0 2px rgba(6,16,10,0.5), 0 0 0 3.5px rgba(255,255,255,0.2)' }} />
+                    <div key={p.id} className="flex items-center gap-3 font-sans"
+                      style={{ background: 'rgba(247,242,233,0.05)', border: '1px solid rgba(234,243,226,0.13)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
+                      {/* Coloured pin chip */}
+                      <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                        className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
+                        style={{ width: 36, height: 36, background: placeColor(p.label), cursor: 'pointer', border: 'none' }}>
+                        <MapPin size={16} strokeWidth={2} style={{ color: '#fff' }} />
                       </button>
+                      {/* Name + distance */}
                       <button
                         onClick={() => {
                           mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
@@ -1897,17 +1896,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           onPlaceSelect?.(p.name);
                           setPlacesOpen(false);
                         }}
-                        className="flex-1 flex items-center gap-1.5 pr-1 font-sans text-left transition-all min-w-0"
-                        style={{ color: 'var(--text-secondary)', minHeight: 40, fontSize: 13 }}>
-                        <span className="flex-1 min-w-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</span>
-                        <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>{p.elevation}m</span>
+                        className="flex-1 min-w-0 text-left transition-all"
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                        <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{p.name}</div>
+                        <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation}m away</div>
                       </button>
-                      <button
-                        onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
+                      {/* Ghost edit */}
+                      <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        <PenLine size={15} style={{ color: 'rgba(234,243,226,0.55)' }} />
+                      </button>
+                      {/* Ghost delete */}
+                      <button onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
                         aria-label={`Delete ${p.name}`} title="Delete this place"
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, minHeight: 40, background: 'transparent', border: 'none', borderLeft: '1px solid rgba(212,110,66,0.25)', color: 'rgba(212,110,66,0.85)', cursor: 'pointer' }}>
-                        <Trash2 size={14} />
+                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.06)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                        <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
                       </button>
                     </div>
                   ))}
