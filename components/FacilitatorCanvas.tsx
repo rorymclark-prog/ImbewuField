@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
+import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
 import { listFarmers, saveDesign, shareDesign } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
-import { Loader2, Sparkles, Sprout } from 'lucide-react';
 
 type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
@@ -19,30 +19,30 @@ interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number
 
 const CATALOG: Record<ElType, Cat> = {
   // Water
-  tank:       { label: 'JoJo tank',    icon: 'TK', shape: 'circle', w: 1.8, h: 1.8, spec: '5000 L', litres: 5000, fill: '#3E7BB0' },
-  pond:       { label: 'Pond / dam',   icon: 'PD', shape: 'circle', w: 6,   h: 6,   fill: '#2F6586' },
-  well:       { label: 'Well / bore',  icon: 'WL', shape: 'circle', w: 1.2, h: 1.2, fill: '#3A3030' },
-  reedbed:    { label: 'Reed bed',     icon: 'RB', shape: 'rect',   w: 3,   h: 2,   fill: '#4A6A30' },
+  tank:       { label: 'JoJo tank',    icon: '🛢',  shape: 'circle', w: 1.8, h: 1.8, spec: '5000 L', litres: 5000, fill: '#3E7BB0' },
+  pond:       { label: 'Pond / dam',   icon: '💧',  shape: 'circle', w: 6,   h: 6,   fill: '#2F6586' },
+  well:       { label: 'Well / bore',  icon: '⛲',  shape: 'circle', w: 1.2, h: 1.2, fill: '#3A3030' },
+  reedbed:    { label: 'Reed bed',     icon: '🌾',  shape: 'rect',   w: 3,   h: 2,   fill: '#4A6A30' },
   // Beds & plants
-  bed:        { label: 'Veg bed',      icon: 'VB', shape: 'rect',   w: 1,   h: 3,   fill: '#3F7A3C' },
-  hugel:      { label: 'Hugelkultur',  icon: 'HG', shape: 'rect',   w: 2,   h: 5,   fill: '#6B4C2A' },
-  banana:     { label: 'Banana circle',icon: 'BC', shape: 'circle', w: 3,   h: 3,   fill: '#2A5A1A' },
-  tree:       { label: 'Fruit tree',   icon: 'FT', shape: 'circle', w: 4,   h: 4,   fill: '#2C5E33' },
-  foodforest: { label: 'Food forest',  icon: 'FF', shape: 'circle', w: 8,   h: 8,   fill: '#1A3A18' },
-  herb:       { label: 'Herb spiral',  icon: 'HS', shape: 'circle', w: 2,   h: 2,   fill: '#6E8B3D' },
-  shrub:      { label: 'Shrub',        icon: 'SH', shape: 'circle', w: 1.5, h: 1.5, fill: '#4E8B4A' },
+  bed:        { label: 'Veg bed',      icon: '🥬',  shape: 'rect',   w: 1,   h: 3,   fill: '#3F7A3C' },
+  hugel:      { label: 'Hugelkultur',  icon: '🪵',  shape: 'rect',   w: 2,   h: 5,   fill: '#6B4C2A' },
+  banana:     { label: 'Banana circle',icon: '🍌',  shape: 'circle', w: 3,   h: 3,   fill: '#2A5A1A' },
+  tree:       { label: 'Fruit tree',   icon: '🌳',  shape: 'circle', w: 4,   h: 4,   fill: '#2C5E33' },
+  foodforest: { label: 'Food forest',  icon: '🌲',  shape: 'circle', w: 8,   h: 8,   fill: '#1A3A18' },
+  herb:       { label: 'Herb spiral',  icon: '🌀',  shape: 'circle', w: 2,   h: 2,   fill: '#6E8B3D' },
+  shrub:      { label: 'Shrub',        icon: '🪴',  shape: 'circle', w: 1.5, h: 1.5, fill: '#4E8B4A' },
   // Structures
-  coop:       { label: 'Chicken coop', icon: 'CH', shape: 'rect',   w: 2,   h: 3,   fill: '#9A6A34' },
-  compost:    { label: 'Compost',      icon: 'CP', shape: 'rect',   w: 1.5, h: 1.5, fill: '#5E4E32' },
-  greenhouse: { label: 'Greenhouse',   icon: 'GH', shape: 'rect',   w: 4,   h: 8,   fill: '#6B8A9A' },
-  tunnel:     { label: 'Polytunnel',   icon: 'TN', shape: 'rect',   w: 3,   h: 6,   fill: '#5E86A8' },
-  shed:       { label: 'Shed',         icon: 'SD', shape: 'rect',   w: 2.5, h: 3,   fill: '#6E6757' },
-  beehive:    { label: 'Beehive',      icon: 'BH', shape: 'circle', w: 1,   h: 1,   fill: '#8A5A14' },
-  biogas:     { label: 'Biogas',       icon: 'BG', shape: 'circle', w: 2,   h: 2,   fill: '#5A4A7A' },
-  nursery:    { label: 'Nursery',      icon: 'NS', shape: 'rect',   w: 3,   h: 4,   fill: '#3A5E30' },
+  coop:       { label: 'Chicken coop', icon: '🐔',  shape: 'rect',   w: 2,   h: 3,   fill: '#9A6A34' },
+  compost:    { label: 'Compost',      icon: '♻',   shape: 'rect',   w: 1.5, h: 1.5, fill: '#5E4E32' },
+  greenhouse: { label: 'Greenhouse',   icon: '🏡',  shape: 'rect',   w: 4,   h: 8,   fill: '#6B8A9A' },
+  tunnel:     { label: 'Polytunnel',   icon: '⛺',  shape: 'rect',   w: 3,   h: 6,   fill: '#5E86A8' },
+  shed:       { label: 'Shed',         icon: '🏚',  shape: 'rect',   w: 2.5, h: 3,   fill: '#6E6757' },
+  beehive:    { label: 'Beehive',      icon: '🐝',  shape: 'circle', w: 1,   h: 1,   fill: '#8A5A14' },
+  biogas:     { label: 'Biogas',       icon: '⚗',   shape: 'circle', w: 2,   h: 2,   fill: '#5A4A7A' },
+  nursery:    { label: 'Nursery',      icon: '🌱',  shape: 'rect',   w: 3,   h: 4,   fill: '#3A5E30' },
   // Earthworks
-  swalew:     { label: 'Swale (berm)', icon: 'SW', shape: 'rect',   w: 8,   h: 1.5, fill: '#3A5A2A' },
-  firebreak:  { label: 'Firebreak',    icon: 'FB', shape: 'rect',   w: 10,  h: 2,   fill: '#8A6040' },
+  swalew:     { label: 'Swale (berm)', icon: '〰',  shape: 'rect',   w: 8,   h: 1.5, fill: '#3A5A2A' },
+  firebreak:  { label: 'Firebreak',    icon: '🔥',  shape: 'rect',   w: 10,  h: 2,   fill: '#8A6040' },
 };
 
 const GROUPS: { name: string; types: ElType[] }[] = [
@@ -53,13 +53,13 @@ const GROUPS: { name: string; types: ElType[] }[] = [
 ];
 
 const LINES: Record<LineKind, { label: string; icon: string; color: string; dash: number[]; width: number }> = {
-  pipe:      { label: 'Pipe',       icon: '--', color: '#5B9ED4', dash: [9, 5],   width: 3 },
-  swale:     { label: 'Swale',      icon: '~',  color: '#7AAA50', dash: [3, 5],   width: 4 },
-  windbreak: { label: 'Windbreak',  icon: '|',  color: '#3A7A30', dash: [],       width: 8 },
-  drip:      { label: 'Drip line',  icon: '.',  color: '#4A9ED4', dash: [2, 4],   width: 1.5 },
-  contour:   { label: 'Contour',    icon: '~',  color: '#B89A60', dash: [6, 4],   width: 2 },
-  fence:     { label: 'Fence',      icon: '|',  color: '#C2A878', dash: [],       width: 2.5 },
-  path:      { label: 'Path',       icon: '..', color: '#C9B896', dash: [],       width: 7 },
+  pipe:      { label: 'Pipe',       icon: '〰', color: '#5B9ED4', dash: [9, 5],   width: 3 },
+  swale:     { label: 'Swale',      icon: '⌇', color: '#7AAA50', dash: [3, 5],   width: 4 },
+  windbreak: { label: 'Windbreak',  icon: '🌿', color: '#3A7A30', dash: [],       width: 8 },
+  drip:      { label: 'Drip line',  icon: '·', color: '#4A9ED4', dash: [2, 4],   width: 1.5 },
+  contour:   { label: 'Contour',    icon: '~', color: '#B89A60', dash: [6, 4],   width: 2 },
+  fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],       width: 2.5 },
+  path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],       width: 7 },
 };
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number }
@@ -686,12 +686,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   async function handleSave() {
-    setSavedMsg('Saving...');
+    setSavedMsg('Saving…');
     try {
       await saveDesign({ title: siteText || 'Garden design', data: { items, lines, pxPerM } });
-      setSavedMsg('Saved');
+      setSavedMsg('✓ Saved');
     } catch {
-      setSavedMsg('Saved');
+      setSavedMsg('✓ Saved');
     }
     setTimeout(() => setSavedMsg(''), 3000);
   }
@@ -737,7 +737,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       if (!res.ok) throw new Error(`${res.status}`);
       const reader = res.body!.getReader(); const dec = new TextDecoder(); let text = '';
       while (true) { const { done, value } = await reader.read(); if (done) break; text += dec.decode(value, { stream: true }); setReview(text); }
-    } catch (e) { setReview(`Error: ${e instanceof Error ? e.message : 'Review failed'}`); }
+    } catch (e) { setReview(`⚠ ${e instanceof Error ? e.message : 'Review failed'}`); }
     finally { setReviewing(false); }
   }
 
@@ -756,42 +756,42 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   const tile = (active: boolean) => ({
-    background: active ? 'rgba(31,77,43,0.14)' : 'rgba(22,37,20,0.6)',
-    border: `1px solid ${active ? 'rgba(31,77,43,0.40)' : '#E2D8C4'}`,
-    color: active ? '#2D6B3C' : 'var(--text-secondary)',
+    background: active ? 'rgba(31,77,43,0.22)' : '#FBF6EC',
+    border: `1px solid ${active ? 'rgba(31,77,43,0.55)' : '#E2D8C4'}`,
+    color: active ? '#1F4D2B' : '#5C5040',
   });
 
   return (
     <div className="flex h-full overflow-hidden relative">
       {/* ── Palette ── (static column on desktop; slide-in drawer on mobile) */}
       <div
-        className={`flex-shrink-0 overflow-y-auto p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-lg' : '-translate-x-full md:translate-x-0'}`}
-        style={{ width: 150, background: '#FBF6EC', borderRight: '1px solid #E2D8C4' }}
+        className={`flex-shrink-0 overflow-y-auto p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
+        style={{ width: 150, background: '#F5F0E8', borderRight: '1px solid #E2D8C4' }}
       >
         {/* Base map */}
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Base map</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Base map</div>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => loadImage(e.target.files?.[0])} />
-          <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all" style={tile(false)}>
-            Import garden map
+          <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(false)}>
+            <ImageIcon size={14} /> Import garden map
           </button>
           {bg && (
             <div className="mt-1.5 space-y-1">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-mono" style={{ color: '#5C5040' }}>fade</span>
+                <span className="text-xs font-mono" style={{ color: '#9A8268' }}>fade</span>
                 <input type="range" min={0.15} max={1} step={0.05} value={bg.opacity}
                   onChange={(e) => setBg((b) => b ? { ...b, opacity: parseFloat(e.target.value) } : b)}
                   className="flex-1" style={{ accentColor: '#1F4D2B' }} />
               </div>
-              <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>remove</button>
+              <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>remove</button>
             </div>
           )}
           <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); }}
-            className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(scaleMode)}>
-            Set scale
+            className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(scaleMode)}>
+            <Ruler size={14} /> Set scale
           </button>
           <div className="flex items-center justify-between mt-1.5">
-            <span className="text-xs font-mono" style={{ color: '#5C5040' }}>1 m = {pxPerM.toFixed(0)} px</span>
+            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>1 m = {pxPerM.toFixed(0)} px</span>
             <div className="flex gap-1">
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
@@ -802,12 +802,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         {/* Element groups */}
         {GROUPS.map((g) => (
           <div key={g.name}>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>{g.name}</div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>{g.name}</div>
             <div className="grid grid-cols-2 gap-1.5">
               {g.types.map((type) => (
                 <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); }}
                   className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
-                  <span className="font-mono font-bold" style={{ fontSize: 10, letterSpacing: '0.04em', color: CATALOG[type].fill }}>{CATALOG[type].icon}</span>
+                  <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
                   <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
                 </button>
               ))}
@@ -817,7 +817,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
         {/* Lines */}
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Lines</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Lines</div>
           <div className="grid grid-cols-2 gap-1.5">
             {(Object.keys(LINES) as LineKind[]).map((kind) => (
               <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); }}
@@ -830,14 +830,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       </div>
 
       {/* ── Canvas ── */}
-      <div ref={wrapRef} className="relative flex-1" style={{ background: '#0d1a0d', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
+      <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
         <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
-          style={{ background: 'rgba(6,16,10,0.82)', border: '1px solid #E2D8C4' }}>
-          <span className="text-xs font-mono" style={{ color: '#2D6B3C' }}>N ↑</span>
+          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>N ↑</span>
         </div>
         {armed && (
           <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-display"
-            style={{ background: '#1F4D2B', color: '#F7F2E9' }}>
+            style={{ background: '#1F4D2B', color: '#fff' }}>
             {scaleMode ? (draftPt ? 'Tap the end of the known distance' : 'Tap the start of a known distance')
               : lineKind ? (draftPt ? `Tap to end the ${LINES[lineKind].label.toLowerCase()}` : `Tap to start the ${LINES[lineKind].label.toLowerCase()}`)
               : `Tap on the map to place ${placeType ? CATALOG[placeType].label : ''}`} · Esc to cancel
@@ -851,7 +851,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           onClick={onStageClick} onTap={onStageClick}>
           <Layer listening={false}>
             {bg && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
-            {grid.map((g, i) => <Line key={i} points={g} stroke="#ffffff" strokeWidth={1} opacity={0.06} />)}
+            {grid.map((g, i) => <Line key={i} points={g} stroke="#20190F" strokeWidth={1} opacity={0.08} />)}
             {draftPt && <Circle x={draftPt[0]} y={draftPt[1]} radius={5} fill="#5DCF80" />}
           </Layer>
           <Layer>
@@ -866,7 +866,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                   <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
                   <Circle x={l.points[2]} y={l.points[3]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(2, e.target.x(), e.target.y())} />
                   <Group x={mx} y={my} onClick={() => setLines((prev) => prev.filter((q) => q.id !== l.id))} onTap={() => setLines((prev) => prev.filter((q) => q.id !== l.id))}>
-                    <Circle radius={7} fill="#0d1a0d" stroke="#D46E42" strokeWidth={1.3} /><Text text="x" fontSize={10} fill="#D46E42" x={-3} y={-5} />
+                    <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
                   </Group>
                 </Group>
               );
@@ -901,7 +901,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               enabledAnchors={selectedIsCircle
                 ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
                 : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']}
-              anchorSize={8} anchorStroke="#1F4D2B" anchorFill="rgba(31,77,43,0.30)"
+              anchorSize={8} anchorStroke="#1F4D2B" anchorFill="rgba(31,77,43,0.7)"
               borderEnabled={false}
               boundBoxFunc={(o, n) => (n.width < 8 || n.height < 8 ? o : n)} />
           </Layer>
@@ -910,82 +910,82 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
       {/* ── Right panel ── (static column on desktop; slide-in drawer on mobile) */}
       <div
-        className={`flex-shrink-0 overflow-y-auto absolute inset-y-0 right-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'props' ? 'translate-x-0 shadow-lg' : 'translate-x-full md:translate-x-0'}`}
-        style={{ width: 252, maxWidth: '85vw', background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+        className={`flex-shrink-0 overflow-y-auto absolute inset-y-0 right-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'props' ? 'translate-x-0 shadow-2xl' : 'translate-x-full md:translate-x-0'}`}
+        style={{ width: 252, maxWidth: '85vw', background: '#F5F0E8', borderLeft: '1px solid #E2D8C4' }}
       >
         <div className="p-3 space-y-3">
           {/* Properties */}
           {selected ? (
-            <div className="rounded-xl p-2.5 space-y-2" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.20)' }}>
+            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.25)' }}>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-display font-semibold" style={{ color: '#2D6B3C' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
+                <span className="text-xs font-display font-semibold" style={{ color: '#1F4D2B' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
                 <div className="flex gap-1">
-                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}>Copy</button>
-                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono" style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: '#D4922A' }}>Del</button>
+                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono inline-flex items-center" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}><Copy size={13} /></button>
+                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono inline-flex items-center" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.35)', color: '#C0531E' }}><X size={13} /></button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <label className="text-xs font-mono" style={{ color: '#5C5040' }}>
+                <label className="text-xs font-mono" style={{ color: '#9A8268' }}>
                   {selectedIsCircle ? 'diameter m' : 'width m'}
                   <input type="number" step={0.1} min={0.2} value={selected.wM.toFixed(1)}
                     onChange={(e) => { const v = Math.max(0.2, parseFloat(e.target.value) || 0.2); updateSel(selectedIsCircle ? { wM: v, hM: v } : { wM: v }); }}
-                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
                 {!selectedIsCircle && (
-                  <label className="text-xs font-mono" style={{ color: '#5C5040' }}>length m
+                  <label className="text-xs font-mono" style={{ color: '#9A8268' }}>length m
                     <input type="number" step={0.1} min={0.2} value={selected.hM.toFixed(1)}
                       onChange={(e) => updateSel({ hM: Math.max(0.2, parseFloat(e.target.value) || 0.2) })}
-                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                   </label>
                 )}
                 {selected.litres !== undefined && (
-                  <label className="text-xs font-mono" style={{ color: '#5C5040' }}>litres
+                  <label className="text-xs font-mono" style={{ color: '#9A8268' }}>litres
                     <input type="number" step={500} min={0} value={selected.litres}
                       onChange={(e) => updateSel({ litres: Math.max(0, parseInt(e.target.value) || 0) })}
-                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                      className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                   </label>
                 )}
-                <label className="text-xs font-mono" style={{ color: '#5C5040' }}>rotate °
+                <label className="text-xs font-mono" style={{ color: '#9A8268' }}>rotate °
                   <input type="number" step={5} value={Math.round(selected.rotation)}
                     onChange={(e) => updateSel({ rotation: parseFloat(e.target.value) || 0 })}
-                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
               </div>
             </div>
           ) : (
-            <p className="text-xs font-display" style={{ color: '#5C5040' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
+            <p className="text-xs font-display" style={{ color: '#9A8268' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
           )}
 
           {/* BOQ */}
           <div>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Bill of quantities</div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Bill of quantities</div>
             {boq.length || lineTotals.length ? (
               <div className="space-y-1">
                 {boq.map((b) => (
-                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
-                    <span style={{ color: 'var(--text-secondary)' }}>{b.icon} {b.label}</span>
+                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                    <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
                     <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${b.litres.toLocaleString()}L` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
                   </div>
                 ))}
                 {lineTotals.map((l) => (
-                  <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
-                    <span style={{ color: '#235E86' }}>{l.icon} {l.label}</span>
+                  <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                    <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
                     <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
                   </div>
                 ))}
               </div>
-            ) : <p className="text-xs font-display" style={{ color: '#5C5040' }}>Quantities tally here as you place things.</p>}
+            ) : <p className="text-xs font-display" style={{ color: '#9A8268' }}>Quantities tally here as you place things.</p>}
           </div>
 
           {(bedArea > 0 || totalLitres > 0) && (
             <div className="grid grid-cols-2 gap-2">
-              <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.14)' }}>
-                <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Growing area</div>
-                <div className="text-sm font-display font-semibold" style={{ color: '#2D6B3C' }}>{bedArea.toFixed(0)} m²</div>
+              <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)' }}>
+                <div className="text-xs font-mono" style={{ color: '#9A8268' }}>Growing area</div>
+                <div className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{bedArea.toFixed(0)} m²</div>
               </div>
-              <div className="p-2 rounded-lg" style={{ background: 'rgba(91,158,212,0.08)', border: '1px solid rgba(91,158,212,0.2)' }}>
-                <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Water store</div>
-                <div className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{(totalLitres / 1000).toFixed(1)} kL</div>
+              <div className="p-2 rounded-lg" style={{ background: 'rgba(47,111,158,0.08)', border: '1px solid rgba(47,111,158,0.2)' }}>
+                <div className="text-xs font-mono" style={{ color: '#9A8268' }}>Water store</div>
+                <div className="text-sm font-display font-semibold" style={{ color: '#2F6F9E' }}>{(totalLitres / 1000).toFixed(1)} kL</div>
               </div>
             </div>
           )}
@@ -994,10 +994,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <div className="flex gap-2">
             <button onClick={runReview} disabled={reviewing || !items.length}
               className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
-              style={reviewing || !items.length ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' } : { background: '#1F4D2B', color: '#F7F2E9', border: '1px solid #1F4D2B' }}>
-              {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin inline-block" /> Reviewing...</span> : <span className="flex items-center justify-center gap-1"><Sparkles size={14} className="inline mr-1" /> AI review</span>}
+              style={reviewing || !items.length ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.45)', color: '#1F4D2B' }}>
+              {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 className="animate-spin" size={14} /> Reviewing…</span> : <span className="flex items-center justify-center gap-1.5"><Sparkles size={14} /> AI review</span>}
             </button>
-            <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }} title="Export PNG">↓ PNG</button>
+            <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Export PNG"><Download size={14} /> PNG</button>
           </div>
 
           {/* Save button */}
@@ -1007,9 +1007,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               disabled={!items.length && !lines.length}
               className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
               style={!items.length && !lines.length
-                ? { background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: '#5C5040' }
-                : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.22)', color: '#2D6B3C' }}>
-              {savedMsg || '↓ Save design'}
+                ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+                : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.35)', color: '#1F4D2B' }}>
+              {savedMsg || <span className="inline-flex items-center justify-center gap-1.5"><Download size={14} /> Save design</span>}
             </button>
           </div>
 
@@ -1017,46 +1017,46 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <div className="relative">
             <button onClick={() => { setShareOpen((o) => !o); setSharedTo(null); }} disabled={!items.length && !lines.length}
               className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
-              style={{ background: 'rgba(91,158,212,0.14)', border: '1px solid rgba(91,158,212,0.4)', color: '#235E86' }}>
-              ↗ Share this design with a farmer
+              style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: '#2F6F9E' }}>
+              <span className="inline-flex items-center justify-center gap-1.5"><Share2 size={14} /> Share this design with a farmer</span>
             </button>
             {shareOpen && !sharedTo && (
-              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#5C5040' }}>
-                  {farmersLoading ? 'Loading...' : 'Send to'}
+              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#9A8268' }}>
+                  {farmersLoading ? 'Loading…' : 'Send to'}
                 </div>
                 {farmersLoading && (
-                  <div className="text-xs font-display px-2 py-1" style={{ color: '#5C5040' }}>
-                    <Loader2 size={14} className="animate-spin inline-block mr-1" /> Fetching farmers...
+                  <div className="text-xs font-display px-2 py-1 flex items-center gap-1.5" style={{ color: '#9A8268' }}>
+                    <Loader2 className="animate-spin" size={14} /> Fetching farmers…
                   </div>
                 )}
                 {!farmersLoading && displayFarmers.map((f) => (
                   <button key={f.id}
                     onClick={() => { if (f.profile) { sendDesignToFarmer(f.profile); } else { setSharedTo(f.name); setShareOpen(false); } }}
                     disabled={sharing}
-                    className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-display transition-all"
-                    style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4', color: 'var(--text-secondary)' }}>
-                    {sharing ? <Loader2 size={14} className="animate-spin inline-block mr-1" /> : <Sprout size={14} className="inline mr-1" />} {f.name}
+                    className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-display transition-all inline-flex items-center gap-1.5"
+                    style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                    {sharing ? <Loader2 className="animate-spin" size={14} /> : <Sprout size={14} />} {f.name}
                   </button>
                 ))}
               </div>
             )}
             {sharedTo && (
-              <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: '#2D6B3C' }}>
-                Sent to {sharedTo} — opens on their phone
+              <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
+                <Check size={14} /> Sent to {sharedTo} — opens on their phone
               </div>
             )}
           </div>
 
           {review && (
-            <div className="rounded-xl p-3 space-y-1" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid rgba(31,77,43,0.12)' }}>
+            <div className="rounded-xl p-3 space-y-1" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid rgba(31,77,43,0.15)' }}>
               {review.split('\n').map((line, i) => {
                 if (!line.trim()) return null;
-                if (line.startsWith('## ')) return <h4 key={i} className="text-xs font-display font-semibold mt-2 mb-1" style={{ color: '#C07A1E' }}>{line.replace('## ', '')}</h4>;
-                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}><span style={{ color: '#1F4D2B', flexShrink: 0 }}>-</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
-                return <p key={i} className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{line.replace(/\*\*/g, '')}</p>;
+                if (line.startsWith('## ')) return <h4 key={i} className="text-xs font-display font-semibold mt-2 mb-1" style={{ color: '#9E5C08' }}>{line.replace('## ', '')}</h4>;
+                if (/^\d+\.|^- |^• /.test(line)) return <div key={i} className="flex gap-1.5 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}><span style={{ color: '#1F4D2B' }}>›</span><span>{line.replace(/^[-•]\s*|^\d+\.\s*/, '').replace(/\*\*/g, '')}</span></div>;
+                return <p key={i} className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>{line.replace(/\*\*/g, '')}</p>;
               })}
-              {reviewing && <span className="inline-block w-1.5 h-3 rounded-sm animate-pulse" style={{ background: '#2D6B3C' }} />}
+              {reviewing && <span className="inline-block w-1.5 h-3 rounded-sm animate-pulse" style={{ background: '#1F4D2B' }} />}
             </div>
           )}
         </div>
@@ -1064,19 +1064,19 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
       {/* ── Mobile: scrim + drawer toggle buttons (hidden on desktop) ── */}
       {mobilePanel && (
-        <div className="md:hidden absolute inset-0 z-20" style={{ background: 'rgba(0,0,0,0.45)' }}
+        <div className="md:hidden absolute inset-0 z-20" style={{ background: 'rgba(31,25,15,0.12)' }}
           onClick={() => setMobilePanel(null)} aria-hidden="true" />
       )}
       <div className="md:hidden absolute bottom-4 left-0 right-0 z-40 flex justify-between px-4 pointer-events-none">
         <button onClick={() => setMobilePanel((p) => (p === 'palette' ? null : 'palette'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.40)', color: '#2D6B3C', boxShadow: '0 2px 8px rgba(31,77,43,0.15)' }}>
-          {mobilePanel === 'palette' ? 'Close' : 'Elements'}
+          style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.5)', color: '#1F4D2B', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
+          {mobilePanel === 'palette' ? <><X size={16} /> Close</> : <><LayoutGrid size={16} /> Elements</>}
         </button>
         <button onClick={() => setMobilePanel((p) => (p === 'props' ? null : 'props'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: '#FBF6EC', border: '1px solid rgba(91,158,212,0.5)', color: '#235E86', boxShadow: '0 2px 8px rgba(35,94,134,0.15)' }}>
-          {mobilePanel === 'props' ? 'Close' : 'Plan'}
+          style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.5)', color: '#2F6F9E', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
+          {mobilePanel === 'props' ? <><X size={16} /> Close</> : <><ClipboardList size={16} /> Plan</>}
         </button>
       </div>
     </div>

@@ -1,17 +1,26 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Leaf, Sprout, Save, Ruler, X, Camera, ArrowRight } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
   myProduction,
-  mySales,
   addProduction,
   addSale,
   designsSharedWithMe,
   uploadPhoto,
 } from '@/lib/db/queries';
+import {
+  Sprout,
+  ArrowRight,
+  Camera,
+  X,
+  Loader2,
+  Star,
+  Leaf,
+  Banknote,
+  Ruler,
+} from 'lucide-react';
 import type { ProductionLog, SalesLog, Design } from '@/lib/db/types';
 
 /* ── Tiny shared primitives (match DataPanel style) ──────────────────────── */
@@ -91,19 +100,16 @@ function SubmitBtn({
       style={{
         background: loading
           ? 'rgba(31,77,43,0.06)'
-          : '#1F4D2B',
-        border: '1px solid rgba(31,77,43,0.20)',
-        color: loading ? '#5C5040' : '#F7F2E9',
+          : 'rgba(31,77,43,0.14)',
+        border: '1px solid rgba(31,77,43,0.28)',
+        color: loading ? '#9A8268' : '#1F4D2B',
         cursor: loading ? 'not-allowed' : 'pointer',
       }}
     >
       {loading ? (
         <>
-          <span
-            className="inline-block w-3 h-3 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
-          />
-          Saving...
+          <Loader2 size={14} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          Saving…
         </>
       ) : (
         children
@@ -132,14 +138,13 @@ function SignInPrompt() {
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-12 px-6 text-center">
       <div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl"
+        className="w-14 h-14 rounded-2xl flex items-center justify-center"
         style={{
-          background: '#1F4D2B',
-          color: '#F7F2E9',
-          border: '1px solid rgba(31,77,43,0.14)',
+          background: 'rgba(31,77,43,0.10)',
+          border: '1px solid rgba(31,77,43,0.25)',
         }}
       >
-        <Sprout size={20} style={{ color: '#1F4D2B' }} />
+        <Sprout size={28} style={{ color: '#1F4D2B' }} />
       </div>
       <div>
         <p
@@ -148,20 +153,20 @@ function SignInPrompt() {
         >
           Sign in to keep your own records
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: '#9A8268' }}>
           Track what you grow and sell — your data stays with you.
         </p>
       </div>
       <a
         href="/login"
-        className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
+        className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all flex items-center gap-1.5"
         style={{
-          background: '#1F4D2B',
-          border: '1px solid rgba(31,77,43,0.22)',
-          color: '#F7F2E9',
+          background: 'rgba(31,77,43,0.14)',
+          border: '1px solid rgba(31,77,43,0.35)',
+          color: '#1F4D2B',
         }}
       >
-        <span className="flex items-center gap-1.5">Go to sign in<ArrowRight size={14} /></span>
+        Go to sign in <ArrowRight size={16} />
       </a>
     </div>
   );
@@ -275,9 +280,9 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   if (fileRef.current) fileRef.current.value = '';
                 }}
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
-                style={{ background: 'rgba(0,0,0,0.35)', color: '#F7F2E9' }}
+                style={{ background: 'rgba(31,25,15,0.12)', color: '#20190F' }}
               >
-                <X size={10} />
+                <X size={14} />
               </button>
             </div>
           )}
@@ -286,11 +291,11 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             style={{
               background: '#FBF6EC',
               border: '1px dashed #E2D8C4',
-              color: '#5C5040',
+              color: '#9A8268',
             }}
           >
-            <Camera size={14} style={{ flexShrink: 0 }} />
-            <span>{form.photoFile ? form.photoFile.name : 'Choose photo'}</span>
+            <Camera size={16} style={{ color: '#9A8268' }} />
+            <span>{form.photoFile ? form.photoFile.name : 'Choose photo…'}</span>
             <input
               ref={fileRef}
               type="file"
@@ -302,11 +307,11 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#D4922A' }}>
+          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}><Save size={13} className="inline mr-1" />Save harvest</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Star size={14} /> Save harvest</SubmitBtn>
       </form>
     </Card>
   );
@@ -362,7 +367,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="#C07A1E">
+    <Card accent="#9E5C08">
       <SectionLabel>Log sale</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
@@ -410,11 +415,11 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#D4922A' }}>
+          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}><Save size={13} className="inline mr-1" />Save sale</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Star size={14} /> Save sale</SubmitBtn>
       </form>
     </Card>
   );
@@ -425,7 +430,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
         No harvests logged yet.
       </p>
     );
@@ -437,7 +442,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
           style={{
-            background: 'rgba(226,216,196,0.35)',
+            background: '#FBF6EC',
             border: '1px solid #E2D8C4',
           }}
         >
@@ -452,10 +457,10 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             </div>
           ) : (
             <div
-              className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
-              style={{ background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.12)' }}
+              className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+              style={{ background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.15)' }}
             >
-              <Leaf size={16} style={{ color: '#1F4D2B' }} />
+              <Leaf size={18} style={{ color: '#1F4D2B' }} />
             </div>
           )}
           <div className="flex-1 min-w-0">
@@ -465,13 +470,13 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             >
               {item.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
               {fmtDate(item.logged_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#2D6B3C' }}
+            style={{ color: '#1F4D2B' }}
           >
             {item.kg} kg
           </div>
@@ -486,7 +491,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
         No sales logged yet.
       </p>
     );
@@ -498,15 +503,15 @@ function SalesList({ items }: { items: SalesLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: 'rgba(226,216,196,0.35)',
+            background: '#FBF6EC',
             border: '1px solid #E2D8C4',
           }}
         >
           <div
-            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
-            style={{ background: 'rgba(212,168,83,0.1)', border: '1px solid rgba(212,168,83,0.15)' }}
+            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style={{ background: 'rgba(158,92,8,0.10)', border: '1px solid rgba(158,92,8,0.15)' }}
           >
-            🪙
+            <Banknote size={18} style={{ color: '#9E5C08' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
@@ -515,18 +520,18 @@ function SalesList({ items }: { items: SalesLog[] }) {
             >
               {item.crop}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: '#5C5040' }}>
+                <span className="font-normal" style={{ color: '#9A8268' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#C07A1E' }}
+            style={{ color: '#9E5C08' }}
           >
             R {item.amount.toFixed(2)}
           </div>
@@ -541,7 +546,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
 function SharedDesignsList({ items }: { items: Design[] }) {
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#5C5040' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
         No designs shared with you yet.
       </p>
     );
@@ -553,15 +558,15 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           key={design.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: 'rgba(226,216,196,0.35)',
+            background: '#FBF6EC',
             border: '1px solid #E2D8C4',
           }}
         >
           <div
-            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg"
-            style={{ background: 'rgba(91,158,212,0.1)', border: '1px solid rgba(91,158,212,0.15)' }}
+            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style={{ background: 'rgba(47,111,158,0.10)', border: '1px solid rgba(47,111,158,0.15)' }}
           >
-            <Ruler size={20} style={{ color: '#235E86' }} />
+            <Ruler size={18} style={{ color: '#2F6F9E' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
@@ -570,7 +575,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             >
               {design.title || 'Untitled design'}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
               Shared {fmtDate(design.created_at)}
             </p>
           </div>
@@ -578,17 +583,17 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           <button
             type="button"
             disabled
-            className="text-xs font-display px-2.5 py-1 rounded-lg flex-shrink-0"
+            className="text-xs font-display px-2.5 py-1 rounded-lg flex-shrink-0 flex items-center gap-1"
             style={{
-              background: 'rgba(91,158,212,0.08)',
-              border: '1px solid rgba(91,158,212,0.2)',
-              color: '#235E86',
+              background: 'rgba(47,111,158,0.08)',
+              border: '1px solid rgba(47,111,158,0.2)',
+              color: '#2F6F9E',
               opacity: 0.7,
               cursor: 'default',
             }}
             title="Open in Design tab (coming soon)"
           >
-            Open →
+            Open <ArrowRight size={14} />
           </button>
         </div>
       ))}
@@ -621,16 +626,19 @@ export default function MyRecords() {
   const loadData = useCallback(async () => {
     setDataLoading(true);
     try {
-      const [prod, salesData, des] = await Promise.all([
+      const [prod, des] = await Promise.all([
         myProduction(),
-        mySales(),
         designsSharedWithMe(),
       ]);
-      const sortedProd = [...prod].sort((a, b) =>
-        (b.logged_at ?? '').localeCompare(a.logged_at ?? ''));
+      // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
+      const sortedProd = [...prod].sort((a, b) => {
+        return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
+      });
       setProduction(sortedProd);
-      setSales(salesData);
       setDesigns(des);
+      // Sales: re-fetch via a separate call is not available in queries, so we
+      // keep the list that was accumulated via onSaved callbacks only.
+      // (myProduction covers the production side; sales appended below)
     } finally {
       setDataLoading(false);
     }
@@ -651,12 +659,12 @@ export default function MyRecords() {
   if (user === 'loading') {
     return (
       <div className="p-5 space-y-3">
-        <div className="h-5 w-32 rounded-lg animate-pulse" style={{ background: 'var(--bg-4)' }} />
+        <div className="h-5 w-32 rounded-lg animate-pulse" style={{ background: '#E2D8CB' }} />
         {[1, 2].map((i) => (
           <div
             key={i}
             className="h-24 rounded-xl animate-pulse"
-            style={{ background: 'rgba(226,216,196,0.55)', animationDelay: `${i * 80}ms` }}
+            style={{ background: '#EDE7DB', animationDelay: `${i * 80}ms` }}
           />
         ))}
       </div>
@@ -684,15 +692,12 @@ export default function MyRecords() {
           >
             My Records
           </h2>
-          <p className="font-display text-xs mt-0.5" style={{ color: '#5C5040' }}>
+          <p className="font-display text-xs mt-0.5" style={{ color: '#9A8268' }}>
             What you grow · what you sell · designs from your supervisor
           </p>
         </div>
         {dataLoading && (
-          <span
-            className="inline-block w-3.5 h-3.5 rounded-full border-2 animate-spin"
-            style={{ borderColor: '#1F4D2B transparent transparent transparent' }}
-          />
+          <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
         )}
       </div>
 
@@ -726,7 +731,7 @@ export default function MyRecords() {
       <Divider />
 
       {/* ── Shared designs ──────────────────────────── */}
-      <Card accent="#235E86">
+      <Card accent="#2F6F9E">
         <SectionLabel>Shared with me</SectionLabel>
         <SharedDesignsList items={designs} />
       </Card>

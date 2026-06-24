@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { MapPin, Check, Circle, Map as MapIcon, FileText, Camera, User, BookOpen, ChevronLeft } from 'lucide-react';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileText, ArrowLeft } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
@@ -13,9 +13,9 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 type Status = 'thriving' | 'establishing' | 'support';
 const STATUS: Record<Status, { label: string; color: string }> = {
-  thriving: { label: 'Thriving', color: '#2D6B3C' },
-  establishing: { label: 'Establishing', color: '#C07A1E' },
-  support: { label: 'Needs support', color: '#C0512A' },
+  thriving: { label: 'Thriving', color: '#1F4D2B' },
+  establishing: { label: 'Establishing', color: '#9E5C08' },
+  support: { label: 'Needs support', color: '#C0531E' },
 };
 
 interface Garden { id: string; name: string; town: string; lat: number; lon: number; farmers: number; status: Status; produceKg: number; training: number; facilitator: string }
@@ -39,9 +39,9 @@ const TOTALS = { gardens: 142, farmers: 3012, produceT: 38.6, training: 78, depl
 
 const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki'];
 const CROPS = [
-  { n: 'Spinach',      c: '#3F7A3C' }, { n: 'Tomatoes',    c: '#B83C2E' }, { n: 'Cabbage',     c: '#6BA84F' },
-  { n: 'Carrots',      c: '#C97A2C' }, { n: 'Onions',      c: '#C2A05A' }, { n: 'Maize',       c: '#D9B23A' },
-  { n: 'Beans',        c: '#7A5230' }, { n: 'Pumpkin',     c: '#CC7A28' }, { n: 'Sweet potato', c: '#A85E3C' }, { n: 'Green pepper', c: '#3F8B3C' },
+  { n: 'Spinach', e: '🥬', c: '#3F7A3C' }, { n: 'Tomatoes', e: '🍅', c: '#B83C2E' }, { n: 'Cabbage', e: '🥬', c: '#6BA84F' },
+  { n: 'Carrots', e: '🥕', c: '#C97A2C' }, { n: 'Onions', e: '🧅', c: '#C2A05A' }, { n: 'Maize', e: '🌽', c: '#D9B23A' },
+  { n: 'Beans', e: '🫘', c: '#7A5230' }, { n: 'Pumpkin', e: '🎃', c: '#CC7A28' }, { n: 'Sweet potato', e: '🍠', c: '#A85E3C' }, { n: 'Green pepper', e: '🫑', c: '#3F8B3C' },
 ];
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
 const BUYERS = ['Local market', 'Spaza shop', 'School feeding', 'Bakkie trader', 'Neighbours'];
@@ -180,11 +180,10 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
 
 function Stat({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
-    <div className="rounded-xl p-3 flex-1" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
-      <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#5C5040' }}>{label}</div>
-      {/* Big number scales up on desktop (handoff §0) — phone stays 24px */}
-      <div className="font-display font-bold mt-0.5" style={{ fontSize: 'clamp(24px, 2.2vw, 34px)', lineHeight: 1.1, color }}>{value}</div>
-      <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{sub}</div>
+    <div className="rounded-xl p-3 flex-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>{label}</div>
+      <div className="font-display font-bold text-2xl mt-0.5" style={{ color }}>{value}</div>
+      <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{sub}</div>
     </div>
   );
 }
@@ -192,18 +191,18 @@ function Stat({ label, value, sub, color }: { label: string; value: string; sub:
 function Spinner() {
   return (
     <div className="flex items-center justify-center py-6">
-      <div className="rounded-full animate-spin" style={{ width: 20, height: 20, border: '2px solid #E2D8C4', borderTopColor: '#1F4D2B' }} />
+      <Loader2 className="animate-spin" size={20} style={{ color: '#1F4D2B' }} />
     </div>
   );
 }
 
 function SkeletonRow() {
   return (
-    <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
-      <div className="rounded-full flex-shrink-0" style={{ width: 26, height: 26, background: 'rgba(226,216,196,0.55)' }} />
+    <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-full flex-shrink-0" style={{ width: 26, height: 26, background: '#EDE7DB' }} />
       <div className="flex-1 space-y-1">
-        <div className="rounded" style={{ height: 10, width: '60%', background: 'rgba(226,216,196,0.55)' }} />
-        <div className="rounded" style={{ height: 8, width: '40%', background: 'rgba(226,216,196,0.55)' }} />
+        <div className="rounded" style={{ height: 10, width: '60%', background: '#EDE7DB' }} />
+        <div className="rounded" style={{ height: 8, width: '40%', background: '#EDE7DB' }} />
       </div>
     </div>
   );
@@ -349,17 +348,17 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
       <div className="flex-shrink-0 grid grid-cols-2 gap-2 px-3 py-3 md:flex md:gap-3 md:px-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
         {mode === 'funder' ? (
           <>
-            <Stat label="Funds deployed" value={TOTALS.deployed} sub="presidential fund + IDC" color="#C07A1E" />
-            <Stat label="Gardens" value={TOTALS.gardens.toString()} sub="9 provinces" color="#2D6B3C" />
+            <Stat label="Funds deployed" value={TOTALS.deployed} sub="presidential fund + IDC" color="#9E5C08" />
+            <Stat label="Gardens" value={TOTALS.gardens.toString()} sub="9 provinces" color="#1F4D2B" />
             <Stat label="Livelihoods" value={TOTALS.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
-            <Stat label="Food grown" value={`${TOTALS.produceT} t`} sub="this season" color="#235E86" />
+            <Stat label="Food grown" value={`${TOTALS.produceT} t`} sub="this season" color="#2F6F9E" />
           </>
         ) : (
           <>
-            <Stat label="Active gardens" value={TOTALS.gardens.toString()} sub="across 9 provinces" color="#2D6B3C" />
+            <Stat label="Active gardens" value={TOTALS.gardens.toString()} sub="across 9 provinces" color="#1F4D2B" />
             <Stat label="Farmers" value={TOTALS.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
-            <Stat label="Produce, season" value={`${TOTALS.produceT} t`} sub="logged by supervisors" color="#235E86" />
-            <Stat label="Training done" value={`${TOTALS.training}%`} sub="9-month programme" color="#C07A1E" />
+            <Stat label="Produce, season" value={`${TOTALS.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
+            <Stat label="Training done" value={`${TOTALS.training}%`} sub="9-month programme" color="#9E5C08" />
           </>
         )}
       </div>
@@ -379,18 +378,18 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         <div
           className={`${garden ? 'hidden md:block' : 'block'} w-full md:w-[380px] md:flex-shrink-0 overflow-y-auto`}
           style={{
-            background: '#FBF6EC',
+            background: '#F5F0E8',
             borderRight: '1px solid #E2D8C4',
           }}
         >
           {/* ── LEVEL 1 — gardens list ── */}
           <div className="p-3">
             <div className="flex items-center justify-between mb-2 px-1">
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>
                 {mode === 'funder' ? 'Funded gardens' : 'Gardens'}
               </div>
               {isDemo && (
-                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(212,168,83,0.12)', color: '#C07A1E', border: '1px solid rgba(212,168,83,0.3)' }}>demo sample</span>
+                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: '#9E5C08', border: '1px solid rgba(158,92,8,0.3)' }}>demo sample</span>
               )}
             </div>
             {gardensLoading ? (
@@ -405,16 +404,16 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     onClick={() => selectGarden(g)}
                     className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all"
                     style={{
-                      background: garden?.id === g.id ? 'rgba(31,77,43,0.10)' : 'rgba(226,216,196,0.35)',
-                      border: garden?.id === g.id ? '1px solid rgba(31,77,43,0.25)' : '1px solid #E2D8C4',
+                      background: garden?.id === g.id ? 'rgba(31,77,43,0.12)' : '#F5F0E8',
+                      border: garden?.id === g.id ? '1px solid rgba(31,77,43,0.4)' : '1px solid #E2D8C4',
                     }}
                   >
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: STATUS[g.status].color }} />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{g.name}</div>
-                      <div className="text-xs font-mono" style={{ color: '#5C5040' }}>{g.town} · {g.farmers || '—'} farmers</div>
+                      <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{g.town} · {g.farmers || '—'} farmers</div>
                     </div>
-                    <span className="text-xs font-mono flex-shrink-0" style={{ color: '#235E86' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
+                    <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2F6F9E' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
                   </button>
                 ))}
               </div>
@@ -425,10 +424,10 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {/* CENTRE — map. Fixed-height band on mobile, hidden once a garden is selected;
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
-          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: 'rgba(251,246,236,0.92)', border: '1px solid #E2D8C4' }}>
-            <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#5C5040' }}>
+          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}>
               {gardener
-                ? <><MapPin size={12} className="inline flex-shrink-0" />{gardener.name} · {gardener.lat.toFixed(4)}, {gardener.lon.toFixed(4)}</>
+                ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {`${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : `Showing ${gardens.length} of ${TOTALS.gardens} gardens${isDemo ? ' · demo' : ''}`}
             </span>
           </div>
@@ -436,27 +435,27 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             {gardens.map((g) => (
               <Marker key={g.id} longitude={g.lon} latitude={g.lat} anchor="center">
                 <button onClick={() => selectGarden(g)} className="rounded-full transition-all"
-                  style={{ width: garden?.id === g.id ? 18 : 13, height: garden?.id === g.id ? 18 : 13, background: STATUS[g.status].color, border: '2px solid #fff', boxShadow: garden?.id === g.id ? `0 0 0 4px ${STATUS[g.status].color}55` : '0 1px 4px rgba(0,0,0,0.18)', cursor: 'pointer' }} title={g.name} />
+                  style={{ width: garden?.id === g.id ? 18 : 13, height: garden?.id === g.id ? 18 : 13, background: STATUS[g.status].color, border: '2px solid #fff', boxShadow: garden?.id === g.id ? `0 0 0 4px ${STATUS[g.status].color}55` : '0 1px 4px rgba(31,25,15,0.12)', cursor: 'pointer' }} title={g.name} />
               </Marker>
             ))}
             {gardener && (
               <Marker longitude={gardener.lon} latitude={gardener.lat} anchor="center">
-                <div className="rounded-full flex items-center justify-center" style={{ width: 26, height: 26, background: '#1F4D2B', border: '3px solid #fff', boxShadow: '0 0 0 6px rgba(31,77,43,0.22)' }}><User size={13} style={{ color: '#EAF3E2' }} /></div>
+                <div className="rounded-full flex items-center justify-center" style={{ width: 26, height: 26, background: '#1F4D2B', border: '3px solid #fff', boxShadow: '0 0 0 6px rgba(31,77,43,0.35)' }}><User size={13} color="#fff" /></div>
               </Marker>
             )}
           </ReactMapGL>
-          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: 'rgba(251,246,236,0.92)', border: '1px solid #E2D8C4' }}>
+          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
             {(Object.keys(STATUS) as Status[]).map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: STATUS[s].color }} />
-                <span className="text-xs font-mono" style={{ color: '#5C5040' }}>{STATUS[s].label}</span>
+                <span className="text-xs font-mono" style={{ color: '#9A8268' }}>{STATUS[s].label}</span>
               </div>
             ))}
           </div>
           {/* "Select a garden" placeholder — shown only when no garden is selected */}
           {!garden && (
             <div className="absolute inset-0 flex items-end justify-center pb-16 pointer-events-none z-10">
-              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: 'rgba(251,246,236,0.90)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#9A8268' }}>
                 Select a garden from the list to drill in
               </div>
             </div>
@@ -467,28 +466,28 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {garden && (
           <div
             className="w-full md:w-[380px] md:flex-shrink-0 overflow-y-auto"
-            style={{ background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+            style={{ background: '#F5F0E8', borderLeft: '1px solid #E2D8C4' }}
           >
             {gardener && totals ? (
               /* ── LEVEL 3 — gardener profile ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGardener(null)} className="flex items-center gap-1 text-xs font-sans" style={{ color: '#5C5040' }}><ChevronLeft size={13} />{garden.name}</button>
+                <button onClick={() => setGardener(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}><ArrowLeft size={14} /> {garden.name}</button>
 
                 {/* Identity */}
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.25)', color: '#2D6B3C', fontWeight: 600 }}>
+                  <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B', fontWeight: 600 }}>
                     {initials(gardener.name)}
-                    <span className="absolute -bottom-1 -right-1 rounded-full flex items-center justify-center" style={{ width: 16, height: 16, background: '#FBF6EC', border: '1px solid #E2D8C4' }}><Camera size={9} style={{ color: '#5C5040' }} /></span>
+                    <span className="absolute -bottom-1 -right-1"><Camera size={10} style={{ color: '#1F4D2B' }} /></span>
                   </div>
                   <div className="min-w-0">
                     <div className="font-display font-bold text-base truncate" style={{ color: '#20190F' }}>{gardener.name}</div>
-                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>ID {gardener.idNumber}</div>
-                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
+                    <div className="text-xs font-mono" style={{ color: '#9A8268' }}>ID {gardener.idNumber}</div>
+                    <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
                   </div>
                 </div>
                 <button onClick={() => mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 })}
-                  className="w-full py-1.5 rounded-lg text-xs font-display transition-all" style={{ background: 'rgba(91,158,212,0.14)', border: '1px solid rgba(91,158,212,0.4)', color: '#235E86' }}>
-                  <MapPin size={14} className="inline mr-1" />Find this garden on the map
+                  className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: '#2F6F9E' }}>
+                  <MapPin size={14} /> Find this garden on the map
                 </button>
 
                 {gardenerLoading ? (
@@ -497,22 +496,22 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <>
                     {/* Value summary */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#5C5040' }}>Produced</div><div className="text-base font-display font-semibold" style={{ color: '#2D6B3C' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#5C5040' }}>Sold</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.14)' }}><div className="text-xs font-mono" style={{ color: '#5C5040' }}>Value</div><div className="text-base font-display font-semibold" style={{ color: '#C07A1E' }}>R{totals.value.toLocaleString()}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Produced</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Sold</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Value</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{totals.value.toLocaleString()}</div></div>
                     </div>
 
                     {/* Courses */}
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Courses & training</div>
-                        <span className="text-xs font-mono" style={{ color: '#2D6B3C' }}>{gardener.trainingPct}%</span>
+                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>Courses & training</div>
+                        <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>{gardener.trainingPct}%</span>
                       </div>
                       <div className="grid grid-cols-2 gap-1">
                         {gardener.courses.map((c) => (
-                          <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
-                            <span style={{ color: c.done ? '#1F4D2B' : '#5C5040' }}>{c.done ? <Check size={10} /> : <Circle size={10} />}</span>
-                            <span className="truncate" style={{ color: c.done ? '#20190F' : '#5C5040' }}>{c.name}</span>
+                          <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}>
+                            <span className="flex-shrink-0" style={{ color: c.done ? '#1F4D2B' : '#9A8268' }}>{c.done ? <Check size={10} /> : '○'}</span>
+                            <span className="truncate" style={{ color: c.done ? '#5C5040' : '#9A8268' }}>{c.name}</span>
                           </div>
                         ))}
                       </div>
@@ -520,19 +519,19 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Garden design + report */}
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="rounded-lg overflow-hidden" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}>
-                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(91,158,212,0.12)' }}><MapIcon size={20} style={{ color: '#235E86' }} /></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-sans" style={{ color: '#235E86' }}>view</div></div>
+                      <div className="rounded-lg overflow-hidden" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}>
+                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(47,111,158,0.12)' }}><MapIcon size={22} style={{ color: '#2F6F9E' }} /></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-mono" style={{ color: '#2F6F9E' }}>view</div></div>
                       </div>
-                      <div className="rounded-lg overflow-hidden" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}>
-                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(212,168,83,0.12)' }}><FileText size={20} style={{ color: '#C07A1E' }} /></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-sans" style={{ color: '#C07A1E' }}>view</div></div>
+                      <div className="rounded-lg overflow-hidden" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}>
+                        <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(158,92,8,0.12)' }}><FileText size={22} style={{ color: '#9E5C08' }} /></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-mono" style={{ color: '#9E5C08' }}>view</div></div>
                       </div>
                     </div>
 
                     {/* Produce photos */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Produce photos</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Produce photos</div>
                       <div className="flex gap-1.5 flex-wrap">
                         {photoCrops.map(({ crop: c, photoUrl }, i) => (
                           photoUrl ? (
@@ -541,7 +540,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img src={photoUrl} alt={c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><span className="font-mono font-bold" style={{ fontSize: 10, color: c.c }}>{c.n.slice(0, 2).toUpperCase()}</span><span className="font-mono" style={{ fontSize: 7, color: '#5C5040', marginTop: 2 }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><span style={{ fontSize: 20 }}>{c.e}</span><span className="font-mono" style={{ fontSize: 8, color: '#9A8268' }}>{c.n}</span></div>
                           )
                         ))}
                       </div>
@@ -549,20 +548,20 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Books — production */}
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}><BookOpen size={12} />Books — production</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — production</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1" style={{ color: '#20190F' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#5C5040' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#2D6B3C' }}>{p.kg}kg</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#9A8268' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
                         ))}
                       </div>
                     </div>
 
                     {/* Books — sales */}
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}><BookOpen size={12} />Books — sales</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — sales</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}><span className="font-mono font-bold flex-shrink-0" style={{ fontSize: 9, color: p.crop.c }}>{p.crop.n.slice(0,2).toUpperCase()}</span><span className="flex-1 truncate" style={{ color: '#20190F' }}>{p.kg}kg — {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#235E86' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
@@ -572,18 +571,18 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ) : (
               /* ── LEVEL 2 — garden + gardeners ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGarden(null)} className="text-xs font-mono" style={{ color: '#5C5040' }}>← all gardens</button>
+                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}><ArrowLeft size={14} /> all gardens</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>
+                  <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#235E86'], ['Training', garden.training ? `${garden.training}%` : '—', '#C07A1E']].map(([l, v, c]) => (
-                    <div key={l as string} className="p-2 rounded-lg" style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#5C5040' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
+                  {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], ['Training', garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
+                    <div key={l as string} className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
                   ))}
                 </div>
                 <div>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#5C5040' }}>Gardeners — tap for full record</div>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Gardeners — tap for full record</div>
                   {gardenersLoading ? (
                     <div className="space-y-1">
                       <SkeletonRow /><SkeletonRow /><SkeletonRow />
@@ -593,19 +592,19 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       {gardeners.map((gr) => {
                         const prod = gr.production.reduce((s, p) => s + p.kg, 0);
                         return (
-                          <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: 'rgba(226,216,196,0.35)', border: '1px solid #E2D8C4' }}>
-                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 26, height: 26, background: 'rgba(31,77,43,0.10)', color: '#2D6B3C', fontSize: 10, fontWeight: 600 }}>{initials(gr.name)}</div>
-                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#5C5040' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
-                            <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2D6B3C' }}>{prod > 0 ? `${prod}kg` : '—'}</span>
+                          <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 26, height: 26, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 10, fontWeight: 600 }}>{initials(gr.name)}</div>
+                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#9A8268' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
+                            <span className="text-xs font-mono flex-shrink-0" style={{ color: '#1F4D2B' }}>{prod > 0 ? `${prod}kg` : '—'}</span>
                           </button>
                         );
                       })}
                     </div>
                   )}
                 </div>
-                <div className="rounded-lg p-2.5" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>Funder report</div>
-                  <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>Every gardener&apos;s record — ID, training, production, sales and design — rolls up automatically into the programme&apos;s M&amp;E report.</p>
+                <div className="rounded-lg p-2.5" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#9A8268' }}>Funder report</div>
+                  <p className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>Every gardener&apos;s record — ID, training, production, sales and design — rolls up automatically into the programme&apos;s M&amp;E report.</p>
                 </div>
               </div>
             )}
