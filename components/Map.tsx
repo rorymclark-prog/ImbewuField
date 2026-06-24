@@ -353,8 +353,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // teardown flag so this new instance can persist shapes again.
     tearingDownRef.current = false;
 
-    // Colour by featureType: water = blue, site/boundary = emerald
-    const strokeColor = ['case', ['==', ['get', 'user_featureType'], 'water'], '#7FC4F0', '#5DCF80'] as unknown as string;
+    // Generate 8×8 diagonal hatch sprites (land = green, water = blue).
+    // Must be added before map.addControl so fill-pattern references are valid when layers attach.
+    if (!map.hasImage('imbewu-hatch-land')) {
+      const mk = (r: number, g: number, b: number, a: number) => {
+        const sz = 8; const d = new Uint8ClampedArray(sz * sz * 4);
+        for (let y = 0; y < sz; y++) for (let x = 0; x < sz; x++) {
+          const on = (x + y) % sz < 2; const i = (y * sz + x) * 4;
+          d[i] = on ? r : 0; d[i + 1] = on ? g : 0; d[i + 2] = on ? b : 0; d[i + 3] = on ? a : 0;
+        }
+        return { width: sz, height: sz, data: d };
+      };
+      map.addImage('imbewu-hatch-land',  mk(46, 107,  58, 170));
+      map.addImage('imbewu-hatch-water', mk(35,  94, 134, 200));
+    }
 
     // Touch screens need much bigger, easier-to-grab corner dots than a mouse. On a phone
     // a finger covers ~44px, so tiny 8px vertices are nearly impossible to drag accurately —
@@ -371,19 +383,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       // for fingers — widen the touch buffer so corners are easy to catch on a phone.
       clickBuffer: 4,
       touchBuffer: 40,
-      // Fills are SPLIT by type and ordered land-then-water so the blue water fill always
-      // paints ON TOP of the green boundary (you can see the colour difference even where
-      // a dam sits inside a parcel). Water uses a higher opacity so it reads clearly.
+      // Polygon style: dark casing + diagonal hatch fill + bright edge + white vertex handles.
+      // Layers render in array order (first = bottom). Land/water split so blue always paints
+      // on top of green where a water feature overlaps a land parcel.
       styles: [
-        { id: 'gl-draw-polygon-fill-site', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static'], ['!=', 'user_featureType', 'water']], paint: { 'fill-color': '#48A864', 'fill-opacity': 0.18 } },
-        { id: 'gl-draw-polygon-fill-site-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static'], ['!=', 'user_featureType', 'water']], paint: { 'fill-color': '#48A864', 'fill-opacity': 0.16 } },
-        { id: 'gl-draw-polygon-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static'], ['==', 'user_featureType', 'water']], paint: { 'fill-color': '#5B9ED4', 'fill-opacity': 0.42 } },
-        { id: 'gl-draw-polygon-fill-water-static', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static'], ['==', 'user_featureType', 'water']], paint: { 'fill-color': '#5B9ED4', 'fill-opacity': 0.4 } },
-        { id: 'gl-draw-polygon-stroke-active', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2.5, 'line-dasharray': [2, 1] } },
-        { id: 'gl-draw-polygon-stroke-static', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2 } },
-        { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': strokeColor, 'line-width': 2, 'line-dasharray': [2, 1] } },
-        { id: 'gl-draw-point', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']], paint: { 'circle-radius': vtxRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2.5 } },
-        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': strokeColor, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.85 } },
+        // Dark casing — thick under-stroke that survives on any satellite background colour
+        { id: 'gl-draw-poly-casing-land',  type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#0d1f12', 'line-width': 9 } },
+        { id: 'gl-draw-poly-casing-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#071422', 'line-width': 9 } },
+        // Diagonal hatch fill — semi-transparent 45° lines, transparent gaps let satellite show through
+        { id: 'gl-draw-poly-fill-land',  type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], paint: { 'fill-pattern': 'imbewu-hatch-land'  } as object },
+        { id: 'gl-draw-poly-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], paint: { 'fill-pattern': 'imbewu-hatch-water' } as object },
+        // Bright edge — thin bright stroke on top of dark casing
+        { id: 'gl-draw-poly-stroke-land',  type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#9BE66B', 'line-width': 3.5 } },
+        { id: 'gl-draw-poly-stroke-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#5BB4EC', 'line-width': 3.5 } },
+        // In-progress line while adding corners
+        { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': '#9BE66B', 'line-width': 2.5 } },
+        // Vertex handles — white dots with dark-green stroke (larger on touch devices)
+        { id: 'gl-draw-point',          type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'vertex']],   paint: { 'circle-radius': vtxRadius, 'circle-color': '#fff', 'circle-stroke-color': '#2E6B3A', 'circle-stroke-width': 2.5 } },
+        { id: 'gl-draw-point-midpoint', type: 'circle', filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']], paint: { 'circle-radius': midRadius, 'circle-color': '#fff', 'circle-stroke-color': '#2E6B3A', 'circle-stroke-width': 2,   'circle-opacity': 0.85 } },
       ],
     });
 
