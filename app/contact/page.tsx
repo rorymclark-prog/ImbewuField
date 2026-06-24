@@ -2,15 +2,37 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft } from 'lucide-react';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured, getFirebase } from '@/lib/firebase/init';
 import { getMyProfile } from '@/lib/db/queries';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } from 'firebase/firestore';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import type { Profile } from '@/lib/db/types';
+
+interface ContactReply {
+  id: string;
+  reply_body: string;
+  replied_by_name: string | null;
+  replied_at: { toDate?: () => Date; seconds?: number } | null;
+  recipient_label: string;
+}
+
+function timeAgo(ts: ContactReply['replied_at']): string {
+  if (!ts) return '';
+  try {
+    const d = typeof (ts as { toDate?: () => Date }).toDate === 'function'
+      ? (ts as { toDate: () => Date }).toDate()
+      : new Date((ts as { seconds?: number }).seconds ? (ts as { seconds: number }).seconds * 1000 : '');
+    const diff = Date.now() - d.getTime();
+    if (diff < 60_000) return 'Just now';
+    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
+    if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+    return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' });
+  } catch { return ''; }
+}
 
 type Recipient = 'mentor' | 'organisation' | 'support';
 
@@ -26,6 +48,8 @@ export default function ContactPage() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
+  const [replies, setReplies] = useState<ContactReply[]>([]);
+  const [expandedReply, setExpandedReply] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user && isLive) router.replace('/login');
@@ -34,6 +58,16 @@ export default function ContactPage() {
   useEffect(() => {
     if (!loading && user && isLive) {
       getMyProfile().then(setProfile).catch(() => {});
+      const fb = getFirebase();
+      if (fb) {
+        getDocs(query(
+          collection(fb.db, 'contact_replies'),
+          where('for_uid', '==', user.uid),
+          orderBy('replied_at', 'desc'),
+        )).then((snap) => {
+          setReplies(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ContactReply)));
+        }).catch(() => {});
+      }
     }
   }, [user, loading, isLive]);
 
@@ -123,6 +157,66 @@ export default function ContactPage() {
           </div>
         ) : (
           <>
+            {/* Replies from mentor/org */}
+            {replies.length > 0 && (
+              <div style={{ marginBottom: 28 }}>
+                <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
+                  <MailOpen size={14} style={{ color: '#1F4D2B' }} />
+                  <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
+                    Replies from your team
+                  </span>
+                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                    {replies.length}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {replies.map((r) => (
+                    <div key={r.id} className="rounded-2xl overflow-hidden"
+                      style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.2)' }}>
+                      <button
+                        onClick={() => setExpandedReply(expandedReply === r.id ? null : r.id)}
+                        className="w-full flex items-start gap-3 px-4 py-3 text-left"
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                      >
+                        <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
+                          style={{ width: 32, height: 32, fontSize: 12, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
+                          {(r.replied_by_name ?? 'M').slice(0, 1).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
+                              {r.replied_by_name ?? 'Your mentor'}
+                            </span>
+                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#8C7A62' }}>
+                              {timeAgo(r.replied_at)}
+                            </span>
+                          </div>
+                          {expandedReply !== r.id && (
+                            <div className="font-sans truncate" style={{ fontSize: 12, color: '#5C5040', marginTop: 2 }}>
+                              {r.reply_body}
+                            </div>
+                          )}
+                        </div>
+                        {expandedReply === r.id
+                          ? <ChevronUp size={13} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />
+                          : <ChevronDown size={13} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />}
+                      </button>
+                      {expandedReply === r.id && (
+                        <div className="px-4 pb-4 pt-1" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
+                          <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: '#20190F' }}>
+                            {r.reply_body}
+                          </p>
+                          <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', marginTop: 10, textTransform: 'capitalize' }}>
+                            Via {r.recipient_label}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Page intro */}
             <div style={{ marginBottom: 24 }}>
               <div

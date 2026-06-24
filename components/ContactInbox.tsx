@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { MessageCircle, ChevronDown, ChevronUp, Mail, Loader2, MailOpen } from 'lucide-react';
-import { collection, query, where, orderBy, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { MessageCircle, ChevronDown, ChevronUp, Mail, Loader2, MailOpen, CornerDownRight, Send } from 'lucide-react';
+import { collection, query, where, orderBy, getDocs, updateDoc, addDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 
 interface ContactMessage {
@@ -12,7 +13,7 @@ interface ContactMessage {
   recipient: string;
   subject: string;
   body: string;
-  status: 'unread' | 'read';
+  status: 'unread' | 'read' | 'replied';
   created_at: { toDate?: () => Date; seconds?: number } | string | null;
 }
 
@@ -42,6 +43,9 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState<Record<string, string>>({});
+  const [replySending, setReplySending] = useState<string | null>(null);
+  const [replySent, setReplySent] = useState<Set<string>>(new Set());
   const isLive = isBackendConfigured();
 
   const load = useCallback(async () => {
@@ -84,6 +88,30 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
       const msg = messages.find((m) => m.id === id);
       if (msg?.status === 'unread') markRead(id);
     }
+  }
+
+  async function sendReply(msg: ContactMessage) {
+    const text = (replyText[msg.id] ?? '').trim();
+    if (!text || !isLive) return;
+    const fb = getFirebase();
+    if (!fb) return;
+    setReplySending(msg.id);
+    const auth = getAuth(fb.app);
+    const me = auth.currentUser;
+    await addDoc(collection(fb.db, 'contact_replies'), {
+      message_id: msg.id,
+      for_uid: msg.from_uid,
+      reply_body: text,
+      replied_at: serverTimestamp(),
+      replied_by_name: me?.displayName ?? me?.email ?? 'Your mentor',
+      recipient_label: recipient,
+    });
+    await updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' });
+    setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, status: 'replied' as const } : m));
+    setReplySent((s) => new Set(s).add(msg.id));
+    setReplyText((t) => ({ ...t, [msg.id]: '' }));
+    setReplySending(null);
+    setTimeout(() => setReplySent((s) => { const n = new Set(s); n.delete(msg.id); return n; }), 3000);
   }
 
   const unreadCount = messages.filter((m) => m.status === 'unread').length;
@@ -187,17 +215,44 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
               <div className="px-10 pb-4" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
                 <div className="font-sans text-xs pt-2 pb-3" style={{ color: '#8C7A62' }}>
                   Sent to: <span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
+                  {msg.status === 'replied' && (
+                    <span className="ml-2 px-1.5 py-0.5 rounded font-mono" style={{ fontSize: 10, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)' }}>
+                      replied
+                    </span>
+                  )}
                 </div>
                 <p className="font-sans text-sm leading-relaxed whitespace-pre-wrap" style={{ color: '#20190F' }}>
                   {msg.body}
                 </p>
-                {msg.from_uid && (
-                  <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-                    <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-                      User ID: {msg.from_uid.slice(0, 12)}…
-                    </span>
+
+                {/* Reply box */}
+                <div className="mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <CornerDownRight size={12} style={{ color: '#8C7A62' }} />
+                    <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>Reply</span>
                   </div>
-                )}
+                  <textarea
+                    value={replyText[msg.id] ?? ''}
+                    onChange={(e) => setReplyText((t) => ({ ...t, [msg.id]: e.target.value }))}
+                    placeholder="Write a reply to this learner…"
+                    rows={3}
+                    className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none"
+                    style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', lineHeight: 1.5 }}
+                  />
+                  <button
+                    onClick={() => sendReply(msg)}
+                    disabled={!replyText[msg.id]?.trim() || replySending === msg.id}
+                    className="mt-2 flex items-center gap-1.5 font-display font-semibold text-xs px-4 py-2 rounded-xl"
+                    style={{
+                      background: replyText[msg.id]?.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.08)',
+                      color: replyText[msg.id]?.trim() ? '#F7F2E9' : '#8C7A62',
+                      border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
+                    }}
+                  >
+                    {replySending === msg.id ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
+                    {replySent.has(msg.id) ? 'Sent!' : replySending === msg.id ? 'Sending…' : 'Send reply'}
+                  </button>
+                </div>
               </div>
             )}
           </div>
