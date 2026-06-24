@@ -1011,6 +1011,37 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }
   }
 
+  const handleSharePlace = async (place: SavedPlace) => {
+    const draw = drawRef.current;
+    const mapInst = mapRef.current;
+    if (!draw || !mapInst) return;
+    setPlaceShareId(place.id);
+    setPlaceShareStatus('saving');
+    try {
+      const allFeatures = draw.getAll().features.filter(
+        (f) => (f.properties?.placeId === place.id)
+      );
+      const geojson: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: allFeatures };
+      const waterPoints = loadWaterPoints().filter(() => true); // include all for now
+      const center = mapInst.getCenter();
+      const code = await saveSharedSite({
+        geojson,
+        places: [place],
+        waterPoints,
+        mapCenter: [center.lng, center.lat],
+        mapZoom: mapInst.getZoom(),
+        label: place.name,
+      });
+      const url = `${window.location.origin}/farmer?share=${code}`;
+      await navigator.clipboard.writeText(url);
+      setPlaceShareStatus('copied');
+      setTimeout(() => { setPlaceShareId(null); setPlaceShareStatus('idle'); }, 3000);
+    } catch {
+      setPlaceShareStatus('error');
+      setTimeout(() => { setPlaceShareId(null); setPlaceShareStatus('idle'); }, 2500);
+    }
+  };
+
   // Fly to saved place
   useEffect(() => {
     if (!jumpTo) return;
@@ -1151,7 +1182,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1177,18 +1208,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
           centroid, bbox,
+          placeId: f.properties?.placeId as string | undefined,
         };
       });
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
@@ -1210,10 +1242,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
           centroid, bbox,
+          placeId: f.properties?.placeId as string | undefined,
         };
       });
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number] }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
@@ -1225,11 +1258,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
   const [shapeName, setShapeName] = useState('');
   const [shapeCategory, setShapeCategory] = useState('');
+  const [shapeNamePlaceId, setShapeNamePlaceId] = useState<string | null>(null);
+  const [placeShareId, setPlaceShareId] = useState<string | null>(null);
+  const [placeShareStatus, setPlaceShareStatus] = useState<'idle'|'saving'|'copied'|'error'>('idle');
   const openShapeNaming = useCallback((id: string, type: 'site' | 'water', overrideName?: string, overrideCat?: string) => {
     const draw = drawRef.current;
     const f = draw?.get(id);
     setShapeName(overrideName !== undefined ? overrideName : (f?.properties?.name as string) ?? '');
     setShapeCategory(overrideCat !== undefined ? overrideCat : (f?.properties?.category as string) ?? '');
+    setShapeNamePlaceId((f?.properties?.placeId as string) ?? null);
     setShapeNaming({ id, type });
   }, []);
   const confirmShapeNaming = useCallback(() => {
@@ -1239,13 +1276,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       try {
         draw.setFeatureProperty(shapeNaming.id, 'name', shapeName.trim() || undefined);
         draw.setFeatureProperty(shapeNaming.id, 'category', shapeCategory || undefined);
+        draw.setFeatureProperty(shapeNaming.id, 'placeId', shapeNamePlaceId ?? undefined);
       } catch { /* feature may be gone */ }
     }
     setShapeNaming(null);
     recompute();
     setSiteFeatures(getSiteFeatures());
     setWaterFeatures(getWaterFeatures());
-  }, [shapeNaming, shapeName, shapeCategory, recompute, getSiteFeatures, getWaterFeatures]);
+  }, [shapeNaming, shapeName, shapeCategory, shapeNamePlaceId, recompute, getSiteFeatures, getWaterFeatures]);
 
   // Delete a single drawn feature by id (one parcel / one water store)
   const deleteFeature = useCallback((featureId: string) => {
@@ -1456,6 +1494,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   className="flex items-center gap-1.5 active:bg-red-50 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#C0492A', fontSize: 13, fontWeight: 600 }}>
                   <Trash2 size={14} />Delete
+                </button>
+                <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
+                <button
+                  onClick={() => handleSharePlace(p)}
+                  disabled={placeShareId === p.id && placeShareStatus === 'saving'}
+                  className="flex items-center gap-1.5 active:bg-stone-100 transition-colors relative"
+                  style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: placeShareId === p.id && placeShareStatus === 'copied' ? '#1F4D2B' : '#20190F', fontSize: 13, fontWeight: 600 }}>
+                  {placeShareId === p.id && placeShareStatus === 'saving'
+                    ? <Loader2 size={14} className="animate-spin" style={{ color: '#20190F' }} />
+                    : <Share2 size={14} style={{ color: placeShareId === p.id && placeShareStatus === 'copied' ? '#1F4D2B' : '#20190F' }} />}
+                  {placeShareId === p.id && placeShareStatus === 'copied' ? 'Copied!' : 'Share'}
                 </button>
               </div>
             </Popup>
@@ -2209,7 +2258,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
                           <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                         </div>
-                        <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{sf.category ? `${sf.category} · ` : ''}Land · {sf.areaHa} ha</div>
+                        <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
+                          <span>{sf.category ? `${sf.category} · ` : ''}Land · {sf.areaHa} ha</span>
+                          {sf.placeId && (() => { const pl = savedPins.find(p => p.id === sf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
+                        </div>
                       </button>
                       <button onClick={() => startEdit(sf.id, 'site')}
                         className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
@@ -2257,7 +2309,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
                       <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                     </div>
-                    <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</div>
+                    <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
+                      <span>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</span>
+                      {wf.placeId && (() => { const pl = savedPins.find(p => p.id === wf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
+                    </div>
                   </button>
                   <button onClick={() => startEdit(wf.id, 'water')}
                     className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
@@ -2679,6 +2734,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   );
                 })}
               </div>
+              {savedPins.length > 0 && (
+                <>
+                  <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>Link to place (optional)</div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {savedPins.map((pin) => {
+                      const on = shapeNamePlaceId === pin.id;
+                      return (
+                        <button key={pin.id} onClick={() => setShapeNamePlaceId(on ? null : pin.id)}
+                          className="flex items-center gap-1.5 rounded-full font-sans font-semibold transition-all"
+                          style={{ fontSize: 12.5, padding: '5px 12px 5px 8px', background: on ? resolveColor(pin) : 'rgba(226,216,196,0.4)', color: on ? '#fff' : '#5C5040', border: `1px solid ${on ? resolveColor(pin) : '#E2D8C4'}`, cursor: 'pointer' }}>
+                          <MapPin size={12} style={{ color: on ? '#fff' : resolveColor(pin) }} />
+                          {pin.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
               <div className="flex gap-2">
                 <button onClick={() => setShapeNaming(null)}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
