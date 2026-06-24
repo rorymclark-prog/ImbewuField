@@ -1737,7 +1737,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           // calm paper-tint when off (replaces the old clashing teal/ochre/blue).
           const chip = (on: boolean): React.CSSProperties => ({
             ...(on
-              ? { background: 'rgba(168,216,138,0.16)', border: '1px solid rgba(168,216,138,0.45)', color: '#A8D88A' }
+              ? { background: 'rgba(168,216,138,0.32)', border: '1.5px solid rgba(168,216,138,0.7)', color: '#A8D88A' }
               : { background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2' }),
             borderRadius: 9, height: 40, padding: '0 13px', fontSize: 13, fontWeight: 600,
             display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -1802,7 +1802,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   className="flex-1 flex items-center justify-center gap-2 font-sans transition-all"
                   style={{
                     ...(editEngine === key
-                      ? { background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.4)', color: '#A8D88A' }
+                      ? { background: 'rgba(168,216,138,0.32)', border: '1.5px solid rgba(168,216,138,0.7)', color: '#A8D88A' }
                       : { background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2' }),
                     borderRadius: 11, minHeight: 44, fontSize: 13, fontWeight: 600,
                   }}>
@@ -1838,8 +1838,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             title={selectedLocation ? 'Save this spot to your Places' : 'Tap a spot on the map first'}
             className="flex items-center gap-2 transition-all active:scale-95"
             style={{
-              background: placeSaved ? 'rgba(168,216,138,0.16)' : 'rgba(247,242,233,0.07)',
-              border: `1px solid ${placeSaved ? 'rgba(168,216,138,0.4)' : 'rgba(234,243,226,0.16)'}`,
+              background: placeSaved ? 'rgba(168,216,138,0.32)' : 'rgba(247,242,233,0.07)',
+              border: `1.5px solid ${placeSaved ? 'rgba(168,216,138,0.7)' : 'rgba(234,243,226,0.16)'}`,
               borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600,
               color: placeSaved ? '#A8D88A' : '#EAF3E2', opacity: selectedLocation ? 1 : 0.5,
             }}>
