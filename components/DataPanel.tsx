@@ -287,6 +287,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   useEffect(() => { setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null); }, [activePlaceId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
+  // Refresh survey card when the survey sheet closes (save happened inside the sheet)
+  useEffect(() => { if (!surveySheetOpen && activePlaceId) setSurvey(loadSurvey(activePlaceId)); }, [surveySheetOpen]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
 
   // Evidence state

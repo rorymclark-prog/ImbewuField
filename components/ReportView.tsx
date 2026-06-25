@@ -7,6 +7,7 @@ import { loadReports, saveReport, deleteReport, reportId, type SavedReport } fro
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
 import { loadSurvey } from '@/lib/site-survey';
+import { getSiteEvidence } from '@/lib/site-evidence';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -276,6 +277,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setGenerated(false);
 
     try {
+      // Build evidence summary (strip base64 thumbnails — send counts + notes only)
+      const rawEvidence = activePlaceId ? getSiteEvidence(activePlaceId) : {};
+      const evidenceData: Record<string, { count: number; notes: string[] }> = {};
+      for (const [key, items] of Object.entries(rawEvidence)) {
+        if (items.length > 0) {
+          evidenceData[key] = {
+            count: items.length,
+            notes: items.filter(i => i.note).map(i => i.note!),
+          };
+        }
+      }
+
       const res = await fetch('/api/generate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -285,6 +298,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           siteData: siteData || undefined,
           waterData: waterData || undefined,
           surveyData: activePlaceId ? loadSurvey(activePlaceId) ?? undefined : undefined,
+          evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
           sections: Array.from(selected),
           language,
           bilingual,
@@ -487,9 +501,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Length */}
           <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>Length</div>
           <div className="flex flex-col gap-1.5 mb-4">
-            {([['one-pager', 'One pager'], ['standard', 'Standard'], ['comprehensive', 'Comprehensive']] as const).map(([val, label]) => (
-              <button key={val} onClick={() => setLength(val)}
+            {([
+              ['one-pager', 'One pager', 'Executive Summary only — fits one printed page'] as const,
+              ['standard', 'Standard', 'Core sections for the farmer'] as const,
+              ['comprehensive', 'Comprehensive', 'All sections, full detail'] as const,
+            ]).map(([val, label, tip]) => (
+              <button key={val} onClick={() => {
+                setLength(val as 'one-pager' | 'standard' | 'comprehensive');
+                if (val === 'one-pager') setSelected(new Set(['Executive Summary']));
+                else if (val === 'comprehensive') setSelected(new Set(ALL_SECTIONS));
+                else setSelected(prev => prev.size <= 1 ? new Set(FARMER_ESSENTIALS) : prev);
+              }}
                 className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
+                title={tip}
                 style={length === val
                   ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }
                   : { background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
@@ -513,9 +537,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 title="Select all sections">
                 All
               </button>
+              <button onClick={() => setSelected(new Set())}
+                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                style={{ color: '#9B4040', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
+                title="Deselect all sections">
+                None
+              </button>
             </div>
           </div>
-          <div className="space-y-1">
+          {length === 'one-pager' && (
+            <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6010' }}>
+              One pager = Executive Summary only
+            </div>
+          )}
+          <div className="space-y-1" style={{ opacity: length === 'one-pager' ? 0.4 : 1, pointerEvents: length === 'one-pager' ? 'none' : 'auto' }}>
             {ALL_SECTIONS.map((s) => (
               <button
                 key={s}
@@ -545,6 +580,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Photo analysis will inform the report</div>
             </div>
           )}
+
+          {/* Satellite capture status */}
+          <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : '#E2D8C4'}` }}>
+            <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? '#1F4D2B' : '#8C7A62' }}>
+              {mapCapture ? '✓ Aerial snapshot captured' : 'No aerial snapshot'}
+            </div>
+            {!mapCapture && (
+              <div className="text-xs font-mono" style={{ color: '#8C7A62' }}>
+                Close report → zoom into your site on the map → tap Capture → reopen
+              </div>
+            )}
+          </div>
           {/* Generated TOC — appears once the report has content */}
           {report && (() => {
             const tocItems = report.split('\n')

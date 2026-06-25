@@ -47,12 +47,13 @@ const LANGUAGES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
-  const { locationData, photoAnalysis, siteData, waterData, surveyData, sections, language, bilingual, tone, length }: {
+  const { locationData, photoAnalysis, siteData, waterData, surveyData, evidenceData, sections, language, bilingual, tone, length }: {
     locationData: LocationData;
     photoAnalysis?: string;
     siteData?: SiteData;
     waterData?: WaterData;
     surveyData?: SiteSurvey;
+    evidenceData?: Record<string, { count: number; notes: string[] }>;
     sections: string[];
     language?: string;
     bilingual?: boolean;
@@ -143,6 +144,11 @@ Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.
 Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
+${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (items the farmer has photographed, measured or noted on this site — treat as ACTUAL observed conditions, not estimates):\n${
+  Object.entries(evidenceData)
+    .map(([key, { count, notes }]) => `  · ${key.replace(/_/g, ' ')}: ${count} item${count !== 1 ? 's' : ''}${notes.length > 0 ? ' — notes: ' + notes.map(n => `"${n}"`).join(', ') : ''}`)
+    .join('\n')
+}\nReference this evidence where relevant — if water items exist, mention them in the Water Harvesting section; soil items in Soil Strategy; etc. This is real ground-truth data.` : ''}
 ---
 
 ${withTitle ? `Begin with this title line exactly:\n# Permaculture Site Report\nthen a one-line subheading naming the biome and region, then the sections below.\n\n` : `Do NOT write any document title, introduction or preamble. Output ONLY the section(s) requested below, starting directly with the first "## " heading.\n\n`}Generate ONLY the sections listed here, in this order: ${sections.join(', ')}
