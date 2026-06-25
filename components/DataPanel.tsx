@@ -926,23 +926,23 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           const isWet = (r: number) => r > rainAvg * 0.9;
 
           const ZONE_LABELS: Record<string, string> = {
-            Cwa: 'Humid subtropical · summer rain', Cwb: 'Humid subtropical · mist belt',
-            Csa: 'Mediterranean · coastal', Csb: 'Mediterranean · maritime',
-            Cfa: 'Humid subtropical', Cfb: 'Temperate oceanic',
-            BWh: 'Semi-arid · hot desert', BWk: 'Semi-arid · cold desert',
-            BSh: 'Semi-arid · hot steppe', BSk: 'Semi-arid · cold steppe',
-            ET: 'Alpine / montane',
+            Cwa: t('zoneHumidSubtropicalSummerRain'), Cwb: t('zoneHumidSubtropicalMistBelt'),
+            Csa: t('zoneMediterraneanCoastal'), Csb: t('zoneMediterraneanMaritime'),
+            Cfa: t('zoneHumidSubtropical'), Cfb: t('zoneTemperateOceanic'),
+            BWh: t('zoneSemiAridHotDesert'), BWk: t('zoneSemiAridColdDesert'),
+            BSh: t('zoneSemiAridHotSteppe'), BSk: t('zoneSemiAridColdSteppe'),
+            ET: t('zoneAlpineMontane'),
           };
           const kp = data.climate.koppen;
           const zoneLabel = ZONE_LABELS[kp] ?? kp;
 
           const zoneSummary =
-            kp.startsWith('Cw') ? 'Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you grow most of the year — plan around the dry winter and afternoon summer storms.'
-            : kp.startsWith('Cf') ? 'Reliable rainfall year-round with mild temperatures and no long dry season. Good for steady production across multiple crops — manage humidity and disease rather than drought.'
-            : kp.startsWith('Cs') ? 'Wet, mild winters and hot, dry summers. The rainy cool season is your primary growing window; summer demands drought-tolerant or irrigated crops.'
-            : kp.startsWith('BS') ? 'Semi-arid steppe — moderate rainfall with strong seasonality. Water harvesting and mulching are essential to extend the growing window.'
-            : kp.startsWith('BW') ? 'Arid desert margins — low and unreliable rainfall. Water harvesting must be established before any significant food production is viable.'
-            : kp.startsWith('ET') ? 'High-altitude site with cold winters and a short growing season. Maximise warm-aspect micro-climates and frost-hardy varieties.'
+            kp.startsWith('Cw') ? t('summaryWarmWetSummer')
+            : kp.startsWith('Cf') ? t('summaryReliableRainfall')
+            : kp.startsWith('Cs') ? t('summaryWetMildWinter')
+            : kp.startsWith('BS') ? t('summarySemiAridSteppe')
+            : kp.startsWith('BW') ? t('summaryAridDesert')
+            : kp.startsWith('ET') ? t('summaryHighAltitude')
             : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
 
           const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
@@ -1018,7 +1018,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 21, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
                 <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: '#9A8C70', margin: '3px 0 11px' }}>
-                  Köppen {kp} — {data.climate.koppenDesc}
+                  Köppen {kp} — {zoneLabel}
                 </div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5 }}>{zoneSummary}</div>
                 <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
@@ -1035,7 +1035,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
-                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm rain / yr</span>
+                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} {t('chipRainPerYear')}</span>
                   <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
                   <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{frostChip}</span>
                 </div>
