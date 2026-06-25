@@ -1250,6 +1250,55 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {tab === 'Reports' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
+            {/* Site survey card */}
+            {(() => {
+              const sv = survey;
+              const steps = [
+                !!(sv?.siteType && sv.goals?.length > 0),
+                !!(sv?.waterSource?.length),
+                sv?.roofMainM2 !== undefined && sv?.roofMainM2 !== null,
+                !!(sv?.landPrepMethod && sv.soilCondition),
+                !!(sv?.existingCrops?.length),
+                !!(sv?.farmingPractice && sv.challenges?.length),
+              ];
+              const done = steps.filter(Boolean).length;
+              const pct = Math.round(done / 6 * 100);
+              const GOAL_LABELS: Record<string, string> = {
+                food: t('surveyGoalFood'), income: t('surveyGoalIncome'),
+                soil: t('surveyGoalSoil'), education: t('surveyGoalEducation'),
+              };
+              return (
+                <div style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                      {t('surveySectionLabel')}
+                    </span>
+                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === 6 ? '#3C6B3F' : '#B07A1E' }}>
+                      {t('surveyStepsOf6').replace('{n}', String(done))}
+                    </span>
+                  </div>
+                  <div style={{ height: 6, background: '#DCD2BD', borderRadius: 3, overflow: 'hidden', marginBottom: 10 }}>
+                    <div style={{ width: `${pct}%`, height: '100%', background: done === 6 ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
+                  </div>
+                  {(sv?.goals?.length ?? 0) > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
+                      {(sv?.goals ?? []).map((g: string) => (
+                        <span key={g} style={{ font: '500 11px/1 system-ui', padding: '4px 9px', borderRadius: 99, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>
+                          {GOAL_LABELS[g] ?? g}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setSurveySheetOpen(true)}
+                    style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
+                  >
+                    {done === 6 ? t('surveyUpdateButton') : t('surveyOpenButton')}
+                  </button>
+                </div>
+              );
+            })()}
+
             {/* Report completeness bar */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
