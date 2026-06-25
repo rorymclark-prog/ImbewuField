@@ -11,20 +11,34 @@ interface Props {
 }
 
 async function resizeImage(file: File, maxPx = 1120): Promise<{ data: string; mediaType: string }> {
-  return new Promise((resolve) => {
-    const img = new Image();
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
+    reader.onerror = () => reject(new Error(`Could not read ${file.name}`));
     reader.onload = (e) => {
-      img.src = e.target!.result as string;
+      const img = new Image();
+      img.onerror = () => reject(new Error(`${file.name} could not be decoded — try JPEG or PNG`));
       img.onload = () => {
+        if (!img.naturalWidth || !img.naturalHeight) {
+          reject(new Error(`${file.name} has zero dimensions`));
+          return;
+        }
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
         const canvas = document.createElement('canvas');
         canvas.width = Math.round(img.width * ratio);
         canvas.height = Math.round(img.height * ratio);
-        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // Detect silent HEIC decode failure: canvas stays transparent → JPEG becomes black frame
+        const cx = Math.floor(canvas.width / 2);
+        const cy = Math.floor(canvas.height / 2);
+        if (ctx.getImageData(cx, cy, 1, 1).data[3] === 0) {
+          reject(new Error(`${file.name} appears blank after resize — try a JPEG or PNG instead of HEIC`));
+          return;
+        }
         const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
         resolve({ data: dataUrl.split(',')[1], mediaType: 'image/jpeg' });
       };
+      img.src = e.target!.result as string;
     };
     reader.readAsDataURL(file);
   });
@@ -42,12 +56,20 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
   const processFiles = useCallback(async (files: File[]) => {
     const valid = files.filter(f => f.type.startsWith('image/')).slice(0, 5);
     if (!valid.length) return;
-
-    const resized = await Promise.all(valid.map(resizeImage));
-    const urls = valid.map(f => URL.createObjectURL(f));
-    setPreviews(urls);
-    setImageData(resized);
-    setAnalysis('');
+    setError('');
+    const results = await Promise.allSettled(valid.map(resizeImage));
+    const ok: Array<{ idx: number; data: { data: string; mediaType: string } }> = [];
+    const errs: string[] = [];
+    results.forEach((r, i) => {
+      if (r.status === 'fulfilled') ok.push({ idx: i, data: r.value });
+      else errs.push(r.reason instanceof Error ? r.reason.message : `Photo ${i + 1} failed`);
+    });
+    if (errs.length) setError(errs.join(' · '));
+    if (ok.length) {
+      setPreviews(ok.map(({ idx }) => URL.createObjectURL(valid[idx])));
+      setImageData(ok.map(({ data }) => data));
+      setAnalysis('');
+    }
   }, []);
 
   const onDrop = useCallback((e: React.DragEvent) => {
@@ -78,7 +100,14 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         text += dec.decode(value, { stream: true });
         setAnalysis(text);
       }
-      if (text.trim()) onAnalysisComplete(text);
+      if (text.trim()) {
+        const isBlackFrame = /cannot extract meaningful visual|essentially a black frame|extremely dark|underexposed|appears blank/i.test(text);
+        if (isBlackFrame) {
+          setError('Claude could not read the photo — it appears blank or very dark. Retake in good light or convert to JPEG/PNG first.');
+        } else {
+          onAnalysisComplete(text);
+        }
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Analysis failed');
     } finally {
