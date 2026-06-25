@@ -85,6 +85,23 @@ function SkeletonLine({ w }: { w: string }) {
   return <div className="h-3 rounded-full animate-pulse" style={{ width: w, background: 'rgba(226,216,196,0.7)' }} />;
 }
 
+const CACHE_PREFIX = 'imbewu_lifeguide_v1_';
+const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+function readCache(key: string): LifeGuideData | null {
+  try {
+    const raw = localStorage.getItem(CACHE_PREFIX + key);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts > CACHE_TTL_MS) { localStorage.removeItem(CACHE_PREFIX + key); return null; }
+    return data as LifeGuideData;
+  } catch { return null; }
+}
+
+function writeCache(key: string, data: LifeGuideData) {
+  try { localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ data, ts: Date.now() })); } catch { /* storage full */ }
+}
+
 export default function LifeGuide({ locationData }: { locationData: LocationData | null }) {
   const [data, setData] = useState<LifeGuideData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -93,9 +110,13 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
 
   useEffect(() => {
     if (!locationData?.biome) return;
-    const key = `${locationData.biome.code}:${locationData.rainfall.annual}`;
-    if (fetched.current === key || data) return;
-    fetched.current = key;
+    const cacheKey = `${locationData.biome.code}_${locationData.rainfall.annual}`;
+    if (fetched.current === cacheKey) return;
+    fetched.current = cacheKey;
+
+    const cached = readCache(cacheKey);
+    if (cached) { setData(cached); return; }
+
     setLoading(true);
     setError('');
     fetch('/api/life-guide', {
@@ -104,9 +125,9 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       body: JSON.stringify({ locationData }),
     })
       .then((r) => r.json())
-      .then((d: LifeGuideData) => { setData(d); setLoading(false); })
+      .then((d: LifeGuideData) => { writeCache(cacheKey, d); setData(d); setLoading(false); })
       .catch(() => { setError('Could not load — check connection'); setLoading(false); });
-  }, [locationData, data]);
+  }, [locationData]);
 
   if (!locationData) {
     return <p className="text-xs font-display text-center py-8" style={{ color: '#8C7A62' }}>Select a location on the map first</p>;
