@@ -896,139 +896,304 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         )}
 
         {/* CLIMATE */}
-        {tab === 'Climate' && (
-          <>
-            <div className="grid grid-cols-2 gap-2.5">
-              <Stat label="Köppen" value={data.climate.koppen} sub={data.climate.koppenDesc} color="#C07A1E" />
-              <Stat label="Solar" value={`${data.climate.solarRadiation}`} sub="kWh/m²/day" color="#C07A1E" />
-              <Stat label="Summer max" value={`${data.climate.maxTemp}°C`} />
-              <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? 'Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? '#235E86' : undefined} />
-            </div>
+        {tab === 'Climate' && (() => {
+          const MS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+          const monthly = data.rainfall.monthly ?? [];
+          const temps = data.climate.monthlyTemp;
+          const annualRain = Math.round(data.rainfall.annual);
+          const kmh = Math.round(data.climate.windSpeed * 3.6);
+          const tMin = Math.min(...temps);
+          const tMax = Math.max(...temps);
+          const rainMax = Math.max(...monthly, 1);
+          const rainAvg = annualRain / 12;
+          const isWet = (r: number) => r > rainAvg * 0.9;
 
-            {/* Wind — prominent because it drives windbreak design */}
-            <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#235E86' }}>Wind</span>
-                <span className="font-display font-bold" style={{ fontSize: 20, color: '#235E86' }}>
-                  {(data.climate.windSpeed * 3.6).toFixed(0)} <span className="text-xs font-mono font-normal" style={{ color: '#5C5040' }}>km/h avg</span>
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-                  <p className="text-xs font-mono mb-0.5" style={{ color: '#8C7A62' }}>Summer (prevails FROM)</p>
-                  <p className="text-sm font-display font-bold" style={{ color: '#20190F' }}>{data.climate.windFromSummer}</p>
-                </div>
-                <div className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-                  <p className="text-xs font-mono mb-0.5" style={{ color: '#8C7A62' }}>Winter (prevails FROM)</p>
-                  <p className="text-sm font-display font-bold" style={{ color: '#20190F' }}>{data.climate.windFromWinter}</p>
-                </div>
-              </div>
-              <p className="text-xs font-display mt-2 leading-relaxed" style={{ color: '#5C5040' }}>
-                {data.climate.windSpeed > 4
-                  ? `⚠ Strong winds — place windbreaks on the ${data.climate.windFromSummer} and ${data.climate.windFromWinter} sides before planting crops.`
-                  : `Moderate winds — a windbreak on the ${data.climate.windFromSummer} side will still protect young plants and cut water loss.`
-                }
-              </p>
-            </div>
+          const ZONE_LABELS: Record<string, string> = {
+            Cwa: 'Humid subtropical · summer rain', Cwb: 'Humid subtropical · mist belt',
+            Csa: 'Mediterranean · coastal', Csb: 'Mediterranean · maritime',
+            Cfa: 'Humid subtropical', Cfb: 'Temperate oceanic',
+            BWh: 'Semi-arid · hot desert', BWk: 'Semi-arid · cold desert',
+            BSh: 'Semi-arid · hot steppe', BSk: 'Semi-arid · cold steppe',
+            ET: 'Alpine / montane',
+          };
+          const kp = data.climate.koppen;
+          const zoneLabel = ZONE_LABELS[kp] ?? kp;
 
-            {/* Windbreak advisor */}
-            {(() => {
-              const kmh = data.climate.windSpeed * 3.6;
-              const summer = data.climate.windFromSummer;
-              const winter = data.climate.windFromWinter;
-              const rows = kmh > 20 ? 3 : kmh > 10 ? 2 : 1;
-              const species = kmh > 18
-                ? [
-                    `Tall canopy (8–15 m): Acacia, Eucalyptus, or Casuarina as outer shield`,
-                    `Mid layer (3–6 m): Wild Olive (Olea europaea subsp. africana) or Tecoma`,
-                    `Inner shrubs (1–2 m): Aloe, Agapanthus, or dense hedge crop`,
-                  ]
-                : kmh > 10
-                ? [
-                    `Outer row (4–8 m): indigenous Acacia or Wild Pear (Dombeya)`,
-                    `Inner hedge (1–3 m): Kei Apple (Dovyalis) — edible + thorny barrier`,
-                  ]
-                : [`Single hedge row (1–3 m): Kei Apple, Wild Rose, or dense Bougainvillea`];
-              return (
-                <div className="rounded-xl p-3 space-y-2" style={{ background: '#EDF5EE', border: '1px solid #B4D4BC' }}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>Windbreak design</span>
-                    <span className="font-mono font-bold text-xs" style={{ color: '#1F4D2B' }}>{rows}-row system</span>
+          const zoneSummary =
+            kp.startsWith('Cw') ? 'Warm, wet summers and mild, dry winters with frequent morning mist. Reliable summer rain and a long frost-free season let you grow most of the year — plan around the dry winter and afternoon summer storms.'
+            : kp.startsWith('Cf') ? 'Reliable rainfall year-round with mild temperatures and no long dry season. Good for steady production across multiple crops — manage humidity and disease rather than drought.'
+            : kp.startsWith('Cs') ? 'Wet, mild winters and hot, dry summers. The rainy cool season is your primary growing window; summer demands drought-tolerant or irrigated crops.'
+            : kp.startsWith('BS') ? 'Semi-arid steppe — moderate rainfall with strong seasonality. Water harvesting and mulching are essential to extend the growing window.'
+            : kp.startsWith('BW') ? 'Arid desert margins — low and unreliable rainfall. Water harvesting must be established before any significant food production is viable.'
+            : kp.startsWith('ET') ? 'High-altitude site with cold winters and a short growing season. Maximise warm-aspect micro-climates and frost-hardy varieties.'
+            : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
+
+          const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
+            Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ' }, { pre: '', bold: 'bananas, avocado & subtropical fruit', post: '.' }],
+            Cwa: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The warm, frost-free conditions also carry ' }, { pre: '', bold: 'tropical fruit, avocado & sugar cane', post: '.' }],
+            Cfb: [{ pre: 'Well-distributed rain supports year-round production — ', bold: 'leafy greens, brassicas, stone fruit, berries & root vegetables', post: ' thrive. Mild winters keep frost-tender crops viable on protected aspects.' }],
+            Cfa: [{ pre: 'Subtropical with year-round rain — ', bold: 'maize, subtropical fruit, leafy greens & legumes', post: '. High humidity — select disease-resistant varieties and maximise airflow.' }],
+            Csb: [{ pre: 'Rainy winters grow the best crops — ', bold: 'wheat, alliums, legumes, brassicas & root vegetables', post: '. Dry summers need drought-tolerant varieties: ' }, { pre: '', bold: 'olives, figs, lavender & stone fruit', post: '.' }],
+            Csa: [{ pre: 'Classic Mediterranean growing season — ', bold: 'wheat, olives, citrus, grapes, figs & root vegetables', post: ' thrive. Summer heat demands irrigation for annuals; drought-tolerant trees fruit without it.' }],
+            BSh: [{ pre: 'Drought-tolerant crops are essential — ', bold: 'sorghum, cowpeas, Moringa & indigenous grains', post: '. Water harvesting is a prerequisite for ' }, { pre: '', bold: 'food trees and market gardens', post: '.' }],
+            BSk: [{ pre: 'Cold steppe — ', bold: 'drought-tolerant small grains, garlic & root vegetables', post: ' on water-harvested plots. ' }, { pre: '', bold: 'Stone fruit & cool-season grains', post: ' are your most viable options.' }],
+            BWh: [{ pre: 'Arid — water harvesting before any food production. With irrigation: ', bold: 'citrus, dates, melons & heat-tolerant vegetables', post: '.' }],
+            BWk: [{ pre: 'Cold arid — water harvesting essential. Short growing window: ', bold: 'cold-hardy grains, root vegetables & wind-tolerant perennials', post: '.' }],
+            ET:  [{ pre: 'Short alpine season — ', bold: 'potatoes, kale, oats & alpine herbs', post: ' on warm north-facing aspects. Protect all crops from frost and strong wind.' }],
+          };
+          const cropSegs = CROPS[kp] ?? [{ pre: 'Locally adapted varieties suited to your rainfall and temperature range.', bold: '', post: '' }];
+
+          const patternChip = data.rainfall.pattern === 'winter' ? 'Winter rainfall' : data.rainfall.pattern === 'summer' ? 'Summer rainfall' : 'Year-round rain';
+          const frostChipGreen = tMin >= 5;
+          const frostChip = tMin < 2 ? 'Frost expected' : tMin < 5 ? 'Light frost risk' : 'Frost-free';
+
+          // Approximate monthly sunshine (seasonal model from annual solar average)
+          const SUN_MULT = data.rainfall.pattern === 'winter'
+            ? [1.10, 1.05, 0.97, 0.92, 0.88, 0.87, 0.88, 0.92, 0.98, 1.05, 1.10, 1.10]
+            : [0.87, 0.89, 0.93, 0.98, 1.04, 1.08, 1.08, 1.04, 0.98, 0.93, 0.89, 0.87];
+          const sunHours = SUN_MULT.map(m => Math.round((data.climate.solarRadiation / 0.82) * m * 10) / 10);
+          const sunMax = Math.max(...sunHours, 1);
+          const sunMin = Math.min(...sunHours);
+          const sunAvg = Math.round(sunHours.reduce((a, b) => a + b, 0) / 12 * 10) / 10;
+
+          // Approximate monthly wind (±~20% seasonal, windiest Aug–Oct)
+          const WIND_MULT = [0.87, 0.87, 0.90, 0.92, 0.95, 0.96, 0.98, 1.13, 1.18, 1.12, 1.00, 0.91];
+          const monthlyWind = WIND_MULT.map(m => Math.round(kmh * m));
+          const windMax = Math.max(...monthlyWind, 1);
+
+          // Frost strip
+          const frostFreeDays = Math.round(temps.filter(t => t >= 5).length / 12 * 365);
+          const lightFrostMonths = temps
+            .map((t, i) => (t >= 2 && t < 5) ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i] : null)
+            .filter((v): v is string => v !== null);
+
+          // Compass rose: direction → SVG rotation degrees
+          const DIR_DEG: Record<string, number> = { N:0, NE:45, E:90, SE:135, S:180, SW:225, W:270, NW:315 };
+          const primRot = DIR_DEG[data.climate.windFromSummer] ?? 45;
+          const secRot  = DIR_DEG[data.climate.windFromWinter]  ?? 225;
+
+          // Colour helpers
+          function tempColor(t: number) {
+            const norm = (t - tMin) / ((tMax - tMin) || 1);
+            return `hsl(${Math.round(47 - norm * 12)}, 62%, ${Math.round(33 + norm * 20)}%)`;
+          }
+          function sunColor(h: number) {
+            const norm = (h - sunMin) / ((sunMax - sunMin) || 1);
+            return `hsl(${Math.round(38 + norm * 5)}, ${Math.round(78 + norm * 8)}%, ${Math.round(54 + norm * 10)}%)`;
+          }
+
+          // Shared style helpers
+          const cardSt = { background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 16, padding: '19px 19px 17px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' };
+          const ovlSt  = { fontFamily: 'var(--font-sans)', fontWeight: 700 as const, fontSize: 11.5, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#B07A1E' };
+          const implSt = { fontFamily: 'var(--font-display)', fontWeight: 400 as const, fontSize: 13.5, fontStyle: 'italic' as const, color: '#5C5240', lineHeight: 1.45 };
+          const colSt  = { flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center' as const, justifyContent: 'flex-end' as const, height: '100%' };
+          const valSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 11, color: '#766A50', marginBottom: 5 };
+          const monSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 10, color: '#AC9E82', marginTop: 7, textTransform: 'uppercase' as const };
+          function chip(bg: string, color: string) {
+            return { display: 'inline-flex' as const, alignItems: 'center' as const, gap: 6, fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12.5, padding: '5px 11px', borderRadius: 999, background: bg, color };
+          }
+
+          return (
+            <div className="space-y-3.5">
+
+              {/* 1 — Climate zone */}
+              <div style={cardSt}>
+                <div style={{ ...ovlSt, marginBottom: 8 }}>Climate zone</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 21, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
+                <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: '#9A8C70', margin: '3px 0 11px' }}>
+                  Köppen {kp} — {data.climate.koppenDesc}
+                </div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5 }}>{zoneSummary}</div>
+                <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7 }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
+                    </svg>
+                    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 11.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#3C6B3F' }}>Good for growing</span>
                   </div>
-                  <p className="text-xs font-display leading-relaxed" style={{ color: '#2A4A2E' }}>
-                    Plant on your <strong>{summer} boundary</strong> to intercept prevailing summer winds
-                    {winter !== summer ? `, with a lighter secondary break on the ${winter} side for winter` : ''}.
-                    Space rows {rows > 1 ? `${rows * 3}–${rows * 4} m apart, perpendicular to the prevailing direction` : 'along the windward boundary'}.
-                  </p>
-                  <div className="space-y-1">
-                    {species.map((s, i) => (
-                      <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#2A4A2E' }}>
-                        <span className="flex-shrink-0 font-bold" style={{ color: '#1F4D2B' }}>{i + 1}.</span>
-                        {s}
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 14, color: '#3D4A36', lineHeight: 1.5 }}>
+                    {cropSegs.map((seg, i) => (
+                      <span key={i}>{seg.pre}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{seg.post}</span>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 8, marginTop: 13, flexWrap: 'wrap' }}>
+                  <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm rain / yr</span>
+                  <span style={chip('#EDE7DA', '#7A6A48')}>{patternChip}</span>
+                  <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{frostChip}</span>
+                </div>
+              </div>
+
+              {/* 2 — Rainfall mm/month */}
+              {monthly.length === 12 && (
+                <div style={cardSt}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+                    <div style={ovlSt}>Rainfall — mm / month</div>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#3A6E92' }}>≈ {annualRain} mm / yr</div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 150, paddingTop: 2 }}>
+                    {monthly.map((r, i) => (
+                      <div key={i} style={colSt}>
+                        <span style={valSt}>{Math.round(r)}</span>
+                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, (r / rainMax) * 130), borderRadius: '5px 5px 2px 2px', background: isWet(r) ? '#3F92C9' : '#A6C9DF' }} />
+                        <span style={monSt}>{MS[i]}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs font-mono" style={{ color: '#4A7A54', fontSize: 10 }}>
-                    A {rows > 1 ? 'multi-row' : 'single-row'} windbreak at 5× tree height from crops reduces wind speed by 50–70%.
-                  </p>
+                  <div style={{ display: 'flex', gap: 8, margin: '13px 0 9px' }}>
+                    <span style={chip('#E7EEF4', '#3A6E92')}>
+                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#3F92C9', display: 'inline-block' }} /> Wet · {data.rainfall.wetSeason}
+                    </span>
+                    <span style={chip('#EFEADF', '#8A7B58')}>
+                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#A6C9DF', display: 'inline-block' }} /> Dry · {data.rainfall.drySeason}
+                    </span>
+                  </div>
+                  <div style={implSt}>→ Most rain falls {data.rainfall.wetSeason}. Store storm-water to carry the {data.rainfall.drySeason} dry spell.</div>
                 </div>
-              );
-            })()}
+              )}
 
-            <Card>
-              <Label>Monthly temperature (°C)</Label>
-              <div className="mt-2" style={{ position: 'relative' }}>
-                <div className="flex items-end gap-0.5" style={{ height: 72 }}>
-                  {data.climate.monthlyTemp.map((t, i) => {
-                    const tMin = Math.min(...data.climate.monthlyTemp);
-                    const tMax = Math.max(...data.climate.monthlyTemp);
-                    const range = tMax - tMin + 0.01;
-                    const norm = (t - tMin) / range;
-                    const isHot = t === tMax;
-                    const isCold = t === tMin;
+              {/* 3 — Monthly temperature */}
+              <div style={cardSt}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+                  <div style={ovlSt}>Monthly temperature — °C</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#A06A20' }}>{Math.round(tMin)}° – {Math.round(tMax)}°</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 130, paddingTop: 2 }}>
+                  {temps.map((temp, i) => {
+                    const norm = (temp - tMin) / ((tMax - tMin) || 1);
                     return (
-                      <div key={i} className="flex-1 flex flex-col items-center" style={{ gap: 2 }}>
-                        {(isHot || isCold) && (
-                          <span style={{ fontSize: 8, color: isHot ? '#C03C1E' : '#235E86', fontFamily: 'var(--font-mono)', fontWeight: 700, lineHeight: 1 }}>
-                            {t.toFixed(0)}°
-                          </span>
-                        )}
-                        {!(isHot || isCold) && <span style={{ fontSize: 8, color: 'transparent' }}>0</span>}
-                        <div
-                          className="w-full rounded-sm"
-                          style={{
-                            height: `${Math.max(6, norm * 52)}px`,
-                            background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
-                          }}
-                          title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${t.toFixed(1)}°C`}
-                        />
-                        <span style={{ fontSize: 8, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>
-                          {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
-                        </span>
+                      <div key={i} style={colSt}>
+                        <span style={valSt}>{Math.round(temp)}°</span>
+                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, norm * 110 + 20), borderRadius: '5px 5px 2px 2px', background: tempColor(temp) }} />
+                        <span style={monSt}>{MS[i]}</span>
                       </div>
                     );
                   })}
                 </div>
-                <div className="flex justify-between mt-1">
-                  <span style={{ fontSize: 9, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{Math.min(...data.climate.monthlyTemp).toFixed(0)}°C min</span>
-                  <span style={{ fontSize: 9, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{Math.max(...data.climate.monthlyTemp).toFixed(0)}°C max</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: '#9A8C70' }}>
+                  <span>Winter low ≈ {Math.round(tMin)}° (Jun–Jul nights)</span>
+                  <span>Summer high ≈ {Math.round(tMax)}°</span>
                 </div>
               </div>
-            </Card>
-            <Card>
-              <Label>Rainfall timing</Label>
-              <p className="text-sm font-display font-medium capitalize mb-1" style={{ color: '#20190F' }}>
-                {data.rainfall.pattern} rainfall
-              </p>
-              <p className="text-xs font-display" style={{ color: '#5C5040' }}>
-                Wet: {data.rainfall.wetSeason} &nbsp;·&nbsp; Dry: {data.rainfall.drySeason}
-              </p>
-              <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
-                → Earthworks before first rains: {data.biome.rainfallPattern === 'winter' ? 'Apr–May' : 'Aug–Sep'}
-              </p>
-            </Card>
-          </>
-        )}
+
+              {/* 4 — Sunlight hours/day */}
+              <div style={cardSt}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+                  <div style={ovlSt}>Sunlight — hours / day</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#C77F1A' }}>≈ {sunAvg} h avg</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 130, paddingTop: 2 }}>
+                  {sunHours.map((h, i) => (
+                    <div key={i} style={colSt}>
+                      <span style={valSt}>{h.toFixed(1)}</span>
+                      <div style={{ width: '64%', maxWidth: 23, height: Math.max(8, (h / sunMax) * 110), borderRadius: '5px 5px 2px 2px', background: sunColor(h) }} />
+                      <span style={monSt}>{MS[i]}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ ...implSt, marginTop: 11 }}>
+                  → {data.rainfall.pattern === 'winter'
+                    ? 'Sunniest in the wet summer — maximise solar gain in autumn and spring.'
+                    : 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.'}
+                </div>
+              </div>
+
+              {/* 5 — Wind + compass rose */}
+              <div style={cardSt}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
+                  <div style={ovlSt}>Wind — km / h</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#5E7A66' }}>
+                    {kmh > 22 ? 'Moderate – strong' : kmh > 12 ? 'Light – moderate' : 'Light'}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: 5, height: 120 }}>
+                    {monthlyWind.map((w, i) => (
+                      <div key={i} style={colSt}>
+                        <span style={valSt}>{w}</span>
+                        <div style={{ width: '64%', maxWidth: 23, height: Math.max(6, (w / windMax) * 100), borderRadius: '5px 5px 2px 2px', background: (i >= 7 && i <= 9) ? '#5E8A6E' : '#9DB3A4' }} />
+                        <span style={monSt}>{MS[i]}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ flexShrink: 0, width: 104, textAlign: 'center' }}>
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="42" fill="#F1ECE0" stroke="#D8CFBA" strokeWidth="1.5"/>
+                      <circle cx="50" cy="50" r="30" fill="none" stroke="#E2DAC6" strokeWidth="1"/>
+                      <g transform={`rotate(${secRot}, 50, 50)`}>
+                        <line x1="50" y1="50" x2="50" y2="16" stroke="#A9BEAF" strokeWidth="3.5" strokeLinecap="round"/>
+                        <path d="M50 16 L44 26 M50 16 L56 26" fill="none" stroke="#A9BEAF" strokeWidth="3.5" strokeLinecap="round"/>
+                      </g>
+                      <g transform={`rotate(${primRot}, 50, 50)`}>
+                        <line x1="50" y1="50" x2="50" y2="14" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
+                        <path d="M50 14 L43 25 M50 14 L57 25" fill="none" stroke="#3C6B4A" strokeWidth="4.5" strokeLinecap="round"/>
+                      </g>
+                      <circle cx="50" cy="50" r="3.2" fill="#3C6B4A"/>
+                      <text x="50" y="12" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#6B6048">N</text>
+                      <text x="91" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">E</text>
+                      <text x="50" y="95" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">S</text>
+                      <text x="9" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">W</text>
+                    </svg>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, color: '#3C6B4A', marginTop: 2 }}>Prevailing {data.climate.windFromSummer}</div>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 11, color: '#9A8C70' }}>{data.climate.windFromWinter} in winter</div>
+                  </div>
+                </div>
+                <div style={{ ...implSt, marginTop: 13 }}>
+                  → Windiest Aug–Oct — site a windbreak along the {data.climate.windFromSummer} edge before spring.
+                </div>
+              </div>
+
+              {/* 6 — Frost & growing season */}
+              <div style={cardSt}>
+                <div style={{ ...ovlSt, marginBottom: 13 }}>Frost &amp; growing season</div>
+                <div style={{ display: 'flex', gap: 4, marginBottom: 7 }}>
+                  {temps.map((temp, i) => {
+                    const light = temp >= 2 && temp < 5;
+                    const hard  = temp < 2;
+                    return (
+                      <div key={i} style={{ flex: 1, height: 30, borderRadius: 5,
+                        background: hard ? '#C8D8EE' : light ? '#F2E2BB' : '#CDE3BE',
+                        border: light ? '1.5px solid #DDB85E' : hard ? '1.5px solid #6B9AC4' : 'none',
+                      }}/>
+                    );
+                  })}
+                </div>
+                <div style={{ display: 'flex', gap: 4, marginBottom: 14 }}>
+                  {MS.map((m, i) => (
+                    <div key={i} style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 10, color: '#AC9E82', textTransform: 'uppercase' }}>{m}</div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <span style={chip('#DDEBCF', '#3C6B3F')}>Frost-free ≈ {frostFreeDays} days</span>
+                  {lightFrostMonths.length > 0 && (
+                    <span style={chip('#F4EAD0', '#9A7A2E')}>Light frost: {lightFrostMonths.join('–')} valleys</span>
+                  )}
+                  {tMin < 5 && <span style={chip('#EDE7DA', '#7A6A48')}>Plant tender from mid-Aug</span>}
+                </div>
+              </div>
+
+              {/* Lima → full report */}
+              <button
+                onClick={() => onOpenReport?.()}
+                style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#274D2C', borderRadius: 15, padding: '13px 16px 13px 13px', width: '100%', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+              >
+                <span style={{ width: 40, height: 40, flexShrink: 0, borderRadius: '50%', background: '#3C6B3F', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#CDEBB6' }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
+                  </svg>
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 14.5, color: '#EAF3E2' }}>Want the full climate report?</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'rgba(234,243,226,0.6)' }}>Frost dates, ET, disease risk &amp; planting calendar</div>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(234,243,226,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
+
+            </div>
+          );
+        })()}
 
         {/* NATURE */}
         {tab === 'Nature' && <LifeGuide locationData={data} />}
