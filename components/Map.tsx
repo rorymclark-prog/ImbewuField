@@ -182,9 +182,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [wpCategory, setWpCategory] = useState('');
   const [droppingWaterPoint, setDroppingWaterPoint] = useState(false);
   const [shareState, setShareState] = useState<'idle'|'saving'|'copied'|'error'>('idle');
-  const [placesOpen, setPlacesOpen] = useState(false); // quick-jump "Places" list in the toolbar
-  const [showShapeLabels, setShowShapeLabels] = useState(true);
-  const [showPlaceLabels, setShowPlaceLabels] = useState(true);
+  const [placesOpen, setPlacesOpen] = useState(false);
+  const [sectionParcels, setSectionParcels] = useState(false);
+  const [sectionWater, setSectionWater] = useState(false);
+  const [showShapeLabels, setShowShapeLabels] = useState(false);
+  const [showPlaceLabels, setShowPlaceLabels] = useState(false);
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
@@ -2114,80 +2116,73 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {placeSaved ? <Check size={18} strokeWidth={2.2} style={{ color: '#A8D88A' }} /> : <Bookmark size={18} strokeWidth={1.8} style={{ color: '#A8D88A' }} />}{placeSaved ? 'Saved' : 'Save place'}
           </button>
 
-          {/* Quick-jump to a saved place */}
-          <button onClick={() => setPlacesOpen((o) => !o)}
-            className="flex items-center gap-2 transition-all active:scale-95"
-            style={{
-              background: placesOpen ? 'rgba(168,216,138,0.32)' : 'rgba(247,242,233,0.07)',
-              border: `1.5px solid ${placesOpen ? 'rgba(168,216,138,0.7)' : 'rgba(234,243,226,0.16)'}`,
-              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: placesOpen ? '#A8D88A' : '#EAF3E2',
-            }}>
-            <MapPin size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> Places
-            {savedPins.length ? <span style={{ fontSize: 12, fontWeight: 700, color: '#1a1205', background: '#A8D88A', borderRadius: 999, minWidth: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 6px' }}>{savedPins.length}</span> : null}
-          </button>
-
-          {/* Saved-places quick list — tap one to fly there; trash to delete */}
-          {placesOpen && (
-            <div className="w-full flex flex-col gap-1" style={{ marginTop: 2 }}>
-              {savedPins.length === 0 ? (
-                <div className="px-3 py-2 rounded-lg font-sans"
-                  style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: 13 }}>
-                  No saved places yet — tap a spot, then save it above.
-                </div>
-              ) : (
-                <>
-                  {/* Show pin names on the map */}
-                  <button onClick={() => setShowPlaceLabels((v) => !v)}
-                    className="flex items-center gap-2 px-3 rounded-lg font-sans transition-all"
-                    style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: 'var(--text-secondary)', minHeight: 38, fontSize: 13 }}>
-                    <span className="flex-1 text-left">Show pin names on map</span>
-                    <span className="flex items-center rounded-full transition-all flex-shrink-0"
-                      style={{ width: 38, height: 22, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.16)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start' }}>
-                      <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#fff', display: 'block' }} />
-                    </span>
-                  </button>
-
-                  {savedPins.map((p) => (
-                    <div key={p.id} className="flex items-center gap-3 font-sans"
-                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
-                      {/* Coloured pin chip */}
-                      <button onClick={() => startEditPlace(p)} title="Edit name or colour"
-                        className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
-                        style={{ width: 36, height: 36, background: placeColor(p.label), cursor: 'pointer', border: 'none' }}>
-                        <MapPin size={16} strokeWidth={2} style={{ color: '#fff' }} />
-                      </button>
-                      {/* Name + distance */}
-                      <button
-                        onClick={() => {
-                          mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
-                          onLocationSelect(p.lat, p.lon);
-                          onPlaceSelect?.({ name: p.name, id: p.id });
-                          setPlacesOpen(false);
-                        }}
-                        className="flex-1 min-w-0 text-left transition-all"
-                        style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
-                        <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{p.name}</div>
-                        <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation}m away</div>
-                      </button>
-                      {/* Ghost edit */}
-                      <button onClick={() => startEditPlace(p)} title="Edit name or colour"
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
-                        <PenLine size={15} style={{ color: 'rgba(234,243,226,0.55)' }} />
-                      </button>
-                      {/* Ghost delete */}
-                      <button onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
-                        aria-label={`Delete ${p.name}`} title="Delete this place"
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
-                        <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
-                      </button>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          )}
+          {/* ── Places section — collapsible ── */}
+          <div className="w-full">
+            <button
+              onClick={() => setPlacesOpen((o) => !o)}
+              className="w-full flex items-center justify-between active:opacity-70 transition-all"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '3px 2px' }}>
+              <div className="flex items-center gap-1.5">
+                <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: placesOpen ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
+                <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                  Places{savedPins.length ? ` · ${savedPins.length}` : ''}
+                </span>
+              </div>
+              <button onClick={(e) => { e.stopPropagation(); setShowPlaceLabels((v) => !v); }}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                <MapPin size={11} style={{ color: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showPlaceLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>Labels</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            </button>
+            {placesOpen && (
+              <div className="w-full flex flex-col gap-1 mt-1.5">
+                {savedPins.length === 0 ? (
+                  <div className="px-3 py-2 rounded-lg font-sans"
+                    style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: 13 }}>
+                    No saved places yet — tap a spot on the map, then save it.
+                  </div>
+                ) : savedPins.map((p) => (
+                  <div key={p.id} className="flex items-center gap-3 font-sans"
+                    style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
+                    <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                      className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
+                      style={{ width: 36, height: 36, background: placeColor(p.label), cursor: 'pointer', border: 'none' }}>
+                      <MapPin size={16} strokeWidth={2} style={{ color: '#fff' }} />
+                    </button>
+                    <button
+                      onClick={() => {
+                        mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 15, duration: 1400 });
+                        onLocationSelect(p.lat, p.lon);
+                        onPlaceSelect?.({ name: p.name, id: p.id });
+                        setPlacesOpen(false);
+                        setSectionParcels(true);
+                      }}
+                      className="flex-1 min-w-0 text-left transition-all"
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                      <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{p.name}</div>
+                      <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation}m away</div>
+                    </button>
+                    <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                      className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                      style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                      <PenLine size={15} style={{ color: 'rgba(234,243,226,0.55)' }} />
+                    </button>
+                    <button onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
+                      aria-label={`Delete ${p.name}`} title="Delete this place"
+                      className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                      style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                      <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Drawing in progress */}
           {activeDraw && (
@@ -2255,147 +2250,183 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </>
           )}
 
-          {/* ── Site / Land parcel section ── */}
+          {/* ── Site / Land parcel section — collapsible ── */}
           {!activeDraw && !editingFeatureId && !pinDraw && !editPin && (
-            <>
-              {siteStats ? (
-                <div className="w-full flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between" style={{ paddingLeft: 2 }}>
-                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                      Parcels · {siteStats.count ?? 1}
-                    </span>
-                    <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>{siteStats.areaHa} ha total</span>
-                  </div>
-                  {siteFeatures.map((sf, idx) => (
-                    <div key={sf.id} className="flex items-center gap-3 font-sans"
-                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
-                      <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#9BE66B' }} />
-                      <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
-                        <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
-                          <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
-                          <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
-                        </div>
-                        <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                          <span>{sf.category ? `${sf.category} · ` : ''}Land · {sf.areaHa} ha</span>
-                          {sf.placeId && (() => { const pl = savedPins.find(p => p.id === sf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
-                        </div>
-                      </button>
-                      <button onClick={() => startEdit(sf.id, 'site')}
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                        title="Edit shape"><PenLine size={15} style={{ color: '#A8D88A' }} /></button>
-                      <button onClick={() => requestDelete(sf.id)}
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={pendingDelete === sf.id
-                          ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
-                          : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                        title="Delete parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
-                    </div>
-                  ))}
-                  <button onClick={() => startPinDraw('site')}
-                    className="w-full flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                    style={{ fontSize: 14.5, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#A8D88A', cursor: 'pointer' }}>
-                    <Plus size={17} />Add parcel
-                  </button>
+            <div className="w-full">
+              <button
+                onClick={() => setSectionParcels((o) => !o)}
+                className="w-full flex items-center justify-between active:opacity-70 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '3px 2px' }}>
+                <div className="flex items-center gap-1.5">
+                  <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionParcels ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
+                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                    Parcels{siteStats ? ` · ${siteStats.count ?? 1}` : ''}
+                  </span>
+                  {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
                 </div>
-              ) : (
-                <button onClick={() => startPinDraw('site')}
-                  className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
-                  style={{ height: 52, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
-                  <PenTool size={19} strokeWidth={2} />Draw land boundary
+                <button onClick={(e) => { e.stopPropagation(); setShowShapeLabels((v) => !v); }}
+                  className="flex items-center gap-1 active:scale-95 transition-all"
+                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                  <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>Labels</span>
+                  <span className="flex items-center rounded-full flex-shrink-0"
+                    style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                    <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                  </span>
                 </button>
+              </button>
+              {sectionParcels && (
+                <>
+                  {siteStats ? (
+                    <div className="w-full flex flex-col gap-1.5 mt-1.5">
+                      {siteFeatures.map((sf, idx) => (
+                        <div key={sf.id} className="flex items-center gap-3 font-sans"
+                          style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
+                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#9BE66B' }} />
+                          <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                            <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
+                              <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
+                              <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
+                            </div>
+                            <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
+                              <span>{sf.category ? `${sf.category} · ` : ''}Land · {sf.areaHa} ha</span>
+                              {sf.placeId && (() => { const pl = savedPins.find(p => p.id === sf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
+                            </div>
+                          </button>
+                          <button onClick={() => startEdit(sf.id, 'site')}
+                            className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                            style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                            title="Edit shape"><PenLine size={15} style={{ color: '#A8D88A' }} /></button>
+                          <button onClick={() => requestDelete(sf.id)}
+                            className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                            style={pendingDelete === sf.id
+                              ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
+                              : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                            title="Delete parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
+                        </div>
+                      ))}
+                      <button onClick={() => startPinDraw('site')}
+                        className="w-full flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
+                        style={{ fontSize: 14.5, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#A8D88A', cursor: 'pointer' }}>
+                        <Plus size={17} />Add parcel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-1.5">
+                      <button onClick={() => startPinDraw('site')}
+                        className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
+                        style={{ height: 52, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
+                        <PenTool size={19} strokeWidth={2} />Draw land boundary
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
-            </>
+            </div>
           )}
 
-          {/* ── Water harvesting + infrastructure section ── */}
-          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && (waterStats ? (
-            <div className="w-full flex flex-col gap-1.5">
-              <div className="flex items-center justify-between" style={{ paddingLeft: 2 }}>
-                <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                  Water Harvesting · {waterStats.count}
-                </span>
-                <span className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL</span>
-              </div>
-              {waterFeatures.map((wf, idx) => (
-                <div key={wf.id} className="flex items-center gap-3 font-sans"
-                  style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
-                  <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#5BB4EC' }} />
-                  <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
-                    <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
-                      <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
-                      <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
-                    </div>
-                    <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                      <span>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</span>
-                      {wf.placeId && (() => { const pl = savedPins.find(p => p.id === wf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
-                    </div>
-                  </button>
-                  <button onClick={() => startEdit(wf.id, 'water')}
-                    className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                    style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                    title="Edit shape"><PenLine size={15} style={{ color: '#7CC6F2' }} /></button>
-                  <button onClick={() => requestDelete(wf.id)}
-                    className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                    style={pendingDelete === wf.id
-                      ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
-                      : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                    title="Delete area">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
+          {/* ── Water harvesting — collapsible ── */}
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && (
+            <div className="w-full">
+              <button
+                onClick={() => setSectionWater((o) => !o)}
+                className="w-full flex items-center justify-between active:opacity-70 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '3px 2px' }}>
+                <div className="flex items-center gap-1.5">
+                  <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionWater ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
+                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                    Water{waterStats ? ` · ${waterStats.count}` : ''}
+                  </span>
+                  {waterStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL</span>}
                 </div>
-              ))}
-              {/* Water infrastructure points */}
-              {waterPoints.length > 0 && (
-                <div>
-                  <div className="font-sans mb-1.5" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>Infrastructure</div>
-                  {waterPoints.map((wp) => (
-                    <div key={wp.id} className="flex items-center gap-3 font-sans mb-1.5"
-                      style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 13px 10px 15px' }}>
-                      <div className="flex-shrink-0 rounded-full" style={{ width: 10, height: 10, background: categoryColor(wp.category) }} />
-                      <div className="flex-1 min-w-0">
-                        <div className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#EAF3E2' }}>{wp.name || wp.category || 'Water point'}</div>
-                        {wp.category && wp.name && <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>{wp.category}</div>}
+              </button>
+              {sectionWater && (
+                <>
+                  {waterStats ? (
+                    <div className="w-full flex flex-col gap-1.5 mt-1.5">
+                      {waterFeatures.map((wf, idx) => (
+                        <div key={wf.id} className="flex items-center gap-3 font-sans"
+                          style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
+                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#5BB4EC' }} />
+                          <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                            <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
+                              <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
+                              <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
+                            </div>
+                            <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
+                              <span>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</span>
+                              {wf.placeId && (() => { const pl = savedPins.find(p => p.id === wf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
+                            </div>
+                          </button>
+                          <button onClick={() => startEdit(wf.id, 'water')}
+                            className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                            style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                            title="Edit shape"><PenLine size={15} style={{ color: '#7CC6F2' }} /></button>
+                          <button onClick={() => requestDelete(wf.id)}
+                            className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                            style={pendingDelete === wf.id
+                              ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
+                              : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
+                            title="Delete area">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
+                        </div>
+                      ))}
+                      {/* Water infrastructure points */}
+                      {waterPoints.length > 0 && (
+                        <div>
+                          <div className="font-sans mb-1.5" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>Infrastructure</div>
+                          {waterPoints.map((wp) => (
+                            <div key={wp.id} className="flex items-center gap-3 font-sans mb-1.5"
+                              style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 13px 10px 15px' }}>
+                              <div className="flex-shrink-0 rounded-full" style={{ width: 10, height: 10, background: categoryColor(wp.category) }} />
+                              <div className="flex-1 min-w-0">
+                                <div className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#EAF3E2' }}>{wp.name || wp.category || 'Water point'}</div>
+                                {wp.category && wp.name && <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>{wp.category}</div>}
+                              </div>
+                              <button onClick={() => { setWaterPointNaming(wp); setWpName(wp.name); setWpCategory(wp.category); }}
+                                className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                                style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                                <PenLine size={15} style={{ color: '#7CC6F2' }} />
+                              </button>
+                              <button onClick={() => { deleteWaterPoint(wp.id); setWaterPoints(loadWaterPoints()); }}
+                                className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                                style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                                <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => startPinDraw('water')}
+                          className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
+                          style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
+                          <Plus size={16} />Harvesting area
+                        </button>
+                        <button onClick={() => setDroppingWaterPoint(true)}
+                          className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
+                          style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
+                          <Pipette size={16} />Water point
+                        </button>
                       </div>
-                      <button onClick={() => { setWaterPointNaming(wp); setWpName(wp.name); setWpCategory(wp.category); }}
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
-                        <PenLine size={15} style={{ color: '#7CC6F2' }} />
+                    </div>
+                  ) : (
+                    <div className="flex gap-2 mt-1.5">
+                      <button onClick={() => startPinDraw('water')}
+                        className="flex-1 flex items-center justify-center gap-2 font-sans font-bold transition-all active:scale-95"
+                        style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
+                        <Droplets size={16} strokeWidth={2} />Harvesting area
                       </button>
-                      <button onClick={() => { deleteWaterPoint(wp.id); setWaterPoints(loadWaterPoints()); }}
-                        className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
-                        style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
-                        <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
+                      <button onClick={() => setDroppingWaterPoint(true)}
+                        className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
+                        style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
+                        <Pipette size={16} />Water point
                       </button>
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               )}
-              <div className="flex gap-2">
-                <button onClick={() => startPinDraw('water')}
-                  className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
-                  <Plus size={16} />Harvesting area
-                </button>
-                <button onClick={() => setDroppingWaterPoint(true)}
-                  className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                  style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
-                  <Pipette size={16} />Water point
-                </button>
-              </div>
             </div>
-          ) : (
-            <div className="flex gap-2">
-              <button onClick={() => startPinDraw('water')}
-                className="flex-1 flex items-center justify-center gap-2 font-sans font-bold transition-all active:scale-95"
-                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
-                <Droplets size={16} strokeWidth={2} />Harvesting area
-              </button>
-              <button onClick={() => setDroppingWaterPoint(true)}
-                className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
-                style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
-                <Pipette size={16} />Water point
-              </button>
-            </div>
-          ))}
+          )}
 
           {/* Capture */}
           {onMapCapture && selectedLocation && (
@@ -2502,17 +2533,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </div>
       )}
 
-      {/* ── Labels toggles — Plots and Pins, top-right below panel header ── */}
-      {!pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && (
+      {/* ── Labels pill — visible when panel is minimised (section headers carry toggles when panel is open) ── */}
+      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && (
         <div className="absolute flex items-center gap-1 font-sans transition-all"
-          style={{ top: 58, right: 14, zIndex: 9, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
+          style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
           <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>Labels</span>
           {(siteFeatures.length > 0 || waterFeatures.length > 0) && (
             <button onClick={() => setShowShapeLabels((v) => !v)}
               className="flex items-center gap-1 active:scale-95 transition-all"
               style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
               <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Plots</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Parcels & water</span>
               <span className="flex items-center rounded-full flex-shrink-0"
                 style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
                 <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
@@ -2526,7 +2557,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 className="flex items-center gap-1 active:scale-95 transition-all"
                 style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
                 <MapPin size={11} style={{ color: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: showPlaceLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Pins</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: showPlaceLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Places</span>
                 <span className="flex items-center rounded-full flex-shrink-0"
                   style={{ width: 26, height: 15, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
                   <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
