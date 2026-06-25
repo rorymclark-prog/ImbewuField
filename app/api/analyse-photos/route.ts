@@ -11,14 +11,15 @@ export async function POST(req: NextRequest) {
     source: 'upload' | 'satellite';
   } = await req.json();
 
-  if (!images?.length) return NextResponse.json({ error: 'No images provided' }, { status: 400 });
+  const validImages = images?.filter(img => img?.data && img.data.length > 100);
+  if (!validImages?.length) return NextResponse.json({ error: 'No valid images — photos may be empty or corrupt. Try re-selecting them.' }, { status: 400 });
 
   const sourceNote = source === 'satellite'
     ? 'This is a satellite/aerial view of the site captured directly from the map.'
     : 'These are ground-level photos taken at the site.';
 
   const content: Anthropic.MessageParam['content'] = [
-    ...images.map((img) => ({
+    ...validImages.map((img) => ({
       type: 'image' as const,
       source: {
         type: 'base64' as const,

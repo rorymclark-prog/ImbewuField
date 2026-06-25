@@ -14,8 +14,9 @@ import SiteDesign from './SiteDesign';
 import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
+import LifeGuide from './LifeGuide';
 import { useLanguage } from '@/lib/i18n';
-import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 
 interface Props {
   data: LocationData | null;
@@ -34,7 +35,7 @@ interface Props {
   activePlaceId?: string;
 }
 
-const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
+const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
 type Tab = typeof TABS[number];
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
@@ -110,6 +111,7 @@ const TAB_ICONS: Record<string, JSX.Element> = {
   Water: <Droplets size={16} />,
   Soil: <Layers size={16} />,
   Climate: <Sun size={16} />,
+  Nature: <TreeDeciduous size={16} />,
   Area: <Ruler size={16} />,
   Photos: <Camera size={16} />,
   Design: <Compass size={16} />,
@@ -788,6 +790,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </Card>
           </>
         )}
+
+        {/* NATURE */}
+        {tab === 'Nature' && <LifeGuide locationData={data} />}
 
         {/* PHOTOS */}
         {tab === 'Photos' && (
