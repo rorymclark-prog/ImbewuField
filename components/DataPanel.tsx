@@ -19,6 +19,10 @@ import WaterBalance from './WaterBalance';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
+import EvidenceSheet from './EvidenceSheet';
+import EvidenceCatalogue from './EvidenceCatalogue';
+import { EVIDENCE_CATALOGUE, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
+import { getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 
 interface Props {
@@ -274,6 +278,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
+
+  // Evidence state
+  const siteId = activePlaceId ?? 'default';
+  const [evidenceSheet, setEvidenceSheet] = useState<{ group: EvidenceCatalogueGroup; item?: EvidenceCatalogueItem } | null>(null);
+  const [evidenceCatalogueOpen, setEvidenceCatalogueOpen] = useState(false);
+  const [evidenceTick, setEvidenceTick] = useState(0);
+  const completeness = getReportCompleteness(siteId);
 
   // Photo prompt (pre-report interstitial)
   const [photoPromptOpen, setPhotoPromptOpen] = useState(false);
@@ -1225,42 +1236,154 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           />
         )}
 
-        {/* REPORTS — saved permaculture reports, reopen without regenerating */}
+        {/* REPORTS — evidence grid + completeness + generate report */}
         {tab === 'Reports' && (
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+            {/* Report completeness bar */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
+                <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                  Report completeness
+                </span>
+                <span style={{ font: '700 11px/1 system-ui, sans-serif', color: completeness >= 60 ? '#3C6B3F' : '#B07A1E' }}>
+                  {completeness}%
+                </span>
+              </div>
+              <div style={{ height: 8, background: '#DCD2BD', borderRadius: 5, overflow: 'hidden' }}>
+                <div style={{ width: `${completeness}%`, height: '100%', background: completeness >= 60 ? '#3C6B3F' : '#B07A1E', borderRadius: 5, transition: 'width 0.4s ease' }} />
+              </div>
+            </div>
+
+            {/* Evidence & Documents label + catalogue link */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                Evidence &amp; documents
+              </span>
+              <button
+                onClick={() => setEvidenceCatalogueOpen(true)}
+                style={{ font: '500 11.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+              >
+                Full library →
+              </button>
+            </div>
+
+            {/* Evidence group cards 2-col */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              {EVIDENCE_CATALOGUE.map((group) => {
+                const count = getGroupCount(siteId, group.key);
+                const allItems = getSiteEvidence(siteId);
+                const groupPhotos: EvidenceItem[] = Object.entries(allItems)
+                  .filter(([k]) => k.startsWith(group.key))
+                  .flatMap(([, arr]) => arr)
+                  .filter((e) => e.type === 'photo')
+                  .slice(0, 3);
+
+                return (
+                  <button
+                    key={group.key}
+                    onClick={() => setEvidenceSheet({ group })}
+                    style={{
+                      background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13,
+                      padding: '13px 14px', cursor: 'pointer', textAlign: 'left',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: groupPhotos.length > 0 || count === 0 ? 11 : 0 }}>
+                      <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
+                        {EVIDENCE_GROUP_ICON[group.key]}
+                      </div>
+                      <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519' }}>{group.label}</span>
+                    </div>
+
+                    {/* Thumbnail row or + prompt */}
+                    <div style={{ display: 'flex', gap: 5 }}>
+                      {groupPhotos.map((ev) => (
+                        <div key={ev.id} style={{ width: 34, height: 34, borderRadius: 7, overflow: 'hidden', background: '#E0D6C2', flexShrink: 0 }}>
+                          {ev.dataUrl && <img src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                        </div>
+                      ))}
+                      <div style={{
+                        width: 34, height: 34, borderRadius: 7,
+                        border: '1.5px dashed #C3B695', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                      }}>
+                        <span style={{ font: '400 18px/1 system-ui', color: '#9A8B6E' }}>+</span>
+                      </div>
+                    </div>
+
+                    {count > 0 ? (
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 8 }}>{count} {count === 1 ? 'item' : 'items'}</div>
+                    ) : (
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#C0392B', marginTop: 8 }}>Add {group.label.toLowerCase()}</div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Site photos — full-width */}
+            {(() => {
+              const allItems = getSiteEvidence(siteId);
+              const allPhotos = Object.values(allItems).flatMap((arr) => arr).filter((e) => e.type === 'photo');
+              return (
+                <button
+                  onClick={() => setEvidenceSheet({ group: { key: 'site_photos', label: 'Site photos', color: '#7A5C92', bg: '#EAE0EE', iconBg: '#EAE0EE', items: [] } })}
+                  style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px', cursor: 'pointer', textAlign: 'left' }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
+                      📸
+                    </div>
+                    <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519', flex: 1 }}>Site photos</span>
+                    {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E' }}>{allPhotos.length} photos</span>}
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {allPhotos.slice(0, 4).map((ev) => (
+                      <div key={ev.id} style={{ flex: 1, height: 44, borderRadius: 8, overflow: 'hidden', background: '#E0D6C2', minWidth: 0 }}>
+                        {ev.dataUrl && <img src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                      </div>
+                    ))}
+                    <div style={{ width: 44, height: 44, borderRadius: 8, border: '1.5px dashed #C3B695', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ font: '400 20px/1 system-ui', color: '#9A8B6E' }}>+</span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })()}
+
+            {/* Generate report button */}
             {data && (
               <button
                 onClick={() => onOpenReport?.()}
                 className="w-full flex items-center justify-center gap-2 rounded-xl font-display font-semibold"
-                style={{ background: '#1F4D2B', color: '#EAF3E2', padding: '13px 16px', fontSize: 14.5, border: 'none', cursor: 'pointer' }}
+                style={{ background: '#274D2C', color: '#EAF3E2', padding: '14px 16px', fontSize: 14.5, border: 'none', cursor: 'pointer' }}
               >
-                <FileText size={16} />
+                <FileText size={16} color="#CDEBB6" />
                 {t('generateFullReport')}
               </button>
             )}
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
-              {t('savedReportsHeader')}
-            </div>
-            {savedReports.length === 0 ? (
-              <div className="rounded-xl p-4 text-sm" style={{ background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                {t('noSavedReportsMessage')}
-              </div>
-            ) : (
-              savedReports.map((r) => (
-                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-                  <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
-                    <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{r.name}</div>
-                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
-                      {new Date(r.savedAt).toLocaleDateString()} · {Math.abs(r.location.lat).toFixed(3)}°S {r.location.lon.toFixed(3)}°E
-                    </div>
-                  </button>
-                  <button onClick={() => onViewReport?.(r)} className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
-                    {t('reportOpenButton')}
-                  </button>
-                  <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 flex-shrink-0 flex items-center" style={{ color: '#5C5040' }}><Trash2 size={14} /></button>
+
+            {/* Saved reports */}
+            {savedReports.length > 0 && (
+              <>
+                <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                  {t('savedReportsHeader')}
                 </div>
-              ))
+                {savedReports.map((r) => (
+                  <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                    <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
+                      <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{r.name}</div>
+                      <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
+                        {new Date(r.savedAt).toLocaleDateString()} · {Math.abs(r.location.lat).toFixed(3)}°S {r.location.lon.toFixed(3)}°E
+                      </div>
+                    </button>
+                    <button onClick={() => onViewReport?.(r)} className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+                      style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
+                      {t('reportOpenButton')}
+                    </button>
+                    <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 flex-shrink-0 flex items-center" style={{ color: '#5C5040' }}><Trash2 size={14} /></button>
+                  </div>
+                ))}
+              </>
             )}
           </div>
         )}
@@ -1401,6 +1524,37 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           </div>
         </div>
       )}
+
+      {/* ── Evidence sheet ── */}
+      {evidenceSheet && (
+        <EvidenceSheet
+          siteId={siteId}
+          group={evidenceSheet.group}
+          item={evidenceSheet.item}
+          onClose={() => setEvidenceSheet(null)}
+          onChanged={() => setEvidenceTick((n) => n + 1)}
+        />
+      )}
+
+      {/* ── Evidence catalogue modal ── */}
+      {evidenceCatalogueOpen && (
+        <EvidenceCatalogue
+          siteId={siteId}
+          onClose={() => setEvidenceCatalogueOpen(false)}
+          onChanged={() => setEvidenceTick((n) => n + 1)}
+        />
+      )}
     </div>
   );
 }
+
+// Group icons used in the Reports tab evidence grid
+const EVIDENCE_GROUP_ICON: Record<string, string> = {
+  water: '💧',
+  structures: '🏠',
+  soil: '🌱',
+  trees: '🌿',
+  animals: '🐓',
+  energy: '⚡',
+  site_photos: '📸',
+};
