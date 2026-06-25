@@ -186,7 +186,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [sectionParcels, setSectionParcels] = useState(false);
   const [sectionWater, setSectionWater] = useState(false);
   const [showShapeLabels, setShowShapeLabels] = useState(false);
-  const [showPlaceLabels, setShowPlaceLabels] = useState(false);
+  const [showPlaceLabels, setShowPlaceLabels] = useState(true);
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
