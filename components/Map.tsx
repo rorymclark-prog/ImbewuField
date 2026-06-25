@@ -2017,7 +2017,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex items-center gap-1 transition-all active:scale-95"
               style={{ background: 'transparent', border: 'none', color: 'rgba(234,243,226,0.55)', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
             >
-              Hide <ChevronUp size={14} />
+              {t('toolbarHideButton')} <ChevronUp size={14} />
             </button>
           </div>
         </div>
@@ -2036,7 +2036,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onChange={(e) => { const v = e.target.value; setSearchQuery(v); setSearchError(''); setSearchResult(''); setShowRecents(false); fetchSuggestions(v); }}
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
-            placeholder="Search town or address"
+            placeholder={t('searchPlaceholder')}
             className="map-search-input flex-1 font-sans outline-none min-w-0"
             style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
           />
@@ -2072,7 +2072,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {showRecents && suggestions.length === 0 && recents.length > 0 && (
           <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
             style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
-            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>Recent</div>
+            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
             {recents.map((r, i) => (
               <button key={i}
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(r); }}
@@ -2099,9 +2099,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <Layers size={19} strokeWidth={1.8} style={{ color: '#A8D88A', flexShrink: 0 }} />
             {/* Collapsed: summarise the active layers (e.g. "Satellite · Contours") */}
             <span className="truncate">{layersOpen ? t('layersButtonOpen') : [
-              style === 'satellite-streets-v12' ? 'Satellite' : 'Topo',
-              hdImagery ? 'HD' : null, contours ? 'Contours' : null,
-              hillshade ? 'Relief' : null, terrain3d ? '3D' : null,
+              style === 'satellite-streets-v12' ? t('layerToggleSatellite') : t('layerToggleTopo'),
+              hdImagery ? t('layerToggleHD') : null, contours ? t('layerToggleContours') : null,
+              hillshade ? t('layerToggleRelief') : null, terrain3d ? t('layerToggle3D') : null,
             ].filter(Boolean).join(' · ')}</span>
           </span>
           <ChevronDown size={16} style={{ color: 'rgba(234,243,226,0.6)', flexShrink: 0, transition: 'transform 0.2s', transform: layersOpen ? 'rotate(180deg)' : 'none' }} />
@@ -2121,21 +2121,21 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="flex gap-1.5 flex-wrap font-sans">
             {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
               <button key={s} onClick={() => setStyle(s)} className="transition-all" style={chip(style === s)}>
-                {style === s && <Check size={13} strokeWidth={2.4} />}{['Satellite', 'Topo'][i]}
+                {style === s && <Check size={13} strokeWidth={2.4} />}{[t('layerToggleSatellite'), t('layerToggleTopo')][i]}
               </button>
             ))}
             <button onClick={() => setHdImagery(!hdImagery)}
               title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
               className="transition-all" style={chip(hdImagery)}>
-              {hdImagery && <Check size={13} strokeWidth={2.4} />}HD
+              {hdImagery && <Check size={13} strokeWidth={2.4} />}{t('layerToggleHD')}
             </button>
             <button onClick={() => setContours(!contours)} className="transition-all" style={chip(contours)}>
-              {contours && <Check size={13} strokeWidth={2.4} />}Contours
+              {contours && <Check size={13} strokeWidth={2.4} />}{t('layerToggleContours')}
             </button>
             <button onClick={() => setHillshade(!hillshade)}
               title="Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible"
               className="transition-all" style={chip(hillshade)}>
-              <Mountain size={13} strokeWidth={1.9} />Relief
+              <Mountain size={13} strokeWidth={1.9} />{t('layerToggleRelief')}
             </button>
             <button
               onClick={() => {
@@ -2151,7 +2151,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               }}
               title={terrain3d ? '3D terrain on — switch off for closer top-down zoom' : '3D terrain off (flat)'}
               className="transition-all" style={chip(terrain3d)}>
-              <Box size={13} strokeWidth={1.9} />3D
+              <Box size={13} strokeWidth={1.9} />{t('layerToggle3D')}
             </button>
           </div>
           );
@@ -2162,17 +2162,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <div className="rounded-lg font-mono"
             style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
               color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
-            <AlertTriangle size={13} className="inline mr-1" /> In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.
+            <AlertTriangle size={13} className="inline mr-1" /> {t('threeDWarning')}
           </div>
         )}
 
         {layersOpen && (
           <div>
             <div style={{ fontSize: 11, fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.45)', marginBottom: 8, paddingLeft: 2 }}>
-              Edit tool · try both
+              {t('editToolSectionLabel')}
             </div>
             <div className="flex gap-2">
-              {([['custom', 'Big handles', Hand], ['native', 'Mapbox tool', PenTool]] as const).map(([key, label, Icon]) => (
+              {([['custom', t('editEngineBigHandles'), Hand], ['native', t('editEngineMapboxTool'), PenTool]] as const).map(([key, label, Icon]) => (
                 <button key={key} onClick={() => chooseEngine(key)}
                   className="flex-1 flex items-center justify-center gap-2 font-sans transition-all"
                   style={{
@@ -2194,7 +2194,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {/* Actions row — always wraps */}
         <div>
           <div style={{ fontSize: 11, fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.45)', marginBottom: 10, paddingLeft: 2 }}>
-            Tools
+            {t('toolsSectionLabel')}
           </div>
           <div className="flex gap-1.5 flex-wrap font-sans">
           {/* My location */}
@@ -2205,7 +2205,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600,
               color: locating ? 'rgba(234,243,226,0.5)' : '#EAF3E2',
             }}>
-            {locating ? <Loader2 size={18} className="animate-spin" style={{ color: '#A8D88A' }} /> : <LocateFixed size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} />} Locate me
+            {locating ? <Loader2 size={18} className="animate-spin" style={{ color: '#A8D88A' }} /> : <LocateFixed size={19} strokeWidth={1.8} style={{ color: '#A8D88A' }} />} {t('locateMeButton')}
           </button>
 
           {/* Save the current spot as a place */}
@@ -2230,7 +2230,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <div className="flex items-center gap-1.5">
                 <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: placesOpen ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                 <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                  Places{savedPins.length ? ` · ${savedPins.length}` : ''}
+                  {t('placesSectionLabel')}{savedPins.length ? ` · ${savedPins.length}` : ''}
                 </span>
               </div>
               <button onClick={(e) => { e.stopPropagation(); setShowPlaceLabels((v) => !v); }}
@@ -2249,7 +2249,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {savedPins.length === 0 ? (
                   <div className="px-3 py-2 rounded-lg font-sans"
                     style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: 13 }}>
-                    No saved places yet — tap a spot on the map, then save it.
+                    {t('noSavedPlacesMessage')}
                   </div>
                 ) : savedPins.map((p) => (
                   <div key={p.id} className="flex items-center gap-3 font-sans"
@@ -2365,7 +2365,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <div className="flex items-center gap-1.5">
                   <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionParcels ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                    Parcels{siteStats ? ` · ${siteStats.count ?? 1}` : ''}
+                    {t('parcelsSectionLabel')}{siteStats ? ` · ${siteStats.count ?? 1}` : ''}
                   </span>
                   {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
                 </div>
@@ -2413,7 +2413,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <button onClick={() => startPinDraw('site')}
                         className="w-full flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
                         style={{ fontSize: 14.5, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#A8D88A', cursor: 'pointer' }}>
-                        <Plus size={17} />Add parcel
+                        <Plus size={17} />{t('parcelAddButton')}
                       </button>
                     </div>
                   ) : (
@@ -2421,7 +2421,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <button onClick={() => startPinDraw('site')}
                         className="w-full flex items-center justify-center gap-2 font-sans transition-all active:scale-95"
                         style={{ height: 52, borderRadius: 14, border: 'none', background: '#C07A1E', color: '#1a1205', fontSize: 15, fontWeight: 800, boxShadow: '0 6px 16px -6px rgba(192,122,30,0.7)', cursor: 'pointer' }}>
-                        <PenTool size={19} strokeWidth={2} />Draw land boundary
+                        <PenTool size={19} strokeWidth={2} />{t('drawLandBoundaryButton')}
                       </button>
                     </div>
                   )}
@@ -2440,7 +2440,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <div className="flex items-center gap-1.5">
                   <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionWater ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                    Water{waterStats ? ` · ${waterStats.count}` : ''}
+                    {t('waterSectionLabel')}{waterStats ? ` · ${waterStats.count}` : ''}
                   </span>
                   {waterStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL</span>}
                 </div>
@@ -2478,13 +2478,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       {/* Water infrastructure points */}
                       {waterPoints.length > 0 && (
                         <div>
-                          <div className="font-sans mb-1.5" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>Infrastructure</div>
+                          <div className="font-sans mb-1.5" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.4)', paddingLeft: 2 }}>{t('waterInfrastructureSectionLabel')}</div>
                           {waterPoints.map((wp) => (
                             <div key={wp.id} className="flex items-center gap-3 font-sans mb-1.5"
                               style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 13px 10px 15px' }}>
                               <div className="flex-shrink-0 rounded-full" style={{ width: 10, height: 10, background: categoryColor(wp.category) }} />
                               <div className="flex-1 min-w-0">
-                                <div className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#EAF3E2' }}>{wp.name || wp.category || 'Water point'}</div>
+                                <div className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#EAF3E2' }}>{wp.name || wp.category || t('waterPointAddButton')}</div>
                                 {wp.category && wp.name && <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)' }}>{wp.category}</div>}
                               </div>
                               <button onClick={() => { setWaterPointNaming(wp); setWpName(wp.name); setWpCategory(wp.category); }}
@@ -2505,12 +2505,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         <button onClick={() => startPinDraw('water')}
                           className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
                           style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
-                          <Plus size={16} />Harvesting area
+                          <Plus size={16} />{t('waterAreaAddButton')}
                         </button>
                         <button onClick={() => setDroppingWaterPoint(true)}
                           className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
                           style={{ fontSize: 14, height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', cursor: 'pointer' }}>
-                          <Pipette size={16} />Water point
+                          <Pipette size={16} />{t('waterPointAddButton')}
                         </button>
                       </div>
                     </div>
@@ -2519,12 +2519,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <button onClick={() => startPinDraw('water')}
                         className="flex-1 flex items-center justify-center gap-2 font-sans font-bold transition-all active:scale-95"
                         style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
-                        <Droplets size={16} strokeWidth={2} />Harvesting area
+                        <Droplets size={16} strokeWidth={2} />{t('waterAreaAddButton')}
                       </button>
                       <button onClick={() => setDroppingWaterPoint(true)}
                         className="flex-1 flex items-center justify-center gap-2 font-sans font-bold active:scale-95"
                         style={{ height: 48, borderRadius: 13, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', color: '#7CC6F2', fontSize: 14, cursor: 'pointer' }}>
-                        <Pipette size={16} />Water point
+                        <Pipette size={16} />{t('waterPointAddButton')}
                       </button>
                     </div>
                   )}
@@ -2549,8 +2549,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <Sprout size={18} strokeWidth={1.8} style={{ color: '#CDEBB6' }} />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <div style={{ fontSize: 14.5, fontWeight: 800, color: '#EAF3E2', lineHeight: 1.25 }}>Ask Lima about your land</div>
-                <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)', lineHeight: 1.3 }}>Sizes, water, what to plant…</div>
+                <div style={{ fontSize: 14.5, fontWeight: 800, color: '#EAF3E2', lineHeight: 1.25 }}>{t('askLimaButton')}</div>
+                <div style={{ fontSize: 12, color: 'rgba(234,243,226,0.5)', lineHeight: 1.3 }}>{t('askLimaSubtitle')}</div>
               </div>
               <ChevronRight size={18} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
             </button>
@@ -2588,7 +2588,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           onClick={() => mapRef.current?.zoomTo(Math.min(MAX_ZOOM, zoom + 1), { duration: 300 })}
           className="rounded-lg flex items-center justify-center leading-none transition-all active:scale-90"
           style={{ width: 40, height: 40, fontSize: 22, background: 'transparent', border: 'none', color: '#EAF3E2' }}
-          title="Zoom in" aria-label="Zoom in"
+          title={t('zoomInTitle')} aria-label={t('zoomInAriaLabel')}
         >+</button>
 
         {/* Vertical fill bar — shows current zoom, not draggable */}
@@ -2603,7 +2603,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           onClick={() => mapRef.current?.zoomTo(Math.max(MIN_ZOOM, zoom - 1), { duration: 300 })}
           className="rounded-lg flex items-center justify-center leading-none transition-all active:scale-90"
           style={{ width: 40, height: 40, fontSize: 22, background: 'transparent', border: 'none', color: '#EAF3E2' }}
-          title="Zoom out" aria-label="Zoom out"
+          title={t('zoomOutTitle')} aria-label={t('zoomOutAriaLabel')}
         >−</button>
 
         <span className="text-xs font-sans font-semibold" style={{ color: 'rgba(234,243,226,0.6)' }}>
