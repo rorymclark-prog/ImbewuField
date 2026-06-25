@@ -762,27 +762,71 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Stat label="Summer max" value={`${data.climate.maxTemp}°C`} />
               <Stat label="Winter min" value={`${data.climate.minTemp}°C`} sub={data.climate.minTemp < 2 ? 'Frost likely' : 'Frost-free'} color={data.climate.minTemp < 2 ? '#235E86' : undefined} />
             </div>
+
+            {/* Wind — prominent because it drives windbreak design */}
+            <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#235E86' }}>Wind</span>
+                <span className="font-display font-bold" style={{ fontSize: 20, color: '#235E86' }}>
+                  {(data.climate.windSpeed * 3.6).toFixed(0)} <span className="text-xs font-mono font-normal" style={{ color: '#5C5040' }}>km/h avg</span>
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <p className="text-xs font-mono mb-0.5" style={{ color: '#8C7A62' }}>Summer (prevails FROM)</p>
+                  <p className="text-sm font-display font-bold" style={{ color: '#20190F' }}>{data.climate.windFromSummer}</p>
+                </div>
+                <div className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <p className="text-xs font-mono mb-0.5" style={{ color: '#8C7A62' }}>Winter (prevails FROM)</p>
+                  <p className="text-sm font-display font-bold" style={{ color: '#20190F' }}>{data.climate.windFromWinter}</p>
+                </div>
+              </div>
+              <p className="text-xs font-display mt-2 leading-relaxed" style={{ color: '#5C5040' }}>
+                {data.climate.windSpeed > 4
+                  ? `⚠ Strong winds — place windbreaks on the ${data.climate.windFromSummer} and ${data.climate.windFromWinter} sides before planting crops.`
+                  : `Moderate winds — a windbreak on the ${data.climate.windFromSummer} side will still protect young plants and cut water loss.`
+                }
+              </p>
+            </div>
+
             <Card>
               <Label>Monthly temperature (°C)</Label>
-              <div className="flex items-end gap-1 h-14 mt-2">
-                {data.climate.monthlyTemp.map((t, i) => {
-                  const range = data.climate.maxTemp - data.climate.minTemp + 0.01;
-                  const norm = (t - data.climate.minTemp) / range;
-                  return (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <div
-                        className="w-full rounded-sm transition-all"
-                        style={{
-                          height: `${Math.max(6, norm * 48)}px`,
-                          background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
-                        }}
-                      />
-                      <span style={{ fontSize: 9, color: '#5C5040', fontFamily: 'var(--font-mono)' }}>
-                        {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
-                      </span>
-                    </div>
-                  );
-                })}
+              <div className="mt-2" style={{ position: 'relative' }}>
+                <div className="flex items-end gap-0.5" style={{ height: 72 }}>
+                  {data.climate.monthlyTemp.map((t, i) => {
+                    const tMin = Math.min(...data.climate.monthlyTemp);
+                    const tMax = Math.max(...data.climate.monthlyTemp);
+                    const range = tMax - tMin + 0.01;
+                    const norm = (t - tMin) / range;
+                    const isHot = t === tMax;
+                    const isCold = t === tMin;
+                    return (
+                      <div key={i} className="flex-1 flex flex-col items-center" style={{ gap: 2 }}>
+                        {(isHot || isCold) && (
+                          <span style={{ fontSize: 8, color: isHot ? '#C03C1E' : '#235E86', fontFamily: 'var(--font-mono)', fontWeight: 700, lineHeight: 1 }}>
+                            {t.toFixed(0)}°
+                          </span>
+                        )}
+                        {!(isHot || isCold) && <span style={{ fontSize: 8, color: 'transparent' }}>0</span>}
+                        <div
+                          className="w-full rounded-sm"
+                          style={{
+                            height: `${Math.max(6, norm * 52)}px`,
+                            background: `linear-gradient(to top, hsl(${25 + norm * 35}, 70%, ${28 + norm * 22}%), hsl(${30 + norm * 30}, 60%, ${35 + norm * 18}%))`,
+                          }}
+                          title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${t.toFixed(1)}°C`}
+                        />
+                        <span style={{ fontSize: 8, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>
+                          {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex justify-between mt-1">
+                  <span style={{ fontSize: 9, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{Math.min(...data.climate.monthlyTemp).toFixed(0)}°C min</span>
+                  <span style={{ fontSize: 9, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{Math.max(...data.climate.monthlyTemp).toFixed(0)}°C max</span>
+                </div>
               </div>
             </Card>
             <Card>

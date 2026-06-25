@@ -25,17 +25,17 @@ const FARM_KEY = 'imbewu_farm_shapes';
 // Per-parcel colour palette — each new parcel gets the next entry, cycling if > 6.
 // Even-index entries hatch at 45°, odd at 135° so adjacent parcels are always distinct.
 const LAND_PALETTE = [
-  { r:  46, g: 107, b:  58, a: 170, edge: '#9BE66B' },  // 0 bright green   45°
-  { r: 160, g: 116, b:  36, a: 170, edge: '#D4A830' },  // 1 amber/ochre    135°
-  { r: 130, g:  65, b:  30, a: 170, edge: '#C07838' },  // 2 sienna/brown    45°
-  { r:  72, g: 136, b:  72, a: 170, edge: '#6CC86C' },  // 3 sage green     135°
-  { r: 130, g: 172, b:  40, a: 170, edge: '#A8D820' },  // 4 lime            45°
-  { r:  90, g:  58, b: 138, a: 170, edge: '#9870D4' },  // 5 lavender       135°
+  { r:  46, g: 107, b:  58, a: 200, edge: '#9BE66B' },  // 0 bright green   45°
+  { r: 160, g: 116, b:  36, a: 200, edge: '#D4A830' },  // 1 amber/ochre    135°
+  { r: 130, g:  65, b:  30, a: 200, edge: '#C07838' },  // 2 sienna/brown    45°
+  { r:  72, g: 136, b:  72, a: 200, edge: '#6CC86C' },  // 3 sage green     135°
+  { r: 130, g: 172, b:  40, a: 200, edge: '#A8D820' },  // 4 lime            45°
+  { r:  90, g:  58, b: 138, a: 200, edge: '#9870D4' },  // 5 lavender       135°
 ] as const;
 const WATER_PALETTE = [
-  { r:  35, g:  94, b: 134, a: 200, edge: '#5BB4EC' },  // 0 sky blue        45°
-  { r:  28, g: 136, b: 126, a: 200, edge: '#38B8AC' },  // 1 teal           135°
-  { r:  40, g:  76, b: 174, a: 200, edge: '#5090E0' },  // 2 deep blue       45°
+  { r:  35, g:  94, b: 134, a: 220, edge: '#5BB4EC' },  // 0 sky blue        45°
+  { r:  28, g: 136, b: 126, a: 220, edge: '#38B8AC' },  // 1 teal           135°
+  { r:  40, g:  76, b: 174, a: 220, edge: '#5090E0' },  // 2 deep blue       45°
 ] as const;
 // Helper: hatch angle alternates by index (even = 45°, odd = 135°)
 function hatchOn(x: number, y: number, sz: number, idx: number): boolean {
@@ -412,13 +412,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         // Dark casing — thick under-stroke that survives on any satellite background colour
         { id: 'gl-draw-poly-casing-land',  type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#0d1f12', 'line-width': 9 } },
         { id: 'gl-draw-poly-casing-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#071422', 'line-width': 9 } },
-        // Diagonal hatch fill — colour + angle varies per feature via hatchIdx user property
+        // Diagonal hatch fill — colour + angle varies per feature via hatchIdx user property.
+        // fill-color: transparent is required; without it Mapbox applies a default black fill behind the pattern
         { id: 'gl-draw-poly-fill-land', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']],
-          paint: { 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], LAND_PALETTE.length],
+          paint: { 'fill-color': 'rgba(0,0,0,0)', 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], LAND_PALETTE.length],
             0, 'imbewu-hatch-land-0', 1, 'imbewu-hatch-land-1', 2, 'imbewu-hatch-land-2',
             3, 'imbewu-hatch-land-3', 4, 'imbewu-hatch-land-4', 'imbewu-hatch-land-5'] } as object },
         { id: 'gl-draw-poly-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']],
-          paint: { 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], WATER_PALETTE.length],
+          paint: { 'fill-color': 'rgba(0,0,0,0)', 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], WATER_PALETTE.length],
             0, 'imbewu-hatch-water-0', 1, 'imbewu-hatch-water-1', 'imbewu-hatch-water-2'] } as object },
         // Bright edge — colour matches the hatch palette entry for that feature
         { id: 'gl-draw-poly-stroke-land', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']],
@@ -1320,7 +1321,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
   // time via the row's name). Stored on the feature so it persists + shows in lists. ──
   const SHAPE_CATEGORIES: Record<'site' | 'water', string[]> = {
-    site: ['Home plot', 'Field', 'Orchard', 'Grazing', 'Other'],
+    site: ['Home plot', 'Vegetable garden', 'Staple crop plot', 'Field', 'Orchard', 'Grazing', 'Other'],
     water: ['Roof', 'Swale', 'Contour bank', 'Road run-off', 'Earthwork', 'Other'],
   };
   const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
