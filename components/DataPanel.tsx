@@ -18,6 +18,8 @@ import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
+import PeoplePanel from './PeoplePanel';
+import type { Profile } from '@/lib/db/types';
 
 interface Props {
   data: LocationData | null;
@@ -34,9 +36,13 @@ interface Props {
   appLang?: string;
   placeName?: string | null;
   activePlaceId?: string;
+  people?: Profile[];
+  peopleLoading?: boolean;
+  currentUserId?: string;
+  onOpenProfile?: () => void;
 }
 
-const TABS = ['Overview', 'Ask', 'Reports', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
+const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
 type Tab = typeof TABS[number];
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
@@ -253,7 +259,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile }: Props) {
   const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
   useEffect(() => {
     const refresh = () => setSavedReports(loadReports());
@@ -752,6 +758,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             </Card>
           </>
+        )}
+
+        {/* PEOPLE */}
+        {tab === 'People' && (
+          <PeoplePanel
+            people={people ?? []}
+            loading={peopleLoading ?? false}
+            currentUserId={currentUserId}
+            onOpenProfile={onOpenProfile ?? (() => {})}
+          />
         )}
 
         {/* WATER */}

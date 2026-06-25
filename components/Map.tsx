@@ -24,6 +24,20 @@ const FARM_KEY = 'imbewu_farm_shapes';
 
 // Per-parcel colour palette — each new parcel gets the next entry, cycling if > 6.
 // Even-index entries hatch at 45°, odd at 135° so adjacent parcels are always distinct.
+const ROLE_COLOR: Record<string, string> = {
+  farmer: '#1F4D2B', mentor: '#235E86', student: '#C07A1E',
+  ngo: '#6B35A0', funder: '#B83A18', admin: '#5C5040',
+};
+
+export interface PeopleMarker {
+  id: string;
+  lat: number;
+  lon: number;
+  name: string;
+  role: string;
+  photoUrl?: string | null;
+}
+
 const LAND_PALETTE = [
   { r:  46, g: 107, b:  58, a: 200, edge: '#9BE66B' },  // 0 bright green   45°
   { r: 160, g: 116, b:  36, a: 200, edge: '#D4A830' },  // 1 amber/ochre    135°
@@ -129,9 +143,12 @@ interface Props {
   onDrawingChange?: (active: boolean) => void;
   locationData?: LocationData | null;
   onPlaceSelect?: (info: { name: string; id: string } | null) => void;
+  people?: PeopleMarker[];
+  showPeople?: boolean;
+  onTogglePeople?: () => void;
 }
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -1524,6 +1541,34 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Marker>
         ))}
 
+        {/* ── People face-photo markers ── */}
+        {showPeople && (people ?? []).map(p => (
+          <Marker key={p.id} latitude={p.lat} longitude={p.lon} anchor="bottom">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, cursor: 'pointer' }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: '50%', overflow: 'hidden',
+                border: `2.5px solid ${ROLE_COLOR[p.role] ?? '#5C5040'}`,
+                background: ROLE_COLOR[p.role] ?? '#5C5040',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+              }}>
+                {p.photoUrl
+                  ? <img src={p.photoUrl} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  : <span style={{ color: 'white', fontWeight: 700, fontSize: 15, fontFamily: 'system-ui' }}>
+                      {(p.name?.[0] ?? '?').toUpperCase()}
+                    </span>
+                }
+              </div>
+              <div style={{
+                background: 'rgba(20,20,20,0.78)', color: 'white',
+                fontSize: 9.5, fontFamily: 'var(--font-mono)', fontWeight: 600,
+                padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap', maxWidth: 72,
+                overflow: 'hidden', textOverflow: 'ellipsis',
+              }}>{p.name}</div>
+            </div>
+          </Marker>
+        ))}
+
         {/* ── Tap-action Popup for active place pin ── */}
         {activePin && !movingPin && (() => {
           const p = savedPins.find(pin => pin.id === activePin);
@@ -2611,6 +2656,21 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <span className="flex items-center rounded-full flex-shrink-0"
                   style={{ width: 26, height: 15, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
                   <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            </>
+          )}
+          {people && people.length > 0 && onTogglePeople && (
+            <>
+              <div style={{ width: 1, height: 18, background: 'rgba(234,243,226,0.1)' }} />
+              <button onClick={onTogglePeople}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+                <Sprout size={11} style={{ color: showPeople ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: showPeople ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>People</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showPeople ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPeople ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPeople ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
                 </span>
               </button>
             </>

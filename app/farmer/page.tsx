@@ -15,10 +15,14 @@ import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import NavDrawer from '@/components/NavDrawer';
+import ProfileSheet from '@/components/ProfileSheet';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { loadPlaces } from '@/lib/saved-places';
+import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
+import type { Profile } from '@/lib/db/types';
+import type { PeopleMarker } from '@/components/Map';
 
 const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm'];
 import { setLastSite } from '@/lib/last-site';
@@ -81,6 +85,11 @@ function HomeInner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [drawing, setDrawing] = useState(false); // boundary/water draw active → hide the Results FAB
+  const [people, setPeople] = useState<Profile[]>([]);
+  const [peopleLoading, setPeopleLoading] = useState(false);
+  const [showPeople, setShowPeople] = useState(false);
+  const [profileSheetOpen, setProfileSheetOpen] = useState(false);
+  const [myProfile, setMyProfile] = useState<Profile | null>(null);
 
   const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
     setSelected({ lat, lon });
@@ -137,6 +146,33 @@ function HomeInner() {
   // When boundary/water drawing starts, collapse the bottom sheet so the crosshair and
   // the lower part of the map aren't hidden behind the 70vh panel.
   useEffect(() => { if (drawing) setSheetOpen(false); }, [drawing]);
+
+  // Load org team members when authenticated
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setPeopleLoading(true);
+      const [team, me] = await Promise.all([listOrgPeople(), getMyProfile()]);
+      if (!cancelled) {
+        setPeople(team);
+        setMyProfile(me);
+        setPeopleLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, []);
+
+  const peopleMarkers: PeopleMarker[] = people
+    .filter(p => p.showOnMap && p.mapLat != null && p.mapLon != null)
+    .map(p => ({
+      id: p.id,
+      lat: p.mapLat!,
+      lon: p.mapLon!,
+      name: p.full_name ?? 'Unknown',
+      role: p.role,
+      photoUrl: p.photo_url,
+    }));
 
   return (
     <>
@@ -253,6 +289,9 @@ function HomeInner() {
               onDrawingChange={setDrawing}
               locationData={data}
               onPlaceSelect={handlePlaceSelect}
+              people={peopleMarkers}
+              showPeople={showPeople}
+              onTogglePeople={() => setShowPeople(v => !v)}
             />
           </div>
 
@@ -276,6 +315,10 @@ function HomeInner() {
               appLang={lang}
               activePlaceId={activePlaceId ?? undefined}
               placeName={activePlaceName}
+              people={people}
+              peopleLoading={peopleLoading}
+              currentUserId={myProfile?.id}
+              onOpenProfile={() => setProfileSheetOpen(true)}
             />
           </div>
 
@@ -363,6 +406,10 @@ function HomeInner() {
                 appLang={lang}
                 activePlaceId={activePlaceId ?? undefined}
                 placeName={activePlaceName}
+                people={people}
+                peopleLoading={peopleLoading}
+                currentUserId={myProfile?.id}
+                onOpenProfile={() => setProfileSheetOpen(true)}
               />
             </div>
           </div>
@@ -370,6 +417,14 @@ function HomeInner() {
 
         <TabBar />
       </div>
+
+      <ProfileSheet
+        open={profileSheetOpen}
+        onClose={() => setProfileSheetOpen(false)}
+        profile={myProfile}
+        mapCenter={selected ? { lat: selected.lat, lon: selected.lon } : undefined}
+        onSaved={(updated) => setMyProfile(updated)}
+      />
     </>
   );
 }

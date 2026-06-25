@@ -15,6 +15,11 @@ export interface Programme {
 export interface Profile {
   id: string; full_name: string | null; role: UserRole; org_id: string | null;
   language: string; id_number: string | null; phone: string | null; photo_url: string | null; created_at: string;
+  bio?: string | null;
+  skills?: string[] | null;
+  showOnMap?: boolean;
+  mapLat?: number | null;
+  mapLon?: number | null;
 }
 
 export interface Garden {

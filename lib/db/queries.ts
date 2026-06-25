@@ -32,6 +32,25 @@ export async function updateMyProfile(patch: Partial<Profile>): Promise<void> {
   await setDoc(doc(f.db, 'profiles', u), patch, { merge: true });
 }
 
+// ---- people directory (org-scoped) ----
+export async function listOrgPeople(): Promise<Profile[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const me = await getMyProfile();
+  const myOrgId = me?.org_id;
+  if (!myOrgId) return [];
+  const s = await getDocs(query(collection(f.db, 'profiles'), where('org_id', '==', myOrgId)));
+  return rows<Profile>(s).filter((p) => p.id !== u);
+}
+export async function uploadProfilePhoto(file: File): Promise<string> {
+  const f = fb(); const u = uid(); if (!f || !u) throw new Error('Not authenticated');
+  const path = `profile_photos/${u}/${Date.now()}_${file.name.replace(/[^a-z0-9.]/gi, '_')}`;
+  const r = storageRef(f.storage, path);
+  await uploadBytes(r, file);
+  const url = await getDownloadURL(r);
+  await setDoc(doc(f.db, 'profiles', u), { photo_url: url }, { merge: true });
+  return url;
+}
+
 // ---- gardens (oversight) ----
 export async function listGardens(): Promise<Garden[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
