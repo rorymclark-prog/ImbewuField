@@ -15,6 +15,7 @@ import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PL
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
+import { useLanguage } from '@/lib/i18n';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -149,6 +150,7 @@ interface Props {
 }
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
+  const { t } = useLanguage();
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -1919,7 +1921,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           }}
         >
           <span className="flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 8, background: '#1F4D2B', color: '#A8D88A' }}><Sprout size={15} strokeWidth={1.7} /></span>
-          Find your land
+          {t('findYourLand')}
         </button>
       )}
 
@@ -1949,7 +1951,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="flex items-center justify-center" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B', color: '#A8D88A' }}>
               <Sprout size={17} strokeWidth={1.7} />
             </div>
-            <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>Find your land</span>
+            <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>{t('findYourLand')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             {/* Share this site — saves draw + places + water, copies URL */}
@@ -2638,7 +2640,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex items-center gap-1 active:scale-95 transition-all"
               style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
               <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>Parcels & water</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('parcelsWater')}</span>
               <span className="flex items-center rounded-full flex-shrink-0"
                 style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
                 <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />

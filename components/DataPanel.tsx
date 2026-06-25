@@ -260,6 +260,7 @@ function Skeleton() {
 
 /* ── Main component ───────────────────────────────── */
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile }: Props) {
+  const { t } = useLanguage();
   const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
   useEffect(() => {
     const refresh = () => setSavedReports(loadReports());
@@ -422,7 +423,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
         {/* Overline */}
         <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.16em' }}>
-          Site report
+          {t('siteReport')}
         </div>
 
         {/* Name + suitability badge */}
@@ -470,26 +471,26 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           className="flex overflow-x-auto"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {VISIBLE_TABS.map((t) => (
+          {VISIBLE_TABS.map((tabName) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
+              key={tabName}
+              onClick={() => setTab(tabName)}
               className="flex items-center gap-1.5 flex-shrink-0 transition-all duration-150"
               style={{
                 padding: '9px 12px',
-                borderBottom: tab === t ? '2px solid #C07A1E' : '2px solid transparent',
+                borderBottom: tab === tabName ? '2px solid #C07A1E' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
-                color: tab === t ? '#C07A1E' : '#5C5040',
+                color: tab === tabName ? '#C07A1E' : '#5C5040',
                 fontSize: 12.5,
                 fontFamily: 'var(--font-display)',
-                fontWeight: tab === t ? 600 : 400,
+                fontWeight: tab === tabName ? 600 : 400,
                 whiteSpace: 'nowrap',
                 cursor: 'pointer',
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center' }}>{TAB_ICONS[t]}</span>
-              {t}
+              <span style={{ display: 'flex', alignItems: 'center' }}>{TAB_ICONS[tabName]}</span>
+              {t('tab' + tabName)}
             </button>
           ))}
         </div>
@@ -513,10 +514,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
-                          Your land{siteData.count && siteData.count > 1 ? ` · ${siteData.count} parcels` : ''}
+                          {t('yourLand')}{siteData.count && siteData.count > 1 ? ` · ${siteData.count} ${t('parcels')}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} perimeter · {siteData.areaM2.toLocaleString()} m²
+                          {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} {t('perimeter')} · {siteData.areaM2.toLocaleString()} m²
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
@@ -524,7 +525,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           ? <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaM2.toLocaleString()}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>m²</div></>
                           : <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
-                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div></>
+                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>{t('hectares')}</div></>
                         }
                       </div>
                     </div>
@@ -550,10 +551,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
-                          Harvesting areas{waterData.count > 1 ? ` · ${waterData.count}` : ''}
+                          {t('harvestingAreas')}{waterData.count > 1 ? ` · ${waterData.count}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {waterData.areaM2.toLocaleString()} m² catchment area
+                          {waterData.areaM2.toLocaleString()} m² {t('catchmentArea')}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
@@ -582,7 +583,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Annual rainfall</span>
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('annualRainfall')}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                   {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> mm</span>
                 </span>
@@ -604,21 +605,21 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Layers size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Soil texture</span>
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('soilTexture')}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                   {data.soil.textureClass}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Snowflake size={16} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Frost risk</span>
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('frostRisk')}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
                   {frostLabel}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
                 <Mountain size={16} style={{ color: '#5C5040', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>Elevation</span>
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('elevation')}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                   {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> m</span>
                 </span>
@@ -668,7 +669,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* 12-month planting calendar strip */}
             {data.rainfall.monthly?.length === 12 && (
               <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
-                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>Planting calendar</span>
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>{t('plantingCalendar')}</span>
                 <div className="flex gap-0.5 mt-2">
                   {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
                     const rain = data.rainfall.monthly![i];
@@ -677,7 +678,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     const isGrow = !isFrost && temp >= 12 && rain >= 30;
                     const isDry  = !isFrost && !isGrow && rain < 20 && temp > 22;
                     const bg = isFrost ? '#BFD9EE' : isGrow ? '#B5D9B5' : isDry ? '#E8C87A' : '#D8CEBC';
-                    const label = isFrost ? 'Frost' : isGrow ? 'Grow' : isDry ? 'Dry' : 'Rest';
+                    const label = isFrost ? t('frost') : isGrow ? t('grow') : isDry ? t('dry') : t('rest');
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
                         <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
@@ -687,7 +688,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   })}
                 </div>
                 <div className="flex gap-3 mt-2 flex-wrap">
-                  {[['#B5D9B5','Grow'],['#E8C87A','Dry'],['#BFD9EE','Frost'],['#D8CEBC','Rest']] .map(([c,l]) => (
+                  {([['#B5D9B5', t('grow')],['#E8C87A', t('dry')],['#BFD9EE', t('frost')],['#D8CEBC', t('rest')]]).map(([c,l]) => (
                     <div key={l} className="flex items-center gap-1">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
                       <span style={{ fontSize: 9.5, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{l}</span>
@@ -1066,12 +1067,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* REPORTS — saved permaculture reports, reopen without regenerating */}
         {tab === 'Reports' && (
           <div className="space-y-3">
+            {data && (
+              <button
+                onClick={() => onOpenReport?.()}
+                className="w-full flex items-center justify-center gap-2 rounded-xl font-display font-semibold"
+                style={{ background: '#1F4D2B', color: '#EAF3E2', padding: '13px 16px', fontSize: 14.5, border: 'none', cursor: 'pointer' }}
+              >
+                <FileText size={16} />
+                {t('generateFullReport')}
+              </button>
+            )}
             <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
-              Saved Reports
+              {t('savedReports')}
             </div>
             {savedReports.length === 0 ? (
               <div className="rounded-xl p-4 text-sm" style={{ background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                No saved reports yet. Open <span style={{ color: '#C07A1E' }}>Generate Full Report</span>, then tap <span style={{ color: '#1F4D2B' }}>Save report</span> to keep it here.
+                {t('reportsEmpty')}
               </div>
             ) : (
               savedReports.map((r) => (

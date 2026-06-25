@@ -3,16 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Map, DollarSign, User } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
 const TABS = [
-  { href: '/home',     label: 'Home',    Icon: Home },
-  { href: '/farmer',   label: 'Map',     Icon: Map },
-  { href: '/finances', label: 'Finance', Icon: DollarSign },
-  { href: '/account',  label: 'Account', Icon: User },
+  { href: '/home',     key: 'tabHome',    Icon: Home },
+  { href: '/farmer',   key: 'tabMap',     Icon: Map },
+  { href: '/finances', key: 'tabFinance', Icon: DollarSign },
+  { href: '/account',  key: 'tabAccount', Icon: User },
 ];
 
 export default function TabBar() {
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   function isActive(href: string) {
     const base = href.split('?')[0];
@@ -29,7 +31,7 @@ export default function TabBar() {
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
     >
-      {TABS.map(({ href, label, Icon }) => {
+      {TABS.map(({ href, key, Icon }) => {
         const active = isActive(href);
         return (
           <Link
@@ -52,7 +54,7 @@ export default function TabBar() {
                 letterSpacing: '0.01em',
               }}
             >
-              {label}
+              {t(key)}
             </span>
           </Link>
         );
