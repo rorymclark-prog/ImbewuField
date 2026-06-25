@@ -141,13 +141,13 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       {/* Indigenous plants */}
       <SectionHead icon={<TreeDeciduous size={14} />} label="Indigenous plants to include" />
       <div>
-        {data.indigenousPlants.map((p, i) => <PlantRow key={i} p={p} />)}
+        {(data.indigenousPlants ?? []).map((p, i) => <PlantRow key={i} p={p} />)}
       </div>
 
       {/* Vegetables */}
       <SectionHead icon={<Sprout size={14} />} label="Vegetables for this climate" />
       <div className="grid grid-cols-2 gap-1.5">
-        {data.vegetables.map((v, i) => (
+        {(data.vegetables ?? []).map((v, i) => (
           <div key={i} className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{v.name}</p>
             {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#C07A1E', fontSize: 10 }}>{v.season}</p>}
@@ -159,7 +159,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       {/* Fruit trees */}
       <SectionHead icon={<Apple size={14} />} label="Fruit trees" />
       <div className="flex flex-wrap gap-1.5">
-        {data.fruitTrees.map((f, i) => (
+        {(data.fruitTrees ?? []).map((f, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{f.name}</p>
             {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{f.notes}</p>}
@@ -170,13 +170,13 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       {/* Indigenous fruit */}
       <SectionHead icon={<Cherry size={14} />} label="Indigenous fruit" />
       <div>
-        {data.indigenousFruit.map((p, i) => <PlantRow key={i} p={{ ...p, role: p.notes }} />)}
+        {(data.indigenousFruit ?? []).map((p, i) => <PlantRow key={i} p={{ ...p, role: p.notes }} />)}
       </div>
 
       {/* Nuts */}
       <SectionHead icon={<Nut size={14} />} label="Nut trees &amp; crops" />
       <div className="flex flex-wrap gap-1.5">
-        {data.nuts.map((n, i) => (
+        {(data.nuts ?? []).map((n, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{n.name}</p>
             {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{n.notes}</p>}
@@ -187,7 +187,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       {/* Animals */}
       <SectionHead icon={<Bird size={14} />} label="Animal systems" />
       <div>
-        {data.animals.map((a, i) => <AnimalCard key={i} a={a} />)}
+        {(data.animals ?? []).map((a, i) => <AnimalCard key={i} a={a} />)}
       </div>
     </div>
   );

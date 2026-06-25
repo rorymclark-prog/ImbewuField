@@ -215,7 +215,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [editPoints, setEditPoints] = useState<[number, number][]>([]); // working ring (open — no closing dup)
   const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
-  const editNameRef = useRef<{ name?: string; category?: string } | null>(null); // name/category snapshot across edit
+  const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number } | null>(null); // snapshot across edit
   const nativeEditBackupRef = useRef<GeoJSON.Feature | null>(null);      // snapshot for native-edit Undo
 
   // Saved-place pins: load + keep in sync with the Places tab
@@ -652,6 +652,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     try { const ids = draw.add(feature); id = ids?.[0] ?? null; } catch { id = null; }
     if (id != null) {
       draw.setFeatureProperty(id, 'featureType', type);
+      const existingCount = draw.getAll().features.filter((feat: GeoJSON.Feature) =>
+        (feat.geometry.type === 'Polygon' || feat.geometry.type === 'MultiPolygon') &&
+        (type === 'water' ? feat.properties?.featureType === 'water' : feat.properties?.featureType !== 'water') &&
+        feat.id !== id
+      ).length;
+      draw.setFeatureProperty(id, 'hatchIdx', existingCount);
     }
     setPinDraw(null);
     setDraftPoints([]);
@@ -687,7 +693,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9) ring.pop();
     }
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
-    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined };
+    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined };
     try { draw.delete(featureId); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
@@ -805,6 +811,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       const snap = editNameRef.current;
       if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
       if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
+      if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
     }
     editNameRef.current = null;
     setEditPin(null);
@@ -830,6 +837,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           const snap = editNameRef.current;
           if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
           if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
+          if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
         }
       } catch {}
     }

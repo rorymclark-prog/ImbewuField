@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { loadSurvey } from '@/lib/site-survey';
+import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
@@ -15,6 +15,7 @@ import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import LifeGuide from './LifeGuide';
+import WaterBalance from './WaterBalance';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 
@@ -261,6 +262,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return () => window.removeEventListener('imbewu-reports-changed', refresh);
   }, []);
   const [tab, setTab] = useState<Tab>('Overview');
+  const [survey, setSurvey] = useState<SiteSurvey | null>(null);
+  useEffect(() => { setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null); }, [activePlaceId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
@@ -677,6 +680,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* WATER */}
         {tab === 'Water' && (
           <>
+            <WaterBalance
+              locationData={data}
+              waterData={waterData ?? null}
+              survey={survey}
+              siteAreaHa={siteData?.areaHa}
+            />
             <Card>
               <RainfallChart rainfall={data.rainfall} />
             </Card>
