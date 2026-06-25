@@ -95,7 +95,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
 
   // Step 1 — Water
   const [waterSource, setWaterSource] = useState<string[]>(existing?.waterSource ?? []);
-  const [waterDelivery, setWaterDelivery] = useState(existing?.waterDelivery ?? '');
+  const [waterDelivery, setWaterDelivery] = useState<string[]>(Array.isArray(existing?.waterDelivery) ? existing.waterDelivery : (existing?.waterDelivery ? [existing.waterDelivery] : []));
   const [waterStorage, setWaterStorage] = useState<string[]>(existing?.waterStorage ?? []);
 
   // Step 2 — Roof catchment
@@ -126,7 +126,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
 
   const canNext = [
     siteType && goals.length > 0,  // step 0
-    waterSource.length > 0 && !!waterDelivery,  // step 1
+    waterSource.length > 0 && waterDelivery.length > 0,  // step 1
     true,  // step 2 — catchment is optional
     !!landPrep && !!soilCondition,  // step 3
     true,  // step 4 — what exists is optional
@@ -276,7 +276,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
             </div>
 
             <div>
-              <SectionLabel>How does water reach the plants?</SectionLabel>
+              <SectionLabel>How does water reach the plants? (select all that apply)</SectionLabel>
               <div className="space-y-2">
                 {[
                   { v: 'drip',       label: 'Drip irrigation',    desc: 'Lines / emitters direct to roots' },
@@ -287,7 +287,11 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
                   { v: 'flood',      label: 'Flood / furrow',      desc: 'Water runs along channels' },
                   { v: 'none',       label: 'Rain-fed only',       desc: 'No supplemental watering' },
                 ].map(o => (
-                  <Radio key={o.v} label={o.label} desc={o.desc} on={waterDelivery === o.v} onClick={() => setWaterDelivery(o.v)} />
+                  <Radio key={o.v} label={o.label} desc={o.desc}
+                    on={waterDelivery.includes(o.v)}
+                    onClick={() => setWaterDelivery(prev =>
+                      prev.includes(o.v) ? prev.filter(x => x !== o.v) : [...prev, o.v]
+                    )} />
                 ))}
               </div>
             </div>

@@ -36,7 +36,7 @@ interface Props {
   activePlaceId?: string;
 }
 
-const TABS = ['Overview', 'Ask', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Reports', 'Farm'] as const;
+const TABS = ['Overview', 'Ask', 'Reports', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
 type Tab = typeof TABS[number];
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
@@ -275,31 +275,45 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [promptLoading, setPromptLoading] = useState(false);
   const promptInputRef = useRef<HTMLInputElement>(null);
 
-  async function resizeForPrompt(file: File): Promise<{ data: string; mediaType: string }> {
+  async function resizeForPrompt(file: File): Promise<{ data: string; mediaType: string } | null> {
     return new Promise((resolve) => {
       const img = new Image();
       const reader = new FileReader();
+
+      const fail = () => resolve(null); // HEIC or corrupt — skip silently
+
       reader.onload = (e) => {
         img.src = e.target!.result as string;
         img.onload = () => {
+          if (!img.width || !img.height) { fail(); return; }
           const ratio = Math.min(1120 / img.width, 1120 / img.height, 1);
           const canvas = document.createElement('canvas');
           canvas.width = Math.round(img.width * ratio);
           canvas.height = Math.round(img.height * ratio);
-          canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const ctx = canvas.getContext('2d')!;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          // Sanity check: sample 4 pixels — if all zero the browser couldn't decode the image
+          const px = ctx.getImageData(0, 0, Math.min(4, canvas.width), 1).data;
+          const allBlack = px.every((v, i) => i % 4 === 3 ? true : v < 5);
+          if (allBlack) { fail(); return; }
           resolve({ data: canvas.toDataURL('image/jpeg', 0.82).split(',')[1], mediaType: 'image/jpeg' });
         };
+        img.onerror = fail;
       };
+      reader.onerror = fail;
       reader.readAsDataURL(file);
     });
   }
 
   async function handlePromptFiles(files: FileList | null) {
     if (!files?.length) return;
-    const valid = Array.from(files).filter(f => f.type.startsWith('image/')).slice(0, 6);
-    const resized = await Promise.all(valid.map(resizeForPrompt));
-    setPromptPreviews(prev => [...prev, ...valid.map(f => URL.createObjectURL(f))].slice(0, 6));
-    setPromptImageData(prev => [...prev, ...resized].slice(0, 6));
+    const candidates = Array.from(files).filter(f => f.type.startsWith('image/')).slice(0, 6);
+    const results = await Promise.all(candidates.map(async (f, i) => ({ f, i, r: await resizeForPrompt(f) })));
+    const good = results.filter(x => x.r !== null);
+    const skipped = results.length - good.length;
+    if (skipped > 0) console.warn(`${skipped} photo(s) could not be decoded (possibly HEIC — use JPEG/PNG)`);
+    setPromptPreviews(prev => [...prev, ...good.map(x => URL.createObjectURL(x.f))].slice(0, 6));
+    setPromptImageData(prev => [...prev, ...good.map(x => x.r!)].slice(0, 6));
   }
 
   async function analyseAndGenerate() {
@@ -500,8 +514,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
-                        <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div>
+                        {siteData.areaHa < 1
+                          ? <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaM2.toLocaleString()}</div>
+                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>m²</div></>
+                          : <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
+                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>hectares</div></>
+                        }
                       </div>
                     </div>
                     {siteData.features && siteData.features.some(f => f.name) && (
@@ -511,7 +529,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
                             {f.category && <span style={{ color: '#94876F' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.areaHa} ha</span>
+                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.areaHa < 1 ? `${Math.round(f.areaHa * 10000).toLocaleString()} m²` : `${f.areaHa} ha`}</span>
                           </div>
                         ) : null)}
                       </div>

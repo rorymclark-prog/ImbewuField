@@ -85,14 +85,26 @@ function HomeInner() {
   const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
     setSelected({ lat, lon });
     setMapCapture(null);
-    setLoading(true);
     setError('');
-    // Auto-open sheet on mobile when a location is tapped
     setSheetOpen(true);
+
+    // Check localStorage cache (keyed to 2 dp — same location, no re-fetch)
+    const cacheKey = `imbewu_loc_${lat.toFixed(2)}_${lon.toFixed(2)}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        setData(JSON.parse(cached));
+        return;
+      }
+    } catch { /* ignore parse errors */ }
+
+    setLoading(true);
     try {
       const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`);
       if (!res.ok) throw new Error(`${res.status}`);
-      setData(await res.json());
+      const json = await res.json();
+      setData(json);
+      try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to load data');
     } finally {

@@ -12,7 +12,7 @@ export interface SiteSurvey {
 
   // Screen 1 — Water resources
   waterSource: string[];    // 'municipal' | 'borehole' | 'river' | 'rainwater' | 'grey'
-  waterDelivery: string;    // 'piped' | 'gravity' | 'bucket' | 'drip' | 'sprinkler' | 'flood' | 'none'
+  waterDelivery: string[];  // array: 'piped' | 'gravity' | 'bucket' | 'drip' | 'sprinkler' | 'flood' | 'none'
   waterStorage: string[];   // 'jojo' | 'dam' | 'pond' | 'cistern' | 'none'
 
   // Screen 2 — Roof catchment
@@ -74,7 +74,8 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('');
   lines.push('--- WATER RESOURCES ---');
   lines.push(`Sources available: ${s.waterSource.length ? s.waterSource.join(', ') : 'none specified'}`);
-  lines.push(`Delivery / irrigation: ${(deliveryLabels[s.waterDelivery] ?? s.waterDelivery) || 'not specified'}`);
+  const deliveryArr = Array.isArray(s.waterDelivery) ? s.waterDelivery : (s.waterDelivery ? [s.waterDelivery] : []);
+  lines.push(`Delivery / irrigation: ${deliveryArr.map(v => deliveryLabels[v] ?? v).join(' + ') || 'not specified'}`);
   lines.push(`On-site water storage: ${s.waterStorage.filter(v => v !== 'none').join(', ') || 'none'}`);
 
   lines.push('');
