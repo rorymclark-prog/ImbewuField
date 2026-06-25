@@ -41,7 +41,7 @@ type Tab = typeof TABS[number];
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
-const VISIBLE_TABS = TABS.filter((t) => t !== 'Farm' && t !== 'Reports');
+const VISIBLE_TABS = TABS.filter((t) => t !== 'Farm');
 
 const BIOME_COLORS: Record<string, string> = {
   SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
@@ -619,6 +619,33 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             </div>
 
+            {/* Site insight bullets */}
+            <div className="space-y-1.5">
+              {([
+                data.rainfall.annual < 400
+                  ? { color: '#D4922A', text: `Semi-arid site — ${data.rainfall.annual} mm/yr. Water harvesting must come before food-tree establishment.` }
+                  : data.rainfall.annual < 700
+                  ? { color: '#5C5040', text: `${data.rainfall.annual} mm/yr — moderate rainfall. Mulch and swales extend the effective growing window significantly.` }
+                  : { color: '#1F4D2B', text: `${data.rainfall.annual} mm/yr — strong rainfall. Build soil-carbon to hold moisture through the dry months.` },
+                data.climate.minTemp < 2
+                  ? { color: '#235E86', text: `Frost expected (${data.climate.minTemp}°C winter min). Protect tender crops Aug–Sep with covers and north-facing micro-climates.` }
+                  : data.climate.minTemp < 6
+                  ? { color: '#5C5040', text: `Light frost risk (${data.climate.minTemp}°C winter min). Site cold-sensitive trees on raised beds or north-facing slopes.` }
+                  : { color: '#1F4D2B', text: `Frost-free year-round (${data.climate.minTemp}°C min). Tropical and subtropical food trees are viable here.` },
+                (data.climate.windSpeed * 3.6) > 18
+                  ? { color: '#D4922A', text: `High wind exposure (${(data.climate.windSpeed * 3.6).toFixed(0)} km/h avg). Windbreaks on the ${data.climate.windFromSummer} side are your highest-return first investment.` }
+                  : { color: '#5C5040', text: `Moderate wind from ${data.climate.windFromSummer}. A single hedge row on the windward side reduces crop stress noticeably.` },
+                data.soil.organicCarbon < 1.5
+                  ? { color: '#C07A1E', text: `Low soil carbon (${data.soil.organicCarbon}%). Compost, kraal manure, and thick mulch layers will double your yield within two seasons.` }
+                  : { color: '#1F4D2B', text: `Reasonable soil carbon (${data.soil.organicCarbon}%). Maintain with compost and minimal tillage to hold gains.` },
+              ] as { color: string; text: string }[]).map((ins, i) => (
+                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(251,246,236,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
+                  <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
+                  <span>{ins.text}</span>
+                </div>
+              ))}
+            </div>
+
             {/* Lima contextual read card */}
             <div className="flex gap-3 items-start" style={{ background: '#FBF6EC', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
               <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B' }}>
@@ -631,6 +658,38 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {limaRead}
               </p>
             </div>
+
+            {/* 12-month planting calendar strip */}
+            {data.rainfall.monthly?.length === 12 && (
+              <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>Planting calendar</span>
+                <div className="flex gap-0.5 mt-2">
+                  {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
+                    const rain = data.rainfall.monthly![i];
+                    const temp = data.climate.monthlyTemp[i] ?? 20;
+                    const isFrost = temp < 3;
+                    const isGrow = !isFrost && temp >= 12 && rain >= 30;
+                    const isDry  = !isFrost && !isGrow && rain < 20 && temp > 22;
+                    const bg = isFrost ? '#BFD9EE' : isGrow ? '#B5D9B5' : isDry ? '#E8C87A' : '#D8CEBC';
+                    const label = isFrost ? 'Frost' : isGrow ? 'Grow' : isDry ? 'Dry' : 'Rest';
+                    return (
+                      <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
+                        <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
+                        <span style={{ fontSize: 7.5, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{m}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex gap-3 mt-2 flex-wrap">
+                  {[['#B5D9B5','Grow'],['#E8C87A','Dry'],['#BFD9EE','Frost'],['#D8CEBC','Rest']] .map(([c,l]) => (
+                    <div key={l} className="flex items-center gap-1">
+                      <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
+                      <span style={{ fontSize: 9.5, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{l}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Primary CTA */}
             <button
@@ -768,6 +827,54 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {data.biome.soilStrategy}
               </p>
             </Card>
+
+            {/* Soil health score */}
+            {(() => {
+              const ph = data.soil.ph;
+              const oc = data.soil.organicCarbon;
+              const bd = data.soil.bulkDensity;
+              const sand = data.soil.sand;
+              const clay = data.soil.clay;
+              const pHScore  = ph  >= 6   && ph  <= 7   ? 2.5 : ph  >= 5.5 && ph  <= 7.5 ? 1.5 : 0.5;
+              const ocScore  = oc  >= 2.5              ? 2.5 : oc  >= 1.5               ? 1.5 : 0.5;
+              const bdScore  = bd  <  1.2              ? 2.5 : bd  <  1.4               ? 1.5 : 0.5;
+              const texScore = (sand < 70 && clay < 40) ? 2.5 : (sand < 80 || clay < 50) ? 1.5 : 0.5;
+              const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
+              const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
+              const scoreLabel = total >= 8 ? 'Healthy' : total >= 5 ? 'Moderate' : 'Degraded';
+              const improvements: string[] = [];
+              if (pHScore < 2) improvements.push(ph < 6 ? `pH ${ph} is acidic — add agricultural lime (1–2 t/ha)` : `pH ${ph} is alkaline — add elemental sulphur or pine-needle mulch`);
+              if (ocScore < 2) improvements.push(`Organic carbon ${oc}% is low — layer compost 5 cm deep, add kraal manure or biochar`);
+              if (bdScore < 2) improvements.push(`Bulk density ${bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile`);
+              if (texScore < 2 && clay > 40) improvements.push(`High clay (${clay}%) — gypsum + organic matter improve drainage and workability`);
+              else if (texScore < 2 && sand > 70) improvements.push(`Sandy soil (${sand}%) — mulch heavily and boost CEC with compost and biochar`);
+              return (
+                <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#5C5040' }}>Soil health score</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-display font-bold" style={{ fontSize: 22, color: scoreColor, lineHeight: 1 }}>{total}</span>
+                      <span className="font-mono" style={{ fontSize: 10, color: '#8C7A62' }}>/10</span>
+                      <span className="font-sans font-semibold ml-1" style={{ fontSize: 10, color: scoreColor }}>{scoreLabel}</span>
+                    </div>
+                  </div>
+                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(226,216,196,0.6)' }}>
+                    <div className="h-full rounded-full" style={{ width: `${total * 10}%`, background: scoreColor, transition: 'width 0.6s ease' }} />
+                  </div>
+                  {improvements.length > 0 && (
+                    <div className="space-y-1.5">
+                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62', fontSize: 9.5 }}>Priority improvements</p>
+                      {improvements.slice(0, 3).map((imp, i) => (
+                        <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
+                          <span className="flex-shrink-0 font-bold" style={{ color: '#C07A1E' }}>{i + 1}.</span>
+                          {imp}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </>
         )}
 
@@ -806,6 +913,50 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 }
               </p>
             </div>
+
+            {/* Windbreak advisor */}
+            {(() => {
+              const kmh = data.climate.windSpeed * 3.6;
+              const summer = data.climate.windFromSummer;
+              const winter = data.climate.windFromWinter;
+              const rows = kmh > 20 ? 3 : kmh > 10 ? 2 : 1;
+              const species = kmh > 18
+                ? [
+                    `Tall canopy (8–15 m): Acacia, Eucalyptus, or Casuarina as outer shield`,
+                    `Mid layer (3–6 m): Wild Olive (Olea europaea subsp. africana) or Tecoma`,
+                    `Inner shrubs (1–2 m): Aloe, Agapanthus, or dense hedge crop`,
+                  ]
+                : kmh > 10
+                ? [
+                    `Outer row (4–8 m): indigenous Acacia or Wild Pear (Dombeya)`,
+                    `Inner hedge (1–3 m): Kei Apple (Dovyalis) — edible + thorny barrier`,
+                  ]
+                : [`Single hedge row (1–3 m): Kei Apple, Wild Rose, or dense Bougainvillea`];
+              return (
+                <div className="rounded-xl p-3 space-y-2" style={{ background: '#EDF5EE', border: '1px solid #B4D4BC' }}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>Windbreak design</span>
+                    <span className="font-mono font-bold text-xs" style={{ color: '#1F4D2B' }}>{rows}-row system</span>
+                  </div>
+                  <p className="text-xs font-display leading-relaxed" style={{ color: '#2A4A2E' }}>
+                    Plant on your <strong>{summer} boundary</strong> to intercept prevailing summer winds
+                    {winter !== summer ? `, with a lighter secondary break on the ${winter} side for winter` : ''}.
+                    Space rows {rows > 1 ? `${rows * 3}–${rows * 4} m apart, perpendicular to the prevailing direction` : 'along the windward boundary'}.
+                  </p>
+                  <div className="space-y-1">
+                    {species.map((s, i) => (
+                      <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#2A4A2E' }}>
+                        <span className="flex-shrink-0 font-bold" style={{ color: '#1F4D2B' }}>{i + 1}.</span>
+                        {s}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs font-mono" style={{ color: '#4A7A54', fontSize: 10 }}>
+                    A {rows > 1 ? 'multi-row' : 'single-row'} windbreak at 5× tree height from crops reduces wind speed by 50–70%.
+                  </p>
+                </div>
+              );
+            })()}
 
             <Card>
               <Label>Monthly temperature (°C)</Label>
