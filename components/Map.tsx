@@ -22,6 +22,26 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 // work (was the #1 complaint — "20 minutes of drawing gone on refresh").
 const FARM_KEY = 'imbewu_farm_shapes';
 
+// Per-parcel colour palette — each new parcel gets the next entry, cycling if > 6.
+// Even-index entries hatch at 45°, odd at 135° so adjacent parcels are always distinct.
+const LAND_PALETTE = [
+  { r:  46, g: 107, b:  58, a: 170, edge: '#9BE66B' },  // 0 bright green   45°
+  { r: 160, g: 116, b:  36, a: 170, edge: '#D4A830' },  // 1 amber/ochre    135°
+  { r: 130, g:  65, b:  30, a: 170, edge: '#C07838' },  // 2 sienna/brown    45°
+  { r:  72, g: 136, b:  72, a: 170, edge: '#6CC86C' },  // 3 sage green     135°
+  { r: 130, g: 172, b:  40, a: 170, edge: '#A8D820' },  // 4 lime            45°
+  { r:  90, g:  58, b: 138, a: 170, edge: '#9870D4' },  // 5 lavender       135°
+] as const;
+const WATER_PALETTE = [
+  { r:  35, g:  94, b: 134, a: 200, edge: '#5BB4EC' },  // 0 sky blue        45°
+  { r:  28, g: 136, b: 126, a: 200, edge: '#38B8AC' },  // 1 teal           135°
+  { r:  40, g:  76, b: 174, a: 200, edge: '#5090E0' },  // 2 deep blue       45°
+] as const;
+// Helper: hatch angle alternates by index (even = 45°, odd = 135°)
+function hatchOn(x: number, y: number, sz: number, idx: number): boolean {
+  return idx % 2 === 0 ? (x + y) % sz < 2 : (sz + x - y) % sz < 2;
+}
+
 // A "static" MapboxDraw mode: features are DISPLAYED but completely non-interactive
 // (no select, no vertex-drag). We switch into it while reticle-drawing/editing so
 // panning the map can't accidentally grab and move an existing boundary/water shape.
@@ -355,19 +375,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // teardown flag so this new instance can persist shapes again.
     tearingDownRef.current = false;
 
-    // Generate 8×8 diagonal hatch sprites (land = green, water = blue).
+    // Generate 8×8 diagonal hatch sprites — one per palette entry, alternating 45°/135°.
     // Must be added before map.addControl so fill-pattern references are valid when layers attach.
-    if (!map.hasImage('imbewu-hatch-land')) {
-      const mk = (r: number, g: number, b: number, a: number) => {
+    if (!map.hasImage('imbewu-hatch-land-0')) {
+      const mkSprite = (r: number, g: number, b: number, a: number, idx: number) => {
         const sz = 8; const d = new Uint8ClampedArray(sz * sz * 4);
         for (let y = 0; y < sz; y++) for (let x = 0; x < sz; x++) {
-          const on = (x + y) % sz < 2; const i = (y * sz + x) * 4;
-          d[i] = on ? r : 0; d[i + 1] = on ? g : 0; d[i + 2] = on ? b : 0; d[i + 3] = on ? a : 0;
+          const on = hatchOn(x, y, sz, idx); const i = (y * sz + x) * 4;
+          d[i] = on ? r : 0; d[i+1] = on ? g : 0; d[i+2] = on ? b : 0; d[i+3] = on ? a : 0;
         }
         return { width: sz, height: sz, data: d };
       };
-      map.addImage('imbewu-hatch-land',  mk(46, 107,  58, 170));
-      map.addImage('imbewu-hatch-water', mk(35,  94, 134, 200));
+      LAND_PALETTE.forEach((p, i) => map.addImage(`imbewu-hatch-land-${i}`,  mkSprite(p.r, p.g, p.b, p.a, i)));
+      WATER_PALETTE.forEach((p, i) => map.addImage(`imbewu-hatch-water-${i}`, mkSprite(p.r, p.g, p.b, p.a, i)));
     }
 
     // Touch screens need much bigger, easier-to-grab corner dots than a mouse. On a phone
@@ -392,12 +412,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         // Dark casing — thick under-stroke that survives on any satellite background colour
         { id: 'gl-draw-poly-casing-land',  type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#0d1f12', 'line-width': 9 } },
         { id: 'gl-draw-poly-casing-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#071422', 'line-width': 9 } },
-        // Diagonal hatch fill — semi-transparent 45° lines, transparent gaps let satellite show through
-        { id: 'gl-draw-poly-fill-land',  type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], paint: { 'fill-pattern': 'imbewu-hatch-land'  } as object },
-        { id: 'gl-draw-poly-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], paint: { 'fill-pattern': 'imbewu-hatch-water' } as object },
-        // Bright edge — thin bright stroke on top of dark casing
-        { id: 'gl-draw-poly-stroke-land',  type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#9BE66B', 'line-width': 3.5 } },
-        { id: 'gl-draw-poly-stroke-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']], layout: { 'line-join': 'round' }, paint: { 'line-color': '#5BB4EC', 'line-width': 3.5 } },
+        // Diagonal hatch fill — colour + angle varies per feature via hatchIdx user property
+        { id: 'gl-draw-poly-fill-land', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']],
+          paint: { 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], LAND_PALETTE.length],
+            0, 'imbewu-hatch-land-0', 1, 'imbewu-hatch-land-1', 2, 'imbewu-hatch-land-2',
+            3, 'imbewu-hatch-land-3', 4, 'imbewu-hatch-land-4', 'imbewu-hatch-land-5'] } as object },
+        { id: 'gl-draw-poly-fill-water', type: 'fill', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']],
+          paint: { 'fill-pattern': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], WATER_PALETTE.length],
+            0, 'imbewu-hatch-water-0', 1, 'imbewu-hatch-water-1', 'imbewu-hatch-water-2'] } as object },
+        // Bright edge — colour matches the hatch palette entry for that feature
+        { id: 'gl-draw-poly-stroke-land', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']],
+          layout: { 'line-join': 'round' }, paint: { 'line-width': 3.5,
+            'line-color': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], LAND_PALETTE.length],
+              0, '#9BE66B', 1, '#D4A830', 2, '#C07838', 3, '#6CC86C', 4, '#A8D820', '#9870D4'] } },
+        { id: 'gl-draw-poly-stroke-water', type: 'line', filter: ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']],
+          layout: { 'line-join': 'round' }, paint: { 'line-width': 3.5,
+            'line-color': ['match', ['%', ['number', ['get', 'user_hatchIdx'], 0], WATER_PALETTE.length],
+              0, '#5BB4EC', 1, '#38B8AC', '#5090E0'] } },
         // In-progress line while adding corners
         { id: 'gl-draw-line', type: 'line', filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']], paint: { 'line-color': '#9BE66B', 'line-width': 2.5 } },
         // Vertex handles — white dots with dark-green stroke (larger on touch devices)
@@ -415,8 +446,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       let createdId: string | null = null;
       e.features.forEach((f) => {
         if (f.id != null) {
-          draw.setFeatureProperty(String(f.id), 'featureType', type);
-          createdId = String(f.id);
+          const fid = String(f.id);
+          draw.setFeatureProperty(fid, 'featureType', type);
+          // Assign the next palette slot based on how many features of this type already exist
+          const existingCount = draw.getAll().features.filter((feat: GeoJSON.Feature) =>
+            (feat.geometry.type === 'Polygon' || feat.geometry.type === 'MultiPolygon') &&
+            (type === 'water' ? feat.properties?.featureType === 'water' : feat.properties?.featureType !== 'water') &&
+            feat.id !== f.id
+          ).length;
+          draw.setFeatureProperty(fid, 'hatchIdx', existingCount);
+          createdId = fid;
         }
       });
       setActiveDraw(null);
@@ -1201,7 +1240,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1228,18 +1267,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           category: f.properties?.category as string | undefined,
           centroid, bbox,
           placeId: f.properties?.placeId as string | undefined,
+          hatchIdx: (f.properties?.hatchIdx as number) ?? 0,
         };
       });
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
@@ -1262,10 +1302,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           category: f.properties?.category as string | undefined,
           centroid, bbox,
           placeId: f.properties?.placeId as string | undefined,
+          hatchIdx: (f.properties?.hatchIdx as number) ?? 0,
         };
       });
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
@@ -2282,7 +2323,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       {siteFeatures.map((sf, idx) => (
                         <div key={sf.id} className="flex items-center gap-3 font-sans"
                           style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
-                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#9BE66B' }} />
+                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: LAND_PALETTE[sf.hatchIdx % LAND_PALETTE.length].edge }} />
                           <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
                               <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
@@ -2347,7 +2388,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       {waterFeatures.map((wf, idx) => (
                         <div key={wf.id} className="flex items-center gap-3 font-sans"
                           style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
-                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: '#5BB4EC' }} />
+                          <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: WATER_PALETTE[wf.hatchIdx % WATER_PALETTE.length].edge }} />
                           <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
                               <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
