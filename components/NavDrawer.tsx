@@ -8,53 +8,55 @@ import {
   MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
   Camera, Home, User, Users, BarChart3, Building2, Sprout,
 } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
 interface NavDrawerProps {
   open: boolean;
   onClose: () => void;
 }
 
-const NAV_SECTIONS = [
-  {
-    label: 'Main',
-    items: [
-      { href: '/home',    Icon: Home,          label: 'Home' },
-      { href: '/farmer',  Icon: Map,           label: 'Design Map' },
-      { href: '/finances', Icon: DollarSign,   label: 'Finance' },
-      { href: '/student', Icon: GraduationCap, label: 'Study' },
-      { href: '/contact', Icon: MessageCircle, label: 'Contact' },
-    ],
-  },
-  {
-    label: 'Farm Tools',
-    items: [
-      { href: '/journal',  Icon: Leaf,        label: 'Field Journal' },
-      { href: '/plan',     Icon: CalendarDays, label: 'Crop Planner' },
-      { href: '/cropplan', Icon: Wheat,        label: 'Task Planner' },
-      { href: '/survey',   Icon: LayoutGrid,   label: 'Garden Survey' },
-      { href: '/vision',   Icon: Camera,       label: 'Lima Vision' },
-    ],
-  },
-  {
-    label: 'Organisation',
-    items: [
-      { href: '/surveys',     Icon: ClipboardList, label: 'Surveys' },
-      { href: '/mentor',      Icon: Users,         label: 'Mentor' },
-      { href: '/ngo',         Icon: BarChart3,     label: 'NGO Dashboard' },
-      { href: '/funder',      Icon: Building2,     label: 'Funder' },
-      { href: '/facilitator', Icon: Sprout,        label: 'Facilitator' },
-    ],
-  },
-  {
-    label: 'Account',
-    items: [
-      { href: '/account', Icon: User, label: 'My Account' },
-    ],
-  },
-];
-
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const NAV_SECTIONS = [
+    {
+      label: t('navSectionMain'),
+      items: [
+        { href: '/home',    Icon: Home,          label: t('tabHome') },
+        { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
+        { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
+        { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
+        { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
+      ],
+    },
+    {
+      label: t('navSectionFarmTools'),
+      items: [
+        { href: '/journal',  Icon: Leaf,        label: t('navFieldJournal') },
+        { href: '/plan',     Icon: CalendarDays, label: t('homeQuickCropPlanner') },
+        { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
+        { href: '/survey',   Icon: LayoutGrid,   label: t('navGardenSurvey') },
+        { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
+      ],
+    },
+    {
+      label: t('navSectionOrganisation'),
+      items: [
+        { href: '/surveys',     Icon: ClipboardList, label: t('homeSurveysLabel') },
+        { href: '/mentor',      Icon: Users,         label: t('homeRoleMentorLabel') },
+        { href: '/ngo',         Icon: BarChart3,     label: t('navNGODashboard') },
+        { href: '/funder',      Icon: Building2,     label: t('homeRoleFunderLabel') },
+        { href: '/facilitator', Icon: Sprout,        label: t('navFacilitator') },
+      ],
+    },
+    {
+      label: t('tabAccount'),
+      items: [
+        { href: '/account', Icon: User, label: t('navMyAccount') },
+      ],
+    },
+  ];
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -109,12 +111,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
               ImbewuField
             </div>
             <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', marginTop: 1 }}>
-              Permaculture Intelligence
+              {t('tagline')}
             </div>
           </div>
           <button
             onClick={onClose}
-            aria-label="Close menu"
+            aria-label={t('navCloseMenu')}
             style={{
               background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4',
               borderRadius: 8, padding: 7, cursor: 'pointer', color: '#5C5040',
@@ -182,7 +184,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           className="font-sans flex-shrink-0"
           style={{ fontSize: 10.5, color: '#94876F', padding: '12px 20px', borderTop: '1px solid #E2D8C4' }}
         >
-          ImbewuField · grown with you
+          {t('homeFooter')}
         </div>
       </div>
     </>
