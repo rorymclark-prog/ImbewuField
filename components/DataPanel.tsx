@@ -783,10 +783,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <RainfallChart rainfall={data.rainfall} />
             </Card>
-            <div className="grid grid-cols-2 gap-2.5">
-              <Stat label={t('statSolar')} value={`${data.climate.solarRadiation} kWh`} sub={t('statSolarSub')} color="#C07A1E" />
-              <Stat label={t('statEToEst')} value={`${(data.climate.solarRadiation * 1.1).toFixed(1)}mm`} sub={t('statEToSub')} color="#D4922A" />
-            </div>
             <Card>
               <Label>{t('waterHarvestingStrategyHeader')}</Label>
               <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>

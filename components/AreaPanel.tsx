@@ -5,9 +5,21 @@ import { Loader2, RefreshCw } from 'lucide-react';
 
 interface Props { coords: { lat: number; lon: number } | null }
 
-// Cache profiles by coordinate so switching tabs doesn't re-call Claude.
-const cache = new Map<string, string>();
+const TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const keyOf = (c: { lat: number; lon: number }) => `${c.lat.toFixed(4)},${c.lon.toFixed(4)}`;
+
+function getCached(key: string): string | null {
+  try {
+    const raw = localStorage.getItem(`imbewu_area_${key}`);
+    if (!raw) return null;
+    const { text, ts } = JSON.parse(raw) as { text: string; ts: number };
+    if (Date.now() - ts > TTL_MS) return null;
+    return text;
+  } catch { return null; }
+}
+function setCached(key: string, text: string) {
+  try { localStorage.setItem(`imbewu_area_${key}`, JSON.stringify({ text, ts: Date.now() })); } catch { /* quota */ }
+}
 
 function renderMarkdown(text: string) {
   const sections = text.split(/(?=^## )/m).filter((s) => s.trim());
@@ -55,7 +67,14 @@ export default function AreaPanel({ coords }: Props) {
   const [error, setError] = useState('');
   const abortRef = useRef<AbortController | null>(null);
 
-  async function load(c: { lat: number; lon: number }) {
+  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
+
+  async function load(c: { lat: number; lon: number }, force = false) {
+    const k = keyOf(c);
+    if (!force) {
+      const hit = getCached(k);
+      if (hit) { setProfile(hit); setLoading(false); return; }
+    }
     abortRef.current?.abort();
     const ac = new AbortController();
     abortRef.current = ac;
@@ -75,7 +94,7 @@ export default function AreaPanel({ coords }: Props) {
         text += dec.decode(value, { stream: true });
         setProfile(text);
       }
-      if (text.trim()) cache.set(keyOf(c), text);
+      if (text.trim()) { setCached(k, text); setLastUpdated(Date.now()); }
     } catch (err: unknown) {
       if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
     } finally {
@@ -83,11 +102,12 @@ export default function AreaPanel({ coords }: Props) {
     }
   }
 
-  // Auto-load when coordinates change (using cache if we've seen this spot)
+  // Auto-load when coordinates change — hits localStorage cache first
   useEffect(() => {
     if (!coords) return;
-    const cached = cache.get(keyOf(coords));
-    if (cached) { setProfile(cached); setLoading(false); return; }
+    const k = keyOf(coords);
+    const hit = getCached(k);
+    if (hit) { setProfile(hit); setLoading(false); return; }
     load(coords);
     return () => abortRef.current?.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,11 +124,18 @@ export default function AreaPanel({ coords }: Props) {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
-          Area &amp; community
+        <div>
+          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
+            Area &amp; community
+          </div>
+          {lastUpdated && !loading && (
+            <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8C70' }}>
+              Cached · refreshes in {Math.max(0, 7 - Math.floor((Date.now() - lastUpdated) / 86400000))}d
+            </div>
+          )}
         </div>
         <button
-          onClick={() => load(coords)} disabled={loading}
+          onClick={() => load(coords, true)} disabled={loading}
           className="px-2.5 py-1 rounded-lg text-xs font-display font-semibold flex items-center gap-1.5"
           style={loading
             ? { background: '#FBF6EC', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
@@ -139,7 +166,7 @@ export default function AreaPanel({ coords }: Props) {
           {renderMarkdown(profile)}
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#C07A1E' }} />}
           <p className="text-xs font-mono mt-4 pt-2" style={{ color: '#5C5040', opacity: 0.6, borderTop: '1px solid #E2D8C4' }}>
-            AI estimate · municipality from OpenStreetMap · verify key figures locally
+            AI research · OSM + Overpass POI data · verify locally · tap Refresh to update
           </p>
         </div>
       )}
