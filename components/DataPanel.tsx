@@ -641,21 +641,21 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div className="space-y-1.5">
               {([
                 data.rainfall.annual < 400
-                  ? { color: '#D4922A', text: `Semi-arid site — ${data.rainfall.annual} mm/yr. Water harvesting must come before food-tree establishment.` }
+                  ? { color: '#D4922A', text: t('insightSemiArid').replace('{mm}', String(data.rainfall.annual)) }
                   : data.rainfall.annual < 700
-                  ? { color: '#5C5040', text: `${data.rainfall.annual} mm/yr — moderate rainfall. Mulch and swales extend the effective growing window significantly.` }
-                  : { color: '#1F4D2B', text: `${data.rainfall.annual} mm/yr — strong rainfall. Build soil-carbon to hold moisture through the dry months.` },
+                  ? { color: '#5C5040', text: t('insightModerateRain').replace('{mm}', String(data.rainfall.annual)) }
+                  : { color: '#1F4D2B', text: t('insightStrongRain').replace('{mm}', String(data.rainfall.annual)) },
                 data.climate.minTemp < 2
-                  ? { color: '#235E86', text: `Frost expected (${data.climate.minTemp}°C winter min). Protect tender crops Aug–Sep with covers and north-facing micro-climates.` }
+                  ? { color: '#235E86', text: t('insightFrostExpected').replace('{tempC}', String(data.climate.minTemp)) }
                   : data.climate.minTemp < 6
-                  ? { color: '#5C5040', text: `Light frost risk (${data.climate.minTemp}°C winter min). Site cold-sensitive trees on raised beds or north-facing slopes.` }
-                  : { color: '#1F4D2B', text: `Frost-free year-round (${data.climate.minTemp}°C min). Tropical and subtropical food trees are viable here.` },
+                  ? { color: '#5C5040', text: t('insightLightFrost').replace('{tempC}', String(data.climate.minTemp)) }
+                  : { color: '#1F4D2B', text: t('insightFrostFree').replace('{tempC}', String(data.climate.minTemp)) },
                 (data.climate.windSpeed * 3.6) > 18
-                  ? { color: '#D4922A', text: `High wind exposure (${(data.climate.windSpeed * 3.6).toFixed(0)} km/h avg). Windbreaks on the ${data.climate.windFromSummer} side are your highest-return first investment.` }
-                  : { color: '#5C5040', text: `Moderate wind from ${data.climate.windFromSummer}. A single hedge row on the windward side reduces crop stress noticeably.` },
+                  ? { color: '#D4922A', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
+                  : { color: '#5C5040', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
                 data.soil.organicCarbon < 1.5
-                  ? { color: '#C07A1E', text: `Low soil carbon (${data.soil.organicCarbon}%). Compost, kraal manure, and thick mulch layers will double your yield within two seasons.` }
-                  : { color: '#1F4D2B', text: `Reasonable soil carbon (${data.soil.organicCarbon}%). Maintain with compost and minimal tillage to hold gains.` },
+                  ? { color: '#C07A1E', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
+                  : { color: '#1F4D2B', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (
                 <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(251,246,236,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
@@ -950,9 +950,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           };
           const cropSegs = CROPS[kp] ?? [{ pre: 'Locally adapted varieties suited to your rainfall and temperature range.', bold: '', post: '' }];
 
-          const patternChip = data.rainfall.pattern === 'winter' ? 'Winter rainfall' : data.rainfall.pattern === 'summer' ? 'Summer rainfall' : 'Year-round rain';
+          const patternChip = data.rainfall.pattern === 'winter' ? t('climatePatternWinter') : data.rainfall.pattern === 'summer' ? t('climatePatternSummer') : t('climatePatternYearRound');
           const frostChipGreen = tMin >= 5;
-          const frostChip = tMin < 2 ? 'Frost expected' : tMin < 5 ? 'Light frost risk' : 'Frost-free';
+          const frostChip = tMin < 2 ? t('climateFrostExpected') : tMin < 5 ? t('climateLightFrost') : t('climateFrostFree');
 
           // Approximate monthly sunshine (seasonal model from annual solar average)
           const SUN_MULT = data.rainfall.pattern === 'winter'
@@ -1049,13 +1049,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                   <div style={{ display: 'flex', gap: 8, margin: '13px 0 9px' }}>
                     <span style={chip('#E7EEF4', '#3A6E92')}>
-                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#3F92C9', display: 'inline-block' }} /> Wet · {data.rainfall.wetSeason}
+                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#3F92C9', display: 'inline-block' }} /> {t('climateWetLabel')} · {data.rainfall.wetSeason}
                     </span>
                     <span style={chip('#EFEADF', '#8A7B58')}>
-                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#A6C9DF', display: 'inline-block' }} /> Dry · {data.rainfall.drySeason}
+                      <span style={{ width: 9, height: 9, borderRadius: 2, background: '#A6C9DF', display: 'inline-block' }} /> {t('climateDryLabel')} · {data.rainfall.drySeason}
                     </span>
                   </div>
-                  <div style={implSt}>→ Most rain falls {data.rainfall.wetSeason}. Store storm-water to carry the {data.rainfall.drySeason} dry spell.</div>
+                  <div style={implSt}>→ {t('climateRainfallInsight').replace('{wet}', data.rainfall.wetSeason).replace('{dry}', data.rainfall.drySeason)}</div>
                 </div>
               )}
 

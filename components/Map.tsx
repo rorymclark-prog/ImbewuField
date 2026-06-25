@@ -2390,11 +2390,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: LAND_PALETTE[sf.hatchIdx % LAND_PALETTE.length].edge }} />
                           <button onClick={() => openShapeNaming(sf.id, 'site')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
-                              <span className="truncate">{sf.name || `Parcel ${idx + 1}`}</span>
+                              <span className="truncate">{sf.name || `${t('parcelDefaultName')} ${idx + 1}`}</span>
                               <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                             </div>
                             <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                              <span>{sf.category ? `${sf.category} · ` : ''}Land · {sf.areaHa} ha</span>
+                              <span>{sf.category ? `${sf.category} · ` : ''}{t('parcelLandLabel')} · {sf.areaHa} ha</span>
                               {sf.placeId && (() => { const pl = savedPins.find(p => p.id === sf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
                             </div>
                           </button>
@@ -2455,7 +2455,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: WATER_PALETTE[wf.hatchIdx % WATER_PALETTE.length].edge }} />
                           <button onClick={() => openShapeNaming(wf.id, 'water')} className="flex-1 min-w-0 text-left" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <div className="flex items-center gap-1.5" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>
-                              <span className="truncate">{wf.name || `Area ${idx + 1}`}</span>
+                              <span className="truncate">{wf.name || `${t('waterAreaDefaultName')} ${idx + 1}`}</span>
                               <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                             </div>
                             <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
