@@ -265,6 +265,16 @@ function Skeleton() {
 /* ── Main component ───────────────────────────────── */
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile }: Props) {
   const { t } = useLanguage();
+  const REPORT_GROUP_LABEL: Record<string, string> = {
+    water: t('reportGroupWater'), structures: t('reportGroupStructures'),
+    soil: t('reportGroupSoil'), trees: t('reportGroupTrees'),
+    animals: t('reportGroupAnimals'), energy: t('reportGroupEnergy'),
+  };
+  const REPORT_GROUP_ADD: Record<string, string> = {
+    water: t('reportAddWater'), structures: t('reportAddStructures'),
+    soil: t('reportAddSoil'), trees: t('reportAddTrees'),
+    animals: t('reportAddAnimals'), energy: t('reportAddEnergy'),
+  };
   const [savedReports, setSavedReports] = useState<SavedReport[]>([]);
   useEffect(() => {
     const refresh = () => setSavedReports(loadReports());
@@ -1244,7 +1254,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
                 <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
-                  Report completeness
+                  {t('reportCompletenessLabel')}
                 </span>
                 <span style={{ font: '700 11px/1 system-ui, sans-serif', color: completeness >= 60 ? '#3C6B3F' : '#B07A1E' }}>
                   {completeness}%
@@ -1258,13 +1268,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Evidence & Documents label + catalogue link */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
-                Evidence &amp; documents
+                {t('reportEvidenceDocsLabel')}
               </span>
               <button
                 onClick={() => setEvidenceCatalogueOpen(true)}
                 style={{ font: '500 11.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
               >
-                Full library →
+                {t('reportFullLibraryLink')} →
               </button>
             </div>
 
@@ -1292,7 +1302,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
                         {EVIDENCE_GROUP_ICON[group.key]}
                       </div>
-                      <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519' }}>{group.label}</span>
+                      <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519' }}>{REPORT_GROUP_LABEL[group.key] ?? group.label}</span>
                     </div>
 
                     {/* Thumbnail row or + prompt */}
@@ -1311,9 +1321,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     </div>
 
                     {count > 0 ? (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 8 }}>{count} {count === 1 ? 'item' : 'items'}</div>
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 8 }}>{count} {count === 1 ? t('reportItemSingular') : t('reportItemPlural')}</div>
                     ) : (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#C0392B', marginTop: 8 }}>Add {group.label.toLowerCase()}</div>
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#C0392B', marginTop: 8 }}>{REPORT_GROUP_ADD[group.key] ?? `Add ${group.label.toLowerCase()}`}</div>
                     )}
                   </button>
                 );
@@ -1326,15 +1336,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const allPhotos = Object.values(allItems).flatMap((arr) => arr).filter((e) => e.type === 'photo');
               return (
                 <button
-                  onClick={() => setEvidenceSheet({ group: { key: 'site_photos', label: 'Site photos', color: '#7A5C92', bg: '#EAE0EE', iconBg: '#EAE0EE', items: [] } })}
+                  onClick={() => setEvidenceSheet({ group: { key: 'site_photos', label: t('reportGroupSitePhotos'), color: '#7A5C92', bg: '#EAE0EE', iconBg: '#EAE0EE', items: [] } })}
                   style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
                     <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
                       📸
                     </div>
-                    <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519', flex: 1 }}>Site photos</span>
-                    {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E' }}>{allPhotos.length} photos</span>}
+                    <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
+                    {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}
                   </div>
                   <div style={{ display: 'flex', gap: 6 }}>
                     {allPhotos.slice(0, 4).map((ev) => (
