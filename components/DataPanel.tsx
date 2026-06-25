@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { loadSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -15,7 +15,7 @@ import SavedPlaces from './SavedPlaces';
 import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import { useLanguage } from '@/lib/i18n';
-import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2, Snowflake, Mountain } from 'lucide-react';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 
 interface Props {
   data: LocationData | null;
@@ -262,6 +262,79 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
+
+  // Photo prompt (pre-report interstitial)
+  const [photoPromptOpen, setPhotoPromptOpen] = useState(false);
+  const [promptPreviews, setPromptPreviews] = useState<string[]>([]);
+  const [promptImageData, setPromptImageData] = useState<Array<{ data: string; mediaType: string }>>([]);
+  const [promptLoading, setPromptLoading] = useState(false);
+  const promptInputRef = useRef<HTMLInputElement>(null);
+
+  async function resizeForPrompt(file: File): Promise<{ data: string; mediaType: string }> {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target!.result as string;
+        img.onload = () => {
+          const ratio = Math.min(1120 / img.width, 1120 / img.height, 1);
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * ratio);
+          canvas.height = Math.round(img.height * ratio);
+          canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve({ data: canvas.toDataURL('image/jpeg', 0.82).split(',')[1], mediaType: 'image/jpeg' });
+        };
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function handlePromptFiles(files: FileList | null) {
+    if (!files?.length) return;
+    const valid = Array.from(files).filter(f => f.type.startsWith('image/')).slice(0, 6);
+    const resized = await Promise.all(valid.map(resizeForPrompt));
+    setPromptPreviews(prev => [...prev, ...valid.map(f => URL.createObjectURL(f))].slice(0, 6));
+    setPromptImageData(prev => [...prev, ...resized].slice(0, 6));
+  }
+
+  async function analyseAndGenerate() {
+    if (!promptImageData.length || !data) return;
+    setPromptLoading(true);
+    try {
+      const res = await fetch('/api/analyse-photos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ images: promptImageData, locationData: data, source: 'upload' }),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      const reader = res.body!.getReader();
+      const dec = new TextDecoder();
+      let text = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        text += dec.decode(value, { stream: true });
+      }
+      const analysis = text.trim() ? text : undefined;
+      if (analysis) setPhotoAnalysis(analysis);
+      setPhotoPromptOpen(false);
+      onOpenReport(analysis ?? photoAnalysis);
+    } catch {
+      setPhotoPromptOpen(false);
+      onOpenReport(photoAnalysis);
+    } finally {
+      setPromptLoading(false);
+    }
+  }
+
+  function openPhotoOrReport() {
+    if (!photoAnalysis) {
+      setPhotoPromptOpen(true);
+    } else {
+      onOpenReport(photoAnalysis);
+    }
+  }
+
   const [placeSaved, setPlaceSaved] = useState(false);
   useEffect(() => { setPlaceSaved(false); }, [coords]);
 
@@ -542,7 +615,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 if (activePlaceId && !loadSurvey(activePlaceId)) {
                   setSurveyPromptOpen(true);
                 } else {
-                  onOpenReport(photoAnalysis);
+                  openPhotoOrReport();
                 }
               }}
               className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
@@ -804,7 +877,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: 'pointer' }}>
                 Fill in the questionnaire (2 min)
               </button>
-              <button onClick={() => { setSurveyPromptOpen(false); onOpenReport(photoAnalysis); }}
+              <button onClick={() => { setSurveyPromptOpen(false); openPhotoOrReport(); }}
                 className="w-full flex items-center justify-center font-sans font-semibold"
                 style={{ height: 40, borderRadius: 13, background: 'transparent', color: '#8C7A62', border: 'none', fontSize: 13, cursor: 'pointer' }}>
                 Skip for now, generate anyway
@@ -818,9 +891,100 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {surveySheetOpen && activePlaceId && (
         <SiteSurveySheet
           placeId={activePlaceId}
-          onSaved={() => { setSurveySheetOpen(false); onOpenReport(photoAnalysis); }}
+          onSaved={() => { setSurveySheetOpen(false); openPhotoOrReport(); }}
           onClose={() => setSurveySheetOpen(false)}
         />
+      )}
+
+      {/* ── Pre-report photo prompt ── */}
+      {photoPromptOpen && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(4px)' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: '#F7F2E9', borderRadius: '24px 24px 0 0', padding: '24px 20px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))', maxHeight: '90dvh', overflowY: 'auto' }}>
+
+            {/* Header */}
+            <div className="flex items-start gap-3 mb-4">
+              <div style={{ width: 44, height: 44, borderRadius: 13, background: '#1A3A4A', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Camera size={20} color="#EAF3E2" />
+              </div>
+              <div>
+                <div className="font-display font-semibold" style={{ fontSize: 17, color: '#20190F' }}>Add site photos</div>
+                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
+                  Satellite images are blurry and can&apos;t see soil colour, drainage, or what&apos;s actually growing. A few photos let Lima give you a plan based on what&apos;s really there.
+                </div>
+              </div>
+            </div>
+
+            {/* What to photograph */}
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {[
+                { Icon: Camera,   label: 'All directions',   detail: 'Stand in the middle, shoot 4 shots around you' },
+                { Icon: Layers,   label: 'Soil profile',     detail: 'Dig a small hole — show the colour and layers' },
+                { Icon: Droplets, label: 'Water & drainage', detail: 'Dams, wet spots, channels, waterlogged areas' },
+                { Icon: Leaf,     label: "What's growing",   detail: 'Trees, plants, bare patches, any crops' },
+              ].map(({ Icon, label, detail }) => (
+                <div key={label} style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 10, padding: '9px 10px' }}>
+                  <Icon size={15} color="#1F4D2B" />
+                  <div className="font-sans font-semibold" style={{ fontSize: 12, color: '#20190F', marginTop: 4 }}>{label}</div>
+                  <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4, marginTop: 2 }}>{detail}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Upload area */}
+            <input
+              ref={promptInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={(e) => handlePromptFiles(e.target.files)}
+            />
+
+            {promptPreviews.length === 0 ? (
+              <button
+                onClick={() => promptInputRef.current?.click()}
+                className="w-full flex flex-col items-center justify-center gap-2"
+                style={{ height: 76, borderRadius: 13, border: '2px dashed rgba(31,77,43,0.3)', background: 'rgba(31,77,43,0.04)', cursor: 'pointer' }}>
+                <Camera size={20} color="#1F4D2B" />
+                <span className="font-sans font-semibold" style={{ fontSize: 13, color: '#1F4D2B' }}>Tap to add photos</span>
+              </button>
+            ) : (
+              <div className="flex gap-2 pb-1 overflow-x-auto">
+                {promptPreviews.map((url, i) => (
+                  <img key={i} src={url} alt="" className="rounded-xl object-cover flex-shrink-0" style={{ width: 68, height: 68, border: '1.5px solid rgba(31,77,43,0.2)' }} />
+                ))}
+                {promptPreviews.length < 6 && (
+                  <button
+                    onClick={() => promptInputRef.current?.click()}
+                    className="flex-shrink-0 flex items-center justify-center rounded-xl"
+                    style={{ width: 68, height: 68, background: 'rgba(31,77,43,0.06)', border: '2px dashed rgba(31,77,43,0.25)', cursor: 'pointer' }}>
+                    <span style={{ fontSize: 24, color: '#1F4D2B', lineHeight: 1 }}>+</span>
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="space-y-2 mt-3">
+              {promptPreviews.length > 0 && (
+                <button
+                  onClick={analyseAndGenerate}
+                  disabled={promptLoading}
+                  className="w-full flex items-center justify-center gap-2 font-sans font-bold"
+                  style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: promptLoading ? 'default' : 'pointer', opacity: promptLoading ? 0.75 : 1 }}>
+                  {promptLoading
+                    ? <><Loader2 size={16} className="animate-spin" />Analysing photos…</>
+                    : <><Camera size={16} />Analyse &amp; generate plan</>}
+                </button>
+              )}
+              <button
+                onClick={() => { setPhotoPromptOpen(false); onOpenReport(photoAnalysis); }}
+                className="w-full flex items-center justify-center font-sans font-semibold"
+                style={{ height: 40, borderRadius: 13, background: 'transparent', color: '#8C7A62', border: 'none', fontSize: 13, cursor: 'pointer' }}>
+                Skip — generate without photos
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
