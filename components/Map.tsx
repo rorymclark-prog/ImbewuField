@@ -13,10 +13,11 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
+import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, syncLocalMapStateToCloud, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -148,6 +149,7 @@ interface Props {
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -557,6 +559,33 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     window.addEventListener(MAP_STATE_EVENT, onMapState);
     return () => window.removeEventListener(MAP_STATE_EVENT, onMapState);
   }, [restoreShapes]);
+
+  // The browser that already has saved work may be open on any of the public
+  // domains. Once it sees an authenticated user, push its local work first.
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    const sync = () => {
+      void syncLocalMapStateToCloud()
+        .then(() => {
+          if (!cancelled) restoreShapes(true);
+        })
+        .catch(() => {
+          // Local work remains in storage; the next focus/refresh tries again.
+        });
+    };
+    sync();
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') sync();
+    };
+    window.addEventListener('focus', sync);
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('focus', sync);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [user, restoreShapes]);
 
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any

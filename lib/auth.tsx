@@ -24,7 +24,7 @@ import {
 } from 'firebase/auth';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
-import { hydrateUserMapStateFromCloud } from '@/lib/map-sync';
+import { syncLocalMapStateToCloud } from '@/lib/map-sync';
 import type { Profile, UserRole } from '@/lib/db/types';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -86,10 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
       setUser(firebaseUser);
-      await syncProfile(firebaseUser);
+      try {
+        await syncProfile(firebaseUser);
+      } catch {
+        setProfile(null);
+      }
       if (firebaseUser) {
         try {
-          await hydrateUserMapStateFromCloud();
+          await syncLocalMapStateToCloud();
         } catch {
           // Keep auth usable even if map sync is temporarily unavailable.
         }
