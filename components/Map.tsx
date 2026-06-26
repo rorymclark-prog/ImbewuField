@@ -2388,46 +2388,44 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </span>
                   {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
                 </div>
-                <div className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
-                  {/* Shapes toggle */}
-                  <button onClick={() => setShowFeatures((v) => !v)}
+              </button>
+              {/* Toggle row — sits below section header, wraps on narrow panels */}
+              <div className="flex flex-wrap items-center gap-0.5 pl-4 pb-1">
+                <button onClick={() => setShowFeatures((v) => !v)}
+                  className="flex items-center gap-1 active:scale-95 transition-all"
+                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                  <Square size={10} style={{ color: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showFeatures ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsShapesToggle')}</span>
+                  <span className="flex items-center rounded-full flex-shrink-0"
+                    style={{ width: 22, height: 13, padding: 2, background: showFeatures ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showFeatures ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                    <span style={{ width: 9, height: 9, borderRadius: '50%', background: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                  </span>
+                </button>
+                {showFeatures && (
+                  <button onClick={() => setShowHatch((v) => !v)}
                     className="flex items-center gap-1 active:scale-95 transition-all"
                     style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
-                    <Square size={10} style={{ color: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
-                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showFeatures ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsShapesToggle')}</span>
+                    <Grid size={10} style={{ color: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showHatch ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsHatchToggle')}</span>
                     <span className="flex items-center rounded-full flex-shrink-0"
-                      style={{ width: 22, height: 13, padding: 2, background: showFeatures ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showFeatures ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-                      <span style={{ width: 9, height: 9, borderRadius: '50%', background: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                      style={{ width: 22, height: 13, padding: 2, background: showHatch ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showHatch ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                      <span style={{ width: 9, height: 9, borderRadius: '50%', background: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
                     </span>
                   </button>
-                  {/* Hatching toggle — only when shapes are on */}
-                  {showFeatures && (
-                    <button onClick={() => setShowHatch((v) => !v)}
-                      className="flex items-center gap-1 active:scale-95 transition-all"
-                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
-                      <Grid size={10} style={{ color: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
-                      <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showHatch ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsHatchToggle')}</span>
-                      <span className="flex items-center rounded-full flex-shrink-0"
-                        style={{ width: 22, height: 13, padding: 2, background: showHatch ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showHatch ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
-                      </span>
-                    </button>
-                  )}
-                  {/* Labels toggle */}
-                  {showFeatures && (
-                    <button onClick={() => setShowShapeLabels((v) => !v)}
-                      className="flex items-center gap-1 active:scale-95 transition-all"
-                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
-                      <Layers size={10} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
-                      <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('parcelsLabelsToggle')}</span>
-                      <span className="flex items-center rounded-full flex-shrink-0"
-                        style={{ width: 22, height: 13, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
-                      </span>
-                    </button>
-                  )}
-                </div>
-              </button>
+                )}
+                {showFeatures && (
+                  <button onClick={() => setShowShapeLabels((v) => !v)}
+                    className="flex items-center gap-1 active:scale-95 transition-all"
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                    <Layers size={10} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('parcelsLabelsToggle')}</span>
+                    <span className="flex items-center rounded-full flex-shrink-0"
+                      style={{ width: 22, height: 13, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                      <span style={{ width: 9, height: 9, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                    </span>
+                  </button>
+                )}
+              </div>
               {sectionParcels && (
                 <>
                   {siteStats ? (
@@ -2845,29 +2843,39 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         return (
           <>
-            {/* Place-name bubbles — above the global site boundary when showPlaceLabels is on */}
-            {showPlaceLabels && savedPins
-              .filter(p => siteFeatures.some(sf => sf.placeId === p.id) || waterFeatures.some(wf => wf.placeId === p.id))
-              .map(p => (
-                <div key={`pname-${p.id}`}
-                  className="absolute pointer-events-none select-none font-display font-bold whitespace-nowrap"
-                  style={{
-                    left: (gMinX + gMaxX) / 2,
-                    top: gMinY - 10,
-                    transform: 'translate(-50%, -100%)',
-                    background: 'rgba(6,16,10,0.90)',
-                    border: `1.5px solid ${resolveColor(p)}`,
-                    borderRadius: 10,
-                    padding: '4px 12px',
-                    fontSize: 13,
-                    color: '#fff',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                    zIndex: 8,
-                  }}>
-                  {p.name}
-                </div>
-              ))
-            }
+            {/* Place-name bubble — outside the site to the right (or left if right is off-screen) */}
+            {showPlaceLabels && (() => {
+              const NAME_W = 196, NAME_H = 34;
+              const pinsWithSite = savedPins.filter(p =>
+                siteFeatures.some(sf => sf.placeId === p.id) || waterFeatures.some(wf => wf.placeId === p.id)
+              );
+              return pinsWithSite.map(p => {
+                // right-side preferred; fall back to left if it would clip the viewport
+                const rightX = gMaxX + PAD + NAME_W / 2;
+                const leftX  = gMinX - PAD - NAME_W / 2;
+                const pnX = (rightX + NAME_W / 2 < CW - 8) ? rightX : leftX;
+                const pnY = gMinY + NAME_H / 2 + PAD;
+                return (
+                  <div key={`pname-${p.id}`}
+                    className="absolute pointer-events-none select-none font-display font-bold whitespace-nowrap"
+                    style={{
+                      left: pnX,
+                      top: pnY,
+                      transform: 'translate(-50%, -50%)',
+                      background: 'rgba(6,16,10,0.90)',
+                      border: `1.5px solid ${resolveColor(p)}`,
+                      borderRadius: 10,
+                      padding: '4px 12px',
+                      fontSize: 13,
+                      color: '#fff',
+                      boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                      zIndex: 8,
+                    }}>
+                    {p.name}
+                  </div>
+                );
+              });
+            })()}
 
             {/* SVG leader lines + chip divs — only when showShapeLabels is on */}
             {showShapeLabels && (<>
