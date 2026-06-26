@@ -122,6 +122,14 @@ service cloud.firestore {
       allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
     }
 
+    // Per-user map data (farm shapes, saved places, water points) — cross-device sync.
+    match /user_map_data/{uid} {
+      allow read, write: if signedIn() && uid == request.auth.uid;
+      match /data/{doc} {
+        allow read, write: if signedIn() && uid == request.auth.uid;
+      }
+    }
+
     match /shared_sites/{code} {
       allow read: if true;
       allow create: if request.resource.data.code is string

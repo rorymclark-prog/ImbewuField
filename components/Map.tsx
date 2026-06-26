@@ -16,6 +16,9 @@ import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
+import { getFirebase } from '@/lib/firebase/init';
+import { pullUserMapData, pushFarmShapes } from '@/lib/user-sync';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -151,6 +154,7 @@ interface Props {
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -331,6 +335,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // overwrite the saved collection with a partial/empty in-memory store.
     if (!tearingDownRef.current && restoredRef.current) {
       try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
+      const uid = getFirebase()?.auth?.currentUser?.uid;
+      if (uid) pushFarmShapes(uid, all).catch(() => {});
     }
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
@@ -551,6 +557,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }, 200);
     return () => clearInterval(iv);
   }, [restoreShapes]);
+
+  // When the user logs in, pull their Firestore data into localStorage then re-restore shapes.
+  // This ensures data is consistent across browsers/devices.
+  useEffect(() => {
+    const uid = user?.uid;
+    if (!uid) return;
+    let cancelled = false;
+    pullUserMapData(uid).then(() => {
+      if (cancelled) return;
+      // Re-trigger shape restore with Firestore-fresh data
+      restoredRef.current = false;
+      const map = mapRef.current?.getMap();
+      if (map) restoreShapes();
+      // If map not ready, the polling interval will pick it up via restoredRef.current = false
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user?.uid, restoreShapes]);
 
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any

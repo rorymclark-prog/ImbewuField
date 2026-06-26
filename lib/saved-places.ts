@@ -1,3 +1,6 @@
+import { pushPlaces } from './user-sync';
+import { getFirebase } from './firebase/init';
+
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
 // The label sets the pin colour on the map.
@@ -42,11 +45,17 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('permamap-places-changed'));
 }
 
+function syncToFirestore(places: SavedPlace[]) {
+  const uid = getFirebase()?.auth?.currentUser?.uid;
+  if (uid) pushPlaces(uid, places).catch(() => {});
+}
+
 export function savePlace(place: SavedPlace): SavedPlace[] {
   const places = loadPlaces().filter(p => p.id !== place.id);
   const updated = [place, ...places];
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
+  syncToFirestore(updated);
   return updated;
 }
 
@@ -54,6 +63,7 @@ export function deletePlace(id: string): SavedPlace[] {
   const updated = loadPlaces().filter(p => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
+  syncToFirestore(updated);
   return updated;
 }
 
@@ -61,6 +71,7 @@ export function updatePlacePosition(id: string, lat: number, lon: number): Saved
   const updated = loadPlaces().map(p => p.id === id ? { ...p, lat, lon } : p);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
+  syncToFirestore(updated);
   return updated;
 }
 
