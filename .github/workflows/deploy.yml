@@ -1,7 +1,7 @@
 name: Deploy ImbewuField
 
 # Push to main → rename project to "imbewufield" (idempotent), deploy, alias domains.
-# Live URLs: imbewufield.vercel.app + permamap-sa.vercel.app
+# Live URLs: imbewufield.vercel.app + permamap-sa.vercel.app + fieldproof.vercel.app
 # org/project IDs are public; build env comes from `vercel pull`.
 
 on:
@@ -59,3 +59,4 @@ jobs:
           url="${{ steps.deploy.outputs.url }}"
           vercel alias set "$url" imbewufield.vercel.app --token="$VERCEL_TOKEN"
           vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
+          vercel alias set "$url" fieldproof.vercel.app --token="$VERCEL_TOKEN"
