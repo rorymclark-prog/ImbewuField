@@ -12,10 +12,40 @@ const COLL        = 'user_map_data';
 
 function db() { return getFirebase()?.db ?? null; }
 
-// Pull map data from Firestore. Strategy per key:
-//   • Firestore has data → overwrite localStorage with it
-//   • Firestore empty AND localStorage has data → bootstrap Firestore from localStorage
-// This handles first-run on a device that already had local data before sync was added.
+// Merge two place arrays: local wins on ID conflict (more recent edit on this device).
+function mergePlaces(remote: SavedPlace[], local: SavedPlace[]): SavedPlace[] {
+  const byId = new Map<string, SavedPlace>();
+  for (const p of remote) byId.set(p.id, p);
+  for (const p of local)  byId.set(p.id, p); // local overwrites remote on conflict
+  return [...byId.values()];
+}
+
+function mergeWater(remote: WaterPoint[], local: WaterPoint[]): WaterPoint[] {
+  const byId = new Map<string, WaterPoint>();
+  for (const p of remote) byId.set(p.id, p);
+  for (const p of local)  byId.set(p.id, p);
+  return [...byId.values()];
+}
+
+// Merge two GeoJSON FeatureCollections by feature id. Local wins on conflict.
+function mergeShapes(
+  remote: { features: { id?: string }[] } | null,
+  local:  { features: { id?: string }[] } | null,
+): { type: string; features: { id?: string }[] } | null {
+  const rf = remote?.features ?? [];
+  const lf = local?.features  ?? [];
+  if (!rf.length && !lf.length) return null;
+  const byId = new Map<string, { id?: string }>();
+  for (const f of rf) if (f.id) byId.set(String(f.id), f);
+  for (const f of lf) if (f.id) byId.set(String(f.id), f);
+  // Features without an id just append from local (shouldn't happen with Draw)
+  const noId = lf.filter(f => !f.id);
+  return { type: 'FeatureCollection', features: [...byId.values(), ...noId] };
+}
+
+// Pull user map data from Firestore and MERGE with localStorage.
+// Both sources contribute; local wins on per-item conflicts.
+// Merged result is saved back to both localStorage and Firestore.
 export async function pullUserMapData(uid: string): Promise<void> {
   const d = db();
   console.log('[sync] pull uid=', uid, 'db=', !!d);
@@ -28,61 +58,51 @@ export async function pullUserMapData(uid: string): Promise<void> {
     ]);
     console.log('[sync] pull result: shapes=', shapesSnap.exists(), 'places=', placesSnap.exists(), 'water=', waterSnap.exists());
 
-    // Farm shapes
-    if (shapesSnap.exists() && shapesSnap.data().shapes) {
-      localStorage.setItem(FARM_KEY, JSON.stringify(shapesSnap.data().shapes));
-      console.log('[sync] restored shapes from Firestore');
-    } else {
-      const local = localStorage.getItem(FARM_KEY);
-      if (local) {
-        const parsed = JSON.parse(local);
-        if (parsed?.features?.length) {
-          await setDoc(doc(d, COLL, uid, 'data', 'shapes'), { shapes: parsed, updatedAt: serverTimestamp() });
-          console.log('[sync] bootstrapped shapes to Firestore, features=', parsed.features.length);
-        }
-      }
+    // --- Places ---
+    const remotePlaces: SavedPlace[] = placesSnap.exists() ? (placesSnap.data().places ?? []) : [];
+    const localPlacesRaw = localStorage.getItem(PLACES_KEY);
+    const localPlaces: SavedPlace[] = localPlacesRaw ? (JSON.parse(localPlacesRaw) ?? []) : [];
+    const mergedPlaces = mergePlaces(remotePlaces, localPlaces);
+    localStorage.setItem(PLACES_KEY, JSON.stringify(mergedPlaces));
+    if (mergedPlaces.length !== remotePlaces.length || localPlaces.some(l => !remotePlaces.find(r => r.id === l.id))) {
+      await setDoc(doc(d, COLL, uid, 'data', 'places'), { places: mergedPlaces, updatedAt: serverTimestamp() });
     }
+    console.log('[sync] places merged: remote=', remotePlaces.length, 'local=', localPlaces.length, 'result=', mergedPlaces.length);
 
-    // Saved places
-    if (placesSnap.exists() && placesSnap.data().places) {
-      localStorage.setItem(PLACES_KEY, JSON.stringify(placesSnap.data().places));
-      console.log('[sync] restored places from Firestore, count=', placesSnap.data().places.length);
-    } else {
-      const local = localStorage.getItem(PLACES_KEY);
-      if (local) {
-        const parsed = JSON.parse(local);
-        if (Array.isArray(parsed) && parsed.length) {
-          await setDoc(doc(d, COLL, uid, 'data', 'places'), { places: parsed, updatedAt: serverTimestamp() });
-          console.log('[sync] bootstrapped places to Firestore, count=', parsed.length);
-        }
-      }
+    // --- Water points ---
+    const remoteWater: WaterPoint[] = waterSnap.exists() ? (waterSnap.data().points ?? []) : [];
+    const localWaterRaw = localStorage.getItem(WATER_KEY);
+    const localWater: WaterPoint[] = localWaterRaw ? (JSON.parse(localWaterRaw) ?? []) : [];
+    const mergedWater = mergeWater(remoteWater, localWater);
+    localStorage.setItem(WATER_KEY, JSON.stringify(mergedWater));
+    if (mergedWater.length !== remoteWater.length || localWater.some(l => !remoteWater.find(r => r.id === l.id))) {
+      await setDoc(doc(d, COLL, uid, 'data', 'water'), { points: mergedWater, updatedAt: serverTimestamp() });
     }
+    console.log('[sync] water merged: remote=', remoteWater.length, 'local=', localWater.length, 'result=', mergedWater.length);
 
-    // Water points
-    if (waterSnap.exists() && waterSnap.data().points) {
-      localStorage.setItem(WATER_KEY, JSON.stringify(waterSnap.data().points));
-      console.log('[sync] restored water from Firestore, count=', waterSnap.data().points.length);
-    } else {
-      const local = localStorage.getItem(WATER_KEY);
-      if (local) {
-        const parsed = JSON.parse(local);
-        if (Array.isArray(parsed) && parsed.length) {
-          await setDoc(doc(d, COLL, uid, 'data', 'water'), { points: parsed, updatedAt: serverTimestamp() });
-          console.log('[sync] bootstrapped water to Firestore, count=', parsed.length);
-        }
+    // --- Farm shapes ---
+    const remoteShapes = shapesSnap.exists() ? shapesSnap.data().shapes : null;
+    const localShapesRaw = localStorage.getItem(FARM_KEY);
+    const localShapes = localShapesRaw ? JSON.parse(localShapesRaw) : null;
+    const mergedShapes = mergeShapes(remoteShapes, localShapes);
+    if (mergedShapes) {
+      localStorage.setItem(FARM_KEY, JSON.stringify(mergedShapes));
+      const remoteCount = remoteShapes?.features?.length ?? 0;
+      const localCount  = localShapes?.features?.length  ?? 0;
+      if (mergedShapes.features.length !== remoteCount || localCount > 0) {
+        await setDoc(doc(d, COLL, uid, 'data', 'shapes'), { shapes: mergedShapes, updatedAt: serverTimestamp() });
       }
+      console.log('[sync] shapes merged: remote=', remoteCount, 'local=', localCount, 'result=', mergedShapes.features.length);
     }
   } catch (e) { console.error('[sync] pull error', e); }
 }
 
 export async function pushFarmShapes(uid: string, shapes: object): Promise<void> {
   const d = db();
-  const count = (shapes as { features?: unknown[] }).features?.length ?? 0;
-  console.log('[sync] push shapes uid=', uid, 'features=', count);
   if (!d) return;
   try {
     await setDoc(doc(d, COLL, uid, 'data', 'shapes'), { shapes, updatedAt: serverTimestamp() });
-    console.log('[sync] push shapes OK');
+    console.log('[sync] push shapes OK features=', (shapes as { features?: unknown[] }).features?.length);
   } catch (e) { console.error('[sync] push shapes error', e); }
 }
 
