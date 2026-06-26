@@ -562,18 +562,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // This ensures drawn shapes, pins, and water points are consistent across browsers/devices.
   useEffect(() => {
     const uid = user?.uid;
+    console.log('[map-sync] uid=', uid ?? 'none');
     if (!uid) return;
     let cancelled = false;
     pullUserMapData(uid).then(() => {
       if (cancelled) return;
-      // Refresh pins and water points — dispatch the same events the write functions use
+      console.log('[map-sync] pull done, dispatching events + re-restoring');
       window.dispatchEvent(new CustomEvent('permamap-places-changed'));
       window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
-      // Re-trigger shape restore with Firestore-fresh data
       restoredRef.current = false;
       const map = mapRef.current?.getMap();
       if (map) restoreShapes();
-    }).catch(() => {});
+    }).catch((e) => console.error('[map-sync] error', e));
     return () => { cancelled = true; };
   }, [user?.uid, restoreShapes]);
 

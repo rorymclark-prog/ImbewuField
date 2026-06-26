@@ -12,9 +12,9 @@ const COLL        = 'user_map_data';
 
 function db() { return getFirebase()?.db ?? null; }
 
-// Pull all map data from Firestore → overwrite localStorage (called on login).
 export async function pullUserMapData(uid: string): Promise<void> {
   const d = db();
+  console.log('[sync] pull uid=', uid, 'db=', !!d);
   if (!d) return;
   try {
     const [shapesSnap, placesSnap, waterSnap] = await Promise.all([
@@ -22,35 +22,43 @@ export async function pullUserMapData(uid: string): Promise<void> {
       getDoc(doc(d, COLL, uid, 'data', 'places')),
       getDoc(doc(d, COLL, uid, 'data', 'water')),
     ]);
+    console.log('[sync] pull result: shapes=', shapesSnap.exists(), 'places=', placesSnap.exists(), 'water=', waterSnap.exists());
     if (shapesSnap.exists() && shapesSnap.data().shapes)
       localStorage.setItem(FARM_KEY, JSON.stringify(shapesSnap.data().shapes));
     if (placesSnap.exists() && placesSnap.data().places)
       localStorage.setItem(PLACES_KEY, JSON.stringify(placesSnap.data().places));
     if (waterSnap.exists() && waterSnap.data().points)
       localStorage.setItem(WATER_KEY, JSON.stringify(waterSnap.data().points));
-  } catch { /* offline or permission error — keep existing localStorage */ }
+  } catch (e) { console.error('[sync] pull error', e); }
 }
 
 export async function pushFarmShapes(uid: string, shapes: object): Promise<void> {
   const d = db();
+  const count = (shapes as { features?: unknown[] }).features?.length ?? 0;
+  console.log('[sync] push shapes uid=', uid, 'features=', count, 'db=', !!d);
   if (!d) return;
   try {
     await setDoc(doc(d, COLL, uid, 'data', 'shapes'), { shapes, updatedAt: serverTimestamp() });
-  } catch { }
+    console.log('[sync] push shapes OK');
+  } catch (e) { console.error('[sync] push shapes error', e); }
 }
 
 export async function pushPlaces(uid: string, places: SavedPlace[]): Promise<void> {
   const d = db();
+  console.log('[sync] push places uid=', uid, 'count=', places.length, 'db=', !!d);
   if (!d) return;
   try {
     await setDoc(doc(d, COLL, uid, 'data', 'places'), { places, updatedAt: serverTimestamp() });
-  } catch { }
+    console.log('[sync] push places OK');
+  } catch (e) { console.error('[sync] push places error', e); }
 }
 
 export async function pushWaterPoints(uid: string, points: WaterPoint[]): Promise<void> {
   const d = db();
+  console.log('[sync] push water uid=', uid, 'count=', points.length, 'db=', !!d);
   if (!d) return;
   try {
     await setDoc(doc(d, COLL, uid, 'data', 'water'), { points, updatedAt: serverTimestamp() });
-  } catch { }
+    console.log('[sync] push water OK');
+  } catch (e) { console.error('[sync] push water error', e); }
 }
