@@ -1,3 +1,9 @@
+import {
+  queueUserMapStatePatch,
+  readLocalSavedPlaces,
+  writeLocalSavedPlaces,
+} from '@/lib/map-sync';
+
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
 // The label sets the pin colour on the map.
@@ -27,40 +33,29 @@ export interface SavedPlace {
 export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string =>
   p.color ?? placeColor(p.label);
 
-const KEY = 'permamap_saved_places';
-
 export function loadPlaces(): SavedPlace[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '[]');
-  } catch {
-    return [];
-  }
-}
-
-function notify() {
-  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('permamap-places-changed'));
+  return readLocalSavedPlaces();
 }
 
 export function savePlace(place: SavedPlace): SavedPlace[] {
   const places = loadPlaces().filter(p => p.id !== place.id);
   const updated = [place, ...places];
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  notify();
+  writeLocalSavedPlaces(updated, { notify: true });
+  queueUserMapStatePatch({ places: updated });
   return updated;
 }
 
 export function deletePlace(id: string): SavedPlace[] {
   const updated = loadPlaces().filter(p => p.id !== id);
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  notify();
+  writeLocalSavedPlaces(updated, { notify: true });
+  queueUserMapStatePatch({ places: updated });
   return updated;
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
   const updated = loadPlaces().map(p => p.id === id ? { ...p, lat, lon } : p);
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  notify();
+  writeLocalSavedPlaces(updated, { notify: true });
+  queueUserMapStatePatch({ places: updated });
   return updated;
 }
 

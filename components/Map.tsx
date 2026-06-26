@@ -13,15 +13,12 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
+import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
-
-// Drawn parcels + water are persisted here so a refresh never loses the farmer's
-// work (was the #1 complaint — "20 minutes of drawing gone on refresh").
-const FARM_KEY = 'imbewu_farm_shapes';
 
 // Per-parcel colour palette — each new parcel gets the next entry, cycling if > 6.
 // Even-index entries hatch at 45°, odd at 135° so adjacent parcels are always distinct.
@@ -330,7 +327,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // Skip while tearing down (unmount) or before restore has run — either path could
     // overwrite the saved collection with a partial/empty in-memory store.
     if (!tearingDownRef.current && restoredRef.current) {
-      try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
+      writeLocalFarmShapes(all, { notify: false });
+      queueUserMapStatePatch({ shapes: all });
     }
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
@@ -522,15 +520,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // and we must NOT let that persist an empty collection (it would wipe saved shapes
   // every time the user navigates away from the map).
   const tearingDownRef = useRef(false);
-  const restoreShapes = useCallback(() => {
-    if (restoredRef.current) return;
+  const restoreShapes = useCallback((force = false) => {
+    if (restoredRef.current && !force) return;
     const draw = ensureDraw();
     if (!draw) return;
     try {
-      const raw = localStorage.getItem(FARM_KEY);
-      if (raw) {
-        const fc = JSON.parse(raw);
-        if (fc?.features?.length) { draw.set(fc); recompute(); }
+      const fc = readLocalFarmShapes();
+      if (fc?.features?.length) {
+        draw.set(fc);
+        recompute();
       }
     } catch { /* ignore corrupt/blocked storage */ }
     restoredRef.current = true;
@@ -550,6 +548,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       else if (tries > 50) clearInterval(iv); // ~10s safety cap
     }, 200);
     return () => clearInterval(iv);
+  }, [restoreShapes]);
+
+  // Cloud-hydrated state can arrive after the map mounted. When that happens,
+  // re-read the stored shapes so the draw layer catches up.
+  useEffect(() => {
+    const onMapState = () => restoreShapes(true);
+    window.addEventListener(MAP_STATE_EVENT, onMapState);
+    return () => window.removeEventListener(MAP_STATE_EVENT, onMapState);
   }, [restoreShapes]);
 
   // cancelDraw: reliably exits an in-progress polygon draw.
@@ -1240,10 +1246,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (!data) return;
           const draw = drawRef.current;
           if (draw) draw.set(data.geojson);
-          localStorage.setItem('imbewu_places', JSON.stringify(data.places));
-          window.dispatchEvent(new CustomEvent('imbewu-places-changed'));
-          localStorage.setItem('imbewu_water_points', JSON.stringify(data.waterPoints));
-          window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
+          writeLocalSavedPlaces(data.places, { notify: true });
+          writeLocalWaterPoints(data.waterPoints, { notify: true });
           setSavedPins(loadPlaces());
           mapInst.flyTo({ center: data.mapCenter as [number, number], zoom: data.mapZoom });
           history.replaceState(null, '', window.location.pathname);

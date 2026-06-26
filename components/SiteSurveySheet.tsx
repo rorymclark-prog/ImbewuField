@@ -1,8 +1,8 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText } from 'lucide-react';
 import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
-import { loadPlaces } from '@/lib/saved-places';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 
 interface Props {
   placeId: string;
@@ -83,7 +83,14 @@ function NumInput({ value, onChange, placeholder, hint }: { value: string; onCha
 
 export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
   const existing = loadSurvey(placeId);
-  const place = loadPlaces().find(p => p.id === placeId);
+  const [places, setPlaces] = useState<SavedPlace[]>([]);
+  useEffect(() => {
+    const refresh = () => setPlaces(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
+  const place = places.find(p => p.id === placeId);
 
   const [step, setStep] = useState(0);
 

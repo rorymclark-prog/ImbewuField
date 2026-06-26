@@ -17,7 +17,7 @@ import ThemePanel from '@/components/ThemePanel';
 import NavDrawer from '@/components/NavDrawer';
 import ProfileSheet from '@/components/ProfileSheet';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
-import { loadPlaces } from '@/lib/saved-places';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -70,6 +70,7 @@ function HomeInner() {
   const [showReport, setShowReport] = useState(false);
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
   const [savedReportView, setSavedReportView] = useState<SavedReport | null>(null);
+  const [savedPlaces, setSavedPlaces] = useState<SavedPlace[]>([]);
 
   const handleViewReport = useCallback((r: SavedReport) => {
     setSavedReportView(r);
@@ -163,6 +164,13 @@ function HomeInner() {
     return () => { cancelled = true; };
   }, []);
 
+  useEffect(() => {
+    const refresh = () => setSavedPlaces(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
+
   const peopleMarkers: PeopleMarker[] = people
     .filter(p => p.showOnMap && p.mapLat != null && p.mapLon != null)
     .map(p => ({
@@ -185,7 +193,7 @@ function HomeInner() {
           photoAnalysis={reportPhotoAnalysis}
           siteData={siteData ?? undefined}
           waterData={waterData ?? undefined}
-          savedPlaces={loadPlaces()}
+          savedPlaces={savedPlaces}
           mapCapture={mapCapture}
           appLang={lang}
           activePlaceId={activePlaceId ?? undefined}

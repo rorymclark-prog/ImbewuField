@@ -81,7 +81,12 @@ function SurveyInner() {
 
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(urlPlaceId);
   const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
-  useEffect(() => { setSavedPins(loadPlaces()); }, []);
+  useEffect(() => {
+    const refresh = () => setSavedPins(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
   const selectedPlace = savedPins.find(p => p.id === selectedPlaceId) ?? null;
 
   const [step, setStep] = useState(0);          // 0..4 wizard, 5 = result

@@ -90,6 +90,10 @@ service cloud.firestore {
       allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
     }
 
+    match /user_map_state/{uid} {
+      allow read, write: if signedIn() && uid == request.auth.uid;
+    }
+
     match /course_progress/{id} {
       allow read:  if owns(resource.data) || isStaff() || isMentor();
       allow write: if signedIn()

@@ -47,6 +47,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-06-26 (cloud sync for saved map state)
+- **Saved places / water points / drawn shapes now sync per user** via Firestore
+  `user_map_state/{uid}` instead of living only in localStorage, so the same
+  signed-in account should show the same work across browsers.
+- **Auth now hydrates map state on sign-in** and emits change events so the
+  farmer / report / survey screens refresh after cloud data arrives.
+- **Firestore rules updated** to allow only the signed-in owner to read/write
+  their own `user_map_state` document.
+- **Build verified** with `npm run build`.
+
 ### 2026-06-23 (critical bug fixes + UX pass 2)
 - **BLOCKER fixed: water colour** — MapboxDraw missing `userProperties:true`; without
   it `user_featureType` style filters never matched → all polygons green, no blue water.

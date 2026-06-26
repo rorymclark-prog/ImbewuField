@@ -1,3 +1,9 @@
+import {
+  queueUserMapStatePatch,
+  readLocalWaterPoints,
+  writeLocalWaterPoints,
+} from '@/lib/map-sync';
+
 export type WaterPointCategory = 'Dam' | 'Borehole' | 'Spring' | 'Well' | 'Pond' | 'Tank' | 'Other';
 
 export interface WaterPoint {
@@ -23,28 +29,21 @@ export function categoryColor(cat?: string): string {
   return WATER_POINT_CATEGORIES.find((c) => c.v === cat)?.color ?? '#235E86';
 }
 
-const KEY = 'imbewu_water_points';
-
-function notify() {
-  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
-}
-
 export function loadWaterPoints(): WaterPoint[] {
-  if (typeof window === 'undefined') return [];
-  try { return JSON.parse(localStorage.getItem(KEY) ?? '[]'); } catch { return []; }
+  return readLocalWaterPoints();
 }
 
 export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
   const updated = [pt, ...loadWaterPoints().filter((p) => p.id !== pt.id)];
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  notify();
+  writeLocalWaterPoints(updated, { notify: true });
+  queueUserMapStatePatch({ waterPoints: updated });
   return updated;
 }
 
 export function deleteWaterPoint(id: string): WaterPoint[] {
   const updated = loadWaterPoints().filter((p) => p.id !== id);
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  notify();
+  writeLocalWaterPoints(updated, { notify: true });
+  queueUserMapStatePatch({ waterPoints: updated });
   return updated;
 }
 
