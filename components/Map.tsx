@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
 
@@ -226,6 +226,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [sectionWater, setSectionWater] = useState(false);
   const [showShapeLabels, setShowShapeLabels] = useState(false);
   const [showPlaceLabels, setShowPlaceLabels] = useState(true);
+  const [showFeatures, setShowFeatures] = useState(true);  // all drawn polygon boundaries + hatching
+  const [showHatch, setShowHatch] = useState(true);         // hatch fill pattern only
   const [toolbarMin, setToolbarMin] = useState(true);  // start collapsed so the map is clear on arrival; tap "☰ Tools" to open
   // ── Reticle EDIT: edit an existing shape with the SAME "move the map under the
   // crosshair" motion used for drawing — no tiny dot-dragging. Tap a corner to lift it
@@ -1150,6 +1152,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
+
+  // Sync draw layer visibility with showFeatures / showHatch toggles
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    const borderIds = ['gl-draw-poly-casing-land', 'gl-draw-poly-casing-water', 'gl-draw-poly-stroke-land', 'gl-draw-poly-stroke-water'];
+    const fillIds   = ['gl-draw-poly-fill-land', 'gl-draw-poly-fill-water'];
+    const vis = (v: boolean) => v ? 'visible' : 'none';
+    borderIds.forEach(id => { try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis(showFeatures)); } catch {} });
+    fillIds.forEach(id   => { try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis(showFeatures && showHatch)); } catch {} });
+  }, [showFeatures, showHatch]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
   // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
@@ -2369,16 +2382,45 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </span>
                   {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
                 </div>
-                <button onClick={(e) => { e.stopPropagation(); setShowShapeLabels((v) => !v); }}
-                  className="flex items-center gap-1 active:scale-95 transition-all"
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
-                  <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
-                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('parcelsLabelsToggle')}</span>
-                  <span className="flex items-center rounded-full flex-shrink-0"
-                    style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-                    <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
-                  </span>
-                </button>
+                <div className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+                  {/* Shapes toggle */}
+                  <button onClick={() => setShowFeatures((v) => !v)}
+                    className="flex items-center gap-1 active:scale-95 transition-all"
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                    <Square size={10} style={{ color: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                    <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showFeatures ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsShapesToggle')}</span>
+                    <span className="flex items-center rounded-full flex-shrink-0"
+                      style={{ width: 22, height: 13, padding: 2, background: showFeatures ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showFeatures ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                      <span style={{ width: 9, height: 9, borderRadius: '50%', background: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                    </span>
+                  </button>
+                  {/* Hatching toggle — only when shapes are on */}
+                  {showFeatures && (
+                    <button onClick={() => setShowHatch((v) => !v)}
+                      className="flex items-center gap-1 active:scale-95 transition-all"
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                      <Grid size={10} style={{ color: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                      <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showHatch ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('labelsHatchToggle')}</span>
+                      <span className="flex items-center rounded-full flex-shrink-0"
+                        style={{ width: 22, height: 13, padding: 2, background: showHatch ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showHatch ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                      </span>
+                    </button>
+                  )}
+                  {/* Labels toggle */}
+                  {showFeatures && (
+                    <button onClick={() => setShowShapeLabels((v) => !v)}
+                      className="flex items-center gap-1 active:scale-95 transition-all"
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 4px' }}>
+                      <Layers size={10} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.3)' }} />
+                      <span className="font-sans" style={{ fontSize: 11, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.3)' }}>{t('parcelsLabelsToggle')}</span>
+                      <span className="flex items-center rounded-full flex-shrink-0"
+                        style={{ width: 22, height: 13, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                        <span style={{ width: 9, height: 9, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                      </span>
+                    </button>
+                  )}
+                </div>
               </button>
               {sectionParcels && (
                 <>
@@ -2643,18 +2685,45 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         <div className="absolute flex items-center gap-1 font-sans transition-all"
           style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
           <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>{t('labelsPillHeader')}</span>
-          {(siteFeatures.length > 0 || waterFeatures.length > 0) && (
-            <button onClick={() => setShowShapeLabels((v) => !v)}
+          {(siteFeatures.length > 0 || waterFeatures.length > 0) && (<>
+            {/* Shapes — show/hide all drawn polygon boundaries + hatching */}
+            <button onClick={() => setShowFeatures((v) => !v)}
               className="flex items-center gap-1 active:scale-95 transition-all"
               style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
-              <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('labelsParcelsAndWaterToggle')}</span>
+              <Square size={11} style={{ color: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+              <span style={{ fontSize: 12, fontWeight: 700, color: showFeatures ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('labelsShapesToggle')}</span>
               <span className="flex items-center rounded-full flex-shrink-0"
-                style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
-                <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                style={{ width: 26, height: 15, padding: 2, background: showFeatures ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showFeatures ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                <span style={{ width: 11, height: 11, borderRadius: '50%', background: showFeatures ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
               </span>
             </button>
-          )}
+            {/* Hatching — show/hide fill pattern while keeping border lines */}
+            {showFeatures && (
+              <button onClick={() => setShowHatch((v) => !v)}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+                <Grid size={11} style={{ color: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: showHatch ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('labelsHatchToggle')}</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showHatch ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showHatch ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showHatch ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            )}
+            {/* Labels chip — only shown when shapes are visible */}
+            {showFeatures && (
+              <button onClick={() => setShowShapeLabels((v) => !v)}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+                <Layers size={11} style={{ color: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.35)' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: showShapeLabels ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('labelsParcelsAndWaterToggle')}</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showShapeLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showShapeLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showShapeLabels ? '#9BE66B' : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            )}
+          </>)}
           {savedPins.length > 0 && (
             <>
               {(siteFeatures.length > 0 || waterFeatures.length > 0) && <div style={{ width: 1, height: 18, background: 'rgba(234,243,226,0.1)' }} />}
@@ -2689,7 +2758,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       )}
 
       {/* ── Floating shape chips — smart placement: outside small shapes, inside large ── */}
-      {showShapeLabels && !pinDraw && !editPin && map && (() => {
+      {showShapeLabels && showFeatures && !pinDraw && !editPin && map && (() => {
         const CHIP_W = 160, CHIP_H = 34, PAD = 10;
         const INSIDE_PX2 = Infinity; // always place labels outside the polygon
         const container = map.getContainer();
