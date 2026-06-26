@@ -1,4 +1,5 @@
 import {
+  pushUserMapStatePatch,
   queueUserMapStatePatch,
   readLocalSavedPlaces,
   writeLocalSavedPlaces,
@@ -41,21 +42,27 @@ export function savePlace(place: SavedPlace): SavedPlace[] {
   const places = loadPlaces().filter(p => p.id !== place.id);
   const updated = [place, ...places];
   writeLocalSavedPlaces(updated, { notify: true });
-  queueUserMapStatePatch({ places: updated });
+  void pushUserMapStatePatch({ places: updated }).catch(() => {
+    queueUserMapStatePatch({ places: updated });
+  });
   return updated;
 }
 
 export function deletePlace(id: string): SavedPlace[] {
   const updated = loadPlaces().filter(p => p.id !== id);
   writeLocalSavedPlaces(updated, { notify: true });
-  queueUserMapStatePatch({ places: updated });
+  void pushUserMapStatePatch({ places: updated }).catch(() => {
+    queueUserMapStatePatch({ places: updated });
+  });
   return updated;
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
   const updated = loadPlaces().map(p => p.id === id ? { ...p, lat, lon } : p);
   writeLocalSavedPlaces(updated, { notify: true });
-  queueUserMapStatePatch({ places: updated });
+  void pushUserMapStatePatch({ places: updated }).catch(() => {
+    queueUserMapStatePatch({ places: updated });
+  });
   return updated;
 }
 

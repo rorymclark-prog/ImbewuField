@@ -1,4 +1,5 @@
 import {
+  pushUserMapStatePatch,
   queueUserMapStatePatch,
   readLocalWaterPoints,
   writeLocalWaterPoints,
@@ -36,14 +37,18 @@ export function loadWaterPoints(): WaterPoint[] {
 export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
   const updated = [pt, ...loadWaterPoints().filter((p) => p.id !== pt.id)];
   writeLocalWaterPoints(updated, { notify: true });
-  queueUserMapStatePatch({ waterPoints: updated });
+  void pushUserMapStatePatch({ waterPoints: updated }).catch(() => {
+    queueUserMapStatePatch({ waterPoints: updated });
+  });
   return updated;
 }
 
 export function deleteWaterPoint(id: string): WaterPoint[] {
   const updated = loadWaterPoints().filter((p) => p.id !== id);
   writeLocalWaterPoints(updated, { notify: true });
-  queueUserMapStatePatch({ waterPoints: updated });
+  void pushUserMapStatePatch({ waterPoints: updated }).catch(() => {
+    queueUserMapStatePatch({ waterPoints: updated });
+  });
   return updated;
 }
 

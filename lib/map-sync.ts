@@ -1,7 +1,7 @@
 'use client';
 
 import type { FeatureCollection } from 'geojson';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from '@/lib/firebase/init';
 import type { SavedPlace } from '@/lib/saved-places';
 import type { WaterPoint } from '@/lib/water-points';
@@ -201,6 +201,23 @@ export async function pushUserMapStatePatch(patch: UserMapPatch): Promise<void> 
   const next = cleanPatch(patch);
   if (!ref || Object.keys(next).length === 0) return;
   await setDoc(ref, { ...next, updatedAt: serverTimestamp() }, { merge: true });
+}
+
+export function startUserMapStateListener(onState?: (state: UserMapState | null) => void): () => void {
+  const ref = currentUserMapDocRef();
+  if (!ref) return () => {};
+  return onSnapshot(ref, async (snap) => {
+    if (!snap.exists()) {
+      onState?.(null);
+      return;
+    }
+    try {
+      const state = await hydrateUserMapStateFromCloud();
+      onState?.(state);
+    } catch {
+      // Ignore transient read errors; the next snapshot or refresh will retry.
+    }
+  });
 }
 
 export function queueUserMapStatePatch(patch: UserMapPatch): void {
