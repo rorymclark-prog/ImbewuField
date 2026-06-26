@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect, type PointerEvent as ReactPointerEvent } from 'react';
+import { useRef, useState, useCallback, useEffect, useMemo, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
   Source, Layer, Marker, Popup, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
@@ -1350,6 +1350,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
+  // Set of place IDs that have at least one drawn feature (site or water)
+  const pinsWithFeatures = useMemo(() => new Set([
+    ...siteFeatures.flatMap(sf => sf.placeId ? [sf.placeId] : []),
+    ...waterFeatures.flatMap(wf => wf.placeId ? [wf.placeId] : []),
+  ]), [siteFeatures, waterFeatures]);
+
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
   // time via the row's name). Stored on the feature so it persists + shows in lists. ──
   const SHAPE_CATEGORIES: Record<'site' | 'water', string[]> = {
@@ -1542,7 +1548,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   onLocationSelect(p.lat, p.lon);
                   onPlaceSelect?.({ name: p.name, id: p.id });
                 }}
-                className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${showPlaceLabels || activePin === p.id || movingPin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${(showPlaceLabels && !(showFeatures && pinsWithFeatures.has(p.id))) || activePin === p.id || movingPin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${resolveColor(p)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)', cursor: 'pointer' }}>
                 {p.name}
               </button>
@@ -2757,58 +2763,60 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </div>
       )}
 
-      {/* ── Floating shape chips — smart placement: outside small shapes, inside large ── */}
-      {showShapeLabels && showFeatures && !pinDraw && !editPin && map && (() => {
+      {/* ── Floating shape chips — placed outside the GLOBAL site bbox, plus optional place-name bubble ── */}
+      {showFeatures && !pinDraw && !editPin && map && (() => {
         const CHIP_W = 160, CHIP_H = 34, PAD = 10;
-        const INSIDE_PX2 = Infinity; // always place labels outside the polygon
         const container = map.getContainer();
         const CW = container?.clientWidth ?? 800;
+        const CH = container?.clientHeight ?? 600;
+
+        // Global bbox across all site + water features
+        let gMinX = Infinity, gMaxX = -Infinity, gMinY = Infinity, gMaxY = -Infinity;
+        const allFeatureBboxes = [
+          ...siteFeatures.filter(sf => sf.centroid).map(sf => sf.bbox),
+          ...waterFeatures.filter(wf => wf.centroid).map(wf => wf.bbox),
+        ];
+        for (const bb of allFeatureBboxes) {
+          const sw = map.project([bb[0], bb[1]]);
+          const ne = map.project([bb[2], bb[3]]);
+          gMinX = Math.min(gMinX, sw.x, ne.x);
+          gMaxX = Math.max(gMaxX, sw.x, ne.x);
+          gMinY = Math.min(gMinY, sw.y, ne.y);
+          gMaxY = Math.max(gMaxY, sw.y, ne.y);
+        }
+        if (!isFinite(gMinX)) return null; // no features
 
         // Build a unified list of chips with computed positions
         const chips: Array<{
           id: string; type: 'land' | 'water';
           cx: number; cy: number;       // chip centre (screen px)
           anchorX: number; anchorY: number;  // polygon centroid (screen px)
-          inside: boolean;              // no leader when inside
+          inside: boolean;              // always false now
           label: string; sub: string;
         }> = [];
 
         const placeChip = (
           centroid: [number, number],
-          bbox: [number, number, number, number],
+          _bbox: [number, number, number, number],
           type: 'land' | 'water',
           id: string, label: string, sub: string,
         ) => {
           const cp = map.project(centroid);
-          const sw = map.project([bbox[0], bbox[1]]);
-          const ne = map.project([bbox[2], bbox[3]]);
-          const bboxMinX = Math.min(sw.x, ne.x), bboxMaxX = Math.max(sw.x, ne.x);
-          const bboxMinY = Math.min(sw.y, ne.y), bboxMaxY = Math.max(sw.y, ne.y);
-          const bboxW = bboxMaxX - bboxMinX, bboxH = bboxMaxY - bboxMinY;
-          const screenArea = bboxW * bboxH;
+          // Find nearest edge of the GLOBAL bbox and push chip there
+          const edges = [
+            { dist: gMaxX - cp.x, cx: gMaxX + PAD + CHIP_W / 2, cy: cp.y },
+            { dist: cp.x - gMinX, cx: gMinX - PAD - CHIP_W / 2, cy: cp.y },
+            { dist: cp.y - gMinY, cx: cp.x,                      cy: gMinY - PAD - CHIP_H / 2 },
+            { dist: gMaxY - cp.y, cx: cp.x,                      cy: gMaxY + PAD + CHIP_H / 2 },
+          ].sort((a, b) => a.dist - b.dist);
 
-          let cx = cp.x, cy = cp.y, inside = false;
-
-          if (screenArea > INSIDE_PX2 && bboxW > CHIP_W + 8 && bboxH > CHIP_H + 8) {
-            // Large enough — label sits inside polygon at centroid
-            inside = true;
-          } else {
-            // Small shape — place chip outside, prefer right side
-            const rightCx = bboxMaxX + PAD + CHIP_W / 2;
-            const leftCx  = bboxMinX - PAD - CHIP_W / 2;
-            if (rightCx + CHIP_W / 2 < CW - 8) {
-              cx = rightCx;
-              cy = cp.y;
-            } else if (leftCx - CHIP_W / 2 > 8) {
-              cx = leftCx;
-              cy = cp.y;
-            } else {
-              // Fallback: land above, water below
-              cx = cp.x;
-              cy = type === 'land' ? bboxMinY - PAD - CHIP_H / 2 : bboxMaxY + PAD + CHIP_H / 2;
+          let cx = cp.x, cy = cp.y;
+          for (const e of edges) {
+            if (e.cx + CHIP_W / 2 < CW - 8 && e.cx - CHIP_W / 2 > 8 && e.cy + CHIP_H / 2 < CH - 60 && e.cy - CHIP_H / 2 > 8) {
+              cx = e.cx; cy = e.cy; break;
             }
           }
-          chips.push({ id, type, cx, cy, anchorX: cp.x, anchorY: cp.y, inside, label, sub });
+          chips.push({ id, type, cx, cy, anchorX: cp.x, anchorY: cp.y, inside: false, label, sub });
         };
 
         for (const sf of siteFeatures) {
@@ -2837,42 +2845,69 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         return (
           <>
-            {/* SVG leader lines (only for outside chips) */}
-            <svg className="absolute inset-0 pointer-events-none w-full h-full" style={{ zIndex: 6 }}>
-              {chips.filter(c => !c.inside).map(c => (
-                <g key={c.id}>
-                  <line
-                    x1={c.anchorX} y1={c.anchorY} x2={c.cx} y2={c.cy}
-                    stroke={c.type === 'land' ? 'rgba(155,230,107,0.5)' : 'rgba(124,198,242,0.5)'}
-                    strokeWidth="1.5" strokeDasharray="3 3"
-                  />
-                  <circle cx={c.anchorX} cy={c.anchorY} r="4"
-                    fill={c.type === 'land' ? '#9BE66B' : '#7CC6F2'} stroke="#0d1f12" strokeWidth="1.5" />
-                </g>
-              ))}
-            </svg>
+            {/* Place-name bubbles — above the global site boundary when showPlaceLabels is on */}
+            {showPlaceLabels && savedPins
+              .filter(p => siteFeatures.some(sf => sf.placeId === p.id) || waterFeatures.some(wf => wf.placeId === p.id))
+              .map(p => (
+                <div key={`pname-${p.id}`}
+                  className="absolute pointer-events-none select-none font-display font-bold whitespace-nowrap"
+                  style={{
+                    left: (gMinX + gMaxX) / 2,
+                    top: gMinY - 10,
+                    transform: 'translate(-50%, -100%)',
+                    background: 'rgba(6,16,10,0.90)',
+                    border: `1.5px solid ${resolveColor(p)}`,
+                    borderRadius: 10,
+                    padding: '4px 12px',
+                    fontSize: 13,
+                    color: '#fff',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                    zIndex: 8,
+                  }}>
+                  {p.name}
+                </div>
+              ))
+            }
 
-            {/* Chip divs */}
-            {chips.map(c => (
-              <div key={c.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
-                style={{
-                  left: c.cx, top: c.cy, transform: 'translate(-50%,-50%)',
-                  background: c.type === 'land' ? '#1F4D2B' : '#235E86',
-                  border: `1.5px solid ${c.type === 'land' ? '#9BE66B' : '#7CC6F2'}`,
-                  borderRadius: 999, padding: '5px 12px 5px 5px',
-                  boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
-                  zIndex: 7, whiteSpace: 'nowrap',
-                }}>
-                <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                  style={{ width: 24, height: 24, background: c.type === 'land' ? 'rgba(46,107,58,0.9)' : 'rgba(27,74,120,0.9)' }}>
-                  {c.type === 'land'
-                    ? <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
-                    : <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />}
-                </span>
-                <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{c.label}</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{c.sub}</span>
-              </div>
+            {/* SVG leader lines + chip divs — only when showShapeLabels is on */}
+            {showShapeLabels && (<>
+              {/* SVG leader lines (always outside now) */}
+              <svg className="absolute inset-0 pointer-events-none w-full h-full" style={{ zIndex: 6 }}>
+                {chips.map(c => (
+                  <g key={c.id}>
+                    <line
+                      x1={c.anchorX} y1={c.anchorY} x2={c.cx} y2={c.cy}
+                      stroke={c.type === 'land' ? 'rgba(155,230,107,0.5)' : 'rgba(124,198,242,0.5)'}
+                      strokeWidth="1.5" strokeDasharray="3 3"
+                    />
+                    <circle cx={c.anchorX} cy={c.anchorY} r="4"
+                      fill={c.type === 'land' ? '#9BE66B' : '#7CC6F2'} stroke="#0d1f12" strokeWidth="1.5" />
+                  </g>
+                ))}
+              </svg>
+
+              {/* Chip divs */}
+              {chips.map(c => (
+                <div key={c.id} className="absolute pointer-events-none select-none flex items-center gap-1.5"
+                  style={{
+                    left: c.cx, top: c.cy, transform: 'translate(-50%,-50%)',
+                    background: c.type === 'land' ? '#1F4D2B' : '#235E86',
+                    border: `1.5px solid ${c.type === 'land' ? '#9BE66B' : '#7CC6F2'}`,
+                    borderRadius: 999, padding: '5px 12px 5px 5px',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.55)',
+                    zIndex: 7, whiteSpace: 'nowrap',
+                  }}>
+                  <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                    style={{ width: 24, height: 24, background: c.type === 'land' ? 'rgba(46,107,58,0.9)' : 'rgba(27,74,120,0.9)' }}>
+                    {c.type === 'land'
+                      ? <Home size={13} strokeWidth={2} style={{ color: '#9BE66B' }} />
+                      : <Droplets size={13} strokeWidth={2} style={{ color: '#7CC6F2' }} />}
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#fff' }}>{c.label}</span>
+                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginLeft: 3 }}>{c.sub}</span>
+                </div>
             ))}
+            </>)}
           </>
         );
       })()}

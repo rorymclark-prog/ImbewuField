@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import {
   ChevronRight, ChevronLeft, Check, Droplets, Sun, CloudSun, CloudFog,
   Mountain, Minus, Plus, Printer, Sprout, Zap, Waves, Fence, Recycle, MapPin,
@@ -12,8 +13,12 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 
-const SURVEY_KEY = 'imbewu_garden_survey';
+const BASE_SURVEY_KEY = 'imbewu_garden_survey';
+function surveyKey(placeId: string | null) {
+  return placeId ? `${BASE_SURVEY_KEY}_${placeId}` : `${BASE_SURVEY_KEY}_default`;
+}
 const PLANNER_KEY = 'imbewu_planner_crops';
 const BED_M2 = 9.6; // 1.2 m × 8 m standard bed
 
@@ -66,7 +71,14 @@ const WEEK_PLAN = [
 
 export default function SurveyPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlPlaceId = searchParams.get('placeId');
   const month = new Date().getMonth();
+
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(urlPlaceId);
+  const [savedPins, setSavedPins] = useState<SavedPlace[]>([]);
+  useEffect(() => { setSavedPins(loadPlaces()); }, []);
+  const selectedPlace = savedPins.find(p => p.id === selectedPlaceId) ?? null;
 
   const [step, setStep] = useState(0);          // 0..4 wizard, 5 = result
   const [sun, setSun] = useState<Sun | null>(null);
@@ -109,8 +121,8 @@ export default function SurveyPage() {
   }
 
   function save() {
-    const data = { ha: known.ha, rainL: known.rainL, sun, slope, resources, tanks, goal, beds, bedCrops, savedAt: new Date().toISOString() };
-    try { localStorage.setItem(SURVEY_KEY, JSON.stringify(data)); } catch { /* ignore */ }
+    const data = { ha: known.ha, rainL: known.rainL, sun, slope, resources, tanks, goal, beds, bedCrops, placeId: selectedPlaceId, savedAt: new Date().toISOString() };
+    try { localStorage.setItem(surveyKey(selectedPlaceId), JSON.stringify(data)); } catch { /* ignore */ }
     setSaved(true);
     setTimeout(() => setSaved(false), 2200);
   }
@@ -133,7 +145,7 @@ export default function SurveyPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Garden Survey</span>
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Garden Survey{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
         <div className="flex-1" />
         {step === 5 && (
           <button onClick={() => window.print()}
@@ -165,6 +177,39 @@ export default function SurveyPage() {
           {/* ── Step 0 · Known from the map ── */}
           {step === 0 && (
             <div className="space-y-4">
+              {/* Which parcel is this survey for? */}
+              {savedPins.length > 0 && (
+                <div className="rounded-2xl p-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>Survey for</div>
+                  <div className="flex flex-wrap gap-2">
+                    {savedPins.map(p => (
+                      <button key={p.id}
+                        onClick={() => setSelectedPlaceId(p.id)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-display font-semibold text-sm transition-all"
+                        style={{
+                          background: selectedPlaceId === p.id ? '#1F4D2B' : 'rgba(31,77,43,0.07)',
+                          color: selectedPlaceId === p.id ? '#fff' : '#1F4D2B',
+                          border: `1.5px solid ${selectedPlaceId === p.id ? '#9BE66B' : 'rgba(31,77,43,0.2)'}`,
+                          cursor: 'pointer',
+                        }}>
+                        <MapPin size={12} />
+                        {p.name}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setSelectedPlaceId(null)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans text-sm transition-all"
+                      style={{
+                        background: selectedPlaceId === null ? '#1F4D2B' : 'rgba(31,77,43,0.07)',
+                        color: selectedPlaceId === null ? '#fff' : '#5C5040',
+                        border: `1.5px solid ${selectedPlaceId === null ? '#9BE66B' : '#E2D8C4'}`,
+                        cursor: 'pointer',
+                      }}>
+                      No parcel yet
+                    </button>
+                  </div>
+                </div>
+              )}
               <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>Your land</h1>
               <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
                 Size and water come straight from your map analysis. The next steps only ask what the map can&rsquo;t see.
