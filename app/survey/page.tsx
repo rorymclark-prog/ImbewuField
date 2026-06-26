@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -70,6 +70,10 @@ const WEEK_PLAN = [
 ];
 
 export default function SurveyPage() {
+  return <Suspense><SurveyInner /></Suspense>;
+}
+
+function SurveyInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlPlaceId = searchParams.get('placeId');
