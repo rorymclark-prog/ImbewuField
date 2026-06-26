@@ -1153,15 +1153,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
-  // Sync draw layer visibility with showFeatures / showHatch toggles
+  // Sync draw layer visibility with showFeatures / showHatch toggles.
+  // Uses setPaintProperty (opacity) not setLayoutProperty (visibility) — more reliable
+  // with fill-pattern layers. Re-applied on styledata so it survives Draw re-init.
   useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
+    const rawMap = mapRef.current?.getMap();
+    if (!rawMap) return;
     const borderIds = ['gl-draw-poly-casing-land', 'gl-draw-poly-casing-water', 'gl-draw-poly-stroke-land', 'gl-draw-poly-stroke-water'];
     const fillIds   = ['gl-draw-poly-fill-land', 'gl-draw-poly-fill-water'];
-    const vis = (v: boolean) => v ? 'visible' : 'none';
-    borderIds.forEach(id => { try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis(showFeatures)); } catch {} });
-    fillIds.forEach(id   => { try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis(showFeatures && showHatch)); } catch {} });
+    const applyVisibility = () => {
+      try {
+        borderIds.forEach(id => { if (rawMap.getLayer(id)) rawMap.setPaintProperty(id, 'line-opacity', showFeatures ? 1 : 0); });
+        fillIds.forEach(id   => { if (rawMap.getLayer(id)) rawMap.setPaintProperty(id, 'fill-opacity', (showFeatures && showHatch) ? 1 : 0); });
+      } catch { /* map not ready */ }
+    };
+    applyVisibility();
+    rawMap.on('styledata', applyVisibility);
+    return () => { rawMap.off('styledata', applyVisibility); };
   }, [showFeatures, showHatch]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
