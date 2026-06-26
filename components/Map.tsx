@@ -1154,19 +1154,38 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   // Sync draw layer visibility with showFeatures / showHatch toggles.
-  // Uses setPaintProperty (opacity) not setLayoutProperty (visibility) — more reliable
-  // with fill-pattern layers. Re-applied on styledata so it survives Draw re-init.
+  // Uses setFilter(['literal', false]) to hide layers — more reliable than paint/layout
+  // properties which can be reset by Draw's render cycle. Restores original filters when on.
+  // Re-applied on 'styledata' so it survives any Draw re-init.
   useEffect(() => {
     const rawMap = mapRef.current?.getMap();
     if (!rawMap) return;
-    const borderIds = ['gl-draw-poly-casing-land', 'gl-draw-poly-casing-water', 'gl-draw-poly-stroke-land', 'gl-draw-poly-stroke-water'];
-    const fillIds   = ['gl-draw-poly-fill-land', 'gl-draw-poly-fill-water'];
+
+    const HIDE = ['literal', false] as unknown as mapboxgl.FilterSpecification;
+    const LAND = ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
+    const WATER = ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
+
     const applyVisibility = () => {
+      const showFill = showFeatures && showHatch;
+      const borderLand  = showFeatures ? LAND  : HIDE;
+      const borderWater = showFeatures ? WATER : HIDE;
+      const fillLand    = showFill     ? LAND  : HIDE;
+      const fillWater   = showFill     ? WATER : HIDE;
       try {
-        borderIds.forEach(id => { if (rawMap.getLayer(id)) rawMap.setPaintProperty(id, 'line-opacity', showFeatures ? 1 : 0); });
-        fillIds.forEach(id   => { if (rawMap.getLayer(id)) rawMap.setPaintProperty(id, 'fill-opacity', (showFeatures && showHatch) ? 1 : 0); });
-      } catch { /* map not ready */ }
+        if (rawMap.getLayer('gl-draw-poly-casing-land'))  rawMap.setFilter('gl-draw-poly-casing-land',  borderLand);
+        if (rawMap.getLayer('gl-draw-poly-stroke-land'))  rawMap.setFilter('gl-draw-poly-stroke-land',  borderLand);
+        if (rawMap.getLayer('gl-draw-poly-casing-water')) rawMap.setFilter('gl-draw-poly-casing-water', borderWater);
+        if (rawMap.getLayer('gl-draw-poly-stroke-water')) rawMap.setFilter('gl-draw-poly-stroke-water', borderWater);
+        if (rawMap.getLayer('gl-draw-poly-fill-land'))    rawMap.setFilter('gl-draw-poly-fill-land',    fillLand);
+        if (rawMap.getLayer('gl-draw-poly-fill-water'))   rawMap.setFilter('gl-draw-poly-fill-water',   fillWater);
+        // eslint-disable-next-line no-console
+        console.debug('[toggles] features=%s hatch=%s fillLand=%o layer=%o', showFeatures, showHatch, fillLand, rawMap.getLayer('gl-draw-poly-fill-land'));
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('[toggles] error', e);
+      }
     };
+
     applyVisibility();
     rawMap.on('styledata', applyVisibility);
     return () => { rawMap.off('styledata', applyVisibility); };
