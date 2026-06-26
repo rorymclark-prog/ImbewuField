@@ -2691,7 +2691,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Floating shape chips — smart placement: outside small shapes, inside large ── */}
       {showShapeLabels && !pinDraw && !editPin && map && (() => {
         const CHIP_W = 160, CHIP_H = 34, PAD = 10;
-        const INSIDE_PX2 = 22000; // screen px² threshold for inside placement
+        const INSIDE_PX2 = Infinity; // always place labels outside the polygon
         const container = map.getContainer();
         const CW = container?.clientWidth ?? 800;
 
