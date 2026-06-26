@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, syncLocalMapStateToCloud, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
+import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, hydrateUserMapStateFromCloud, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
@@ -560,13 +560,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => window.removeEventListener(MAP_STATE_EVENT, onMapState);
   }, [restoreShapes]);
 
-  // The browser that already has saved work may be open on any of the public
-  // domains. Once it sees an authenticated user, push its local work first.
+  // Pull cloud state on focus/visibility so the sidebar stays current, but do
+  // not re-upload stale browser-local data from a browser that did not edit it.
   useEffect(() => {
     if (!user) return;
     let cancelled = false;
     const sync = () => {
-      void syncLocalMapStateToCloud()
+      void hydrateUserMapStateFromCloud()
         .then(() => {
           if (!cancelled) restoreShapes(true);
         })
