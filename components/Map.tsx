@@ -558,19 +558,21 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => clearInterval(iv);
   }, [restoreShapes]);
 
-  // When the user logs in, pull their Firestore data into localStorage then re-restore shapes.
-  // This ensures data is consistent across browsers/devices.
+  // When the user logs in, pull their Firestore data into localStorage then refresh all map state.
+  // This ensures drawn shapes, pins, and water points are consistent across browsers/devices.
   useEffect(() => {
     const uid = user?.uid;
     if (!uid) return;
     let cancelled = false;
     pullUserMapData(uid).then(() => {
       if (cancelled) return;
+      // Refresh pins and water points — dispatch the same events the write functions use
+      window.dispatchEvent(new CustomEvent('permamap-places-changed'));
+      window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
       // Re-trigger shape restore with Firestore-fresh data
       restoredRef.current = false;
       const map = mapRef.current?.getMap();
       if (map) restoreShapes();
-      // If map not ready, the polling interval will pick it up via restoredRef.current = false
     }).catch(() => {});
     return () => { cancelled = true; };
   }, [user?.uid, restoreShapes]);
