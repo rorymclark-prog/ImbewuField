@@ -197,6 +197,7 @@ function HomeInner() {
           mapCapture={mapCapture}
           appLang={lang}
           activePlaceId={activePlaceId ?? undefined}
+          activePlaceName={activePlaceName ?? undefined}
           savedReport={savedReportView ?? undefined}
           onClose={() => { setShowReport(false); setSavedReportView(null); }}
         />

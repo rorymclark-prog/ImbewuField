@@ -50,6 +50,23 @@ const WATER_PALETTE = [
   { r:  28, g: 136, b: 126, a: 220, edge: '#38B8AC' },  // 1 teal           135°
   { r:  40, g:  76, b: 174, a: 220, edge: '#5090E0' },  // 2 deep blue       45°
 ] as const;
+
+function formatM2(areaM2: number): string {
+  return `${Math.round(areaM2).toLocaleString()} m²`;
+}
+
+function formatLandArea(areaM2: number): string {
+  return areaM2 < 10000
+    ? formatM2(areaM2)
+    : `${(areaM2 / 10000).toFixed(areaM2 / 10000 < 10 ? 2 : 1)} ha`;
+}
+
+function formatWaterArea(areaM2: number, estVolumeKL?: number): string {
+  return estVolumeKL != null
+    ? `~${estVolumeKL.toLocaleString()} kL · ${formatM2(areaM2)}`
+    : formatM2(areaM2);
+}
+
 // Helper: hatch angle alternates by index (even = 45°, odd = 135°)
 function hatchOn(x: number, y: number, sz: number, idx: number): boolean {
   return idx % 2 === 0 ? (x + y) % sz < 2 : (sz + x - y) % sz < 2;
@@ -1196,25 +1213,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const rawMap = mapRef.current?.getMap();
     if (!rawMap) return;
 
-    const HIDE = ['literal', false] as unknown as mapboxgl.FilterSpecification;
-    const LAND = ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
-    const WATER = ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
-
     const applyVisibility = () => {
-      const showFill = showFeatures && showHatch;
-      const borderLand  = showFeatures ? LAND  : HIDE;
-      const borderWater = showFeatures ? WATER : HIDE;
-      const fillLand    = showFill     ? LAND  : HIDE;
-      const fillWater   = showFill     ? WATER : HIDE;
+      const borderVisibility = showFeatures ? 'visible' : 'none';
+      const fillVisibility = showFeatures && showHatch ? 'visible' : 'none';
       try {
-        if (rawMap.getLayer('gl-draw-poly-casing-land'))  rawMap.setFilter('gl-draw-poly-casing-land',  borderLand);
-        if (rawMap.getLayer('gl-draw-poly-stroke-land'))  rawMap.setFilter('gl-draw-poly-stroke-land',  borderLand);
-        if (rawMap.getLayer('gl-draw-poly-casing-water')) rawMap.setFilter('gl-draw-poly-casing-water', borderWater);
-        if (rawMap.getLayer('gl-draw-poly-stroke-water')) rawMap.setFilter('gl-draw-poly-stroke-water', borderWater);
-        if (rawMap.getLayer('gl-draw-poly-fill-land'))    rawMap.setFilter('gl-draw-poly-fill-land',    fillLand);
-        if (rawMap.getLayer('gl-draw-poly-fill-water'))   rawMap.setFilter('gl-draw-poly-fill-water',   fillWater);
+        if (rawMap.getLayer('gl-draw-poly-casing-land'))  rawMap.setLayoutProperty('gl-draw-poly-casing-land',  'visibility', borderVisibility);
+        if (rawMap.getLayer('gl-draw-poly-stroke-land'))  rawMap.setLayoutProperty('gl-draw-poly-stroke-land',  'visibility', borderVisibility);
+        if (rawMap.getLayer('gl-draw-poly-casing-water')) rawMap.setLayoutProperty('gl-draw-poly-casing-water', 'visibility', borderVisibility);
+        if (rawMap.getLayer('gl-draw-poly-stroke-water')) rawMap.setLayoutProperty('gl-draw-poly-stroke-water', 'visibility', borderVisibility);
+        if (rawMap.getLayer('gl-draw-poly-fill-land'))    rawMap.setLayoutProperty('gl-draw-poly-fill-land',    'visibility', fillVisibility);
+        if (rawMap.getLayer('gl-draw-poly-fill-water'))   rawMap.setLayoutProperty('gl-draw-poly-fill-water',   'visibility', fillVisibility);
         // eslint-disable-next-line no-console
-        console.debug('[toggles] features=%s hatch=%s fillLand=%o layer=%o', showFeatures, showHatch, fillLand, rawMap.getLayer('gl-draw-poly-fill-land'));
+        console.debug('[toggles] features=%s hatch=%s border=%s fill=%s', showFeatures, showHatch, borderVisibility, fillVisibility);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('[toggles] error', e);
@@ -1336,12 +1346,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     ? editPoints.map((p, i) => { const q = map.project(p as [number, number]); return { x: q.x, y: q.y, i }; })
     : [];
   // Live area readout while editing (m² / ha)
-  const editAreaHa = (editPin && editPoints.length >= 3)
-    ? Math.round((turfArea({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[...editPoints, editPoints[0]]] } }) / 10000) * 100) / 100
+  const editAreaM2 = (editPin && editPoints.length >= 3)
+    ? Math.round(turfArea({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[...editPoints, editPoints[0]]] } }))
     : null;
 
   // Helper: get all site polygons with their IDs for per-shape edit buttons
-  const getSiteFeatures = useCallback((): Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
+  const getSiteFeatures = useCallback((): Array<{ id: string; areaM2: number; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     const all = draw.getAll();
@@ -1363,6 +1373,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           : [0, 0, 0, 0];
         return {
           id: String(f.id),
+          areaM2: Math.round(turfArea(f)),
           areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
@@ -1374,13 +1385,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
 
   // We track siteFeatures as a derived list rebuilt whenever siteStats changes
-  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
+  const [siteFeatures, setSiteFeatures] = useState<Array<{ id: string; areaM2: number; areaHa: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => {
     setSiteFeatures(getSiteFeatures());
   }, [siteStats, getSiteFeatures]);
 
   // Per-water-store list (id + capacity) so each can be edited/deleted individually
-  const getWaterFeatures = useCallback((): Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
+  const getWaterFeatures = useCallback((): Array<{ id: string; areaM2: number; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }> => {
     const draw = drawRef.current;
     if (!draw) return [];
     return draw.getAll().features
@@ -1398,7 +1409,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           ? [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)]
           : [0, 0, 0, 0];
         return {
-          id: String(f.id), estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
+          id: String(f.id),
+          areaM2: Math.round(turfArea(f)),
+          estVolumeKL: Math.round(turfArea(f) * WATER_AVG_DEPTH),
           name: f.properties?.name as string | undefined,
           category: f.properties?.category as string | undefined,
           centroid, bbox,
@@ -1407,7 +1420,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         };
       });
   }, []);
-  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
+  const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; areaM2: number; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
   // Set of place IDs that have at least one drawn feature (site or water)
@@ -1944,8 +1957,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               background: 'rgba(6,16,10,0.88)', border: `1px solid ${draftStroke}66`, backdropFilter: 'blur(8px)' }}>
             <span className="font-display" style={{ fontSize: 12, color: draftStroke }}>
               {selCorner == null
-                ? `Drag a corner to move it${editAreaHa != null ? ` · ${editAreaHa} ha` : ''}`
-                : `Corner ${selCorner + 1} selected — drag or Remove · ${editAreaHa ?? ''} ha`}
+                ? `Drag a corner to move it${editAreaM2 != null ? ` · ${formatLandArea(editAreaM2)}` : ''}`
+                : `Corner ${selCorner + 1} selected — drag or Remove · ${editAreaM2 != null ? formatLandArea(editAreaM2) : ''}`}
             </span>
           </div>
 
@@ -2446,7 +2459,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
                     {t('parcelsSectionLabel')}{siteStats ? ` · ${siteStats.count ?? 1}` : ''}
                   </span>
-                  {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
+                  {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{formatLandArea(siteStats.areaM2)}</span>}
                 </div>
               </button>
               {/* Toggle row — sits below section header, wraps on narrow panels */}
@@ -2500,7 +2513,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                               <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                             </div>
                             <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                              <span>{sf.category ? `${sf.category} · ` : ''}{t('parcelLandLabel')} · {sf.areaHa} ha</span>
+                              <span>{sf.category ? `${sf.category} · ` : ''}{t('parcelLandLabel')} · {formatLandArea(sf.areaM2)}</span>
                               {sf.placeId && (() => { const pl = savedPins.find(p => p.id === sf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
                             </div>
                           </button>
@@ -2548,7 +2561,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
                     {t('waterSectionLabel')}{waterStats ? ` · ${waterStats.count}` : ''}
                   </span>
-                  {waterStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL</span>}
+                  {waterStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{formatWaterArea(waterStats.areaM2, waterStats.estVolumeKL)}</span>}
                 </div>
               </button>
               {sectionWater && (
@@ -2565,7 +2578,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                               <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                             </div>
                             <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                              <span>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</span>
+                              <span>{wf.category ? `${wf.category} · ` : ''}{formatWaterArea(wf.areaM2, wf.estVolumeKL)}</span>
                               {wf.placeId && (() => { const pl = savedPins.find(p => p.id === wf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
                             </div>
                           </button>
@@ -2822,7 +2835,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       )}
 
       {/* ── Floating shape chips — placed outside the GLOBAL site bbox, plus optional place-name bubble ── */}
-      {showFeatures && !pinDraw && !editPin && map && (() => {
+      {toolbarMin && showFeatures && !pinDraw && !editPin && map && (() => {
         const CHIP_W = 160, CHIP_H = 34, PAD = 10;
         const container = map.getContainer();
         const CW = container?.clientWidth ?? 800;
@@ -2878,10 +2891,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         };
 
         for (const sf of siteFeatures) {
-          if (sf.centroid) placeChip(sf.centroid, sf.bbox, 'land', sf.id, sf.name || 'Parcel', `${sf.areaHa} ha`);
+          if (sf.centroid) placeChip(sf.centroid, sf.bbox, 'land', sf.id, sf.name || 'Parcel', formatLandArea(sf.areaM2));
         }
         for (const wf of waterFeatures) {
-          if (wf.centroid) placeChip(wf.centroid, wf.bbox, 'water', wf.id, wf.name || 'Water', `${wf.estVolumeKL.toLocaleString()} kL`);
+          if (wf.centroid) placeChip(wf.centroid, wf.bbox, 'water', wf.id, wf.name || 'Water', formatWaterArea(wf.areaM2, wf.estVolumeKL));
         }
 
         // Overlap resolution — push colliding chips apart vertically (3 passes)
@@ -2916,8 +2929,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 const pnX = (rightX + NAME_W / 2 < CW - 8) ? rightX : leftX;
                 const pnY = gMinY + NAME_H / 2 + PAD;
                 return (
-                  <div key={`pname-${p.id}`}
-                    className="absolute pointer-events-none select-none font-display font-bold whitespace-nowrap"
+                  <button
+                    key={`pname-${p.id}`}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 });
+                      onLocationSelect(p.lat, p.lon);
+                      onPlaceSelect?.({ name: p.name, id: p.id });
+                      setActivePin(p.id);
+                    }}
+                    className="absolute select-none font-display font-bold whitespace-nowrap transition-transform active:scale-95"
                     style={{
                       left: pnX,
                       top: pnY,
@@ -2930,9 +2952,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       color: '#fff',
                       boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
                       zIndex: 8,
-                    }}>
+                      cursor: 'pointer',
+                    }}
+                    aria-label={`Zoom to ${p.name}`}
+                  >
                     {p.name}
-                  </div>
+                  </button>
                 );
               });
             })()}

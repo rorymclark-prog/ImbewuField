@@ -87,6 +87,7 @@ interface Props {
   onClose: () => void;
   savedReport?: SavedReport;   // when opening a previously-saved report
   activePlaceId?: string;
+  activePlaceName?: string;
 }
 
 function renderReport(text: string) {
@@ -212,7 +213,7 @@ function renderReport(text: string) {
   return elements;
 }
 
-export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport, activePlaceId }: Props) {
+export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport, activePlaceId, activePlaceName }: Props) {
   // When viewing a saved report, its snapshot overrides the live props so charts/header match.
   const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
   const d = activeSaved?.location ?? locationData;
@@ -236,6 +237,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [justSaved, setJustSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const activePlace = savedPlaces?.find((p) => p.id === activePlaceId) ?? null;
+  const activePlaceTitle = activePlaceName ?? activePlace?.name ?? '';
+  const headerCoords = `${d.biome.name} · ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E`;
+  const headerTitle = activePlaceTitle ? `${activePlaceTitle} · ${headerCoords}` : headerCoords;
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -247,7 +252,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     if (!report) return;
     saveReport({
       id: activeSaved?.id ?? reportId(),
-      name: `${d.biome.name} · ${new Date().toLocaleDateString()}`,
+      name: `${activePlaceTitle ? `${activePlaceTitle} · ` : ''}${d.biome.name} · ${new Date().toLocaleDateString()}`,
       savedAt: new Date().toISOString(),
       lang: language,
       report,
@@ -257,7 +262,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     });
     setJustSaved(true);
     setTimeout(() => setJustSaved(false), 2500);
-  }, [report, activeSaved, d, siteData, waterData, language]);
+  }, [report, activeSaved, d, siteData, waterData, language, activePlaceTitle]);
 
   const openSaved = useCallback((r: SavedReport) => {
     setActiveSaved(r);
@@ -453,7 +458,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         });
       };
 
-      const fileName = `ImbewuField-Site-Report-${d.biome.name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'site'}-${new Date().toISOString().slice(0, 10)}.pdf`;
+      const fileSafe = (value: string) => value.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'site';
+      const fileName = `ImbewuField-Site-Report-${fileSafe(activePlaceTitle || d.biome.name)}-${new Date().toISOString().slice(0, 10)}.pdf`;
 
       // Cover section
       doc.setFont('helvetica', 'bold');
@@ -470,6 +476,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       doc.line(marginX, y, pageWidth - marginX, y);
       y += 16;
 
+      if (activePlaceTitle) {
+        addParagraph(`Place: ${activePlaceTitle}`, { style: 'bold', gapAfter: 2 });
+      }
       addParagraph(`Site: ${d.biome.name}`, { style: 'bold', gapAfter: 2 });
       addParagraph(`Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E`, { gapAfter: 2 });
       addParagraph(`Rainfall: ${d.rainfall.annual} mm/yr · ${d.rainfall.pattern} · wet ${d.rainfall.wetSeason} · dry ${d.rainfall.drySeason}`, { gapAfter: 2 });
@@ -481,10 +490,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         addParagraph(`Vegetation: ${d.vegetation.vegUnit}`, { gapAfter: 2 });
       }
       if (siteData) {
-        addParagraph(`Site area: ${siteData.areaHa} ha · perimeter ${siteData.perimeterKm.toFixed(2)} km`, { gapAfter: 2 });
+        addParagraph(`Site area: ${siteData.areaHa < 1 ? `${siteData.areaM2.toLocaleString()} m²` : `${siteData.areaHa} ha`} · perimeter ${siteData.perimeterKm.toFixed(2)} km`, { gapAfter: 2 });
       }
       if (waterData) {
-        addParagraph(`Water storage: ~${waterData.estVolumeKL.toLocaleString()} kL across ${waterData.count} feature${waterData.count === 1 ? '' : 's'}`, { gapAfter: 4 });
+        addParagraph(`Water storage: ~${waterData.estVolumeKL.toLocaleString()} kL across ${waterData.count} feature${waterData.count === 1 ? '' : 's'} · ${waterData.areaM2.toLocaleString()} m²`, { gapAfter: 4 });
       }
 
       if (savedPlaces && savedPlaces.length > 0) {
@@ -610,7 +619,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function shareReport() {
     if (!d || !report) return;
     const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
-    const text = `ImbewuField Site Analysis\n${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (fieldproof.vercel.app)`;
+    const text = `ImbewuField Site Analysis\n${activePlaceTitle ? `${activePlaceTitle}\n` : ''}${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (fieldproof.vercel.app)`;
     if (typeof navigator !== 'undefined' && navigator.share) {
       try { await navigator.share({ title: 'ImbewuField Site Analysis', text }); return; } catch { /* user cancelled */ }
     }
@@ -635,7 +644,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           Site Analysis Report
         </div>
         <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
-          {d.biome.name} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
+          {headerTitle}
         </div>
 
         <div className="flex-1" />
@@ -946,15 +955,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {/* Site summary bar */}
-              <div className={`mt-5 grid gap-3 ${['', '', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4', 'grid-cols-5', 'grid-cols-6'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0)]}`}>
+              <div className="mt-5 grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
                 {[
+                  ...(activePlaceTitle ? [{ label: 'Place', value: activePlaceTitle, color: '#1F4D2B' }] : []),
                   { label: 'Biome', value: d.biome.name, color: bColor },
                   { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
                   { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
                   { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C' },
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
-                  ...(siteData ? [{ label: 'Site Area', value: `${siteData.areaHa} ha`, color: '#2D6B3C' }] : []),
-                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL`, color: '#235E86' }] : []),
+                  ...(siteData ? [{ label: 'Site Area', value: siteData.areaHa < 1 ? `${siteData.areaM2.toLocaleString()} m²` : `${siteData.areaHa} ha`, color: '#2D6B3C' }] : []),
+                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL · ${waterData.areaM2.toLocaleString()} m²`, color: '#235E86' }] : []),
                 ].map(({ label, value, color }) => (
                   <div key={label} className="p-3 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
                     <div className="text-xs font-mono mb-0.5" style={{ color: '#5C5040' }}>{label}</div>
