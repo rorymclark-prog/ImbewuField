@@ -2,7 +2,7 @@
 
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import { initializeFirestore, getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase web config — all public (security is enforced by Firestore rules + Auth,
@@ -26,6 +26,14 @@ export function getFirebase() {
   if (!isBackendConfigured()) return null;
   if (cache) return cache;
   const app = getApps().length ? getApp() : initializeApp(config);
-  cache = { app, auth: getAuth(app), db: getFirestore(app), storage: getStorage(app) };
+  // ignoreUndefinedProperties: optional model fields (place color/notes, etc.) are often
+  // undefined; without this, setDoc/Transaction.set throws "Unsupported field value:
+  // undefined" and the write silently fails (data saved locally but never synced).
+  // initializeFirestore throws if the instance already exists (HMR / module re-eval) —
+  // fall back to the existing one.
+  let db: Firestore;
+  try { db = initializeFirestore(app, { ignoreUndefinedProperties: true }); }
+  catch { db = getFirestore(app); }
+  cache = { app, auth: getAuth(app), db, storage: getStorage(app) };
   return cache;
 }
