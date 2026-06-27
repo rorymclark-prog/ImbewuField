@@ -5,14 +5,30 @@ import type { LocationData } from '@/lib/types';
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 export async function POST(req: NextRequest) {
-  const { images, locationData, source }: {
-    images: Array<{ data: string; mediaType: string }>;
-    locationData: LocationData;
-    source: 'upload' | 'satellite';
-  } = await req.json();
+  let body: { images: Array<{ data: string; mediaType: string }>; locationData: LocationData; source: 'upload' | 'satellite' };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ ok: false, error: 'Invalid request body' }, { status: 400 });
+  }
+  const { images, locationData, source } = body;
 
-  const validImages = images?.filter(img => img?.data && img.data.length > 100);
+  let validImages = images?.filter(img => img?.data && img.data.length > 100);
   if (!validImages?.length) return NextResponse.json({ error: 'No valid images — photos may be empty or corrupt. Try re-selecting them.' }, { status: 400 });
+
+  validImages = validImages.slice(0, 6);
+  if (validImages.some(img => img.data.length > 7_000_000)) {
+    return NextResponse.json({ error: 'Image too large' }, { status: 413 });
+  }
+
+  if (
+    !locationData?.biome?.name ||
+    typeof locationData.lat !== 'number' ||
+    typeof locationData.lon !== 'number' ||
+    typeof locationData.rainfall?.annual !== 'number'
+  ) {
+    return NextResponse.json({ error: 'Missing or invalid location data' }, { status: 400 });
+  }
 
   const sourceNote = source === 'satellite'
     ? 'This is a satellite/aerial view of the site captured directly from the map.'
@@ -84,7 +100,7 @@ Be direct and concise. This feeds into a full design report.`,
         const msg = err instanceof Error ? err.message : String(err);
         const friendly = /could not process image/i.test(msg)
           ? '\n\n⚠ Could not read this image. Try zooming the map and capturing again, or upload a photo instead.'
-          : `\n\n⚠ Analysis error: ${msg}`;
+          : '\n\n⚠ Analysis error — please try again.';
         controller.enqueue(new TextEncoder().encode(friendly));
       } finally {
         controller.close();

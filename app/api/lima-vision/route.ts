@@ -3,6 +3,9 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
+const ALLOWED_MEDIA = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] as const;
+type AllowedMedia = (typeof ALLOWED_MEDIA)[number];
+
 export async function POST(req: NextRequest) {
   const { image, mode }: {
     image: { data: string; mediaType: string };
@@ -12,6 +15,14 @@ export async function POST(req: NextRequest) {
   if (!image?.data) {
     return NextResponse.json({ error: 'No image provided' }, { status: 400 });
   }
+
+  if (!(ALLOWED_MEDIA as readonly string[]).includes(image.mediaType)) {
+    return NextResponse.json(
+      { error: 'Unsupported image format — use JPEG, PNG, WEBP or GIF.' },
+      { status: 400 },
+    );
+  }
+  const mediaType = image.mediaType as AllowedMedia;
 
   const cropPrompt = `You are Lima, a warm and practical permaculture field assistant based in South Africa. A farmer has taken a photo of a planted bed and wants to know what is growing and when they can expect a harvest.
 
@@ -46,7 +57,7 @@ These are rough field estimates for guidance only.`;
       type: 'image',
       source: {
         type: 'base64',
-        media_type: image.mediaType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
+        media_type: mediaType,
         data: image.data,
       },
     },

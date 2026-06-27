@@ -60,6 +60,9 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
   const [hasSample, setHasSample] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => () => { abortRef.current?.abort(); }, []);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
@@ -109,6 +112,8 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
     setInput('');
     setPendingImage(null);
     setLoading(true);
+    const controller = new AbortController();
+    abortRef.current = controller;
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -118,6 +123,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
           context: buildContext(),
           image: img ? { data: img.data, mediaType: img.mediaType } : undefined,
         }),
+        signal: controller.signal,
       });
       if (!res.ok || !res.body) throw new Error(`${res.status}`);
       const reader = res.body.getReader();
@@ -129,8 +135,10 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
         acc += dec.decode(value, { stream: true });
         setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: acc }; return c; });
       }
-    } catch {
-      setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }; return c; });
+    } catch (e) {
+      if ((e as Error)?.name !== 'AbortError') {
+        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }; return c; });
+      }
     } finally {
       setLoading(false);
     }

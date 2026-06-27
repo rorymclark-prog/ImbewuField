@@ -2,16 +2,18 @@
 
 import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
-const ROLES: { key: string; label: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
-  { key: 'farmer',  label: 'Farmer',  Icon: Sprout,        href: '/farmer',  ready: true },
-  { key: 'mentor',  label: 'Mentor',  Icon: Users,         href: '/mentor',  ready: true },
-  { key: 'student', label: 'Student', Icon: GraduationCap, href: '/student', ready: true },
-  { key: 'ngo',     label: 'NGO',     Icon: BarChart3,     href: '/ngo',     ready: true },
-  { key: 'funder',  label: 'Funder',  Icon: Building2,     href: '/funder',  ready: true },
+const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
+  { key: 'farmer',  labelKey: 'homeRoleFarmerLabel',  Icon: Sprout,        href: '/farmer',  ready: true },
+  { key: 'mentor',  labelKey: 'homeRoleMentorLabel',  Icon: Users,         href: '/mentor',  ready: true },
+  { key: 'student', labelKey: 'homeRoleStudentLabel', Icon: GraduationCap, href: '/student', ready: true },
+  { key: 'ngo',     labelKey: 'homeRoleNGOLabel',     Icon: BarChart3,     href: '/ngo',     ready: true },
+  { key: 'funder',  labelKey: 'homeRoleFunderLabel',  Icon: Building2,     href: '/funder',  ready: true },
 ];
 
 export default function RoleSwitcher({ current }: { current: string }) {
+  const { t } = useLanguage();
   return (
     <div className="flex items-center gap-1 px-1.5 py-1 rounded-full"
       style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
@@ -29,14 +31,14 @@ export default function RoleSwitcher({ current }: { current: string }) {
           return (
             <span key={r.key} className={base} style={style} title="Coming soon">
               <r.Icon size={16} />
-              <span className="hidden md:inline">{r.label}</span>
+              <span className="hidden md:inline">{t(r.labelKey)}</span>
             </span>
           );
         }
         return (
           <Link key={r.key} href={r.href} className={base} style={style}>
             <r.Icon size={16} />
-            <span className="hidden md:inline">{r.label}</span>
+            <span className="hidden md:inline">{t(r.labelKey)}</span>
           </Link>
         );
       })}

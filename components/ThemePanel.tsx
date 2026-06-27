@@ -54,8 +54,11 @@ export default function ThemePanel({ open, onClose }: Props) {
     const handler = (e: MouseEvent) => {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) onClose();
     };
-    setTimeout(() => window.addEventListener('mousedown', handler), 0);
-    return () => window.removeEventListener('mousedown', handler);
+    const tid = setTimeout(() => window.addEventListener('mousedown', handler), 0);
+    return () => {
+      clearTimeout(tid);
+      window.removeEventListener('mousedown', handler);
+    };
   }, [open, onClose]);
 
   return (

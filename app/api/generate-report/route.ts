@@ -75,7 +75,7 @@ const LANGUAGES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
-  const { locationData, photoAnalysis, siteData, waterData, surveyData, evidenceData, sections, language, bilingual, tone, length }: {
+  let body: {
     locationData: LocationData;
     photoAnalysis?: string;
     siteData?: SiteData;
@@ -87,7 +87,16 @@ export async function POST(req: NextRequest) {
     bilingual?: boolean;
     tone?: 'simple' | 'professional';
     length?: 'one-pager' | 'standard' | 'comprehensive';
-  } = await req.json();
+  };
+  try {
+    body = await req.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  const { locationData, photoAnalysis, siteData, waterData, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -96,6 +105,24 @@ export async function POST(req: NextRequest) {
   );
   if (safeSections.length === 0) {
     return new Response(JSON.stringify({ error: 'No valid sections requested.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Validate locationData shape before any field access to avoid unhandled 500s.
+  if (
+    !locationData ||
+    typeof locationData.lat !== 'number' ||
+    typeof locationData.lon !== 'number' ||
+    !locationData.rainfall?.monthly ||
+    !Array.isArray(locationData.rainfall.monthly) ||
+    !locationData.elevation?.aspectLabel ||
+    !locationData.soil ||
+    !locationData.biome?.keySpecies ||
+    !locationData.climate
+  ) {
+    return new Response(JSON.stringify({ error: 'locationData is missing required fields' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });

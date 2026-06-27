@@ -189,6 +189,20 @@ export default function StudentPage() {
     setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
   }
 
+  // Gate: do not render protected content while auth is resolving or user is absent
+  if (isLive && (loading || !user)) {
+    return (
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+          <BrandLogo />
+        </header>
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 size={28} className="animate-spin" style={{ color: '#1F4D2B' }} />
+        </main>
+      </div>
+    );
+  }
+
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>

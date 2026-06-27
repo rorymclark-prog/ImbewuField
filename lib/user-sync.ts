@@ -55,7 +55,7 @@ function notifySurveys() {
 }
 
 function readLocal<T>(key: string): T[] {
-  try { const raw = localStorage.getItem(key); return raw ? (JSON.parse(raw) ?? []) : []; }
+  try { const v = JSON.parse(localStorage.getItem(key) ?? '[]'); return Array.isArray(v) ? v : []; }
   catch { return []; }
 }
 
@@ -262,8 +262,15 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
       const data = snap.exists() ? snap.data() : {};
       const remote: SavedPlace[] = data.places ?? [];
       const deleted: Tombstones = { ...(data.deleted ?? {}) };
-      delete deleted[place.id]; // re-created → clear any tombstone
-      tx.set(ref, { places: [place, ...remote.filter((p) => p.id !== place.id)], deleted, updatedAt: serverTimestamp() });
+      const tomb = deleted[place.id] ?? 0;
+      const ts = place.updatedAt ?? 0;
+      if (tomb > ts) {
+        // A newer deletion outranks this edit — keep the item deleted, drop the upsert.
+        tx.set(ref, { places: remote.filter((p) => p.id !== place.id), deleted, updatedAt: serverTimestamp() });
+      } else {
+        delete deleted[place.id]; // edit is newer (or no tombstone) → re-create, clear tombstone
+        tx.set(ref, { places: [place, ...remote.filter((p) => p.id !== place.id)], deleted, updatedAt: serverTimestamp() });
+      }
     });
     console.log('[sync] upsertPlace OK');
   } catch (e) { console.error('[sync] upsertPlace', e); }
@@ -307,8 +314,15 @@ export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<voi
       const data = snap.exists() ? snap.data() : {};
       const remote: WaterPoint[] = data.points ?? [];
       const deleted: Tombstones = { ...(data.deleted ?? {}) };
-      delete deleted[pt.id];
-      tx.set(ref, { points: [pt, ...remote.filter((p) => p.id !== pt.id)], deleted, updatedAt: serverTimestamp() });
+      const tomb = deleted[pt.id] ?? 0;
+      const ts = waterTs(pt);
+      if (tomb > ts) {
+        // A newer deletion outranks this edit — keep the item deleted, drop the upsert.
+        tx.set(ref, { points: remote.filter((p) => p.id !== pt.id), deleted, updatedAt: serverTimestamp() });
+      } else {
+        delete deleted[pt.id]; // edit is newer (or no tombstone) → re-create, clear tombstone
+        tx.set(ref, { points: [pt, ...remote.filter((p) => p.id !== pt.id)], deleted, updatedAt: serverTimestamp() });
+      }
     });
     console.log('[sync] upsertWaterPoint OK');
   } catch (e) { console.error('[sync] upsertWaterPoint', e); }

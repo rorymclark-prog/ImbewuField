@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 
@@ -66,7 +66,16 @@ Month-by-month key activities tied to the actual rainfall pattern (${d.rainfall.
 }
 
 export async function POST(req: NextRequest) {
-  const data: LocationData = await req.json();
+  let data: LocationData;
+  try {
+    data = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+  if (!data?.biome || !data.rainfall?.monthly || !Array.isArray(data.rainfall.monthly)
+      || !data.elevation || !data.soil || !data.climate) {
+    return NextResponse.json({ error: 'Invalid location data' }, { status: 400 });
+  }
   const prompt = buildPrompt(data);
 
   const stream = await client.messages.stream({
@@ -83,6 +92,9 @@ export async function POST(req: NextRequest) {
             controller.enqueue(new TextEncoder().encode(chunk.delta.text));
           }
         }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
       } finally {
         controller.close();
       }

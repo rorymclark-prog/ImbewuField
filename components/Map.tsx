@@ -562,8 +562,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = ensureDraw();
     if (!draw) return; // map not ready — the restore poller will pick up localStorage
     // Don't yank the draw store out from under an in-progress edit/draw — defer until done.
+    // Includes reticle-draw (pinDraw) and reticle-edit (editPin): those use 'static' mode
+    // internally so the native mode check alone would miss them.
     let mode = ''; try { mode = draw.getMode(); } catch {}
-    if (mode === 'direct_select' || mode === 'draw_polygon' || editingFeatureId) {
+    if (mode === 'direct_select' || mode === 'draw_polygon' || editingFeatureId || pinDraw || editPin) {
       pendingRemoteRedrawRef.current = true;
       return;
     }
@@ -576,15 +578,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       recompute();
     } catch { /* ignore */ }
     finally { applyingRemoteRef.current = false; }
-  }, [ensureDraw, recompute, editingFeatureId]);
+  }, [ensureDraw, recompute, editingFeatureId, pinDraw, editPin]);
 
-  // When the user finishes an edit, flush any remote shape update we deferred mid-edit.
+  // When the user finishes ALL editing sessions, flush any remote shape update we deferred.
   useEffect(() => {
-    if (!editingFeatureId && pendingRemoteRedrawRef.current) {
+    if (!editingFeatureId && !pinDraw && !editPin && pendingRemoteRedrawRef.current) {
       pendingRemoteRedrawRef.current = false;
       redrawShapesFromStorage();
     }
-  }, [editingFeatureId, redrawShapesFromStorage]);
+  }, [editingFeatureId, pinDraw, editPin, redrawShapesFromStorage]);
 
   // Stable handle to the latest redraw callback, so the sync subscription can depend on
   // uid alone and not re-subscribe (re-reconcile) every time the callback identity changes.
@@ -622,9 +624,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       onShapes: () => redrawRef.current(),
       onMergeDone: () => {
         mergeReadyRef.current = true;
-        // Flush any shape the user drew during the reconcile window (push was gated off).
-        const draw = drawRef.current;
-        if (draw && draw.getAll().features.length) pushShapes(uid, draw.getAll()).catch(() => {});
+        // Flush from the reconciled localStorage set, NOT draw.getAll() — a deferred
+        // mid-edit redraw means the draw store may still hold un-merged in-memory shapes.
+        try {
+          const raw = localStorage.getItem(FARM_KEY);
+          const fc = raw ? JSON.parse(raw) : null;
+          if (fc?.features?.length) pushShapes(uid, fc).catch(() => {});
+        } catch { /* ignore */ }
       },
     });
     return () => { mergeReadyRef.current = false; unsub(); };
@@ -986,6 +992,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   cancelEditRef.current = cancelReticleEdit;
   const editPinRef = useRef(editPin);
   editPinRef.current = editPin;
+  // Keep cancelPinDraw reachable from the Escape handler so Escape restores draw mode + rotation.
+  const cancelPinDrawRef = useRef(cancelPinDraw);
+  cancelPinDrawRef.current = cancelPinDraw;
 
   // Escape key cancels an in-progress draw (fix 2: Escape-to-cancel)
   useEffect(() => {
@@ -993,8 +1002,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (e.key === 'Escape') {
         // Cancel reticle-edit if active (restores the original shape)
         if (editPinRef.current) cancelEditRef.current();
-        // Cancel reticle-draw if active
-        setPinDraw((prev) => { if (prev !== null) setDraftPoints([]); return prev !== null ? null : prev; });
+        // Cancel reticle-draw if active — route through ref so we get changeMode + unlockRotation
+        setPinDraw((prev) => { if (prev !== null) cancelPinDrawRef.current(); return prev !== null ? null : prev; });
         // Cancel draw mode if active
         setActiveDraw((prev) => {
           if (prev !== null) {

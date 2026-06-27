@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
@@ -53,13 +53,26 @@ function TraineeCard({ trainee, doneIds, isLive }: {
   const [notes, setNotes] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (saveTimer.current) clearTimeout(saveTimer.current); }, []);
 
   async function handleLog() {
     if (!notes.trim()) return;
     setSaving(true);
-    if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
-    setSaving(false); setSaved(true); setNotes('');
-    setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
+    setSaveError(false);
+    try {
+      if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
+      setSaved(true);
+      setNotes('');
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      saveTimer.current = setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
+    } catch {
+      setSaveError(true);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -125,12 +138,17 @@ function TraineeCard({ trainee, doneIds, isLive }: {
                   {saving ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
                   {saved ? 'Saved!' : saving ? 'Saving...' : 'Save visit'}
                 </button>
-                <button onClick={() => { setLogging(false); setNotes(''); }}
+                <button onClick={() => { setLogging(false); setNotes(''); setSaveError(false); }}
                   className="px-3 py-2 rounded-xl text-xs font-display"
                   style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Cancel
                 </button>
               </div>
+              {saveError && (
+                <p className="text-xs font-sans mt-1" style={{ color: '#B03A2E' }}>
+                  Could not save — please check your connection and try again.
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -161,16 +179,21 @@ export default function MentorPage() {
 
   const load = useCallback(async () => {
     setFetching(true);
-    if (isLive) {
-      const list = await listTrainees();
-      setTrainees(list);
-      const map: Record<string, CourseProgress[]> = {};
-      await Promise.all(list.map(async (t) => { map[t.id] = await getCourseProgress(t.id); }));
-      setProgressMap(map);
-    } else {
-      setTrainees(SAMPLE);
+    try {
+      if (isLive) {
+        const list = await listTrainees();
+        setTrainees(list);
+        const map: Record<string, CourseProgress[]> = {};
+        await Promise.all(list.map(async (t) => { map[t.id] = await getCourseProgress(t.id).catch(() => []); }));
+        setProgressMap(map);
+      } else {
+        setTrainees(SAMPLE);
+      }
+    } catch {
+      // listTrainees itself failed — leave trainees empty, spinner clears via finally
+    } finally {
+      setFetching(false);
     }
-    setFetching(false);
   }, [isLive]);
 
   useEffect(() => { load(); }, [load]);

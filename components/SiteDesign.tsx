@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 
@@ -18,11 +18,12 @@ const LANGS = [
 ];
 
 async function resizeImage(file: File, maxPx = 1400): Promise<{ data: string; mediaType: string }> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read file'));
     reader.onload = (e) => {
-      img.src = e.target!.result as string;
+      img.onerror = () => reject(new Error('Could not decode image'));
       img.onload = () => {
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
         const canvas = document.createElement('canvas');
@@ -32,6 +33,7 @@ async function resizeImage(file: File, maxPx = 1400): Promise<{ data: string; me
         const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
         resolve({ data: dataUrl.split(',')[1], mediaType: 'image/jpeg' });
       };
+      img.src = e.target!.result as string;
     };
     reader.readAsDataURL(file);
   });
@@ -67,12 +69,26 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
   const [language, setLanguage] = useState(appLang ?? 'en');
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const inputRef = useRef<HTMLInputElement>(null);
+  const previewUrlRef = useRef<string>('');
 
   const processFile = useCallback(async (file?: File) => {
     if (!file || !file.type.startsWith('image/')) return;
-    setImageData(await resizeImage(file));
-    setPreview(URL.createObjectURL(file));
+    try {
+      const resized = await resizeImage(file);
+      setImageData(resized);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Could not process image');
+      return;
+    }
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    const url = URL.createObjectURL(file);
+    previewUrlRef.current = url;
+    setPreview(url);
     setDesign('');
+  }, []);
+
+  useEffect(() => () => {
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
   }, []);
 
   async function generate() {

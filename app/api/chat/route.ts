@@ -103,8 +103,16 @@ Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.org
   return parts.join('\n\n');
 }
 
+const ALLOWED_MEDIA_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as const;
+type AllowedMediaType = typeof ALLOWED_MEDIA_TYPES[number];
+
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body: any;
+  try {
+    body = await req.json();
+  } catch {
+    return new Response('Invalid request', { status: 400 });
+  }
   const messages: ChatMsg[] = Array.isArray(body.messages) ? body.messages : [];
   const ctx = body.context as Ctx | undefined;
 
@@ -124,10 +132,14 @@ export async function POST(req: NextRequest) {
   // Optional photo on the latest user turn → multimodal diagnosis
   const image = body.image as { data: string; mediaType: string } | undefined;
   if (image?.data && clean.length) {
+    const suppliedType = image.mediaType || 'image/jpeg';
+    const mediaType: AllowedMediaType = (ALLOWED_MEDIA_TYPES as readonly string[]).includes(suppliedType)
+      ? suppliedType as AllowedMediaType
+      : 'image/jpeg';
     const last = clean[clean.length - 1];
     if (last.role === 'user' && typeof last.content === 'string') {
       last.content = [
-        { type: 'image', source: { type: 'base64', media_type: (image.mediaType || 'image/jpeg') as 'image/jpeg', data: image.data } },
+        { type: 'image', source: { type: 'base64', media_type: mediaType, data: image.data } },
         { type: 'text', text: last.content || 'Please look at this photo and diagnose it (plant, pest, disease, weed or soil) with organic/regenerative remedies.' },
       ];
     }
@@ -152,6 +164,9 @@ export async function POST(req: NextRequest) {
             controller.enqueue(new TextEncoder().encode(chunk.delta.text));
           }
         }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
       } finally {
         controller.close();
       }

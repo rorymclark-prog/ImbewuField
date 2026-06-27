@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props { locationData: LocationData | null }
 
@@ -57,6 +58,7 @@ function renderMarkdown(text: string) {
 }
 
 export default function InsightsPanel({ locationData }: Props) {
+  const { t } = useLanguage();
   const [insights, setInsights] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -134,7 +136,7 @@ export default function InsightsPanel({ locationData }: Props) {
           {loading ? (
             <><Loader2 size={14} className="animate-spin" /> Analysing...</>
           ) : insights ? (
-            <>↺ Regenerate</>
+            <>↺ {t('buttonRegenerate')}</>
           ) : (
             <>Analyse site</>
           )}

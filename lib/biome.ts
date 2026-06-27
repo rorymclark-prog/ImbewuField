@@ -156,7 +156,6 @@ export function classifyBiome(
 
   // Fynbos (SW Cape, winter rainfall, mild)
   if (isWinterRainfall && lat < -32) return BIOMES.FYNBOS;
-  if (isWinterRainfall && lat < -33) return BIOMES.FYNBOS;
 
   // Nama-Karoo (central plateau, low summer rainfall)
   if (lon > 20 && lon < 27 && lat > -32 && lat < -27 && annualRainfall < 400) return BIOMES.NAMA_KAROO;

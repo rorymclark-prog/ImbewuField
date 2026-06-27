@@ -12,7 +12,7 @@ export async function fetchElevation(lat: number, lon: number): Promise<Elevatio
 
   const res = await fetch(
     `https://api.opentopodata.org/v1/srtm30m?locations=${locations}`,
-    { next: { revalidate: 86400 } }
+    { next: { revalidate: 86400 }, signal: AbortSignal.timeout(8000) } as RequestInit
   );
 
   if (!res.ok) throw new Error(`OpenTopoData error: ${res.status}`);

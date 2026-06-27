@@ -105,39 +105,43 @@ const MONTH_FOCUS: Record<number, string> = {
 
 export default function CropPlanPage() {
   const [view, setView] = useState<View>('day');
-  const [cursor, setCursor] = useState<Date>(() => new Date());
-  const [today, setToday] = useState<Date>(() => new Date());
+  const [cursor, setCursor] = useState<Date | null>(null);
+  const [today, setToday] = useState<Date | null>(null);
   const [beds, setBeds] = useState<Bed[]>(DEFAULT_BEDS);
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setBeds(loadBeds()); setToday(new Date()); }, []);
+  useEffect(() => { setBeds(loadBeds()); const now = new Date(); setCursor(now); setToday(now); setMounted(true); }, []);
 
-  const dayJobs = useMemo(() => jobsForDate(cursor, beds), [cursor, beds]);
-  const weekStart = useMemo(() => mondayOf(cursor), [cursor]);
+  const safeCursor = cursor ?? new Date(0);
+  const safeToday = today ?? new Date(0);
+
+  const dayJobs = useMemo(() => jobsForDate(safeCursor, beds), [safeCursor, beds]);
+  const weekStart = useMemo(() => mondayOf(safeCursor), [safeCursor]);
   const weekDays = useMemo(() => Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)), [weekStart]);
 
   // Month matrix (Monday-first weeks)
   const monthMatrix = useMemo(() => {
-    const first = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
+    const first = new Date(safeCursor.getFullYear(), safeCursor.getMonth(), 1);
     const start = mondayOf(first);
     const weeks: Date[][] = [];
     for (let w = 0; w < 6; w++) {
       const row = Array.from({ length: 7 }, (_, i) => addDays(start, w * 7 + i));
       weeks.push(row);
-      if (row[6].getMonth() !== cursor.getMonth() && w >= 4) break;
+      if (row[6].getMonth() !== safeCursor.getMonth() && w >= 4) break;
     }
     return weeks;
-  }, [cursor]);
+  }, [safeCursor]);
 
-  const season = saSeason(cursor.getMonth());
+  const season = saSeason(safeCursor.getMonth());
 
   function step(dir: number) {
-    if (view === 'day') setCursor((c) => addDays(c, dir));
-    else if (view === 'week') setCursor((c) => addDays(c, dir * 7));
-    else setCursor((c) => new Date(c.getFullYear(), c.getMonth() + dir, 1));
+    if (view === 'day') setCursor((c) => addDays(c ?? new Date(), dir));
+    else if (view === 'week') setCursor((c) => addDays(c ?? new Date(), dir * 7));
+    else setCursor((c) => { const d = c ?? new Date(); return new Date(d.getFullYear(), d.getMonth() + dir, 1); });
   }
 
-  const isToday = sameDay(cursor, today);
-  const dayLabel = isToday ? 'Today' : DOW[(cursor.getDay() + 6) % 7];
+  const isToday = mounted && sameDay(safeCursor, safeToday);
+  const dayLabel = isToday ? 'Today' : DOW[(safeCursor.getDay() + 6) % 7];
 
   const TABS: { v: View; label: string }[] = [
     { v: 'day', label: 'Day' }, { v: 'week', label: 'Week' },
@@ -164,10 +168,10 @@ export default function CropPlanPage() {
             <div>
               <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>Crop plan</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                {view === 'day' && `${DOW[(cursor.getDay() + 6) % 7]} · ${fmtDM(cursor)}`}
-                {view === 'week' && `Week of ${fmtDM(weekStart)}`}
-                {view === 'month' && `${MONTHS[cursor.getMonth()]} ${cursor.getFullYear()}`}
-                {view === 'season' && `${season.name} ${cursor.getFullYear()}`}
+                {mounted && view === 'day' && `${DOW[(safeCursor.getDay() + 6) % 7]} · ${fmtDM(safeCursor)}`}
+                {mounted && view === 'week' && `Week of ${fmtDM(weekStart)}`}
+                {mounted && view === 'month' && `${MONTHS[safeCursor.getMonth()]} ${safeCursor.getFullYear()}`}
+                {mounted && view === 'season' && `${season.name} ${safeCursor.getFullYear()}`}
               </h1>
             </div>
             {view !== 'season' && (
@@ -222,7 +226,7 @@ export default function CropPlanPage() {
             <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
               {weekDays.map((d) => {
                 const jobs = jobsForDate(d, beds);
-                const td = sameDay(d, today);
+                const td = mounted && sameDay(d, safeToday);
                 return (
                   <div key={d.toISOString()} className="rounded-2xl p-3" style={{ background: '#FBF6EC', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
                     <div className="flex md:flex-col md:items-start items-center gap-2 mb-2">
@@ -255,8 +259,8 @@ export default function CropPlanPage() {
                 {monthMatrix.map((week, wi) => (
                   <div key={wi} className="grid grid-cols-7 gap-1">
                     {week.map((d) => {
-                      const inMonth = d.getMonth() === cursor.getMonth();
-                      const td = sameDay(d, today);
+                      const inMonth = d.getMonth() === safeCursor.getMonth();
+                      const td = mounted && sameDay(d, safeToday);
                       const jobs = jobsForDate(d, beds);
                       const types = Array.from(new Set(jobs.map((j) => j.type))).slice(0, 3);
                       return (
@@ -298,10 +302,10 @@ export default function CropPlanPage() {
                 </div>
               </div>
               {season.months.map((m) => (
-                <div key={m} className="rounded-2xl px-4 py-3.5" style={{ background: '#FBF6EC', border: `1px solid ${m === today.getMonth() ? '#1F4D2B40' : '#E2D8C4'}` }}>
+                <div key={m} className="rounded-2xl px-4 py-3.5" style={{ background: '#FBF6EC', border: `1px solid ${mounted && m === safeToday.getMonth() ? '#1F4D2B40' : '#E2D8C4'}` }}>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{MONTHS[m]}</span>
-                    {m === today.getMonth() && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
+                    {mounted && m === safeToday.getMonth() && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
                   </div>
                   <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: '#5C5040', lineHeight: 1.5 }}>{MONTH_FOCUS[m]}</p>
                 </div>

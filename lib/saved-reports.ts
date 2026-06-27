@@ -30,12 +30,16 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-reports-changed'));
 }
 
-export function saveReport(r: SavedReport): SavedReport[] {
+export function saveReport(r: SavedReport): { reports: SavedReport[]; saved: boolean } {
   const others = loadReports().filter((x) => x.id !== r.id);
   const updated = [r, ...others].slice(0, 50); // keep the 50 most recent
-  try { localStorage.setItem(KEY, JSON.stringify(updated)); } catch { /* quota — ignore */ }
-  notify();
-  return updated;
+  let saved = false;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(updated));
+    saved = true;
+  } catch { /* quota exceeded — report not persisted */ }
+  if (saved) notify();
+  return { reports: updated, saved };
 }
 
 export function deleteReport(id: string): SavedReport[] {

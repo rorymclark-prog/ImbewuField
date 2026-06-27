@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Settings, AlertTriangle, PenLine, ChevronUp, Menu } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
@@ -17,6 +17,8 @@ import ThemePanel from '@/components/ThemePanel';
 import NavDrawer from '@/components/NavDrawer';
 import ProfileSheet from '@/components/ProfileSheet';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
+import { isBackendConfigured } from '@/lib/firebase/init';
 import { loadPlaces } from '@/lib/saved-places';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -42,6 +44,8 @@ export default function Home() {
 
 function HomeInner() {
   const { t, lang } = useLanguage();
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
@@ -136,6 +140,11 @@ function HomeInner() {
     if (data) setLastSite({ locationData: data, siteData, waterData });
   }, [data, siteData, waterData]);
 
+  // Auth guard — redirect to login when backend is configured and no user is signed in
+  useEffect(() => {
+    if (!authLoading && !user && isBackendConfigured()) router.replace('/login');
+  }, [user, authLoading, router]);
+
   // Close sheet on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSheetOpen(false); };
@@ -173,6 +182,9 @@ function HomeInner() {
       role: p.role,
       photoUrl: p.photo_url,
     }));
+
+  // Render nothing while auth resolves (or while redirecting to /login)
+  if (isBackendConfigured() && (authLoading || !user)) return null;
 
   return (
     <>

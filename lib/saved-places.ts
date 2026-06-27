@@ -36,7 +36,8 @@ const KEY = 'permamap_saved_places';
 export function loadPlaces(): SavedPlace[] {
   if (typeof window === 'undefined') return [];
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '[]');
+    const v = JSON.parse(localStorage.getItem(KEY) ?? '[]');
+    return Array.isArray(v) ? v : [];
   } catch {
     return [];
   }

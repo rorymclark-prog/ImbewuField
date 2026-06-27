@@ -29,16 +29,16 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
 
   useEffect(() => { setPlaces(loadPlaces()); }, []);
 
-  // Pre-fill name from biome/coords when location changes
+  // Pre-fill name from biome/coords when location changes (skip while the save form is open)
   useEffect(() => {
-    if (locationData && coords) {
+    if (locationData && coords && !saving) {
       setName(locationData.biome.name !== 'Outside South Africa'
         ? `${locationData.biome.name} site`
         : `${Math.abs(coords.lat).toFixed(3)}°S ${coords.lon.toFixed(3)}°E`
       );
       setSaved(false);
     }
-  }, [locationData, coords]);
+  }, [locationData, coords, saving]);
 
   function handleSave() {
     if (!coords || !locationData || !name.trim()) return;

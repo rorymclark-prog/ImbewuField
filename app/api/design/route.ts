@@ -11,15 +11,21 @@ const LANGUAGES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
-  const { images, locationData, photoAnalysis, language, tone }: {
-    images: Array<{ data: string; mediaType: string }>;
-    locationData: LocationData;
-    photoAnalysis?: string;
-    language?: string;
-    tone?: 'simple' | 'professional';
-  } = await req.json();
+  let body: { images: Array<{ data: string; mediaType: string }>; locationData: LocationData; photoAnalysis?: string; language?: string; tone?: 'simple' | 'professional' };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+  const { images, locationData, photoAnalysis, language, tone } = body;
 
   if (!images?.length) return NextResponse.json({ error: 'No sketch provided' }, { status: 400 });
+
+  if (!locationData?.biome || !locationData.rainfall || !locationData.elevation
+      || !locationData.soil || !locationData.climate
+      || typeof locationData.lat !== 'number' || typeof locationData.lon !== 'number') {
+    return NextResponse.json({ error: 'Invalid location data' }, { status: 400 });
+  }
 
   const d = locationData;
   const langCode = language ?? 'en';

@@ -198,11 +198,14 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const handleFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
     if (!file) return;
-    setForm((f) => ({
-      ...f,
-      photoFile: file,
-      photoPreview: URL.createObjectURL(file),
-    }));
+    setForm((f) => {
+      if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
+      return {
+        ...f,
+        photoFile: file,
+        photoPreview: URL.createObjectURL(file),
+      };
+    });
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -225,13 +228,16 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         logged_at: new Date().toISOString(),
         ...(photo_url ? { photo_url } : {}),
       });
-      setForm({
-        crop: '',
-        kg: '',
-        photoFile: null,
-        photoPreview: '',
-        loading: false,
-        error: '',
+      setForm((f) => {
+        if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
+        return {
+          crop: '',
+          kg: '',
+          photoFile: null,
+          photoPreview: '',
+          loading: false,
+          error: '',
+        };
       });
       if (fileRef.current) fileRef.current.value = '';
       onSaved();
@@ -277,7 +283,10 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
               <button
                 type="button"
                 onClick={() => {
-                  setForm((f) => ({ ...f, photoFile: null, photoPreview: '' }));
+                  setForm((f) => {
+                    if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
+                    return { ...f, photoFile: null, photoPreview: '' };
+                  });
                   if (fileRef.current) fileRef.current.value = '';
                 }}
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
@@ -620,13 +629,14 @@ export default function MyRecords() {
     return unsub;
   }, []);
 
-  const loadData = useCallback(async () => {
+  const loadData = useCallback(async (isCancelled?: () => boolean) => {
     setDataLoading(true);
     try {
       const [prod, des] = await Promise.all([
         myProduction(),
         designsSharedWithMe(),
       ]);
+      if (isCancelled?.()) return;
       // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
       const sortedProd = [...prod].sort((a, b) => {
         return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
@@ -637,19 +647,21 @@ export default function MyRecords() {
       // keep the list that was accumulated via onSaved callbacks only.
       // (myProduction covers the production side; sales appended below)
     } finally {
-      setDataLoading(false);
+      if (!isCancelled?.()) setDataLoading(false);
     }
   }, []);
 
   // Load data once signed in
   useEffect(() => {
+    let cancelled = false;
     if (user && user !== 'loading') {
-      void loadData();
+      void loadData(() => cancelled);
     } else if (user === null) {
       setProduction([]);
       setSales([]);
       setDesigns([]);
     }
+    return () => { cancelled = true; };
   }, [user, loadData]);
 
   // Still resolving auth state

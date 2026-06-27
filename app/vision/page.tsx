@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Loader2, Leaf, Scale, ChevronRight } from 'lucide-react';
 import BackButton from '@/components/BackButton';
@@ -87,6 +87,12 @@ export default function VisionPage() {
   const [networkError, setNetworkError] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Revoke blob URL on each retake and on unmount to avoid memory leaks on low-end devices
+  useEffect(() => {
+    if (!preview) return;
+    return () => URL.revokeObjectURL(preview);
+  }, [preview]);
 
   // Reset result when mode changes so stale crop data doesn't show under weigh
   function switchMode(m: Mode) {

@@ -11,6 +11,7 @@ const MONTH_FULL = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 interface Props { rainfall: MonthlyRainfall }
 
 export default function RainfallChart({ rainfall }: Props) {
+  if (!rainfall?.monthly?.length) return null;
   const maxVal = Math.max(...rainfall.monthly, 10);
   const data = rainfall.monthly.map((v, i) => ({ month: MONTHS[i], full: MONTH_FULL[i], mm: Math.round(v) }));
 

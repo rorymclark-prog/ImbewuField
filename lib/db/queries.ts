@@ -226,12 +226,19 @@ export async function myMentorVisits(traineeId: string): Promise<MentorVisit[]> 
 // ---- surveys (NGO asks, farmers answer) ----
 export async function createSurvey(s: { org_name: string; title: string; questions: SurveyQuestion[] }): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'surveys'), { ...s, created_by: u, created_at: serverTimestamp() });
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'surveys'), { ...s, org_id: me?.org_id ?? null, created_by: u, created_at: serverTimestamp() });
 }
 export async function listSurveys(): Promise<Survey[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
-  const s = await getDocs(query(collection(f.db, 'surveys'), orderBy('created_at', 'desc')));
-  return rows<Survey>(s);
+  const me = await getMyProfile();
+  if (!me?.org_id) return [];
+  const s = await getDocs(query(collection(f.db, 'surveys'), where('org_id', '==', me.org_id)));
+  return rows<Survey>(s).sort((a, b) => {
+    const ta = (a as { created_at?: { toMillis?: () => number } }).created_at?.toMillis?.() ?? 0;
+    const tb = (b as { created_at?: { toMillis?: () => number } }).created_at?.toMillis?.() ?? 0;
+    return tb - ta;
+  });
 }
 export async function addSurveyResponse(survey_id: string, answers: Record<string, string>): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;

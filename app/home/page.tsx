@@ -31,10 +31,27 @@ import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 
-function getDayDate() {
+// Map app lang codes to BCP 47 locale codes for date formatting.
+// Falls back to 'en-ZA' for any code not listed (covers future additions).
+const LANG_TO_LOCALE: Record<string, string> = {
+  en: 'en-ZA',
+  af: 'af-ZA',
+  zu: 'zu-ZA',
+  xh: 'xh-ZA',
+  st: 'st-ZA',
+  nso: 'nso-ZA',
+  tn: 'tn-ZA',
+  ts: 'ts-ZA',
+  ve: 've-ZA',
+  ss: 'ss-ZA',
+  nr: 'nr-ZA',
+};
+
+function getDayDate(lang: string) {
+  const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
   const now = new Date();
-  const day = now.toLocaleDateString('en-GB', { weekday: 'long' });
-  const date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+  const day = now.toLocaleDateString(locale, { weekday: 'long' });
+  const date = now.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
   return `${day} · ${date}`;
 }
 
@@ -76,7 +93,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
 }
 
 function HomeLandingInner() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
@@ -124,7 +141,7 @@ function HomeLandingInner() {
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 9.5, color: '#C07A1E', letterSpacing: '0.12em', lineHeight: 1 }}>
-            {getDayDate()}
+            {getDayDate(lang)}
           </span>
           <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}>
             {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}

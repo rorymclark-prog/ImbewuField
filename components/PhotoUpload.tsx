@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Camera, Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 
@@ -52,6 +52,9 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
   const [analysis, setAnalysis] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const dragRef = useRef<boolean>(false);
+  const previewUrls = useRef<string[]>([]);
+
+  useEffect(() => () => { previewUrls.current.forEach(URL.revokeObjectURL); }, []);
 
   const processFiles = useCallback(async (files: File[]) => {
     const valid = files.filter(f => f.type.startsWith('image/')).slice(0, 5);
@@ -66,7 +69,10 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
     });
     if (errs.length) setError(errs.join(' · '));
     if (ok.length) {
-      setPreviews(ok.map(({ idx }) => URL.createObjectURL(valid[idx])));
+      previewUrls.current.forEach(URL.revokeObjectURL);
+      const urls = ok.map(({ idx }) => URL.createObjectURL(valid[idx]));
+      previewUrls.current = urls;
+      setPreviews(urls);
       setImageData(ok.map(({ data }) => data));
       setAnalysis('');
     }
@@ -253,7 +259,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               : `Analyse ${imageData.length} photo${imageData.length > 1 ? 's' : ''}`}
           </button>
           <button
-            onClick={() => { setPreviews([]); setImageData([]); setAnalysis(''); }}
+            onClick={() => { previewUrls.current.forEach(URL.revokeObjectURL); previewUrls.current = []; setPreviews([]); setImageData([]); setAnalysis(''); }}
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#8C7A62' }}
           >

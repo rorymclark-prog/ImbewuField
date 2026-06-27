@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
@@ -105,9 +105,11 @@ function loadQty(): Record<string, number> {
 export default function PlanPage() {
   const month = new Date().getMonth();
   const { name: seasonName, months, Icon: SeasonIcon } = getSASeason(month);
-  const [crops, setCrops] = useState<string[]>(loadCrops);
-  const [qty, setQty] = useState<Record<string, number>>(loadQty);
+  const [crops, setCrops] = useState<string[]>(DEFAULT_CROPS);
+  const [qty, setQty] = useState<Record<string, number>>({});
   const [input, setInput] = useState('');
+
+  useEffect(() => { setCrops(loadCrops()); setQty(loadQty()); }, []);
 
   const bedsFor = (crop: string) => qty[crop] ?? 1;
 

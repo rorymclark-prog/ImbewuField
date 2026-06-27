@@ -39,7 +39,7 @@ function currentUid(): string | undefined {
 
 export function loadWaterPoints(): WaterPoint[] {
   if (typeof window === 'undefined') return [];
-  try { return JSON.parse(localStorage.getItem(KEY) ?? '[]'); } catch { return []; }
+  try { const v = JSON.parse(localStorage.getItem(KEY) ?? '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
 }
 
 export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {

@@ -135,7 +135,7 @@ export default function AccountPage() {
               ) : (
                 <div className="flex items-center justify-center rounded-full font-display font-bold"
                   style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#EAF3E2' }}>
-                  {(displayName ?? user.email ?? '?')[0].toUpperCase()}
+                  {((displayName || user.email || '?').trim()[0] ?? '?').toUpperCase()}
                 </div>
               )}
               <button onClick={() => photoInputRef.current?.click()} disabled={photoUploading}
