@@ -54,6 +54,39 @@ function notifySurveys() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
 }
 
+// ── Design-studio sync (geometry-first studio state) ──────────────────────────
+// The studio stores one blob under DESIGN_STUDIO_KEY: { [siteId]: DesignStudioState }.
+// DesignStudioState carries geometry (nested coordinate arrays Firestore can't store), so we
+// persist the blob as a JSON STRING and merge per-siteId by updatedAt (newest wins).
+const DESIGN_STUDIO_KEY = 'imbewu_design_studio_v1';
+type DesignStateLike = { siteId: string; updatedAt?: string };
+type DesignStore = Record<string, DesignStateLike>;
+const designTs = (s: DesignStateLike) => (s.updatedAt ? Date.parse(s.updatedAt) || 0 : 0);
+
+function readLocalDesign(): DesignStore {
+  try { const v = JSON.parse(localStorage.getItem(DESIGN_STUDIO_KEY) ?? '{}'); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
+  catch { return {}; }
+}
+function writeLocalDesign(store: DesignStore) {
+  try { localStorage.setItem(DESIGN_STUDIO_KEY, JSON.stringify(store)); } catch {}
+}
+function parseDesign(json: unknown): DesignStore {
+  if (typeof json !== 'string') return {};
+  try { const v = JSON.parse(json); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
+  catch { return {}; }
+}
+function mergeDesign(remote: DesignStore, local: DesignStore): DesignStore {
+  const out: DesignStore = { ...remote };
+  for (const [sid, s] of Object.entries(local)) {
+    if (!out[sid] || designTs(s) >= designTs(out[sid])) out[sid] = s;
+  }
+  return out;
+}
+function notifyDesign() {
+  // The studio listens on MAP_STATE_EVENT to reload from localStorage.
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-map-state-changed'));
+}
+
 function readLocal<T>(key: string): T[] {
   try { const v = JSON.parse(localStorage.getItem(key) ?? '[]'); return Array.isArray(v) ? v : []; }
   catch { return []; }
@@ -131,6 +164,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
   const placesRef  = doc(d, COLL, uid, 'data', 'places');
   const waterRef   = doc(d, COLL, uid, 'data', 'water');
   const surveysRef = doc(d, COLL, uid, 'data', 'surveys');
+  const designRef  = doc(d, COLL, uid, 'data', 'design');
 
   const unsubs: Array<() => void> = [];
   let disposed = false;
@@ -197,6 +231,16 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       });
       notifySurveys();
 
+      // Design studio: one blob (per-site states) stored as a JSON string (nested geometry).
+      await runTransaction(d, async (tx) => {
+        const snap = await tx.get(designRef);
+        const remote = parseDesign(snap.exists() ? snap.data().designJson : '{}');
+        const merged = mergeDesign(remote, readLocalDesign());
+        writeLocalDesign(merged);
+        tx.set(designRef, { designJson: JSON.stringify(merged), updatedAt: serverTimestamp() });
+      });
+      notifyDesign();
+
     } catch (e) {
       console.error('[sync] reconcile error (likely offline) — keeping local data', e);
     }
@@ -236,6 +280,13 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       writeLocalSurveys(merged);
       notifySurveys();
     }, (e) => console.error('[sync] surveys listener', e)));
+
+    unsubs.push(onSnapshot(designRef, (snap) => {
+      if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+      const merged = mergeDesign(parseDesign(snap.data().designJson), readLocalDesign());
+      writeLocalDesign(merged);
+      notifyDesign();
+    }, (e) => console.error('[sync] design listener', e)));
   })();
 
   return () => { disposed = true; unsubs.forEach((u) => u()); };
@@ -294,6 +345,23 @@ export async function upsertSurvey(uid: string, survey: SurveyLike): Promise<voi
       tx.set(ref, { surveys, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] upsertSurvey', e); }
+}
+
+// Push the whole design-studio blob (a JSON string of {siteId: state}) and merge per-site
+// with whatever is in the cloud. Resolves uid itself so the map-sync shim can call it plainly.
+export async function upsertDesignStudio(rawJson: string): Promise<void> {
+  const d = db(); if (!d) return;
+  const uid = getFirebase()?.auth?.currentUser?.uid;
+  if (!uid) return;
+  const ref = doc(d, COLL, uid, 'data', 'design');
+  try {
+    await runTransaction(d, async (tx) => {
+      const snap = await tx.get(ref);
+      const remote = parseDesign(snap.exists() ? snap.data().designJson : '{}');
+      const merged = mergeDesign(remote, parseDesign(rawJson));
+      tx.set(ref, { designJson: JSON.stringify(merged), updatedAt: serverTimestamp() });
+    });
+  } catch (e) { console.error('[sync] upsertDesignStudio', e); }
 }
 
 export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<void> {

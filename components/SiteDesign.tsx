@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import GeometryDesignStudio from './GeometryDesignStudio';
 
 interface Props {
   locationData: LocationData | null;
@@ -118,8 +119,11 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
   }
 
   return (
-    <div className="space-y-3">
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>
+    <div className="space-y-5">
+      {/* Geometry-first design studio — locks traced site geometry, then AI styles overlays */}
+      <GeometryDesignStudio locationData={locationData} />
+
+      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
         Sketch → AI Design
       </div>
       <p className="text-xs font-display leading-relaxed" style={{ color: '#9A8268' }}>
