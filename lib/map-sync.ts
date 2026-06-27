@@ -34,6 +34,7 @@ const LOCAL_STORAGE_EXACT_KEYS = new Set([
   WATER_POINTS_KEY,
   'imbewu_evidence_v1',
   'imbewu_garden_survey',
+  'imbewu_design_studio_v1',
   'imbewu_invoice_customers',
   'imbewu_invoice_products',
   'imbewu_invoices',

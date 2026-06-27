@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import GeometryDesignStudio from './GeometryDesignStudio';
 
 interface Props {
   locationData: LocationData | null;
@@ -102,7 +103,14 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
+      <GeometryDesignStudio locationData={locationData} />
+
+      <details className="rounded-2xl p-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        <summary className="cursor-pointer text-xs font-display font-semibold" style={{ color: '#5C5040' }}>
+          Legacy sketch upload
+        </summary>
+        <div className="space-y-3 mt-3">
       <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>
         Sketch → AI Design
       </div>
@@ -177,6 +185,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#9E5C08' }} />}
         </div>
       )}
+        </div>
+      </details>
     </div>
   );
 }
