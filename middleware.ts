@@ -11,7 +11,8 @@ export function middleware(req: NextRequest) {
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/api/gate') || pathname.startsWith('/_next') ||
     pathname === '/favicon.ico' || pathname === '/manifest.json' || pathname.startsWith('/icon') ||
-    pathname.startsWith('/opengraph-image') || pathname.startsWith('/twitter-image')
+    pathname.startsWith('/opengraph-image') || pathname.startsWith('/twitter-image') ||
+    pathname === '/sync-export'
   ) {
     return NextResponse.next();
   }
