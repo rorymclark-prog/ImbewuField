@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
+import { MAP_STATE_EVENT } from '@/lib/map-sync';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
@@ -289,6 +290,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
   useEffect(() => { if (!surveySheetOpen && activePlaceId) setSurvey(loadSurvey(activePlaceId)); }, [surveySheetOpen]);
+  useEffect(() => {
+    const refreshSurvey = () => setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null);
+    window.addEventListener(MAP_STATE_EVENT, refreshSurvey);
+    return () => window.removeEventListener(MAP_STATE_EVENT, refreshSurvey);
+  }, [activePlaceId]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
 
   // Evidence state
