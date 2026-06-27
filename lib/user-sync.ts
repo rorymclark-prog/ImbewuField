@@ -21,6 +21,14 @@ function readLocal<T>(key: string): T[] {
   catch { return []; }
 }
 
+// Shapes are stored in Firestore as a JSON string (GeoJSON has nested coordinate arrays
+// that Firestore can't store natively). Parse defensively.
+function parseShapes(shapesJson: unknown): ShapeFC | null {
+  if (typeof shapesJson !== 'string') return null;
+  try { const fc = JSON.parse(shapesJson); return fc?.features ? fc : null; }
+  catch { return null; }
+}
+
 function pruneTombstones(t: Tombstones, now: number): Tombstones {
   const out: Tombstones = {};
   for (const [id, ts] of Object.entries(t)) if (now - ts < TOMB_TTL_MS) out[id] = ts;
@@ -119,11 +127,13 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
 
       // Shapes: the drawn collection is edited as a whole (and the reticle editor
       // delete+re-adds features with fresh ids), so per-feature union would duplicate.
+      // Stored as a JSON STRING because GeoJSON coordinates are nested arrays, which
+      // Firestore can't store natively.
       // Rule: if remote exists and is non-empty, remote wins (so deletions are durable);
       // otherwise bootstrap remote from local (recovers a device's existing drawing).
       {
         const sSnap = await getDoc(shapesRef);
-        const remoteFC: ShapeFC | null = sSnap.exists() ? (sSnap.data().shapes ?? null) : null;
+        const remoteFC = sSnap.exists() ? parseShapes(sSnap.data().shapesJson) : null;
         if (remoteFC?.features?.length) {
           localStorage.setItem(FARM_KEY, JSON.stringify(remoteFC));
           handlers.onShapes?.();
@@ -131,7 +141,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
           let localFC: ShapeFC | null = null;
           try { const raw = localStorage.getItem(FARM_KEY); localFC = raw ? JSON.parse(raw) : null; } catch {}
           if (localFC?.features?.length) {
-            await setDoc(shapesRef, { shapes: localFC, updatedAt: serverTimestamp() });
+            await setDoc(shapesRef, { shapesJson: JSON.stringify(localFC), updatedAt: serverTimestamp() });
           }
           handlers.onShapes?.();
         }
@@ -162,9 +172,9 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
 
     unsubs.push(onSnapshot(shapesRef, (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const shapes = snap.data().shapes;
-      if (!shapes) return;
-      localStorage.setItem(FARM_KEY, JSON.stringify(shapes));
+      const fc = parseShapes(snap.data().shapesJson);
+      if (!fc) return;
+      localStorage.setItem(FARM_KEY, JSON.stringify(fc));
       handlers.onShapes?.();
       console.log('[sync] realtime shapes');
     }, (e) => console.error('[sync] shapes listener', e)));
@@ -242,13 +252,14 @@ export async function removeWaterPoint(uid: string, id: string): Promise<void> {
 }
 
 // Shapes: this browser's draw collection is the source of truth. Plain full-collection
-// write (offline-friendly, fire-and-forget). The realtime listener keeps every open
-// browser's localStorage current, so a push here already includes other devices' features.
+// write (offline-friendly, fire-and-forget). Stored as a JSON string — GeoJSON coordinates
+// are nested arrays, which Firestore rejects as a native value. The realtime listener keeps
+// every open browser's localStorage current, so a push here already includes other devices'.
 export async function pushShapes(uid: string, fc: ShapeFC): Promise<void> {
   const d = db(); if (!d) return;
   const ref = doc(d, COLL, uid, 'data', 'shapes');
   try {
-    await setDoc(ref, { shapes: fc, updatedAt: serverTimestamp() });
+    await setDoc(ref, { shapesJson: JSON.stringify(fc), updatedAt: serverTimestamp() });
     console.log('[sync] pushShapes OK features=', fc.features?.length);
   } catch (e) { console.error('[sync] pushShapes', e); }
 }
