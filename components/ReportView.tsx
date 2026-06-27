@@ -235,6 +235,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [savedList, setSavedList] = useState<SavedReport[]>([]);
   const [justSaved, setJustSaved] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [exporting, setExporting] = useState(false);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -325,8 +326,285 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     }
   }, [d, photoAnalysis, siteData, waterData, selected, language, bilingual, tone, length]);
 
-  function printReport() {
-    window.print();
+  async function exportPdf() {
+    if (!report) return;
+    setExporting(true);
+
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const marginX = 48;
+      const marginTop = 48;
+      const marginBottom = 42;
+      const contentWidth = pageWidth - marginX * 2;
+      let y = marginTop;
+
+      const ensureSpace = (needed: number) => {
+        if (y + needed > pageHeight - marginBottom) {
+          doc.addPage();
+          y = marginTop;
+        }
+      };
+
+      const cleaned = (value: string) => value.replace(/\*\*/g, '').trim();
+
+      const addParagraph = (text: string, options?: {
+        size?: number;
+        style?: 'normal' | 'bold';
+        color?: [number, number, number];
+        font?: 'helvetica' | 'courier';
+        gapBefore?: number;
+        gapAfter?: number;
+        width?: number;
+      }) => {
+        const size = options?.size ?? 10;
+        const style = options?.style ?? 'normal';
+        const color = options?.color ?? [32, 25, 15];
+        const font = options?.font ?? 'helvetica';
+        const gapBefore = options?.gapBefore ?? 0;
+        const gapAfter = options?.gapAfter ?? 4;
+        const width = options?.width ?? contentWidth;
+        const value = cleaned(text);
+        if (!value) {
+          y += gapBefore + gapAfter;
+          return;
+        }
+        doc.setFont(font, style);
+        doc.setFontSize(size);
+        doc.setTextColor(color[0], color[1], color[2]);
+        const lines = doc.splitTextToSize(value, width);
+        const lineHeight = size * 1.28;
+        ensureSpace(gapBefore + lines.length * lineHeight + gapAfter);
+        y += gapBefore;
+        doc.text(lines, marginX, y);
+        y += lines.length * lineHeight + gapAfter;
+      };
+
+      const addHeading = (text: string, level: 2 | 3) => {
+        const isH2 = level === 2;
+        const size = isH2 ? 14 : 11;
+        const color: [number, number, number] = isH2 ? [31, 77, 43] : [192, 122, 30];
+        const value = cleaned(text);
+        if (!value) return;
+        ensureSpace(size * 2.2 + 12);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(size);
+        doc.setTextColor(color[0], color[1], color[2]);
+        doc.text(value, marginX, y);
+        y += size * 1.45;
+        if (isH2) {
+          doc.setDrawColor(226, 216, 196);
+          doc.setLineWidth(1);
+          doc.line(marginX, y - 2, pageWidth - marginX, y - 2);
+          y += 4;
+        }
+      };
+
+      const addBullet = (text: string, prefix = '•') => {
+        const value = cleaned(text);
+        if (!value) return;
+        const bulletWidth = 14;
+        const wrapped = doc.splitTextToSize(value, contentWidth - bulletWidth);
+        const size = 10;
+        const lineHeight = size * 1.28;
+        ensureSpace(wrapped.length * lineHeight + 2);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(size);
+        doc.setTextColor(32, 25, 15);
+        doc.text(prefix, marginX, y);
+        doc.text(wrapped, marginX + bulletWidth, y);
+        y += wrapped.length * lineHeight + 2;
+      };
+
+      const addNumbered = (text: string, number: string) => {
+        const value = cleaned(text);
+        if (!value) return;
+        const labelWidth = 20;
+        const wrapped = doc.splitTextToSize(value, contentWidth - labelWidth);
+        const size = 10;
+        const lineHeight = size * 1.28;
+        ensureSpace(wrapped.length * lineHeight + 2);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(size);
+        doc.setTextColor(192, 122, 30);
+        doc.text(`${number}.`, marginX, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(32, 25, 15);
+        doc.text(wrapped, marginX + labelWidth, y);
+        y += wrapped.length * lineHeight + 2;
+      };
+
+      const addTable = (rows: string[][]) => {
+        if (!rows.length) return;
+        const rowFont = 'courier';
+        const rowSize = 8.5;
+        const rowLineHeight = rowSize * 1.35;
+        rows.forEach((row, index) => {
+          const text = row.join('  |  ');
+          const wrapped = doc.splitTextToSize(text, contentWidth);
+          ensureSpace(wrapped.length * rowLineHeight + 3);
+          doc.setFont(rowFont, index === 0 ? 'bold' : 'normal');
+          doc.setFontSize(rowSize);
+          doc.setTextColor(index === 0 ? 92 : 32, index === 0 ? 80 : 25, index === 0 ? 64 : 15);
+          doc.text(wrapped, marginX, y);
+          y += wrapped.length * rowLineHeight + 3;
+        });
+      };
+
+      const fileName = `ImbewuField-Site-Report-${d.biome.name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'site'}-${new Date().toISOString().slice(0, 10)}.pdf`;
+
+      // Cover section
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.setTextColor(32, 25, 15);
+      doc.text('ImbewuField', marginX, y);
+      y += 18;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(32, 25, 15);
+      doc.text('Permaculture Site Analysis Report', marginX, y);
+      y += 18;
+      doc.setDrawColor(226, 216, 196);
+      doc.line(marginX, y, pageWidth - marginX, y);
+      y += 16;
+
+      addParagraph(`Site: ${d.biome.name}`, { style: 'bold', gapAfter: 2 });
+      addParagraph(`Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E`, { gapAfter: 2 });
+      addParagraph(`Rainfall: ${d.rainfall.annual} mm/yr · ${d.rainfall.pattern} · wet ${d.rainfall.wetSeason} · dry ${d.rainfall.drySeason}`, { gapAfter: 2 });
+      addParagraph(`Climate: ${d.climate.koppen} (${d.climate.koppenDesc}) · mean ${d.climate.meanTemp}°C`, { gapAfter: 2 });
+      addParagraph(`Soil: pH ${d.soil.ph} · organic carbon ${d.soil.organicCarbon}% · texture ${d.soil.textureClass}`, { gapAfter: 2 });
+      addParagraph(`Elevation: ${d.elevation.elevation} m · slope ${d.elevation.slopeDeg}°`, { gapAfter: 4 });
+
+      if (d.vegetation) {
+        addParagraph(`Vegetation: ${d.vegetation.vegUnit}`, { gapAfter: 2 });
+      }
+      if (siteData) {
+        addParagraph(`Site area: ${siteData.areaHa} ha · perimeter ${siteData.perimeterKm.toFixed(2)} km`, { gapAfter: 2 });
+      }
+      if (waterData) {
+        addParagraph(`Water storage: ~${waterData.estVolumeKL.toLocaleString()} kL across ${waterData.count} feature${waterData.count === 1 ? '' : 's'}`, { gapAfter: 4 });
+      }
+
+      if (savedPlaces && savedPlaces.length > 0) {
+        addHeading('Saved Places', 3);
+        savedPlaces.forEach((p) => {
+          const placeLabel = PLACE_LABELS.find((l) => l.v === p.label)?.name ?? 'Place';
+          addBullet(`${p.name} · ${placeLabel} · ${Math.abs(p.lat).toFixed(5)}°S, ${p.lon.toFixed(5)}°E`);
+        });
+        y += 2;
+      }
+
+      if (mapCapture) {
+        const mapImage = mapCapture.startsWith('data:')
+          ? mapCapture
+          : `data:image/jpeg;base64,${mapCapture}`;
+        const props = doc.getImageProperties(mapImage) as { width: number; height: number };
+        const imageWidth = contentWidth;
+        const imageHeight = imageWidth * (props.height / props.width);
+        ensureSpace(imageHeight + 48);
+        addHeading('Site Satellite View', 3);
+        doc.addImage(mapImage, 'JPEG', marginX, y, imageWidth, imageHeight);
+        y += imageHeight + 10;
+        addParagraph(`Maxar satellite imagery · ${Math.abs(d.lat).toFixed(4)}°S ${d.lon.toFixed(4)}°E`, {
+          size: 8,
+          color: [92, 80, 64],
+          gapAfter: 8,
+        });
+      }
+
+      addHeading('Report', 2);
+
+      const lines = report.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        const raw = lines[i];
+        const line = raw.trim();
+        if (!line) {
+          y += 4;
+          continue;
+        }
+
+        if (line.startsWith('## ')) {
+          addHeading(line.replace('## ', ''), 2);
+          continue;
+        }
+
+        if (line.startsWith('### ')) {
+          addHeading(line.replace('### ', ''), 3);
+          continue;
+        }
+
+        if (line.startsWith('|')) {
+          const tableRows: string[][] = [];
+          while (i < lines.length && lines[i].startsWith('|')) {
+            const cells = lines[i].split('|').map((cell) => cleaned(cell)).filter(Boolean);
+            if (cells.length > 0 && !cells.every((cell) => /^:?-{3,}:?$/.test(cell))) {
+              tableRows.push(cells);
+            }
+            i++;
+          }
+          i--;
+          addTable(tableRows);
+          continue;
+        }
+
+        if (/^\d+\. \*\*/.test(line)) {
+          const match = line.match(/^(\d+)\. \*\*(.+?)\*\*(.*)$/);
+          if (match) {
+            addNumbered(`${match[2]}${match[3] ?? ''}`, match[1]);
+            continue;
+          }
+        }
+
+        if (/^\d+\./.test(line)) {
+          const number = line.match(/^(\d+)/)?.[1] ?? '1';
+          addNumbered(line.replace(/^\d+\.\s*/, ''), number);
+          continue;
+        }
+
+        if (line.startsWith('- ') || line.startsWith('• ')) {
+          addBullet(line.replace(/^[-•]\s*/, ''));
+          continue;
+        }
+
+        if (line.startsWith('**') && line.endsWith('**')) {
+          addParagraph(line, { style: 'bold', gapAfter: 3 });
+          continue;
+        }
+
+        addParagraph(line);
+      }
+
+      const totalPages = doc.getNumberOfPages();
+      for (let page = 1; page <= totalPages; page++) {
+        doc.setPage(page);
+        doc.setDrawColor(226, 216, 196);
+        doc.setLineWidth(1);
+        doc.line(marginX, pageHeight - 32, pageWidth - marginX, pageHeight - 32);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(140, 122, 98);
+        doc.text('Generated by ImbewuField · fieldproof.vercel.app', pageWidth / 2, pageHeight - 18, { align: 'center' });
+        doc.text(`Page ${page} of ${totalPages}`, pageWidth - marginX, pageHeight - 18, { align: 'right' });
+      }
+
+      const blob = doc.output('blob');
+      const file = new File([blob], fileName, { type: 'application/pdf' });
+      const url = URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = file.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch {
+      // Keep a last-resort print path if PDF generation or download is blocked.
+      window.print();
+    } finally {
+      setExporting(false);
+    }
   }
 
   async function shareReport() {
@@ -376,15 +654,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
         {generated && (
           <button
-            onClick={printReport}
+            onClick={exportPdf}
+            disabled={exporting}
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
             style={{
-              background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
+              background: exporting ? 'rgba(192,122,30,0.08)' : 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
               border: '1px solid rgba(192,122,30,0.35)',
               color: '#C07A1E',
+              opacity: exporting ? 0.75 : 1,
             }}
           >
-            Export PDF
+            {exporting ? <><Loader2 size={12} className="animate-spin" /> Exporting...</> : 'Export PDF'}
           </button>
         )}
 
@@ -793,8 +1073,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }
 
         /* ══════════════════════════════════════════════════════════════════
-           PRINT / PDF STYLES
-           These fire when the user clicks "Export PDF" → window.print()
+           PRINT STYLES
+           These keep a manual browser print clean if the user prints the page.
         ══════════════════════════════════════════════════════════════════ */
         @media print {
 
