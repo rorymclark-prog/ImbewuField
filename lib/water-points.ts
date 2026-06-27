@@ -1,4 +1,4 @@
-import { pushWaterPoints } from './user-sync';
+import { upsertWaterPoint, removeWaterPoint } from './user-sync';
 import { getFirebase } from './firebase/init';
 
 export type WaterPointCategory = 'Dam' | 'Borehole' | 'Spring' | 'Well' | 'Pond' | 'Tank' | 'Other';
@@ -10,6 +10,7 @@ export interface WaterPoint {
   lat: number;
   lon: number;
   createdAt: string; // ISO
+  updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
 }
 
 export const WATER_POINT_CATEGORIES: { v: WaterPointCategory; icon: string; color: string }[] = [
@@ -32,9 +33,8 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
 }
 
-function syncToFirestore(points: WaterPoint[]) {
-  const uid = getFirebase()?.auth?.currentUser?.uid;
-  if (uid) pushWaterPoints(uid, points).catch(() => {});
+function currentUid(): string | undefined {
+  return getFirebase()?.auth?.currentUser?.uid;
 }
 
 export function loadWaterPoints(): WaterPoint[] {
@@ -43,10 +43,12 @@ export function loadWaterPoints(): WaterPoint[] {
 }
 
 export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
-  const updated = [pt, ...loadWaterPoints().filter((p) => p.id !== pt.id)];
+  const stamped = { ...pt, updatedAt: Date.now() };
+  const updated = [stamped, ...loadWaterPoints().filter((p) => p.id !== stamped.id)];
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
-  syncToFirestore(updated);
+  const uid = currentUid();
+  if (uid) upsertWaterPoint(uid, stamped).catch(() => {});
   return updated;
 }
 
@@ -54,7 +56,8 @@ export function deleteWaterPoint(id: string): WaterPoint[] {
   const updated = loadWaterPoints().filter((p) => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
-  syncToFirestore(updated);
+  const uid = currentUid();
+  if (uid) removeWaterPoint(uid, id).catch(() => {});
   return updated;
 }
 

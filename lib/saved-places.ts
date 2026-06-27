@@ -1,4 +1,4 @@
-import { pushPlaces } from './user-sync';
+import { upsertPlace, removePlace } from './user-sync';
 import { getFirebase } from './firebase/init';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
@@ -22,6 +22,7 @@ export interface SavedPlace {
   rainfall: number;
   elevation: number;
   savedAt: string; // ISO date
+  updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
   label?: PlaceLabel;
   color?: string;  // custom hex — overrides label colour when set
   notes?: string;
@@ -45,17 +46,18 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('permamap-places-changed'));
 }
 
-function syncToFirestore(places: SavedPlace[]) {
-  const uid = getFirebase()?.auth?.currentUser?.uid;
-  if (uid) pushPlaces(uid, places).catch(() => {});
+function currentUid(): string | undefined {
+  return getFirebase()?.auth?.currentUser?.uid;
 }
 
 export function savePlace(place: SavedPlace): SavedPlace[] {
-  const places = loadPlaces().filter(p => p.id !== place.id);
-  const updated = [place, ...places];
+  const stamped = { ...place, updatedAt: Date.now() };
+  const places = loadPlaces().filter(p => p.id !== stamped.id);
+  const updated = [stamped, ...places];
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
-  syncToFirestore(updated);
+  const uid = currentUid();
+  if (uid) upsertPlace(uid, stamped).catch(() => {});
   return updated;
 }
 
@@ -63,15 +65,22 @@ export function deletePlace(id: string): SavedPlace[] {
   const updated = loadPlaces().filter(p => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
-  syncToFirestore(updated);
+  const uid = currentUid();
+  if (uid) removePlace(uid, id).catch(() => {});
   return updated;
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
-  const updated = loadPlaces().map(p => p.id === id ? { ...p, lat, lon } : p);
+  let moved: SavedPlace | undefined;
+  const updated = loadPlaces().map(p => {
+    if (p.id !== id) return p;
+    moved = { ...p, lat, lon, updatedAt: Date.now() };
+    return moved;
+  });
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
-  syncToFirestore(updated);
+  const uid = currentUid();
+  if (uid && moved) upsertPlace(uid, moved).catch(() => {});
   return updated;
 }
 

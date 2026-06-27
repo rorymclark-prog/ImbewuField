@@ -18,7 +18,7 @@ import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
-import { pullUserMapData, pushFarmShapes } from '@/lib/user-sync';
+import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -333,10 +333,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // Persist every shape change so a page refresh never loses the farmer's drawing.
     // Skip while tearing down (unmount) or before restore has run — either path could
     // overwrite the saved collection with a partial/empty in-memory store.
-    if (!tearingDownRef.current && restoredRef.current) {
+    // applyingRemoteRef: true while we paint a Firestore-sourced shape onto the map.
+    // Skip persist+push then, or we'd echo the remote write straight back and loop.
+    if (!tearingDownRef.current && restoredRef.current && !applyingRemoteRef.current) {
       try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
+      // Push only after the initial reconcile, so a local draw can't clobber the merge.
       const uid = getFirebase()?.auth?.currentUser?.uid;
-      if (uid) pushFarmShapes(uid, all).catch(() => {});
+      if (uid && mergeReadyRef.current) pushShapes(uid, all).catch(() => {});
     }
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
@@ -528,6 +531,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // and we must NOT let that persist an empty collection (it would wipe saved shapes
   // every time the user navigates away from the map).
   const tearingDownRef = useRef(false);
+  // True while painting a Firestore-sourced shape onto the map — suppresses the
+  // persist+push inside recompute so a remote change doesn't echo back into a loop.
+  const applyingRemoteRef = useRef(false);
+  // Flips true once the initial local↔remote reconcile finishes — gates shape pushes
+  // so a local draw during the reconcile window can't clobber the merged result.
+  const mergeReadyRef = useRef(false);
+  // Set when a live remote shape update arrives while the user is mid-edit; flushed when
+  // they finish so we don't yank a feature out from under an in-progress vertex drag.
+  const pendingRemoteRedrawRef = useRef(false);
   const restoreShapes = useCallback(() => {
     if (restoredRef.current) return;
     const draw = ensureDraw();
@@ -541,6 +553,38 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     } catch { /* ignore corrupt/blocked storage */ }
     restoredRef.current = true;
   }, [ensureDraw, recompute]);
+
+  // Force the drawn shapes to match localStorage RIGHT NOW (used when a live Firestore
+  // update arrives from another browser). Unlike restoreShapes this isn't one-shot.
+  // draw.set() does NOT fire draw.* events, so the applyingRemoteRef guard stays valid
+  // for the synchronous recompute() that follows.
+  const redrawShapesFromStorage = useCallback(() => {
+    const draw = ensureDraw();
+    if (!draw) return; // map not ready — the restore poller will pick up localStorage
+    // Don't yank the draw store out from under an in-progress edit/draw — defer until done.
+    let mode = ''; try { mode = draw.getMode(); } catch {}
+    if (mode === 'direct_select' || mode === 'draw_polygon' || editingFeatureId) {
+      pendingRemoteRedrawRef.current = true;
+      return;
+    }
+    try {
+      const raw = localStorage.getItem(FARM_KEY);
+      const fc = raw ? JSON.parse(raw) : null;
+      applyingRemoteRef.current = true;
+      draw.set(fc?.features ? fc : { type: 'FeatureCollection', features: [] });
+      restoredRef.current = true;
+      recompute();
+    } catch { /* ignore */ }
+    finally { applyingRemoteRef.current = false; }
+  }, [ensureDraw, recompute, editingFeatureId]);
+
+  // When the user finishes an edit, flush any remote shape update we deferred mid-edit.
+  useEffect(() => {
+    if (!editingFeatureId && pendingRemoteRedrawRef.current) {
+      pendingRemoteRedrawRef.current = false;
+      redrawShapesFromStorage();
+    }
+  }, [editingFeatureId, redrawShapesFromStorage]);
 
   // Poll for the map being ready, then restore saved shapes once. More reliable than
   // onLoad (which can miss when the style is cached or the page bounces during nav).
@@ -558,24 +602,28 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => clearInterval(iv);
   }, [restoreShapes]);
 
-  // When the user logs in, pull their Firestore data into localStorage then refresh all map state.
-  // This ensures drawn shapes, pins, and water points are consistent across browsers/devices.
+  // Live cross-device sync: while signed in, subscribe to the user's Firestore docs.
+  // A save in ANY browser pushes here in realtime → localStorage updates → pins, water
+  // points and drawn shapes refresh without a reload. Also does a one-time merge of
+  // local + remote on connect so existing data from any device is unified.
   useEffect(() => {
     const uid = user?.uid;
     console.log('[map-sync] uid=', uid ?? 'none');
     if (!uid) return;
-    let cancelled = false;
-    pullUserMapData(uid).then(() => {
-      if (cancelled) return;
-      console.log('[map-sync] pull done, dispatching events + re-restoring');
-      window.dispatchEvent(new CustomEvent('permamap-places-changed'));
-      window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
-      restoredRef.current = false;
-      const map = mapRef.current?.getMap();
-      if (map) restoreShapes();
-    }).catch((e) => console.error('[map-sync] error', e));
-    return () => { cancelled = true; };
-  }, [user?.uid, restoreShapes]);
+    mergeReadyRef.current = false;
+    const unsub = subscribeUserMapData(uid, {
+      onPlaces: () => window.dispatchEvent(new CustomEvent('permamap-places-changed')),
+      onWater:  () => window.dispatchEvent(new CustomEvent('imbewu-water-points-changed')),
+      onShapes: () => redrawShapesFromStorage(),
+      onMergeDone: () => {
+        mergeReadyRef.current = true;
+        // Flush any shape the user drew during the reconcile window (push was gated off).
+        const draw = drawRef.current;
+        if (draw && draw.getAll().features.length) pushShapes(uid, draw.getAll()).catch(() => {});
+      },
+    });
+    return () => { mergeReadyRef.current = false; unsub(); };
+  }, [user?.uid, redrawShapesFromStorage]);
 
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any
