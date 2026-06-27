@@ -13,7 +13,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
-import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
+import { MAP_STATE_EVENT, markLocalStorageKeyUpdated } from '@/lib/map-sync';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
@@ -26,6 +26,19 @@ const BED_M2 = 9.6; // 1.2 m × 8 m standard bed
 type Sun = 'full' | 'partial' | 'shade';
 type Slope = 'flat' | 'gentle' | 'steep';
 type Goal = 'feed' | 'income' | 'soil';
+
+interface GardenSurvey {
+  ha?: number;
+  rainL?: number;
+  sun: Sun | null;
+  slope: Slope | null;
+  resources: string[];
+  tanks: number;
+  goal: Goal | null;
+  beds: number;
+  placeId: string | null;
+  savedAt?: string;
+}
 
 const SUN_OPTS: { v: Sun; label: string; Icon: typeof Sun }[] = [
   { v: 'full', label: 'Full sun', Icon: Sun },
@@ -60,6 +73,63 @@ function seasonCrops(month: number): string[] {
 }
 
 function bedLetter(i: number) { return String.fromCharCode(65 + i); }
+
+function parseGardenSurvey(raw: string | null): GardenSurvey | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as Partial<GardenSurvey>;
+    if (!parsed || typeof parsed !== 'object') return null;
+    return {
+      ha: typeof parsed.ha === 'number' ? parsed.ha : undefined,
+      rainL: typeof parsed.rainL === 'number' ? parsed.rainL : undefined,
+      sun: parsed.sun === 'full' || parsed.sun === 'partial' || parsed.sun === 'shade' ? parsed.sun : null,
+      slope: parsed.slope === 'flat' || parsed.slope === 'gentle' || parsed.slope === 'steep' ? parsed.slope : null,
+      resources: Array.isArray(parsed.resources) ? parsed.resources.filter((v): v is string => typeof v === 'string') : [],
+      tanks: typeof parsed.tanks === 'number' && Number.isFinite(parsed.tanks) ? parsed.tanks : 2,
+      goal: parsed.goal === 'feed' || parsed.goal === 'income' || parsed.goal === 'soil' ? parsed.goal : null,
+      beds: typeof parsed.beds === 'number' && Number.isFinite(parsed.beds) ? parsed.beds : 4,
+      placeId: typeof parsed.placeId === 'string' ? parsed.placeId : null,
+      savedAt: typeof parsed.savedAt === 'string' ? parsed.savedAt : undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function loadGardenSurvey(placeId: string | null): GardenSurvey | null {
+  if (typeof window === 'undefined') return null;
+  const keys = placeId
+    ? [surveyKey(placeId)]
+    : [surveyKey(null), BASE_SURVEY_KEY];
+  for (const key of keys) {
+    const survey = parseGardenSurvey(window.localStorage.getItem(key));
+    if (survey) return survey;
+  }
+  return null;
+}
+
+function latestSavedGardenSurveyPlaceId(savedPins: SavedPlace[]): string | null | undefined {
+  if (typeof window === 'undefined') return undefined;
+  const knownPlaceIds = new Set(savedPins.map((place) => place.id));
+  let latest: { placeId: string | null; time: number } | null = null;
+  try {
+    for (let i = 0; i < window.localStorage.length; i += 1) {
+      const key = window.localStorage.key(i);
+      if (!key || (key !== BASE_SURVEY_KEY && !key.startsWith(`${BASE_SURVEY_KEY}_`))) continue;
+      const survey = parseGardenSurvey(window.localStorage.getItem(key));
+      if (!survey) continue;
+      const placeId = key === BASE_SURVEY_KEY || key === surveyKey(null)
+        ? null
+        : key.slice(`${BASE_SURVEY_KEY}_`.length);
+      if (placeId && savedPins.length > 0 && !knownPlaceIds.has(placeId)) continue;
+      const time = survey.savedAt ? Date.parse(survey.savedAt) : 1;
+      if (!latest || time > latest.time) latest = { placeId, time: Number.isFinite(time) ? time : 1 };
+    }
+  } catch {
+    return undefined;
+  }
+  return latest?.placeId;
+}
 
 const WEEK_PLAN = [
   { wk: 1, title: 'Mark & clear', tasks: ['Peg out the beds (1.2 m × 8 m)', 'Clear weeds and old roots', 'Dig in mature compost'] },
@@ -99,6 +169,7 @@ function SurveyInner() {
   const [beds, setBeds] = useState(4);
   const [week, setWeek] = useState(1);
   const [saved, setSaved] = useState(false);
+  const [savedSiteSnapshot, setSavedSiteSnapshot] = useState<{ ha?: number; rainL?: number } | null>(null);
 
   // Known from the map analysis (fall back to sample if no site analysed yet).
   const known = useMemo(() => {
@@ -113,6 +184,36 @@ function SurveyInner() {
   useEffect(() => {
     setBeds(Math.max(2, Math.min(12, Math.round(known.ha * 10))));
   }, [known.ha]);
+
+  useEffect(() => {
+    const selectLatestSavedSurveyPlace = () => {
+      if (urlPlaceId || selectedPlaceId) return;
+      const latestPlaceId = latestSavedGardenSurveyPlaceId(savedPins);
+      if (latestPlaceId) setSelectedPlaceId(latestPlaceId);
+    };
+    selectLatestSavedSurveyPlace();
+    window.addEventListener(MAP_STATE_EVENT, selectLatestSavedSurveyPlace);
+    return () => window.removeEventListener(MAP_STATE_EVENT, selectLatestSavedSurveyPlace);
+  }, [savedPins, selectedPlaceId, urlPlaceId]);
+
+  useEffect(() => {
+    const restoreSavedSurvey = () => {
+      const existing = loadGardenSurvey(selectedPlaceId);
+      if (!existing) return;
+      setSun(existing.sun);
+      setSlope(existing.slope);
+      setResources(existing.resources);
+      setTanks(existing.tanks);
+      setGoal(existing.goal);
+      setBeds(Math.max(1, Math.min(20, existing.beds)));
+      setSavedSiteSnapshot({ ha: existing.ha, rainL: existing.rainL });
+      setStep(5);
+    };
+
+    restoreSavedSurvey();
+    window.addEventListener(MAP_STATE_EVENT, restoreSavedSurvey);
+    return () => window.removeEventListener(MAP_STATE_EVENT, restoreSavedSurvey);
+  }, [selectedPlaceId]);
 
   const crops = useMemo(() => {
     let pool: string[] = [];
@@ -131,11 +232,16 @@ function SurveyInner() {
   }
 
   function save() {
-    const data = { ha: known.ha, rainL: known.rainL, sun, slope, resources, tanks, goal, beds, bedCrops, placeId: selectedPlaceId, savedAt: new Date().toISOString() };
+    const data = { ha: shownHa, rainL: shownRainL, sun, slope, resources, tanks, goal, beds, bedCrops, placeId: selectedPlaceId, savedAt: new Date().toISOString() };
     const key = surveyKey(selectedPlaceId);
     try {
       localStorage.setItem(key, JSON.stringify(data));
       markLocalStorageKeyUpdated(key);
+      if (!selectedPlaceId) {
+        localStorage.setItem(BASE_SURVEY_KEY, JSON.stringify(data));
+        markLocalStorageKeyUpdated(BASE_SURVEY_KEY);
+      }
+      setSavedSiteSnapshot({ ha: data.ha, rainL: data.rainL });
     } catch { /* ignore */ }
     setSaved(true);
     setTimeout(() => setSaved(false), 2200);
@@ -151,6 +257,8 @@ function SurveyInner() {
 
   const sunLabel = SUN_OPTS.find((s) => s.v === sun)?.label.toLowerCase() ?? 'full sun';
   const tanksPhrase = resources.includes('rain-tanks') ? `${tanks} tank${tanks > 1 ? 's' : ''}` : 'no tanks yet';
+  const shownHa = savedSiteSnapshot?.ha ?? known.ha;
+  const shownRainL = savedSiteSnapshot?.rainL ?? known.rainL;
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
@@ -236,11 +344,11 @@ function SurveyInner() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(31,77,43,0.06)' }}>
                     <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>Land size</div>
-                    <div className="font-display font-bold text-lg" style={{ color: '#20190F' }}>{known.ha} ha</div>
+                    <div className="font-display font-bold text-lg" style={{ color: '#20190F' }}>{shownHa} ha</div>
                   </div>
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(35,94,134,0.07)' }}>
                     <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>Rain caught / yr</div>
-                    <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{known.rainL.toLocaleString('en-ZA')} L</div>
+                    <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{shownRainL.toLocaleString('en-ZA')} L</div>
                   </div>
                 </div>
                 <Link href="/farmer" className="flex items-center gap-1.5 mt-3 text-xs font-display font-semibold" style={{ color: '#1F4D2B', textDecoration: 'none' }}>
@@ -358,7 +466,7 @@ function SurveyInner() {
               <div className="rounded-xl px-4 py-3 flex gap-3 items-start" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
                 <Sprout size={16} style={{ color: '#1F4D2B', flexShrink: 0, marginTop: 1 }} />
                 <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                  Lima: From {known.ha} ha · {sunLabel} · {tanksPhrase}, I suggest <strong>{beds} beds</strong> at 1.2 m × 8 m. Adjust the count, then save your plan.
+                  Lima: From {shownHa} ha · {sunLabel} · {tanksPhrase}, I suggest <strong>{beds} beds</strong> at 1.2 m × 8 m. Adjust the count, then save your plan.
                 </p>
               </div>
 
@@ -394,7 +502,7 @@ function SurveyInner() {
                 <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#C07A1E', letterSpacing: '0.1em' }}>Garden plan</div>
                 <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{beds} beds · {(beds * BED_M2).toFixed(1)} m²</h1>
                 <p className="font-sans text-sm mt-1" style={{ color: '#5C5040' }}>
-                  {known.ha} ha · {sunLabel} · {tanksPhrase}{goal ? ` · goal: ${GOALS.find((g) => g.v === goal)?.label.toLowerCase()}` : ''}
+                  {shownHa} ha · {sunLabel} · {tanksPhrase}{goal ? ` · goal: ${GOALS.find((g) => g.v === goal)?.label.toLowerCase()}` : ''}
                 </p>
               </div>
 

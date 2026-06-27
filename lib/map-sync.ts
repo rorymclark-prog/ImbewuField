@@ -117,13 +117,37 @@ function writeLocalStorageUpdatedAt(updatedAt: Record<string, number>): void {
   }
 }
 
-function withLegacyStorageTimestamps(
+function inferStorageValueTimestamp(key: string, value: string): number | null {
+  if (!isSyncableStorageKey(key)) return null;
+  const parsed = safeParse<unknown>(value, null);
+  if (!parsed || typeof parsed !== 'object') return null;
+
+  const maybeDate = (candidate: unknown): number | null => {
+    if (typeof candidate !== 'string') return null;
+    const time = Date.parse(candidate);
+    return Number.isFinite(time) && time > 0 ? time : null;
+  };
+
+  if (Array.isArray(parsed)) {
+    return parsed.reduce<number | null>((latest, item) => {
+      const time = item && typeof item === 'object'
+        ? maybeDate((item as { savedAt?: unknown; dateISO?: unknown }).savedAt ?? (item as { dateISO?: unknown }).dateISO)
+        : null;
+      return time == null ? latest : Math.max(latest ?? 0, time);
+    }, null);
+  }
+
+  const record = parsed as { savedAt?: unknown; updatedAt?: unknown; dateISO?: unknown };
+  return maybeDate(record.savedAt) ?? maybeDate(record.updatedAt) ?? maybeDate(record.dateISO);
+}
+
+function withInferredStorageTimestamps(
   snapshot: Record<string, string>,
   updatedAt: Record<string, number>,
 ): Record<string, number> {
   const next = cleanStorageUpdatedAt(updatedAt);
-  Object.keys(snapshot).forEach((key) => {
-    if (next[key] === undefined) next[key] = LEGACY_STORAGE_TIMESTAMP;
+  Object.entries(snapshot).forEach(([key, value]) => {
+    if (next[key] === undefined) next[key] = inferStorageValueTimestamp(key, value) ?? LEGACY_STORAGE_TIMESTAMP;
   });
   return next;
 }
@@ -134,8 +158,8 @@ function mergeLocalStorageState(
   remoteSnapshot: Record<string, string> = {},
   remoteUpdatedAt: Record<string, number> = {},
 ): Pick<UserMapState, 'localStorageSnapshot' | 'localStorageUpdatedAt'> {
-  const localTimes = cleanStorageUpdatedAt(localUpdatedAt);
-  const remoteTimes = cleanStorageUpdatedAt(remoteUpdatedAt);
+  const localTimes = withInferredStorageTimestamps(localSnapshot, localUpdatedAt);
+  const remoteTimes = withInferredStorageTimestamps(remoteSnapshot, remoteUpdatedAt);
   const mergedSnapshot: Record<string, string> = {};
   const mergedUpdatedAt: Record<string, number> = {};
   const keys = new Set([...Object.keys(localSnapshot), ...Object.keys(remoteSnapshot)]);
@@ -295,12 +319,13 @@ export function markLocalStorageKeyUpdated(key: string): void {
 }
 
 function readLocalUserMapState(): UserMapState {
+  const localStorageSnapshot = readLocalStorageSnapshot();
   return {
     shapes: readLocalFarmShapes(),
     places: readLocalSavedPlaces(),
     waterPoints: readLocalWaterPoints(),
-    localStorageSnapshot: readLocalStorageSnapshot(),
-    localStorageUpdatedAt: readLocalStorageUpdatedAt(),
+    localStorageSnapshot,
+    localStorageUpdatedAt: withInferredStorageTimestamps(localStorageSnapshot, readLocalStorageUpdatedAt()),
   };
 }
 
@@ -365,7 +390,7 @@ export async function hydrateUserMapStateFromCloud(): Promise<UserMapState | nul
     if (hasAnyState(local)) {
       const initial = {
         ...local,
-        localStorageUpdatedAt: withLegacyStorageTimestamps(local.localStorageSnapshot, local.localStorageUpdatedAt),
+        localStorageUpdatedAt: withInferredStorageTimestamps(local.localStorageSnapshot, local.localStorageUpdatedAt),
       };
       await pushUserMapStatePatch(initial);
       writeLocalStorageUpdatedAt(initial.localStorageUpdatedAt);
