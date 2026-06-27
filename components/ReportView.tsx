@@ -237,10 +237,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [justSaved, setJustSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState('');
   const activePlace = savedPlaces?.find((p) => p.id === activePlaceId) ?? null;
   const activePlaceTitle = activePlaceName ?? activePlace?.name ?? '';
+  const activePlaceLabel = activePlace
+    ? PLACE_LABELS.find((l) => l.v === activePlace.label)?.name ?? 'Place'
+    : '';
+  const activePlaceHeader = activePlaceTitle && activePlaceLabel
+    ? `${activePlaceTitle} · ${activePlaceLabel}`
+    : activePlaceTitle;
   const headerCoords = `${d.biome.name} · ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E`;
-  const headerTitle = activePlaceTitle ? `${activePlaceTitle} · ${headerCoords}` : headerCoords;
+  const headerTitle = activePlaceHeader ? `${activePlaceHeader} · ${headerCoords}` : headerCoords;
+  const formatArea = (areaM2: number, areaHa?: number) =>
+    areaHa != null && areaHa >= 1 ? `${areaHa} ha` : `${Math.round(areaM2).toLocaleString()} m2`;
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -334,6 +343,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function exportPdf() {
     if (!report) return;
     setExporting(true);
+    setExportError('');
 
     try {
       const { jsPDF } = await import('jspdf');
@@ -459,7 +469,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       };
 
       const fileSafe = (value: string) => value.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'site';
-      const fileName = `ImbewuField-Site-Report-${fileSafe(activePlaceTitle || d.biome.name)}-${new Date().toISOString().slice(0, 10)}.pdf`;
+      const fileName = `ImbewuField-Site-Report-${fileSafe(activePlaceHeader || d.biome.name)}-${new Date().toISOString().slice(0, 10)}.pdf`;
 
       // Cover section
       doc.setFont('helvetica', 'bold');
@@ -476,8 +486,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       doc.line(marginX, y, pageWidth - marginX, y);
       y += 16;
 
-      if (activePlaceTitle) {
-        addParagraph(`Place: ${activePlaceTitle}`, { style: 'bold', gapAfter: 2 });
+      if (activePlaceHeader) {
+        addParagraph(`Place: ${activePlaceHeader}`, { style: 'bold', gapAfter: 2 });
       }
       addParagraph(`Site: ${d.biome.name}`, { style: 'bold', gapAfter: 2 });
       addParagraph(`Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E`, { gapAfter: 2 });
@@ -490,10 +500,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         addParagraph(`Vegetation: ${d.vegetation.vegUnit}`, { gapAfter: 2 });
       }
       if (siteData) {
-        addParagraph(`Site area: ${siteData.areaHa < 1 ? `${siteData.areaM2.toLocaleString()} m²` : `${siteData.areaHa} ha`} · perimeter ${siteData.perimeterKm.toFixed(2)} km`, { gapAfter: 2 });
+        addParagraph(`Site area: ${formatArea(siteData.areaM2, siteData.areaHa)} · perimeter ${siteData.perimeterKm.toFixed(2)} km`, { gapAfter: 2 });
       }
       if (waterData) {
-        addParagraph(`Water storage: ~${waterData.estVolumeKL.toLocaleString()} kL across ${waterData.count} feature${waterData.count === 1 ? '' : 's'} · ${waterData.areaM2.toLocaleString()} m²`, { gapAfter: 4 });
+        addParagraph(`Water storage: ~${waterData.estVolumeKL.toLocaleString()} kL across ${waterData.count} feature${waterData.count === 1 ? '' : 's'} · ${formatArea(waterData.areaM2)}`, { gapAfter: 4 });
       }
 
       if (savedPlaces && savedPlaces.length > 0) {
@@ -608,7 +618,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 4000);
-    } catch {
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : 'PDF export failed. Opening print as a fallback.');
       // Keep a last-resort print path if PDF generation or download is blocked.
       window.print();
     } finally {
@@ -619,7 +630,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function shareReport() {
     if (!d || !report) return;
     const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
-    const text = `ImbewuField Site Analysis\n${activePlaceTitle ? `${activePlaceTitle}\n` : ''}${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (fieldproof.vercel.app)`;
+    const text = `ImbewuField Site Analysis\n${activePlaceHeader ? `${activePlaceHeader}\n` : ''}${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (fieldproof.vercel.app)`;
     if (typeof navigator !== 'undefined' && navigator.share) {
       try { await navigator.share({ title: 'ImbewuField Site Analysis', text }); return; } catch { /* user cancelled */ }
     }
@@ -723,6 +734,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : generated ? 'Regenerate' : 'Generate report'}
         </button>
       </div>
+      {exportError && (
+        <div className="no-print px-6 py-2 text-xs font-sans"
+          style={{ background: 'rgba(192,83,30,0.08)', borderBottom: '1px solid rgba(192,83,30,0.2)', color: '#9E5C08' }}>
+          PDF export had a problem, so print fallback was opened: {exportError}
+        </div>
+      )}
 
       <div className="flex-1 flex overflow-hidden">
 
@@ -957,14 +974,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               {/* Site summary bar */}
               <div className="mt-5 grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
                 {[
-                  ...(activePlaceTitle ? [{ label: 'Place', value: activePlaceTitle, color: '#1F4D2B' }] : []),
+                  ...(activePlaceHeader ? [{ label: 'Place', value: activePlaceHeader, color: '#1F4D2B' }] : []),
                   { label: 'Biome', value: d.biome.name, color: bColor },
                   { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
                   { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
                   { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C' },
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
-                  ...(siteData ? [{ label: 'Site Area', value: siteData.areaHa < 1 ? `${siteData.areaM2.toLocaleString()} m²` : `${siteData.areaHa} ha`, color: '#2D6B3C' }] : []),
-                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL · ${waterData.areaM2.toLocaleString()} m²`, color: '#235E86' }] : []),
+                  ...(siteData ? [{ label: 'Site Area', value: formatArea(siteData.areaM2, siteData.areaHa), color: '#2D6B3C' }] : []),
+                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL · ${formatArea(waterData.areaM2)}`, color: '#235E86' }] : []),
                 ].map(({ label, value, color }) => (
                   <div key={label} className="p-3 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
                     <div className="text-xs font-mono mb-0.5" style={{ color: '#5C5040' }}>{label}</div>

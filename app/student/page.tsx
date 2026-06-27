@@ -159,11 +159,16 @@ export default function StudentPage() {
 
   const load = useCallback(async () => {
     setFetching(true);
-    if (isLive && user) {
-      const rows = await myCourseProgress();
-      setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
+    try {
+      if (isLive && user) {
+        const rows = await myCourseProgress();
+        setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
+      }
+    } catch {
+      setDoneIds(new Set());
+    } finally {
+      setFetching(false);
     }
-    setFetching(false);
   }, [isLive, user]);
 
   useEffect(() => { if (!loading) load(); }, [loading, load]);
@@ -178,8 +183,17 @@ export default function StudentPage() {
     });
     if (isLive) {
       setToggling(moduleId);
-      await setCourseProgress(moduleId, willBeDone);
-      setToggling(null);
+      try {
+        await setCourseProgress(moduleId, willBeDone);
+      } catch {
+        setDoneIds((prev) => {
+          const next = new Set(prev);
+          willBeDone ? next.delete(moduleId) : next.add(moduleId);
+          return next;
+        });
+      } finally {
+        setToggling(null);
+      }
     }
   }
 

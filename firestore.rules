@@ -15,11 +15,48 @@ service cloud.firestore {
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
     function sameOrg(d)    { return isStaff() && d.org_id == myOrg(); }
+    function garden(gid)   { return get(/databases/$(database)/documents/gardens/$(gid)).data; }
+    function safeProfileKeys() {
+      return [
+        'full_name',
+        'language',
+        'phone',
+        'photo_url',
+        'bio',
+        'skills',
+        'showOnMap',
+        'mapLat',
+        'mapLon',
+        'role',
+        'org_id'
+      ];
+    }
+    function safeSelfProfileUpdateKeys() {
+      return [
+        'full_name',
+        'language',
+        'phone',
+        'photo_url',
+        'bio',
+        'skills',
+        'showOnMap',
+        'mapLat',
+        'mapLon'
+      ];
+    }
 
     match /profiles/{uid} {
       allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
-      allow create: if signedIn() && uid == request.auth.uid;
-      allow update: if signedIn() && uid == request.auth.uid;
+      allow create: if signedIn()
+        && uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(safeProfileKeys())
+        && request.resource.data.role == 'farmer'
+        && request.resource.data.org_id == null;
+      allow update: if signedIn()
+        && uid == request.auth.uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.org_id == resource.data.org_id
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(safeSelfProfileUpdateKeys());
     }
 
     match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isStaff()); }
@@ -35,14 +72,21 @@ service cloud.firestore {
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
 
       match /members/{pid} {
-        allow read:  if signedIn();
-        allow write: if signedIn() && (isStaff() ||
-          get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid);
+        allow read:  if signedIn() && (
+          pid == request.auth.uid ||
+          isMentor() ||
+          (isStaff() && garden(gid).org_id == myOrg()) ||
+          garden(gid).supervisor_id == request.auth.uid
+        );
+        allow write: if signedIn() && (
+          (isStaff() && garden(gid).org_id == myOrg()) ||
+          garden(gid).supervisor_id == request.auth.uid
+        );
       }
     }
 
     match /{path=**}/members/{pid} {
-      allow read: if signedIn();
+      allow read: if false;
     }
 
     match /production_logs/{id} {

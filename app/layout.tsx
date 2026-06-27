@@ -3,6 +3,7 @@ import { Newsreader, Public_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
+import { LanguageProvider } from '@/lib/i18n';
 import ChatWidget from '@/components/ChatWidget';
 import StorageMigrationBridge from '@/components/StorageMigrationBridge';
 
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="h-screen overflow-hidden bg-paper text-ink font-sans">
         <ThemeProvider>
           <AuthProvider>
-            {children}
-            <StorageMigrationBridge />
-            <ChatWidget />
+            <LanguageProvider>
+              {children}
+              <StorageMigrationBridge />
+              <ChatWidget />
+            </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

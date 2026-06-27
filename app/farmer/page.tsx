@@ -153,11 +153,19 @@ function HomeInner() {
     let cancelled = false;
     async function load() {
       setPeopleLoading(true);
-      const [team, me] = await Promise.all([listOrgPeople(), getMyProfile()]);
-      if (!cancelled) {
-        setPeople(team);
-        setMyProfile(me);
-        setPeopleLoading(false);
+      try {
+        const [team, me] = await Promise.all([listOrgPeople(), getMyProfile()]);
+        if (!cancelled) {
+          setPeople(team);
+          setMyProfile(me);
+        }
+      } catch {
+        if (!cancelled) {
+          setPeople([]);
+          setMyProfile(null);
+        }
+      } finally {
+        if (!cancelled) setPeopleLoading(false);
       }
     }
     load();

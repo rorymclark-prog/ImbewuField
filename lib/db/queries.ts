@@ -16,6 +16,14 @@ import type {
   Survey, SurveyQuestion, SurveyResponse,
 } from './types';
 
+export type SelfProfilePatch = Partial<Pick<
+  Profile,
+  'full_name' | 'language' | 'phone' | 'photo_url' | 'bio' | 'skills' | 'showOnMap' | 'mapLat' | 'mapLon'
+>> & {
+  role?: 'farmer';
+  org_id?: null;
+};
+
 const fb = () => getFirebase();
 const uid = () => fb()?.auth.currentUser?.uid ?? null;
 const rows = <T,>(snap: { docs: { id: string; data: () => unknown }[] }) =>
@@ -27,9 +35,12 @@ export async function getMyProfile(): Promise<Profile | null> {
   const s = await getDoc(doc(f.db, 'profiles', u));
   return s.exists() ? ({ id: s.id, ...s.data() } as unknown as Profile) : null;
 }
-export async function updateMyProfile(patch: Partial<Profile>): Promise<void> {
+export async function updateMyProfile(patch: SelfProfilePatch): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await setDoc(doc(f.db, 'profiles', u), patch, { merge: true });
+  const safePatch = Object.fromEntries(
+    Object.entries(patch).filter(([, value]) => value !== undefined)
+  ) as SelfProfilePatch;
+  await setDoc(doc(f.db, 'profiles', u), safePatch, { merge: true });
 }
 
 // ---- people directory (org-scoped) ----

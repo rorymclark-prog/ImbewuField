@@ -35,7 +35,7 @@ interface AuthContextValue {
   role: UserRole | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<string | null>;
-  signUp: (email: string, password: string, fullName: string, role?: UserRole) => Promise<string | null>;
+  signUp: (email: string, password: string, fullName: string) => Promise<string | null>;
   signInWithGoogle: () => Promise<string | null>;
   resetPassword: (email: string) => Promise<string | null>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<string | null>;
@@ -127,14 +127,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     email: string,
     password: string,
     fullName: string,
-    role: UserRole = 'farmer',
   ): Promise<string | null> => {
     const fb = getFirebase();
     if (!fb) return 'Firebase is not configured yet — running in sample mode.';
     try {
       const cred = await createUserWithEmailAndPassword(fb.auth, email, password);
       await updateProfile(cred.user, { displayName: fullName });
-      await updateMyProfile({ full_name: fullName, role, language: 'en' });
+      await updateMyProfile({ full_name: fullName, role: 'farmer', org_id: null, language: 'en' });
       return null;
     } catch (err) {
       return friendlyAuthError(err);

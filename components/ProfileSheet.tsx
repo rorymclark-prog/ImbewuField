@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useCallback } from 'react';
 import { X, Camera, Check, Loader2, User } from 'lucide-react';
-import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
+import { uploadProfilePhoto, updateMyProfile, type SelfProfilePatch } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
 
 const ROLE_LABEL: Record<string, string> = {
@@ -214,7 +214,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
     if (!profile) return;
     setSaving(true);
     try {
-      const patch: Partial<typeof profile> = {
+      const patch: SelfProfilePatch = {
         full_name: fullName.trim() || null,
         bio: bio.trim() || null,
         skills: skills.length > 0 ? skills : null,

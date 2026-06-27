@@ -57,9 +57,13 @@ function TraineeCard({ trainee, doneIds, isLive }: {
   async function handleLog() {
     if (!notes.trim()) return;
     setSaving(true);
-    if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
-    setSaving(false); setSaved(true); setNotes('');
-    setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
+    try {
+      if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
+      setSaved(true); setNotes('');
+      setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -159,16 +163,22 @@ export default function MentorPage() {
 
   const load = useCallback(async () => {
     setFetching(true);
-    if (isLive) {
-      const list = await listTrainees();
-      setTrainees(list);
-      const map: Record<string, CourseProgress[]> = {};
-      await Promise.all(list.map(async (t) => { map[t.id] = await getCourseProgress(t.id); }));
-      setProgressMap(map);
-    } else {
-      setTrainees(SAMPLE);
+    try {
+      if (isLive) {
+        const list = await listTrainees();
+        setTrainees(list);
+        const map: Record<string, CourseProgress[]> = {};
+        await Promise.all(list.map(async (t) => { map[t.id] = await getCourseProgress(t.id); }));
+        setProgressMap(map);
+      } else {
+        setTrainees(SAMPLE);
+      }
+    } catch {
+      setTrainees([]);
+      setProgressMap({});
+    } finally {
+      setFetching(false);
     }
-    setFetching(false);
   }, [isLive]);
 
   useEffect(() => { load(); }, [load]);

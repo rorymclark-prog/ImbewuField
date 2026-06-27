@@ -5,17 +5,8 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, ChevronLeft, Mail, Check } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import type { UserRole } from '@/lib/db/types';
 
 type Mode = 'signin' | 'create' | 'reset';
-
-const SIGNUP_ROLES: { value: UserRole; label: string }[] = [
-  { value: 'farmer',  label: 'Farmer' },
-  { value: 'mentor',  label: 'Mentor (trainer / field supervisor)' },
-  { value: 'student', label: 'Student' },
-  { value: 'ngo',     label: 'NGO coordinator' },
-  { value: 'funder',  label: 'Funder / donor' },
-];
 
 // Google icon (verbatim SVG — no Lucide equivalent)
 function GoogleIcon() {
@@ -37,7 +28,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
-  const [role, setRole] = useState<UserRole>('farmer');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -58,7 +48,7 @@ export default function LoginPage() {
       }
       const err = mode === 'signin'
         ? await signIn(email, password)
-        : await signUp(email, password, fullName.trim(), role);
+        : await signUp(email, password, fullName.trim());
       if (err) { setError(err); } else { router.push('/home'); }
     } finally {
       setLoading(false);
@@ -182,12 +172,10 @@ export default function LoginPage() {
             )}
 
             {mode === 'create' && (
-              <select value={role} onChange={(e) => setRole(e.target.value as UserRole)}
-                disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none"
-                style={inputStyle()}>
-                {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
-              </select>
+              <p className="font-sans text-xs rounded-lg px-3 py-2"
+                style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.16)', color: '#5C5040' }}>
+                New accounts start as farmer accounts. Mentor, NGO, and funder access should be assigned by an administrator.
+              </p>
             )}
 
             {error && <p className="font-sans" style={{ fontSize: 13, color: '#D4922A' }}>{error}</p>}

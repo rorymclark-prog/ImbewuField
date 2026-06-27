@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MAP_STATE_EVENT, queueUserMapStatePatch, readLocalFarmShapes, hydrateUserMapStateFromCloud, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
+import { MAP_STATE_EVENT, queueUserMapStatePatch, pushUserMapStatePatch, readLocalFarmShapes, hydrateUserMapStateFromCloud, writeLocalSavedPlaces, writeLocalWaterPoints, writeLocalFarmShapes } from '@/lib/map-sync';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
@@ -52,7 +52,7 @@ const WATER_PALETTE = [
 ] as const;
 
 function formatM2(areaM2: number): string {
-  return `${Math.round(areaM2).toLocaleString()} m²`;
+  return `${Math.round(areaM2).toLocaleString()} m2`;
 }
 
 function formatLandArea(areaM2: number): string {
@@ -934,6 +934,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (ftype === type && f.id != null) draw.delete(String(f.id));
     });
     setEditingFeatureId(null);
+    const next = draw.getAll();
+    writeLocalFarmShapes(next, { notify: true });
+    void pushUserMapStatePatch({ shapes: next }).catch(() => {
+      queueUserMapStatePatch({ shapes: next });
+    });
     recompute();
   }, [recompute]);
 
@@ -1481,6 +1486,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     try { draw.delete(featureId); } catch {}
     setEditingFeatureId((prev) => (prev === featureId ? null : prev));
     setPendingDelete(null);
+    const next = draw.getAll();
+    writeLocalFarmShapes(next, { notify: true });
+    void pushUserMapStatePatch({ shapes: next }).catch(() => {
+      queueUserMapStatePatch({ shapes: next });
+    });
     recompute();
   }, [recompute]);
 
