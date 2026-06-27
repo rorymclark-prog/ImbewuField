@@ -586,6 +586,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }
   }, [editingFeatureId, redrawShapesFromStorage]);
 
+  // Stable handle to the latest redraw callback, so the sync subscription can depend on
+  // uid alone and not re-subscribe (re-reconcile) every time the callback identity changes.
+  const redrawRef = useRef(redrawShapesFromStorage);
+  redrawRef.current = redrawShapesFromStorage;
+
   // Poll for the map being ready, then restore saved shapes once. More reliable than
   // onLoad (which can miss when the style is cached or the page bounces during nav).
   useEffect(() => {
@@ -614,7 +619,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const unsub = subscribeUserMapData(uid, {
       onPlaces: () => window.dispatchEvent(new CustomEvent('permamap-places-changed')),
       onWater:  () => window.dispatchEvent(new CustomEvent('imbewu-water-points-changed')),
-      onShapes: () => redrawShapesFromStorage(),
+      onShapes: () => redrawRef.current(),
       onMergeDone: () => {
         mergeReadyRef.current = true;
         // Flush any shape the user drew during the reconcile window (push was gated off).
@@ -623,7 +628,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       },
     });
     return () => { mergeReadyRef.current = false; unsub(); };
-  }, [user?.uid, redrawShapesFromStorage]);
+  }, [user?.uid]);
 
   // cancelDraw: reliably exits an in-progress polygon draw.
   // Calling draw.changeMode('simple_select') while in draw_polygon discards any
