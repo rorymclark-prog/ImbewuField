@@ -1205,24 +1205,29 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
-  // Sync draw layer visibility with showFeatures / showHatch toggles.
-  // Uses setFilter(['literal', false]) to hide layers — more reliable than paint/layout
-  // properties which can be reset by Draw's render cycle. Restores original filters when on.
-  // Re-applied on 'styledata' so it survives any Draw re-init.
+  // Sync Draw's generated hot/cold layers with the UI toggles.
   useEffect(() => {
     const rawMap = mapRef.current?.getMap();
     if (!rawMap) return;
+
+    const setDrawLayerVisibility = (baseId: string, visibility: 'visible' | 'none') => {
+      [baseId, `${baseId}.cold`, `${baseId}.hot`].forEach((layerId) => {
+        if (rawMap.getLayer(layerId)) {
+          rawMap.setLayoutProperty(layerId, 'visibility', visibility);
+        }
+      });
+    };
 
     const applyVisibility = () => {
       const borderVisibility = showFeatures ? 'visible' : 'none';
       const fillVisibility = showFeatures && showHatch ? 'visible' : 'none';
       try {
-        if (rawMap.getLayer('gl-draw-poly-casing-land'))  rawMap.setLayoutProperty('gl-draw-poly-casing-land',  'visibility', borderVisibility);
-        if (rawMap.getLayer('gl-draw-poly-stroke-land'))  rawMap.setLayoutProperty('gl-draw-poly-stroke-land',  'visibility', borderVisibility);
-        if (rawMap.getLayer('gl-draw-poly-casing-water')) rawMap.setLayoutProperty('gl-draw-poly-casing-water', 'visibility', borderVisibility);
-        if (rawMap.getLayer('gl-draw-poly-stroke-water')) rawMap.setLayoutProperty('gl-draw-poly-stroke-water', 'visibility', borderVisibility);
-        if (rawMap.getLayer('gl-draw-poly-fill-land'))    rawMap.setLayoutProperty('gl-draw-poly-fill-land',    'visibility', fillVisibility);
-        if (rawMap.getLayer('gl-draw-poly-fill-water'))   rawMap.setLayoutProperty('gl-draw-poly-fill-water',   'visibility', fillVisibility);
+        setDrawLayerVisibility('gl-draw-poly-casing-land', borderVisibility);
+        setDrawLayerVisibility('gl-draw-poly-stroke-land', borderVisibility);
+        setDrawLayerVisibility('gl-draw-poly-casing-water', borderVisibility);
+        setDrawLayerVisibility('gl-draw-poly-stroke-water', borderVisibility);
+        setDrawLayerVisibility('gl-draw-poly-fill-land', fillVisibility);
+        setDrawLayerVisibility('gl-draw-poly-fill-water', fillVisibility);
         // eslint-disable-next-line no-console
         console.debug('[toggles] features=%s hatch=%s border=%s fill=%s', showFeatures, showHatch, borderVisibility, fillVisibility);
       } catch (e) {
@@ -1233,7 +1238,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
     applyVisibility();
     rawMap.on('styledata', applyVisibility);
-    return () => { rawMap.off('styledata', applyVisibility); };
+    rawMap.on('draw.render', applyVisibility);
+    return () => {
+      rawMap.off('styledata', applyVisibility);
+      rawMap.off('draw.render', applyVisibility);
+    };
   }, [showFeatures, showHatch]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
