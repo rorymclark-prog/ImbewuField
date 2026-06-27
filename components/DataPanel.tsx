@@ -49,6 +49,66 @@ interface Props {
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
 type Tab = typeof TABS[number];
+type GardenSurveyGoal = 'feed' | 'income' | 'soil';
+
+interface GardenSurveySnapshot {
+  sun: string | null;
+  slope: string | null;
+  resources: string[];
+  tanks: number;
+  goal: GardenSurveyGoal | null;
+  beds: number;
+  savedAt?: string;
+}
+
+const GARDEN_SURVEY_KEY = 'imbewu_garden_survey';
+
+function gardenSurveyKey(placeId?: string | null): string {
+  return placeId ? `${GARDEN_SURVEY_KEY}_${placeId}` : `${GARDEN_SURVEY_KEY}_default`;
+}
+
+function parseGardenSurvey(raw: string | null): GardenSurveySnapshot | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as Partial<GardenSurveySnapshot>;
+    if (!parsed || typeof parsed !== 'object') return null;
+    return {
+      sun: typeof parsed.sun === 'string' ? parsed.sun : null,
+      slope: typeof parsed.slope === 'string' ? parsed.slope : null,
+      resources: Array.isArray(parsed.resources) ? parsed.resources.filter((v): v is string => typeof v === 'string') : [],
+      tanks: typeof parsed.tanks === 'number' ? parsed.tanks : 2,
+      goal: parsed.goal === 'feed' || parsed.goal === 'income' || parsed.goal === 'soil' ? parsed.goal : null,
+      beds: typeof parsed.beds === 'number' ? parsed.beds : 0,
+      savedAt: typeof parsed.savedAt === 'string' ? parsed.savedAt : undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function loadGardenSurvey(placeId?: string | null): GardenSurveySnapshot | null {
+  if (typeof window === 'undefined') return null;
+  const keys = placeId
+    ? [gardenSurveyKey(placeId)]
+    : [gardenSurveyKey(null), GARDEN_SURVEY_KEY];
+  for (const key of keys) {
+    const survey = parseGardenSurvey(window.localStorage.getItem(key));
+    if (survey) return survey;
+  }
+  return null;
+}
+
+function gardenSurveyProgress(survey: GardenSurveySnapshot | null): { done: number; total: number; pct: number } {
+  const steps = [
+    true,
+    !!(survey?.sun && survey.slope),
+    !!(survey?.resources?.length),
+    !!survey?.goal,
+    !!(survey?.beds && survey.beds > 0),
+  ];
+  const done = survey ? steps.filter(Boolean).length : 0;
+  return { done, total: 5, pct: Math.round((done / 5) * 100) };
+}
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
@@ -285,15 +345,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   }, []);
   const [tab, setTab] = useState<Tab>('Overview');
   const [survey, setSurvey] = useState<SiteSurvey | null>(null);
-  useEffect(() => { setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null); }, [activePlaceId]);
+  const [gardenSurvey, setGardenSurvey] = useState<GardenSurveySnapshot | null>(null);
+  const refreshSurveys = () => {
+    setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null);
+    setGardenSurvey(loadGardenSurvey(activePlaceId ?? null));
+  };
+  useEffect(() => { refreshSurveys(); }, [activePlaceId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
-  useEffect(() => { if (!surveySheetOpen && activePlaceId) setSurvey(loadSurvey(activePlaceId)); }, [surveySheetOpen]);
+  useEffect(() => { if (!surveySheetOpen) refreshSurveys(); }, [surveySheetOpen]);
   useEffect(() => {
-    const refreshSurvey = () => setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null);
-    window.addEventListener(MAP_STATE_EVENT, refreshSurvey);
-    return () => window.removeEventListener(MAP_STATE_EVENT, refreshSurvey);
+    window.addEventListener(MAP_STATE_EVENT, refreshSurveys);
+    return () => window.removeEventListener(MAP_STATE_EVENT, refreshSurveys);
   }, [activePlaceId]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
 
@@ -1261,7 +1325,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Site survey card */}
             {(() => {
               const sv = survey;
-              const steps = [
+              const siteSteps = [
                 !!(sv?.siteType && sv.goals?.length > 0),
                 !!(sv?.waterSource?.length),
                 sv?.roofMainM2 !== undefined && sv?.roofMainM2 !== null,
@@ -1269,28 +1333,36 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 !!(sv?.existingCrops?.length),
                 !!(sv?.farmingPractice && sv.challenges?.length),
               ];
-              const done = steps.filter(Boolean).length;
-              const pct = Math.round(done / 6 * 100);
+              const siteDone = siteSteps.filter(Boolean).length;
+              const garden = gardenSurveyProgress(gardenSurvey);
+              const showingGardenSurvey = !sv && gardenSurvey !== null;
+              const done = showingGardenSurvey ? garden.done : siteDone;
+              const total = showingGardenSurvey ? garden.total : 6;
+              const pct = showingGardenSurvey ? garden.pct : Math.round(done / 6 * 100);
               const GOAL_LABELS: Record<string, string> = {
                 food: t('surveyGoalFood'), income: t('surveyGoalIncome'),
                 soil: t('surveyGoalSoil'), education: t('surveyGoalEducation'),
+                feed: 'Food',
               };
+              const goals = showingGardenSurvey && gardenSurvey?.goal
+                ? [gardenSurvey.goal]
+                : (sv?.goals ?? []);
               return (
                 <div style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                     <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
-                      {t('surveySectionLabel')}
+                      {showingGardenSurvey ? 'Garden survey' : t('surveySectionLabel')}
                     </span>
-                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === 6 ? '#3C6B3F' : '#B07A1E' }}>
-                      {t('surveyStepsOf6').replace('{n}', String(done))}
+                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === total ? '#3C6B3F' : '#B07A1E' }}>
+                      {showingGardenSurvey ? `${done} of ${total} steps` : t('surveyStepsOf6').replace('{n}', String(done))}
                     </span>
                   </div>
                   <div style={{ height: 6, background: '#DCD2BD', borderRadius: 3, overflow: 'hidden', marginBottom: 10 }}>
-                    <div style={{ width: `${pct}%`, height: '100%', background: done === 6 ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
+                    <div style={{ width: `${pct}%`, height: '100%', background: done === total ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
                   </div>
-                  {(sv?.goals?.length ?? 0) > 0 && (
+                  {goals.length > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
-                      {(sv?.goals ?? []).map((g: string) => (
+                      {goals.map((g: string) => (
                         <span key={g} style={{ font: '500 11px/1 system-ui', padding: '4px 9px', borderRadius: 99, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>
                           {GOAL_LABELS[g] ?? g}
                         </span>
@@ -1298,10 +1370,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     </div>
                   )}
                   <button
-                    onClick={() => setSurveySheetOpen(true)}
+                    onClick={() => {
+                      if (showingGardenSurvey) {
+                        window.location.href = activePlaceId ? `/survey?placeId=${activePlaceId}` : '/survey';
+                      } else {
+                        setSurveySheetOpen(true);
+                      }
+                    }}
                     style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
                   >
-                    {done === 6 ? t('surveyUpdateButton') : t('surveyOpenButton')}
+                    {showingGardenSurvey ? 'Review garden survey' : done === 6 ? t('surveyUpdateButton') : t('surveyOpenButton')}
                   </button>
                 </div>
               );

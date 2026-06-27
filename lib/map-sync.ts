@@ -99,7 +99,7 @@ function cleanStorageUpdatedAt(value: unknown): Record<string, number> {
   return cleaned;
 }
 
-function readLocalStorageUpdatedAt(): Record<string, number> {
+export function readLocalStorageUpdatedAt(): Record<string, number> {
   if (typeof window === 'undefined') return {};
   try {
     return cleanStorageUpdatedAt(safeParse<Record<string, unknown>>(window.localStorage.getItem(LOCAL_STORAGE_META_KEY), {}));
@@ -315,6 +315,29 @@ export function markLocalStorageKeyUpdated(key: string): void {
     localStorageSnapshot: readLocalStorageSnapshot(),
     localStorageUpdatedAt,
   });
+  emit(MAP_STATE_EVENT);
+}
+
+export function importLegacyLocalStorageSnapshot(
+  snapshot: Record<string, string>,
+  updatedAt: Record<string, number> = {},
+): void {
+  if (typeof window === 'undefined') return;
+  const incomingSnapshot: Record<string, string> = {};
+  Object.entries(snapshot).forEach(([key, value]) => {
+    if (isSyncableStorageKey(key) && typeof value === 'string') incomingSnapshot[key] = value;
+  });
+  if (Object.keys(incomingSnapshot).length === 0) return;
+
+  const merged = mergeLocalStorageState(
+    readLocalStorageSnapshot(),
+    readLocalStorageUpdatedAt(),
+    incomingSnapshot,
+    updatedAt,
+  );
+  writeLocalStorageSnapshot(merged.localStorageSnapshot);
+  writeLocalStorageUpdatedAt(merged.localStorageUpdatedAt);
+  queueUserMapStatePatch(merged);
   emit(MAP_STATE_EVENT);
 }
 

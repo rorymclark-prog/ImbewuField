@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText } from 'lucide-react';
 import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
+import { MAP_STATE_EVENT } from '@/lib/map-sync';
 
 interface Props {
   placeId: string;
@@ -83,6 +84,7 @@ function NumInput({ value, onChange, placeholder, hint }: { value: string; onCha
 
 export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
   const existing = loadSurvey(placeId);
+  const [loadedSurveyAt, setLoadedSurveyAt] = useState(existing?.savedAt ?? '');
   const [places, setPlaces] = useState<SavedPlace[]>([]);
   useEffect(() => {
     const refresh = () => setPlaces(loadPlaces());
@@ -127,6 +129,42 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
   const [isCommercial, setIsCommercial] = useState(existing?.isCommercial ?? false);
   const [marketType, setMarketType] = useState(existing?.marketType ?? '');
   const [notes, setNotes] = useState(existing?.notes ?? '');
+
+  const applySurvey = useCallback((next: SiteSurvey) => {
+    setSiteType(next.siteType ?? 'homestead');
+    setAdults(next.adults ?? '');
+    setMemberCount(next.memberCount ?? '');
+    setGoals(next.goals ?? []);
+    setWaterSource(next.waterSource ?? []);
+    setWaterDelivery(Array.isArray(next.waterDelivery) ? next.waterDelivery : (next.waterDelivery ? [next.waterDelivery] : []));
+    setWaterStorage(next.waterStorage ?? []);
+    setRoofMain(next.roofMainM2?.toString() ?? '');
+    setRoofSecondary(next.roofSecondaryM2?.toString() ?? '');
+    setHasGutters(next.hasGutters ?? false);
+    setLandPrep(next.landPrepMethod ?? '');
+    setSoilCondition(next.soilCondition ?? '');
+    setSoilAmendments(next.soilAmendments ?? []);
+    setFencing(next.hasFencing ?? '');
+    setCrops(next.existingCrops ?? []);
+    setLivestock(next.livestock ?? []);
+    setOtherInfra(next.otherInfra ?? []);
+    setPractice(next.farmingPractice ?? '');
+    setChallenges(next.challenges ?? []);
+    setIsCommercial(next.isCommercial ?? false);
+    setMarketType(next.marketType ?? '');
+    setNotes(next.notes ?? '');
+    setLoadedSurveyAt(next.savedAt);
+  }, []);
+
+  useEffect(() => {
+    const refreshFromStorage = () => {
+      const next = loadSurvey(placeId);
+      if (next && next.savedAt !== loadedSurveyAt) applySurvey(next);
+    };
+    refreshFromStorage();
+    window.addEventListener(MAP_STATE_EVENT, refreshFromStorage);
+    return () => window.removeEventListener(MAP_STATE_EVENT, refreshFromStorage);
+  }, [applySurvey, loadedSurveyAt, placeId]);
 
   const totalRoof = (Number(roofMain) || 0) + (Number(roofSecondary) || 0);
   const roofHarvest600 = totalRoof > 0 ? Math.round(totalRoof * 600 * (hasGutters ? 0.8 : 0.6) / 1000) : 0;

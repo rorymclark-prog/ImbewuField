@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
 import ChatWidget from '@/components/ChatWidget';
+import StorageMigrationBridge from '@/components/StorageMigrationBridge';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             {children}
+            <StorageMigrationBridge />
             <ChatWidget />
           </AuthProvider>
         </ThemeProvider>
