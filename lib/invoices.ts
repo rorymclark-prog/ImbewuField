@@ -2,6 +2,8 @@
 // and past invoices the farmer can call up and reprint. localStorage-backed
 // (offline-first, same as the rest of the app).
 
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
+
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
 export interface SavedInvoice {
@@ -22,7 +24,10 @@ function read<T>(key: string): T[] {
   try { const v = JSON.parse(localStorage.getItem(key) ?? '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
 }
 function write<T>(key: string, v: T[]) {
-  try { localStorage.setItem(key, JSON.stringify(v)); } catch {}
+  try {
+    localStorage.setItem(key, JSON.stringify(v));
+    markLocalStorageKeyUpdated(key);
+  } catch {}
 }
 function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-invoices-changed'));

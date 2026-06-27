@@ -11,6 +11,7 @@ export interface UserMapState {
   places: SavedPlace[];
   waterPoints: WaterPoint[];
   localStorageSnapshot: Record<string, string>;
+  localStorageUpdatedAt: Record<string, number>;
 }
 
 type UserMapPatch = Partial<UserMapState>;
@@ -20,6 +21,8 @@ const SHAPES_KEY = 'imbewu_farm_shapes';
 const PLACES_KEY = 'permamap_saved_places';
 const LEGACY_PLACES_KEY = 'imbewu_places';
 const WATER_POINTS_KEY = 'imbewu_water_points';
+const LOCAL_STORAGE_META_KEY = 'imbewu_sync_meta_v1';
+const LEGACY_STORAGE_TIMESTAMP = 1;
 
 const MAP_STATE_EVENT = 'imbewu-map-state-changed';
 const PLACES_EVENT = 'permamap-places-changed';
@@ -82,7 +85,96 @@ function cleanPatch(patch: UserMapPatch): UserMapPatch {
   if (patch.places !== undefined) next.places = patch.places;
   if (patch.waterPoints !== undefined) next.waterPoints = patch.waterPoints;
   if (patch.localStorageSnapshot !== undefined) next.localStorageSnapshot = patch.localStorageSnapshot;
+  if (patch.localStorageUpdatedAt !== undefined) next.localStorageUpdatedAt = patch.localStorageUpdatedAt;
   return next;
+}
+
+function cleanStorageUpdatedAt(value: unknown): Record<string, number> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  const cleaned: Record<string, number> = {};
+  Object.entries(value as Record<string, unknown>).forEach(([key, raw]) => {
+    if (!isSyncableStorageKey(key) || typeof raw !== 'number' || !Number.isFinite(raw) || raw <= 0) return;
+    cleaned[key] = raw;
+  });
+  return cleaned;
+}
+
+function readLocalStorageUpdatedAt(): Record<string, number> {
+  if (typeof window === 'undefined') return {};
+  try {
+    return cleanStorageUpdatedAt(safeParse<Record<string, unknown>>(window.localStorage.getItem(LOCAL_STORAGE_META_KEY), {}));
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalStorageUpdatedAt(updatedAt: Record<string, number>): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(LOCAL_STORAGE_META_KEY, JSON.stringify(cleanStorageUpdatedAt(updatedAt)));
+  } catch {
+    // Keep the app usable if storage is blocked or full.
+  }
+}
+
+function withLegacyStorageTimestamps(
+  snapshot: Record<string, string>,
+  updatedAt: Record<string, number>,
+): Record<string, number> {
+  const next = cleanStorageUpdatedAt(updatedAt);
+  Object.keys(snapshot).forEach((key) => {
+    if (next[key] === undefined) next[key] = LEGACY_STORAGE_TIMESTAMP;
+  });
+  return next;
+}
+
+function mergeLocalStorageState(
+  localSnapshot: Record<string, string>,
+  localUpdatedAt: Record<string, number>,
+  remoteSnapshot: Record<string, string> = {},
+  remoteUpdatedAt: Record<string, number> = {},
+): Pick<UserMapState, 'localStorageSnapshot' | 'localStorageUpdatedAt'> {
+  const localTimes = cleanStorageUpdatedAt(localUpdatedAt);
+  const remoteTimes = cleanStorageUpdatedAt(remoteUpdatedAt);
+  const mergedSnapshot: Record<string, string> = {};
+  const mergedUpdatedAt: Record<string, number> = {};
+  const keys = new Set([...Object.keys(localSnapshot), ...Object.keys(remoteSnapshot)]);
+
+  keys.forEach((key) => {
+    if (!isSyncableStorageKey(key)) return;
+    const localHas = Object.prototype.hasOwnProperty.call(localSnapshot, key);
+    const remoteHas = Object.prototype.hasOwnProperty.call(remoteSnapshot, key);
+    if (!localHas && !remoteHas) return;
+
+    const localTime = localTimes[key];
+    const remoteTime = remoteTimes[key];
+    let useLocal = localHas && !remoteHas;
+    if (localHas && remoteHas) {
+      if (localTime !== undefined && remoteTime !== undefined) useLocal = localTime >= remoteTime;
+      else if (localTime !== undefined) useLocal = true;
+      else if (remoteTime !== undefined) useLocal = false;
+      else useLocal = true;
+    }
+
+    if (useLocal) {
+      mergedSnapshot[key] = localSnapshot[key];
+      mergedUpdatedAt[key] = localTime ?? remoteTime ?? LEGACY_STORAGE_TIMESTAMP;
+    } else {
+      mergedSnapshot[key] = remoteSnapshot[key];
+      mergedUpdatedAt[key] = remoteTime ?? localTime ?? LEGACY_STORAGE_TIMESTAMP;
+    }
+  });
+
+  return { localStorageSnapshot: mergedSnapshot, localStorageUpdatedAt: mergedUpdatedAt };
+}
+
+function recordsEqual<T extends string | number>(
+  left: Record<string, T> = {},
+  right: Record<string, T> = {},
+): boolean {
+  const leftKeys = Object.keys(left);
+  const rightKeys = Object.keys(right);
+  return leftKeys.length === rightKeys.length && leftKeys.every((key) => right[key] === left[key]);
 }
 
 function currentUserMapDocRef() {
@@ -185,6 +277,21 @@ export function writeLocalStorageSnapshot(snapshot: Record<string, string>): voi
   } catch {
     // Keep the app usable if storage is blocked or full.
   }
+  emit(MAP_STATE_EVENT);
+}
+
+export function markLocalStorageKeyUpdated(key: string): void {
+  if (typeof window === 'undefined' || !isSyncableStorageKey(key)) return;
+  const localStorageUpdatedAt = {
+    ...readLocalStorageUpdatedAt(),
+    [key]: Date.now(),
+  };
+  writeLocalStorageUpdatedAt(localStorageUpdatedAt);
+  queueUserMapStatePatch({
+    localStorageSnapshot: readLocalStorageSnapshot(),
+    localStorageUpdatedAt,
+  });
+  emit(MAP_STATE_EVENT);
 }
 
 function readLocalUserMapState(): UserMapState {
@@ -193,6 +300,7 @@ function readLocalUserMapState(): UserMapState {
     places: readLocalSavedPlaces(),
     waterPoints: readLocalWaterPoints(),
     localStorageSnapshot: readLocalStorageSnapshot(),
+    localStorageUpdatedAt: readLocalStorageUpdatedAt(),
   };
 }
 
@@ -255,26 +363,36 @@ export async function hydrateUserMapStateFromCloud(): Promise<UserMapState | nul
   const snap = await getDoc(ref);
   if (!snap.exists()) {
     if (hasAnyState(local)) {
-      await pushUserMapStatePatch(local);
+      const initial = {
+        ...local,
+        localStorageUpdatedAt: withLegacyStorageTimestamps(local.localStorageSnapshot, local.localStorageUpdatedAt),
+      };
+      await pushUserMapStatePatch(initial);
+      writeLocalStorageUpdatedAt(initial.localStorageUpdatedAt);
       writeLocalSavedPlaces(local.places, { notify: true });
       writeLocalWaterPoints(local.waterPoints, { notify: true });
       writeLocalFarmShapes(local.shapes, { notify: true });
+      writeLocalStorageSnapshot(local.localStorageSnapshot);
     }
     return local;
   }
 
   const remote = snap.data() as UserMapPatch;
+  const localStorage = mergeLocalStorageState(
+    local.localStorageSnapshot,
+    local.localStorageUpdatedAt,
+    remote.localStorageSnapshot ?? {},
+    remote.localStorageUpdatedAt ?? {},
+  );
   const merged: UserMapState = {
     shapes: remote.shapes !== undefined ? (remote.shapes ?? null) : local.shapes,
     places: remote.places !== undefined ? (remote.places ?? []) : local.places,
     waterPoints: remote.waterPoints !== undefined ? (remote.waterPoints ?? []) : local.waterPoints,
-    localStorageSnapshot: {
-      ...local.localStorageSnapshot,
-      ...(remote.localStorageSnapshot ?? {}),
-    },
+    ...localStorage,
   };
 
   writeLocalStorageSnapshot(merged.localStorageSnapshot);
+  writeLocalStorageUpdatedAt(merged.localStorageUpdatedAt);
   writeLocalSavedPlaces(merged.places, { notify: true });
   writeLocalWaterPoints(merged.waterPoints, { notify: true });
   writeLocalFarmShapes(merged.shapes, { notify: true });
@@ -284,7 +402,9 @@ export async function hydrateUserMapStateFromCloud(): Promise<UserMapState | nul
     (remote.places === undefined && local.places.length > 0) ||
     (remote.waterPoints === undefined && local.waterPoints.length > 0) ||
     remote.localStorageSnapshot === undefined ||
-    Object.keys(local.localStorageSnapshot).some((key) => !(key in (remote.localStorageSnapshot ?? {})));
+    remote.localStorageUpdatedAt === undefined ||
+    !recordsEqual(remote.localStorageSnapshot ?? {}, merged.localStorageSnapshot) ||
+    !recordsEqual(cleanStorageUpdatedAt(remote.localStorageUpdatedAt), merged.localStorageUpdatedAt);
 
   if (needsBackfill) {
     await pushUserMapStatePatch(merged);
@@ -294,10 +414,6 @@ export async function hydrateUserMapStateFromCloud(): Promise<UserMapState | nul
 }
 
 export async function syncLocalMapStateToCloud(): Promise<UserMapState | null> {
-  const local = readLocalUserMapState();
-  if (hasAnyState(local)) {
-    await pushUserMapStatePatch(local);
-  }
   return hydrateUserMapStateFromCloud();
 }
 

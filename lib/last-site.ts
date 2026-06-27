@@ -1,4 +1,5 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 
 // Remembers the farmer's most recently analysed site so the global chat
 // assistant stays site-aware on every page (not just the map).
@@ -11,7 +12,10 @@ export interface LastSite {
 }
 
 export function setLastSite(s: LastSite) {
-  try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
+  try {
+    localStorage.setItem(KEY, JSON.stringify(s));
+    markLocalStorageKeyUpdated(KEY);
+  } catch {}
 }
 
 export function getLastSite(): LastSite | null {

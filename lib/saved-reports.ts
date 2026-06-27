@@ -1,4 +1,5 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -33,14 +34,20 @@ function notify() {
 export function saveReport(r: SavedReport): SavedReport[] {
   const others = loadReports().filter((x) => x.id !== r.id);
   const updated = [r, ...others].slice(0, 50); // keep the 50 most recent
-  try { localStorage.setItem(KEY, JSON.stringify(updated)); } catch { /* quota — ignore */ }
+  try {
+    localStorage.setItem(KEY, JSON.stringify(updated));
+    markLocalStorageKeyUpdated(KEY);
+  } catch { /* quota — ignore */ }
   notify();
   return updated;
 }
 
 export function deleteReport(id: string): SavedReport[] {
   const updated = loadReports().filter((x) => x.id !== id);
-  try { localStorage.setItem(KEY, JSON.stringify(updated)); } catch {}
+  try {
+    localStorage.setItem(KEY, JSON.stringify(updated));
+    markLocalStorageKeyUpdated(KEY);
+  } catch {}
   notify();
   return updated;
 }

@@ -2,6 +2,8 @@
 // Photos stored as resized base64 thumbnails (≤ 400px, ~30-50KB each)
 // Max 4 items per key, 40 items total across all keys to stay within localStorage limits
 
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
+
 export interface EvidenceItem {
   id: string;
   type: 'photo' | 'pdf' | 'note';
@@ -38,6 +40,7 @@ function load(): SiteEvidenceStore {
 function save(store: SiteEvidenceStore) {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(store));
+    markLocalStorageKeyUpdated(STORE_KEY);
   } catch {
     // localStorage full — silently ignore
   }

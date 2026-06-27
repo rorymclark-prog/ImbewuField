@@ -13,6 +13,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
@@ -131,7 +132,11 @@ function SurveyInner() {
 
   function save() {
     const data = { ha: known.ha, rainL: known.rainL, sun, slope, resources, tanks, goal, beds, bedCrops, placeId: selectedPlaceId, savedAt: new Date().toISOString() };
-    try { localStorage.setItem(surveyKey(selectedPlaceId), JSON.stringify(data)); } catch { /* ignore */ }
+    const key = surveyKey(selectedPlaceId);
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      markLocalStorageKeyUpdated(key);
+    } catch { /* ignore */ }
     setSaved(true);
     setTimeout(() => setSaved(false), 2200);
   }

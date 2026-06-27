@@ -1,4 +1,4 @@
-import { queueUserMapStatePatch, readLocalStorageSnapshot } from '@/lib/map-sync';
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 
 export interface SiteSurvey {
   placeId: string;
@@ -134,6 +134,9 @@ export function loadSurvey(placeId: string): SiteSurvey | null {
 
 export function saveSurvey(survey: SiteSurvey): void {
   if (typeof window === 'undefined') return;
-  try { localStorage.setItem(key(survey.placeId), JSON.stringify(survey)); } catch {}
-  queueUserMapStatePatch({ localStorageSnapshot: readLocalStorageSnapshot() });
+  const storageKey = key(survey.placeId);
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(survey));
+    markLocalStorageKeyUpdated(storageKey);
+  } catch {}
 }

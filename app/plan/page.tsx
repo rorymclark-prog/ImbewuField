@@ -6,6 +6,7 @@ import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
+import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarCheck } from 'lucide-react';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
@@ -112,8 +113,12 @@ export default function PlanPage() {
   const bedsFor = (crop: string) => qty[crop] ?? 1;
 
   function persist(nextCrops: string[], nextQty: Record<string, number>) {
-    localStorage.setItem(LS_KEY, JSON.stringify(nextCrops));
-    localStorage.setItem(LS_QTY, JSON.stringify(nextQty));
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(nextCrops));
+      markLocalStorageKeyUpdated(LS_KEY);
+      localStorage.setItem(LS_QTY, JSON.stringify(nextQty));
+      markLocalStorageKeyUpdated(LS_QTY);
+    } catch { /* ignore */ }
   }
 
   function addCrop() {
