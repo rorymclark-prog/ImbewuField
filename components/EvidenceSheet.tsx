@@ -29,6 +29,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const [editingField, setEditingField] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [storageFull, setStorageFull] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const quickFields = QUICK_NUMBERS[group.key] ?? [];
@@ -50,14 +51,20 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   async function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
     setUploading(true);
+    setStorageFull(false);
     for (const file of Array.from(files)) {
       try {
+        let saved: boolean;
         if (file.type.startsWith('image/')) {
           const dataUrl = await resizeForStorage(file);
-          addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
+          saved = addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
         } else {
           // PDF or document — store filename only (no binary)
-          addEvidenceItem(siteId, itemKey, { type: 'pdf', name: file.name, sizeBytes: file.size });
+          saved = addEvidenceItem(siteId, itemKey, { type: 'pdf', name: file.name, sizeBytes: file.size });
+        }
+        if (!saved) {
+          setStorageFull(true);
+          break;
         }
       } catch (err) {
         console.warn('Evidence upload error:', err);
@@ -80,7 +87,10 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   }
 
   function saveField(fieldKey: string) {
-    setQuickNumber(siteId, group.key, fieldKey, editValue);
+    const saved = setQuickNumber(siteId, group.key, fieldKey, editValue);
+    if (!saved) {
+      setStorageFull(true);
+    }
     setQuickNums(getQuickNumbers(siteId, group.key));
     setEditingField(null);
     onChanged();
@@ -158,6 +168,25 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           style={{ display: 'none' }}
           onChange={(e) => handleFiles(e.target.files)}
         />
+
+        {/* Storage-full error banner */}
+        {storageFull && (
+          <div style={{
+            margin: '12px 20px 0', background: '#FEF2F2', border: '1px solid #FECACA',
+            borderRadius: 10, padding: '10px 13px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+          }}>
+            <span style={{ font: '500 13px/1.4 system-ui, sans-serif', color: '#B91C1C' }}>
+              📵 Storage full — photo not saved. Delete some items to free space.
+            </span>
+            <button
+              onClick={() => setStorageFull(false)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#B91C1C', flexShrink: 0, padding: 2 }}
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
 
         {/* Photo grid */}
         {photoItems.length > 0 && (

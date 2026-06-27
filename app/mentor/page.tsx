@@ -141,8 +141,10 @@ function TraineeCard({ trainee, doneIds, isLive }: {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
+const MENTOR_ALLOWED_ROLES = new Set(['mentor', 'ngo', 'funder', 'admin']);
+
 export default function MentorPage() {
-  const { user, loading } = useAuth();
+  const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
 
@@ -172,6 +174,27 @@ export default function MentorPage() {
   }, [isLive]);
 
   useEffect(() => { load(); }, [load]);
+
+  if (!loading && user && isLive && role && !MENTOR_ALLOWED_ROLES.has(role)) {
+    return (
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+          <BrandLogo />
+          <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+          <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
+          <div className="flex-1" />
+          <SettingsButton />
+        </header>
+        <main className="flex-1 flex items-center justify-center px-4">
+          <div className="rounded-2xl px-6 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <Users size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
+            <p className="text-sm font-display" style={{ color: '#5C5040' }}>Not authorized for this view.</p>
+          </div>
+        </main>
+        <TabBar />
+      </div>
+    );
+  }
 
   const filtered = trainees.filter((t) => !search || (t.full_name ?? '').toLowerCase().includes(search.toLowerCase()));
 

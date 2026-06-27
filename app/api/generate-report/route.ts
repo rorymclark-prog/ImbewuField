@@ -10,6 +10,34 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+// Canonical section names — every literal used in sections.includes() checks below
+// plus the batch logic. Any value not in this set is silently dropped before any
+// Anthropic call is made.
+const KNOWN_SECTIONS = new Set([
+  'Executive Summary',
+  'Site Conditions',
+  'Natural Vegetation & Biome',
+  'Water Harvesting',
+  'Soil Strategy',
+  'Planting Calendar',
+  'Fruit, Nut & Berry Trees',
+  'Indigenous Trees',
+  'Agroecosystem Planting Guide',
+  'Crop Rotation',
+  'Irrigation Plan',
+  'Year-Round Food Production',
+  'Animals & Livestock',
+  'Sun & Solar',
+  'Wind & Windbreaks',
+  'Fire & Hazards',
+  'Economic Opportunities',
+  'Plant Guilds',
+  'Zone Design',
+  'Seasonal Calendar',
+  '5-Year Vision',
+  'Year 1 Priorities',
+]);
+
 // Reverse-geocode coordinates → SA administrative area (municipality / district / province).
 // Used so the report can name the real municipality and ground market-gap advice in the right place.
 async function reverseGeocode(lat: number, lon: number): Promise<{ municipality: string | null; district: string | null; province: string | null; label: string | null } | null> {
@@ -60,6 +88,18 @@ export async function POST(req: NextRequest) {
     tone?: 'simple' | 'professional';
     length?: 'one-pager' | 'standard' | 'comprehensive';
   } = await req.json();
+
+  // DoS hardening: drop any section name not in the canonical allow-list so an
+  // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
+  const safeSections = (Array.isArray(sections) ? sections : []).filter(
+    (s) => KNOWN_SECTIONS.has(s),
+  );
+  if (safeSections.length === 0) {
+    return new Response(JSON.stringify({ error: 'No valid sections requested.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
   const langCode = language ?? 'en';
   const langName = LANGUAGES[langCode] ?? 'English';
@@ -519,26 +559,34 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const BATCH_SIZE = reportLength === 'one-pager' ? 4 : 2;
   const perBatchTokens = reportLength === 'comprehensive' ? 16000 : reportLength === 'one-pager' ? 2000 : 8000;
   const batches: string[][] = [];
-  for (let i = 0; i < sections.length; i += BATCH_SIZE) batches.push(sections.slice(i, i + BATCH_SIZE));
+  for (let i = 0; i < safeSections.length; i += BATCH_SIZE) batches.push(safeSections.slice(i, i + BATCH_SIZE));
 
-  // Kick every batch off concurrently; only the first batch carries the title.
-  const batchPromises = batches.map((batchSections, idx) =>
-    client.messages
+  // Fan-out concurrency is capped at 4 batches at a time so even a legitimate
+  // max-section request cannot burst all Anthropic calls simultaneously.
+  const CONCURRENCY = 4;
+  const batchResults: string[] = new Array(batches.length);
+
+  const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
+    batchResults[idx] = await client.messages
       .create({
         model: 'claude-sonnet-4-6',
         max_tokens: perBatchTokens,
         messages: [{ role: 'user', content: buildPrompt(batchSections, idx === 0) }],
       })
       .then((msg) => msg.content.map((b) => (b.type === 'text' ? b.text : '')).join(''))
-      .catch(() => `\n\n_[A section could not be generated — please regenerate the report.]_\n`),
-  );
+      .catch(() => `\n\n_[A section could not be generated — please regenerate the report.]_\n`);
+  };
+
+  // Execute batches in chunks of CONCURRENCY, preserving original order.
+  for (let i = 0; i < batches.length; i += CONCURRENCY) {
+    await Promise.all(batches.slice(i, i + CONCURRENCY).map((b, j) => runBatch(b, i + j)));
+  }
 
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        for (const p of batchPromises) {
-          const text = await p; // batches run in parallel; emit each in order
+        for (const text of batchResults) {
           controller.enqueue(encoder.encode(text.trimEnd() + '\n\n'));
         }
       } finally {

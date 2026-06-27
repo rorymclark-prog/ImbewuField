@@ -85,8 +85,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
       setUser(firebaseUser);
-      await syncProfile(firebaseUser);
-      setLoading(false);
+      try {
+        await syncProfile(firebaseUser);
+      } catch (err) {
+        console.error('syncProfile failed:', err);
+        setProfile(null);
+      } finally {
+        setLoading(false);
+      }
     });
 
     return unsub;
@@ -117,11 +123,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const cred = await createUserWithEmailAndPassword(fb.auth, email, password);
       await updateProfile(cred.user, { displayName: fullName });
       await updateMyProfile({ full_name: fullName, role, language: 'en' });
+      await syncProfile(cred.user);
       return null;
     } catch (err) {
       return friendlyAuthError(err);
     }
-  }, []);
+  }, [syncProfile]);
 
   // ── signInWithGoogle ─────────────────────────────────────────────────────
   const signInWithGoogle = useCallback(async (): Promise<string | null> => {
@@ -135,11 +142,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!existing) {
         await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en' });
       }
+      await syncProfile(cred.user);
       return null;
     } catch (err) {
       return friendlyAuthError(err);
     }
-  }, []);
+  }, [syncProfile]);
 
   // ── resetPassword ────────────────────────────────────────────────────────
   const resetPassword = useCallback(async (email: string): Promise<string | null> => {

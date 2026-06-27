@@ -18,8 +18,17 @@ service cloud.firestore {
 
     match /profiles/{uid} {
       allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
-      allow create: if signedIn() && uid == request.auth.uid;
-      allow update: if signedIn() && uid == request.auth.uid;
+      // Self-service signup may pick one of the offered roles, but NEVER admin, and may
+      // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
+      allow create: if signedIn() && uid == request.auth.uid
+        && request.resource.data.role in ['farmer', 'mentor', 'student', 'ngo', 'funder']
+        && (!('org_id' in request.resource.data) || request.resource.data.org_id == null);
+      // role and org_id are IMMUTABLE from the client — pin them to the existing values so a
+      // user can edit name/photo/language but can never self-promote to admin or spoof an org.
+      // Promotion/org assignment must go through a trusted Admin-SDK backend or custom claims.
+      allow update: if signedIn() && uid == request.auth.uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.org_id == resource.data.org_id;
     }
 
     match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isStaff()); }
@@ -35,15 +44,21 @@ service cloud.firestore {
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
 
       match /members/{pid} {
-        allow read:  if signedIn();
+        // Scope to the parent garden — same-org staff, the supervisor, a mentor, or the
+        // member themselves. Prevents cross-org enumeration of every garden's participants.
+        allow read: if signedIn() && (
+          sameOrg(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
+          get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid ||
+          isMentor() ||
+          pid == request.auth.uid
+        );
         allow write: if signedIn() && (isStaff() ||
           get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid);
       }
     }
-
-    match /{path=**}/members/{pid} {
-      allow read: if signedIn();
-    }
+    // NOTE: the blanket `match /{path=**}/members/{pid}` recursive read was removed — it
+    // exposed every garden's member list to any signed-in user. listGardeners reads members
+    // by explicit garden id, which the scoped per-garden rule above already permits.
 
     match /production_logs/{id} {
       allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();

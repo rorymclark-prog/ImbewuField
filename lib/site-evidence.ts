@@ -35,11 +35,42 @@ function load(): SiteEvidenceStore {
   }
 }
 
-function save(store: SiteEvidenceStore) {
+const BYTE_BUDGET = 4 * 1024 * 1024; // 4 MB
+
+function save(store: SiteEvidenceStore): boolean {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(store));
+    return true;
   } catch {
-    // localStorage full — silently ignore
+    return false;
+  }
+}
+
+/** Evict oldest EvidenceItems (by takenAt across all siteIds/keys) until serialized size is under BYTE_BUDGET. */
+function evictUntilUnderBudget(store: SiteEvidenceStore): void {
+  // Collect all items with their location so we can remove them
+  type Located = { siteId: string; itemKey: string; idx: number; takenAt: number };
+  const all: Located[] = [];
+  for (const siteId of Object.keys(store)) {
+    const items = store[siteId]?.items ?? {};
+    for (const itemKey of Object.keys(items)) {
+      items[itemKey].forEach((ev, idx) => {
+        all.push({ siteId, itemKey, idx, takenAt: ev.takenAt });
+      });
+    }
+  }
+  // Sort oldest first
+  all.sort((a, b) => a.takenAt - b.takenAt);
+
+  for (const loc of all) {
+    if (JSON.stringify(store).length * 2 <= BYTE_BUDGET) break; // rough byte estimate
+    const arr = store[loc.siteId]?.items?.[loc.itemKey];
+    if (!arr) continue;
+    // Find the item by index position (remove by identity since indices may shift)
+    const evToRemove = arr.find((ev) => ev.takenAt === loc.takenAt);
+    if (evToRemove) {
+      store[loc.siteId].items[loc.itemKey] = arr.filter((ev) => ev !== evToRemove);
+    }
   }
 }
 
@@ -51,14 +82,18 @@ export function getEvidenceItems(siteId: string, itemKey: string): EvidenceItem[
   return load()[siteId]?.items?.[itemKey] ?? [];
 }
 
-export function addEvidenceItem(siteId: string, itemKey: string, item: Omit<EvidenceItem, 'id' | 'takenAt'>): void {
+export function addEvidenceItem(siteId: string, itemKey: string, item: Omit<EvidenceItem, 'id' | 'takenAt'>): boolean {
   const store = load();
   if (!store[siteId]) store[siteId] = { items: {}, quickNumbers: {} };
   if (!store[siteId].items[itemKey]) store[siteId].items[itemKey] = [];
   const existing = store[siteId].items[itemKey];
   if (existing.length >= MAX_PER_KEY) existing.splice(0, 1); // drop oldest
   existing.push({ ...item, id: `ev_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`, takenAt: Date.now() });
-  save(store);
+  // Enforce byte budget before writing
+  if (JSON.stringify(store).length * 2 > BYTE_BUDGET) {
+    evictUntilUnderBudget(store);
+  }
+  return save(store);
 }
 
 export function removeEvidenceItem(siteId: string, itemKey: string, itemId: string): void {
@@ -74,12 +109,12 @@ export function getQuickNumbers(siteId: string, groupKey: string): QuickNumbers 
   return load()[siteId]?.quickNumbers?.[groupKey] ?? {};
 }
 
-export function setQuickNumber(siteId: string, groupKey: string, fieldKey: string, value: string): void {
+export function setQuickNumber(siteId: string, groupKey: string, fieldKey: string, value: string): boolean {
   const store = load();
   if (!store[siteId]) store[siteId] = { items: {}, quickNumbers: {} };
   if (!store[siteId].quickNumbers[groupKey]) store[siteId].quickNumbers[groupKey] = {};
   store[siteId].quickNumbers[groupKey][fieldKey] = value;
-  save(store);
+  return save(store);
 }
 
 // Completeness: 0–100, based on how many of the 6 main groups have ≥ 1 item

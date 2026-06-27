@@ -1,6 +1,10 @@
+import { getFirebase } from './firebase/init';
+import { upsertSurvey } from './user-sync';
+
 export interface SiteSurvey {
   placeId: string;
   savedAt: string;
+  updatedAt?: number; // ms — drives cross-device newest-wins merge
 
   // Branching
   siteType: 'homestead' | 'community';
@@ -41,6 +45,14 @@ export interface SiteSurvey {
 }
 
 export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string {
+  // Older-schema surveys loaded from localStorage may be missing array fields entirely.
+  // Default them all so the .map/.filter/.join calls below never throw (report 500).
+  s = {
+    ...s,
+    goals: s.goals ?? [], waterSource: s.waterSource ?? [], waterStorage: s.waterStorage ?? [],
+    soilAmendments: s.soilAmendments ?? [], existingCrops: s.existingCrops ?? [],
+    livestock: s.livestock ?? [], challenges: s.challenges ?? [], otherInfra: s.otherInfra ?? [],
+  };
   const totalRoof = (s.roofMainM2 ?? 0) + (s.roofSecondaryM2 ?? 0);
   const efficiency = s.hasGutters ? 0.80 : 0.60;
   const roofHarvestKL = totalRoof > 0
@@ -132,5 +144,9 @@ export function loadSurvey(placeId: string): SiteSurvey | null {
 
 export function saveSurvey(survey: SiteSurvey): void {
   if (typeof window === 'undefined') return;
-  try { localStorage.setItem(key(survey.placeId), JSON.stringify(survey)); } catch {}
+  const stamped = { ...survey, updatedAt: Date.now() };
+  try { localStorage.setItem(key(stamped.placeId), JSON.stringify(stamped)); } catch {}
+  window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
+  const uid = getFirebase()?.auth?.currentUser?.uid;
+  if (uid) upsertSurvey(uid, stamped).catch(() => {});
 }

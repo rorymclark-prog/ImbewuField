@@ -126,7 +126,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ locationData }),
     })
-      .then((r) => r.json())
+      .then(async (r) => { if (!r.ok) throw new Error(String(r.status)); const d = await r.json(); if (!d || typeof d.ecosystem !== 'string') throw new Error('bad-shape'); return d; })
       .then((d: LifeGuideData) => { writeCache(cacheKey, d); setData(d); setLoading(false); })
       .catch(() => { setError('Could not load — check connection'); setLoading(false); });
   }, [locationData]);

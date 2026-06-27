@@ -5,16 +5,54 @@ import { getFirebase } from './firebase/init';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 
-const FARM_KEY    = 'imbewu_farm_shapes';
-const PLACES_KEY  = 'permamap_saved_places';
-const WATER_KEY   = 'imbewu_water_points';
-const COLL        = 'user_map_data';
+const FARM_KEY      = 'imbewu_farm_shapes';
+const PLACES_KEY    = 'permamap_saved_places';
+const WATER_KEY     = 'imbewu_water_points';
+const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per place: imbewu_site_survey_<placeId>
+const COLL          = 'user_map_data';
 const TOMB_TTL_MS = 90 * 24 * 60 * 60 * 1000; // prune deletion tombstones after 90 days
 
 function db() { return getFirebase()?.db ?? null; }
 
 type ShapeFC = { type: string; features: { id?: string | number }[] };
 type Tombstones = Record<string, number>; // id → deletedAt (ms)
+type SurveyLike = { placeId: string; updatedAt?: number; savedAt?: string };
+type SurveyMap = Record<string, SurveyLike>;
+
+const surveyTs = (s: SurveyLike) => s.updatedAt ?? (s.savedAt ? Date.parse(s.savedAt) || 0 : 0);
+
+// Read every per-place survey out of localStorage into a {placeId: survey} map.
+function readLocalSurveys(): SurveyMap {
+  const out: SurveyMap = {};
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(SURVEY_PREFIX)) {
+        try { const s = JSON.parse(localStorage.getItem(k) ?? 'null'); if (s?.placeId) out[s.placeId] = s; } catch {}
+      }
+    }
+  } catch {}
+  return out;
+}
+
+function writeLocalSurveys(surveys: SurveyMap): void {
+  for (const [pid, s] of Object.entries(surveys)) {
+    try { localStorage.setItem(SURVEY_PREFIX + pid, JSON.stringify(s)); } catch {}
+  }
+}
+
+// Union by placeId, newest survey wins.
+function mergeSurveys(remote: SurveyMap, local: SurveyMap): SurveyMap {
+  const out: SurveyMap = { ...remote };
+  for (const [pid, s] of Object.entries(local)) {
+    if (!out[pid] || surveyTs(s) >= surveyTs(out[pid])) out[pid] = s;
+  }
+  return out;
+}
+
+function notifySurveys() {
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
+}
 
 function readLocal<T>(key: string): T[] {
   try { const raw = localStorage.getItem(key); return raw ? (JSON.parse(raw) ?? []) : []; }
@@ -90,9 +128,10 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
   console.log('[sync] subscribe uid=', uid, 'db=', !!d);
   if (!d) { handlers.onMergeDone?.(); return () => {}; }
 
-  const shapesRef = doc(d, COLL, uid, 'data', 'shapes');
-  const placesRef = doc(d, COLL, uid, 'data', 'places');
-  const waterRef  = doc(d, COLL, uid, 'data', 'water');
+  const shapesRef  = doc(d, COLL, uid, 'data', 'shapes');
+  const placesRef  = doc(d, COLL, uid, 'data', 'places');
+  const waterRef   = doc(d, COLL, uid, 'data', 'water');
+  const surveysRef = doc(d, COLL, uid, 'data', 'surveys');
 
   const unsubs: Array<() => void> = [];
   let disposed = false;
@@ -129,12 +168,14 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       // delete+re-adds features with fresh ids), so per-feature union would duplicate.
       // Stored as a JSON STRING because GeoJSON coordinates are nested arrays, which
       // Firestore can't store natively.
-      // Rule: if remote exists and is non-empty, remote wins (so deletions are durable);
-      // otherwise bootstrap remote from local (recovers a device's existing drawing).
+      // Rule: if the remote doc EXISTS (even with zero features — a deliberate delete-all),
+      // remote is authoritative so the deletion stays deleted. Only bootstrap from local when
+      // no remote doc has ever been written, which recovers a device's pre-sync drawing.
       {
         const sSnap = await getDoc(shapesRef);
-        const remoteFC = sSnap.exists() ? parseShapes(sSnap.data().shapesJson) : null;
-        if (remoteFC?.features?.length) {
+        const hasRemoteDoc = sSnap.exists() && sSnap.data().shapesJson !== undefined;
+        if (hasRemoteDoc) {
+          const remoteFC = parseShapes(sSnap.data().shapesJson) ?? { type: 'FeatureCollection', features: [] };
           localStorage.setItem(FARM_KEY, JSON.stringify(remoteFC));
           handlers.onShapes?.();
         } else {
@@ -147,6 +188,16 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
         }
       }
 
+      // Site surveys: per-place survey objects collected in one doc keyed by placeId.
+      await runTransaction(d, async (tx) => {
+        const snap = await tx.get(surveysRef);
+        const remote: SurveyMap = (snap.exists() ? snap.data().surveys : {}) ?? {};
+        const merged = mergeSurveys(remote, readLocalSurveys());
+        writeLocalSurveys(merged);
+        tx.set(surveysRef, { surveys: merged, updatedAt: serverTimestamp() });
+      });
+      notifySurveys();
+
       console.log('[sync] reconcile done');
     } catch (e) {
       console.error('[sync] reconcile error (likely offline) — keeping local data', e);
@@ -156,16 +207,21 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
     handlers.onMergeDone?.();
 
     // ── Phase 2: realtime listeners ──
+    // MERGE remote into local (newest-wins + remote deletion tombstones) rather than blindly
+    // overwriting, so a local create/edit that hasn't round-tripped yet isn't clobbered by an
+    // unrelated remote change. Remote tombstones still propagate deletions.
     unsubs.push(onSnapshot(placesRef, (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      localStorage.setItem(PLACES_KEY, JSON.stringify(snap.data().places ?? []));
+      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(PLACES_KEY), snap.data().deleted ?? {}, {}, placeId, placeTs, Date.now());
+      localStorage.setItem(PLACES_KEY, JSON.stringify(items));
       handlers.onPlaces?.();
       console.log('[sync] realtime places');
     }, (e) => console.error('[sync] places listener', e)));
 
     unsubs.push(onSnapshot(waterRef, (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      localStorage.setItem(WATER_KEY, JSON.stringify(snap.data().points ?? []));
+      const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(WATER_KEY), snap.data().deleted ?? {}, {}, waterId, waterTs, Date.now());
+      localStorage.setItem(WATER_KEY, JSON.stringify(items));
       handlers.onWater?.();
       console.log('[sync] realtime water');
     }, (e) => console.error('[sync] water listener', e)));
@@ -178,6 +234,14 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       handlers.onShapes?.();
       console.log('[sync] realtime shapes');
     }, (e) => console.error('[sync] shapes listener', e)));
+
+    unsubs.push(onSnapshot(surveysRef, (snap) => {
+      if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+      const merged = mergeSurveys(snap.data().surveys ?? {}, readLocalSurveys());
+      writeLocalSurveys(merged);
+      notifySurveys();
+      console.log('[sync] realtime surveys');
+    }, (e) => console.error('[sync] surveys listener', e)));
   })();
 
   return () => { disposed = true; unsubs.forEach((u) => u()); };
@@ -218,6 +282,20 @@ export async function removePlace(uid: string, id: string): Promise<void> {
     });
     console.log('[sync] removePlace OK');
   } catch (e) { console.error('[sync] removePlace', e); }
+}
+
+export async function upsertSurvey(uid: string, survey: SurveyLike): Promise<void> {
+  const d = db(); if (!d) return;
+  const ref = doc(d, COLL, uid, 'data', 'surveys');
+  try {
+    await runTransaction(d, async (tx) => {
+      const snap = await tx.get(ref);
+      const surveys: SurveyMap = (snap.exists() ? snap.data().surveys : {}) ?? {};
+      surveys[survey.placeId] = survey;
+      tx.set(ref, { surveys, updatedAt: serverTimestamp() });
+    });
+    console.log('[sync] upsertSurvey OK', survey.placeId);
+  } catch (e) { console.error('[sync] upsertSurvey', e); }
 }
 
 export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<void> {

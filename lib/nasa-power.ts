@@ -113,17 +113,38 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const monthly = shouldUseOpenMeteo ? openMeteoMonthly! : nasaMonthly;
   const annual = shouldUseOpenMeteo ? openMeteoAnnual! : nasaAnnual;
   const rainfallSource = shouldUseOpenMeteo ? 'open-meteo' : 'nasa-power';
-  const monthlyTemp = MONTH_KEYS.map((k) => p.T2M[k] ?? 20);
-  const meanTemp = parseFloat((monthlyTemp.reduce((a, b) => a + b, 0) / 12).toFixed(1));
-  const hotMonthTemp = Math.max(...MONTH_KEYS.map((k) => p.T2M_MAX[k] ?? 0));
-  const coldMonthTemp = Math.min(...MONTH_KEYS.map((k) => p.T2M_MIN[k] ?? 0));
+
+  // NASA POWER uses -999 as a missing/fill sentinel (common at coastal/ocean taps).
+  // Strip these before any reduction so they don't corrupt min/max/mean calculations.
+  const clean = (v: unknown): number | null =>
+    typeof v === 'number' && v > -900 && !isNaN(v) ? v : null;
+
+  // Reduce a POWER parameter object over MONTH_KEYS, applying fn to the clean values.
+  // Returns fallback when all values are missing/sentinel.
+  const reduceParam = (
+    obj: Record<string, unknown>,
+    fn: (vals: number[]) => number,
+    fallback: number
+  ): number => {
+    const vals = MONTH_KEYS.map((k) => clean(obj[k])).filter((v): v is number => v !== null);
+    return vals.length > 0 ? fn(vals) : fallback;
+  };
+
+  const monthlyTemp = MONTH_KEYS.map((k) => clean(p.T2M[k]) ?? 20);
+  const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
+  const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
+  const coldMonthTemp = reduceParam(p.T2M_MIN, (vals) => Math.min(...vals), 5);
   // NASA POWER returns ALLSKY_SFC_SW_DWN in MJ/m²/day — convert to kWh/m²/day (÷3.6) to match labels
-  const solarVals = MONTH_KEYS.map((k) => (p.ALLSKY_SFC_SW_DWN[k] ?? 0) / 3.6);
-  const solarRadiation = parseFloat((solarVals.reduce((a, b) => a + b, 0) / 12).toFixed(1));
+  const solarVals = MONTH_KEYS.map((k) => (clean(p.ALLSKY_SFC_SW_DWN[k]) ?? 0) / 3.6);
+  const solarRadiation = parseFloat((solarVals.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
 
   // Wind — mean speed at 2m, and dominant direction (FROM) for summer (DJF) vs winter (JJA)
-  const windSpeed = p.WS2M ? parseFloat((MONTH_KEYS.reduce((s, k) => s + (p.WS2M[k] ?? 0), 0) / 12).toFixed(1)) : 0;
-  const wd = (keys: string[]) => p.WD10M ? aspectLabel(circularMeanDeg(keys.map((k) => p.WD10M[k] ?? 0))) : '—';
+  const windSpeed = p.WS2M
+    ? parseFloat((reduceParam(p.WS2M, (vals) => vals.reduce((s, v) => s + v, 0) / vals.length, 0)).toFixed(1))
+    : 0;
+  const wd = (keys: string[]) => p.WD10M
+    ? aspectLabel(circularMeanDeg(keys.map((k) => clean(p.WD10M[k]) ?? 0)))
+    : '—';
   const windFromSummer = wd(['DEC', 'JAN', 'FEB']);
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 

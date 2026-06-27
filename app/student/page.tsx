@@ -143,8 +143,10 @@ function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
 
 // ── Main page ────────────────────────────────────────────────────────────────
 
+const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'ngo', 'funder', 'admin']);
+
 export default function StudentPage() {
-  const { user, loading } = useAuth();
+  const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
 
@@ -185,6 +187,27 @@ export default function StudentPage() {
 
   function toggleExpand(moduleId: string) {
     setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
+  }
+
+  if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
+    return (
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+          <BrandLogo />
+          <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+          <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>
+          <div className="flex-1" />
+          <SettingsButton />
+        </header>
+        <main className="flex-1 flex items-center justify-center px-4">
+          <div className="rounded-2xl px-6 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <GraduationCap size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
+            <p className="text-sm font-display" style={{ color: '#5C5040' }}>Not authorized for this view.</p>
+          </div>
+        </main>
+        <TabBar />
+      </div>
+    );
   }
 
   const doneCount = doneIds.size;

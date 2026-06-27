@@ -289,6 +289,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
   useEffect(() => { if (!surveySheetOpen && activePlaceId) setSurvey(loadSurvey(activePlaceId)); }, [surveySheetOpen]);
+  // Refresh live when a survey syncs in from another browser/device.
+  useEffect(() => {
+    const refresh = () => setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null);
+    window.addEventListener('imbewu-surveys-changed', refresh);
+    return () => window.removeEventListener('imbewu-surveys-changed', refresh);
+  }, [activePlaceId]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
 
   // Evidence state

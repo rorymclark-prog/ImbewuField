@@ -240,7 +240,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [editPoints, setEditPoints] = useState<[number, number][]>([]); // working ring (open — no closing dup)
   const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
-  const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number } | null>(null); // snapshot across edit
+  const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number; placeId?: string } | null>(null); // snapshot across edit
   const nativeEditBackupRef = useRef<GeoJSON.Feature | null>(null);      // snapshot for native-edit Undo
 
   // Saved-place pins: load + keep in sync with the Places tab
@@ -793,7 +793,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9) ring.pop();
     }
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
-    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined };
+    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined, placeId: f.properties?.placeId as string | undefined };
     try { draw.delete(featureId); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
@@ -912,6 +912,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
       if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
       if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
+      if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
     }
     editNameRef.current = null;
     setEditPin(null);
@@ -938,6 +939,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
           if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
           if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
+      if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
         }
       } catch {}
     }
@@ -1318,8 +1320,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (!data) return;
           const draw = drawRef.current;
           if (draw) draw.set(data.geojson);
-          localStorage.setItem('imbewu_places', JSON.stringify(data.places));
-          window.dispatchEvent(new CustomEvent('imbewu-places-changed'));
+          // Canonical key/event used by lib/saved-places.ts — the old 'imbewu_places' was a
+          // dead key, so shared places never loaded.
+          localStorage.setItem('permamap_saved_places', JSON.stringify(data.places));
+          window.dispatchEvent(new CustomEvent('permamap-places-changed'));
           localStorage.setItem('imbewu_water_points', JSON.stringify(data.waterPoints));
           window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
           setSavedPins(loadPlaces());

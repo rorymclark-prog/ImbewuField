@@ -99,11 +99,13 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
 // ---- production / sales ----
 export async function addProduction(row: Partial<ProductionLog>): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, created_at: serverTimestamp() });
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 export async function addSale(row: Partial<SalesLog>): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, created_at: serverTimestamp() });
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 export async function myProduction(): Promise<ProductionLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
@@ -167,7 +169,8 @@ export async function mySales(): Promise<SalesLog[]> {
 // ---- expenses (costs) ----
 export async function addExpense(row: Partial<ExpenseLog>): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, created_at: serverTimestamp() });
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 export async function myExpenses(): Promise<ExpenseLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
@@ -248,15 +251,21 @@ export async function myRespondedSurveyIds(): Promise<string[]> {
 // ---- farmer / trainee directory ----
 export async function listFarmers(): Promise<Profile[]> {
   const f = fb(); if (!f) return [];
-  const s = await getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer')));
+  const me = await getMyProfile();
+  const myOrgId = me?.org_id;
+  if (!myOrgId) return [];
+  const s = await getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer'), where('org_id', '==', myOrgId)));
   return rows<Profile>(s);
 }
 export async function listTrainees(): Promise<Profile[]> {
   const f = fb(); if (!f) return [];
   // Returns farmers + students — the people a trainer works with
+  const me = await getMyProfile();
+  const myOrgId = me?.org_id;
+  if (!myOrgId) return [];
   const [farmers, students] = await Promise.all([
-    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer'))),
-    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'student'))),
+    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'farmer'), where('org_id', '==', myOrgId))),
+    getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'student'), where('org_id', '==', myOrgId))),
   ]);
   return [...rows<Profile>(farmers), ...rows<Profile>(students)];
 }
