@@ -125,7 +125,6 @@ export interface SyncHandlers {
 // Returns an unsubscribe function.
 export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () => void {
   const d = db();
-  console.log('[sync] subscribe uid=', uid, 'db=', !!d);
   if (!d) { handlers.onMergeDone?.(); return () => {}; }
 
   const shapesRef  = doc(d, COLL, uid, 'data', 'shapes');
@@ -198,7 +197,6 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       });
       notifySurveys();
 
-      console.log('[sync] reconcile done');
     } catch (e) {
       console.error('[sync] reconcile error (likely offline) — keeping local data', e);
     }
@@ -215,7 +213,6 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(PLACES_KEY), snap.data().deleted ?? {}, {}, placeId, placeTs, Date.now());
       localStorage.setItem(PLACES_KEY, JSON.stringify(items));
       handlers.onPlaces?.();
-      console.log('[sync] realtime places');
     }, (e) => console.error('[sync] places listener', e)));
 
     unsubs.push(onSnapshot(waterRef, (snap) => {
@@ -223,7 +220,6 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(WATER_KEY), snap.data().deleted ?? {}, {}, waterId, waterTs, Date.now());
       localStorage.setItem(WATER_KEY, JSON.stringify(items));
       handlers.onWater?.();
-      console.log('[sync] realtime water');
     }, (e) => console.error('[sync] water listener', e)));
 
     unsubs.push(onSnapshot(shapesRef, (snap) => {
@@ -232,7 +228,6 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       if (!fc) return;
       localStorage.setItem(FARM_KEY, JSON.stringify(fc));
       handlers.onShapes?.();
-      console.log('[sync] realtime shapes');
     }, (e) => console.error('[sync] shapes listener', e)));
 
     unsubs.push(onSnapshot(surveysRef, (snap) => {
@@ -240,7 +235,6 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       const merged = mergeSurveys(snap.data().surveys ?? {}, readLocalSurveys());
       writeLocalSurveys(merged);
       notifySurveys();
-      console.log('[sync] realtime surveys');
     }, (e) => console.error('[sync] surveys listener', e)));
   })();
 
@@ -272,7 +266,6 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
         tx.set(ref, { places: [place, ...remote.filter((p) => p.id !== place.id)], deleted, updatedAt: serverTimestamp() });
       }
     });
-    console.log('[sync] upsertPlace OK');
   } catch (e) { console.error('[sync] upsertPlace', e); }
 }
 
@@ -287,7 +280,6 @@ export async function removePlace(uid: string, id: string): Promise<void> {
       const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: Date.now() }, Date.now());
       tx.set(ref, { places: remote.filter((p) => p.id !== id), deleted, updatedAt: serverTimestamp() });
     });
-    console.log('[sync] removePlace OK');
   } catch (e) { console.error('[sync] removePlace', e); }
 }
 
@@ -301,7 +293,6 @@ export async function upsertSurvey(uid: string, survey: SurveyLike): Promise<voi
       surveys[survey.placeId] = survey;
       tx.set(ref, { surveys, updatedAt: serverTimestamp() });
     });
-    console.log('[sync] upsertSurvey OK', survey.placeId);
   } catch (e) { console.error('[sync] upsertSurvey', e); }
 }
 
@@ -324,7 +315,6 @@ export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<voi
         tx.set(ref, { points: [pt, ...remote.filter((p) => p.id !== pt.id)], deleted, updatedAt: serverTimestamp() });
       }
     });
-    console.log('[sync] upsertWaterPoint OK');
   } catch (e) { console.error('[sync] upsertWaterPoint', e); }
 }
 
@@ -339,7 +329,6 @@ export async function removeWaterPoint(uid: string, id: string): Promise<void> {
       const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: Date.now() }, Date.now());
       tx.set(ref, { points: remote.filter((p) => p.id !== id), deleted, updatedAt: serverTimestamp() });
     });
-    console.log('[sync] removeWaterPoint OK');
   } catch (e) { console.error('[sync] removeWaterPoint', e); }
 }
 
@@ -352,6 +341,5 @@ export async function pushShapes(uid: string, fc: ShapeFC): Promise<void> {
   const ref = doc(d, COLL, uid, 'data', 'shapes');
   try {
     await setDoc(ref, { shapesJson: JSON.stringify(fc), updatedAt: serverTimestamp() });
-    console.log('[sync] pushShapes OK features=', fc.features?.length);
   } catch (e) { console.error('[sync] pushShapes', e); }
 }

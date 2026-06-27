@@ -615,7 +615,6 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // local + remote on connect so existing data from any device is unified.
   useEffect(() => {
     const uid = user?.uid;
-    console.log('[map-sync] uid=', uid ?? 'none');
     if (!uid) return;
     mergeReadyRef.current = false;
     const unsub = subscribeUserMapData(uid, {

@@ -127,7 +127,9 @@ service cloud.firestore {
     }
 
     match /surveys/{id} {
-      allow read:   if signedIn() && (isStaff() || resource.data.created_by == request.auth.uid);
+      // sameOrg (not bare isStaff) so a staff member can't read another org's surveys by id.
+      // createSurvey stamps org_id and listSurveys queries by org, so this matches the app.
+      allow read:   if signedIn() && (sameOrg(resource.data) || resource.data.created_by == request.auth.uid);
       allow create: if signedIn() && isStaff() && request.resource.data.created_by == request.auth.uid;
       allow update, delete: if signedIn() && resource.data.created_by == request.auth.uid;
     }
