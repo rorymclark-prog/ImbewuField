@@ -163,7 +163,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
       <Label>{label}</Label>
       <div
         className="font-display font-bold leading-none mt-1"
-        style={{ fontSize: 21, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
+        style={{ fontSize: 18, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
       >
         {value}
       </div>
@@ -551,9 +551,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="text-right flex-shrink-0">
                         {siteData.areaHa < 1
-                          ? <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaM2.toLocaleString()}</div>
+                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteData.areaM2.toLocaleString()}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>m²</div></>
-                          : <><div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
+                          : <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>{t('hectaresUnit')}</div></>
                         }
                       </div>
@@ -587,7 +587,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
                         <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
                       </div>
                     </div>
@@ -895,7 +895,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#5C5040' }}>{t('soilHealthScoreHeader')}</span>
                     <div className="flex items-baseline gap-1">
-                      <span className="font-display font-bold" style={{ fontSize: 22, color: scoreColor, lineHeight: 1 }}>{total}</span>
+                      <span className="font-display font-bold" style={{ fontSize: 18, color: scoreColor, lineHeight: 1 }}>{total}</span>
                       <span className="font-mono" style={{ fontSize: 10, color: '#8C7A62' }}>/10</span>
                       <span className="font-sans font-semibold ml-1" style={{ fontSize: 10, color: scoreColor }}>{scoreLabel}</span>
                     </div>
@@ -1024,7 +1024,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               {/* 1 — Climate zone */}
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 21, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
                 <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: '#9A8C70', margin: '3px 0 11px' }}>
                   Köppen {kp} — {zoneLabel}
                 </div>
@@ -1470,7 +1470,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </svg>
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 17, color: '#20190F' }}>{t('surveyPromptTitle')}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('surveyPromptTitle')}</div>
                 <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
                   {t('surveyPromptBody')}
                 </div>
@@ -1512,7 +1512,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <Camera size={20} color="#EAF3E2" />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 17, color: '#20190F' }}>{t('photoPromptTitle')}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('photoPromptTitle')}</div>
                 <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
                   {t('photoPromptBody')}
                 </div>
@@ -1563,7 +1563,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     onClick={() => promptInputRef.current?.click()}
                     className="flex-shrink-0 flex items-center justify-center rounded-xl"
                     style={{ width: 68, height: 68, background: 'rgba(31,77,43,0.06)', border: '2px dashed rgba(31,77,43,0.25)', cursor: 'pointer' }}>
-                    <span style={{ fontSize: 24, color: '#1F4D2B', lineHeight: 1 }}>+</span>
+                    <span style={{ fontSize: 20, color: '#1F4D2B', lineHeight: 1 }}>+</span>
                   </button>
                 )}
               </div>

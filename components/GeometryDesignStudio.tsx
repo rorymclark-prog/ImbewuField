@@ -888,7 +888,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9E5C08' }}>Geometry-first Design Studio</div>
-            <h3 className="font-display font-bold text-lg leading-tight" style={{ color: '#20190F' }}>Approve the real land first. Then design.</h3>
+            <h3 className="font-display font-bold text-base leading-tight" style={{ color: '#20190F' }}>Approve the real land first. Then design.</h3>
             <p className="text-xs font-display leading-relaxed mt-1" style={{ color: '#6B5A44' }}>
               The studio reads your saved parcels and water shapes. Locked geometry is treated as farmer truth, so generated design maps can style and label it but not move it.
             </p>
@@ -907,7 +907,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
             <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>
               {icon}{label}
             </div>
-            <div className="font-display font-bold text-lg mt-1" style={{ color: '#20190F' }}>{value}</div>
+            <div className="font-display font-bold text-base mt-1" style={{ color: '#20190F' }}>{value}</div>
           </div>
         ))}
       </div>
