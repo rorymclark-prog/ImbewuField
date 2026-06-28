@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -9,6 +9,7 @@ import {
   Download,
   Droplets,
   FileDown,
+  FileText,
   Layers3,
   Lock,
   LockOpen,
@@ -38,6 +39,9 @@ import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
+import { reportId } from '@/lib/saved-reports';
+import { buildSkeletonReportDoc, type MapRef } from '@/lib/report-doc';
+import ReportDocView from '@/components/ReportDocView';
 import polygonClipping from 'polygon-clipping';
 
 // ── Contract types (kept in sync with /api/design-plan) ──────────────────────
@@ -2114,6 +2118,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [aiRendering, setAiRendering] = useState(false);
   const [aiRenderError, setAiRenderError] = useState('');
   const [renderLayer, setRenderLayer] = useState<AiRenderLayer>('overall');
+  const [showReportDoc, setShowReportDoc] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Fetch the Mapbox satellite tile for the design view and inline it as a base64
@@ -2451,6 +2456,26 @@ export default function GeometryDesignStudio({ locationData }: Props) {
 
   // Effective plan: prefer AI plan; fall back to local generated plan for text cards
   const hasPlan = !!aiPlan || !!studio.generatedPlan;
+
+  // Instant LOCAL structured report (skeleton) — Executive + Implementation +
+  // data-derived sections, built from what we already have. Claude enrichment
+  // and the remaining sections come in a later phase.
+  const reportDoc = useMemo(() => {
+    const siteId = designSiteIdFromLocation(locationData);
+    return buildSkeletonReportDoc({
+      id: reportId(),
+      siteId,
+      location: locationData ?? ({} as NonNullable<typeof locationData>),
+      survey: loadSurvey(siteId),
+      layers: studio.layers,
+      plan: studio.generatedPlan ?? null,
+      createdAt: new Date().toISOString(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationData, studio.layers, studio.generatedPlan]);
+
+  const viewMapFromReport = (m: MapRef) =>
+    setMapView(m === 'implementation' ? 'design' : m);
 
   return (
     <div className="space-y-4">
@@ -2923,6 +2948,26 @@ export default function GeometryDesignStudio({ locationData }: Props) {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── STRUCTURED REPORT (beta) — 11-section, map-linked ─────────────── */}
+        {locationData && studio.layers.length > 0 && (
+          <div className="space-y-2">
+            <button
+              onClick={() => setShowReportDoc((v) => !v)}
+              className={buttonBase}
+              style={{
+                width: '100%',
+                background: '#FBF7ED',
+                color: '#1F4D2B',
+                border: `1px solid ${CARD_BORDER}`,
+              }}
+            >
+              <FileText size={14} />
+              {showReportDoc ? 'Hide structured report' : 'Structured Report (beta) — Executive + Implementation + more'}
+            </button>
+            {showReportDoc && <ReportDocView doc={reportDoc} onViewMap={viewMapFromReport} />}
           </div>
         )}
 
