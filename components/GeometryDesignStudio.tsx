@@ -1325,7 +1325,7 @@ function GeometryPreview({
                 ? (FILL_COLORS[layer.layerType] ?? 'none')
                 : 'none';
             const strokeWidth =
-              layer.layerType === 'property_boundary' ? 7 : 4.5;
+              layer.layerType === 'property_boundary' ? 6 : 3;
             const dash =
               !layer.locked && layer.approved
                 ? '10,5'
@@ -1362,7 +1362,7 @@ function GeometryPreview({
           {visibleLayers.map((layer) => {
             // Over the photo, drop the property-boundary's centre label — its huge
             // centroid pill stacks on the house; the green outline + legend show it.
-            if (showSat && layer.layerType === 'property_boundary') return null;
+            if (layer.layerType === 'property_boundary') return null;
             const [cx, cy] = layerCentroid(layer, project, [SVG_W / 2, SVG_H / 2]);
             const text = layer.name.length > 26 ? `${layer.name.slice(0, 25)}…` : layer.name;
             const area = layer.areaLabel !== 'area unknown' ? ` · ${layer.areaLabel}` : '';
@@ -1411,11 +1411,11 @@ function GeometryPreview({
                         d={d}
                         fillRule="evenodd"
                         fill={color}
-                        fillOpacity={showSat ? 0.1 : 0.17}
+                        fillOpacity={showSat ? 0.17 : 0.17}
                         stroke={color}
-                        strokeWidth={showSat ? 2.4 : 1.3}
-                        strokeOpacity={showSat ? 0.95 : 0.55}
-                        strokeDasharray={isFeatureZone ? undefined : '5,3'}
+                        strokeWidth={showSat ? 3 : 1.3}
+                        strokeOpacity={showSat ? 0.98 : 0.55}
+                        strokeDasharray={isFeatureZone ? undefined : '6,4'}
                       />
                     ))}
                   </g>
@@ -1458,22 +1458,23 @@ function GeometryPreview({
                 >
                   {zone.n}
                 </text>
-                {/* Zone title caption below badge — parchment only (legend names */}
-                {/* the zones over the photo, so we drop these to declutter). */}
-                {!showSat && (
-                  <text
-                    x={bx}
-                    y={captionCy + 5}
-                    textAnchor="middle"
-                    fontFamily="'Helvetica Neue', sans-serif"
-                    fontSize="8.5"
-                    fontWeight="700"
-                    fill={color}
-                    opacity="0.88"
-                  >
-                    {captionFull}
-                  </text>
-                )}
+                {/* Zone title caption below badge — over the photo we keep it but */}
+                {/* add a dark halo (paint-order stroke) so it stays legible. */}
+                <text
+                  x={bx}
+                  y={captionCy + 5}
+                  textAnchor="middle"
+                  fontFamily="'Helvetica Neue', sans-serif"
+                  fontSize="8.5"
+                  fontWeight="700"
+                  fill={showSat ? '#FFFFFF' : color}
+                  opacity={showSat ? 1 : 0.88}
+                  stroke={showSat ? 'rgba(0,0,0,0.65)' : undefined}
+                  strokeWidth={showSat ? 2.5 : undefined}
+                  paintOrder={showSat ? 'stroke' : undefined}
+                >
+                  {captionFull}
+                </text>
               </g>
             );
           })}
@@ -1593,10 +1594,13 @@ function GeometryPreview({
 
           {/* ── WATER LAYER — catchment, runoff, swales, harvest math ──────── */}
           {showWater && (() => {
-            const roofLayer = visibleLayers.find(
+            // Aggregate ALL roof + structure footprints for catchment (multi-roof).
+            const roofLayers = visibleLayers.filter(
               (l) => l.layerType === 'roof' || l.layerType === 'structure',
             );
-            const roofM2 = Math.round(roofLayer?.areaM2 ?? 0);
+            const roofLayer = roofLayers[0] ?? null;
+            const roofM2 = Math.round(roofLayers.reduce((s, l) => s + (l.areaM2 || 0), 0));
+            const waterBodies = visibleLayers.filter((l) => l.layerType === 'water_body');
             const rainMm = Math.round(locationData?.rainfall?.annual ?? 0);
             const harvestKL = Math.round((roofM2 * rainMm * 0.8) / 1000);
             const roofC = roofLayer ? layerCentroid(roofLayer, project, boundsCenter) : boundsCenter;
@@ -1611,13 +1615,28 @@ function GeometryPreview({
               { glyph: '〜', color: '#4EA6D8', label: 'Swale on contour' },
               { glyph: '◐', color: '#2C5F8A', label: 'Rain tank (near house)' },
             ];
+            if (waterBodies.length) rows.push({ glyph: '◆', color: '#1565A4', label: 'Existing dam / pond' });
             return (
               <g>
-                {/* roof catchment fill */}
-                {roofLayer &&
-                  geometryToPaths(roofLayer.geometry, project).map((d, i) => (
-                    <path key={`rc-${i}`} d={d} fill="rgba(116,185,242,0.32)" stroke="#3A8EC4" strokeWidth="1.6" />
-                  ))}
+                {/* roof catchment fill — all roofs */}
+                {roofLayers.flatMap((rl, ri) =>
+                  geometryToPaths(rl.geometry, project).map((d, i) => (
+                    <path key={`rc-${ri}-${i}`} d={d} fill="rgba(116,185,242,0.32)" stroke="#3A8EC4" strokeWidth="1.6" />
+                  )),
+                )}
+                {/* existing water bodies (dam / pond) */}
+                {waterBodies.map((wb, wi) => {
+                  const c = layerCentroid(wb, project, boundsCenter);
+                  return (
+                    <g key={`wb-${wi}`}>
+                      {geometryToPaths(wb.geometry, project).map((d, i) => (
+                        <path key={i} d={d} fill="rgba(21,101,164,0.4)" stroke="#1565A4" strokeWidth="1.8" />
+                      ))}
+                      <circle cx={c[0]} cy={c[1]} r="11" fill="#1565A4" stroke="#fff" strokeWidth="2" />
+                      <text x={c[0]} y={c[1] + 3} textAnchor="middle" fontFamily="sans-serif" fontSize="9" fontWeight="800" fill="#fff">◆</text>
+                    </g>
+                  );
+                })}
                 {/* swales on contour (indicative) */}
                 {slope.usable &&
                   [0.34, 0.56, 0.78].map((t, i) => {
@@ -2045,7 +2064,7 @@ function GeometryPreview({
         fontSize="9.5"
         fill="#9A8268"
       >
-        Locked geometry stays fixed · ImbewuField
+        Locked geometry stays fixed · WGS 84 · ImbewuField
       </text>
 
       {/* ═══════════════════════════════════════════════════════════════════
