@@ -1250,14 +1250,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   useEffect(() => {
     const rawMap = mapRef.current?.getMap();
     if (!rawMap) return;
-    const BORDER_LAYERS = ['gl-draw-poly-casing-land', 'gl-draw-poly-stroke-land', 'gl-draw-poly-casing-water', 'gl-draw-poly-stroke-water'];
-    const FILL_LAYERS = ['gl-draw-poly-fill-land', 'gl-draw-poly-fill-water'];
     const apply = () => {
       const borders = showFeatures ? 'visible' : 'none';
       const fill = (showFeatures && showHatch) ? 'visible' : 'none';
       try {
-        for (const id of BORDER_LAYERS) if (rawMap.getLayer(id)) rawMap.setLayoutProperty(id, 'visibility', borders);
-        for (const id of FILL_LAYERS)   if (rawMap.getLayer(id)) rawMap.setLayoutProperty(id, 'visibility', fill);
+        // MapboxDraw renders each style layer into TWO real layers (`<id>.cold` / `<id>.hot`),
+        // so getLayer('gl-draw-poly-fill-land') is null — the prior bug that made every toggle
+        // attempt a silent no-op. Scan the live style and match by prefix to catch both.
+        const layers = rawMap.getStyle()?.layers ?? [];
+        for (const layer of layers) {
+          const id = layer.id;
+          if (!id.startsWith('gl-draw-poly-')) continue;
+          rawMap.setLayoutProperty(id, 'visibility', id.includes('poly-fill') ? fill : borders);
+        }
       } catch { /* layers not ready yet — draw.render/styledata will retry */ }
     };
     apply();
