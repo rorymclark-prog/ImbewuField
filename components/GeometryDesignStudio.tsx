@@ -646,6 +646,56 @@ function GeometryPreview({
   const showSectorPanel = mapView === 'sector';
   const showZoneKey = mapView === 'zone' || mapView === 'design';
 
+  // ── Boundary path for clipPath (zone/design views) ─────────────────────────
+  // Build an SVG path from the property_boundary ring (or all approved coords hull)
+  const boundaryPathForClip: string = (() => {
+    if (!showZoneBadges) return '';
+    const boundaryLayer = visibleLayers.find((l) => l.layerType === 'property_boundary');
+    const source = boundaryLayer ?? visibleLayers[0];
+    if (!source) return '';
+    const g = source.geometry;
+    if (g.type === 'Polygon' && g.coordinates[0]) {
+      return ringToPath(g.coordinates[0], project);
+    }
+    if (g.type === 'MultiPolygon' && g.coordinates[0]?.[0]) {
+      return ringToPath(g.coordinates[0][0], project);
+    }
+    // Fallback: convex-ish rect from bboxPx
+    const { minX, maxX, minY, maxY } = bboxPx;
+    return `M ${minX} ${minY} L ${maxX} ${minY} L ${maxX} ${maxY} L ${minX} ${maxY} Z`;
+  })();
+
+  // ── Label de-collision state ────────────────────────────────────────────────
+  // We compute placed-rect bookkeeping once during render.
+  // Each call to placeLabel returns a possibly-nudged y offset.
+  const placedRects: Array<{ x: number; y: number; w: number; h: number }> = [];
+  function placeLabel(cx: number, cy: number, textLen: number): number {
+    const w = Math.min(textLen * 6 + 16, 210);
+    const h = 18;
+    const x0 = cx - w / 2;
+    let y0 = cy - 9; // top of label pill
+    const maxNudges = 6;
+    const step = 16;
+    for (let n = 0; n < maxNudges; n++) {
+      const overlaps = placedRects.some(
+        (r) =>
+          x0 < r.x + r.w &&
+          x0 + w > r.x &&
+          y0 < r.y + r.h &&
+          y0 + h > r.y,
+      );
+      if (!overlaps) break;
+      // nudge down, or up if close to bottom
+      if (y0 + h + step < SVG_H - 30) {
+        y0 += step;
+      } else {
+        y0 -= step;
+      }
+    }
+    placedRects.push({ x: x0, y: y0, w, h });
+    return y0 + 9; // return centreY of the pill
+  }
+
   // ── Sector inset (Sector view — left side below data strip) ───────────────
   const sectorInsetX = mapAreaW - 192;
   const sectorInsetY = northY + 82;
@@ -709,6 +759,12 @@ function GeometryPreview({
         <pattern id="hatch-soft" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="8" stroke="#8B6A20" strokeWidth="1.2" opacity="0.18" />
         </pattern>
+        {/* Boundary clip — zone area fills are clipped to the property outline */}
+        {showZoneBadges && boundaryPathForClip && (
+          <clipPath id="design-boundary-clip">
+            <path d={boundaryPathForClip} />
+          </clipPath>
+        )}
       </defs>
 
       {/* ── BACKGROUND ────────────────────────────────────────────────────── */}
@@ -854,16 +910,18 @@ function GeometryPreview({
             const area = layer.areaLabel !== 'area unknown' ? ` · ${layer.areaLabel}` : '';
             const full = `${text}${area}`;
             const pillW = Math.min(Math.max(full.length * 6.2 + 16, 52), 210);
+            // De-collide: placeLabel returns the nudged centreY for the pill
+            const labelCy = placeLabel(cx, cy, full.length);
             return (
               <g key={`lbl-${layer.id}`} opacity={layer.approved ? 1 : 0.52}>
                 <rect
-                  x={cx - pillW / 2} y={cy - 9}
+                  x={cx - pillW / 2} y={labelCy - 9}
                   width={pillW} height={18}
                   rx="9"
                   fill="rgba(32,25,15,0.74)"
                 />
                 <text
-                  x={cx} y={cy + 5}
+                  x={cx} y={labelCy + 5}
                   textAnchor="middle"
                   fontFamily="'Helvetica Neue', sans-serif"
                   fontSize="9"
@@ -876,7 +934,77 @@ function GeometryPreview({
             );
           })}
 
-          {/* ── ZONE BADGES + SUGGESTED-AREA BLOBS (Zone + Design views) ─── */}
+          {/* ── ZONE AREA FILLS — clipped to boundary (Zone + Design views) ─── */}
+          {/* Drawn BEFORE badges so outlines + badges sit on top */}
+          {showZoneBadges && aiPlan && boundaryPathForClip && (
+            <g clipPath="url(#design-boundary-clip)">
+              {aiPlan.zones.map((zone) => {
+                const color = ZONE_COLORS[zone.n] ?? '#555';
+                const [bx, by] = resolveAnchor(
+                  zone.anchor,
+                  visibleLayers,
+                  project,
+                  boundsCenter,
+                  bboxPx,
+                );
+                const bboxW = bboxPx.maxX - bboxPx.minX;
+                const bboxH = bboxPx.maxY - bboxPx.minY;
+
+                // For anchors that map to a real feature layer, use the feature's
+                // actual polygon path. Otherwise draw a generous ellipse.
+                const anchorToLayerType: Partial<Record<AnchorHint, DesignLayerType>> = {
+                  house: 'roof',
+                  'existing-garden': 'cultivation',
+                  'tree-belt': 'tree_belt',
+                };
+                const featureLayerType = anchorToLayerType[zone.anchor];
+                const featureLayer = featureLayerType
+                  ? visibleLayers.find((l) => l.layerType === featureLayerType)
+                  : undefined;
+
+                if (featureLayer) {
+                  // Use the real projected polygon path
+                  const paths = geometryToPaths(featureLayer.geometry, project);
+                  return (
+                    <g key={`zone-area-${zone.n}`}>
+                      {paths.map((d, idx) => (
+                        <path
+                          key={idx}
+                          d={d}
+                          fill={color}
+                          fillOpacity="0.16"
+                          stroke={color}
+                          strokeWidth="1.2"
+                          strokeDasharray="5,3"
+                          strokeOpacity="0.55"
+                        />
+                      ))}
+                    </g>
+                  );
+                }
+
+                // Proposed zone — generous ellipse (22-34% of bbox), clipped to boundary
+                const rx = bboxW * (0.22 + zone.n * 0.025);
+                const ry = bboxH * (0.22 + zone.n * 0.025);
+                return (
+                  <g key={`zone-area-${zone.n}`}>
+                    <ellipse
+                      cx={bx} cy={by}
+                      rx={rx} ry={ry}
+                      fill={color}
+                      fillOpacity="0.16"
+                      stroke={color}
+                      strokeWidth="1.5"
+                      strokeDasharray="6,4"
+                      strokeOpacity="0.60"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          )}
+
+          {/* ── ZONE BADGES (Zone + Design views) ────────────────────────────── */}
           {showZoneBadges && aiPlan && aiPlan.zones.map((zone) => {
             const color = ZONE_COLORS[zone.n] ?? '#555';
             const [bx, by] = resolveAnchor(
@@ -886,36 +1014,16 @@ function GeometryPreview({
               boundsCenter,
               bboxPx,
             );
-            // Suggested-area blob for non-house zones
-            const drawBlob = zone.n >= 1 && zone.n <= 4;
-            // Blob radius scales with zone number
-            const blobRx = 50 + zone.n * 22;
-            const blobRy = 40 + zone.n * 16;
+            // Badge sits at the anchor point (no blob offset needed — areas are now fills)
+            const badgeCy = by;
+            // Zone title caption: de-collide
+            const captionFull = zone.title.length > 20 ? `${zone.title.slice(0, 19)}…` : zone.title;
+            const captionCy = placeLabel(bx, badgeCy + 32, captionFull.length);
             return (
               <g key={`zone-${zone.n}`}>
-                {/* Soft suggested-area ellipse */}
-                {drawBlob && (
-                  <>
-                    <ellipse
-                      cx={bx} cy={by}
-                      rx={blobRx} ry={blobRy}
-                      fill={`${color}18`}
-                      stroke={color}
-                      strokeWidth="1.5"
-                      strokeDasharray="6,4"
-                      opacity="0.7"
-                    />
-                    <ellipse
-                      cx={bx} cy={by}
-                      rx={blobRx} ry={blobRy}
-                      fill="url(#hatch-soft)"
-                      opacity="0.5"
-                    />
-                  </>
-                )}
                 {/* Badge circle */}
                 <circle
-                  cx={bx} cy={by - (drawBlob ? blobRy - 4 : 0)}
+                  cx={bx} cy={badgeCy}
                   r="15"
                   fill={color}
                   stroke="#FAF5EA"
@@ -924,7 +1032,7 @@ function GeometryPreview({
                 />
                 <text
                   x={bx}
-                  y={by - (drawBlob ? blobRy - 4 : 0) + 5}
+                  y={badgeCy + 5}
                   textAnchor="middle"
                   fontFamily="'Helvetica Neue', sans-serif"
                   fontSize="13"
@@ -933,10 +1041,10 @@ function GeometryPreview({
                 >
                   {zone.n}
                 </text>
-                {/* Zone title caption below badge */}
+                {/* Zone title caption below badge — de-collided */}
                 <text
                   x={bx}
-                  y={by - (drawBlob ? blobRy - 4 : 0) + 26}
+                  y={captionCy + 5}
                   textAnchor="middle"
                   fontFamily="'Helvetica Neue', sans-serif"
                   fontSize="8.5"
@@ -944,7 +1052,7 @@ function GeometryPreview({
                   fill={color}
                   opacity="0.88"
                 >
-                  {zone.title.length > 20 ? `${zone.title.slice(0, 19)}…` : zone.title}
+                  {captionFull}
                 </text>
               </g>
             );
@@ -959,11 +1067,14 @@ function GeometryPreview({
               boundsCenter,
               bboxPx,
             );
-            const yOff = i * 52;
             const oppW = 180;
             const short = opp.note.length > 70 ? `${opp.note.slice(0, 68)}…` : opp.note;
+            // De-collide: treat the opp card as a ~42px-tall rect, centred at ox
+            // placeLabel gives us the pill centreY; we use it as the card top + 9
+            const cardTopCy = placeLabel(ox, oy + 22 + i * 52, oppW / 6);
+            const cardY = cardTopCy - 9;
             return (
-              <g key={`opp-${i}`} transform={`translate(${ox - oppW / 2} ${oy + 22 + yOff})`}>
+              <g key={`opp-${i}`} transform={`translate(${ox - oppW / 2} ${cardY})`}>
                 <rect
                   width={oppW} height={42}
                   rx="10"
