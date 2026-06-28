@@ -114,7 +114,35 @@ interface Props {
   locationData: LocationData | null;
 }
 
-type MapView = 'base' | 'sector' | 'zone' | 'design';
+type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design';
+
+// Views that render the overlay on the satellite photo + show the right rail.
+const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design']);
+
+// 16-point compass label → bearing (deg clockwise from North).
+const COMPASS_BEARING: Record<string, number> = {
+  N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5,
+  S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5,
+};
+
+// Compass label → unit screen vector pointing in that bearing (north = -y, east = +x).
+function bearingToDir(label: string | undefined): readonly [number, number] {
+  const b = COMPASS_BEARING[(label ?? 'N').toUpperCase()] ?? 0;
+  const r = (b * Math.PI) / 180;
+  return [Math.sin(r), -Math.cos(r)];
+}
+
+// Indicative slope from the coarse elevation grid (no DEM). Everything derived from
+// this is rendered DASHED + captioned, and suppressed when the slope is ~flat.
+function slopeIndicative(elev: { slopeDeg?: number; aspectDeg?: number } | undefined) {
+  const slopeDeg = elev?.slopeDeg ?? 0;
+  const usable = slopeDeg > 0.5 && elev?.aspectDeg != null;
+  const aspect = elev?.aspectDeg ?? 0; // direction the slope FACES (downhill)
+  const rad = (aspect * Math.PI) / 180;
+  const downhillDir: readonly [number, number] = [Math.sin(rad), -Math.cos(rad)];
+  const contourDir: readonly [number, number] = [downhillDir[1], -downhillDir[0]]; // perpendicular
+  return { usable, slopeDeg, downhillDir, contourDir };
+}
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -319,7 +347,7 @@ function computeSatFit(layers: DesignLayer[], mapView: MapView) {
   const SVG_W = 960;
   const SVG_H = 640;
   const RAIL_W = 220;
-  const mapAreaW = mapView === 'design' ? SVG_W - RAIL_W - 16 : SVG_W;
+  const mapAreaW = OVERLAY_VIEWS.has(mapView) ? SVG_W - RAIL_W - 16 : SVG_W;
   const drawable = layers.filter((l) => l.approved);
   const visible = drawable.length ? drawable : layers;
   const bounds = getBounds(visible);
@@ -328,7 +356,7 @@ function computeSatFit(layers: DesignLayer[], mapView: MapView) {
   const imgW = mapAreaW - 40;
   const imgH = SVG_H - 40;
   const useSatellite =
-    mapView === 'design' &&
+    OVERLAY_VIEWS.has(mapView) &&
     !!MAPBOX_TOKEN &&
     visible.length > 0 &&
     Number.isFinite(bounds.minX) &&
@@ -767,7 +795,7 @@ function GeometryPreview({
   // Right rail width for Design view
   const RAIL_W = 220;
   // Map area width changes in design view to make room for the rail
-  const mapAreaW = mapView === 'design' ? SVG_W - RAIL_W - 16 : SVG_W;
+  const mapAreaW = OVERLAY_VIEWS.has(mapView) ? SVG_W - RAIL_W - 16 : SVG_W;
 
   const drawableLayers = layers.filter((l) => l.approved);
   const visibleLayers = drawableLayers.length ? drawableLayers : layers;
@@ -886,7 +914,9 @@ function GeometryPreview({
   const showZoneBadges = mapView === 'zone' || mapView === 'design';
   const showDesignElements = mapView === 'design';
   const showSectorPanel = mapView === 'sector';
+  const showWater = mapView === 'water';
   const showZoneKey = mapView === 'zone' || mapView === 'design';
+  const slope = slopeIndicative(locationData?.elevation);
 
   // ── Boundary path for clipPath (zone/design views) ─────────────────────────
   // Build an SVG path from the property_boundary ring (or all approved coords hull)
@@ -1070,6 +1100,7 @@ function GeometryPreview({
     base: 'Base Map',
     sector: 'Sector Analysis',
     zone: 'Zone Map',
+    water: 'Water & Hydrology',
     design: 'Permaculture Design',
   };
 
@@ -1110,6 +1141,19 @@ function GeometryPreview({
         </marker>
         <marker id="arrow-foot" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
           <path d="M0,0 L0,7 L9,3.5 Z" fill="#C8B890" opacity="0.85" />
+        </marker>
+        {/* Sector / water / soil markers */}
+        <marker id="arrow-wind" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L9,3.5 Z" fill="#E08A2C" opacity="0.92" />
+        </marker>
+        <marker id="arrow-fire" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L9,3.5 Z" fill="#C0392B" opacity="0.92" />
+        </marker>
+        <marker id="arrow-frost" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L9,3.5 Z" fill="#9FD0E8" opacity="0.92" />
+        </marker>
+        <marker id="arrow-flood" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L9,3.5 Z" fill="#3A8EC4" opacity="0.95" />
         </marker>
         {/* Hatch pattern for suggested-area blobs */}
         <pattern id="hatch-soft" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
@@ -1531,6 +1575,128 @@ function GeometryPreview({
             );
           })}
 
+          {/* ── WATER LAYER — catchment, runoff, swales, harvest math ──────── */}
+          {showWater && (() => {
+            const roofLayer = visibleLayers.find(
+              (l) => l.layerType === 'roof' || l.layerType === 'structure',
+            );
+            const roofM2 = Math.round(roofLayer?.areaM2 ?? 0);
+            const rainMm = Math.round(locationData?.rainfall?.annual ?? 0);
+            const harvestKL = Math.round((roofM2 * rainMm * 0.9) / 1000);
+            const roofC = roofLayer ? layerCentroid(roofLayer, project, boundsCenter) : boundsCenter;
+            const bboxW = bboxPx.maxX - bboxPx.minX;
+            const bboxH = bboxPx.maxY - bboxPx.minY;
+            const railX = mapAreaW + 8;
+            const dn = slope.downhillDir;
+            const ct = slope.contourDir;
+            const rows: Array<{ glyph: string; color: string; label: string }> = [
+              { glyph: '▦', color: '#3A8EC4', label: 'Roof catchment → tank' },
+              { glyph: '→', color: '#3A8EC4', label: 'Runoff downslope (indicative)' },
+              { glyph: '〜', color: '#4EA6D8', label: 'Swale on contour' },
+              { glyph: '◐', color: '#2C5F8A', label: 'Rain tank (near house)' },
+            ];
+            return (
+              <g>
+                {/* roof catchment fill */}
+                {roofLayer &&
+                  geometryToPaths(roofLayer.geometry, project).map((d, i) => (
+                    <path key={`rc-${i}`} d={d} fill="rgba(116,185,242,0.32)" stroke="#3A8EC4" strokeWidth="1.6" />
+                  ))}
+                {/* swales on contour (indicative) */}
+                {slope.usable &&
+                  [0.34, 0.56, 0.78].map((t, i) => {
+                    const px = bboxPx.minX + bboxW * t;
+                    const py = bboxPx.minY + bboxH * t;
+                    const len = Math.min(bboxW, bboxH) * 0.62;
+                    return (
+                      <line
+                        key={`sw-${i}`}
+                        x1={px - ct[0] * len / 2} y1={py - ct[1] * len / 2}
+                        x2={px + ct[0] * len / 2} y2={py + ct[1] * len / 2}
+                        stroke="#4EA6D8" strokeWidth="2" strokeDasharray="7,5" opacity="0.7"
+                      />
+                    );
+                  })}
+                {/* runoff flow arrows downslope */}
+                {slope.usable &&
+                  [0.3, 0.5, 0.7].map((t, i) => {
+                    const sx = bboxPx.minX + bboxW * t - dn[0] * bboxH * 0.26;
+                    const sy = bboxPx.minY + bboxH * t - dn[1] * bboxH * 0.26;
+                    return (
+                      <line
+                        key={`fl-${i}`}
+                        x1={sx} y1={sy}
+                        x2={sx + dn[0] * bboxH * 0.4} y2={sy + dn[1] * bboxH * 0.4}
+                        stroke="#3A8EC4" strokeWidth="2.6" strokeDasharray="2,4"
+                        markerEnd="url(#arrow-flood)" opacity="0.8"
+                      />
+                    );
+                  })}
+                {/* rain tank near roof */}
+                {roofLayer && (
+                  <g>
+                    <ellipse cx={roofC[0] + 24} cy={roofC[1] + 24} rx="9" ry="4.5" fill="#2C5F8A" stroke="#fff" strokeWidth="1.4" />
+                    <rect x={roofC[0] + 15} y={roofC[1] + 24} width="18" height="15" fill="#2C5F8A" stroke="#fff" strokeWidth="1.4" />
+                    <ellipse cx={roofC[0] + 24} cy={roofC[1] + 39} rx="9" ry="4.5" fill="#3A6E9C" stroke="#fff" strokeWidth="1.4" />
+                  </g>
+                )}
+                {/* droplet badge on roof */}
+                {roofLayer && (
+                  <g transform={`translate(${roofC[0]} ${roofC[1]})`}>
+                    <circle r="15" fill="#1565A4" stroke="#fff" strokeWidth="2.5" filter="url(#ps-shadow)" />
+                    <path d="M0,-8 C5,-1 6,3 0,7 C-6,3 -5,-1 0,-8 Z" fill="#fff" />
+                  </g>
+                )}
+                {/* harvest math callout */}
+                {roofLayer && roofM2 > 0 && (() => {
+                  const ly = placeLabel(roofC[0], roofC[1] - 30, 32);
+                  return (
+                    <g>
+                      <rect x={roofC[0] - 96} y={ly - 11} width="192" height="22" rx="11" fill="rgba(18,38,66,0.92)" />
+                      <text x={roofC[0]} y={ly + 4} textAnchor="middle" fontFamily="sans-serif" fontSize="9.5" fontWeight="700" fill="#CDE7FA">
+                        {`Roof ${roofM2} m² × ${rainMm} mm = ~${harvestKL} kL/yr`}
+                      </text>
+                    </g>
+                  );
+                })()}
+                {/* indicative-slope chip when slope unknown/flat */}
+                {!slope.usable && (
+                  <g>
+                    <rect x={boundsCenter[0] - 104} y={boundsCenter[1] + 30} width="208" height="20" rx="10" fill="rgba(18,38,66,0.88)" />
+                    <text x={boundsCenter[0]} y={boundsCenter[1] + 44} textAnchor="middle" fontFamily="sans-serif" fontSize="8.5" fill="#CDE7FA">
+                      Flow direction: observe after rain (flat/coarse slope)
+                    </text>
+                  </g>
+                )}
+
+                {/* ── WATER RIGHT RAIL ── */}
+                <rect x={railX} y="20" width={RAIL_W} height={SVG_H - 40} rx="16" fill="rgba(16,34,52,0.94)" stroke="#2C5F8A" strokeWidth="1.2" />
+                <text x={railX + 14} y="44" fontFamily="Georgia, serif" fontWeight="800" fontSize="11" fill="#9FD4F2" letterSpacing="0.06em">WATER & HYDROLOGY</text>
+                <text x={railX + 14} y="64" fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#7FB8DC" letterSpacing="0.08em">RAINWATER HARVEST</text>
+                <text x={railX + 14} y="82" fontFamily="sans-serif" fontSize="9.5" fontWeight="700" fill="#EAF4FB">{`~${harvestKL} kL / year`}</text>
+                <text x={railX + 14} y="96" fontFamily="sans-serif" fontSize="8" fill="#A9C7DC">{`${roofM2} m² roof × ${rainMm} mm × 0.9`}</text>
+                <text x={railX + 14} y="124" fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#7FB8DC" letterSpacing="0.08em">LEGEND</text>
+                {rows.map((r, i) => (
+                  <g key={`wr-${i}`} transform={`translate(${railX + 14} ${138 + i * 22})`}>
+                    <text x="0" y="0" fontFamily="sans-serif" fontSize="12" fill={r.color}>{r.glyph}</text>
+                    <text x="20" y="0" fontFamily="sans-serif" fontSize="8.5" fill="#D8E6F0">{r.label}</text>
+                  </g>
+                ))}
+                <text x={railX + 14} y="250" fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#7FB8DC" letterSpacing="0.08em">NOTES</text>
+                {[
+                  'Roof tanks + small dams need no',
+                  'licence (Nat. Water Act general',
+                  'authorisation). Slow, spread & sink',
+                  'runoff with swales on contour.',
+                  'Flow lines are indicative — confirm',
+                  'the low point on the ground.',
+                ].map((line, i) => (
+                  <text key={`wn-${i}`} x={railX + 14} y={266 + i * 12} fontFamily="sans-serif" fontSize="7.5" fill="#A9C7DC">{line}</text>
+                ))}
+              </g>
+            );
+          })()}
+
           {/* ── SECTOR VIEW — sun-path inset + wind notes ──────────────────── */}
           {showSectorPanel && (
             <g>
@@ -1598,6 +1764,93 @@ function GeometryPreview({
               )}
             </g>
           )}
+
+          {/* ── SECTOR RADIAL ENERGIES + RAIL (upgrade) ─────────────────────── */}
+          {showSectorPanel && (() => {
+            const cx = boundsCenter[0];
+            const cy = boundsCenter[1];
+            const siteR = 0.5 * Math.hypot(bboxPx.maxX - bboxPx.minX, bboxPx.maxY - bboxPx.minY);
+            const R = siteR + 54;
+            const isSH = (locationData?.lat ?? -29) < 0;
+            const climate = locationData?.climate;
+            const railX = mapAreaW + 8;
+            const ray = (from: readonly [number, number], lenOut = 50, lenIn = 16) => ({
+              sx: cx + from[0] * (R + lenOut), sy: cy + from[1] * (R + lenOut),
+              ex: cx + from[0] * (R - lenIn), ey: cy + from[1] * (R - lenIn),
+            });
+            const sun = ray(bearingToDir(isSH ? 'N' : 'S'), 30, 8);
+            const sumW = climate?.windFromSummer ? ray(bearingToDir(climate.windFromSummer)) : null;
+            const winW = climate?.windFromWinter ? ray(bearingToDir(climate.windFromWinter)) : null;
+            const windW = 2 + Math.min(climate?.windSpeed ?? 3, 8) * 0.5;
+            const showFrost = (climate?.minTemp ?? 99) < 5 && slope.usable;
+            const rows: Array<{ glyph: string; color: string; label: string }> = [
+              { glyph: '☀', color: '#F7C97E', label: `Midday sun from ${isSH ? 'N' : 'S'} — face beds to it` },
+            ];
+            if (climate?.windFromSummer) rows.push({ glyph: '⤙', color: '#E08A2C', label: `Summer wind from ${climate.windFromSummer}` });
+            if (climate?.windFromWinter) rows.push({ glyph: '⤙', color: '#C97B25', label: `Winter wind from ${climate.windFromWinter}` });
+            if (showFrost) rows.push({ glyph: '❄', color: '#9FD0E8', label: 'Frost drains to low corner' });
+            if (slope.usable) rows.push({ glyph: '→', color: '#3A8EC4', label: 'Runoff enters from uphill' });
+            return (
+              <g>
+                {/* sun ray (from N in SH) */}
+                <line x1={sun.sx} y1={sun.sy} x2={sun.ex} y2={sun.ey} stroke="#F7C97E" strokeWidth="4" markerEnd="url(#arrow-harvest)" opacity="0.9" />
+                <circle cx={sun.sx} cy={sun.sy} r="9" fill="#F7C97E" opacity="0.95" />
+                <text x={sun.sx} y={sun.sy - 12} textAnchor="middle" fontFamily="sans-serif" fontSize="8.5" fontWeight="700" fill="#F7C97E">Midday sun</text>
+                {/* summer wind */}
+                {sumW && (
+                  <g>
+                    <line x1={sumW.sx} y1={sumW.sy} x2={sumW.ex} y2={sumW.ey} stroke="#E08A2C" strokeWidth={windW} strokeDasharray="8,5" markerEnd="url(#arrow-wind)" opacity="0.88" />
+                    <text x={sumW.sx} y={sumW.sy} textAnchor="middle" fontFamily="sans-serif" fontSize="8" fontWeight="700" fill="#E08A2C">Summer wind</text>
+                  </g>
+                )}
+                {/* winter wind */}
+                {winW && (
+                  <g>
+                    <line x1={winW.sx} y1={winW.sy} x2={winW.ex} y2={winW.ey} stroke="#C97B25" strokeWidth={windW} strokeDasharray="8,5" markerEnd="url(#arrow-wind)" opacity="0.82" />
+                    <text x={winW.sx} y={winW.sy} textAnchor="middle" fontFamily="sans-serif" fontSize="8" fontWeight="700" fill="#C97B25">Winter wind</text>
+                  </g>
+                )}
+                {/* frost drainage downslope + pocket */}
+                {showFrost && (() => {
+                  const dn = slope.downhillDir;
+                  const fx = cx + dn[0] * siteR * 0.85;
+                  const fy = cy + dn[1] * siteR * 0.85;
+                  return (
+                    <g>
+                      <line x1={cx} y1={cy} x2={fx} y2={fy} stroke="#9FD0E8" strokeWidth="2.4" strokeDasharray="3,4" markerEnd="url(#arrow-frost)" opacity="0.8" />
+                      <ellipse cx={fx} cy={fy} rx="26" ry="16" fill="rgba(159,208,232,0.18)" stroke="#9FD0E8" strokeWidth="1.4" strokeDasharray="4,3" />
+                      <text x={fx} y={fy + 3} textAnchor="middle" fontFamily="sans-serif" fontSize="7.5" fill="#CDE7FA">frost pocket</text>
+                    </g>
+                  );
+                })()}
+                {/* runoff inflow from uphill */}
+                {slope.usable && (() => {
+                  const r2 = ray([-slope.downhillDir[0], -slope.downhillDir[1]] as const);
+                  return <line x1={r2.sx} y1={r2.sy} x2={r2.ex} y2={r2.ey} stroke="#3A8EC4" strokeWidth="2.6" markerEnd="url(#arrow-flood)" opacity="0.75" />;
+                })()}
+
+                {/* SECTOR RAIL */}
+                <rect x={railX} y="20" width={RAIL_W} height={SVG_H - 40} rx="16" fill="rgba(28,22,10,0.94)" stroke="#F7C97E" strokeWidth="1.2" />
+                <text x={railX + 14} y="44" fontFamily="Georgia, serif" fontWeight="800" fontSize="11" fill="#F7C97E" letterSpacing="0.06em">SECTOR ANALYSIS</text>
+                <text x={railX + 14} y="62" fontFamily="sans-serif" fontSize="8" fill="#C9B48E">Energies entering the site</text>
+                {rows.map((r, i) => (
+                  <g key={`sr-${i}`} transform={`translate(${railX + 14} ${88 + i * 24})`}>
+                    <text x="0" y="0" fontFamily="sans-serif" fontSize="13" fill={r.color}>{r.glyph}</text>
+                    <text x="22" y="0" fontFamily="sans-serif" fontSize="8.5" fill="#E6DAC2">{r.label}</text>
+                  </g>
+                ))}
+                <text x={railX + 14} y={112 + rows.length * 24} fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#C9B48E" letterSpacing="0.08em">DESIGN RESPONSE</text>
+                {[
+                  '• North beds catch winter sun',
+                  `• Windbreak on the ${climate?.windFromWinter ?? 'cold'}-wind edge`,
+                  '• Frost-tender crops off low corner',
+                  '• Slow & sink runoff with swales',
+                ].map((line, i) => (
+                  <text key={`sd-${i}`} x={railX + 14} y={130 + rows.length * 24 + i * 14} fontFamily="sans-serif" fontSize="8" fill="#B9AA8E">{line}</text>
+                ))}
+              </g>
+            );
+          })()}
 
           {/* ── ZONE KEY PANEL (Zone view — in map area) ───────────────────── */}
           {showZoneKey && mapView === 'zone' && (
@@ -2144,6 +2397,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     { id: 'base', label: 'Base' },
     { id: 'sector', label: 'Sector' },
     { id: 'zone', label: 'Zone' },
+    { id: 'water', label: 'Water' },
     { id: 'design', label: 'Design' },
   ];
 
