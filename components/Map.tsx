@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -1271,6 +1271,37 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => { rawMap.off('styledata', apply); rawMap.off('draw.render', apply); };
   }, [showFeatures, showHatch]);
 
+  // Print a clean BASE MAP for the farmer to sketch on by hand: satellite + contours +
+  // boundary/house OUTLINES, with the hatch fill removed (the fill makes a busy print).
+  // Hatch fill layers are hidden directly for the capture, then restored to the live state.
+  const printBaseMap = useCallback(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    const fillIds = (map.getStyle()?.layers ?? [])
+      .filter((l) => l.id.startsWith('gl-draw-poly-') && l.id.includes('poly-fill'))
+      .map((l) => l.id);
+    fillIds.forEach((id) => { try { map.setLayoutProperty(id, 'visibility', 'none'); } catch {} });
+    map.once('idle', () => {
+      let dataUrl = '';
+      try { dataUrl = map.getCanvas().toDataURL('image/png'); } catch {}
+      const restore = (showFeatures && showHatch) ? 'visible' : 'none';
+      fillIds.forEach((id) => { try { map.setLayoutProperty(id, 'visibility', restore); } catch {} });
+      if (!dataUrl) return;
+      const w = window.open('', '_blank');
+      if (!w) return;
+      w.document.write(`<!doctype html><html><head><title>ImbewuField — base map</title>`
+        + `<style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}`
+        + `body{margin:0;font-family:Georgia,serif;color:#20190f}`
+        + `h1{font-size:16px;margin:0 0 4px}.s{font-size:11px;color:#6b5a42;margin:0 0 8px}`
+        + `img{width:100%;height:auto;border:1px solid #d8cdb6;border-radius:6px}</style></head>`
+        + `<body><h1>Site base map</h1>`
+        + `<div class="s">Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.</div>`
+        + `<img src="${dataUrl}" onload="setTimeout(function(){window.print();},300)"/></body></html>`);
+      w.document.close();
+    });
+    map.triggerRepaint();
+  }, [showFeatures, showHatch]);
+
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
   // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
   useEffect(() => {
@@ -2349,6 +2380,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {placeSaved ? <Check size={18} strokeWidth={2.2} style={{ color: '#A8D88A' }} /> : <Bookmark size={18} strokeWidth={1.8} style={{ color: '#A8D88A' }} />}{placeSaved ? t('savePlaceConfirmedButton') : t('savePlaceButton')}
           </button>
 
+          {/* Print a clean base map (no hatch) for the farmer to sketch on by hand */}
+          <button onClick={printBaseMap}
+            title="Print a clean base map (boundary, house outlines + contours, no hatching) to sketch your design on by hand"
+            className="flex items-center gap-2 transition-all active:scale-95"
+            style={{
+              background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 600, color: '#EAF3E2',
+            }}>
+            <Printer size={18} strokeWidth={1.8} style={{ color: '#A8D88A' }} /> {t('printBaseMapButton')}
+          </button>
+
           {/* ── Places section — collapsible ── */}
           <div className="w-full">
             <button
@@ -2965,8 +3007,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 const pnX = (rightX + NAME_W / 2 < CW - 8) ? rightX : leftX;
                 const pnY = gMinY + NAME_H / 2 + PAD;
                 return (
-                  <div key={`pname-${p.id}`}
-                    className="absolute pointer-events-none select-none font-display font-bold whitespace-nowrap"
+                  // MUST stay clickable: this overlay is the VISIBLE place label when a place
+                  // has linked features (the Marker label is hidden then). Clicking it zooms to
+                  // the place + loads its report. Do NOT re-add `pointer-events-none` here —
+                  // that silently breaks "tap the place label to open it" (a recurring regression).
+                  <button key={`pname-${p.id}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (movingPin) return;
+                      mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 });
+                      onLocationSelect(p.lat, p.lon);
+                      onPlaceSelect?.({ name: p.name, id: p.id });
+                    }}
+                    className="absolute select-none font-display font-bold whitespace-nowrap"
                     style={{
                       left: pnX,
                       top: pnY,
@@ -2979,9 +3032,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       color: '#fff',
                       boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
                       zIndex: 8,
+                      cursor: 'pointer',
                     }}>
                     {p.name}
-                  </div>
+                  </button>
                 );
               });
             })()}

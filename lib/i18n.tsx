@@ -65,6 +65,7 @@ const T: Record<string, Dict> = {
     toolsSectionLabel: 'Tools',
     locateMeButton: 'Locate me',
     savePlaceButton: 'Save place',
+    printBaseMapButton: 'Print base map',
     savePlaceConfirmedButton: 'Saved',
     placesSectionLabel: 'Places',
     placesLabelsToggle: 'Labels',
