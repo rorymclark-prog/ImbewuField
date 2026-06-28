@@ -102,6 +102,7 @@ THE COLOURED LINES ALREADY ON THE FIRST IMAGE ARE SURVEYED GROUND TRUTH AND ARE 
   • ORANGE area = the EXISTING VEGETABLE GARDEN (acknowledge and keep it).
   • DASHED line = the DRIVEWAY / vehicle access (keep it).
   • BLUE area/outline = the HOUSE ROOF.
+If NO dashed driveway line is present, IDENTIFY the existing driveway / vehicle access visible in the photo (the cleared track running from the road to the house) and mark it with a dashed white access arrow — locate it on the real track, do not invent a new one.
 Also keep the underlying photograph exactly as-is — do NOT move or invent the house, driveway, trees, roads or neighbouring buildings. Your ONLY job is to ADD styling, icons, labels and annotations ON TOP of these fixed lines, like an architect finishing a surveyed site plan.
 
 ${layerTheme(layer)}
