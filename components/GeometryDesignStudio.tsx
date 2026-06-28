@@ -1323,10 +1323,10 @@ function GeometryPreview({
                         d={d}
                         fillRule="evenodd"
                         fill={color}
-                        fillOpacity="0.17"
+                        fillOpacity={showSat ? 0.1 : 0.17}
                         stroke={color}
-                        strokeWidth="1.3"
-                        strokeOpacity="0.55"
+                        strokeWidth={showSat ? 2.4 : 1.3}
+                        strokeOpacity={showSat ? 0.95 : 0.55}
                         strokeDasharray={isFeatureZone ? undefined : '5,3'}
                       />
                     ))}
@@ -1371,32 +1371,41 @@ function GeometryPreview({
                 >
                   {zone.n}
                 </text>
-                {/* Zone title caption below badge — de-collided */}
-                <text
-                  x={bx}
-                  y={captionCy + 5}
-                  textAnchor="middle"
-                  fontFamily="'Helvetica Neue', sans-serif"
-                  fontSize="8.5"
-                  fontWeight="700"
-                  fill={color}
-                  opacity="0.88"
-                >
-                  {captionFull}
-                </text>
+                {/* Zone title caption below badge — parchment only (legend names */}
+                {/* the zones over the photo, so we drop these to declutter). */}
+                {!showSat && (
+                  <text
+                    x={bx}
+                    y={captionCy + 5}
+                    textAnchor="middle"
+                    fontFamily="'Helvetica Neue', sans-serif"
+                    fontSize="8.5"
+                    fontWeight="700"
+                    fill={color}
+                    opacity="0.88"
+                  >
+                    {captionFull}
+                  </text>
+                )}
               </g>
             );
           })}
 
           {/* ── OPPORTUNITY LABELS (Design view) ─────────────────────────── */}
           {showDesignElements && aiPlan && aiPlan.opportunities.map((opp, i) => {
-            const [ox, oy] = resolveAnchor(
-              opp.anchor,
-              visibleLayers,
-              project,
-              boundsCenter,
-              bboxPx,
-            );
+            // Over the photo, drop opportunity cards onto the zone they describe
+            // (orchard → Zone 3, low-care → Zone 4) so they spread out like a real
+            // plan instead of stacking on the house.
+            const theme = `${opp.title} ${opp.note}`.toLowerCase();
+            let center = resolveAnchor(opp.anchor, visibleLayers, project, boundsCenter, bboxPx);
+            if (showSat) {
+              if (/orchard|food forest|fruit|\btree/.test(theme) && zonePartition.centroids[3]) {
+                center = zonePartition.centroids[3];
+              } else if (/low.?care|graz|fodder|support/.test(theme) && zonePartition.centroids[4]) {
+                center = zonePartition.centroids[4];
+              }
+            }
+            const [ox, oy] = center;
             const oppW = 180;
             const short = opp.note.length > 70 ? `${opp.note.slice(0, 68)}…` : opp.note;
             // De-collide: treat the opp card as a ~42px-tall rect, centred at ox
