@@ -36,6 +36,7 @@ import {
 } from '@/lib/design-studio';
 import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
+import polygonClipping from 'polygon-clipping';
 
 // ── Contract types (kept in sync with /api/design-plan) ──────────────────────
 
@@ -294,6 +295,113 @@ function layerCentroid(
     [0, 0],
   );
   return project([sum[0] / coords.length, sum[1] / coords.length]);
+}
+
+// ── Polygon-clipping helpers (non-overlapping zone partition) ────────────────
+// All ops happen in PIXEL space after projection, so half-planes/disks are simple.
+type PcPair = [number, number];
+type PcPoly = PcPair[][]; // [outerRing, ...holes]
+type PcMulti = PcPoly[];
+
+function geomToPixelMulti(
+  geometry: Geometry,
+  project: (c: Position) => readonly [number, number],
+): PcMulti {
+  const ringPx = (ring: Position[]): PcPair[] =>
+    ring.map((c) => {
+      const [x, y] = project(c);
+      return [x, y] as PcPair;
+    });
+  switch (geometry.type) {
+    case 'Polygon':
+      return [geometry.coordinates.map(ringPx)];
+    case 'MultiPolygon':
+      return geometry.coordinates.map((poly) => poly.map(ringPx));
+    case 'GeometryCollection':
+      return geometry.geometries.flatMap((g) => geomToPixelMulti(g, project));
+    default:
+      return [];
+  }
+}
+
+function multiToPaths(mp: PcMulti): string[] {
+  return mp.map((poly) =>
+    poly
+      .map(
+        (ring) =>
+          ring
+            .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`)
+            .join(' ') + ' Z',
+      )
+      .join(' '),
+  );
+}
+
+function ringSignedArea(ring: PcPair[]): number {
+  let a = 0;
+  for (let i = 0, n = ring.length; i < n; i++) {
+    const [x1, y1] = ring[i];
+    const [x2, y2] = ring[(i + 1) % n];
+    a += x1 * y2 - x2 * y1;
+  }
+  return a / 2;
+}
+
+// Centroid of the largest outer ring across the multipolygon (for badge placement).
+function multiCentroid(mp: PcMulti): readonly [number, number] | null {
+  let best: PcPair[] | null = null;
+  let bestA = 0;
+  for (const poly of mp) {
+    const outer = poly[0];
+    if (!outer || outer.length < 3) continue;
+    const a = Math.abs(ringSignedArea(outer));
+    if (a > bestA) {
+      bestA = a;
+      best = outer;
+    }
+  }
+  if (!best) return null;
+  let cx = 0;
+  let cy = 0;
+  let area = 0;
+  for (let i = 0, n = best.length; i < n; i++) {
+    const [x1, y1] = best[i];
+    const [x2, y2] = best[(i + 1) % n];
+    const cross = x1 * y2 - x2 * y1;
+    area += cross;
+    cx += (x1 + x2) * cross;
+    cy += (y1 + y2) * cross;
+  }
+  area /= 2;
+  if (Math.abs(area) < 1e-6) {
+    const sx = best.reduce((s, p) => s + p[0], 0) / best.length;
+    const sy = best.reduce((s, p) => s + p[1], 0) / best.length;
+    return [sx, sy];
+  }
+  return [cx / (6 * area), cy / (6 * area)];
+}
+
+function diskPoly(cx: number, cy: number, r: number): PcPoly {
+  const pts: PcPair[] = [];
+  for (let i = 0; i < 44; i++) {
+    const a = (i / 44) * Math.PI * 2;
+    pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+  }
+  pts.push(pts[0]);
+  return [pts];
+}
+
+function rectPoly(x0: number, y0: number, x1: number, y1: number): PcPoly {
+  return [[[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]];
+}
+
+// Wrap each boolean op so a degenerate input can never crash the render.
+function safePc(fn: () => PcMulti): PcMulti {
+  try {
+    return fn();
+  } catch {
+    return [];
+  }
 }
 
 function metersPerDegreeLon(latDeg: number): number {
@@ -665,6 +773,95 @@ function GeometryPreview({
     return `M ${minX} ${minY} L ${maxX} ${minY} L ${maxX} ${maxY} L ${minX} ${maxY} Z`;
   })();
 
+  // ── Zone partition — non-overlapping polygons carved from the open space ─────
+  // Existing features ARE their zone (0 house, 2 garden, 5 tree). The remaining
+  // open space (boundary − features) is split by proximity/direction from the
+  // house: zone 1 = near-house disk, zone 3 = north, zone 4 = east, zone 5 = the
+  // rest at the edges. All clipped to the boundary, so zones never overlap or spill.
+  const zonePartition: {
+    paths: Record<number, string[]>;
+    centroids: Record<number, readonly [number, number]>;
+  } = (() => {
+    const paths: Record<number, string[]> = {};
+    const centroids: Record<number, readonly [number, number]> = {};
+    if (!showZoneBadges || !aiPlan) return { paths, centroids };
+    const boundaryLayer =
+      visibleLayers.find((l) => l.layerType === 'property_boundary') ?? visibleLayers[0];
+    if (!boundaryLayer) return { paths, centroids };
+    const boundaryMP = geomToPixelMulti(boundaryLayer.geometry, project);
+    if (!boundaryMP.length) return { paths, centroids };
+
+    const byType = (t: DesignLayerType) => visibleLayers.find((l) => l.layerType === t);
+    const houseLayer = byType('roof') ?? byType('structure');
+    const gardenLayer = byType('cultivation');
+    const treeLayer = byType('tree_belt');
+    const waterLayer = byType('water_body');
+
+    const houseMP = houseLayer ? geomToPixelMulti(houseLayer.geometry, project) : [];
+    const gardenMP = gardenLayer ? geomToPixelMulti(gardenLayer.geometry, project) : [];
+    const treeMP = treeLayer ? geomToPixelMulti(treeLayer.geometry, project) : [];
+    const waterMP = waterLayer ? geomToPixelMulti(waterLayer.geometry, project) : [];
+
+    // Open space = boundary minus the existing feature footprints.
+    const obstacles = [houseMP, gardenMP, treeMP, waterMP].filter((m) => m.length);
+    let open = boundaryMP;
+    if (obstacles.length) {
+      const merged = obstacles.length === 1 ? obstacles[0] : safePc(() => polygonClipping.union(obstacles[0], ...obstacles.slice(1)));
+      const diff = merged.length ? safePc(() => polygonClipping.difference(boundaryMP, merged)) : boundaryMP;
+      open = diff.length ? diff : boundaryMP;
+    }
+
+    const cx0 = (bboxPx.minX + bboxPx.maxX) / 2;
+    const cy0 = (bboxPx.minY + bboxPx.maxY) / 2;
+    const [hx, hy] = houseLayer
+      ? layerCentroid(houseLayer, project, [cx0, cy0])
+      : [cx0, cy0];
+    const bboxW = bboxPx.maxX - bboxPx.minX;
+    const bboxH = bboxPx.maxY - bboxPx.minY;
+    const PAD = Math.max(bboxW, bboxH) * 4 + 2000;
+
+    // Zone 1 — near-house disk ∩ open
+    const disk1 = diskPoly(hx, hy, Math.min(bboxW, bboxH) * 0.3);
+    const zone1 = safePc(() => polygonClipping.intersection(open, disk1));
+    let rest = safePc(() => polygonClipping.difference(open, disk1));
+
+    // Zone 3 — north of house (smaller screen-y = north) ∩ rest
+    const northRect = rectPoly(bboxPx.minX - PAD, bboxPx.minY - PAD, bboxPx.maxX + PAD, hy);
+    const zone3 = rest.length ? safePc(() => polygonClipping.intersection(rest, northRect)) : [];
+    rest = rest.length ? safePc(() => polygonClipping.difference(rest, northRect)) : [];
+
+    // Zone 4 — east of house (larger screen-x) ∩ rest
+    const eastRect = rectPoly(hx, bboxPx.minY - PAD, bboxPx.maxX + PAD, bboxPx.maxY + PAD);
+    const zone4 = rest.length ? safePc(() => polygonClipping.intersection(rest, eastRect)) : [];
+    const zone5open = rest.length ? safePc(() => polygonClipping.difference(rest, eastRect)) : [];
+
+    // Zone 5 — existing tree belt ∪ the remaining edge open space
+    const z5parts = [treeMP, zone5open].filter((m) => m.length);
+    const zone5 =
+      z5parts.length === 0
+        ? []
+        : z5parts.length === 1
+          ? z5parts[0]
+          : safePc(() => polygonClipping.union(z5parts[0], ...z5parts.slice(1)));
+
+    const byN: Record<number, PcMulti> = {
+      0: houseMP,
+      1: zone1,
+      2: gardenMP,
+      3: zone3,
+      4: zone4,
+      5: zone5,
+    };
+    for (const zone of aiPlan.zones) {
+      const mp = byN[zone.n] ?? [];
+      if (!mp.length) continue;
+      paths[zone.n] = multiToPaths(mp);
+      const c = multiCentroid(mp);
+      if (c) centroids[zone.n] = c;
+    }
+    return { paths, centroids };
+  })();
+
   // ── Label de-collision state ────────────────────────────────────────────────
   // We compute placed-rect bookkeeping once during render.
   // Each call to placeLabel returns a possibly-nudged y offset.
@@ -934,70 +1131,32 @@ function GeometryPreview({
             );
           })}
 
-          {/* ── ZONE AREA FILLS — clipped to boundary (Zone + Design views) ─── */}
-          {/* Drawn BEFORE badges so outlines + badges sit on top */}
-          {showZoneBadges && aiPlan && boundaryPathForClip && (
-            <g clipPath="url(#design-boundary-clip)">
+          {/* ── ZONE AREA FILLS — real non-overlapping polygons (Zone + Design) ─ */}
+          {/* Carved from the open space + existing features; already inside the */}
+          {/* boundary. Drawn BEFORE badges so outlines + badges sit on top.     */}
+          {showZoneBadges && aiPlan && (
+            <g clipPath={boundaryPathForClip ? 'url(#design-boundary-clip)' : undefined}>
               {aiPlan.zones.map((zone) => {
+                const ds = zonePartition.paths[zone.n];
+                if (!ds || !ds.length) return null;
                 const color = ZONE_COLORS[zone.n] ?? '#555';
-                const [bx, by] = resolveAnchor(
-                  zone.anchor,
-                  visibleLayers,
-                  project,
-                  boundsCenter,
-                  bboxPx,
-                );
-                const bboxW = bboxPx.maxX - bboxPx.minX;
-                const bboxH = bboxPx.maxY - bboxPx.minY;
-
-                // For anchors that map to a real feature layer, use the feature's
-                // actual polygon path. Otherwise draw a generous ellipse.
-                const anchorToLayerType: Partial<Record<AnchorHint, DesignLayerType>> = {
-                  house: 'roof',
-                  'existing-garden': 'cultivation',
-                  'tree-belt': 'tree_belt',
-                };
-                const featureLayerType = anchorToLayerType[zone.anchor];
-                const featureLayer = featureLayerType
-                  ? visibleLayers.find((l) => l.layerType === featureLayerType)
-                  : undefined;
-
-                if (featureLayer) {
-                  // Use the real projected polygon path
-                  const paths = geometryToPaths(featureLayer.geometry, project);
-                  return (
-                    <g key={`zone-area-${zone.n}`}>
-                      {paths.map((d, idx) => (
-                        <path
-                          key={idx}
-                          d={d}
-                          fill={color}
-                          fillOpacity="0.16"
-                          stroke={color}
-                          strokeWidth="1.2"
-                          strokeDasharray="5,3"
-                          strokeOpacity="0.55"
-                        />
-                      ))}
-                    </g>
-                  );
-                }
-
-                // Proposed zone — generous ellipse (22-34% of bbox), clipped to boundary
-                const rx = bboxW * (0.22 + zone.n * 0.025);
-                const ry = bboxH * (0.22 + zone.n * 0.025);
+                // Existing-feature zones (house/garden) draw solid; proposed zones dashed.
+                const isFeatureZone = zone.n === 0 || zone.n === 2;
                 return (
                   <g key={`zone-area-${zone.n}`}>
-                    <ellipse
-                      cx={bx} cy={by}
-                      rx={rx} ry={ry}
-                      fill={color}
-                      fillOpacity="0.16"
-                      stroke={color}
-                      strokeWidth="1.5"
-                      strokeDasharray="6,4"
-                      strokeOpacity="0.60"
-                    />
+                    {ds.map((d, idx) => (
+                      <path
+                        key={idx}
+                        d={d}
+                        fillRule="evenodd"
+                        fill={color}
+                        fillOpacity="0.17"
+                        stroke={color}
+                        strokeWidth="1.3"
+                        strokeOpacity="0.55"
+                        strokeDasharray={isFeatureZone ? undefined : '5,3'}
+                      />
+                    ))}
                   </g>
                 );
               })}
@@ -1007,13 +1166,11 @@ function GeometryPreview({
           {/* ── ZONE BADGES (Zone + Design views) ────────────────────────────── */}
           {showZoneBadges && aiPlan && aiPlan.zones.map((zone) => {
             const color = ZONE_COLORS[zone.n] ?? '#555';
-            const [bx, by] = resolveAnchor(
-              zone.anchor,
-              visibleLayers,
-              project,
-              boundsCenter,
-              bboxPx,
-            );
+            // Badge sits at the centroid of the zone's computed area; if the zone
+            // has no area (e.g. no garden traced), fall back to the anchor hint.
+            const [bx, by] =
+              zonePartition.centroids[zone.n] ??
+              resolveAnchor(zone.anchor, visibleLayers, project, boundsCenter, bboxPx);
             // Badge sits at the anchor point (no blob offset needed — areas are now fills)
             const badgeCy = by;
             // Zone title caption: de-collide
