@@ -36,6 +36,8 @@ import {
 } from '@/lib/design-studio';
 import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
+import { loadSurvey } from '@/lib/site-survey';
+import { getSiteEvidence } from '@/lib/site-evidence';
 import polygonClipping from 'polygon-clipping';
 
 // ── Contract types (kept in sync with /api/design-plan) ──────────────────────
@@ -115,6 +117,9 @@ interface Props {
 }
 
 type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design';
+
+// AI (Gemini) render themes — one per permaculture layer + an overall master plan.
+type AiRenderLayer = 'overall' | 'water' | 'sector' | 'foodforest' | 'soil' | 'animals';
 
 // Views that render the overlay on the satellite photo + show the right rail.
 const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design']);
@@ -2108,6 +2113,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [aiRender, setAiRender] = useState<string | null>(null);
   const [aiRendering, setAiRendering] = useState(false);
   const [aiRenderError, setAiRenderError] = useState('');
+  const [renderLayer, setRenderLayer] = useState<AiRenderLayer>('overall');
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Fetch the Mapbox satellite tile for the design view and inline it as a base64
@@ -2358,8 +2364,8 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   }
 
   // Generate the AI "hero" render: send the real satellite + plan context to Gemini.
-  async function runAiRender() {
-    if (!satDataUrl) {
+  async function runAiRender(layer: AiRenderLayer = 'overall') {
+    if (!svgRef.current || !satDataUrl) {
       setAiRenderError('Open a site and switch to the Design view so the satellite loads first.');
       return;
     }
@@ -2367,19 +2373,49 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     setAiRenderError('');
     setAiRender(null);
     try {
+      // (a) COMPOSITE input: the satellite WITH our exact traced overlay baked in
+      // (boundary/driveway/garden/house), so Gemini can SEE and preserve the lines.
+      const compositeDataUrl = await svgToPngDataUrl(svgRef.current);
+
+      // (b) full site data
+      const siteId = designSiteIdFromLocation(locationData);
+      const survey = loadSurvey(siteId);
       const layers = studio.layers.filter((l) => l.approved);
+
+      // (c) ground-level site photos as extra reference images (≤4)
+      let photos: string[] = [];
+      try {
+        const evidence = getSiteEvidence(siteId);
+        photos = Object.values(evidence)
+          .flat()
+          .filter((e) => e.type === 'photo' && !!e.dataUrl)
+          .slice(0, 4)
+          .map((e) => e.dataUrl as string);
+      } catch {
+        photos = [];
+      }
+
       const context = {
         placeName: title,
+        layer,
         biome: locationData?.biome?.name,
         rainfallMm: locationData?.rainfall?.annual ?? undefined,
+        rainfallPattern: locationData?.rainfall?.pattern,
         soilTexture: locationData?.soil?.textureClass ?? undefined,
+        soilPh: locationData?.soil?.ph ?? undefined,
+        slopeDeg: locationData?.elevation?.slopeDeg ?? undefined,
+        aspectLabel: locationData?.elevation?.aspectLabel,
+        minTemp: locationData?.climate?.minTemp ?? undefined,
+        maxTemp: locationData?.climate?.maxTemp ?? undefined,
         zones: aiPlan?.zones?.map((z) => ({ n: z.n, title: z.title, items: z.items })),
-        features: layers.map((l) => ({ name: l.name, area: l.areaLabel, type: l.layerType })),
+        polygons: layers.map((l) => ({ name: l.name, type: l.layerType, area: l.areaLabel })),
+        survey: survey ?? undefined,
       };
+
       const res = await fetch('/api/ai-render', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: satDataUrl, context }),
+        body: JSON.stringify({ imageBase64: compositeDataUrl, photos, context }),
       });
       const data = await res.json();
       if (!res.ok || !data.image) {
@@ -2391,6 +2427,18 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     } finally {
       setAiRendering(false);
     }
+  }
+
+  // Render a specific layer: switch the map to that layer's view first so the
+  // baked-in composite Gemini sees matches the layer, then call the renderer.
+  async function renderSelectedLayer(layer: AiRenderLayer) {
+    setRenderLayer(layer);
+    const view: MapView = layer === 'water' ? 'water' : layer === 'sector' ? 'sector' : 'design';
+    if (mapView !== view) {
+      setMapView(view);
+      await new Promise((r) => setTimeout(r, 450));
+    }
+    await runAiRender(layer);
   }
 
   const MAP_VIEWS: Array<{ id: MapView; label: string }> = [
@@ -2802,11 +2850,39 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </button>
         </div>
 
-        {/* ── AI HERO RENDER (Gemini edits the real satellite) ─────────────── */}
-        {mapView === 'design' && (
+        {/* ── AI HERO RENDER (Gemini, per layer, fed the full site data) ────── */}
+        {OVERLAY_VIEWS.has(mapView) && (
           <div className="space-y-2">
+            <p className="text-xs font-semibold" style={{ color: '#3A5A2A' }}>
+              AI Render (beta) — pick a layer
+            </p>
+            {/* Layer picker */}
+            <div className="flex flex-wrap gap-1.5">
+              {([
+                { id: 'overall', label: 'Overall' },
+                { id: 'water', label: 'Water' },
+                { id: 'sector', label: 'Sector' },
+                { id: 'foodforest', label: 'Food Forest' },
+                { id: 'soil', label: 'Soil' },
+                { id: 'animals', label: 'Animals' },
+              ] as Array<{ id: AiRenderLayer; label: string }>).map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => setRenderLayer(l.id)}
+                  disabled={aiRendering}
+                  className="text-xs rounded-full px-2.5 py-1"
+                  style={{
+                    background: renderLayer === l.id ? '#1F4D2B' : '#FBF7ED',
+                    color: renderLayer === l.id ? '#FFFFFF' : '#3A5A2A',
+                    border: `1px solid ${CARD_BORDER}`,
+                  }}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
             <button
-              onClick={runAiRender}
+              onClick={() => renderSelectedLayer(renderLayer)}
               disabled={aiRendering || !satDataUrl}
               className={buttonBase}
               style={{
@@ -2816,10 +2892,10 @@ export default function GeometryDesignStudio({ locationData }: Props) {
                 border: `1px solid ${CARD_BORDER}`,
                 opacity: !satDataUrl ? 0.5 : 1,
               }}
-              title={!satDataUrl ? 'Switch to Design view and let the satellite load first' : 'Generate an AI presentation render from your real satellite'}
+              title={!satDataUrl ? 'Let the satellite load first' : 'Generate an AI render of this layer from your real map + survey + photos'}
             >
               <Sparkles size={14} />
-              {aiRendering ? 'Generating AI render… (~20s)' : aiRender ? 'Regenerate AI render' : 'AI Render (beta) — photo-style design'}
+              {aiRendering ? 'Generating… (~20s)' : `Render the ${renderLayer === 'overall' ? 'overall' : renderLayer} layer`}
             </button>
             {aiRenderError && (
               <p className="text-xs" style={{ color: '#B5371F' }}>{aiRenderError}</p>
@@ -2829,16 +2905,16 @@ export default function GeometryDesignStudio({ locationData }: Props) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={aiRender}
-                  alt="AI-generated permaculture design render"
+                  alt={`AI-generated ${renderLayer} render`}
                   style={{ width: '100%', borderRadius: 14, border: `1px solid ${CARD_BORDER}` }}
                 />
                 <div className="flex items-center justify-between">
                   <span className="text-xs" style={{ color: '#7B6A52' }}>
-                    AI presentation render · not geometry-exact — the map above stays the source of truth.
+                    Presentation render — AI visualisation, not a measured drawing. The map above stays the source of truth.
                   </span>
                   <a
                     href={aiRender}
-                    download={`${slugify(title)}-ai-render.png`}
+                    download={`${slugify(title)}-${renderLayer}-render.png`}
                     className="text-xs font-semibold"
                     style={{ color: '#1F4D2B' }}
                   >
