@@ -70,6 +70,43 @@ interface DesignPlanAI {
   notes: string;
 }
 
+// Deterministic, INSTANT permaculture plan built locally from the locked features —
+// so the design always draws immediately (the AI route is slow on serverless and must
+// never block the map). The AI plan, if it returns, enriches/replaces this.
+function buildLocalPlan(
+  features: { layerType: string; name: string }[],
+  site: { biome?: string; rainfallMm?: number; soilTexture?: string },
+): DesignPlanAI {
+  const has = (t: string) => features.some((f) => f.layerType === t);
+  const zones: DesignPlanAI['zones'] = [
+    { n: 0, title: 'Zone 0 · House', items: ['Roof catchment', 'Rainwater harvesting'], note: 'The home and the ground right around it.', anchor: 'house' },
+    { n: 1, title: 'Zone 1 · Daily use', items: ['Herbs', 'Kitchen garden', 'Compost', 'Nursery'], note: 'What you touch every day — keep it by the door.', anchor: 'near-house' },
+    { n: 2, title: 'Zone 2 · Intensive production', items: ['Vegetable beds', 'Small livestock'], note: has('cultivation') ? 'Your existing vegetable garden — main food beds.' : 'Main vegetable beds.', anchor: has('cultivation') ? 'existing-garden' : 'open-north' },
+    { n: 3, title: 'Zone 3 · Orchard / food forest', items: ['Fruit trees', 'Guilds', 'Nut trees'], note: 'Trees and perennials in open, sunny ground (north).', anchor: 'open-north' },
+    { n: 4, title: 'Zone 4 · Low-care', items: ['Support species', 'Cut-and-come-again', 'Larger perennials'], note: 'Hardier plantings that need less attention.', anchor: 'open-east' },
+    { n: 5, title: 'Zone 5 · Conservation / buffer', items: ['Tree belt', 'Wildlife', 'Windbreak'], note: 'Wild edges — privacy, wind and biodiversity.', anchor: has('tree_belt') ? 'tree-belt' : 'edges' },
+  ];
+  const water: DesignPlanAI['water'] = [
+    { kind: 'harvest', from: 'house', to: 'garden', note: 'Roof water to tanks near the garden.' },
+    { kind: 'runoff', from: 'high', to: 'low', note: 'Surface runoff follows the slope downhill.' },
+    { kind: 'infiltrate', from: 'high', to: 'boundary', note: 'Swales on contour to slow, spread & sink water.' },
+  ];
+  const access: DesignPlanAI['access'] = [
+    { kind: 'vehicle', note: 'Vehicle access along the existing driveway.' },
+    { kind: 'foot', note: 'Footpath from the house to the garden.' },
+  ];
+  const opportunities: DesignPlanAI['opportunities'] = [
+    { title: 'Orchard / food forest', note: 'Fruit & nut trees in the open sunny ground.', anchor: 'open-north' },
+    { title: 'Compost & nursery', note: 'Set up near the kitchen and garden path.', anchor: 'near-house' },
+  ];
+  const rain = site.rainfallMm ? `${site.rainfallMm} mm/yr` : 'local rainfall';
+  return {
+    summary: `Geometry-first permaculture design for this ${site.biome ?? 'site'}. Zones are placed by how often you use each area — from the house outward.`,
+    zones, water, access, opportunities,
+    notes: `${site.biome ?? 'This region'} · ${rain} · ${site.soilTexture ?? 'mixed'} soil. Focus: food security, water capture, soil building, biodiversity. Figures are estimates — adjust on the ground.`,
+  };
+}
+
 // ── Props / view types ────────────────────────────────────────────────────────
 
 interface Props {
@@ -1470,35 +1507,33 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       goals: studio.generatedPlan?.surveyGoals,
     };
 
+    // Render an INSTANT local plan so the design elements ALWAYS draw — the AI route is
+    // slow on serverless and must never block (or hide) the map. Also keep the local
+    // rule-based text plan in sync for the report cards.
+    setAiPlan(buildLocalPlan(features, site));
+    commit((current) => ({ ...current, generatedPlan: generateGeometryDesignPlan(current, locationData) }));
+    setGenerating(false);
+    setMessage('Design generated — switch Base / Sector / Zone / Design to explore.');
+
+    // Best-effort: enrich the text with the AI plan in the background (replaces if it returns).
     try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 25000);
       const res = await fetch('/api/design-plan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ boundary, features, site }),
+        signal: ctrl.signal,
       });
+      clearTimeout(timer);
       if (res.ok) {
         const plan = (await res.json()) as DesignPlanAI;
-        setAiPlan(plan);
-        setMessage('AI design plan generated. Switch views to explore zones, water strategy, and opportunities.');
-      } else {
-        const err = await res.json().catch(() => ({ error: 'API error' }));
-        // Fall back to local generative plan
-        commit((current) => ({
-          ...current,
-          generatedPlan: generateGeometryDesignPlan(current, locationData),
-        }));
-        setMessage(`AI plan unavailable (${String(err.error ?? res.status)}) — local plan used instead.`);
+        if (plan && Array.isArray(plan.zones) && plan.zones.length) {
+          setAiPlan(plan);
+          setMessage('AI-enhanced design ready.');
+        }
       }
-    } catch {
-      // Network error — fall back to local plan
-      commit((current) => ({
-        ...current,
-        generatedPlan: generateGeometryDesignPlan(current, locationData),
-      }));
-      setMessage('Offline — local design plan used. Connect to get the AI-enhanced plan.');
-    } finally {
-      setGenerating(false);
-    }
+    } catch { /* keep the instant local plan */ }
   }
 
   async function exportPng() {

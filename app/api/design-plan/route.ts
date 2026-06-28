@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
+// Claude design generation can take 15-40s — allow up to 60s so the (best-effort,
+// background) enrichment call isn't killed by the default serverless timeout.
+export const maxDuration = 60;
+
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 // ── Request shape ─────────────────────────────────────────────────────────────
