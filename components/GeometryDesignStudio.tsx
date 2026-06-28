@@ -40,7 +40,7 @@ import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { reportId } from '@/lib/saved-reports';
-import { buildSkeletonReportDoc, type MapRef } from '@/lib/report-doc';
+import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
 import polygonClipping from 'polygon-clipping';
 
@@ -120,13 +120,16 @@ interface Props {
   locationData: LocationData | null;
 }
 
-type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design';
+type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design' | 'implementation';
 
 // AI (Gemini) render themes — one per permaculture layer + an overall master plan.
 type AiRenderLayer = 'overall' | 'water' | 'sector' | 'foodforest' | 'soil' | 'animals';
 
 // Views that render the overlay on the satellite photo + show the right rail.
-const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design']);
+const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design', 'implementation']);
+
+// Implementation-phase palette (Phase 1 / 2 / 3).
+const PHASE_COLORS: Record<number, string> = { 1: '#C0650A', 2: '#2F7A4A', 3: '#1A5A8A' };
 
 // 16-point compass label → bearing (deg clockwise from North).
 const COMPASS_BEARING: Record<string, number> = {
@@ -365,7 +368,7 @@ function computeSatFit(layers: DesignLayer[], mapView: MapView) {
   const imgW = mapAreaW - 40;
   const imgH = SVG_H - 40;
   const useSatellite =
-    OVERLAY_VIEWS.has(mapView) &&
+    (OVERLAY_VIEWS.has(mapView) || mapView === 'base') &&
     !!MAPBOX_TOKEN &&
     visible.length > 0 &&
     Number.isFinite(bounds.minX) &&
@@ -788,6 +791,7 @@ function GeometryPreview({
   showFill,
   aiPlan,
   satDataUrl,
+  implementationPhases,
 }: {
   layers: DesignLayer[];
   title: string;
@@ -798,6 +802,7 @@ function GeometryPreview({
   showFill: boolean;
   aiPlan: DesignPlanAI | null;
   satDataUrl: string | null;
+  implementationPhases?: ImplementationPhase[];
 }) {
   const SVG_W = 960;
   const SVG_H = 640;
@@ -924,6 +929,7 @@ function GeometryPreview({
   const showDesignElements = mapView === 'design';
   const showSectorPanel = mapView === 'sector';
   const showWater = mapView === 'water';
+  const showImplementation = mapView === 'implementation';
   const showZoneKey = mapView === 'zone' || mapView === 'design';
   const slope = slopeIndicative(locationData?.elevation);
 
@@ -1111,6 +1117,7 @@ function GeometryPreview({
     zone: 'Zone Map',
     water: 'Water & Hydrology',
     design: 'Permaculture Design',
+    implementation: 'Implementation',
   };
 
   return (
@@ -1591,7 +1598,7 @@ function GeometryPreview({
             );
             const roofM2 = Math.round(roofLayer?.areaM2 ?? 0);
             const rainMm = Math.round(locationData?.rainfall?.annual ?? 0);
-            const harvestKL = Math.round((roofM2 * rainMm * 0.9) / 1000);
+            const harvestKL = Math.round((roofM2 * rainMm * 0.8) / 1000);
             const roofC = roofLayer ? layerCentroid(roofLayer, project, boundsCenter) : boundsCenter;
             const bboxW = bboxPx.maxX - bboxPx.minX;
             const bboxH = bboxPx.maxY - bboxPx.minY;
@@ -1683,7 +1690,7 @@ function GeometryPreview({
                 <text x={railX + 14} y="44" fontFamily="Georgia, serif" fontWeight="800" fontSize="11" fill="#9FD4F2" letterSpacing="0.06em">WATER & HYDROLOGY</text>
                 <text x={railX + 14} y="64" fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#7FB8DC" letterSpacing="0.08em">RAINWATER HARVEST</text>
                 <text x={railX + 14} y="82" fontFamily="sans-serif" fontSize="9.5" fontWeight="700" fill="#EAF4FB">{`~${harvestKL} kL / year`}</text>
-                <text x={railX + 14} y="96" fontFamily="sans-serif" fontSize="8" fill="#A9C7DC">{`${roofM2} m² roof × ${rainMm} mm × 0.9`}</text>
+                <text x={railX + 14} y="96" fontFamily="sans-serif" fontSize="8" fill="#A9C7DC">{`${roofM2} m² roof × ${rainMm} mm × 0.8`}</text>
                 <text x={railX + 14} y="124" fontFamily="sans-serif" fontWeight="800" fontSize="8.5" fill="#7FB8DC" letterSpacing="0.08em">LEGEND</text>
                 {rows.map((r, i) => (
                   <g key={`wr-${i}`} transform={`translate(${railX + 14} ${138 + i * 22})`}>
@@ -1702,6 +1709,79 @@ function GeometryPreview({
                 ].map((line, i) => (
                   <text key={`wn-${i}`} x={railX + 14} y={266 + i * 12} fontFamily="sans-serif" fontSize="7.5" fill="#A9C7DC">{line}</text>
                 ))}
+              </g>
+            );
+          })()}
+
+          {/* ── IMPLEMENTATION MAP — numbered phased build sequence ─────────── */}
+          {showImplementation && (() => {
+            const phases = implementationPhases ?? [];
+            if (!phases.length) return null;
+            const bboxW = bboxPx.maxX - bboxPx.minX;
+            const bboxH = bboxPx.maxY - bboxPx.minY;
+            const layerById = new Map(visibleLayers.map((l) => [l.id, l] as const));
+            const pins: { seq: number; phase: number; task: string; x: number; y: number }[] = [];
+            phases.forEach((ph, pi) => {
+              ph.steps.forEach((st, si) => {
+                const ls = st.layerIds
+                  .map((id) => layerById.get(id))
+                  .filter((l): l is DesignLayer => !!l);
+                let x: number;
+                let y: number;
+                if (ls.length) {
+                  const cs = ls.map((l) => layerCentroid(l, project, boundsCenter));
+                  x = cs.reduce((s, c) => s + c[0], 0) / cs.length;
+                  y = cs.reduce((s, c) => s + c[1], 0) / cs.length;
+                } else {
+                  x = bboxPx.minX + bboxW * (0.22 + pi * 0.26);
+                  y = bboxPx.minY + bboxH * (0.28 + si * 0.16);
+                }
+                pins.push({ seq: st.seq, phase: ph.phase, task: st.task, x, y });
+              });
+            });
+            pins.sort((a, b) => a.seq - b.seq);
+            const railX = mapAreaW + 8;
+            let yy = 86;
+            const railRows: React.ReactNode[] = [];
+            phases.forEach((ph) => {
+              railRows.push(
+                <g key={`ph-${ph.phase}`} transform={`translate(${railX + 14} ${yy})`}>
+                  <circle cx="4" cy="-3" r="5" fill={PHASE_COLORS[ph.phase] ?? '#555'} />
+                  <text x="16" y="0" fontFamily="sans-serif" fontSize="9" fontWeight="800" fill="#EAF4FB">{ph.label}</text>
+                  {ph.monthRange ? (
+                    <text x="16" y="11" fontFamily="sans-serif" fontSize="7.5" fill="#9DB4C8">
+                      {ph.monthRange}{ph.budgetBand ? ` · ${ph.budgetBand} budget` : ''}
+                    </text>
+                  ) : null}
+                </g>,
+              );
+              yy += ph.monthRange ? 26 : 18;
+              ph.steps.slice(0, 4).forEach((st) => {
+                railRows.push(
+                  <text key={`st-${st.seq}`} x={railX + 20} y={yy} fontFamily="sans-serif" fontSize="8.5" fill="#C9D7E2">
+                    {st.seq}. {st.task.length > 30 ? `${st.task.slice(0, 29)}…` : st.task}
+                  </text>,
+                );
+                yy += 13;
+              });
+              yy += 6;
+            });
+            return (
+              <g>
+                <polyline
+                  points={pins.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')}
+                  fill="none" stroke="rgba(250,245,234,0.7)" strokeWidth="2" strokeDasharray="5,5"
+                />
+                {pins.map((p, i) => (
+                  <g key={`pin-${i}`}>
+                    <circle cx={p.x} cy={p.y} r="13" fill={PHASE_COLORS[p.phase] ?? '#555'} stroke="#FAF5EA" strokeWidth="2.5" filter="url(#ps-shadow)" />
+                    <text x={p.x} y={p.y + 4} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="900" fill="#fff">{p.seq}</text>
+                  </g>
+                ))}
+                <rect x={railX} y="20" width={RAIL_W} height={SVG_H - 40} rx="16" fill="rgba(20,28,40,0.94)" stroke="#1A5A8A" strokeWidth="1.2" />
+                <text x={railX + 14} y="44" fontFamily="Georgia, serif" fontWeight="800" fontSize="11" fill="#9FD4F2" letterSpacing="0.06em">IMPLEMENTATION</text>
+                <text x={railX + 14} y="62" fontFamily="sans-serif" fontSize="8" fill="#9DB4C8">Phased build sequence — follow the numbers</text>
+                {railRows}
               </g>
             );
           })()}
@@ -1779,11 +1859,16 @@ function GeometryPreview({
             const cx = boundsCenter[0];
             const cy = boundsCenter[1];
             const siteR = 0.5 * Math.hypot(bboxPx.maxX - bboxPx.minX, bboxPx.maxY - bboxPx.minY);
-            const R = siteR + 54;
             const isSH = (locationData?.lat ?? -29) < 0;
             const climate = locationData?.climate;
             const railX = mapAreaW + 8;
-            const ray = (from: readonly [number, number], lenOut = 50, lenIn = 16) => ({
+            // Cap the ring so arrows (+ their tails) always stay inside the map frame,
+            // not the rail. Leaves room for the ~50px arrow tail + labels.
+            const margin = 30;
+            const maxRx = Math.min(cx - margin, mapAreaW - margin - cx);
+            const maxRy = Math.min(cy - margin, SVG_H - margin - cy);
+            const R = Math.max(siteR + 18, Math.min(siteR + 54, Math.min(maxRx, maxRy) - 52));
+            const ray = (from: readonly [number, number], lenOut = 44, lenIn = 16) => ({
               sx: cx + from[0] * (R + lenOut), sy: cy + from[1] * (R + lenOut),
               ex: cx + from[0] * (R - lenIn), ey: cy + from[1] * (R - lenIn),
             });
@@ -1924,7 +2009,7 @@ function GeometryPreview({
       )}
 
       {/* ── LAYER LEGEND (not in Design view — rail handles it there) ──── */}
-      {presentTypes.length > 0 && mapView !== 'design' && (
+      {presentTypes.length > 0 && mapView !== 'design' && mapView !== 'implementation' && (
         <g transform={`translate(${legendX} ${legendY})`}>
           <rect width={legendW} height={legendH} rx="13" fill="rgba(32,25,15,0.82)" />
           <text
@@ -2452,6 +2537,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     { id: 'zone', label: 'Zone' },
     { id: 'water', label: 'Water' },
     { id: 'design', label: 'Design' },
+    { id: 'implementation', label: 'Impl.' },
   ];
 
   // Effective plan: prefer AI plan; fall back to local generated plan for text cards
@@ -2474,8 +2560,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationData, studio.layers, studio.generatedPlan]);
 
-  const viewMapFromReport = (m: MapRef) =>
-    setMapView(m === 'implementation' ? 'design' : m);
+  const viewMapFromReport = (m: MapRef) => setMapView(m);
 
   return (
     <div className="space-y-4">
@@ -2843,6 +2928,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           showFill={showFill}
           aiPlan={aiPlan}
           satDataUrl={satDataUrl}
+          implementationPhases={reportDoc.sections.implementation}
         />
 
         {/* ── EXPORT BUTTONS ──────────────────────────────────────────────── */}
@@ -2878,36 +2964,12 @@ export default function GeometryDesignStudio({ locationData }: Props) {
         {/* ── AI HERO RENDER (Gemini, per layer, fed the full site data) ────── */}
         {OVERLAY_VIEWS.has(mapView) && (
           <div className="space-y-2">
-            <p className="text-xs font-semibold" style={{ color: '#3A5A2A' }}>
-              AI Render (beta) — pick a layer
+            <p className="text-xs" style={{ color: '#7B6A52' }}>
+              Optional glossy poster of the overall design (AI image — looks nice for a
+              pitch, but the maps above are the exact, reliable version).
             </p>
-            {/* Layer picker */}
-            <div className="flex flex-wrap gap-1.5">
-              {([
-                { id: 'overall', label: 'Overall' },
-                { id: 'water', label: 'Water' },
-                { id: 'sector', label: 'Sector' },
-                { id: 'foodforest', label: 'Food Forest' },
-                { id: 'soil', label: 'Soil' },
-                { id: 'animals', label: 'Animals' },
-              ] as Array<{ id: AiRenderLayer; label: string }>).map((l) => (
-                <button
-                  key={l.id}
-                  onClick={() => setRenderLayer(l.id)}
-                  disabled={aiRendering}
-                  className="text-xs rounded-full px-2.5 py-1"
-                  style={{
-                    background: renderLayer === l.id ? '#1F4D2B' : '#FBF7ED',
-                    color: renderLayer === l.id ? '#FFFFFF' : '#3A5A2A',
-                    border: `1px solid ${CARD_BORDER}`,
-                  }}
-                >
-                  {l.label}
-                </button>
-              ))}
-            </div>
             <button
-              onClick={() => renderSelectedLayer(renderLayer)}
+              onClick={() => renderSelectedLayer('overall')}
               disabled={aiRendering || !satDataUrl}
               className={buttonBase}
               style={{
@@ -2917,10 +2979,10 @@ export default function GeometryDesignStudio({ locationData }: Props) {
                 border: `1px solid ${CARD_BORDER}`,
                 opacity: !satDataUrl ? 0.5 : 1,
               }}
-              title={!satDataUrl ? 'Let the satellite load first' : 'Generate an AI render of this layer from your real map + survey + photos'}
+              title={!satDataUrl ? 'Let the satellite load first' : 'Generate a glossy AI poster of the overall design'}
             >
               <Sparkles size={14} />
-              {aiRendering ? 'Generating… (~20s)' : `Render the ${renderLayer === 'overall' ? 'overall' : renderLayer} layer`}
+              {aiRendering ? 'Generating… (~20s)' : 'Generate AI poster (overall)'}
             </button>
             {aiRenderError && (
               <p className="text-xs" style={{ color: '#B5371F' }}>{aiRenderError}</p>

@@ -223,7 +223,7 @@ export function buildSkeletonReportDoc(args: {
   const roof = approved.find((l) => l.layerType === 'roof');
   const garden = approved.find((l) => l.layerType === 'cultivation');
   const tree = approved.find((l) => l.layerType === 'tree_belt');
-  const harvestKL = wc?.roofHarvestAnnualKL ?? (roof ? Math.round((roof.areaM2 * rainMm * 0.9) / 1000) : null);
+  const harvestKL = wc?.roofHarvestAnnualKL ?? (roof ? Math.round((roof.areaM2 * rainMm * 0.8) / 1000) : null);
 
   const crops = clean(survey?.existingCrops, ['nothing']).map((c) => CROP_LABELS[c] ?? c);
   const livestock = clean(survey?.livestock, ['none']).map((l) => LIVESTOCK_LABELS[l] ?? l);
