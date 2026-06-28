@@ -82,16 +82,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════════════
-   LEGIBILITY — enlarge the smallest text utilities app-wide.
-   These come after @tailwind utilities so they win by source order.
+   LEGIBILITY — nudge the smallest text utilities up a touch for readability,
+   but NOT oversized (the previous values ~doubled every class app-wide, which
+   made the report sidebar and everything else far too big). These come after
+   @tailwind utilities so they win by source order. The text-scale slider
+   (Settings) still lets anyone who wants larger text scale the whole app up.
    (Elements with an inline fontSize keep their own size.)
    ═══════════════════════════════════════════════════════ */
-.text-xs { font-size: 20px !important; line-height: 1.4 !important; }
-.text-sm { font-size: 22px !important; line-height: 1.45 !important; }
-.text-base { font-size: 24px !important; }
-.text-lg { font-size: 27px !important; }
-.text-xl { font-size: 30px !important; }
-body { font-size: 21px; }
+.text-xs { font-size: 13px !important; line-height: 1.45 !important; }
+.text-sm { font-size: 14px !important; line-height: 1.5 !important; }
+.text-base { font-size: 16px !important; }
+.text-lg { font-size: 18px !important; }
+.text-xl { font-size: 21px !important; }
+body { font-size: 16px; }
 
 /* Inputs that sit on a fixed dark background need a light placeholder regardless of
    the (possibly light) app theme — otherwise the placeholder/text go dark-on-dark. */
