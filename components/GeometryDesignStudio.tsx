@@ -1852,6 +1852,9 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [mapView, setMapView] = useState<MapView>('design');
   const [showFill, setShowFill] = useState(false);
   const [satDataUrl, setSatDataUrl] = useState<string | null>(null);
+  const [aiRender, setAiRender] = useState<string | null>(null);
+  const [aiRendering, setAiRendering] = useState(false);
+  const [aiRenderError, setAiRenderError] = useState('');
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Fetch the Mapbox satellite tile for the design view and inline it as a base64
@@ -2098,6 +2101,42 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       );
     } finally {
       setExporting('');
+    }
+  }
+
+  // Generate the AI "hero" render: send the real satellite + plan context to Gemini.
+  async function runAiRender() {
+    if (!satDataUrl) {
+      setAiRenderError('Open a site and switch to the Design view so the satellite loads first.');
+      return;
+    }
+    setAiRendering(true);
+    setAiRenderError('');
+    setAiRender(null);
+    try {
+      const layers = studio.layers.filter((l) => l.approved);
+      const context = {
+        placeName: title,
+        biome: locationData?.biome?.name,
+        rainfallMm: locationData?.rainfall?.annual ?? undefined,
+        soilTexture: locationData?.soil?.textureClass ?? undefined,
+        zones: aiPlan?.zones?.map((z) => ({ n: z.n, title: z.title, items: z.items })),
+        features: layers.map((l) => ({ name: l.name, area: l.areaLabel, type: l.layerType })),
+      };
+      const res = await fetch('/api/ai-render', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageBase64: satDataUrl, context }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.image) {
+        throw new Error(data.error ? `${data.error}${data.detail ? ` — ${data.detail}` : ''}` : 'Render failed.');
+      }
+      setAiRender(data.image);
+    } catch (e) {
+      setAiRenderError(e instanceof Error ? e.message : 'Render failed.');
+    } finally {
+      setAiRendering(false);
     }
   }
 
@@ -2508,6 +2547,54 @@ export default function GeometryDesignStudio({ locationData }: Props) {
             {exporting === 'pdf' ? 'Exporting…' : 'Export PDF'}
           </button>
         </div>
+
+        {/* ── AI HERO RENDER (Gemini edits the real satellite) ─────────────── */}
+        {mapView === 'design' && (
+          <div className="space-y-2">
+            <button
+              onClick={runAiRender}
+              disabled={aiRendering || !satDataUrl}
+              className={buttonBase}
+              style={{
+                width: '100%',
+                background: aiRendering ? '#EFE7D6' : 'linear-gradient(90deg,#2F7A4A,#1F4D2B)',
+                color: aiRendering ? '#6B5B3E' : '#FFFFFF',
+                border: `1px solid ${CARD_BORDER}`,
+                opacity: !satDataUrl ? 0.5 : 1,
+              }}
+              title={!satDataUrl ? 'Switch to Design view and let the satellite load first' : 'Generate an AI presentation render from your real satellite'}
+            >
+              <Sparkles size={14} />
+              {aiRendering ? 'Generating AI render… (~20s)' : aiRender ? 'Regenerate AI render' : 'AI Render (beta) — photo-style design'}
+            </button>
+            {aiRenderError && (
+              <p className="text-xs" style={{ color: '#B5371F' }}>{aiRenderError}</p>
+            )}
+            {aiRender && (
+              <div className="space-y-1">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={aiRender}
+                  alt="AI-generated permaculture design render"
+                  style={{ width: '100%', borderRadius: 14, border: `1px solid ${CARD_BORDER}` }}
+                />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs" style={{ color: '#7B6A52' }}>
+                    AI presentation render · not geometry-exact — the map above stays the source of truth.
+                  </span>
+                  <a
+                    href={aiRender}
+                    download={`${slugify(title)}-ai-render.png`}
+                    className="text-xs font-semibold"
+                    style={{ color: '#1F4D2B' }}
+                  >
+                    Download
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* ── TEXT PLAN CARDS ─────────────────────────────────────────────── */}
         {studio.generatedPlan && (
