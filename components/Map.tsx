@@ -1241,42 +1241,29 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     };
   }, []);
 
-  // Sync draw layer visibility with showFeatures / showHatch toggles.
-  // Uses setFilter(['literal', false]) to hide layers — more reliable than paint/layout
-  // properties which can be reset by Draw's render cycle. Restores original filters when on.
-  // Re-applied on 'styledata' so it survives any Draw re-init.
+  // Sync draw layer visibility with the Shapes (showFeatures) and Hatching (showHatch) toggles.
+  // Hide via layout `visibility` (definitive — a hidden layer draws nothing), and CRUCIALLY
+  // re-apply on Draw's own `draw.render` event: MapboxDraw re-renders its layers on every
+  // store change / mode change and resets their state, which is why earlier paint/filter
+  // approaches "didn't work" — nothing was re-applying after Draw's render. We also re-apply
+  // on `styledata` (basemap/style switches re-add the draw layers).
   useEffect(() => {
     const rawMap = mapRef.current?.getMap();
     if (!rawMap) return;
-
-    const HIDE = ['literal', false] as unknown as mapboxgl.FilterSpecification;
-    const LAND = ['all', ['==', '$type', 'Polygon'], ['!=', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
-    const WATER = ['all', ['==', '$type', 'Polygon'], ['==', 'user_featureType', 'water']] as unknown as mapboxgl.FilterSpecification;
-
-    const applyVisibility = () => {
-      const showFill = showFeatures && showHatch;
-      const borderLand  = showFeatures ? LAND  : HIDE;
-      const borderWater = showFeatures ? WATER : HIDE;
-      const fillLand    = showFill     ? LAND  : HIDE;
-      const fillWater   = showFill     ? WATER : HIDE;
+    const BORDER_LAYERS = ['gl-draw-poly-casing-land', 'gl-draw-poly-stroke-land', 'gl-draw-poly-casing-water', 'gl-draw-poly-stroke-water'];
+    const FILL_LAYERS = ['gl-draw-poly-fill-land', 'gl-draw-poly-fill-water'];
+    const apply = () => {
+      const borders = showFeatures ? 'visible' : 'none';
+      const fill = (showFeatures && showHatch) ? 'visible' : 'none';
       try {
-        if (rawMap.getLayer('gl-draw-poly-casing-land'))  rawMap.setFilter('gl-draw-poly-casing-land',  borderLand);
-        if (rawMap.getLayer('gl-draw-poly-stroke-land'))  rawMap.setFilter('gl-draw-poly-stroke-land',  borderLand);
-        if (rawMap.getLayer('gl-draw-poly-casing-water')) rawMap.setFilter('gl-draw-poly-casing-water', borderWater);
-        if (rawMap.getLayer('gl-draw-poly-stroke-water')) rawMap.setFilter('gl-draw-poly-stroke-water', borderWater);
-        if (rawMap.getLayer('gl-draw-poly-fill-land'))    rawMap.setFilter('gl-draw-poly-fill-land',    fillLand);
-        if (rawMap.getLayer('gl-draw-poly-fill-water'))   rawMap.setFilter('gl-draw-poly-fill-water',   fillWater);
-        // eslint-disable-next-line no-console
-        console.debug('[toggles] features=%s hatch=%s fillLand=%o layer=%o', showFeatures, showHatch, fillLand, rawMap.getLayer('gl-draw-poly-fill-land'));
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('[toggles] error', e);
-      }
+        for (const id of BORDER_LAYERS) if (rawMap.getLayer(id)) rawMap.setLayoutProperty(id, 'visibility', borders);
+        for (const id of FILL_LAYERS)   if (rawMap.getLayer(id)) rawMap.setLayoutProperty(id, 'visibility', fill);
+      } catch { /* layers not ready yet — draw.render/styledata will retry */ }
     };
-
-    applyVisibility();
-    rawMap.on('styledata', applyVisibility);
-    return () => { rawMap.off('styledata', applyVisibility); };
+    apply();
+    rawMap.on('styledata', apply);
+    rawMap.on('draw.render', apply);
+    return () => { rawMap.off('styledata', apply); rawMap.off('draw.render', apply); };
   }, [showFeatures, showHatch]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
