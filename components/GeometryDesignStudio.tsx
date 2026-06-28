@@ -1027,6 +1027,31 @@ function GeometryPreview({
     return y0 + 9; // return centreY of the pill
   }
 
+  // ── Zone badge positions (de-collided so 0/1/2 don't stack near the house) ──
+  // Computed up front so on-map labels can be told to avoid the badges too.
+  const badgePositions: Record<number, readonly [number, number]> = {};
+  if (showZoneBadges && aiPlan) {
+    const placed: Array<{ x: number; y: number }> = [];
+    for (const zone of aiPlan.zones) {
+      let [bx, by] =
+        zonePartition.centroids[zone.n] ??
+        resolveAnchor(zone.anchor, visibleLayers, project, boundsCenter, bboxPx);
+      for (let iter = 0; iter < 10; iter++) {
+        const clash = placed.find((p) => Math.hypot(p.x - bx, p.y - by) < 36);
+        if (!clash) break;
+        const ang = Math.atan2(by - clash.y, bx - clash.x) || (iter * 1.1 + 0.4);
+        bx = clash.x + Math.cos(ang) * 38;
+        by = clash.y + Math.sin(ang) * 38;
+      }
+      placed.push({ x: bx, y: by });
+      badgePositions[zone.n] = [bx, by];
+    }
+    // Seed the label-collision map with badge footprints so labels never sit on a badge.
+    for (const p of placed) {
+      placedRects.push({ x: p.x - 17, y: p.y - 17, w: 34, h: 34 });
+    }
+  }
+
   // ── Sector inset (Sector view — left side below data strip) ───────────────
   const sectorInsetX = mapAreaW - 192;
   const sectorInsetY = northY + 82;
@@ -1275,6 +1300,9 @@ function GeometryPreview({
 
           {/* ── FEATURE LABELS (always shown — BASE: only these) ─────────── */}
           {visibleLayers.map((layer) => {
+            // Over the photo, drop the property-boundary's centre label — its huge
+            // centroid pill stacks on the house; the green outline + legend show it.
+            if (showSat && layer.layerType === 'property_boundary') return null;
             const [cx, cy] = layerCentroid(layer, project, [SVG_W / 2, SVG_H / 2]);
             const text = layer.name.length > 26 ? `${layer.name.slice(0, 25)}…` : layer.name;
             const area = layer.areaLabel !== 'area unknown' ? ` · ${layer.areaLabel}` : '';
@@ -1339,12 +1367,11 @@ function GeometryPreview({
           {/* ── ZONE BADGES (Zone + Design views) ────────────────────────────── */}
           {showZoneBadges && aiPlan && aiPlan.zones.map((zone) => {
             const color = ZONE_COLORS[zone.n] ?? '#555';
-            // Badge sits at the centroid of the zone's computed area; if the zone
-            // has no area (e.g. no garden traced), fall back to the anchor hint.
+            // Use the pre-computed, de-collided badge position (falls back to anchor).
             const [bx, by] =
+              badgePositions[zone.n] ??
               zonePartition.centroids[zone.n] ??
               resolveAnchor(zone.anchor, visibleLayers, project, boundsCenter, bboxPx);
-            // Badge sits at the anchor point (no blob offset needed — areas are now fills)
             const badgeCy = by;
             // Zone title caption: de-collide
             const captionFull = zone.title.length > 20 ? `${zone.title.slice(0, 19)}…` : zone.title;
