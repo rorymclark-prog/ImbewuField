@@ -99,7 +99,7 @@ export default function InsightsPanel({ locationData }: Props) {
   if (!locationData) {
     return (
       <div className="flex flex-col items-center justify-center h-32 text-center">
-        <p className="text-xs font-display" style={{ color: '#5C5040' }}>Select a location first</p>
+        <p className="text-xs font-display" style={{ color: '#5C5040' }}>{t('insightsSelectLocation')}</p>
       </div>
     );
   }
@@ -110,11 +110,11 @@ export default function InsightsPanel({ locationData }: Props) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: '#5C5040' }}>
-            AI Permaculture Report
+            {t('insightsReportTitle')}
           </div>
           {!insights && !loading && (
             <div className="text-xs font-display" style={{ color: '#5C5040' }}>
-              Water · Soil · Guilds · Calendar · Quick wins
+              {t('insightsReportSubtitle')}
             </div>
           )}
         </div>
@@ -134,11 +134,11 @@ export default function InsightsPanel({ locationData }: Props) {
           }
         >
           {loading ? (
-            <><Loader2 size={14} className="animate-spin" /> Analysing...</>
+            <><Loader2 size={14} className="animate-spin" /> {t('insightsAnalysing')}</>
           ) : insights ? (
             <>↺ {t('buttonRegenerate')}</>
           ) : (
-            <>Analyse site</>
+            <>{t('insightsAnalyseSite')}</>
           )}
         </button>
       </div>
@@ -159,7 +159,7 @@ export default function InsightsPanel({ locationData }: Props) {
           style={{ background: 'rgba(31,77,43,0.04)', border: '1px dashed rgba(31,77,43,0.20)' }}
         >
           <p className="text-xs font-display" style={{ color: '#5C5040' }}>
-            Uses your exact slope, rainfall timing, soil pH + OC, and biome to generate a specific site report
+            {t('insightsEmptyPrompt')}
           </p>
         </div>
       )}

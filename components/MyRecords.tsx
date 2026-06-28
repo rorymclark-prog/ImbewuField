@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
+import { useLanguage } from '@/lib/i18n';
 import {
   myProduction,
   addProduction,
@@ -93,6 +94,7 @@ function SubmitBtn({
   loading: boolean;
   children: React.ReactNode;
 }) {
+  const { t } = useLanguage();
   return (
     <button
       type="submit"
@@ -110,7 +112,7 @@ function SubmitBtn({
       {loading ? (
         <>
           <Loader2 size={14} className="animate-spin" style={{ color: '#1F4D2B' }} />
-          Saving…
+          {t('myRecordsSaving')}
         </>
       ) : (
         children
@@ -136,6 +138,7 @@ function fmtDate(raw: string | null | undefined): string {
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
 
 function SignInPrompt() {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-12 px-6 text-center">
       <div
@@ -152,10 +155,10 @@ function SignInPrompt() {
           className="font-display font-semibold text-base mb-1"
           style={{ color: '#20190F' }}
         >
-          Sign in to keep your own records
+          {t('myRecordsSignInTitle')}
         </p>
         <p className="font-display text-xs leading-relaxed" style={{ color: '#9A8268' }}>
-          Track what you grow and sell — your data stays with you.
+          {t('myRecordsSignInBody')}
         </p>
       </div>
       <a
@@ -167,7 +170,7 @@ function SignInPrompt() {
           color: '#1F4D2B',
         }}
       >
-        Go to sign in <ArrowRight size={16} />
+        {t('myRecordsSignInButton')} <ArrowRight size={16} />
       </a>
     </div>
   );
@@ -185,6 +188,7 @@ interface ProdFormState {
 }
 
 function LogProductionForm({ onSaved }: { onSaved: () => void }) {
+  const { t } = useLanguage();
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     kg: '',
@@ -213,7 +217,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     const crop = form.crop.trim();
     const kg = parseFloat(form.kg);
     if (!crop || isNaN(kg) || kg <= 0) {
-      setForm((f) => ({ ...f, error: 'Crop name and a positive kg are required.' }));
+      setForm((f) => ({ ...f, error: t('myRecordsProdValidationError') }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
@@ -242,25 +246,25 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       if (fileRef.current) fileRef.current.value = '';
       onSaved();
     } catch {
-      setForm((f) => ({ ...f, loading: false, error: 'Failed to save. Try again.' }));
+      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
     }
   }
 
   return (
     <Card accent="#1F4D2B">
-      <SectionLabel>Log production</SectionLabel>
+      <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
-          <FieldLabel>Crop</FieldLabel>
+          <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
           <Input
             type="text"
-            placeholder="e.g. Spinach"
+            placeholder={t('myRecordsCropPlaceholder')}
             value={form.crop}
             onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
           />
         </div>
         <div>
-          <FieldLabel>Kg harvested</FieldLabel>
+          <FieldLabel>{t('myRecordsKgHarvestedLabel')}</FieldLabel>
           <Input
             type="number"
             placeholder="0.0"
@@ -271,7 +275,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           />
         </div>
         <div>
-          <FieldLabel>Produce photo (optional)</FieldLabel>
+          <FieldLabel>{t('myRecordsPhotoLabel')}</FieldLabel>
           {form.photoPreview && (
             <div className="mb-2 relative w-full h-24 overflow-hidden rounded-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -305,7 +309,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             }}
           >
             <Camera size={16} style={{ color: '#9A8268' }} />
-            <span>{form.photoFile ? form.photoFile.name : 'Choose photo…'}</span>
+            <span>{form.photoFile ? form.photoFile.name : t('myRecordsChoosePhoto')}</span>
             <input
               ref={fileRef}
               type="file"
@@ -321,7 +325,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}><Star size={14} /> Save harvest</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveHarvest')}</SubmitBtn>
       </form>
     </Card>
   );
@@ -339,6 +343,7 @@ interface SaleFormState {
 }
 
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
+  const { t } = useLanguage();
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     kg: '',
@@ -356,7 +361,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
       setForm((f) => ({
         ...f,
-        error: 'Crop, kg, and amount (R) are required.',
+        error: t('myRecordsSaleValidationError'),
       }));
       return;
     }
@@ -372,26 +377,26 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       setForm({ crop: '', kg: '', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
     } catch {
-      setForm((f) => ({ ...f, loading: false, error: 'Failed to save. Try again.' }));
+      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
     }
   }
 
   return (
     <Card accent="#9E5C08">
-      <SectionLabel>Log sale</SectionLabel>
+      <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <FieldLabel>Crop</FieldLabel>
+            <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
             <Input
               type="text"
-              placeholder="e.g. Tomatoes"
+              placeholder={t('myRecordsCropSalePlaceholder')}
               value={form.crop}
               onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
             />
           </div>
           <div>
-            <FieldLabel>Kg sold</FieldLabel>
+            <FieldLabel>{t('myRecordsKgSoldLabel')}</FieldLabel>
             <Input
               type="number"
               placeholder="0.0"
@@ -404,7 +409,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <FieldLabel>Amount (R)</FieldLabel>
+            <FieldLabel>{t('myRecordsAmountLabel')}</FieldLabel>
             <Input
               type="number"
               placeholder="0.00"
@@ -415,10 +420,10 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             />
           </div>
           <div>
-            <FieldLabel>Buyer (optional)</FieldLabel>
+            <FieldLabel>{t('myRecordsBuyerLabel')}</FieldLabel>
             <Input
               type="text"
-              placeholder="e.g. Market"
+              placeholder={t('myRecordsBuyerPlaceholder')}
               value={form.buyer}
               onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
             />
@@ -429,7 +434,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             {form.error}
           </p>
         )}
-        <SubmitBtn loading={form.loading}><Star size={14} /> Save sale</SubmitBtn>
+        <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
       </form>
     </Card>
   );
@@ -438,10 +443,11 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 /* ── Production list ─────────────────────────────────────────────────────── */
 
 function ProductionList({ items }: { items: ProductionLog[] }) {
+  const { t } = useLanguage();
   if (items.length === 0) {
     return (
       <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
-        No harvests logged yet.
+        {t('myRecordsNoHarvests')}
       </p>
     );
   }
@@ -499,10 +505,11 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 /* ── Sales list ──────────────────────────────────────────────────────────── */
 
 function SalesList({ items }: { items: SalesLog[] }) {
+  const { t } = useLanguage();
   if (items.length === 0) {
     return (
       <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
-        No sales logged yet.
+        {t('myRecordsNoSales')}
       </p>
     );
   }
@@ -554,10 +561,11 @@ function SalesList({ items }: { items: SalesLog[] }) {
 /* ── Shared designs list ─────────────────────────────────────────────────── */
 
 function SharedDesignsList({ items }: { items: Design[] }) {
+  const { t } = useLanguage();
   if (items.length === 0) {
     return (
       <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
-        No designs shared with you yet.
+        {t('myRecordsNoDesigns')}
       </p>
     );
   }
@@ -583,10 +591,10 @@ function SharedDesignsList({ items }: { items: Design[] }) {
               className="text-sm font-display font-medium leading-tight truncate"
               style={{ color: '#20190F' }}
             >
-              {design.title || 'Untitled design'}
+              {design.title || t('myRecordsUntitledDesign')}
             </p>
             <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
-              Shared {fmtDate(design.created_at)}
+              {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
           <Link
@@ -599,7 +607,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
               textDecoration: 'none',
             }}
           >
-            Open <ArrowRight size={14} />
+            {t('myRecordsOpenButton')} <ArrowRight size={14} />
           </Link>
         </div>
       ))}
@@ -610,6 +618,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
 /* ── Main MyRecords component ────────────────────────────────────────────── */
 
 export default function MyRecords() {
+  const { t } = useLanguage();
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [sales, setSales] = useState<SalesLog[]>([]);
@@ -699,10 +708,10 @@ export default function MyRecords() {
             className="font-display font-bold text-base leading-tight"
             style={{ color: '#20190F' }}
           >
-            My Records
+            {t('myRecordsTitle')}
           </h2>
           <p className="font-display text-xs mt-0.5" style={{ color: '#9A8268' }}>
-            What you grow · what you sell · designs from your supervisor
+            {t('myRecordsSubtitle')}
           </p>
         </div>
         {dataLoading && (
@@ -734,7 +743,7 @@ export default function MyRecords() {
                   {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
-                  total harvested{topCrop ? ` · ${topCrop[0]} tops` : ''}
+                  {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
                 </div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
@@ -753,7 +762,7 @@ export default function MyRecords() {
 
       {/* ── Recent harvests ─────────────────────────── */}
       <Card>
-        <SectionLabel>Recent harvests</SectionLabel>
+        <SectionLabel>{t('myRecordsRecentHarvests')}</SectionLabel>
         <ProductionList items={production.slice(0, 10)} />
       </Card>
 
@@ -789,7 +798,7 @@ export default function MyRecords() {
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
                 <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
-                  total revenue · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} kg sold
+                  {t('myRecordsTotalRevenue')} · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} {t('myRecordsKgSoldSuffix')}
                 </div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
@@ -808,7 +817,7 @@ export default function MyRecords() {
 
       {/* ── Recent sales ────────────────────────────── */}
       <Card>
-        <SectionLabel>Recent sales</SectionLabel>
+        <SectionLabel>{t('myRecordsSalesHeader')}</SectionLabel>
         <SalesList items={sales.slice(0, 10)} />
       </Card>
 
@@ -816,7 +825,7 @@ export default function MyRecords() {
 
       {/* ── Shared designs ──────────────────────────── */}
       <Card accent="#2F6F9E">
-        <SectionLabel>Shared with me</SectionLabel>
+        <SectionLabel>{t('myRecordsSharedWithMe')}</SectionLabel>
         <SharedDesignsList items={designs} />
       </Card>
 

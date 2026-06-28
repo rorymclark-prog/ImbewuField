@@ -200,16 +200,56 @@ function PlanCard({ title, sections, icon }: { title: string; sections: DesignPl
 
 const buttonBase = 'rounded-xl px-3 py-2 text-xs font-display font-semibold transition-all flex items-center justify-center gap-1.5';
 
+/**
+ * Compute centroid pixel coordinates for a layer's geometry.
+ */
+function layerCentroid(
+  layer: DesignLayer,
+  project: (coord: Position) => readonly [number, number],
+  fallback: readonly [number, number],
+): readonly [number, number] {
+  const coords = collectPositions(layer.geometry);
+  if (!coords.length) return fallback;
+  const mid = coords.reduce<[number, number]>((sum, c) => [sum[0] + c[0], sum[1] + c[1]], [0, 0]);
+  return project([mid[0] / coords.length, mid[1] / coords.length]);
+}
+
+/**
+ * Approximate metres per degree of longitude at a given latitude.
+ * Used only for the scale bar — accuracy is sufficient at parcel scale.
+ */
+function metersPerDegreeLon(latDeg: number): number {
+  const latRad = (latDeg * Math.PI) / 180;
+  return 111_320 * Math.cos(latRad);
+}
+
+/**
+ * Given a raw metre span, round to a "nice" scale bar length.
+ */
+function niceScaleMetres(rawM: number): number {
+  const magnitude = Math.pow(10, Math.floor(Math.log10(rawM)));
+  const candidates = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000].map((v) => v * magnitude);
+  // pick the largest candidate ≤ rawM * 0.4
+  const target = rawM * 0.4;
+  let best = candidates[0];
+  for (const c of candidates) {
+    if (c <= target) best = c;
+  }
+  return best;
+}
+
 function GeometryPreview({
   layers,
   title,
   hasPlan,
   svgRef,
+  locationData,
 }: {
   layers: DesignLayer[];
   title: string;
   hasPlan: boolean;
   svgRef: React.RefObject<SVGSVGElement>;
+  locationData: LocationData | null;
 }) {
   const width = 960;
   const height = 620;
@@ -219,13 +259,71 @@ function GeometryPreview({
   const project = makeProjector(bounds, width, height, 62);
   const boundary = visibleLayers.find((layer) => layer.layerType === 'property_boundary') ?? visibleLayers[0];
   const center = boundary
-    ? (() => {
-        const coords = collectPositions(boundary.geometry);
-        if (!coords.length) return [width / 2, height / 2] as const;
-        const mid = coords.reduce<[number, number]>((sum, coord) => [sum[0] + coord[0], sum[1] + coord[1]], [0, 0]);
-        return project([mid[0] / coords.length, mid[1] / coords.length]);
-      })()
-    : [width / 2, height / 2] as const;
+    ? layerCentroid(boundary, project, [width / 2, height / 2])
+    : ([width / 2, height / 2] as const);
+
+  // --- Scale bar ---
+  // Compute metres-per-pixel in the X direction using Web Mercator approximation.
+  const midLatDeg = locationData?.lat ?? (bounds.minY + bounds.maxY) / 2;
+  const lonSpanDeg = Math.max(bounds.maxX - bounds.minX, 0.000001);
+  const dx = Math.max(bounds.maxX - bounds.minX, 0.000001);
+  const dy = Math.max(bounds.maxY - bounds.minY, 0.000001);
+  const mapRenderWidth = width - 62 * 2;
+  const mapRenderHeight = height - 62 * 2;
+  const scaleFromX = (lonSpanDeg * metersPerDegreeLon(midLatDeg)) / Math.min(mapRenderWidth, mapRenderHeight * (dx / dy));
+  const metersPerPixel = scaleFromX;
+  const mapPixelWidth = Math.min(mapRenderWidth, mapRenderHeight * (dx / dy));
+  const scaleBarRawM = mapPixelWidth * metersPerPixel * 0.3;
+  const scaleBarM = visibleLayers.length ? niceScaleMetres(scaleBarRawM) : 50;
+  const scaleBarPx = scaleBarM / metersPerPixel;
+  const scaleBarLabel = scaleBarM >= 1000 ? `${(scaleBarM / 1000).toFixed(1)} km` : `${scaleBarM} m`;
+  const scaleBarX = 52;
+  const scaleBarY = height - 50;
+
+  // --- Data strip values ---
+  const annualRainfall = locationData?.rainfall?.annual;
+  const soilTexture = locationData?.soil?.textureClass;
+  const minTemp = locationData?.climate?.minTemp;
+  const maxTemp = locationData?.climate?.maxTemp;
+  const elevation = locationData?.elevation?.elevation;
+  const totalDesignedM2 = layers
+    .filter((l) => l.approved && l.layerType !== 'water_body')
+    .reduce((sum, l) => sum + l.areaM2, 0);
+  const roofLayers = layers.filter((l) => l.approved && (l.layerType === 'roof'));
+  const roofAreaM2 = roofLayers.reduce((sum, l) => sum + l.areaM2, 0);
+  const hasRoof = roofAreaM2 > 0 && annualRainfall != null && annualRainfall > 0;
+  const roofHarvestKL = hasRoof ? Math.round((roofAreaM2 * (annualRainfall ?? 0) * 0.8) / 1000) : null;
+  const totalHa = totalDesignedM2 / 10_000;
+
+  // Data strip rows — only include what we have
+  type DataRow = { label: string; value: string };
+  const dataRows: DataRow[] = [];
+  if (annualRainfall != null) dataRows.push({ label: 'Rainfall (est.)', value: `${Math.round(annualRainfall)} mm/yr` });
+  if (soilTexture) dataRows.push({ label: 'Soil texture', value: soilTexture });
+  if (minTemp != null && maxTemp != null) dataRows.push({ label: 'Temp range', value: `${Math.round(minTemp)}–${Math.round(maxTemp)} °C` });
+  if (elevation != null) dataRows.push({ label: 'Elevation', value: `${Math.round(elevation)} m` });
+  if (totalDesignedM2 > 0) dataRows.push({ label: 'Designed area', value: totalHa >= 1 ? `${totalHa.toFixed(2)} ha` : `${Math.round(totalDesignedM2)} m²` });
+  if (roofHarvestKL != null) dataRows.push({ label: 'Roof harvest (est.)', value: `${roofHarvestKL.toLocaleString()} kL/yr` });
+
+  // Data panel geometry — left side, below title
+  const dataPanelX = 52;
+  const dataPanelY = 108;
+  const dataPanelW = 220;
+  const rowH = 22;
+  const dataPanelH = dataRows.length > 0 ? 28 + dataRows.length * rowH : 0;
+
+  // --- Legend: only layer types actually present ---
+  const presentTypes = Array.from(new Set(visibleLayers.map((l) => l.layerType)));
+  const legendCols = Math.min(presentTypes.length, 3);
+  const legendRows = Math.ceil(presentTypes.length / legendCols);
+  const legendW = legendCols * 130 + 22;
+  const legendH = 36 + legendRows * 26;
+  const legendX = 52;
+  const legendY = height - 52 - legendH;
+
+  // North arrow position (top-right, always)
+  const northX = width - 118;
+  const northY = 48;
 
   return (
     <svg
@@ -244,7 +342,13 @@ function GeometryPreview({
         <filter id="paper-shadow" x="-20%" y="-20%" width="140%" height="140%">
           <feDropShadow dx="0" dy="8" stdDeviation="9" floodColor="#2A1D10" floodOpacity="0.16" />
         </filter>
+        <filter id="label-glow" x="-10%" y="-30%" width="120%" height="160%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
+
+      {/* Background */}
       <rect width={width} height={height} rx="34" fill={PAPER} />
       <rect x="24" y="24" width={width - 48} height={height - 48} rx="28" fill="#FBF7ED" stroke="#D8C9AC" />
       <g opacity="0.48">
@@ -259,8 +363,23 @@ function GeometryPreview({
         ))}
       </g>
 
+      {/* Title */}
       <text x="52" y="64" fontFamily="serif" fontWeight="800" fontSize="31" fill="#20190F">{title}</text>
-      <text x="54" y="94" fontFamily="sans-serif" fontSize="16" fill="#7B6A52">Geometry-first permaculture design</text>
+      <text x="54" y="90" fontFamily="sans-serif" fontSize="14" fill="#7B6A52">Geometry-first permaculture design</text>
+
+      {/* Data strip — site info panel below title */}
+      {dataRows.length > 0 && (
+        <g>
+          <rect x={dataPanelX} y={dataPanelY} width={dataPanelW} height={dataPanelH} rx="12" fill="rgba(32,25,15,0.80)" />
+          <text x={dataPanelX + 12} y={dataPanelY + 18} fontFamily="sans-serif" fontWeight="800" fontSize="11" fill="#F7C97E" letterSpacing="0.08em">SITE DATA</text>
+          {dataRows.map((row, i) => (
+            <g key={row.label} transform={`translate(${dataPanelX + 12} ${dataPanelY + 28 + i * rowH})`}>
+              <text x="0" y="13" fontFamily="sans-serif" fontSize="10" fill="#B9AA8E">{row.label}</text>
+              <text x={dataPanelW - 24} y="13" textAnchor="end" fontFamily="sans-serif" fontWeight="700" fontSize="10" fill="#F7F0E4">{row.value}</text>
+            </g>
+          ))}
+        </g>
+      )}
 
       {visibleLayers.length === 0 ? (
         <g>
@@ -270,17 +389,21 @@ function GeometryPreview({
         </g>
       ) : (
         <>
-          {hasPlan && (
-            <g opacity="0.92">
-              <ellipse cx={center[0]} cy={center[1]} rx="92" ry="64" fill="rgba(255, 193, 82, 0.16)" stroke="#D58A18" strokeWidth="3" strokeDasharray="9 9" />
-              <ellipse cx={center[0]} cy={center[1]} rx="158" ry="104" fill="rgba(90, 180, 103, 0.12)" stroke="#65A45F" strokeWidth="3" strokeDasharray="12 10" />
-              <ellipse cx={center[0]} cy={center[1]} rx="228" ry="150" fill="rgba(50, 113, 74, 0.08)" stroke="#2F8F4E" strokeWidth="3" strokeDasharray="16 12" />
-              <text x={center[0]} y={center[1] - 75} textAnchor="middle" fontFamily="sans-serif" fontSize="15" fontWeight="700" fill="#9E5C08">Zone 1</text>
-              <text x={center[0] + 132} y={center[1] - 105} textAnchor="middle" fontFamily="sans-serif" fontSize="15" fontWeight="700" fill="#2F6B3F">Zone 2</text>
-              <text x={center[0] - 190} y={center[1] + 130} textAnchor="middle" fontFamily="sans-serif" fontSize="15" fontWeight="700" fill="#1F4D2B">Zone 3</text>
-            </g>
-          )}
+          {/* Zone rings — rendered BELOW the geometry so they sit behind real shapes */}
+          <g opacity="0.82">
+            <ellipse cx={center[0]} cy={center[1]} rx="88" ry="62" fill="rgba(255, 193, 82, 0.14)" stroke="#D58A18" strokeWidth="2.5" strokeDasharray="8 7" />
+            <ellipse cx={center[0]} cy={center[1]} rx="154" ry="102" fill="rgba(90, 180, 103, 0.10)" stroke="#65A45F" strokeWidth="2.5" strokeDasharray="11 9" />
+            <ellipse cx={center[0]} cy={center[1]} rx="224" ry="148" fill="rgba(50, 113, 74, 0.06)" stroke="#2F8F4E" strokeWidth="2.5" strokeDasharray="15 11" />
+            {/* Zone labels sit on the dashed rings, pill-backed */}
+            <rect x={center[0] - 26} y={center[1] - 79} width="52" height="16" rx="8" fill="rgba(213,138,24,0.82)" />
+            <text x={center[0]} y={center[1] - 67} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#FFF8E8">Zone 1</text>
+            <rect x={center[0] + 100} y={center[1] - 117} width="52" height="16" rx="8" fill="rgba(101,164,95,0.85)" />
+            <text x={center[0] + 126} y={center[1] - 105} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#EAF3E2">Zone 2</text>
+            <rect x={center[0] - 218} y={center[1] + 118} width="52" height="16" rx="8" fill="rgba(47,143,78,0.80)" />
+            <text x={center[0] - 192} y={center[1] + 130} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#EAF3E2">Zone 3</text>
+          </g>
 
+          {/* Real geometry paths */}
           {visibleLayers.map((layer) => {
             const paths = geometryToPaths(layer.geometry, project);
             const stroke = getDesignLayerColor(layer.layerType);
@@ -306,28 +429,77 @@ function GeometryPreview({
               </g>
             );
           })}
+
+          {/* Feature labels — one per layer, near centroid, pill background */}
+          {visibleLayers.map((layer) => {
+            const [cx, cy] = layerCentroid(layer, project, [width / 2, height / 2]);
+            const labelText = layer.name;
+            const areaText = layer.areaLabel !== 'area unknown' ? ` · ${layer.areaLabel}` : '';
+            const fullText = `${labelText}${areaText}`;
+            // Estimate pill width by character count (monospace approximation)
+            const pillW = Math.min(Math.max(fullText.length * 6.5 + 16, 60), 200);
+            const pillH = 18;
+            const pillX = cx - pillW / 2;
+            const pillY = cy - pillH / 2;
+            return (
+              <g key={`label-${layer.id}`} opacity={layer.approved ? 1 : 0.55}>
+                <rect x={pillX} y={pillY} width={pillW} height={pillH} rx="9" fill="rgba(32,25,15,0.76)" />
+                <text
+                  x={cx}
+                  y={cy + 5}
+                  textAnchor="middle"
+                  fontFamily="sans-serif"
+                  fontSize="9.5"
+                  fontWeight="600"
+                  fill="#F7F0E4"
+                >
+                  {fullText.length > 28 ? `${fullText.slice(0, 27)}…` : fullText}
+                </text>
+              </g>
+            );
+          })}
         </>
       )}
 
-      <g transform="translate(820 55)">
-        <circle cx="42" cy="42" r="34" fill="#1F4D2B" opacity="0.94" />
-        <path d="M42 14 L52 45 L42 39 L32 45 Z" fill="#F7F0E4" />
-        <text x="42" y="84" textAnchor="middle" fontFamily="sans-serif" fontSize="14" fontWeight="800" fill="#1F4D2B">N</text>
+      {/* North arrow — top-right */}
+      <g transform={`translate(${northX} ${northY})`}>
+        <circle cx="34" cy="34" r="28" fill="#1F4D2B" opacity="0.94" />
+        <path d="M34 10 L42 36 L34 31 L26 36 Z" fill="#F7F0E4" />
+        <text x="34" y="72" textAnchor="middle" fontFamily="sans-serif" fontSize="12" fontWeight="800" fill="#1F4D2B">N</text>
       </g>
 
-      <g transform="translate(52 476)">
-        <rect width="390" height="96" rx="22" fill="rgba(32,25,15,0.82)" />
-        <text x="22" y="31" fontFamily="sans-serif" fontWeight="800" fontSize="15" fill="#F7F0E4">Legend</text>
-        {LAYER_TYPES.slice(0, 6).map((type, index) => (
-          <g key={type} transform={`translate(${22 + (index % 3) * 122} ${48 + Math.floor(index / 3) * 27})`}>
-            <rect width="14" height="14" rx="4" fill={getDesignLayerColor(type)} />
-            <text x="20" y="12" fontFamily="sans-serif" fontSize="12" fill="#F7F0E4">{getDesignLayerTypeLabel(type)}</text>
-          </g>
-        ))}
-      </g>
+      {/* Legend — only present layer types, bottom-left */}
+      {presentTypes.length > 0 && (
+        <g transform={`translate(${legendX} ${legendY})`}>
+          <rect width={legendW} height={legendH} rx="14" fill="rgba(32,25,15,0.82)" />
+          <text x="14" y="22" fontFamily="sans-serif" fontWeight="800" fontSize="11" fill="#F7C97E" letterSpacing="0.08em">LEGEND</text>
+          {presentTypes.map((type, index) => {
+            const col = index % legendCols;
+            const row = Math.floor(index / legendCols);
+            return (
+              <g key={type} transform={`translate(${14 + col * 130} ${34 + row * 26})`}>
+                <rect width="12" height="12" rx="3" fill={getDesignLayerColor(type)} />
+                <text x="18" y="10" fontFamily="sans-serif" fontSize="10" fill="#F7F0E4">{getDesignLayerTypeLabel(type)}</text>
+              </g>
+            );
+          })}
+        </g>
+      )}
 
-      <text x={width - 52} y={height - 36} textAnchor="end" fontFamily="sans-serif" fontSize="13" fill="#7B6A52">
-        Locked geometry stays fixed
+      {/* Scale bar — bottom, just above legend */}
+      {visibleLayers.length > 0 && (
+        <g transform={`translate(${scaleBarX} ${scaleBarY})`}>
+          <rect x="0" y="-4" width={scaleBarPx + 80} height="22" rx="8" fill="rgba(32,25,15,0.72)" />
+          <line x1="8" y1="9" x2={8 + scaleBarPx} y2="9" stroke="#F7F0E4" strokeWidth="2.5" />
+          <line x1="8" y1="4" x2="8" y2="14" stroke="#F7F0E4" strokeWidth="2" />
+          <line x1={8 + scaleBarPx} y1="4" x2={8 + scaleBarPx} y2="14" stroke="#F7F0E4" strokeWidth="2" />
+          <text x={8 + scaleBarPx + 8} y="13" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill="#F7C97E">{scaleBarLabel}</text>
+        </g>
+      )}
+
+      {/* Footer note */}
+      <text x={width - 52} y={height - 36} textAnchor="end" fontFamily="sans-serif" fontSize="11" fill="#7B6A52">
+        Locked geometry stays fixed · ImbewuField
       </text>
     </svg>
   );
@@ -626,7 +798,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </div>
         )}
 
-        <GeometryPreview layers={studio.layers} title={title} hasPlan={!!studio.generatedPlan} svgRef={svgRef} />
+        <GeometryPreview layers={studio.layers} title={title} hasPlan={!!studio.generatedPlan} svgRef={svgRef} locationData={locationData} />
 
         <div className="grid grid-cols-2 gap-2">
           <button onClick={exportPng} disabled={exporting !== '' || studio.layers.length === 0} className={buttonBase} style={{ background: '#FBF7ED', color: '#9E5C08', border: `1px solid ${CARD_BORDER}` }}>

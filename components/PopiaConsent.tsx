@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
 const POPIA_KEY = 'imbewu_popia';
 const ONBOARD_KEY = 'permamap_onboarded';
@@ -15,10 +16,11 @@ interface PopiaRecord {
   at: string;
 }
 
-const GOALS: { v: Goal; label: string; desc: string; Icon: React.ElementType }[] = [
-  { v: 'feed',   label: 'Feed my family',  desc: 'A steady spread of vegetables through the year', Icon: Utensils   },
-  { v: 'income', label: 'Earn an income',   desc: 'Lima leans to market crops you can sell',        Icon: TrendingUp },
-  { v: 'soil',   label: 'Restore my soil',  desc: 'Cover crops and legumes to bring back the land', Icon: Recycle    },
+type GoalDef = { v: Goal; labelKey: string; descKey: string; Icon: React.ElementType };
+const GOAL_DEFS: GoalDef[] = [
+  { v: 'feed',   labelKey: 'popiaGoalFeedLabel',   descKey: 'popiaGoalFeedDesc',   Icon: Utensils   },
+  { v: 'income', labelKey: 'popiaGoalIncomeLabel', descKey: 'popiaGoalIncomeDesc', Icon: TrendingUp },
+  { v: 'soil',   labelKey: 'popiaGoalSoilLabel',   descKey: 'popiaGoalSoilDesc',   Icon: Recycle    },
 ];
 
 /** Pill toggle — 34 × 20 px, green when on, muted when off */
@@ -60,6 +62,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
 }
 
 export default function PopiaConsent() {
+  const { t } = useLanguage();
   const [ready, setReady] = useState(false);
   const [done, setDone] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
@@ -147,14 +150,13 @@ export default function PopiaConsent() {
                 className="font-display font-bold"
                 style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.15 }}
               >
-                Your data, your choice
+                {t('popiaTitle')}
               </h2>
             </div>
 
             {/* Body copy */}
             <p className="font-sans mb-5" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.6 }}>
-              We keep your farm information safe and only use it to help you. You can change
-              these settings any time in the app.
+              {t('popiaBody')}
             </p>
 
             {/* Toggle rows */}
@@ -169,10 +171,10 @@ export default function PopiaConsent() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
-                    Store my farm &amp; finance data
+                    {t('popiaStoreLabel')}
                   </div>
                   <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-                    Saved securely in the cloud so it&rsquo;s never lost. Required to use the app.
+                    {t('popiaStoreDesc')}
                   </div>
                 </div>
                 <Toggle on={storeData} onChange={setStoreData} />
@@ -182,10 +184,10 @@ export default function PopiaConsent() {
               <div className="flex items-center gap-3 px-4 py-3.5" style={{ background: '#FBF6EC' }}>
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
-                    Share anonymised results with my NGO
+                    {t('popiaShareLabel')}
                   </div>
                   <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-                    Helps programmes track impact. You can turn this off any time.
+                    {t('popiaShareDesc')}
                   </div>
                 </div>
                 <Toggle on={shareNgo} onChange={setShareNgo} />
@@ -208,14 +210,14 @@ export default function PopiaConsent() {
               }}
             >
               <span className="flex items-center justify-center gap-1.5">
-                I agree, continue
+                {t('popiaAgreeButton')}
                 <ArrowRight size={15} />
               </span>
             </button>
 
             {!storeData && (
               <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                Cloud storage is required to use ImbewuField.
+                {t('popiaStorageRequired')}
               </p>
             )}
           </>
@@ -229,15 +231,15 @@ export default function PopiaConsent() {
               className="font-display font-bold mb-1"
               style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.2 }}
             >
-              What do you most want from your land?
+              {t('popiaGoalTitle')}
             </h2>
             <p className="font-sans mb-5" style={{ fontSize: 13, color: '#8C7A62', lineHeight: 1.5 }}>
-              Lima uses this to tailor its suggestions for you.
+              {t('popiaGoalBody')}
             </p>
 
             {/* Goal cards — same selection style as app/survey/page.tsx */}
             <div className="space-y-2.5 mb-5">
-              {GOALS.map(({ v, label, desc, Icon }) => {
+              {GOAL_DEFS.map(({ v, labelKey, descKey, Icon }) => {
                 const on = goal === v;
                 return (
                   <button
@@ -269,13 +271,13 @@ export default function PopiaConsent() {
                         className="font-display font-semibold"
                         style={{ fontSize: 14, color: on ? '#EAF3E2' : '#20190F', lineHeight: 1.2 }}
                       >
-                        {label}
+                        {t(labelKey)}
                       </div>
                       <div
                         className="font-sans mt-0.5"
                         style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : '#8C7A62', lineHeight: 1.4 }}
                       >
-                        {desc}
+                        {t(descKey)}
                       </div>
                     </div>
 
@@ -312,7 +314,7 @@ export default function PopiaConsent() {
               }}
             >
               <span className="flex items-center justify-center gap-1.5">
-                Get started
+                {t('popiaGetStarted')}
                 <ArrowRight size={15} />
               </span>
             </button>
