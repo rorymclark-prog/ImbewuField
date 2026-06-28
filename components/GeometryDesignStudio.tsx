@@ -90,7 +90,11 @@ function getBounds(layers: DesignLayer[]) {
 }
 
 function makeProjector(bounds: ReturnType<typeof getBounds>, width: number, height: number, pad: number) {
-  const dx = Math.max(bounds.maxX - bounds.minX, 0.000001);
+  // GEOMETRY MUST STAY EXACT. 1° longitude is shorter than 1° latitude away from the
+  // equator (× cos(lat)), so projecting raw degrees with one scale stretches shapes
+  // horizontally. Correct longitude by cos(centre latitude) so real proportions are kept.
+  const cosLat = Math.max(Math.cos(((bounds.minY + bounds.maxY) / 2) * Math.PI / 180), 0.01);
+  const dx = Math.max((bounds.maxX - bounds.minX) * cosLat, 0.000001); // lng span in lat-equivalent units
   const dy = Math.max(bounds.maxY - bounds.minY, 0.000001);
   const scale = Math.min((width - pad * 2) / dx, (height - pad * 2) / dy);
   const mapWidth = dx * scale;
@@ -99,7 +103,7 @@ function makeProjector(bounds: ReturnType<typeof getBounds>, width: number, heig
   const offsetY = (height - mapHeight) / 2;
 
   return (coord: Position) => {
-    const x = offsetX + (coord[0] - bounds.minX) * scale;
+    const x = offsetX + (coord[0] - bounds.minX) * cosLat * scale;
     const y = offsetY + (bounds.maxY - coord[1]) * scale;
     return [Number.isFinite(x) ? x : width / 2, Number.isFinite(y) ? y : height / 2] as const;
   };
@@ -389,20 +393,6 @@ function GeometryPreview({
         </g>
       ) : (
         <>
-          {/* Zone rings — rendered BELOW the geometry so they sit behind real shapes */}
-          <g opacity="0.82">
-            <ellipse cx={center[0]} cy={center[1]} rx="88" ry="62" fill="rgba(255, 193, 82, 0.14)" stroke="#D58A18" strokeWidth="2.5" strokeDasharray="8 7" />
-            <ellipse cx={center[0]} cy={center[1]} rx="154" ry="102" fill="rgba(90, 180, 103, 0.10)" stroke="#65A45F" strokeWidth="2.5" strokeDasharray="11 9" />
-            <ellipse cx={center[0]} cy={center[1]} rx="224" ry="148" fill="rgba(50, 113, 74, 0.06)" stroke="#2F8F4E" strokeWidth="2.5" strokeDasharray="15 11" />
-            {/* Zone labels sit on the dashed rings, pill-backed */}
-            <rect x={center[0] - 26} y={center[1] - 79} width="52" height="16" rx="8" fill="rgba(213,138,24,0.82)" />
-            <text x={center[0]} y={center[1] - 67} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#FFF8E8">Zone 1</text>
-            <rect x={center[0] + 100} y={center[1] - 117} width="52" height="16" rx="8" fill="rgba(101,164,95,0.85)" />
-            <text x={center[0] + 126} y={center[1] - 105} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#EAF3E2">Zone 2</text>
-            <rect x={center[0] - 218} y={center[1] + 118} width="52" height="16" rx="8" fill="rgba(47,143,78,0.80)" />
-            <text x={center[0] - 192} y={center[1] + 130} textAnchor="middle" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#EAF3E2">Zone 3</text>
-          </g>
-
           {/* Real geometry paths */}
           {visibleLayers.map((layer) => {
             const paths = geometryToPaths(layer.geometry, project);
@@ -458,6 +448,30 @@ function GeometryPreview({
               </g>
             );
           })}
+
+          {/* Permaculture ZONES — anchored to the REAL features they describe (Zone 0 = house,
+              2 = existing cultivation, 5 = tree belt/buffer). Not generic concentric rings:
+              real zones map to actual areas + daily-use distance. A numbered badge sits on each. */}
+          {(() => {
+            const ZONE_BY_TYPE: Record<string, { z: number; color: string }> = {
+              structure: { z: 0, color: '#3A352C' },
+              roof: { z: 0, color: '#3A352C' },
+              cultivation: { z: 2, color: '#C66A1C' },
+              tree_belt: { z: 5, color: '#1F6E5A' },
+            };
+            return visibleLayers.map((layer) => {
+              const zone = ZONE_BY_TYPE[layer.layerType];
+              if (!zone) return null;
+              const [cx, cy] = layerCentroid(layer, project, [width / 2, height / 2]);
+              const by = cy - 26;
+              return (
+                <g key={`zone-${layer.id}`}>
+                  <circle cx={cx} cy={by} r="13" fill={zone.color} stroke="#FBF7ED" strokeWidth="2.5" filter="url(#paper-shadow)" />
+                  <text x={cx} y={by + 5} textAnchor="middle" fontFamily="sans-serif" fontSize="14" fontWeight="800" fill="#FBF7ED">{zone.z}</text>
+                </g>
+              );
+            });
+          })()}
         </>
       )}
 
