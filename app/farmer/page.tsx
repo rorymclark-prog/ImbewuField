@@ -88,6 +88,28 @@ function HomeInner() {
   });
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  // Draggable width of the desktop side panel — persisted, clamped 320–760px.
+  const [panelWidth, setPanelWidth] = useState(390);
+  useEffect(() => {
+    const saved = parseInt(localStorage.getItem('imbewu_panel_width') || '', 10);
+    if (Number.isFinite(saved) && saved >= 320 && saved <= 760) setPanelWidth(saved);
+  }, []);
+  const startPanelResize = useCallback((e: React.PointerEvent) => {
+    e.preventDefault();
+    const move = (ev: PointerEvent) => {
+      const w = Math.min(Math.max(window.innerWidth - ev.clientX, 320), 760);
+      setPanelWidth(w);
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      document.body.style.userSelect = '';
+      setPanelWidth((w) => { try { localStorage.setItem('imbewu_panel_width', String(w)); } catch {} return w; });
+    };
+    document.body.style.userSelect = 'none';
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  }, []);
   const [drawing, setDrawing] = useState(false); // boundary/water draw active → hide the Results FAB
   const [people, setPeople] = useState<Profile[]>([]);
   const [peopleLoading, setPeopleLoading] = useState(false);
@@ -307,10 +329,20 @@ function HomeInner() {
             />
           </div>
 
+          {/* ── Drag handle to resize the side panel ── */}
+          <div
+            onPointerDown={startPanelResize}
+            className="hidden lg:flex items-center justify-center flex-shrink-0 group"
+            title="Drag to resize the panel"
+            style={{ width: 8, cursor: 'col-resize', background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+          >
+            <div style={{ width: 3, height: 36, borderRadius: 3, background: 'rgba(92,80,64,0.25)' }} className="group-hover:bg-stone-400 transition-colors" />
+          </div>
+
           {/* ── Desktop side panel (md+) ── */}
           <div
             className="hidden lg:flex flex-shrink-0 overflow-hidden flex-col"
-            style={{ width: 390, background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: panelWidth, background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
           >
             <DataPanel
               data={data}
