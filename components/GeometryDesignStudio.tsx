@@ -131,6 +131,8 @@ const LAYER_TYPES: DesignLayerType[] = [
 
 const CARD_BORDER = 'rgba(98, 83, 61, 0.18)';
 const PAPER = '#F7F0E4';
+// Public pk.* token — used to fetch the Mapbox Static satellite tile behind the design.
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? '';
 
 const FILL_COLORS: Partial<Record<DesignLayerType, string>> = {
   water_body: 'rgba(78,166,216,0.22)',
@@ -225,6 +227,118 @@ function makeProjector(
       Number.isFinite(y) ? y : height / 2,
     ];
   };
+}
+
+// ── Satellite base: Web-Mercator helpers (match Mapbox Static tile exactly) ──
+const TILE = 512;
+
+function lngLatToWorld(lng: number, lat: number, zoom: number): [number, number] {
+  const worldSize = TILE * Math.pow(2, zoom);
+  const x = ((lng + 180) / 360) * worldSize;
+  const sinLat = Math.min(Math.max(Math.sin((lat * Math.PI) / 180), -0.9999), 0.9999);
+  const y = (0.5 - Math.log((1 + sinLat) / (1 - sinLat)) / (4 * Math.PI)) * worldSize;
+  return [x, y];
+}
+
+// Fractional zoom so the bbox fits inside (imgW x imgH) logical px, with breathing room.
+function fitZoom(
+  bounds: ReturnType<typeof getBounds>,
+  imgW: number,
+  imgH: number,
+  padFrac = 0.88,
+): { zoom: number; centerLng: number; centerLat: number } {
+  const centerLng = (bounds.minX + bounds.maxX) / 2;
+  const centerLat = (bounds.minY + bounds.maxY) / 2;
+  const [x1, y1] = lngLatToWorld(bounds.minX, bounds.maxY, 0); // top-left
+  const [x2, y2] = lngLatToWorld(bounds.maxX, bounds.minY, 0); // bottom-right
+  const spanX = Math.max(Math.abs(x2 - x1), 1e-9);
+  const spanY = Math.max(Math.abs(y2 - y1), 1e-9);
+  const zoomX = Math.log2((imgW * padFrac) / spanX);
+  const zoomY = Math.log2((imgH * padFrac) / spanY);
+  let zoom = Math.min(zoomX, zoomY);
+  zoom = Math.max(1, Math.min(zoom, 19.5)); // clamp into a sane satellite range
+  return { zoom, centerLng, centerLat };
+}
+
+// Static Images API URL (center+zoom, satellite, no labels), logical px (<=1280), @2x.
+function buildSatelliteUrl(
+  centerLng: number,
+  centerLat: number,
+  zoom: number,
+  imgW: number,
+  imgH: number,
+  token: string,
+): string {
+  const w = Math.min(Math.round(imgW), 1280);
+  const h = Math.min(Math.round(imgH), 1280);
+  return (
+    `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/` +
+    `${centerLng.toFixed(6)},${centerLat.toFixed(6)},${zoom.toFixed(4)},0,0/` +
+    `${w}x${h}@2x?access_token=${encodeURIComponent(token)}&attribution=false&logo=false`
+  );
+}
+
+// Projector that lines up exactly with the static tile (center-relative Mercator).
+function makeMercatorProjector(
+  centerLng: number,
+  centerLat: number,
+  zoom: number,
+  imgW: number,
+  imgH: number,
+  originX: number,
+  originY: number,
+) {
+  const [cx, cy] = lngLatToWorld(centerLng, centerLat, zoom);
+  return (coord: Position): readonly [number, number] => {
+    const [wx, wy] = lngLatToWorld(coord[0], coord[1], zoom);
+    const x = originX + imgW / 2 + (wx - cx);
+    const y = originY + imgH / 2 + (wy - cy);
+    return [
+      Number.isFinite(x) ? x : originX + imgW / 2,
+      Number.isFinite(y) ? y : originY + imgH / 2,
+    ];
+  };
+}
+
+async function fetchImageAsDataUrl(url: string): Promise<string> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Mapbox static ${res.status}`);
+  const blob = await res.blob();
+  return await new Promise<string>((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onloadend = () => resolve(fr.result as string);
+    fr.onerror = () => reject(new Error('Could not read satellite image.'));
+    fr.readAsDataURL(blob);
+  });
+}
+
+// SHARED fit — called identically by the parent (to fetch) and GeometryPreview (to
+// project), so the overlay can never drift from the photo. Mirrors the preview's
+// visibleLayers/bounds/mapAreaW derivation.
+function computeSatFit(layers: DesignLayer[], mapView: MapView) {
+  const SVG_W = 960;
+  const SVG_H = 640;
+  const RAIL_W = 220;
+  const mapAreaW = mapView === 'design' ? SVG_W - RAIL_W - 16 : SVG_W;
+  const drawable = layers.filter((l) => l.approved);
+  const visible = drawable.length ? drawable : layers;
+  const bounds = getBounds(visible);
+  const imgX = 20;
+  const imgY = 20;
+  const imgW = mapAreaW - 40;
+  const imgH = SVG_H - 40;
+  const useSatellite =
+    mapView === 'design' &&
+    !!MAPBOX_TOKEN &&
+    visible.length > 0 &&
+    Number.isFinite(bounds.minX) &&
+    bounds.maxX - bounds.minX > 0 &&
+    bounds.maxY - bounds.minY > 0;
+  const fit = fitZoom(bounds, imgW, imgH);
+  const url = useSatellite
+    ? buildSatelliteUrl(fit.centerLng, fit.centerLat, fit.zoom, imgW, imgH, MAPBOX_TOKEN)
+    : '';
+  return { useSatellite, fit, imgX, imgY, imgW, imgH, url };
 }
 
 function ringToPath(
@@ -636,6 +750,7 @@ function GeometryPreview({
   mapView,
   showFill,
   aiPlan,
+  satDataUrl,
 }: {
   layers: DesignLayer[];
   title: string;
@@ -645,6 +760,7 @@ function GeometryPreview({
   mapView: MapView;
   showFill: boolean;
   aiPlan: DesignPlanAI | null;
+  satDataUrl: string | null;
 }) {
   const SVG_W = 960;
   const SVG_H = 640;
@@ -657,7 +773,23 @@ function GeometryPreview({
   const visibleLayers = drawableLayers.length ? drawableLayers : layers;
   const bounds = getBounds(visibleLayers);
   const PAD = 68;
-  const project = makeProjector(bounds, mapAreaW, SVG_H, PAD);
+
+  // Satellite base: when the photo has loaded, project with the matching Mercator
+  // transform so traced geometry registers pixel-perfect on the imagery. Otherwise
+  // fall back to the parchment projector (no token / load failed / not design view).
+  const sat = computeSatFit(layers, mapView);
+  const showSat = sat.useSatellite && !!satDataUrl;
+  const project = showSat
+    ? makeMercatorProjector(
+        sat.fit.centerLng,
+        sat.fit.centerLat,
+        sat.fit.zoom,
+        sat.imgW,
+        sat.imgH,
+        sat.imgX,
+        sat.imgY,
+      )
+    : makeProjector(bounds, mapAreaW, SVG_H, PAD);
 
   // Boundary centroid (pixel)
   const boundary = visibleLayers.find((l) => l.layerType === 'property_boundary') ?? visibleLayers[0];
@@ -687,7 +819,9 @@ function GeometryPreview({
   const renderW = mapAreaW - PAD * 2;
   const renderH = SVG_H - PAD * 2;
   const mapPixelWidth = Math.min(renderW, renderH * (dx / dy));
-  const metersPerPixel = (lonSpanDeg * metersPerDegreeLon(midLatDeg)) / mapPixelWidth;
+  const metersPerPixel = showSat
+    ? (156543.03392 * Math.cos((sat.fit.centerLat * Math.PI) / 180)) / Math.pow(2, sat.fit.zoom)
+    : (lonSpanDeg * metersPerDegreeLon(midLatDeg)) / mapPixelWidth;
   const scaleBarRawM = mapPixelWidth * metersPerPixel * 0.28;
   const scaleBarM = visibleLayers.length ? niceScaleMetres(scaleBarRawM) : 50;
   const scaleBarPx = scaleBarM / metersPerPixel;
@@ -962,6 +1096,12 @@ function GeometryPreview({
             <path d={boundaryPathForClip} />
           </clipPath>
         )}
+        {/* Rounded-rect clip so the satellite photo keeps the parchment's soft corners */}
+        {showSat && (
+          <clipPath id="design-photo-clip">
+            <rect x={sat.imgX} y={sat.imgY} width={sat.imgW} height={sat.imgH} rx="18" />
+          </clipPath>
+        )}
       </defs>
 
       {/* ── BACKGROUND ────────────────────────────────────────────────────── */}
@@ -975,28 +1115,61 @@ function GeometryPreview({
         stroke="#D4C4A0"
         strokeWidth="1.5"
       />
-      {/* Very subtle contour lines */}
-      <g opacity="0.28">
-        {Array.from({ length: 7 }).map((_, i) => (
-          <path
-            key={i}
-            d={`M ${62 + i * 130} ${SVG_H - 30} C ${80 + i * 110} ${SVG_H * 0.65}, ${90 + i * 100} ${SVG_H * 0.38}, ${220 + i * 90} 54`}
-            fill="none"
-            stroke="#CEBF96"
-            strokeWidth="1.8"
+      {/* ── SATELLITE BASE (design view, when loaded) ───────────────────────── */}
+      {showSat && satDataUrl && (
+        <g clipPath="url(#design-photo-clip)">
+          <image
+            href={satDataUrl}
+            x={sat.imgX}
+            y={sat.imgY}
+            width={sat.imgW}
+            height={sat.imgH}
+            preserveAspectRatio="xMidYMid slice"
           />
-        ))}
-      </g>
+          {/* Gentle darken so light strokes & labels read over bright soil/sky */}
+          <rect
+            x={sat.imgX}
+            y={sat.imgY}
+            width={sat.imgW}
+            height={sat.imgH}
+            fill="#0B1A0B"
+            opacity="0.16"
+          />
+        </g>
+      )}
+      {/* Very subtle contour lines (parchment fallback only — hidden over photo) */}
+      {!showSat && (
+        <g opacity="0.28">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <path
+              key={i}
+              d={`M ${62 + i * 130} ${SVG_H - 30} C ${80 + i * 110} ${SVG_H * 0.65}, ${90 + i * 100} ${SVG_H * 0.38}, ${220 + i * 90} 54`}
+              fill="none"
+              stroke="#CEBF96"
+              strokeWidth="1.8"
+            />
+          ))}
+        </g>
+      )}
 
       {/* ── TITLE BLOCK ───────────────────────────────────────────────────── */}
+      {/* Over the photo, sit the title on a translucent dark card (like a real plan) */}
+      {showSat && (
+        <rect
+          x="40" y="40"
+          width={Math.min(Math.max(title.length * 15 + 44, 240), mapAreaW - 80)}
+          height="62" rx="14"
+          fill="rgba(11,18,11,0.60)"
+        />
+      )}
       {/* Title bar rule */}
-      <line x1="48" y1="96" x2={mapAreaW - 48} y2="96" stroke="#C4B48C" strokeWidth="1" />
+      <line x1="48" y1="96" x2={mapAreaW - 48} y2="96" stroke={showSat ? 'rgba(255,255,255,0.22)' : '#C4B48C'} strokeWidth="1" />
       <text
         x="52" y="66"
         fontFamily="Georgia, 'Times New Roman', serif"
         fontWeight="800"
         fontSize="28"
-        fill="#20190F"
+        fill={showSat ? '#FFFFFF' : '#20190F'}
       >
         {title}
       </text>
@@ -1004,7 +1177,7 @@ function GeometryPreview({
         x="52" y="87"
         fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif"
         fontSize="12"
-        fill="#7B6A52"
+        fill={showSat ? '#D9E8C9' : '#7B6A52'}
         letterSpacing="0.04em"
       >
         Permaculture Design Map · {VIEW_LABELS[mapView]}
@@ -1642,7 +1815,31 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [exporting, setExporting] = useState<'png' | 'pdf' | ''>('');
   const [mapView, setMapView] = useState<MapView>('design');
   const [showFill, setShowFill] = useState(false);
+  const [satDataUrl, setSatDataUrl] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+
+  // Fetch the Mapbox satellite tile for the design view and inline it as a base64
+  // data URL (so PNG/PDF export stays taint-free). Uses the SAME computeSatFit as
+  // GeometryPreview, so the photo and the overlay projector can never drift.
+  const satFit = computeSatFit(studio.layers, mapView);
+  const satKey = satFit.useSatellite ? satFit.url : '';
+  useEffect(() => {
+    if (!satKey) {
+      setSatDataUrl(null);
+      return;
+    }
+    let cancelled = false;
+    fetchImageAsDataUrl(satKey)
+      .then((d) => {
+        if (!cancelled) setSatDataUrl(d);
+      })
+      .catch(() => {
+        if (!cancelled) setSatDataUrl(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [satKey]);
 
   useEffect(() => {
     const refresh = () => {
@@ -2243,6 +2440,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           mapView={mapView}
           showFill={showFill}
           aiPlan={aiPlan}
+          satDataUrl={satDataUrl}
         />
 
         {/* ── EXPORT BUTTONS ──────────────────────────────────────────────── */}
