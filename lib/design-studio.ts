@@ -192,15 +192,32 @@ function featureId(feature: Feature, index: number, areaM2: number): string {
 function classifyFeature(feature: Feature, index: number, largestLandIndex: number): DesignLayerType {
   const props = (feature.properties ?? {}) as Record<string, unknown>;
   const featureType = props.featureType === 'water' ? 'water' : props.featureType === 'site' ? 'site' : 'unknown';
-  const text = `${String(props.name ?? '')} ${String(props.category ?? '')}`.toLowerCase();
+  const rawName = String(props.name ?? '');
+  const rawCat  = String(props.category ?? '');
+  const text = `${rawName} ${rawCat}`.toLowerCase().trim();
 
+  // Water polygons are always water — check this before any text rules
   if (featureType === 'water') return 'water_body';
-  if (/(roof|catchment|house roof|main roof)/.test(text)) return 'roof';
-  if (/(drive|access|road|track|path|gate|entrance)/.test(text)) return 'access';
-  if (/(house|home|shed|barn|building|structure|dwelling)/.test(text)) return 'structure';
-  if (/(tree|orchard|forest|wood|windbreak|hedge|shelter)/.test(text)) return 'tree_belt';
-  if (/(veg|vegetable|garden|bed|crop|field|food|market)/.test(text)) return 'cultivation';
-  if (featureType === 'site' && index === largestLandIndex) return 'property_boundary';
+
+  // ---- Named-keyword rules (high specificity first) ----
+  // Roof/catchment: must include an explicit roof/house/home/dwelling/structure keyword
+  if (/(^|\s|\/)(roof|house roof|main roof|catchment)(\s|\/|$)/.test(text)) return 'roof';
+  // Access / roads / paths
+  if (/(drive|access road|access track|access path|driveway|road|track|path|gate|entrance)/.test(text)) return 'access';
+  // Roof-like structures (house, home, dwelling, shed, barn, building) — named shapes only
+  if (text && /(^|\s)(house|home|dwelling|structure|shed|barn|building|main building|farmhouse)(\s|$)/.test(text)) return 'roof';
+  // Tree belts / shelter / windbreaks
+  if (/(tree belt|shelter belt|windbreak|wind break|hedge|hedgerow|orchard|food forest|woodlot|woodland|forest|trees|belt)/.test(text)) return 'tree_belt';
+  // Cultivation / gardens / beds / crops / fields
+  if (/(veg|vegetable|garden|bed|crop|field|food garden|market garden|pasture|paddock|nursery|polyculture)/.test(text)) return 'cultivation';
+  // Water body named explicitly
+  if (/(dam|pond|swale|tank|reservoir|wetland|vlei|stream|river|canal|irrigation)/.test(text)) return 'water_body';
+
+  // ---- Boundary: the LARGEST non-water land polygon that is not a small named structure ----
+  // Exclude shapes that are almost certainly a structure (small area) even without a keyword name
+  if (index === largestLandIndex) return 'property_boundary';
+
+  // Unnamed or unrecognised site polygon → default to cultivation
   if (featureType === 'site') return 'cultivation';
   return 'unknown';
 }
@@ -531,6 +548,57 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     commercialNote,
   ].filter(Boolean);
 
+  // ---------------------------------------------------------------------------
+  // Derived area labels for richer text
+  // ---------------------------------------------------------------------------
+  const boundaryAreaLabel = boundary ? ` (${formatDesignArea(boundary.areaM2)})` : '';
+  const cultivationTotalM2 = cultivation.reduce((s, l) => s + l.areaM2, 0);
+  const cultivationAreaLabel = cultivationTotalM2 > 0 ? ` (${formatDesignArea(cultivationTotalM2)} total)` : '';
+  const treeBeltTotalM2 = treeBelts.reduce((s, l) => s + l.areaM2, 0);
+  const treeBeltAreaLabel = treeBeltTotalM2 > 0 ? ` (${formatDesignArea(treeBeltTotalM2)})` : '';
+
+  // Biome-specific advice
+  const biomeAdvice: Record<string, string> = {
+    'Fynbos': 'Fynbos soils are naturally low in nutrients — avoid heavy manuring; rather mulch with local leaf litter and let the soil biology do the work.',
+    'Succulent Karoo': 'Water is the main constraint here. Every litre harvested and stored buys you another season of production.',
+    'Nama-Karoo': 'This semi-arid biome demands water-first design — swales, shade, and mulch are non-negotiable before planting intensively.',
+    'Grassland': 'Grassland soils can be very productive once you add organic matter. Focus on cover crops and compost to build the topsoil layer.',
+    'Savanna': 'Fire risk is real — keep Zone 1 beds moist and clear of dry mulch near structures during dry season.',
+    'Albany Thicket': 'This biome recovers slowly from disturbance. Protect existing thicket patches and work with them as windbreaks and habitat.',
+    'Indian Ocean Coastal Belt': 'High humidity can drive fungal disease — space plants well, prioritise airflow, and avoid overhead irrigation.',
+    'Forest': 'Use forest edges as productive shelter — shade-tolerant crops (taro, ginger, leafy greens) thrive here year-round.',
+  };
+  const biomeSpecificNote = biome ? (biomeAdvice[biome] ?? `This site is in the ${biome} biome — adapt planting to local rainfall and soil.`) : '';
+
+  // Wind protection priority
+  const windProtectionNote = (summerWind && winterWind && summerWind !== winterWind)
+    ? `Wind shifts between seasons: it comes from the ${summerWind} in summer and the ${winterWind} in winter. You need shelter on both those sides — a mix of deciduous and evergreen trees gives year-round cover.`
+    : (summerWind || winterWind)
+      ? `Prevailing wind is from the ${summerWind ?? winterWind}. Plant a tree belt or dense hedge on that side to cut wind speed and reduce moisture loss from beds by 30–50%.`
+      : 'No wind direction data yet — walk the site on a windy day and note which side the grasses lean toward; that is the side to shelter first.';
+
+  // Slope-driven water movement
+  const slopeText = slope != null
+    ? slope < 1
+      ? `The slope is nearly flat (${slope.toFixed(1)}°) — water sits rather than runs. Focus on drainage channels and raised beds to prevent waterlogging.`
+      : slope < 5
+        ? `A gentle slope of ${slope.toFixed(1)}° means water moves slowly. A few on-contour swales will capture most of the runoff before it leaves.`
+        : slope < 15
+          ? `The slope is ${slope.toFixed(1)}° — significant runoff potential. Contour swales every 10–20 m across the slope will slow and sink rain into the soil.`
+          : `The slope is steep at ${slope.toFixed(1)}°. Prioritise erosion control: grass cover, stone lines on contour, and terraced beds before anything else.`
+    : 'Measure the slope after rain — follow the water and note where it speeds up; that is where you need a barrier first.';
+
+  // Aspect-driven sun advice
+  const aspectLabel = locationData?.elevation?.aspectLabel;
+  const aspectNote = aspectLabel
+    ? `Slope faces ${aspectLabel} — ${
+        /north/i.test(aspectLabel) ? 'maximum sun exposure in winter, ideal for beds and warm-season crops.' :
+        /south/i.test(aspectLabel) ? 'less direct sun; favour shade-tolerant crops and use north-facing raised beds where possible.' :
+        /east/i.test(aspectLabel) ? 'morning sun, afternoon shade — good for leafy greens and reduces afternoon heat stress.' :
+        'afternoon sun — use shade cloth in summer and keep water-hungry crops on the eastern side.'
+      }`
+    : '';
+
   return {
     id: `plan-${Date.now()}`,
     generatedAt: new Date().toISOString(),
@@ -539,150 +607,256 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     lockedLayerIds: locked.map((layer) => layer.id),
     sectorMap: [
       {
-        title: 'Sun sector',
+        title: 'Sun and temperature',
         body: [
-          'In the Southern Hemisphere, the best winter sun comes from the north — keep that side of productive beds and structures open.',
+          'In the Southern Hemisphere, the best winter sun comes from the north.',
+          boundary
+            ? `Keep the northern side of ${boundary.name}${boundaryAreaLabel} open — no tall structures or dense trees between your beds and the northern sky.`
+            : 'Keep the northern side of the property open for winter sun.',
+          aspectNote,
           frostNote,
           elevationNote,
+          biomeSpecificNote,
           practiceNote,
         ].filter(Boolean).join(' '),
         layerIds: roof.map((layer) => layer.id),
       },
       {
-        title: 'Wind sector',
+        title: 'Wind and shelter',
         body: [
-          `Use trees, hedges, or robust crops as wind filters.`,
-          (summerWind || winterWind)
-            ? `Summer wind from ${summerWind ?? 'unknown'}, winter wind from ${winterWind ?? 'unknown'} — shelter plantings on those sides protect your beds and reduce water loss.`
+          windProtectionNote,
+          treeBelts.length
+            ? `You have ${treeBelts.length} tree/shelter layer${treeBelts.length > 1 ? 's' : ''} mapped${treeBeltAreaLabel}: ${layerList(treeBelts, '')}. Confirm they are on the windward side and fill any gaps.`
+            : 'No tree belts mapped yet — even a double row of fast-growing indigenous trees (buffalo thorn, fever tree, wild olive) reduces wind damage within 2–3 seasons.',
+          annualRainfall != null
+            ? `At ${Math.round(annualRainfall)} mm/year${drySeason ? `, dry season ${drySeason}` : ''}, wind-driven moisture loss is a real yield killer — shelter pays for itself.`
             : '',
-          biome ? `This site sits in the ${biome} biome.` : '',
         ].filter(Boolean).join(' '),
         layerIds: treeBelts.map((layer) => layer.id),
       },
       {
-        title: 'Fire and access sector',
+        title: 'Water flow and slope',
         body: [
-          `Keep access clear around ${layerList(access, 'the entrance and paths')} so water, people, and tools can move quickly.`,
+          slopeText,
+          'Walk the site after rain to see where water flows and pools — that ground survey beats any map.',
           fencingNote,
           livestockNote,
+        ].filter(Boolean).join(' '),
+        layerIds: boundary ? [boundary.id, ...access.map((l) => l.id)] : access.map((l) => l.id),
+      },
+      {
+        title: 'Fire and access',
+        body: [
+          `Keep ${layerList(access, 'your entrance and main paths')} wide enough for a vehicle — this is your fire break and your supply route.`,
+          biome === 'Savanna' || biome === 'Grassland'
+            ? 'Clear dry grass to 3 m on each side of the access route before fire season every year.'
+            : '',
+          infraNote,
         ].filter(Boolean).join(' '),
         layerIds: access.map((layer) => layer.id),
       },
     ],
     zoneMap: [
       {
-        title: 'Zone 0 / daily base',
+        title: 'Zone 0 — your home base',
         body: [
-          `Anchor daily activity around ${layerList(roof, 'the home, shed, or main working point')}.`,
+          roof.length
+            ? `Zone 0 is centred on ${layerList(roof, 'the main structure')} — this is where tools, seeds, and energy radiate out from.`
+            : 'Mark your main structure or working point on the map as Zone 0 — it is the anchor for all other zones.',
+          'Everything within 10–15 steps of the kitchen door should be Zone 1 — the highest-care food production area.',
           infraNote,
+          surveyOtherInfra.includes('shed') ? 'Shed noted — use it as a dry store for seeds, tools, and dried herbs close to the working zone.' : '',
         ].filter(Boolean).join(' '),
         layerIds: roof.map((layer) => layer.id),
       },
       {
-        title: 'Zone 1 / high-care food',
+        title: 'Zone 1 — daily food production',
         body: [
-          `Put herbs, seedlings, salad beds, compost, and daily watering near ${layerList(roof.length ? roof : cultivation, 'the easiest-to-reach cultivation area')}.`,
+          cultivation.length
+            ? `Zone 1 covers ${layerList(cultivation, 'your mapped cultivation areas')}${cultivationAreaLabel} — the beds you visit every day for watering, harvesting, and care.`
+            : 'No cultivation areas mapped yet — start small: 4 to 6 raised beds within easy reach of the kitchen.',
           cropsNote,
           soilNotes.length ? `Soil notes: ${soilNotes.join('; ')}.` : '',
+          soilCondition === 'compacted' ? 'Compacted soil in Zone 1 — break it up with a fork, add compost, and mulch before planting.' : '',
+          soilCondition === 'sandy' ? 'Sandy soil loses nutrients and water fast — add compost generously and mulch 10 cm deep.' : '',
+          'Priority crops for Zone 1: leafy greens, herbs, tomatoes, chillies, and beans — all high-value, low-space, frequent-harvest.',
         ].filter(Boolean).join(' '),
         layerIds: [...roof, ...cultivation].map((layer) => layer.id),
       },
       {
-        title: 'Zone 2 / stable production',
+        title: 'Zone 2 — main seasonal production',
         body: [
-          `Use ${layerList(cultivation, 'mapped crop areas')} for main vegetables, perennial beds, and seasonal rotations.`,
+          cultivation.length
+            ? `Zone 2 uses the outer parts of ${layerList(cultivation, 'your cultivation areas')} for main-crop rotations, squash, sweet potato, maize, and longer-season vegetables.`
+            : 'Zone 2 is the mid-distance growing area — plan paths between beds so you can reach everything without stepping on soil.',
           gardenIrrigNote,
-          survey?.isCommercial ? 'Plan for consistent, market-sized yields from Zone 2 beds.' : '',
+          survey?.isCommercial
+            ? `Commercial focus: Zone 2 is where consistent, market-volume yields come from. Plan succession planting so you always have a crop ready. ${goalNote}`
+            : goalNote,
+          surveyLivestock.includes('chickens') ? 'Rotate chickens through fallow Zone 2 beds between seasons — they scratch, fertilise, and control pests in one pass.' : '',
         ].filter(Boolean).join(' '),
         layerIds: cultivation.map((layer) => layer.id),
       },
       {
-        title: 'Zone 3 / low-maintenance support',
+        title: 'Zone 3 — low-maintenance and support',
         body: [
-          `Use ${layerList(treeBelts, 'outer edges and less visited areas')} for shelter, mulch plants, fruit trees, and biodiversity.`,
-          surveyLivestock.includes('chickens') ? 'Chickens can range here for pest control — rotate access with temporary fencing.' : '',
-          surveyLivestock.includes('goats') || surveyLivestock.includes('cattle') ? 'Large livestock should stay out of planted areas — build a kraal on the boundary and use manure as a resource.' : '',
+          treeBelts.length
+            ? `Zone 3 includes ${layerList(treeBelts, 'the outer/boundary areas')}${treeBeltAreaLabel} — planted for shelter, mulch material, nitrogen fixation, and wildlife habitat.`
+            : `Zone 3 covers the outer edges of the property${boundaryAreaLabel} — this is where you plant for the long term: nitrogen-fixing trees, fruit trees, hedge species, and fodder crops that look after themselves once established.`,
+          surveyCrops.includes('fruit-trees') ? 'Fruit trees already growing — these are your Zone 3 backbone. Under-plant with comfrey, nasturtium, and other dynamic accumulators.' : 'Good Zone 3 trees for SA: wild fig, buffalo thorn, wattle (for mulch), moringa, and indigenous fruit trees.',
+          surveyLivestock.includes('goats') || surveyLivestock.includes('cattle')
+            ? 'Large livestock need to stay out of planted Zone 1 and 2 — build a kraal at the Zone 3/4 boundary and bring manure to the beds instead.'
+            : '',
+          surveyLivestock.includes('bees') ? 'Beehives belong in Zone 3 — away from daily foot traffic but close enough to benefit from Zone 1 and 2 flowers.' : '',
         ].filter(Boolean).join(' '),
         layerIds: treeBelts.map((layer) => layer.id),
+      },
+      {
+        title: 'Zone 4/5 — boundary and wild margin',
+        body: [
+          boundary
+            ? `The property boundary${boundaryAreaLabel} defines your outer limit. Use the margin inside the fence for pioneer species, fodder, and wildlife corridors.`
+            : 'Map your full property boundary to understand how much space is available for outer zones.',
+          'Leave at least a 3–5 m wild strip inside the boundary fence — it reduces wind speed, provides habitat for beneficial insects, and stops erosion at the edge.',
+          surveyLivestock.includes('cattle') ? 'Keep cattle in Zone 4/5 on rotational grazing. Move them before they overgraze and let pasture recover fully.' : '',
+        ].filter(Boolean).join(' '),
+        layerIds: boundary ? [boundary.id] : [],
       },
     ],
     waterMap: [
       {
-        title: 'Household water need',
-        body: [householdNeedNote, waterSourceNote, waterStorageNote].filter(Boolean).join(' '),
+        title: 'How much water does this place need?',
+        body: [
+          householdNeedNote,
+          waterSourceNote,
+          waterStorageNote,
+          annualRainfall != null
+            ? `Annual rainfall here: ${rainfallDesc}. ${
+                annualRainfall < 300
+                  ? 'Below 300 mm/year — this is serious water stress territory. Every drop must be caught, stored, and used twice.'
+                  : annualRainfall < 600
+                    ? 'Between 300–600 mm/year — water is the main limiting factor. Fill tanks from every roof and harvest every drop of rain that falls on site.'
+                    : annualRainfall < 900
+                      ? 'Between 600–900 mm/year — enough to grow well with good water management. Focus on eliminating runoff.'
+                      : 'Above 900 mm/year — good rainfall, but it often arrives unevenly. Store the surplus from wet season to carry through the dry.'
+              }`
+            : 'Reload location data to get rainfall figures.',
+          drySeason ? `Dry season (${drySeason}) is the critical period — plan storage and irrigation to cover these months without relying on rain.` : '',
+        ].filter(Boolean).join(' '),
         layerIds: water.map((layer) => layer.id),
       },
       {
-        title: 'Catch and store from roofs',
+        title: 'Roof harvest potential',
         body: [
           annualRainfall != null
             ? `Rainfall at this site: ${rainfallDesc}.`
             : 'Reload location data to get rainfall figures.',
           roofHarvestNote ?? '',
-          hasGutters ? 'Gutters are already in place — maintain clean downpipes and first-flush diverters.' : 'No gutters recorded yet — fitting gutters and connecting them to a tank is the highest-return water upgrade on most homesteads.',
+          waterCalc.roofHarvestAnnualKL != null
+            ? `To store a 90-day household buffer (${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL), you need tanks sized to that volume minimum. A 5 000 L JoJo tank costs roughly R2 000–R3 500 — compare that to what you currently pay for water or trucking.`
+            : '',
+          hasGutters
+            ? 'Gutters in place — make sure each downpipe has a first-flush diverter (cheap to build) to keep the tank clean.'
+            : 'No gutters yet — a simple IBR roof with 100 mm gutters and a downpipe to a JoJo is a weekend project that pays back for decades.',
         ].filter(Boolean).join(' '),
         layerIds: roof.map((layer) => layer.id),
       },
       {
-        title: 'Slow and spread on the land',
+        title: 'Slow, sink, and spread rainfall',
         body: [
-          slope != null
-            ? `The mapped slope is about ${slope.toFixed(1)} degrees.`
-            : 'Confirm the slope on the ground.',
-          'Walk the site after rain to see where water flows and pools, then dig swales, berms, or simple trenches across the slope to slow runoff before it leaves the boundary.',
-          soilCondition === 'compacted' ? 'Compacted soil sheds water fast — deep fork or subsoil before planting and add mulch to restore absorption.' : '',
-          soilCondition === 'sandy' ? 'Sandy soil drains fast — prioritise mulch, hugelkultur beds, and shade to hold moisture.' : '',
-          soilCondition === 'clay' ? 'Clay soil holds water but can waterlog — raised beds and deep-rooted plants help structure it over time.' : '',
+          slopeText,
+          slope != null && slope > 1
+            ? `Dig on-contour swales ${slope < 5 ? '20–30 m' : '10–15 m'} apart across the slope. Pile the soil on the downhill side as a berm and plant it with nitrogen-fixing shrubs.`
+            : 'Even on flat land, slight depressions and mulched basins around trees slow water down long enough for it to sink in.',
+          soilCondition === 'compacted' ? 'Compacted soil sheds water like a roof — break the hardpan with a subsoiler or deep-forked swale trenches before you expect water to sink in.' : '',
+          soilCondition === 'sandy' ? 'Sandy soil drains too fast — hugelkultur beds (buried logs) act as underground sponges and slow drainage significantly.' : '',
+          soilCondition === 'clay' ? 'Clay is slow to absorb but holds water once it does — keep it covered with mulch to prevent surface sealing after heavy rain.' : '',
+          'After every rain event, walk the boundary and note where water exits the property — that is your first swale location.',
         ].filter(Boolean).join(' '),
         layerIds: boundary ? [boundary.id] : [],
       },
       {
         title: 'Existing water features',
-        body: water.length
-          ? `Design around ${layerList(water, 'existing water bodies')} — record volume and surface area in reports to track changes season to season.`
-          : 'No water bodies mapped yet. Add dams, ponds, tanks, or seasonal wet patches to improve the water movement picture.',
+        body: [
+          water.length
+            ? `${layerList(water, 'Existing water bodies')} are mapped on site. Record their water level at the start and end of each dry season to track how your land is changing over time.`
+            : 'No water bodies mapped yet. Even a simple earth dam or pond stores water between rain events and raises the local water table under the surrounding land.',
+          water.length && surveyWaterSources.length
+            ? `Water sources available (from survey): ${surveyWaterSources.join(', ')}. Cross-check with what you see on the map.`
+            : '',
+          surveyChallenges.includes('flooding') ? 'Flooding listed as a challenge — map where water pools and consider converting those low spots into productive dams or wetland gardens rather than fighting the water.' : '',
+        ].filter(Boolean).join(' '),
         layerIds: water.map((layer) => layer.id),
       },
     ],
     opportunityMap: [
       {
-        title: 'Compost and nursery',
+        title: 'Highest-return first moves',
         body: [
-          'Place compost bays, seedling work, and tool storage close to Zone 1 so daily care stays easy.',
-          surveyOtherInfra.includes('compost-bay') ? 'Compost bay already noted — keep it within 20–30 steps of the main beds.' : 'Build at least two compost bays so one always has finished compost while the other fills.',
-          survey?.isCommercial && !surveyOtherInfra.includes('shade-tunnel') ? 'A shade tunnel or simple polypipe tunnel house for seedling production pays back quickly if you are selling.' : '',
+          'The sequence that works on almost every SA smallholding: (1) fix the water system, (2) fence a small intensive Zone 1, (3) build soil with compost, then (4) expand planting. Skipping steps wastes effort.',
+          waterCalc.roofHarvestAnnualKL != null
+            ? `Your roof can catch ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year — if you only do one thing this season, connect gutters to a tank.`
+            : 'Start with water: map your roof area in the site survey to see what harvest is possible before buying any tanks.',
+          goalNote,
+          commercialNote,
         ].filter(Boolean).join(' '),
         layerIds: [...roof, ...cultivation].map((layer) => layer.id),
       },
       {
-        title: 'Food forest edge',
+        title: 'Compost and soil building',
         body: [
-          'Use boundary edges and lower-care corners for a layered food forest — tall fruit trees, mid-layer shrubs, and ground-cover herbs and vegetables.',
-          'Pollinator plants on the edges improve vegetable yields in Zone 1 and 2.',
-          surveyCrops.includes('fruit-trees') ? 'Fruit trees already growing — plan for succession planting so you always have trees at different stages.' : '',
+          surveyOtherInfra.includes('compost-bay')
+            ? 'Compost bay already in place — aim for two bays so you always have one filling and one finishing. Turn every 2–3 weeks for fast results.'
+            : 'Build two compost bays from pallets or wire mesh within 30 steps of Zone 1. Fill with kitchen scraps, green garden waste, dry stalks, and livestock manure in layers.',
+          cultivation.length
+            ? `With ${formatDesignArea(cultivationTotalM2)} of beds, you need roughly ${Math.round(cultivationTotalM2 * 0.05)} m³ of compost per season (5 cm top-dress). Two standard 1 m³ bays running continuously can supply that.`
+            : 'Even a single 1 m³ compost heap cycling kitchen scraps and garden waste builds soil faster than any bought fertiliser.',
+          soilNotes.length ? `Current soil notes: ${soilNotes.join('; ')}.` : '',
+          survey?.isCommercial && !surveyOtherInfra.includes('shade-tunnel') ? 'Selling produce? A simple polypipe tunnel house (R3 000–R8 000 DIY) extends the season and doubles seedling production capacity.' : '',
         ].filter(Boolean).join(' '),
-        layerIds: boundary ? [boundary.id, ...treeBelts.map((layer) => layer.id)] : treeBelts.map((layer) => layer.id),
+        layerIds: [...roof, ...cultivation].map((layer) => layer.id),
       },
       {
-        title: 'Water-first upgrades',
+        title: 'Food forest and orchard',
         body: [
-          'Before decorative planting, finish the water system: gutters → tank → overflow path → swale → mulch basin.',
+          boundary
+            ? `The boundary margin of ${boundary.name}${boundaryAreaLabel} is ideal for a layered food forest — tall canopy fruit trees (mango, pecan, avocado by biome), mid-layer guava, pomegranate, lemon, and groundcover of comfrey, sweet potato, and herbs.`
+            : 'Use the outer edges of the property for long-term food tree planting — they take years to mature but need very little attention once established.',
+          'A 10 m × 10 m food forest patch — once established — can supply fruit, firewood, mulch material, and habitat for beneficial insects with almost no ongoing labour.',
+          surveyCrops.includes('fruit-trees')
+            ? 'Fruit trees already on site — plan succession so you always have trees at 1, 3, 5, and 10+ years of age. Mark them on the map and track yields.'
+            : biome && /Savanna|Grassland|Natal|Limpopo/i.test(biome)
+              ? 'Good trees for this biome: marula, wild fig, natal plum, buffalo thorn, moringa, and fever tree for the outer zone.'
+              : 'Talk to a local nursery about which indigenous fruit trees succeed in your specific district — local provenance stock always outperforms exotic transplants.',
+          'Pollinator strips (sunflower, borage, phacelia, indigenous wildflowers) along Zone 2 edges improve vegetable yields by 20–30% without any other change.',
+        ].filter(Boolean).join(' '),
+        layerIds: boundary ? [boundary.id, ...treeBelts.map((l) => l.id)] : treeBelts.map((l) => l.id),
+      },
+      {
+        title: 'Water infrastructure upgrades',
+        body: [
           waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
-            ? `Your roof can harvest ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year; the 90-day household buffer is ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL — size your tank storage to cover the gap.`
-            : 'Complete the roof harvest estimate in the site survey to size your tank correctly.',
-          surveyChallenges.includes('drought') ? 'Drought is a listed challenge — shade cloth, thick mulch, and buried drip irrigation are the most reliable dry-season tools.' : '',
-          surveyChallenges.includes('flooding') ? 'Flooding is a listed challenge — swales and raised beds keep crops producing when the land is wet.' : '',
+            ? `Tank sizing guide: roof harvest ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
+            : 'Complete the roof harvest estimate in the site survey to size your tanks correctly.',
+          waterCalc.gardenIrrigationDrySeasonDailyLitres != null
+            ? `Dry-season garden irrigation for ${formatDesignArea(cultivationTotalM2)}: roughly ${waterCalc.gardenIrrigationDrySeasonDailyLitres.toLocaleString()} L/day. Drip irrigation reduces this by 40–60% versus overhead watering.`
+            : '',
+          surveyChallenges.includes('drought') ? 'Drought is your main challenge — invest in shade cloth (30–40%), thick mulch (10 cm minimum), and drip lines before the dry season. These three together can halve your irrigation demand.' : '',
+          surveyChallenges.includes('flooding') ? 'Flooding challenge noted — raised beds (30 cm above current grade) and swale cut-off drains above the growing area keep production going through wet spells.' : '',
         ].filter(Boolean).join(' '),
         layerIds: [...water, ...roof].map((layer) => layer.id),
       },
       ...(challengeNote ? [{
-        title: 'Addressing your main challenges',
+        title: 'Tackling your main challenges',
         body: [
           challengeNote,
-          surveyChallenges.includes('pests') ? 'Companion planting, beneficial insect habitat, and crop rotation reduce pest pressure without chemicals.' : '',
-          surveyChallenges.includes('labour') ? 'Reduce labour by mulching heavily, using drip irrigation, and focusing effort on a small intensive Zone 1 before expanding.' : '',
-          surveyChallenges.includes('soil') ? 'Restore soil biology first — compost, mulch, and cover crops before adding mineral fertilisers.' : '',
-          surveyChallenges.includes('market-access') ? 'Focus on high-value, low-weight crops (herbs, salad leaves, seedlings) that are easy to transport to local markets.' : '',
+          surveyChallenges.includes('pests') ? 'Pest control without chemicals: companion planting (marigolds, basil, nasturtium), beneficial insect habitat (flower strips), chickens on rotation, and a strict crop-rotation calendar.' : '',
+          surveyChallenges.includes('labour') ? 'Labour shortage: heavily mulch all beds (less weeding), install drip irrigation (less watering), and focus on a small, super-productive Zone 1 rather than spreading effort across a large plot.' : '',
+          surveyChallenges.includes('soil') ? 'Soil restoration sequence: (1) stop bare soil exposure with mulch or cover crops, (2) add compost and kraal manure, (3) plant nitrogen-fixers on the edges, (4) test and adjust pH only after 12 months of organic build-up.' : '',
+          surveyChallenges.includes('weeds') ? 'Weed pressure drops dramatically with 10 cm of wood-chip or straw mulch. Pull a weed once before mulching and you may not see it again for a season.' : '',
+          surveyChallenges.includes('market-access') ? 'For market access challenges: focus on high-value, low-weight, long-shelf-life crops — dried herbs, chilli, baby salad leaves, and seedlings travel well and command better margins than bulk vegetables.' : '',
+          surveyChallenges.includes('erosion') ? 'Erosion control first: plant vetiver grass or stone lines on contour, cover bare soil immediately with mulch or a fast-growing cover crop (vetch, oats, or cowpeas), and keep foot traffic on designated paths.' : '',
+          surveyChallenges.includes('finance') ? 'On a tight budget: propagate from seed not seedlings, make your own compost, and barter or share tools with neighbours. A small intensive plot produces far more value per rand spent than a large neglected one.' : '',
         ].filter(Boolean).join(' '),
         layerIds: [...cultivation, ...treeBelts].map((layer) => layer.id),
       }] : []),

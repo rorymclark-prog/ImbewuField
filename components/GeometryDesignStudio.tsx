@@ -41,6 +41,9 @@ interface Props {
   locationData: LocationData | null;
 }
 
+// Map view types
+type MapView = 'base' | 'sector' | 'zone' | 'design';
+
 const LAYER_TYPES: DesignLayerType[] = [
   'property_boundary',
   'cultivation',
@@ -54,6 +57,18 @@ const LAYER_TYPES: DesignLayerType[] = [
 
 const CARD_BORDER = 'rgba(98, 83, 61, 0.18)';
 const PAPER = '#F7F0E4';
+
+// Soft translucent fills for the "Fill / hatch" ON mode
+const FILL_COLORS: Partial<Record<DesignLayerType, string>> = {
+  water_body: 'rgba(78,166,216,0.22)',
+  property_boundary: 'rgba(140,235,106,0.10)',
+  cultivation: 'rgba(224,182,63,0.18)',
+  roof: 'rgba(116,185,242,0.20)',
+  access: 'rgba(217,145,51,0.16)',
+  tree_belt: 'rgba(47,143,78,0.18)',
+  structure: 'rgba(181,138,88,0.20)',
+  unknown: 'rgba(185,170,142,0.14)',
+};
 
 function collectPositions(geometry: Geometry | null | undefined): Position[] {
   if (!geometry) return [];
@@ -242,18 +257,43 @@ function niceScaleMetres(rawM: number): number {
   return best;
 }
 
+// Zone badge config — FEATURE-ANCHORED: badges sit on the real feature they describe.
+// Zone 0 = house/roof/structure, 2 = cultivation, 5 = tree belt/buffer.
+const ZONE_BY_TYPE: Record<string, { z: number; color: string }> = {
+  structure: { z: 0, color: '#3A352C' },
+  roof: { z: 0, color: '#3A352C' },
+  cultivation: { z: 2, color: '#C66A1C' },
+  tree_belt: { z: 5, color: '#1F6E5A' },
+};
+
+// Zone key for the legend in Zone + Design views
+const ZONE_KEY: Array<{ z: number; label: string; color: string }> = [
+  { z: 0, label: 'House', color: '#3A352C' },
+  { z: 1, label: 'Daily', color: '#5A4A2C' },
+  { z: 2, label: 'Intensive', color: '#C66A1C' },
+  { z: 3, label: 'Orchard', color: '#8B8B20' },
+  { z: 4, label: 'Low-care', color: '#2F7A4A' },
+  { z: 5, label: 'Buffer', color: '#1F6E5A' },
+];
+
 function GeometryPreview({
   layers,
   title,
   hasPlan,
   svgRef,
   locationData,
+  mapView,
+  showFill,
+  generatedPlan,
 }: {
   layers: DesignLayer[];
   title: string;
   hasPlan: boolean;
   svgRef: React.RefObject<SVGSVGElement>;
   locationData: LocationData | null;
+  mapView: MapView;
+  showFill: boolean;
+  generatedPlan: import('@/lib/design-studio').GeneratedDesignPlan | null;
 }) {
   const width = 960;
   const height = 620;
@@ -267,7 +307,6 @@ function GeometryPreview({
     : ([width / 2, height / 2] as const);
 
   // --- Scale bar ---
-  // Compute metres-per-pixel in the X direction using Web Mercator approximation.
   const midLatDeg = locationData?.lat ?? (bounds.minY + bounds.maxY) / 2;
   const lonSpanDeg = Math.max(bounds.maxX - bounds.minX, 0.000001);
   const dx = Math.max(bounds.maxX - bounds.minX, 0.000001);
@@ -299,7 +338,6 @@ function GeometryPreview({
   const roofHarvestKL = hasRoof ? Math.round((roofAreaM2 * (annualRainfall ?? 0) * 0.8) / 1000) : null;
   const totalHa = totalDesignedM2 / 10_000;
 
-  // Data strip rows — only include what we have
   type DataRow = { label: string; value: string };
   const dataRows: DataRow[] = [];
   if (annualRainfall != null) dataRows.push({ label: 'Rainfall (est.)', value: `${Math.round(annualRainfall)} mm/yr` });
@@ -309,7 +347,6 @@ function GeometryPreview({
   if (totalDesignedM2 > 0) dataRows.push({ label: 'Designed area', value: totalHa >= 1 ? `${totalHa.toFixed(2)} ha` : `${Math.round(totalDesignedM2)} m²` });
   if (roofHarvestKL != null) dataRows.push({ label: 'Roof harvest (est.)', value: `${roofHarvestKL.toLocaleString()} kL/yr` });
 
-  // Data panel geometry — left side, below title
   const dataPanelX = 52;
   const dataPanelY = 108;
   const dataPanelW = 220;
@@ -329,6 +366,44 @@ function GeometryPreview({
   const northX = width - 118;
   const northY = 48;
 
+  // View label shown in title area
+  const VIEW_LABELS: Record<MapView, string> = {
+    base: 'Base map',
+    sector: 'Sector analysis',
+    zone: 'Zone map',
+    design: 'Design overlay',
+  };
+
+  // Whether to render zone badges (Zone + Design views)
+  const showZoneBadges = mapView === 'zone' || mapView === 'design';
+  // Whether to render access + water flow arrows (Design view only)
+  const showDesignArrows = mapView === 'design';
+  // Whether to show the sector inset box (Sector view)
+  const showSectorInset = mapView === 'sector';
+  // Whether to show zone key panel (Zone + Design views)
+  const showZoneKey = mapView === 'zone' || mapView === 'design';
+
+  // For Design view: find access/driveway layers for arrows, water bodies for flow
+  const accessLayers = visibleLayers.filter((l) => l.layerType === 'access');
+  const waterLayers = visibleLayers.filter((l) => l.layerType === 'water_body');
+
+  // Sector inset box position (top-right, below north arrow)
+  const sectorInsetX = width - 190;
+  const sectorInsetY = northY + 80;
+  const sectorInsetW = 168;
+  const sectorInsetH = 150;
+
+  // Zone key panel position (right side, below north arrow and possibly sector inset)
+  const zoneKeyX = width - 190;
+  const zoneKeyY = northY + 80;
+  const zoneKeyW = 168;
+  const zoneKeyH = 36 + ZONE_KEY.length * 22;
+
+  // Opportunity labels from plan (Design view)
+  const opportunities = showDesignArrows && generatedPlan
+    ? generatedPlan.opportunityMap.slice(0, 2)
+    : [];
+
   return (
     <svg
       ref={svgRef}
@@ -337,12 +412,9 @@ function GeometryPreview({
       viewBox={`0 0 ${width} ${height}`}
       className="w-full h-auto rounded-2xl shadow-sm"
       role="img"
-      aria-label="Geometry first design map"
+      aria-label={`${VIEW_LABELS[mapView]} — geometry design map`}
     >
       <defs>
-        <pattern id="studio-grid" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-          <line x1="0" y1="0" x2="0" y2="26" stroke="#C8B998" strokeWidth="3" opacity="0.35" />
-        </pattern>
         <filter id="paper-shadow" x="-20%" y="-20%" width="140%" height="140%">
           <feDropShadow dx="0" dy="8" stdDeviation="9" floodColor="#2A1D10" floodOpacity="0.16" />
         </filter>
@@ -350,6 +422,12 @@ function GeometryPreview({
           <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
+        <marker id="arrow-water" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 Z" fill="#4EA6D8" opacity="0.85" />
+        </marker>
+        <marker id="arrow-access" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 Z" fill="#F7F0E4" opacity="0.9" />
+        </marker>
       </defs>
 
       {/* Background */}
@@ -369,7 +447,9 @@ function GeometryPreview({
 
       {/* Title */}
       <text x="52" y="64" fontFamily="serif" fontWeight="800" fontSize="31" fill="#20190F">{title}</text>
-      <text x="54" y="90" fontFamily="sans-serif" fontSize="14" fill="#7B6A52">Geometry-first permaculture design</text>
+      <text x="54" y="90" fontFamily="sans-serif" fontSize="14" fill="#7B6A52">
+        {VIEW_LABELS[mapView]} · Geometry-first permaculture design
+      </text>
 
       {/* Data strip — site info panel below title */}
       {dataRows.length > 0 && (
@@ -393,11 +473,16 @@ function GeometryPreview({
         </g>
       ) : (
         <>
-          {/* Real geometry paths */}
+          {/* Real geometry paths — OUTLINE ONLY by default; soft fill when showFill=true */}
           {visibleLayers.map((layer) => {
             const paths = geometryToPaths(layer.geometry, project);
             const stroke = getDesignLayerColor(layer.layerType);
-            const fill = layer.layerType === 'water_body' ? 'rgba(78,166,216,0.32)' : layer.layerType === 'property_boundary' ? 'rgba(140,235,106,0.12)' : 'url(#studio-grid)';
+            // Fill: none by default (outline-only); soft translucent when showFill is on
+            const fill = layer.geometryType.includes('Line')
+              ? 'none'
+              : showFill
+                ? (FILL_COLORS[layer.layerType] ?? 'none')
+                : 'none';
             const strokeWidth = layer.layerType === 'property_boundary' ? 8 : 5;
             return (
               <g key={layer.id} filter={layer.locked ? 'url(#paper-shadow)' : undefined} opacity={layer.approved ? 1 : 0.38}>
@@ -405,7 +490,7 @@ function GeometryPreview({
                   <path
                     key={`${layer.id}-${index}`}
                     d={path}
-                    fill={layer.geometryType.includes('Line') ? 'none' : fill}
+                    fill={fill}
                     stroke={stroke}
                     strokeWidth={strokeWidth}
                     strokeLinejoin="round"
@@ -426,7 +511,6 @@ function GeometryPreview({
             const labelText = layer.name;
             const areaText = layer.areaLabel !== 'area unknown' ? ` · ${layer.areaLabel}` : '';
             const fullText = `${labelText}${areaText}`;
-            // Estimate pill width by character count (monospace approximation)
             const pillW = Math.min(Math.max(fullText.length * 6.5 + 16, 60), 200);
             const pillH = 18;
             const pillX = cx - pillW / 2;
@@ -449,33 +533,138 @@ function GeometryPreview({
             );
           })}
 
-          {/* Permaculture ZONES — anchored to the REAL features they describe (Zone 0 = house,
-              2 = existing cultivation, 5 = tree belt/buffer). Not generic concentric rings:
-              real zones map to actual areas + daily-use distance. A numbered badge sits on each. */}
-          {(() => {
-            const ZONE_BY_TYPE: Record<string, { z: number; color: string }> = {
-              structure: { z: 0, color: '#3A352C' },
-              roof: { z: 0, color: '#3A352C' },
-              cultivation: { z: 2, color: '#C66A1C' },
-              tree_belt: { z: 5, color: '#1F6E5A' },
-            };
-            return visibleLayers.map((layer) => {
-              const zone = ZONE_BY_TYPE[layer.layerType];
-              if (!zone) return null;
-              const [cx, cy] = layerCentroid(layer, project, [width / 2, height / 2]);
-              const by = cy - 26;
-              return (
-                <g key={`zone-${layer.id}`}>
-                  <circle cx={cx} cy={by} r="13" fill={zone.color} stroke="#FBF7ED" strokeWidth="2.5" filter="url(#paper-shadow)" />
-                  <text x={cx} y={by + 5} textAnchor="middle" fontFamily="sans-serif" fontSize="14" fontWeight="800" fill="#FBF7ED">{zone.z}</text>
+          {/* ZONE BADGES — feature-anchored numbered badges placed on the real features
+              (Zone 0 = house/roof/structure, 2 = cultivation, 5 = tree belt/buffer).
+              NEVER generic concentric rings. Only shown in Zone + Design views. */}
+          {showZoneBadges && visibleLayers.map((layer) => {
+            const zone = ZONE_BY_TYPE[layer.layerType];
+            if (!zone) return null;
+            const [cx, cy] = layerCentroid(layer, project, [width / 2, height / 2]);
+            const by = cy - 26;
+            return (
+              <g key={`zone-${layer.id}`}>
+                <circle cx={cx} cy={by} r="13" fill={zone.color} stroke="#FBF7ED" strokeWidth="2.5" filter="url(#paper-shadow)" />
+                <text x={cx} y={by + 5} textAnchor="middle" fontFamily="sans-serif" fontSize="14" fontWeight="800" fill="#FBF7ED">{zone.z}</text>
+              </g>
+            );
+          })}
+
+          {/* DESIGN VIEW — access arrows + water-flow arrows + opportunity labels */}
+          {showDesignArrows && (
+            <>
+              {/* Access arrows: dashed cream lines from access layer centroids pointing toward boundary center */}
+              {accessLayers.map((layer) => {
+                const [ax, ay] = layerCentroid(layer, project, [width / 2, height / 2]);
+                const [bx, by] = center;
+                const dx2 = bx - ax;
+                const dy2 = by - ay;
+                const len = Math.sqrt(dx2 * dx2 + dy2 * dy2) || 1;
+                // shorten arrow so it doesn't overlap the center badge
+                const ex = ax + (dx2 / len) * Math.min(len - 30, len * 0.85);
+                const ey = ay + (dy2 / len) * Math.min(len - 30, len * 0.85);
+                return (
+                  <line
+                    key={`access-arrow-${layer.id}`}
+                    x1={ax} y1={ay} x2={ex} y2={ey}
+                    stroke="#F7F0E4"
+                    strokeWidth="3"
+                    strokeDasharray="10,7"
+                    markerEnd="url(#arrow-access)"
+                    opacity="0.82"
+                  />
+                );
+              })}
+              {/* Water-flow arrows: schematic blue arrow from water bodies downslope (toward lower y = south) */}
+              {waterLayers.map((layer) => {
+                const [wx, wy] = layerCentroid(layer, project, [width / 2, height / 2]);
+                return (
+                  <line
+                    key={`water-flow-${layer.id}`}
+                    x1={wx} y1={wy} x2={wx} y2={Math.min(wy + 60, height - 80)}
+                    stroke="#4EA6D8"
+                    strokeWidth="3"
+                    markerEnd="url(#arrow-water)"
+                    opacity="0.85"
+                  />
+                );
+              })}
+              {/* Opportunity labels from plan — first two, dashed outline pill */}
+              {opportunities.map((opp, i) => {
+                const ox = 52 + dataPanelW + 24;
+                const oy = dataPanelY + i * 48;
+                const oppW = 220;
+                const shortBody = opp.body.length > 90 ? `${opp.body.slice(0, 88)}…` : opp.body;
+                return (
+                  <g key={`opp-${i}`}>
+                    <rect x={ox} y={oy} width={oppW} height={40} rx="10"
+                      fill="rgba(32,25,15,0.68)" stroke="#F7C97E" strokeWidth="1.5" strokeDasharray="5,3" />
+                    <text x={ox + 10} y={oy + 14} fontFamily="sans-serif" fontSize="9.5" fontWeight="800" fill="#F7C97E">{opp.title}</text>
+                    <text x={ox + 10} y={oy + 28} fontFamily="sans-serif" fontSize="8.5" fill="#D8CDBA">{shortBody}</text>
+                  </g>
+                );
+              })}
+            </>
+          )}
+
+          {/* SECTOR VIEW — sun arc inset box (separate box, NOT over the map) */}
+          {showSectorInset && (
+            <g>
+              {/* Inset box background */}
+              <rect x={sectorInsetX} y={sectorInsetY} width={sectorInsetW} height={sectorInsetH} rx="14"
+                fill="rgba(32,25,15,0.86)" stroke="#F7C97E" strokeWidth="1.5" />
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 18} textAnchor="middle"
+                fontFamily="sans-serif" fontSize="10" fontWeight="800" fill="#F7C97E" letterSpacing="0.07em">SUN SECTORS</text>
+              {/* Mini compass: N at top */}
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 36}
+                textAnchor="middle" fontFamily="sans-serif" fontSize="10" fontWeight="700" fill="#F7F0E4">N</text>
+              {/* High summer arc — sun rises high in south (SH), represented as an arc near top */}
+              <path
+                d={`M ${sectorInsetX + 30} ${sectorInsetY + 105} Q ${sectorInsetX + sectorInsetW / 2} ${sectorInsetY + 44} ${sectorInsetX + sectorInsetW - 30} ${sectorInsetY + 105}`}
+                fill="none" stroke="#F7C97E" strokeWidth="2.5" opacity="0.92" />
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 58}
+                textAnchor="middle" fontFamily="sans-serif" fontSize="8" fill="#F7C97E">High summer arc</text>
+              {/* Low winter arc — sun stays low in north (SH) */}
+              <path
+                d={`M ${sectorInsetX + 30} ${sectorInsetY + 115} Q ${sectorInsetX + sectorInsetW / 2} ${sectorInsetY + 78} ${sectorInsetX + sectorInsetW - 30} ${sectorInsetY + 115}`}
+                fill="none" stroke="#74B9F2" strokeWidth="2" opacity="0.82" strokeDasharray="5,3" />
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 94}
+                textAnchor="middle" fontFamily="sans-serif" fontSize="8" fill="#74B9F2">Low winter arc</text>
+              {/* Caption */}
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 118}
+                textAnchor="middle" fontFamily="sans-serif" fontSize="8.5" fill="#B9AA8E">Main useful sun from the north.</text>
+              <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 132}
+                textAnchor="middle" fontFamily="sans-serif" fontSize="8.5" fill="#B9AA8E">Southern hemisphere.</text>
+              {/* Wind/sector notes from plan if present */}
+              {generatedPlan?.sectorMap?.[1]?.body && (
+                <text x={sectorInsetX + 10} y={sectorInsetY + 148}
+                  fontFamily="sans-serif" fontSize="7.5" fill="#9A8268">
+                  {generatedPlan.sectorMap[1].body.slice(0, 60)}…
+                </text>
+              )}
+            </g>
+          )}
+
+          {/* ZONE KEY panel — right side, Zone + Design views */}
+          {showZoneKey && (
+            <g>
+              <rect x={zoneKeyX} y={zoneKeyY} width={zoneKeyW} height={zoneKeyH} rx="14"
+                fill="rgba(32,25,15,0.84)" />
+              <text x={zoneKeyX + 14} y={zoneKeyY + 20} fontFamily="sans-serif" fontSize="10"
+                fontWeight="800" fill="#F7C97E" letterSpacing="0.07em">ZONE KEY</text>
+              {ZONE_KEY.map((entry, i) => (
+                <g key={entry.z} transform={`translate(${zoneKeyX + 14} ${zoneKeyY + 30 + i * 22})`}>
+                  <circle cx="8" cy="8" r="8" fill={entry.color} stroke="#FBF7ED" strokeWidth="1.5" />
+                  <text x="10" y="4" fontFamily="sans-serif" fontSize="9" fontWeight="800" fill="#FBF7ED"
+                    textAnchor="middle" dominantBaseline="middle">{entry.z}</text>
+                  <text x="22" y="13" fontFamily="sans-serif" fontSize="9" fill="#D8CDBA">{entry.label}</text>
                 </g>
-              );
-            });
-          })()}
+              ))}
+            </g>
+          )}
         </>
       )}
 
-      {/* North arrow — top-right */}
+      {/* North arrow — top-right, always */}
       <g transform={`translate(${northX} ${northY})`}>
         <circle cx="34" cy="34" r="28" fill="#1F4D2B" opacity="0.94" />
         <path d="M34 10 L42 36 L34 31 L26 36 Z" fill="#F7F0E4" />
@@ -524,6 +713,8 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [studio, setStudio] = useState<DesignStudioState>(() => emptyDesignStudioState(siteId));
   const [message, setMessage] = useState('');
   const [exporting, setExporting] = useState<'png' | 'pdf' | ''>('');
+  const [mapView, setMapView] = useState<MapView>('design');
+  const [showFill, setShowFill] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -618,7 +809,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       const dataUrl = await svgToPngDataUrl(svgRef.current);
       const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = `${slugify(title)}-design-map.png`;
+      link.download = `${slugify(title)}-${mapView}-map.png`;
       link.click();
       setMessage('PNG exported.');
     } catch (err) {
@@ -645,7 +836,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(11);
       doc.setTextColor(92, 80, 64);
-      doc.text(`${title} - ${new Date().toLocaleDateString()}`, 42, 75);
+      doc.text(`${title} — ${mapView.charAt(0).toUpperCase() + mapView.slice(1)} view · ${new Date().toLocaleDateString()}`, 42, 75);
       doc.addImage(dataUrl, 'PNG', 42, 96, 535, 346);
       doc.setDrawColor(216, 201, 172);
       doc.roundedRect(600, 96, 200, 346, 16, 16, 'S');
@@ -672,7 +863,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       doc.text(`Locked layers: ${lockedCount}`, 190, 474);
       doc.text(`Land area: ${formatDesignArea(totalArea)}`, 320, 474);
       doc.text(`Water area: ${formatDesignArea(waterArea)}`, 470, 474);
-      doc.save(`${slugify(title)}-design-map.pdf`);
+      doc.save(`${slugify(title)}-${mapView}-map.pdf`);
       setMessage('PDF exported.');
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'PDF export failed.');
@@ -680,6 +871,13 @@ export default function GeometryDesignStudio({ locationData }: Props) {
       setExporting('');
     }
   }
+
+  const MAP_VIEWS: Array<{ id: MapView; label: string }> = [
+    { id: 'base', label: 'Base' },
+    { id: 'sector', label: 'Sector' },
+    { id: 'zone', label: 'Zone' },
+    { id: 'design', label: 'Design' },
+  ];
 
   return (
     <div className="space-y-4">
@@ -812,7 +1010,52 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </div>
         )}
 
-        <GeometryPreview layers={studio.layers} title={title} hasPlan={!!studio.generatedPlan} svgRef={svgRef} locationData={locationData} />
+        {/* Map view controls + fill toggle */}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          {/* Segmented control: Base / Sector / Zone / Design */}
+          <div className="flex rounded-xl overflow-hidden" style={{ border: `1px solid ${CARD_BORDER}` }}>
+            {MAP_VIEWS.map((view, i) => (
+              <button
+                key={view.id}
+                onClick={() => setMapView(view.id)}
+                className="px-3 py-1.5 text-xs font-display font-semibold transition-all"
+                style={{
+                  background: mapView === view.id ? '#1F4D2B' : '#FBF7ED',
+                  color: mapView === view.id ? '#EAF3E2' : '#5C5040',
+                  borderRight: i < MAP_VIEWS.length - 1 ? `1px solid ${CARD_BORDER}` : 'none',
+                }}
+              >
+                {view.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Fill / hatch toggle */}
+          <button
+            onClick={() => setShowFill((v) => !v)}
+            className={buttonBase}
+            style={{
+              background: showFill ? '#E8DDC9' : '#FBF7ED',
+              color: showFill ? '#9E5C08' : '#8A7860',
+              border: `1px solid ${showFill ? 'rgba(158,92,8,0.35)' : CARD_BORDER}`,
+            }}
+            aria-pressed={showFill}
+          >
+            <Layers3 size={13} />
+            Fill / hatch {showFill ? 'on' : 'off'}
+          </button>
+        </div>
+
+        <GeometryPreview
+          layers={studio.layers}
+          title={title}
+          hasPlan={!!studio.generatedPlan}
+          svgRef={svgRef}
+          locationData={locationData}
+          mapView={mapView}
+          showFill={showFill}
+          generatedPlan={studio.generatedPlan}
+        />
 
         <div className="grid grid-cols-2 gap-2">
           <button onClick={exportPng} disabled={exporting !== '' || studio.layers.length === 0} className={buttonBase} style={{ background: '#FBF7ED', color: '#9E5C08', border: `1px solid ${CARD_BORDER}` }}>
