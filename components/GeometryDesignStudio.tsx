@@ -122,8 +122,8 @@ interface Props {
 
 type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design' | 'implementation';
 
-// AI (Gemini) render themes — one per permaculture layer + an overall master plan.
-type AiRenderLayer = 'overall' | 'water' | 'sector' | 'foodforest' | 'soil' | 'animals';
+// AI (Gemini) render themes — one per MAP + an overall master plan.
+type AiRenderLayer = 'overall' | 'base' | 'water' | 'sector' | 'zone' | 'implementation';
 
 // Views that render the overlay on the satellite photo + show the right rail.
 const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design', 'implementation']);
@@ -2542,10 +2542,12 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   // baked-in composite Gemini sees matches the layer, then call the renderer.
   async function renderSelectedLayer(layer: AiRenderLayer) {
     setRenderLayer(layer);
-    const view: MapView = layer === 'water' ? 'water' : layer === 'sector' ? 'sector' : 'design';
+    const view: MapView =
+      layer === 'overall' ? 'design' : (layer as MapView);
     if (mapView !== view) {
       setMapView(view);
-      await new Promise((r) => setTimeout(r, 450));
+      // wait for the SVG to re-render to the target view + its satellite to be ready
+      await new Promise((r) => setTimeout(r, 600));
     }
     await runAiRender(layer);
   }
@@ -2980,31 +2982,64 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </button>
         </div>
 
-        {/* ── AI HERO RENDER (Gemini, per layer, fed the full site data) ────── */}
+        {/* ── AI RENDERS — glossy Gemini version of any map ─────────────────── */}
         {OVERLAY_VIEWS.has(mapView) && (
-          <div className="space-y-2">
-            <p className="text-xs" style={{ color: '#7B6A52' }}>
-              Optional glossy poster of the overall design (AI image — looks nice for a
-              pitch, but the maps above are the exact, reliable version).
+          <div
+            className="space-y-2 rounded-2xl p-3"
+            style={{ background: 'linear-gradient(135deg,#10240F,#1F4D2B)', border: `1px solid ${CARD_BORDER}` }}
+          >
+            <div className="flex items-center gap-2">
+              <Sparkles size={16} color="#F7C97E" />
+              <span className="text-sm font-display font-bold" style={{ color: '#FFFFFF' }}>AI Render — glossy version of any map</span>
+            </div>
+            <p className="text-xs" style={{ color: '#C9E0BE' }}>
+              Pick a map, then generate a photo-style render of it (fed your real satellite,
+              survey, polygons & photos). Beautiful for sharing — the exact SVG maps stay the source of truth.
             </p>
+            {/* 6-map picker */}
+            <div className="flex flex-wrap gap-1.5">
+              {([
+                { id: 'overall', label: 'Overall' },
+                { id: 'base', label: 'Base' },
+                { id: 'water', label: 'Water' },
+                { id: 'sector', label: 'Sector' },
+                { id: 'zone', label: 'Zone' },
+                { id: 'implementation', label: 'Implementation' },
+              ] as Array<{ id: AiRenderLayer; label: string }>).map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => setRenderLayer(l.id)}
+                  disabled={aiRendering}
+                  className="text-xs rounded-full px-3 py-1 font-semibold"
+                  style={{
+                    background: renderLayer === l.id ? '#F7C97E' : 'rgba(255,255,255,0.1)',
+                    color: renderLayer === l.id ? '#20190F' : '#EAF3E2',
+                    border: '1px solid rgba(255,255,255,0.18)',
+                  }}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
             <button
-              onClick={() => renderSelectedLayer('overall')}
+              onClick={() => renderSelectedLayer(renderLayer)}
               disabled={aiRendering || !satDataUrl}
               className={buttonBase}
               style={{
                 width: '100%',
-                background: aiRendering ? '#EFE7D6' : 'linear-gradient(90deg,#2F7A4A,#1F4D2B)',
-                color: aiRendering ? '#6B5B3E' : '#FFFFFF',
-                border: `1px solid ${CARD_BORDER}`,
+                background: aiRendering ? '#EFE7D6' : '#F7C97E',
+                color: aiRendering ? '#6B5B3E' : '#20190F',
+                border: 'none',
                 opacity: !satDataUrl ? 0.5 : 1,
+                fontWeight: 700,
               }}
-              title={!satDataUrl ? 'Let the satellite load first' : 'Generate a glossy AI poster of the overall design'}
+              title={!satDataUrl ? 'Let the satellite load first' : 'Generate a glossy AI render of this map'}
             >
               <Sparkles size={14} />
-              {aiRendering ? 'Generating… (~20s)' : 'Generate AI poster (overall)'}
+              {aiRendering ? 'Generating… (~20s)' : `Render the ${renderLayer === 'overall' ? 'overall design' : renderLayer + ' map'} with AI`}
             </button>
             {aiRenderError && (
-              <p className="text-xs" style={{ color: '#B5371F' }}>{aiRenderError}</p>
+              <p className="text-xs" style={{ color: '#FFC7B5' }}>{aiRenderError}</p>
             )}
             {aiRender && (
               <div className="space-y-1">
@@ -3012,21 +3047,24 @@ export default function GeometryDesignStudio({ locationData }: Props) {
                 <img
                   src={aiRender}
                   alt={`AI-generated ${renderLayer} render`}
-                  style={{ width: '100%', borderRadius: 14, border: `1px solid ${CARD_BORDER}` }}
+                  style={{ width: '100%', borderRadius: 14, border: '2px solid #F7C97E' }}
                 />
                 <div className="flex items-center justify-between">
-                  <span className="text-xs" style={{ color: '#7B6A52' }}>
-                    Presentation render — AI visualisation, not a measured drawing. The map above stays the source of truth.
-                  </span>
+                  <a href={aiRender} target="_blank" rel="noreferrer" className="text-xs font-semibold" style={{ color: '#F7C97E' }}>
+                    Open full size ↗
+                  </a>
                   <a
                     href={aiRender}
                     download={`${slugify(title)}-${renderLayer}-render.png`}
                     className="text-xs font-semibold"
-                    style={{ color: '#1F4D2B' }}
+                    style={{ color: '#F7C97E' }}
                   >
-                    Download
+                    Download ↓
                   </a>
                 </div>
+                <p className="text-xs" style={{ color: '#9DB48E' }}>
+                  AI visualisation — not a measured drawing. The {renderLayer === 'overall' ? 'design' : renderLayer} map above is the exact version.
+                </p>
               </div>
             )}
           </div>

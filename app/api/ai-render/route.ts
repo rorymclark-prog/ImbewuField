@@ -5,7 +5,7 @@ export const maxDuration = 60;
 
 const MODEL = 'gemini-2.5-flash-image';
 
-type RenderLayer = 'overall' | 'water' | 'sector' | 'foodforest' | 'soil' | 'animals';
+type RenderLayer = 'overall' | 'base' | 'water' | 'sector' | 'zone' | 'implementation';
 
 interface SurveyCtx {
   siteType?: string;
@@ -43,18 +43,18 @@ interface RenderContext {
 
 function layerTheme(layer: RenderLayer): string {
   switch (layer) {
+    case 'base':
+      return `MAP FOCUS — BASE MAP: a clean "what's here today" map. Keep the satellite crisp and bright; outline the property boundary, house roof, vegetable garden and any tree belt with clean coloured lines + short labels. NO zones, NO design arrows — just the honest existing site.`;
     case 'water':
-      return `LAYER FOCUS — WATER & HYDROLOGY: emphasise water. Blue solid arrows = surface runoff downhill; dashed blue = swales / slow-spread-sink on contour; a droplet + tank icon at the house roof (rainwater harvesting); dam/pond markers at low points. Mute other elements to soft greys so water reads clearly.`;
+      return `MAP FOCUS — WATER & HYDROLOGY: emphasise water. Bold blue arrows = surface runoff downhill; dashed blue = swales / slow-spread-sink on contour; a droplet + tank icon at the house roof (rainwater harvesting); dam/pond markers at low points. Mute other elements to soft greys so water reads clearly.`;
     case 'sector':
-      return `LAYER FOCUS — SECTOR ANALYSIS: show external energies entering from OUTSIDE the boundary — a sun arc (sun strongest from the NORTH in the Southern Hemisphere, summer-high / winter-low), prevailing summer & winter wind arrows, and frost / fire / noise / view sectors as translucent wedges aimed at the site. Keep the boundary crisp.`;
-    case 'foodforest':
-      return `LAYER FOCUS — FOOD FOREST: show a layered planting system on the open sunny (north) ground — canopy & fruit-tree rows, sub-canopy, shrub and ground-cover guild icons, a windbreak on the windward edge. Keep existing trees. Planting areas as soft green blends.`;
-    case 'soil':
-      return `LAYER FOCUS — SOIL & FERTILITY: compost bays near the garden, mulch areas, nutrient-flow arrows, contour / erosion-control lines on slopes, nitrogen-fixer markers. Annotate soil texture / pH.`;
-    case 'animals':
-      return `LAYER FOCUS — ANIMAL SYSTEMS: chicken run / tractor near the garden, beehive markers by the orchard, grazing paddocks with rotation arrows, a kraal near the house, fenced cells. Respect existing fencing.`;
+      return `MAP FOCUS — SECTOR ANALYSIS: show external energies entering from OUTSIDE the boundary — a sun arc (sun strongest from the NORTH in the Southern Hemisphere, summer-high / winter-low), bold prevailing summer & winter wind arrows, and frost / fire wedges aimed at the site. Keep the boundary crisp.`;
+    case 'zone':
+      return `MAP FOCUS — ZONE MAP: show permaculture Zones 0–5 as clean coloured regions with big numbered badges (0 house → 5 wild edge), placed on the real ground. This is about WHERE each zone is, not detailed design.`;
+    case 'implementation':
+      return `MAP FOCUS — IMPLEMENTATION MAP: show the phased BUILD SEQUENCE — numbered pins (1,2,3…) at each task location, connected by a dotted path in order, coloured by phase (Phase 1 / 2 / 3). It should read like a step-by-step build plan on the land.`;
     default:
-      return `LAYER FOCUS — OVERALL MASTER PLAN: a balanced design — zones 0–5, water strategy, access and food-forest integrated but uncluttered.`;
+      return `MAP FOCUS — OVERALL MASTER PLAN: a balanced design — zones 0–5, water strategy, access and food forest integrated but uncluttered.`;
   }
 }
 
@@ -116,7 +116,7 @@ ${zoneLines || '  • Zones 0–5 from house outward (0 house, 1 daily use, 2 in
 - A title block top-left (translucent dark card): "${ctx.placeName ?? 'Permaculture Design'}" / "${layer === 'overall' ? 'Permaculture Design Map' : layer.charAt(0).toUpperCase() + layer.slice(1) + ' Layer'}"${ctx.address ? ` / "${ctx.address}"` : ''} / "${siteFigs}".
 - A north arrow (top-right) and a scale bar (bottom-left).
 ${polyLines ? `\nSURVEYED POLYGONS (these correspond to the coloured lines — keep exactly):\n${polyLines}\n` : ''}${surveyLines ? `\nSITE CONTEXT (farmer survey — design within this reality):\n  ${surveyLines}\n` : ''}
-Style: high-end permaculture / landscape-architecture presentation board — legible, professional, not cluttered. Output the final annotated image.`;
+QUALITY BAR (important): produce a CRISP, BRIGHT, HIGH-RESOLUTION professional permaculture / landscape-architecture presentation board — the kind a paid designer hands a client. Keep the satellite bright and sharp (no muddy dark wash). Use clean flat-vector styling, a tasteful colour palette, and BOLD, LARGE, clearly-legible labels (never tiny or blurry) with subtle shadows so they read over the photo. Generous spacing, strong visual hierarchy, no clutter. Output a single polished image.`;
 }
 
 export async function POST(req: NextRequest) {
