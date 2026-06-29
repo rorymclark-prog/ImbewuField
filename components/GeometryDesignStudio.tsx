@@ -42,6 +42,7 @@ import { getSiteEvidence } from '@/lib/site-evidence';
 import { reportId } from '@/lib/saved-reports';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
+import HybridRender from '@/components/HybridRender';
 import polygonClipping from 'polygon-clipping';
 
 // ── Contract types (kept in sync with /api/design-plan) ──────────────────────
@@ -3043,27 +3044,17 @@ export default function GeometryDesignStudio({ locationData }: Props) {
             )}
             {aiRender && (
               <div className="space-y-1">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={aiRender}
-                  alt={`AI-generated ${renderLayer} render`}
-                  style={{ width: '100%', borderRadius: 14, border: '2px solid #F7C97E' }}
+                {/* HYBRID: Gemini's glossy map + our crisp legend overlay (legible text). */}
+                <HybridRender
+                  imageDataUrl={aiRender}
+                  placeName={title}
+                  biome={locationData?.biome?.name}
+                  rainfallMm={locationData?.rainfall?.annual ?? undefined}
+                  soilTexture={locationData?.soil?.textureClass ?? undefined}
+                  filename={`${slugify(title)}-${renderLayer}-hybrid.png`}
                 />
-                <div className="flex items-center justify-between">
-                  <a href={aiRender} target="_blank" rel="noreferrer" className="text-xs font-semibold" style={{ color: '#F7C97E' }}>
-                    Open full size ↗
-                  </a>
-                  <a
-                    href={aiRender}
-                    download={`${slugify(title)}-${renderLayer}-render.png`}
-                    className="text-xs font-semibold"
-                    style={{ color: '#F7C97E' }}
-                  >
-                    Download ↓
-                  </a>
-                </div>
                 <p className="text-xs" style={{ color: '#9DB48E' }}>
-                  AI visualisation — not a measured drawing. The {renderLayer === 'overall' ? 'design' : renderLayer} map above is the exact version.
+                  Hybrid render — Gemini styling + our crisp legend. AI visualisation, not a measured drawing; the {renderLayer === 'overall' ? 'design' : renderLayer} map above is the exact version.
                 </p>
               </div>
             )}
