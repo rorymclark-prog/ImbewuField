@@ -441,17 +441,26 @@ Do not: place the sun arc randomly across the property; obscure the driveway; ad
 Visual rule: Use large soft arrows entering the site from outside the boundary. Sun shown as a corner inset, not warped across the property.`,
   },
   {
-    id: 'zone', n: 3, title: 'Zone Map', purpose: 'Where should things go by frequency of use?',
-    spec: `MAP 3 — ZONE MAP
-Title: Permaculture Zone Map
-Purpose: Show how often different parts of the site are used.
-Include: Zone 0 house; Zone 1 daily-use area close to house, kitchen, patio and main path; Zone 2 existing vegetable garden and regular-use production; Zone 3 orchard / food forest / larger production; Zone 4 low-care managed production / support species; Zone 5 existing tree belt / biodiversity / quiet wild area; driveway as the main access spine; walking paths; simple zone legend.
-Do not: list every plant species; cover the whole map with heavy colours; move zones away from real access patterns.
-Visual rule: Zones semi-transparent, strongest detail near the house. Show the pattern of use, not every plant.`,
+    id: 'slope', n: 3, title: 'Slope & Topography Map', purpose: 'How does the land lie — where is high, low, steep and flat?',
+    spec: `MAP 3 — SLOPE & TOPOGRAPHY MAP
+Title: Slope and Topography Map
+Purpose: Show the lie of the land so water, access and planting can follow the landform.
+Include: approximate contour lines or height bands from high to low; downhill slope-direction arrows; the steepest areas; flat / terrace-able areas; ridge lines and valley / drainage lines; the property high point and low point; where water naturally collects and where it leaves the site; level areas suitable for beds, dams or buildings; north arrow; scale bar; legend.
+Do not: invent dramatic cliffs or hills not supported by the references; contradict the water map's flow direction; add planting detail.
+Visual rule: Soft contour shading (lighter high, darker low) with clear downhill arrows. A calm analysis map.`,
   },
   {
-    id: 'water', n: 4, title: 'Water Map', purpose: 'Where does water come from, go, and need storing?',
-    spec: `MAP 4 — WATER MAP
+    id: 'soil', n: 4, title: 'Soil & Fertility Map', purpose: 'Where is soil strong, weak, wet or dry — and where to build it?',
+    spec: `MAP 4 — SOIL & FERTILITY MAP
+Title: Soil and Fertility Map
+Purpose: Show where soil is strong, weak, wet, dry or compacted, and where to build fertility first.
+Include: existing good soil / productive beds; poor or compacted soil zones; eroded or bare ground; wet / waterlogged soil; dry / shallow soil; mulch-bank and compost-building locations; where to add organic matter first; areas to keep covered with living mulch; legend. Show the site's soil texture, pH and organic-carbon figures in a small notes box.
+Do not: invent soil-test results beyond the provided data; place compost far from where it is needed; ignore slope and water.
+Visual rule: Earth-tone fertility gradient (rich to poor) with compost / mulch icons and a small data-notes box.`,
+  },
+  {
+    id: 'water', n: 5, title: 'Water Map', purpose: 'Where does water come from, go, and need storing?',
+    spec: `MAP 5 — WATER MAP
 Title: Water Catchment and Flow Map
 Purpose: Show how water is caught, stored, slowed, used and safely overflowed.
 Include: roof catchment; gutter/downpipe direction if known; existing tanks / ponds / water points; proposed tanks if suitable; tank overflow route; surface runoff arrows; wet areas; dry areas; swales / contour bunds / infiltration lines if suitable; greywater opportunity; high-water planting zones; low-water planting zones; erosion risk points; safe overflow direction away from foundations; legend.
@@ -459,8 +468,35 @@ Do not: send overflow toward the house; draw swales running downhill; invent lar
 Visual rule: Blue arrows and soft blue catchment areas; water movement easy to read.`,
   },
   {
-    id: 'opportunity', n: 5, title: 'Opportunity Map', purpose: 'Where are the highest-return upgrades?',
-    spec: `MAP 5 — OPPORTUNITY MAP
+    id: 'climate', n: 6, title: 'Climate Map — Sun Path & Wind Rose', purpose: 'The site\'s sun and wind tools, drawn properly for South Africa.',
+    spec: `MAP 6 — CLIMATE MAP (SUN PATH & WIND ROSE)
+Title: Climate Map — Sun Path and Wind Rose
+Purpose: Show the site's sun and wind the way a professional site analysis does.
+Include: a sun-path diagram inset for the Southern Hemisphere (sun travels across the NORTHERN sky; summer arc high, winter arc low; sunrise NE/E, sunset NW/W); a wind-rose inset showing prevailing and storm wind directions; the useful north solar sector marked lightly on the plan; winter shade cast by the house and tall trees (toward the south); warm north-facing micro-climates; cold / frost pockets; legend.
+Do not: draw the sun arc across the property; put strong sun to the south; crowd the plan with weather symbols.
+Visual rule: Two clean corner insets (sun path + wind rose) plus light north-sector shading on the plan.`,
+  },
+  {
+    id: 'circulation', n: 7, title: 'Circulation & Access Map', purpose: 'How do people, vehicles, water and tools move through the site?',
+    spec: `MAP 7 — CIRCULATION & ACCESS MAP
+Title: Circulation, Access and Services Map
+Purpose: Show how people, vehicles, water and tools move through the site, and where services run.
+Include: driveway and vehicle access; main walking paths and desire lines; gates and entrances; the daily routes between house, water, beds and storage; wheelbarrow / harvest routes; service lines if known (water taps, electricity, drainage, washing / greywater); the delivery / market-out point; legend.
+Do not: block existing access; route paths through productive beds unnecessarily; invent utilities not supported by the references.
+Visual rule: Clear path lines (existing solid, proposed dashed) with movement arrows; keep the main access spine obvious.`,
+  },
+  {
+    id: 'zone', n: 8, title: 'Zone Map', purpose: 'Where should things go by frequency of use?',
+    spec: `MAP 8 — ZONE MAP
+Title: Permaculture Zone Map
+Purpose: Show how often different parts of the site are used.
+Include: Zone 0 house; Zone 1 daily-use area close to house, kitchen, patio and main path; Zone 2 existing vegetable garden and regular-use production; Zone 3 orchard / food forest / larger production; Zone 4 low-care managed production / support species; Zone 5 existing tree belt / biodiversity / quiet wild area; driveway as the main access spine; walking paths; simple zone legend.
+Do not: list every plant species; cover the whole map with heavy colours; move zones away from real access patterns.
+Visual rule: Zones semi-transparent, strongest detail near the house. Show the pattern of use, not every plant.`,
+  },
+  {
+    id: 'opportunity', n: 9, title: 'Opportunity Map', purpose: 'Where are the highest-return upgrades?',
+    spec: `MAP 9 — OPPORTUNITY MAP
 Title: Best Opportunities Map
 Purpose: Show the highest-value upgrades on the site.
 Include: best compost location; nursery / seedling table; rainwater tank upgrade; tank overflow improvement; banana circle / wet productive area; orchard opportunity; food forest edge; pollinator strip; windbreak; mulch bank; chicken / animal opportunity if relevant; market garden expansion area if relevant; priority symbols: Do First / Do Next / Later.
@@ -468,17 +504,27 @@ Do not: show too many opportunities; make it feel like a shopping list; ignore a
 Visual rule: Use numbered opportunity circles and a side legend.`,
   },
   {
-    id: 'planting', n: 6, title: 'Planting Design Map', purpose: 'What should be planted where?',
-    spec: `MAP 6 — PLANTING DESIGN MAP
+    id: 'planting', n: 10, title: 'Planting Design Map', purpose: 'What should be planted where?',
+    spec: `MAP 10 — PLANTING DESIGN MAP
 Title: What to Plant Where
 Purpose: Show plant GROUPS and tree systems in the correct places.
 Include: kitchen herbs near house; vegetables in existing/intensive beds; fruit trees in the orchard area; food forest on a suitable edge; bananas / wet-loving plants near greywater / moist area; drought-tolerant plants on dry edges; support species where soil must be built first; windbreak trees on exposed boundaries; pollinator strips near vegetable beds; mulch bank species near production; indigenous biodiversity planting in Zone 5; legend with plant groups. Use icons for: herbs, vegetables, fruit trees, bananas/wet crops, support species, pollinators, windbreak, food forest, mulch bank, indigenous buffer.
+Side-legend examples (put detail here, not on the map): citrus and stone fruit in the orchard; bananas and taro near greywater; herbs and salad at the kitchen door; pigeon pea, vetiver, comfrey and tagasaste as support / mulch species; indigenous species in the Zone 5 buffer.
 Do not: write every crop name directly on the map; place high-water crops in dry areas; place daily herbs far from the house; ignore existing tree belts.
 Visual rule: Map shows plant groups; the side panel gives plant examples.`,
   },
   {
-    id: 'phasing', n: 7, title: 'Implementation / Phasing Map', purpose: 'Where do I start?',
-    spec: `MAP 7 — IMPLEMENTATION / PHASING MAP
+    id: 'cropplan', n: 11, title: 'Crop Plan & Rotation Map', purpose: 'How is the veg area laid out into beds, crop families and rotation?',
+    spec: `MAP 11 — CROP PLAN & ROTATION MAP
+Title: Crop Plan and Rotation Map
+Purpose: Turn the vegetable area into a workable bed layout with crop families and rotation.
+Include: the existing / intensive growing area drawn as a tidy bed grid; crop-family blocks across the beds (leaf, fruiting, root, legume); this-season vs next-season rotation direction arrows; quick-succession beds nearest the house; perennial / permanent beds; nursery and seedling area; paths between beds; a small rotation legend (which family follows which); a seasonal note tuned to the site's rainfall pattern.
+Do not: name every single cultivar on the beds; follow legumes with legumes or heavy feeders with heavy feeders; place water-hungry beds far from water.
+Visual rule: Tidy bed grid, colour-coded crop families, rotation arrows; detail in the side legend.`,
+  },
+  {
+    id: 'phasing', n: 12, title: 'Implementation / Phasing Map', purpose: 'Where do I start?',
+    spec: `MAP 12 — IMPLEMENTATION / PHASING MAP
 Title: Step-by-Step Implementation Map
 Purpose: Turn the design into numbered work across the site.
 Include numbered action points by phase:
@@ -490,8 +536,8 @@ Phase 5 (Year 2+): expand orchard; expand market garden; add value-adding / ente
 Visual rule: Large numbered circles on the site map; the farmer must clearly know where to start.`,
   },
   {
-    id: 'full', n: 8, title: 'Full Design Map', purpose: 'What does the whole design become? (poster map)',
-    spec: `MAP 8 — FULL DESIGN MAP
+    id: 'full', n: 13, title: 'Full Design Map', purpose: 'What does the whole design become? (poster map)',
+    spec: `MAP 13 — FULL DESIGN MAP
 Title: Full Permaculture Design Map
 Purpose: Show the final design direction in one beautiful, readable poster map.
 Include: property boundary; house / Zone 0; driveway / access spine; existing vegetable garden; Zone 1 daily-use; Zone 2 regular-use production; Zone 3 orchard / food forest; Zone 4 low-care managed production; Zone 5 wild / biodiversity buffer; water catchment and overflow; main paths; compost; nursery; orchard; food forest; windbreaks; planting groups; pollinator strips; existing tree belts; north arrow; scale bar; legend; sun-sector inset.

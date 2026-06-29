@@ -357,7 +357,7 @@ function MapPromptPack({ studio, locationData }: { studio: DesignStudioState; lo
         <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>Map prompt pack</span>
       </div>
       <p className="text-xs font-display mb-3 leading-relaxed" style={{ color: '#7B6A52' }}>
-        8 canonical maps for Gemini / ChatGPT image generation. Each prompt is woven with this site&apos;s data and your approved geometry. Use the Export PNG above as <strong>Image 1</strong> and a satellite screenshot as <strong>Image 2</strong>, then paste a prompt below. Generate one map at a time.
+The canonical map pack for Gemini / ChatGPT image generation. Each prompt is woven with this site&apos;s data and your approved geometry. Use the Export PNG above as <strong>Image 1</strong> and a satellite screenshot as <strong>Image 2</strong>, then paste a prompt below. Generate one map at a time.
       </p>
       <div className="flex flex-col gap-1.5">
         {prompts.map((p) => (
