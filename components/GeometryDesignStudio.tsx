@@ -337,10 +337,14 @@ function GeometryPreview({
   );
 }
 
-function MapPromptPack({ studio, locationData }: { studio: DesignStudioState; locationData: LocationData | null }) {
+function MapPromptPack({ studio, locationData, svgRef }: { studio: DesignStudioState; locationData: LocationData | null; svgRef: React.RefObject<SVGSVGElement | null> }) {
   const [copied, setCopied] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [results, setResults] = useState<Record<string, string>>({});
+  const [genErr, setGenErr] = useState('');
   const prompts: MapPackEntry[] = buildMapPackPrompts(studio, locationData);
+  const hasGeometry = studio.layers.some((l) => l.approved);
 
   async function copy(entry: MapPackEntry) {
     try {
@@ -350,15 +354,43 @@ function MapPromptPack({ studio, locationData }: { studio: DesignStudioState; lo
     } catch { /* clipboard blocked */ }
   }
 
+  // Generate the map in-app: send the traced site map (Image 1) + the prompt to
+  // Gemini and show the returned image.
+  async function generate(entry: MapPackEntry) {
+    const svg = svgRef.current;
+    if (!svg || !hasGeometry) { setGenErr('Approve at least one mapped layer first, then generate.'); return; }
+    setBusy(entry.id); setGenErr('');
+    try {
+      const dataUrl = await svgToPngDataUrl(svg);
+      const base64 = dataUrl.split(',')[1] ?? '';
+      const res = await fetch('/api/generate-map', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: entry.prompt, images: [{ data: base64, mediaType: 'image/png' }] }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(j.error || `Generation failed (${res.status}).`);
+      setResults((r) => ({ ...r, [entry.id]: `data:${j.image.mediaType};base64,${j.image.data}` }));
+      setOpenId(null);
+    } catch (e) {
+      setGenErr(e instanceof Error ? e.message : 'Generation failed.');
+    } finally {
+      setBusy(null);
+    }
+  }
+
   return (
     <div className="rounded-xl p-3" style={{ background: '#FBF7ED', border: `1px solid ${CARD_BORDER}` }}>
       <div className="flex items-center gap-2 mb-1">
         <MapIcon size={15} style={{ color: '#1F4D2B' }} />
-        <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>Map prompt pack</span>
+        <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>Canonical map pack</span>
       </div>
       <p className="text-xs font-display mb-3 leading-relaxed" style={{ color: '#7B6A52' }}>
-The canonical map pack for Gemini / ChatGPT image generation. Each prompt is woven with this site&apos;s data and your approved geometry. Use the Export PNG above as <strong>Image 1</strong> and a satellite screenshot as <strong>Image 2</strong>, then paste a prompt below. Generate one map at a time.
+        13 site-design maps. <strong>Generate</strong> builds the image in-app with Gemini from your traced site map; <strong>Copy</strong> gives you the prompt to run in Gemini / ChatGPT by hand.
       </p>
+      {genErr && (
+        <div className="text-xs font-display rounded-lg px-2.5 py-2 mb-2" style={{ background: 'rgba(192,83,30,0.08)', border: '1px solid rgba(192,83,30,0.3)', color: '#C0531E' }}>{genErr}</div>
+      )}
       <div className="flex flex-col gap-1.5">
         {prompts.map((p) => (
           <div key={p.id} className="rounded-lg" style={{ background: PAPER, border: `1px solid ${CARD_BORDER}` }}>
@@ -368,10 +400,22 @@ The canonical map pack for Gemini / ChatGPT image generation. Each prompt is wov
                 <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{p.title}</div>
                 <div className="text-xs font-display truncate" style={{ color: '#7B6A52' }}>{p.purpose}</div>
               </button>
+              <button onClick={() => generate(p)} disabled={busy !== null} className="flex items-center gap-1 px-2.5 py-1.5 rounded-md flex-shrink-0 text-xs font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy && busy !== p.id ? 0.5 : 1 }}>
+                {busy === p.id ? <><RefreshCw size={13} className="animate-spin" /> …</> : <><Wand2 size={13} /> Generate</>}
+              </button>
               <button onClick={() => copy(p)} className="flex items-center gap-1 px-2.5 py-1.5 rounded-md flex-shrink-0 text-xs font-display font-semibold" style={{ background: copied === p.id ? 'rgba(31,77,43,0.15)' : '#FBF7ED', border: `1px solid ${CARD_BORDER}`, color: '#1F4D2B', cursor: 'pointer' }}>
                 {copied === p.id ? <><Check size={13} /> Copied</> : <><Copy size={13} /> Copy</>}
               </button>
             </div>
+            {results[p.id] && (
+              <div className="px-2.5 pb-2.5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={results[p.id]} alt={p.title} className="w-full rounded-lg" style={{ border: `1px solid ${CARD_BORDER}` }} />
+                <a href={results[p.id]} download={`${slugify(p.title)}.png`} className="inline-flex items-center gap-1 mt-1.5 text-xs font-display font-semibold" style={{ color: '#9E5C08' }}>
+                  <Download size={12} /> Download
+                </a>
+              </div>
+            )}
             {openId === p.id && (
               <pre className="text-xs px-2.5 pb-2.5 whitespace-pre-wrap" style={{ color: '#5C5040', maxHeight: 220, overflowY: 'auto', fontFamily: 'var(--font-mono)' }}>{p.prompt}</pre>
             )}
@@ -695,7 +739,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </div>
         )}
 
-        <MapPromptPack studio={studio} locationData={locationData} />
+        <MapPromptPack studio={studio} locationData={locationData} svgRef={svgRef} />
 
         {message && (
           <div className="text-xs font-display rounded-xl px-3 py-2" style={{ background: '#FBF7ED', border: `1px solid ${CARD_BORDER}`, color: '#5C5040' }}>
