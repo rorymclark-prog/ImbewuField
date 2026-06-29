@@ -17,6 +17,8 @@ import {
   ShieldCheck,
   Sparkles,
   Wand2,
+  Copy,
+  Check,
 } from 'lucide-react';
 import type { Geometry, Position } from 'geojson';
 import {
@@ -29,10 +31,12 @@ import {
   loadDesignStudioState,
   mergeFarmShapesIntoDesignState,
   saveDesignStudioState,
+  buildMapPackPrompts,
   type DesignLayer,
   type DesignLayerType,
   type DesignPlanSection,
   type DesignStudioState,
+  type MapPackEntry,
 } from '@/lib/design-studio';
 import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
@@ -330,6 +334,51 @@ function GeometryPreview({
         Locked geometry stays fixed
       </text>
     </svg>
+  );
+}
+
+function MapPromptPack({ studio, locationData }: { studio: DesignStudioState; locationData: LocationData | null }) {
+  const [copied, setCopied] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const prompts: MapPackEntry[] = buildMapPackPrompts(studio, locationData);
+
+  async function copy(entry: MapPackEntry) {
+    try {
+      await navigator.clipboard.writeText(entry.prompt);
+      setCopied(entry.id);
+      setTimeout(() => setCopied((c) => (c === entry.id ? null : c)), 1800);
+    } catch { /* clipboard blocked */ }
+  }
+
+  return (
+    <div className="rounded-xl p-3" style={{ background: '#FBF7ED', border: `1px solid ${CARD_BORDER}` }}>
+      <div className="flex items-center gap-2 mb-1">
+        <MapIcon size={15} style={{ color: '#1F4D2B' }} />
+        <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>Map prompt pack</span>
+      </div>
+      <p className="text-xs font-display mb-3 leading-relaxed" style={{ color: '#7B6A52' }}>
+        8 canonical maps for Gemini / ChatGPT image generation. Each prompt is woven with this site&apos;s data and your approved geometry. Use the Export PNG above as <strong>Image 1</strong> and a satellite screenshot as <strong>Image 2</strong>, then paste a prompt below. Generate one map at a time.
+      </p>
+      <div className="flex flex-col gap-1.5">
+        {prompts.map((p) => (
+          <div key={p.id} className="rounded-lg" style={{ background: PAPER, border: `1px solid ${CARD_BORDER}` }}>
+            <div className="flex items-center gap-2 px-2.5 py-2">
+              <span className="flex items-center justify-center rounded-md flex-shrink-0 text-xs font-display font-bold" style={{ width: 22, height: 22, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>{p.n}</span>
+              <button onClick={() => setOpenId((o) => (o === p.id ? null : p.id))} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none' }}>
+                <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{p.title}</div>
+                <div className="text-xs font-display truncate" style={{ color: '#7B6A52' }}>{p.purpose}</div>
+              </button>
+              <button onClick={() => copy(p)} className="flex items-center gap-1 px-2.5 py-1.5 rounded-md flex-shrink-0 text-xs font-display font-semibold" style={{ background: copied === p.id ? 'rgba(31,77,43,0.15)' : '#FBF7ED', border: `1px solid ${CARD_BORDER}`, color: '#1F4D2B', cursor: 'pointer' }}>
+                {copied === p.id ? <><Check size={13} /> Copied</> : <><Copy size={13} /> Copy</>}
+              </button>
+            </div>
+            {openId === p.id && (
+              <pre className="text-xs px-2.5 pb-2.5 whitespace-pre-wrap" style={{ color: '#5C5040', maxHeight: 220, overflowY: 'auto', fontFamily: 'var(--font-mono)' }}>{p.prompt}</pre>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -645,6 +694,8 @@ export default function GeometryDesignStudio({ locationData }: Props) {
             <PlanCard title="Opportunities" sections={studio.generatedPlan.opportunityMap} icon={<Sparkles size={15} />} />
           </div>
         )}
+
+        <MapPromptPack studio={studio} locationData={locationData} />
 
         {message && (
           <div className="text-xs font-display rounded-xl px-3 py-2" style={{ background: '#FBF7ED', border: `1px solid ${CARD_BORDER}`, color: '#5C5040' }}>

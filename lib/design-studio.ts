@@ -366,3 +366,169 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
     ],
   };
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Canonical ImbewuField 8-map pack — image-generation prompt builder.
+
+   Turns the selected site (its data + the farmer's approved geometry) into the
+   8 copy-paste prompts for Gemini / ChatGPT image generation. The two reference
+   images are: IMAGE 1 = the studio's traced site map (PNG export), IMAGE 2 =
+   the satellite capture. The shared header enforces geometry fidelity and the
+   Southern-Hemisphere sun rule (useful sun to the NORTH).
+   ────────────────────────────────────────────────────────────────────────── */
+
+export interface MapPackEntry {
+  id: string;
+  n: number;
+  title: string;
+  purpose: string;
+  prompt: string;
+}
+
+const SHARED_HEADER = `IMBEWUFIELD CANONICAL MAP GENERATION INSTRUCTIONS
+
+You are creating professional permaculture site-design maps from two reference images of the same property.
+
+IMAGE 1 is the app/site-map reference. Use it as the authoritative source for: property boundary, parcel shape, roof catchment / house roof outline, existing vegetable garden location, mapped labels, mapped dimensions and proportions.
+
+IMAGE 2 is the satellite reference. Use it as the visual source for: the real driveway and access, house position and roof shape, surrounding roads, neighbouring buildings, tree belts and vegetation, garden/lawn texture, overall landscape appearance.
+
+Critical accuracy rules:
+- Keep north up exactly as shown.
+- Preserve the exact relative position, scale, shape and proportions of the property boundary, house, driveway, vegetable garden, existing trees and yard.
+- Do not invent a new house shape. Do not move the driveway. Do not rotate the property. Do not change the proportions of the site.
+- Do not invent new roads, ponds, buildings, beds or paths unless clearly labelled PROPOSED.
+- Existing features are solid lines; proposed features are dashed lines or lighter transparent fills.
+- The map may be redrawn and visually improved, but the geometry must stay faithful to the two references.
+
+Style: professional permaculture site-plan map; clean illustrated/GIS hybrid; soft earth-colour palette; semi-transparent overlays; clear labels; simple legend; north arrow; scale bar if possible; readable and not overcrowded; not fantasy art; never sacrifice spatial accuracy for beauty.
+
+Sun-sector rule: This property is in South Africa (Southern Hemisphere). The main useful sun sector is to the NORTH. Do not draw a random sun arc across the property. Show the sun path as a clean inset diagram in a corner: north side = strongest useful sun; east = sunrise; west = sunset; summer sun = high and strong; winter sun = lower and weaker (rises NE, sits low in the northern sky, sets NW).
+
+Generate only the requested map type below. Use the same traced geometry every time — do not let each map reinvent the site.`;
+
+interface MapSpec {
+  id: string;
+  n: number;
+  title: string;
+  purpose: string;
+  spec: string;
+}
+
+const MAP_SPECS: MapSpec[] = [
+  {
+    id: 'base', n: 1, title: 'Base Site Map', purpose: 'What is here now — the truth map. No design yet.',
+    spec: `MAP 1 — BASE SITE MAP
+Title: Existing Site Map
+Purpose: Show what is already on the site before any design.
+Include: property boundary; house / roof footprint; driveway and access; surrounding road; existing vegetable garden; existing trees and tree belts; lawn / open areas; hard surfaces / patio / parking if visible; water tanks / ponds / taps if visible; fence or gate if visible; north arrow; scale bar; simple legend.
+Do not include: zones; plant recommendations; proposed orchard; proposed food forest; water-flow arrows unless already visible; decorative design elements.
+Visual rule: This must be the cleanest, most restrained and most accurate map — a clean redrawn site plan.`,
+  },
+  {
+    id: 'sector', n: 2, title: 'Sector Map', purpose: 'What outside forces affect this site?',
+    spec: `MAP 2 — SECTOR MAP
+Title: Sector Analysis Map
+Purpose: Show the outside forces that enter the property.
+Include: property boundary; house; driveway; existing trees; sun sector from the north; summer sun and winter sun as a separate inset; prevailing wind arrows; storm wind arrows if known; water entering and leaving the site; fire risk direction if relevant; noise / dust direction from road or neighbours; privacy / view issues; pest or wildlife movement if relevant; frost / cold-air movement if relevant; legend.
+Do not: place the sun arc randomly across the property; obscure the driveway; add planting details.
+Visual rule: Use large soft arrows entering the site from outside the boundary. Sun shown as a corner inset, not warped across the property.`,
+  },
+  {
+    id: 'zone', n: 3, title: 'Zone Map', purpose: 'Where should things go by frequency of use?',
+    spec: `MAP 3 — ZONE MAP
+Title: Permaculture Zone Map
+Purpose: Show how often different parts of the site are used.
+Include: Zone 0 house; Zone 1 daily-use area close to house, kitchen, patio and main path; Zone 2 existing vegetable garden and regular-use production; Zone 3 orchard / food forest / larger production; Zone 4 low-care managed production / support species; Zone 5 existing tree belt / biodiversity / quiet wild area; driveway as the main access spine; walking paths; simple zone legend.
+Do not: list every plant species; cover the whole map with heavy colours; move zones away from real access patterns.
+Visual rule: Zones semi-transparent, strongest detail near the house. Show the pattern of use, not every plant.`,
+  },
+  {
+    id: 'water', n: 4, title: 'Water Map', purpose: 'Where does water come from, go, and need storing?',
+    spec: `MAP 4 — WATER MAP
+Title: Water Catchment and Flow Map
+Purpose: Show how water is caught, stored, slowed, used and safely overflowed.
+Include: roof catchment; gutter/downpipe direction if known; existing tanks / ponds / water points; proposed tanks if suitable; tank overflow route; surface runoff arrows; wet areas; dry areas; swales / contour bunds / infiltration lines if suitable; greywater opportunity; high-water planting zones; low-water planting zones; erosion risk points; safe overflow direction away from foundations; legend.
+Do not: send overflow toward the house; draw swales running downhill; invent large dams unless labelled proposed and spatially sensible.
+Visual rule: Blue arrows and soft blue catchment areas; water movement easy to read.`,
+  },
+  {
+    id: 'opportunity', n: 5, title: 'Opportunity Map', purpose: 'Where are the highest-return upgrades?',
+    spec: `MAP 5 — OPPORTUNITY MAP
+Title: Best Opportunities Map
+Purpose: Show the highest-value upgrades on the site.
+Include: best compost location; nursery / seedling table; rainwater tank upgrade; tank overflow improvement; banana circle / wet productive area; orchard opportunity; food forest edge; pollinator strip; windbreak; mulch bank; chicken / animal opportunity if relevant; market garden expansion area if relevant; priority symbols: Do First / Do Next / Later.
+Do not: show too many opportunities; make it feel like a shopping list; ignore access and water.
+Visual rule: Use numbered opportunity circles and a side legend.`,
+  },
+  {
+    id: 'planting', n: 6, title: 'Planting Design Map', purpose: 'What should be planted where?',
+    spec: `MAP 6 — PLANTING DESIGN MAP
+Title: What to Plant Where
+Purpose: Show plant GROUPS and tree systems in the correct places.
+Include: kitchen herbs near house; vegetables in existing/intensive beds; fruit trees in the orchard area; food forest on a suitable edge; bananas / wet-loving plants near greywater / moist area; drought-tolerant plants on dry edges; support species where soil must be built first; windbreak trees on exposed boundaries; pollinator strips near vegetable beds; mulch bank species near production; indigenous biodiversity planting in Zone 5; legend with plant groups. Use icons for: herbs, vegetables, fruit trees, bananas/wet crops, support species, pollinators, windbreak, food forest, mulch bank, indigenous buffer.
+Do not: write every crop name directly on the map; place high-water crops in dry areas; place daily herbs far from the house; ignore existing tree belts.
+Visual rule: Map shows plant groups; the side panel gives plant examples.`,
+  },
+  {
+    id: 'phasing', n: 7, title: 'Implementation / Phasing Map', purpose: 'Where do I start?',
+    spec: `MAP 7 — IMPLEMENTATION / PHASING MAP
+Title: Step-by-Step Implementation Map
+Purpose: Turn the design into numbered work across the site.
+Include numbered action points by phase:
+Phase 1 (0-30 days): fix water movement; mulch existing beds; set compost position; mark main paths.
+Phase 2 (1-3 months): improve vegetable beds; start nursery; plant herbs; first tank/overflow improvements.
+Phase 3 (3-6 months): plant support species; plant windbreak; establish pollinator strips; start orchard prep.
+Phase 4 (6-12 months): plant fruit trees; expand food forest; improve irrigation; add animal system if suitable.
+Phase 5 (Year 2+): expand orchard; expand market garden; add value-adding / enterprise systems.
+Visual rule: Large numbered circles on the site map; the farmer must clearly know where to start.`,
+  },
+  {
+    id: 'full', n: 8, title: 'Full Design Map', purpose: 'What does the whole design become? (poster map)',
+    spec: `MAP 8 — FULL DESIGN MAP
+Title: Full Permaculture Design Map
+Purpose: Show the final design direction in one beautiful, readable poster map.
+Include: property boundary; house / Zone 0; driveway / access spine; existing vegetable garden; Zone 1 daily-use; Zone 2 regular-use production; Zone 3 orchard / food forest; Zone 4 low-care managed production; Zone 5 wild / biodiversity buffer; water catchment and overflow; main paths; compost; nursery; orchard; food forest; windbreaks; planting groups; pollinator strips; existing tree belts; north arrow; scale bar; legend; sun-sector inset.
+Do not include: every crop name; every calculation; every risk; every monthly task; too many arrows.
+Visual rule: This is the poster map — accurate, beautiful and readable.`,
+  },
+];
+
+function mapPackSiteData(state: DesignStudioState, locationData: LocationData | null): string {
+  const approved = state.layers.filter((l) => l.approved);
+  const lines: string[] = ['Country: South Africa (Southern Hemisphere — useful sun sector is to the NORTH).'];
+
+  const d = locationData;
+  if (d) {
+    lines.push(`Location: ${d.lat.toFixed(4)} S, ${d.lon.toFixed(4)} E${d.biome?.name ? ` - ${d.biome.name} biome` : ''}.`);
+    if (d.rainfall?.annual) lines.push(`Rainfall: about ${Math.round(d.rainfall.annual)} mm/year${d.rainfall.pattern ? ` (${d.rainfall.pattern})` : ''}.`);
+    if (d.climate?.meanTemp != null) lines.push(`Climate: mean ${d.climate.meanTemp} C${d.climate.windFromSummer ? `, summer wind from ${d.climate.windFromSummer}` : ''}${d.climate.windFromWinter ? `, winter wind from ${d.climate.windFromWinter}` : ''}.`);
+    if (d.elevation) lines.push(`Terrain: ${d.elevation.elevation ?? '?'} m ASL, slope ${d.elevation.slopeDeg != null ? `${d.elevation.slopeDeg.toFixed(1)} deg` : 'unknown'}${d.elevation.aspectLabel ? `, ${d.elevation.aspectLabel}-facing` : ''}.`);
+    if (d.soil) lines.push(`Soil: ${d.soil.textureClass ?? 'unknown'}, pH ${d.soil.ph ?? '?'}, organic carbon ${d.soil.organicCarbon ?? '?'}%.`);
+  }
+
+  if (approved.length) {
+    lines.push('');
+    lines.push('Approved mapped features (faithful geometry — keep these exactly):');
+    for (const l of approved) {
+      lines.push(`- ${l.name} (${TYPE_LABELS[l.layerType]}, ${l.areaLabel})${l.locked ? ' [LOCKED]' : ''}`);
+    }
+    const waterArea = approved.filter((l) => l.layerType === 'water_body').reduce((s, l) => s + l.areaM2, 0);
+    if (waterArea > 0) lines.push(`Mapped water surface: about ${Math.round(waterArea).toLocaleString()} m2.`);
+  } else {
+    lines.push('No farmer-approved geometry yet — rely on the two reference images for all features.');
+  }
+
+  return lines.join('\n');
+}
+
+export function buildMapPackPrompts(state: DesignStudioState, locationData: LocationData | null): MapPackEntry[] {
+  const data = mapPackSiteData(state, locationData);
+  return MAP_SPECS.map((m) => ({
+    id: m.id,
+    n: m.n,
+    title: m.title,
+    purpose: m.purpose,
+    prompt: `${SHARED_HEADER}\n\n${m.spec}\n\n--- SITE DATA (weave into the map; do not invent beyond this) ---\n${data}`,
+  }));
+}
