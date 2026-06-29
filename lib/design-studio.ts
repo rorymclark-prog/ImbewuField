@@ -1,7 +1,7 @@
 'use client';
 
 import turfArea from '@turf/area';
-import type { Feature, FeatureCollection, Geometry } from 'geojson';
+import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
 import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
 
@@ -401,6 +401,12 @@ Critical accuracy rules:
 - Existing features are solid lines; proposed features are dashed lines or lighter transparent fills.
 - The map may be redrawn and visually improved, but the geometry must stay faithful to the two references.
 
+Render mode (critical for accuracy):
+- Strict top-down orthographic plan view. This is a flat MAP, never a 3D render, never an angled/perspective illustration, never a bird's-eye tilt.
+- Treat IMAGE 1 as a base layer and trace directly on top of it. Reproduce EVERY corner of the property boundary and the exact footprint and angle of the house/roof, driveway, and existing vegetable garden.
+- Match IMAGE 1's aspect ratio, framing and north orientation. Do not crop, pan, or zoom differently from IMAGE 1.
+- Only the thematic overlay for the requested map changes between maps; the underlying traced geometry is identical every time.
+
 Style: professional permaculture site-plan map; clean illustrated/GIS hybrid; soft earth-colour palette; semi-transparent overlays; clear labels; simple legend; north arrow; scale bar if possible; readable and not overcrowded; not fantasy art; never sacrifice spatial accuracy for beauty.
 
 Sun-sector rule: This property is in South Africa (Southern Hemisphere). The main useful sun sector is to the NORTH. Do not draw a random sun arc across the property. Show the sun path as a clean inset diagram in a corner: north side = strongest useful sun; east = sunrise; west = sunset; summer sun = high and strong; winter sun = lower and weaker (rises NE, sits low in the northern sky, sets NW).
@@ -494,9 +500,43 @@ Visual rule: This is the poster map — accurate, beautiful and readable.`,
   },
 ];
 
+function collectCoords(geometry: Geometry | undefined, out: Position[]): void {
+  if (!geometry) return;
+  const g = geometry as { type: string; coordinates?: unknown };
+  const push = (c: unknown) => { if (Array.isArray(c) && typeof c[0] === 'number') out.push(c as Position); };
+  if (g.type === 'Point') push(g.coordinates);
+  else if (g.type === 'LineString' || g.type === 'MultiPoint') (g.coordinates as Position[]).forEach(push);
+  else if (g.type === 'Polygon' || g.type === 'MultiLineString') (g.coordinates as Position[][]).forEach((r) => r.forEach(push));
+  else if (g.type === 'MultiPolygon') (g.coordinates as Position[][][]).forEach((p) => p.forEach((r) => r.forEach(push)));
+}
+
+// Real ground dimensions of the site (E-W x N-S) in metres, so the image model
+// has true proportions to anchor on rather than guessing.
+function siteExtentMeters(layers: DesignLayer[]): { w: number; h: number } | null {
+  const coords: Position[] = [];
+  for (const l of layers) collectCoords(l.geometry, coords);
+  if (coords.length < 2) return null;
+  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+  for (const [lon, lat] of coords) {
+    if (typeof lon !== 'number' || typeof lat !== 'number') continue;
+    if (lon < minLon) minLon = lon; if (lon > maxLon) maxLon = lon;
+    if (lat < minLat) minLat = lat; if (lat > maxLat) maxLat = lat;
+  }
+  if (!Number.isFinite(minLon) || !Number.isFinite(minLat)) return null;
+  const midLatRad = ((minLat + maxLat) / 2) * Math.PI / 180;
+  const w = (maxLon - minLon) * 111_320 * Math.cos(midLatRad);
+  const h = (maxLat - minLat) * 110_540;
+  if (w <= 0 || h <= 0) return null;
+  return { w: Math.round(w), h: Math.round(h) };
+}
+
 function mapPackSiteData(state: DesignStudioState, locationData: LocationData | null): string {
   const approved = state.layers.filter((l) => l.approved);
   const lines: string[] = ['Country: South Africa (Southern Hemisphere — useful sun sector is to the NORTH).'];
+
+  const boundary = approved.find((l) => l.layerType === 'property_boundary');
+  const extent = siteExtentMeters(boundary ? [boundary] : approved);
+  if (extent) lines.push(`Site extent: about ${extent.w} m east-west by ${extent.h} m north-south — keep this width:height proportion exactly.`);
 
   const d = locationData;
   if (d) {
@@ -522,6 +562,9 @@ function mapPackSiteData(state: DesignStudioState, locationData: LocationData | 
   return lines.join('\n');
 }
 
+const ALWAYS_PRESERVE = `--- KEEP UNCHANGED FROM IMAGE 1 (solid lines, identical on every map) ---
+Property boundary (every corner), house / roof footprint and its angle, driveway and access, existing vegetable garden, and existing trees. Do not move, rotate, resize or restyle these. Only the thematic overlay for THIS map is new.`;
+
 export function buildMapPackPrompts(state: DesignStudioState, locationData: LocationData | null): MapPackEntry[] {
   const data = mapPackSiteData(state, locationData);
   return MAP_SPECS.map((m) => ({
@@ -529,6 +572,6 @@ export function buildMapPackPrompts(state: DesignStudioState, locationData: Loca
     n: m.n,
     title: m.title,
     purpose: m.purpose,
-    prompt: `${SHARED_HEADER}\n\n${m.spec}\n\n--- SITE DATA (weave into the map; do not invent beyond this) ---\n${data}`,
+    prompt: `${SHARED_HEADER}\n\n${m.spec}\n\n${ALWAYS_PRESERVE}\n\n--- SITE DATA (weave into the map; do not invent beyond this) ---\n${data}`,
   }));
 }
