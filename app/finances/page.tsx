@@ -7,6 +7,7 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { addSale, addExpense, myProduction, mySales, myExpenses } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog } from '@/lib/db/types';
+import { sampleFinanceLogs, isFinanceDemoOn, setFinanceDemo } from '@/lib/demo-data';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -426,7 +427,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
 
-function SignInPrompt() {
+function SignInPrompt({ onPreview }: { onPreview?: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-16 px-6 text-center">
       <div
@@ -443,17 +444,28 @@ function SignInPrompt() {
           Log crop sales and see your earnings over time.
         </p>
       </div>
-      <a
-        href="/login"
-        className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
-        style={{
-          background: '#1F4D2B',
-          border: '1px solid rgba(31,77,43,0.22)',
-          color: '#F7F2E9',
-        }}
-      >
-        Go to sign in
-      </a>
+      <div className="flex items-center gap-2 flex-wrap justify-center">
+        <a
+          href="/login"
+          className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
+          style={{
+            background: '#1F4D2B',
+            border: '1px solid rgba(31,77,43,0.22)',
+            color: '#F7F2E9',
+          }}
+        >
+          Go to sign in
+        </a>
+        {onPreview && (
+          <button
+            onClick={onPreview}
+            className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#9E5C08', cursor: 'pointer' }}
+          >
+            Preview with sample data
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -603,6 +615,19 @@ export default function FinancesPage() {
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
+  const [demo, setDemo] = useState(false);
+
+  useEffect(() => { setDemo(isFinanceDemoOn()); }, []);
+
+  // In demo mode, show the sample financing set so the dashboard can be
+  // previewed without signing in or capturing data.
+  const sample = useMemo(() => (demo ? sampleFinanceLogs() : null), [demo]);
+  const effSales = sample ? sample.sales : sales;
+  const effProduction = sample ? sample.production : production;
+  const effExpenses = sample ? sample.expenses : expenses;
+
+  function enableDemo() { setFinanceDemo(true); setDemo(true); }
+  function exitDemo() { setFinanceDemo(false); setDemo(false); }
 
   // Auth: same pattern as MyRecords
   useEffect(() => {
@@ -667,7 +692,16 @@ export default function FinancesPage() {
 
       {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 lg:px-8 py-5 lg:py-8 space-y-4">
-        {user === 'loading' ? (
+        {demo && (
+          <div className="flex items-center gap-2 rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)' }}>
+            <Sprout size={15} style={{ color: '#C07A1E' }} />
+            <span className="font-sans font-semibold" style={{ fontSize: 13, color: '#C07A1E' }}>Sample data — a preview of how your finances will look.</span>
+            <div className="flex-1" />
+            <button onClick={exitDemo} className="font-sans font-semibold" style={{ fontSize: 13, color: '#9E5C08', background: 'none', border: 'none', cursor: 'pointer' }}>Exit</button>
+          </div>
+        )}
+
+        {user === 'loading' && !demo ? (
           <>
             <div className="grid grid-cols-3 gap-3">
               {[0, 1, 2].map((i) => (
@@ -680,30 +714,30 @@ export default function FinancesPage() {
             </div>
             <Skeleton className="h-48 rounded-2xl" />
           </>
-        ) : !user ? (
-          <SignInPrompt />
+        ) : !user && !demo ? (
+          <SignInPrompt onPreview={enableDemo} />
         ) : (
           <>
             {/* Wide / laptop: the financial-sheet ledger workspace (frame 15) */}
             <div className="hidden lg:block">
               <FinancialSheet
-                sales={sales}
-                production={production}
-                expenses={expenses}
-                name={user.displayName ?? 'My farm'}
-                loading={dataLoading}
+                sales={effSales}
+                production={effProduction}
+                expenses={effExpenses}
+                name={demo ? 'Demo farm' : (user && user !== 'loading' ? user.displayName ?? 'My farm' : 'My farm')}
+                loading={dataLoading && !demo}
               />
             </div>
             {/* Phone / tablet: the simple money view */}
             <div className="lg:hidden space-y-4">
               <SummaryCards
-                sales={sales}
-                production={production}
-                expenses={expenses}
-                loading={dataLoading}
+                sales={effSales}
+                production={effProduction}
+                expenses={effExpenses}
+                loading={dataLoading && !demo}
               />
-              <SalesLedger sales={sales} loading={dataLoading} />
-              <LogSaleForm onSaved={loadData} />
+              <SalesLedger sales={effSales} loading={dataLoading && !demo} />
+              {!demo && <LogSaleForm onSaved={loadData} />}
             </div>
           </>
         )}
