@@ -115,16 +115,88 @@ function buildLocalPlan(
   };
 }
 
+// ── Shared design brief ───────────────────────────────────────────────────────
+// ONE canonical placement spec, derived from the same plan + anchors the SVG maps
+// use. Fed identically into EVERY AI map prompt so planting/zones/water/phasing all
+// express the SAME design (same positions, same species) instead of each improvising.
+
+// Translate an anchor into a concrete spatial phrase that matches what the SVG draws.
+// North is UP on the map, so 'open-north' = the top/north of the property.
+function anchorToWords(a: AnchorHint): string {
+  switch (a) {
+    case 'house': return 'on and around the house';
+    case 'near-house': return 'in the ring of ground immediately around the house (the daily-use band)';
+    case 'existing-garden': return 'on the existing vegetable-garden ground (the orange-outlined area)';
+    case 'tree-belt': return 'along the existing tree belt at the boundary edge';
+    case 'open-north': return 'on the open sunny ground on the NORTH side (top of the map — best sun in the Southern Hemisphere)';
+    case 'open-south': return 'on the open ground on the SOUTH side (bottom of the map)';
+    case 'open-east': return 'on the open ground on the EAST side (right of the map)';
+    case 'open-west': return 'on the open ground on the WEST side (left of the map)';
+    case 'edges': return 'along the property edges / boundary buffer';
+    default: return 'in an appropriate open area inside the boundary';
+  }
+}
+
+// Canonical species / contents per zone — identical wording across all maps.
+const ZONE_PLANTINGS: Record<number, string> = {
+  0: 'the home — roof catchment, rainwater tanks, gutters',
+  1: 'herbs (basil, coriander, chives), kitchen greens, compost bay, seedling nursery',
+  2: 'intensive vegetable beds (tomatoes, beans, brassicas, leafy greens), pollinator strip',
+  3: 'orchard / food forest — citrus, mango, avocado, guava, macadamia, with understorey + groundcover',
+  4: 'support species (pigeon pea, comfrey, vetiver), hardy perennials, mulch-bank plants',
+  5: 'windbreak + indigenous biodiversity buffer (native trees & shrubs)',
+};
+
+interface DesignBrief {
+  zones: Array<{ n: number; title: string; where: string; contents: string }>;
+  water: string[];
+  access: string[];
+}
+
+function buildDesignBrief(plan: DesignPlanAI): DesignBrief {
+  return {
+    zones: plan.zones.map((z) => ({
+      n: z.n,
+      title: z.title,
+      where: anchorToWords(z.anchor),
+      contents: ZONE_PLANTINGS[z.n] ?? z.items.join(', '),
+    })),
+    water: [
+      'Rainwater: roof gutters → JoJo tank beside the house, overflow toward the garden',
+      'Greywater: from the house → mulch basin / banana circle on the lower ground',
+      'Swales on contour across the slope to slow, spread & sink runoff',
+      'Drip irrigation across the vegetable beds from a tap point',
+    ],
+    access: [
+      'Driveway: the traced dashed vehicle track from the road/gate to the house (keep clear)',
+      'Footpaths: house → vegetable garden → orchard',
+    ],
+  };
+}
+
 // ── Props / view types ────────────────────────────────────────────────────────
 
 interface Props {
   locationData: LocationData | null;
+  siteName?: string | null;
 }
 
 type MapView = 'base' | 'sector' | 'zone' | 'water' | 'design' | 'implementation';
 
-// AI (Gemini) render themes — one per MAP + an overall master plan.
-type AiRenderLayer = 'overall' | 'base' | 'water' | 'sector' | 'zone' | 'implementation';
+// AI (Gemini) render themes — canonical 8-map pack.
+type AiRenderLayer = 'overall' | 'base' | 'sector' | 'zone' | 'water' | 'opportunity' | 'planting' | 'implementation';
+
+// Human-readable map-type label for the render frame title.
+const AI_MAP_LABELS: Record<AiRenderLayer, string> = {
+  overall: 'Full design map',
+  base: 'Existing site map',
+  sector: 'Sector analysis',
+  zone: 'Zone map',
+  water: 'Water map',
+  opportunity: 'Opportunities map',
+  planting: 'Planting design',
+  implementation: 'Implementation plan',
+};
 
 // Views that render the overlay on the satellite photo + show the right rail.
 const OVERLAY_VIEWS = new Set<MapView>(['sector', 'zone', 'water', 'design', 'implementation']);
@@ -286,7 +358,7 @@ function fitZoom(
   bounds: ReturnType<typeof getBounds>,
   imgW: number,
   imgH: number,
-  padFrac = 0.88,
+  padFrac = 0.76,
 ): { zoom: number; centerLng: number; centerLat: number } {
   const centerLng = (bounds.minX + bounds.maxX) / 2;
   const centerLat = (bounds.minY + bounds.maxY) / 2;
@@ -594,9 +666,14 @@ function resolveAnchor(
   boundsCenter: readonly [number, number],
   bboxPx: { minX: number; maxX: number; minY: number; maxY: number },
 ): readonly [number, number] {
-  const houseLike = layers.find(
-    (l) => l.layerType === 'roof' || l.layerType === 'structure',
-  );
+  let houseLike = layers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
+  if (!houseLike) {
+    const candidates = layers.filter(
+      (l) => l.layerType !== 'property_boundary' && l.layerType !== 'water_body' &&
+             l.layerType !== 'access' && l.layerType !== 'tree_belt' && l.areaM2 > 0,
+    );
+    if (candidates.length > 0) houseLike = candidates.reduce((min, l) => l.areaM2 < min.areaM2 ? l : min);
+  }
   const gardenLike = layers.find((l) => l.layerType === 'cultivation');
   const treeLike = layers.find((l) => l.layerType === 'tree_belt');
 
@@ -653,9 +730,14 @@ function resolveWaterPoint(
   bboxPx: { minX: number; maxX: number; minY: number; maxY: number },
 ): readonly [number, number] {
   if (role === 'house') {
-    const houseLike = layers.find(
-      (l) => l.layerType === 'roof' || l.layerType === 'structure',
-    );
+    let houseLike = layers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
+    if (!houseLike) {
+      const candidates = layers.filter(
+        (l) => l.layerType !== 'property_boundary' && l.layerType !== 'water_body' &&
+               l.layerType !== 'access' && l.layerType !== 'tree_belt' && l.areaM2 > 0,
+      );
+      if (candidates.length > 0) houseLike = candidates.reduce((min, l) => l.areaM2 < min.areaM2 ? l : min);
+    }
     return houseLike
       ? layerCentroid(houseLike, project, boundsCenter)
       : boundsCenter;
@@ -688,7 +770,14 @@ function resolveWaterTarget(
 
 // ── SVG export ────────────────────────────────────────────────────────────────
 
-function svgToPngDataUrl(svg: SVGSVGElement): Promise<string> {
+// crop: when set, only this sub-rectangle (in SVG px) is captured — used to send the AI
+// model the SATELLITE AREA ONLY (no legend rail, no paper border), so the model's output
+// and our boundary-clip mask share one coordinate frame.
+function svgToPngDataUrl(
+  svg: SVGSVGElement,
+  crop?: { x: number; y: number; w: number; h: number },
+  mime: 'image/jpeg' | 'image/png' = 'image/jpeg',
+): Promise<string> {
   return new Promise((resolve, reject) => {
     const clone = svg.cloneNode(true) as SVGSVGElement;
     clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -698,10 +787,14 @@ function svgToPngDataUrl(svg: SVGSVGElement): Promise<string> {
     const image = new Image();
     const W = Number(svg.getAttribute('width')) || 960;
     const H = Number(svg.getAttribute('height')) || 620;
+    const cx = crop?.x ?? 0;
+    const cy = crop?.y ?? 0;
+    const cw = crop?.w && crop.w > 0 ? crop.w : W;
+    const ch = crop?.h && crop.h > 0 ? crop.h : H;
     image.onload = () => {
       const canvas = document.createElement('canvas');
-      canvas.width = W * 2;
-      canvas.height = H * 2;
+      canvas.width = cw * 2;
+      canvas.height = ch * 2;
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         URL.revokeObjectURL(url);
@@ -711,9 +804,11 @@ function svgToPngDataUrl(svg: SVGSVGElement): Promise<string> {
       ctx.fillStyle = PAPER;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.scale(2, 2);
+      // Shift the full SVG so (cx,cy) sits at the canvas origin; the canvas size crops the rest.
+      ctx.translate(-cx, -cy);
       ctx.drawImage(image, 0, 0, W, H);
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL('image/png'));
+      resolve(canvas.toDataURL(mime, mime === 'image/jpeg' ? 0.88 : undefined));
     };
     image.onerror = () => {
       URL.revokeObjectURL(url);
@@ -721,6 +816,115 @@ function svgToPngDataUrl(svg: SVGSVGElement): Promise<string> {
     };
     image.src = url;
   });
+}
+
+// ── AI clip frame ─────────────────────────────────────────────────────────────
+// The boundary (and driveway) projected into the SATELLITE-AREA frame and normalised to
+// [0..1], so HybridRender can hard-clip the AI render to the real traced boundary and
+// redraw the driveway crisply — deterministic, regardless of what the model painted.
+interface AiClipFrame {
+  ring: Array<[number, number]>;
+  driveway: Array<[number, number]>;
+  drivewayClosed: boolean; // true = traced as an area (polygon) → draw as a filled lane, not a dashed loop
+  house: Array<[number, number]>; // roof/structure polygon (normalised) — protected by the gpt-image-2 mask
+  aspect: number; // w / h of the satellite area
+}
+
+function ringFromGeometry(geom: DesignLayer['geometry'] | undefined): Position[] {
+  if (!geom) return [];
+  if (geom.type === 'Polygon') return geom.coordinates[0] ?? [];
+  if (geom.type === 'MultiPolygon') return geom.coordinates[0]?.[0] ?? [];
+  return [];
+}
+function lineFromGeometry(geom: DesignLayer['geometry'] | undefined): Position[] {
+  if (!geom) return [];
+  if (geom.type === 'LineString') return geom.coordinates ?? [];
+  if (geom.type === 'MultiLineString') return geom.coordinates[0] ?? [];
+  if (geom.type === 'Polygon') return geom.coordinates[0] ?? [];
+  return [];
+}
+
+function computeClipFrame(layers: DesignLayer[]): AiClipFrame | null {
+  // Use the overlay fit (matches how every design map is rendered).
+  const fit = computeSatFit(layers, 'design');
+  if (!fit.useSatellite) return null;
+  const boundary =
+    layers.find((l) => l.layerType === 'property_boundary' && l.approved) ??
+    layers.find((l) => l.layerType === 'property_boundary');
+  if (!boundary) return null;
+  const project = makeMercatorProjector(
+    fit.fit.centerLng,
+    fit.fit.centerLat,
+    fit.fit.zoom,
+    fit.imgW,
+    fit.imgH,
+    fit.imgX,
+    fit.imgY,
+  );
+  const norm = (c: Position): [number, number] => {
+    const [px, py] = project(c);
+    return [(px - fit.imgX) / fit.imgW, (py - fit.imgY) / fit.imgH];
+  };
+  const ring = ringFromGeometry(boundary.geometry).map(norm);
+  if (ring.length < 3) return null;
+  const drive = layers.find((l) => l.layerType === 'access' && l.approved) ?? layers.find((l) => l.layerType === 'access');
+  const driveway = drive ? lineFromGeometry(drive.geometry).map(norm) : [];
+  const drivewayClosed = !!drive && (drive.geometry?.type === 'Polygon' || drive.geometry?.type === 'MultiPolygon');
+  const houseLayer =
+    layers.find((l) => (l.layerType === 'roof' || l.layerType === 'structure') && l.approved) ??
+    layers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
+  const house = houseLayer ? ringFromGeometry(houseLayer.geometry).map(norm) : [];
+  return { ring, driveway, drivewayClosed, house, aspect: fit.imgW / fit.imgH };
+}
+
+// Build a PNG edit-mask for gpt-image-2 (OpenAI convention: TRANSPARENT = editable, OPAQUE
+// = preserved). Editable = inside the boundary MINUS the house and driveway → the model only
+// paints the open ground, leaving the real house/driveway/neighbours untouched. Must be the
+// SAME pixel dimensions as the composite image we send. Returns a data URL, or null.
+function buildEditMask(clip: AiClipFrame, pxW: number, pxH: number): string | null {
+  if (clip.ring.length < 3 || pxW < 2 || pxH < 2) return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = pxW;
+  canvas.height = pxH;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+  const path = (pts: Array<[number, number]>) => {
+    ctx.beginPath();
+    pts.forEach(([nx, ny], i) => {
+      const x = nx * pxW, y = ny * pxH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+  };
+  // 1) Preserve everything (fully opaque).
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, pxW, pxH);
+  // 2) Make inside-the-boundary editable (erase to transparent).
+  ctx.globalCompositeOperation = 'destination-out';
+  path(clip.ring);
+  ctx.fill();
+  // 3) Re-preserve the house + driveway (opaque again).
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#ffffff';
+  if (clip.house.length >= 3) { path(clip.house); ctx.fill(); }
+  if (clip.driveway.length >= 2) {
+    if (clip.drivewayClosed) {
+      path(clip.driveway);
+      ctx.fill();
+    } else {
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = Math.max(pxW * 0.05, 24);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      clip.driveway.forEach(([nx, ny], i) => {
+        const x = nx * pxW, y = ny * pxH;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+  }
+  return canvas.toDataURL('image/png');
 }
 
 // ── Plan card (text side-panel) ───────────────────────────────────────────────
@@ -972,7 +1176,18 @@ function GeometryPreview({
     if (!boundaryMP.length) return { paths, centroids };
 
     const byType = (t: DesignLayerType) => visibleLayers.find((l) => l.layerType === t);
-    const houseLayer = byType('roof') ?? byType('structure');
+    // House detection: named keyword match first, then size-based fallback (smallest
+    // non-boundary land polygon) so unrecognised or Afrikaans names still work.
+    let houseLayer = byType('roof') ?? byType('structure');
+    if (!houseLayer) {
+      const candidates = visibleLayers.filter(
+        (l) => l.layerType !== 'property_boundary' && l.layerType !== 'water_body' &&
+               l.layerType !== 'access' && l.layerType !== 'tree_belt' && l.areaM2 > 0,
+      );
+      if (candidates.length > 0) {
+        houseLayer = candidates.reduce((min, l) => l.areaM2 < min.areaM2 ? l : min);
+      }
+    }
     const gardenLayer = byType('cultivation');
     const treeLayer = byType('tree_belt');
     const waterLayer = byType('water_body');
@@ -1240,16 +1455,20 @@ function GeometryPreview({
 
       {/* ── TITLE BLOCK ───────────────────────────────────────────────────── */}
       {/* Over the photo, sit the title on a translucent dark card (like a real plan) */}
-      {showSat && (
-        <rect
-          x="40" y="40"
-          width={Math.min(Math.max(title.length * 15 + 44, 240), mapAreaW - 80)}
-          height="62" rx="14"
-          fill="rgba(11,18,11,0.60)"
-        />
-      )}
-      {/* Title bar rule */}
-      <line x1="48" y1="96" x2={mapAreaW - 48} y2="96" stroke={showSat ? 'rgba(255,255,255,0.22)' : '#C4B48C'} strokeWidth="1" />
+
+      {(() => {
+        const titleCardW = Math.min(Math.max(title.length * 15 + 44, 240), mapAreaW - 80);
+        return (
+          <>
+            {showSat && (
+              <rect x="40" y="40" width={titleCardW} height="62" rx="14" fill="rgba(11,18,11,0.60)" />
+            )}
+            {/* Title bar rule — clipped to the title card width so it doesn't cut across the map */}
+            <line x1="48" y1="96" x2={Math.min(40 + titleCardW - 8, mapAreaW - 48)} y2="96"
+              stroke={showSat ? 'rgba(255,255,255,0.22)' : '#C4B48C'} strokeWidth="1" />
+          </>
+        );
+      })()}
       <text
         x="52" y="66"
         fontFamily="Georgia, 'Times New Roman', serif"
@@ -1267,7 +1486,6 @@ function GeometryPreview({
         letterSpacing="0.04em"
       >
         Permaculture Design Map · {VIEW_LABELS[mapView]}
-        {locationData?.biome?.name ? ` · ${locationData.biome.name}` : ''}
       </text>
 
       {/* ── DATA STRIP ────────────────────────────────────────────────────── */}
@@ -1459,29 +1677,30 @@ function GeometryPreview({
                 >
                   {zone.n}
                 </text>
-                {/* Zone title caption below badge — over the photo we keep it but */}
-                {/* add a dark halo (paint-order stroke) so it stays legible. */}
-                <text
-                  x={bx}
-                  y={captionCy + 5}
-                  textAnchor="middle"
-                  fontFamily="'Helvetica Neue', sans-serif"
-                  fontSize="8.5"
-                  fontWeight="700"
-                  fill={showSat ? '#FFFFFF' : color}
-                  opacity={showSat ? 1 : 0.88}
-                  stroke={showSat ? 'rgba(0,0,0,0.65)' : undefined}
-                  strokeWidth={showSat ? 2.5 : undefined}
-                  paintOrder={showSat ? 'stroke' : undefined}
-                >
-                  {captionFull}
-                </text>
+                {/* Zone title caption — hidden in Design view (opportunity cards + legend cover it) */}
+                {!showDesignElements && (
+                  <text
+                    x={bx}
+                    y={captionCy + 5}
+                    textAnchor="middle"
+                    fontFamily="'Helvetica Neue', sans-serif"
+                    fontSize="8.5"
+                    fontWeight="700"
+                    fill={showSat ? '#FFFFFF' : color}
+                    opacity={showSat ? 1 : 0.88}
+                    stroke={showSat ? 'rgba(0,0,0,0.65)' : undefined}
+                    strokeWidth={showSat ? 2.5 : undefined}
+                    paintOrder={showSat ? 'stroke' : undefined}
+                  >
+                    {captionFull}
+                  </text>
+                )}
               </g>
             );
           })}
 
-          {/* ── OPPORTUNITY LABELS (Design view) ─────────────────────────── */}
-          {showDesignElements && aiPlan && aiPlan.opportunities.map((opp, i) => {
+          {/* ── OPPORTUNITY LABELS (Design view, satellite only, max 3) ──── */}
+          {showDesignElements && showSat && aiPlan && aiPlan.opportunities.slice(0, 3).map((opp, i) => {
             // Over the photo, drop opportunity cards onto the zone they describe
             // (orchard → Zone 3, low-care → Zone 4) so they spread out like a real
             // plan instead of stacking on the house.
@@ -1494,8 +1713,10 @@ function GeometryPreview({
                 center = zonePartition.centroids[4];
               }
             }
-            const [ox, oy] = center;
+            const [rawOx, oy] = center;
+            // Clamp x so the card stays within the map area
             const oppW = 180;
+            const ox = Math.max(oppW / 2 + 8, Math.min(rawOx, mapAreaW - oppW / 2 - 8));
             const short = opp.note.length > 70 ? `${opp.note.slice(0, 68)}…` : opp.note;
             // De-collide: treat the opp card as a ~42px-tall rect, centred at ox
             // placeLabel gives us the pill centreY; we use it as the card top + 9
@@ -1562,9 +1783,14 @@ function GeometryPreview({
           {/* ── ACCESS ARROWS (Design view — from plan.access) ────────────── */}
           {showDesignElements && aiPlan && aiPlan.access.map((a, i) => {
             // Vehicle: from boundary edge toward house; foot: from house outward
-            const houseLike = visibleLayers.find(
-              (l) => l.layerType === 'roof' || l.layerType === 'structure',
-            );
+            let houseLike = visibleLayers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
+            if (!houseLike) {
+              const candidates = visibleLayers.filter(
+                (l) => l.layerType !== 'property_boundary' && l.layerType !== 'water_body' &&
+                       l.layerType !== 'access' && l.layerType !== 'tree_belt' && l.areaM2 > 0,
+              );
+              if (candidates.length > 0) houseLike = candidates.reduce((min, l) => l.areaM2 < min.areaM2 ? l : min);
+            }
             const house = houseLike
               ? layerCentroid(houseLike, project, boundsCenter)
               : boundsCenter;
@@ -2207,7 +2433,7 @@ function GeometryPreview({
 
 // ── Main exported component ───────────────────────────────────────────────────
 
-export default function GeometryDesignStudio({ locationData }: Props) {
+export default function GeometryDesignStudio({ locationData, siteName }: Props) {
   const siteId = designSiteIdFromLocation(locationData);
   const [studio, setStudio] = useState<DesignStudioState>(() =>
     emptyDesignStudioState(siteId),
@@ -2223,6 +2449,17 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const [aiRendering, setAiRendering] = useState(false);
   const [aiRenderError, setAiRenderError] = useState('');
   const [renderLayer, setRenderLayer] = useState<AiRenderLayer>('overall');
+  const [aiSatOnly, setAiSatOnly] = useState(false);
+  const [aiProvider, setAiProvider] = useState<'gemini' | 'openai' | 'fal' | 'falgpt'>('gemini');
+  const [geminiModel, setGeminiModel] = useState<'flash' | 'pro' | 'pro-preview'>('pro-preview');
+  const [aiRenderCache, setAiRenderCache] = useState<Partial<Record<AiRenderLayer, string>>>(() => {
+    // Warm the cache from localStorage on first mount (keyed by siteId so farms don't share)
+    try {
+      const sid = designSiteIdFromLocation(locationData);
+      const raw = localStorage.getItem(`imbewu_airender_${sid}`);
+      return raw ? JSON.parse(raw) : {};
+    } catch { return {}; }
+  });
   const [showReportDoc, setShowReportDoc] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -2250,6 +2487,19 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   }, [satKey]);
 
   useEffect(() => {
+    // A NEW site was selected — immediately drop the previous site's satellite tile and
+    // AI render so we never flash another property's imagery while the new site loads,
+    // and reload the per-site render cache (keyed by siteId) for the new site.
+    setSatDataUrl(null);
+    setAiRender(null);
+    try {
+      const sid = designSiteIdFromLocation(locationData);
+      const raw = localStorage.getItem(`imbewu_airender_${sid}`);
+      setAiRenderCache(raw ? JSON.parse(raw) : {});
+    } catch {
+      setAiRenderCache({});
+    }
+
     const refresh = () => {
       const nextSiteId = designSiteIdFromLocation(locationData);
       const saved = loadDesignStudioState(nextSiteId);
@@ -2269,6 +2519,16 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     };
   }, [locationData]);
 
+  // Boundary + driveway projected into the satellite frame — drives the hard clip in
+  // HybridRender (per-site, same for every map). null when no boundary/satellite yet.
+  const aiClipFrame = useMemo(() => computeClipFrame(studio.layers), [studio.layers]);
+
+  // Base-map completeness: house (roof/structure) + driveway (access) are the two most
+  // commonly-missing features — flag them so the user knows to trace them (then the SVG
+  // base map fills them in automatically; no AI needed).
+  const hasHouse = studio.layers.some((l) => l.layerType === 'roof' || l.layerType === 'structure');
+  const hasDriveway = studio.layers.some((l) => l.layerType === 'access');
+
   const approvedCount = studio.layers.filter((l) => l.approved).length;
   const lockedCount = studio.layers.filter((l) => l.locked).length;
   const totalArea = studio.layers
@@ -2277,7 +2537,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   const waterArea = studio.layers
     .filter((l) => l.approved && l.layerType === 'water_body')
     .reduce((s, l) => s + l.areaM2, 0);
-  const title = locationData?.biome?.name ?? 'ImbewuField Design';
+  const title = siteName ?? locationData?.biome?.name ?? 'ImbewuField Design';
 
   function commit(recipe: (current: DesignStudioState) => DesignStudioState) {
     setStudio((current) => {
@@ -2414,7 +2674,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     setExporting('png');
     setMessage('');
     try {
-      const dataUrl = await svgToPngDataUrl(svgRef.current);
+      const dataUrl = await svgToPngDataUrl(svgRef.current, undefined, 'image/png');
       const link = document.createElement('a');
       link.href = dataUrl;
       link.download = `${slugify(title)}-${mapView}-map.png`;
@@ -2432,7 +2692,7 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     setExporting('pdf');
     setMessage('');
     try {
-      const dataUrl = await svgToPngDataUrl(svgRef.current);
+      const dataUrl = await svgToPngDataUrl(svgRef.current, undefined, 'image/png');
       const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({
         orientation: 'landscape',
@@ -2474,7 +2734,12 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   }
 
   // Generate the AI "hero" render: send the real satellite + plan context to Gemini.
-  async function runAiRender(layer: AiRenderLayer = 'overall') {
+  async function runAiRender(layer: AiRenderLayer = 'overall', forceRegenerate = false) {
+    // Show cached render instantly — no Gemini call needed (unless forced)
+    if (!forceRegenerate && aiRenderCache[layer]) {
+      setAiRender(aiRenderCache[layer]!);
+      return;
+    }
     if (!svgRef.current || !satDataUrl) {
       setAiRenderError('Open a site and switch to the Design view so the satellite loads first.');
       return;
@@ -2483,9 +2748,28 @@ export default function GeometryDesignStudio({ locationData }: Props) {
     setAiRenderError('');
     setAiRender(null);
     try {
-      // (a) COMPOSITE input: the satellite WITH our exact traced overlay baked in
-      // (boundary/driveway/garden/house), so Gemini can SEE and preserve the lines.
-      const compositeDataUrl = await svgToPngDataUrl(svgRef.current);
+      // IMAGE 1 = composite (geometry reference: satellite + overlay baked in).
+      // IMAGE 2 = raw satellite (visual reference), omitted in sat-only mode.
+      // Crop the composite to the SATELLITE AREA only (no rail, no paper border) so the
+      // model's output shares the exact coordinate frame the boundary clip uses.
+      const satFitNow = computeSatFit(studio.layers, mapView);
+      const cropRect = satFitNow.useSatellite
+        ? { x: satFitNow.imgX, y: satFitNow.imgY, w: satFitNow.imgW, h: satFitNow.imgH }
+        : undefined;
+      const compositeDataUrl = aiSatOnly ? satDataUrl : await svgToPngDataUrl(svgRef.current, cropRect);
+      const satRef = aiSatOnly ? null : satDataUrl;
+
+      // gpt-image-2 (fal queue) supports a MASK: protect the house + driveway so the model
+      // only repaints the open ground — keeps the REAL structures, big accuracy win. Same
+      // pixel dims as the composite (svgToPngDataUrl renders cropRect at 2×). Design maps only.
+      let maskBase64: string | undefined;
+      if (
+        aiProvider === 'falgpt' && !aiSatOnly && aiClipFrame &&
+        layer !== 'base' && layer !== 'sector' && satFitNow.useSatellite
+      ) {
+        const m = buildEditMask(aiClipFrame, satFitNow.imgW * 2, satFitNow.imgH * 2);
+        if (m) maskBase64 = m;
+      }
 
       // (b) full site data
       const siteId = designSiteIdFromLocation(locationData);
@@ -2505,6 +2789,20 @@ export default function GeometryDesignStudio({ locationData }: Props) {
         photos = [];
       }
 
+      // Shared design brief — the SAME canonical placement spec for every map, so
+      // planting/zones/water/phasing all express one integrated design.
+      const effectivePlan: DesignPlanAI =
+        aiPlan ??
+        buildLocalPlan(
+          layers.map((l) => ({ layerType: l.layerType, name: l.name })),
+          {
+            biome: locationData?.biome?.name,
+            rainfallMm: locationData?.rainfall?.annual ?? undefined,
+            soilTexture: locationData?.soil?.textureClass ?? undefined,
+          },
+        );
+      const designBrief = buildDesignBrief(effectivePlan);
+
       const context = {
         placeName: title,
         layer,
@@ -2520,18 +2818,59 @@ export default function GeometryDesignStudio({ locationData }: Props) {
         zones: aiPlan?.zones?.map((z) => ({ n: z.n, title: z.title, items: z.items })),
         polygons: layers.map((l) => ({ name: l.name, type: l.layerType, area: l.areaLabel })),
         survey: survey ?? undefined,
+        designBrief,
       };
 
       const res = await fetch('/api/ai-render', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: compositeDataUrl, photos, context }),
+        body: JSON.stringify({ imageBase64: compositeDataUrl, satBase64: satRef, maskBase64, photos, context, provider: aiProvider, geminiModel }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.image) {
+      let data: { image?: string; error?: string; detail?: string; pending?: boolean; statusUrl?: string; responseUrl?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        const raw = await res.text().catch(() => '');
+        throw new Error(`Server error (${res.status})${raw ? ` — ${raw.slice(0, 200)}` : ''}`);
+      }
+      if (!res.ok) {
         throw new Error(data.error ? `${data.error}${data.detail ? ` — ${data.detail}` : ''}` : 'Render failed.');
       }
-      setAiRender(data.image);
+
+      let finalImage = data.image;
+      // Async path (gpt-image-2 via fal queue): poll until the render is ready (~30–90s).
+      if (!finalImage && data.pending && data.statusUrl && data.responseUrl) {
+        const { statusUrl, responseUrl } = data;
+        for (let i = 0; i < 45 && !finalImage; i++) {
+          await new Promise((r) => setTimeout(r, 3000));
+          const pr = await fetch('/api/ai-render/poll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ statusUrl, responseUrl }),
+          });
+          const pd: { image?: string; error?: string; detail?: string; pending?: boolean } = await pr.json().catch(() => ({}));
+          if (pd.image) { finalImage = pd.image; break; }
+          // Surface ANY non-ok poll response (even with no JSON body) instead of silently looping to a timeout.
+          if (!pr.ok) throw new Error(pd.error ? `${pd.error}${pd.detail ? ` — ${pd.detail}` : ''}` : `Poll failed (HTTP ${pr.status})`);
+          // otherwise still pending → keep polling
+        }
+        if (!finalImage) throw new Error('Timed out waiting for the render — try again.');
+      }
+
+      if (!finalImage) {
+        throw new Error(data.error ? `${data.error}${data.detail ? ` — ${data.detail}` : ''}` : 'Render failed.');
+      }
+      const img = finalImage; // const snapshot for the setState closures below
+      setAiRender(img);
+      // Persist in memory cache and localStorage so the tab shows it instantly next time
+      setAiRenderCache((prev) => {
+        const next = { ...prev, [layer]: img };
+        try {
+          const sid = designSiteIdFromLocation(locationData);
+          localStorage.setItem(`imbewu_airender_${sid}`, JSON.stringify(next));
+        } catch {}
+        return next;
+      });
     } catch (e) {
       setAiRenderError(e instanceof Error ? e.message : 'Render failed.');
     } finally {
@@ -2543,8 +2882,13 @@ export default function GeometryDesignStudio({ locationData }: Props) {
   // baked-in composite Gemini sees matches the layer, then call the renderer.
   async function renderSelectedLayer(layer: AiRenderLayer) {
     setRenderLayer(layer);
-    const view: MapView =
-      layer === 'overall' ? 'design' : (layer as MapView);
+    // Map each AI layer to a real SVG MapView so the baked composite is valid.
+    // opportunity/planting/overall have no dedicated SVG view → use the master 'design'.
+    const VIEW_FOR_LAYER: Record<AiRenderLayer, MapView> = {
+      overall: 'design', base: 'base', sector: 'sector', zone: 'zone',
+      water: 'water', opportunity: 'design', planting: 'design', implementation: 'implementation',
+    };
+    const view: MapView = VIEW_FOR_LAYER[layer];
     if (mapView !== view) {
       setMapView(view);
       // wait for the SVG to re-render to the target view + its satellite to be ready
@@ -2939,6 +3283,23 @@ export default function GeometryDesignStudio({ locationData }: Props) {
           </button>
         </div>
 
+        {/* Base-map completeness hint — house & driveway are what's usually missing */}
+        {studio.layers.length > 0 && (!hasHouse || !hasDriveway) && (
+          <div
+            className="rounded-xl px-3 py-2 text-xs flex items-start gap-2"
+            style={{ background: 'rgba(158,92,8,0.08)', border: '1px solid rgba(158,92,8,0.25)', color: '#7A5208' }}
+          >
+            <span aria-hidden>🏠</span>
+            <span>
+              {!hasHouse && !hasDriveway
+                ? 'Your house and driveway aren’t on the map yet. Trace them on the map (House/Roof + Driveway) and they’ll fill in here automatically — no AI needed.'
+                : !hasHouse
+                  ? 'Your house isn’t traced yet. Trace it on the map as House/Roof so it shows filled in on every map.'
+                  : 'Your driveway isn’t traced yet. Trace it on the map as Driveway/Access so it shows on every map.'}
+            </span>
+          </div>
+        )}
+
         {/* ── SVG PREVIEW ─────────────────────────────────────────────────── */}
         <GeometryPreview
           layers={studio.layers}
@@ -2997,64 +3358,137 @@ export default function GeometryDesignStudio({ locationData }: Props) {
               Pick a map, then generate a photo-style render of it (fed your real satellite,
               survey, polygons & photos). Beautiful for sharing — the exact SVG maps stay the source of truth.
             </p>
-            {/* 6-map picker */}
+            {/* 8-map picker */}
             <div className="flex flex-wrap gap-1.5">
               {([
-                { id: 'overall', label: 'Overall' },
-                { id: 'base', label: 'Base' },
-                { id: 'water', label: 'Water' },
+                { id: 'overall', label: 'Full Design' },
+                { id: 'base', label: 'Existing Site' },
                 { id: 'sector', label: 'Sector' },
-                { id: 'zone', label: 'Zone' },
-                { id: 'implementation', label: 'Implementation' },
+                { id: 'zone', label: 'Zones' },
+                { id: 'water', label: 'Water' },
+                { id: 'opportunity', label: 'Opportunities' },
+                { id: 'planting', label: 'Planting' },
+                { id: 'implementation', label: 'Phasing' },
               ] as Array<{ id: AiRenderLayer; label: string }>).map((l) => (
                 <button
                   key={l.id}
-                  onClick={() => setRenderLayer(l.id)}
+                  onClick={() => {
+                    setRenderLayer(l.id);
+                    // Auto-show cached render if available — no need to regenerate
+                    if (aiRenderCache[l.id]) setAiRender(aiRenderCache[l.id]!);
+                    else setAiRender(null);
+                  }}
                   disabled={aiRendering}
                   className="text-xs rounded-full px-3 py-1 font-semibold"
                   style={{
                     background: renderLayer === l.id ? '#F7C97E' : 'rgba(255,255,255,0.1)',
                     color: renderLayer === l.id ? '#20190F' : '#EAF3E2',
-                    border: '1px solid rgba(255,255,255,0.18)',
+                    border: aiRenderCache[l.id] ? '1px solid #F7C97E' : '1px solid rgba(255,255,255,0.18)',
                   }}
                 >
-                  {l.label}
+                  {l.label}{aiRenderCache[l.id] ? ' ✓' : ''}
                 </button>
               ))}
             </div>
-            <button
-              onClick={() => renderSelectedLayer(renderLayer)}
-              disabled={aiRendering || !satDataUrl}
-              className={buttonBase}
-              style={{
-                width: '100%',
-                background: aiRendering ? '#EFE7D6' : '#F7C97E',
-                color: aiRendering ? '#6B5B3E' : '#20190F',
-                border: 'none',
-                opacity: !satDataUrl ? 0.5 : 1,
-                fontWeight: 700,
-              }}
-              title={!satDataUrl ? 'Let the satellite load first' : 'Generate a glossy AI render of this map'}
-            >
-              <Sparkles size={14} />
-              {aiRendering ? 'Generating… (~20s)' : `Render the ${renderLayer === 'overall' ? 'overall design' : renderLayer + ' map'} with AI`}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => aiRenderCache[renderLayer] ? runAiRender(renderLayer, true) : renderSelectedLayer(renderLayer)}
+                disabled={aiRendering || !satDataUrl}
+                className={buttonBase}
+                style={{
+                  flex: 1,
+                  background: aiRendering ? '#EFE7D6' : '#F7C97E',
+                  color: aiRendering ? '#6B5B3E' : '#20190F',
+                  border: 'none',
+                  opacity: !satDataUrl ? 0.5 : 1,
+                  fontWeight: 700,
+                }}
+                title={!satDataUrl ? 'Let the satellite load first' : 'Generate a glossy AI render of this map'}
+              >
+                <Sparkles size={14} />
+                {aiRendering ? 'Generating… (~20s)' : aiRenderCache[renderLayer] ? `Regenerate ${renderLayer} map` : `Render ${renderLayer} map`}
+              </button>
+              <button
+                onClick={() => setAiSatOnly((v) => !v)}
+                title={aiSatOnly ? 'Satellite only — AI interprets the land freely. Click for composite (with traced polygons).' : 'Composite — overlay + satellite baked together so AI sees your geometry. Click for satellite-only.'}
+                style={{
+                  flexShrink: 0,
+                  padding: '6px 10px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.22)',
+                  background: aiSatOnly ? 'rgba(120,200,255,0.18)' : 'rgba(255,255,255,0.08)',
+                  color: aiSatOnly ? '#7ECFFF' : '#C8D4C0',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {aiSatOnly ? '🛰 sat only' : '🗺 overlaid'}
+              </button>
+            </div>
+            {/* Provider + model toggles */}
+            <div className="flex flex-wrap gap-1.5 items-center">
+              {(['gemini', 'openai', 'falgpt'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setAiProvider(p)}
+                  title={p === 'falgpt' ? 'GPT Image 2 via fal queue — slower (~30–90s), uses your fal credit, no 60s limit' : undefined}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    border: aiProvider === p ? '1.5px solid #F7C97E' : '1px solid rgba(255,255,255,0.15)',
+                    background: aiProvider === p ? 'rgba(247,201,126,0.12)' : 'rgba(255,255,255,0.05)',
+                    color: aiProvider === p ? '#F7C97E' : '#8FA882',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {p === 'gemini' ? '✦ Gemini' : p === 'openai' ? '⬡ ChatGPT' : '◆ GPT-2'}
+                </button>
+              ))}
+              {aiProvider === 'gemini' && (
+                <div className="flex gap-1" style={{ borderLeft: '1px solid rgba(255,255,255,0.12)', paddingLeft: 6 }}>
+                  {(['flash', 'pro', 'pro-preview'] as const).map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => setGeminiModel(m)}
+                      style={{
+                        padding: '3px 7px',
+                        borderRadius: 5,
+                        border: geminiModel === m ? '1px solid #F7C97E' : '1px solid rgba(255,255,255,0.1)',
+                        background: geminiModel === m ? 'rgba(247,201,126,0.1)' : 'transparent',
+                        color: geminiModel === m ? '#F7C97E' : '#6B7C65',
+                        fontSize: 10,
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {m === 'flash' ? '3.1 Flash' : m === 'pro' ? '3 Pro' : '3 Pro preview'}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             {aiRenderError && (
               <p className="text-xs" style={{ color: '#FFC7B5' }}>{aiRenderError}</p>
             )}
             {aiRender && (
               <div className="space-y-1">
-                {/* HYBRID: Gemini's glossy map + our crisp legend overlay (legible text). */}
                 <HybridRender
                   imageDataUrl={aiRender}
                   placeName={title}
+                  mapType={AI_MAP_LABELS[renderLayer]}
                   biome={locationData?.biome?.name}
                   rainfallMm={locationData?.rainfall?.annual ?? undefined}
                   soilTexture={locationData?.soil?.textureClass ?? undefined}
+                  satUrl={renderLayer === 'base' || renderLayer === 'sector' ? null : satDataUrl}
+                  clip={renderLayer === 'base' || renderLayer === 'sector' ? null : aiClipFrame}
                   filename={`${slugify(title)}-${renderLayer}-hybrid.png`}
                 />
                 <p className="text-xs" style={{ color: '#9DB48E' }}>
-                  Hybrid render — Gemini styling + our crisp legend. AI visualisation, not a measured drawing; the {renderLayer === 'overall' ? 'design' : renderLayer} map above is the exact version.
+                  AI render ({aiProvider}) — visualisation only; the SVG map above is the exact version.
                 </p>
               </div>
             )}

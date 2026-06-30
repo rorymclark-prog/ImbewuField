@@ -205,7 +205,8 @@ function classifyFeature(feature: Feature, index: number, largestLandIndex: numb
   // Access / roads / paths
   if (/(drive|access road|access track|access path|driveway|road|track|path|gate|entrance)/.test(text)) return 'access';
   // Roof-like structures (house, home, dwelling, shed, barn, building) — named shapes only
-  if (text && /(^|\s)(house|home|dwelling|structure|shed|barn|building|main building|farmhouse)(\s|$)/.test(text)) return 'roof';
+  // Includes Afrikaans: huis, woning, plaashuis, huisie, gebou
+  if (text && /(^|\s)(house|home|dwelling|structure|shed|barn|building|main building|farmhouse|cottage|cabin|lodge|residence|bungalow|huis|woning|plaashuis|huisie|gebou|homestead)(\s|$)/.test(text)) return 'roof';
   // Tree belts / shelter / windbreaks
   if (/(tree belt|shelter belt|windbreak|wind break|hedge|hedgerow|orchard|food forest|woodlot|woodland|forest|trees|belt)/.test(text)) return 'tree_belt';
   // Cultivation / gardens / beds / crops / fields

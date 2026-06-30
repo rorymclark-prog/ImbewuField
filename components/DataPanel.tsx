@@ -1234,7 +1234,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
         {/* DESIGN */}
         {tab === 'Design' && (
-          <SiteDesign locationData={data} photoAnalysis={photoAnalysis} appLang={appLang} />
+          <SiteDesign locationData={data} photoAnalysis={photoAnalysis} appLang={appLang} placeName={placeName} />
         )}
 
         {/* AI */}

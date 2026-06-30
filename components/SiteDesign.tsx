@@ -9,6 +9,7 @@ interface Props {
   locationData: LocationData | null;
   photoAnalysis?: string;
   appLang?: string;
+  placeName?: string | null;
 }
 
 const LANGS = [
@@ -61,7 +62,7 @@ function renderDesign(text: string) {
   });
 }
 
-export default function SiteDesign({ locationData, photoAnalysis, appLang }: Props) {
+export default function SiteDesign({ locationData, photoAnalysis, appLang, placeName }: Props) {
   const [preview, setPreview] = useState<string>('');
   const [imageData, setImageData] = useState<{ data: string; mediaType: string } | null>(null);
   const [design, setDesign] = useState('');
@@ -121,7 +122,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang }: Pro
   return (
     <div className="space-y-5">
       {/* Geometry-first design studio — locks traced site geometry, then AI styles overlays */}
-      <GeometryDesignStudio locationData={locationData} />
+      <GeometryDesignStudio locationData={locationData} siteName={placeName} />
 
       <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
         Sketch → AI Design

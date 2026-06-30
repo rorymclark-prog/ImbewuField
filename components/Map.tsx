@@ -510,6 +510,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         // Use a short delay: selectionchange fires after modechange, so getSelectedIds()
         // isn't populated yet at the moment this event fires.
         setTimeout(() => {
+          // Don't activate native editing while a custom reticle edit is active — a stray
+          // tap on a background polygon while dragging a corner would otherwise switch to
+          // native direct_select and show midpoint dots that look like new corners.
+          if (editPinRef.current) return;
           const ids = draw.getSelectedIds();
           if (ids.length > 0) {
             const f = draw.get(ids[0]);
@@ -800,9 +804,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
     editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined, placeId: f.properties?.placeId as string | undefined };
     try { draw.delete(featureId); } catch {}
+    // Lock remaining shapes so tapping them doesn't accidentally activate a different layer
+    try { draw.changeMode('static'); } catch {}
     const map = mapRef.current?.getMap();
     if (map) {
-      try { map.dragRotate.disable(); map.touchZoomRotate.disableRotation(); } catch {}
+      try { map.dragRotate.disable(); map.touchZoomRotate.disableRotation(); map.dragPan.disable(); } catch {}
       // Zoom to FIT the whole shape (flat, top-down) so every corner handle is on-screen
       // and reachable — a big parcel previously left corners off the edge of the map.
       const lngs = ring.map((c) => c[0]); const lats = ring.map((c) => c[1]);
@@ -856,6 +862,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const onCornerPointerMove = useCallback((e: ReactPointerEvent<HTMLDivElement>) => {
     const d = dragRef.current;
     if (!d || d.pointerId !== e.pointerId) return;
+    // Prevent the map from receiving move events and panning while we're dragging a corner.
+    e.stopPropagation();
+    e.preventDefault();
     const map = mapRef.current?.getMap();
     if (!map) return;
     const rect = map.getContainer().getBoundingClientRect();
@@ -870,22 +879,43 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }
   }, []);
 
-  // Insert a new corner at the crosshair, on the longest edge, and lift it for positioning
+  // Insert a new corner adjacent to the selected one (if any), else nearest the crosshair.
+  // The new corner is placed at the midpoint of the edge after the selected corner so the
+  // user can immediately drag it to the right position.
   const addEditCorner = useCallback(() => {
-    const at = crosshairLngLat();
-    if (!at) return;
     setEditPoints((pts) => {
-      if (pts.length < 2) { setSelCorner(pts.length); return [...pts, at]; }
-      // find the edge whose midpoint is nearest the crosshair → insert there
-      let best = 0, bestD = Infinity;
-      for (let i = 0; i < pts.length; i++) {
-        const a = pts[i], b = pts[(i + 1) % pts.length];
-        const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-        const d = (mx - at[0]) ** 2 + (my - at[1]) ** 2;
-        if (d < bestD) { bestD = d; best = i; }
+      if (pts.length < 2) {
+        const at = crosshairLngLat();
+        if (!at) return pts;
+        setSelCorner(pts.length);
+        return [...pts, at];
       }
-      const next = [...pts.slice(0, best + 1), at, ...pts.slice(best + 1)];
-      setSelCorner(best + 1);
+      // If a corner is selected, insert on the edge AFTER it (between selCorner and selCorner+1).
+      // Snap to the current selCorner value via a ref-safe read inside the updater closure.
+      const sel = selCornerRef.current;
+      let insertAfter: number;
+      let newPt: [number, number];
+      if (sel !== null) {
+        insertAfter = sel;
+        const a = pts[sel];
+        const b = pts[(sel + 1) % pts.length];
+        newPt = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      } else {
+        // No selection — fall back to edge nearest the crosshair
+        const at = crosshairLngLat();
+        if (!at) return pts;
+        let best = 0, bestD = Infinity;
+        for (let i = 0; i < pts.length; i++) {
+          const a = pts[i], b = pts[(i + 1) % pts.length];
+          const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+          const d = (mx - at[0]) ** 2 + (my - at[1]) ** 2;
+          if (d < bestD) { bestD = d; best = i; }
+        }
+        insertAfter = best;
+        newPt = at;
+      }
+      const next = [...pts.slice(0, insertAfter + 1), newPt, ...pts.slice(insertAfter + 1)];
+      setSelCorner(insertAfter + 1);
       return next;
     });
   }, [crosshairLngLat]);
@@ -925,6 +955,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setSelCorner(null);
     editOriginal.current = null;
     unlockRotation();
+    const mapInst = mapRef.current?.getMap();
+    if (mapInst) try { mapInst.dragPan.enable(); draw.changeMode('simple_select'); } catch {}
     recompute();
   }, [ensureDraw, editPin, editPoints, recompute, unlockRotation]);
 
@@ -954,6 +986,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setSelCorner(null);
     editOriginal.current = null;
     unlockRotation();
+    const mapInst2 = mapRef.current?.getMap();
+    if (mapInst2 && draw) try { mapInst2.dragPan.enable(); draw.changeMode('simple_select'); } catch {}
     recompute();
   }, [ensureDraw, editPin, recompute, unlockRotation]);
 
@@ -991,6 +1025,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   cancelEditRef.current = cancelReticleEdit;
   const editPinRef = useRef(editPin);
   editPinRef.current = editPin;
+  // Stable ref so addEditCorner's setEditPoints updater can read the current selCorner
+  // without needing it as a dependency (which would recreate the callback every tap).
+  const selCornerRef = useRef(selCorner);
+  selCornerRef.current = selCorner;
   // Keep cancelPinDraw reachable from the Escape handler so Escape restores draw mode + rotation.
   const cancelPinDrawRef = useRef(cancelPinDraw);
   cancelPinDrawRef.current = cancelPinDraw;
