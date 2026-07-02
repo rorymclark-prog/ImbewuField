@@ -163,6 +163,64 @@ export function makeMercatorProjector(
   };
 }
 
+// Inverse of makeMercatorProjector/lngLatToWorld: normalised [0..1] canvas coords → [lng,lat].
+// Must stay the exact algebraic inverse of lngLatToWorld — verify any edit round-trips.
+export function makeMercatorUnprojector(
+  centerLng: number,
+  centerLat: number,
+  zoom: number,
+  imgW: number,
+  imgH: number,
+) {
+  const worldSize = TILE * Math.pow(2, zoom);
+  const [cx, cy] = lngLatToWorld(centerLng, centerLat, zoom);
+  return (norm: [number, number]): [number, number] => {
+    const x = norm[0] * imgW;
+    const y = norm[1] * imgH;
+    const wx = cx + (x - imgW / 2);
+    const wy = cy + (y - imgH / 2);
+    const lng = (wx / worldSize) * 360 - 180;
+    const n = Math.PI - 2 * Math.PI * (wy / worldSize);
+    const lat = (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
+    return [lng, lat];
+  };
+}
+
+// Re-normalises saved geometry into a freshly-recomputed frame. If the new frame is
+// (within tolerance) the same as the one the state was saved with, returns state
+// unchanged — this is the common case and must stay a cheap no-op.
+export function migrateStateToFrame(
+  state: DesignCanvasState,
+  newFrame: Omit<CanvasFrame, 'satDataUrl'>,
+  project: (lngLat: [number, number]) => [number, number],
+): DesignCanvasState {
+  const f = state.frame;
+  const sameFrame =
+    Math.abs(f.centerLng - newFrame.centerLng) < 1e-7 &&
+    Math.abs(f.centerLat - newFrame.centerLat) < 1e-7 &&
+    Math.abs(f.zoom - newFrame.zoom) < 1e-6 &&
+    f.imgW === newFrame.imgW &&
+    f.imgH === newFrame.imgH;
+  if (sameFrame) return state;
+
+  const unprojectOld = makeMercatorUnprojector(f.centerLng, f.centerLat, f.zoom, f.imgW, f.imgH);
+  const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+  const remap = (pt: [number, number]): [number, number] => {
+    const lngLat = unprojectOld(pt);
+    const [x, y] = project(lngLat);
+    return [clamp01(x), clamp01(y)];
+  };
+
+  const items = state.items.map((item) => {
+    const [x, y] = remap([item.x, item.y]);
+    return { ...item, x, y };
+  });
+  const zones = state.zones.map((z) => ({ ...z, points: z.points.map(remap) }));
+  const lines = state.lines.map((l) => ({ ...l, points: l.points.map(remap) }));
+
+  return { ...state, frame: newFrame, items, zones, lines };
+}
+
 export async function fetchImageAsDataUrl(url: string): Promise<string> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Mapbox static ${res.status}`);
@@ -215,7 +273,10 @@ export function computeCanvasFrame(
     : (() => {
         const centerLat = Number.isFinite(lat) ? lat : 0;
         const centerLng = Number.isFinite(lon as number) ? (lon as number) : 0;
-        const halfDegLat = 60 / METRES_PER_DEGREE_LAT / 2; // 120 m box → 60 m half-span
+        // 120 m box → 60 m half-span. NB: METRES_PER_DEGREE_LAT (111.32) is metres per
+        // 0.001° (milli-degree) — one full degree of latitude is 111,320 m. Using it as
+        // per-degree here once produced a ±30 km box (a whole-suburb satellite view).
+        const halfDegLat = 60 / (METRES_PER_DEGREE_LAT * 1000);
         const cosLat = Math.max(Math.cos((centerLat * Math.PI) / 180), 0.01);
         const halfDegLng = halfDegLat / cosLat;
         return {

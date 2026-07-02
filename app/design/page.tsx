@@ -25,6 +25,7 @@ import {
   fetchImageAsDataUrl,
   loadCanvasState,
   saveCanvasState,
+  migrateStateToFrame,
   newId,
   type CanvasFrame,
   type DesignCanvasState,
@@ -226,6 +227,21 @@ function DesignStudioInner() {
   const lon = lonRaw === null || lonRaw === '' ? NaN : Number(lonRaw);
   const hasSite = Number.isFinite(lat) && Number.isFinite(lon);
 
+  // Saved-place name for the header — resolved in an effect (localStorage), never during
+  // render: SSR has no localStorage, so a render-time read hydration-mismatches the header.
+  const [placeName, setPlaceName] = useState<string | null>(null);
+  useEffect(() => {
+    if (!hasSite) return;
+    try {
+      const match = loadPlaces().find(
+        (p) => Math.abs(p.lat - lat) < 5e-5 && Math.abs(p.lon - lon) < 5e-5,
+      );
+      setPlaceName(match?.name ?? null);
+    } catch {
+      setPlaceName(null);
+    }
+  }, [hasSite, lat, lon]);
+
   const [locationData, setLocationData] = useState<LocationData | null>(null);
   const [layers, setLayers] = useState<DesignLayer[]>([]);
   const [refLayers, setRefLayers] = useState<RefLayers>({ boundary: [], house: [], driveway: [] });
@@ -309,8 +325,16 @@ function DesignStudioInner() {
       // Canvas state: load existing, or seed fresh from traced site elements on first visit.
       setCanvasState((prev) => {
         const existing = loadCanvasState(siteId);
-        if (existing) return existing;
-        if (prev && prev.siteId === siteId) return prev;
+        if (existing) {
+          const migrated = migrateStateToFrame(existing, frameNoImg, project);
+          if (migrated !== existing) saveCanvasState(migrated);
+          return migrated;
+        }
+        if (prev && prev.siteId === siteId) {
+          const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
+          if (migratedPrev !== prev) saveCanvasState(migratedPrev);
+          return migratedPrev;
+        }
 
         const fresh = freshState(siteId, frameNoImg);
         const siteElements = loadSiteElements(siteId);
@@ -397,15 +421,8 @@ function DesignStudioInner() {
 
   if (!hasSite) return <EmptyState />;
 
-  // Prefer the saved place's NAME over raw coordinates in the header (coords are a
-  // fallback for un-named sites).
-  let siteName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-  try {
-    const match = loadPlaces().find(
-      (p) => Math.abs(p.lat - lat) < 5e-5 && Math.abs(p.lon - lon) < 5e-5,
-    );
-    if (match?.name) siteName = match.name;
-  } catch { /* localStorage unavailable */ }
+  // Saved-place name (effect-resolved) with coordinates as the fallback.
+  const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
 
   return (
     <div

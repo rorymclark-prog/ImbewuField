@@ -22,8 +22,12 @@ export default function ChatWidget() {
     return () => window.removeEventListener('imbewu-drawing', h);
   }, []);
 
-  // Skip on auth pages and home (which has LimaBar)
-  if (pathname.startsWith('/gate') || pathname.startsWith('/login') || pathname.startsWith('/home')) return null;
+  // Skip on auth pages, home (which has LimaBar), and the Design Studio (its
+  // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select).
+  if (
+    pathname.startsWith('/gate') || pathname.startsWith('/login') ||
+    pathname.startsWith('/home') || pathname.startsWith('/design')
+  ) return null;
 
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 

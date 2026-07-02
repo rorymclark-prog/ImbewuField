@@ -145,6 +145,9 @@ export default function DesignCanvas({
   const [draftPoints, setDraftPoints] = useState<Array<[number, number]>>([]);
   // Drag state for moving an existing item.
   const dragItemId = useRef<string | null>(null);
+  // Local preview position while dragging — committed to onChange once on release so a
+  // drag emits a single undo entry instead of one per pointermove (see endDragItem).
+  const [dragPos, setDragPos] = useState<[number, number] | null>(null);
 
   function clientToNorm(clientX: number, clientY: number): [number, number] | null {
     const svg = svgRef.current;
@@ -226,14 +229,19 @@ export default function DesignCanvas({
     if (!id) return;
     const pt = clientToNorm(e.clientX, e.clientY);
     if (!pt) return;
-    onChange({
-      ...state,
-      items: state.items.map((it) => (it.id === id ? { ...it, x: pt[0], y: pt[1] } : it)),
-    });
+    setDragPos(pt);
   }
 
   function endDragItem() {
+    const id = dragItemId.current;
+    if (id && dragPos) {
+      onChange({
+        ...state,
+        items: state.items.map((it) => (it.id === id ? { ...it, x: dragPos[0], y: dragPos[1] } : it)),
+      });
+    }
     dragItemId.current = null;
+    setDragPos(null);
   }
 
   function deleteItem(id: string) {
@@ -447,8 +455,10 @@ export default function DesignCanvas({
           const hM = item.hM ?? def.hM;
           const wPx = Math.max(wM / mPerPx, 6);
           const hPx = Math.max(hM / mPerPx, 6);
-          const cx = item.x * imgW;
-          const cy = item.y * imgH;
+          const isDragging = item.id === dragItemId.current && dragPos;
+          const [px, py] = isDragging ? dragPos : [item.x, item.y];
+          const cx = px * imgW;
+          const cy = py * imgH;
           const isSelected = selectedId === item.id;
           const fontSize = Math.min(22, Math.max(10, Math.min(wPx, hPx) * 0.55));
 

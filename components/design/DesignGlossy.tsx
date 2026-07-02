@@ -48,7 +48,7 @@ export interface DesignGlossyProps {
 
 const SCALE = 2;
 
-function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number) {
+function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
 
@@ -128,7 +128,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, refL
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
   // width — sizing in logical px here would draw every footprint at half scale.
-  const pxPerM = imgW / (state.frame.imgW * state.frame.mPerPx);
+  const pxPerM = imgW / (frame.imgW * frame.mPerPx);
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def) continue;
@@ -177,7 +177,7 @@ async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refL
     ctx.fillRect(0, 0, imgW, imgH);
   }
 
-  drawMarks(ctx, state, refLayers, imgW, imgH);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH);
 
   return canvas.toDataURL('image/jpeg', 0.9);
 }
@@ -261,7 +261,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   // Item footprints (+25% margin). Same canvas-scale-aware conversion as the composite:
   // metres → CANVAS px (the mask is SCALE× the logical frame, and it MUST protect the
   // full true-scale footprint, not half of it).
-  const maskPxPerM = imgW / (state.frame.imgW * state.frame.mPerPx);
+  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def) continue;
@@ -281,6 +281,19 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   }
 
   return canvas.toDataURL('image/png');
+}
+
+// Rough compass bucket for a normalised [0..1] point relative to the property centre,
+// used to give Gemini a plain-English location hint for each placed element.
+function compass8(x: number, y: number): string {
+  const dx = x - 0.5;
+  const dy = y - 0.5;
+  if (Math.hypot(dx, dy) < 0.12) return 'central';
+  const angle = Math.atan2(dx, -dy); // 0 = N, clockwise
+  const deg = (angle * (180 / Math.PI) + 360) % 360;
+  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const idx = Math.round(deg / 45) % 8;
+  return dirs[idx];
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -315,8 +328,20 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             touchupPrompt: STRICT_PROMPT,
           });
         } else {
+          const placedElements = state.items.map((item) => {
+            const def = ELEMENTS_BY_ID[item.defId];
+            return {
+              type: item.defId,
+              label: item.label ?? def?.name ?? item.defId,
+              note: item.note,
+              locationHint: `${compass8(item.x, item.y)} part of the property`,
+            };
+          });
+          const zones = state.zones.map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }));
+          const polygons = state.lines.map((l) => ({ name: l.kind, type: 'line' }));
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
+            satBase64: frame.satDataUrl ? stripDataUrl(frame.satDataUrl) : undefined,
             provider: 'gemini',
             geminiModel: 'pro-preview',
             context: {
@@ -324,6 +349,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               layer: 'overall',
               biome: site?.biome,
               rainfallMm: site?.rainfallMm,
+              placedElements,
+              zones,
+              polygons,
             },
           });
         }
@@ -398,26 +426,29 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               <Sparkles size={18} />
               {loading === 'gemini' ? 'Generating…' : 'Gemini (fast)'}
             </button>
-            <button
-              onClick={() => generate('falgpt')}
-              disabled={loading !== null}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                minHeight: 44,
-                padding: '10px 18px',
-                borderRadius: 12,
-                border: `2px solid ${GREEN}`,
-                background: 'transparent',
-                color: GREEN,
-                fontWeight: 700,
-                opacity: loading && loading !== 'falgpt' ? 0.5 : 1,
-              }}
-            >
-              <Gem size={18} />
-              {loading === 'falgpt' ? 'Generating… 30–90s' : 'GPT-2 strict (best)'}
-            </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <button
+                onClick={() => generate('falgpt')}
+                disabled={loading !== null}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  minHeight: 44,
+                  padding: '10px 18px',
+                  borderRadius: 12,
+                  border: `2px solid ${GREEN}`,
+                  background: 'transparent',
+                  color: GREEN,
+                  fontWeight: 700,
+                  opacity: loading && loading !== 'falgpt' ? 0.5 : 1,
+                }}
+              >
+                <Gem size={18} />
+                {loading === 'falgpt' ? 'Generating… 30–90s' : 'GPT-2 strict (best)'}
+              </button>
+              <span style={{ fontSize: 11, opacity: 0.6 }}>Uses fal credit (~$0.05-0.15)</span>
+            </div>
           </div>
           {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
         </div>
