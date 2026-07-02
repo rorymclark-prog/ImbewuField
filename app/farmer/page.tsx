@@ -271,6 +271,13 @@ function HomeInner() {
             style={{ fontSize: 15, background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }}>
             <PenLine size={15} /> <span>Design map</span>
           </Link>
+          <Link
+            href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+          >
+            <span aria-hidden>🎨</span> <span>Design Studio</span>
+          </Link>
           <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
           <LangSwitcher />
           <AccountButton />

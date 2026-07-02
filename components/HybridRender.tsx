@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 // AI render frame. When a clip frame is supplied, we HARD-CLIP the AI image to the real
 // traced boundary: outside the boundary we show the untouched satellite (neighbours stay
@@ -12,6 +12,7 @@ type ClipFrame = {
   driveway: Array<[number, number]>;
   drivewayClosed?: boolean; // traced as an area → soft filled lane, not a dashed loop
   aspect: number; // w / h of the satellite area
+  elements?: Array<{ type: string; icon: string; label: string; x: number; y: number }>; // farmer-placed point elements (normalised [0..1])
 };
 
 // Short perpendicular "pickets" along the boundary ring → reads as a strict fence line.
@@ -44,6 +45,7 @@ export default function HybridRender({
   satUrl,
   clip,
   filename,
+  onTouchUp,
 }: {
   imageDataUrl: string;
   placeName: string;
@@ -54,8 +56,115 @@ export default function HybridRender({
   satUrl?: string | null;
   clip?: ClipFrame | null;
   filename: string;
+  onTouchUp?: (rectNorm: { x0: number; y0: number; x1: number; y1: number }, promptText: string) => Promise<void>;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
+
+  // --- Touch-up: draw-a-rectangle-and-prompt local UI state (does not touch existing render logic) ---
+  const [touchUpMode, setTouchUpMode] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
+  const [dragCurrent, setDragCurrent] = useState<{ x: number; y: number } | null>(null);
+  const [selectedRect, setSelectedRect] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
+  const [touchUpPrompt, setTouchUpPrompt] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [touchUpError, setTouchUpError] = useState('');
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  // Convert a pointer event's client coords into SVG viewBox units (0..W / 0..H).
+  function clientToViewBox(clientX: number, clientY: number): { x: number; y: number } | null {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const rect = svg.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return null;
+    const fx = (clientX - rect.left) / rect.width;
+    const fy = (clientY - rect.top) / rect.height;
+    return { x: Math.min(Math.max(fx * W, 0), W), y: Math.min(Math.max(fy * H, 0), H) };
+  }
+
+  function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    if (!touchUpMode) return;
+    const pt = clientToViewBox(e.clientX, e.clientY);
+    if (!pt) return;
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    setSelectedRect(null);
+    setTouchUpPrompt('');
+    setTouchUpError('');
+    setDragStart(pt);
+    setDragCurrent(pt);
+    setDragging(true);
+  }
+
+  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (!dragging) return;
+    const pt = clientToViewBox(e.clientX, e.clientY);
+    if (!pt) return;
+    setDragCurrent(pt);
+  }
+
+  function handlePointerUp() {
+    if (!dragging || !dragStart || !dragCurrent) {
+      setDragging(false);
+      return;
+    }
+    setDragging(false);
+    const x0 = Math.min(dragStart.x, dragCurrent.x);
+    const x1 = Math.max(dragStart.x, dragCurrent.x);
+    const y0 = Math.min(dragStart.y, dragCurrent.y);
+    const y1 = Math.max(dragStart.y, dragCurrent.y);
+    const wFrac = (x1 - x0) / W;
+    const hFrac = (y1 - y0) / H;
+    if (wFrac >= 0.03 && hFrac >= 0.03) {
+      setSelectedRect({ x0, y0, x1, y1 });
+    } else {
+      setSelectedRect(null);
+    }
+    setDragStart(null);
+    setDragCurrent(null);
+  }
+
+  function cancelTouchUp() {
+    setSelectedRect(null);
+    setTouchUpPrompt('');
+    setTouchUpError('');
+    setDragStart(null);
+    setDragCurrent(null);
+    setDragging(false);
+  }
+
+  async function submitTouchUp() {
+    if (!onTouchUp || !selectedRect || !touchUpPrompt.trim()) return;
+    const rectNorm = {
+      x0: selectedRect.x0 / W,
+      y0: selectedRect.y0 / H,
+      x1: selectedRect.x1 / W,
+      y1: selectedRect.y1 / H,
+    };
+    setSubmitting(true);
+    setTouchUpError('');
+    try {
+      await onTouchUp(rectNorm, touchUpPrompt.trim());
+      setSelectedRect(null);
+      setTouchUpPrompt('');
+      setTouchUpMode(false);
+    } catch (err) {
+      setTouchUpError(err instanceof Error ? err.message : 'Touch-up failed. Try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  // Live drag rect + committed selection rect, in viewBox px, for the overlay <rect> (dragging only —
+  // never rendered into the persistent SVG that download() clones).
+  const liveDragRect = dragging && dragStart && dragCurrent
+    ? {
+        x0: Math.min(dragStart.x, dragCurrent.x),
+        y0: Math.min(dragStart.y, dragCurrent.y),
+        x1: Math.max(dragStart.x, dragCurrent.x),
+        y1: Math.max(dragStart.y, dragCurrent.y),
+      }
+    : null;
+  const overlayRect = liveDragRect || selectedRect;
   const notes = [biome, rainfallMm ? `${rainfallMm} mm/yr` : '', soilTexture ? `${soilTexture} soil` : '']
     .filter(Boolean)
     .join(' · ');
@@ -111,6 +220,7 @@ export default function HybridRender({
 
   return (
     <div className="space-y-1">
+      <div style={{ position: 'relative' }}>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ borderRadius: 14, border: '2px solid #F7C97E', display: 'block' }}>
         {useClip ? (
           <>
@@ -144,6 +254,30 @@ export default function HybridRender({
                 <polyline points={drivePts} fill="none" stroke="#F4EDD8" strokeWidth={3} strokeDasharray="11,7" strokeLinecap="round" strokeLinejoin="round" />
               </>
             ))}
+            {/* Placed site elements (tanks/taps/boreholes/etc) — drawn by us so they're
+                always exactly where the farmer placed them, regardless of what the model painted. */}
+            {clip!.elements?.map((el, i) => {
+              const ex = el.x * W, ey = el.y * H;
+              const text = el.label.length > 22 ? `${el.label.slice(0, 21)}…` : el.label;
+              const pillW = Math.min(Math.max(text.length * 6 + 18, 26), 170);
+              return (
+                <g key={`elem-${i}`}>
+                  <circle cx={ex} cy={ey} r="11" fill="rgba(11,18,11,0.85)" stroke="#F4EDD8" strokeWidth="2" />
+                  <text x={ex} y={ey + 4.5} textAnchor="middle" fontSize="12">{el.icon}</text>
+                  <rect x={ex - pillW / 2} y={ey + 14} width={pillW} height={16} rx="8" fill="rgba(11,18,11,0.85)" />
+                  <text
+                    x={ex} y={ey + 25.5}
+                    textAnchor="middle"
+                    fontFamily="Helvetica, Arial, sans-serif"
+                    fontSize="9"
+                    fontWeight="600"
+                    fill="#F4EDD8"
+                  >
+                    {text}
+                  </text>
+                </g>
+              );
+            })}
           </>
         ) : (
           <image href={imageDataUrl} x={0} y={0} width={W} height={H} preserveAspectRatio="xMidYMid slice" />
@@ -159,9 +293,143 @@ export default function HybridRender({
         <rect x={0} y={H - 36} width={W} height={36} fill="rgba(11,18,11,0.55)" />
         <text x={20} y={H - 13} fontFamily="Helvetica, Arial, sans-serif" fontSize="12" fill="#D9E8C9">AI visualisation — confirm on the ground. The SVG map is the exact version.</text>
         <text x={W - 20} y={H - 13} textAnchor="end" fontFamily="Helvetica, Arial, sans-serif" fontSize="11" fill="#9DB48E">ImbewuField · WGS 84</text>
+
+        {/* Touch-up selection rectangle — only exists while in touch-up mode (dragging or a
+            committed selection awaiting a prompt). Never present when touchUpMode is off, so it's
+            never baked into a download() export (the Download button is hidden while active anyway). */}
+        {touchUpMode && overlayRect && (
+          <rect
+            x={overlayRect.x0}
+            y={overlayRect.y0}
+            width={overlayRect.x1 - overlayRect.x0}
+            height={overlayRect.y1 - overlayRect.y0}
+            fill="rgba(247,201,126,0.25)"
+            stroke="#F7C97E"
+            strokeWidth={2.5}
+            strokeDasharray="8,6"
+          />
+        )}
       </svg>
-      <div className="flex items-center justify-end">
-        <button onClick={download} className="text-xs font-semibold" style={{ color: '#F7C97E', background: 'none', border: 'none', cursor: 'pointer' }}>
+
+      {/* Touch-up pointer-capture layer — HTML, sits on top of the SVG, phone-first (pointer events
+          cover mouse + touch + pen). Only active while touchUpMode is on. */}
+      {touchUpMode && (
+        <div
+          ref={overlayRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            touchAction: 'none',
+            cursor: 'crosshair',
+          }}
+        />
+      )}
+
+      {/* Floating prompt UI — plain HTML, absolutely positioned over the image, OUTSIDE the <svg>
+          so it can never end up in the exported PNG. Shown only once a big-enough rect is selected. */}
+      {touchUpMode && selectedRect && (
+        <div
+          style={{
+            position: 'absolute',
+            left: `${(selectedRect.x0 / W) * 100}%`,
+            top: `${Math.min((selectedRect.y1 / H) * 100 + 1, 88)}%`,
+            width: `${Math.max(((selectedRect.x1 - selectedRect.x0) / W) * 100, 55)}%`,
+            maxWidth: '92%',
+            background: 'rgba(11,18,11,0.95)',
+            border: '1px solid #F7C97E',
+            borderRadius: 10,
+            padding: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            zIndex: 5,
+          }}
+        >
+          <input
+            type="text"
+            value={touchUpPrompt}
+            onChange={(e) => setTouchUpPrompt(e.target.value)}
+            placeholder="What should change here?"
+            disabled={submitting}
+            style={{
+              fontSize: 12,
+              padding: '6px 8px',
+              borderRadius: 6,
+              border: '1px solid #4A5A44',
+              background: '#0B120B',
+              color: '#F4EDD8',
+            }}
+          />
+          {touchUpError && (
+            <div style={{ fontSize: 11, color: '#E88A6B' }}>{touchUpError}</div>
+          )}
+          <div className="flex items-center justify-end" style={{ gap: 8 }}>
+            <button
+              onClick={cancelTouchUp}
+              disabled={submitting}
+              className="text-xs font-semibold"
+              style={{ color: '#D9E8C9', background: 'none', border: 'none', cursor: submitting ? 'default' : 'pointer' }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={submitTouchUp}
+              disabled={submitting || !touchUpPrompt.trim()}
+              className="text-xs font-semibold"
+              style={{
+                color: '#0B120B',
+                background: '#F7C97E',
+                border: 'none',
+                borderRadius: 6,
+                padding: '5px 10px',
+                cursor: submitting || !touchUpPrompt.trim() ? 'default' : 'pointer',
+                opacity: submitting || !touchUpPrompt.trim() ? 0.6 : 1,
+              }}
+            >
+              {submitting ? 'Redoing…' : 'Redo this area'}
+            </button>
+          </div>
+        </div>
+      )}
+      </div>
+      <div className="flex items-center justify-end" style={{ gap: 14 }}>
+        {onTouchUp && (
+          <button
+            onClick={() => {
+              if (!imageDataUrl) return;
+              if (touchUpMode) {
+                cancelTouchUp();
+                setTouchUpMode(false);
+              } else {
+                setTouchUpMode(true);
+              }
+            }}
+            disabled={!imageDataUrl}
+            className="text-xs font-semibold"
+            style={{
+              color: touchUpMode ? '#0B120B' : '#F7C97E',
+              background: touchUpMode ? '#F7C97E' : 'none',
+              border: 'none',
+              borderRadius: touchUpMode ? 6 : 0,
+              padding: touchUpMode ? '3px 8px' : 0,
+              cursor: imageDataUrl ? 'pointer' : 'default',
+              opacity: imageDataUrl ? 1 : 0.4,
+            }}
+          >
+            {touchUpMode ? 'Exit touch up' : '✏️ Touch up'}
+          </button>
+        )}
+        <button
+          onClick={download}
+          disabled={touchUpMode}
+          title={touchUpMode ? 'Exit touch up before downloading' : undefined}
+          className="text-xs font-semibold"
+          style={{ color: '#F7C97E', background: 'none', border: 'none', cursor: touchUpMode ? 'default' : 'pointer', opacity: touchUpMode ? 0.4 : 1 }}
+        >
           Download ↓
         </button>
       </div>

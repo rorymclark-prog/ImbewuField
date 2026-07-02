@@ -13,6 +13,8 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
+import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, type SiteElement, type SiteElementType } from '@/lib/site-elements';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
@@ -224,10 +226,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [wpName, setWpName] = useState('');
   const [wpCategory, setWpCategory] = useState('');
   const [droppingWaterPoint, setDroppingWaterPoint] = useState(false);
+  // ── Site Elements palette: same reticle-drop UX as water points, one marker per tap ──
+  const [siteElements, setSiteElements] = useState<SiteElement[]>([]);
+  const [droppingElement, setDroppingElement] = useState<SiteElementType | null>(null); // armed type, reticle-drop active
+  const [elementEditing, setElementEditing] = useState<SiteElement | null>(null); // element open in the rename/note sheet
+  const [elName, setElName] = useState('');
+  const [elNote, setElNote] = useState('');
+  const [pendingDeleteElement, setPendingDeleteElement] = useState<string | null>(null);
+  const pendingElementTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [shareState, setShareState] = useState<'idle'|'saving'|'copied'|'error'>('idle');
   const [placesOpen, setPlacesOpen] = useState(false);
   const [sectionParcels, setSectionParcels] = useState(false);
   const [sectionWater, setSectionWater] = useState(false);
+  const [sectionElements, setSectionElements] = useState(false);
   const [showShapeLabels, setShowShapeLabels] = useState(false);
   const [showPlaceLabels, setShowPlaceLabels] = useState(true);
   const [showFeatures, setShowFeatures] = useState(true);  // all drawn polygon boundaries + hatching
@@ -258,6 +269,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     window.addEventListener('imbewu-water-points-changed', refresh);
     return () => window.removeEventListener('imbewu-water-points-changed', refresh);
   }, []);
+
+  // Site elements (JoJo tanks, taps, beehives, etc): load + keep in sync, keyed per site
+  const siteIdForElements = useMemo(() => designSiteIdFromLocation(locationData ?? null), [locationData]);
+  useEffect(() => {
+    const refresh = () => setSiteElements(loadSiteElements(siteIdForElements));
+    refresh();
+    window.addEventListener('imbewu-site-elements-changed', refresh);
+    return () => window.removeEventListener('imbewu-site-elements-changed', refresh);
+  }, [siteIdForElements]);
 
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
@@ -1595,6 +1615,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     });
   }, [deleteFeature]);
 
+  // Two-tap delete for a placed site element — mirrors requestDelete/pendingDelete above,
+  // scoped separately since elements live outside the mapbox-gl-draw feature store.
+  const requestDeleteElement = useCallback((id: string) => {
+    if (pendingElementTimer.current) clearTimeout(pendingElementTimer.current);
+    setPendingDeleteElement((cur) => {
+      if (cur === id) {
+        deleteSiteElement(siteIdForElements, id);
+        setSiteElements(loadSiteElements(siteIdForElements));
+        setElementEditing((e) => (e?.id === id ? null : e));
+        return null;
+      }
+      pendingElementTimer.current = setTimeout(() => setPendingDeleteElement(null), 3500);
+      return id;
+    });
+  }, [siteIdForElements]);
+
   return (
     <div className="relative w-full h-full">
       <ReactMapGL
@@ -1687,6 +1723,31 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
           </Marker>
         ))}
+
+        {/* Site element markers (JoJo tanks, taps, beehives, etc) */}
+        {!activeDraw && siteElements.map((el) => {
+          const meta = getElementMeta(el.type);
+          const display = el.label || meta.label;
+          return (
+            <Marker key={el.id} longitude={el.lon} latitude={el.lat} anchor="center">
+              <button
+                onClick={(e) => { e.stopPropagation(); setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                title={`${display}${el.note ? ` — ${el.note}` : ''}`}
+                className="flex flex-col items-center group"
+                style={{ cursor: 'pointer', padding: 6 }}
+              >
+                <span className="opacity-0 group-hover:opacity-100 px-1.5 py-0.5 rounded text-xs font-display font-medium whitespace-nowrap mb-0.5"
+                  style={{ background: 'rgba(6,16,10,0.9)', border: `1px solid ${meta.color}80`, color: meta.color, transition: 'opacity 0.15s' }}>
+                  {display}{el.note ? ` — ${el.note}` : ''}
+                </span>
+                <div className="flex items-center justify-center rounded-full"
+                  style={{ width: 28, height: 28, background: meta.color, border: '2px solid rgba(255,255,255,0.85)', boxShadow: '0 1px 4px rgba(6,16,10,0.5)', fontSize: 14, lineHeight: 1 }}>
+                  <span aria-hidden="true">{meta.icon}</span>
+                </div>
+              </button>
+            </Marker>
+          );
+        })}
 
         {/* ── "Move pin" drag bar — shown when movingPin is active ── */}
         {movingPin && (() => {
@@ -2047,6 +2108,63 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             }}
               className="flex-1 flex items-center justify-center gap-2 font-sans font-bold"
               style={{ height: 48, borderRadius: 13, background: '#235E86', border: 'none', color: '#fff', fontSize: 15, cursor: 'pointer' }}>
+              <MapPin size={17} />Place here
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* ── Site element drop mode: crosshair + Place here (mirrors water point drop mode exactly) ── */}
+      {droppingElement && (
+        <>
+          {/* Top hint */}
+          <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-center pointer-events-none"
+            style={{ top: 14, zIndex: 20, maxWidth: 'calc(100vw - 24px)',
+              background: 'rgba(6,16,10,0.88)', border: `1px solid ${getElementMeta(droppingElement).color}80`, backdropFilter: 'blur(8px)' }}>
+            <span className="font-display" style={{ fontSize: 12, color: getElementMeta(droppingElement).color }}>
+              Pan to the location, then tap Place here
+            </span>
+          </div>
+          {/* Crosshair, tinted to the element's accent colour */}
+          <div className="absolute left-1/2 top-1/2 pointer-events-none"
+            style={{ transform: 'translate(-50%, -50%)', zIndex: 8 }}>
+            <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+              <circle cx="27" cy="27" r="20" stroke={getElementMeta(droppingElement).color} strokeWidth="2" opacity="0.5" />
+              <circle cx="27" cy="27" r="3.5" fill={getElementMeta(droppingElement).color} stroke="#fff" strokeWidth="1.5" />
+              <line x1="27" y1="2" x2="27" y2="14" stroke={getElementMeta(droppingElement).color} strokeWidth="2" />
+              <line x1="27" y1="40" x2="27" y2="52" stroke={getElementMeta(droppingElement).color} strokeWidth="2" />
+              <line x1="2" y1="27" x2="14" y2="27" stroke={getElementMeta(droppingElement).color} strokeWidth="2" />
+              <line x1="40" y1="27" x2="52" y2="27" stroke={getElementMeta(droppingElement).color} strokeWidth="2" />
+            </svg>
+          </div>
+          {/* Action bar */}
+          <div className="absolute left-0 right-0 flex gap-2 px-3"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', zIndex: 30 }}>
+            <button onClick={() => setDroppingElement(null)}
+              className="flex items-center justify-center gap-1.5 font-sans font-semibold"
+              style={{ flex: '0 0 auto', minWidth: 72, padding: '10px 14px', borderRadius: 13, background: 'rgba(6,16,10,0.88)', border: '1px solid rgba(234,243,226,0.16)', color: '#EAF3E2', fontSize: 14, cursor: 'pointer' }}>
+              <X size={15} />Cancel
+            </button>
+            <button onClick={() => {
+              const map = mapRef.current?.getMap();
+              if (!map || !droppingElement) return;
+              const center = map.getCenter();
+              const newElement: SiteElement = {
+                id: generateId(),
+                type: droppingElement,
+                lat: center.lat,
+                lon: center.lng,
+                createdAt: new Date().toISOString(),
+              };
+              saveSiteElement(siteIdForElements, newElement);
+              setSiteElements(loadSiteElements(siteIdForElements));
+              setDroppingElement(null);
+              setElementEditing(newElement);
+              setElName('');
+              setElNote('');
+            }}
+              className="flex-1 flex items-center justify-center gap-2 font-sans font-bold"
+              style={{ height: 48, borderRadius: 13, background: getElementMeta(droppingElement).color, border: 'none', color: '#fff', fontSize: 15, cursor: 'pointer' }}>
               <MapPin size={17} />Place here
             </button>
           </div>
@@ -2666,7 +2784,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           )}
 
           {/* ── Water harvesting — collapsible ── */}
-          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && (
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && !droppingElement && (
             <div className="w-full">
               <button
                 onClick={() => setSectionWater((o) => !o)}
@@ -2764,6 +2882,78 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     </div>
                   )}
                 </>
+              )}
+            </div>
+          )}
+
+          {/* ── Site Elements — collapsible palette of placeable infrastructure icons ── */}
+          {!activeDraw && !editingFeatureId && !pinDraw && !editPin && !droppingWaterPoint && !droppingElement && (
+            <div className="w-full">
+              <button
+                onClick={() => setSectionElements((o) => !o)}
+                className="w-full flex items-center justify-between active:opacity-70 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '3px 2px' }}>
+                <div className="flex items-center gap-1.5">
+                  <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionElements ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
+                  <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
+                    Site Elements{siteElements.length ? ` · ${siteElements.length}` : ''}
+                  </span>
+                </div>
+              </button>
+              {sectionElements && (
+                <div className="w-full flex flex-col gap-1.5 mt-1.5">
+                  {/* Palette — tap an icon to arm reticle-drop mode for that element type */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {ELEMENT_TYPES.map((type) => {
+                      const meta = getElementMeta(type);
+                      return (
+                        <button key={type} onClick={() => setDroppingElement(type)}
+                          title={meta.label}
+                          className="flex flex-col items-center justify-center gap-0.5 transition-all active:scale-95"
+                          style={{ width: 60, height: 56, borderRadius: 13, background: 'rgba(247,242,233,0.07)', border: `1px solid ${meta.color}55`, cursor: 'pointer' }}>
+                          <span style={{ fontSize: 18, lineHeight: 1 }} aria-hidden="true">{meta.icon}</span>
+                          <span className="font-sans text-center px-0.5" style={{ fontSize: 9.5, fontWeight: 700, color: 'rgba(234,243,226,0.65)', lineHeight: 1.15 }}>
+                            {meta.label}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {/* Placed elements list */}
+                  {siteElements.length > 0 && (
+                    <div className="flex flex-col gap-1.5 mt-1">
+                      {siteElements.map((el) => {
+                        const meta = getElementMeta(el.type);
+                        return (
+                          <div key={el.id} className="flex items-center gap-3 font-sans"
+                            style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
+                            <button onClick={() => { setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                              title="Edit name or note"
+                              className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
+                              style={{ width: 36, height: 36, background: meta.color, cursor: 'pointer', border: 'none', fontSize: 16 }}>
+                              <span aria-hidden="true">{meta.icon}</span>
+                            </button>
+                            <button
+                              onClick={() => { setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                              className="flex-1 min-w-0 text-left transition-all"
+                              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
+                              <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{el.label || meta.label}</div>
+                              {el.note && <div className="truncate" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{el.note}</div>}
+                            </button>
+                            <button onClick={() => requestDeleteElement(el.id)}
+                              aria-label={`Delete ${el.label || meta.label}`} title="Delete this element"
+                              className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
+                              style={pendingDeleteElement === el.id
+                                ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
+                                : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
+                              {pendingDeleteElement === el.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}
@@ -3299,6 +3489,55 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   setWaterPointNaming(null);
                 }}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#235E86', border: 'none', color: '#fff', cursor: 'pointer' }}>
+                  <Check size={15} />Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Site element rename/note sheet (mirrors the water point naming sheet) ── */}
+      {elementEditing && (
+        <>
+          <div className="fixed inset-0 z-[70]" style={{ background: 'rgba(6,16,10,0.55)', backdropFilter: 'blur(2px)' }}
+            onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }} aria-hidden="true" />
+          <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
+            style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+              <div className="flex items-center gap-2 mb-3">
+                <span style={{ fontSize: 18, lineHeight: 1 }} aria-hidden="true">{getElementMeta(elementEditing.type).icon}</span>
+                <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  {getElementMeta(elementEditing.type).label}
+                </span>
+              </div>
+              <input value={elName} onChange={(e) => setElName(e.target.value)} autoFocus
+                placeholder={`e.g. ${getElementMeta(elementEditing.type).label}`}
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              <input value={elNote} onChange={(e) => setElNote(e.target.value)}
+                placeholder="Note — e.g. 5000 L"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
+                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              <div className="flex gap-2">
+                <button onClick={() => requestDeleteElement(elementEditing.id)}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={pendingDeleteElement === elementEditing.id
+                    ? { fontSize: 14, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', cursor: 'pointer' }
+                    : { fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
+                  {pendingDeleteElement === elementEditing.id ? 'Sure?' : 'Delete'}
+                </button>
+                <button onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }}
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  Skip
+                </button>
+                <button onClick={() => {
+                  const updated: SiteElement = { ...elementEditing, label: elName.trim() || undefined, note: elNote.trim() || undefined };
+                  saveSiteElement(siteIdForElements, updated);
+                  setSiteElements(loadSiteElements(siteIdForElements));
+                  setElementEditing(null);
+                  setPendingDeleteElement(null);
+                }}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: getElementMeta(elementEditing.type).color, border: 'none', color: '#fff', cursor: 'pointer' }}>
                   <Check size={15} />Save
                 </button>
               </div>

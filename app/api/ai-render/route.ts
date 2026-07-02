@@ -49,6 +49,7 @@ interface RenderContext {
     water: string[];
     access: string[];
   };
+  placedElements?: Array<{ type: string; label: string; note?: string; locationHint: string }>;
 }
 
 function layerTheme(layer: RenderLayer): string {
@@ -362,6 +363,15 @@ ${brief.access.map((a) => `• ${a}`).join('\n')}
 Whatever this specific map emphasises, keep all of the above in the SAME positions it has on the other maps. The orchard is always in the same place; the vegetable beds are always in the same place; the tanks are always in the same place.\n`
     : '';
 
+  // Farmer-placed point features (tanks, taps, boreholes, etc.) — same 'base' exclusion as
+  // designBrief: the existing-site map shows only what's physically there today, not plans.
+  const placedElements = layer === 'base' ? undefined : ctx.placedElements;
+  const placedElementsBlock = placedElements?.length
+    ? `\n═══ FARMER-PLACED ELEMENTS — KEEP EXACTLY WHERE SHOWN ═══
+These are REAL features the farmer has already placed on the site. They MUST appear at their approximate position below — do NOT invent them elsewhere, do NOT omit any of them, and do NOT move them to a "better" spot.
+${placedElements.map((e) => `• ${e.label}${e.note ? ` (${e.note})` : ''} — ${e.locationHint}`).join('\n')}\n`
+    : '';
+
   return `You are a professional permaculture cartographer creating a presentation-quality map for "${ctx.placeName ?? 'a South African farm'}".
 
 TWO REFERENCE IMAGES:
@@ -406,6 +416,7 @@ This property is in South Africa. The NORTH side receives the strongest useful s
   - Winter sun = lower arc, weaker
 
 ${briefBlock}
+${placedElementsBlock}
 ${layerTheme(layer)}
 ${showZones && zoneLines ? `\nPERMACULTURE ZONES (use these as placement guides):\n${zoneLines}` : ''}
 ${polyLines ? `\nSURVEYED POLYGONS (geometry reference):\n${polyLines}` : ''}
@@ -684,7 +695,7 @@ async function submitFalGptQueue(
 }
 
 export async function POST(req: NextRequest) {
-  let body: { imageBase64?: string; satBase64?: string; maskBase64?: string; photos?: string[]; context?: RenderContext; provider?: 'gemini' | 'openai' | 'fal' | 'falgpt'; geminiModel?: GeminiModel };
+  let body: { imageBase64?: string; satBase64?: string; maskBase64?: string; photos?: string[]; context?: RenderContext; provider?: 'gemini' | 'openai' | 'fal' | 'falgpt'; geminiModel?: GeminiModel; touchupPrompt?: string };
   try {
     body = await req.json();
   } catch {
@@ -732,6 +743,11 @@ export async function POST(req: NextRequest) {
         { error: 'FAL_KEY is not configured on the server. Add it with: vercel env add FAL_KEY production' },
         { status: 500 },
       );
+    }
+    const touchupPrompt = body.touchupPrompt?.trim();
+    if (touchupPrompt) {
+      const wrappedPrompt = `Make ONLY this specific change to the highlighted (transparent) region of the image; leave every other pixel exactly as it is: ${touchupPrompt}`;
+      return submitFalGptQueue(falKey, imageBase64, wrappedPrompt, maskBase64);
     }
     return submitFalGptQueue(falKey, imageBase64, prompt, maskBase64);
   }

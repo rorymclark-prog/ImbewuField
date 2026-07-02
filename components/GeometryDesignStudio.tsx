@@ -39,6 +39,7 @@ import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
+import { loadSiteElements, getElementMeta, type SiteElement } from '@/lib/site-elements';
 import { reportId } from '@/lib/saved-reports';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
@@ -215,6 +216,19 @@ function bearingToDir(label: string | undefined): readonly [number, number] {
   const b = COMPASS_BEARING[(label ?? 'N').toUpperCase()] ?? 0;
   const r = (b * Math.PI) / 180;
   return [Math.sin(r), -Math.cos(r)];
+}
+
+// Inverse of bearingToDir: a normalised [0..1] position relative to the boundary centroid
+// (0.5, 0.5) → an 8-point compass direction ("N"/"NE"/"E"/...). Used to phrase a short,
+// plain-English locationHint for AI prompts (e.g. "near the house, NE side").
+const COMPASS_8 = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] as const;
+function compass8FromNormPos(nx: number, ny: number): string {
+  const dx = nx - 0.5;
+  const dy = ny - 0.5; // screen space: +y is south/down
+  if (Math.abs(dx) < 0.02 && Math.abs(dy) < 0.02) return 'centre';
+  const deg = (Math.atan2(dx, -dy) * 180) / Math.PI; // bearing clockwise from north
+  const idx = Math.round(((deg < 0 ? deg + 360 : deg) / 45)) % 8;
+  return COMPASS_8[idx];
 }
 
 // Indicative slope from the coarse elevation grid (no DEM). Everything derived from
@@ -828,6 +842,7 @@ interface AiClipFrame {
   drivewayClosed: boolean; // true = traced as an area (polygon) → draw as a filled lane, not a dashed loop
   house: Array<[number, number]>; // roof/structure polygon (normalised) — protected by the gpt-image-2 mask
   aspect: number; // w / h of the satellite area
+  elements: Array<{ type: string; icon: string; label: string; note?: string; x: number; y: number }>; // farmer-placed point elements (normalised [0..1])
 }
 
 function ringFromGeometry(geom: DesignLayer['geometry'] | undefined): Position[] {
@@ -844,7 +859,7 @@ function lineFromGeometry(geom: DesignLayer['geometry'] | undefined): Position[]
   return [];
 }
 
-function computeClipFrame(layers: DesignLayer[]): AiClipFrame | null {
+function computeClipFrame(layers: DesignLayer[], elements: SiteElement[] = []): AiClipFrame | null {
   // Use the overlay fit (matches how every design map is rendered).
   const fit = computeSatFit(layers, 'design');
   if (!fit.useSatellite) return null;
@@ -874,7 +889,12 @@ function computeClipFrame(layers: DesignLayer[]): AiClipFrame | null {
     layers.find((l) => (l.layerType === 'roof' || l.layerType === 'structure') && l.approved) ??
     layers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
   const house = houseLayer ? ringFromGeometry(houseLayer.geometry).map(norm) : [];
-  return { ring, driveway, drivewayClosed, house, aspect: fit.imgW / fit.imgH };
+  const elementPoints = elements.map((el) => {
+    const meta = getElementMeta(el.type);
+    const [x, y] = norm([el.lon, el.lat]);
+    return { type: el.type, icon: meta.icon, label: el.label ?? meta.label, note: el.note, x, y };
+  });
+  return { ring, driveway, drivewayClosed, house, aspect: fit.imgW / fit.imgH, elements: elementPoints };
 }
 
 // Build a PNG edit-mask for gpt-image-2 (OpenAI convention: TRANSPARENT = editable, OPAQUE
@@ -924,7 +944,39 @@ function buildEditMask(clip: AiClipFrame, pxW: number, pxH: number): string | nu
       ctx.stroke();
     }
   }
+  // 4) Re-preserve each placed site element (tank/tap/borehole/etc) — a small circular
+  // region around its position, so gpt-image-2 never repaints over it.
+  if (clip.elements.length) {
+    const r = Math.min(Math.max(pxW * 0.018, 24), 32); // ~24-32px radius scaled to pxW
+    for (const el of clip.elements) {
+      ctx.beginPath();
+      ctx.arc(el.x * pxW, el.y * pxH, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
   return canvas.toDataURL('image/png');
+}
+
+// Poll a fal queue job (gpt-image-2 async path) until the render is ready (~30–90s), or throw
+// on failure/timeout. Shared by the full-render flow (runAiRender) and the touch-up flow
+// (handleTouchUp) — SAME 45×3000ms polling loop and error messages either way.
+async function pollFalRender(statusUrl: string, responseUrl: string): Promise<string> {
+  let finalImage: string | undefined;
+  for (let i = 0; i < 45 && !finalImage; i++) {
+    await new Promise((r) => setTimeout(r, 3000));
+    const pr = await fetch('/api/ai-render/poll', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ statusUrl, responseUrl }),
+    });
+    const pd: { image?: string; error?: string; detail?: string; pending?: boolean } = await pr.json().catch(() => ({}));
+    if (pd.image) { finalImage = pd.image; break; }
+    // Surface ANY non-ok poll response (even with no JSON body) instead of silently looping to a timeout.
+    if (!pr.ok) throw new Error(pd.error ? `${pd.error}${pd.detail ? ` — ${pd.detail}` : ''}` : `Poll failed (HTTP ${pr.status})`);
+    // otherwise still pending → keep polling
+  }
+  if (!finalImage) throw new Error('Timed out waiting for the render — try again.');
+  return finalImage;
 }
 
 // ── Plan card (text side-panel) ───────────────────────────────────────────────
@@ -997,6 +1049,7 @@ function GeometryPreview({
   aiPlan,
   satDataUrl,
   implementationPhases,
+  siteElements,
 }: {
   layers: DesignLayer[];
   title: string;
@@ -1008,6 +1061,7 @@ function GeometryPreview({
   aiPlan: DesignPlanAI | null;
   satDataUrl: string | null;
   implementationPhases?: ImplementationPhase[];
+  siteElements?: SiteElement[];
 }) {
   const SVG_W = 960;
   const SVG_H = 640;
@@ -1606,6 +1660,38 @@ function GeometryPreview({
                   fill="#F4EDD8"
                 >
                   {full.length > 30 ? `${full.slice(0, 29)}…` : full}
+                </text>
+              </g>
+            );
+          })}
+
+          {/* ── SITE ELEMENTS (farmer-placed: tanks/taps/boreholes/etc) ─────── */}
+          {siteElements?.map((el) => {
+            const meta = getElementMeta(el.type);
+            const [ex, ey] = project([el.lon, el.lat]);
+            const label = el.label ?? meta.label;
+            const text = label.length > 22 ? `${label.slice(0, 21)}…` : label;
+            const pillW = Math.min(Math.max(text.length * 6 + 18, 26), 170);
+            const labelCy = placeLabel(ex, ey + 16, text.length);
+            return (
+              <g key={`elem-${el.id}`}>
+                <circle cx={ex} cy={ey} r="10" fill={meta.color} stroke="#fff" strokeWidth="2.5" />
+                <text x={ex} y={ey + 4} textAnchor="middle" fontSize="11">{meta.icon}</text>
+                <rect
+                  x={ex - pillW / 2} y={labelCy - 8}
+                  width={pillW} height={16}
+                  rx="8"
+                  fill="rgba(32,25,15,0.74)"
+                />
+                <text
+                  x={ex} y={labelCy + 4}
+                  textAnchor="middle"
+                  fontFamily="'Helvetica Neue', sans-serif"
+                  fontSize="8.5"
+                  fontWeight="600"
+                  fill="#F4EDD8"
+                >
+                  {text}
                 </text>
               </g>
             );
@@ -2461,6 +2547,9 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     } catch { return {}; }
   });
   const [showReportDoc, setShowReportDoc] = useState(false);
+  const [siteElements, setSiteElements] = useState<SiteElement[]>(() =>
+    loadSiteElements(designSiteIdFromLocation(locationData)),
+  );
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Fetch the Mapbox satellite tile for the design view and inline it as a base64
@@ -2519,9 +2608,27 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     };
   }, [locationData]);
 
-  // Boundary + driveway projected into the satellite frame — drives the hard clip in
-  // HybridRender (per-site, same for every map). null when no boundary/satellite yet.
-  const aiClipFrame = useMemo(() => computeClipFrame(studio.layers), [studio.layers]);
+  // Farmer-placed site elements (tanks/taps/boreholes/etc) — reload whenever the site
+  // switches, and whenever an element is added/edited/removed elsewhere.
+  useEffect(() => {
+    const refreshElements = () => {
+      setSiteElements(loadSiteElements(designSiteIdFromLocation(locationData)));
+    };
+    refreshElements();
+    window.addEventListener('imbewu-site-elements-changed', refreshElements);
+    window.addEventListener('storage', refreshElements);
+    return () => {
+      window.removeEventListener('imbewu-site-elements-changed', refreshElements);
+      window.removeEventListener('storage', refreshElements);
+    };
+  }, [locationData]);
+
+  // Boundary + driveway + placed elements projected into the satellite frame — drives the
+  // hard clip in HybridRender (per-site, same for every map). null when no boundary/satellite yet.
+  const aiClipFrame = useMemo(
+    () => computeClipFrame(studio.layers, siteElements),
+    [studio.layers, siteElements],
+  );
 
   // Base-map completeness: house (roof/structure) + driveway (access) are the two most
   // commonly-missing features — flag them so the user knows to trace them (then the SVG
@@ -2803,6 +2910,17 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
         );
       const designBrief = buildDesignBrief(effectivePlan);
 
+      // Farmer-placed site elements (tanks/taps/boreholes/etc) — same normalised frame as
+      // aiClipFrame (boundary centroid = 0.5,0.5), reduced to a short compass locationHint
+      // for the AI prompt (e.g. "near the house, NE side"). `note` travels with each element
+      // through computeClipFrame itself — no index-based zipping against siteElements.
+      const placedElements = (aiClipFrame?.elements ?? []).map((el) => ({
+        type: el.type,
+        label: el.label,
+        note: el.note,
+        locationHint: `${compass8FromNormPos(el.x, el.y)} side of the property`,
+      }));
+
       const context = {
         placeName: title,
         layer,
@@ -2819,6 +2937,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
         polygons: layers.map((l) => ({ name: l.name, type: l.layerType, area: l.areaLabel })),
         survey: survey ?? undefined,
         designBrief,
+        placedElements: placedElements.length ? placedElements : undefined,
       };
 
       const res = await fetch('/api/ai-render', {
@@ -2840,21 +2959,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
       let finalImage = data.image;
       // Async path (gpt-image-2 via fal queue): poll until the render is ready (~30–90s).
       if (!finalImage && data.pending && data.statusUrl && data.responseUrl) {
-        const { statusUrl, responseUrl } = data;
-        for (let i = 0; i < 45 && !finalImage; i++) {
-          await new Promise((r) => setTimeout(r, 3000));
-          const pr = await fetch('/api/ai-render/poll', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ statusUrl, responseUrl }),
-          });
-          const pd: { image?: string; error?: string; detail?: string; pending?: boolean } = await pr.json().catch(() => ({}));
-          if (pd.image) { finalImage = pd.image; break; }
-          // Surface ANY non-ok poll response (even with no JSON body) instead of silently looping to a timeout.
-          if (!pr.ok) throw new Error(pd.error ? `${pd.error}${pd.detail ? ` — ${pd.detail}` : ''}` : `Poll failed (HTTP ${pr.status})`);
-          // otherwise still pending → keep polling
-        }
-        if (!finalImage) throw new Error('Timed out waiting for the render — try again.');
+        finalImage = await pollFalRender(data.statusUrl, data.responseUrl);
       }
 
       if (!finalImage) {
@@ -2876,6 +2981,88 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     } finally {
       setAiRendering(false);
     }
+  }
+
+  // "Touch up": the user draws a rectangle directly on the CURRENT AI render + types a short
+  // instruction — ONLY that region regenerates via gpt-image-2's mask (transparent = editable,
+  // opaque = preserved). Reuses the same fal gpt-image-2/edit queue as the full render, just fed
+  // with the previous render as base image + a user-drawn rectangular mask + a short raw prompt.
+  async function handleTouchUp(
+    rectNorm: { x0: number; y0: number; x1: number; y1: number },
+    promptText: string,
+  ): Promise<void> {
+    if (!aiRender) throw new Error('No render to touch up yet.');
+
+    // Load the current render to read its real pixel dimensions — the mask must match exactly.
+    const img = new Image();
+    img.src = aiRender;
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error('Could not load the current render.'));
+    });
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+
+    // Build the touch-up mask: fully opaque (preserved) except a transparent (editable) hole
+    // over the user-drawn rectangle — same gpt-image-2 convention as buildEditMask.
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Could not prepare the touch-up mask.');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillRect(
+      rectNorm.x0 * w,
+      rectNorm.y0 * h,
+      (rectNorm.x1 - rectNorm.x0) * w,
+      (rectNorm.y1 - rectNorm.y0) * h,
+    );
+    const maskDataUrl = canvas.toDataURL('image/png');
+
+    const stripDataUrl = (s: string) => s.replace(/^data:image\/\w+;base64,/, '');
+
+    const res = await fetch('/api/ai-render', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        imageBase64: stripDataUrl(aiRender),
+        maskBase64: stripDataUrl(maskDataUrl),
+        touchupPrompt: promptText,
+        provider: 'falgpt',
+        context: {},
+      }),
+    });
+    let data: { image?: string; error?: string; detail?: string; pending?: boolean; statusUrl?: string; responseUrl?: string } = {};
+    try {
+      data = await res.json();
+    } catch {
+      const raw = await res.text().catch(() => '');
+      throw new Error(`Server error (${res.status})${raw ? ` — ${raw.slice(0, 200)}` : ''}`);
+    }
+    if (!res.ok) {
+      throw new Error(data.error ? `${data.error}${data.detail ? ` — ${data.detail}` : ''}` : 'Render failed.');
+    }
+
+    let finalImage = data.image;
+    if (!finalImage && data.pending && data.statusUrl && data.responseUrl) {
+      finalImage = await pollFalRender(data.statusUrl, data.responseUrl);
+    }
+    if (!finalImage) {
+      throw new Error(data.error ? `${data.error}${data.detail ? ` — ${data.detail}` : ''}` : 'Render failed.');
+    }
+
+    const finalImg = finalImage; // const snapshot for the setState closures below
+    setAiRender(finalImg);
+    setAiRenderCache((prev) => {
+      const next = { ...prev, [renderLayer]: finalImg };
+      try {
+        const sid = designSiteIdFromLocation(locationData);
+        localStorage.setItem(`imbewu_airender_${sid}`, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
   }
 
   // Render a specific layer: switch the map to that layer's view first so the
@@ -3312,6 +3499,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
           aiPlan={aiPlan}
           satDataUrl={satDataUrl}
           implementationPhases={reportDoc.sections.implementation}
+          siteElements={siteElements}
         />
 
         {/* ── EXPORT BUTTONS ──────────────────────────────────────────────── */}
@@ -3486,6 +3674,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
                   satUrl={renderLayer === 'base' || renderLayer === 'sector' ? null : satDataUrl}
                   clip={renderLayer === 'base' || renderLayer === 'sector' ? null : aiClipFrame}
                   filename={`${slugify(title)}-${renderLayer}-hybrid.png`}
+                  onTouchUp={handleTouchUp}
                 />
                 <p className="text-xs" style={{ color: '#9DB48E' }}>
                   AI render ({aiProvider}) — visualisation only; the SVG map above is the exact version.

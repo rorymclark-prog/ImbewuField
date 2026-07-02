@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import GeometryDesignStudio from './GeometryDesignStudio';
@@ -122,6 +123,22 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
   return (
     <div className="space-y-5">
       {/* Geometry-first design studio — locks traced site geometry, then AI styles overlays */}
+      {/* Design Studio — the farmer-driven true-scale canvas (build your own design) */}
+      {locationData && (
+        <Link
+          href={`/design?lat=${locationData.lat.toFixed(5)}&lon=${locationData.lon.toFixed(5)}`}
+          className="flex items-center justify-between rounded-2xl px-4 py-3 transition-all"
+          style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: '#FBF6EC', textDecoration: 'none' }}
+        >
+          <span className="flex items-center gap-2 font-display font-semibold" style={{ fontSize: 15 }}>
+            <PencilRuler size={17} /> Design Studio — build your own design
+          </span>
+          <span className="font-sans" style={{ fontSize: 12, color: '#F7C97E' }}>
+            Place tanks, trees & zones at real scale →
+          </span>
+        </Link>
+      )}
+
       <GeometryDesignStudio locationData={locationData} siteName={placeName} />
 
       <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
