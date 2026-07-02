@@ -151,8 +151,14 @@ export default function DesignCanvas({
     if (!svg) return null;
     const rect = svg.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return null;
-    const fx = clamp01((clientX - rect.left) / rect.width);
-    const fy = clamp01((clientY - rect.top) / rect.height);
+    // The svg fills its container with preserveAspectRatio="meet", so the rendered box
+    // may be letterboxed — map through the actual drawn-image scale + offsets, not the
+    // raw rect, or taps land off-target whenever the container aspect ≠ viewBox aspect.
+    const scale = Math.min(rect.width / imgW, rect.height / imgH);
+    const offX = (rect.width - imgW * scale) / 2;
+    const offY = (rect.height - imgH * scale) / 2;
+    const fx = clamp01((clientX - rect.left - offX) / (imgW * scale));
+    const fy = clamp01((clientY - rect.top - offY) / (imgH * scale));
     return [fx, fy];
   }
 
@@ -248,12 +254,14 @@ export default function DesignCanvas({
   const armedNonSelect = tool !== 'select';
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      {/* Fill the container BOTH ways (meet = letterbox) so the whole site is always in
+          view and the canvas never overflows and pushes the palette off-screen. */}
       <svg
         ref={svgRef}
         viewBox={`0 0 ${imgW} ${imgH}`}
-        width="100%"
-        style={{ display: 'block', touchAction: armedNonSelect ? 'none' : 'auto', borderRadius: 12, background: '#FBF6EC' }}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ display: 'block', width: '100%', height: '100%', touchAction: armedNonSelect ? 'none' : 'auto', background: '#0B120B' }}
         onPointerDown={handleBackgroundPointerDown}
         onPointerMove={moveDragItem}
         onPointerUp={endDragItem}

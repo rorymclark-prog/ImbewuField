@@ -218,8 +218,12 @@ function EmptyState() {
 
 function DesignStudioInner() {
   const params = useSearchParams();
-  const lat = Number(params.get('lat'));
-  const lon = Number(params.get('lon'));
+  const latRaw = params.get('lat');
+  const lonRaw = params.get('lon');
+  // Number(null) === 0 — a missing param must NOT masquerade as latitude 0 / longitude 0
+  // (it skipped the saved-places picker and filed the design under site:0.00000,0.00000).
+  const lat = latRaw === null || latRaw === '' ? NaN : Number(latRaw);
+  const lon = lonRaw === null || lonRaw === '' ? NaN : Number(lonRaw);
   const hasSite = Number.isFinite(lat) && Number.isFinite(lon);
 
   const [locationData, setLocationData] = useState<LocationData | null>(null);
@@ -393,9 +397,15 @@ function DesignStudioInner() {
 
   if (!hasSite) return <EmptyState />;
 
-  const siteName = locationData
-    ? `${locationData.lat.toFixed(4)}, ${locationData.lon.toFixed(4)}`
-    : `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  // Prefer the saved place's NAME over raw coordinates in the header (coords are a
+  // fallback for un-named sites).
+  let siteName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  try {
+    const match = loadPlaces().find(
+      (p) => Math.abs(p.lat - lat) < 5e-5 && Math.abs(p.lon - lon) < 5e-5,
+    );
+    if (match?.name) siteName = match.name;
+  } catch { /* localStorage unavailable */ }
 
   return (
     <div
