@@ -12,7 +12,7 @@ export type ElType =
   | 'coop' | 'compost' | 'greenhouse' | 'tunnel' | 'shed' | 'beehive' | 'biogas'
   | 'swalew' | 'firebreak' | 'nursery';
 
-export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour';
+export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour' | 'building';
 
 export type SectorKind = 'sun_winter' | 'sun_summer' | 'wind' | 'fire' | 'water_flow' | 'view';
 
@@ -105,6 +105,7 @@ const TYPE_LAYER: Record<ElType, LayerId> = {
 const LINE_LAYER: Record<LineKind, LayerId> = {
   pipe: 'water', swale: 'water', drip: 'water', contour: 'water',
   fence: 'access', path: 'access', windbreak: 'planting',
+  building: 'existing',
 };
 
 export function defaultLayerForType(t: ElType): LayerId { return TYPE_LAYER[t]; }
@@ -182,7 +183,7 @@ export interface DetectResponse {
 
 export interface GhostFeature {
   id: string;
-  kind: DetectKind | 'boundary';
+  kind: DetectKind | 'boundary' | 'osm_building' | 'osm_road' | 'osm_water';
   elType?: ElType;       // what accepting creates (point features)
   lineKind?: LineKind;   // what accepting creates (poly features)
   pxPoints: number[];    // flattened stage px [x1,y1,x2,y2,...]

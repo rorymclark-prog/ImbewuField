@@ -9,7 +9,7 @@ import type { Profile, Design } from '@/lib/db/types';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDesignState } from '@/lib/design-studio';
 import { readLocalFarmShapes } from '@/lib/map-sync';
-import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector } from '@/lib/design-canvas';
+import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMercatorUnprojector } from '@/lib/design-canvas';
 import type { LocationData } from '@/lib/types';
 import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse } from '@/lib/facilitator-design';
 import {
@@ -64,6 +64,7 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   contour:   { label: 'Contour',    icon: '~', color: '#B89A60', dash: [6, 4],   width: 2 },
   fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],       width: 2.5 },
   path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],       width: 7 },
+  building:  { label: 'Building',   icon: '▢', color: '#5A5448', dash: [],       width: 2.5 },
 };
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
@@ -504,7 +505,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [ghosts, setGhosts] = useState<GhostFeature[] | null>(null);
   const [detecting, setDetecting] = useState(false);
   const [detectError, setDetectError] = useState('');
+  const [ghostSource, setGhostSource] = useState<'ai' | 'osm'>('ai');
   const [scaleSuggestion, setScaleSuggestion] = useState<{ metresAcross: number; pxPerM: number } | null>(null);
+  // Geo frame for the current site background — set inside loadSiteBackground's img.onload
+  // (map imports only; file imports have no geo). Lets later actions project geo↔canvas
+  // with the SAME maths as the map-truth import above.
+  const siteFrameRef = useRef<{ frame: ReturnType<typeof computeCanvasFrame>['frame']; bgX: number; bgY: number; drawnW: number; drawnH: number } | null>(null);
+  const [findingFeatures, setFindingFeatures] = useState(false);
+  const [findFeaturesError, setFindFeaturesError] = useState('');
   // true when importFromSite / site-restore set the EXACT scale from the map fit;
   // false when a plain file image is loaded (scale is a guess until measured or AI-suggested).
   const [scaleLocked, setScaleLocked] = useState(false);
@@ -591,6 +599,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         setScaleLocked(false);
         setGhosts(null);
         setScaleSuggestion(null);
+        siteFrameRef.current = null; // file imports have no geo — can't find map features
       };
       img.src = dataUrl;
     };
@@ -634,6 +643,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setShowGrid(false);
       setSitePickerOpen(false);
       setSiteLoading(null);
+
+      // Geo frame for later geo↔canvas actions (e.g. "Find map features") — same
+      // frame + drawn rect used by the map-truth projector just below.
+      siteFrameRef.current = { frame, bgX, bgY, drawnW, drawnH };
 
       // ── Map-truth import — draw the farmer's TRACED shapes directly instead of
       // re-guessing them from the satellite. `near` is already classified by
@@ -733,6 +746,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const res = await resp.json() as DetectResponse;
       const found = buildGhosts(res, { x: bg.x, y: bg.y, w: bg.w, h: bg.h });
       setGhosts(found);
+      setGhostSource('ai');
       if (res.metresAcross && !scaleLocked) {
         setScaleSuggestion({ metresAcross: res.metresAcross, pxPerM: bg.w / res.metresAcross });
       }
@@ -741,6 +755,76 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setDetectError(e instanceof Error ? e.message : 'Auto-detect failed — please try again.');
     } finally {
       setDetecting(false);
+    }
+  }
+
+  // "Find map features" — pull surveyed OSM buildings/roads/water for the imported
+  // site's bbox and turn them into the SAME approve/reject ghost overlays as AI
+  // detect, but projected with the EXACT maths as the map-truth import (same
+  // projector construction from the same frame) so they line up pixel-for-pixel.
+  async function runFindMapFeatures() {
+    const sf = siteFrameRef.current;
+    if (!sf || findingFeatures) return;
+    setFindingFeatures(true);
+    setFindFeaturesError('');
+    try {
+      const { frame, bgX, bgY, drawnW, drawnH } = sf;
+      const unproject = makeMercatorUnprojector(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH);
+      const [lon1, lat1] = unproject([0, 0]);
+      const [lon2, lat2] = unproject([1, 1]);
+      const south = Math.min(lat1, lat2), north = Math.max(lat1, lat2);
+      const west = Math.min(lon1, lon2), east = Math.max(lon1, lon2);
+
+      const resp = await fetch('/api/site-features', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ south, west, north, east }),
+      });
+      if (!resp.ok) throw new Error('unreachable');
+      const res = await resp.json() as { features: Array<{ kind: 'building' | 'road' | 'water'; ring: Array<[number, number]>; name?: string }> };
+
+      // Same projector construction as loadSiteBackground's map-truth import.
+      const projector = makeMercatorProjector(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, 0, 0);
+      const toCanvasPx = (coord: [number, number]): [number, number] => {
+        const [ix, iy] = projector(coord);
+        return [bgX + (ix * drawnW) / frame.imgW, bgY + (iy * drawnH) / frame.imgH];
+      };
+
+      const KIND_TO_LINE: Record<'building' | 'road' | 'water', LineKind> = { building: 'building', road: 'path', water: 'pipe' };
+      const KIND_TO_GHOST: Record<'building' | 'road' | 'water', GhostFeature['kind']> = { building: 'osm_building', road: 'osm_road', water: 'osm_water' };
+      const minX = bgX, maxX = bgX + drawnW, minY = bgY, maxY = bgY + drawnH;
+
+      const buildings: GhostFeature[] = [];
+      const others: GhostFeature[] = [];
+      (res.features ?? []).forEach((f, i) => {
+        if (!f.ring || f.ring.length < 2) return;
+        const pxPoints = f.ring.flatMap((c) => toCanvasPx(c));
+        // Drop features entirely outside the visible image — partial overlap is fine, no clipping.
+        let anyInside = false;
+        for (let k = 0; k + 1 < pxPoints.length; k += 2) {
+          if (pxPoints[k] >= minX && pxPoints[k] <= maxX && pxPoints[k + 1] >= minY && pxPoints[k + 1] <= maxY) {
+            anyInside = true; break;
+          }
+        }
+        if (!anyInside) return;
+        const ghost: GhostFeature = {
+          id: `osmghost-${i}`,
+          kind: KIND_TO_GHOST[f.kind],
+          lineKind: KIND_TO_LINE[f.kind],
+          pxPoints,
+          note: f.name,
+          layer: 'existing',
+        };
+        (f.kind === 'building' ? buildings : others).push(ghost);
+      });
+      const found = [...buildings, ...others].slice(0, 60);
+
+      setGhosts(found);
+      setGhostSource('osm');
+      if (found.length === 0) setFindFeaturesError('No map data reachable — try again in a minute.');
+    } catch {
+      setFindFeaturesError('No map data reachable — try again in a minute.');
+    } finally {
+      setFindingFeatures(false);
     }
   }
 
@@ -782,6 +866,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setItems((prev) => [...prev, {
         id, type: 'bed', x: minX, y: minY,
         wM: (maxX - minX) / pxPerM, hM: (maxY - minY) / pxPerM, rotation: 0, layer: 'existing',
+      }]);
+    } else if (g.kind === 'osm_building' || g.kind === 'osm_road' || g.kind === 'osm_water') {
+      // Surveyed map data — building/water rings close, roads stay open polylines.
+      setLines((prev) => [...prev, {
+        id: 'osm-' + g.id, kind: g.lineKind!, points: g.pxPoints, closed: g.kind !== 'osm_road', layer: 'existing',
       }]);
     } else if (g.lineKind) {
       // Polyline / ring — driveway → path, boundary → fence.
@@ -1205,6 +1294,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     setBg(null); setBgSite(null); setBgDataUrl(null);
     setPxPerM(26); setScaleSet(false); setScaleLocked(false);
     setGhosts(null); setScaleSuggestion(null); setDetectError('');
+    setFindFeaturesError(''); setGhostSource('ai');
+    siteFrameRef.current = null;
     setActiveLayer('base'); setHiddenLayers([]);
     setSelectedId(null);
     setDesignId(null); setDesignTitle(''); setCloudStatus('idle'); setCloudSavedAt(null);
@@ -1323,6 +1414,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           {detectError && (
             <div className="text-[10px] font-mono px-1 mt-1" style={{ color: '#C0531E' }}>{detectError}</div>
           )}
+          <button onClick={runFindMapFeatures} disabled={!siteFrameRef.current || findingFeatures}
+            title={!siteFrameRef.current ? 'Import from a map site first' : undefined}
+            className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5"
+            style={!siteFrameRef.current || findingFeatures ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+            {findingFeatures ? <><Loader2 size={14} className="animate-spin" /> Finding…</> : <>🗺 Find map features</>}
+          </button>
+          {findFeaturesError && (
+            <div className="text-[10px] font-mono px-1 mt-1" style={{ color: '#C0531E' }}>{findFeaturesError}</div>
+          )}
           {bg && (
             <div className="mt-1.5 space-y-1">
               <div className="flex items-center gap-1.5">
@@ -1366,6 +1466,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 </button>
                 {detectError && (
                   <div className="text-[10px] font-mono px-1 mb-1.5" style={{ color: '#C0531E' }}>{detectError}</div>
+                )}
+                <button onClick={runFindMapFeatures} disabled={!siteFrameRef.current || findingFeatures}
+                  title={!siteFrameRef.current ? 'Import from a map site first' : undefined}
+                  className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
+                  style={!siteFrameRef.current || findingFeatures ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+                  {findingFeatures ? <><Loader2 size={14} className="animate-spin" /> Finding…</> : <>🗺 Find map features</>}
+                </button>
+                {findFeaturesError && (
+                  <div className="text-[10px] font-mono px-1 mb-1.5" style={{ color: '#C0531E' }}>{findFeaturesError}</div>
                 )}
               </>
             )}
@@ -1535,7 +1644,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         {ghosts && ghosts.length > 0 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full text-xs font-display flex items-center gap-2 pointer-events-auto"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
-            <span>✨ AI found {ghosts.length} feature{ghosts.length > 1 ? 's' : ''}</span>
+            <span>{ghostSource === 'osm' ? `🗺 Map data: ${ghosts.length} feature${ghosts.length > 1 ? 's' : ''} found` : `✨ AI found ${ghosts.length} feature${ghosts.length > 1 ? 's' : ''}`}</span>
             <button onClick={acceptAllGhosts}
               className="px-2.5 py-1 rounded-full font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff' }}>
               ✓ Accept all
@@ -1635,7 +1744,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             {(ghosts ?? []).map((g) => {
               const GHOST_COLOR = '#22B8CF';
               const firstX = g.pxPoints[0], firstY = g.pxPoints[1];
-              const isRing = (g.kind === 'boundary' || g.kind === 'veg_area') && g.pxPoints.length >= 6;
+              const isRing = (g.kind === 'boundary' || g.kind === 'veg_area' || g.kind === 'osm_building' || g.kind === 'osm_water') && g.pxPoints.length >= 6;
               const emoji = g.kind === 'tree' ? '🌳' : g.kind === 'water_tank' ? '🛢' : g.kind === 'pond' ? '💧' : g.kind === 'building' ? '🏠' : '';
               return (
                 <Group key={g.id}>

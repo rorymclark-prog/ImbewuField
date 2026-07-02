@@ -52,17 +52,14 @@ interface FalBbox {
   h?: unknown;
 }
 
+// Buildings now come from geo data (site-features), and Florence-2 misread
+// roofs as "pools"/"dams" and sheds as "tanks" on aerial photos in field
+// testing — so building/house/roof and pool/dam/pond entries are dropped
+// here entirely rather than risk more false positives from this model.
 const FLORENCE_LABEL_MAP: Array<{ match: string; kind: DetectKind }> = [
-  { match: 'building', kind: 'building' },
-  { match: 'house', kind: 'building' },
-  { match: 'roof', kind: 'building' },
   { match: 'tree', kind: 'tree' },
   { match: 'water tank', kind: 'water_tank' },
   { match: 'tank', kind: 'water_tank' },
-  { match: 'swimming pool', kind: 'pond' },
-  { match: 'pool', kind: 'pond' },
-  { match: 'dam', kind: 'pond' },
-  { match: 'pond', kind: 'pond' },
 ];
 
 function labelToKind(label: string): DetectKind | null {
@@ -105,7 +102,7 @@ async function detectWithFal(falKey: string, body: DetectBody): Promise<DetectRe
       headers: { Authorization: `Key ${falKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         image_url: `data:image/jpeg;base64,${imageBase64}`,
-        text_input: 'building. tree. water tank. swimming pool. dam. car.',
+        text_input: 'tree. water tank. car.',
       }),
       signal: controller.signal,
     });
@@ -168,11 +165,24 @@ async function detectWithFal(falKey: string, body: DetectBody): Promise<DetectRe
     if (w < effImgW * 0.01 || h < effImgH * 0.01) continue;
     if (w > effImgW * 0.9 || h > effImgH * 0.9) continue;
 
+    // Kills the giant-circle failure mode: reject any box whose longer side
+    // exceeds 25% of the image dimension it's measured against.
+    if (w > effImgW * 0.25 || h > effImgH * 0.25) continue;
+
     const cx = clamp01((x + w / 2) / effImgW);
     const cy = clamp01((y + h / 2) / effImgH);
 
     const sizeMRaw = Math.max(w, h) * effMPerPx;
-    const sizeM = clamp(Math.round(sizeMRaw * 10) / 10, 0.5, 60);
+    let sizeM = clamp(Math.round(sizeMRaw * 10) / 10, 0.5, 60);
+
+    // Per-kind sanity clamps — Florence-2's box size is unreliable enough
+    // that a tree or tank estimate outside these ranges is almost certainly
+    // a misdetection rather than a genuinely huge tree/tank.
+    if (kind === 'tree') {
+      sizeM = clamp(sizeM, 1, 12);
+    } else if (kind === 'water_tank') {
+      sizeM = clamp(sizeM, 0.5, 5);
+    }
 
     features.push({
       kind,
