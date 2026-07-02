@@ -191,6 +191,7 @@ const METRES_PER_DEGREE_LAT = 111.32;
 export function computeCanvasFrame(
   layers: DesignLayer[],
   lat: number,
+  lon?: number,
   opts?: { imgW?: number; imgH?: number },
 ): {
   frame: Omit<CanvasFrame, 'satDataUrl'>;
@@ -207,12 +208,13 @@ export function computeCanvasFrame(
     rawBounds.maxX - rawBounds.minX > 0 &&
     rawBounds.maxY - rawBounds.minY > 0;
 
-  // Fallback: a 120 m box around the site's centre (or 0,0 if we truly have nothing).
+  // Fallback: a 120 m box around the site's centre — the REAL lat/lon, so an un-traced
+  // saved place still gets its own satellite (lng 0 here once meant "Atlantic Ocean").
   const bounds = hasRealBounds
     ? rawBounds
     : (() => {
         const centerLat = Number.isFinite(lat) ? lat : 0;
-        const centerLng = 0;
+        const centerLng = Number.isFinite(lon as number) ? (lon as number) : 0;
         const halfDegLat = 60 / METRES_PER_DEGREE_LAT / 2; // 120 m box → 60 m half-span
         const cosLat = Math.max(Math.cos((centerLat * Math.PI) / 180), 0.01);
         const halfDegLng = halfDegLat / cosLat;

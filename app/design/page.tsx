@@ -9,7 +9,8 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin } from 'lucide-react';
+import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
 import {
@@ -120,6 +121,13 @@ function readCachedLocationData(lat: number, lon: number): LocationData | null {
 }
 
 function EmptyState() {
+  // Saved places double as direct entry points: pick one and the studio fetches its
+  // satellite straight away — no need to open the site on the main map first.
+  // Loaded in an effect (not a useState initializer) so SSR HTML and hydration match.
+  const [places, setPlaces] = useState<SavedPlace[]>([]);
+  useEffect(() => {
+    try { setPlaces(loadPlaces()); } catch { /* localStorage unavailable */ }
+  }, []);
   return (
     <div
       style={{
@@ -136,9 +144,52 @@ function EmptyState() {
       }}
     >
       <Compass size={40} color={GREEN} />
-      <p style={{ fontSize: 16, maxWidth: 320, lineHeight: 1.5 }}>
-        Open a site on the map first, then tap Design Studio.
-      </p>
+      {places.length > 0 ? (
+        <>
+          <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
+            Pick a saved place to start designing
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 380 }}>
+            {places.map((p) => (
+              <Link
+                key={p.id}
+                href={`/design?lat=${p.lat.toFixed(5)}&lon=${p.lon.toFixed(5)}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '12px 14px',
+                  minHeight: 48,
+                  borderRadius: 14,
+                  background: '#FFFFFF',
+                  border: '1px solid #E2D8C4',
+                  color: DARK,
+                  textDecoration: 'none',
+                  textAlign: 'left',
+                }}
+              >
+                <MapPin size={18} color={resolveColor(p)} style={{ flexShrink: 0 }} />
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ display: 'block', fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {p.name}
+                  </span>
+                  {p.biome && (
+                    <span style={{ display: 'block', fontSize: 11.5, color: '#94876F' }}>{p.biome}</span>
+                  )}
+                </span>
+                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>Design →</span>
+              </Link>
+            ))}
+          </div>
+          <p style={{ fontSize: 12.5, color: '#94876F', maxWidth: 340 }}>
+            Tip: sites with a traced boundary get a perfectly-fitted satellite view.
+          </p>
+        </>
+      ) : (
+        <p style={{ fontSize: 16, maxWidth: 320, lineHeight: 1.5 }}>
+          Open a site on the map first, then tap Design Studio — or save a place and it will appear here.
+        </p>
+      )}
       <Link
         href="/farmer"
         style={{
@@ -223,7 +274,7 @@ function DesignStudioInner() {
         merged.layers.find((l) => l.layerType === 'access' && l.approved) ??
         merged.layers.find((l) => l.layerType === 'access');
 
-      const { frame: frameNoImg, url, project } = computeCanvasFrame(merged.layers, lat);
+      const { frame: frameNoImg, url, project } = computeCanvasFrame(merged.layers, lat, lon);
 
       const boundaryRing = ringFromGeometry(boundaryLayer?.geometry).map((c) => project(c));
       const houseRing = ringFromGeometry(houseLayer?.geometry).map((c) => project(c));
