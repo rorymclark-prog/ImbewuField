@@ -33,7 +33,11 @@ import {
 } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
-import type { Advice } from '@/lib/design-rules';
+import type { LineShape } from '@/lib/design-canvas';
+import DesignCanvas from '@/components/design/DesignCanvas';
+import DesignPalette from '@/components/design/DesignPalette';
+import DesignWizard from '@/components/design/DesignWizard';
+import DesignAdvisor from '@/components/design/DesignAdvisor';
 
 const PAPER = '#FBF6EC';
 const GOLD = '#F7C97E';
@@ -225,15 +229,17 @@ function DesignStudioInner() {
   const [frame, setFrame] = useState<CanvasFrame | null>(null);
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
   const [saved, setSaved] = useState(true);
-  const [advice, setAdvice] = useState<Advice[]>([]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [tool, setTool] = useState<'select' | 'place' | 'zone' | 'line'>('select');
   const [placeDefId, setPlaceDefId] = useState<string | null>(null);
-  const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5 | null>(null);
-  const [lineKind, setLineKind] = useState<'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' | null>(null);
-  const [activeLayers, setActiveLayers] = useState<{ items: boolean; zones: boolean; lines: boolean }>({
-    items: true,
+  const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5>(1);
+  const [lineKind, setLineKind] = useState<LineShape['kind']>('swale');
+  const [activeLayers, setActiveLayers] = useState({
+    water: true,
     zones: true,
+    planting: true,
+    structures: true,
     lines: true,
   });
 
@@ -363,20 +369,20 @@ function DesignStudioInner() {
     });
   }, []);
 
-  // Re-evaluate advisor rules whenever the canvas or site context changes.
-  useEffect(() => {
-    if (!canvasState) return;
-    let cancelled = false;
-    import('@/lib/design-rules').then(({ evaluateDesign }) => {
-      if (cancelled) return;
-      setAdvice(
-        evaluateDesign(canvasState, ELEMENTS_BY_ID, site ?? undefined, houseXY ? { houseXY } : undefined),
-      );
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [canvasState, site, houseXY]);
+  // Delete whatever is selected (item, zone or line) — used by the palette's Delete button.
+  const onDeleteSelected = selectedId
+    ? () => {
+        const id = selectedId;
+        setSelectedId(null);
+        handleChange((prev) => ({
+          ...prev,
+          items: prev.items.filter((i) => i.id !== id),
+          zones: prev.zones.filter((z) => z.id !== id),
+          lines: prev.lines.filter((l) => l.id !== id),
+          updatedAt: new Date().toISOString(),
+        }));
+      }
+    : null;
 
   const setStep = useCallback(
     (step: WizardStep) => {
@@ -442,16 +448,20 @@ function DesignStudioInner() {
 
       {/* Wizard (top) */}
       {canvasState && (
-        <DesignWizardPlaceholder
+        <DesignWizard
           step={canvasState.step}
-          onStep={setStep}
-          advice={advice}
+          setStep={setStep}
+          state={canvasState}
+          refLayersPresent={{
+            boundary: refLayers.boundary.length > 2,
+            house: refLayers.house.length > 2,
+          }}
         />
       )}
 
       {/* Canvas (middle) */}
       <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
-        {canvasState && canvasState.step === 'glossy' && frame ? (
+        {canvasState && frame && canvasState.step === 'glossy' ? (
           <DesignGlossyLazy
             state={canvasState}
             frame={frame}
@@ -459,203 +469,72 @@ function DesignStudioInner() {
             site={site ? { biome: site.biome, rainfallMm: site.rainfallMm } : null}
             placeName={siteName}
           />
-        ) : (
-          <DesignCanvasPlaceholder
-            state={canvasState}
+        ) : canvasState && frame ? (
+          <DesignCanvas
             frame={frame}
-            refLayers={refLayers}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
+            state={canvasState}
+            onChange={(next) => handleChange(() => next)}
+            tool={tool}
             placeDefId={placeDefId}
             zoneDraw={zoneDraw}
             lineKind={lineKind}
             activeLayers={activeLayers}
-            onChange={handleChange}
-            onUndo={handleUndo}
+            refLayers={refLayers}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
           />
+        ) : (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: DARK,
+              opacity: 0.6,
+            }}
+          >
+            Loading site…
+          </div>
         )}
       </div>
 
       {/* Palette (docked bottom) */}
       {canvasState && canvasState.step !== 'glossy' && (
-        <DesignPalettePlaceholder
+        <DesignPalette
+          step={canvasState.step}
+          tool={tool}
+          setTool={setTool}
           placeDefId={placeDefId}
-          onPickItem={setPlaceDefId}
+          setPlaceDefId={setPlaceDefId}
           zoneDraw={zoneDraw}
-          onPickZone={setZoneDraw}
+          setZoneDraw={setZoneDraw}
           lineKind={lineKind}
-          onPickLine={setLineKind}
+          setLineKind={setLineKind}
           activeLayers={activeLayers}
-          onToggleLayer={(k) => setActiveLayers((prev) => ({ ...prev, [k]: !prev[k] }))}
+          setActiveLayers={setActiveLayers}
+          onUndo={handleUndo}
+          canUndo={undoStack.current.length > 0}
+          onDeleteSelected={onDeleteSelected}
         />
       )}
 
       {/* Advisor (floating) */}
       {canvasState && canvasState.step !== 'glossy' && (
-        <DesignAdvisorPlaceholder advice={advice} />
+        <DesignAdvisor
+          state={canvasState}
+          site={site}
+          houseXY={houseXY}
+          lastChangeId={canvasState.updatedAt}
+        />
       )}
     </div>
   );
 }
 
-// ── Lightweight inline placeholders for the sibling components (DesignCanvas,
-// DesignPalette, DesignWizard, DesignAdvisor) so this page renders standalone.
-// These are intentionally minimal — components/design/* being built in parallel
-// under the shared contract types own the real UI. Swap by importing the real
-// components once they exist on disk; the state/prop wiring above already matches
-// the CanvasFrame/DesignCanvasState/PlacedItem contract exactly.
-
-function DesignWizardPlaceholder({
-  step,
-  onStep,
-  advice,
-}: {
-  step: WizardStep;
-  onStep: (s: WizardStep) => void;
-  advice: Advice[];
-}) {
-  const steps: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
-  return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 6,
-        overflowX: 'auto',
-        padding: '8px 12px',
-        borderBottom: '1px solid rgba(11,18,11,0.08)',
-        background: PAPER,
-      }}
-    >
-      {steps.map((s) => (
-        <button
-          key={s}
-          onClick={() => onStep(s)}
-          style={{
-            minHeight: 36,
-            padding: '6px 12px',
-            borderRadius: 999,
-            border: 'none',
-            fontSize: 12,
-            fontWeight: 600,
-            whiteSpace: 'nowrap',
-            background: s === step ? GREEN : 'rgba(31,77,43,0.08)',
-            color: s === step ? PAPER : GREEN,
-          }}
-        >
-          {s}
-        </button>
-      ))}
-      {advice.length > 0 && (
-        <span style={{ marginLeft: 8, alignSelf: 'center', fontSize: 11, opacity: 0.6 }}>
-          {advice.length} tip{advice.length === 1 ? '' : 's'}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function DesignCanvasPlaceholder({
-  state,
-  frame,
-}: {
-  state: DesignCanvasState | null;
-  frame: CanvasFrame | null;
-  refLayers: RefLayers;
-  selectedId: string | null;
-  onSelect: (id: string | null) => void;
-  placeDefId: string | null;
-  zoneDraw: number | null;
-  lineKind: string | null;
-  activeLayers: { items: boolean; zones: boolean; lines: boolean };
-  onChange: (updater: (prev: DesignCanvasState) => DesignCanvasState) => void;
-  onUndo: () => void;
-}) {
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: frame?.satDataUrl ? `url(${frame.satDataUrl}) center/cover` : '#1F4D2B22',
-        touchAction: 'none',
-      }}
-    >
-      {!state && <span style={{ color: DARK, opacity: 0.6 }}>Loading site…</span>}
-    </div>
-  );
-}
-
-function DesignPalettePlaceholder({
-  activeLayers,
-  onToggleLayer,
-}: {
-  placeDefId: string | null;
-  onPickItem: (id: string | null) => void;
-  zoneDraw: number | null;
-  onPickZone: (z: 0 | 1 | 2 | 3 | 4 | 5 | null) => void;
-  lineKind: string | null;
-  onPickLine: (k: 'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' | null) => void;
-  activeLayers: { items: boolean; zones: boolean; lines: boolean };
-  onToggleLayer: (k: 'items' | 'zones' | 'lines') => void;
-}) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 8,
-        padding: '10px 12px',
-        borderTop: '1px solid rgba(11,18,11,0.08)',
-        background: PAPER,
-      }}
-    >
-      {(['items', 'zones', 'lines'] as const).map((k) => (
-        <button
-          key={k}
-          onClick={() => onToggleLayer(k)}
-          style={{
-            minHeight: 44,
-            minWidth: 44,
-            padding: '8px 14px',
-            borderRadius: 10,
-            border: 'none',
-            background: activeLayers[k] ? GOLD : 'rgba(11,18,11,0.06)',
-            fontWeight: 600,
-            fontSize: 13,
-          }}
-        >
-          {k}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function DesignAdvisorPlaceholder({ advice }: { advice: Advice[] }) {
-  if (advice.length === 0) return null;
-  const top = advice[0];
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        right: 12,
-        bottom: 90,
-        maxWidth: 260,
-        padding: '10px 14px',
-        borderRadius: 14,
-        background: top.severity === 'warn' ? '#B53A3A' : GREEN,
-        color: PAPER,
-        fontSize: 12,
-        lineHeight: 1.4,
-        boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
-      }}
-    >
-      {top.msg}
-    </div>
-  );
-}
-
+// DesignGlossy is heavy (canvas compositing + AI client) — lazy-load it only when the
+// farmer reaches the glossy step.
 function DesignGlossyLazy(props: {
   state: DesignCanvasState;
   frame: CanvasFrame;
