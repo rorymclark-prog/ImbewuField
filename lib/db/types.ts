@@ -42,9 +42,12 @@ export interface SalesLog {
   amount: number; buyer: string | null; sold_at: string; created_at: string;
 }
 
+export type ExpenseCategory = 'feed' | 'seed' | 'fuel' | 'equipment' | 'labour' | 'transport' | 'other';
+
 export interface ExpenseLog {
   id: string; profile_id: string; garden_id: string | null; item: string;
   amount: number; supplier: string | null; spent_at: string; created_at: string;
+  category?: ExpenseCategory | null;
 }
 
 export interface Design {

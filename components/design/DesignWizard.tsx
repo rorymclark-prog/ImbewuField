@@ -5,7 +5,7 @@
 // Phone-first: the stepper scrolls horizontally on narrow screens, Back/Next buttons
 // are full 44px+ touch targets, and each step gets a short friendly guidance line.
 
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Sparkles, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
@@ -19,6 +19,9 @@ interface DesignWizardProps {
   setStep: (s: WizardStep) => void;
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
+  onAutoDetect?: () => void;
+  detecting?: boolean;
+  suggestionsCount?: number;
 }
 
 const STEP_ORDER: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
@@ -67,7 +70,15 @@ function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPre
   }
 }
 
-export default function DesignWizard({ step, setStep, state, refLayersPresent }: DesignWizardProps) {
+export default function DesignWizard({
+  step,
+  setStep,
+  state,
+  refLayersPresent,
+  onAutoDetect,
+  detecting,
+  suggestionsCount,
+}: DesignWizardProps) {
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
@@ -154,6 +165,51 @@ export default function DesignWizard({ step, setStep, state, refLayersPresent }:
       >
         {STEP_GUIDANCE[step]}
       </div>
+
+      {/* Auto-detect — 'base' step only, and only when the caller wired it up */}
+      {step === 'base' && onAutoDetect && (
+        <button
+          onClick={() => !detecting && onAutoDetect()}
+          disabled={detecting}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            minHeight: 44,
+            borderRadius: 10,
+            border: `1.5px solid ${GREEN}`,
+            background: 'transparent',
+            color: detecting ? 'rgba(31,77,43,0.5)' : GREEN,
+            fontWeight: 600,
+            fontSize: 14,
+            cursor: detecting ? 'default' : 'pointer',
+            position: 'relative',
+          }}
+        >
+          {detecting ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+          {detecting ? 'Detecting… (~20s)' : '✨ Auto-detect features'}
+          {!detecting && !!suggestionsCount && suggestionsCount > 0 && (
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 20,
+                height: 20,
+                padding: '0 6px',
+                borderRadius: 999,
+                background: GOLD,
+                color: DARK,
+                fontSize: 11,
+                fontWeight: 700,
+              }}
+            >
+              {suggestionsCount} suggestion{suggestionsCount === 1 ? '' : 's'} to review
+            </span>
+          )}
+        </button>
+      )}
 
       {/* Back / Next */}
       <div style={{ display: 'flex', gap: 8 }}>

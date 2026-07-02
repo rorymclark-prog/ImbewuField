@@ -9,7 +9,7 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import {
   loadCustomers, addCustomer, loadProducts, addProduct,
-  loadInvoices, saveInvoice, deleteInvoice, invoiceId, type SavedInvoice,
+  loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId, type SavedInvoice,
 } from '@/lib/invoices';
 
 interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
@@ -79,12 +79,15 @@ export default function InvoicePage() {
   // Persist the customer, item presets and the invoice record. Returns its id.
   function persist(): string {
     const id = currentId ?? invoiceId();
+    const existing = saved.find((s) => s.id === id);
     addCustomer(billTo);
     items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
     saveInvoice({
       id, no: currentNo, billTo: billTo.trim(),
       items: items.filter((it) => it.desc.trim()).map(({ desc, qty, unit, price }) => ({ desc, qty, unit, price })),
       total, dateISO: new Date().toISOString(),
+      status: existing?.status ?? 'unpaid',
+      paidAt: existing?.paidAt,
     });
     if (currentId === null) {
       const nextSeq = currentNo + 1;
@@ -313,6 +316,15 @@ export default function InvoicePage() {
                       <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
                         {new Date(inv.dateISO).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} · {money(inv.total)}
                       </div>
+                    </button>
+                    <button
+                      onClick={() => setSaved(setInvoiceStatus(inv.id, inv.status === 'paid' ? 'unpaid' : 'paid'))}
+                      aria-label={inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
+                      className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                      style={inv.status === 'paid'
+                        ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
+                        : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
+                      {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
                     </button>
                     <button onClick={() => deleteInvoice(inv.id)} aria-label="Delete invoice"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>

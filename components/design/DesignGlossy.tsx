@@ -6,7 +6,7 @@
 // may only repaint background texture — never move, add, or remove anything the farmer
 // placed.
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, RefreshCw, Sparkles, Gem } from 'lucide-react';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
@@ -305,11 +305,70 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+// ── Persistence — cache the last render per site so a page refresh doesn't lose it.
+// dataURLs can be large; localStorage has a quota, so writes are best-effort.
+interface SavedGlossy {
+  image: string;
+  provider: 'gemini' | 'falgpt';
+  at: string;
+}
+
+const glossyKey = (siteId: string) => `imbewu_design_glossy_${siteId}`;
+
+function loadSavedGlossy(siteId: string): SavedGlossy | null {
+  try {
+    const raw = localStorage.getItem(glossyKey(siteId));
+    if (!raw) return null;
+    return JSON.parse(raw) as SavedGlossy;
+  } catch {
+    return null;
+  }
+}
+
+function saveGlossy(siteId: string, saved: SavedGlossy) {
+  try {
+    localStorage.setItem(glossyKey(siteId), JSON.stringify(saved));
+  } catch {
+    // QuotaExceededError or similar — skip persisting, non-fatal.
+  }
+}
+
+function relativeDate(iso: string): string {
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return '';
+  const diffMs = Date.now() - then;
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return new Date(iso).toLocaleDateString();
+}
+
+const PROVIDER_LABEL: Record<'gemini' | 'falgpt', string> = {
+  gemini: 'Gemini',
+  falgpt: 'GPT-2 strict',
+};
+
 export default function DesignGlossy({ state, frame, refLayers, site, placeName }: DesignGlossyProps) {
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
+  const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Load any cached render for this site on mount.
+  useEffect(() => {
+    const cached = loadSavedGlossy(state.siteId);
+    if (cached) {
+      setSaved(cached);
+      setResultImage(cached.image);
+    }
+    // Only re-check when the site changes, not on every state edit.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.siteId]);
 
   const generate = useCallback(
     async (provider: 'gemini' | 'falgpt') => {
@@ -355,7 +414,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             },
           });
         }
-        setResultImage(image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`);
+        const finalImage = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
+        setResultImage(finalImage);
+        const record: SavedGlossy = { image: finalImage, provider, at: new Date().toISOString() };
+        saveGlossy(state.siteId, record);
+        setSaved(record);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
       } finally {
@@ -400,58 +463,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
       {!resultImage && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-            Generate an artist&apos;s impression of your exact design. The AI can only repaint the
-            background — every item, zone, and line you placed stays locked in place.
-          </p>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button
-              onClick={() => generate('gemini')}
-              disabled={loading !== null}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                minHeight: 44,
-                padding: '10px 18px',
-                borderRadius: 12,
-                border: 'none',
-                background: GOLD,
-                color: DARK,
-                fontWeight: 700,
-                opacity: loading && loading !== 'gemini' ? 0.5 : 1,
-              }}
-            >
-              <Sparkles size={18} />
-              {loading === 'gemini' ? 'Generating…' : 'Gemini (fast)'}
-            </button>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <button
-                onClick={() => generate('falgpt')}
-                disabled={loading !== null}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  minHeight: 44,
-                  padding: '10px 18px',
-                  borderRadius: 12,
-                  border: `2px solid ${GREEN}`,
-                  background: 'transparent',
-                  color: GREEN,
-                  fontWeight: 700,
-                  opacity: loading && loading !== 'falgpt' ? 0.5 : 1,
-                }}
-              >
-                <Gem size={18} />
-                {loading === 'falgpt' ? 'Generating… 30–90s' : 'GPT-2 strict (best)'}
-              </button>
-              <span style={{ fontSize: 11, opacity: 0.6 }}>Uses fal credit (~$0.05-0.15)</span>
-            </div>
-          </div>
-          {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
-        </div>
+        <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
+          Generate an artist&apos;s impression of your exact design. The AI can only repaint the
+          background — every item, zone, and line you placed stays locked in place.
+        </p>
       )}
 
       {resultImage && (
@@ -473,6 +488,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               AI artist&apos;s impression of YOUR design — the canvas is the exact version.
             </div>
           </div>
+          {saved && resultImage === saved.image && (
+            <div style={{ fontSize: 12, opacity: 0.65 }}>
+              Saved render · {relativeDate(saved.at)} · {PROVIDER_LABEL[saved.provider]}
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button
               onClick={handleDownload}
@@ -492,11 +512,36 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               <Download size={18} />
               Download
             </button>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button
+            onClick={() => generate('gemini')}
+            disabled={loading !== null}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              minHeight: 44,
+              padding: '10px 18px',
+              borderRadius: 12,
+              border: 'none',
+              background: GOLD,
+              color: DARK,
+              fontWeight: 700,
+              opacity: loading && loading !== 'gemini' ? 0.5 : 1,
+            }}
+          >
+            {resultImage ? <RefreshCw size={18} /> : <Sparkles size={18} />}
+            {loading === 'gemini' ? 'Generating…' : resultImage ? 'Regenerate — Gemini (fast)' : 'Gemini (fast)'}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <button
-              onClick={() => {
-                setResultImage(null);
-                setError(null);
-              }}
+              onClick={() => generate('falgpt')}
+              disabled={loading !== null}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -504,18 +549,25 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
                 minHeight: 44,
                 padding: '10px 18px',
                 borderRadius: 12,
-                border: `1px solid ${DARK}33`,
+                border: `2px solid ${GREEN}`,
                 background: 'transparent',
-                color: DARK,
-                fontWeight: 600,
+                color: GREEN,
+                fontWeight: 700,
+                opacity: loading && loading !== 'falgpt' ? 0.5 : 1,
               }}
             >
-              <RefreshCw size={16} />
-              Regenerate
+              {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
+              {loading === 'falgpt'
+                ? 'Generating… 30–90s'
+                : resultImage
+                  ? 'Regenerate — GPT-2 strict (best)'
+                  : 'GPT-2 strict (best)'}
             </button>
+            <span style={{ fontSize: 11, opacity: 0.6 }}>Uses fal credit (~$0.05-0.15)</span>
           </div>
         </div>
-      )}
+        {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
+      </div>
     </div>
   );
 }

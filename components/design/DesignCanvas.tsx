@@ -10,7 +10,7 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useRef, useState } from 'react';
-import type { CanvasFrame, DesignCanvasState, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, DetectSuggestion, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 
@@ -42,9 +42,13 @@ export interface DesignCanvasProps {
   refLayers: RefLayers;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  suggestions?: DetectSuggestion[];
+  onEditItem?: (id: string) => void;
 }
 
 const GOLD = '#F7C97E';
+const CYAN = '#22D3EE';
+const SCALE_STEPS_M = [5, 10, 20, 50, 100, 200] as const;
 
 function ringToPx(ring: Array<[number, number]>, imgW: number, imgH: number): string {
   return ring.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' ');
@@ -125,6 +129,17 @@ function ringCentroid(points: Array<[number, number]>): [number, number] {
   return [sum[0] / points.length, sum[1] / points.length];
 }
 
+// Pick the largest of the standard step lengths whose pixel span fits within a quarter
+// of the image width, so the scale bar reads cleanly at any zoom.
+function pickScaleBarM(imgW: number, mPerPx: number): number {
+  const maxPx = imgW / 4;
+  let chosen: number = SCALE_STEPS_M[0];
+  for (const m of SCALE_STEPS_M) {
+    if (m / mPerPx <= maxPx) chosen = m;
+  }
+  return chosen;
+}
+
 export default function DesignCanvas({
   frame,
   state,
@@ -137,6 +152,8 @@ export default function DesignCanvas({
   refLayers,
   selectedId,
   onSelect,
+  suggestions,
+  onEditItem,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
@@ -377,6 +394,21 @@ export default function DesignCanvas({
             const mid = line.points[Math.floor(line.points.length / 2)] ?? line.points[0];
             return (
               <g key={line.id}>
+                {/* Invisible fat hit-stroke — thin visible lines are hard to tap precisely,
+                    so a wide transparent duplicate underneath catches the pointer instead. */}
+                <polyline
+                  points={polylinePoints(line.points, imgW, imgH)}
+                  fill="none"
+                  stroke="transparent"
+                  strokeWidth={18}
+                  strokeLinecap="round"
+                  style={{ cursor: tool === 'select' ? 'pointer' : 'default', pointerEvents: 'stroke' }}
+                  onPointerDown={(e) => {
+                    if (tool !== 'select') return;
+                    e.stopPropagation();
+                    onSelect(line.id);
+                  }}
+                />
                 <polyline
                   points={polylinePoints(line.points, imgW, imgH)}
                   fill="none"
@@ -385,12 +417,7 @@ export default function DesignCanvas({
                   strokeDasharray={style.dash}
                   opacity={style.opacity ?? 1}
                   strokeLinecap="round"
-                  style={{ cursor: tool === 'select' ? 'pointer' : 'default' }}
-                  onPointerDown={(e) => {
-                    if (tool !== 'select') return;
-                    e.stopPropagation();
-                    onSelect(line.id);
-                  }}
+                  style={{ pointerEvents: 'none' }}
                 />
                 {line.kind === 'fence' && (
                   <path d={fenceTicks(line.points, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
@@ -520,6 +547,21 @@ export default function DesignCanvas({
                   </div>
                 </foreignObject>
               </g>
+              {isSelected && onEditItem && (
+                <g
+                  transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 26})`}
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    onEditItem(item.id);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <circle r={9} fill="#4EA6D8" stroke="#FBF6EC" strokeWidth={1.2} />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={10} fill="#FBF6EC">
+                    ✎
+                  </text>
+                </g>
+              )}
               {isSelected && (
                 <g
                   transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 6})`}
@@ -538,6 +580,94 @@ export default function DesignCanvas({
             </g>
           );
         })}
+
+        {/* AI auto-detect ghosts — 'pending' suggestions rendered as dashed cyan outlines.
+            pointerEvents none throughout so they never block placing/drawing/selecting. */}
+        {suggestions
+          ?.filter((s) => s.status === 'pending')
+          .map((s) => {
+            const isArea = s.kind === 'veg_area' && s.points.length >= 3;
+            const isPoint = s.points.length === 1;
+            const isLine = !isArea && s.points.length >= 2;
+            const labelPt = isPoint ? s.points[0] : ringCentroid(s.points);
+            return (
+              <g key={s.id} pointerEvents="none" opacity={0.7}>
+                {isPoint && (
+                  <circle
+                    cx={s.points[0][0] * imgW}
+                    cy={s.points[0][1] * imgH}
+                    r={Math.max((s.sizeM ?? 3) / mPerPx / 2, 4)}
+                    fill="none"
+                    stroke={CYAN}
+                    strokeWidth={2}
+                    strokeDasharray="5 4"
+                  />
+                )}
+                {isArea && (
+                  <polygon
+                    points={ringToPx(s.points, imgW, imgH)}
+                    fill={CYAN}
+                    fillOpacity={0.1}
+                    stroke={CYAN}
+                    strokeWidth={2}
+                    strokeDasharray="5 4"
+                  />
+                )}
+                {isLine && (
+                  <polyline
+                    points={polylinePoints(s.points, imgW, imgH)}
+                    fill="none"
+                    stroke={CYAN}
+                    strokeWidth={2.5}
+                    strokeDasharray="5 4"
+                  />
+                )}
+                {labelPt && (
+                  <g transform={`translate(${(labelPt[0] * imgW).toFixed(1)},${(labelPt[1] * imgH - 12).toFixed(1)})`}>
+                    <rect x={-16} y={-9} width={32} height={16} rx={8} fill="rgba(11,18,11,0.85)" stroke={CYAN} strokeWidth={1} />
+                    <text textAnchor="middle" dominantBaseline="central" fontSize={9} fontWeight={700} fill={CYAN}>
+                      AI?
+                    </text>
+                  </g>
+                )}
+              </g>
+            );
+          })}
+
+        {/* North arrow — top-right, drawn last so it always sits on top. */}
+        <g transform={`translate(${imgW - 34}, 34)`} pointerEvents="none">
+          <circle r={19} fill="rgba(11,18,11,0.72)" />
+          <path d="M0,-12 L6,8 L0,4 L-6,8 Z" fill="#FBF6EC" />
+          <text x={0} y={-16} textAnchor="middle" fontSize={10} fontWeight={700} fill="#FBF6EC">
+            N
+          </text>
+        </g>
+
+        {/* Scale bar — bottom-left, drawn last so it always sits on top. */}
+        {(() => {
+          const barM = pickScaleBarM(imgW, mPerPx);
+          const barPx = barM / mPerPx;
+          const x0 = 16;
+          const y0 = imgH - 20;
+          return (
+            <g pointerEvents="none">
+              <rect
+                x={x0 - 8}
+                y={y0 - 14}
+                width={barPx + 16}
+                height={26}
+                rx={6}
+                fill="rgba(11,18,11,0.72)"
+              />
+              <line x1={x0} y1={y0} x2={x0 + barPx} y2={y0} stroke="#FBF6EC" strokeWidth={2.5} />
+              <line x1={x0} y1={y0 - 4} x2={x0} y2={y0 + 4} stroke="#FBF6EC" strokeWidth={2} />
+              <line x1={x0 + barPx} y1={y0 - 4} x2={x0 + barPx} y2={y0 + 4} stroke="#FBF6EC" strokeWidth={2} />
+              <text x={x0 + barPx / 2} y={y0 - 8} textAnchor="middle" fontSize={9.5} fontWeight={700} fill="#FBF6EC">
+                {barM} m
+              </text>
+            </g>
+          );
+        })()}
       </svg>
 
       {(tool === 'zone' || tool === 'line') && draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
@@ -566,6 +696,29 @@ export default function DesignCanvas({
       {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (
         <button
           type="button"
+          onClick={() => setDraftPoints((prev) => prev.slice(0, -1))}
+          style={{
+            position: 'absolute',
+            bottom: 12,
+            right: 108,
+            minHeight: 44,
+            minWidth: 44,
+            padding: '0 16px',
+            borderRadius: 22,
+            border: '1px solid rgba(0,0,0,0.15)',
+            background: 'rgba(251,246,236,0.92)',
+            color: '#0B120B',
+            fontWeight: 600,
+            fontSize: 14,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+          }}
+        >
+          ↩ Point
+        </button>
+      )}
+      {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (
+        <button
+          type="button"
           onClick={() => setDraftPoints([])}
           style={{
             position: 'absolute',
@@ -582,7 +735,7 @@ export default function DesignCanvas({
             fontSize: 14,
           }}
         >
-          Cancel
+          ✕ Cancel
         </button>
       )}
     </div>

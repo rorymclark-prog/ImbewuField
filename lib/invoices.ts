@@ -4,6 +4,7 @@
 
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
+export type InvoiceStatus = 'unpaid' | 'paid';
 export interface SavedInvoice {
   id: string;
   no: number;
@@ -11,6 +12,8 @@ export interface SavedInvoice {
   items: InvoiceItem[];
   total: number;
   dateISO: string;
+  status: InvoiceStatus;
+  paidAt?: string;
 }
 
 const C_KEY = 'imbewu_invoice_customers';
@@ -49,16 +52,30 @@ export function addProduct(p: Product) {
 }
 
 /* ── Saved invoices ─────────────────────────── */
-export function loadInvoices(): SavedInvoice[] { return read<SavedInvoice>(I_KEY); }
+// Old records predate `status` — default them to 'unpaid' on load so callers
+// never see an undefined status.
+function migrate(inv: SavedInvoice): SavedInvoice {
+  return inv.status ? inv : { ...inv, status: 'unpaid' };
+}
+export function loadInvoices(): SavedInvoice[] { return read<SavedInvoice>(I_KEY).map(migrate); }
 export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
   const list = loadInvoices().filter((x) => x.id !== inv.id);
-  const updated = [inv, ...list].slice(0, 100);
+  const updated = [migrate(inv), ...list].slice(0, 100);
   write(I_KEY, updated);
   notify();
   return updated;
 }
 export function deleteInvoice(id: string): SavedInvoice[] {
   const updated = loadInvoices().filter((x) => x.id !== id);
+  write(I_KEY, updated);
+  notify();
+  return updated;
+}
+export function setInvoiceStatus(id: string, status: InvoiceStatus): SavedInvoice[] {
+  const list = loadInvoices();
+  const updated = list.map((x) => (x.id === id
+    ? { ...x, status, paidAt: status === 'paid' ? new Date().toISOString() : undefined }
+    : x));
   write(I_KEY, updated);
   notify();
   return updated;

@@ -27,14 +27,19 @@ import {
   saveCanvasState,
   migrateStateToFrame,
   newId,
+  pointInRing,
+  DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
+  type DetectSuggestion,
   type PlacedItem,
   type WizardStep,
+  type ZoneShape,
 } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
+import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas from '@/components/design/DesignCanvas';
 import DesignPalette from '@/components/design/DesignPalette';
 import DesignWizard from '@/components/design/DesignWizard';
@@ -85,6 +90,32 @@ function centroidOf(ring: Array<[number, number]>): [number, number] | null {
   }
   return [sx / ring.length, sy / ring.length];
 }
+
+// Normalised-ring bbox centroid + metre extent (imgW/imgH aspect-aware), clamped to a
+// sane building footprint range — used to convert a detected building ring into a shed.
+function ringBboxM(
+  points: Array<[number, number]>,
+  frame: { imgW: number; imgH: number; mPerPx: number },
+): { center: [number, number]; wM: number; hM: number } {
+  const xs = points.map((p) => p[0]);
+  const ys = points.map((p) => p[1]);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const wM = Math.min(20, Math.max(2, (maxX - minX) * frame.imgW * frame.mPerPx));
+  const hM = Math.min(20, Math.max(2, (maxY - minY) * frame.imgH * frame.mPerPx));
+  return { center: [(minX + maxX) / 2, (minY + maxY) / 2], wM, hM };
+}
+
+const SUGGESTION_ICON: Record<DetectSuggestion['kind'], string> = {
+  tree: '🌳',
+  building: '🏠',
+  water_tank: '🛢',
+  pond: '🌊',
+  veg_area: '🥬',
+  driveway: '🛣',
+};
 
 interface RefLayers {
   boundary: Array<[number, number]>;
@@ -263,6 +294,14 @@ function DesignStudioInner() {
     lines: true,
   });
 
+  // Item edit sheet — the item currently being edited via DesignCanvas's onEditItem.
+  const [editItemId, setEditItemId] = useState<string | null>(null);
+
+  // Auto-detect — AI suggestions awaiting farmer review.
+  const [suggestions, setSuggestions] = useState<DetectSuggestion[]>([]);
+  const [detecting, setDetecting] = useState(false);
+  const [detectError, setDetectError] = useState<string | null>(null);
+
   const undoStack = useRef<DesignCanvasState[]>([]);
   const siteId = useMemo(
     () => designSiteIdFromLocation(hasSite ? ({ lat, lon } as LocationData) : null),
@@ -287,7 +326,17 @@ function DesignStudioInner() {
 
     const refresh = () => {
       const saved0 = loadDesignStudioState(siteId);
-      const merged = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved0, siteId);
+      const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved0, siteId);
+      // The main map stores traced shapes GLOBALLY, so mergedAll can contain another
+      // site's geometry. Keep only layers near THIS site (~2 km) — otherwise a far-away
+      // site inherits a foreign boundary and the satellite fits to the wrong ground.
+      const NEAR_DEG = 0.02;
+      const nearLayers = mergedAll.layers.filter((l) => {
+        const c = ringFromGeometry(l.geometry)[0] ?? lineFromGeometry(l.geometry)[0];
+        if (!c) return false;
+        return Math.abs(c[1] - lat) < NEAR_DEG && Math.abs(c[0] - lon) < NEAR_DEG;
+      });
+      const merged = { ...mergedAll, layers: nearLayers };
       setLayers(merged.layers);
 
       const boundaryLayer =
@@ -352,9 +401,11 @@ function DesignStudioInner() {
     refresh();
     window.addEventListener(MAP_STATE_EVENT, refresh);
     window.addEventListener('storage', refresh);
+    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
     return () => {
       window.removeEventListener(MAP_STATE_EVENT, refresh);
       window.removeEventListener('storage', refresh);
+      window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSite, lat, lon, siteId]);
@@ -418,6 +469,139 @@ function DesignStudioInner() {
     },
     [handleChange],
   );
+
+  const handleAutoDetect = useCallback(async () => {
+    if (!frame?.satDataUrl) {
+      setDetectError('Satellite image not loaded yet — wait a moment and try again.');
+      return;
+    }
+    setDetectError(null);
+    setDetecting(true);
+    try {
+      const res = await fetch('/api/design-detect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64: stripDataUrl(frame.satDataUrl),
+          imgW: frame.imgW,
+          imgH: frame.imgH,
+          mPerPx: frame.mPerPx,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setDetectError(typeof data?.error === 'string' ? data.error : 'Auto-detect failed — please try again.');
+        return;
+      }
+      const rawFeatures = Array.isArray(data?.features) ? data.features : [];
+      const next: DetectSuggestion[] = rawFeatures.map(
+        (f: { kind: DetectSuggestion['kind']; points: Array<[number, number]>; sizeM?: number; note?: string }) => ({
+          id: newId(),
+          kind: f.kind,
+          points: f.points,
+          sizeM: f.sizeM,
+          note: f.note,
+          status: 'pending' as const,
+        }),
+      );
+      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
+    } catch {
+      setDetectError('Auto-detect failed — please try again.');
+    } finally {
+      setDetecting(false);
+    }
+  }, [frame]);
+
+  const acceptSuggestion = useCallback(
+    (id: string) => {
+      const suggestion = suggestions.find((s) => s.id === id);
+      if (!suggestion || !frame) return;
+
+      let rejectedInstead = false;
+
+      handleChange((prev) => {
+        const point0 = suggestion.points[0];
+        switch (suggestion.kind) {
+          case 'tree': {
+            if (!point0) break;
+            const item: PlacedItem = {
+              id: newId(),
+              defId: 'tree_indigenous',
+              x: point0[0],
+              y: point0[1],
+              wM: suggestion.sizeM ?? 6,
+              hM: suggestion.sizeM ?? 6,
+            };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'water_tank': {
+            if (!point0) break;
+            const item: PlacedItem = {
+              id: newId(),
+              defId: 'jojo_5000',
+              x: point0[0],
+              y: point0[1],
+              ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
+            };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'pond': {
+            if (!point0) break;
+            const item: PlacedItem = {
+              id: newId(),
+              defId: 'pond_small',
+              x: point0[0],
+              y: point0[1],
+              ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
+            };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'building': {
+            if (suggestion.points.length === 0) break;
+            const { center, wM, hM } = ringBboxM(suggestion.points, frame);
+            if (pointInRing(center, refLayers.house)) {
+              rejectedInstead = true;
+              break;
+            }
+            const item: PlacedItem = { id: newId(), defId: 'shed', x: center[0], y: center[1], wM, hM };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'veg_area': {
+            if (suggestion.points.length < 3) break;
+            const zone: ZoneShape = { id: newId(), zone: 2, points: suggestion.points };
+            return { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() };
+          }
+          case 'driveway': {
+            if (suggestion.points.length < 2) break;
+            const line: LineShape = { id: newId(), kind: 'path', points: suggestion.points };
+            return { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() };
+          }
+        }
+        return prev;
+      });
+
+      setSuggestions((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, status: rejectedInstead ? 'rejected' : 'accepted' } : s)),
+      );
+    },
+    [suggestions, frame, refLayers.house, handleChange],
+  );
+
+  const rejectSuggestion = useCallback((id: string) => {
+    setSuggestions((prev) => prev.map((s) => (s.id === id ? { ...s, status: 'rejected' } : s)));
+  }, []);
+
+  const acceptAllSuggestions = useCallback(() => {
+    suggestions.filter((s) => s.status === 'pending').forEach((s) => acceptSuggestion(s.id));
+  }, [suggestions, acceptSuggestion]);
+
+  const dismissAllSuggestions = useCallback(() => {
+    setSuggestions((prev) => prev.map((s) => (s.status === 'pending' ? { ...s, status: 'rejected' } : s)));
+  }, []);
+
+  const pendingSuggestions = suggestions.filter((s) => s.status === 'pending');
+
+  const editItem = editItemId ? canvasState?.items.find((i) => i.id === editItemId) ?? null : null;
 
   if (!hasSite) return <EmptyState />;
 
@@ -483,7 +667,24 @@ function DesignStudioInner() {
             boundary: refLayers.boundary.length > 2,
             house: refLayers.house.length > 2,
           }}
+          onAutoDetect={handleAutoDetect}
+          detecting={detecting}
+          suggestionsCount={pendingSuggestions.length}
         />
+      )}
+      {detectError && (
+        <div
+          style={{
+            margin: '0 14px',
+            padding: '8px 12px',
+            borderRadius: 10,
+            background: 'rgba(181,58,58,0.12)',
+            color: '#B53A3A',
+            fontSize: 12.5,
+          }}
+        >
+          {detectError}
+        </div>
       )}
 
       {/* Canvas (middle) */}
@@ -497,19 +698,139 @@ function DesignStudioInner() {
             placeName={siteName}
           />
         ) : canvasState && frame ? (
-          <DesignCanvas
-            frame={frame}
-            state={canvasState}
-            onChange={(next) => handleChange(() => next)}
-            tool={tool}
-            placeDefId={placeDefId}
-            zoneDraw={zoneDraw}
-            lineKind={lineKind}
-            activeLayers={activeLayers}
-            refLayers={refLayers}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
+          <>
+            <DesignCanvas
+              frame={frame}
+              state={canvasState}
+              onChange={(next) => handleChange(() => next)}
+              tool={tool}
+              placeDefId={placeDefId}
+              zoneDraw={zoneDraw}
+              lineKind={lineKind}
+              activeLayers={activeLayers}
+              refLayers={refLayers}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              suggestions={suggestions}
+              onEditItem={setEditItemId}
+            />
+            {pendingSuggestions.length > 0 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 12,
+                  right: 12,
+                  width: 260,
+                  maxHeight: '40%',
+                  overflowY: 'auto',
+                  background: 'rgba(251,246,236,0.97)',
+                  border: `1px solid ${GOLD}`,
+                  borderRadius: 14,
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                  zIndex: 15,
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '8px 10px',
+                    borderBottom: '1px solid rgba(11,18,11,0.1)',
+                  }}
+                >
+                  <span style={{ fontWeight: 700, fontSize: 12.5 }}>AI suggestions</span>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button
+                      type="button"
+                      onClick={acceptAllSuggestions}
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: GREEN,
+                        background: 'transparent',
+                        border: `1px solid ${GREEN}`,
+                        borderRadius: 8,
+                        padding: '4px 8px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Accept all
+                    </button>
+                    <button
+                      type="button"
+                      onClick={dismissAllSuggestions}
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: '#B53A3A',
+                        background: 'transparent',
+                        border: '1px solid #B53A3A',
+                        borderRadius: 8,
+                        padding: '4px 8px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Dismiss all
+                    </button>
+                  </div>
+                </div>
+                {pendingSuggestions.map((s) => (
+                  <div
+                    key={s.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      padding: '8px 10px',
+                      borderBottom: '1px solid rgba(11,18,11,0.06)',
+                    }}
+                  >
+                    <span style={{ fontSize: 18, flexShrink: 0 }}>{SUGGESTION_ICON[s.kind]}</span>
+                    <span style={{ flex: 1, minWidth: 0, fontSize: 12, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {s.note ?? s.kind}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label="Accept suggestion"
+                      onClick={() => acceptSuggestion(s.id)}
+                      style={{
+                        width: 28,
+                        height: 28,
+                        flexShrink: 0,
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: GREEN,
+                        color: PAPER,
+                        fontSize: 13,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      ✓
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Reject suggestion"
+                      onClick={() => rejectSuggestion(s.id)}
+                      style={{
+                        width: 28,
+                        height: 28,
+                        flexShrink: 0,
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: '#B53A3A',
+                        color: PAPER,
+                        fontSize: 13,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      ✗
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div
             style={{
@@ -556,6 +877,245 @@ function DesignStudioInner() {
           lastChangeId={canvasState.updatedAt}
         />
       )}
+
+      {/* Item edit sheet */}
+      {editItem && (
+        <ItemEditSheet
+          item={editItem}
+          onCancel={() => setEditItemId(null)}
+          onDelete={() => {
+            const id = editItem.id;
+            setEditItemId(null);
+            handleChange((prev) => ({
+              ...prev,
+              items: prev.items.filter((i) => i.id !== id),
+              updatedAt: new Date().toISOString(),
+            }));
+            if (selectedId === id) setSelectedId(null);
+          }}
+          onSave={(patch) => {
+            const id = editItem.id;
+            handleChange((prev) => ({
+              ...prev,
+              items: prev.items.map((i) => (i.id === id ? { ...i, ...patch } : i)),
+              updatedAt: new Date().toISOString(),
+            }));
+            setEditItemId(null);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+interface ItemEditPatch {
+  label?: string;
+  note?: string;
+  wM?: number;
+  hM?: number;
+}
+
+function ItemEditSheet({
+  item,
+  onCancel,
+  onDelete,
+  onSave,
+}: {
+  item: PlacedItem;
+  onCancel: () => void;
+  onDelete: () => void;
+  onSave: (patch: ItemEditPatch) => void;
+}) {
+  const def = ELEMENTS_BY_ID[item.defId];
+  const isRect = def?.shape === 'rect';
+  const [label, setLabel] = useState(item.label ?? '');
+  const [note, setNote] = useState(item.note ?? '');
+  const [wM, setWM] = useState(String(item.wM ?? def?.wM ?? 1));
+  const [hM, setHM] = useState(String(item.hM ?? def?.hM ?? 1));
+
+  function handleSave() {
+    const parsedW = parseFloat(wM);
+    const parsedH = parseFloat(hM);
+    const patch: ItemEditPatch = {
+      label: label.trim() ? label.trim() : undefined,
+      note: note.trim() ? note.trim() : undefined,
+    };
+    if (Number.isFinite(parsedW) && parsedW > 0) {
+      patch.wM = parsedW;
+      patch.hM = isRect ? (Number.isFinite(parsedH) && parsedH > 0 ? parsedH : parsedW) : parsedW;
+    }
+    onSave(patch);
+  }
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 40,
+        display: 'flex',
+        alignItems: 'flex-end',
+        background: 'rgba(11,18,11,0.45)',
+      }}
+      onClick={onCancel}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: '100%',
+          background: PAPER,
+          borderTopLeftRadius: 18,
+          borderTopRightRadius: 18,
+          padding: '16px 18px calc(18px + env(safe-area-inset-bottom))',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 12,
+          maxHeight: '80dvh',
+          overflowY: 'auto',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>{def?.icon}</span>
+          <span style={{ fontWeight: 700, fontSize: 16, color: DARK }}>{def?.name ?? 'Item'}</span>
+        </div>
+
+        <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+          Label
+          <input
+            type="text"
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            placeholder={def?.name}
+            style={{
+              minHeight: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(11,18,11,0.2)',
+              padding: '0 12px',
+              fontSize: 14,
+              background: '#FFFFFF',
+              color: DARK,
+            }}
+          />
+        </label>
+
+        <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+          Note
+          <input
+            type="text"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="e.g. 5000 L"
+            style={{
+              minHeight: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(11,18,11,0.2)',
+              padding: '0 12px',
+              fontSize: 14,
+              background: '#FFFFFF',
+              color: DARK,
+            }}
+          />
+        </label>
+
+        <div style={{ display: 'flex', gap: 10 }}>
+          <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+            {isRect ? 'Width (m)' : 'Size (m)'}
+            <input
+              type="number"
+              inputMode="decimal"
+              min={0.1}
+              step={0.1}
+              value={wM}
+              onChange={(e) => setWM(e.target.value)}
+              style={{
+                minHeight: 44,
+                borderRadius: 10,
+                border: '1px solid rgba(11,18,11,0.2)',
+                padding: '0 12px',
+                fontSize: 14,
+                background: '#FFFFFF',
+                color: DARK,
+              }}
+            />
+          </label>
+          {isRect && (
+            <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+              Height (m)
+              <input
+                type="number"
+                inputMode="decimal"
+                min={0.1}
+                step={0.1}
+                value={hM}
+                onChange={(e) => setHM(e.target.value)}
+                style={{
+                  minHeight: 44,
+                  borderRadius: 10,
+                  border: '1px solid rgba(11,18,11,0.2)',
+                  padding: '0 12px',
+                  fontSize: 14,
+                  background: '#FFFFFF',
+                  color: DARK,
+                }}
+              />
+            </label>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+          <button
+            type="button"
+            onClick={handleSave}
+            style={{
+              flex: 1,
+              minHeight: 44,
+              borderRadius: 10,
+              border: 'none',
+              background: GREEN,
+              color: PAPER,
+              fontWeight: 700,
+              fontSize: 14,
+              cursor: 'pointer',
+            }}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={onDelete}
+            style={{
+              flex: 1,
+              minHeight: 44,
+              borderRadius: 10,
+              border: '1px solid #B53A3A',
+              background: 'transparent',
+              color: '#B53A3A',
+              fontWeight: 700,
+              fontSize: 14,
+              cursor: 'pointer',
+            }}
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            style={{
+              flex: 1,
+              minHeight: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(11,18,11,0.2)',
+              background: 'transparent',
+              color: DARK,
+              fontWeight: 600,
+              fontSize: 14,
+              cursor: 'pointer',
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

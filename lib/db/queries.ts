@@ -107,6 +107,10 @@ export async function addSale(row: Partial<SalesLog>): Promise<void> {
   const me = await getMyProfile();
   await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
+export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<void> {
+  const f = fb(); if (!f) return;
+  await updateDoc(doc(f.db, 'sales_logs', id), { ...patch });
+}
 export async function myProduction(): Promise<ProductionLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
   const s = await getDocs(query(collection(f.db, 'production_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
@@ -172,6 +176,10 @@ export async function addExpense(row: Partial<ExpenseLog>): Promise<void> {
   const me = await getMyProfile();
   await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
+export async function updateExpense(id: string, patch: Partial<ExpenseLog>): Promise<void> {
+  const f = fb(); if (!f) return;
+  await updateDoc(doc(f.db, 'expense_logs', id), { ...patch });
+}
 export async function myExpenses(): Promise<ExpenseLog[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
   const s = await getDocs(query(collection(f.db, 'expense_logs'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
@@ -186,6 +194,10 @@ export async function deleteProduction(id: string): Promise<void> {
 export async function deleteSale(id: string): Promise<void> {
   const f = fb(); if (!f) return;
   await deleteDoc(doc(f.db, 'sales_logs', id));
+}
+export async function deleteExpense(id: string): Promise<void> {
+  const f = fb(); if (!f) return;
+  await deleteDoc(doc(f.db, 'expense_logs', id));
 }
 
 // ---- course progress ----
