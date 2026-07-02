@@ -5,7 +5,8 @@
 // Phone-first: the stepper scrolls horizontally on narrow screens, Back/Next buttons
 // are full 44px+ touch targets, and each step gets a short friendly guidance line.
 
-import { ChevronLeft, ChevronRight, Check, Sparkles, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Sparkles, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
@@ -92,6 +93,11 @@ export default function DesignWizard({
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
+  // Collapsible: the guidance/suggest/nav block eats canvas height — start collapsed
+  // once the design already has content (returning farmer), expanded for first-timers.
+  const [expanded, setExpanded] = useState(
+    () => state.items.length + state.zones.length + state.lines.length === 0,
+  );
 
   return (
     <div
@@ -160,8 +166,28 @@ export default function DesignWizard({
             </button>
           );
         })}
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          aria-label={expanded ? 'Collapse guidance' : 'Expand guidance'}
+          style={{
+            flex: '0 0 auto',
+            width: 44,
+            minHeight: 44,
+            borderRadius: 999,
+            border: '1px solid rgba(31,77,43,0.25)',
+            background: 'transparent',
+            color: GREEN,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+        >
+          <ChevronDown size={18} style={{ transition: 'transform 0.2s', transform: expanded ? 'rotate(180deg)' : 'none' }} />
+        </button>
       </div>
 
+      {expanded && (<>
       {/* Guidance text */}
       <div
         style={{
@@ -267,6 +293,7 @@ export default function DesignWizard({
           Next <ChevronRight size={16} />
         </button>
       </div>
+      </>)}
     </div>
   );
 }

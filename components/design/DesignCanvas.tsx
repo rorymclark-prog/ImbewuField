@@ -9,7 +9,7 @@
 // via `onChange`. Pointer-event driven (phone-first); the clientToViewBox conversion
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
@@ -129,6 +129,37 @@ function ringCentroid(points: Array<[number, number]>): [number, number] {
   return [sum[0] / points.length, sum[1] / points.length];
 }
 
+function clamp(v: number, lo: number, hi: number): number {
+  return Math.min(hi, Math.max(lo, v));
+}
+
+// Crisp fence-line helper (ported from HybridRender.tsx's fencePicketPath) — short
+// perpendicular "pickets" along a closed ring, in viewBox px.
+function fencePicketPath(pts: Array<[number, number]>, spacing: number, half: number): string {
+  let d = '';
+  for (let i = 0; i < pts.length; i++) {
+    const [ax, ay] = pts[i];
+    const [bx, by] = pts[(i + 1) % pts.length];
+    const dx = bx - ax, dy = by - ay;
+    const len = Math.hypot(dx, dy) || 1;
+    const px = -dy / len, py = dx / len;
+    const n = Math.max(1, Math.round(len / spacing));
+    for (let k = 1; k < n; k++) {
+      const t = k / n;
+      const cx = ax + dx * t, cy = ay + dy * t;
+      d += `M${(cx - px * half).toFixed(1)},${(cy - py * half).toFixed(1)} L${(cx + px * half).toFixed(1)},${(cy + py * half).toFixed(1)} `;
+    }
+  }
+  return d.trim();
+}
+
+// Signature of the boundary ring identity — used to key the auto-fit effect so it only
+// re-runs when the boundary actually changes (point count + rounded coords), not on
+// every render.
+function boundarySignature(ring: Array<[number, number]>): string {
+  return ring.map(([x, y]) => `${x.toFixed(4)},${y.toFixed(4)}`).join('|');
+}
+
 // Pick the largest of the standard step lengths whose pixel span fits within a quarter
 // of the image width, so the scale bar reads cleanly at any zoom.
 function pickScaleBarM(imgW: number, mPerPx: number): number {
@@ -158,6 +189,13 @@ export default function DesignCanvas({
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
 
+  // Zoom/pan view transform — world-space (viewBox px) is drawn inside a single
+  // <g transform="translate(tx ty) scale(k)">; fixed overlays (north arrow, scale bar,
+  // zoom controls, Finish/Point buttons) stay outside it.
+  const [view, setView] = useState<{ k: number; tx: number; ty: number }>({ k: 1, tx: 0, ty: 0 });
+  const viewRef = useRef(view);
+  viewRef.current = view;
+
   // In-progress draw state for zone/line tools.
   const [draftPoints, setDraftPoints] = useState<Array<[number, number]>>([]);
   // Drag state for moving an existing item.
@@ -172,7 +210,20 @@ export default function DesignCanvas({
   const dragVertex = useRef<{ shapeId: string; kind: 'zone' | 'line'; index: number } | null>(null);
   const [vertexPos, setVertexPos] = useState<[number, number] | null>(null);
 
-  function clientToNorm(clientX: number, clientY: number): [number, number] | null {
+  // Resize-handle drag state for a selected item. Local preview (wM/hM) committed once
+  // on release via onChange, same single-undo pattern as move/vertex drags.
+  const dragResizeId = useRef<string | null>(null);
+  const [resizePreview, setResizePreview] = useState<{ wM: number; hM: number } | null>(null);
+
+  // One-finger background pan (select tool only). Tracks whether the current background
+  // pointerdown has moved past the tap threshold, so a still tap still deselects.
+  const panState = useRef<{ pointerId: number; startX: number; startY: number; startTx: number; startTy: number; moved: boolean } | null>(null);
+
+  // Active pointers for pinch-zoom (two-pointer gesture on the svg background).
+  const activePointers = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchState = useRef<{ startDist: number; startK: number; startTx: number; startTy: number; midX: number; midY: number } | null>(null);
+
+  function vbFromClient(clientX: number, clientY: number): [number, number] | null {
     const svg = svgRef.current;
     if (!svg) return null;
     const rect = svg.getBoundingClientRect();
@@ -183,10 +234,78 @@ export default function DesignCanvas({
     const scale = Math.min(rect.width / imgW, rect.height / imgH);
     const offX = (rect.width - imgW * scale) / 2;
     const offY = (rect.height - imgH * scale) / 2;
-    const fx = clamp01((clientX - rect.left - offX) / (imgW * scale));
-    const fy = clamp01((clientY - rect.top - offY) / (imgH * scale));
-    return [fx, fy];
+    const vx = (clientX - rect.left - offX) / scale;
+    const vy = (clientY - rect.top - offY) / scale;
+    return [vx, vy];
   }
+
+  function clientToNorm(clientX: number, clientY: number): [number, number] | null {
+    const vb = vbFromClient(clientX, clientY);
+    if (!vb) return null;
+    const { k, tx, ty } = viewRef.current;
+    const wx = (vb[0] - tx) / k;
+    const wy = (vb[1] - ty) / k;
+    return [clamp01(wx / imgW), clamp01(wy / imgH)];
+  }
+
+  // Computes the auto-fit view for the current boundary: ≥3 points → frame its bbox to
+  // ~82% of the canvas; otherwise k=1 centred (no-op translate, since the world origin
+  // already sits at the canvas origin).
+  function computeAutoFit(): { k: number; tx: number; ty: number } {
+    if (refLayers.boundary.length >= 3) {
+      const xs = refLayers.boundary.map(([x]) => x * imgW);
+      const ys = refLayers.boundary.map(([, y]) => y * imgH);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const bw = Math.max(maxX - minX, 1);
+      const bh = Math.max(maxY - minY, 1);
+      const bcx = (minX + maxX) / 2;
+      const bcy = (minY + maxY) / 2;
+      const k = clamp(Math.min(imgW / bw, imgH / bh) * 0.82, 1, 5);
+      return { k, tx: imgW / 2 - k * bcx, ty: imgH / 2 - k * bcy };
+    }
+    return { k: 1, tx: 0, ty: 0 };
+  }
+
+  // Auto-fit on load: keyed on a signature of the boundary's points so it only re-runs
+  // when the boundary identity actually changes, never on every render (e.g. while
+  // panning/zooming).
+  const boundarySig = boundarySignature(refLayers.boundary);
+  useEffect(() => {
+    setView(computeAutoFit());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boundarySig, imgW, imgH]);
+
+  function runAutoFit() {
+    setView(computeAutoFit());
+  }
+
+  function zoomAbout(vx: number, vy: number, factor: number) {
+    setView((prev) => {
+      const nextK = clamp(prev.k * factor, 1, 6);
+      const ratio = nextK / prev.k;
+      const tx = vx - (vx - prev.tx) * ratio;
+      const ty = vy - (vy - prev.ty) * ratio;
+      return { k: nextK, tx, ty };
+    });
+  }
+
+  // Native (non-React) wheel listener with { passive: false } — React's onWheel prop is
+  // attached passively, so e.preventDefault() inside it throws and never actually stops
+  // page scroll (same gotcha documented in FacilitatorCanvas.tsx's zoom effect).
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const vb = vbFromClient(e.clientX, e.clientY);
+      if (!vb) return;
+      zoomAbout(vb[0], vb[1], e.deltaY < 0 ? 1.18 : 1 / 1.18);
+    };
+    svg.addEventListener('wheel', onWheel, { passive: false });
+    return () => svg.removeEventListener('wheel', onWheel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imgW, imgH]);
 
   function commitZone(points: Array<[number, number]>) {
     if (points.length < 3) return;
@@ -203,11 +322,44 @@ export default function DesignCanvas({
   }
 
   function handleBackgroundPointerDown(e: React.PointerEvent<SVGSVGElement>) {
-    // Ignore taps that originated on an item/zone/line handle (they stopPropagation).
-    if (tool === 'select') {
-      onSelect(null);
+    // Track every active pointer on the background for pinch-zoom, regardless of tool.
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+
+    if (activePointers.current.size === 2) {
+      // Entering a two-finger pinch — cancel any in-progress pan.
+      panState.current = null;
+      const pts = Array.from(activePointers.current.values());
+      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
+      const midClientX = (pts[0].x + pts[1].x) / 2;
+      const midClientY = (pts[0].y + pts[1].y) / 2;
+      const mid = vbFromClient(midClientX, midClientY);
+      pinchState.current = {
+        startDist: dist,
+        startK: viewRef.current.k,
+        startTx: viewRef.current.tx,
+        startTy: viewRef.current.ty,
+        midX: mid ? mid[0] : imgW / 2,
+        midY: mid ? mid[1] : imgH / 2,
+      };
       return;
     }
+    if (activePointers.current.size > 2) return;
+
+    // Single-pointer: in 'select' tool, background pointerdown starts a potential pan —
+    // a tap without movement (<6px) still deselects (handled in the pointerup fallback).
+    if (tool === 'select') {
+      panState.current = {
+        pointerId: e.pointerId,
+        startX: e.clientX,
+        startY: e.clientY,
+        startTx: view.tx,
+        startTy: view.ty,
+        moved: false,
+      };
+      return;
+    }
+
     const pt = clientToNorm(e.clientX, e.clientY);
     if (!pt) return;
 
@@ -231,6 +383,48 @@ export default function DesignCanvas({
     if (tool === 'line') {
       setDraftPoints((prev) => [...prev, pt]);
       return;
+    }
+  }
+
+  function handleBackgroundPointerMove(e: React.PointerEvent<SVGSVGElement>) {
+    if (activePointers.current.has(e.pointerId)) {
+      activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    if (pinchState.current && activePointers.current.size >= 2) {
+      const pts = Array.from(activePointers.current.values()).slice(0, 2);
+      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
+      const ps = pinchState.current;
+      const nextK = clamp((dist / ps.startDist) * ps.startK, 1, 6);
+      const ratio = nextK / ps.startK;
+      const tx = ps.midX - (ps.midX - ps.startTx) * ratio;
+      const ty = ps.midY - (ps.midY - ps.startTy) * ratio;
+      setView({ k: nextK, tx, ty });
+      return;
+    }
+
+    const pan = panState.current;
+    if (pan && pan.pointerId === e.pointerId) {
+      const dx = e.clientX - pan.startX;
+      const dy = e.clientY - pan.startY;
+      if (!pan.moved && Math.hypot(dx, dy) < 6) return;
+      pan.moved = true;
+      // Convert client-space delta to viewBox-space delta (undo the letterbox scale).
+      const rect = svgRef.current?.getBoundingClientRect();
+      if (!rect || rect.width === 0 || rect.height === 0) return;
+      const scale = Math.min(rect.width / imgW, rect.height / imgH);
+      setView({ k: viewRef.current.k, tx: pan.startTx + dx / scale, ty: pan.startTy + dy / scale });
+    }
+  }
+
+  function handleBackgroundPointerUp(e: React.PointerEvent<SVGSVGElement>) {
+    activePointers.current.delete(e.pointerId);
+    if (activePointers.current.size < 2) pinchState.current = null;
+
+    const pan = panState.current;
+    if (pan && pan.pointerId === e.pointerId) {
+      if (!pan.moved && tool === 'select') onSelect(null);
+      panState.current = null;
     }
   }
 
@@ -308,6 +502,48 @@ export default function DesignCanvas({
     setVertexPos(null);
   }
 
+  function startDragResize(e: React.PointerEvent, id: string) {
+    if (tool !== 'select') return;
+    e.stopPropagation();
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragResizeId.current = id;
+  }
+
+  function moveDragResize(e: React.PointerEvent) {
+    const id = dragResizeId.current;
+    if (!id) return;
+    const item = state.items.find((it) => it.id === id);
+    const def = item && ELEMENTS_BY_ID[item.defId];
+    if (!item || !def) return;
+    const wM = item.wM ?? def.wM;
+    const hM = item.hM ?? def.hM;
+    // Item coords are world-space (unscaled viewBox px, inside the <g transform>) — the
+    // pointer must be converted through the same inverse view transform as clientToNorm,
+    // not compared against raw screen-space viewBox px, or resize drifts while zoomed.
+    const centreWorld: [number, number] = [item.x * imgW, item.y * imgH];
+    const vb = vbFromClient(e.clientX, e.clientY);
+    if (!vb) return;
+    const { k, tx, ty } = viewRef.current;
+    const pointerWorld: [number, number] = [(vb[0] - tx) / k, (vb[1] - ty) / k];
+    const distWorldPx = Math.hypot(pointerWorld[0] - centreWorld[0], pointerWorld[1] - centreWorld[1]);
+    const distM = distWorldPx * mPerPx;
+    const newWM = clamp(2 * distM, 0.3, 40);
+    const newHM = hM * (newWM / wM);
+    setResizePreview({ wM: newWM, hM: def.shape === 'circle' ? newWM : newHM });
+  }
+
+  function endDragResize() {
+    const id = dragResizeId.current;
+    if (id && resizePreview) {
+      onChange({
+        ...state,
+        items: state.items.map((it) => (it.id === id ? { ...it, wM: resizePreview.wM, hM: resizePreview.hM } : it)),
+      });
+    }
+    dragResizeId.current = null;
+    setResizePreview(null);
+  }
+
   function deleteItem(id: string) {
     onChange({ ...state, items: state.items.filter((it) => it.id !== id) });
     if (selectedId === id) onSelect(null);
@@ -323,8 +559,9 @@ export default function DesignCanvas({
     if (selectedId === id) onSelect(null);
   }
 
-  const armedNonSelect = tool !== 'select';
-
+  // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
+  // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
+  // preventDefault + our own pointer handlers either way.
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
       {/* Fill the container BOTH ways (meet = letterbox) so the whole site is always in
@@ -333,18 +570,23 @@ export default function DesignCanvas({
         ref={svgRef}
         viewBox={`0 0 ${imgW} ${imgH}`}
         preserveAspectRatio="xMidYMid meet"
-        style={{ display: 'block', width: '100%', height: '100%', touchAction: armedNonSelect ? 'none' : 'auto', background: '#0B120B' }}
+        style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none', background: '#0B120B' }}
         onPointerDown={handleBackgroundPointerDown}
         onPointerMove={(e) => {
+          handleBackgroundPointerMove(e);
           moveDragItem(e);
           moveDragVertex(e);
+          moveDragResize(e);
         }}
-        onPointerUp={() => {
+        onPointerUp={(e) => {
+          handleBackgroundPointerUp(e);
           endDragItem();
           endDragVertex();
+          endDragResize();
         }}
         onDoubleClick={handleBackgroundDoubleClick}
       >
+        <g transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k})`}>
         {/* Satellite underlay */}
         {satDataUrl ? (
           <image href={satDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
@@ -378,17 +620,20 @@ export default function DesignCanvas({
             pointerEvents="none"
           />
         )}
-        {refLayers.boundary.length >= 3 && (
-          <polygon
-            points={ringToPx(refLayers.boundary, imgW, imgH)}
-            fill="none"
-            stroke="#9BE86B"
-            strokeWidth={1.5}
-            strokeDasharray="4 4"
-            strokeLinecap="butt"
-            pointerEvents="none"
-          />
-        )}
+        {refLayers.boundary.length >= 3 && (() => {
+          const boundaryPx = refLayers.boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
+          const boundaryPts = ringToPx(refLayers.boundary, imgW, imgH);
+          const picketPath = fencePicketPath(boundaryPx, 26, 6);
+          return (
+            <g pointerEvents="none">
+              {/* Crisp fence style ported from HybridRender.tsx: dark casing + green line + pickets. */}
+              <polygon points={boundaryPts} fill="none" stroke="#0B120B" strokeWidth={5} strokeLinejoin="round" opacity={0.5} />
+              <polygon points={boundaryPts} fill="none" stroke="#9BE86B" strokeWidth={3} strokeLinejoin="round" />
+              <path d={picketPath} stroke="#0B120B" strokeWidth={3} strokeLinecap="round" opacity={0.5} fill="none" />
+              <path d={picketPath} stroke="#9BE86B" strokeWidth={1.6} strokeLinecap="round" fill="none" />
+            </g>
+          );
+        })()}
 
         {/* Zones */}
         {activeLayers.zones &&
@@ -405,7 +650,7 @@ export default function DesignCanvas({
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
                   fill={def.color}
-                  fillOpacity={0.22}
+                  fillOpacity={0.2}
                   stroke={def.color}
                   strokeWidth={1.5}
                   strokeDasharray="6 4"
@@ -417,8 +662,8 @@ export default function DesignCanvas({
                   }}
                 />
                 <g transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}>
-                  <circle r={11} fill={def.color} stroke="#FBF6EC" strokeWidth={1.5} />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FBF6EC">
+                  <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
                     {z.zone}
                   </text>
                 </g>
@@ -569,8 +814,9 @@ export default function DesignCanvas({
           const layerKey = categoryLayerKey(def.category);
           if (layerKey && !activeLayers[layerKey]) return null;
 
-          const wM = item.wM ?? def.wM;
-          const hM = item.hM ?? def.hM;
+          const isResizingThis = item.id === dragResizeId.current && resizePreview;
+          const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
+          const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
           const wPx = Math.max(wM / mPerPx, 6);
           const hPx = Math.max(hM / mPerPx, 6);
           const isDragging = item.id === dragItemId.current && dragPos;
@@ -578,7 +824,10 @@ export default function DesignCanvas({
           const cx = px * imgW;
           const cy = py * imgH;
           const isSelected = selectedId === item.id;
-          const fontSize = Math.min(22, Math.max(10, Math.min(wPx, hPx) * 0.55));
+          const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
+          const fontSize = iconDiscR * 1.05;
+          const labelText = item.label ?? def.name;
+          const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
 
           return (
             <g
@@ -606,35 +855,37 @@ export default function DesignCanvas({
                   )}
                 </>
               )}
+              {/* True-scale footprint (soft fill + stroke) */}
               {def.shape === 'circle' ? (
                 <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
               ) : (
                 <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
               )}
+              {/* Centred icon disc: colour-filled, white-stroked, emoji centred */}
+              <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
               <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
                 {def.icon}
               </text>
+              {/* Label pill below, app style */}
               <g transform={`translate(0, ${hPx / 2 + 9})`}>
-                <rect x={-1} y={-7} width={1} height={1} fill="none" />
-                <foreignObject x={-40} y={-8} width={80} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
+                <foreignObject x={-45} y={-8} width={90} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
                   <div
                     style={{
-                      fontSize: 8.5,
-                      lineHeight: '13px',
+                      fontSize: 9,
+                      lineHeight: '14px',
                       textAlign: 'center',
-                      color: '#0B120B',
-                      background: 'rgba(251,246,236,0.9)',
-                      borderRadius: 6,
-                      padding: '1px 4px',
+                      color: '#F4EDD8',
+                      background: 'rgba(32,25,15,0.74)',
+                      borderRadius: 8,
+                      padding: '1px 5px',
                       display: 'inline-block',
-                      maxWidth: 80,
+                      maxWidth: 90,
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      border: '1px solid rgba(0,0,0,0.08)',
                     }}
                   >
-                    {item.label ?? def.name}
+                    {labelFull}
                   </div>
                 </foreignObject>
               </g>
@@ -666,6 +917,30 @@ export default function DesignCanvas({
                   <text textAnchor="middle" dominantBaseline="central" fontSize={11} fill="#FBF6EC">
                     ✕
                   </text>
+                </g>
+              )}
+              {/* Direct-resize handle — bottom-right corner of the footprint bbox */}
+              {isSelected && tool === 'select' && (
+                <g>
+                  <rect
+                    x={wPx / 2 - 5}
+                    y={hPx / 2 - 5}
+                    width={10}
+                    height={10}
+                    fill="#FFFFFF"
+                    stroke={GOLD}
+                    strokeWidth={2}
+                    style={{ cursor: 'nwse-resize', touchAction: 'none' }}
+                    onPointerDown={(e) => startDragResize(e, item.id)}
+                  />
+                  {isResizingThis && (
+                    <g transform={`translate(${wPx / 2 + 14}, ${hPx / 2 + 14})`} pointerEvents="none">
+                      <rect x={-20} y={-9} width={40} height={18} rx={9} fill="rgba(11,18,11,0.85)" stroke={GOLD} strokeWidth={1} />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
+                        {wM.toFixed(1)} m
+                      </text>
+                    </g>
+                  )}
                 </g>
               )}
             </g>
@@ -779,6 +1054,9 @@ export default function DesignCanvas({
             );
           })}
 
+        </g>
+        {/* End world-space transform group — everything below is a fixed screen-space overlay. */}
+
         {/* North arrow — top-right, drawn last so it always sits on top. */}
         <g transform={`translate(${imgW - 34}, 34)`} pointerEvents="none">
           <circle r={19} fill="rgba(11,18,11,0.72)" />
@@ -788,10 +1066,13 @@ export default function DesignCanvas({
           </text>
         </g>
 
-        {/* Scale bar — bottom-left, drawn last so it always sits on top. */}
+        {/* Scale bar — bottom-left, drawn last so it always sits on top. Metres-per-viewBox-px
+            at the current zoom is mPerPx/k (the world is scaled by k on screen), so the bar
+            length for N metres is (N/mPerPx)*k viewBox px. */}
         {(() => {
-          const barM = pickScaleBarM(imgW, mPerPx);
-          const barPx = barM / mPerPx;
+          const mPerPxOnScreen = mPerPx / view.k;
+          const barM = pickScaleBarM(imgW, mPerPxOnScreen);
+          const barPx = (barM / mPerPx) * view.k;
           const x0 = 16;
           const y0 = imgH - 20;
           return (
@@ -814,6 +1095,44 @@ export default function DesignCanvas({
           );
         })()}
       </svg>
+
+      {/* Zoom controls — floating column bottom-right, above the scale bar. */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 56,
+          right: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+        }}
+      >
+        {[
+          { label: '+', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
+          { label: '−', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
+          { label: '⤢', onClick: runAutoFit },
+        ].map(({ label, onClick }) => (
+          <button
+            key={label}
+            type="button"
+            onClick={onClick}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              border: 'none',
+              background: 'rgba(11,18,11,0.82)',
+              color: '#FBF6EC',
+              fontWeight: 700,
+              fontSize: 16,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              cursor: 'pointer',
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
       {(tool === 'zone' || tool === 'line') && draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
         <button

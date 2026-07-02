@@ -40,6 +40,14 @@ import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { loadSiteElements, getElementMeta, type SiteElement } from '@/lib/site-elements';
+import {
+  loadCanvasState,
+  makeMercatorUnprojector,
+  DESIGN_CANVAS_CHANGED_EVENT,
+  type DesignCanvasState,
+  type LineShape,
+} from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { reportId } from '@/lib/saved-reports';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
@@ -1050,6 +1058,7 @@ function GeometryPreview({
   satDataUrl,
   implementationPhases,
   siteElements,
+  studioBuild,
 }: {
   layers: DesignLayer[];
   title: string;
@@ -1062,6 +1071,7 @@ function GeometryPreview({
   satDataUrl: string | null;
   implementationPhases?: ImplementationPhase[];
   siteElements?: SiteElement[];
+  studioBuild?: DesignCanvasState | null;
 }) {
   const SVG_W = 960;
   const SVG_H = 640;
@@ -1696,6 +1706,125 @@ function GeometryPreview({
               </g>
             );
           })}
+
+          {/* ── STUDIO BUILD (Design Studio /design canvas: placed items, drawn ─ */}
+          {/* zones, lines) — projected from the studio's own normalised frame  ─ */}
+          {/* into lng/lat, then through this map's own `project`, so the       ─ */}
+          {/* studio build always registers correctly on this SVG/photo.       ─ */}
+          {(mapView === 'design' || mapView === 'zone' || mapView === 'water') &&
+            studioBuild &&
+            studioBuild.items.length + studioBuild.zones.length + studioBuild.lines.length > 0 &&
+            (() => {
+              const f = studioBuild.frame;
+              const unproj = makeMercatorUnprojector(f.centerLng, f.centerLat, f.zoom, f.imgW, f.imgH);
+              const toPx = (n: [number, number]): readonly [number, number] => project(unproj(n));
+              // Approximate metres→px scale at this map's centre (same trick used
+              // elsewhere in this file: project two points 0.001° apart in latitude).
+              const [, pyA] = project([f.centerLng, f.centerLat]);
+              const [, pyB] = project([f.centerLng, f.centerLat + 0.001]);
+              const pxPerM = Math.abs(pyA - pyB) / 111.32 || 0;
+
+              const lineStyle: Record<LineShape['kind'], { color: string; dash?: string; width: number }> = {
+                swale: { color: '#4EA6D8', dash: '6,4', width: 2.5 },
+                fence: { color: '#8A7860', dash: '3,3', width: 1.6 },
+                path: { color: '#C8B890', dash: '4,3', width: 2 },
+                pipe: { color: '#3A8EC4', width: 2 },
+                drip: { color: '#3A8EC4', dash: '2,3', width: 1.6 },
+                windbreak: { color: '#2F7A4A', dash: '8,3', width: 2.5 },
+              };
+
+              return (
+                <g>
+                  {/* Zones — soft washes with dashed border + numbered badge */}
+                  {studioBuild.zones.map((z) => {
+                    if (z.points.length < 3) return null;
+                    const color = ZONE_COLORS[z.zone] ?? '#555';
+                    const pxPoints = z.points.map(toPx);
+                    const d = `M ${pxPoints.map(([x, y]) => `${x} ${y}`).join(' L ')} Z`;
+                    const cx = pxPoints.reduce((s, p) => s + p[0], 0) / pxPoints.length;
+                    const cy = pxPoints.reduce((s, p) => s + p[1], 0) / pxPoints.length;
+                    return (
+                      <g key={`studio-zone-${z.id}`}>
+                        <path
+                          d={d}
+                          fill={color}
+                          fillOpacity={0.16}
+                          stroke={color}
+                          strokeWidth={1.6}
+                          strokeDasharray="6,4"
+                        />
+                        <circle cx={cx} cy={cy} r="9" fill={color} stroke="#FAF5EA" strokeWidth="2" />
+                        <text
+                          x={cx} y={cy + 3.5}
+                          textAnchor="middle"
+                          fontFamily="sans-serif"
+                          fontSize="9"
+                          fontWeight="900"
+                          fill="#FFFFFF"
+                        >
+                          {z.zone}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {/* Lines — swales/fences/paths/pipes/drip/windbreak, styled by kind */}
+                  {studioBuild.lines.map((l) => {
+                    if (l.points.length < 2) return null;
+                    const style = lineStyle[l.kind] ?? { color: '#8A7860', width: 2 };
+                    const pxPoints = l.points.map(toPx);
+                    const d = `M ${pxPoints.map(([x, y]) => `${x} ${y}`).join(' L ')}`;
+                    return (
+                      <path
+                        key={`studio-line-${l.id}`}
+                        d={d}
+                        fill="none"
+                        stroke={style.color}
+                        strokeWidth={style.width}
+                        strokeDasharray={style.dash}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    );
+                  })}
+
+                  {/* Items — icon discs, matching the SITE ELEMENTS marker style above */}
+                  {studioBuild.items.map((item) => {
+                    const def = ELEMENTS_BY_ID[item.defId];
+                    if (!def) return null;
+                    const [ix, iy] = toPx([item.x, item.y]);
+                    const wM = item.wM ?? def.wM;
+                    const rPx = pxPerM > 0 ? Math.max((wM * pxPerM) / 2, 6) : 10;
+                    const label = item.label ?? def.name;
+                    const text = label.length > 22 ? `${label.slice(0, 21)}…` : label;
+                    const pillW = Math.min(Math.max(text.length * 6 + 18, 26), 170);
+                    const labelCy = placeLabel(ix, iy + rPx + 12, text.length);
+                    return (
+                      <g key={`studio-item-${item.id}`}>
+                        <circle cx={ix} cy={iy} r={rPx} fill={def.color} stroke="#fff" strokeWidth="2.5" />
+                        <text x={ix} y={iy + 4} textAnchor="middle" fontSize="11">{def.icon}</text>
+                        <rect
+                          x={ix - pillW / 2} y={labelCy - 8}
+                          width={pillW} height={16}
+                          rx="8"
+                          fill="rgba(32,25,15,0.74)"
+                        />
+                        <text
+                          x={ix} y={labelCy + 4}
+                          textAnchor="middle"
+                          fontFamily="'Helvetica Neue', sans-serif"
+                          fontSize="8.5"
+                          fontWeight="600"
+                          fill="#F4EDD8"
+                        >
+                          {text}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </g>
+              );
+            })()}
 
           {/* ── ZONE AREA FILLS — real non-overlapping polygons (Zone + Design) ─ */}
           {/* Carved from the open space + existing features; already inside the */}
@@ -2550,6 +2679,10 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
   const [siteElements, setSiteElements] = useState<SiteElement[]>(() =>
     loadSiteElements(designSiteIdFromLocation(locationData)),
   );
+  const [studioBuild, setStudioBuild] = useState<DesignCanvasState | null>(() =>
+    loadCanvasState(designSiteIdFromLocation(locationData)),
+  );
+  const [showStudioBuild, setShowStudioBuild] = useState(true);
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Fetch the Mapbox satellite tile for the design view and inline it as a base64
@@ -2623,6 +2756,22 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     };
   }, [locationData]);
 
+  // Design Studio build (/design canvas: placed items, drawn zones, lines) — reload
+  // whenever the site switches, and whenever the studio canvas changes elsewhere
+  // (same tab via DESIGN_CANVAS_CHANGED_EVENT, other tab via 'storage').
+  useEffect(() => {
+    const refreshStudioBuild = () => {
+      setStudioBuild(loadCanvasState(designSiteIdFromLocation(locationData)));
+    };
+    refreshStudioBuild();
+    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refreshStudioBuild);
+    window.addEventListener('storage', refreshStudioBuild);
+    return () => {
+      window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refreshStudioBuild);
+      window.removeEventListener('storage', refreshStudioBuild);
+    };
+  }, [locationData]);
+
   // Boundary + driveway + placed elements projected into the satellite frame — drives the
   // hard clip in HybridRender (per-site, same for every map). null when no boundary/satellite yet.
   const aiClipFrame = useMemo(
@@ -2635,6 +2784,8 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
   // base map fills them in automatically; no AI needed).
   const hasHouse = studio.layers.some((l) => l.layerType === 'roof' || l.layerType === 'structure');
   const hasDriveway = studio.layers.some((l) => l.layerType === 'access');
+  const hasStudioBuild = !!studioBuild &&
+    studioBuild.items.length + studioBuild.zones.length + studioBuild.lines.length > 0;
 
   const approvedCount = studio.layers.filter((l) => l.approved).length;
   const lockedCount = studio.layers.filter((l) => l.locked).length;
@@ -3468,6 +3619,21 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
             <Layers3 size={13} />
             Fill / hatch {showFill ? 'on' : 'off'}
           </button>
+
+          {hasStudioBuild && (
+            <button
+              onClick={() => setShowStudioBuild((v) => !v)}
+              className={buttonBase}
+              style={{
+                background: showStudioBuild ? '#E8DDC9' : '#FBF7ED',
+                color: showStudioBuild ? '#9E5C08' : '#8A7860',
+                border: `1px solid ${showStudioBuild ? 'rgba(158,92,8,0.35)' : CARD_BORDER}`,
+              }}
+              aria-pressed={showStudioBuild}
+            >
+              🎨 Studio design {showStudioBuild ? 'on' : 'off'}
+            </button>
+          )}
         </div>
 
         {/* Base-map completeness hint — house & driveway are what's usually missing */}
@@ -3500,6 +3666,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
           satDataUrl={satDataUrl}
           implementationPhases={reportDoc.sections.implementation}
           siteElements={siteElements}
+          studioBuild={showStudioBuild ? studioBuild : null}
         />
 
         {/* ── EXPORT BUTTONS ──────────────────────────────────────────────── */}
