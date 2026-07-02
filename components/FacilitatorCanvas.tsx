@@ -9,7 +9,7 @@ import type { Profile, Design } from '@/lib/db/types';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDesignState } from '@/lib/design-studio';
 import { readLocalFarmShapes } from '@/lib/map-sync';
-import { computeCanvasFrame, fetchImageAsDataUrl } from '@/lib/design-canvas';
+import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector } from '@/lib/design-canvas';
 import type { LocationData } from '@/lib/types';
 import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse } from '@/lib/facilitator-design';
 import {
@@ -517,6 +517,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [farmersLoading, setFarmersLoading] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [savedMsg, setSavedMsg] = useState('');
+  // Transient confirmation when traced map shapes (boundary/water/paths) are imported
+  // as map-truth lines — see loadSiteBackground.
+  const [mapImportMsg, setMapImportMsg] = useState('');
 
   // Cloud save/load — designId binds this canvas to a Firestore doc once saved.
   const [designId, setDesignId] = useState<string | null>(null);
@@ -617,8 +620,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const W = size.w || 800, H = size.h || 560; // container can measure 0 mid-layout
       const s0 = Math.min(W / img.width, H / img.height, 1);
       const drawnW = img.width * s0;
+      const drawnH = img.height * s0;
       const metresAcross = frame.imgW * frame.mPerPx; // ground truth from the fit
-      setBg({ img, x: (W - drawnW) / 2, y: (H - img.height * s0) / 2, w: drawnW, h: img.height * s0, opacity: 1 });
+      const bgX = (W - drawnW) / 2, bgY = (H - drawnH) / 2;
+      setBg({ img, x: bgX, y: bgY, w: drawnW, h: drawnH, opacity: 1 });
       setBgSite(site);
       setBgDataUrl(null);
       setPxPerM(drawnW / metresAcross);
@@ -629,6 +634,52 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setShowGrid(false);
       setSitePickerOpen(false);
       setSiteLoading(null);
+
+      // ── Map-truth import — draw the farmer's TRACED shapes directly instead of
+      // re-guessing them from the satellite. `near` is already classified by
+      // mergeFarmShapesIntoDesignState (layerType), so we just project + place.
+      const projector = makeMercatorProjector(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, 0, 0);
+      const toCanvasPx = (coord: number[]): [number, number] => {
+        const [ix, iy] = projector(coord as [number, number]);
+        return [bgX + (ix * drawnW) / frame.imgW, bgY + (iy * drawnH) / frame.imgH];
+      };
+      const flatten = (ring: number[][]): number[] => ring.flatMap((c) => toCanvasPx(c));
+
+      const boundaryLayers = near.filter((l) => l.layerType === 'property_boundary');
+      const boundary = boundaryLayers.find((l) => l.approved) ?? boundaryLayers[0];
+      const waterLayers = near.filter((l) => l.layerType === 'water_body');
+
+      const newLines: LineEl[] = [];
+      if (boundary) {
+        const g = boundary.geometry as { type?: string; coordinates?: unknown };
+        const ring = g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] : undefined;
+        if (ring && ring.length >= 3) {
+          newLines.push({ id: 'mapshape-boundary', kind: 'fence', points: flatten(ring), closed: true, layer: 'existing' });
+        }
+      }
+      waterLayers.forEach((l, i) => {
+        const g = l.geometry as { type?: string; coordinates?: unknown };
+        const ring = g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] : undefined;
+        if (ring && ring.length >= 3) {
+          newLines.push({ id: `mapshape-water-${i}`, kind: 'pipe', points: flatten(ring), closed: true, layer: 'existing' });
+        }
+      });
+      near.forEach((l, i) => {
+        if (l.layerType === 'property_boundary' || l.layerType === 'water_body') return;
+        const g = l.geometry as { type?: string; coordinates?: unknown };
+        if (g?.type !== 'LineString') return; // other polygon types are skipped
+        const coords = g.coordinates as number[][];
+        if (coords.length >= 2) {
+          newLines.push({ id: `mapshape-line-${i}`, kind: 'path', points: flatten(coords), layer: 'existing' });
+        }
+      });
+
+      setLines((prev) => [...prev.filter((l) => !l.id.startsWith('mapshape-')), ...newLines]);
+
+      if (newLines.length > 0) {
+        setMapImportMsg(`✓ ${newLines.length} traced shape${newLines.length === 1 ? '' : 's'} imported from your map`);
+        setTimeout(() => setMapImportMsg(''), 5000);
+      }
     };
     img.onerror = () => setSiteLoading(null);
     img.src = dataUrl;
@@ -665,9 +716,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
       const imageBase64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
 
+      // mPerPx must describe the DOWNSCALED offscreen image actually sent (canvas.width),
+      // not the on-screen canvas px (1/pxPerM) — those differ once the satellite is
+      // scaled to fit the container. bg.w is the drawn width in canvas px.
+      const metresAcrossBg = bg.w / pxPerM;
+      const mPerPx = metresAcrossBg / canvas.width;
+
       const resp = await fetch('/api/design-detect', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64, imgW: canvas.width, imgH: canvas.height, mPerPx: 1 / pxPerM }),
+        body: JSON.stringify({ imageBase64, imgW: canvas.width, imgH: canvas.height, mPerPx }),
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => null) as { error?: string } | null;
@@ -1248,6 +1305,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 </button>
               ))}
               <div className="text-[10px] font-mono px-1" style={{ color: '#9A8268' }}>Satellite loads with the scale set automatically.</div>
+            </div>
+          )}
+          {mapImportMsg && (
+            <div className="mt-1.5 text-[10px] font-mono px-1.5 py-1 rounded-lg" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.35)', color: '#1F4D2B' }}>
+              {mapImportMsg}
             </div>
           )}
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5" style={tile(false)}>
