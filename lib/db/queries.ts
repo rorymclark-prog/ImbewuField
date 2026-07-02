@@ -120,8 +120,36 @@ export async function myProduction(): Promise<ProductionLog[]> {
 // ---- designs (incl. supervisor → farmer share) ----
 export async function saveDesign(d: Partial<Design>): Promise<string | null> {
   const f = fb(); const u = uid(); if (!f || !u) return null;
-  const r = await addDoc(collection(f.db, 'designs'), { ...d, owner_id: u, created_at: serverTimestamp() });
+  const r = await addDoc(collection(f.db, 'designs'), { ...d, owner_id: u, created_at: serverTimestamp(), updated_at: serverTimestamp() });
   return r.id;
+}
+export async function updateDesign(id: string, patch: Partial<Design>): Promise<boolean> {
+  const f = fb(); if (!f) return false;
+  try {
+    await updateDoc(doc(f.db, 'designs', id), { ...patch, updated_at: serverTimestamp() });
+    return true;
+  } catch {
+    return false;
+  }
+}
+export async function myDesigns(): Promise<Design[]> {
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'designs'), where('owner_id', '==', u)));
+  return rows<Design>(s).sort((a, b) => {
+    const t = (d: Design) => (d as { updated_at?: { toMillis?: () => number }; created_at?: { toMillis?: () => number } });
+    const ta = t(a).updated_at?.toMillis?.() ?? t(a).created_at?.toMillis?.() ?? 0;
+    const tb = t(b).updated_at?.toMillis?.() ?? t(b).created_at?.toMillis?.() ?? 0;
+    return tb - ta;
+  });
+}
+export async function deleteDesign(id: string): Promise<boolean> {
+  const f = fb(); if (!f) return false;
+  try {
+    await deleteDoc(doc(f.db, 'designs', id));
+    return true;
+  } catch {
+    return false;
+  }
 }
 export async function shareDesign(designId: string, farmerProfileId: string): Promise<void> {
   const f = fb(); if (!f) return;

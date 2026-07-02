@@ -53,6 +53,7 @@ export interface ExpenseLog {
 export interface Design {
   id: string; owner_id: string; garden_id: string | null; title: string;
   data: Record<string, unknown>; shared_with: string | null; created_at: string;
+  updated_at?: unknown;
 }
 
 export interface Report {

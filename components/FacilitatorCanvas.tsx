@@ -4,8 +4,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
 import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
-import { listFarmers, saveDesign, shareDesign } from '@/lib/db/queries';
-import type { Profile } from '@/lib/db/types';
+import { listFarmers, saveDesign, updateDesign, myDesigns, deleteDesign, shareDesign } from '@/lib/db/queries';
+import type { Profile, Design } from '@/lib/db/types';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDesignState } from '@/lib/design-studio';
 import { readLocalFarmShapes } from '@/lib/map-sync';
@@ -518,6 +518,16 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [sharing, setSharing] = useState(false);
   const [savedMsg, setSavedMsg] = useState('');
 
+  // Cloud save/load — designId binds this canvas to a Firestore doc once saved.
+  const [designId, setDesignId] = useState<string | null>(null);
+  const [designTitle, setDesignTitle] = useState('');
+  const [cloudStatus, setCloudStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'local-only'>('idle');
+  const [cloudSavedAt, setCloudSavedAt] = useState<number | null>(null);
+  const [myDesignsOpen, setMyDesignsOpen] = useState(false);
+  const [myDesignsList, setMyDesignsList] = useState<Design[] | null>(null);
+  const [designsLoading, setDesignsLoading] = useState(false);
+  const manualSaveInFlight = useRef(false);
+
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<Konva.Stage>(null);
   const trRef = useRef<Konva.Transformer>(null);
@@ -796,6 +806,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       if (s.pxPerM !== 26) setScaleSet(true);
       setActiveLayer(s.activeLayer ?? 'base');
       setHiddenLayers(s.hiddenLayers ?? []);
+      setDesignId(s.designId ?? null);
+      setDesignTitle(s.title ?? '');
       if (s.bgSite) {
         loadSiteBackground(s.bgSite).catch(() => {});
       } else if (s.bgDataUrl && s.bgRect) {
@@ -826,6 +838,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         pxPerM,
         activeLayer,
         hiddenLayers,
+        designId: designId ?? undefined,
+        title: designTitle || undefined,
         bgSite: bgSite ?? undefined,
         bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
         bgRect: bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined,
@@ -834,7 +848,33 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       });
     }, 600);
     return () => clearTimeout(t);
-  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, bgSite, bgDataUrl]);
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, bgSite, bgDataUrl, designId, designTitle]);
+
+  // Cloud payload — NEVER include bgDataUrl (Firestore 1 MB doc limit); bgSite is
+  // cheap (re-fetches the satellite on load) so it's safe to persist.
+  const buildCloudPayload = useCallback(() => ({
+    title: designTitle || siteText || bgSite?.name || 'Garden design',
+    data: { items, lines, sectors, pxPerM, bgSite: bgSite ?? null, activeLayer, hiddenLayers },
+  }), [designTitle, siteText, bgSite, items, lines, sectors, pxPerM, activeLayer, hiddenLayers]);
+
+  // Cloud autosave — only once a design is bound (designId set) and the initial
+  // localStorage restore has completed, so we never clobber a doc with empty state.
+  useEffect(() => {
+    if (!restoredRef.current || !designId) return;
+    const t = setTimeout(async () => {
+      if (manualSaveInFlight.current) return;
+      setCloudStatus('saving');
+      try {
+        const ok = await updateDesign(designId, buildCloudPayload());
+        setCloudStatus(ok ? 'saved' : 'error');
+        if (ok) setCloudSavedAt(Date.now());
+      } catch {
+        setCloudStatus('error');
+      }
+    }, 4000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bgSite, designId]);
 
   function onStageClick(e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) {
     const stage = e.target.getStage();
@@ -925,9 +965,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   async function sendDesignToFarmer(farmer: Profile) {
     setSharing(true);
     try {
-      const designId = await saveDesign({ title: 'Garden design', data: { items, lines, sectors, pxPerM } });
-      if (designId) {
-        await shareDesign(designId, farmer.id);
+      let id = designId;
+      if (id) {
+        await updateDesign(id, buildCloudPayload());
+      } else {
+        id = await saveDesign(buildCloudPayload());
+        if (id) setDesignId(id);
+      }
+      if (id) {
+        await shareDesign(id, farmer.id);
         setSharedTo(farmer.full_name ?? farmer.id);
       } else {
         setSharedTo(farmer.full_name ?? farmer.id);
@@ -941,14 +987,96 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   async function handleSave() {
+    manualSaveInFlight.current = true;
+    setCloudStatus('saving');
     setSavedMsg('Saving…');
     try {
-      await saveDesign({ title: siteText || 'Garden design', data: { items, lines, sectors, pxPerM } });
-      setSavedMsg('✓ Saved');
+      const payload = buildCloudPayload();
+      if (designId) {
+        const ok = await updateDesign(designId, payload);
+        if (ok) {
+          setCloudStatus('saved'); setCloudSavedAt(Date.now());
+          setSavedMsg(`✓ Saved · ${payload.title}`);
+        } else {
+          setCloudStatus('error');
+          setSavedMsg('⚠ Not saved to cloud — sign in. Work is kept on this device.');
+        }
+      } else {
+        const id = await saveDesign(payload);
+        if (id) {
+          setDesignId(id);
+          setCloudStatus('saved'); setCloudSavedAt(Date.now());
+          setSavedMsg(`✓ Saved · ${payload.title}`);
+        } else {
+          setCloudStatus('local-only');
+          setSavedMsg('⚠ Not saved to cloud — sign in. Work is kept on this device.');
+        }
+      }
     } catch {
-      setSavedMsg('✓ Saved');
+      setCloudStatus('error');
+      setSavedMsg('⚠ Not saved to cloud — sign in. Work is kept on this device.');
+    } finally {
+      manualSaveInFlight.current = false;
     }
     setTimeout(() => setSavedMsg(''), 3000);
+  }
+
+  // ── My designs (load / delete) ──────────────────────────────────────────
+  async function openMyDesigns() {
+    const next = !myDesignsOpen;
+    setMyDesignsOpen(next);
+    if (next) {
+      setDesignsLoading(true);
+      setMyDesignsList(null);
+      try {
+        const list = await myDesigns();
+        setMyDesignsList(list);
+      } catch {
+        setMyDesignsList([]);
+      } finally {
+        setDesignsLoading(false);
+      }
+    }
+  }
+
+  async function loadDesignRow(d: Design) {
+    const hasUnsavedWork = (items.length > 0 || lines.length > 0) && designId !== d.id;
+    if (hasUnsavedWork && !window.confirm('Load this design? Any unsaved changes to the current one will be lost from view (they remain on this device until overwritten).')) {
+      return;
+    }
+    const data = (d.data ?? {}) as {
+      items?: Item[]; lines?: LineEl[]; sectors?: SectorEl[]; pxPerM?: number;
+      activeLayer?: LayerId; hiddenLayers?: LayerId[];
+      bgSite?: { lat: number; lon: number; name: string } | null;
+    };
+    setItems(data.items ?? []);
+    setLines(data.lines ?? []);
+    setSectors(data.sectors ?? []);
+    setPxPerM(data.pxPerM ?? 26);
+    setActiveLayer(data.activeLayer ?? 'base');
+    setHiddenLayers(data.hiddenLayers ?? []);
+    setSelectedId(null);
+    setGhosts(null);
+    setScaleSuggestion(null);
+    setDesignId(d.id);
+    setDesignTitle(d.title ?? '');
+    setCloudStatus('saved');
+    setCloudSavedAt(Date.now());
+    if (data.bgSite) {
+      loadSiteBackground(data.bgSite).catch(() => {});
+    } else {
+      setBg(null); setBgSite(null); setBgDataUrl(null);
+    }
+    setMyDesignsOpen(false);
+  }
+
+  async function deleteDesignRow(id: string) {
+    if (!window.confirm('Delete this design? This cannot be undone.')) return;
+    const ok = await deleteDesign(id);
+    if (ok) {
+      setMyDesignsList((prev) => (prev ?? []).filter((d) => d.id !== id));
+      if (designId === id) setDesignId(null);
+    }
   }
 
   // Farmer list to display: real ones if loaded, else hardcoded fallback
@@ -1022,6 +1150,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     setGhosts(null); setScaleSuggestion(null); setDetectError('');
     setActiveLayer('base'); setHiddenLayers([]);
     setSelectedId(null);
+    setDesignId(null); setDesignTitle(''); setCloudStatus('idle'); setCloudSavedAt(null);
     resetView();
   }
 
@@ -1599,6 +1728,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
           {/* Save button */}
           <div>
+            <input
+              type="text"
+              value={designTitle}
+              onChange={(e) => setDesignTitle(e.target.value)}
+              placeholder="Design name…"
+              className="w-full mb-1.5 px-2 py-1.5 rounded-lg font-mono text-xs"
+              style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }}
+            />
             <button
               onClick={handleSave}
               disabled={!items.length && !lines.length}
@@ -1608,6 +1745,54 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.35)', color: '#1F4D2B' }}>
               {savedMsg || <span className="inline-flex items-center justify-center gap-1.5"><Download size={14} /> Save design</span>}
             </button>
+            {!savedMsg && (
+              <div className="mt-1 text-[10px] font-mono px-0.5" style={{
+                color: cloudStatus === 'saved' ? '#1F4D2B'
+                  : cloudStatus === 'error' ? '#C0531E'
+                  : cloudStatus === 'local-only' ? '#C0531E'
+                  : '#9A8268',
+              }}>
+                {cloudStatus === 'saving' && '↻ Saving to cloud…'}
+                {cloudStatus === 'saved' && `✓ Cloud · ${cloudSavedAt ? new Date(cloudSavedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}`}
+                {cloudStatus === 'error' && '⚠ Cloud save failed — kept on this device'}
+                {cloudStatus === 'local-only' && '📱 Saved on this device only'}
+                {cloudStatus === 'idle' && !designId && '📱 Auto-saved on this device — Save to keep it in your account'}
+              </div>
+            )}
+            <button
+              onClick={openMyDesigns}
+              className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all"
+              style={tile(myDesignsOpen)}>
+              📂 My designs
+            </button>
+            {myDesignsOpen && (
+              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                {designsLoading && (
+                  <div className="text-xs font-display px-2 py-1 flex items-center gap-1.5" style={{ color: '#9A8268' }}>
+                    <Loader2 className="animate-spin" size={14} /> Loading…
+                  </div>
+                )}
+                {!designsLoading && myDesignsList && myDesignsList.length === 0 && (
+                  <div className="text-xs font-mono px-1 py-1" style={{ color: '#9A8268' }}>No saved designs yet.</div>
+                )}
+                {!designsLoading && myDesignsList && myDesignsList.map((d) => {
+                  const data = (d.data ?? {}) as { items?: unknown[]; lines?: unknown[] };
+                  const ts = (d as { updated_at?: { toDate?: () => Date }; created_at?: { toDate?: () => Date } });
+                  const when = ts.updated_at?.toDate?.() ?? ts.created_at?.toDate?.();
+                  return (
+                    <div key={d.id} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg" style={{ background: d.id === designId ? 'rgba(31,77,43,0.1)' : '#FFFFFF', border: '1px solid #E2D8C4' }}>
+                      <button onClick={() => loadDesignRow(d)} className="flex-1 min-w-0 text-left">
+                        <div className="text-xs font-display truncate" style={{ color: '#3A352C' }}>{d.title || 'Garden design'}</div>
+                        <div className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
+                          {when ? when.toLocaleDateString() : '—'} · {(data.items?.length ?? 0)} items · {(data.lines?.length ?? 0)} lines
+                        </div>
+                      </button>
+                      <button onClick={() => deleteDesignRow(d.id)} title="Delete" className="flex-shrink-0 text-xs px-1.5 py-1 rounded font-mono" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.35)', color: '#C0531E' }}>🗑</button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Share to farmer (supervisor power) */}

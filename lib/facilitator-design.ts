@@ -239,6 +239,9 @@ export interface FacilitatorDesignState {
   pxPerM: number;
   activeLayer: LayerId;
   hiddenLayers: LayerId[];
+  /** Cloud design doc this canvas is bound to, once saved — drives update-not-create autosave. */
+  designId?: string;
+  title?: string;
   /** For site imports we re-fetch the satellite on load instead of storing megabytes of image. */
   bgSite?: { lat: number; lon: number; name: string };
   /** For small file imports only (quota-guarded). */
