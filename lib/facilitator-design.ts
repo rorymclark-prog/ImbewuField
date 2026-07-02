@@ -57,7 +57,7 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
   },
   existing: {
     id: 'existing', name: "What's there", icon: '🏠',
-    blurb: 'Mark what already exists — buildings, big trees, fences, the driveway. Use ✨ Detect to let AI find them.',
+    blurb: 'Mark what already exists. 🗺 Find map features pulls buildings and roads from map data; tap to place big trees.',
     elementTypes: ['shed', 'tree', 'well'], lineKinds: ['fence', 'path'],
   },
   sectors: {
@@ -136,10 +136,10 @@ export function coachTip(layer: LayerId, c: CoachCounts): string {
   switch (layer) {
     case 'base':
       if (!c.hasBg) return 'Load a base map: "From my map sites" gives you your real satellite photo with the scale already set.';
-      if (!c.scaleSet) return 'Photo loaded. Now set the scale — use ✨ Detect to get an AI estimate, or measure a known distance with Set scale.';
+      if (!c.scaleSet) return 'Photo loaded. Now set the scale — ✨ Suggest scale reads it from parked cars, or measure a known distance with Set scale.';
       return 'Base map and scale are set ✓ — move on to mark what is already on the land.';
     case 'existing':
-      if (n('existing') === 0) return 'Nothing marked yet. Tap ✨ Detect to find buildings, trees and the driveway automatically, then approve what is right.';
+      if (n('existing') === 0) return 'Nothing marked yet. Tap 🗺 Find map features to pull your buildings and roads from map data, then tap to place your big trees.';
       return `${n('existing')} existing feature${n('existing') > 1 ? 's' : ''} marked ✓ — next, map your sectors: sun, wind and fire.`;
     case 'sectors':
       if (c.sectors === 0) return 'Place at least winter sun (from the north in SA) and prevailing wind. Drag to position, rotate to aim.';

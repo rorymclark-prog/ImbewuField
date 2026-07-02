@@ -1406,11 +1406,17 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5" style={tile(false)}>
             <ImageIcon size={14} /> Import garden map
           </button>
-          <button onClick={runDetect} disabled={!bg || detecting}
-            className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5"
-            style={!bg || detecting ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
-            {detecting ? <><Loader2 size={14} className="animate-spin" /> Detecting…</> : <>✨ Detect from photo</>}
-          </button>
+          {/* Photo-AI is only offered on FILE imports, where its one reliable trick —
+              scale from parked cars — has no better alternative. Site imports have
+              exact scale + map data, and field testing showed photo detection adds
+              nothing there (Florence: 0 features on a tree-covered plot). */}
+          {bg && !scaleLocked && (
+            <button onClick={runDetect} disabled={detecting}
+              className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5"
+              style={detecting ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+              {detecting ? <><Loader2 size={14} className="animate-spin" /> Reading photo…</> : <>✨ Suggest scale from photo</>}
+            </button>
+          )}
           {detectError && (
             <div className="text-[10px] font-mono px-1 mt-1" style={{ color: '#C0531E' }}>{detectError}</div>
           )}
@@ -1459,14 +1465,6 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#1F4D2B' }}>For this step</div>
             {activeLayer === 'existing' && (
               <>
-                <button onClick={runDetect} disabled={!bg || detecting}
-                  className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
-                  style={!bg || detecting ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
-                  {detecting ? <><Loader2 size={14} className="animate-spin" /> Detecting…</> : <>✨ Detect from photo</>}
-                </button>
-                {detectError && (
-                  <div className="text-[10px] font-mono px-1 mb-1.5" style={{ color: '#C0531E' }}>{detectError}</div>
-                )}
                 <button onClick={runFindMapFeatures} disabled={!siteFrameRef.current || findingFeatures}
                   title={!siteFrameRef.current ? 'Import from a map site first' : undefined}
                   className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
