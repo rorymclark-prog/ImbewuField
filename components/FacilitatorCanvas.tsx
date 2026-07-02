@@ -6,6 +6,11 @@ import type Konva from 'konva';
 import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
 import { listFarmers, saveDesign, shareDesign } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
+import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
+import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDesignState } from '@/lib/design-studio';
+import { readLocalFarmShapes } from '@/lib/map-sync';
+import { computeCanvasFrame, fetchImageAsDataUrl } from '@/lib/design-canvas';
+import type { LocationData } from '@/lib/types';
 
 type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
@@ -460,6 +465,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [lines, setLines] = useState<LineEl[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [pxPerM, setPxPerM] = useState(26);
+  // "From my map sites": import a saved place's satellite as the base map with the
+  // scale set AUTOMATICALLY from the frame's metres-per-pixel — no manual Set scale.
+  const [sitePickerOpen, setSitePickerOpen] = useState(false);
+  const [sitePlaces, setSitePlaces] = useState<SavedPlace[]>([]);
+  const [siteLoading, setSiteLoading] = useState<string | null>(null);
   const [size, setSize] = useState({ w: 800, h: 560 });
   const [showGrid, setShowGrid] = useState(true);
   const [showLabels, setShowLabels] = useState(false);
@@ -535,6 +545,44 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setShowGrid(false);
     };
     img.src = URL.createObjectURL(file);
+  }
+
+  // Import a saved place's satellite directly (same fit + maths as the Design Studio),
+  // and auto-set pxPerM so 1 m on the stage is true to the ground.
+  async function importFromSite(p: SavedPlace) {
+    try {
+      setSiteLoading(p.id);
+      const siteId = designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData);
+      const saved = loadDesignStudioState(siteId);
+      const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved, siteId);
+      const NEAR = 0.02; // only shapes near THIS site drive the fit (global store)
+      const near = mergedAll.layers.filter((l) => {
+        const g = l.geometry as { type?: string; coordinates?: unknown };
+        const ring =
+          g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] :
+          g?.type === 'LineString' ? (g.coordinates as number[][]) : [];
+        const c = ring?.[0];
+        return !!c && Math.abs(c[1] - p.lat) < NEAR && Math.abs(c[0] - p.lon) < NEAR;
+      });
+      const { frame, url } = computeCanvasFrame(near, p.lat, p.lon);
+      if (!url) throw new Error('No Mapbox token configured');
+      const dataUrl = await fetchImageAsDataUrl(url);
+      const img = new window.Image();
+      img.onload = () => {
+        const s0 = Math.min(size.w / img.width, size.h / img.height, 1);
+        const drawnW = img.width * s0;
+        const metresAcross = frame.imgW * frame.mPerPx; // ground truth from the fit
+        setBg({ img, x: (size.w - drawnW) / 2, y: (size.h - img.height * s0) / 2, w: drawnW, h: img.height * s0, opacity: 1 });
+        setPxPerM(drawnW / metresAcross);
+        setShowGrid(false);
+        setSitePickerOpen(false);
+        setSiteLoading(null);
+      };
+      img.onerror = () => setSiteLoading(null);
+      img.src = dataUrl;
+    } catch {
+      setSiteLoading(null);
+    }
   }
 
   const placeItem = (type: ElType, cx: number, cy: number) => {
@@ -772,7 +820,34 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         <div>
           <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Base map</div>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => loadImage(e.target.files?.[0])} />
-          <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(false)}>
+          <button
+            onClick={() => { try { setSitePlaces(loadPlaces()); } catch { setSitePlaces([]); } setSitePickerOpen((v) => !v); }}
+            className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
+            style={{ ...tile(sitePickerOpen), fontWeight: 600 }}
+          >
+            🛰 From my map sites
+          </button>
+          {sitePickerOpen && (
+            <div className="mt-1.5 space-y-1">
+              {sitePlaces.length === 0 && (
+                <div className="text-xs font-mono px-1" style={{ color: '#9A8268' }}>No saved places yet — save one on the Farmer map first.</div>
+              )}
+              {sitePlaces.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => !siteLoading && importFromSite(p)}
+                  className="w-full py-1.5 px-2 rounded-lg text-xs font-display flex items-center gap-1.5 text-left"
+                  style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#3A352C', opacity: siteLoading && siteLoading !== p.id ? 0.5 : 1 }}
+                >
+                  <span style={{ width: 8, height: 8, borderRadius: 999, background: resolveColor(p), flexShrink: 0 }} />
+                  <span className="flex-1 truncate">{p.name}</span>
+                  {siteLoading === p.id ? <Loader2 size={12} className="animate-spin" /> : <span style={{ color: '#1F4D2B' }}>→</span>}
+                </button>
+              ))}
+              <div className="text-[10px] font-mono px-1" style={{ color: '#9A8268' }}>Satellite loads with the scale set automatically.</div>
+            </div>
+          )}
+          <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5" style={tile(false)}>
             <ImageIcon size={14} /> Import garden map
           </button>
           {bg && (
@@ -791,7 +866,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <Ruler size={14} /> Set scale
           </button>
           <div className="flex items-center justify-between mt-1.5">
-            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>1 m = {pxPerM.toFixed(0)} px</span>
+            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>1 m = {pxPerM < 10 ? pxPerM.toFixed(1) : pxPerM.toFixed(0)} px</span>
             <div className="flex gap-1">
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
