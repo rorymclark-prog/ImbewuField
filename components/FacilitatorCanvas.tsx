@@ -11,14 +11,13 @@ import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDes
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { computeCanvasFrame, fetchImageAsDataUrl } from '@/lib/design-canvas';
 import type { LocationData } from '@/lib/types';
-
-type ElType =
-  | 'tank' | 'pond' | 'well' | 'reedbed'
-  | 'bed' | 'hugel' | 'banana' | 'tree' | 'foodforest' | 'herb' | 'shrub'
-  | 'coop' | 'compost' | 'greenhouse' | 'tunnel' | 'shed' | 'beehive' | 'biogas'
-  | 'swalew' | 'firebreak' | 'nursery';
-
-type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour';
+import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse } from '@/lib/facilitator-design';
+import {
+  LAYERS, LAYER_ORDER, SECTOR_DEFS, defaultLayerForType, defaultLayerForLine, layerForPlacement,
+  coachTip, type CoachCounts,
+  saveFacilitatorState, loadFacilitatorState, clearFacilitatorState,
+  buildGhosts,
+} from '@/lib/facilitator-design';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
 
@@ -67,8 +66,8 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],       width: 7 },
 };
 
-interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number }
-interface LineEl { id: string; kind: LineKind; points: number[] }
+interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
+interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
 
 // Demo: farmers a supervisor could push a design to (real version = backend + accounts)
 const FARMERS = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane'];
@@ -463,8 +462,10 @@ function ElementIcon({ type, w, h }: { type: ElType; w: number; h: number }) {
 export default function FacilitatorCanvas({ siteText, language }: { siteText?: string; language?: string }) {
   const [items, setItems] = useState<Item[]>([]);
   const [lines, setLines] = useState<LineEl[]>([]);
+  const [sectors, setSectors] = useState<SectorEl[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [pxPerM, setPxPerM] = useState(26);
+  const [scaleSet, setScaleSet] = useState(false);
   // "From my map sites": import a saved place's satellite as the base map with the
   // scale set AUTOMATICALLY from the frame's metres-per-pixel — no manual Set scale.
   const [sitePickerOpen, setSitePickerOpen] = useState(false);
@@ -482,11 +483,31 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const stagePosRef = useRef({ x: 0, y: 0 });
   const lastDist = useRef(0);
 
+  // Layers: progressive build-up. activeLayer drives palette filtering + coach tips;
+  // hiddenLayers lets a facilitator declutter the view without deleting anything.
+  const [activeLayer, setActiveLayer] = useState<LayerId>('base');
+  const [hiddenLayers, setHiddenLayers] = useState<LayerId[]>([]);
+  const [armedSector, setArmedSector] = useState<SectorKind | null>(null);
+  const [layersMenuOpen, setLayersMenuOpen] = useState(false);
+  const [moreElementsOpen, setMoreElementsOpen] = useState(false);
+
   const [bg, setBg] = useState<{ img: HTMLImageElement; x: number; y: number; w: number; h: number; opacity: number } | null>(null);
+  const [bgSite, setBgSite] = useState<{ lat: number; lon: number; name: string } | null>(null);
+  const [bgDataUrl, setBgDataUrl] = useState<string | null>(null);
   const [placeType, setPlaceType] = useState<ElType | null>(null);
   const [lineKind, setLineKind] = useState<LineKind | null>(null);
   const [scaleMode, setScaleMode] = useState(false);
   const [draftPt, setDraftPt] = useState<number[] | null>(null);
+  const restoredRef = useRef(false);
+
+  // AI detect — vision detection of existing features + boundary as ghost overlays.
+  const [ghosts, setGhosts] = useState<GhostFeature[] | null>(null);
+  const [detecting, setDetecting] = useState(false);
+  const [detectError, setDetectError] = useState('');
+  const [scaleSuggestion, setScaleSuggestion] = useState<{ metresAcross: number; pxPerM: number } | null>(null);
+  // true when importFromSite / site-restore set the EXACT scale from the map fit;
+  // false when a plain file image is loaded (scale is a guess until measured or AI-suggested).
+  const [scaleLocked, setScaleLocked] = useState(false);
 
   const [review, setReview] = useState('');
   const [reviewing, setReviewing] = useState(false);
@@ -504,8 +525,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const fileRef = useRef<HTMLInputElement>(null);
 
   const selected = items.find((i) => i.id === selectedId) ?? null;
+  const selectedSector = !selected && selectedId ? sectors.find((s) => s.id === selectedId) ?? null : null;
   const selectedIsCircle = selected ? CATALOG[selected.type].shape === 'circle' : false;
-  const armed = placeType || lineKind || scaleMode;
+  const armed = placeType || lineKind || scaleMode || armedSector;
 
   useEffect(() => {
     const el = wrapRef.current; if (!el) return;
@@ -519,13 +541,17 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     const tr = trRef.current; if (!tr) return;
     const node = selectedId ? nodeRefs.current[selectedId] : null;
     tr.nodes(node ? [node] : []);
+    tr.rotateEnabled(true);
+    tr.enabledAnchors(selectedSector ? [] : selectedIsCircle
+      ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+      : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']);
     tr.getLayer()?.batchDraw();
-  }, [selectedId, items, pxPerM]);
+  }, [selectedId, selectedSector, selectedIsCircle, items, sectors, pxPerM]);
 
   // Esc cancels any armed tool
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); }
+      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) {
         const t = e.target as HTMLElement;
         if (t.tagName !== 'INPUT' && t.tagName !== 'TEXTAREA') { e.preventDefault(); deleteSelected(); }
@@ -538,58 +564,170 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   function loadImage(file?: File) {
     if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      const img = new window.Image();
+      img.onload = () => {
+        const W = size.w || 800, H = size.h || 560; // container can measure 0 mid-layout
+        const s = Math.min(W / img.width, H / img.height, 1);
+        setBg({ img, x: (W - img.width * s) / 2, y: (H - img.height * s) / 2, w: img.width * s, h: img.height * s, opacity: 1 });
+        setBgSite(null);
+        setBgDataUrl(dataUrl);
+        setShowGrid(false);
+        setScaleLocked(false);
+        setGhosts(null);
+        setScaleSuggestion(null);
+      };
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Shared by importFromSite (live pick) and the on-mount restore (bgSite from storage) —
+  // both need the exact same satellite fetch + auto-scale maths.
+  const loadSiteBackground = useCallback(async (site: { lat: number; lon: number; name: string }) => {
+    const siteId = designSiteIdFromLocation({ lat: site.lat, lon: site.lon } as LocationData);
+    const saved = loadDesignStudioState(siteId);
+    const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved, siteId);
+    const NEAR = 0.02; // only shapes near THIS site drive the fit (global store)
+    const near = mergedAll.layers.filter((l) => {
+      const g = l.geometry as { type?: string; coordinates?: unknown };
+      const ring =
+        g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] :
+        g?.type === 'LineString' ? (g.coordinates as number[][]) : [];
+      const c = ring?.[0];
+      return !!c && Math.abs(c[1] - site.lat) < NEAR && Math.abs(c[0] - site.lon) < NEAR;
+    });
+    const { frame, url } = computeCanvasFrame(near, site.lat, site.lon);
+    if (!url) throw new Error('No Mapbox token configured');
+    const dataUrl = await fetchImageAsDataUrl(url);
     const img = new window.Image();
     img.onload = () => {
-      const s = Math.min(size.w / img.width, size.h / img.height, 1);
-      setBg({ img, x: (size.w - img.width * s) / 2, y: (size.h - img.height * s) / 2, w: img.width * s, h: img.height * s, opacity: 1 });
+      const W = size.w || 800, H = size.h || 560; // container can measure 0 mid-layout
+      const s0 = Math.min(W / img.width, H / img.height, 1);
+      const drawnW = img.width * s0;
+      const metresAcross = frame.imgW * frame.mPerPx; // ground truth from the fit
+      setBg({ img, x: (W - drawnW) / 2, y: (H - img.height * s0) / 2, w: drawnW, h: img.height * s0, opacity: 1 });
+      setBgSite(site);
+      setBgDataUrl(null);
+      setPxPerM(drawnW / metresAcross);
+      setScaleSet(true);
+      setScaleLocked(true);
+      setGhosts(null);
+      setScaleSuggestion(null);
       setShowGrid(false);
+      setSitePickerOpen(false);
+      setSiteLoading(null);
     };
-    img.src = URL.createObjectURL(file);
-  }
+    img.onerror = () => setSiteLoading(null);
+    img.src = dataUrl;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size.w, size.h]);
 
   // Import a saved place's satellite directly (same fit + maths as the Design Studio),
   // and auto-set pxPerM so 1 m on the stage is true to the ground.
   async function importFromSite(p: SavedPlace) {
     try {
       setSiteLoading(p.id);
-      const siteId = designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData);
-      const saved = loadDesignStudioState(siteId);
-      const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved, siteId);
-      const NEAR = 0.02; // only shapes near THIS site drive the fit (global store)
-      const near = mergedAll.layers.filter((l) => {
-        const g = l.geometry as { type?: string; coordinates?: unknown };
-        const ring =
-          g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] :
-          g?.type === 'LineString' ? (g.coordinates as number[][]) : [];
-        const c = ring?.[0];
-        return !!c && Math.abs(c[1] - p.lat) < NEAR && Math.abs(c[0] - p.lon) < NEAR;
-      });
-      const { frame, url } = computeCanvasFrame(near, p.lat, p.lon);
-      if (!url) throw new Error('No Mapbox token configured');
-      const dataUrl = await fetchImageAsDataUrl(url);
-      const img = new window.Image();
-      img.onload = () => {
-        const s0 = Math.min(size.w / img.width, size.h / img.height, 1);
-        const drawnW = img.width * s0;
-        const metresAcross = frame.imgW * frame.mPerPx; // ground truth from the fit
-        setBg({ img, x: (size.w - drawnW) / 2, y: (size.h - img.height * s0) / 2, w: drawnW, h: img.height * s0, opacity: 1 });
-        setPxPerM(drawnW / metresAcross);
-        setShowGrid(false);
-        setSitePickerOpen(false);
-        setSiteLoading(null);
-      };
-      img.onerror = () => setSiteLoading(null);
-      img.src = dataUrl;
+      await loadSiteBackground({ lat: p.lat, lon: p.lon, name: p.name });
     } catch {
       setSiteLoading(null);
+    }
+  }
+
+  // AI detect — draw the base map to an offscreen canvas (downscaled), send it to
+  // the vision endpoint, and turn the response into approve/reject ghost overlays.
+  async function runDetect() {
+    if (!bg || detecting) return;
+    setDetecting(true);
+    setDetectError('');
+    try {
+      const longEdge = Math.max(bg.img.naturalWidth || bg.img.width, bg.img.naturalHeight || bg.img.height);
+      const scale = Math.min(1, 1400 / longEdge);
+      const cw = Math.max(1, Math.round((bg.img.naturalWidth || bg.img.width) * scale));
+      const ch = Math.max(1, Math.round((bg.img.naturalHeight || bg.img.height) * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Could not prepare the image');
+      ctx.drawImage(bg.img, 0, 0, cw, ch);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+      const imageBase64 = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
+
+      const resp = await fetch('/api/design-detect', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageBase64, imgW: canvas.width, imgH: canvas.height, mPerPx: 1 / pxPerM }),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => null) as { error?: string } | null;
+        throw new Error(err?.error || 'Auto-detect failed — please try again.');
+      }
+      const res = await resp.json() as DetectResponse;
+      const found = buildGhosts(res, { x: bg.x, y: bg.y, w: bg.w, h: bg.h });
+      setGhosts(found);
+      if (res.metresAcross && !scaleLocked) {
+        setScaleSuggestion({ metresAcross: res.metresAcross, pxPerM: bg.w / res.metresAcross });
+      }
+      if (found.length === 0) setDetectError('No features found in this photo.');
+    } catch (e) {
+      setDetectError(e instanceof Error ? e.message : 'Auto-detect failed — please try again.');
+    } finally {
+      setDetecting(false);
     }
   }
 
   const placeItem = (type: ElType, cx: number, cy: number) => {
     const c = CATALOG[type];
     const id = `${type}-${Date.now()}-${Math.round(Math.random() * 999)}`;
-    setItems((prev) => [...prev, { id, type, x: cx - (c.w * pxPerM) / 2, y: cy - (c.h * pxPerM) / 2, wM: c.w, hM: c.h, rotation: 0, litres: c.litres }]);
+    const layer = layerForPlacement(activeLayer, defaultLayerForType(type));
+    setItems((prev) => [...prev, { id, type, x: cx - (c.w * pxPerM) / 2, y: cy - (c.h * pxPerM) / 2, wM: c.w, hM: c.h, rotation: 0, litres: c.litres, layer }]);
     setSelectedId(id);
+  };
+
+  // ── AI-detect ghost accept/dismiss ──────────────────────────────────────
+  const dismissGhost = (id: string) => {
+    setGhosts((prev) => {
+      const next = (prev ?? []).filter((g) => g.id !== id);
+      return next.length ? next : null;
+    });
+  };
+
+  const acceptGhost = (g: GhostFeature) => {
+    if (g.elType) {
+      // Point feature — a single [x, y] pair; footprint is square (wM = hM).
+      const c = CATALOG[g.elType];
+      const px = g.pxPoints[0], py = g.pxPoints[1];
+      const sizeM = g.sizeM ?? c.w;
+      const sizePx = sizeM * pxPerM;
+      const id = `${g.elType}-${Date.now()}-${Math.round(Math.random() * 999)}`;
+      setItems((prev) => [...prev, {
+        id, type: g.elType!, x: px - sizePx / 2, y: py - sizePx / 2,
+        wM: sizeM, hM: sizeM, rotation: 0, litres: c.litres, layer: 'existing',
+      }]);
+    } else if (g.kind === 'veg_area') {
+      // Ring → bed footprint from the bounding box.
+      const xs = g.pxPoints.filter((_, i) => i % 2 === 0);
+      const ys = g.pxPoints.filter((_, i) => i % 2 === 1);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const id = `bed-${Date.now()}-${Math.round(Math.random() * 999)}`;
+      setItems((prev) => [...prev, {
+        id, type: 'bed', x: minX, y: minY,
+        wM: (maxX - minX) / pxPerM, hM: (maxY - minY) / pxPerM, rotation: 0, layer: 'existing',
+      }]);
+    } else if (g.lineKind) {
+      // Polyline / ring — driveway → path, boundary → fence.
+      const id = `line-${Date.now()}-${Math.round(Math.random() * 999)}`;
+      setLines((prev) => [...prev, {
+        id, kind: g.lineKind!, points: g.pxPoints, closed: g.kind === 'boundary', layer: 'existing',
+      }]);
+    }
+    dismissGhost(g.id);
+  };
+
+  const acceptAllGhosts = () => {
+    (ghosts ?? []).forEach(acceptGhost);
   };
 
   // All zoom — native listeners on wrapRef (always mounted, supports passive:false).
@@ -647,6 +785,57 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     };
   }, []);
 
+  // Restore a saved design on mount — progressive building survives reload.
+  useEffect(() => {
+    const s = loadFacilitatorState();
+    if (s) {
+      setItems(s.items as Item[]);
+      setLines(s.lines as LineEl[]);
+      setSectors(s.sectors ?? []);
+      setPxPerM(s.pxPerM);
+      if (s.pxPerM !== 26) setScaleSet(true);
+      setActiveLayer(s.activeLayer ?? 'base');
+      setHiddenLayers(s.hiddenLayers ?? []);
+      if (s.bgSite) {
+        loadSiteBackground(s.bgSite).catch(() => {});
+      } else if (s.bgDataUrl && s.bgRect) {
+        const img = new window.Image();
+        const rect = s.bgRect;
+        img.onload = () => {
+          setBg({ img, x: rect.x, y: rect.y, w: rect.w, h: rect.h, opacity: s.bgOpacity ?? 1 });
+          setBgDataUrl(s.bgDataUrl ?? null);
+          setShowGrid(false);
+        };
+        img.src = s.bgDataUrl;
+      }
+    }
+    restoredRef.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Debounced autosave — skip until the initial restore above has completed so we
+  // never clobber saved state with the empty initial render.
+  useEffect(() => {
+    if (!restoredRef.current) return;
+    const t = setTimeout(() => {
+      saveFacilitatorState({
+        version: 1,
+        items,
+        lines,
+        sectors,
+        pxPerM,
+        activeLayer,
+        hiddenLayers,
+        bgSite: bgSite ?? undefined,
+        bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
+        bgRect: bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined,
+        bgOpacity: bg?.opacity,
+        savedAt: Date.now(),
+      });
+    }, 600);
+    return () => clearTimeout(t);
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, bgSite, bgDataUrl]);
+
   function onStageClick(e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) {
     const stage = e.target.getStage();
     const p = stage?.getRelativePointerPosition();
@@ -657,7 +846,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       else {
         const px = Math.hypot(p.x - draftPt[0], p.y - draftPt[1]);
         const m = parseFloat(window.prompt('How many metres is this line on the ground?', '10') || '');
-        if (m > 0 && px > 4) setPxPerM(px / m);
+        if (m > 0 && px > 4) { setPxPerM(px / m); setScaleSet(true); }
         setScaleMode(false); setDraftPt(null);
       }
       return;
@@ -665,7 +854,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     if (lineKind) {
       if (!draftPt) { setDraftPt([p.x, p.y]); }
       else {
-        setLines((prev) => [...prev, { id: `line-${Date.now()}`, kind: lineKind, points: [draftPt[0], draftPt[1], p.x, p.y] }]);
+        const layer = layerForPlacement(activeLayer, defaultLayerForLine(lineKind));
+        setLines((prev) => [...prev, { id: `line-${Date.now()}`, kind: lineKind, points: [draftPt[0], draftPt[1], p.x, p.y], layer }]);
         setDraftPt(null); setLineKind(null);
       }
       return;
@@ -675,6 +865,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setPlaceType(null);
       return;
     }
+    if (armedSector) {
+      const def = SECTOR_DEFS[armedSector];
+      const id = `sector-${Date.now()}`;
+      setSectors((prev) => [...prev, { id, kind: armedSector, x: p.x, y: p.y, rotation: 0, radiusM: def.radiusM, spanDeg: def.spanDeg }]);
+      setSelectedId(id);
+      setArmedSector(null);
+      return;
+    }
     if (e.target === stage) setSelectedId(null);
   }
 
@@ -682,15 +880,24 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     if (!selectedId) return;
     delete nodeRefs.current[selectedId];
     setItems((prev) => prev.filter((i) => i.id !== selectedId));
+    setSectors((prev) => prev.filter((s) => s.id !== selectedId));
     setSelectedId(null);
   };
   const duplicateSelected = () => {
-    if (!selected) return;
-    const id = `${selected.type}-${Date.now()}`;
-    setItems((prev) => [...prev, { ...selected, id, x: selected.x + 20, y: selected.y + 20 }]);
-    setSelectedId(id);
+    if (selected) {
+      const id = `${selected.type}-${Date.now()}`;
+      setItems((prev) => [...prev, { ...selected, id, x: selected.x + 20, y: selected.y + 20 }]);
+      setSelectedId(id);
+      return;
+    }
+    if (selectedSector) {
+      const id = `sector-${Date.now()}`;
+      setSectors((prev) => [...prev, { ...selectedSector, id, x: selectedSector.x + 20, y: selectedSector.y + 20 }]);
+      setSelectedId(id);
+    }
   };
   const updateSel = (patch: Partial<Item>) => setItems((prev) => prev.map((i) => i.id === selectedId ? { ...i, ...patch } : i));
+  const updateSelSector = (patch: Partial<SectorEl>) => setSectors((prev) => prev.map((s) => s.id === selectedId ? { ...s, ...patch } : s));
 
   const bakeTransform = (id: string, node: Konva.Node) => {
     const sx = node.scaleX(), sy = node.scaleY();
@@ -718,7 +925,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   async function sendDesignToFarmer(farmer: Profile) {
     setSharing(true);
     try {
-      const designId = await saveDesign({ title: 'Garden design', data: { items, lines, pxPerM } });
+      const designId = await saveDesign({ title: 'Garden design', data: { items, lines, sectors, pxPerM } });
       if (designId) {
         await shareDesign(designId, farmer.id);
         setSharedTo(farmer.full_name ?? farmer.id);
@@ -736,7 +943,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   async function handleSave() {
     setSavedMsg('Saving…');
     try {
-      await saveDesign({ title: siteText || 'Garden design', data: { items, lines, pxPerM } });
+      await saveDesign({ title: siteText || 'Garden design', data: { items, lines, sectors, pxPerM } });
       setSavedMsg('✓ Saved');
     } catch {
       setSavedMsg('✓ Saved');
@@ -759,14 +966,64 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     return { type, label: c.label, icon: c.icon, count: list.length, areaM2, litres };
   }).filter(Boolean) as { type: ElType; label: string; icon: string; count: number; areaM2: number; litres: number }[];
 
+  const lineLengthM = (points: number[]) => {
+    let d = 0;
+    for (let i = 0; i + 3 < points.length; i += 2) d += Math.hypot(points[i + 2] - points[i], points[i + 3] - points[i + 1]);
+    return d / pxPerM;
+  };
+
   const lineTotals = (Object.keys(LINES) as LineKind[]).map((kind) => {
     const list = lines.filter((l) => l.kind === kind); if (!list.length) return null;
-    const m = list.reduce((s, l) => s + Math.hypot(l.points[2] - l.points[0], l.points[3] - l.points[1]) / pxPerM, 0);
+    const m = list.reduce((s, l) => s + lineLengthM(l.points), 0);
     return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: list.length, m };
   }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number }[];
 
   const bedArea = boq.find((b) => b.type === 'bed')?.areaM2 ?? 0;
   const totalLitres = boq.reduce((s, b) => s + b.litres, 0);
+
+  // ── Layer bookkeeping for the stepper + coach ──
+  const itemsByLayer: Partial<Record<LayerId, number>> = {};
+  items.forEach((it) => {
+    const l = it.layer ?? defaultLayerForType(it.type);
+    itemsByLayer[l] = (itemsByLayer[l] ?? 0) + 1;
+  });
+  const linesByLayer: Partial<Record<LayerId, number>> = {};
+  lines.forEach((l) => {
+    const layer = l.layer ?? defaultLayerForLine(l.kind);
+    linesByLayer[layer] = (linesByLayer[layer] ?? 0) + 1;
+  });
+  const layerHasContent = (id: LayerId): boolean =>
+    id === 'base' ? !!bg : (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0) > 0 || (id === 'sectors' && sectors.length > 0);
+  const coachCounts: CoachCounts = {
+    hasBg: !!bg,
+    scaleSet,
+    itemsByLayer,
+    linesByLayer,
+    sectors: sectors.length,
+    tanks: items.filter((i) => i.type === 'tank').length,
+    totalLitres,
+    bedAreaM2: bedArea,
+    paths: lines.filter((l) => l.kind === 'path').length,
+  };
+
+  function resetView() {
+    stageScaleRef.current = 1;
+    stagePosRef.current = { x: 0, y: 0 };
+    setStageScale(1);
+    setStagePos({ x: 0, y: 0 });
+  }
+
+  function startFresh() {
+    if (!window.confirm('Clear this design and start fresh? This cannot be undone.')) return;
+    clearFacilitatorState();
+    setItems([]); setLines([]); setSectors([]);
+    setBg(null); setBgSite(null); setBgDataUrl(null);
+    setPxPerM(26); setScaleSet(false); setScaleLocked(false);
+    setGhosts(null); setScaleSuggestion(null); setDetectError('');
+    setActiveLayer('base'); setHiddenLayers([]);
+    setSelectedId(null);
+    resetView();
+  }
 
   async function runReview() {
     if (!items.length) return;
@@ -809,11 +1066,28 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     color: active ? '#1F4D2B' : '#5C5040',
   });
 
+  // ── Palette filtering: the active layer surfaces a curated "For this step" set
+  // and collapses the rest behind "More elements" — except on base/review, which
+  // always show everything (those layers don't define a curated set).
+  const activeLayerDef = LAYERS[activeLayer];
+  const stepElementTypes = activeLayerDef.elementTypes;
+  const stepLineKinds = activeLayerDef.lineKinds;
+  const stepSectorKinds = activeLayerDef.sectorKinds ?? [];
+  const hasStepFilter = stepElementTypes.length > 0 || stepLineKinds.length > 0 || stepSectorKinds.length > 0;
+  const showAllGroups = !hasStepFilter || moreElementsOpen;
+
+  const layerIndex = LAYER_ORDER.indexOf(activeLayer);
+  const goPrevLayer = () => setActiveLayer(LAYER_ORDER[Math.max(0, layerIndex - 1)]);
+  const goNextLayer = () => setActiveLayer(LAYER_ORDER[Math.min(LAYER_ORDER.length - 1, layerIndex + 1)]);
+
+  const toggleLayerVisible = (id: LayerId) =>
+    setHiddenLayers((prev) => prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]);
+
   return (
-    <div className="flex h-full overflow-hidden relative">
+    <div className="flex h-full w-full overflow-hidden relative">
       {/* ── Palette ── (static column on desktop; slide-in drawer on mobile) */}
       <div
-        className={`flex-shrink-0 overflow-y-auto p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
+        className={`flex-shrink-0 overflow-y-auto overflow-x-hidden p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
         style={{ width: 150, background: '#F5F0E8', borderRight: '1px solid #E2D8C4' }}
       >
         {/* Base map */}
@@ -850,96 +1124,281 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5" style={tile(false)}>
             <ImageIcon size={14} /> Import garden map
           </button>
+          <button onClick={runDetect} disabled={!bg || detecting}
+            className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5"
+            style={!bg || detecting ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+            {detecting ? <><Loader2 size={14} className="animate-spin" /> Detecting…</> : <>✨ Detect from photo</>}
+          </button>
+          {detectError && (
+            <div className="text-[10px] font-mono px-1 mt-1" style={{ color: '#C0531E' }}>{detectError}</div>
+          )}
           {bg && (
             <div className="mt-1.5 space-y-1">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-mono" style={{ color: '#9A8268' }}>fade</span>
                 <input type="range" min={0.15} max={1} step={0.05} value={bg.opacity}
                   onChange={(e) => setBg((b) => b ? { ...b, opacity: parseFloat(e.target.value) } : b)}
-                  className="flex-1" style={{ accentColor: '#1F4D2B' }} />
+                  className="flex-1 min-w-0" style={{ accentColor: '#1F4D2B', width: '100%' }} />
               </div>
               <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>remove</button>
             </div>
           )}
-          <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); }}
+          <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); setArmedSector(null); }}
             className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(scaleMode)}>
             <Ruler size={14} /> Set scale
           </button>
           <div className="flex items-center justify-between mt-1.5">
-            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>1 m = {pxPerM < 10 ? pxPerM.toFixed(1) : pxPerM.toFixed(0)} px</span>
+            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>
+              1 m = {pxPerM < 10 ? pxPerM.toFixed(1) : pxPerM.toFixed(0)} px
+              {scaleLocked && <span style={{ color: '#1F4D2B' }}> · ✓ from map</span>}
+            </span>
             <div className="flex gap-1">
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
             </div>
           </div>
+          <button onClick={startFresh} className="w-full mt-1.5 py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+            Start fresh
+          </button>
         </div>
 
-        {/* Element groups */}
-        {GROUPS.map((g) => (
-          <div key={g.name}>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>{g.name}</div>
+        {/* ── For this step ── (types/lines/sectors the active layer surfaces first) */}
+        {stepElementTypes.length > 0 && (
+          <div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#1F4D2B' }}>For this step</div>
+            {activeLayer === 'existing' && (
+              <>
+                <button onClick={runDetect} disabled={!bg || detecting}
+                  className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
+                  style={!bg || detecting ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+                  {detecting ? <><Loader2 size={14} className="animate-spin" /> Detecting…</> : <>✨ Detect from photo</>}
+                </button>
+                {detectError && (
+                  <div className="text-[10px] font-mono px-1 mb-1.5" style={{ color: '#C0531E' }}>{detectError}</div>
+                )}
+              </>
+            )}
             <div className="grid grid-cols-2 gap-1.5">
-              {g.types.map((type) => (
-                <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); }}
+              {stepElementTypes.map((type) => (
+                <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
                   className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
                   <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
                   <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
                 </button>
               ))}
+              {stepLineKinds.map((kind) => (
+                <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                  className="flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(lineKind === kind)}>
+                  <span>{LINES[kind].icon}</span><span style={{ fontSize: 10 }}>{LINES[kind].label}</span>
+                </button>
+              ))}
             </div>
           </div>
-        ))}
+        )}
 
-        {/* Lines */}
-        <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Lines</div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {(Object.keys(LINES) as LineKind[]).map((kind) => (
-              <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); }}
-                className="flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(lineKind === kind)}>
-                <span>{LINES[kind].icon}</span><span style={{ fontSize: 10 }}>{LINES[kind].label}</span>
-              </button>
-            ))}
+        {stepSectorKinds.length > 0 && (
+          <div>
+            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#1F4D2B' }}>For this step</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {stepSectorKinds.map((kind) => {
+                const def = SECTOR_DEFS[kind];
+                return (
+                  <button key={kind} onClick={() => { setArmedSector(kind); setPlaceType(null); setLineKind(null); setScaleMode(false); }}
+                    className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(armedSector === kind)} title={def.hint}>
+                    <span style={{ fontSize: 15 }}>{def.icon}</span>
+                    <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{def.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* More elements toggle — collapsed by default on layers that define a "for this step" set */}
+        {hasStepFilter && (
+          <button onClick={() => setMoreElementsOpen((v) => !v)}
+            className="w-full text-xs font-mono flex items-center justify-center gap-1" style={{ color: '#9A8268' }}>
+            More elements {moreElementsOpen ? '▴' : '▾'}
+          </button>
+        )}
+
+        {showAllGroups && (
+          <>
+            {/* Element groups */}
+            {GROUPS.map((g) => (
+              <div key={g.name}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>{g.name}</div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {g.types.map((type) => (
+                    <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
+                      className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
+                      <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
+                      <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* Lines */}
+            <div>
+              <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Lines</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {(Object.keys(LINES) as LineKind[]).map((kind) => (
+                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                    className="flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(lineKind === kind)}>
+                    <span>{LINES[kind].icon}</span><span style={{ fontSize: 10 }}>{LINES[kind].label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {/* ── Canvas ── */}
       <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
-        <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
+        {/* Fit / re-centre — overlaid top-right, above the stepper bar */}
+        <button onClick={resetView} title="Re-centre" className="absolute top-2 right-2 z-20 flex items-center justify-center rounded-lg pointer-events-auto"
+          style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
+          ⤢
+        </button>
+
+        {/* Stepper + coach — docked at the top of the canvas */}
+        <div className="absolute top-2 left-2 right-12 z-10 rounded-xl pointer-events-auto"
+          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
+          <div className="flex items-center gap-1 px-1.5 py-1 overflow-x-auto">
+            <button onClick={goPrevLayer} disabled={layerIndex === 0} className="text-xs font-mono px-1 flex-shrink-0" style={{ color: layerIndex === 0 ? '#C7BCA6' : '#9A8268' }}>‹ Back</button>
+            {LAYER_ORDER.map((id) => {
+              const def = LAYERS[id];
+              const active = id === activeLayer;
+              return (
+                <button key={id} onClick={() => setActiveLayer(id)}
+                  className="relative flex-shrink-0 flex items-center gap-1 px-2 py-1 rounded-full text-xs font-display transition-all"
+                  style={{ background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#fff' : '#5C5040', border: `1px solid ${active ? '#1F4D2B' : '#E2D8C4'}` }}>
+                  <span>{def.icon}</span><span>{def.name}</span>
+                  {layerHasContent(id) && (
+                    <span className="absolute -top-0.5 -right-0.5 rounded-full" style={{ width: 7, height: 7, background: '#5DCF80', border: '1px solid #FBF6EC' }} />
+                  )}
+                </button>
+              );
+            })}
+            <button onClick={goNextLayer} disabled={layerIndex === LAYER_ORDER.length - 1} className="text-xs font-mono px-1 flex-shrink-0" style={{ color: layerIndex === LAYER_ORDER.length - 1 ? '#C7BCA6' : '#9A8268' }}>Next ›</button>
+            <div className="relative flex-shrink-0 ml-auto">
+              <button onClick={() => setLayersMenuOpen((v) => !v)} title="Layers" className="text-xs px-1.5 py-1 rounded-full" style={{ color: '#5C5040' }}>👁</button>
+              {layersMenuOpen && (
+                <div className="absolute right-0 top-full mt-1 rounded-lg p-1.5 space-y-0.5 z-20" style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', width: 180, boxShadow: '0 4px 16px rgba(31,25,15,0.15)' }}>
+                  {LAYER_ORDER.map((id) => {
+                    const def = LAYERS[id];
+                    const count = (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0) + (id === 'sectors' ? sectors.length : 0);
+                    const hidden = hiddenLayers.includes(id);
+                    return (
+                      <div key={id} className="flex items-center justify-between gap-1.5 px-1 py-0.5 rounded text-xs font-display" style={{ color: '#3A352C' }}>
+                        <span className="truncate">{def.icon} {def.name} <span className="font-mono" style={{ color: '#9A8268' }}>({count})</span></span>
+                        <button onClick={() => toggleLayerVisible(id)} style={{ color: hidden ? '#C7BCA6' : '#1F4D2B' }}>{hidden ? '🚫' : '👁'}</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="px-2 pb-1 text-[11px] font-display truncate" style={{ color: '#5C5040' }}>
+            ✨ {coachTip(activeLayer, coachCounts)}
+          </div>
+        </div>
+
+        {/* N badge — moved below the stepper so it doesn't collide */}
+        <div className="absolute top-[70px] left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
           style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
           <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>N ↑</span>
         </div>
+
         {armed && (
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-display"
+          <div className="absolute top-[70px] left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-display"
             style={{ background: '#1F4D2B', color: '#fff' }}>
             {scaleMode ? (draftPt ? 'Tap the end of the known distance' : 'Tap the start of a known distance')
               : lineKind ? (draftPt ? `Tap to end the ${LINES[lineKind].label.toLowerCase()}` : `Tap to start the ${LINES[lineKind].label.toLowerCase()}`)
+              : armedSector ? 'Tap on the map to place this sector\'s apex'
               : `Tap on the map to place ${placeType ? CATALOG[placeType].label : ''}`} · Esc to cancel
+          </div>
+        )}
+
+        {/* AI scale suggestion — just under the stepper; never shown once the scale is map-locked */}
+        {scaleSuggestion && !scaleLocked && (
+          <div className="absolute top-[70px] left-1/2 -translate-x-1/2 z-10 px-3 py-2 rounded-xl text-xs font-display flex items-center gap-2"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
+            <span>✨ AI: this image looks ≈ {scaleSuggestion.metresAcross} m across → 1 m = {scaleSuggestion.pxPerM.toFixed(1)} px</span>
+            <button onClick={() => { setPxPerM(scaleSuggestion.pxPerM); setScaleSet(true); setScaleSuggestion(null); }}
+              className="px-2 py-0.5 rounded-full font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff' }}>
+              Apply
+            </button>
+            <button onClick={() => setScaleSuggestion(null)}
+              className="px-2 py-0.5 rounded-full font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+              Ignore
+            </button>
+          </div>
+        )}
+
+        {/* AI-detect approve bar — bottom-centre while ghosts await review */}
+        {ghosts && ghosts.length > 0 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full text-xs font-display flex items-center gap-2 pointer-events-auto"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
+            <span>✨ AI found {ghosts.length} feature{ghosts.length > 1 ? 's' : ''}</span>
+            <button onClick={acceptAllGhosts}
+              className="px-2.5 py-1 rounded-full font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff' }}>
+              ✓ Accept all
+            </button>
+            <button onClick={() => setGhosts(null)}
+              className="px-2.5 py-1 rounded-full font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+              Dismiss
+            </button>
           </div>
         )}
         <Stage ref={stageRef} width={size.w} height={size.h}
           scaleX={stageScale} scaleY={stageScale} x={stagePos.x} y={stagePos.y}
-          draggable={!armed}
+          draggable={!armed} dragDistance={5}
           onDragMove={(e) => { stagePosRef.current = { x: e.target.x(), y: e.target.y() }; }}
           onDragEnd={(e) => { const p = { x: e.target.x(), y: e.target.y() }; stagePosRef.current = p; setStagePos(p); }}
           onClick={onStageClick} onTap={onStageClick}>
           <Layer listening={false}>
-            {bg && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
+            {bg && !hiddenLayers.includes('base') && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
             {grid.map((g, i) => <Line key={i} points={g} stroke="#20190F" strokeWidth={1} opacity={0.08} />)}
             {draftPt && <Circle x={draftPt[0]} y={draftPt[1]} radius={5} fill="#5DCF80" />}
           </Layer>
           <Layer>
+            {/* sectors */}
+            {sectors.filter((s) => !hiddenLayers.includes('sectors')).map((s) => {
+              const def = SECTOR_DEFS[s.kind];
+              const rM = s.radiusM * pxPerM;
+              const apexAngle = -s.spanDeg / 2;
+              // Label sits along the wedge's centreline (local +x, before the group's own rotation is applied).
+              const labelR = rM * 0.65;
+              return (
+                <Group key={s.id} x={s.x} y={s.y} rotation={s.rotation} draggable
+                  ref={(node) => { if (node) nodeRefs.current[s.id] = node; }}
+                  onClick={() => setSelectedId(s.id)} onTap={() => setSelectedId(s.id)}
+                  onDragEnd={(e) => setSectors((prev) => prev.map((p) => p.id === s.id ? { ...p, x: e.target.x(), y: e.target.y() } : p))}
+                  onTransformEnd={(e) => { const node = e.target; setSectors((prev) => prev.map((p) => p.id === s.id ? { ...p, rotation: node.rotation() } : p)); }}>
+                  <Arc innerRadius={0} outerRadius={rM} angle={s.spanDeg} rotation={apexAngle}
+                    fill={def.color} opacity={0.16} stroke={def.color} strokeWidth={1.5} dash={[7, 4]} />
+                  <Text text={`${def.icon} ${def.label}`} fontSize={11} fill={def.color}
+                    x={labelR - 30} y={-6} width={60} align="center" listening={false} />
+                  <Circle radius={5} fill={def.color} stroke="#fff" strokeWidth={1.3} />
+                </Group>
+              );
+            })}
             {/* lines */}
-            {lines.map((l) => {
+            {lines.filter((l) => !hiddenLayers.includes(l.layer ?? defaultLayerForLine(l.kind))).map((l) => {
               const L = LINES[l.kind];
-              const mx = (l.points[0] + l.points[2]) / 2, my = (l.points[1] + l.points[3]) / 2;
+              const n = l.points.length;
+              const mx = (l.points[0] + l.points[n - 2]) / 2, my = (l.points[1] + l.points[n - 1]) / 2;
               const setPt = (idx: number, x: number, y: number) => setLines((prev) => prev.map((q) => q.id === l.id ? { ...q, points: q.points.map((v, k) => k === idx ? x : k === idx + 1 ? y : v) } : q));
               return (
                 <Group key={l.id}>
-                  <Line points={l.points} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" />
+                  <Line points={l.points} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" closed={l.closed ?? false} />
                   <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
-                  <Circle x={l.points[2]} y={l.points[3]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(2, e.target.x(), e.target.y())} />
+                  <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
                   <Group x={mx} y={my} onClick={() => setLines((prev) => prev.filter((q) => q.id !== l.id))} onTap={() => setLines((prev) => prev.filter((q) => q.id !== l.id))}>
                     <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
                   </Group>
@@ -947,7 +1406,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               );
             })}
             {/* items */}
-            {items.map((it) => {
+            {items.filter((it) => !hiddenLayers.includes(it.layer ?? defaultLayerForType(it.type))).map((it) => {
               const c = CATALOG[it.type];
               const w = it.wM * pxPerM, h = it.hM * pxPerM;
               return (
@@ -971,14 +1430,47 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 </Group>
               );
             })}
-            {/* Transformer: proportional for circles, free for rects */}
+            {/* Transformer: proportional for circles/sectors rotate-only, free for rects */}
             <Transformer ref={trRef} rotateEnabled keepRatio={selectedIsCircle}
-              enabledAnchors={selectedIsCircle
+              enabledAnchors={selectedSector ? [] : selectedIsCircle
                 ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
                 : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']}
               anchorSize={8} anchorStroke="#1F4D2B" anchorFill="rgba(31,77,43,0.7)"
               borderEnabled={false}
               boundBoxFunc={(o, n) => (n.width < 8 || n.height < 8 ? o : n)} />
+          </Layer>
+          {/* AI-detect ghosts — non-listening except the accept/dismiss pills, drawn above items */}
+          <Layer listening={false}>
+            {(ghosts ?? []).map((g) => {
+              const GHOST_COLOR = '#22B8CF';
+              const firstX = g.pxPoints[0], firstY = g.pxPoints[1];
+              const isRing = (g.kind === 'boundary' || g.kind === 'veg_area') && g.pxPoints.length >= 6;
+              const emoji = g.kind === 'tree' ? '🌳' : g.kind === 'water_tank' ? '🛢' : g.kind === 'pond' ? '💧' : g.kind === 'building' ? '🏠' : '';
+              return (
+                <Group key={g.id}>
+                  {isRing ? (
+                    <Line points={g.pxPoints} closed stroke={GHOST_COLOR} strokeWidth={2} dash={[8, 5]} fill="rgba(34,184,207,0.07)" />
+                  ) : g.lineKind ? (
+                    <Line points={g.pxPoints} stroke={GHOST_COLOR} strokeWidth={2} dash={[8, 5]} />
+                  ) : (
+                    <>
+                      <Circle x={firstX} y={firstY} radius={((g.sizeM ?? 4) / 2) * pxPerM} stroke={GHOST_COLOR} strokeWidth={2} dash={[8, 5]} fill="rgba(34,184,207,0.07)" />
+                      {emoji && <Text text={emoji} x={firstX - 9} y={firstY - 10} fontSize={18} listening={false} />}
+                    </>
+                  )}
+                  <Group x={firstX - 24} y={firstY - 24} listening>
+                    <Group onClick={() => acceptGhost(g)} onTap={() => acceptGhost(g)}>
+                      <Circle radius={9} fill="#1F4D2B" stroke="#fff" strokeWidth={1.3} />
+                      <Text text="✓" fontSize={11} fill="#fff" x={-4} y={-5.5} listening={false} />
+                    </Group>
+                    <Group x={22} onClick={() => dismissGhost(g.id)} onTap={() => dismissGhost(g.id)}>
+                      <Circle radius={9} fill="#C0531E" stroke="#fff" strokeWidth={1.3} />
+                      <Text text="✕" fontSize={11} fill="#fff" x={-4} y={-5.5} listening={false} />
+                    </Group>
+                  </Group>
+                </Group>
+              );
+            })}
           </Layer>
         </Stage>
       </div>
@@ -1023,6 +1515,36 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 <label className="text-xs font-mono" style={{ color: '#9A8268' }}>rotate °
                   <input type="number" step={5} value={Math.round(selected.rotation)}
                     onChange={(e) => updateSel({ rotation: parseFloat(e.target.value) || 0 })}
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                </label>
+              </div>
+            </div>
+          ) : selectedSector ? (
+            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FBF6EC', border: `1px solid ${SECTOR_DEFS[selectedSector.kind].color}66` }}>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-display font-semibold" style={{ color: SECTOR_DEFS[selectedSector.kind].color }}>
+                  {SECTOR_DEFS[selectedSector.kind].icon} {SECTOR_DEFS[selectedSector.kind].label}
+                </span>
+                <div className="flex gap-1">
+                  <button onClick={duplicateSelected} title="Duplicate" className="text-xs px-1.5 py-0.5 rounded font-mono inline-flex items-center" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}><Copy size={13} /></button>
+                  <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono inline-flex items-center" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.35)', color: '#C0531E' }}><X size={13} /></button>
+                </div>
+              </div>
+              <p className="text-[11px] font-display" style={{ color: '#9A8268' }}>{SECTOR_DEFS[selectedSector.kind].hint}</p>
+              <div className="grid grid-cols-2 gap-2">
+                <label className="text-xs font-mono" style={{ color: '#9A8268' }}>rotate °
+                  <input type="number" step={5} value={Math.round(selectedSector.rotation)}
+                    onChange={(e) => updateSelSector({ rotation: parseFloat(e.target.value) || 0 })}
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                </label>
+                <label className="text-xs font-mono" style={{ color: '#9A8268' }}>radius m
+                  <input type="number" step={1} min={5} max={200} value={Math.round(selectedSector.radiusM)}
+                    onChange={(e) => updateSelSector({ radiusM: Math.min(200, Math.max(5, parseFloat(e.target.value) || 5)) })}
+                    className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                </label>
+                <label className="text-xs font-mono" style={{ color: '#9A8268' }}>span °
+                  <input type="number" step={5} min={10} max={180} value={Math.round(selectedSector.spanDeg)}
+                    onChange={(e) => updateSelSector({ spanDeg: Math.min(180, Math.max(10, parseFloat(e.target.value) || 10)) })}
                     className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
               </div>

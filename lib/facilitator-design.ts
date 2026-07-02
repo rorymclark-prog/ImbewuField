@@ -1,0 +1,278 @@
+// Facilitator designer — layered, progressive map building.
+//
+// The layer order follows the permaculture design canon (Yeomans' Scale of
+// Permanence, Mollison's zones & sectors): what changes slowest is designed
+// first. Base map → existing features → sectors → water → access →
+// structures → planting → review. Each layer is saved independently and the
+// coach guides the farmer from one to the next.
+
+export type ElType =
+  | 'tank' | 'pond' | 'well' | 'reedbed'
+  | 'bed' | 'hugel' | 'banana' | 'tree' | 'foodforest' | 'herb' | 'shrub'
+  | 'coop' | 'compost' | 'greenhouse' | 'tunnel' | 'shed' | 'beehive' | 'biogas'
+  | 'swalew' | 'firebreak' | 'nursery';
+
+export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour';
+
+export type SectorKind = 'sun_winter' | 'sun_summer' | 'wind' | 'fire' | 'water_flow' | 'view';
+
+export interface SectorEl {
+  id: string;
+  kind: SectorKind;
+  x: number;         // stage px — apex of the wedge
+  y: number;
+  rotation: number;  // degrees; 0 = wedge opens to the right (east)
+  radiusM: number;   // wedge reach in metres
+  spanDeg: number;   // wedge angle
+}
+
+export const SECTOR_DEFS: Record<SectorKind, { label: string; icon: string; color: string; spanDeg: number; radiusM: number; hint: string }> = {
+  sun_winter: { label: 'Winter sun',  icon: '🌤', color: '#E0A020', spanDeg: 60, radiusM: 30, hint: 'Where low winter sun comes from (north in SA)' },
+  sun_summer: { label: 'Summer sun',  icon: '☀️', color: '#E8C43A', spanDeg: 90, radiusM: 30, hint: 'High summer sun arc — plan shade' },
+  wind:       { label: 'Wind',        icon: '💨', color: '#6A9AC0', spanDeg: 45, radiusM: 40, hint: 'Prevailing / damaging wind direction' },
+  fire:       { label: 'Fire danger', icon: '🔥', color: '#C0531E', spanDeg: 50, radiusM: 45, hint: 'Direction a veld fire would come from' },
+  water_flow: { label: 'Water flow',  icon: '🌊', color: '#3E7BB0', spanDeg: 30, radiusM: 35, hint: 'Which way stormwater runs across the land' },
+  view:       { label: 'View',        icon: '👁', color: '#8A8070', spanDeg: 35, radiusM: 30, hint: 'A view to keep open (or to screen)' },
+};
+
+export type LayerId = 'base' | 'existing' | 'sectors' | 'water' | 'access' | 'structures' | 'planting' | 'review';
+
+export const LAYER_ORDER: LayerId[] = ['base', 'existing', 'sectors', 'water', 'access', 'structures', 'planting', 'review'];
+
+export interface DesignLayerDef {
+  id: LayerId;
+  name: string;
+  icon: string;
+  blurb: string;              // one-line coach text shown in the stepper
+  elementTypes: ElType[];     // palette groups surfaced first on this layer
+  lineKinds: LineKind[];
+  sectorKinds?: SectorKind[];
+}
+
+export const LAYERS: Record<LayerId, DesignLayerDef> = {
+  base: {
+    id: 'base', name: 'Base map', icon: '🗺',
+    blurb: 'Start here: load your site photo and set the scale. Everything is measured against this.',
+    elementTypes: [], lineKinds: [],
+  },
+  existing: {
+    id: 'existing', name: "What's there", icon: '🏠',
+    blurb: 'Mark what already exists — buildings, big trees, fences, the driveway. Use ✨ Detect to let AI find them.',
+    elementTypes: ['shed', 'tree', 'well'], lineKinds: ['fence', 'path'],
+  },
+  sectors: {
+    id: 'sectors', name: 'Sectors', icon: '🧭',
+    blurb: 'Map the energies crossing the land: sun, wind, fire risk, water flow. These decide where things go.',
+    elementTypes: [], lineKinds: [],
+    sectorKinds: ['sun_winter', 'sun_summer', 'wind', 'fire', 'water_flow', 'view'],
+  },
+  water: {
+    id: 'water', name: 'Water', icon: '💧',
+    blurb: 'Water first — it is the hardest thing to move later. Tanks at roofs, swales on contour, ponds at low points.',
+    elementTypes: ['tank', 'pond', 'reedbed', 'swalew', 'well'], lineKinds: ['swale', 'pipe', 'drip', 'contour'],
+  },
+  access: {
+    id: 'access', name: 'Access', icon: '🚶',
+    blurb: 'Paths and access next. A bed you cannot reach with a wheelbarrow will not be tended.',
+    elementTypes: ['firebreak'], lineKinds: ['path', 'fence'],
+  },
+  structures: {
+    id: 'structures', name: 'Structures', icon: '🏗',
+    blurb: 'Place structures: compost near the kitchen, chickens between garden and orchard, nursery in morning sun.',
+    elementTypes: ['coop', 'compost', 'greenhouse', 'tunnel', 'beehive', 'biogas', 'nursery', 'shed'], lineKinds: [],
+  },
+  planting: {
+    id: 'planting', name: 'Planting', icon: '🌱',
+    blurb: 'Now plant: daily veg within 10 m of the door (zone 1), orchard further out, food forest beyond.',
+    elementTypes: ['bed', 'hugel', 'banana', 'tree', 'foodforest', 'herb', 'shrub'], lineKinds: ['windbreak'],
+  },
+  review: {
+    id: 'review', name: 'Review & save', icon: '✅',
+    blurb: 'Done building. Check the bill of quantities, run the AI review, then save or share the design.',
+    elementTypes: [], lineKinds: [],
+  },
+};
+
+const TYPE_LAYER: Record<ElType, LayerId> = {
+  tank: 'water', pond: 'water', well: 'water', reedbed: 'water', swalew: 'water',
+  bed: 'planting', hugel: 'planting', banana: 'planting', tree: 'planting',
+  foodforest: 'planting', herb: 'planting', shrub: 'planting',
+  coop: 'structures', compost: 'structures', greenhouse: 'structures', tunnel: 'structures',
+  shed: 'structures', beehive: 'structures', biogas: 'structures', nursery: 'structures',
+  firebreak: 'access',
+};
+
+const LINE_LAYER: Record<LineKind, LayerId> = {
+  pipe: 'water', swale: 'water', drip: 'water', contour: 'water',
+  fence: 'access', path: 'access', windbreak: 'planting',
+};
+
+export function defaultLayerForType(t: ElType): LayerId { return TYPE_LAYER[t]; }
+export function defaultLayerForLine(k: LineKind): LayerId { return LINE_LAYER[k]; }
+
+/** Which layer new geometry lands on: the active layer if it belongs there, else the type's home layer. */
+export function layerForPlacement(active: LayerId, home: LayerId): LayerId {
+  return active === 'base' || active === 'review' ? home : active;
+}
+
+// ── Coach ──────────────────────────────────────────────────────────────────
+// Deterministic, state-aware guidance: "start here → add this → move on → save".
+
+export interface CoachCounts {
+  hasBg: boolean;
+  scaleSet: boolean;        // pxPerM differs from the default / was auto-set
+  itemsByLayer: Partial<Record<LayerId, number>>;
+  linesByLayer: Partial<Record<LayerId, number>>;
+  sectors: number;
+  tanks: number;
+  totalLitres: number;
+  bedAreaM2: number;
+  paths: number;
+}
+
+export function coachTip(layer: LayerId, c: CoachCounts): string {
+  const n = (l: LayerId) => (c.itemsByLayer[l] ?? 0) + (c.linesByLayer[l] ?? 0);
+  switch (layer) {
+    case 'base':
+      if (!c.hasBg) return 'Load a base map: "From my map sites" gives you your real satellite photo with the scale already set.';
+      if (!c.scaleSet) return 'Photo loaded. Now set the scale — use ✨ Detect to get an AI estimate, or measure a known distance with Set scale.';
+      return 'Base map and scale are set ✓ — move on to mark what is already on the land.';
+    case 'existing':
+      if (n('existing') === 0) return 'Nothing marked yet. Tap ✨ Detect to find buildings, trees and the driveway automatically, then approve what is right.';
+      return `${n('existing')} existing feature${n('existing') > 1 ? 's' : ''} marked ✓ — next, map your sectors: sun, wind and fire.`;
+    case 'sectors':
+      if (c.sectors === 0) return 'Place at least winter sun (from the north in SA) and prevailing wind. Drag to position, rotate to aim.';
+      if (c.sectors < 2) return 'Good start. Add the wind sector too — windbreaks and fire planning depend on it.';
+      return `${c.sectors} sectors mapped ✓ — now design water, the hardest thing to change later.`;
+    case 'water':
+      if (c.tanks === 0) return 'Every roof needs a tank. Place a JoJo tank at a roof corner, then think about swales on contour.';
+      if (c.totalLitres < 5000) return 'Tank placed — consider more storage. A SA household garden wants 10 kL+ to bridge the dry season.';
+      return `${(c.totalLitres / 1000).toFixed(1)} kL of storage ✓ — move on to paths and access.`;
+    case 'access':
+      if (c.paths === 0) return 'Draw the main path from the door to the most-visited spots: tank, veg beds, compost.';
+      return 'Access mapped ✓ — now place your structures.';
+    case 'structures':
+      if (n('structures') === 0) return 'Compost within 20 steps of the kitchen; chicken coop between garden and orchard so the birds work for you.';
+      return `${n('structures')} structure${n('structures') > 1 ? 's' : ''} placed ✓ — time to plant.`;
+    case 'planting':
+      if (c.bedAreaM2 === 0) return 'Start with veg beds nearest the door — daily-picked food must be on the daily path.';
+      if (c.bedAreaM2 < 20) return `${c.bedAreaM2.toFixed(0)} m² of beds so far. 20–40 m² feeds a family its vegetables.`;
+      return `${c.bedAreaM2.toFixed(0)} m² growing ✓ — you are ready to review and save.`;
+    case 'review':
+      return 'Run the AI review for warnings, then Save design. Share it with a farmer to put it on their phone.';
+  }
+}
+
+// ── AI detect → canvas conversion ──────────────────────────────────────────
+
+export type DetectKind = 'tree' | 'building' | 'water_tank' | 'pond' | 'veg_area' | 'driveway';
+
+export interface DetectedFeature {
+  kind: DetectKind;
+  points: Array<[number, number]>; // normalised 0..1 in image space
+  sizeM?: number;
+  note?: string;
+}
+
+export interface DetectResponse {
+  features: DetectedFeature[];
+  boundary?: Array<[number, number]>; // normalised ring, 3+ points
+  metresAcross?: number;              // AI-estimated real width of the image
+}
+
+export interface GhostFeature {
+  id: string;
+  kind: DetectKind | 'boundary';
+  elType?: ElType;       // what accepting creates (point features)
+  lineKind?: LineKind;   // what accepting creates (poly features)
+  pxPoints: number[];    // flattened stage px [x1,y1,x2,y2,...]
+  sizeM?: number;
+  note?: string;
+  layer: LayerId;
+}
+
+const DETECT_TO_EL: Partial<Record<DetectKind, ElType>> = {
+  tree: 'tree', water_tank: 'tank', pond: 'pond', building: 'shed',
+};
+const DETECT_TO_LINE: Partial<Record<DetectKind, LineKind>> = {
+  driveway: 'path',
+};
+
+export interface BgRect { x: number; y: number; w: number; h: number }
+
+/** Map normalised detect output into stage-pixel ghosts positioned over the background image. */
+export function buildGhosts(res: DetectResponse, bg: BgRect): GhostFeature[] {
+  const toPx = (pts: Array<[number, number]>): number[] =>
+    pts.flatMap(([nx, ny]) => [bg.x + nx * bg.w, bg.y + ny * bg.h]);
+  const ghosts: GhostFeature[] = [];
+  if (res.boundary && res.boundary.length >= 3) {
+    ghosts.push({ id: 'ghost-boundary', kind: 'boundary', lineKind: 'fence', pxPoints: toPx(res.boundary), note: 'Property boundary', layer: 'existing' });
+  }
+  res.features.forEach((f, i) => {
+    if (f.kind === 'veg_area' && f.points.length >= 3) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: 'bed', pxPoints: toPx(f.points), sizeM: f.sizeM, note: f.note, layer: 'existing' });
+      return;
+    }
+    const line = DETECT_TO_LINE[f.kind];
+    if (line && f.points.length >= 2) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, lineKind: line, pxPoints: toPx(f.points), note: f.note, layer: 'existing' });
+      return;
+    }
+    const el = DETECT_TO_EL[f.kind];
+    if (el && f.points.length >= 1) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: el, pxPoints: toPx([f.points[0]]), sizeM: f.sizeM, note: f.note, layer: 'existing' });
+    }
+  });
+  return ghosts;
+}
+
+// ── Persistence ────────────────────────────────────────────────────────────
+
+export interface FacItem { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
+export interface FacLine { id: string; kind: LineKind; points: number[]; layer?: LayerId }
+
+export interface FacilitatorDesignState {
+  version: 1;
+  items: FacItem[];
+  lines: FacLine[];
+  sectors: SectorEl[];
+  pxPerM: number;
+  activeLayer: LayerId;
+  hiddenLayers: LayerId[];
+  /** For site imports we re-fetch the satellite on load instead of storing megabytes of image. */
+  bgSite?: { lat: number; lon: number; name: string };
+  /** For small file imports only (quota-guarded). */
+  bgDataUrl?: string;
+  bgRect?: BgRect;
+  bgOpacity?: number;
+  savedAt: number;
+}
+
+const STORE_KEY = 'imbewu_facilitator_design_v1';
+
+export function saveFacilitatorState(s: FacilitatorDesignState): void {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(s));
+  } catch {
+    // Quota — retry without the embedded image.
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({ ...s, bgDataUrl: undefined }));
+    } catch { /* give up quietly */ }
+  }
+}
+
+export function loadFacilitatorState(): FacilitatorDesignState | null {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw) as FacilitatorDesignState;
+    if (s?.version !== 1 || !Array.isArray(s.items)) return null;
+    return s;
+  } catch {
+    return null;
+  }
+}
+
+export function clearFacilitatorState(): void {
+  try { localStorage.removeItem(STORE_KEY); } catch { /* noop */ }
+}
