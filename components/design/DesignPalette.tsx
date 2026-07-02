@@ -125,32 +125,70 @@ export default function DesignPalette({
   const hintDef = hintDefId ? catalog.find((d) => d.id === hintDefId) : null;
   const armedDef = placeDefId ? ELEMENT_CATALOG.find((d) => d.id === placeDefId) : null;
 
-  function selectTool(next: ToolKind) {
-    setTool(next);
-    if (next !== 'place') setHintDefId(null);
-  }
+  // Which chip-driven controls are relevant for this step.
+  const showZoneChips = step === 'zones';
+  const showLineChips = step === 'water' || step === 'structures';
+  const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip'];
+  const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
+  const lineChipsForStep = LINE_KINDS.filter((lk) =>
+    (step === 'water' ? WATER_LINE_IDS : STRUCTURE_LINE_IDS).includes(lk.id)
+  );
 
   function pickElement(def: DesignElementDef) {
-    setPlaceDefId(def.id);
-    setHintDefId(def.id);
-    if (tool !== 'place') setTool('place');
+    if (placeDefId === def.id && tool === 'place') {
+      // Tapping the armed chip again disarms.
+      setPlaceDefId(null);
+      setTool('select');
+      setHintDefId(null);
+    } else {
+      setPlaceDefId(def.id);
+      setTool('place');
+      setHintDefId(def.id);
+    }
   }
+
+  function pickZone(z: 0 | 1 | 2 | 3 | 4 | 5) {
+    setHintDefId(null);
+    if (zoneDraw === z && tool === 'zone') {
+      setTool('select');
+    } else {
+      setZoneDraw(z);
+      setTool('zone');
+    }
+  }
+
+  function pickLine(kind: LineShape['kind']) {
+    setHintDefId(null);
+    if (lineKind === kind && tool === 'line') {
+      setTool('select');
+    } else {
+      setLineKind(kind);
+      setTool('line');
+    }
+  }
+
+  const armedHintLabel =
+    tool === 'place' && armedDef
+      ? `Tap the map to place ${armedDef.name}`
+      : tool === 'zone'
+        ? `Tap the map to paint Zone ${zoneDraw}`
+        : tool === 'line'
+          ? `Tap corners, then ✓ Finish`
+          : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'inherit' }}>
-      {/* Tool row */}
+      {/* Tool row: Select · Undo · Delete only — arming happens via chips below */}
       <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
-        <button type="button" style={toolButtonStyle(tool === 'select')} onClick={() => selectTool('select')}>
+        <button
+          type="button"
+          style={toolButtonStyle(tool === 'select')}
+          onClick={() => {
+            setTool('select');
+            setHintDefId(null);
+          }}
+        >
           ↖️ Select
-        </button>
-        <button type="button" style={toolButtonStyle(tool === 'place')} onClick={() => selectTool('place')}>
-          📍 Place
-        </button>
-        <button type="button" style={toolButtonStyle(tool === 'zone')} onClick={() => selectTool('zone')}>
-          🗺️ Zone
-        </button>
-        <button type="button" style={toolButtonStyle(tool === 'line')} onClick={() => selectTool('line')}>
-          〰️ Line
         </button>
         <button
           type="button"
@@ -176,75 +214,59 @@ export default function DesignPalette({
         </button>
       </div>
 
-      {/* Place tool: element chips filtered by step */}
-      {tool === 'place' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {isReadOnlyStep && (
-            <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-              Showing the full catalog — switch to a Water/Planting/Structures step to filter.
-            </div>
-          )}
-          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
-            {catalog.map((def) => {
-              const active = placeDefId === def.id;
-              return (
-                <button
-                  key={def.id}
-                  type="button"
-                  onClick={() => pickElement(def)}
-                  style={{
-                    minHeight: 44,
-                    padding: '6px 10px',
-                    borderRadius: 10,
-                    border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
-                    background: active ? GREEN : PAPER,
-                    color: active ? PAPER : DARK,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 2,
-                    flexShrink: 0,
-                    minWidth: 68,
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>{def.icon}</span>
-                  <span style={{ fontSize: 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-                  <span style={{ fontSize: 9, opacity: 0.75 }}>
-                    {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
-                  </span>
-                </button>
-              );
-            })}
+      {/* Element chips: always visible for this step, regardless of tool */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {isReadOnlyStep && (
+          <div style={{ fontSize: 11.5, color: '#6B6355' }}>
+            Showing the full catalog — switch to a Water/Planting/Structures step to filter.
           </div>
-          {(hintDef || armedDef) && (
-            <div
-              style={{
-                fontSize: 11.5,
-                color: DARK,
-                background: 'rgba(247,201,126,0.25)',
-                border: '1px solid rgba(0,0,0,0.08)',
-                borderRadius: 8,
-                padding: '6px 10px',
-              }}
-            >
-              {(hintDef ?? armedDef)?.icon} <strong>{(hintDef ?? armedDef)?.name}:</strong> {(hintDef ?? armedDef)?.tip}
-            </div>
-          )}
+        )}
+        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
+          {catalog.map((def) => {
+            const active = placeDefId === def.id && tool === 'place';
+            return (
+              <button
+                key={def.id}
+                type="button"
+                onClick={() => pickElement(def)}
+                style={{
+                  minHeight: 44,
+                  padding: '6px 10px',
+                  borderRadius: 10,
+                  border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                  background: active ? GREEN : PAPER,
+                  color: active ? PAPER : DARK,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 2,
+                  flexShrink: 0,
+                  minWidth: 68,
+                  cursor: 'pointer',
+                }}
+              >
+                <span style={{ fontSize: 18, lineHeight: 1 }}>{def.icon}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
+                <span style={{ fontSize: 9, opacity: 0.75 }}>
+                  {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
+                </span>
+              </button>
+            );
+          })}
         </div>
-      )}
+      </div>
 
-      {/* Zone tool: zone 0-5 color chips */}
-      {tool === 'zone' && (
+      {/* Zones step: always show the zone 0-5 colour chips row */}
+      {showZoneChips && (
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
           {(Object.keys(ZONE_DEFS) as unknown as Array<0 | 1 | 2 | 3 | 4 | 5>).map((z) => {
             const def = ZONE_DEFS[z];
-            const active = zoneDraw === z;
+            const active = zoneDraw === z && tool === 'zone';
             return (
               <button
                 key={z}
                 type="button"
-                onClick={() => setZoneDraw(z)}
+                onClick={() => pickZone(z)}
                 style={{
                   minHeight: 44,
                   padding: '6px 12px',
@@ -269,16 +291,16 @@ export default function DesignPalette({
         </div>
       )}
 
-      {/* Line tool: line-kind chips */}
-      {tool === 'line' && (
+      {/* Water/Structures step: compact line-kind chips row */}
+      {showLineChips && (
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
-          {LINE_KINDS.map((lk) => {
-            const active = lineKind === lk.id;
+          {lineChipsForStep.map((lk) => {
+            const active = lineKind === lk.id && tool === 'line';
             return (
               <button
                 key={lk.id}
                 type="button"
-                onClick={() => setLineKind(lk.id)}
+                onClick={() => pickLine(lk.id)}
                 style={{
                   minHeight: 44,
                   padding: '6px 12px',
@@ -300,6 +322,28 @@ export default function DesignPalette({
               </button>
             );
           })}
+        </div>
+      )}
+
+      {/* Hint line: armed state, or a def tip on tap */}
+      {(armedHintLabel || hintDef) && (
+        <div
+          style={{
+            fontSize: 11.5,
+            color: DARK,
+            background: 'rgba(247,201,126,0.25)',
+            border: '1px solid rgba(0,0,0,0.08)',
+            borderRadius: 8,
+            padding: '6px 10px',
+          }}
+        >
+          {hintDef ? (
+            <>
+              {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
+            </>
+          ) : (
+            armedHintLabel
+          )}
         </div>
       )}
 

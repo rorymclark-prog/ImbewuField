@@ -166,6 +166,12 @@ export default function DesignCanvas({
   // drag emits a single undo entry instead of one per pointermove (see endDragItem).
   const [dragPos, setDragPos] = useState<[number, number] | null>(null);
 
+  // Vertex-drag state for editing a selected zone/line's points. Same local-preview /
+  // commit-on-release pattern as item drag — only the dragged vertex previews locally,
+  // the rest of the ring/line stays as committed state until pointerup.
+  const dragVertex = useRef<{ shapeId: string; kind: 'zone' | 'line'; index: number } | null>(null);
+  const [vertexPos, setVertexPos] = useState<[number, number] | null>(null);
+
   function clientToNorm(clientX: number, clientY: number): [number, number] | null {
     const svg = svgRef.current;
     if (!svg) return null;
@@ -261,6 +267,47 @@ export default function DesignCanvas({
     setDragPos(null);
   }
 
+  function startDragVertex(e: React.PointerEvent, shapeId: string, kind: 'zone' | 'line', index: number) {
+    if (tool !== 'select') return;
+    e.stopPropagation();
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragVertex.current = { shapeId, kind, index };
+  }
+
+  function moveDragVertex(e: React.PointerEvent) {
+    if (!dragVertex.current) return;
+    const pt = clientToNorm(e.clientX, e.clientY);
+    if (!pt) return;
+    setVertexPos(pt);
+  }
+
+  function endDragVertex() {
+    const dv = dragVertex.current;
+    if (dv && vertexPos) {
+      if (dv.kind === 'zone') {
+        onChange({
+          ...state,
+          zones: state.zones.map((z) =>
+            z.id === dv.shapeId
+              ? { ...z, points: z.points.map((p, i) => (i === dv.index ? vertexPos : p)) }
+              : z,
+          ),
+        });
+      } else {
+        onChange({
+          ...state,
+          lines: state.lines.map((l) =>
+            l.id === dv.shapeId
+              ? { ...l, points: l.points.map((p, i) => (i === dv.index ? vertexPos : p)) }
+              : l,
+          ),
+        });
+      }
+    }
+    dragVertex.current = null;
+    setVertexPos(null);
+  }
+
   function deleteItem(id: string) {
     onChange({ ...state, items: state.items.filter((it) => it.id !== id) });
     if (selectedId === id) onSelect(null);
@@ -288,8 +335,14 @@ export default function DesignCanvas({
         preserveAspectRatio="xMidYMid meet"
         style={{ display: 'block', width: '100%', height: '100%', touchAction: armedNonSelect ? 'none' : 'auto', background: '#0B120B' }}
         onPointerDown={handleBackgroundPointerDown}
-        onPointerMove={moveDragItem}
-        onPointerUp={endDragItem}
+        onPointerMove={(e) => {
+          moveDragItem(e);
+          moveDragVertex(e);
+        }}
+        onPointerUp={() => {
+          endDragItem();
+          endDragVertex();
+        }}
         onDoubleClick={handleBackgroundDoubleClick}
       >
         {/* Satellite underlay */}
@@ -299,15 +352,19 @@ export default function DesignCanvas({
           <rect x={0} y={0} width={imgW} height={imgH} fill="#FBF6EC" />
         )}
 
-        {/* Reference outlines: driveway, house, boundary (drawn in this order so boundary reads on top) */}
+        {/* Reference outlines: driveway, house, boundary (drawn in this order so boundary reads
+            on top). Plain thin dashes, butt caps, no vertex dots — these are non-interactive
+            traced references, not editable shapes, and must not look draggable. */}
         {refLayers.driveway.length >= 2 && (
           <polyline
             points={polylinePoints(refLayers.driveway, imgW, imgH)}
             fill="none"
             stroke="#E8D9B8"
-            strokeWidth={3}
-            strokeDasharray="5 5"
+            strokeWidth={1.5}
+            strokeDasharray="4 4"
+            strokeLinecap="butt"
             opacity={0.85}
+            pointerEvents="none"
           />
         )}
         {refLayers.house.length >= 3 && (
@@ -315,7 +372,10 @@ export default function DesignCanvas({
             points={ringToPx(refLayers.house, imgW, imgH)}
             fill="rgba(78,166,216,0.15)"
             stroke="#4EA6D8"
-            strokeWidth={2}
+            strokeWidth={1.25}
+            strokeDasharray="4 4"
+            strokeLinecap="butt"
+            pointerEvents="none"
           />
         )}
         {refLayers.boundary.length >= 3 && (
@@ -323,7 +383,10 @@ export default function DesignCanvas({
             points={ringToPx(refLayers.boundary, imgW, imgH)}
             fill="none"
             stroke="#9BE86B"
-            strokeWidth={2.5}
+            strokeWidth={1.5}
+            strokeDasharray="4 4"
+            strokeLinecap="butt"
+            pointerEvents="none"
           />
         )}
 
@@ -332,11 +395,15 @@ export default function DesignCanvas({
           state.zones.map((z) => {
             const def = ZONE_DEFS[z.zone];
             const isSelected = selectedId === z.id;
-            const centroid = ringCentroid(z.points);
+            const isDraggingThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
+            const effectivePoints = isDraggingThisShape
+              ? z.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
+              : z.points;
+            const centroid = ringCentroid(effectivePoints);
             return (
               <g key={z.id}>
                 <polygon
-                  points={ringToPx(z.points, imgW, imgH)}
+                  points={ringToPx(effectivePoints, imgW, imgH)}
                   fill={def.color}
                   fillOpacity={0.22}
                   stroke={def.color}
@@ -358,14 +425,24 @@ export default function DesignCanvas({
                 {isSelected && (
                   <>
                     <polygon
-                      points={ringToPx(z.points, imgW, imgH)}
+                      points={ringToPx(effectivePoints, imgW, imgH)}
                       fill="none"
                       stroke={GOLD}
                       strokeWidth={2.5}
                       strokeDasharray="4 3"
                     />
-                    {z.points.map(([x, y], i) => (
-                      <circle key={i} cx={x * imgW} cy={y * imgH} r={3} fill={GOLD} opacity={0.85} />
+                    {effectivePoints.map(([x, y], i) => (
+                      <circle
+                        key={i}
+                        cx={x * imgW}
+                        cy={y * imgH}
+                        r={7}
+                        fill="#FBF6EC"
+                        stroke={GOLD}
+                        strokeWidth={2}
+                        style={{ cursor: 'grab', touchAction: 'none' }}
+                        onPointerDown={(e) => startDragVertex(e, z.id, 'zone', i)}
+                      />
                     ))}
                     <g
                       transform={`translate(${(centroid[0] * imgW + 16).toFixed(1)},${(centroid[1] * imgH - 16).toFixed(1)})`}
@@ -391,13 +468,17 @@ export default function DesignCanvas({
           state.lines.map((line) => {
             const style = lineStroke(line.kind);
             const isSelected = selectedId === line.id;
-            const mid = line.points[Math.floor(line.points.length / 2)] ?? line.points[0];
+            const isDraggingThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
+            const effectivePoints = isDraggingThisShape
+              ? line.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
+              : line.points;
+            const mid = effectivePoints[Math.floor(effectivePoints.length / 2)] ?? effectivePoints[0];
             return (
               <g key={line.id}>
                 {/* Invisible fat hit-stroke — thin visible lines are hard to tap precisely,
                     so a wide transparent duplicate underneath catches the pointer instead. */}
                 <polyline
-                  points={polylinePoints(line.points, imgW, imgH)}
+                  points={polylinePoints(effectivePoints, imgW, imgH)}
                   fill="none"
                   stroke="transparent"
                   strokeWidth={18}
@@ -410,7 +491,7 @@ export default function DesignCanvas({
                   }}
                 />
                 <polyline
-                  points={polylinePoints(line.points, imgW, imgH)}
+                  points={polylinePoints(effectivePoints, imgW, imgH)}
                   fill="none"
                   stroke={style.stroke}
                   strokeWidth={style.width}
@@ -420,12 +501,22 @@ export default function DesignCanvas({
                   style={{ pointerEvents: 'none' }}
                 />
                 {line.kind === 'fence' && (
-                  <path d={fenceTicks(line.points, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
+                  <path d={fenceTicks(effectivePoints, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
                 )}
                 {isSelected && (
                   <>
-                    {line.points.map(([x, y], i) => (
-                      <circle key={i} cx={x * imgW} cy={y * imgH} r={3} fill={GOLD} opacity={0.85} />
+                    {effectivePoints.map(([x, y], i) => (
+                      <circle
+                        key={i}
+                        cx={x * imgW}
+                        cy={y * imgH}
+                        r={7}
+                        fill="#FBF6EC"
+                        stroke={GOLD}
+                        strokeWidth={2}
+                        style={{ cursor: 'grab', touchAction: 'none' }}
+                        onPointerDown={(e) => startDragVertex(e, line.id, 'line', i)}
+                      />
                     ))}
                     {mid && (
                       <g
@@ -581,11 +672,65 @@ export default function DesignCanvas({
           );
         })}
 
-        {/* AI auto-detect ghosts — 'pending' suggestions rendered as dashed cyan outlines.
+        {/* AI auto-detect ghosts — 'pending' suggestions rendered as dashed outlines.
             pointerEvents none throughout so they never block placing/drawing/selecting. */}
         {suggestions
           ?.filter((s) => s.status === 'pending')
           .map((s) => {
+            // Zone suggestions: translucent fill in the target zone's colour + a "Z{n}?" pill
+            // at the ring centroid, distinct from the generic vision-kind cyan ghosts.
+            if (s.kind === 'zone' && s.points.length >= 3 && s.zone !== undefined) {
+              const zoneDef = ZONE_DEFS[s.zone];
+              const centroid = ringCentroid(s.points);
+              return (
+                <g key={s.id} pointerEvents="none" opacity={0.85}>
+                  <polygon
+                    points={ringToPx(s.points, imgW, imgH)}
+                    fill={zoneDef.color}
+                    fillOpacity={0.16}
+                    stroke={zoneDef.color}
+                    strokeWidth={2}
+                    strokeDasharray="5 4"
+                  />
+                  <g transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}>
+                    <rect x={-18} y={-9} width={36} height={18} rx={9} fill="rgba(11,18,11,0.85)" stroke={zoneDef.color} strokeWidth={1} />
+                    <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={zoneDef.color}>
+                      Z{s.zone}?
+                    </text>
+                  </g>
+                </g>
+              );
+            }
+
+            // Point-like local generators (greywater/compost/beehive/veg_bed/nursery): render
+            // as a circle ghost at sizeM (default 2m), same cyan-dashed style as vision points.
+            const isLocalPoint =
+              (s.kind === 'greywater' || s.kind === 'compost' || s.kind === 'beehive' || s.kind === 'veg_bed' || s.kind === 'nursery') &&
+              s.points.length >= 1;
+            if (isLocalPoint) {
+              const [px, py] = s.points[0];
+              return (
+                <g key={s.id} pointerEvents="none" opacity={0.7}>
+                  <circle
+                    cx={px * imgW}
+                    cy={py * imgH}
+                    r={Math.max((s.sizeM ?? 2) / mPerPx / 2, 4)}
+                    fill="none"
+                    stroke={CYAN}
+                    strokeWidth={2}
+                    strokeDasharray="5 4"
+                  />
+                  <g transform={`translate(${(px * imgW).toFixed(1)},${(py * imgH - 12).toFixed(1)})`}>
+                    <rect x={-16} y={-9} width={32} height={16} rx={8} fill="rgba(11,18,11,0.85)" stroke={CYAN} strokeWidth={1} />
+                    <text textAnchor="middle" dominantBaseline="central" fontSize={9} fontWeight={700} fill={CYAN}>
+                      AI?
+                    </text>
+                  </g>
+                </g>
+              );
+            }
+
+            // 'swale' generator: dashed cyan polyline, same treatment as vision line kinds.
             const isArea = s.kind === 'veg_area' && s.points.length >= 3;
             const isPoint = s.points.length === 1;
             const isLine = !isArea && s.points.length >= 2;

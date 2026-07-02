@@ -38,12 +38,22 @@ const STEP_LABELS: Record<WizardStep, string> = {
 
 const STEP_GUIDANCE: Record<WizardStep, string> = {
   base: "Check your boundary and house are showing — trace them on the main map if not.",
-  water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope.',
-  zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow.',
-  planting: "Trees north of beds so they don't shade them. Tap a tree, then tap the map.",
-  structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path.',
+  water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope — or tap ✨ Suggest water setup and approve the overlay.',
+  zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow — or tap ✨ Suggest zones and approve the overlay.',
+  planting: "Trees north of beds so they don't shade them. Tap a tree, then tap the map — or tap ✨ Suggest planting and approve the overlay.",
+  structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path — or tap ✨ Suggest structures and approve the overlay.',
   review: 'Toggle layers to check each map: water, zones, planting.',
   glossy: "Happy? Generate the artist's impression of YOUR design.",
+};
+
+const SUGGEST_STEPS: ReadonlySet<WizardStep> = new Set(['base', 'water', 'zones', 'planting', 'structures']);
+
+const SUGGEST_LABEL: Partial<Record<WizardStep, string>> = {
+  base: '✨ Auto-detect features (AI)',
+  zones: '✨ Suggest zones',
+  water: '✨ Suggest water setup',
+  planting: '✨ Suggest planting',
+  structures: '✨ Suggest structures',
 };
 
 function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPresent: { boundary: boolean; house: boolean }): boolean {
@@ -166,8 +176,9 @@ export default function DesignWizard({
         {STEP_GUIDANCE[step]}
       </div>
 
-      {/* Auto-detect — 'base' step only, and only when the caller wired it up */}
-      {step === 'base' && onAutoDetect && (
+      {/* Suggest button — shown on base/water/zones/planting/structures. Spinner only
+          means anything on 'base' (AI vision call); the local generators are instant. */}
+      {SUGGEST_STEPS.has(step) && onAutoDetect && (
         <button
           onClick={() => !detecting && onAutoDetect()}
           disabled={detecting}
@@ -187,8 +198,8 @@ export default function DesignWizard({
             position: 'relative',
           }}
         >
-          {detecting ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-          {detecting ? 'Detecting… (~20s)' : '✨ Auto-detect features'}
+          {step === 'base' && detecting ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+          {step === 'base' && detecting ? 'Detecting… (~20s)' : SUGGEST_LABEL[step]}
           {!detecting && !!suggestionsCount && suggestionsCount > 0 && (
             <span
               style={{

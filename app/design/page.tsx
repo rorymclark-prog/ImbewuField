@@ -36,9 +36,10 @@ import {
   type WizardStep,
   type ZoneShape,
 } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
+import { suggestZones, suggestWater, suggestStructures, suggestPlanting } from '@/lib/design-suggest';
 import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas from '@/components/design/DesignCanvas';
 import DesignPalette from '@/components/design/DesignPalette';
@@ -115,7 +116,22 @@ const SUGGESTION_ICON: Record<DetectSuggestion['kind'], string> = {
   pond: '🌊',
   veg_area: '🥬',
   driveway: '🛣',
+  zone: '🎯',
+  greywater: '♻️',
+  compost: '♻️',
+  beehive: '🐝',
+  veg_bed: '🥬',
+  nursery: '🌱',
+  swale: '🌊',
 };
+
+// Zone suggestions get their real zone colour dot instead of the generic 🎯 icon.
+function suggestionIconFor(s: DetectSuggestion): string {
+  if (s.kind === 'zone' && s.zone !== undefined && ZONE_DEFS[s.zone]) {
+    return ZONE_DEFS[s.zone].color;
+  }
+  return SUGGESTION_ICON[s.kind];
+}
 
 interface RefLayers {
   boundary: Array<[number, number]>;
@@ -339,9 +355,18 @@ function DesignStudioInner() {
       const merged = { ...mergedAll, layers: nearLayers };
       setLayers(merged.layers);
 
-      const boundaryLayer =
+      let boundaryLayer =
         merged.layers.find((l) => l.layerType === 'property_boundary' && l.approved) ??
         merged.layers.find((l) => l.layerType === 'property_boundary');
+      if (!boundaryLayer) {
+        // The merge classifies the GLOBALLY-largest shape as property_boundary — which may
+        // belong to another site and get dropped by the near-site filter above. Promote the
+        // largest NEAR land polygon so this site still has a working boundary (fit, refs,
+        // suggestions) instead of erroring "trace your boundary first".
+        boundaryLayer = [...merged.layers]
+          .filter((l) => l.layerType !== 'water_body' && ringFromGeometry(l.geometry).length >= 3)
+          .sort((a, b) => b.areaM2 - a.areaM2)[0];
+      }
       const houseLayer =
         merged.layers.find((l) => (l.layerType === 'roof' || l.layerType === 'structure') && l.approved) ??
         merged.layers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
@@ -470,7 +495,7 @@ function DesignStudioInner() {
     [handleChange],
   );
 
-  const handleAutoDetect = useCallback(async () => {
+  const handleVisionDetect = useCallback(async () => {
     if (!frame?.satDataUrl) {
       setDetectError('Satellite image not loaded yet — wait a moment and try again.');
       return;
@@ -511,6 +536,42 @@ function DesignStudioInner() {
       setDetecting(false);
     }
   }, [frame]);
+
+  // Per-step suggest: 'base' keeps the existing AI vision detect; the other four steps
+  // use the instant local geometry generators from lib/design-suggest.ts.
+  const handleSuggest = useCallback(() => {
+    if (!canvasState) return;
+    if (canvasState.step === 'base') {
+      handleVisionDetect();
+      return;
+    }
+    if (refLayers.boundary.length < 3) {
+      setDetectError('Trace your boundary on the main map first.');
+      return;
+    }
+    setDetectError(null);
+    let next: DetectSuggestion[] = [];
+    switch (canvasState.step) {
+      case 'zones':
+        next = suggestZones(refLayers.boundary, refLayers.house);
+        break;
+      case 'water':
+        if (!frame) return;
+        next = suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
+        break;
+      case 'structures':
+        if (!frame) return;
+        next = suggestStructures(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
+        break;
+      case 'planting':
+        if (!frame) return;
+        next = suggestPlanting(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
+        break;
+      default:
+        return;
+    }
+    setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
+  }, [canvasState, refLayers, frame, handleVisionDetect]);
 
   const acceptSuggestion = useCallback(
     (id: string) => {
@@ -574,6 +635,41 @@ function DesignStudioInner() {
           case 'driveway': {
             if (suggestion.points.length < 2) break;
             const line: LineShape = { id: newId(), kind: 'path', points: suggestion.points };
+            return { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() };
+          }
+          case 'zone': {
+            if (suggestion.points.length < 3) break;
+            const zone: ZoneShape = { id: newId(), zone: suggestion.zone ?? 2, points: suggestion.points };
+            return { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() };
+          }
+          case 'greywater': {
+            if (!point0) break;
+            const item: PlacedItem = { id: newId(), defId: 'greywater_basin', x: point0[0], y: point0[1] };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'compost': {
+            if (!point0) break;
+            const item: PlacedItem = { id: newId(), defId: 'compost_bay', x: point0[0], y: point0[1] };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'beehive': {
+            if (!point0) break;
+            const item: PlacedItem = { id: newId(), defId: 'beehive', x: point0[0], y: point0[1] };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'veg_bed': {
+            if (!point0) break;
+            const item: PlacedItem = { id: newId(), defId: 'veg_bed', x: point0[0], y: point0[1] };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'nursery': {
+            if (!point0) break;
+            const item: PlacedItem = { id: newId(), defId: 'nursery_table', x: point0[0], y: point0[1] };
+            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
+          }
+          case 'swale': {
+            if (suggestion.points.length < 2) break;
+            const line: LineShape = { id: newId(), kind: 'swale', points: suggestion.points };
             return { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() };
           }
         }
@@ -667,7 +763,7 @@ function DesignStudioInner() {
             boundary: refLayers.boundary.length > 2,
             house: refLayers.house.length > 2,
           }}
-          onAutoDetect={handleAutoDetect}
+          onAutoDetect={handleSuggest}
           detecting={detecting}
           suggestionsCount={pendingSuggestions.length}
         />
@@ -786,7 +882,21 @@ function DesignStudioInner() {
                       borderBottom: '1px solid rgba(11,18,11,0.06)',
                     }}
                   >
-                    <span style={{ fontSize: 18, flexShrink: 0 }}>{SUGGESTION_ICON[s.kind]}</span>
+                    {s.kind === 'zone' && s.zone !== undefined && ZONE_DEFS[s.zone] ? (
+                      <span
+                        aria-hidden
+                        style={{
+                          width: 14,
+                          height: 14,
+                          borderRadius: '50%',
+                          flexShrink: 0,
+                          background: ZONE_DEFS[s.zone].color,
+                          border: '1px solid rgba(11,18,11,0.25)',
+                        }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: 18, flexShrink: 0 }}>{suggestionIconFor(s)}</span>
+                    )}
                     <span style={{ flex: 1, minWidth: 0, fontSize: 12, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {s.note ?? s.kind}
                     </span>

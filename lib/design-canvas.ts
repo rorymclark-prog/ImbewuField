@@ -383,11 +383,16 @@ export function newId(): string {
 // ── Auto-detect (Tier 1) ──────────────────────────────────────────────────────
 // AI-suggested features from the satellite image. Suggestions are GHOSTS until the
 // farmer accepts them (they then become normal items/zones/lines via onChange).
+export type SuggestionKind =
+  | 'tree' | 'building' | 'water_tank' | 'pond' | 'veg_area' | 'driveway' // vision (base step)
+  | 'zone' | 'greywater' | 'compost' | 'beehive' | 'veg_bed' | 'nursery' | 'swale'; // local per-step generators
+
 export interface DetectSuggestion {
   id: string;
-  kind: 'tree' | 'building' | 'water_tank' | 'pond' | 'veg_area' | 'driveway';
+  kind: SuggestionKind;
   points: Array<[number, number]>; // normalised [0..1]; length 1 = point (use sizeM), 2+ = line, 3+ ring for areas
   sizeM?: number; // canopy/footprint diameter estimate for point features
+  zone?: 0 | 1 | 2 | 3 | 4 | 5; // set when kind === 'zone'
   note?: string;
   status: 'pending' | 'accepted' | 'rejected';
 }
