@@ -12,6 +12,8 @@ const MAX_FEATURES = 150;
 type FeatureKind = 'building' | 'road' | 'water';
 
 interface SiteFeature {
+  /** Stable OSM way id — lets the client skip features it has already accepted. */
+  id: number;
   kind: FeatureKind;
   ring: Array<[number, number]>;
   name?: string;
@@ -31,6 +33,7 @@ interface OverpassGeomPoint {
 
 interface OverpassElement {
   type?: string;
+  id?: unknown;
   tags?: Record<string, string | undefined>;
   geometry?: OverpassGeomPoint[];
 }
@@ -103,7 +106,9 @@ function parseOverpassElements(elements: OverpassElement[]): SiteFeature[] {
     // how consumers should render the ring (polygon vs polyline); it is not
     // itself part of the wire format since it's fully derivable from kind+ring.
 
-    const feature: SiteFeature = { kind, ring };
+    const id = Number(el.id);
+    if (!Number.isFinite(id)) continue;
+    const feature: SiteFeature = { id, kind, ring };
     if (typeof tags.name === 'string' && tags.name) feature.name = tags.name;
 
     if (kind === 'building') buildings.push(feature);

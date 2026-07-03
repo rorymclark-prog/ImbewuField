@@ -70,6 +70,100 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
 
+// ── Clip-to-image geometry helpers ──────────────────────────────────────────
+// "Find map features" pulls OSM ways for the satellite's bbox, but a way can run
+// well past the edges of the fetched image (a road continuing off-plot, a building
+// straddling the frame). Left unclipped, ghosts dangle onto blank canvas and — worse —
+// inflate BOQ line lengths with metres that were never drawn. Clip against the drawn
+// image rect BEFORE the feature becomes a ghost.
+interface ClipRect { x: number; y: number; w: number; h: number }
+
+/** Liang-Barsky segment clip against an axis-aligned rect. Returns null if fully outside. */
+function clipSegmentToRect(
+  x0: number, y0: number, x1: number, y1: number, rect: ClipRect,
+): [number, number, number, number] | null {
+  const xmin = rect.x, xmax = rect.x + rect.w, ymin = rect.y, ymax = rect.y + rect.h;
+  const dx = x1 - x0, dy = y1 - y0;
+  let t0 = 0, t1 = 1;
+  const p = [-dx, dx, -dy, dy];
+  const q = [x0 - xmin, xmax - x0, y0 - ymin, ymax - y0];
+  for (let i = 0; i < 4; i++) {
+    if (p[i] === 0) {
+      if (q[i] < 0) return null; // parallel and outside on this side
+    } else {
+      const r = q[i] / p[i];
+      if (p[i] < 0) { if (r > t1) return null; if (r > t0) t0 = r; }
+      else { if (r < t0) return null; if (r < t1) t1 = r; }
+    }
+  }
+  return [x0 + t0 * dx, y0 + t0 * dy, x0 + t1 * dx, y0 + t1 * dy];
+}
+
+/**
+ * Clip an OPEN polyline against a rect, stitching consecutive surviving segments
+ * back into runs. A road can leave and re-enter the frame, so this can yield
+ * multiple pieces; pieces with < 2 points are dropped.
+ */
+function clipPolylineToRect(points: number[], rect: ClipRect): number[][] {
+  const runs: number[][] = [];
+  let current: number[] = [];
+  let lastClippedEnd: [number, number] | null = null;
+  for (let i = 0; i + 3 < points.length; i += 2) {
+    const [x0, y0, x1, y1] = [points[i], points[i + 1], points[i + 2], points[i + 3]];
+    const clipped = clipSegmentToRect(x0, y0, x1, y1, rect);
+    if (!clipped) {
+      if (current.length >= 4) runs.push(current);
+      current = [];
+      lastClippedEnd = null;
+      continue;
+    }
+    const [cx0, cy0, cx1, cy1] = clipped;
+    if (current.length === 0 || lastClippedEnd?.[0] !== cx0 || lastClippedEnd?.[1] !== cy0) {
+      if (current.length >= 4) runs.push(current);
+      current = [cx0, cy0, cx1, cy1];
+    } else {
+      current.push(cx1, cy1);
+    }
+    lastClippedEnd = [cx1, cy1];
+  }
+  if (current.length >= 4) runs.push(current);
+  return runs;
+}
+
+/** Sutherland–Hodgman polygon clip against an axis-aligned rect. Drop results with < 3 points. */
+function clipPolygonToRect(points: number[], rect: ClipRect): number[] {
+  type Pt = [number, number];
+  let poly: Pt[] = [];
+  for (let i = 0; i + 1 < points.length; i += 2) poly.push([points[i], points[i + 1]]);
+
+  const edges: Array<{ inside: (p: Pt) => boolean; intersect: (a: Pt, b: Pt) => Pt }> = [
+    { inside: (p) => p[0] >= rect.x, intersect: (a, b) => [rect.x, a[1] + ((rect.x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])] },
+    { inside: (p) => p[0] <= rect.x + rect.w, intersect: (a, b) => [rect.x + rect.w, a[1] + ((rect.x + rect.w - a[0]) * (b[1] - a[1])) / (b[0] - a[0])] },
+    { inside: (p) => p[1] >= rect.y, intersect: (a, b) => [a[0] + ((rect.y - a[1]) * (b[0] - a[0])) / (b[1] - a[1]), rect.y] },
+    { inside: (p) => p[1] <= rect.y + rect.h, intersect: (a, b) => [a[0] + ((rect.y + rect.h - a[1]) * (b[0] - a[0])) / (b[1] - a[1]), rect.y + rect.h] },
+  ];
+
+  for (const edge of edges) {
+    if (poly.length === 0) break;
+    const output: Pt[] = [];
+    for (let i = 0; i < poly.length; i++) {
+      const curr = poly[i];
+      const prev = poly[(i - 1 + poly.length) % poly.length];
+      const currIn = edge.inside(curr);
+      const prevIn = edge.inside(prev);
+      if (currIn) {
+        if (!prevIn) output.push(edge.intersect(prev, curr));
+        output.push(curr);
+      } else if (prevIn) {
+        output.push(edge.intersect(prev, curr));
+      }
+    }
+    poly = output;
+  }
+  if (poly.length < 3) return [];
+  return poly.flatMap((p) => p);
+}
+
 // Demo: farmers a supervisor could push a design to (real version = backend + accounts)
 const FARMERS = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane'];
 
@@ -463,6 +557,10 @@ function ElementIcon({ type, w, h }: { type: ElType; w: number; h: number }) {
 export default function FacilitatorCanvas({ siteText, language }: { siteText?: string; language?: string }) {
   const [items, setItems] = useState<Item[]>([]);
   const [lines, setLines] = useState<LineEl[]>([]);
+  // Mirror for callbacks that run inside stale closures (loadSiteBackground's
+  // useCallback → auto runFindMapFeatures): dedupe must see CURRENT lines.
+  const linesRef = useRef<LineEl[]>([]);
+  linesRef.current = lines;
   const [sectors, setSectors] = useState<SectorEl[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [pxPerM, setPxPerM] = useState(26);
@@ -693,6 +791,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         setMapImportMsg(`✓ ${newLines.length} traced shape${newLines.length === 1 ? '' : 's'} imported from your map`);
         setTimeout(() => setMapImportMsg(''), 5000);
       }
+
+      // Auto-run "Find map features" at import — this used to be a manual button, but
+      // field testing showed facilitators just want it to happen. Pass the frame info
+      // straight through (siteFrameRef.current is also set above, but by the time this
+      // promise resolves the surrounding state update batch may not have flushed yet).
+      // manual=false: 0 new features is a silent no-op (this also fires on mount-restore,
+      // where everything worth finding is usually already accepted).
+      runFindMapFeatures({ frame, bgX, bgY, drawnW, drawnH }, false);
     };
     img.onerror = () => setSiteLoading(null);
     img.src = dataUrl;
@@ -762,8 +868,16 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   // site's bbox and turn them into the SAME approve/reject ghost overlays as AI
   // detect, but projected with the EXACT maths as the map-truth import (same
   // projector construction from the same frame) so they line up pixel-for-pixel.
-  async function runFindMapFeatures() {
-    const sf = siteFrameRef.current;
+  //
+  // `frameOverride` lets loadSiteBackground's img.onload call this synchronously with
+  // the freshly-built frame before siteFrameRef/React state have necessarily flushed.
+  // `manual` distinguishes an explicit button press (shows a "nothing new" note on 0
+  // results) from the silent auto-run on import (0 new is expected on restore).
+  async function runFindMapFeatures(
+    frameOverride?: { frame: ReturnType<typeof computeCanvasFrame>['frame']; bgX: number; bgY: number; drawnW: number; drawnH: number },
+    manual = true,
+  ) {
+    const sf = frameOverride ?? siteFrameRef.current;
     if (!sf || findingFeatures) return;
     setFindingFeatures(true);
     setFindFeaturesError('');
@@ -780,7 +894,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         body: JSON.stringify({ south, west, north, east }),
       });
       if (!resp.ok) throw new Error('unreachable');
-      const res = await resp.json() as { features: Array<{ kind: 'building' | 'road' | 'water'; ring: Array<[number, number]>; name?: string }> };
+      const res = await resp.json() as { features: Array<{ id: number; kind: 'building' | 'road' | 'water'; ring: Array<[number, number]>; name?: string }> };
 
       // Same projector construction as loadSiteBackground's map-truth import.
       const projector = makeMercatorProjector(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, 0, 0);
@@ -791,38 +905,55 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
       const KIND_TO_LINE: Record<'building' | 'road' | 'water', LineKind> = { building: 'building', road: 'path', water: 'pipe' };
       const KIND_TO_GHOST: Record<'building' | 'road' | 'water', GhostFeature['kind']> = { building: 'osm_building', road: 'osm_road', water: 'osm_water' };
-      const minX = bgX, maxX = bgX + drawnW, minY = bgY, maxY = bgY + drawnH;
+      const clipRect: ClipRect = { x: bgX, y: bgY, w: drawnW, h: drawnH };
+
+      // Dedupe against lines already accepted in a previous run (or restored from a
+      // saved design) — id `osm-${feature.id}` (or a `-N` piece of a split road).
+      const alreadyHas = (featureId: number) => linesRef.current.some((l) => l.id === `osm-${featureId}` || l.id.startsWith(`osm-${featureId}-`));
 
       const buildings: GhostFeature[] = [];
       const others: GhostFeature[] = [];
-      (res.features ?? []).forEach((f, i) => {
-        if (!f.ring || f.ring.length < 2) return;
+      (res.features ?? []).forEach((f) => {
+        if (!f.ring || f.ring.length < 2 || alreadyHas(f.id)) return;
         const pxPoints = f.ring.flatMap((c) => toCanvasPx(c));
-        // Drop features entirely outside the visible image — partial overlap is fine, no clipping.
-        let anyInside = false;
-        for (let k = 0; k + 1 < pxPoints.length; k += 2) {
-          if (pxPoints[k] >= minX && pxPoints[k] <= maxX && pxPoints[k + 1] >= minY && pxPoints[k + 1] <= maxY) {
-            anyInside = true; break;
-          }
+
+        if (f.kind === 'road') {
+          const pieces = clipPolylineToRect(pxPoints, clipRect);
+          pieces.forEach((piece, pi) => {
+            const ghost: GhostFeature = {
+              id: pieces.length > 1 ? `osm-${f.id}-${pi + 1}` : `osm-${f.id}`,
+              kind: KIND_TO_GHOST[f.kind],
+              lineKind: KIND_TO_LINE[f.kind],
+              pxPoints: piece,
+              note: f.name,
+              layer: 'existing',
+            };
+            others.push(ghost);
+          });
+        } else {
+          const clippedPoly = clipPolygonToRect(pxPoints, clipRect);
+          if (clippedPoly.length < 6) return; // < 3 points
+          const ghost: GhostFeature = {
+            id: `osm-${f.id}`,
+            kind: KIND_TO_GHOST[f.kind],
+            lineKind: KIND_TO_LINE[f.kind],
+            pxPoints: clippedPoly,
+            note: f.name,
+            layer: 'existing',
+          };
+          (f.kind === 'building' ? buildings : others).push(ghost);
         }
-        if (!anyInside) return;
-        const ghost: GhostFeature = {
-          id: `osmghost-${i}`,
-          kind: KIND_TO_GHOST[f.kind],
-          lineKind: KIND_TO_LINE[f.kind],
-          pxPoints,
-          note: f.name,
-          layer: 'existing',
-        };
-        (f.kind === 'building' ? buildings : others).push(ghost);
       });
       const found = [...buildings, ...others].slice(0, 60);
 
-      setGhosts(found);
-      setGhostSource('osm');
-      if (found.length === 0) setFindFeaturesError('No map data reachable — try again in a minute.');
+      if (found.length > 0) {
+        setGhosts(found);
+        setGhostSource('osm');
+      } else if (manual) {
+        setFindFeaturesError('No new map features here.');
+      }
     } catch {
-      setFindFeaturesError('No map data reachable — try again in a minute.');
+      if (manual) setFindFeaturesError('No map data reachable — try again in a minute.');
     } finally {
       setFindingFeatures(false);
     }
@@ -869,8 +1000,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       }]);
     } else if (g.kind === 'osm_building' || g.kind === 'osm_road' || g.kind === 'osm_water') {
       // Surveyed map data — building/water rings close, roads stay open polylines.
+      // g.id IS the final line id already (`osm-${feature.id}`, or `-1`/`-2`/… for a
+      // split road piece) — do not re-prefix it.
       setLines((prev) => [...prev, {
-        id: 'osm-' + g.id, kind: g.lineKind!, points: g.pxPoints, closed: g.kind !== 'osm_road', layer: 'existing',
+        id: g.id, kind: g.lineKind!, points: g.pxPoints, closed: g.kind !== 'osm_road', layer: 'existing',
       }]);
     } else if (g.lineKind) {
       // Polyline / ring — driveway → path, boundary → fence.
@@ -1420,7 +1553,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           {detectError && (
             <div className="text-[10px] font-mono px-1 mt-1" style={{ color: '#C0531E' }}>{detectError}</div>
           )}
-          <button onClick={runFindMapFeatures} disabled={!siteFrameRef.current || findingFeatures}
+          <button onClick={() => runFindMapFeatures()} disabled={!siteFrameRef.current || findingFeatures}
             title={!siteFrameRef.current ? 'Import from a map site first' : undefined}
             className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5"
             style={!siteFrameRef.current || findingFeatures ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
@@ -1465,7 +1598,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#1F4D2B' }}>For this step</div>
             {activeLayer === 'existing' && (
               <>
-                <button onClick={runFindMapFeatures} disabled={!siteFrameRef.current || findingFeatures}
+                <button onClick={() => runFindMapFeatures()} disabled={!siteFrameRef.current || findingFeatures}
                   title={!siteFrameRef.current ? 'Import from a map site first' : undefined}
                   className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
                   style={!siteFrameRef.current || findingFeatures ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
