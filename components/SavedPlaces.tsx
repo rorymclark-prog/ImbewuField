@@ -27,7 +27,12 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
   const [notes, setNotes] = useState('');
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => { setPlaces(loadPlaces()); }, []);
+  useEffect(() => {
+    const refresh = () => setPlaces(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
 
   // Pre-fill name from biome/coords when location changes (skip while the save form is open)
   useEffect(() => {

@@ -26,7 +26,7 @@ import type { SavedReport } from '@/lib/saved-reports';
 import type { Profile } from '@/lib/db/types';
 import type { PeopleMarker } from '@/components/Map';
 
-const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm'];
+const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm','People','Nature'];
 import { setLastSite } from '@/lib/last-site';
 
 const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
@@ -66,6 +66,10 @@ function HomeInner() {
   const [jumpTo, setJumpTo] = useState<{ lat: number; lon: number } | null>(null);
   const [activePlaceName, setActivePlaceName] = useState<string | null>(null);
   const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+  // LimaBar can deep-link a typed question (?q=) or a photo intent (?photo=1) straight
+  // into the chat tab — consumed once so re-renders don't keep re-submitting it.
+  const [initialChatQuery, setInitialChatQuery] = useState<string | null>(() => searchParams.get('q'));
+  const [initialChatPhoto, setInitialChatPhoto] = useState<boolean>(() => searchParams.get('photo') === '1');
 
   const handlePlaceSelect = useCallback((info: { name: string; id: string } | null) => {
     setActivePlaceName(info?.name ?? null);
@@ -372,6 +376,9 @@ function HomeInner() {
               peopleLoading={peopleLoading}
               currentUserId={myProfile?.id}
               onOpenProfile={() => setProfileSheetOpen(true)}
+              initialChatQuery={initialChatQuery}
+              initialChatPhoto={initialChatPhoto}
+              onChatDeepLinkConsumed={() => { setInitialChatQuery(null); setInitialChatPhoto(false); }}
             />
           </div>
 
@@ -463,6 +470,9 @@ function HomeInner() {
                 peopleLoading={peopleLoading}
                 currentUserId={myProfile?.id}
                 onOpenProfile={() => setProfileSheetOpen(true)}
+                initialChatQuery={initialChatQuery}
+                initialChatPhoto={initialChatPhoto}
+                onChatDeepLinkConsumed={() => { setInitialChatQuery(null); setInitialChatPhoto(false); }}
               />
             </div>
           </div>

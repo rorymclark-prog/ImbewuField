@@ -11,12 +11,13 @@ import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDes
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMercatorUnprojector } from '@/lib/design-canvas';
 import type { LocationData } from '@/lib/types';
-import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse } from '@/lib/facilitator-design';
+import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect } from '@/lib/facilitator-design';
 import {
   LAYERS, LAYER_ORDER, SECTOR_DEFS, defaultLayerForType, defaultLayerForLine, layerForPlacement,
   coachTip, type CoachCounts,
   saveFacilitatorState, loadFacilitatorState, clearFacilitatorState,
   buildGhosts,
+  DEFAULT_PX_PER_M, geomPxToM, geomMToPx,
 } from '@/lib/facilitator-design';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
@@ -619,6 +620,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [reviewing, setReviewing] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
+  const [shareError, setShareError] = useState<string | null>(null);
   const [farmers, setFarmers] = useState<Profile[]>([]);
   const [farmersLoading, setFarmersLoading] = useState(false);
   const [sharing, setSharing] = useState(false);
@@ -642,6 +644,90 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const trRef = useRef<Konva.Transformer>(null);
   const nodeRefs = useRef<Record<string, Konva.Node>>({});
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // ── Undo / redo ──────────────────────────────────────────────────────────
+  // History is a stack of full {items, lines, sectors} snapshots (cap 50).
+  // Snapshots are pushed via pushHistory() BEFORE a mutating commit lands, so
+  // undo restores the state as it was just before that commit. Refs (not
+  // state) so pushes from event handlers always see the latest stacks without
+  // needing to be in a dependency array.
+  interface HistorySnapshot { items: Item[]; lines: LineEl[]; sectors: SectorEl[] }
+  const HISTORY_CAP = 50;
+  const pastRef = useRef<HistorySnapshot[]>([]);
+  const futureRef = useRef<HistorySnapshot[]>([]);
+  const [historyTick, setHistoryTick] = useState(0); // bump to re-render undo/redo button enabled-state
+  const propEditDebounceRef = useRef<{ timer: ReturnType<typeof setTimeout> | null; baseline: HistorySnapshot | null }>({ timer: null, baseline: null });
+
+  const pushHistory = useCallback(() => {
+    pastRef.current.push({ items, lines, sectors });
+    if (pastRef.current.length > HISTORY_CAP) pastRef.current.shift();
+    futureRef.current = [];
+    setHistoryTick((t) => t + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, sectors]);
+
+  const resetHistory = useCallback(() => {
+    pastRef.current = [];
+    futureRef.current = [];
+    if (propEditDebounceRef.current.timer) clearTimeout(propEditDebounceRef.current.timer);
+    propEditDebounceRef.current = { timer: null, baseline: null };
+    setHistoryTick((t) => t + 1);
+  }, []);
+
+  // Property-panel edits (number inputs) fire on every keystroke — debounce so
+  // dragging a slider/typing a number doesn't spam 20 history entries. The
+  // FIRST edit in a burst captures the pre-edit baseline; the debounce timer
+  // just delays when that baseline actually gets pushed onto the stack.
+  const pushHistoryDebounced = useCallback((delayMs = 500) => {
+    if (!propEditDebounceRef.current.baseline) {
+      propEditDebounceRef.current.baseline = { items, lines, sectors };
+    }
+    if (propEditDebounceRef.current.timer) clearTimeout(propEditDebounceRef.current.timer);
+    propEditDebounceRef.current.timer = setTimeout(() => {
+      const baseline = propEditDebounceRef.current.baseline;
+      if (baseline) {
+        pastRef.current.push(baseline);
+        if (pastRef.current.length > HISTORY_CAP) pastRef.current.shift();
+        futureRef.current = [];
+        setHistoryTick((t) => t + 1);
+      }
+      propEditDebounceRef.current = { timer: null, baseline: null };
+    }, delayMs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, sectors]);
+
+  const applySnapshot = useCallback((snap: HistorySnapshot) => {
+    setItems(snap.items);
+    setLines(snap.lines);
+    setSectors(snap.sectors);
+    setSelectedId((prev) => {
+      if (!prev) return prev;
+      const stillExists = snap.items.some((i) => i.id === prev) || snap.sectors.some((s) => s.id === prev);
+      return stillExists ? prev : null;
+    });
+  }, []);
+
+  const undo = useCallback(() => {
+    const snap = pastRef.current.pop();
+    if (!snap) return;
+    futureRef.current.push({ items, lines, sectors });
+    applySnapshot(snap);
+    setHistoryTick((t) => t + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, sectors, applySnapshot]);
+
+  const redo = useCallback(() => {
+    const snap = futureRef.current.pop();
+    if (!snap) return;
+    pastRef.current.push({ items, lines, sectors });
+    applySnapshot(snap);
+    setHistoryTick((t) => t + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, sectors, applySnapshot]);
+  // historyTick forces these to re-evaluate after every push/undo/redo (the
+  // stacks themselves are refs, so mutating them alone wouldn't re-render).
+  const canUndo = historyTick >= 0 && pastRef.current.length > 0;
+  const canRedo = historyTick >= 0 && futureRef.current.length > 0;
 
   const selected = items.find((i) => i.id === selectedId) ?? null;
   const selectedSector = !selected && selectedId ? sectors.find((s) => s.id === selectedId) ?? null : null;
@@ -667,7 +753,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     tr.getLayer()?.batchDraw();
   }, [selectedId, selectedSector, selectedIsCircle, items, sectors, pxPerM]);
 
-  // Esc cancels any armed tool
+  // Esc cancels any armed tool; Delete/Backspace removes selection; Ctrl/Cmd+Z
+  // undoes, Ctrl/Cmd+Shift+Z (and Ctrl+Y) redoes.
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }
@@ -675,11 +762,23 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         const t = e.target as HTMLElement;
         if (t.tagName !== 'INPUT' && t.tagName !== 'TEXTAREA') { e.preventDefault(); deleteSelected(); }
       }
+      const mod = e.metaKey || e.ctrlKey;
+      if (mod && e.key.toLowerCase() === 'z') {
+        const t = e.target as HTMLElement;
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        if (e.shiftKey) redo(); else undo();
+      } else if (mod && e.key.toLowerCase() === 'y') {
+        const t = e.target as HTMLElement;
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        redo();
+      }
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedId]);
+  }, [selectedId, undo, redo]);
 
   function loadImage(file?: File) {
     if (!file || !file.type.startsWith('image/')) return;
@@ -706,7 +805,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   // Shared by importFromSite (live pick) and the on-mount restore (bgSite from storage) —
   // both need the exact same satellite fetch + auto-scale maths.
-  const loadSiteBackground = useCallback(async (site: { lat: number; lon: number; name: string }) => {
+  //
+  // `onBgReady` (used by the mount-restore below) fires synchronously inside the
+  // img.onload, right after the fresh bgRect + pxPerM are computed — this is the
+  // hook point for METRE→PX geometry conversion (geomVersion 2), which must use
+  // the NEW rect/scale rather than whatever was true when the design was saved.
+  const loadSiteBackground = useCallback(async (
+    site: { lat: number; lon: number; name: string },
+    onBgReady?: (bgRect: BgRect, pxPerM: number) => void,
+  ) => {
     const siteId = designSiteIdFromLocation({ lat: site.lat, lon: site.lon } as LocationData);
     const saved = loadDesignStudioState(siteId);
     const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved, siteId);
@@ -730,10 +837,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const drawnH = img.height * s0;
       const metresAcross = frame.imgW * frame.mPerPx; // ground truth from the fit
       const bgX = (W - drawnW) / 2, bgY = (H - drawnH) / 2;
+      const newPxPerM = drawnW / metresAcross;
       setBg({ img, x: bgX, y: bgY, w: drawnW, h: drawnH, opacity: 1 });
       setBgSite(site);
       setBgDataUrl(null);
-      setPxPerM(drawnW / metresAcross);
+      setPxPerM(newPxPerM);
       setScaleSet(true);
       setScaleLocked(true);
       setGhosts(null);
@@ -745,6 +853,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       // Geo frame for later geo↔canvas actions (e.g. "Find map features") — same
       // frame + drawn rect used by the map-truth projector just below.
       siteFrameRef.current = { frame, bgX, bgY, drawnW, drawnH };
+
+      // Metre→px geometry conversion hook (geomVersion 2 restore) — must run with
+      // THIS freshly-computed rect/scale, not whatever was saved.
+      onBgReady?.({ x: bgX, y: bgY, w: drawnW, h: drawnH }, newPxPerM);
 
       // ── Map-truth import — draw the farmer's TRACED shapes directly instead of
       // re-guessing them from the satellite. `near` is already classified by
@@ -960,6 +1072,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }
 
   const placeItem = (type: ElType, cx: number, cy: number) => {
+    pushHistory();
     const c = CATALOG[type];
     const id = `${type}-${Date.now()}-${Math.round(Math.random() * 999)}`;
     const layer = layerForPlacement(activeLayer, defaultLayerForType(type));
@@ -975,7 +1088,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     });
   };
 
-  const acceptGhost = (g: GhostFeature) => {
+  const acceptGhost = (g: GhostFeature, skipHistory = false) => {
+    if (!skipHistory) pushHistory();
     if (g.elType) {
       // Point feature — a single [x, y] pair; footprint is square (wM = hM).
       const c = CATALOG[g.elType];
@@ -1016,7 +1130,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   };
 
   const acceptAllGhosts = () => {
-    (ghosts ?? []).forEach(acceptGhost);
+    if ((ghosts ?? []).length > 0) pushHistory();
+    (ghosts ?? []).forEach((g) => acceptGhost(g, true));
   };
 
   // All zoom — native listeners on wrapRef (always mounted, supports passive:false).
@@ -1075,20 +1190,77 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }, []);
 
   // Restore a saved design on mount — progressive building survives reload.
+  //
+  // METRE-BASED PERSISTENCE (geomVersion 2): saved geometry is metres relative to
+  // the bg's top-left corner, not absolute px, because the satellite re-fits to
+  // whatever container is on screen right now. Since the bg is restored
+  // asynchronously (loadSiteBackground's img.onload, or the file-image's own
+  // onload below), the metre→px conversion must happen AFTER the fresh
+  // bgRect+pxPerM are known — so items/lines/sectors are NOT set immediately for
+  // a geomVersion-2 doc with a background; they're set inside the bg's onReady/
+  // onload callback instead. A doc with no background at all has no rect to wait
+  // for, so it converts immediately using a default px/m.
+  //
+  // v1 docs (no geomVersion) predate this scheme entirely and were saved in
+  // absolute px. They're migrated on load: px (OLD saved bgRect+pxPerM) → metres
+  // → px (NEW freshly-computed bgRect+pxPerM). With no saved bgRect there is
+  // nothing to convert from, so they load as-is (best effort).
   useEffect(() => {
     const s = loadFacilitatorState();
     if (s) {
-      setItems(s.items as Item[]);
-      setLines(s.lines as LineEl[]);
-      setSectors(s.sectors ?? []);
+      const isV2 = s.geomVersion === 2;
+      const rawItems = s.items as FacItem[];
+      const rawLines = s.lines as FacLine[];
+      const rawSectors = (s.sectors ?? []) as FacSector[];
+
+      // Resolves raw saved geometry (v1 px or v2 metres) into px against a FRESH
+      // bgRect+pxPerM, or — if no bg is available at all — a sensible fallback.
+      const resolveAndSet = (freshRect: BgRect | null, freshPxPerM: number) => {
+        if (isV2) {
+          if (freshRect) {
+            const g = geomMToPx(rawItems, rawLines, rawSectors, freshRect, freshPxPerM);
+            setItems(g.items as Item[]);
+            setLines(g.lines as LineEl[]);
+            setSectors(g.sectors as SectorEl[]);
+          } else {
+            // No bg at all — nothing to anchor metres to; use a default px/m so
+            // geometry still renders (in a sensible relative layout) instead of crashing.
+            const g = geomMToPx(rawItems, rawLines, rawSectors, { x: 0, y: 0, w: 0, h: 0 }, DEFAULT_PX_PER_M);
+            setItems(g.items as Item[]);
+            setLines(g.lines as LineEl[]);
+            setSectors(g.sectors as SectorEl[]);
+          }
+        } else {
+          // v1 migration: if we know the OLD rect+scale this was saved under, go
+          // px(old) → metres → px(new fresh rect). Otherwise load as-is.
+          if (s.bgRect && freshRect) {
+            const oldRect = s.bgRect;
+            const oldPxPerM = s.pxPerM;
+            const m = geomPxToM(rawItems, rawLines, rawSectors, oldRect, oldPxPerM);
+            const g = geomMToPx(m.items, m.lines, m.sectors, freshRect, freshPxPerM);
+            setItems(g.items as Item[]);
+            setLines(g.lines as LineEl[]);
+            setSectors(g.sectors as SectorEl[]);
+          } else {
+            setItems(rawItems as Item[]);
+            setLines(rawLines as LineEl[]);
+            setSectors(rawSectors as SectorEl[]);
+          }
+        }
+      };
+
       setPxPerM(s.pxPerM);
       if (s.pxPerM !== 26) setScaleSet(true);
       setActiveLayer(s.activeLayer ?? 'base');
       setHiddenLayers(s.hiddenLayers ?? []);
       setDesignId(s.designId ?? null);
       setDesignTitle(s.title ?? '');
+
       if (s.bgSite) {
-        loadSiteBackground(s.bgSite).catch(() => {});
+        loadSiteBackground(s.bgSite, (freshRect, freshPxPerM) => resolveAndSet(freshRect, freshPxPerM)).catch(() => {
+          // Satellite fetch failed — still show geometry rather than an empty canvas.
+          resolveAndSet(null, s.pxPerM || DEFAULT_PX_PER_M);
+        });
       } else if (s.bgDataUrl && s.bgRect) {
         const img = new window.Image();
         const rect = s.bgRect;
@@ -1096,8 +1268,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           setBg({ img, x: rect.x, y: rect.y, w: rect.w, h: rect.h, opacity: s.bgOpacity ?? 1 });
           setBgDataUrl(s.bgDataUrl ?? null);
           setShowGrid(false);
+          // File imports restore the SAME rect they were saved with — metres
+          // convert back losslessly against it.
+          resolveAndSet(rect, s.pxPerM);
         };
         img.src = s.bgDataUrl;
+      } else {
+        // No background at all.
+        resolveAndSet(null, s.pxPerM || DEFAULT_PX_PER_M);
       }
     }
     restoredRef.current = true;
@@ -1106,14 +1284,25 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   // Debounced autosave — skip until the initial restore above has completed so we
   // never clobber saved state with the empty initial render.
+  //
+  // METRE-BASED PERSISTENCE (geomVersion 2): the background satellite re-fits to
+  // whatever container is on screen at load time, so absolute stage px drift off
+  // the image on a different device/window. We persist geometry in metres
+  // relative to the bg's top-left corner (using the CURRENT bgRect + pxPerM as
+  // the anchor) so load-time can re-derive px against the freshly-fit rect.
+  // Runtime state (items/lines/sectors) stays in px throughout — this conversion
+  // happens only at the save boundary.
   useEffect(() => {
     if (!restoredRef.current) return;
     const t = setTimeout(() => {
+      const bgRect: BgRect | undefined = bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined;
+      const geom = bgRect ? geomPxToM(items, lines, sectors, bgRect, pxPerM) : null;
       saveFacilitatorState({
         version: 1,
-        items,
-        lines,
-        sectors,
+        geomVersion: 2,
+        items: (geom?.items ?? items) as FacItem[],
+        lines: (geom?.lines ?? lines) as FacLine[],
+        sectors: (geom?.sectors ?? sectors) as FacSector[],
         pxPerM,
         activeLayer,
         hiddenLayers,
@@ -1121,7 +1310,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         title: designTitle || undefined,
         bgSite: bgSite ?? undefined,
         bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
-        bgRect: bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined,
+        bgRect,
         bgOpacity: bg?.opacity,
         savedAt: Date.now(),
       });
@@ -1130,11 +1319,22 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, bgSite, bgDataUrl, designId, designTitle]);
 
   // Cloud payload — NEVER include bgDataUrl (Firestore 1 MB doc limit); bgSite is
-  // cheap (re-fetches the satellite on load) so it's safe to persist.
-  const buildCloudPayload = useCallback(() => ({
-    title: designTitle || siteText || bgSite?.name || 'Garden design',
-    data: { items, lines, sectors, pxPerM, bgSite: bgSite ?? null, activeLayer, hiddenLayers },
-  }), [designTitle, siteText, bgSite, items, lines, sectors, pxPerM, activeLayer, hiddenLayers]);
+  // cheap (re-fetches the satellite on load) so it's safe to persist. Same
+  // metre-relative conversion as the localStorage save above (geomVersion 2).
+  const buildCloudPayload = useCallback(() => {
+    const bgRect: BgRect | undefined = bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined;
+    const geom = bgRect ? geomPxToM(items as FacItem[], lines as FacLine[], sectors as FacSector[], bgRect, pxPerM) : null;
+    return {
+      title: designTitle || siteText || bgSite?.name || 'Garden design',
+      data: {
+        geomVersion: 2 as const,
+        items: geom?.items ?? items,
+        lines: geom?.lines ?? lines,
+        sectors: geom?.sectors ?? sectors,
+        pxPerM, bgSite: bgSite ?? null, activeLayer, hiddenLayers,
+      },
+    };
+  }, [designTitle, siteText, bgSite, items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg]);
 
   // Cloud autosave — only once a design is bound (designId set) and the initial
   // localStorage restore has completed, so we never clobber a doc with empty state.
@@ -1173,6 +1373,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     if (lineKind) {
       if (!draftPt) { setDraftPt([p.x, p.y]); }
       else {
+        pushHistory();
         const layer = layerForPlacement(activeLayer, defaultLayerForLine(lineKind));
         setLines((prev) => [...prev, { id: `line-${Date.now()}`, kind: lineKind, points: [draftPt[0], draftPt[1], p.x, p.y], layer }]);
         setDraftPt(null); setLineKind(null);
@@ -1185,6 +1386,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       return;
     }
     if (armedSector) {
+      pushHistory();
       const def = SECTOR_DEFS[armedSector];
       const id = `sector-${Date.now()}`;
       setSectors((prev) => [...prev, { id, kind: armedSector, x: p.x, y: p.y, rotation: 0, radiusM: def.radiusM, spanDeg: def.spanDeg }]);
@@ -1197,6 +1399,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   const deleteSelected = () => {
     if (!selectedId) return;
+    pushHistory();
     delete nodeRefs.current[selectedId];
     setItems((prev) => prev.filter((i) => i.id !== selectedId));
     setSectors((prev) => prev.filter((s) => s.id !== selectedId));
@@ -1204,21 +1407,26 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   };
   const duplicateSelected = () => {
     if (selected) {
+      pushHistory();
       const id = `${selected.type}-${Date.now()}`;
       setItems((prev) => [...prev, { ...selected, id, x: selected.x + 20, y: selected.y + 20 }]);
       setSelectedId(id);
       return;
     }
     if (selectedSector) {
+      pushHistory();
       const id = `sector-${Date.now()}`;
       setSectors((prev) => [...prev, { ...selectedSector, id, x: selectedSector.x + 20, y: selectedSector.y + 20 }]);
       setSelectedId(id);
     }
   };
-  const updateSel = (patch: Partial<Item>) => setItems((prev) => prev.map((i) => i.id === selectedId ? { ...i, ...patch } : i));
-  const updateSelSector = (patch: Partial<SectorEl>) => setSectors((prev) => prev.map((s) => s.id === selectedId ? { ...s, ...patch } : s));
+  // Property-panel edits (number inputs) — debounced push so a keystroke burst
+  // or slider drag collapses into one undo step.
+  const updateSel = (patch: Partial<Item>) => { pushHistoryDebounced(); setItems((prev) => prev.map((i) => i.id === selectedId ? { ...i, ...patch } : i)); };
+  const updateSelSector = (patch: Partial<SectorEl>) => { pushHistoryDebounced(); setSectors((prev) => prev.map((s) => s.id === selectedId ? { ...s, ...patch } : s)); };
 
   const bakeTransform = (id: string, node: Konva.Node) => {
+    pushHistory();
     const sx = node.scaleX(), sy = node.scaleY();
     node.scaleX(1); node.scaleY(1);
     setItems((prev) => prev.map((it) => {
@@ -1243,6 +1451,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   async function sendDesignToFarmer(farmer: Profile) {
     setSharing(true);
+    setShareError(null);
     try {
       let id = designId;
       if (id) {
@@ -1251,17 +1460,16 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         id = await saveDesign(buildCloudPayload());
         if (id) setDesignId(id);
       }
-      if (id) {
-        await shareDesign(id, farmer.id);
-        setSharedTo(farmer.full_name ?? farmer.id);
-      } else {
-        setSharedTo(farmer.full_name ?? farmer.id);
-      }
-    } catch {
+      if (!id) throw new Error('Could not save the design to send it.');
+      await shareDesign(id, farmer.id);
       setSharedTo(farmer.full_name ?? farmer.id);
+      setShareOpen(false);
+    } catch {
+      // HONEST FAILURE: do not fake a "sent" banner — the farmer would never
+      // receive anything and a facilitator relying on the ✓ would be misled.
+      setShareError('⚠ Could not send — check connection');
     } finally {
       setSharing(false);
-      setShareOpen(false);
     }
   }
 
@@ -1324,14 +1532,38 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       return;
     }
     const data = (d.data ?? {}) as {
-      items?: Item[]; lines?: LineEl[]; sectors?: SectorEl[]; pxPerM?: number;
+      geomVersion?: 2;
+      items?: FacItem[]; lines?: FacLine[]; sectors?: FacSector[]; pxPerM?: number;
       activeLayer?: LayerId; hiddenLayers?: LayerId[];
       bgSite?: { lat: number; lon: number; name: string } | null;
     };
-    setItems(data.items ?? []);
-    setLines(data.lines ?? []);
-    setSectors(data.sectors ?? []);
-    setPxPerM(data.pxPerM ?? 26);
+    const isV2 = data.geomVersion === 2;
+    const rawItems = data.items ?? [];
+    const rawLines = data.lines ?? [];
+    const rawSectors = data.sectors ?? [];
+    const savedPxPerM = data.pxPerM ?? 26;
+
+    // Same metre→px restore boundary as the localStorage mount-restore: cloud docs
+    // never carry a file-image background (buildCloudPayload only persists bgSite),
+    // so the only async case is a map site background; otherwise resolve immediately.
+    const resolveAndSet = (freshRect: BgRect | null, freshPxPerM: number) => {
+      if (isV2) {
+        const g = freshRect
+          ? geomMToPx(rawItems, rawLines, rawSectors, freshRect, freshPxPerM)
+          : geomMToPx(rawItems, rawLines, rawSectors, { x: 0, y: 0, w: 0, h: 0 }, DEFAULT_PX_PER_M);
+        setItems(g.items as Item[]);
+        setLines(g.lines as LineEl[]);
+        setSectors(g.sectors as SectorEl[]);
+      } else {
+        // Pre-fix cloud doc: absolute px, no bgRect was ever stored to migrate
+        // from — load as-is (best effort).
+        setItems(rawItems as Item[]);
+        setLines(rawLines as LineEl[]);
+        setSectors(rawSectors as SectorEl[]);
+      }
+    };
+
+    setPxPerM(savedPxPerM);
     setActiveLayer(data.activeLayer ?? 'base');
     setHiddenLayers(data.hiddenLayers ?? []);
     setSelectedId(null);
@@ -1341,10 +1573,14 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     setDesignTitle(d.title ?? '');
     setCloudStatus('saved');
     setCloudSavedAt(Date.now());
+    resetHistory();
     if (data.bgSite) {
-      loadSiteBackground(data.bgSite).catch(() => {});
+      loadSiteBackground(data.bgSite, (freshRect, freshPxPerM) => resolveAndSet(freshRect, freshPxPerM)).catch(() => {
+        resolveAndSet(null, savedPxPerM || DEFAULT_PX_PER_M);
+      });
     } else {
       setBg(null); setBgSite(null); setBgDataUrl(null);
+      resolveAndSet(null, savedPxPerM || DEFAULT_PX_PER_M);
     }
     setMyDesignsOpen(false);
   }
@@ -1358,18 +1594,29 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     }
   }
 
-  // Farmer list to display: real ones if loaded, else hardcoded fallback
-  const displayFarmers: Array<{ id: string; name: string; profile?: Profile }> =
+  // Farmer list to display: real ones if loaded, else hardcoded fallback.
+  // The fallback is a DEMO list only (no backend account behind it) — labelled
+  // and handled distinctly below so a facilitator never believes a demo click
+  // actually reached a farmer's phone.
+  const displayFarmers: Array<{ id: string; name: string; profile?: Profile; isDemo?: boolean }> =
     farmers.length > 0
       ? farmers.map((p) => ({ id: p.id, name: p.full_name ?? p.id, profile: p }))
-      : FARMERS.map((name, i) => ({ id: `mock-${i}`, name }));
+      : FARMERS.map((name, i) => ({ id: `mock-${i}`, name: `${name} (demo)`, isDemo: true }));
 
   // ── BOQ ──
+  // Ponds/dams have no fixed `litres` spec (unlike tanks) — estimate stored
+  // volume from footprint area × an assumed average depth, since a facilitator
+  // laying out water storage needs SOME number, not a blank. 1.5 m is a
+  // conservative average depth for a small farm dam/pond (shallower at the
+  // edges, deeper in the middle) — noted in the row's title attribute below.
+  const POND_ASSUMED_DEPTH_M = 1.5;
   const boq = (Object.keys(CATALOG) as ElType[]).map((type) => {
     const list = items.filter((i) => i.type === type); if (!list.length) return null;
     const c = CATALOG[type];
     const areaM2 = list.reduce((s, i) => s + (c.shape === 'circle' ? Math.PI * (i.wM / 2) ** 2 : i.wM * i.hM), 0);
-    const litres = list.reduce((s, i) => s + (i.litres ?? 0), 0);
+    const litres = type === 'pond'
+      ? areaM2 * POND_ASSUMED_DEPTH_M * 1000
+      : list.reduce((s, i) => s + (i.litres ?? 0), 0);
     return { type, label: c.label, icon: c.icon, count: list.length, areaM2, litres };
   }).filter(Boolean) as { type: ElType; label: string; icon: string; count: number; areaM2: number; litres: number }[];
 
@@ -1432,6 +1679,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     setActiveLayer('base'); setHiddenLayers([]);
     setSelectedId(null);
     setDesignId(null); setDesignTitle(''); setCloudStatus('idle'); setCloudSavedAt(null);
+    resetHistory();
     resetView();
   }
 
@@ -1689,11 +1937,23 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
       {/* ── Canvas ── */}
       <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
-        {/* Fit / re-centre — overlaid top-right, above the stepper bar */}
-        <button onClick={resetView} title="Re-centre" className="absolute top-2 right-2 z-20 flex items-center justify-center rounded-lg pointer-events-auto"
-          style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
-          ⤢
-        </button>
+        {/* Fit / re-centre + undo/redo — overlaid top-right, above the stepper bar */}
+        <div className="absolute top-2 right-2 z-20 flex items-center gap-1 pointer-events-auto">
+          <button onClick={undo} disabled={!canUndo} title="Undo (Ctrl/Cmd+Z)"
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: canUndo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
+            ↩
+          </button>
+          <button onClick={redo} disabled={!canRedo} title="Redo (Ctrl/Cmd+Shift+Z)"
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: canRedo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
+            ↪
+          </button>
+          <button onClick={resetView} title="Re-centre" className="flex items-center justify-center rounded-lg"
+            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
+            ⤢
+          </button>
+        </div>
 
         {/* Stepper + coach — docked at the top of the canvas */}
         <div className="absolute top-2 left-2 right-12 z-10 rounded-xl pointer-events-auto"
@@ -1809,7 +2069,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 <Group key={s.id} x={s.x} y={s.y} rotation={s.rotation} draggable
                   ref={(node) => { if (node) nodeRefs.current[s.id] = node; }}
                   onClick={() => setSelectedId(s.id)} onTap={() => setSelectedId(s.id)}
+                  onDragStart={pushHistory}
                   onDragEnd={(e) => setSectors((prev) => prev.map((p) => p.id === s.id ? { ...p, x: e.target.x(), y: e.target.y() } : p))}
+                  onTransformStart={pushHistory}
                   onTransformEnd={(e) => { const node = e.target; setSectors((prev) => prev.map((p) => p.id === s.id ? { ...p, rotation: node.rotation() } : p)); }}>
                   <Arc innerRadius={0} outerRadius={rM} angle={s.spanDeg} rotation={apexAngle}
                     fill={def.color} opacity={0.16} stroke={def.color} strokeWidth={1.5} dash={[7, 4]} />
@@ -1825,12 +2087,13 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               const n = l.points.length;
               const mx = (l.points[0] + l.points[n - 2]) / 2, my = (l.points[1] + l.points[n - 1]) / 2;
               const setPt = (idx: number, x: number, y: number) => setLines((prev) => prev.map((q) => q.id === l.id ? { ...q, points: q.points.map((v, k) => k === idx ? x : k === idx + 1 ? y : v) } : q));
+              const deleteLine = () => { pushHistory(); setLines((prev) => prev.filter((q) => q.id !== l.id)); };
               return (
                 <Group key={l.id}>
                   <Line points={l.points} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" closed={l.closed ?? false} />
-                  <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
-                  <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
-                  <Group x={mx} y={my} onClick={() => setLines((prev) => prev.filter((q) => q.id !== l.id))} onTap={() => setLines((prev) => prev.filter((q) => q.id !== l.id))}>
+                  <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
+                  <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
+                  <Group x={mx} y={my} onClick={deleteLine} onTap={deleteLine}>
                     <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
                   </Group>
                 </Group>
@@ -1844,6 +2107,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 <Group key={it.id} x={it.x} y={it.y} rotation={it.rotation} draggable
                   ref={(node) => { if (node) nodeRefs.current[it.id] = node; }}
                   onClick={() => setSelectedId(it.id)} onTap={() => setSelectedId(it.id)}
+                  onDragStart={pushHistory}
                   onDragEnd={(e) => setItems((prev) => prev.map((p) => p.id === it.id ? { ...p, x: e.target.x(), y: e.target.y() } : p))}
                   onTransformEnd={(e) => bakeTransform(it.id, e.target)}>
                   {/* Invisible hit area — makes the whole footprint draggable/clickable without a visible background */}
@@ -1990,9 +2254,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             {boq.length || lineTotals.length ? (
               <div className="space-y-1">
                 {boq.map((b) => (
-                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
+                    title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
                     <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
-                    <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${b.litres.toLocaleString()}L` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                    <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${Math.round(b.litres).toLocaleString()}L${b.type === 'pond' ? '*' : ''}` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
                   </div>
                 ))}
                 {lineTotals.map((l) => (
@@ -2099,12 +2364,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
           {/* Share to farmer (supervisor power) */}
           <div className="relative">
-            <button onClick={() => { setShareOpen((o) => !o); setSharedTo(null); }} disabled={!items.length && !lines.length}
+            <button onClick={() => { setShareOpen((o) => !o); setSharedTo(null); setShareError(null); }} disabled={!items.length && !lines.length}
               className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
               style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: '#2F6F9E' }}>
               <span className="inline-flex items-center justify-center gap-1.5"><Share2 size={14} /> Share this design with a farmer</span>
             </button>
-            {shareOpen && !sharedTo && (
+            {shareOpen && !sharedTo && !shareError && (
               <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
                 <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#9A8268' }}>
                   {farmersLoading ? 'Loading…' : 'Send to'}
@@ -2116,7 +2381,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 )}
                 {!farmersLoading && displayFarmers.map((f) => (
                   <button key={f.id}
-                    onClick={() => { if (f.profile) { sendDesignToFarmer(f.profile); } else { setSharedTo(f.name); setShareOpen(false); } }}
+                    onClick={() => {
+                      if (f.profile) { sendDesignToFarmer(f.profile); }
+                      else { setShareError('⚠ Demo farmer — nothing sent'); }
+                    }}
                     disabled={sharing}
                     className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-display transition-all inline-flex items-center gap-1.5"
                     style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
@@ -2128,6 +2396,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             {sharedTo && (
               <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
                 <Check size={14} /> Sent to {sharedTo} — opens on their phone
+              </div>
+            )}
+            {shareError && (
+              <div className="mt-1.5 rounded-xl px-3 py-2 text-xs font-display flex items-center justify-between gap-1.5" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.4)', color: '#C0531E' }}>
+                <span>{shareError}</span>
+                <button onClick={() => setShareError(null)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(192,83,30,0.14)', color: '#C0531E' }}>OK</button>
               </div>
             )}
           </div>

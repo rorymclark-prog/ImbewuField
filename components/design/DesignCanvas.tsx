@@ -307,16 +307,38 @@ export default function DesignCanvas({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgW, imgH]);
 
+  // Double-click-to-finish fires 1-2 extra pointerdowns at the tap position before the
+  // dblclick handler runs, appending near-duplicate draft points right at the end. Strip
+  // any trailing point(s) within ~6 viewBox px of the point before them so a double-tap
+  // finish doesn't leave a stray near-duplicate vertex in the committed shape.
+  function dropTrailingDuplicates(points: Array<[number, number]>): Array<[number, number]> {
+    const cleaned = points.slice();
+    while (cleaned.length > 1) {
+      const [ax, ay] = cleaned[cleaned.length - 2];
+      const [bx, by] = cleaned[cleaned.length - 1];
+      const dx = (bx - ax) * imgW;
+      const dy = (by - ay) * imgH;
+      if (Math.hypot(dx, dy) < 6) {
+        cleaned.pop();
+      } else {
+        break;
+      }
+    }
+    return cleaned;
+  }
+
   function commitZone(points: Array<[number, number]>) {
-    if (points.length < 3) return;
-    const shape: ZoneShape = { id: newId(), zone: zoneDraw, points };
+    const cleaned = dropTrailingDuplicates(points);
+    if (cleaned.length < 3) return;
+    const shape: ZoneShape = { id: newId(), zone: zoneDraw, points: cleaned };
     onChange({ ...state, zones: [...state.zones, shape] });
     setDraftPoints([]);
   }
 
   function commitLine(points: Array<[number, number]>) {
-    if (points.length < 2) return;
-    const shape: LineShape = { id: newId(), kind: lineKind, points };
+    const cleaned = dropTrailingDuplicates(points);
+    if (cleaned.length < 2) return;
+    const shape: LineShape = { id: newId(), kind: lineKind, points: cleaned };
     onChange({ ...state, lines: [...state.lines, shape] });
     setDraftPoints([]);
   }

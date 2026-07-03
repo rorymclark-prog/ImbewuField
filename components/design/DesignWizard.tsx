@@ -41,7 +41,7 @@ const STEP_GUIDANCE: Record<WizardStep, string> = {
   base: "Check your boundary and house are showing — trace them on the main map if not.",
   water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope — or tap ✨ Suggest water setup and approve the overlay.',
   zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow — or tap ✨ Suggest zones and approve the overlay.',
-  planting: "Trees north of beds so they don't shade them. Tap a tree, then tap the map — or tap ✨ Suggest planting and approve the overlay.",
+  planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map — or tap ✨ Suggest planting and approve the overlay.",
   structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path — or tap ✨ Suggest structures and approve the overlay.',
   review: 'Toggle layers to check each map: water, zones, planting.',
   glossy: "Happy? Generate the artist's impression of YOUR design.",

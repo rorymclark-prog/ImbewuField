@@ -311,8 +311,9 @@ export function suggestPlanting(
   const { dxNorm, dyNorm } = metresToNormFactory(mPerPx, imgW, imgH);
   const out: DetectSuggestion[] = [];
 
-  // Three trees in an arc north of the house (y decreases northward).
-  const dyM = -10;
+  // Three trees in an arc SOUTH of the house (y increases southward) — the sun travels
+  // through the northern sky here, so a canopy south of the beds can't shade them.
+  const dyM = 10;
   for (const dxM of [-8, 0, 8]) {
     const raw: Pt = [h[0] + dxNorm(dxM), h[1] + dyNorm(dyM)];
     const pt = nudgeInside(raw, h, boundary);
@@ -321,7 +322,7 @@ export function suggestPlanting(
       kind: 'tree',
       points: [pt],
       sizeM: 5,
-      note: 'Fruit tree — north side sun',
+      note: 'Fruit tree — south side, sun stays clear of the beds',
       status: 'pending',
     });
   }

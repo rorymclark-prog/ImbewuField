@@ -228,15 +228,29 @@ export function buildGhosts(res: DetectResponse, bg: BgRect): GhostFeature[] {
 }
 
 // ── Persistence ────────────────────────────────────────────────────────────
+//
+// geomVersion 2 — metre-based persistence. Designs used to be saved in absolute
+// stage px, but the satellite background re-fits to whatever container size
+// loads it (a different device/window), so px-based geometry drifts off the
+// satellite on every load except the one it was saved on. From geomVersion 2
+// onward we persist geometry in METRES relative to the background image's
+// top-left corner (xM/yM/pointsM), alongside the existing px fields (which
+// remain the live/runtime representation — nothing about in-canvas behaviour
+// changes). bgRect + pxPerM at save time are the anchor used to convert px→m;
+// a freshly computed bgRect + pxPerM at load time converts m→px again, so the
+// geometry always lines up with whatever satellite frame is actually on screen.
 
-export interface FacItem { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
-export interface FacLine { id: string; kind: LineKind; points: number[]; layer?: LayerId }
+export interface FacItem { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; xM?: number; yM?: number }
+export interface FacLine { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId; pointsM?: number[] }
+export interface FacSector extends SectorEl { xM?: number; yM?: number }
 
 export interface FacilitatorDesignState {
   version: 1;
+  /** Geometry persistence scheme. Absent/undefined = v1 (raw stage px, no bg-relative metres). */
+  geomVersion?: 2;
   items: FacItem[];
   lines: FacLine[];
-  sectors: SectorEl[];
+  sectors: FacSector[];
   pxPerM: number;
   activeLayer: LayerId;
   hiddenLayers: LayerId[];
@@ -250,6 +264,58 @@ export interface FacilitatorDesignState {
   bgRect?: BgRect;
   bgOpacity?: number;
   savedAt: number;
+}
+
+/** Default px-per-metre used when metre-based geometry must be restored with no background at all. */
+export const DEFAULT_PX_PER_M = 5;
+
+/** Convert one item's px geometry to bg-relative metres (mutating copy). */
+export function itemPxToM(it: FacItem, bgRect: BgRect, pxPerM: number): FacItem {
+  return { ...it, xM: (it.x - bgRect.x) / pxPerM, yM: (it.y - bgRect.y) / pxPerM };
+}
+export function itemMToPx(it: FacItem, bgRect: BgRect, pxPerM: number): FacItem {
+  if (it.xM === undefined || it.yM === undefined) return it;
+  return { ...it, x: bgRect.x + it.xM * pxPerM, y: bgRect.y + it.yM * pxPerM };
+}
+
+export function linePxToM(l: FacLine, bgRect: BgRect, pxPerM: number): FacLine {
+  const pointsM = l.points.map((v, i) => i % 2 === 0 ? (v - bgRect.x) / pxPerM : (v - bgRect.y) / pxPerM);
+  return { ...l, pointsM };
+}
+export function lineMToPx(l: FacLine, bgRect: BgRect, pxPerM: number): FacLine {
+  if (!l.pointsM) return l;
+  const points = l.pointsM.map((v, i) => i % 2 === 0 ? bgRect.x + v * pxPerM : bgRect.y + v * pxPerM);
+  return { ...l, points };
+}
+
+export function sectorPxToM(s: FacSector, bgRect: BgRect, pxPerM: number): FacSector {
+  return { ...s, xM: (s.x - bgRect.x) / pxPerM, yM: (s.y - bgRect.y) / pxPerM };
+}
+export function sectorMToPx(s: FacSector, bgRect: BgRect, pxPerM: number): FacSector {
+  if (s.xM === undefined || s.yM === undefined) return s;
+  return { ...s, x: bgRect.x + s.xM * pxPerM, y: bgRect.y + s.yM * pxPerM };
+}
+
+/** Convert full geometry px → metres relative to bgRect, for saving under geomVersion 2. */
+export function geomPxToM(
+  items: FacItem[], lines: FacLine[], sectors: FacSector[], bgRect: BgRect, pxPerM: number,
+): { items: FacItem[]; lines: FacLine[]; sectors: FacSector[] } {
+  return {
+    items: items.map((it) => itemPxToM(it, bgRect, pxPerM)),
+    lines: lines.map((l) => linePxToM(l, bgRect, pxPerM)),
+    sectors: sectors.map((s) => sectorPxToM(s, bgRect, pxPerM)),
+  };
+}
+
+/** Convert full geometry metres → px against a freshly-computed bgRect, for loading geomVersion 2 docs. */
+export function geomMToPx(
+  items: FacItem[], lines: FacLine[], sectors: FacSector[], bgRect: BgRect, pxPerM: number,
+): { items: FacItem[]; lines: FacLine[]; sectors: FacSector[] } {
+  return {
+    items: items.map((it) => itemMToPx(it, bgRect, pxPerM)),
+    lines: lines.map((l) => lineMToPx(l, bgRect, pxPerM)),
+    sectors: sectors.map((s) => sectorMToPx(s, bgRect, pxPerM)),
+  };
 }
 
 const STORE_KEY = 'imbewu_facilitator_design_v1';

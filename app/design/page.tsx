@@ -53,6 +53,27 @@ const DARK = '#0B120B';
 
 const MAX_UNDO = 25;
 
+// Module-level flag set around this page's own saveCanvasState calls, so its own writes
+// (handleChange/handleUndo/setStep/migration) don't bounce back through
+// DESIGN_CANVAS_CHANGED_EVENT and re-trigger a full refresh (incl. satellite refetch) of a
+// page that already has the latest state in memory. Only genuinely external saves (another
+// tab, the main map) should cause a refresh.
+let selfSaveInProgress = false;
+
+function withSelfSaveFlag<T>(fn: () => T): T {
+  selfSaveInProgress = true;
+  try {
+    return fn();
+  } finally {
+    // Cleared on a microtask delay, not synchronously — saveCanvasState dispatches the
+    // event synchronously, but React state updates and the event listener callback can
+    // still be queued behind it; a same-tick clear would race the event.
+    Promise.resolve().then(() => {
+      selfSaveInProgress = false;
+    });
+  }
+}
+
 // Pre-seed mapping: existing traced site-element types → Design Studio catalog defIds.
 const SITE_ELEMENT_TO_DEF: Record<SiteElementType, string> = {
   jojo_tank: 'jojo_5000',
@@ -340,7 +361,18 @@ function DesignStudioInner() {
     if (!hasSite) return;
     setLocationData(readCachedLocationData(lat, lon));
 
-    const refresh = () => {
+    // Tracks the frame centre/zoom the satellite was last fetched for, so a refresh only
+    // clears/refetches the (large, flicker-prone) satellite image when the frame actually
+    // moved — not on every DESIGN_CANVAS_CHANGED_EVENT (e.g. a farmer dragging an item).
+    let lastFetchedFrame: { centerLng: number; centerLat: number; zoom: number } | null = null;
+
+    const refresh = (evt?: Event) => {
+      // Ignore change events this page itself caused (its own saveCanvasState calls) —
+      // this page's state is already current, so re-running the full refresh (incl.
+      // re-deriving refLayers/frame and possibly refetching the satellite) is pure
+      // self-inflicted flicker.
+      if (evt?.type === DESIGN_CANVAS_CHANGED_EVENT && selfSaveInProgress) return;
+
       const saved0 = loadDesignStudioState(siteId);
       const mergedAll = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), saved0, siteId);
       // The main map stores traced shapes GLOBALLY, so mergedAll can contain another
@@ -388,12 +420,26 @@ function DesignStudioInner() {
       setRefLayers({ boundary: boundaryRing, house: houseRing, driveway: driveLine });
       setHouseXY(centroidOf(houseRing));
 
-      setFrame({ ...frameNoImg, satDataUrl: null });
+      // Only touch the satellite (clear + refetch) when the frame centre/zoom actually
+      // changed — otherwise keep whatever is already loaded and just update the non-image
+      // frame fields, so an unrelated refresh (e.g. an external canvas-state change) can't
+      // flash the satellite out and back in.
+      const frameMoved =
+        !lastFetchedFrame ||
+        lastFetchedFrame.centerLng !== frameNoImg.centerLng ||
+        lastFetchedFrame.centerLat !== frameNoImg.centerLat ||
+        lastFetchedFrame.zoom !== frameNoImg.zoom;
 
-      if (url) {
-        fetchImageAsDataUrl(url)
-          .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
-          .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
+      if (frameMoved) {
+        lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
+        setFrame({ ...frameNoImg, satDataUrl: null });
+        if (url) {
+          fetchImageAsDataUrl(url)
+            .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
+            .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
+        }
+      } else {
+        setFrame((prev) => ({ ...frameNoImg, satDataUrl: prev?.satDataUrl ?? null }));
       }
 
       // Canvas state: load existing, or seed fresh from traced site elements on first visit.
@@ -401,12 +447,12 @@ function DesignStudioInner() {
         const existing = loadCanvasState(siteId);
         if (existing) {
           const migrated = migrateStateToFrame(existing, frameNoImg, project);
-          if (migrated !== existing) saveCanvasState(migrated);
+          if (migrated !== existing) withSelfSaveFlag(() => saveCanvasState(migrated));
           return migrated;
         }
         if (prev && prev.siteId === siteId) {
           const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
-          if (migratedPrev !== prev) saveCanvasState(migratedPrev);
+          if (migratedPrev !== prev) withSelfSaveFlag(() => saveCanvasState(migratedPrev));
           return migratedPrev;
         }
 
@@ -436,27 +482,14 @@ function DesignStudioInner() {
   }, [hasSite, lat, lon, siteId]);
 
   // Persist canvas state on change (with undo history), and re-run the advisor.
-  const commitState = useCallback(
-    (next: DesignCanvasState, opts?: { skipUndo?: boolean }) => {
-      setCanvasState((prev) => {
-        if (prev && !opts?.skipUndo) {
-          undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
-        }
-        return next;
-      });
-      saveCanvasState(next);
-      setSaved(true);
-    },
-    [],
-  );
-
   const handleChange = useCallback(
     (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
+      setSaved(false);
       setCanvasState((prev) => {
         if (!prev) return prev;
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         const next = updater(prev);
-        saveCanvasState(next);
+        withSelfSaveFlag(() => saveCanvasState(next));
         setSaved(true);
         return next;
       });
@@ -465,10 +498,15 @@ function DesignStudioInner() {
   );
 
   const handleUndo = useCallback(() => {
+    setSaved(false);
     setCanvasState((prev) => {
       const popped = undoStack.current.pop();
-      if (!popped || !prev) return prev;
-      saveCanvasState(popped);
+      if (!popped || !prev) {
+        setSaved(true);
+        return prev;
+      }
+      withSelfSaveFlag(() => saveCanvasState(popped));
+      setSaved(true);
       return popped;
     });
   }, []);
@@ -488,12 +526,17 @@ function DesignStudioInner() {
       }
     : null;
 
-  const setStep = useCallback(
-    (step: WizardStep) => {
-      handleChange((prev) => ({ ...prev, step }));
-    },
-    [handleChange],
-  );
+  // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
+  // between wizard steps instead of reverting their last content edit (item/zone/line
+  // change). Saves + persists like handleChange, just skips the undoStack push.
+  const setStep = useCallback((step: WizardStep) => {
+    setCanvasState((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, step, updatedAt: new Date().toISOString() };
+      withSelfSaveFlag(() => saveCanvasState(next));
+      return next;
+    });
+  }, []);
 
   const handleVisionDetect = useCallback(async () => {
     if (!frame?.satDataUrl) {
@@ -573,6 +616,106 @@ function DesignStudioInner() {
     setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
   }, [canvasState, refLayers, frame, handleVisionDetect]);
 
+  // Pure per-suggestion state transform, shared by acceptSuggestion (one undo entry) and
+  // acceptAllSuggestions (folded into a single undo entry) — see below.
+  const applySuggestion = useCallback(
+    (prev: DesignCanvasState, suggestion: DetectSuggestion, frameArg: CanvasFrame): { next: DesignCanvasState; rejectedInstead: boolean } => {
+      const point0 = suggestion.points[0];
+      switch (suggestion.kind) {
+        case 'tree': {
+          if (!point0) break;
+          const item: PlacedItem = {
+            id: newId(),
+            defId: 'tree_indigenous',
+            x: point0[0],
+            y: point0[1],
+            wM: suggestion.sizeM ?? 6,
+            hM: suggestion.sizeM ?? 6,
+          };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'water_tank': {
+          if (!point0) break;
+          const item: PlacedItem = {
+            id: newId(),
+            defId: 'jojo_5000',
+            x: point0[0],
+            y: point0[1],
+            ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
+          };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'pond': {
+          if (!point0) break;
+          const item: PlacedItem = {
+            id: newId(),
+            defId: 'pond_small',
+            x: point0[0],
+            y: point0[1],
+            ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
+          };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'building': {
+          if (suggestion.points.length === 0) break;
+          const { center, wM, hM } = ringBboxM(suggestion.points, frameArg);
+          if (pointInRing(center, refLayers.house)) {
+            return { next: prev, rejectedInstead: true };
+          }
+          const item: PlacedItem = { id: newId(), defId: 'shed', x: center[0], y: center[1], wM, hM };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'veg_area': {
+          if (suggestion.points.length < 3) break;
+          const zone: ZoneShape = { id: newId(), zone: 2, points: suggestion.points };
+          return { next: { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'driveway': {
+          if (suggestion.points.length < 2) break;
+          const line: LineShape = { id: newId(), kind: 'path', points: suggestion.points };
+          return { next: { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'zone': {
+          if (suggestion.points.length < 3) break;
+          const zone: ZoneShape = { id: newId(), zone: suggestion.zone ?? 2, points: suggestion.points };
+          return { next: { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'greywater': {
+          if (!point0) break;
+          const item: PlacedItem = { id: newId(), defId: 'greywater_basin', x: point0[0], y: point0[1] };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'compost': {
+          if (!point0) break;
+          const item: PlacedItem = { id: newId(), defId: 'compost_bay', x: point0[0], y: point0[1] };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'beehive': {
+          if (!point0) break;
+          const item: PlacedItem = { id: newId(), defId: 'beehive', x: point0[0], y: point0[1] };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'veg_bed': {
+          if (!point0) break;
+          const item: PlacedItem = { id: newId(), defId: 'veg_bed', x: point0[0], y: point0[1] };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'nursery': {
+          if (!point0) break;
+          const item: PlacedItem = { id: newId(), defId: 'nursery_table', x: point0[0], y: point0[1] };
+          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+        case 'swale': {
+          if (suggestion.points.length < 2) break;
+          const line: LineShape = { id: newId(), kind: 'swale', points: suggestion.points };
+          return { next: { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() }, rejectedInstead: false };
+        }
+      }
+      return { next: prev, rejectedInstead: false };
+    },
+    [refLayers.house],
+  );
+
   const acceptSuggestion = useCallback(
     (id: string) => {
       const suggestion = suggestions.find((s) => s.id === id);
@@ -581,115 +724,45 @@ function DesignStudioInner() {
       let rejectedInstead = false;
 
       handleChange((prev) => {
-        const point0 = suggestion.points[0];
-        switch (suggestion.kind) {
-          case 'tree': {
-            if (!point0) break;
-            const item: PlacedItem = {
-              id: newId(),
-              defId: 'tree_indigenous',
-              x: point0[0],
-              y: point0[1],
-              wM: suggestion.sizeM ?? 6,
-              hM: suggestion.sizeM ?? 6,
-            };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'water_tank': {
-            if (!point0) break;
-            const item: PlacedItem = {
-              id: newId(),
-              defId: 'jojo_5000',
-              x: point0[0],
-              y: point0[1],
-              ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
-            };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'pond': {
-            if (!point0) break;
-            const item: PlacedItem = {
-              id: newId(),
-              defId: 'pond_small',
-              x: point0[0],
-              y: point0[1],
-              ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
-            };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'building': {
-            if (suggestion.points.length === 0) break;
-            const { center, wM, hM } = ringBboxM(suggestion.points, frame);
-            if (pointInRing(center, refLayers.house)) {
-              rejectedInstead = true;
-              break;
-            }
-            const item: PlacedItem = { id: newId(), defId: 'shed', x: center[0], y: center[1], wM, hM };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'veg_area': {
-            if (suggestion.points.length < 3) break;
-            const zone: ZoneShape = { id: newId(), zone: 2, points: suggestion.points };
-            return { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() };
-          }
-          case 'driveway': {
-            if (suggestion.points.length < 2) break;
-            const line: LineShape = { id: newId(), kind: 'path', points: suggestion.points };
-            return { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() };
-          }
-          case 'zone': {
-            if (suggestion.points.length < 3) break;
-            const zone: ZoneShape = { id: newId(), zone: suggestion.zone ?? 2, points: suggestion.points };
-            return { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() };
-          }
-          case 'greywater': {
-            if (!point0) break;
-            const item: PlacedItem = { id: newId(), defId: 'greywater_basin', x: point0[0], y: point0[1] };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'compost': {
-            if (!point0) break;
-            const item: PlacedItem = { id: newId(), defId: 'compost_bay', x: point0[0], y: point0[1] };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'beehive': {
-            if (!point0) break;
-            const item: PlacedItem = { id: newId(), defId: 'beehive', x: point0[0], y: point0[1] };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'veg_bed': {
-            if (!point0) break;
-            const item: PlacedItem = { id: newId(), defId: 'veg_bed', x: point0[0], y: point0[1] };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'nursery': {
-            if (!point0) break;
-            const item: PlacedItem = { id: newId(), defId: 'nursery_table', x: point0[0], y: point0[1] };
-            return { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() };
-          }
-          case 'swale': {
-            if (suggestion.points.length < 2) break;
-            const line: LineShape = { id: newId(), kind: 'swale', points: suggestion.points };
-            return { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() };
-          }
-        }
-        return prev;
+        const result = applySuggestion(prev, suggestion, frame);
+        rejectedInstead = result.rejectedInstead;
+        return result.next;
       });
 
       setSuggestions((prev) =>
         prev.map((s) => (s.id === id ? { ...s, status: rejectedInstead ? 'rejected' : 'accepted' } : s)),
       );
     },
-    [suggestions, frame, refLayers.house, handleChange],
+    [suggestions, frame, applySuggestion, handleChange],
   );
 
   const rejectSuggestion = useCallback((id: string) => {
     setSuggestions((prev) => prev.map((s) => (s.id === id ? { ...s, status: 'rejected' } : s)));
   }, []);
 
+  // Applies every pending suggestion inside a SINGLE handleChange call, so accepting a
+  // batch of AI suggestions produces one undo entry (undo reverts the whole batch), not
+  // one entry per suggestion.
   const acceptAllSuggestions = useCallback(() => {
-    suggestions.filter((s) => s.status === 'pending').forEach((s) => acceptSuggestion(s.id));
-  }, [suggestions, acceptSuggestion]);
+    const pending = suggestions.filter((s) => s.status === 'pending');
+    if (pending.length === 0 || !frame) return;
+
+    const outcomes = new Map<string, boolean>(); // id -> rejectedInstead
+
+    handleChange((prev) => {
+      let acc = prev;
+      for (const s of pending) {
+        const result = applySuggestion(acc, s, frame);
+        outcomes.set(s.id, result.rejectedInstead);
+        acc = result.next;
+      }
+      return acc;
+    });
+
+    setSuggestions((prev) =>
+      prev.map((s) => (outcomes.has(s.id) ? { ...s, status: outcomes.get(s.id) ? 'rejected' : 'accepted' } : s)),
+    );
+  }, [suggestions, frame, applySuggestion, handleChange]);
 
   const dismissAllSuggestions = useCallback(() => {
     setSuggestions((prev) => prev.map((s) => (s.status === 'pending' ? { ...s, status: 'rejected' } : s)));

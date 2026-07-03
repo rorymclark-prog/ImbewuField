@@ -15,6 +15,12 @@ interface Props {
   siteData?: SiteData | null;
   waterData?: WaterData | null;
   appLang?: string;
+  /** A question typed into LimaBar (?q=) — submitted automatically once on mount. */
+  initialQuery?: string | null;
+  /** LimaBar's camera button (?photo=1) — opens the photo picker automatically once on mount. */
+  initialPhoto?: boolean;
+  /** Called once the initialQuery/initialPhoto deep link has been acted on, so the caller can clear it. */
+  onInitialConsumed?: () => void;
 }
 
 const SUGGESTIONS = [
@@ -51,7 +57,7 @@ function fileToPayload(file: File): Promise<{ data: string; mediaType: string; p
   });
 }
 
-export default function ChatPanel({ locationData, siteData, waterData, appLang }: Props) {
+export default function ChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, onInitialConsumed }: Props) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -149,6 +155,20 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang }
     e.target.value = '';
     if (!file) return;
     try { setPendingImage(await fileToPayload(file)); } catch { /* ignore */ }
+  }, []);
+
+  // LimaBar deep link: a typed question (?q=) auto-submits once; a photo intent
+  // (?photo=1) opens the picker once. Runs on mount only — the parent clears the
+  // params via onInitialConsumed so this never re-fires on re-render.
+  useEffect(() => {
+    if (initialQuery && initialQuery.trim()) {
+      send(initialQuery);
+      onInitialConsumed?.();
+    } else if (initialPhoto) {
+      fileRef.current?.click();
+      onInitialConsumed?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isDisabled = loading || (!input.trim() && !pendingImage);

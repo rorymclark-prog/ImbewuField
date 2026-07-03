@@ -2596,7 +2596,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       className="flex-1 min-w-0 text-left transition-all"
                       style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                       <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{p.name}</div>
-                      <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation}m away</div>
+                      <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation} m elev.</div>
                     </button>
                     <button onClick={() => startEditPlace(p)} title="Edit name or colour"
                       className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"

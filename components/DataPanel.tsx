@@ -44,6 +44,9 @@ interface Props {
   peopleLoading?: boolean;
   currentUserId?: string;
   onOpenProfile?: () => void;
+  initialChatQuery?: string | null;
+  initialChatPhoto?: boolean;
+  onChatDeepLinkConsumed?: () => void;
 }
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
@@ -263,7 +266,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed }: Props) {
   const { t } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
@@ -1243,7 +1246,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {tab === 'AI' && <InsightsPanel locationData={data} />}
 
         {/* ASK — site-aware permaculture / organic / finance chat assistant */}
-        {tab === 'Ask' && <ChatPanel locationData={data} siteData={siteData} waterData={waterData} appLang={appLang} />}
+        {tab === 'Ask' && (
+          <ChatPanel
+            locationData={data}
+            siteData={siteData}
+            waterData={waterData}
+            appLang={appLang}
+            initialQuery={initialChatQuery}
+            initialPhoto={initialChatPhoto}
+            onInitialConsumed={onChatDeepLinkConsumed}
+          />
+        )}
 
         {/* PLACES */}
         {tab === 'Places' && (

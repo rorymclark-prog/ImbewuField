@@ -464,8 +464,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          Generate an artist&apos;s impression of your exact design. The AI can only repaint the
-          background — every item, zone, and line you placed stays locked in place.
+          Generate an artist&apos;s impression of your design. Gemini (fast) keeps your layout
+          while it repaints the scene; Best quality pixel-locks every item, zone, and line you
+          placed so only the background is repainted.
         </p>
       )}
 
@@ -560,10 +561,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               {loading === 'falgpt'
                 ? 'Generating… 30–90s'
                 : resultImage
-                  ? 'Regenerate — GPT-2 strict (best)'
-                  : 'GPT-2 strict (best)'}
+                  ? 'Regenerate — Best quality (~1 min)'
+                  : 'Best quality (~1 min)'}
             </button>
-            <span style={{ fontSize: 11, opacity: 0.6 }}>Uses fal credit (~$0.05-0.15)</span>
           </div>
         </div>
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
