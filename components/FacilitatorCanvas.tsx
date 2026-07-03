@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
 import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
@@ -19,6 +19,8 @@ import {
   buildGhosts,
   DEFAULT_PX_PER_M, geomPxToM, geomMToPx,
 } from '@/lib/facilitator-design';
+import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
+import { describeHarvest } from '@/lib/water-calc';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
 
@@ -1635,6 +1637,53 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const bedArea = boq.find((b) => b.type === 'bed')?.areaM2 ?? 0;
   const totalLitres = boq.reduce((s, b) => s + b.litres, 0);
 
+  // ── Costed BOQ ──
+  // Item rows: costForItem's type param matches CATALOG/ElType keys 1:1 (tank,
+  // coop, shed, greenhouse, tunnel, etc. are the same strings on both sides) —
+  // no extra mapping needed here. Tanks pass litres per-unit average since boq
+  // rows are already summed across all placed instances of a type.
+  const boqCosts = boq.map((b) => {
+    const list = items.filter((i) => i.type === b.type);
+    const zar = list.reduce((s, i) => s + (costForItem(i.type, i.wM, i.hM, i.litres)?.zar ?? 0), 0);
+    return { type: b.type, zar: zar > 0 ? zar : null };
+  });
+  const lineCosts = lineTotals.map((l) => ({ kind: l.kind, ...(costForLine(l.kind, l.m) ?? { zar: null }) }));
+  const estBudgetTotal =
+    boqCosts.reduce((s, b) => s + (b.zar ?? 0), 0) + lineCosts.reduce((s, l) => s + (l.zar ?? 0), 0);
+
+  // ── Rainwater harvest potential ──
+  // Roof area = closed 'building' line polygons (shoelace, px² ÷ pxPerM²) plus
+  // the rect footprint of shed/greenhouse/tunnel/coop items — all roofed
+  // structures a downpipe could realistically be hung off.
+  const roofM2 = useMemo(() => {
+    const shoelaceAreaPx2 = (points: number[]): number => {
+      let sum = 0;
+      const n = points.length / 2;
+      for (let i = 0; i < n; i++) {
+        const [x0, y0] = [points[i * 2], points[i * 2 + 1]];
+        const j = (i + 1) % n;
+        const [x1, y1] = [points[j * 2], points[j * 2 + 1]];
+        sum += x0 * y1 - x1 * y0;
+      }
+      return Math.abs(sum) / 2;
+    };
+    const buildingM2 = lines
+      .filter((l) => l.kind === 'building' && l.closed && l.points.length >= 6)
+      .reduce((s, l) => s + shoelaceAreaPx2(l.points) / (pxPerM * pxPerM), 0);
+    const roofedItemM2 = items
+      .filter((i) => i.type === 'shed' || i.type === 'greenhouse' || i.type === 'tunnel' || i.type === 'coop')
+      .reduce((s, i) => s + i.wM * i.hM, 0);
+    return buildingM2 + roofedItemM2;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lines, items, pxPerM]);
+
+  const harvest = useMemo(() => {
+    if (roofM2 < 10) return null;
+    const { lat, lon } = bgSite ?? { lat: -29.86, lon: 31.02 }; // Durban default when no site set
+    return describeHarvest(roofM2, lat, lon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roofM2, bgSite]);
+
   // ── Layer bookkeeping for the stepper + coach ──
   const itemsByLayer: Partial<Record<LayerId, number>> = {};
   items.forEach((it) => {
@@ -1710,6 +1759,30 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const uri = stageRef.current?.toDataURL({ pixelRatio: 2 }); if (!uri) return;
       const a = document.createElement('a'); a.href = uri; a.download = 'garden-plan.png'; a.click();
     });
+  }
+
+  // WhatsApp budget share — plain text so it opens straight into a chat, no login,
+  // no attachment. Truncated to keep the wa.me URL well inside browser/OS limits.
+  const WHATSAPP_TEXT_MAX = 1800;
+  function shareBudgetOnWhatsApp() {
+    const lines: string[] = [];
+    lines.push(`*${designTitle || 'Garden design'}* — ImbewuField plan`);
+    boq.forEach((b) => {
+      const cost = boqCosts.find((c) => c.type === b.type);
+      const qty = b.litres ? ` (${Math.round(b.litres).toLocaleString()} L)` : b.areaM2 ? ` (${b.areaM2.toFixed(0)} m²)` : '';
+      const costTxt = cost?.zar ? ` — ${formatZar(cost.zar)}` : '';
+      lines.push(`• ${b.label} ×${b.count}${qty}${costTxt}`);
+    });
+    lineTotals.forEach((l) => {
+      const cost = lineCosts.find((c) => c.kind === l.kind);
+      const costTxt = cost?.zar ? ` — ${formatZar(cost.zar)}` : '';
+      lines.push(`• ${l.label} — ${l.m.toFixed(0)} m${costTxt}`);
+    });
+    lines.push(`TOTAL est: ${formatZar(estBudgetTotal)}`);
+    if (harvest) lines.push(harvest.sentence);
+    lines.push('Planning estimates — prices vary.');
+    const text = lines.join('\n').slice(0, WHATSAPP_TEXT_MAX);
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
   }
 
   const grid: number[][] = [];
@@ -1839,6 +1912,17 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             Start fresh
           </button>
         </div>
+
+        {/* Rainwater harvest potential — surfaced here too while working the water layer */}
+        {activeLayer === 'water' && harvest && (
+          <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.35)' }}>
+            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#2F6F9E' }}>💧 Rainwater potential</div>
+            <p className="text-[11px] font-display leading-snug" style={{ color: '#20190F' }}>{harvest.sentence}</p>
+            <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
+              from {Math.round(roofM2)} m² of roof, {harvest.annualMm} mm/yr ({harvest.pattern} rainfall)
+            </p>
+          </div>
+        )}
 
         {/* ── For this step ── (types/lines/sectors the active layer surfaces first) */}
         {stepElementTypes.length > 0 && (
@@ -2248,27 +2332,68 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             <p className="text-xs font-display" style={{ color: '#9A8268' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
           )}
 
+          {/* Rainwater harvest potential */}
+          {harvest && (
+            <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.35)' }}>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#2F6F9E' }}>💧 Rainwater potential</div>
+              <p className="text-[11px] font-display leading-snug" style={{ color: '#20190F' }}>{harvest.sentence}</p>
+              <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
+                from {Math.round(roofM2)} m² of roof, {harvest.annualMm} mm/yr ({harvest.pattern} rainfall)
+              </p>
+            </div>
+          )}
+
           {/* BOQ */}
           <div>
             <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Bill of quantities</div>
             {boq.length || lineTotals.length ? (
               <div className="space-y-1">
-                {boq.map((b) => (
-                  <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
-                    title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
-                    <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
-                    <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${Math.round(b.litres).toLocaleString()}L${b.type === 'pond' ? '*' : ''}` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                {boq.map((b) => {
+                  const cost = boqCosts.find((c) => c.type === b.type);
+                  return (
+                    <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
+                      title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
+                      <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
+                      <span className="flex items-center gap-2">
+                        <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${Math.round(b.litres).toLocaleString()}L${b.type === 'pond' ? '*' : ''}` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                        {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
+                      </span>
+                    </div>
+                  );
+                })}
+                {lineTotals.map((l) => {
+                  const cost = lineCosts.find((c) => c.kind === l.kind);
+                  return (
+                    <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                      <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
+                      <span className="flex items-center gap-2">
+                        <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
+                        {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
+                      </span>
+                    </div>
+                  );
+                })}
+                {estBudgetTotal > 0 && (
+                  <div className="flex items-center justify-between text-xs font-display px-2 py-1.5 mt-1 rounded-lg font-semibold" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)' }}>
+                    <span style={{ color: '#1F4D2B' }}>Est. budget</span>
+                    <span className="font-mono" style={{ color: '#1F4D2B' }}>{formatZar(estBudgetTotal)}</span>
                   </div>
-                ))}
-                {lineTotals.map((l) => (
-                  <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
-                    <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
-                    <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
-                  </div>
-                ))}
+                )}
+                {estBudgetTotal > 0 && (
+                  <p className="text-[9px] font-mono leading-snug px-0.5 pt-0.5" style={{ color: '#9A8268' }}>{DISCLAIMER}</p>
+                )}
               </div>
             ) : <p className="text-xs font-display" style={{ color: '#9A8268' }}>Quantities tally here as you place things.</p>}
           </div>
+
+          {/* WhatsApp budget share */}
+          <button onClick={shareBudgetOnWhatsApp} disabled={!boq.length && !lineTotals.length}
+            className="w-full py-2 rounded-xl text-xs font-display font-medium transition-all"
+            style={!boq.length && !lineTotals.length
+              ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+              : { background: 'rgba(37,211,102,0.12)', border: '1px solid rgba(37,211,102,0.4)', color: '#128C50' }}>
+            <span className="inline-flex items-center justify-center gap-1.5">📱 Share budget</span>
+          </button>
 
           {(bedArea > 0 || totalLitres > 0) && (
             <div className="grid grid-cols-2 gap-2">
@@ -2291,6 +2416,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 className="animate-spin" size={14} /> Reviewing…</span> : <span className="flex items-center justify-center gap-1.5"><Sparkles size={14} /> AI review</span>}
             </button>
             <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Export PNG"><Download size={14} /> PNG</button>
+            <button onClick={() => window.open('/facilitator/print')} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Print plan">🖨 Print plan</button>
           </div>
 
           {/* Save button */}
