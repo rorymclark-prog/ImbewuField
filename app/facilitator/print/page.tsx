@@ -4,16 +4,24 @@
 //
 // Reads the same localStorage design the facilitator canvas edits
 // (imbewu_facilitator_design_v1), and renders it as a static A4-landscape
-// SVG sheet: title block, plan drawing (from metre coordinates), legend,
-// and a bill-of-quantities table costed from the price book. Pure
-// client-side, read-only — never writes back to the design.
+// multi-page plan pack: page 1 is the full design sheet (title block, plan,
+// legend, costed BOQ); it is followed by one page per non-empty design layer
+// (water, structures, planting, ...), each showing the same plan with that
+// layer's elements full-colour + labelled and every other layer faded to
+// grey context (the property-boundary fence stays full-strength everywhere
+// as a fixed reference). Screen-only checkboxes let the facilitator choose
+// which pages to print (e.g. just the Water map). Pure client-side,
+// read-only — never writes back to the design.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type {
   ElType, LineKind, SectorKind, LayerId,
   FacItem, FacLine, FacSector, FacilitatorDesignState,
 } from '@/lib/facilitator-design';
-import { loadFacilitatorState, DEFAULT_PX_PER_M } from '@/lib/facilitator-design';
+import {
+  loadFacilitatorState, DEFAULT_PX_PER_M,
+  LAYER_ORDER, LAYERS, defaultLayerForType, defaultLayerForLine,
+} from '@/lib/facilitator-design';
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 
@@ -66,6 +74,29 @@ const SECTOR_LABELS: Record<SectorKind, { label: string; icon: string; color: st
 };
 
 const ROOF_TYPES: ElType[] = ['shed', 'greenhouse', 'tunnel', 'coop'];
+
+// ── Layer resolution ─────────────────────────────────────────────────────
+//
+// An item/line carries an explicit `layer` field once placed via the
+// facilitator canvas (stamped at creation time by layerForPlacement there).
+// Older/imported geometry may lack it, so we fall back to the element
+// type's canonical home layer — the exact rule FacilitatorCanvas itself
+// uses. Sectors have no `layer` field at all: every sector kind lives on
+// the single 'sectors' layer.
+
+function resolveItemLayer(it: FacItem): LayerId {
+  return it.layer ?? defaultLayerForType(it.type);
+}
+function resolveLineLayer(l: FacLine): LayerId {
+  return l.layer ?? defaultLayerForLine(l.kind);
+}
+function resolveSectorLayer(): LayerId {
+  return 'sectors';
+}
+/** The property-boundary fence (see FacilitatorCanvas) is always shown full-strength as a reference frame, even on other layers' pages. */
+function isBoundaryLine(l: FacLine): boolean {
+  return l.id === 'mapshape-boundary';
+}
 
 // ── Geometry helpers ────────────────────────────────────────────────────────
 
@@ -129,8 +160,167 @@ function niceScaleLength(plotWidthM: number): number {
 
 interface BoqRow { label: string; icon: string; qty: string; zar: number | null; basis?: string }
 
+interface GridLine { x1: number; y1: number; x2: number; y2: number }
+
+// ── Plan SVG (shared by the full-design page and every layer page) ─────────
+
+interface PlanSvgProps {
+  itemPts: { it: FacItem; p: Pt }[];
+  linePts: { l: FacLine; pts: Pt[] }[];
+  sectorPts: { s: FacSector; p: Pt }[];
+  toDraw: (p: Pt) => Pt;
+  scale: number;
+  pxPerM: number;
+  drawW: number;
+  drawH: number;
+  scaleBarM: number;
+  gridLines: GridLine[];
+  /** Omit for the full-design page (everything full-colour). Set to a LayerId to fade every other layer to grey context. */
+  highlightLayer?: LayerId;
+}
+
+const CONTEXT_GREY = '#B4ADA0';
+const CONTEXT_OPACITY = 0.25;
+
+function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer }: PlanSvgProps) {
+  const scaleBarPx = scaleBarM * scale;
+  const isContext = (layer: LayerId) => highlightLayer !== undefined && layer !== highlightLayer;
+
+  return (
+    <svg width="240mm" height="160mm" viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
+      {/* grid */}
+      {gridLines.map((g, i) => (
+        <line key={`grid-${i}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} stroke="#E2D8C4" strokeWidth={0.2} />
+      ))}
+
+      {/* lines */}
+      {linePts.map(({ l, pts }, i) => {
+        if (pts.length < 2) return null;
+        const L = LINES[l.kind];
+        const boundary = isBoundaryLine(l);
+        const context = !boundary && isContext(resolveLineLayer(l));
+        const strokeColor = context ? CONTEXT_GREY : L.color;
+        const draw = pts.map((p) => toDraw(p));
+        const pointsAttr = draw.map((p) => `${p.x},${p.y}`).join(' ');
+        if (l.closed) {
+          const isBuilding = l.kind === 'building';
+          return (
+            <polygon
+              key={l.id ?? i}
+              points={pointsAttr}
+              fill={isBuilding ? (context ? CONTEXT_GREY : '#5A5448') : 'none'}
+              fillOpacity={isBuilding ? (context ? CONTEXT_OPACITY : 0.2) : 0}
+              stroke={strokeColor}
+              strokeOpacity={context ? CONTEXT_OPACITY : 1}
+              strokeWidth={Math.max(L.width * (scale / pxPerM) * pxPerM * 0.15, 0.6)}
+              strokeDasharray={L.dash.join(',')}
+            />
+          );
+        }
+        return (
+          <polyline
+            key={l.id ?? i}
+            points={pointsAttr}
+            fill="none"
+            stroke={strokeColor}
+            strokeOpacity={context ? CONTEXT_OPACITY : 1}
+            strokeWidth={Math.max(L.width * 0.3, 0.6)}
+            strokeDasharray={L.dash.join(',')}
+            strokeLinecap="round"
+          />
+        );
+      })}
+
+      {/* sectors (translucent wedges) */}
+      {sectorPts.map(({ s, p }, i) => {
+        const def = SECTOR_LABELS[s.kind];
+        const context = isContext(resolveSectorLayer());
+        const center = toDraw(p);
+        const r = s.radiusM * scale;
+        const a0 = (s.rotation - s.spanDeg / 2) * (Math.PI / 180);
+        const a1 = (s.rotation + s.spanDeg / 2) * (Math.PI / 180);
+        const x0 = center.x + r * Math.cos(a0);
+        const y0 = center.y + r * Math.sin(a0);
+        const x1 = center.x + r * Math.cos(a1);
+        const y1 = center.y + r * Math.sin(a1);
+        const large = s.spanDeg > 180 ? 1 : 0;
+        const color = context ? CONTEXT_GREY : def.color;
+        return (
+          <path
+            key={`sector-${i}`}
+            d={`M ${center.x} ${center.y} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z`}
+            fill={color}
+            fillOpacity={context ? CONTEXT_OPACITY * 0.6 : 0.14}
+            stroke={color}
+            strokeOpacity={context ? CONTEXT_OPACITY : 0.4}
+            strokeWidth={0.5}
+          />
+        );
+      })}
+
+      {/* items */}
+      {itemPts.map(({ it, p }, i) => {
+        const cat = CATALOG[it.type];
+        const context = isContext(resolveItemLayer(it));
+        const center = toDraw(p);
+        const w = (it.wM || cat.w) * scale;
+        const h = (it.hM || cat.h) * scale;
+        const showLabel = !context && Math.max(w, h) > 8;
+        const fillColor = context ? CONTEXT_GREY : cat.fill;
+        return (
+          <g key={it.id ?? i} transform={`rotate(${it.rotation || 0} ${center.x} ${center.y})`}>
+            {cat.shape === 'circle' ? (
+              <ellipse cx={center.x} cy={center.y} rx={w / 2} ry={h / 2} fill={fillColor} fillOpacity={context ? CONTEXT_OPACITY : 0.75} stroke={context ? CONTEXT_GREY : '#161311'} strokeWidth={0.3} />
+            ) : (
+              <rect x={center.x - w / 2} y={center.y - h / 2} width={w} height={h} fill={fillColor} fillOpacity={context ? CONTEXT_OPACITY : 0.75} stroke={context ? CONTEXT_GREY : '#161311'} strokeWidth={0.3} />
+            )}
+            {!context && (
+              <text x={center.x} y={center.y + 2} fontSize={Math.min(6, Math.max(w, h) * 0.5)} textAnchor="middle" fill="#fff">{cat.icon}</text>
+            )}
+            {showLabel && (
+              <text x={center.x} y={center.y + h / 2 + 4} fontSize={3} textAnchor="middle" fill="#161311">{cat.label}</text>
+            )}
+          </g>
+        );
+      })}
+
+      {/* north arrow */}
+      <g transform={`translate(${drawW - 18}, 14)`}>
+        <line x1={0} y1={10} x2={0} y2={-6} stroke="#161311" strokeWidth={1} />
+        <polygon points="0,-9 -3,-2 3,-2" fill="#161311" />
+        <text x={0} y={19} fontSize={6} textAnchor="middle" fill="#161311" fontWeight="bold">N ↑</text>
+      </g>
+
+      {/* scale bar */}
+      <g transform={`translate(10, ${drawH - 8})`}>
+        <line x1={0} y1={0} x2={scaleBarPx} y2={0} stroke="#161311" strokeWidth={1.5} />
+        <line x1={0} y1={-2} x2={0} y2={2} stroke="#161311" strokeWidth={1} />
+        <line x1={scaleBarPx} y1={-2} x2={scaleBarPx} y2={2} stroke="#161311" strokeWidth={1} />
+        <text x={scaleBarPx / 2} y={-4} fontSize={4.5} textAnchor="middle" fill="#161311">{scaleBarM} m</text>
+      </g>
+    </svg>
+  );
+}
+
+// ── Page shell (shared A4-landscape sheet chrome) ───────────────────────────
+
+const SHEET_STYLE: CSSProperties = {
+  width: '297mm',
+  minHeight: '210mm',
+  margin: '16px auto',
+  background: '#fff',
+  color: '#161311',
+  fontFamily: 'Georgia, "Times New Roman", serif',
+  padding: '12mm 14mm',
+  boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+  boxSizing: 'border-box',
+};
+
+type PageKey = 'full' | LayerId;
+
 export default function FacilitatorPrintPage() {
   const [state, setState] = useState<FacilitatorDesignState | null | undefined>(undefined);
+  const [enabledPages, setEnabledPages] = useState<Partial<Record<PageKey, boolean>>>({});
 
   useEffect(() => {
     setState(loadFacilitatorState());
@@ -190,6 +380,26 @@ export default function FacilitatorPrintPage() {
       x: offX + (p.x - boxMinX) * scale,
       y: offY + (p.y - boxMinY) * scale,
     });
+
+    // 10 m grid, precomputed once — identical on every page.
+    const gridLines: GridLine[] = [];
+    {
+      const step = 10;
+      const startX = Math.floor(boxMinX / step) * step;
+      const endX = boxMinX + boxW;
+      for (let gx = startX; gx <= endX; gx += step) {
+        const p1 = toDraw({ x: gx, y: boxMinY });
+        const p2 = toDraw({ x: gx, y: boxMinY + boxH });
+        gridLines.push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
+      }
+      const startY = Math.floor(boxMinY / step) * step;
+      const endY = boxMinY + boxH;
+      for (let gy = startY; gy <= endY; gy += step) {
+        const p1 = toDraw({ x: boxMinX, y: gy });
+        const p2 = toDraw({ x: boxMinX + boxW, y: gy });
+        gridLines.push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
+      }
+    }
 
     // Roof area (m²) for rainwater harvest sentence: closed 'building' lines +
     // shed/greenhouse/tunnel/coop footprints (wM x hM).
@@ -266,12 +476,34 @@ export default function FacilitatorPrintPage() {
 
     const scaleBarM = niceScaleLength(rawW);
 
+    // One page per non-empty layer, in canon order, skipping the base-map and review pseudo-stages.
+    const layersPresent: LayerId[] = LAYER_ORDER.filter((lid) => {
+      if (lid === 'base' || lid === 'review') return false;
+      if (lid === 'sectors') return sectorPts.length > 0;
+      return itemPts.some(({ it }) => resolveItemLayer(it) === lid) || linePts.some(({ l }) => resolveLineLayer(l) === lid);
+    });
+
     return {
       pxPerM, itemPts, linePts, sectorPts, toDraw, scale,
       drawW, drawH, roofM2, itemTally, lineTally, boqRows, total, harvest, scaleBarM,
-      boxMinX, boxMinY, boxW, boxH,
+      boxMinX, boxMinY, boxW, boxH, gridLines, layersPresent,
     };
   }, [state]);
+
+  // Seed the page-visibility checkboxes (all on by default) once the layer list is known,
+  // without clobbering toggles the user has already made.
+  useEffect(() => {
+    if (!computed) return;
+    setEnabledPages((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      if (next.full === undefined) { next.full = true; changed = true; }
+      computed.layersPresent.forEach((lid) => {
+        if (next[lid] === undefined) { next[lid] = true; changed = true; }
+      });
+      return changed ? next : prev;
+    });
+  }, [computed]);
 
   if (state === undefined) {
     return <div style={{ padding: 40, fontFamily: 'sans-serif', color: '#5C5040' }}>Loading…</div>;
@@ -295,28 +527,13 @@ export default function FacilitatorPrintPage() {
   const title = state.title || state.bgSite?.name || 'Garden design';
   const dateStr = new Date(state.savedAt || Date.now()).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  // North arrow + grid + scale bar geometry in draw space.
-  const gridLinesM = () => {
-    const lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
-    const step = 10; // 10 m grid
-    const startX = Math.floor(c.boxMinX / step) * step;
-    const endX = c.boxMinX + c.boxW;
-    for (let gx = startX; gx <= endX; gx += step) {
-      const p1 = c.toDraw({ x: gx, y: c.boxMinY });
-      const p2 = c.toDraw({ x: gx, y: c.boxMinY + c.boxH });
-      lines.push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
-    }
-    const startY = Math.floor(c.boxMinY / step) * step;
-    const endY = c.boxMinY + c.boxH;
-    for (let gy = startY; gy <= endY; gy += step) {
-      const p1 = c.toDraw({ x: c.boxMinX, y: gy });
-      const p2 = c.toDraw({ x: c.boxMinX + c.boxW, y: gy });
-      lines.push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
-    }
-    return lines;
+  const togglePage = (key: PageKey) => {
+    setEnabledPages((prev) => ({ ...prev, [key]: !(prev[key] ?? true) }));
   };
 
-  const scaleBarPx = c.scaleBarM * c.scale;
+  const fullOn = enabledPages.full ?? true;
+  const activeLayerPages = c.layersPresent.filter((lid) => enabledPages[lid] ?? true);
+  const nothingToPrint = !fullOn && activeLayerPages.length === 0;
 
   return (
     <div>
@@ -325,14 +542,15 @@ export default function FacilitatorPrintPage() {
           .print-toolbar { display: none !important; }
           @page { size: A4 landscape; margin: 10mm; }
           body { background: #fff !important; }
-          .sheet { box-shadow: none !important; margin: 0 !important; }
+          .sheet { box-shadow: none !important; margin: 0 !important; break-inside: avoid; break-after: page; page-break-after: always; }
+          .sheet:last-child { break-after: auto; page-break-after: auto; }
         }
         @media screen {
           body { background: #EDE7DB; }
         }
       `}</style>
 
-      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', padding: '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
+      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
         <button
           onClick={() => history.back()}
           style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}
@@ -345,220 +563,146 @@ export default function FacilitatorPrintPage() {
         >
           🖨 Print / Save as PDF
         </button>
-        <span style={{ fontSize: 12, opacity: 0.85, marginLeft: 8 }}>A4 landscape plan sheet</span>
+        <span style={{ fontSize: 12, opacity: 0.85, marginLeft: 8 }}>
+          A4 landscape plan pack{nothingToPrint ? ' — select at least one page below' : ''}
+        </span>
+
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginLeft: 'auto' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
+            <input type="checkbox" checked={fullOn} onChange={() => togglePage('full')} />
+            Full design
+          </label>
+          {c.layersPresent.map((lid) => (
+            <label key={lid} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
+              <input type="checkbox" checked={enabledPages[lid] ?? true} onChange={() => togglePage(lid)} />
+              {LAYERS[lid].icon} {LAYERS[lid].name}
+            </label>
+          ))}
+        </div>
       </div>
 
-      <div
-        className="sheet"
-        style={{
-          width: '297mm',
-          minHeight: '210mm',
-          margin: '16px auto',
-          background: '#fff',
-          color: '#161311',
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          padding: '12mm 14mm',
-          boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
-          boxSizing: 'border-box',
-        }}
-      >
-        {/* Title block */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
-          <div>
-            <div style={{ fontSize: 22, fontWeight: 700 }}>{title}</div>
-            {state.bgSite && (
-              <div style={{ fontSize: 11, marginTop: 3, color: '#3A352C' }}>
-                {state.bgSite.name} · {state.bgSite.lat.toFixed(4)}, {state.bgSite.lon.toFixed(4)}
-              </div>
-            )}
-            <div style={{ fontSize: 11, marginTop: 2, color: '#5C5040' }}>{dateStr}</div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: 0.5, color: '#1F4D2B' }}>ImbewuField</div>
-            <div style={{ fontSize: 9.5, color: '#9A8268' }}>Permaculture plan sheet</div>
-          </div>
-        </div>
-
-        {/* Body: drawing left, legend+BOQ right */}
-        <div style={{ display: 'flex', gap: '8mm' }}>
-          {/* Plan drawing */}
-          <div style={{ flex: '0 0 auto' }}>
-            <svg width="240mm" height="160mm" viewBox={`0 0 ${c.drawW} ${c.drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
-              {/* grid */}
-              {gridLinesM().map((g, i) => (
-                <line key={`grid-${i}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} stroke="#E2D8C4" strokeWidth={0.2} />
-              ))}
-
-              {/* lines */}
-              {c.linePts.map(({ l, pts }, i) => {
-                if (pts.length < 2) return null;
-                const L = LINES[l.kind];
-                const draw = pts.map((p) => c.toDraw(p));
-                const pointsAttr = draw.map((p) => `${p.x},${p.y}`).join(' ');
-                if (l.closed) {
-                  const isBuilding = l.kind === 'building';
-                  const isFence = l.kind === 'fence';
-                  const isPipe = l.kind === 'pipe';
-                  return (
-                    <polygon
-                      key={l.id ?? i}
-                      points={pointsAttr}
-                      fill={isBuilding ? '#5A5448' : isFence ? 'none' : isPipe ? 'none' : 'none'}
-                      fillOpacity={isBuilding ? 0.2 : 0}
-                      stroke={L.color}
-                      strokeWidth={Math.max(L.width * (c.scale / c.pxPerM) * c.pxPerM * 0.15, 0.6)}
-                      strokeDasharray={L.dash.join(',')}
-                    />
-                  );
-                }
-                return (
-                  <polyline
-                    key={l.id ?? i}
-                    points={pointsAttr}
-                    fill="none"
-                    stroke={L.color}
-                    strokeWidth={Math.max(L.width * 0.3, 0.6)}
-                    strokeDasharray={L.dash.join(',')}
-                    strokeLinecap="round"
-                  />
-                );
-              })}
-
-              {/* sectors (translucent wedges) */}
-              {c.sectorPts.map(({ s, p }, i) => {
-                const def = SECTOR_LABELS[s.kind];
-                const center = c.toDraw(p);
-                const r = s.radiusM * c.scale;
-                const a0 = (s.rotation - s.spanDeg / 2) * (Math.PI / 180);
-                const a1 = (s.rotation + s.spanDeg / 2) * (Math.PI / 180);
-                const x0 = center.x + r * Math.cos(a0);
-                const y0 = center.y + r * Math.sin(a0);
-                const x1 = center.x + r * Math.cos(a1);
-                const y1 = center.y + r * Math.sin(a1);
-                const large = s.spanDeg > 180 ? 1 : 0;
-                return (
-                  <path
-                    key={`sector-${i}`}
-                    d={`M ${center.x} ${center.y} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z`}
-                    fill={def.color}
-                    fillOpacity={0.14}
-                    stroke={def.color}
-                    strokeOpacity={0.4}
-                    strokeWidth={0.5}
-                  />
-                );
-              })}
-
-              {/* items */}
-              {c.itemPts.map(({ it, p }, i) => {
-                const cat = CATALOG[it.type];
-                const center = c.toDraw(p);
-                const w = (it.wM || cat.w) * c.scale;
-                const h = (it.hM || cat.h) * c.scale;
-                const showLabel = Math.max(w, h) > 8;
-                return (
-                  <g key={it.id ?? i} transform={`rotate(${it.rotation || 0} ${center.x} ${center.y})`}>
-                    {cat.shape === 'circle' ? (
-                      <ellipse cx={center.x} cy={center.y} rx={w / 2} ry={h / 2} fill={cat.fill} fillOpacity={0.75} stroke="#161311" strokeWidth={0.3} />
-                    ) : (
-                      <rect x={center.x - w / 2} y={center.y - h / 2} width={w} height={h} fill={cat.fill} fillOpacity={0.75} stroke="#161311" strokeWidth={0.3} />
-                    )}
-                    <text x={center.x} y={center.y + 2} fontSize={Math.min(6, Math.max(w, h) * 0.5)} textAnchor="middle" fill="#fff">{cat.icon}</text>
-                    {showLabel && (
-                      <text x={center.x} y={center.y + h / 2 + 4} fontSize={3} textAnchor="middle" fill="#161311">{cat.label}</text>
-                    )}
-                  </g>
-                );
-              })}
-
-              {/* north arrow */}
-              <g transform={`translate(${c.drawW - 18}, 14)`}>
-                <line x1={0} y1={10} x2={0} y2={-6} stroke="#161311" strokeWidth={1} />
-                <polygon points="0,-9 -3,-2 3,-2" fill="#161311" />
-                <text x={0} y={19} fontSize={6} textAnchor="middle" fill="#161311" fontWeight="bold">N ↑</text>
-              </g>
-
-              {/* scale bar */}
-              <g transform={`translate(10, ${c.drawH - 8})`}>
-                <line x1={0} y1={0} x2={scaleBarPx} y2={0} stroke="#161311" strokeWidth={1.5} />
-                <line x1={0} y1={-2} x2={0} y2={2} stroke="#161311" strokeWidth={1} />
-                <line x1={scaleBarPx} y1={-2} x2={scaleBarPx} y2={2} stroke="#161311" strokeWidth={1} />
-                <text x={scaleBarPx / 2} y={-4} fontSize={4.5} textAnchor="middle" fill="#161311">{c.scaleBarM} m</text>
-              </g>
-            </svg>
-          </div>
-
-          {/* Legend + BOQ */}
-          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '4mm', fontSize: 10 }}>
+      {fullOn && (
+        <div className="sheet" style={SHEET_STYLE}>
+          {/* Title block */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Legend</div>
-              <div style={{ columnCount: 2, columnGap: '4mm' }}>
-                {(Object.keys(c.itemTally) as ElType[]).map((type) => {
-                  const t = c.itemTally[type]!;
-                  const cat = CATALOG[type];
-                  return (
-                    <div key={type} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
-                      <span style={{ width: 9, height: 9, borderRadius: cat.shape === 'circle' ? '50%' : 2, background: cat.fill, flexShrink: 0, display: 'inline-block' }} />
-                      <span style={{ fontSize: 9 }}>{cat.icon} {cat.label} × {t.count}</span>
-                    </div>
-                  );
-                })}
-                {(Object.keys(c.lineTally) as LineKind[]).map((kind) => {
-                  const t = c.lineTally[kind]!;
-                  const L = LINES[kind];
-                  return (
-                    <div key={kind} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
-                      <span style={{ width: 14, height: 3, background: L.color, flexShrink: 0, display: 'inline-block' }} />
-                      <span style={{ fontSize: 9 }}>{L.icon} {L.label} — {t.m.toFixed(1)} m</span>
-                    </div>
-                  );
-                })}
-                {Object.keys(c.itemTally).length === 0 && Object.keys(c.lineTally).length === 0 && (
-                  <div style={{ fontSize: 9, color: '#9A8268' }}>No elements placed yet.</div>
-                )}
-              </div>
+              <div style={{ fontSize: 22, fontWeight: 700 }}>{title}</div>
+              {state.bgSite && (
+                <div style={{ fontSize: 11, marginTop: 3, color: '#3A352C' }}>
+                  {state.bgSite.name} · {state.bgSite.lat.toFixed(4)}, {state.bgSite.lon.toFixed(4)}
+                </div>
+              )}
+              <div style={{ fontSize: 11, marginTop: 2, color: '#5C5040' }}>{dateStr}</div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: 0.5, color: '#1F4D2B' }}>ImbewuField</div>
+              <div style={{ fontSize: 9.5, color: '#9A8268' }}>Permaculture plan sheet</div>
+            </div>
+          </div>
+
+          {/* Body: drawing left, legend+BOQ right */}
+          <div style={{ display: 'flex', gap: '8mm' }}>
+            {/* Plan drawing */}
+            <div style={{ flex: '0 0 auto' }}>
+              <PlanSvg
+                itemPts={c.itemPts} linePts={c.linePts} sectorPts={c.sectorPts}
+                toDraw={c.toDraw} scale={c.scale} pxPerM={c.pxPerM}
+                drawW={c.drawW} drawH={c.drawH} scaleBarM={c.scaleBarM} gridLines={c.gridLines}
+              />
             </div>
 
-            {c.harvest && (
-              <div style={{ fontSize: 9, background: '#EEF4EC', border: '1px solid #C7D9C0', borderRadius: 4, padding: '3mm', lineHeight: 1.4 }}>
-                💧 {c.harvest.sentence}
-              </div>
-            )}
-
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Bill of quantities</div>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 9 }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid #C7BCA6' }}>
-                    <th style={{ textAlign: 'left', padding: '2px 0' }}>Item</th>
-                    <th style={{ textAlign: 'right', padding: '2px 0' }}>Qty</th>
-                    <th style={{ textAlign: 'right', padding: '2px 0' }}>ZAR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {c.boqRows.map((r, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid #EDE7DB' }}>
-                      <td style={{ padding: '2px 0' }}>{r.icon} {r.label}</td>
-                      <td style={{ textAlign: 'right', padding: '2px 0' }}>{r.qty}</td>
-                      <td style={{ textAlign: 'right', padding: '2px 0' }}>{r.zar !== null ? formatZar(r.zar) : '—'}</td>
-                    </tr>
-                  ))}
-                  {c.boqRows.length === 0 && (
-                    <tr><td colSpan={3} style={{ padding: '4px 0', color: '#9A8268' }}>Nothing to cost yet.</td></tr>
+            {/* Legend + BOQ */}
+            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '4mm', fontSize: 10 }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Legend</div>
+                <div style={{ columnCount: 2, columnGap: '4mm' }}>
+                  {(Object.keys(c.itemTally) as ElType[]).map((type) => {
+                    const t = c.itemTally[type]!;
+                    const cat = CATALOG[type];
+                    return (
+                      <div key={type} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
+                        <span style={{ width: 9, height: 9, borderRadius: cat.shape === 'circle' ? '50%' : 2, background: cat.fill, flexShrink: 0, display: 'inline-block' }} />
+                        <span style={{ fontSize: 9 }}>{cat.icon} {cat.label} × {t.count}</span>
+                      </div>
+                    );
+                  })}
+                  {(Object.keys(c.lineTally) as LineKind[]).map((kind) => {
+                    const t = c.lineTally[kind]!;
+                    const L = LINES[kind];
+                    return (
+                      <div key={kind} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
+                        <span style={{ width: 14, height: 3, background: L.color, flexShrink: 0, display: 'inline-block' }} />
+                        <span style={{ fontSize: 9 }}>{L.icon} {L.label} — {t.m.toFixed(1)} m</span>
+                      </div>
+                    );
+                  })}
+                  {Object.keys(c.itemTally).length === 0 && Object.keys(c.lineTally).length === 0 && (
+                    <div style={{ fontSize: 9, color: '#9A8268' }}>No elements placed yet.</div>
                   )}
-                </tbody>
-                <tfoot>
-                  <tr style={{ borderTop: '2px solid #161311', fontWeight: 700 }}>
-                    <td style={{ padding: '3px 0' }} colSpan={2}>TOTAL</td>
-                    <td style={{ textAlign: 'right', padding: '3px 0' }}>{formatZar(c.total)}</td>
-                  </tr>
-                </tfoot>
-              </table>
-              <div style={{ fontSize: 7.5, color: '#9A8268', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
+                </div>
+              </div>
+
+              {c.harvest && (
+                <div style={{ fontSize: 9, background: '#EEF4EC', border: '1px solid #C7D9C0', borderRadius: 4, padding: '3mm', lineHeight: 1.4 }}>
+                  💧 {c.harvest.sentence}
+                </div>
+              )}
+
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Bill of quantities</div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 9 }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid #C7BCA6' }}>
+                      <th style={{ textAlign: 'left', padding: '2px 0' }}>Item</th>
+                      <th style={{ textAlign: 'right', padding: '2px 0' }}>Qty</th>
+                      <th style={{ textAlign: 'right', padding: '2px 0' }}>ZAR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {c.boqRows.map((r, i) => (
+                      <tr key={i} style={{ borderBottom: '1px solid #EDE7DB' }}>
+                        <td style={{ padding: '2px 0' }}>{r.icon} {r.label}</td>
+                        <td style={{ textAlign: 'right', padding: '2px 0' }}>{r.qty}</td>
+                        <td style={{ textAlign: 'right', padding: '2px 0' }}>{r.zar !== null ? formatZar(r.zar) : '—'}</td>
+                      </tr>
+                    ))}
+                    {c.boqRows.length === 0 && (
+                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#9A8268' }}>Nothing to cost yet.</td></tr>
+                    )}
+                  </tbody>
+                  <tfoot>
+                    <tr style={{ borderTop: '2px solid #161311', fontWeight: 700 }}>
+                      <td style={{ padding: '3px 0' }} colSpan={2}>TOTAL</td>
+                      <td style={{ textAlign: 'right', padding: '3px 0' }}>{formatZar(c.total)}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+                <div style={{ fontSize: 7.5, color: '#9A8268', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {activeLayerPages.map((lid) => {
+        const def = LAYERS[lid];
+        return (
+          <div key={lid} className="sheet" style={SHEET_STYLE}>
+            <div style={{ borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
+              <div style={{ fontSize: 20, fontWeight: 700 }}>{def.icon} {def.name} map</div>
+              <div style={{ fontSize: 11, marginTop: 3, color: '#5C5040' }}>{title}</div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <PlanSvg
+                itemPts={c.itemPts} linePts={c.linePts} sectorPts={c.sectorPts}
+                toDraw={c.toDraw} scale={c.scale} pxPerM={c.pxPerM}
+                drawW={c.drawW} drawH={c.drawH} scaleBarM={c.scaleBarM} gridLines={c.gridLines}
+                highlightLayer={lid}
+              />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

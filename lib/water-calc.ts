@@ -112,6 +112,8 @@ export function recommendedTankLitres(
 }
 
 export interface HarvestDescription {
+  /** Roof area used for display, rounded to a whole m² — see describeHarvest. */
+  roofM2: number;
   annualLitres: number;
   annualMm: number;
   pattern: 'summer' | 'winter' | 'all-year';
@@ -137,15 +139,18 @@ export function describeHarvest(
   lon: number
 ): HarvestDescription {
   const region = nearestRainfall(lat, lon);
+  // Maths uses the raw (unrounded) roofM2 — only display is rounded, below.
   const annualLitres = annualHarvestLitres(roofM2, region.annualMm);
   const recommendedTank = recommendedTankLitres(annualLitres, region.pattern);
+  const roundedRoofM2 = Math.round(roofM2);
 
   const sentence =
-    `Your ${roofM2} m² of roof can harvest ≈ ${formatLitres(annualLitres)} L/yr ` +
+    `Your ${roundedRoofM2} m² of roof can harvest ≈ ${formatLitres(annualLitres)} L/yr ` +
     `(${region.annualMm} mm, ${region.pattern} rainfall) — ` +
     `recommended storage ≈ ${formatLitres(recommendedTank)} L.`;
 
   return {
+    roofM2: roundedRoofM2,
     annualLitres,
     annualMm: region.annualMm,
     pattern: region.pattern,

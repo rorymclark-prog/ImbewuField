@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Image as KonvaImage } from 'react-konva';
+import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Shape, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
 import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
 import { listFarmers, saveDesign, updateDesign, myDesigns, deleteDesign, shareDesign } from '@/lib/db/queries';
@@ -21,6 +21,7 @@ import {
 } from '@/lib/facilitator-design';
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
+import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
 
@@ -72,6 +73,16 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
+
+// ── AI polish ────────────────────────────────────────────────────────────
+// Explicit, controlled beautify pass — state machine for the modal driven by
+// runAiPolish (see below, near exportPNG/shareBudgetOnWhatsApp).
+type AiPolishState =
+  | { phase: 'idle' }
+  | { phase: 'preparing' }
+  | { phase: 'painting' }
+  | { phase: 'done'; image: string }
+  | { phase: 'error'; message: string };
 
 // ── Clip-to-image geometry helpers ──────────────────────────────────────────
 // "Find map features" pulls OSM ways for the satellite's bbox, but a way can run
@@ -576,6 +587,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [size, setSize] = useState({ w: 800, h: 560 });
   const [showGrid, setShowGrid] = useState(true);
   const [showLabels, setShowLabels] = useState(false);
+  // Parchment wash overlay — visibility aid over a dark/busy satellite (see the
+  // background Layer in the Stage below for the actual render logic).
+  const [washOn, setWashOn] = useState(false);
   // Mobile: palette + properties are slide-in drawers over a full-screen canvas
   const [mobilePanel, setMobilePanel] = useState<null | 'palette' | 'props'>(null);
   const [stageScale, setStageScale] = useState(1);
@@ -620,6 +634,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   const [review, setReview] = useState('');
   const [reviewing, setReviewing] = useState(false);
+  const [aiPolish, setAiPolish] = useState<AiPolishState>({ phase: 'idle' });
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -646,6 +661,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const trRef = useRef<Konva.Transformer>(null);
   const nodeRefs = useRef<Record<string, Konva.Node>>({});
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // ── Copy / paste ─────────────────────────────────────────────────────────
+  // Internal clipboard (deep copy, NOT the OS clipboard) for ⌘C/⌘V duplication
+  // of the selected item or sector — see copySelected/pasteClipboard below.
+  const clipboardRef = useRef<{ kind: 'item'; data: Item } | { kind: 'sector'; data: SectorEl } | null>(null);
 
   // ── Undo / redo ──────────────────────────────────────────────────────────
   // History is a stack of full {items, lines, sectors} snapshots (cap 50).
@@ -775,12 +795,24 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
         e.preventDefault();
         redo();
+      } else if (mod && e.key.toLowerCase() === 'c') {
+        const t = e.target as HTMLElement;
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+        if (!selected && !selectedSector) return;
+        e.preventDefault();
+        copySelected();
+      } else if (mod && e.key.toLowerCase() === 'v') {
+        const t = e.target as HTMLElement;
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+        if (!clipboardRef.current) return;
+        e.preventDefault();
+        pasteClipboard();
       }
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedId, undo, redo]);
+  }, [selectedId, undo, redo, pxPerM]);
 
   function loadImage(file?: File) {
     if (!file || !file.type.startsWith('image/')) return;
@@ -1255,6 +1287,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       if (s.pxPerM !== 26) setScaleSet(true);
       setActiveLayer(s.activeLayer ?? 'base');
       setHiddenLayers(s.hiddenLayers ?? []);
+      setWashOn(s.washOn ?? false);
       setDesignId(s.designId ?? null);
       setDesignTitle(s.title ?? '');
 
@@ -1308,6 +1341,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         pxPerM,
         activeLayer,
         hiddenLayers,
+        washOn,
         designId: designId ?? undefined,
         title: designTitle || undefined,
         bgSite: bgSite ?? undefined,
@@ -1318,7 +1352,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       });
     }, 600);
     return () => clearTimeout(t);
-  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, bgSite, bgDataUrl, designId, designTitle]);
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, washOn, bg, bgSite, bgDataUrl, designId, designTitle]);
 
   // Cloud payload — NEVER include bgDataUrl (Firestore 1 MB doc limit); bgSite is
   // cheap (re-fetches the satellite on load) so it's safe to persist. Same
@@ -1422,6 +1456,37 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setSelectedId(id);
     }
   };
+
+  // ⌘C/⌘V duplication — distinct from the Duplicate button above: this goes
+  // through an internal clipboard, so you can pan/select elsewhere between
+  // copy and paste. A fresh ⌘C resets the clipboard to the current selection;
+  // repeated ⌘V without a fresh ⌘C keeps offsetting from the LAST paste (not
+  // the original source), so a row of ⌘V presses staircases down-right.
+  const copySelected = () => {
+    if (selected) clipboardRef.current = { kind: 'item', data: { ...selected } };
+    else if (selectedSector) clipboardRef.current = { kind: 'sector', data: { ...selectedSector } };
+  };
+  const PASTE_OFFSET_M = 1.2;
+  const pasteClipboard = () => {
+    const clip = clipboardRef.current;
+    if (!clip) return;
+    pushHistory();
+    const offset = PASTE_OFFSET_M * pxPerM;
+    if (clip.kind === 'item') {
+      const id = `${clip.data.type}-${Date.now()}-${Math.round(Math.random() * 999)}`;
+      const next: Item = { ...clip.data, id, x: clip.data.x + offset, y: clip.data.y + offset };
+      setItems((prev) => [...prev, next]);
+      setSelectedId(id);
+      clipboardRef.current = { kind: 'item', data: next };
+    } else {
+      const id = `sector-${Date.now()}`;
+      const next: SectorEl = { ...clip.data, id, x: clip.data.x + offset, y: clip.data.y + offset };
+      setSectors((prev) => [...prev, next]);
+      setSelectedId(id);
+      clipboardRef.current = { kind: 'sector', data: next };
+    }
+  };
+
   // Property-panel edits (number inputs) — debounced push so a keystroke burst
   // or slider drag collapses into one undo step.
   const updateSel = (patch: Partial<Item>) => { pushHistoryDebounced(); setItems((prev) => prev.map((i) => i.id === selectedId ? { ...i, ...patch } : i)); };
@@ -1622,15 +1687,21 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     return { type, label: c.label, icon: c.icon, count: list.length, areaM2, litres };
   }).filter(Boolean) as { type: ElType; label: string; icon: string; count: number; areaM2: number; litres: number }[];
 
-  const lineLengthM = (points: number[]) => {
+  // `closed` adds the last→first closing segment (a traced property boundary
+  // is a closed ring — omitting it under-measures the true perimeter, e.g. a
+  // real 54 m boundary reading as 43 m). Every caller (BOQ, costed BOQ, the
+  // WhatsApp budget text, AI review) reads off lineTotals below, so fixing the
+  // maths here alone is enough — nothing downstream needs its own change.
+  const lineLengthM = (points: number[], closed?: boolean) => {
     let d = 0;
     for (let i = 0; i + 3 < points.length; i += 2) d += Math.hypot(points[i + 2] - points[i], points[i + 3] - points[i + 1]);
+    if (closed && points.length >= 4) d += Math.hypot(points[0] - points[points.length - 2], points[1] - points[points.length - 1]);
     return d / pxPerM;
   };
 
   const lineTotals = (Object.keys(LINES) as LineKind[]).map((kind) => {
     const list = lines.filter((l) => l.kind === kind); if (!list.length) return null;
-    const m = list.reduce((s, l) => s + lineLengthM(l.points), 0);
+    const m = list.reduce((s, l) => s + lineLengthM(l.points, l.closed), 0);
     return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: list.length, m };
   }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number }[];
 
@@ -1785,11 +1856,242 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
   }
 
+  // ── AI polish ──────────────────────────────────────────────────────────
+  // Explicit, controlled beautify pass: crop a satellite+layers composite of
+  // ONLY the currently-visible layers, build a pixel-lock mask over every
+  // placed item/line (OpenAI/fal convention, same as DesignGlossy's
+  // buildProtectMask: TRANSPARENT = AI may repaint, OPAQUE = pixel-preserved),
+  // and send both through the exact same strict masked pipeline (gpt-image-2
+  // via fal queue) DesignGlossy's "Best quality" button uses.
+  const canAiPolish = !!bg && (items.length > 0 || lines.length > 0);
+  const aiPolishBusy = aiPolish.phase === 'preparing' || aiPolish.phase === 'painting';
+
+  function loadImageEl(src: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Could not load the rendered image'));
+      img.src = src;
+    });
+  }
+
+  // Re-encode the result (the strict pipeline outputs JPEG bytes) to real PNG
+  // bytes via a canvas round-trip — same trick DesignGlossy's handleDownload
+  // uses — so the modal's "Download PNG" is byte-accurate, not just named
+  // .png. Falls back to the untouched source if the round-trip fails.
+  async function toPngDataUrl(src: string): Promise<string> {
+    try {
+      const img = await loadImageEl(src);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return src;
+      ctx.drawImage(img, 0, 0);
+      return canvas.toDataURL('image/png');
+    } catch {
+      return src;
+    }
+  }
+
+  // Mask canvas, sized to match the composite exactly (outW × outH — the bg
+  // rect at the composite's own pixelRatio). Every visible item footprint +
+  // visible line stroke is painted OPAQUE black (protected); everything else
+  // (the ground) stays transparent (AI may repaint).
+  function buildAiPolishMask(
+    bgRect: { x: number; y: number; w: number; h: number },
+    visItems: Item[],
+    visLines: LineEl[],
+    outW: number,
+    outH: number,
+  ): string {
+    const canvas = document.createElement('canvas');
+    canvas.width = outW;
+    canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas unavailable for the mask');
+    ctx.clearRect(0, 0, outW, outH); // transparent everywhere = editable, by default
+
+    const scale = outW / bgRect.w; // uniform — pixelRatio scales both axes together
+    ctx.fillStyle = '#000000';
+    ctx.strokeStyle = '#000000';
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // Items — footprint at its stage position/size, rotation applied around the
+    // SAME pivot Konva uses: the Group's own origin (it.x, it.y) — a rect's
+    // top-left corner, or a circle's offset local centre. Mirrors the exact
+    // <Group x={it.x} y={it.y} rotation={it.rotation}><Rect/>|<Circle x={w/2}
+    // y={h/2}/></Group> composition in the Stage render below.
+    for (const it of visItems) {
+      const cat = CATALOG[it.type];
+      const w = it.wM * pxPerM * scale;
+      const h = it.hM * pxPerM * scale;
+      const ox = (it.x - bgRect.x) * scale;
+      const oy = (it.y - bgRect.y) * scale;
+      ctx.save();
+      ctx.translate(ox, oy);
+      ctx.rotate((it.rotation * Math.PI) / 180);
+      ctx.beginPath();
+      if (cat.shape === 'circle') ctx.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2);
+      else ctx.rect(0, 0, w, h);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Lines — stroked path (points are already absolute stage px, same space
+    // as bgRect), kind's on-screen width scaled to output px + 4px flat
+    // padding so anti-aliased stroke edges stay fully inside the protected
+    // band. Closed lines get their last→first segment too (same as the
+    // Line's own `closed` prop, and the same fix as lineLengthM above).
+    for (const l of visLines) {
+      if (l.points.length < 4) continue;
+      const L = LINES[l.kind];
+      ctx.beginPath();
+      ctx.moveTo((l.points[0] - bgRect.x) * scale, (l.points[1] - bgRect.y) * scale);
+      for (let i = 2; i + 1 < l.points.length; i += 2) {
+        ctx.lineTo((l.points[i] - bgRect.x) * scale, (l.points[i + 1] - bgRect.y) * scale);
+      }
+      if (l.closed) ctx.closePath();
+      ctx.lineWidth = L.width * scale + 4;
+      ctx.stroke();
+    }
+
+    return canvas.toDataURL('image/png');
+  }
+
+  // Rich element list for the AI's context, e.g. "5000 L jojo tank 1.8 m
+  // across (Water); fence 54 m, closed loop (Access)". Same visibility filter
+  // as the mask, so the AI is told about exactly what it must paint around.
+  function describePlacedElements(visItems: Item[], visLines: LineEl[]): string {
+    const layerName = (l: LayerId) => LAYERS[l].name;
+    const itemDescs = visItems.map((it) => {
+      const c = CATALOG[it.type];
+      const layer = layerName(it.layer ?? defaultLayerForType(it.type));
+      const size = c.shape === 'circle' ? `${it.wM.toFixed(1)} m across` : `${it.wM.toFixed(1)}×${it.hM.toFixed(1)} m`;
+      const spec = it.litres ? `${it.litres.toLocaleString()} L ${c.label.toLowerCase()} ${size}` : `${c.label.toLowerCase()} ${size}`;
+      return `${spec} (${layer})`;
+    });
+    const lineDescs = visLines.map((l) => {
+      const L = LINES[l.kind];
+      const layer = layerName(l.layer ?? defaultLayerForLine(l.kind));
+      const m = lineLengthM(l.points, l.closed);
+      return `${L.label.toLowerCase()} ${m.toFixed(0)} m${l.closed ? ', closed loop' : ''} (${layer})`;
+    });
+    return [...itemDescs, ...lineDescs].join('; ');
+  }
+
+  function buildAiPolishPrompt(elementsText: string, siteName: string): string {
+    const siteLine = siteName ? ` for "${siteName}"` : '';
+    const elementsLine = elementsText
+      ? ` The farmer has placed: ${elementsText}. Their exact pixels are protected by the mask — do not add, move, remove, resize, duplicate or restyle any of them.`
+      : '';
+    return (
+      `Repaint ONLY the unprotected ground as a beautiful hand-illustrated permaculture map${siteLine} ` +
+      `— soft earth tones, gentle grass and soil texture, natural South African smallholding character. ` +
+      `Top of image is north; keep orientation, scale and the property boundary exactly as shown.` +
+      elementsLine
+    );
+  }
+
+  async function runAiPolish() {
+    if (!bg || (!items.length && !lines.length) || aiPolishBusy) return;
+    setAiPolish({ phase: 'preparing' });
+
+    // Snapshot what's about to be temporarily disturbed, so it can be restored exactly.
+    const prevScale = stageScaleRef.current;
+    const prevPos = stagePosRef.current;
+    const prevHidden = hiddenLayers;
+    const sectorsAlreadyHidden = prevHidden.includes('sectors');
+
+    let restored = false;
+    const restoreView = () => {
+      if (restored) return;
+      restored = true;
+      stageScaleRef.current = prevScale;
+      stagePosRef.current = prevPos;
+      setStageScale(prevScale);
+      setStagePos(prevPos);
+      if (!sectorsAlreadyHidden) setHiddenLayers(prevHidden);
+    };
+
+    // Deselect (no transformer handles baked into the capture), flatten the
+    // view to scale 1 / pos 0 — bg.x/y/w/h and every item/line coordinate are
+    // logical stage px, unrelated to the pan/zoom view transform — and
+    // force-hide the 'sectors' layer: sector wedges are analysis overlays,
+    // never physical objects, and must not be painted into a photorealistic render.
+    setSelectedId(null);
+    setStageScale(1);
+    setStagePos({ x: 0, y: 0 });
+    stageScaleRef.current = 1;
+    stagePosRef.current = { x: 0, y: 0 };
+    if (!sectorsAlreadyHidden) setHiddenLayers([...prevHidden, 'sectors']);
+
+    try {
+      // rAF alone can suspend forever in occluded/backgrounded tabs — race a
+      // timeout so the capture proceeds regardless of compositor state.
+      await new Promise<void>((resolve) => {
+        const t = setTimeout(resolve, 150);
+        requestAnimationFrame(() => { clearTimeout(t); resolve(); });
+      });
+
+      const stage = stageRef.current;
+      if (!stage) throw new Error('Canvas is not ready — please try again.');
+
+      // COMPOSITE — satellite + every currently-visible layer, cropped to the bg rect.
+      const compositeDataUrl = stage.toDataURL({ x: bg.x, y: bg.y, width: bg.w, height: bg.h, pixelRatio: 2 });
+      restoreView(); // snap the working view back immediately — no need to hold it through the network round-trip
+
+      const compositeImg = await loadImageEl(compositeDataUrl);
+      const outW = compositeImg.naturalWidth;
+      const outH = compositeImg.naturalHeight;
+
+      // Same "visible" filter the Stage itself renders with — the ORIGINAL
+      // hiddenLayers, before the sectors-only force-hide above (sectors are
+      // never items/lines anyway, so they don't need to be in this set).
+      const visItems = items.filter((it) => !prevHidden.includes(it.layer ?? defaultLayerForType(it.type)));
+      const visLines = lines.filter((l) => !prevHidden.includes(l.layer ?? defaultLayerForLine(l.kind)));
+
+      const maskDataUrl = buildAiPolishMask(bg, visItems, visLines, outW, outH);
+
+      // Dev-note verification: composite/mask must be pixel-identical in size (bg rect × 2).
+      console.log(`[ai-polish] composite ${outW}×${outH} · mask ${outW}×${outH} · bg ${bg.w.toFixed(0)}×${bg.h.toFixed(0)} × pixelRatio 2`);
+
+      const elementsText = describePlacedElements(visItems, visLines);
+      const siteName = designTitle || bgSite?.name || siteText || '';
+      const prompt = buildAiPolishPrompt(elementsText, siteName);
+
+      setAiPolish({ phase: 'painting' });
+      const image = await requestRender({
+        imageBase64: stripDataUrl(compositeDataUrl),
+        maskBase64: stripDataUrl(maskDataUrl),
+        provider: 'falgpt',
+        context: {},
+        touchupPrompt: prompt,
+      });
+      const rawFinal = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
+      const pngFinal = await toPngDataUrl(rawFinal);
+      setAiPolish({ phase: 'done', image: pngFinal });
+    } catch (e) {
+      restoreView();
+      setAiPolish({ phase: 'error', message: e instanceof Error ? e.message : 'AI polish failed — please try again.' });
+    }
+  }
+
   const grid: number[][] = [];
   if (showGrid) {
     for (let x = 0; x <= size.w; x += pxPerM) grid.push([x, 0, x, size.h]);
     for (let y = 0; y <= size.h; y += pxPerM) grid.push([0, y, size.w, y]);
   }
+
+  // Wash overlay boundary: the traced property boundary (map-truth import
+  // writes it as 'mapshape-boundary'), else the longest closed fence line
+  // drawn by hand. No closed fence at all → wash falls back to the whole
+  // image rect (see the background Layer in the Stage below).
+  const closedFences = lines.filter((l) => l.kind === 'fence' && l.closed && l.points.length >= 6);
+  const washBoundary = closedFences.length === 0 ? null :
+    closedFences.find((l) => l.id === 'mapshape-boundary') ??
+    closedFences.reduce((best, l) => (lineLengthM(l.points, l.closed) > lineLengthM(best.points, best.closed) ? l : best));
 
   const tile = (active: boolean) => ({
     background: active ? 'rgba(31,77,43,0.22)' : '#FBF6EC',
@@ -1898,14 +2200,15 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
             className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(scaleMode)}>
             <Ruler size={14} /> Set scale
           </button>
-          <div className="flex items-center justify-between mt-1.5">
-            <span className="text-xs font-mono" style={{ color: '#9A8268' }}>
+          <div className="mt-1.5 space-y-1">
+            <span className="text-xs font-mono block" style={{ color: '#9A8268' }}>
               1 m = {pxPerM < 10 ? pxPerM.toFixed(1) : pxPerM.toFixed(0)} px
               {scaleLocked && <span style={{ color: '#1F4D2B' }}> · ✓ from map</span>}
             </span>
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1">
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
+              <button onClick={() => setWashOn((w) => !w)} title="Dim the satellite so placed elements stand out" className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(washOn)}>wash</button>
             </div>
           </div>
           <button onClick={startFresh} className="w-full mt-1.5 py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
@@ -2139,6 +2442,34 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <Layer listening={false}>
             {bg && !hiddenLayers.includes('base') && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
             {grid.map((g, i) => <Line key={i} points={g} stroke="#20190F" strokeWidth={1} opacity={0.08} />)}
+            {/* Parchment wash — visibility aid over a dark/busy satellite. Sits above
+                the image + grid but below sectors/lines/items (next Layer down). */}
+            {washOn && bg && (
+              washBoundary ? (
+                <>
+                  {/* Dim everywhere except the boundary, in one paint via an evenodd
+                      fill (outer rect ring + inner boundary ring) — avoids punching a
+                      destination-out hole through the satellite image painted above. */}
+                  <Shape
+                    listening={false}
+                    fill="rgba(20,25,18,0.35)"
+                    fillRule="evenodd"
+                    sceneFunc={(ctx, shape) => {
+                      ctx.beginPath();
+                      ctx.rect(bg.x, bg.y, bg.w, bg.h);
+                      const pts = washBoundary.points;
+                      ctx.moveTo(pts[0], pts[1]);
+                      for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]);
+                      ctx.closePath();
+                      ctx.fillStrokeShape(shape);
+                    }}
+                  />
+                  <Line points={washBoundary.points} closed fill="rgba(245,240,232,0.5)" listening={false} />
+                </>
+              ) : (
+                <Rect x={bg.x} y={bg.y} width={bg.w} height={bg.h} fill="rgba(245,240,232,0.4)" listening={false} />
+              )
+            )}
             {draftPt && <Circle x={draftPt[0]} y={draftPt[1]} radius={5} fill="#5DCF80" />}
           </Layer>
           <Layer>
@@ -2297,6 +2628,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                     className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
               </div>
+              <p className="text-[9px] font-mono" style={{ color: '#9A8268' }}>⌘C / ⌘V to duplicate</p>
             </div>
           ) : selectedSector ? (
             <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FBF6EC', border: `1px solid ${SECTOR_DEFS[selectedSector.kind].color}66` }}>
@@ -2327,6 +2659,7 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                     className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                 </label>
               </div>
+              <p className="text-[9px] font-mono" style={{ color: '#9A8268' }}>⌘C / ⌘V to duplicate</p>
             </div>
           ) : (
             <p className="text-xs font-display" style={{ color: '#9A8268' }}>Pick a feature on the left, then tap the map to place it. Tap a placed item to edit it here.</p>
@@ -2409,11 +2742,18 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           )}
 
           {/* Action buttons row */}
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button onClick={runReview} disabled={reviewing || !items.length}
               className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
               style={reviewing || !items.length ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.45)', color: '#1F4D2B' }}>
               {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 className="animate-spin" size={14} /> Reviewing…</span> : <span className="flex items-center justify-center gap-1.5"><Sparkles size={14} /> AI review</span>}
+            </button>
+            <button onClick={runAiPolish} disabled={!canAiPolish || aiPolishBusy}
+              className={`py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5 ${activeLayer === 'review' ? 'flex-1' : 'px-3'}`}
+              style={!canAiPolish || aiPolishBusy ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}
+              title="AI polish this map — beautify the background, keep every placed item and line pixel-locked">
+              {aiPolishBusy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
+              {activeLayer === 'review' ? '✨ AI polish' : 'Polish'}
             </button>
             <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Export PNG"><Download size={14} /> PNG</button>
             <button onClick={() => window.open('/facilitator/print')} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Print plan">🖨 Print plan</button>
@@ -2563,6 +2903,65 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           {mobilePanel === 'props' ? <><X size={16} /> Close</> : <><ClipboardList size={16} /> Plan</>}
         </button>
       </div>
+
+      {/* ── AI polish modal ── */}
+      {aiPolish.phase !== 'idle' && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
+          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+            <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
+                  <Sparkles size={15} /> AI polish
+                </span>
+                {!aiPolishBusy && (
+                  <button onClick={() => setAiPolish({ phase: 'idle' })} className="flex items-center justify-center rounded-lg" style={{ width: 24, height: 24, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+                    <X size={13} />
+                  </button>
+                )}
+              </div>
+              <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
+                Polishing the layers you have visible — use the 👁 menu first to polish a single map (e.g. just Water).
+              </p>
+            </div>
+            <div className="p-4">
+              {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting') && (
+                <div className="flex flex-col items-center justify-center gap-3 py-10">
+                  <Loader2 className="animate-spin" size={28} style={{ color: '#9E5C08' }} />
+                  <p className="text-xs font-display text-center" style={{ color: '#5C5040' }}>
+                    {aiPolish.phase === 'preparing' ? 'Preparing your map…' : 'AI is painting your map — about a minute…'}
+                  </p>
+                </div>
+              )}
+              {aiPolish.phase === 'done' && (
+                <div className="space-y-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={aiPolish.image} alt="AI-polished map" className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
+                  <div className="flex gap-2">
+                    <a href={aiPolish.image} download={`${(designTitle || 'garden-plan').toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-ai-polished.png`}
+                      className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
+                      style={{ background: '#1F4D2B', color: '#fff' }}>
+                      <Download size={14} /> Download PNG
+                    </a>
+                    <button onClick={() => setAiPolish({ phase: 'idle' })}
+                      className="px-4 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      <X size={14} /> Close
+                    </button>
+                  </div>
+                </div>
+              )}
+              {aiPolish.phase === 'error' && (
+                <div className="space-y-3">
+                  <p className="text-xs font-display leading-relaxed" style={{ color: '#C0531E' }}>⚠ {aiPolish.message}</p>
+                  <button onClick={() => setAiPolish({ phase: 'idle' })}
+                    className="w-full py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center justify-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                    <X size={14} /> Close
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

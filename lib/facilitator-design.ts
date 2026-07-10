@@ -254,6 +254,8 @@ export interface FacilitatorDesignState {
   pxPerM: number;
   activeLayer: LayerId;
   hiddenLayers: LayerId[];
+  /** Parchment wash overlay toggle (visibility aid over a busy satellite) — see FacilitatorCanvas. */
+  washOn?: boolean;
   /** Cloud design doc this canvas is bound to, once saved — drives update-not-create autosave. */
   designId?: string;
   title?: string;

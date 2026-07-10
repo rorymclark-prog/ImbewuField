@@ -92,6 +92,12 @@ export const PRICE_BOOK: Record<string, PriceEntry> = {
     zar: 60,
     note: 'Hand excavation and shaping, per running metre; cheaper if machine-dug at scale.',
   },
+  swalew: {
+    label: 'Swale berm (earthworks)',
+    unit: 'per_m2',
+    zar: 60,
+    note: 'hand-dug, planted',
+  },
   citrus_tree: {
     label: 'Citrus tree',
     unit: 'each',
@@ -258,11 +264,15 @@ const ITEM_TYPE_MAP: Record<string, string> = {
   tree: 'generic_fruit_tree',
   shrub: 'shrub',
   veg_bed: 'veg_bed_per_m2',
+  bed: 'veg_bed_per_m2',
   hugel: 'hugel_per_m2',
   hugelkultur: 'hugel_per_m2',
   banana_circle: 'banana_circle',
+  banana: 'banana_circle',
   herb_spiral: 'herb_spiral',
+  herb: 'herb_spiral',
   food_forest: 'food_forest_per_m2',
+  foodforest: 'food_forest_per_m2',
   nursery: 'nursery_per_m2',
   compost_bay: 'compost_bay',
   compost: 'compost_bay',
@@ -278,6 +288,7 @@ const ITEM_TYPE_MAP: Record<string, string> = {
   well: 'well',
   borehole: 'well',
   biogas: 'biogas',
+  swalew: 'swalew',
   firebreak: 'firebreak_per_m2',
 };
 
