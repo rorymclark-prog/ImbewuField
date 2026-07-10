@@ -557,6 +557,14 @@ export default function FacilitatorPrintPage() {
         >
           ‹ Back
         </button>
+        {/* history.back() no-ops when this page was opened directly (e.g. a new tab) —
+            give a real destination so the facilitator is never stranded here. */}
+        <a
+          href="/facilitator"
+          style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13, textDecoration: 'none' }}
+        >
+          ✎ Back to Design map
+        </a>
         <button
           onClick={() => window.print()}
           style={{ padding: '6px 14px', borderRadius: 6, border: 'none', background: '#fff', color: '#1F4D2B', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}

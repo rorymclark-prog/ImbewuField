@@ -11,7 +11,7 @@ import { designSiteIdFromLocation, loadDesignStudioState, mergeFarmShapesIntoDes
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMercatorUnprojector } from '@/lib/design-canvas';
 import type { LocationData } from '@/lib/types';
-import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect } from '@/lib/facilitator-design';
+import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect, FacilitatorDesignState } from '@/lib/facilitator-design';
 import {
   LAYERS, LAYER_ORDER, SECTOR_DEFS, defaultLayerForType, defaultLayerForLine, layerForPlacement,
   coachTip, type CoachCounts,
@@ -22,6 +22,7 @@ import {
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
+import { getFirebase } from '@/lib/firebase/init';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
 
@@ -76,13 +77,25 @@ interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolea
 
 // ── AI polish ────────────────────────────────────────────────────────────
 // Explicit, controlled beautify pass — state machine for the modal driven by
-// runAiPolish (see below, near exportPNG/shareBudgetOnWhatsApp).
+// runAiPolishWith (see below, near exportPNG/shareBudgetOnWhatsApp).
+//
+// Phases: idle → pick (choose which layers to polish) → preparing → painting
+// → done, or error at any point after pick. "Add another map" from done loops
+// back to pick. hiddenLayers is only ever mutated between the start of
+// runAiPolishWith and its single restore path (success OR error) — the pick
+// phase itself never touches visibility, so closing the modal from pick is
+// always a no-op on the user's 👁 state.
 type AiPolishState =
   | { phase: 'idle' }
-  | { phase: 'preparing' }
-  | { phase: 'painting' }
-  | { phase: 'done'; image: string }
+  | { phase: 'pick'; selected: LayerId[] }
+  | { phase: 'preparing'; label: string }
+  | { phase: 'painting'; label: string }
+  | { phase: 'done'; image: string; label: string }
   | { phase: 'error'; message: string };
+
+// A polish run's result, kept for the session so switching layers/maps never
+// throws away a beautified image — see the gallery state + '🖼 Polished (n)' button.
+interface PolishGalleryItem { id: string; label: string; image: string; at: number }
 
 // ── Clip-to-image geometry helpers ──────────────────────────────────────────
 // "Find map features" pulls OSM ways for the satellite's bbox, but a way can run
@@ -180,6 +193,20 @@ function clipPolygonToRect(points: number[], rect: ClipRect): number[] {
 
 // Demo: farmers a supervisor could push a design to (real version = backend + accounts)
 const FARMERS = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane'];
+
+// ── Site-switch safety net ──────────────────────────────────────────────────
+// A saved place is "the same site" as whatever's currently loaded when the sum of
+// |Δlat|+|Δlon| is under this — used both to detect SITE-SWITCH CONTAMINATION
+// (importSite) and to decide whether the URL's initialSite needs importing at all.
+const SITE_DIFF_DEG = 0.001;
+
+// localStorage key for the one-slot "previous design" safety net — written before a
+// site switch that would clear user content (importSite) or a manual Start fresh
+// (startFresh), and swapped back in via the "Restore backed-up design" button. Same
+// payload shape as the STORE_KEY autosave (see lib/facilitator-design.ts), plus
+// backedUpAt.
+const BACKUP_KEY = 'imbewu_facilitator_design_backup';
+type BackupPayload = FacilitatorDesignState & { backedUpAt: number };
 
 // ── Top-view vector icons ──────────────────────────────────────────────────
 // Each function receives the pixel w/h of the element and returns an array of
@@ -568,7 +595,7 @@ function ElementIcon({ type, w, h }: { type: ElType; w: number; h: number }) {
   }
 }
 
-export default function FacilitatorCanvas({ siteText, language }: { siteText?: string; language?: string }) {
+export default function FacilitatorCanvas({ siteText, language, initialSite }: { siteText?: string; language?: string; initialSite?: { lat: number; lon: number; name: string } }) {
   const [items, setItems] = useState<Item[]>([]);
   const [lines, setLines] = useState<LineEl[]>([]);
   // Mirror for callbacks that run inside stale closures (loadSiteBackground's
@@ -615,6 +642,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [scaleMode, setScaleMode] = useState(false);
   const [draftPt, setDraftPt] = useState<number[] | null>(null);
   const restoredRef = useRef(false);
+  // Flips true once the mount-restore effect's OWN background load (if any — a map
+  // site's satellite fetch is async) has settled, so the auto-pick-site-from-URL
+  // effect below reads a bgSite that reflects what was ACTUALLY restored, not a
+  // stale mount-time value. restoredRef (above) only covers the synchronous part.
+  const [restoreSettled, setRestoreSettled] = useState(false);
+  const autoPickedRef = useRef(false);
 
   // AI detect — vision detection of existing features + boundary as ghost overlays.
   const [ghosts, setGhosts] = useState<GhostFeature[] | null>(null);
@@ -635,6 +668,10 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   const [review, setReview] = useState('');
   const [reviewing, setReviewing] = useState(false);
   const [aiPolish, setAiPolish] = useState<AiPolishState>({ phase: 'idle' });
+  // Session-only gallery of polish results — never persisted (see PolishGalleryItem).
+  const [polishGallery, setPolishGallery] = useState<PolishGalleryItem[]>([]);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -645,6 +682,16 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   // Transient confirmation when traced map shapes (boundary/water/paths) are imported
   // as map-truth lines — see loadSiteBackground.
   const [mapImportMsg, setMapImportMsg] = useState('');
+  // Transient confirmation that a previous design was snapshotted to BACKUP_KEY before
+  // a site switch cleared the canvas (see importSite) — separate from mapImportMsg so
+  // the two notices never race/clobber each other.
+  const [backupMsg, setBackupMsg] = useState('');
+  // Whether BACKUP_KEY currently holds a snapshot — gates the "Restore backed-up
+  // design" button. Checked once on mount; kept in sync by backupCurrentDesign.
+  const [hasBackup, setHasBackup] = useState(false);
+  useEffect(() => {
+    try { setHasBackup(!!localStorage.getItem(BACKUP_KEY)); } catch { /* unavailable */ }
+  }, []);
 
   // Cloud save/load — designId binds this canvas to a Firestore doc once saved.
   const [designId, setDesignId] = useState<string | null>(null);
@@ -966,14 +1013,117 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size.w, size.h]);
 
+  // SITE-SWITCH CONTAMINATION guard, shared by the "From my map sites" picker
+  // (importFromSite) and the auto-pick-from-URL path (fix 2): a previous site's
+  // manually-placed items/lines/sectors were persisting mis-registered on the new
+  // satellite, because importFromSite/loadSiteBackground only ever replaced
+  // 'mapshape-' lines. If a real site is already loaded, the new place is actually
+  // different, and there's any user content (placed items/sectors, or lines that
+  // AREN'T auto-imported map-truth/OSM traces), back the whole design up to
+  // BACKUP_KEY first and clear the canvas before loading the new site — so nothing
+  // is ever silently lost, just relocated behind "Restore backed-up design".
+  async function importSite(site: { lat: number; lon: number; name: string }) {
+    const isDifferentSite = !bgSite || Math.abs(bgSite.lat - site.lat) + Math.abs(bgSite.lon - site.lon) > SITE_DIFF_DEG;
+    const hasUserContent = items.length > 0 || sectors.length > 0 ||
+      lines.some((l) => !l.id.startsWith('mapshape-') && !l.id.startsWith('osm-'));
+    if (bgSite && isDifferentSite && hasUserContent) {
+      backupCurrentDesign();
+      setItems([]); setLines([]); setSectors([]);
+      setGhosts(null);
+      setSelectedId(null);
+      setDesignId(null); setDesignTitle('');
+      resetHistory();
+      setBackupMsg('✓ Previous design backed up — Restore from the Base map section');
+      setTimeout(() => setBackupMsg(''), 5000);
+    }
+    await loadSiteBackground(site);
+  }
+
   // Import a saved place's satellite directly (same fit + maths as the Design Studio),
   // and auto-set pxPerM so 1 m on the stage is true to the ground.
   async function importFromSite(p: SavedPlace) {
     try {
       setSiteLoading(p.id);
-      await loadSiteBackground({ lat: p.lat, lon: p.lon, name: p.name });
+      await importSite({ lat: p.lat, lon: p.lon, name: p.name });
     } catch {
       setSiteLoading(null);
+    }
+  }
+
+  // "Restore backed-up design" (fixes 1 + 4) — swaps whatever BACKUP_KEY holds back
+  // in as the live design. SWAPS rather than overwrites: what's currently on screen
+  // is written into BACKUP_KEY first, so hitting Restore again always undoes the
+  // restore too — nothing is ever lost either direction. Loads the backup fully,
+  // via the same metre→px + bgSite-refetch machinery as loadDesignRow/the mount
+  // restore (see resolveAndSet there).
+  async function restoreBackedUpDesign() {
+    let raw: string | null = null;
+    try { raw = localStorage.getItem(BACKUP_KEY); } catch { raw = null; }
+    if (!raw) return;
+    if (!window.confirm('Restore the backed-up design? It swaps places with what you see now — nothing is lost.')) return;
+
+    let parsed: BackupPayload | null = null;
+    try { parsed = JSON.parse(raw) as BackupPayload; } catch { parsed = null; }
+    if (!parsed || !Array.isArray(parsed.items)) return;
+    const backup = parsed; // stable `const` — safe to read from the img.onload closure below
+
+    // Swap, don't overwrite: the design currently on screen becomes the new backup.
+    try {
+      const payload: BackupPayload = { ...buildLocalStatePayload(), backedUpAt: Date.now() };
+      localStorage.setItem(BACKUP_KEY, JSON.stringify(payload));
+    } catch { /* best effort — still proceed with the restore itself */ }
+
+    const isV2 = backup.geomVersion === 2;
+    const rawItems = (backup.items ?? []) as FacItem[];
+    const rawLines = (backup.lines ?? []) as FacLine[];
+    const rawSectors = (backup.sectors ?? []) as FacSector[];
+    const savedPxPerM = backup.pxPerM ?? 26;
+
+    const resolveAndSet = (freshRect: BgRect | null, freshPxPerM: number) => {
+      if (isV2) {
+        const g = freshRect
+          ? geomMToPx(rawItems, rawLines, rawSectors, freshRect, freshPxPerM)
+          : geomMToPx(rawItems, rawLines, rawSectors, { x: 0, y: 0, w: 0, h: 0 }, DEFAULT_PX_PER_M);
+        setItems(g.items as Item[]);
+        setLines(g.lines as LineEl[]);
+        setSectors(g.sectors as SectorEl[]);
+      } else {
+        setItems(rawItems as Item[]);
+        setLines(rawLines as LineEl[]);
+        setSectors(rawSectors as SectorEl[]);
+      }
+    };
+
+    setPxPerM(savedPxPerM);
+    setActiveLayer(backup.activeLayer ?? 'base');
+    setHiddenLayers(backup.hiddenLayers ?? []);
+    setWashOn(backup.washOn ?? false);
+    setDesignId(backup.designId ?? null);
+    setDesignTitle(backup.title ?? '');
+    setSelectedId(null);
+    setGhosts(null);
+    setScaleSuggestion(null);
+    resetHistory();
+
+    if (backup.bgSite) {
+      loadSiteBackground(backup.bgSite, (freshRect, freshPxPerM) => resolveAndSet(freshRect, freshPxPerM)).catch(() => {
+        resolveAndSet(null, savedPxPerM || DEFAULT_PX_PER_M);
+      });
+    } else if (backup.bgDataUrl && backup.bgRect) {
+      const img = new window.Image();
+      const rect = backup.bgRect;
+      img.onload = () => {
+        setBg({ img, x: rect.x, y: rect.y, w: rect.w, h: rect.h, opacity: backup.bgOpacity ?? 1 });
+        setBgDataUrl(backup.bgDataUrl ?? null);
+        setBgSite(null);
+        setShowGrid(false);
+        resolveAndSet(rect, savedPxPerM);
+      };
+      img.onerror = () => resolveAndSet(null, savedPxPerM || DEFAULT_PX_PER_M);
+      img.src = backup.bgDataUrl;
+    } else {
+      setBg(null); setBgSite(null); setBgDataUrl(null);
+      resolveAndSet(null, savedPxPerM || DEFAULT_PX_PER_M);
     }
   }
 
@@ -1307,9 +1457,17 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       setDesignTitle(s.title ?? '');
 
       if (s.bgSite) {
-        loadSiteBackground(s.bgSite, (freshRect, freshPxPerM) => resolveAndSet(freshRect, freshPxPerM)).catch(() => {
+        // NB: loadSiteBackground's own returned promise resolves once the satellite
+        // FETCH completes, not once the image has decoded/onBgReady has fired — so
+        // restoreSettled must flip inside onBgReady itself (and inside the .catch
+        // fallback), not off a .then() on the outer promise.
+        loadSiteBackground(s.bgSite, (freshRect, freshPxPerM) => {
+          resolveAndSet(freshRect, freshPxPerM);
+          setRestoreSettled(true);
+        }).catch(() => {
           // Satellite fetch failed — still show geometry rather than an empty canvas.
           resolveAndSet(null, s.pxPerM || DEFAULT_PX_PER_M);
+          setRestoreSettled(true);
         });
       } else if (s.bgDataUrl && s.bgRect) {
         const img = new window.Image();
@@ -1321,19 +1479,39 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           // File imports restore the SAME rect they were saved with — metres
           // convert back losslessly against it.
           resolveAndSet(rect, s.pxPerM);
+          setRestoreSettled(true);
         };
+        img.onerror = () => setRestoreSettled(true);
         img.src = s.bgDataUrl;
       } else {
         // No background at all.
         resolveAndSet(null, s.pxPerM || DEFAULT_PX_PER_M);
+        setRestoreSettled(true);
       }
+    } else {
+      setRestoreSettled(true);
     }
     restoredRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Debounced autosave — skip until the initial restore above has completed so we
-  // never clobber saved state with the empty initial render.
+  // AUTO-PICK SITE FROM URL (fix 2) — once the mount restore above (incl. any async
+  // background it loaded) has settled, import the site passed via the URL if it
+  // isn't already what's on screen. Runs from a FRESH render's closure (not the
+  // one-shot mount effect above), so bgSite/importSite here are never stale — the
+  // ref guard just ensures it only actually fires once per mount.
+  useEffect(() => {
+    if (!restoreSettled || !initialSite || autoPickedRef.current) return;
+    autoPickedRef.current = true;
+    const differs = !bgSite || Math.abs(bgSite.lat - initialSite.lat) + Math.abs(bgSite.lon - initialSite.lon) > SITE_DIFF_DEG;
+    if (differs) importSite(initialSite).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restoreSettled]);
+
+  // Local-state payload builder — same shape saveFacilitatorState persists under its
+  // STORE_KEY. Shared by the debounced autosave below AND by backupCurrentDesign
+  // (BACKUP_KEY safety-net snapshot for importSite/startFresh) so both always agree
+  // on exactly what "the current design" means.
   //
   // METRE-BASED PERSISTENCE (geomVersion 2): the background satellite re-fits to
   // whatever container is on screen at load time, so absolute stage px drift off
@@ -1342,32 +1520,53 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   // the anchor) so load-time can re-derive px against the freshly-fit rect.
   // Runtime state (items/lines/sectors) stays in px throughout — this conversion
   // happens only at the save boundary.
+  const buildLocalStatePayload = useCallback((): FacilitatorDesignState => {
+    const bgRect: BgRect | undefined = bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined;
+    const geom = bgRect ? geomPxToM(items, lines, sectors, bgRect, pxPerM) : null;
+    return {
+      version: 1,
+      geomVersion: 2,
+      items: (geom?.items ?? items) as FacItem[],
+      lines: (geom?.lines ?? lines) as FacLine[],
+      sectors: (geom?.sectors ?? sectors) as FacSector[],
+      pxPerM,
+      activeLayer,
+      hiddenLayers,
+      washOn,
+      designId: designId ?? undefined,
+      title: designTitle || undefined,
+      bgSite: bgSite ?? undefined,
+      bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
+      bgRect,
+      bgOpacity: bg?.opacity,
+      savedAt: Date.now(),
+    };
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, washOn, designId, designTitle, bgSite, bgDataUrl, bg]);
+
+  // Debounced autosave — skip until the initial restore above has completed so we
+  // never clobber saved state with the empty initial render.
   useEffect(() => {
     if (!restoredRef.current) return;
     const t = setTimeout(() => {
-      const bgRect: BgRect | undefined = bg ? { x: bg.x, y: bg.y, w: bg.w, h: bg.h } : undefined;
-      const geom = bgRect ? geomPxToM(items, lines, sectors, bgRect, pxPerM) : null;
-      saveFacilitatorState({
-        version: 1,
-        geomVersion: 2,
-        items: (geom?.items ?? items) as FacItem[],
-        lines: (geom?.lines ?? lines) as FacLine[],
-        sectors: (geom?.sectors ?? sectors) as FacSector[],
-        pxPerM,
-        activeLayer,
-        hiddenLayers,
-        washOn,
-        designId: designId ?? undefined,
-        title: designTitle || undefined,
-        bgSite: bgSite ?? undefined,
-        bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
-        bgRect,
-        bgOpacity: bg?.opacity,
-        savedAt: Date.now(),
-      });
+      saveFacilitatorState(buildLocalStatePayload());
     }, 600);
     return () => clearTimeout(t);
-  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, washOn, bg, bgSite, bgDataUrl, designId, designTitle]);
+  }, [buildLocalStatePayload]);
+
+  // SITE-SWITCH / START-FRESH SAFETY NET — snapshot the ENTIRE current design (same
+  // shape as the local autosave above, plus backedUpAt) to a single backup slot
+  // before an action that would otherwise destroy it without recourse (importSite
+  // clearing for a new site; startFresh). "Restore backed-up design" in the Base map
+  // section swaps it back in — see restoreBackedUpDesign.
+  const backupCurrentDesign = useCallback(() => {
+    try {
+      const payload: BackupPayload = { ...buildLocalStatePayload(), backedUpAt: Date.now() };
+      localStorage.setItem(BACKUP_KEY, JSON.stringify(payload));
+      setHasBackup(true);
+    } catch {
+      // Quota or unavailable — best effort; never blocks the switch/clear it guards.
+    }
+  }, [buildLocalStatePayload]);
 
   // Cloud payload — NEVER include bgDataUrl (Firestore 1 MB doc limit); bgSite is
   // cheap (re-fetches the satellite on load) so it's safe to persist. Same
@@ -1405,6 +1604,36 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bgSite, designId]);
+
+  // FIRST-SAVE CLOUD GAP — the cloud autosave above only ever engages once designId
+  // is set, so a signed-in facilitator who never taps "Save design" gets local-only
+  // backup forever. Once there's real content (canAiPolish-style check — see below)
+  // and 10s of quiet, auto-create the cloud doc via the exact same create path
+  // handleSave uses, so designId gets set and the autosave effect above takes over
+  // from here. Signed-out facilitators are never touched — saveDesign would no-op
+  // for them anyway, but gating explicitly avoids even attempting the write.
+  const autoCreatedRef = useRef(false);
+  useEffect(() => {
+    if (!restoredRef.current || designId || autoCreatedRef.current) return;
+    const hasContent = !!bg && (items.length > 0 || lines.length > 0); // canAiPolish-style check
+    if (!hasContent || !getFirebase()?.auth?.currentUser?.uid) return;
+    const t = setTimeout(async () => {
+      if (autoCreatedRef.current || designId || manualSaveInFlight.current) return;
+      autoCreatedRef.current = true;
+      try {
+        const id = await saveDesign(buildCloudPayload());
+        if (id) {
+          setDesignId(id);
+          setCloudStatus('saved');
+          setCloudSavedAt(Date.now());
+        }
+      } catch {
+        // Best effort — the facilitator can still tap "Save design" manually.
+      }
+    }, 10000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lines, bg, designId]);
 
   function onStageClick(e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) {
     const stage = e.target.getStage();
@@ -1783,6 +2012,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
   });
   const layerHasContent = (id: LayerId): boolean =>
     id === 'base' ? !!bg : (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0) > 0 || (id === 'sectors' && sectors.length > 0);
+  // AI-polish layer picker candidates: layers with content, sectors excluded —
+  // sector wedges are analysis overlays, never captured (see runAiPolishWith).
+  const aiPolishCandidates = LAYER_ORDER.filter((id) => id !== 'sectors' && layerHasContent(id));
   const coachCounts: CoachCounts = {
     hasBg: !!bg,
     scaleSet,
@@ -1804,6 +2036,9 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   function startFresh() {
     if (!window.confirm('Clear this design and start fresh? This cannot be undone.')) return;
+    // START FRESH SAFETY NET (fix 4): same BACKUP_KEY snapshot as importSite, so an
+    // accidental Start fresh is rescued by the same "Restore backed-up design" button.
+    backupCurrentDesign();
     clearFacilitatorState();
     setItems([]); setLines([]); setSectors([]);
     setBg(null); setBgSite(null); setBgDataUrl(null);
@@ -1996,51 +2231,100 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
     return [...itemDescs, ...lineDescs].join('; ');
   }
 
-  function buildAiPolishPrompt(elementsText: string, siteName: string): string {
+  function buildAiPolishPrompt(elementsText: string, siteName: string, mapLabel: string): string {
     const siteLine = siteName ? ` for "${siteName}"` : '';
     const elementsLine = elementsText
       ? ` The farmer has placed: ${elementsText}. Their exact pixels are protected by the mask — do not add, move, remove, resize, duplicate or restyle any of them.`
       : '';
+    const scopeLine = mapLabel === 'Full design'
+      ? ''
+      : ` This capture shows only the ${mapLabel.toLowerCase()} — other layers are hidden on purpose, so leave the rest of the ground natural and uncluttered.`;
     return (
       `Repaint ONLY the unprotected ground as a beautiful hand-illustrated permaculture map${siteLine} ` +
       `— soft earth tones, gentle grass and soil texture, natural South African smallholding character. ` +
       `Top of image is north; keep orientation, scale and the property boundary exactly as shown.` +
-      elementsLine
+      elementsLine + scopeLine
     );
   }
 
-  async function runAiPolish() {
-    if (!bg || (!items.length && !lines.length) || aiPolishBusy) return;
-    setAiPolish({ phase: 'preparing' });
+  // Human label for a chosen layer set — names the gallery entry, the modal
+  // header and the AI prompt's scope line. "Water map" for one non-map-named
+  // layer, "Full design" when every candidate is chosen, else joined names.
+  function polishLabelFor(chosen: LayerId[]): string {
+    if (chosen.length === 0) return 'Map';
+    if (aiPolishCandidates.length > 0 && chosen.length === aiPolishCandidates.length) return 'Full design';
+    if (chosen.length === 1) {
+      const name = LAYERS[chosen[0]].name;
+      return /map$/i.test(name) ? name : `${name} map`;
+    }
+    return chosen.map((id) => LAYERS[id].name).join(' + ');
+  }
 
-    // Snapshot what's about to be temporarily disturbed, so it can be restored exactly.
+  // Open the modal into the layer picker. Default selection = the layers the
+  // facilitator currently has visible (falls back to every candidate if none
+  // of them are visible right now, so the picker never opens with nothing
+  // checked). Pick itself never touches hiddenLayers — see the type above.
+  function openAiPolishPicker() {
+    if (!canAiPolish || aiPolishBusy) return;
+    const visible = aiPolishCandidates.filter((id) => !hiddenLayers.includes(id));
+    setAiPolish({ phase: 'pick', selected: visible.length ? visible : aiPolishCandidates });
+  }
+
+  function toggleAiPolishLayer(id: LayerId) {
+    setAiPolish((prev) => {
+      if (prev.phase !== 'pick') return prev;
+      const has = prev.selected.includes(id);
+      return { phase: 'pick', selected: has ? prev.selected.filter((x) => x !== id) : [...prev.selected, id] };
+    });
+  }
+
+  function toggleFullDesignPick() {
+    setAiPolish((prev) => {
+      if (prev.phase !== 'pick') return prev;
+      const isFull = aiPolishCandidates.length > 0 && aiPolishCandidates.every((id) => prev.selected.includes(id));
+      return { phase: 'pick', selected: isFull ? [] : [...aiPolishCandidates] };
+    });
+  }
+
+  async function runAiPolishWith(chosen: LayerId[]) {
+    if (!bg || (!items.length && !lines.length) || chosen.length === 0 || aiPolishBusy) return;
+    const label = polishLabelFor(chosen);
+    setAiPolish({ phase: 'preparing', label });
+
+    // Snapshot the user's EXACT prior view/visibility, so it can be restored
+    // through the single path below regardless of success or error (there is
+    // no cancel mid-run — the modal has no close button while busy).
     const prevScale = stageScaleRef.current;
     const prevPos = stagePosRef.current;
     const prevHidden = hiddenLayers;
-    const sectorsAlreadyHidden = prevHidden.includes('sectors');
+
+    // Complement of the chosen set — everything NOT chosen gets hidden for the
+    // capture. Sectors is never a candidate (excluded from aiPolishCandidates),
+    // so it is always in this complement: the same "sectors never captured"
+    // rule as before, just derived from the picker instead of force-added.
+    const captureHidden = LAYER_ORDER.filter((id) => !chosen.includes(id));
 
     let restored = false;
-    const restoreView = () => {
+    const restoreAll = () => {
       if (restored) return;
       restored = true;
       stageScaleRef.current = prevScale;
       stagePosRef.current = prevPos;
       setStageScale(prevScale);
       setStagePos(prevPos);
-      if (!sectorsAlreadyHidden) setHiddenLayers(prevHidden);
+      setHiddenLayers(prevHidden); // single restore path — the user's 👁 state, untouched
     };
 
     // Deselect (no transformer handles baked into the capture), flatten the
     // view to scale 1 / pos 0 — bg.x/y/w/h and every item/line coordinate are
-    // logical stage px, unrelated to the pan/zoom view transform — and
-    // force-hide the 'sectors' layer: sector wedges are analysis overlays,
-    // never physical objects, and must not be painted into a photorealistic render.
+    // logical stage px, unrelated to the pan/zoom view transform — then hide
+    // exactly the complement of what was chosen.
     setSelectedId(null);
     setStageScale(1);
     setStagePos({ x: 0, y: 0 });
     stageScaleRef.current = 1;
     stagePosRef.current = { x: 0, y: 0 };
-    if (!sectorsAlreadyHidden) setHiddenLayers([...prevHidden, 'sectors']);
+    setHiddenLayers(captureHidden);
 
     try {
       // rAF alone can suspend forever in occluded/backgrounded tabs — race a
@@ -2053,30 +2337,28 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const stage = stageRef.current;
       if (!stage) throw new Error('Canvas is not ready — please try again.');
 
-      // COMPOSITE — satellite + every currently-visible layer, cropped to the bg rect.
+      // COMPOSITE — satellite + exactly the chosen layers, cropped to the bg rect.
       const compositeDataUrl = stage.toDataURL({ x: bg.x, y: bg.y, width: bg.w, height: bg.h, pixelRatio: 2 });
-      restoreView(); // snap the working view back immediately — no need to hold it through the network round-trip
+      restoreAll(); // snap the working view back immediately — no need to hold it through the network round-trip
 
       const compositeImg = await loadImageEl(compositeDataUrl);
       const outW = compositeImg.naturalWidth;
       const outH = compositeImg.naturalHeight;
 
-      // Same "visible" filter the Stage itself renders with — the ORIGINAL
-      // hiddenLayers, before the sectors-only force-hide above (sectors are
-      // never items/lines anyway, so they don't need to be in this set).
-      const visItems = items.filter((it) => !prevHidden.includes(it.layer ?? defaultLayerForType(it.type)));
-      const visLines = lines.filter((l) => !prevHidden.includes(l.layer ?? defaultLayerForLine(l.kind)));
+      // Same membership the Stage itself just rendered with.
+      const visItems = items.filter((it) => chosen.includes(it.layer ?? defaultLayerForType(it.type)));
+      const visLines = lines.filter((l) => chosen.includes(l.layer ?? defaultLayerForLine(l.kind)));
 
       const maskDataUrl = buildAiPolishMask(bg, visItems, visLines, outW, outH);
 
       // Dev-note verification: composite/mask must be pixel-identical in size (bg rect × 2).
-      console.log(`[ai-polish] composite ${outW}×${outH} · mask ${outW}×${outH} · bg ${bg.w.toFixed(0)}×${bg.h.toFixed(0)} × pixelRatio 2`);
+      console.log(`[ai-polish] ${label} · composite ${outW}×${outH} · mask ${outW}×${outH} · bg ${bg.w.toFixed(0)}×${bg.h.toFixed(0)} × pixelRatio 2`);
 
       const elementsText = describePlacedElements(visItems, visLines);
       const siteName = designTitle || bgSite?.name || siteText || '';
-      const prompt = buildAiPolishPrompt(elementsText, siteName);
+      const prompt = buildAiPolishPrompt(elementsText, siteName, label);
 
-      setAiPolish({ phase: 'painting' });
+      setAiPolish({ phase: 'painting', label });
       const image = await requestRender({
         imageBase64: stripDataUrl(compositeDataUrl),
         maskBase64: stripDataUrl(maskDataUrl),
@@ -2086,11 +2368,17 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       });
       const rawFinal = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
       const pngFinal = await toPngDataUrl(rawFinal);
-      setAiPolish({ phase: 'done', image: pngFinal });
+      setPolishGallery((prev) => [...prev, { id: `polish-${Date.now()}`, label, image: pngFinal, at: Date.now() }]);
+      setAiPolish({ phase: 'done', image: pngFinal, label });
     } catch (e) {
-      restoreView();
+      restoreAll();
       setAiPolish({ phase: 'error', message: e instanceof Error ? e.message : 'AI polish failed — please try again.' });
     }
+  }
+
+  function removeGalleryItem(id: string) {
+    setPolishGallery((prev) => prev.filter((g) => g.id !== id));
+    setGalleryViewId((v) => (v === id ? null : v));
   }
 
   const grid: number[][] = [];
@@ -2130,6 +2418,8 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
 
   const toggleLayerVisible = (id: LayerId) =>
     setHiddenLayers((prev) => prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]);
+
+  const galleryViewItem = galleryViewId ? polishGallery.find((g) => g.id === galleryViewId) ?? null : null;
 
   return (
     <div className="flex h-full w-full overflow-hidden relative">
@@ -2172,6 +2462,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           {mapImportMsg && (
             <div className="mt-1.5 text-[10px] font-mono px-1.5 py-1 rounded-lg" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.35)', color: '#1F4D2B' }}>
               {mapImportMsg}
+            </div>
+          )}
+          {backupMsg && (
+            <div className="mt-1.5 text-[10px] font-mono px-1.5 py-1 rounded-lg" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.35)', color: '#1F4D2B' }}>
+              {backupMsg}
             </div>
           )}
           <button onClick={() => fileRef.current?.click()} className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5 mt-1.5" style={tile(false)}>
@@ -2229,6 +2524,12 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
           <button onClick={startFresh} className="w-full mt-1.5 py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
             Start fresh
           </button>
+          {hasBackup && (
+            <button onClick={restoreBackedUpDesign} title="Swaps back the design that was here before a site switch or Start fresh"
+              className="w-full mt-1.5 py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+              ↺ Restore backed-up design
+            </button>
+          )}
         </div>
 
         {/* Rainwater harvest potential — surfaced here too while working the water layer */}
@@ -2258,6 +2559,13 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                   <div className="text-[10px] font-mono px-1 mb-1.5" style={{ color: '#C0531E' }}>{findFeaturesError}</div>
                 )}
               </>
+            )}
+            {activeLayer === 'planting' && (
+              <button onClick={() => window.open('/facilitator/crops', '_self')}
+                className="w-full py-1.5 mb-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5"
+                style={tile(false)}>
+                🌱 Crop plan
+              </button>
             )}
             <div className="grid grid-cols-2 gap-1.5">
               {stepElementTypes.map((type) => (
@@ -2766,15 +3074,24 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
               style={reviewing || !items.length ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.45)', color: '#1F4D2B' }}>
               {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 className="animate-spin" size={14} /> Reviewing…</span> : <span className="flex items-center justify-center gap-1.5"><Sparkles size={14} /> AI review</span>}
             </button>
-            <button onClick={runAiPolish} disabled={!canAiPolish || aiPolishBusy}
+            <button onClick={openAiPolishPicker} disabled={!canAiPolish || aiPolishBusy}
               className={`py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5 ${activeLayer === 'review' ? 'flex-1' : 'px-3'}`}
               style={!canAiPolish || aiPolishBusy ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}
-              title="AI polish this map — beautify the background, keep every placed item and line pixel-locked">
+              title="AI polish — choose which maps to beautify, every placed item and line stays pixel-locked">
               {aiPolishBusy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
               {activeLayer === 'review' ? '✨ AI polish' : 'Polish'}
             </button>
+            {polishGallery.length > 0 && (
+              <button onClick={() => setGalleryOpen(true)}
+                className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5"
+                style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}
+                title="Polished maps from this session">
+                🖼 Polished ({polishGallery.length})
+              </button>
+            )}
             <button onClick={exportPNG} disabled={!items.length && !lines.length} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Export PNG"><Download size={14} /> PNG</button>
             <button onClick={() => window.open('/facilitator/print')} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Print plan">🖨 Print plan</button>
+            <button onClick={() => window.open('/facilitator/crops', '_self')} className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Plan your crops">🌱 Crop plan</button>
           </div>
 
           {/* Save button */}
@@ -2938,28 +3255,70 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                 )}
               </div>
               <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
-                Polishing the layers you have visible — use the 👁 menu first to polish a single map (e.g. just Water).
+                {aiPolish.phase === 'pick' && 'Pick what to polish — your 👁 layer visibility is restored exactly after, whatever happens.'}
+                {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `Polishing: ${aiPolish.label}`}
+                {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>
             </div>
             <div className="p-4">
+              {aiPolish.phase === 'pick' && (
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    {aiPolishCandidates.map((id) => {
+                      const def = LAYERS[id];
+                      const count = (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0);
+                      const checked = aiPolish.selected.includes(id);
+                      return (
+                        <label key={id}
+                          className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-display cursor-pointer transition-all"
+                          style={{ background: checked ? 'rgba(31,77,43,0.10)' : '#FFFFFF', border: `1px solid ${checked ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}` }}>
+                          <input type="checkbox" checked={checked} onChange={() => toggleAiPolishLayer(id)} style={{ accentColor: '#1F4D2B' }} />
+                          <span>{def.icon}</span>
+                          <span className="flex-1" style={{ color: '#3A352C' }}>{def.name}</span>
+                          {count > 0 && <span className="font-mono" style={{ color: '#9A8268' }}>({count})</span>}
+                        </label>
+                      );
+                    })}
+                  </div>
+                  <button onClick={toggleFullDesignPick}
+                    className="w-full py-1.5 rounded-lg text-xs font-mono transition-all"
+                    style={tile(aiPolishCandidates.length > 0 && aiPolish.selected.length === aiPolishCandidates.length)}>
+                    🖼 Full design
+                  </button>
+                  <button onClick={() => runAiPolishWith(aiPolish.selected)} disabled={aiPolish.selected.length === 0}
+                    className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                    style={aiPolish.selected.length === 0
+                      ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+                      : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
+                    <Sparkles size={14} /> Polish
+                  </button>
+                </div>
+              )}
               {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting') && (
                 <div className="flex flex-col items-center justify-center gap-3 py-10">
                   <Loader2 className="animate-spin" size={28} style={{ color: '#9E5C08' }} />
                   <p className="text-xs font-display text-center" style={{ color: '#5C5040' }}>
-                    {aiPolish.phase === 'preparing' ? 'Preparing your map…' : 'AI is painting your map — about a minute…'}
+                    {aiPolish.phase === 'preparing' ? `Preparing ${aiPolish.label}…` : `AI is painting ${aiPolish.label} — about a minute…`}
                   </p>
                 </div>
               )}
               {aiPolish.phase === 'done' && (
                 <div className="space-y-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={aiPolish.image} alt="AI-polished map" className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
-                  <div className="flex gap-2">
-                    <a href={aiPolish.image} download={`${(designTitle || 'garden-plan').toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-ai-polished.png`}
+                  <img src={aiPolish.image} alt={`AI-polished ${aiPolish.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
+                  <p className="text-xs font-display" style={{ color: '#5C5040' }}>{aiPolish.label}</p>
+                  <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>PNG download only — the Print pack draws its own plan sheets.</p>
+                  <div className="flex flex-wrap gap-2">
+                    <a href={aiPolish.image} download={`${(designTitle || 'garden-plan').toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-${aiPolish.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`}
                       className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
                       style={{ background: '#1F4D2B', color: '#fff' }}>
-                      <Download size={14} /> Download PNG
+                      <Download size={14} /> Download
                     </a>
+                    <button onClick={openAiPolishPicker}
+                      className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                      style={{ background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
+                      🖼 Add another map
+                    </button>
                     <button onClick={() => setAiPolish({ phase: 'idle' })}
                       className="px-4 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
                       <X size={14} /> Close
@@ -2974,6 +3333,64 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                     className="w-full py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center justify-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
                     <X size={14} /> Close
                   </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Polished-maps gallery (session-only) ── */}
+      {galleryOpen && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
+          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+            <div className="px-4 py-3 flex items-center justify-between gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
+              <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
+                🖼 Polished maps ({polishGallery.length})
+              </span>
+              <button onClick={() => { setGalleryOpen(false); setGalleryViewId(null); }} className="flex items-center justify-center rounded-lg" style={{ width: 24, height: 24, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+                <X size={13} />
+              </button>
+            </div>
+            <div className="p-4">
+              {galleryViewItem ? (
+                <div className="space-y-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={galleryViewItem.image} alt={`Polished ${galleryViewItem.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
+                  <p className="text-xs font-display" style={{ color: '#5C5040' }}>{galleryViewItem.label}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <a href={galleryViewItem.image} download={`${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-ai-polished.png`}
+                      className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
+                      style={{ background: '#1F4D2B', color: '#fff' }}>
+                      <Download size={14} /> Download
+                    </a>
+                    <button onClick={() => removeGalleryItem(galleryViewItem.id)}
+                      className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.35)', color: '#C0531E' }}>
+                      🗑 Remove
+                    </button>
+                    <button onClick={() => setGalleryViewId(null)}
+                      className="px-3 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      ‹ Back
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {polishGallery.length === 0 ? (
+                    <p className="text-xs font-display" style={{ color: '#9A8268' }}>No polished maps yet this session.</p>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2">
+                      {polishGallery.map((g) => (
+                        <button key={g.id} onClick={() => setGalleryViewId(g.id)}
+                          className="relative rounded-lg overflow-hidden" style={{ border: '1px solid #E2D8C4', aspectRatio: '1 / 1' }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={g.image} alt={g.label} className="w-full h-full object-cover" />
+                          <span className="absolute bottom-0 left-0 right-0 text-[9px] font-mono px-1 py-0.5 truncate text-left" style={{ background: 'rgba(20,16,10,0.6)', color: '#fff' }}>{g.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>Session-only — kept until you close the app.</p>
                 </div>
               )}
             </div>

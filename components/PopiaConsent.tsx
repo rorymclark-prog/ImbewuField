@@ -318,6 +318,12 @@ export default function PopiaConsent() {
                 <ArrowRight size={15} />
               </span>
             </button>
+
+            {!goal && (
+              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
+                Pick one to continue
+              </p>
+            )}
           </>
         )}
       </div>

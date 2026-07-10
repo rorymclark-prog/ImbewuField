@@ -177,6 +177,13 @@ export default function PlanPage() {
       </header>
 
       <div className="flex-1 overflow-y-auto">
+        <div className="max-w-md mx-auto px-4 pt-4">
+          <Link href="/facilitator/crops"
+            className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+            🌱 New: plan crops bed-by-bed on your design map →
+          </Link>
+        </div>
         <div className="max-w-md mx-auto px-4 py-5 space-y-5">
 
           {/* Season card */}

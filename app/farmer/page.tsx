@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Settings, AlertTriangle, PenLine, ChevronUp, Menu } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
@@ -46,6 +46,7 @@ function HomeInner() {
   const { t, lang } = useLanguage();
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
@@ -168,10 +169,16 @@ function HomeInner() {
     if (data) setLastSite({ locationData: data, siteData, waterData });
   }, [data, siteData, waterData]);
 
-  // Auth guard — redirect to login when backend is configured and no user is signed in
+  // Auth guard — redirect to login when backend is configured and no user is signed in.
+  // Thread the current path + query through ?from= so login can send the farmer back
+  // to the exact map/panel they were trying to reach instead of dropping them at /home.
   useEffect(() => {
-    if (!authLoading && !user && isBackendConfigured()) router.replace('/login');
-  }, [user, authLoading, router]);
+    if (!authLoading && !user && isBackendConfigured()) {
+      const qs = searchParams.toString();
+      const currentPathAndQuery = qs ? `${pathname}?${qs}` : pathname;
+      router.replace(`/login?from=${encodeURIComponent(currentPathAndQuery)}`);
+    }
+  }, [user, authLoading, router, pathname, searchParams]);
 
   // Close sheet on Escape key
   useEffect(() => {
@@ -271,7 +278,9 @@ function HomeInner() {
 
           {/* Design-map + role switcher are power-user navigation — desktop only.
               On a phone they cluttered the bar into tiny icons; reach them via the home hub (tap the logo). */}
-          <Link href="/facilitator" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+          <Link
+            href={selected ? `/facilitator?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}${activePlaceName ? `&name=${encodeURIComponent(activePlaceName)}` : ''}` : '/facilitator'}
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
             style={{ fontSize: 15, background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }}>
             <PenLine size={15} /> <span>Design map</span>
           </Link>

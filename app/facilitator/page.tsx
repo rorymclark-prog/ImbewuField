@@ -1,7 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -16,8 +17,20 @@ const FacilitatorCanvas = dynamic(() => import('@/components/FacilitatorCanvas')
   ),
 });
 
-export default function FacilitatorPage() {
+function FacilitatorPageInner() {
   const [site, setSite] = useState('');
+
+  // Auto-pick site from URL (?lat=&lon=&name=) — e.g. a "Design this" link from the
+  // main map. Number(null) === 0 — a missing param must NOT masquerade as latitude
+  // 0 / longitude 0 — so a missing/blank param is treated as "no site", not (0, 0).
+  const params = useSearchParams();
+  const latRaw = params.get('lat');
+  const lonRaw = params.get('lon');
+  const lat = latRaw === null || latRaw === '' ? NaN : Number(latRaw);
+  const lon = lonRaw === null || lonRaw === '' ? NaN : Number(lonRaw);
+  const initialSite = Number.isFinite(lat) && Number.isFinite(lon)
+    ? { lat, lon, name: params.get('name') || 'Imported site' }
+    : undefined;
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
@@ -44,8 +57,16 @@ export default function FacilitatorPage() {
 
       {/* Canvas */}
       <div className="flex-1 flex overflow-hidden">
-        <FacilitatorCanvas siteText={site || undefined} />
+        <FacilitatorCanvas siteText={site || undefined} initialSite={initialSite} />
       </div>
     </div>
+  );
+}
+
+export default function FacilitatorPage() {
+  return (
+    <Suspense fallback={<div style={{ height: '100dvh', background: '#F7F2E9' }} />}>
+      <FacilitatorPageInner />
+    </Suspense>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState, type FormEvent } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, ChevronLeft, Mail, Check } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -30,7 +30,20 @@ function GoogleIcon() {
 }
 
 export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginPageInner />
+    </Suspense>
+  );
+}
+
+function LoginPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
+  // honour it when it's a same-app relative path — never an absolute/external URL.
+  const fromParam = searchParams.get('from');
+  const from = fromParam && fromParam.startsWith('/') ? fromParam : null;
   const { signIn, signUp, signInWithGoogle, resetPassword } = useAuth();
 
   const [mode, setMode] = useState<Mode>('signin');
@@ -59,7 +72,7 @@ export default function LoginPage() {
       const err = mode === 'signin'
         ? await signIn(email, password)
         : await signUp(email, password, fullName.trim(), role);
-      if (err) { setError(err); } else { router.push('/home'); }
+      if (err) { setError(err); } else { router.push(from ?? '/home'); }
     } finally {
       setLoading(false);
     }
@@ -71,7 +84,7 @@ export default function LoginPage() {
     setGoogleLoading(true);
     try {
       const err = await signInWithGoogle();
-      if (err) { setError(err); } else { router.push('/home'); }
+      if (err) { setError(err); } else { router.push(from ?? '/home'); }
     } finally {
       setGoogleLoading(false);
     }
@@ -116,6 +129,11 @@ export default function LoginPage() {
             {mode === 'create' && 'Create a new account.'}
             {mode === 'reset' && 'Reset your password.'}
           </div>
+          {from && (
+            <div className="font-sans text-xs mt-1" style={{ color: '#8C7A62' }}>
+              Sign in to continue to your map
+            </div>
+          )}
         </div>
 
         {/* Backend not configured notice */}

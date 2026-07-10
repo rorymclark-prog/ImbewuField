@@ -163,6 +163,13 @@ export default function CropPlanPage() {
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto w-full px-4 py-5" style={{ maxWidth: view === 'week' || view === 'month' ? 880 : 560 }}>
 
+          {/* New: flagship bed-timeline crop planner on the design map */}
+          <Link href="/facilitator/crops"
+            className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+            🌱 New: plan crops bed-by-bed on your design map →
+          </Link>
+
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
