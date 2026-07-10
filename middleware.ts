@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Simple shared-password gate. If SITE_PASSWORD isn't set (e.g. local dev), the gate is off.
+// Simple shared-password gate. If SITE_PASSWORD isn't set, the gate is OFF and
+// everything is reachable — set SITE_PASSWORD in the environment to switch the
+// wall back on (no code change needed). This fails OPEN by design: a blank
+// password must not lock the whole site out.
 export function middleware(req: NextRequest) {
   const PW = process.env.SITE_PASSWORD;
-  // In production, an unset SITE_PASSWORD fails closed (redirects to /gate) rather than
-  // leaving all AI routes unprotected. Local dev still gets an open gate.
-  if (!PW) {
-    if (process.env.NODE_ENV !== 'production') return NextResponse.next();
-    // Fall through to the cookie/redirect check below (no PW means no cookie can match,
-    // so all requests will be sent to /gate — effectively locked until PW is set).
-  }
+  if (!PW) return NextResponse.next();
 
   const { pathname } = req.nextUrl;
   // Always allow the gate, its API, Next internals, and public branding assets
