@@ -906,19 +906,30 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
       const boundary = boundaryLayers.find((l) => l.approved) ?? boundaryLayers[0];
       const waterLayers = near.filter((l) => l.layerType === 'water_body');
 
+      // Everything imported here gets clipped to the photo, same as the
+      // Find-map-features ghosts — off-image geometry confuses the canvas and
+      // inflates BOQ lengths with metres that are not on the plot.
+      const importClipRect: ClipRect = { x: bgX, y: bgY, w: drawnW, h: drawnH };
+
       const newLines: LineEl[] = [];
       if (boundary) {
         const g = boundary.geometry as { type?: string; coordinates?: unknown };
         const ring = g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] : undefined;
         if (ring && ring.length >= 3) {
-          newLines.push({ id: 'mapshape-boundary', kind: 'fence', points: flatten(ring), closed: true, layer: 'existing' });
+          const clipped = clipPolygonToRect(flatten(ring), importClipRect);
+          if (clipped.length >= 6) {
+            newLines.push({ id: 'mapshape-boundary', kind: 'fence', points: clipped, closed: true, layer: 'existing' });
+          }
         }
       }
       waterLayers.forEach((l, i) => {
         const g = l.geometry as { type?: string; coordinates?: unknown };
         const ring = g?.type === 'Polygon' ? (g.coordinates as number[][][])[0] : undefined;
         if (ring && ring.length >= 3) {
-          newLines.push({ id: `mapshape-water-${i}`, kind: 'pipe', points: flatten(ring), closed: true, layer: 'existing' });
+          const clipped = clipPolygonToRect(flatten(ring), importClipRect);
+          if (clipped.length >= 6) {
+            newLines.push({ id: `mapshape-water-${i}`, kind: 'pipe', points: clipped, closed: true, layer: 'existing' });
+          }
         }
       });
       near.forEach((l, i) => {
@@ -927,7 +938,11 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
         if (g?.type !== 'LineString') return; // other polygon types are skipped
         const coords = g.coordinates as number[][];
         if (coords.length >= 2) {
-          newLines.push({ id: `mapshape-line-${i}`, kind: 'path', points: flatten(coords), layer: 'existing' });
+          clipPolylineToRect(flatten(coords), importClipRect).forEach((piece, pi) => {
+            if (piece.length >= 4) {
+              newLines.push({ id: pi === 0 ? `mapshape-line-${i}` : `mapshape-line-${i}-${pi}`, kind: 'path', points: piece, layer: 'existing' });
+            }
+          });
         }
       });
 
@@ -2525,10 +2540,13 @@ export default function FacilitatorCanvas({ siteText, language }: { siteText?: s
                   onDragStart={pushHistory}
                   onDragEnd={(e) => setItems((prev) => prev.map((p) => p.id === it.id ? { ...p, x: e.target.x(), y: e.target.y() } : p))}
                   onTransformEnd={(e) => bakeTransform(it.id, e.target)}>
-                  {/* Invisible hit area — makes the whole footprint draggable/clickable without a visible background */}
+                  {/* Invisible hit area — whole footprint, but never smaller than
+                      ~28px: tiny elements at low zoom were nearly impossible to
+                      grab, and a missed grab pans the whole stage instead. */}
                   {c.shape === 'rect'
-                    ? <Rect width={w} height={h} fill="#000000" opacity={0} />
-                    : <Circle x={w / 2} y={h / 2} radius={w / 2} fill="#000000" opacity={0} />}
+                    ? <Rect x={Math.min(0, (w - 28) / 2)} y={Math.min(0, (h - 28) / 2)}
+                        width={Math.max(w, 28)} height={Math.max(h, 28)} fill="#000000" opacity={0} />
+                    : <Circle x={w / 2} y={h / 2} radius={Math.max(w / 2, 14)} fill="#000000" opacity={0} />}
                   <ElementIcon type={it.type} w={w} h={h} />
                   {showLabels && (
                     <Text text={CATALOG[it.type].label}
