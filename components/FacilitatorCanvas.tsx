@@ -625,6 +625,15 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const stageScaleRef = useRef(1);
   const stagePosRef = useRef({ x: 0, y: 0 });
   const lastDist = useRef(0);
+  const lastCenter = useRef<{ x: number; y: number } | null>(null);
+  // Panning is DELIBERATE, never a side effect of a plain drag. A plain
+  // click/touch-drag only ever moves an element you grabbed — a missed grab
+  // does nothing (no more "moving something flings the whole map away").
+  // The map pans via: two-finger drag, trackpad/wheel scroll, the ✋ Pan
+  // button, or holding Space. draggable is gated on panMode below.
+  const [panTool, setPanTool] = useState(false);
+  const [spaceHeld, setSpaceHeld] = useState(false);
+  const panMode = panTool || spaceHeld;
 
   // Layers: progressive build-up. activeLayer drives palette filtering + coach tips;
   // hiddenLayers lets a facilitator declutter the view without deleting anything.
@@ -1353,30 +1362,46 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       setStagePos(newPos);
     };
 
+    const panBy = (dx: number, dy: number) => {
+      const p = stagePosRef.current;
+      const np = { x: p.x + dx, y: p.y + dy };
+      stagePosRef.current = np;
+      setStagePos(np);
+    };
+
+    // Wheel: pinch-zoom (trackpad pinch fires ctrlKey; Cmd/Ctrl+wheel too) zooms
+    // about the cursor; a plain two-finger/scroll gesture PANS. This means
+    // scrolling over the canvas never surprises you by zooming.
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       const rect = el.getBoundingClientRect();
-      const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
-      applyZoom(stageScaleRef.current * factor, e.clientX - rect.left, e.clientY - rect.top);
+      if (e.ctrlKey || e.metaKey) {
+        const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+        applyZoom(stageScaleRef.current * factor, e.clientX - rect.left, e.clientY - rect.top);
+      } else {
+        panBy(-e.deltaX, -e.deltaY);
+      }
     };
 
+    // Two fingers = pan (by the midpoint's movement) AND pinch-zoom together,
+    // exactly like a native map. One finger never reaches here, so it can't pan.
     const onTouchMove = (e: TouchEvent) => {
       if (e.touches.length !== 2) return;
       e.preventDefault();
+      const rect = el.getBoundingClientRect();
+      const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+      const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
       const dist = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY,
       );
-      if (lastDist.current > 0 && dist > 0) {
-        const rect = el.getBoundingClientRect();
-        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-        applyZoom(stageScaleRef.current * (dist / lastDist.current), cx, cy);
-      }
+      if (lastCenter.current) panBy(cx - lastCenter.current.x, cy - lastCenter.current.y);
+      if (lastDist.current > 0 && dist > 0) applyZoom(stageScaleRef.current * (dist / lastDist.current), cx, cy);
       lastDist.current = dist;
+      lastCenter.current = { x: cx, y: cy };
     };
 
-    const onTouchEnd = () => { lastDist.current = 0; };
+    const onTouchEnd = () => { lastDist.current = 0; lastCenter.current = null; };
 
     el.addEventListener('wheel', onWheel, { passive: false });
     el.addEventListener('touchmove', onTouchMove, { passive: false });
@@ -1387,6 +1412,25 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       el.removeEventListener('touchend', onTouchEnd);
     };
   }, []);
+
+  // Hold Space to pan on desktop (released → back to editing); ignore while typing.
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.code !== 'Space') return;
+      const t = e.target as HTMLElement;
+      if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+      setSpaceHeld(true);
+    };
+    const up = (e: KeyboardEvent) => { if (e.code === 'Space') setSpaceHeld(false); };
+    window.addEventListener('keydown', down);
+    window.addEventListener('keyup', up);
+    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+  }, []);
+
+  // Arming a place/line/scale/sector tool cancels the Pan tool, so the two
+  // interaction modes are never both live.
+  useEffect(() => { if (placeType || lineKind || scaleMode || armedSector) setPanTool(false); }, [placeType, lineKind, scaleMode, armedSector]);
 
   // Restore a saved design on mount — progressive building survives reload.
   //
@@ -2646,7 +2690,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       </div>
 
       {/* ── Canvas ── */}
-      <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : 'grab' }}>
+      <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : panMode ? 'grab' : 'default' }}>
         {/* Fit / re-centre + undo/redo — overlaid top-right, above the stepper bar */}
         <div className="absolute top-2 right-2 z-20 flex items-center gap-1 pointer-events-auto">
           <button onClick={undo} disabled={!canUndo} title="Undo (Ctrl/Cmd+Z)"
@@ -2658,6 +2702,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             className="flex items-center justify-center rounded-lg"
             style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: canRedo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
             ↪
+          </button>
+          <button onClick={() => setPanTool((v) => !v)} title={panTool ? 'Pan on — tap to edit again' : 'Pan the map (or hold Space, or drag with two fingers)'}
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 28, height: 28, background: panMode ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${panMode ? '#1F4D2B' : '#E2D8C4'}`, color: panMode ? '#fff' : '#1F4D2B', fontSize: 13 }}>
+            ✋
           </button>
           <button onClick={resetView} title="Re-centre" className="flex items-center justify-center rounded-lg"
             style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
@@ -2758,7 +2807,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         )}
         <Stage ref={stageRef} width={size.w} height={size.h}
           scaleX={stageScale} scaleY={stageScale} x={stagePos.x} y={stagePos.y}
-          draggable={!armed} dragDistance={5}
+          draggable={panMode} dragDistance={4}
           onDragMove={(e) => { stagePosRef.current = { x: e.target.x(), y: e.target.y() }; }}
           onDragEnd={(e) => { const p = { x: e.target.x(), y: e.target.y() }; stagePosRef.current = p; setStagePos(p); }}
           onClick={onStageClick} onTap={onStageClick}>
@@ -2848,13 +2897,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   onDragStart={pushHistory}
                   onDragEnd={(e) => setItems((prev) => prev.map((p) => p.id === it.id ? { ...p, x: e.target.x(), y: e.target.y() } : p))}
                   onTransformEnd={(e) => bakeTransform(it.id, e.target)}>
-                  {/* Invisible hit area — whole footprint, but never smaller than
-                      ~28px: tiny elements at low zoom were nearly impossible to
-                      grab, and a missed grab pans the whole stage instead. */}
+                  {/* Invisible hit area — the whole footprint, but never smaller
+                      than ~32px so tiny elements at low zoom are still easy to
+                      grab. fillEnabled + a real (transparent-alpha) fill keeps it
+                      reliably in Konva's hit graph (opacity:0 can be skipped). */}
                   {c.shape === 'rect'
-                    ? <Rect x={Math.min(0, (w - 28) / 2)} y={Math.min(0, (h - 28) / 2)}
-                        width={Math.max(w, 28)} height={Math.max(h, 28)} fill="#000000" opacity={0} />
-                    : <Circle x={w / 2} y={h / 2} radius={Math.max(w / 2, 14)} fill="#000000" opacity={0} />}
+                    ? <Rect x={Math.min(0, (w - 32) / 2)} y={Math.min(0, (h - 32) / 2)}
+                        width={Math.max(w, 32)} height={Math.max(h, 32)} fill="rgba(0,0,0,0.01)" />
+                    : <Circle x={w / 2} y={h / 2} radius={Math.max(w / 2, 16)} fill="rgba(0,0,0,0.01)" />}
                   <ElementIcon type={it.type} w={w} h={h} />
                   {showLabels && (
                     <Text text={CATALOG[it.type].label}
