@@ -20,6 +20,8 @@ import {
   EmailAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   type User,
 } from 'firebase/auth';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
@@ -83,6 +85,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
+    // Complete a Google redirect sign-in if we're returning from one, seeding
+    // the profile doc for a brand-new user (the redirect twin of the popup path).
+    getRedirectResult(fb.auth)
+      .then(async (result) => {
+        if (!result?.user) return;
+        const existing = await getMyProfile();
+        if (!existing) {
+          await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en' });
+        }
+      })
+      .catch((err) => console.error('Google redirect sign-in failed:', err));
+
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
       setUser(firebaseUser);
       try {
@@ -134,10 +148,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signInWithGoogle = useCallback(async (): Promise<string | null> => {
     const fb = getFirebase();
     if (!fb) return 'Firebase is not configured yet.';
+    // Google blocks its OAuth screen in in-app browsers — don't spin on a popup
+    // that can never resolve; tell the user to open a real browser.
+    if (isEmbeddedBrowser()) {
+      return 'Google sign-in won\'t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.';
+    }
+    const provider = new GoogleAuthProvider();
     try {
-      const provider = new GoogleAuthProvider();
+      if (prefersRedirect()) {
+        // Full-page redirect — resolves on return via getRedirectResult (below).
+        await signInWithRedirect(fb.auth, provider);
+        return null; // navigates away; nothing more to do here
+      }
       const cred = await signInWithPopup(fb.auth, provider);
-      // Seed profile doc on first Google sign-in
       const existing = await getMyProfile();
       if (!existing) {
         await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en' });
@@ -145,6 +168,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await syncProfile(cred.user);
       return null;
     } catch (err) {
+      // A blocked popup on desktop → fall back to the redirect flow once.
+      const code = (err as { code?: string }).code ?? '';
+      if (code === 'auth/popup-blocked' || code === 'auth/cancelled-popup-request') {
+        try { await signInWithRedirect(fb.auth, provider); return null; } catch (e2) { return friendlyAuthError(e2); }
+      }
       return friendlyAuthError(err);
     }
   }, [syncProfile]);
@@ -229,6 +257,30 @@ function friendlyAuthError(err: unknown): string {
     'auth/popup-blocked':                            'Pop-up was blocked — allow pop-ups for this site and try again.',
     'auth/account-exists-with-different-credential': 'An account already exists with this email using a different sign-in method.',
     'auth/requires-recent-login':                    'Please sign out and sign back in before changing your password.',
+    'auth/operation-not-allowed':                    'Google sign-in isn\'t enabled for this app yet. Use email + password, or ask the admin to enable Google.',
+    'auth/unauthorized-domain':                      'This web address isn\'t authorised for Google sign-in yet. Use email + password for now.',
+    'auth/cancelled-popup-request':                  'Sign-in was cancelled.',
+    'auth/web-storage-unsupported':                  'This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.',
   };
   return map[code] ?? `Something went wrong (${code || 'unknown error'}).`;
 }
+
+// Google's OAuth screen refuses to load inside in-app / embedded browsers
+// (Instagram, Facebook, the Claude preview pane, generic WebViews, etc.) —
+// it returns "disallowed_useragent". Detect those so we can tell the user to
+// open a real browser instead of spinning on a popup that can never resolve.
+export function isEmbeddedBrowser(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent || '';
+  // Electron / Claude preview pane and the common in-app browsers all run
+  // Google's OAuth screen through a WebView it refuses (disallowed_useragent).
+  const embedded = /(FBAN|FBAV|Instagram|Line|Twitter|WhatsApp|WebView|; wv\)|GSA\/|Electron|Claude)/i.test(ua);
+  const iosInApp = /iPhone|iPod|iPad/.test(ua) && !/Safari/.test(ua);
+  return embedded || iosInApp;
+}
+
+const prefersRedirect = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  // Popups are unreliable on touch devices — redirect is the robust path there.
+  return window.matchMedia?.('(pointer: coarse)').matches || 'ontouchstart' in window;
+};

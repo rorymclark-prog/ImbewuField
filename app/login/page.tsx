@@ -1,9 +1,9 @@
 'use client';
 
-import { Suspense, useState, type FormEvent } from 'react';
+import { Suspense, useState, useEffect, type FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowRight, ChevronLeft, Mail, Check } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
+import { ArrowRight, ChevronLeft, Mail, Check, Copy } from 'lucide-react';
+import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
 
@@ -55,8 +55,22 @@ function LoginPageInner() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
+  const [embedded, setEmbedded] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const backendReady = isBackendConfigured();
+
+  // Google OAuth is blocked in in-app browsers — detect on the client so we can
+  // steer the user to a real browser instead of a popup that never opens.
+  useEffect(() => { setEmbedded(isEmbeddedBrowser()); }, []);
+
+  async function copyAppLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.origin);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch { /* clipboard blocked — user can copy from the address bar */ }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -255,19 +269,31 @@ function LoginPageInner() {
               <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>or</span>
               <div className="flex-1 h-px" style={{ background: '#E2D8C4' }} />
             </div>
-            <button type="button" onClick={handleGoogle} disabled={googleLoading}
+            <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
               className="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-xl font-sans font-semibold transition-all"
               style={{
                 background: '#fff',
                 border: '1px solid #E2D8C4',
                 color: '#20190F',
                 fontSize: 15,
-                cursor: googleLoading ? 'wait' : 'pointer',
-                opacity: googleLoading ? 0.6 : 1,
+                cursor: googleLoading ? 'wait' : embedded ? 'not-allowed' : 'pointer',
+                opacity: googleLoading || embedded ? 0.55 : 1,
               }}>
               <GoogleIcon />
               {googleLoading ? 'Connecting...' : 'Continue with Google'}
             </button>
+
+            {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
+            {embedded && (
+              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#8C6A2E' }}>
+                Google sign-in doesn&apos;t open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:
+                <button type="button" onClick={copyAppLink}
+                  className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"
+                  style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 12.5, cursor: 'pointer' }}>
+                  {copied ? <><Check size={13} /> Link copied</> : <><Copy size={13} /> Copy app link</>}
+                </button>
+              </div>
+            )}
           </>
         )}
 
