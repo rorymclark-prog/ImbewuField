@@ -2064,6 +2064,42 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roofM2, bgSite]);
 
+  // Smart map labels: group visible items by type into ONE callout each (summed
+  // count), stack the callouts just outside the property's right edge, and run a
+  // leader line from each to its group's centre. Coordinates are stage px, so
+  // the labels pan/zoom with the design and sit beside the property.
+  const labelCallouts = useMemo(() => {
+    if (!showLabels) return [];
+    const vis = items.filter((it) => !hiddenLayers.includes(it.layer ?? defaultLayerForType(it.type)));
+    if (!vis.length) return [];
+    // Group centres (rotation-aware).
+    const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
+    let maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    for (const it of vis) {
+      const w = it.wM * pxPerM, h = it.hM * pxPerM;
+      const r = (it.rotation * Math.PI) / 180, cos = Math.cos(r), sin = Math.sin(r);
+      const cx = it.x + (w / 2) * cos - (h / 2) * sin;
+      const cy = it.y + (w / 2) * sin + (h / 2) * cos;
+      const g = byType.get(it.type) ?? { cxs: [], cys: [] };
+      g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
+      maxX = Math.max(maxX, cx); minY = Math.min(minY, cy); maxY = Math.max(maxY, cy);
+    }
+    // Anchor column just right of the content; distribute rows without overlap.
+    const fs = 13, hh = fs * 0.9, pad = 6, gap = hh * 2 + 6;
+    const ax = maxX + 34;
+    const groups = [...byType.entries()].map(([type, g]) => {
+      const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
+      const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      const label = CATALOG[type].label, icon = CATALOG[type].icon, count = g.cxs.length;
+      const pw = pad * 2 + (label.length + (count > 1 ? 4 : 0)) * fs * 0.6 + fs * 1.3; // icon + text est.
+      return { type, cx, cy, label, icon, count, ax, ay: cy, pw, hh, fs, pad };
+    }).sort((a, b) => a.cy - b.cy);
+    // Spread ay so pills don't overlap, centred on the content's vertical span.
+    let y = Math.max(minY, (minY + maxY) / 2 - (groups.length - 1) * gap / 2);
+    for (const g of groups) { g.ay = Math.max(g.ay, y); y = g.ay + gap; }
+    return groups;
+  }, [showLabels, items, hiddenLayers, pxPerM]);
+
   // ── Layer bookkeeping for the stepper + coach ──
   const itemsByLayer: Partial<Record<LayerId, number>> = {};
   items.forEach((it) => {
@@ -2938,16 +2974,27 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                         width={Math.max(w, 32)} height={Math.max(h, 32)} fill="rgba(0,0,0,0.01)" />
                     : <Circle x={w / 2} y={h / 2} radius={Math.max(w / 2, 16)} fill="rgba(0,0,0,0.01)" />}
                   <ElementIcon type={it.type} w={w} h={h} />
-                  {showLabels && (
-                    <Text text={CATALOG[it.type].label}
-                      x={0} y={h + 3} width={w} align="center"
-                      fontSize={Math.max(8, Math.min(12, pxPerM * 0.45))}
-                      fill="rgba(255,255,255,0.82)" fontFamily="monospace"
-                      listening={false} />
-                  )}
                 </Group>
               );
             })}
+            {/* Smart labels — one summary callout per element type, stacked in the
+                margin beside the property with a leader line to the group centre,
+                instead of a cramped label under every element. */}
+            {showLabels && labelCallouts.map((g) => (
+              <Group key={`lbl-${g.type}`} listening={false}>
+                {/* Leader — light with a soft dark under-stroke so it reads on any
+                    background (dark satellite or pale parchment wash). */}
+                <Line points={[g.cx, g.cy, g.ax, g.ay]} stroke="#1A140A" strokeWidth={2.4} opacity={0.28} lineCap="round" />
+                <Line points={[g.cx, g.cy, g.ax, g.ay]} stroke="#FBF6EC" strokeWidth={1.1} opacity={0.9} dash={[4, 3]} lineCap="round" />
+                <Circle x={g.cx} y={g.cy} radius={3} fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={1} />
+                <Rect x={g.ax} y={g.ay - g.hh} width={g.pw} height={g.hh * 2} cornerRadius={g.hh}
+                  fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={0.8} opacity={0.97}
+                  shadowColor="#1A140A" shadowBlur={4} shadowOpacity={0.25} shadowOffsetY={1} />
+                <Text text={`${g.icon} ${g.label}${g.count > 1 ? `  ×${g.count}` : ''}`}
+                  x={g.ax + g.pad} y={g.ay - g.fs * 0.55} fontSize={g.fs}
+                  fill="#20190F" fontStyle="600" fontFamily="sans-serif" />
+              </Group>
+            ))}
             {/* Transformer: proportional for circles/sectors rotate-only, free for rects */}
             <Transformer ref={trRef} rotateEnabled keepRatio={selectedIsCircle}
               enabledAnchors={selectedSector ? [] : selectedIsCircle
