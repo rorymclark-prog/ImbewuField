@@ -2333,20 +2333,26 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     return [...itemDescs, ...lineDescs].join('; ');
   }
 
+  // STRICT per-map prompts. Field lesson: an open "paint a beautiful
+  // permaculture map" brief makes the model INVENT a fantasy farm (herb
+  // spirals, chicken runs, name banners) over the real site. The render must
+  // be a faithful artistic RESTYLE of exactly what the capture shows — never
+  // a redesign — so every prompt leads with hard don't-invent rules.
   function buildAiPolishPrompt(elementsText: string, siteName: string, mapLabel: string): string {
-    const siteLine = siteName ? ` for "${siteName}"` : '';
+    const siteLine = siteName ? ` of "${siteName}"` : '';
+    const hardRules =
+      `STRICT RULES — this is a REAL property${siteLine}, not a concept: ` +
+      `(1) Do NOT invent, add, move, remove or resize ANY feature — no new gardens, paths, ponds, trees, buildings or decorations of any kind. ` +
+      `(2) Do NOT paint any text, labels, banners, legends or compasses. ` +
+      `(3) The property boundary line stays EXACTLY where it is drawn. ` +
+      `(4) Every real building, roof, driveway, road, tree and open area stays in its true position, shape and size — the result must be recognisably THIS exact property, feature for feature. ` +
+      `(5) Keep the crop, scale and orientation identical; top of image is north. When unsure, keep it identical to the input.`;
+    const styleLine =
+      ` Style: redraw the photo as a clean, soft hand-drawn site map — gentle earth tones, subtle grass and soil texture, South African smallholding character. Change the STYLE only, never the content.`;
     const elementsLine = elementsText
-      ? ` The farmer has placed: ${elementsText}. Their exact pixels are protected by the mask — do not add, move, remove, resize, duplicate or restyle any of them.`
-      : '';
-    const scopeLine = mapLabel === 'Full design'
-      ? ''
-      : ` This capture shows only the ${mapLabel.toLowerCase()} — other layers are hidden on purpose, so leave the rest of the ground natural and uncluttered.`;
-    return (
-      `Repaint ONLY the unprotected ground as a beautiful hand-illustrated permaculture map${siteLine} ` +
-      `— soft earth tones, gentle grass and soil texture, natural South African smallholding character. ` +
-      `Top of image is north; keep orientation, scale and the property boundary exactly as shown.` +
-      elementsLine + scopeLine
-    );
+      ? ` These features (existing and planned: ${elementsText}) are pixel-locked by the mask — do not touch, duplicate or restyle them; beautify only the ground texture between them.`
+      : ` There are no marked features in this view — this is the ${mapLabel.toLowerCase()}: a faithful 1:1 artistic redraw of what the photo already shows, nothing more.`;
+    return hardRules + styleLine + elementsLine;
   }
 
   // Human label for a chosen layer set — names the gallery entry, the modal
@@ -2400,11 +2406,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const prevPos = stagePosRef.current;
     const prevHidden = hiddenLayers;
 
-    // Complement of the chosen set — everything NOT chosen gets hidden for the
-    // capture. Sectors is never a candidate (excluded from aiPolishCandidates),
-    // so it is always in this complement: the same "sectors never captured"
-    // rule as before, just derived from the picker instead of force-added.
-    const captureHidden = LAYER_ORDER.filter((id) => !chosen.includes(id));
+    // The 'existing' layer (traced boundary, house footprint, roads) is the
+    // ground truth of the site — it is ALWAYS captured and mask-protected, on
+    // every map, even when the picker didn't select it. Without this, a
+    // Base-map polish had an all-transparent mask and the model repainted the
+    // boundary and real features at will (field-tested: it invented a farm).
+    const effectiveChosen: LayerId[] = chosen.includes('existing') ? chosen : [...chosen, 'existing'];
+
+    // Complement of the effective set — everything NOT in it gets hidden for
+    // the capture. Sectors is never a candidate (excluded from
+    // aiPolishCandidates), so it is always in this complement: the same
+    // "sectors never captured" rule as before.
+    const captureHidden = LAYER_ORDER.filter((id) => !effectiveChosen.includes(id));
 
     let restored = false;
     const restoreAll = () => {
@@ -2447,9 +2460,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       const outW = compositeImg.naturalWidth;
       const outH = compositeImg.naturalHeight;
 
-      // Same membership the Stage itself just rendered with.
-      const visItems = items.filter((it) => chosen.includes(it.layer ?? defaultLayerForType(it.type)));
-      const visLines = lines.filter((l) => chosen.includes(l.layer ?? defaultLayerForLine(l.kind)));
+      // Same membership the Stage itself just rendered with — including the
+      // force-included 'existing' layer, so the boundary/house/roads are in
+      // BOTH the composite and the pixel-lock mask.
+      const visItems = items.filter((it) => effectiveChosen.includes(it.layer ?? defaultLayerForType(it.type)));
+      const visLines = lines.filter((l) => effectiveChosen.includes(l.layer ?? defaultLayerForLine(l.kind)));
 
       const maskDataUrl = buildAiPolishMask(bg, visItems, visLines, outW, outH);
 
