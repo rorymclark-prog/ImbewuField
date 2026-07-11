@@ -1965,15 +1965,29 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // conservative average depth for a small farm dam/pond (shallower at the
   // edges, deeper in the middle) — noted in the row's title attribute below.
   const POND_ASSUMED_DEPTH_M = 1.5;
-  const boq = (Object.keys(CATALOG) as ElType[]).map((type) => {
-    const list = items.filter((i) => i.type === type); if (!list.length) return null;
+
+  // "Already on the land" vs "to add": existing-layer geometry (the traced
+  // boundary/house, detected trees, imported roads) is what's THERE, not what
+  // the farmer is building — so it must not be costed. Everything on the design
+  // layers (water/access/structures/planting) is the plan, and gets a price.
+  const isExistingItem = (i: Item) => (i.layer ?? defaultLayerForType(i.type)) === 'existing';
+  const isExistingLine = (l: LineEl) => (l.layer ?? defaultLayerForLine(l.kind)) === 'existing';
+
+  const groupItems = (list: Item[]) => (Object.keys(CATALOG) as ElType[]).map((type) => {
+    const of = list.filter((i) => i.type === type); if (!of.length) return null;
     const c = CATALOG[type];
-    const areaM2 = list.reduce((s, i) => s + (c.shape === 'circle' ? Math.PI * (i.wM / 2) ** 2 : i.wM * i.hM), 0);
+    const areaM2 = of.reduce((s, i) => s + (c.shape === 'circle' ? Math.PI * (i.wM / 2) ** 2 : i.wM * i.hM), 0);
     const litres = type === 'pond'
       ? areaM2 * POND_ASSUMED_DEPTH_M * 1000
-      : list.reduce((s, i) => s + (i.litres ?? 0), 0);
-    return { type, label: c.label, icon: c.icon, count: list.length, areaM2, litres };
+      : of.reduce((s, i) => s + (i.litres ?? 0), 0);
+    return { type, label: c.label, icon: c.icon, count: of.length, areaM2, litres };
   }).filter(Boolean) as { type: ElType; label: string; icon: string; count: number; areaM2: number; litres: number }[];
+
+  const plannedItems = items.filter((i) => !isExistingItem(i));
+  const existingItems = items.filter(isExistingItem);
+  const boq = groupItems(items);              // ALL — capacity metrics (growing area, water store, rainwater)
+  const plannedBoq = groupItems(plannedItems); // costed "to add"
+  const existingItemRows = groupItems(existingItems);
 
   // `closed` adds the last→first closing segment (a traced property boundary
   // is a closed ring — omitting it under-measures the true perimeter, e.g. a
@@ -1987,11 +2001,17 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     return d / pxPerM;
   };
 
-  const lineTotals = (Object.keys(LINES) as LineKind[]).map((kind) => {
-    const list = lines.filter((l) => l.kind === kind); if (!list.length) return null;
-    const m = list.reduce((s, l) => s + lineLengthM(l.points, l.closed), 0);
-    return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: list.length, m };
+  const groupLines = (list: LineEl[]) => (Object.keys(LINES) as LineKind[]).map((kind) => {
+    const of = list.filter((l) => l.kind === kind); if (!of.length) return null;
+    const m = of.reduce((s, l) => s + lineLengthM(l.points, l.closed), 0);
+    return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: of.length, m };
   }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number }[];
+
+  const plannedLines = lines.filter((l) => !isExistingLine(l));
+  const existingLines = lines.filter(isExistingLine);
+  const lineTotals = groupLines(lines);             // ALL (AI review context)
+  const plannedLineTotals = groupLines(plannedLines); // costed "to add"
+  const existingLineRows = groupLines(existingLines);
 
   const bedArea = boq.find((b) => b.type === 'bed')?.areaM2 ?? 0;
   const totalLitres = boq.reduce((s, b) => s + b.litres, 0);
@@ -2001,12 +2021,13 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // coop, shed, greenhouse, tunnel, etc. are the same strings on both sides) —
   // no extra mapping needed here. Tanks pass litres per-unit average since boq
   // rows are already summed across all placed instances of a type.
-  const boqCosts = boq.map((b) => {
-    const list = items.filter((i) => i.type === b.type);
+  // Costs are computed over PLANNED geometry only — existing features are not purchases.
+  const boqCosts = plannedBoq.map((b) => {
+    const list = plannedItems.filter((i) => i.type === b.type);
     const zar = list.reduce((s, i) => s + (costForItem(i.type, i.wM, i.hM, i.litres)?.zar ?? 0), 0);
     return { type: b.type, zar: zar > 0 ? zar : null };
   });
-  const lineCosts = lineTotals.map((l) => ({ kind: l.kind, ...(costForLine(l.kind, l.m) ?? { zar: null }) }));
+  const lineCosts = plannedLineTotals.map((l) => ({ kind: l.kind, ...(costForLine(l.kind, l.m) ?? { zar: null }) }));
   const estBudgetTotal =
     boqCosts.reduce((s, b) => s + (b.zar ?? 0), 0) + lineCosts.reduce((s, l) => s + (l.zar ?? 0), 0);
 
@@ -2132,13 +2153,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   function shareBudgetOnWhatsApp() {
     const lines: string[] = [];
     lines.push(`*${designTitle || 'Garden design'}* — ImbewuField plan`);
-    boq.forEach((b) => {
+    lines.push('*To add:*');
+    plannedBoq.forEach((b) => {
       const cost = boqCosts.find((c) => c.type === b.type);
       const qty = b.litres ? ` (${Math.round(b.litres).toLocaleString()} L)` : b.areaM2 ? ` (${b.areaM2.toFixed(0)} m²)` : '';
       const costTxt = cost?.zar ? ` — ${formatZar(cost.zar)}` : '';
       lines.push(`• ${b.label} ×${b.count}${qty}${costTxt}`);
     });
-    lineTotals.forEach((l) => {
+    plannedLineTotals.forEach((l) => {
       const cost = lineCosts.find((c) => c.kind === l.kind);
       const costTxt = cost?.zar ? ` — ${formatZar(cost.zar)}` : '';
       lines.push(`• ${l.label} — ${l.m.toFixed(0)} m${costTxt}`);
@@ -3062,44 +3084,74 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             </div>
           )}
 
-          {/* BOQ */}
+          {/* BOQ — split into what's ALREADY on the land (no cost) and what you're
+              adding (costed), so the budget only counts things you'll actually buy. */}
           <div>
             <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Bill of quantities</div>
-            {boq.length || lineTotals.length ? (
-              <div className="space-y-1">
-                {boq.map((b) => {
-                  const cost = boqCosts.find((c) => c.type === b.type);
-                  return (
-                    <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
-                      title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
-                      <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
-                      <span className="flex items-center gap-2">
-                        <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${Math.round(b.litres).toLocaleString()}L${b.type === 'pond' ? '*' : ''}` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
-                        {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
-                      </span>
-                    </div>
-                  );
-                })}
-                {lineTotals.map((l) => {
-                  const cost = lineCosts.find((c) => c.kind === l.kind);
-                  return (
-                    <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
-                      <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
-                      <span className="flex items-center gap-2">
-                        <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
-                        {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
-                      </span>
-                    </div>
-                  );
-                })}
-                {estBudgetTotal > 0 && (
-                  <div className="flex items-center justify-between text-xs font-display px-2 py-1.5 mt-1 rounded-lg font-semibold" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)' }}>
-                    <span style={{ color: '#1F4D2B' }}>Est. budget</span>
-                    <span className="font-mono" style={{ color: '#1F4D2B' }}>{formatZar(estBudgetTotal)}</span>
+            {items.length || lines.length ? (
+              <div className="space-y-2.5">
+
+                {/* Already on the land — existing features, not a purchase */}
+                {(existingItemRows.length > 0 || existingLineRows.length > 0) && (
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-mono uppercase tracking-wider px-0.5" style={{ color: '#9A8268' }}>🏠 Already on the land</div>
+                    {existingItemRows.map((b) => (
+                      <div key={`ex-${b.type}`} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
+                        <span style={{ color: '#9A8268' }}>{b.icon} {b.label}</span>
+                        <span className="font-mono" style={{ color: '#9A8268' }}>×{b.count}{b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                      </div>
+                    ))}
+                    {existingLineRows.map((l) => (
+                      <div key={`ex-${l.kind}`} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
+                        <span style={{ color: '#9A8268' }}>{l.icon} {l.label}</span>
+                        <span className="font-mono" style={{ color: '#9A8268' }}>~{l.m.toFixed(1)} m</span>
+                      </div>
+                    ))}
+                    <p className="text-[9px] font-mono px-0.5" style={{ color: '#B0A288' }}>Existing — not counted in the budget.</p>
                   </div>
                 )}
-                {estBudgetTotal > 0 && (
-                  <p className="text-[9px] font-mono leading-snug px-0.5 pt-0.5" style={{ color: '#9A8268' }}>{DISCLAIMER}</p>
+
+                {/* To add — the design, costed */}
+                {(plannedBoq.length > 0 || plannedLineTotals.length > 0) ? (
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-mono uppercase tracking-wider px-0.5" style={{ color: '#1F4D2B' }}>🌱 To add</div>
+                    {plannedBoq.map((b) => {
+                      const cost = boqCosts.find((c) => c.type === b.type);
+                      return (
+                        <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
+                          title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
+                          <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
+                          <span className="flex items-center gap-2">
+                            <span className="font-mono" style={{ color: '#20190F' }}>×{b.count}{b.litres ? ` · ${Math.round(b.litres).toLocaleString()}L${b.type === 'pond' ? '*' : ''}` : b.areaM2 ? ` · ${b.areaM2.toFixed(0)}m²` : ''}</span>
+                            {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {plannedLineTotals.map((l) => {
+                      const cost = lineCosts.find((c) => c.kind === l.kind);
+                      return (
+                        <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                          <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
+                          <span className="flex items-center gap-2">
+                            <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
+                            {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {estBudgetTotal > 0 && (
+                      <div className="flex items-center justify-between text-xs font-display px-2 py-1.5 mt-1 rounded-lg font-semibold" style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)' }}>
+                        <span style={{ color: '#1F4D2B' }}>Est. budget</span>
+                        <span className="font-mono" style={{ color: '#1F4D2B' }}>{formatZar(estBudgetTotal)}</span>
+                      </div>
+                    )}
+                    {estBudgetTotal > 0 && (
+                      <p className="text-[9px] font-mono leading-snug px-0.5 pt-0.5" style={{ color: '#9A8268' }}>{DISCLAIMER}</p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs font-display" style={{ color: '#9A8268' }}>Nothing to add yet — place tanks, beds, paths and more as you move through the steps.</p>
                 )}
               </div>
             ) : <p className="text-xs font-display" style={{ color: '#9A8268' }}>Quantities tally here as you place things.</p>}
