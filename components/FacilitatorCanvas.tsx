@@ -2808,8 +2808,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         <Stage ref={stageRef} width={size.w} height={size.h}
           scaleX={stageScale} scaleY={stageScale} x={stagePos.x} y={stagePos.y}
           draggable={panMode} dragDistance={4}
-          onDragMove={(e) => { stagePosRef.current = { x: e.target.x(), y: e.target.y() }; }}
-          onDragEnd={(e) => { const p = { x: e.target.x(), y: e.target.y() }; stagePosRef.current = p; setStagePos(p); }}
+          onDragMove={(e) => {
+            // Konva events BUBBLE — an element's dragmove reaches this Stage
+            // handler with e.target = the ELEMENT. Only react to the Stage
+            // dragging itself, or the map snaps to wherever the element went.
+            if (e.target !== e.target.getStage()) return;
+            stagePosRef.current = { x: e.target.x(), y: e.target.y() };
+          }}
+          onDragEnd={(e) => {
+            if (e.target !== e.target.getStage()) return;
+            const p = { x: e.target.x(), y: e.target.y() };
+            stagePosRef.current = p; setStagePos(p);
+          }}
           onClick={onStageClick} onTap={onStageClick}>
           <Layer listening={false}>
             {bg && !hiddenLayers.includes('base') && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
