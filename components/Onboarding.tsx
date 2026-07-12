@@ -34,6 +34,7 @@ export default function Onboarding() {
 
         {/* Primary action — prominent, immediately actionable */}
         <button onClick={() => completeOnboarding(picked)}
+          aria-label={`${tp('start')} — ${tp('welcomeTitle')}`}
           className="w-full py-3 rounded-xl text-base font-display font-semibold transition-all mb-5"
           style={{ background: '#1F4D2B', color: '#fff', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
           <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>

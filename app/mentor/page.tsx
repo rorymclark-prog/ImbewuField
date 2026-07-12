@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { listTrainees, getCourseProgress, logMentorVisit } from '@/lib/db/queries';
@@ -209,9 +209,22 @@ export default function MentorPage() {
           <SettingsButton />
         </header>
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="rounded-2xl px-6 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-            <Users size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
-            <p className="text-sm font-display" style={{ color: '#5C5040' }}>Not authorized for this view.</p>
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
+              <Users size={22} style={{ color: '#1F4D2B' }} />
+            </div>
+            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Mentor area</p>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
+              It&apos;s set up for mentors, NGOs and funders — not your role. Head back to your own home to keep going.
+            </p>
+            <button
+              onClick={() => router.push('/home')}
+              className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
+              style={{ background: '#1F4D2B', color: '#F7F2E9' }}
+            >
+              <Home size={15} />
+              Back to my home
+            </button>
           </div>
         </main>
         <TabBar />

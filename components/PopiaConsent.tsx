@@ -67,7 +67,7 @@ export default function PopiaConsent() {
   const [done, setDone] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
   const [storeData, setStoreData] = useState(true);    // required — cannot proceed without
-  const [shareNgo, setShareNgo] = useState(true);      // optional
+  const [shareNgo, setShareNgo] = useState(false);     // optional — privacy-preserving default: off until the farmer opts in
   const [goal, setGoal] = useState<Goal | null>(null);
 
   useEffect(() => {
