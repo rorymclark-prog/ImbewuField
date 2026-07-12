@@ -47,6 +47,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-12 (Guitar Studio — nylon-string guitar course, side section)
+- **New self-contained section at `/guitar`** (owner request, unrelated to the farm
+  platform): a step-by-step nylon-string/classical guitar course. Doesn't touch any
+  existing route or component; sits behind the same site gate.
+- **11 interactive lessons** (`lib/guitar/curriculum.ts`) — posture → tuning → free
+  stroke (p/i/m/a) → first notes → Ode to Joy → rest stroke → thumb+fingers → first
+  chords → E-minor arpeggio study → Spanish/Phrygian sound → Romanza opening.
+- **Playable tab** — every exercise renders as SVG tablature and plays through a
+  Karplus–Strong plucked-string synth (`lib/guitar/audio.ts`, no samples, works
+  offline) with count-in, loop, tempo control and a moving highlight.
+- **Tools** — mic tuner with autocorrelation pitch detection + reference tones
+  (`/guitar/tuner`), Web-Audio metronome with tap tempo (`/guitar/metronome`),
+  tap-to-hear chord library of 13 shapes (`/guitar/chords`).
+- **Progress** — localStorage lesson completion + practice-day streak (`lib/guitar/progress.ts`).
+- Uses the existing design system (paper/forest/ochre, Newsreader/Public Sans, Lucide).
+  `tsc --noEmit` + `next build` clean; routes smoke-tested headless (no JS errors).
+
 ### 2026-06-23 (critical bug fixes + UX pass 2)
 - **BLOCKER fixed: water colour** — MapboxDraw missing `userProperties:true`; without
   it `user_featureType` style filters never matched → all polygons green, no blue water.
