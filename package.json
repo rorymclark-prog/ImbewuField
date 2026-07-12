@@ -6,7 +6,9 @@
     "dev": "next dev -p 4242",
     "build": "next build",
     "start": "next start",
-    "seed": "node scripts/seed.mjs"
+    "seed": "node scripts/seed.mjs",
+    "seed:emulator": "node scripts/seed-emulator.mjs",
+    "dev:emulator": "NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1 next dev -p 4243"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

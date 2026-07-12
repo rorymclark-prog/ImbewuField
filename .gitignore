@@ -7,5 +7,11 @@ serviceAccount.json
 
 .env*
 !.env.example
+!.env.emulator.example
 .vercel
 *.tsbuildinfo
+
+# Firebase emulator debug logs (created whenever `firebase emulators:start` runs)
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

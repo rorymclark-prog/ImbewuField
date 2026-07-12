@@ -1,8 +1,8 @@
 'use client';
 
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
-import { initializeFirestore, getFirestore, type Firestore } from 'firebase/firestore';
+import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
+import { initializeFirestore, getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase web config — all public (security is enforced by Firestore rules + Auth,
@@ -17,6 +17,45 @@ const config = {
 };
 
 export const isBackendConfigured = () => !!config.apiKey && !!config.projectId;
+
+// ── Local Firebase emulator support (dev/test only) ─────────────────────────
+// Fully opt-in: production behaviour is byte-for-byte unchanged unless this
+// flag is set. Never true in a normal `vercel --prod` / production build,
+// since the env var is not defined there.
+const USE_EMULATOR = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === '1';
+const EMULATOR_AUTH_HOST = 'http://127.0.0.1:9099';
+const EMULATOR_FIRESTORE_HOST = '127.0.0.1';
+const EMULATOR_FIRESTORE_PORT = 8080;
+
+// Guard against "already connected" throws from connectAuthEmulator /
+// connectFirestoreEmulator on Next.js Fast Refresh, which re-evaluates this
+// module (resetting the local `cache` var) without tearing down the
+// underlying Auth/Firestore singletons registered against the Firebase app.
+// A flag on globalThis survives module re-evaluation, so we only ever call
+// the connect* functions once per page load.
+declare global {
+  // eslint-disable-next-line no-var
+  var __IMBEWUFIELD_EMULATORS_CONNECTED__: boolean | undefined;
+}
+
+function connectEmulatorsOnce(auth: Auth, db: Firestore) {
+  if (!USE_EMULATOR) return;
+  if (globalThis.__IMBEWUFIELD_EMULATORS_CONNECTED__) return;
+  globalThis.__IMBEWUFIELD_EMULATORS_CONNECTED__ = true;
+  try {
+    connectAuthEmulator(auth, EMULATOR_AUTH_HOST, { disableWarnings: true });
+    connectFirestoreEmulator(db, EMULATOR_FIRESTORE_HOST, EMULATOR_FIRESTORE_PORT);
+    // eslint-disable-next-line no-console
+    console.info(
+      `[ImbewuField] NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1 — using local emulators ` +
+      `(auth: ${EMULATOR_AUTH_HOST}, firestore: ${EMULATOR_FIRESTORE_HOST}:${EMULATOR_FIRESTORE_PORT}). ` +
+      `No production Firebase traffic.`
+    );
+  } catch (err) {
+    // Already connected (e.g. a race on first render) — safe to ignore.
+    console.warn('[ImbewuField] Emulator connect skipped (already connected?):', err);
+  }
+}
 
 let cache: { app: FirebaseApp; auth: Auth; db: Firestore; storage: FirebaseStorage } | null = null;
 
@@ -34,6 +73,8 @@ export function getFirebase() {
   let db: Firestore;
   try { db = initializeFirestore(app, { ignoreUndefinedProperties: true }); }
   catch { db = getFirestore(app); }
-  cache = { app, auth: getAuth(app), db, storage: getStorage(app) };
+  const auth = getAuth(app);
+  connectEmulatorsOnce(auth, db);
+  cache = { app, auth, db, storage: getStorage(app) };
   return cache;
 }
