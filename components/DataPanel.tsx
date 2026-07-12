@@ -299,6 +299,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return () => window.removeEventListener('imbewu-surveys-changed', refresh);
   }, [activePlaceId]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
+  useEffect(() => {
+    setPhotoAnalysis(undefined);
+  }, [coords?.lat, coords?.lon]);
 
   // Evidence state
   const siteId = activePlaceId ?? 'default';
@@ -1231,7 +1234,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           <PhotoUpload
             locationData={data}
             mapCapture={mapCapture}
-            onAnalysisComplete={(analysis) => setPhotoAnalysis(analysis)}
+            onAnalysisComplete={(analysis) => setPhotoAnalysis(analysis || undefined)}
           />
         )}
 

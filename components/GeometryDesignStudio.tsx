@@ -47,7 +47,7 @@ import {
   type DesignCanvasState,
   type LineShape,
 } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, ZONE_COLORS, ZONE_KEY } from '@/lib/design-elements';
 import { reportId } from '@/lib/saved-reports';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
@@ -170,16 +170,8 @@ function buildDesignBrief(plan: DesignPlanAI): DesignBrief {
       where: anchorToWords(z.anchor),
       contents: ZONE_PLANTINGS[z.n] ?? z.items.join(', '),
     })),
-    water: [
-      'Rainwater: roof gutters → JoJo tank beside the house, overflow toward the garden',
-      'Greywater: from the house → mulch basin / banana circle on the lower ground',
-      'Swales on contour across the slope to slow, spread & sink runoff',
-      'Drip irrigation across the vegetable beds from a tap point',
-    ],
-    access: [
-      'Driveway: the traced dashed vehicle track from the road/gate to the house (keep clear)',
-      'Footpaths: house → vegetable garden → orchard',
-    ],
+    water: plan.water.map((w) => w.note),
+    access: plan.access.map((a) => a.note),
   };
 }
 
@@ -279,25 +271,6 @@ const FILL_COLORS: Partial<Record<DesignLayerType, string>> = {
   structure: 'rgba(181,138,88,0.20)',
   unknown: 'rgba(185,170,142,0.14)',
 };
-
-// Zone badge colours — 0 charcoal, 1 red, 2 orange, 3 amber, 4 pale-green, 5 teal
-const ZONE_COLORS: Record<number, string> = {
-  0: '#3A352C',
-  1: '#B53A3A',
-  2: '#C66A1C',
-  3: '#9B8B1E',
-  4: '#2F7A4A',
-  5: '#1A6B58',
-};
-
-const ZONE_KEY: Array<{ z: number; label: string; desc: string }> = [
-  { z: 0, label: 'House', desc: 'Dwelling & immediate surroundings' },
-  { z: 1, label: 'Daily use', desc: 'Herbs, kitchen garden, chickens' },
-  { z: 2, label: 'Intensive', desc: 'Veggie beds, small animals' },
-  { z: 3, label: 'Orchard / food forest', desc: 'Trees, perennials, larger plots' },
-  { z: 4, label: 'Low-care', desc: 'Grazing, woodlot, fodder' },
-  { z: 5, label: 'Conservation / buffer', desc: 'Wild, tree belts, boundary' },
-];
 
 // ── Geometry helpers ───────────────────────────────────────────────────────────
 
@@ -1201,6 +1174,14 @@ function GeometryPreview({
   const showImplementation = mapView === 'implementation';
   const showZoneKey = mapView === 'zone' || mapView === 'design';
   const slope = slopeIndicative(locationData?.elevation);
+  const effectivePlan = buildLocalPlan(
+    visibleLayers.map((l) => ({ layerType: l.layerType, name: l.name })),
+    {
+      biome: locationData?.biome?.name,
+      rainfallMm: locationData?.rainfall?.annual ?? undefined,
+      soilTexture: locationData?.soil?.textureClass ?? undefined,
+    },
+  );
 
   // ── Boundary path for clipPath (zone/design views) ─────────────────────────
   // Build an SVG path from the property_boundary ring (or all approved coords hull)
@@ -1232,7 +1213,7 @@ function GeometryPreview({
   } = (() => {
     const paths: Record<number, string[]> = {};
     const centroids: Record<number, readonly [number, number]> = {};
-    if (!showZoneBadges || !aiPlan) return { paths, centroids };
+    if (!showZoneBadges) return { paths, centroids };
     const boundaryLayer =
       visibleLayers.find((l) => l.layerType === 'property_boundary') ?? visibleLayers[0];
     if (!boundaryLayer) return { paths, centroids };
@@ -1311,7 +1292,7 @@ function GeometryPreview({
       4: zone4,
       5: zone5,
     };
-    for (const zone of aiPlan.zones) {
+    for (const zone of effectivePlan.zones) {
       const mp = byN[zone.n] ?? [];
       if (!mp.length) continue;
       paths[zone.n] = multiToPaths(mp);
@@ -1355,9 +1336,9 @@ function GeometryPreview({
   // ── Zone badge positions (de-collided so 0/1/2 don't stack near the house) ──
   // Computed up front so on-map labels can be told to avoid the badges too.
   const badgePositions: Record<number, readonly [number, number]> = {};
-  if (showZoneBadges && aiPlan) {
+  if (showZoneBadges) {
     const placed: Array<{ x: number; y: number }> = [];
-    for (const zone of aiPlan.zones) {
+    for (const zone of effectivePlan.zones) {
       let [bx, by] =
         zonePartition.centroids[zone.n] ??
         resolveAnchor(zone.anchor, visibleLayers, project, boundsCenter, bboxPx);
@@ -1829,9 +1810,9 @@ function GeometryPreview({
           {/* ── ZONE AREA FILLS — real non-overlapping polygons (Zone + Design) ─ */}
           {/* Carved from the open space + existing features; already inside the */}
           {/* boundary. Drawn BEFORE badges so outlines + badges sit on top.     */}
-          {showZoneBadges && aiPlan && (
+          {showZoneBadges && (
             <g clipPath={boundaryPathForClip ? 'url(#design-boundary-clip)' : undefined}>
-              {aiPlan.zones.map((zone) => {
+              {effectivePlan.zones.map((zone) => {
                 const ds = zonePartition.paths[zone.n];
                 if (!ds || !ds.length) return null;
                 const color = ZONE_COLORS[zone.n] ?? '#555';
@@ -1859,7 +1840,7 @@ function GeometryPreview({
           )}
 
           {/* ── ZONE BADGES (Zone + Design views) ────────────────────────────── */}
-          {showZoneBadges && aiPlan && aiPlan.zones.map((zone) => {
+          {showZoneBadges && effectivePlan.zones.map((zone) => {
             const color = ZONE_COLORS[zone.n] ?? '#555';
             // Use the pre-computed, de-collided badge position (falls back to anchor).
             const [bx, by] =
@@ -1915,7 +1896,7 @@ function GeometryPreview({
           })}
 
           {/* ── OPPORTUNITY LABELS (Design view, satellite only, max 3) ──── */}
-          {showDesignElements && showSat && aiPlan && aiPlan.opportunities.slice(0, 3).map((opp, i) => {
+          {showDesignElements && showSat && effectivePlan.opportunities.slice(0, 3).map((opp, i) => {
             // Over the photo, drop opportunity cards onto the zone they describe
             // (orchard → Zone 3, low-care → Zone 4) so they spread out like a real
             // plan instead of stacking on the house.
@@ -1962,7 +1943,7 @@ function GeometryPreview({
           })}
 
           {/* ── WATER ARROWS (Design view — from plan.water) ──────────────── */}
-          {showDesignElements && aiPlan && aiPlan.water.map((w, i) => {
+          {showDesignElements && effectivePlan.water.map((w, i) => {
             const [x1, y1] = resolveWaterPoint(w.from, visibleLayers, project, boundsCenter, bboxPx);
             const [x2, y2] = resolveWaterTarget(w.to, visibleLayers, project, boundsCenter, bboxPx);
             // Offset slightly per index so arrows don't overlap
@@ -1996,7 +1977,7 @@ function GeometryPreview({
           })}
 
           {/* ── ACCESS ARROWS (Design view — from plan.access) ────────────── */}
-          {showDesignElements && aiPlan && aiPlan.access.map((a, i) => {
+          {showDesignElements && effectivePlan.access.map((a, i) => {
             // Vehicle: from boundary edge toward house; foot: from house outward
             let houseLike = visibleLayers.find((l) => l.layerType === 'roof' || l.layerType === 'structure');
             if (!houseLike) {
@@ -2598,7 +2579,7 @@ function GeometryPreview({
           {/* NOTES section */}
           {(() => {
             const notesBaseY = 48 + ZONE_KEY.length * 22 + 216;
-            const notesText = aiPlan?.notes ?? 'Generate a plan to see design notes here.';
+            const notesText = effectivePlan.notes ?? 'Generate a plan to see design notes here.';
             // Word-wrap at ~26 chars
             const words = notesText.split(' ');
             const lines: string[] = [];
@@ -3049,16 +3030,14 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
 
       // Shared design brief — the SAME canonical placement spec for every map, so
       // planting/zones/water/phasing all express one integrated design.
-      const effectivePlan: DesignPlanAI =
-        aiPlan ??
-        buildLocalPlan(
-          layers.map((l) => ({ layerType: l.layerType, name: l.name })),
-          {
-            biome: locationData?.biome?.name,
-            rainfallMm: locationData?.rainfall?.annual ?? undefined,
-            soilTexture: locationData?.soil?.textureClass ?? undefined,
-          },
-        );
+      const effectivePlan: DesignPlanAI = buildLocalPlan(
+        layers.map((l) => ({ layerType: l.layerType, name: l.name })),
+        {
+          biome: locationData?.biome?.name,
+          rainfallMm: locationData?.rainfall?.annual ?? undefined,
+          soilTexture: locationData?.soil?.textureClass ?? undefined,
+        },
+      );
       const designBrief = buildDesignBrief(effectivePlan);
 
       // Farmer-placed site elements (tanks/taps/boreholes/etc) — same normalised frame as
@@ -3084,7 +3063,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
         aspectLabel: locationData?.elevation?.aspectLabel,
         minTemp: locationData?.climate?.minTemp ?? undefined,
         maxTemp: locationData?.climate?.maxTemp ?? undefined,
-        zones: aiPlan?.zones?.map((z) => ({ n: z.n, title: z.title, items: z.items })),
+        zones: effectivePlan.zones.map((z) => ({ n: z.n, title: z.title, items: z.items })),
         polygons: layers.map((l) => ({ name: l.name, type: l.layerType, area: l.areaLabel })),
         survey: survey ?? undefined,
         designBrief,

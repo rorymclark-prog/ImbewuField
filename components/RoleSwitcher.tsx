@@ -32,10 +32,11 @@ export default function RoleSwitcher({ current }: { current: string }) {
           : r.ready
           ? { background: 'transparent', border: '1px solid transparent', color: '#20190F' }
           : { background: 'transparent', border: '1px solid transparent', color: '#5C5040', opacity: 0.5, cursor: 'not-allowed' };
+        const ariaLabel = `${t(r.labelKey)}${active ? ' (current)' : ''}`;
 
         if (!r.ready) {
           return (
-            <span key={r.key} className={base} style={style} title="Coming soon">
+            <span key={r.key} className={base} style={style} title="Coming soon" aria-label={`${t(r.labelKey)} (coming soon)`}>
               <r.Icon size={16} />
               <span className="hidden md:inline">{t(r.labelKey)}</span>
             </span>
@@ -47,6 +48,8 @@ export default function RoleSwitcher({ current }: { current: string }) {
             href={r.href}
             className={base}
             style={style}
+            aria-label={ariaLabel}
+            aria-current={active ? 'page' : undefined}
             title={isAliasMatch ? 'Design map is the Mentor toolkit' : undefined}
           >
             <r.Icon size={16} />

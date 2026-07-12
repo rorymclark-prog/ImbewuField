@@ -19,11 +19,35 @@ const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
 
+const STRICT_MAP_CRITERIA = {
+  mustInclude: [
+    'the traced property boundary, house roof, and driveway exactly where the farmer drew them',
+    'north-up orientation with no rotation',
+    'only on-map labels placed directly on or touching the feature they name',
+    'a square canvas that reaches all four edges',
+  ],
+  mustAvoid: [
+    'invented buildings, paths, trees, beds, ponds, or decorations',
+    'legends, keys, side panels, title cards, or borders',
+    '3D perspective, tilt, or a redesign of the site',
+    'labels stacked in a column with long leader lines',
+  ],
+  labelPolicy: [
+    'use short dark pills only',
+    'keep every label attached to the correct feature',
+  ],
+  composition: [
+    'the real satellite image stays dominant',
+    'only the unprotected background is repainted',
+    'all locked geometry remains pixel-identical',
+  ],
+} as const;
+
 const STRICT_PROMPT =
   'Repaint ONLY the unprotected background as a beautiful hand-illustrated permaculture map ' +
   '(soft earth tones, gentle textures, subtle grass/soil detail). This design was drawn by the ' +
   'farmer: do NOT add, move, remove, resize or restyle ANY element, zone, line or label — every ' +
-  'feature stays exactly where and how it is.';
+  'feature stays exactly where and how it is. Follow the strict map criteria.';
 
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
@@ -349,7 +373,7 @@ function relativeDate(iso: string): string {
 
 const PROVIDER_LABEL: Record<'gemini' | 'falgpt', string> = {
   gemini: 'Gemini',
-  falgpt: 'GPT-2 strict',
+  falgpt: 'Strict map',
 };
 
 export default function DesignGlossy({ state, frame, refLayers, site, placeName }: DesignGlossyProps) {
@@ -383,7 +407,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             imageBase64: stripDataUrl(composite),
             maskBase64: stripDataUrl(mask),
             provider: 'falgpt',
-            context: {},
+            context: {
+              strictMap: true,
+              mapCriteria: STRICT_MAP_CRITERIA,
+            },
             touchupPrompt: STRICT_PROMPT,
           });
         } else {
@@ -465,8 +492,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           Generate an artist&apos;s impression of your design. Gemini (fast) keeps your layout
-          while it repaints the scene; Best quality pixel-locks every item, zone, and line you
-          placed so only the background is repainted.
+          while it repaints the scene; Strict map pixel-locks every item, zone, and line you
+          placed so only the background is repainted and map rules stay fixed.
         </p>
       )}
 
@@ -559,10 +586,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             >
               {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
               {loading === 'falgpt'
-                ? 'Generating… 30–90s'
+                ? 'Generating strict map… 30–90s'
                 : resultImage
-                  ? 'Regenerate — Best quality (~1 min)'
-                  : 'Best quality (~1 min)'}
+                  ? 'Regenerate — Strict map (~1 min)'
+                  : 'Strict map (~1 min)'}
             </button>
           </div>
         </div>

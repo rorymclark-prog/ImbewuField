@@ -48,6 +48,7 @@ function HomeInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const searchKey = searchParams.toString();
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -122,9 +123,33 @@ function HomeInner() {
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
 
+  useEffect(() => {
+    const panel = searchParams.get('panel');
+    const chat = searchParams.get('chat');
+    const q = searchParams.get('q');
+    const photo = searchParams.get('photo');
+
+    if (!panel) {
+      setForcedTab(chat === '1' ? 'Ask' : null);
+    } else if (VALID_PANELS.includes(panel)) {
+      setForcedTab(panel);
+    } else if (panel === 'saved') {
+      setForcedTab('Places');
+    } else if (panel === 'chat') {
+      setForcedTab('Ask');
+    } else {
+      setForcedTab(null);
+    }
+
+    setInitialChatQuery(q);
+    setInitialChatPhoto(photo === '1');
+    setSheetOpen(!!(panel || chat));
+  }, [searchKey]);
+
   const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
     setSelected({ lat, lon });
     setMapCapture(null);
+    setReportPhotoAnalysis(undefined);
     setError('');
     setSheetOpen(true);
 

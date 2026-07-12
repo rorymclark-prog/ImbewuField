@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useEffect, type FormEvent } from 'react';
+import { Suspense, useState, useEffect, useRef, type FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, ChevronLeft, Mail, Check, Copy } from 'lucide-react';
 import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
@@ -57,12 +57,23 @@ function LoginPageInner() {
   const [resetSent, setResetSent] = useState(false);
   const [embedded, setEmbedded] = useState(false);
   const [copied, setCopied] = useState(false);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const fullNameRef = useRef<HTMLInputElement | null>(null);
+  const errorRef = useRef<HTMLParagraphElement | null>(null);
 
   const backendReady = isBackendConfigured();
 
   // Google OAuth is blocked in in-app browsers — detect on the client so we can
   // steer the user to a real browser instead of a popup that never opens.
   useEffect(() => { setEmbedded(isEmbeddedBrowser()); }, []);
+  useEffect(() => {
+    if (!backendReady) return;
+    const target = mode === 'create' ? fullNameRef.current : emailRef.current;
+    target?.focus();
+  }, [backendReady, mode]);
+  useEffect(() => {
+    if (error) errorRef.current?.focus();
+  }, [error]);
 
   async function copyAppLink() {
     try {
@@ -124,8 +135,8 @@ function LoginPageInner() {
   });
 
   return (
-    <div className="h-screen flex items-center justify-center p-4" style={{ background: '#F7F2E9' }}>
-      <div className="w-full max-w-sm rounded-2xl p-6" style={card}>
+    <div className="min-h-[100dvh] flex items-start justify-center overflow-y-auto px-4 py-6 md:items-center" style={{ background: '#F7F2E9' }}>
+      <div className="w-full max-w-sm rounded-2xl p-6 my-auto" style={card}>
 
         {/* Logo */}
         <div className="text-center mb-5">
@@ -192,37 +203,57 @@ function LoginPageInner() {
           /* ── Forms ── */
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             {mode === 'create' && (
-              <input type="text" autoFocus value={fullName}
-                onChange={(e) => { setFullName(e.target.value); setError(null); }}
-                placeholder="Full name" required disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none"
-                style={inputStyle()} />
+              <>
+                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="full-name">
+                  Full name
+                </label>
+                <input id="full-name" ref={fullNameRef} type="text" value={fullName}
+                  onChange={(e) => { setFullName(e.target.value); setError(null); }}
+                  placeholder="Full name" autoComplete="name" required disabled={!backendReady}
+                  className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
+                  style={inputStyle()} />
+              </>
             )}
 
-            <input type="email" autoFocus={mode !== 'create'} value={email}
+            <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="email">
+              Email address
+            </label>
+            <input id="email" ref={emailRef} type="email" value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
               placeholder="Email address" required disabled={!backendReady}
-              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none"
+              autoComplete="email" inputMode="email"
+              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
               style={inputStyle(!!error && mode !== 'create')} />
 
             {mode !== 'reset' && (
-              <input type="password" value={password}
+              <>
+                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="password">
+                  Password
+                </label>
+                <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
                 placeholder="Password" required disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none"
+                autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
                 style={inputStyle(!!error)} />
+              </>
             )}
 
             {mode === 'create' && (
-              <select value={role} onChange={(e) => setRole(e.target.value as UserRole)}
+              <>
+                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="role">
+                  Role
+                </label>
+                <select id="role" value={role} onChange={(e) => setRole(e.target.value as UserRole)}
                 disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none"
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
                 style={inputStyle()}>
                 {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
-              </select>
+                </select>
+              </>
             )}
 
-            {error && <p className="font-sans" style={{ fontSize: 13, color: '#D4922A' }}>{error}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: '#D4922A' }}>{error}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}

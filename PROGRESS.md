@@ -47,6 +47,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-12 (site audit + repair pass)
+- Ran a repo-wide audit with subagents across shell/login, map/design, API/auth, and content flows.
+- Landed the safe fixes: removed the duplicate home language provider, improved login scrolling/labels/focus, hid the closed nav drawer from the accessibility tree, fixed role-switcher semantics, synced farmer query params, cleared stale report/photo analysis, centralized the zone palette, made the design studio use the local fallback plan, and made shared map imports persist/recompute.
+- Left the gate/auth hardening findings as a separate decision because they change deployment behavior.
+
+### 2026-07-12 (strict map generator)
+- Added a strict-map edit mode to `/api/ai-render` so the GPT-image-2 path gets map-specific guardrails, explicit must-include / must-avoid criteria, and a cartography-only prompt wrapper.
+- Rewired the glossy design renderer to opt into the strict-map mode and renamed the UI copy so the "best quality" action now reads as a strict map generator.
+- This keeps the existing fast Gemini render and the other AI touch-up flows intact while giving the final map render a harder contract.
+
 ### 2026-06-23 (critical bug fixes + UX pass 2)
 - **BLOCKER fixed: water colour** — MapboxDraw missing `userProperties:true`; without
   it `user_featureType` style filters never matched → all polygons green, no blue water.

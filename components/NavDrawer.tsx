@@ -76,7 +76,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        aria-hidden="true"
+        aria-hidden={!open}
         style={{
           position: 'fixed', inset: 0, zIndex: 60,
           background: 'rgba(0,0,0,0.38)',
@@ -89,6 +89,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
       {/* Drawer panel */}
       <div
+        aria-hidden={!open}
+        inert={!open}
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,
           width: 'min(310px, 85vw)',
@@ -100,6 +102,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           transition: 'transform 0.28s cubic-bezier(0.32, 0.72, 0, 1)',
           willChange: 'transform',
           overflowY: 'auto',
+          visibility: open ? 'visible' : 'hidden',
         }}
       >
         {/* Header */}
@@ -140,7 +143,6 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
               </div>
 
               {section.items.map(({ href, Icon, label }) => {
-                const active = pathname === href || (href !== '/' && pathname.startsWith(href + '?'));
                 const exactActive = pathname === href;
                 return (
                   <Link

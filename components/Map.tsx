@@ -1408,7 +1408,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         loadSharedSite(code).then((data) => {
           if (!data) return;
           const draw = drawRef.current;
-          if (draw) draw.set(data.geojson);
+          if (draw) {
+            draw.set(data.geojson);
+            restoredRef.current = true;
+            recompute();
+          }
           // Canonical key/event used by lib/saved-places.ts — the old 'imbewu_places' was a
           // dead key, so shared places never loaded.
           localStorage.setItem('permamap_saved_places', JSON.stringify(data.places));

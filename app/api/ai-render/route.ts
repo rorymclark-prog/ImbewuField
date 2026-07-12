@@ -28,10 +28,19 @@ interface SurveyCtx {
   notes?: string;
 }
 
+interface MapCriteria {
+  mustInclude?: string[];
+  mustAvoid?: string[];
+  labelPolicy?: string[];
+  composition?: string[];
+}
+
 interface RenderContext {
   placeName?: string;
   address?: string;
   layer?: RenderLayer;
+  strictMap?: boolean;
+  mapCriteria?: MapCriteria;
   biome?: string;
   rainfallMm?: number;
   rainfallPattern?: string;
@@ -434,6 +443,35 @@ OUTPUT RULES:
 • Output a single image that fills the ENTIRE square canvas edge to edge — the map reaches all four edges, no border, no panel, no empty space.`;
 }
 
+function buildStrictMapTouchupPrompt(basePrompt: string, ctx: RenderContext): string {
+  const criteria = ctx.mapCriteria;
+  const list = (items?: string[]) => (items?.length ? items.map((item) => `- ${item}`).join('\n') : '');
+
+  const criteriaBlock = criteria
+    ? [
+        'SPECIFIC MAP CRITERIA',
+        criteria.mustInclude?.length ? `MUST INCLUDE\n${list(criteria.mustInclude)}` : '',
+        criteria.mustAvoid?.length ? `MUST AVOID\n${list(criteria.mustAvoid)}` : '',
+        criteria.labelPolicy?.length ? `LABEL POLICY\n${list(criteria.labelPolicy)}` : '',
+        criteria.composition?.length ? `COMPOSITION\n${list(criteria.composition)}` : '',
+      ]
+        .filter(Boolean)
+        .join('\n\n')
+    : '';
+
+  return [
+    'STRICT MAP EDIT MODE',
+    'This is a cartographic edit, not a redesign. Preserve the traced geometry, north-up orientation, and the real satellite base exactly.',
+    'Only repaint the editable background. Do not invent features, labels, legends, title cards, side panels, borders, 3D perspective, or decorative elements.',
+    'Keep every locked boundary, roof, driveway, road, tree, bed, and line exactly where the mask and source image place it.',
+    criteriaBlock,
+    'BASE INSTRUCTION',
+    basePrompt.trim(),
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+}
+
 async function callGemini(
   key: string,
   imageBase64: string,
@@ -580,9 +618,12 @@ function buildFluxPrompt(ctx: RenderContext): string {
     .join(', ');
   const brief = ctx.designBrief;
   const layout = brief && layer !== 'base'
-    ? ` Lay out: ${brief.zones.map((z) => `${z.title} ${z.where}`).join('; ')}.`
+    ? ` Lay out: ${brief.zones.map((z) => `${z.title} ${z.where}`).join('; ')}. Water: ${brief.water.join('; ')}. Access: ${brief.access.join('; ')}.`
     : '';
-  return `A richly detailed, hand-illustrated TOP-DOWN permaculture DESIGN map of "${ctx.placeName ?? 'a South African farm'}"${site ? ` (${site})` : ''}, painted over the aerial photo. Show ${focus[layer] ?? focus.overall}.${layout} Style: professional illustrated GIS cartography — soft earth-tone palette, semi-transparent coloured overlays, top-view plant symbols, clean white labels on small dark pills, north up, subtle north arrow and scale bar. This must look like a designed permaculture plan, NOT a plain satellite photo. Keep the house, property boundary, driveway and existing garden in their current positions and proportions. No legend panel, no title card, no border, nothing outside the property.`;
+  const placedLine = ctx.placedElements?.length
+    ? ` Placed elements: ${ctx.placedElements.map((e) => `${e.label} (${e.locationHint})`).join('; ')}.`
+    : '';
+  return `A richly detailed, hand-illustrated TOP-DOWN permaculture DESIGN map of "${ctx.placeName ?? 'a South African farm'}"${site ? ` (${site})` : ''}, painted over the aerial photo. Show ${focus[layer] ?? focus.overall}.${layout}${placedLine} Style: professional illustrated GIS cartography — soft earth-tone palette, semi-transparent coloured overlays, top-view plant symbols, clean white labels on small dark pills, north up, subtle north arrow and scale bar. This must look like a designed permaculture plan, NOT a plain satellite photo. Keep the house, property boundary, driveway and existing garden in their current positions and proportions. No legend panel, no title card, no border, nothing outside the property.`;
 }
 
 async function callFal(
@@ -746,10 +787,17 @@ export async function POST(req: NextRequest) {
     }
     const touchupPrompt = body.touchupPrompt?.trim();
     if (touchupPrompt) {
-      const wrappedPrompt = `Make ONLY this specific change to the highlighted (transparent) region of the image; leave every other pixel exactly as it is: ${touchupPrompt}`;
+      const wrappedPrompt = body.context?.strictMap
+        ? buildStrictMapTouchupPrompt(touchupPrompt, body.context ?? {})
+        : `Make ONLY this specific change to the highlighted (transparent) region of the image; leave every other pixel exactly as it is: ${touchupPrompt}`;
       return submitFalGptQueue(falKey, imageBase64, wrappedPrompt, maskBase64);
     }
-    return submitFalGptQueue(falKey, imageBase64, prompt, maskBase64);
+    return submitFalGptQueue(
+      falKey,
+      imageBase64,
+      body.context?.strictMap ? buildStrictMapTouchupPrompt(prompt, body.context ?? {}) : prompt,
+      maskBase64,
+    );
   }
 
   // Default: Gemini

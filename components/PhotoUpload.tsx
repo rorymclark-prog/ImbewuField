@@ -53,8 +53,26 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
   const inputRef = useRef<HTMLInputElement>(null);
   const dragRef = useRef<boolean>(false);
   const previewUrls = useRef<string[]>([]);
+  const siteKeyRef = useRef<string | null>(null);
 
   useEffect(() => () => { previewUrls.current.forEach(URL.revokeObjectURL); }, []);
+  useEffect(() => {
+    const nextSiteKey = locationData ? `${locationData.lat.toFixed(6)}:${locationData.lon.toFixed(6)}` : 'none';
+    if (siteKeyRef.current === null) {
+      siteKeyRef.current = nextSiteKey;
+      return;
+    }
+    if (siteKeyRef.current === nextSiteKey) return;
+    siteKeyRef.current = nextSiteKey;
+    previewUrls.current.forEach(URL.revokeObjectURL);
+    previewUrls.current = [];
+    setPreviews([]);
+    setImageData([]);
+    setLoading(false);
+    setError('');
+    setAnalysis('');
+    onAnalysisComplete('');
+  }, [locationData?.lat, locationData?.lon, onAnalysisComplete]);
 
   const processFiles = useCallback(async (files: File[]) => {
     const valid = files.filter(f => f.type.startsWith('image/')).slice(0, 5);
@@ -75,8 +93,9 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
       setPreviews(urls);
       setImageData(ok.map(({ data }) => data));
       setAnalysis('');
+      onAnalysisComplete('');
     }
-  }, []);
+  }, [onAnalysisComplete]);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -259,7 +278,14 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               : `Analyse ${imageData.length} photo${imageData.length > 1 ? 's' : ''}`}
           </button>
           <button
-            onClick={() => { previewUrls.current.forEach(URL.revokeObjectURL); previewUrls.current = []; setPreviews([]); setImageData([]); setAnalysis(''); }}
+            onClick={() => {
+              previewUrls.current.forEach(URL.revokeObjectURL);
+              previewUrls.current = [];
+              setPreviews([]);
+              setImageData([]);
+              setAnalysis('');
+              onAnalysisComplete('');
+            }}
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
             style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#8C7A62' }}
           >

@@ -25,6 +25,24 @@ export interface DesignElementDef {
   nearHouseMaxM?: number; // daily-use max distance from house (herbs/veg)
 }
 
+export const ZONE_COLORS: Record<0 | 1 | 2 | 3 | 4 | 5, string> = {
+  0: '#3A352C',
+  1: '#B53A3A',
+  2: '#C66A1C',
+  3: '#9B8B1E',
+  4: '#2F7A4A',
+  5: '#1A6B58',
+};
+
+export const ZONE_KEY: Array<{ z: 0 | 1 | 2 | 3 | 4 | 5; label: string; desc: string }> = [
+  { z: 0, label: 'House', desc: 'Dwelling & immediate surroundings' },
+  { z: 1, label: 'Daily use', desc: 'Herbs, kitchen garden, chickens' },
+  { z: 2, label: 'Intensive', desc: 'Veggie beds, small animals' },
+  { z: 3, label: 'Orchard / food forest', desc: 'Trees, perennials, larger plots' },
+  { z: 4, label: 'Low-care', desc: 'Grazing, woodlot, fodder' },
+  { z: 5, label: 'Conservation / buffer', desc: 'Wild, tree belts, boundary' },
+];
+
 export const CATEGORY_META: Record<ElementCategory, { label: string; icon: string }> = {
   water: { label: 'Water', icon: '💧' },
   structure: { label: 'Structures', icon: '🏚️' },
@@ -37,12 +55,12 @@ export const CATEGORY_META: Record<ElementCategory, { label: string; icon: strin
 // ZONE_KEY): 0 charcoal House, 1 red Daily use, 2 orange Intensive, 3 amber Orchard/food forest,
 // 4 pale-green Low-care, 5 teal Conservation/buffer.
 export const ZONE_DEFS: Record<0 | 1 | 2 | 3 | 4 | 5, { label: string; color: string }> = {
-  0: { label: 'House', color: '#3A352C' },
-  1: { label: 'Daily use', color: '#B53A3A' },
-  2: { label: 'Intensive', color: '#C66A1C' },
-  3: { label: 'Orchard / food forest', color: '#9B8B1E' },
-  4: { label: 'Low-care', color: '#2F7A4A' },
-  5: { label: 'Conservation / buffer', color: '#1F6E5A' },
+  0: { label: ZONE_KEY[0].label, color: ZONE_COLORS[0] },
+  1: { label: ZONE_KEY[1].label, color: ZONE_COLORS[1] },
+  2: { label: ZONE_KEY[2].label, color: ZONE_COLORS[2] },
+  3: { label: ZONE_KEY[3].label, color: ZONE_COLORS[3] },
+  4: { label: ZONE_KEY[4].label, color: ZONE_COLORS[4] },
+  5: { label: ZONE_KEY[5].label, color: ZONE_COLORS[5] },
 };
 
 export const ELEMENT_CATALOG: DesignElementDef[] = [

@@ -27,7 +27,7 @@ import TabBar from '@/components/TabBar';
 import NavDrawer from '@/components/NavDrawer';
 import Onboarding from '@/components/Onboarding';
 import PopiaConsent from '@/components/PopiaConsent';
-import { LanguageProvider, useLanguage } from '@/lib/i18n';
+import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 
@@ -307,10 +307,10 @@ function HomeLandingInner() {
 
 export default function HomeLanding() {
   return (
-    <LanguageProvider>
+    <>
       <Onboarding />
       <PopiaConsent />
       <HomeLandingInner />
-    </LanguageProvider>
+    </>
   );
 }
