@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -71,6 +71,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  // Set `inert` as a real DOM property, not a JSX attribute — react-dom 18 warns
+  // ("Received `true` for a non-boolean attribute `inert`") when it's passed as a
+  // prop (native inert support is React 19). The property works today in all evergreen browsers.
+  const panelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => { if (panelRef.current) panelRef.current.inert = !open; }, [open]);
+
   return (
     <>
       {/* Backdrop */}
@@ -89,8 +95,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
       {/* Drawer panel */}
       <div
+        ref={panelRef}
         aria-hidden={!open}
-        inert={!open}
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,
           width: 'min(310px, 85vw)',
