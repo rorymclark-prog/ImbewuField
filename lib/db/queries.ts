@@ -12,7 +12,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import { getFirebase } from '@/lib/firebase/init';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
-  SavedPlaceRow, CourseProgress, GardenerProfile, MentorVisit,
+  CourseProgress, GardenerProfile, MentorVisit,
   Survey, SurveyQuestion, SurveyResponse,
 } from './types';
 
@@ -167,20 +167,10 @@ export async function saveReport(r: Partial<Report>): Promise<void> {
   await addDoc(collection(f.db, 'reports'), { ...r, owner_id: u, created_at: serverTimestamp() });
 }
 
-// ---- saved places ----
-export async function listSavedPlaces(): Promise<SavedPlaceRow[]> {
-  const f = fb(); const u = uid(); if (!f || !u) return [];
-  const s = await getDocs(query(collection(f.db, 'saved_places'), where('profile_id', '==', u), orderBy('created_at', 'desc')));
-  return rows<SavedPlaceRow>(s);
-}
-export async function addSavedPlace(p: Partial<SavedPlaceRow>): Promise<void> {
-  const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'saved_places'), { ...p, profile_id: u, created_at: serverTimestamp() });
-}
-export async function deleteSavedPlace(id: string): Promise<void> {
-  const f = fb(); if (!f) return;
-  await deleteDoc(doc(f.db, 'saved_places', id));
-}
+// Saved-places DB helpers removed 2026-07: they wrote to a Firestore
+// 'saved_places' collection that nothing ever read — the live map persists
+// saved places in localStorage ('permamap_saved_places' via lib/saved-places.ts).
+// The orphaned writers had misled the emulator seed into a dead path.
 
 // ---- photo upload ----
 export async function uploadPhoto(file: File, folder = 'produce'): Promise<string | null> {

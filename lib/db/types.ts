@@ -60,11 +60,6 @@ export interface Report {
   id: string; owner_id: string; garden_id: string | null; title: string; content: string | null; lang: string; created_at: string;
 }
 
-export interface SavedPlaceRow {
-  id: string; profile_id: string; name: string; lat: number; lon: number;
-  biome: string | null; rainfall: number | null; elevation: number | null; notes: string | null; created_at: string;
-}
-
 export interface CourseProgress { id: string; profile_id: string; module: string; done: boolean; updated_at: string }
 
 export interface MentorVisit {
