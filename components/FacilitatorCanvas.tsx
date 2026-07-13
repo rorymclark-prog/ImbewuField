@@ -2397,8 +2397,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // checked). Pick itself never touches hiddenLayers — see the type above.
   function openAiPolishPicker(mode: 'polish' | 'producer' = 'polish') {
     if (!canAiPolish || aiPolishBusy) return;
+    // Producer defaults to the WHOLE design (one combined map showing every
+    // element); polish defaults to the currently-visible layers.
     const visible = aiPolishCandidates.filter((id) => !hiddenLayers.includes(id));
-    setAiPolish({ phase: 'pick', selected: visible.length ? visible : aiPolishCandidates, mode });
+    const selected = mode === 'producer' ? aiPolishCandidates : (visible.length ? visible : aiPolishCandidates);
+    setAiPolish({ phase: 'pick', selected, mode });
   }
 
   function toggleAiPolishLayer(id: LayerId) {
@@ -2521,7 +2524,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro' }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.image) throw new Error(data.error || `Producer failed (${res.status})`);
@@ -2602,25 +2605,31 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
 
     const labelStyle: LabelStyle = PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label ?? 'clean';
+    // Selecting the whole design → ONE combined map (all your elements together);
+    // selecting a subset → one focused map per layer.
+    const combined = aiPolishCandidates.length > 1 && chosen.length === aiPolishCandidates.length;
+    const jobs: { layers: LayerId[]; label: string }[] = combined
+      ? [{ layers: chosen, label: designTitle || bgSite?.name || 'Your design' }]
+      : chosen.map((l) => ({ layers: [l], label: /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map` }));
+
     let lastFinal: string | null = null;
     let lastLabel = '';
     try {
-      for (let i = 0; i < chosen.length; i++) {
-        const layer = chosen[i];
-        const label = /map$/i.test(LAYERS[layer].name) ? LAYERS[layer].name : `${LAYERS[layer].name} map`;
-        lastLabel = label;
-        const counter = chosen.length > 1 ? ` (${i + 1}/${chosen.length})` : '';
-        setAiPolish({ phase: 'preparing', label: label + counter });
+      for (let i = 0; i < jobs.length; i++) {
+        const job = jobs[i];
+        lastLabel = job.label;
+        const counter = jobs.length > 1 ? ` (${i + 1}/${jobs.length})` : '';
+        setAiPolish({ phase: 'preparing', label: job.label + counter });
 
-        // Show ONLY this layer + the existing base features (boundary/house/roads).
-        const inThisMap = (id: LayerId) => id === layer || id === 'existing';
+        // Show the job's layers + the existing base features (boundary/house/roads).
+        const inThisMap = (id: LayerId) => job.layers.includes(id) || id === 'existing';
         setHiddenLayers(LAYER_ORDER.filter((id) => !inThisMap(id)));
         await nextFrame();
         const stage = stageRef.current;
         if (!stage) throw new Error('Canvas is not ready — please try again.');
 
-        // Capture the scene the model beautifies (satellite + this layer's element
-        // markers + boundary). The model illustrates the marked elements in place.
+        // Capture the scene the model beautifies (satellite + element markers +
+        // boundary). The model illustrates the marked elements in place.
         const composite = stage.toDataURL(crop);
         const outW = Math.round(bg.w * 2);
         const outH = Math.round(bg.h * 2);
@@ -2629,8 +2638,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const visLines = lines.filter((l) => inThisMap(l.layer ?? defaultLayerForLine(l.kind)));
         const elementsText = describePlacedElements(visItems, visLines);
 
-        setAiPolish({ phase: 'painting', label: label + counter });
-        const model = await requestProducer(stripDataUrl(composite), label, elementsText);
+        setAiPolish({ phase: 'painting', label: job.label + counter });
+        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText);
 
         // Deterministic composite-back: satellite outside the boundary, model
         // (with its illustrated elements) inside, crisp boundary + TRUE labels on top.
@@ -2644,12 +2653,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           height: outH,
         });
         lastFinal = final;
-        setPolishGallery((prev) => [...prev, { id: `producer-${layer}-${Date.now()}`, label, image: final, at: Date.now() }]);
+        setPolishGallery((prev) => [...prev, { id: `producer-${i}-${Date.now()}`, label: job.label, image: final, at: Date.now() }]);
       }
       restoreAll();
-      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: chosen.length > 1 ? `${chosen.length} maps produced` : lastLabel });
+      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: jobs.length > 1 ? `${jobs.length} maps produced` : lastLabel });
       else setAiPolish({ phase: 'idle' });
-      if (chosen.length > 1) setGalleryOpen(true);
+      if (jobs.length > 1) setGalleryOpen(true);
     } catch (e) {
       restoreAll();
       setAiPolish({ phase: 'error', message: e instanceof Error ? e.message : 'Producing the map failed — please try again.' });
@@ -3583,7 +3592,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
-                  <Sparkles size={15} /> AI polish
+                  <Sparkles size={15} /> Produce maps
                 </span>
                 {!aiPolishBusy && (
                   <button onClick={() => setAiPolish({ phase: 'idle' })} className="flex items-center justify-center rounded-lg" style={{ width: 24, height: 24, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
@@ -3592,8 +3601,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 )}
               </div>
               <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
-                {aiPolish.phase === 'pick' && 'Pick what to polish — your 👁 layer visibility is restored exactly after, whatever happens.'}
-                {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `Polishing: ${aiPolish.label}`}
+                {aiPolish.phase === 'pick' && 'Full design = one map with everything; pick single layers for focused maps. Your 👁 visibility is restored after.'}
+                {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `${aiPolish.label}`}
                 {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>
             </div>
@@ -3644,7 +3653,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     style={aiPolish.selected.length === 0
                       ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
                       : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
-                    <Sparkles size={14} /> {aiPolish.phase === 'pick' && aiPolish.mode === 'producer' ? 'Produce map per layer' : 'Polish'}
+                    <Sparkles size={14} /> {aiPolish.phase === 'pick' && aiPolish.mode === 'producer'
+                      ? (aiPolishCandidates.length > 1 && aiPolish.selected.length === aiPolishCandidates.length ? 'Produce full-design map' : 'Produce map per layer')
+                      : 'Polish'}
                   </button>
                 </div>
               )}
