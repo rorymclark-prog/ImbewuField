@@ -295,6 +295,15 @@ export interface FacilitatorDesignState {
   bgDataUrl?: string;
   bgRect?: BgRect;
   bgOpacity?: number;
+  /**
+   * IDs of auto-imported map-truth shapes (`mapshape-*`) the facilitator has
+   * explicitly deleted — the map-truth import re-derives ALL mapshape-* lines
+   * from the farmer's global traced-shapes store on every load (proximity-
+   * matched, not scoped to this exact site), so without this list a deleted
+   * shape that doesn't actually belong on this property silently reappears
+   * the next time the design is opened. Once dismissed, stays dismissed.
+   */
+  dismissedMapshapeIds?: string[];
   savedAt: number;
 }
 

@@ -717,6 +717,21 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [restoreSettled, setRestoreSettled] = useState(false);
   const autoPickedRef = useRef(false);
 
+  // IDs of auto-imported map-truth shapes (mapshape-*) the facilitator has
+  // deleted. The map-truth import (loadSiteBackground) re-derives ALL
+  // mapshape-* lines from the farmer's global traced-shapes store on every
+  // load — proximity-matched to this site, not scoped to it — so a shape
+  // that doesn't actually belong here (a dam/path traced somewhere else,
+  // pulled in because it happens to sit within ~2km) would otherwise silently
+  // reappear every time the design reopens, even after being deleted.
+  const [dismissedMapshapeIds, setDismissedMapshapeIds] = useState<string[]>([]);
+  // Mirror for loadSiteBackground's useCallback closure (same stale-closure
+  // reason linesRef exists above) — the map-truth import must see the
+  // CURRENT dismissed list, not whatever it was when the callback was built.
+  const dismissedMapshapeIdsRef = useRef<string[]>([]);
+  dismissedMapshapeIdsRef.current = dismissedMapshapeIds;
+  const dismissMapshape = (id: string) => setDismissedMapshapeIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+
   // AI detect — vision detection of existing features + boundary as ghost overlays.
   const [ghosts, setGhosts] = useState<GhostFeature[] | null>(null);
   const [detecting, setDetecting] = useState(false);
@@ -1132,10 +1147,16 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         }
       });
 
-      setLines((prev) => [...prev.filter((l) => !l.id.startsWith('mapshape-')), ...newLines]);
+      // Never re-add a shape the facilitator has explicitly deleted before —
+      // see dismissMapshape/dismissedMapshapeIdsRef; without this, a shape
+      // that was proximity-matched in from the farmer's global traced-shapes
+      // store but doesn't actually belong on THIS property would silently
+      // reappear on every subsequent open of the design.
+      const keptNewLines = newLines.filter((l) => !dismissedMapshapeIdsRef.current.includes(l.id));
+      setLines((prev) => [...prev.filter((l) => !l.id.startsWith('mapshape-')), ...keptNewLines]);
 
-      if (newLines.length > 0) {
-        setMapImportMsg(`✓ ${newLines.length} traced shape${newLines.length === 1 ? '' : 's'} imported from your map`);
+      if (keptNewLines.length > 0) {
+        setMapImportMsg(`✓ ${keptNewLines.length} traced shape${keptNewLines.length === 1 ? '' : 's'} imported from your map`);
         setTimeout(() => setMapImportMsg(''), 5000);
       }
 
@@ -1171,6 +1192,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       setGhosts(null);
       setSelectedId(null);
       setDesignId(null); setDesignTitle('');
+      setDismissedMapshapeIds([]);
       resetHistory();
       setBackupMsg('✓ Previous design backed up — Restore from the Base map section');
       setTimeout(() => setBackupMsg(''), 5000);
@@ -1239,6 +1261,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setWashOn(backup.washOn ?? false);
     setDesignId(backup.designId ?? null);
     setDesignTitle(backup.title ?? '');
+    setDismissedMapshapeIds(backup.dismissedMapshapeIds ?? []);
     setSelectedId(null);
     setGhosts(null);
     setScaleSuggestion(null);
@@ -1629,6 +1652,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       setWashOn(s.washOn ?? false);
       setDesignId(s.designId ?? null);
       setDesignTitle(s.title ?? '');
+      setDismissedMapshapeIds(s.dismissedMapshapeIds ?? []);
 
       if (s.bgSite) {
         // NB: loadSiteBackground's own returned promise resolves once the satellite
@@ -1713,9 +1737,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       bgDataUrl: (!bgSite && bgDataUrl && bgDataUrl.length < 1_500_000) ? bgDataUrl : undefined,
       bgRect,
       bgOpacity: bg?.opacity,
+      dismissedMapshapeIds: dismissedMapshapeIds.length ? dismissedMapshapeIds : undefined,
       savedAt: Date.now(),
     };
-  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, washOn, designId, designTitle, bgSite, bgDataUrl, bg]);
+  }, [items, lines, sectors, pxPerM, activeLayer, hiddenLayers, washOn, designId, designTitle, bgSite, bgDataUrl, bg, dismissedMapshapeIds]);
 
   // Debounced autosave — skip until the initial restore above has completed so we
   // never clobber saved state with the empty initial render.
@@ -1756,9 +1781,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         lines: geom?.lines ?? lines,
         sectors: geom?.sectors ?? sectors,
         pxPerM, bgSite: bgSite ?? null, activeLayer, hiddenLayers,
+        dismissedMapshapeIds: dismissedMapshapeIds.length ? dismissedMapshapeIds : undefined,
       },
     };
-  }, [designTitle, siteText, bgSite, items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg]);
+  }, [designTitle, siteText, bgSite, items, lines, sectors, pxPerM, activeLayer, hiddenLayers, bg, dismissedMapshapeIds]);
 
   // Cloud autosave — only once a design is bound (designId set) and the initial
   // localStorage restore has completed, so we never clobber a doc with empty state.
@@ -2041,6 +2067,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       items?: FacItem[]; lines?: FacLine[]; sectors?: FacSector[]; pxPerM?: number;
       activeLayer?: LayerId; hiddenLayers?: LayerId[];
       bgSite?: { lat: number; lon: number; name: string } | null;
+      dismissedMapshapeIds?: string[];
     };
     const isV2 = data.geomVersion === 2;
     const rawItems = data.items ?? [];
@@ -2076,6 +2103,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setScaleSuggestion(null);
     setDesignId(d.id);
     setDesignTitle(d.title ?? '');
+    setDismissedMapshapeIds(data.dismissedMapshapeIds ?? []);
     setCloudStatus('saved');
     setCloudSavedAt(Date.now());
     resetHistory();
@@ -2329,6 +2357,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setActiveLayer('base'); setHiddenLayers([]);
     setSelectedId(null);
     setDesignId(null); setDesignTitle(''); setCloudStatus('idle'); setCloudSavedAt(null);
+    setDismissedMapshapeIds([]);
     resetHistory();
     resetView();
   }
@@ -3612,7 +3641,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               const n = l.points.length;
               const mx = (l.points[0] + l.points[n - 2]) / 2, my = (l.points[1] + l.points[n - 1]) / 2;
               const setPt = (idx: number, x: number, y: number) => setLines((prev) => prev.map((q) => q.id === l.id ? { ...q, points: q.points.map((v, k) => k === idx ? x : k === idx + 1 ? y : v) } : q));
-              const deleteLine = () => { pushHistory(); setLines((prev) => prev.filter((q) => q.id !== l.id)); };
+              const deleteLine = () => {
+                pushHistory();
+                setLines((prev) => prev.filter((q) => q.id !== l.id));
+                // Auto-imported map-truth shape (dam/fence/path pulled in from the
+                // farmer's traced shapes) — remember this was deleted so the next
+                // reload's reimport doesn't silently bring it right back.
+                if (l.id.startsWith('mapshape-')) dismissMapshape(l.id);
+              };
               return (
                 <Group key={l.id}>
                   <Line points={l.points} fill={L.fill} closed={l.closed ?? false} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" lineJoin="round" />
