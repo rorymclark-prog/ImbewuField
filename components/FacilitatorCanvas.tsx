@@ -2614,8 +2614,6 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const boundaryPx = washBoundary ? boundaryStageToOutput(washBoundary.points, bgRect, 2) : undefined;
 
     setSelectedId(null);
-    setStageScale(1); setStagePos({ x: 0, y: 0 });
-    stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
 
     const labelStyle: LabelStyle = PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label ?? 'clean';
     // Selecting the whole design → ONE combined map (all your elements together);
@@ -2636,15 +2634,17 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const counter = jobs.length > 1 ? ` (${i + 1}/${jobs.length})` : '';
         setAiPolish({ phase: 'preparing', label: job.label + counter });
 
-        // Show the job's layers + the existing base features (boundary/house/roads).
+        // Show the job's layers + the existing base features (boundary/house/roads),
+        // and reset the view so the capture crop aligns exactly with the satellite rect.
         const inThisMap = (id: LayerId) => job.layers.includes(id) || id === 'existing';
         setHiddenLayers(LAYER_ORDER.filter((id) => !inThisMap(id)));
+        setStageScale(1); setStagePos({ x: 0, y: 0 });
+        stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
         await nextFrame();
         const stage = stageRef.current;
         if (!stage) throw new Error('Canvas is not ready — please try again.');
 
-        // Capture the scene the model beautifies (satellite + element markers +
-        // boundary). The model illustrates the marked elements in place.
+        // Capture the real scene: satellite + this job's element markers + boundary.
         const composite = stage.toDataURL(crop);
         const outW = Math.round(bg.w * 2);
         const outH = Math.round(bg.h * 2);
@@ -2653,13 +2653,25 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const visLines = lines.filter((l) => inThisMap(l.layer ?? defaultLayerForLine(l.kind)));
         const elementsText = describePlacedElements(visItems, visLines);
 
-        setAiPolish({ phase: 'painting', label: job.label + counter });
-        // Per-layer maps are "focused": keep the satellite ground, illustrate only
-        // this layer's elements. The whole-design map illustrates everything.
-        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText, !combined);
+        // Restore the user's real view immediately after the capture, so the canvas
+        // behind the modal keeps showing their design (not a blank reset) while the
+        // whole-design AI paints.
+        setStageScale(prevScale); setStagePos(prevPos);
+        stageScaleRef.current = prevScale; stagePosRef.current = prevPos;
+        setHiddenLayers(prevHidden);
 
-        // Deterministic composite-back: satellite outside the boundary, model
-        // (with its illustrated elements) inside, crisp boundary + TRUE labels on top.
+        setAiPolish({ phase: combined ? 'painting' : 'preparing', label: job.label + counter });
+        // WHOLE-DESIGN map → the AI beautifies the entire garden (the hero poster).
+        // PER-LAYER maps are DETERMINISTIC: the captured scene (real satellite +
+        // this layer's elements + boundary) IS the map — its satellite, elements and
+        // (burned below) labels can never be blanked by the model, and it's instant.
+        const model = combined
+          ? await requestProducer(stripDataUrl(composite), job.label, elementsText, false)
+          : stripDataUrl(composite);
+
+        // Deterministic composite-back: satellite outside the boundary, the map
+        // (illustrated for full design / real capture for a layer) inside, crisp
+        // boundary + TRUE labels on top.
         const final = await compositeAccurateMap({
           modelImage: model,
           satelliteImage: bg.img,
@@ -3618,7 +3630,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 )}
               </div>
               <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
-                {aiPolish.phase === 'pick' && 'Full design = one map with everything; pick single layers for focused maps. Your 👁 visibility is restored after.'}
+                {aiPolish.phase === 'pick' && 'Full design = one AI-illustrated map of everything. Uncheck to a single layer for a quick satellite map of just that layer (kept exact, no AI). Your 👁 visibility is restored after.'}
                 {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `${aiPolish.label}`}
                 {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>
