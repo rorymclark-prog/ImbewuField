@@ -12,21 +12,36 @@ const GEMINI_MODELS = {
 } as const;
 type GeminiModel = keyof typeof GEMINI_MODELS;
 
-type StylePreset = 'hand_drawn' | 'watercolour' | 'enhanced_real';
+// Four researched site-plan styles (permaculture/landscape-plan traditions).
+type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk';
 
 const STYLE_LINES: Record<StylePreset, string> = {
-  hand_drawn:
-    'Style: a clean, soft hand-drawn permaculture site map — gentle earth tones, subtle grass and soil texture, South African smallholding character.',
-  watercolour:
-    'Style: soft watercolour illustration — muted natural washes, light paper texture, gentle edges.',
-  enhanced_real:
-    'Style: the same photo, gently enhanced — cleaner light, richer but natural greens and soil, no stylisation, still photoreal.',
+  field_ledger:
+    'STYLE — Field Ledger: a hand-inked site-plan illustration in fine black pen on aged cream paper, precise linework for boundaries/fences/paths, soft sparse watercolour tint washes (gentle green for planting, pale blue for water), warm but credible surveyor character.',
+  homestead_storybook:
+    'STYLE — Homestead Storybook: a saturated gouache-painted illustrated garden map, warm picture-book quality, rounded stylised beds bursting with vegetables, canopy-textured fruit trees, an earthy palette of ochre, leaf green and terracotta, whimsical but legible.',
+  extension_blueprint:
+    'STYLE — Extension Blueprint: a clean isometric/axonometric technical site plan, slight 3D height on structures while beds and paths stay flat, muted professional palette (slate blue, sage, warm grey), thin consistent linework, high legibility at small print size.',
+  karoo_folk:
+    'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, saturated colours (barn red, cobalt, sunflower yellow, pine green), decorative South African folk pattern textures, oversized clearly-iconic feature shapes, charming handmade brushwork.',
 };
 
-function buildProducerPrompt(layerLabel: string | undefined, stylePreset: StylePreset): string {
-  const hardRules = `This is a REAL property${layerLabel ? ' — the ' + layerLabel : ''}, not a concept. Redraw the SAME scene in a new artistic style. STRICT: (1) Do NOT invent, add, move, remove or resize ANY feature — no new gardens, paths, ponds, trees, buildings, fences or decorations. (2) Do NOT paint any text, labels, banners, legends, compass or watermark. (3) Every feature already visible stays in its exact position, shape, count and size — the result must be recognisably THIS property, feature for feature. (4) Keep the crop, scale and orientation identical; top of image is north. (5) When unsure, keep it identical to the input. Change the STYLE only, never the content.`;
-
-  return `${hardRules}\n\n${STYLE_LINES[stylePreset]}`;
+// The producer's job changed from "don't touch the elements" to "ILLUSTRATE the
+// marked elements beautifully and recognisably, in place, and invent nothing new".
+// The composite the model receives has the farmer's placed elements drawn as
+// coloured markers; elementsText names what each is so the model draws it as the
+// real thing (a bed of cabbages, a green JoJo tank, a beehive) rather than a flat shape.
+function buildProducerPrompt(layerLabel: string | undefined, stylePreset: StylePreset, elementsText: string): string {
+  const rules =
+    `Turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
+    `Draw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
+    `a green rectangle marker is a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker is a green cylindrical JoJo water tank; a hive marker is a striped beehive; a tree marker is a fruit tree with a full canopy; a hut/shed marker is that building. ` +
+    (elementsText ? `The marked features are: ${elementsText}. ` : '') +
+    `HARD RULES: (1) Do NOT add ANY feature that is not marked — no extra gardens, paths, ponds, trees, buildings, fences, animals or decorations. ` +
+    `(2) Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size. ` +
+    `(3) Do NOT paint any text, labels, numbers, legend, banner, compass or watermark anywhere — we add labels ourselves. ` +
+    `(4) Keep the crop, scale and orientation identical; top of image is north. Make the property boundary read as the crispest line.`;
+  return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
 async function callGemini(
@@ -95,6 +110,7 @@ export async function POST(req: NextRequest) {
   let body: {
     imageBase64?: string;
     layerLabel?: string;
+    elementsText?: string;
     model?: GeminiModel;
     stylePreset?: StylePreset;
   };
@@ -120,8 +136,9 @@ export async function POST(req: NextRequest) {
 
   const model: GeminiModel = body.model && body.model in GEMINI_MODELS ? body.model : 'flash';
   const stylePreset: StylePreset =
-    body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'hand_drawn';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset);
+    body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
+  const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText);
 
   return callGemini(geminiKey, imageBase64, prompt, model);
 }

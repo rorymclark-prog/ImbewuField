@@ -20,21 +20,71 @@
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
 
+/** A true, in-frame label to burn onto the produced map. All coords are OUTPUT px. */
+export interface ProducerLabel {
+  cx: number; cy: number; // leader start — the element's TRUE position
+  ax: number; ay: number; // pill anchor (already clamped inside the frame)
+  text: string;           // e.g. "🥬 Veg bed ×6"
+}
+
+export type LabelStyle = 'ink' | 'storybook' | 'blueprint' | 'folk' | 'clean';
+
 export interface CompositeInputs {
-  /** Model output — the full scene, beautified. Data URL or bare base64. */
+  /** Model output — the whole scene beautified, elements illustrated in place. */
   modelImage: ImageInput;
-  /** Original satellite crop — the ground truth used outside the boundary.
-   *  Pass the already-loaded bg image element directly to skip a re-decode. */
+  /** Original satellite crop — the ground truth used OUTSIDE the boundary. */
   satelliteImage: ImageInput;
-  /** Farmer's exact elements + boundary on a TRANSPARENT background. */
-  elementsImage: ImageInput;
-  /** Boundary polygon in OUTPUT-pixel coordinates: [x0,y0,x1,y1,...]. When
-   *  absent (no traced boundary) the model output is used across the whole
-   *  frame — elements are still painted on top, but there is no sprawl clip. */
+  /** Boundary polygon in OUTPUT-pixel coordinates: [x0,y0,x1,y1,...]. Clips the
+   *  model to the plot interior (erasing sprawl) and is stroked crisp on top. */
   boundaryPx?: number[];
+  /** True labels burned in-frame — hybrid-c: the model illustrates the element
+   *  bodies, we guarantee identity + position with these. */
+  labels?: ProducerLabel[];
+  /** Crisp boundary stroke colour (default tan). */
+  boundaryColor?: string;
+  /** Label pill/type styling, matched to the chosen art style. */
+  labelStyle?: LabelStyle;
   /** Output canvas size (the composite/bg rect × pixelRatio). */
   width: number;
   height: number;
+}
+
+const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: string; font: string }> = {
+  ink:       { pill: '#FBF6EC', stroke: '#3A2E1A', text: '#20190F', font: 'Georgia, serif' },
+  storybook: { pill: '#FBF6EC', stroke: '#1F4D2B', text: '#20190F', font: 'system-ui, sans-serif' },
+  blueprint: { pill: '#EEF3F5', stroke: '#3E5A68', text: '#1A2A33', font: 'system-ui, sans-serif' },
+  folk:      { pill: '#FFF3D6', stroke: '#8A2A14', text: '#20190F', font: 'system-ui, sans-serif' },
+  clean:     { pill: '#FBF6EC', stroke: '#1F4D2B', text: '#20190F', font: 'system-ui, sans-serif' },
+};
+
+/** Burn the true labels onto the produced map: leader line + anchor dot + pill. */
+function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], style: LabelStyle): void {
+  const s = LABEL_STYLES[style] ?? LABEL_STYLES.clean;
+  const fs = 26, padX = 14, h = fs + 14;
+  ctx.textBaseline = 'middle';
+  ctx.font = `600 ${fs}px ${s.font}`;
+  for (const l of labels) {
+    // Leader — dark under-stroke + light over-stroke reads on any background.
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.ax, l.ay);
+    ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.ax, l.ay);
+    ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
+    ctx.setLineDash([]);
+    // Anchor dot at the true position.
+    ctx.beginPath(); ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#FBF6EC'; ctx.fill(); ctx.strokeStyle = s.stroke; ctx.lineWidth = 2; ctx.stroke();
+    // Pill.
+    const w = padX * 2 + ctx.measureText(l.text).width;
+    const x = l.ax, y = l.ay - h / 2, r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+    ctx.fillStyle = s.pill; ctx.shadowColor = 'rgba(20,16,10,0.28)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2;
+    ctx.fill(); ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = s.stroke; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = s.text; ctx.fillText(l.text, x + padX, l.ay + 1);
+  }
 }
 
 const asDataUrl = (s: string) => (s.startsWith('data:') ? s : `data:image/png;base64,${s}`);
@@ -69,10 +119,9 @@ function traceBoundary(ctx: CanvasRenderingContext2D, pts: number[]): void {
  */
 export async function compositeAccurateMap(inp: CompositeInputs): Promise<string> {
   const { width, height, boundaryPx } = inp;
-  const [model, satellite, elements] = await Promise.all([
+  const [model, satellite] = await Promise.all([
     loadImage(inp.modelImage),
     loadImage(inp.satelliteImage),
-    loadImage(inp.elementsImage),
   ]);
 
   const canvas = document.createElement('canvas');
@@ -84,21 +133,26 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   const hasBoundary = Array.isArray(boundaryPx) && boundaryPx.length >= 6;
 
   if (hasBoundary) {
-    // 1. Original satellite fills everything (this is the truth outside the plot).
+    // 1. Original satellite fills everything (truth outside the plot).
     ctx.drawImage(satellite, 0, 0, width, height);
-    // 2. Beautified ground, clipped to the boundary interior only.
+    // 2. Beautified scene (elements illustrated by the model), clipped to the
+    //    boundary interior — anything the model sprawled outside is erased.
     ctx.save();
     traceBoundary(ctx, boundaryPx!);
     ctx.clip();
     ctx.drawImage(model, 0, 0, width, height);
     ctx.restore();
+    // 3. Crisp boundary — the single highest-contrast line on the map.
+    traceBoundary(ctx, boundaryPx!);
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(20,16,10,0.5)'; ctx.lineWidth = 7; ctx.stroke();
+    ctx.strokeStyle = inp.boundaryColor ?? '#C2A878'; ctx.lineWidth = 4; ctx.stroke();
   } else {
-    // No boundary to clip against — use the beautified scene across the frame.
     ctx.drawImage(model, 0, 0, width, height);
   }
 
-  // 3. The farmer's exact elements + boundary, painted on top — pixel-true.
-  ctx.drawImage(elements, 0, 0, width, height);
+  // 4. True labels burned in-frame — hybrid-c identity + position guarantee.
+  if (inp.labels && inp.labels.length) burnLabels(ctx, inp.labels, inp.labelStyle ?? 'clean');
 
   return canvas.toDataURL('image/png');
 }

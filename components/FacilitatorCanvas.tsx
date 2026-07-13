@@ -22,7 +22,15 @@ import {
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
-import { compositeAccurateMap, boundaryStageToOutput } from '@/lib/image-producer';
+import { compositeAccurateMap, boundaryStageToOutput, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
+
+// The four researched producer styles (see /api/image-producer STYLE_LINES).
+const PRODUCER_STYLES: { key: string; name: string; blurb: string; label: LabelStyle }[] = [
+  { key: 'field_ledger',        name: 'Field Ledger',      blurb: 'hand-inked survey',   label: 'ink' },
+  { key: 'homestead_storybook', name: 'Homestead Storybook', blurb: 'warm watercolour',  label: 'storybook' },
+  { key: 'extension_blueprint', name: 'Extension Blueprint', blurb: 'clean technical',    label: 'blueprint' },
+  { key: 'karoo_folk',          name: 'Karoo Folk Map',    blurb: 'bold folk-art',       label: 'folk' },
+];
 import { getFirebase } from '@/lib/firebase/init';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
@@ -686,6 +694,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // — used to capture the transparent "element sticker" the producer paints back
   // on top of the model's beautified output.
   const [captureStickerMode, setCaptureStickerMode] = useState(false);
+  const [producerStyle, setProducerStyle] = useState('field_ledger');
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -2499,15 +2508,47 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   }
 
   // Producer: POST the composited scene to nano banana, get the beautified image.
-  async function requestProducer(imageBase64: string, layerLabel: string): Promise<string> {
+  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string): Promise<string> {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, stylePreset: 'hand_drawn' }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.image) throw new Error(data.error || `Producer failed (${res.status})`);
     return data.image as string; // bare base64
+  }
+
+  // True labels to burn into a produced map: one clustered callout per element
+  // type, positioned in OUTPUT px, clamped inside the frame (so nothing is cropped).
+  function producerLabelsFor(layerItems: Item[], outW: number, outH: number): ProducerLabel[] {
+    if (!bg) return [];
+    const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
+    for (const it of layerItems) {
+      const w = it.wM * pxPerM, h = it.hM * pxPerM;
+      const r = (it.rotation * Math.PI) / 180, cos = Math.cos(r), sin = Math.sin(r);
+      const cx = (it.x + (w / 2) * cos - (h / 2) * sin - bg.x) * 2;
+      const cy = (it.y + (w / 2) * sin + (h / 2) * cos - bg.y) * 2;
+      const g = byType.get(it.type) ?? { cxs: [], cys: [] };
+      g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
+    }
+    const fs = 26;
+    const groups = [...byType.entries()].map(([type, g]) => {
+      const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
+      const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      const c = CATALOG[type]; const count = g.cxs.length;
+      const text = `${c.icon} ${c.label}${count > 1 ? ` ×${count}` : ''}`;
+      return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
+    }).sort((a, b) => a.cy - b.cy);
+    const gap = fs + 22; let y = 40; const out: ProducerLabel[] = [];
+    for (const g of groups) {
+      const ax0 = g.cx < outW * 0.55 ? g.cx + 60 : g.cx - g.pw - 60;
+      const ax = Math.max(14, Math.min(ax0, outW - g.pw - 14));
+      const ay = Math.max(y, Math.max(40, Math.min(outH - 40, g.cy)));
+      y = ay + gap;
+      out.push({ cx: g.cx, cy: g.cy, ax, ay, text: g.text });
+    }
+    return out;
   }
 
   // Accurate per-layer producer: for EACH chosen layer, render the real design
@@ -2541,41 +2582,45 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setStageScale(1); setStagePos({ x: 0, y: 0 });
     stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
 
+    const labelStyle: LabelStyle = PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label ?? 'clean';
     let lastFinal: string | null = null;
+    let lastLabel = '';
     try {
       for (let i = 0; i < chosen.length; i++) {
         const layer = chosen[i];
         const label = /map$/i.test(LAYERS[layer].name) ? LAYERS[layer].name : `${LAYERS[layer].name} map`;
+        lastLabel = label;
         const counter = chosen.length > 1 ? ` (${i + 1}/${chosen.length})` : '';
         setAiPolish({ phase: 'preparing', label: label + counter });
 
         // Show ONLY this layer + the existing base features (boundary/house/roads).
-        setHiddenLayers(LAYER_ORDER.filter((id) => id !== layer && id !== 'existing'));
+        const inThisMap = (id: LayerId) => id === layer || id === 'existing';
+        setHiddenLayers(LAYER_ORDER.filter((id) => !inThisMap(id)));
         await nextFrame();
         const stage = stageRef.current;
         if (!stage) throw new Error('Canvas is not ready — please try again.');
 
-        // Capture 1 — the scene the model beautifies (satellite + elements + boundary).
+        // Capture the scene the model beautifies (satellite + this layer's element
+        // markers + boundary). The model illustrates the marked elements in place.
         const composite = stage.toDataURL(crop);
-        // Capture 2 — the element "sticker" (elements + boundary, transparent bg).
-        setCaptureStickerMode(true);
-        await nextFrame();
-        const sticker = stage.toDataURL(crop);
-        setCaptureStickerMode(false);
-        await nextFrame();
-
         const outW = Math.round(bg.w * 2);
         const outH = Math.round(bg.h * 2);
 
-        setAiPolish({ phase: 'painting', label: label + counter });
-        const model = await requestProducer(stripDataUrl(composite), label);
+        const visItems = items.filter((it) => inThisMap(it.layer ?? defaultLayerForType(it.type)));
+        const visLines = lines.filter((l) => inThisMap(l.layer ?? defaultLayerForLine(l.kind)));
+        const elementsText = describePlacedElements(visItems, visLines);
 
-        // Deterministic composite-back — the guarantee.
+        setAiPolish({ phase: 'painting', label: label + counter });
+        const model = await requestProducer(stripDataUrl(composite), label, elementsText);
+
+        // Deterministic composite-back: satellite outside the boundary, model
+        // (with its illustrated elements) inside, crisp boundary + TRUE labels on top.
         const final = await compositeAccurateMap({
           modelImage: model,
           satelliteImage: bg.img,
-          elementsImage: sticker,
           boundaryPx,
+          labels: producerLabelsFor(visItems, outW, outH),
+          labelStyle,
           width: outW,
           height: outH,
         });
@@ -2583,7 +2628,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         setPolishGallery((prev) => [...prev, { id: `producer-${layer}-${Date.now()}`, label, image: final, at: Date.now() }]);
       }
       restoreAll();
-      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: chosen.length > 1 ? `${chosen.length} maps produced` : 'Map produced' });
+      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: chosen.length > 1 ? `${chosen.length} maps produced` : lastLabel });
       else setAiPolish({ phase: 'idle' });
       if (chosen.length > 1) setGalleryOpen(true);
     } catch (e) {
@@ -3558,6 +3603,21 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     style={tile(aiPolishCandidates.length > 0 && aiPolish.selected.length === aiPolishCandidates.length)}>
                     🖼 Full design
                   </button>
+                  {aiPolish.mode === 'producer' && (
+                    <div className="space-y-1">
+                      <div className="text-[10px] font-mono uppercase tracking-wider px-0.5" style={{ color: '#9A8268' }}>Map style</div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {PRODUCER_STYLES.map((s) => (
+                          <button key={s.key} onClick={() => setProducerStyle(s.key)}
+                            className="py-1.5 px-2 rounded-lg text-left transition-all"
+                            style={tile(producerStyle === s.key)}>
+                            <div className="text-xs font-display font-semibold">{s.name}</div>
+                            <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>{s.blurb}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <button
                     onClick={() => (aiPolish.phase === 'pick' && aiPolish.mode === 'producer' ? runProducer(aiPolish.selected) : runAiPolishWith(aiPolish.selected))}
                     disabled={aiPolish.selected.length === 0}
