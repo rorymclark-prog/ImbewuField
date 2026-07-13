@@ -19,7 +19,17 @@ import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, CropTask } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
+  isSpaceHungry, bedOverlapFraction,
 } from '@/lib/crop-plan';
+
+// Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
+// fraction can still be reached by adding more crops of the same preset.
+const FRACTION_PRESETS: { label: string; value: number }[] = [
+  { label: 'Whole bed', value: 1 },
+  { label: 'Half', value: 0.5 },
+  { label: 'Third', value: 1 / 3 },
+  { label: 'Quarter', value: 0.25 },
+];
 
 // ── Local helpers ────────────────────────────────────────────────────────
 // Months throughout lib/crop-plan.ts are 1-12 (Jan-Dec), wrapping via the
@@ -34,6 +44,27 @@ function monthLabel(m: number): string {
 }
 function genId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/** Compact glyph for a bed-share fraction — falls back to a rounded percentage. */
+function fractionLabel(f: number): string {
+  if (f >= 1) return '';
+  if (Math.abs(f - 0.5) < 0.01) return '½';
+  if (Math.abs(f - 1 / 3) < 0.01) return '⅓';
+  if (Math.abs(f - 0.25) < 0.01) return '¼';
+  return `${Math.round(f * 100)}%`;
+}
+
+/** 🌱 = sown direct from seed, 🪴 = started as a seedling/transplant. */
+function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean }) {
+  return (
+    <span
+      title={transplant ? 'Started as a seedling, then transplanted' : 'Sown direct from seed'}
+      style={{ fontSize: large ? 13 : 11 }}
+    >
+      {transplant ? '🪴' : '🌱'}
+    </span>
+  );
 }
 
 interface Segment { start: number; end: number }
@@ -92,6 +123,8 @@ export default function FacilitatorCropsPage() {
   const [pickerSearch, setPickerSearch] = useState('');
   const [pickerCrop, setPickerCrop] = useState<CropDef | null>(null);
   const [pickerMonth, setPickerMonth] = useState(1);
+  const [pickerFraction, setPickerFraction] = useState(1);
+  const [pickerExisting, setPickerExisting] = useState(false);
 
   const [activePlanting, setActivePlanting] = useState<Planting | null>(null);
 
@@ -122,10 +155,14 @@ export default function FacilitatorCropsPage() {
   const plantings = plan?.plantings ?? [];
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
-  function addPlanting(bedId: string, cropKey: string, sowMonth: number) {
+  function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
-      const next: Planting = { id: genId('pl'), bedId, cropKey, sowMonth };
+      const next: Planting = {
+        id: genId('pl'), bedId, cropKey, sowMonth,
+        areaFraction: areaFraction < 1 ? areaFraction : undefined,
+        existing: existing || undefined,
+      };
       return { version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
     });
   }
@@ -142,6 +179,11 @@ export default function FacilitatorCropsPage() {
   const nextTasks = allTasks.filter((t) => t.month === nextMonth);
 
   const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKg(p, bedAreaFor(p.bedId)), 0);
+  // Already-growing crops are informational (the farmer planted them before
+  // using the app) — split them out of the "to plant" total the same way
+  // the design map's BOQ keeps existing features out of the budget.
+  const existingYieldKg = plantings.filter((p) => p.existing).reduce((sum, p) => sum + estimatedYieldKg(p, bedAreaFor(p.bedId)), 0);
+  const newYieldKg = totalYieldKg - existingYieldKg;
   const yieldByBed = beds
     .map((b) => ({
       bed: b,
@@ -158,6 +200,8 @@ export default function FacilitatorCropsPage() {
     setPickerBedId(bedId);
     setPickerSearch('');
     setPickerCrop(null);
+    setPickerFraction(1);
+    setPickerExisting(false);
   }
   function closePicker() {
     setPickerBedId(null);
@@ -166,12 +210,23 @@ export default function FacilitatorCropsPage() {
   function pickCrop(crop: CropDef) {
     setPickerCrop(crop);
     setPickerMonth(nextValidSowMonth(crop, pattern, currentMonth));
+    // Space-hungry crops default to their own whole bed rather than a split —
+    // the recommendation is enforced as a sane default, not a hard block.
+    setPickerFraction(isSpaceHungry(crop) ? 1 : pickerFraction);
   }
   function confirmAdd() {
     if (!pickerBedId || !pickerCrop) return;
-    addPlanting(pickerBedId, pickerCrop.key, pickerMonth);
+    addPlanting(pickerBedId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
     closePicker();
   }
+  // Overlap warning: how much of the bed is already committed (by OTHER
+  // plantings whose sow→harvest window overlaps this one) before adding this
+  // one — shown as a soft nudge, never a hard block.
+  const pickerOverlap = useMemo(() => {
+    if (!pickerBedId || !pickerCrop) return 0;
+    const harvest = harvestMonth(pickerMonth, pickerCrop.daysToHarvest);
+    return bedOverlapFraction(pickerBedId, pickerMonth, harvest, plantings);
+  }, [pickerBedId, pickerCrop, pickerMonth, plantings]);
 
   const loading = design === undefined || plan === null || !mounted;
 
@@ -300,8 +355,13 @@ export default function FacilitatorCropsPage() {
               <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🥬 Estimated harvest</div>
                 <div className="font-mono font-bold mb-2" style={{ fontSize: 26, color: '#1F4D2B' }}>
-                  {totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr</span>
+                  {newYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr to plant</span>
                 </div>
+                {existingYieldKg > 0 && (
+                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>
+                    + {existingYieldKg.toFixed(1)} kg/yr already growing (not new)
+                  </div>
+                )}
                 <div className="space-y-1">
                   {yieldByBed.map(({ bed, kg }) => (
                     <div key={bed.id} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
@@ -331,6 +391,11 @@ export default function FacilitatorCropsPage() {
           crop={pickerCrop}
           month={pickerMonth}
           pattern={pattern}
+          fraction={pickerFraction}
+          onFraction={setPickerFraction}
+          existing={pickerExisting}
+          onExisting={setPickerExisting}
+          overlap={pickerOverlap}
           onPick={pickCrop}
           onBack={() => setPickerCrop(null)}
           onMonth={setPickerMonth}
@@ -433,7 +498,12 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
   const segments = barSegments(planting.sowMonth, harvest);
-  const trMonth = crop.transplant ? wrapMonth(planting.sowMonth + 1) : null;
+  const trMonth = crop.transplant && !planting.existing ? wrapMonth(planting.sowMonth + 1) : null;
+  const fraction = planting.areaFraction ?? 1;
+  const fLabel = fractionLabel(fraction);
+  // Existing (already-growing) crops get a muted olive treatment so the eye
+  // separates "already there" from "still to sow" at a glance.
+  const barColor = planting.existing ? '#8C8654' : '#3F7A3C';
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
@@ -444,13 +514,13 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
           className="font-sans"
           style={{
             position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: '#3F7A3C', color: '#fff', border: 'none', borderRadius: 6,
+            background: barColor, color: '#fff', border: 'none', borderRadius: 6,
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${monthLabel(harvest)}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${monthLabel(harvest)}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
         >
-          {i === 0 ? `${crop.icon} ${crop.name}` : ''}
+          {i === 0 ? `${crop.icon} ${crop.name}${fLabel ? ` (${fLabel})` : ''}` : ''}
         </button>
       ))}
       {trMonth !== null && (
@@ -470,12 +540,20 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
 
 // ── Crop picker modal ────────────────────────────────────────────────────
 
-function CropPickerModal({ search, onSearch, crop, month, pattern, onPick, onBack, onMonth, onConfirm, onClose }: {
+function CropPickerModal({
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
+  onPick, onBack, onMonth, onConfirm, onClose,
+}: {
   search: string;
   onSearch: (v: string) => void;
   crop: CropDef | null;
   month: number;
   pattern: RainPattern;
+  fraction: number;
+  onFraction: (f: number) => void;
+  existing: boolean;
+  onExisting: (v: boolean) => void;
+  overlap: number;
   onPick: (c: CropDef) => void;
   onBack: () => void;
   onMonth: (m: number) => void;
@@ -524,7 +602,11 @@ function CropPickerModal({ search, onSearch, crop, month, pattern, onPick, onBac
                   >
                     <span style={{ fontSize: 20 }}>{c.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</span>
+                        <SeedBadge transplant={!!c.transplant} />
+                        {isSpaceHungry(c) && <span title="Space-hungry — wants its own bed" style={{ fontSize: 11 }}>📏</span>}
+                      </div>
                       <div className="flex gap-0.5 mt-1">
                         {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
                           <span key={m} style={{ width: 6, height: 6, borderRadius: 2, background: windowMonths.includes(m) ? '#3F7A3C' : '#E2D8C4' }} />
@@ -544,10 +626,23 @@ function CropPickerModal({ search, onSearch, crop, month, pattern, onPick, onBac
             <button onClick={onBack} className="font-sans mb-3" style={{ fontSize: 12, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
               ‹ Back to list
             </button>
+            <div className="flex items-center gap-1.5 mb-2">
+              <SeedBadge transplant={!!crop.transplant} large />
+              {isSpaceHungry(crop) && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-sans" style={{ fontSize: 11, background: 'rgba(192,122,30,0.12)', color: '#9A6018', border: '1px solid rgba(192,122,30,0.3)' }}>
+                  📏 space-hungry
+                </span>
+              )}
+            </div>
             <div className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5 }}>
-              Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest{crop.transplant ? ' · transplant seedlings' : ''}<br />
+              Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest<br />
               {crop.note}
             </div>
+            {isSpaceHungry(crop) && (
+              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+                📏 {crop.name} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.
+              </div>
+            )}
             <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Sow month</div>
             <div className="grid grid-cols-6 gap-1.5 mb-1.5">
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
@@ -571,15 +666,50 @@ function CropPickerModal({ search, onSearch, crop, month, pattern, onPick, onBac
                 );
               })}
             </div>
+            <div className="font-sans mb-1.5" style={{ fontSize: 12, color: '#5C5040' }}>
+              Harvest window: <strong style={{ color: '#20190F' }}>{monthLabel(harvestMonth(month, crop.daysToHarvest))}</strong>
+              {crop.transplant && <> · transplant around <strong style={{ color: '#20190F' }}>{monthLabel(month + 1)}</strong></>}
+            </div>
             {!crop.sowMonths[pattern].includes(month) && (
               <div className="font-sans mb-3" style={{ fontSize: 11, color: '#9A6018' }}>⚠ Outside the usual sowing window for this region — still allowed.</div>
             )}
+
+            <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How much of the bed?</div>
+            <div className="grid grid-cols-4 gap-1.5 mb-2">
+              {FRACTION_PRESETS.map((f) => (
+                <button
+                  key={f.label}
+                  onClick={() => onFraction(f.value)}
+                  className="font-sans font-semibold rounded-lg py-1.5"
+                  style={{
+                    fontSize: 11.5,
+                    background: fraction === f.value ? '#1F4D2B' : '#F5F0E8',
+                    color: fraction === f.value ? '#F7F2E9' : '#5C5040',
+                    border: `1px solid ${fraction === f.value ? '#1F4D2B' : '#E2D8C4'}`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            {overlap + fraction > 1.001 && (
+              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
+                ⚠ This bed already has {Math.round(overlap * 100)}% committed to other crops over this period — {Math.round((overlap + fraction) * 100)}% total is more than the bed. Still allowed, but they'll compete for space.
+              </div>
+            )}
+
+            <label className="flex items-center gap-2 font-sans mb-3 cursor-pointer" style={{ fontSize: 13, color: '#5C5040' }}>
+              <input type="checkbox" checked={existing} onChange={(e) => onExisting(e.target.checked)} style={{ accentColor: '#1F4D2B' }} />
+              This is already growing (not a new planting)
+            </label>
+
             <button
               onClick={onConfirm}
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
               style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
-              Add to bed
+              {existing ? 'Add as existing' : 'Add to bed'}
             </button>
           </div>
         )}
@@ -608,11 +738,23 @@ function PlantingPopover({ planting, bedAreaM2, onRemove, onClose }: {
         style={{ position: 'relative', width: '100%', maxWidth: 300, background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
-          <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{crop.icon} {crop.name}</span>
+          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
+            {crop.icon} {crop.name} <SeedBadge transplant={!!crop.transplant} />
+          </span>
           <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62' }}>
             <X size={16} />
           </button>
         </div>
+        {(planting.areaFraction ?? 1) < 1 && (
+          <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
+            {fractionLabel(planting.areaFraction ?? 1)} of bed — intercropped
+          </div>
+        )}
+        {planting.existing && (
+          <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: '#5C5040' }}>
+            Already growing
+          </div>
+        )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
           <div>Sow {monthLabel(planting.sowMonth)} → harvest {monthLabel(harvest)}</div>
           <div>Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest</div>
