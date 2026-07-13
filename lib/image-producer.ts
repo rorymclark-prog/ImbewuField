@@ -23,7 +23,8 @@ export type ImageInput = string | HTMLImageElement;
 /** A true, in-frame label to burn onto the produced map. All coords are OUTPUT px. */
 export interface ProducerLabel {
   cx: number; cy: number; // leader start — the element's TRUE position
-  ax: number; ay: number; // pill anchor (already clamped inside the frame)
+  ax: number; ay: number; // pill anchor (top-left-ish, already clamped in-frame)
+  lx: number;             // leader END x — the pill's INNER edge (so it meets the pill cleanly)
   text: string;           // e.g. "🥬 Veg bed ×6"
 }
 
@@ -66,9 +67,9 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
   for (const l of labels) {
     // Leader — dark under-stroke + light over-stroke reads on any background.
     ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.ax, l.ay);
+    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
     ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.ax, l.ay);
+    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
     ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
     ctx.setLineDash([]);
     // Anchor dot at the true position.

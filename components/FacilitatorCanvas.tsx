@@ -2088,7 +2088,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     if (!vis.length) return [];
     // Group centres (rotation-aware).
     const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
-    let maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     for (const it of vis) {
       const w = it.wM * pxPerM, h = it.hM * pxPerM;
       const r = (it.rotation * Math.PI) / 180, cos = Math.cos(r), sin = Math.sin(r);
@@ -2096,21 +2096,30 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       const cy = it.y + (w / 2) * sin + (h / 2) * cos;
       const g = byType.get(it.type) ?? { cxs: [], cys: [] };
       g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
-      maxX = Math.max(maxX, cx); minY = Math.min(minY, cy); maxY = Math.max(maxY, cy);
+      minX = Math.min(minX, cx); maxX = Math.max(maxX, cx); minY = Math.min(minY, cy); maxY = Math.max(maxY, cy);
     }
-    // Anchor column just right of the content; distribute rows without overlap.
+    // Split labels to the side each cluster is nearest — left clusters get
+    // left-margin labels, right clusters get right-margin labels — so leaders
+    // stay short and don't all pile up crossing the whole plot.
     const fs = 13, hh = fs * 0.9, pad = 6, gap = hh * 2 + 6;
-    const ax = maxX + 34;
+    const centerX = (minX + maxX) / 2;
     const groups = [...byType.entries()].map(([type, g]) => {
       const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
       const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
       const label = CATALOG[type].label, icon = CATALOG[type].icon, count = g.cxs.length;
       const pw = pad * 2 + (label.length + (count > 1 ? 4 : 0)) * fs * 0.6 + fs * 1.3; // icon + text est.
-      return { type, cx, cy, label, icon, count, ax, ay: cy, pw, hh, fs, pad };
-    }).sort((a, b) => a.cy - b.cy);
-    // Spread ay so pills don't overlap, centred on the content's vertical span.
-    let y = Math.max(minY, (minY + maxY) / 2 - (groups.length - 1) * gap / 2);
-    for (const g of groups) { g.ay = Math.max(g.ay, y); y = g.ay + gap; }
+      const side: 'left' | 'right' = cx < centerX ? 'left' : 'right';
+      const ax = side === 'left' ? minX - pw - 34 : maxX + 34;
+      // The leader meets the pill's INNER edge (right edge of a left pill, left edge of a right pill).
+      const lx = side === 'left' ? ax + pw : ax;
+      return { type, cx, cy, label, icon, count, ax, lx, ay: cy, pw, hh, fs, pad, side };
+    });
+    // Spread ay per side so pills never overlap, centred on the vertical span.
+    (['left', 'right'] as const).forEach((side) => {
+      const col = groups.filter((g) => g.side === side).sort((a, b) => a.cy - b.cy);
+      let y = Math.max(minY, (minY + maxY) / 2 - (col.length - 1) * gap / 2);
+      for (const g of col) { g.ay = Math.max(g.ay, y); y = g.ay + gap; }
+    });
     return groups;
   }, [showLabels, items, hiddenLayers, pxPerM]);
 
@@ -2540,14 +2549,24 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       const text = `${c.icon} ${c.label}${count > 1 ? ` ×${count}` : ''}`;
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
     }).sort((a, b) => a.cy - b.cy);
-    const gap = fs + 22; let y = 40; const out: ProducerLabel[] = [];
-    for (const g of groups) {
-      const ax0 = g.cx < outW * 0.55 ? g.cx + 60 : g.cx - g.pw - 60;
-      const ax = Math.max(14, Math.min(ax0, outW - g.pw - 14));
-      const ay = Math.max(y, Math.max(40, Math.min(outH - 40, g.cy)));
-      y = ay + gap;
-      out.push({ cx: g.cx, cy: g.cy, ax, ay, text: g.text });
-    }
+    // Split left/right: a cluster on the left half gets a left-margin pill, one on
+    // the right half a right-margin pill — leaders stay short, no pile-up. Distribute
+    // vertically per side.
+    const gap = fs + 22;
+    const out: ProducerLabel[] = [];
+    (['left', 'right'] as const).forEach((side) => {
+      const col = groups.filter((g) => (g.cx < outW / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+      let y = 40;
+      for (const g of col) {
+        const ax = side === 'left'
+          ? Math.max(14, g.cx - g.pw - 60)
+          : Math.min(outW - g.pw - 14, g.cx + 60);
+        const lx = side === 'left' ? ax + g.pw : ax; // leader meets the pill's inner edge
+        const ay = Math.max(y, Math.max(40, Math.min(outH - 40, g.cy)));
+        y = ay + gap;
+        out.push({ cx: g.cx, cy: g.cy, ax, lx, ay, text: g.text });
+      }
+    });
     return out;
   }
 
@@ -3143,8 +3162,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <Group key={`lbl-${g.type}`} listening={false}>
                 {/* Leader — light with a soft dark under-stroke so it reads on any
                     background (dark satellite or pale parchment wash). */}
-                <Line points={[g.cx, g.cy, g.ax, g.ay]} stroke="#1A140A" strokeWidth={2.4} opacity={0.28} lineCap="round" />
-                <Line points={[g.cx, g.cy, g.ax, g.ay]} stroke="#FBF6EC" strokeWidth={1.1} opacity={0.9} dash={[4, 3]} lineCap="round" />
+                <Line points={[g.cx, g.cy, g.lx, g.ay]} stroke="#1A140A" strokeWidth={2.4} opacity={0.28} lineCap="round" />
+                <Line points={[g.cx, g.cy, g.lx, g.ay]} stroke="#FBF6EC" strokeWidth={1.1} opacity={0.9} dash={[4, 3]} lineCap="round" />
                 <Circle x={g.cx} y={g.cy} radius={3} fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={1} />
                 <Rect x={g.ax} y={g.ay - g.hh} width={g.pw} height={g.hh * 2} cornerRadius={g.hh}
                   fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={0.8} opacity={0.97}
