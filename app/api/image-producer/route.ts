@@ -33,14 +33,14 @@ const STYLE_LINES: Record<StylePreset, string> = {
 // real thing (a bed of cabbages, a green JoJo tank, a beehive) rather than a flat shape.
 function buildProducerPrompt(layerLabel: string | undefined, stylePreset: StylePreset, elementsText: string): string {
   const rules =
-    `Turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
-    `Draw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
-    `a green rectangle marker is a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker is a green cylindrical JoJo water tank; a hive marker is a striped beehive; a tree marker is a fruit tree with a full canopy; a hut/shed marker is that building. ` +
+    // Lead with the two most-violated rules, stated absolutely.
+    `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) ` +
+    `DO NOT INVENT: draw only what is already visible or marked — no extra gardens, beds, paths, ponds, trees, buildings, fences, vehicles, animals, people or decorations. ` +
+    `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
+    `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
+    `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building. ` +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-    `HARD RULES: (1) Do NOT add ANY feature that is not marked — no extra gardens, paths, ponds, trees, buildings, fences, animals or decorations. ` +
-    `(2) Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size. ` +
-    `(3) Do NOT paint any text, labels, numbers, legend, banner, compass or watermark anywhere — we add labels ourselves. ` +
-    `(4) Keep the crop, scale and orientation identical; top of image is north. Make the property boundary read as the crispest line.`;
+    `Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size; keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
   return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
