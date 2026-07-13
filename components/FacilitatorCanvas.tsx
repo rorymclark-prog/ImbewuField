@@ -2138,7 +2138,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     id === 'base' ? !!bg : (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0) > 0 || (id === 'sectors' && sectors.length > 0);
   // AI-polish layer picker candidates: layers with content, sectors excluded —
   // sector wedges are analysis overlays, never captured (see runAiPolishWith).
-  const aiPolishCandidates = LAYER_ORDER.filter((id) => id !== 'sectors' && layerHasContent(id));
+  // 'base' excluded too: it's the raw satellite (no design elements to illustrate
+  // or label), and offering it traps the producer into a fruit-tree-only map that
+  // hides every placed element. The full design lives on the other layers.
+  const aiPolishCandidates = LAYER_ORDER.filter((id) => id !== 'sectors' && id !== 'base' && layerHasContent(id));
   const coachCounts: CoachCounts = {
     hasBg: !!bg,
     scaleSet,
