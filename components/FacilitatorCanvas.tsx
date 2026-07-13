@@ -21,7 +21,7 @@ import {
 } from '@/lib/facilitator-design';
 import { costForItem, costForLine, costForAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
-import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
+import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
 
 // The four researched producer styles (see /api/image-producer STYLE_LINES).
@@ -767,7 +767,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     try { localStorage.setItem('imbewu_producer_style', key); } catch { /* best effort */ }
   };
   // Second producer engine (Pro mode only — "advanced models" toggle). Gemini
-  // Pro stays the default (settled winner, see memory); ChatGPT/gpt-image-1 is
+  // Pro Preview stays the default (settled winner, see memory); ChatGPT/
+  // gpt-image-2 (via fal's async queue — see submitGptImage2 server-side) is
   // an opt-in A/B for anyone who wants to compare.
   const [producerEngine, setProducerEngine] = useState<'gemini' | 'openai'>('gemini');
   useEffect(() => {
@@ -2687,9 +2688,19 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', mapKind, retry, engine: producerEngine }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro-preview', mapKind, retry, engine: producerEngine }),
     });
     const data = await res.json().catch(() => ({}));
+    // gpt-image-2 (the 'openai' engine) runs via fal's async queue — a
+    // successful submit returns {pending, statusUrl, responseUrl} instead of
+    // an image, and the actual generation is polled for, same as the
+    // existing "Polish" flow's falgpt path (lib/ai-render-client.ts).
+    if (res.ok && data.pending && data.statusUrl && data.responseUrl) {
+      // Resolves to a data: URL (or a raw fal CDN URL) — either is fine, the
+      // composite step's asDataUrl() (lib/image-producer.ts) normalises both
+      // that and callGemini's bare-base64 convention the same way. May throw.
+      return pollFalRender(data.statusUrl, data.responseUrl);
+    }
     if (!res.ok || !data.image) {
       // LOCAL DEV STUB — the Gemini key is prod-only, so on localhost echo the
       // captured composite back as the "model" image. This exercises the whole
@@ -4170,14 +4181,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                         <button onClick={() => chooseProducerEngine('gemini')}
                           className="py-1.5 px-2 rounded-lg text-left transition-all"
                           style={tile(producerEngine === 'gemini')}>
-                          <div className="text-xs font-display font-semibold">Gemini Pro</div>
+                          <div className="text-xs font-display font-semibold">Gemini Pro Preview</div>
                           <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>Default — most reliable so far</div>
                         </button>
                         <button onClick={() => chooseProducerEngine('openai')}
                           className="py-1.5 px-2 rounded-lg text-left transition-all"
                           style={tile(producerEngine === 'openai')}>
                           <div className="text-xs font-display font-semibold">ChatGPT</div>
-                          <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>gpt-image-1 — try as an alternative</div>
+                          <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>gpt-image-2 — try as an alternative</div>
                         </button>
                       </div>
                     </div>

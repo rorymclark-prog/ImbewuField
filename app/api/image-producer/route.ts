@@ -7,8 +7,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export const maxDuration = 60;
 
 // BEST-EFFORT per-IP rate limit — this route calls billed external AI APIs
-// (Gemini and, since the second engine was added, OpenAI's gpt-image-1 at
-// 'high' quality) and the site currently has NO auth wall at all (see
+// (Gemini pro-preview and, since the second engine was added, OpenAI's
+// gpt-image-2 via fal.ai at 'high' quality) and the site currently has NO
+// auth wall at all (see
 // middleware.ts — the shared-password gate was deliberately disabled during
 // prototyping), so without SOME limit any anonymous caller could script an
 // unbounded loop against real API keys. This in-memory sliding window is NOT
@@ -35,6 +36,7 @@ function clientIp(req: NextRequest): string {
 const GEMINI_MODELS = {
   flash: 'gemini-3.1-flash-image',
   pro: 'gemini-3-pro-image',
+  'pro-preview': 'gemini-3-pro-image-preview',
 } as const;
 type GeminiModel = keyof typeof GEMINI_MODELS;
 
@@ -111,9 +113,9 @@ async function callGemini(
   key: string,
   imageBase64: string,
   prompt: string,
-  model: GeminiModel = 'flash',
+  model: GeminiModel = 'pro-preview',
 ): Promise<NextResponse> {
-  const modelId = GEMINI_MODELS[model] ?? GEMINI_MODELS.flash;
+  const modelId = GEMINI_MODELS[model] ?? GEMINI_MODELS['pro-preview'];
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
   const parts: Array<{ text: string } | { inline_data: { mime_type: string; data: string } }> = [
     { text: prompt },
@@ -174,61 +176,52 @@ async function callGemini(
   return NextResponse.json({ image: out, model: modelId });
 }
 
-// Second engine, opt-in ("advanced models" toggle, Pro mode only) — same
-// restyle-never-redesign prompt, OpenAI's gpt-image-1 via the images/edits
-// endpoint. gpt-image-1 (not -2) is the one proven to fit Vercel's 60s cap
-// with a single reference image (see app/api/ai-render/route.ts callOpenAI —
-// same endpoint/shape, reused here). Returns a BARE base64 string, matching
-// callGemini's convention (lib/image-producer.ts's asDataUrl prefixes either).
-async function callOpenAI(key: string, imageBase64: string, prompt: string): Promise<NextResponse> {
-  const form = new FormData();
-  form.append('model', 'gpt-image-1');
-  form.append('prompt', prompt);
-  form.append('n', '1');
-  form.append('size', 'auto'); // composite isn't square — let the model match the input aspect
-  form.append('quality', 'high'); // single reference image (no separate satellite ref) — room for 'high' within the 60s cap
-
-  const compositeBuffer = Buffer.from(imageBase64, 'base64');
-  form.append('image[]', new Blob([compositeBuffer], { type: 'image/jpeg' }), 'composite.jpg');
-
+// Second engine, opt-in ("advanced models" toggle, Pro mode only) — gpt-image-2,
+// OpenAI's most advanced image model (gpt-image-1 is the older generation).
+// Direct calls to OpenAI's images/edits endpoint 504 on Vercel's 60s cap once
+// gpt-image-2 is in the loop (see app/api/ai-render/route.ts's own history —
+// that's exactly why THAT route also moved gpt-image-2 behind fal.ai's async
+// QUEUE instead of calling OpenAI directly). Reusing the identical proven
+// pattern here: submit to fal's queue and return {pending, statusUrl,
+// responseUrl} immediately — the actual generation runs on fal, so this
+// request never sits open waiting. The client polls the SAME
+// /api/ai-render/poll route (it's engine-agnostic — it only speaks fal's
+// queue protocol, not anything ai-render-specific) via lib/ai-render-client's
+// pollFalRender, exactly like the existing "Polish" flow already does.
+async function submitGptImage2(key: string, imageBase64: string, prompt: string): Promise<NextResponse> {
+  const body = {
+    prompt,
+    image_urls: [`data:image/jpeg;base64,${imageBase64}`],
+    quality: 'high', // no 60s cap to fit under via the async queue — go for the best tier
+    image_size: 'auto', // composite isn't square — let the model match the input aspect
+    num_images: 1,
+    output_format: 'jpeg',
+  };
   let res: Response;
   try {
-    res = await fetch('https://api.openai.com/v1/images/edits', {
+    res = await fetch('https://queue.fal.run/openai/gpt-image-2/edit', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${key}` },
-      body: form,
+      headers: { Authorization: `Key ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
     });
   } catch (e) {
     return NextResponse.json({ error: `Network error: ${String(e)}` }, { status: 502 });
   }
-
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    return NextResponse.json(
-      { error: `OpenAI error ${res.status}`, detail: detail.slice(0, 400) },
-      { status: 502 },
-    );
+    return NextResponse.json({ error: `fal.ai submit error ${res.status}`, detail: detail.slice(0, 400) }, { status: 502 });
   }
-
-  let data: unknown;
+  let data: { status_url?: string; response_url?: string };
   try {
     data = await res.json();
   } catch {
     const raw = await res.text().catch(() => '(unreadable)');
-    return NextResponse.json(
-      { error: 'OpenAI returned non-JSON response.', detail: raw.slice(0, 400) },
-      { status: 502 },
-    );
+    return NextResponse.json({ error: 'fal.ai submit returned non-JSON.', detail: raw.slice(0, 400) }, { status: 502 });
   }
-
-  const b64 = (data as { data?: { b64_json?: string }[] }).data?.[0]?.b64_json;
-  if (!b64) {
-    return NextResponse.json(
-      { error: 'OpenAI returned no image.', detail: JSON.stringify(data).slice(0, 400) },
-      { status: 502 },
-    );
+  if (!data.status_url || !data.response_url) {
+    return NextResponse.json({ error: 'fal.ai submit gave no status/response URL.', detail: JSON.stringify(data).slice(0, 300) }, { status: 502 });
   }
-  return NextResponse.json({ image: b64, model: 'gpt-image-1' });
+  return NextResponse.json({ pending: true, statusUrl: data.status_url, responseUrl: data.response_url });
 }
 
 export async function POST(req: NextRequest) {
@@ -268,14 +261,14 @@ export async function POST(req: NextRequest) {
   const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true);
 
   if (body.engine === 'openai') {
-    const openaiKey = process.env.OPENAI_API_KEY;
-    if (!openaiKey) {
+    const falKey = process.env.FAL_KEY;
+    if (!falKey) {
       return NextResponse.json(
-        { error: 'OPENAI_API_KEY is not configured — add it with: vercel env add OPENAI_API_KEY production' },
+        { error: 'FAL_KEY is not configured — add it with: vercel env add FAL_KEY production' },
         { status: 500 },
       );
     }
-    return callOpenAI(openaiKey, imageBase64, prompt);
+    return submitGptImage2(falKey, imageBase64, prompt);
   }
 
   const geminiKey = process.env.GEMINI_API_KEY;
@@ -285,6 +278,9 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
-  const model: GeminiModel = body.model && body.model in GEMINI_MODELS ? body.model : 'flash';
+  // Most advanced Gemini image model — settled winner across an exhaustive
+  // provider comparison (see memory: "Provider verdict") — default when the
+  // caller doesn't specify.
+  const model: GeminiModel = body.model && body.model in GEMINI_MODELS ? body.model : 'pro-preview';
   return callGemini(geminiKey, imageBase64, prompt, model);
 }
