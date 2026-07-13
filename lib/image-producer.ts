@@ -17,13 +17,17 @@
 // Net: the model can hallucinate all it likes; the hallucination is clipped and
 // over-painted out of existence. Accuracy is guaranteed by construction.
 
+/** Either an image source (data URL / base64) or an already-decoded element. */
+export type ImageInput = string | HTMLImageElement;
+
 export interface CompositeInputs {
   /** Model output — the full scene, beautified. Data URL or bare base64. */
-  modelImage: string;
-  /** Original satellite crop — the ground truth used outside the boundary. */
-  satelliteImage: string;
+  modelImage: ImageInput;
+  /** Original satellite crop — the ground truth used outside the boundary.
+   *  Pass the already-loaded bg image element directly to skip a re-decode. */
+  satelliteImage: ImageInput;
   /** Farmer's exact elements + boundary on a TRANSPARENT background. */
-  elementsImage: string;
+  elementsImage: ImageInput;
   /** Boundary polygon in OUTPUT-pixel coordinates: [x0,y0,x1,y1,...]. When
    *  absent (no traced boundary) the model output is used across the whole
    *  frame — elements are still painted on top, but there is no sprawl clip. */
@@ -35,12 +39,19 @@ export interface CompositeInputs {
 
 const asDataUrl = (s: string) => (s.startsWith('data:') ? s : `data:image/png;base64,${s}`);
 
-function loadImage(src: string): Promise<HTMLImageElement> {
+function loadImage(input: ImageInput): Promise<HTMLImageElement> {
+  if (typeof input !== 'string') {
+    // Already-decoded element (e.g. the live bg satellite) — use as-is.
+    return input.complete ? Promise.resolve(input) : new Promise((resolve, reject) => {
+      input.onload = () => resolve(input);
+      input.onerror = () => reject(new Error('composite: image failed to load'));
+    });
+  }
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error('composite: image failed to load'));
-    img.src = asDataUrl(src);
+    img.src = asDataUrl(input);
   });
 }
 

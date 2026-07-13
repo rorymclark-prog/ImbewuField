@@ -22,6 +22,7 @@ import {
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
+import { compositeAccurateMap, boundaryStageToOutput } from '@/lib/image-producer';
 import { getFirebase } from '@/lib/firebase/init';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
@@ -87,7 +88,7 @@ interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolea
 // always a no-op on the user's 👁 state.
 type AiPolishState =
   | { phase: 'idle' }
-  | { phase: 'pick'; selected: LayerId[] }
+  | { phase: 'pick'; selected: LayerId[]; mode?: 'polish' | 'producer' }
   | { phase: 'preparing'; label: string }
   | { phase: 'painting'; label: string }
   | { phase: 'done'; image: string; label: string }
@@ -681,6 +682,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [polishGallery, setPolishGallery] = useState<PolishGalleryItem[]>([]);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
+  // When true, the background Layer paints elements ONLY (no satellite/grid/wash)
+  // — used to capture the transparent "element sticker" the producer paints back
+  // on top of the model's beautified output.
+  const [captureStickerMode, setCaptureStickerMode] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -2372,17 +2377,17 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // facilitator currently has visible (falls back to every candidate if none
   // of them are visible right now, so the picker never opens with nothing
   // checked). Pick itself never touches hiddenLayers — see the type above.
-  function openAiPolishPicker() {
+  function openAiPolishPicker(mode: 'polish' | 'producer' = 'polish') {
     if (!canAiPolish || aiPolishBusy) return;
     const visible = aiPolishCandidates.filter((id) => !hiddenLayers.includes(id));
-    setAiPolish({ phase: 'pick', selected: visible.length ? visible : aiPolishCandidates });
+    setAiPolish({ phase: 'pick', selected: visible.length ? visible : aiPolishCandidates, mode });
   }
 
   function toggleAiPolishLayer(id: LayerId) {
     setAiPolish((prev) => {
       if (prev.phase !== 'pick') return prev;
       const has = prev.selected.includes(id);
-      return { phase: 'pick', selected: has ? prev.selected.filter((x) => x !== id) : [...prev.selected, id] };
+      return { phase: 'pick', selected: has ? prev.selected.filter((x) => x !== id) : [...prev.selected, id], mode: prev.mode };
     });
   }
 
@@ -2390,7 +2395,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setAiPolish((prev) => {
       if (prev.phase !== 'pick') return prev;
       const isFull = aiPolishCandidates.length > 0 && aiPolishCandidates.every((id) => prev.selected.includes(id));
-      return { phase: 'pick', selected: isFull ? [] : [...aiPolishCandidates] };
+      return { phase: 'pick', selected: isFull ? [] : [...aiPolishCandidates], mode: prev.mode };
     });
   }
 
@@ -2490,6 +2495,100 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     } catch (e) {
       restoreAll();
       setAiPolish({ phase: 'error', message: e instanceof Error ? e.message : 'AI polish failed — please try again.' });
+    }
+  }
+
+  // Producer: POST the composited scene to nano banana, get the beautified image.
+  async function requestProducer(imageBase64: string, layerLabel: string): Promise<string> {
+    const res = await fetch('/api/image-producer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64, layerLabel, stylePreset: 'hand_drawn' }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.image) throw new Error(data.error || `Producer failed (${res.status})`);
+    return data.image as string; // bare base64
+  }
+
+  // Accurate per-layer producer: for EACH chosen layer, render the real design
+  // (satellite + that layer's elements + boundary), let nano banana beautify it,
+  // then deterministically composite-back (clip to boundary, paint the farmer's
+  // exact elements on top) so nothing invented survives. One accurate map per layer.
+  async function runProducer(chosen: LayerId[]) {
+    if (!bg || chosen.length === 0 || aiPolishBusy) return;
+
+    const prevScale = stageScaleRef.current;
+    const prevPos = stagePosRef.current;
+    const prevHidden = hiddenLayers;
+    let restored = false;
+    const restoreAll = () => {
+      if (restored) return;
+      restored = true;
+      stageScaleRef.current = prevScale; stagePosRef.current = prevPos;
+      setStageScale(prevScale); setStagePos(prevPos);
+      setCaptureStickerMode(false);
+      setHiddenLayers(prevHidden);
+    };
+    const nextFrame = () => new Promise<void>((resolve) => {
+      const t = setTimeout(resolve, 150);
+      requestAnimationFrame(() => { clearTimeout(t); resolve(); });
+    });
+    const crop = { x: bg.x, y: bg.y, width: bg.w, height: bg.h, pixelRatio: 2 };
+    const bgRect = { x: bg.x, y: bg.y, w: bg.w, h: bg.h };
+    const boundaryPx = washBoundary ? boundaryStageToOutput(washBoundary.points, bgRect, 2) : undefined;
+
+    setSelectedId(null);
+    setStageScale(1); setStagePos({ x: 0, y: 0 });
+    stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
+
+    let lastFinal: string | null = null;
+    try {
+      for (let i = 0; i < chosen.length; i++) {
+        const layer = chosen[i];
+        const label = /map$/i.test(LAYERS[layer].name) ? LAYERS[layer].name : `${LAYERS[layer].name} map`;
+        const counter = chosen.length > 1 ? ` (${i + 1}/${chosen.length})` : '';
+        setAiPolish({ phase: 'preparing', label: label + counter });
+
+        // Show ONLY this layer + the existing base features (boundary/house/roads).
+        setHiddenLayers(LAYER_ORDER.filter((id) => id !== layer && id !== 'existing'));
+        await nextFrame();
+        const stage = stageRef.current;
+        if (!stage) throw new Error('Canvas is not ready — please try again.');
+
+        // Capture 1 — the scene the model beautifies (satellite + elements + boundary).
+        const composite = stage.toDataURL(crop);
+        // Capture 2 — the element "sticker" (elements + boundary, transparent bg).
+        setCaptureStickerMode(true);
+        await nextFrame();
+        const sticker = stage.toDataURL(crop);
+        setCaptureStickerMode(false);
+        await nextFrame();
+
+        const outW = Math.round(bg.w * 2);
+        const outH = Math.round(bg.h * 2);
+
+        setAiPolish({ phase: 'painting', label: label + counter });
+        const model = await requestProducer(stripDataUrl(composite), label);
+
+        // Deterministic composite-back — the guarantee.
+        const final = await compositeAccurateMap({
+          modelImage: model,
+          satelliteImage: bg.img,
+          elementsImage: sticker,
+          boundaryPx,
+          width: outW,
+          height: outH,
+        });
+        lastFinal = final;
+        setPolishGallery((prev) => [...prev, { id: `producer-${layer}-${Date.now()}`, label, image: final, at: Date.now() }]);
+      }
+      restoreAll();
+      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: chosen.length > 1 ? `${chosen.length} maps produced` : 'Map produced' });
+      else setAiPolish({ phase: 'idle' });
+      if (chosen.length > 1) setGalleryOpen(true);
+    } catch (e) {
+      restoreAll();
+      setAiPolish({ phase: 'error', message: e instanceof Error ? e.message : 'Producing the map failed — please try again.' });
     }
   }
 
@@ -2895,11 +2994,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           }}
           onClick={onStageClick} onTap={onStageClick}>
           <Layer listening={false}>
-            {bg && !hiddenLayers.includes('base') && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
-            {grid.map((g, i) => <Line key={i} points={g} stroke="#20190F" strokeWidth={1} opacity={0.08} />)}
+            {bg && !captureStickerMode && !hiddenLayers.includes('base') && <KonvaImage image={bg.img} x={bg.x} y={bg.y} width={bg.w} height={bg.h} opacity={bg.opacity} />}
+            {!captureStickerMode && grid.map((g, i) => <Line key={i} points={g} stroke="#20190F" strokeWidth={1} opacity={0.08} />)}
             {/* Parchment wash — visibility aid over a dark/busy satellite. Sits above
                 the image + grid but below sectors/lines/items (next Layer down). */}
-            {washOn && bg && (
+            {washOn && !captureStickerMode && bg && (
               washBoundary ? (
                 <>
                   {/* Dim everywhere except the boundary, in one paint via an evenodd
@@ -3248,12 +3347,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               style={reviewing || !items.length ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.45)', color: '#1F4D2B' }}>
               {reviewing ? <span className="flex items-center justify-center gap-1.5"><Loader2 className="animate-spin" size={14} /> Reviewing…</span> : <span className="flex items-center justify-center gap-1.5"><Sparkles size={14} /> AI review</span>}
             </button>
-            <button onClick={openAiPolishPicker} disabled={!canAiPolish || aiPolishBusy}
+            <button onClick={() => openAiPolishPicker('producer')} disabled={!canAiPolish || aiPolishBusy}
               className={`py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5 ${activeLayer === 'review' ? 'flex-1' : 'px-3'}`}
               style={!canAiPolish || aiPolishBusy ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' } : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}
-              title="AI polish — choose which maps to beautify, every placed item and line stays pixel-locked">
+              title="Produce an accurate illustrated map per layer — nano banana beautifies the ground, your exact elements and boundary stay pixel-true (nothing invented)">
               {aiPolishBusy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
-              {activeLayer === 'review' ? '✨ AI polish' : 'Polish'}
+              {activeLayer === 'review' ? '🎨 Produce maps' : 'Produce'}
             </button>
             {polishGallery.length > 0 && (
               <button onClick={() => setGalleryOpen(true)}
@@ -3459,12 +3558,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     style={tile(aiPolishCandidates.length > 0 && aiPolish.selected.length === aiPolishCandidates.length)}>
                     🖼 Full design
                   </button>
-                  <button onClick={() => runAiPolishWith(aiPolish.selected)} disabled={aiPolish.selected.length === 0}
+                  <button
+                    onClick={() => (aiPolish.phase === 'pick' && aiPolish.mode === 'producer' ? runProducer(aiPolish.selected) : runAiPolishWith(aiPolish.selected))}
+                    disabled={aiPolish.selected.length === 0}
                     className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                     style={aiPolish.selected.length === 0
                       ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
                       : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
-                    <Sparkles size={14} /> Polish
+                    <Sparkles size={14} /> {aiPolish.phase === 'pick' && aiPolish.mode === 'producer' ? 'Produce map per layer' : 'Polish'}
                   </button>
                 </div>
               )}
@@ -3488,7 +3589,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                       style={{ background: '#1F4D2B', color: '#fff' }}>
                       <Download size={14} /> Download
                     </a>
-                    <button onClick={openAiPolishPicker}
+                    <button onClick={() => openAiPolishPicker('producer')}
                       className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                       style={{ background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
                       🖼 Add another map
