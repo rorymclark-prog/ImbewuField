@@ -2523,14 +2523,24 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   }
 
   // Producer: POST the composited scene to nano banana, get the beautified image.
-  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string): Promise<string> {
+  // focused = a single-layer map: the model must KEEP the satellite ground and
+  // only illustrate that layer's marked features (so a sparse layer never blanks
+  // the plot). Full-design maps (focused=false) illustrate the whole garden.
+  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string, focused = false): Promise<string> {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro' }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', focused }),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.image) throw new Error(data.error || `Producer failed (${res.status})`);
+    if (!res.ok || !data.image) {
+      // LOCAL DEV STUB — the Gemini key is prod-only, so on localhost echo the
+      // captured composite back as the "model" image. This exercises the whole
+      // deterministic pipeline (composite-back + boundary clip + burned labels)
+      // so the producer is verifiable in dev without the model. Never fires in prod.
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') return imageBase64;
+      throw new Error(data.error || `Producer failed (${res.status})`);
+    }
     return data.image as string; // bare base64
   }
 
@@ -2613,8 +2623,6 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     // primary "Produce full-design map" button so the whole-design case never
     // depends on chosen exactly matching a re-derived candidate list.
     const combined = (forceCombined && chosen.length > 1) || (aiPolishCandidates.length > 1 && chosen.length === aiPolishCandidates.length);
-    // eslint-disable-next-line no-console
-    console.log('[PRODUCE]', JSON.stringify({ chosen, forceCombined, candidates: aiPolishCandidates, combined, itemsByLayer, linesByLayer }));
     const jobs: { layers: LayerId[]; label: string }[] = combined
       ? [{ layers: chosen, label: designTitle || bgSite?.name || 'Your design' }]
       : chosen.map((l) => ({ layers: [l], label: /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map` }));
@@ -2646,7 +2654,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const elementsText = describePlacedElements(visItems, visLines);
 
         setAiPolish({ phase: 'painting', label: job.label + counter });
-        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText);
+        // Per-layer maps are "focused": keep the satellite ground, illustrate only
+        // this layer's elements. The whole-design map illustrates everything.
+        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText, !combined);
 
         // Deterministic composite-back: satellite outside the boundary, model
         // (with its illustrated elements) inside, crisp boundary + TRUE labels on top.

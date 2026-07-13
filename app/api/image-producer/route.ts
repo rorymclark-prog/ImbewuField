@@ -31,16 +31,44 @@ const STYLE_LINES: Record<StylePreset, string> = {
 // The composite the model receives has the farmer's placed elements drawn as
 // coloured markers; elementsText names what each is so the model draws it as the
 // real thing (a bed of cabbages, a green JoJo tank, a beehive) rather than a flat shape.
-function buildProducerPrompt(layerLabel: string | undefined, stylePreset: StylePreset, elementsText: string): string {
+function buildProducerPrompt(
+  layerLabel: string | undefined,
+  stylePreset: StylePreset,
+  elementsText: string,
+  focused = false,
+): string {
+  const noWrite =
+    `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
+  const noInvent =
+    `DO NOT INVENT: draw only what is already visible or marked — no extra gardens, beds, paths, ponds, trees, buildings, fences, vehicles, animals, people or decorations. `;
+  const featureLegend =
+    `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building. `;
+  const orient =
+    `Keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
+
+  if (focused) {
+    // Single-layer "focused" map: the ground MUST stay the real satellite photo,
+    // only this layer's marked features get illustrated. Otherwise a sparse layer
+    // (e.g. two tanks) makes the model blank the whole plot to white.
+    const rules =
+      noWrite + noInvent +
+      `\nTASK: this is a FOCUSED single-topic map${layerLabel ? ' (the ' + layerLabel + ')' : ''} of a REAL South African smallholding. ` +
+      `KEEP THE ENTIRE SATELLITE PHOTOGRAPH EXACTLY AS IT IS — do NOT restyle, repaint, flatten, lighten or blank the ground, buildings, vegetation, roads or surroundings. The photo stays the base. ` +
+      `ONLY add attractive, instantly-recognisable illustrations of the specific marked features, exactly where they are marked and at the same count — ` +
+      featureLegend +
+      (elementsText ? `The marked features are: ${elementsText}. ` : '') +
+      `Everything not marked must remain the untouched original photograph. ${orient}`;
+    return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
+  }
+
   const rules =
     // Lead with the two most-violated rules, stated absolutely.
-    `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) ` +
-    `DO NOT INVENT: draw only what is already visible or marked — no extra gardens, beds, paths, ponds, trees, buildings, fences, vehicles, animals, people or decorations. ` +
+    noWrite + noInvent +
     `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
-    `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building. ` +
+    featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-    `Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size; keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
+    `Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size; ${orient}`;
   return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
@@ -113,6 +141,7 @@ export async function POST(req: NextRequest) {
     elementsText?: string;
     model?: GeminiModel;
     stylePreset?: StylePreset;
+    focused?: boolean;
   };
   try {
     body = await req.json();
@@ -138,7 +167,7 @@ export async function POST(req: NextRequest) {
   const stylePreset: StylePreset =
     body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
   const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText);
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, body.focused === true);
 
   return callGemini(geminiKey, imageBase64, prompt, model);
 }

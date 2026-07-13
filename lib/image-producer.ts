@@ -149,6 +149,9 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
     ctx.strokeStyle = 'rgba(20,16,10,0.5)'; ctx.lineWidth = 7; ctx.stroke();
     ctx.strokeStyle = inp.boundaryColor ?? '#C2A878'; ctx.lineWidth = 4; ctx.stroke();
   } else {
+    // No boundary traced — satellite as the base first (so a model that returns a
+    // partial/transparent frame can never leave the map blank), then the model.
+    ctx.drawImage(satellite, 0, 0, width, height);
     ctx.drawImage(model, 0, 0, width, height);
   }
 
