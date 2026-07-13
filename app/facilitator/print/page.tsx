@@ -62,6 +62,8 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],     width: 2.5 },
   path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],     width: 7 },
   building:  { label: 'Building',   icon: '▢', color: '#5A5448', dash: [],     width: 2.5 },
+  driveway:  { label: 'Driveway',   icon: '🚗', color: '#8A7F6B', dash: [],     width: 2.5 },
+  patio:     { label: 'Patio',      icon: '▦', color: '#B08A5A', dash: [],     width: 2.5 },
 };
 
 const SECTOR_LABELS: Record<SectorKind, { label: string; icon: string; color: string }> = {

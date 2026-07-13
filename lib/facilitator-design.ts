@@ -12,7 +12,12 @@ export type ElType =
   | 'coop' | 'compost' | 'greenhouse' | 'tunnel' | 'shed' | 'beehive' | 'biogas'
   | 'swalew' | 'firebreak' | 'nursery';
 
-export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour' | 'building';
+export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour' | 'building' | 'driveway' | 'patio';
+
+// Area (polygon) kinds — drawn by tapping each corner then finishing the
+// shape, unlike the other line kinds which are a simple 2-tap segment.
+// Rendered filled, not just stroked, and priced/measured per m².
+export const POLYGON_LINE_KINDS: LineKind[] = ['building', 'driveway', 'patio'];
 
 export type SectorKind = 'sun_winter' | 'sun_summer' | 'wind' | 'fire' | 'water_flow' | 'view';
 
@@ -58,7 +63,7 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
   existing: {
     id: 'existing', name: "What's there", icon: '🏠',
     blurb: 'Mark what already exists. 🗺 Find map features pulls buildings and roads from map data; tap to place big trees.',
-    elementTypes: ['shed', 'tree', 'well'], lineKinds: ['fence', 'path'],
+    elementTypes: ['shed', 'tree', 'well'], lineKinds: ['building', 'fence', 'path'],
   },
   sectors: {
     id: 'sectors', name: 'Sun, wind & land', icon: '🧭',
@@ -74,12 +79,12 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
   access: {
     id: 'access', name: 'Paths & access', icon: '🚶',
     blurb: 'Paths and access next. A bed you cannot reach with a wheelbarrow will not be tended.',
-    elementTypes: ['firebreak'], lineKinds: ['path', 'fence'],
+    elementTypes: ['firebreak'], lineKinds: ['driveway', 'path', 'fence'],
   },
   structures: {
     id: 'structures', name: 'Buildings', icon: '🏗',
     blurb: 'Place structures: compost near the kitchen, chickens between garden and orchard, nursery in morning sun.',
-    elementTypes: ['coop', 'compost', 'greenhouse', 'tunnel', 'beehive', 'biogas', 'nursery', 'shed'], lineKinds: [],
+    elementTypes: ['coop', 'compost', 'greenhouse', 'tunnel', 'beehive', 'biogas', 'nursery', 'shed'], lineKinds: ['patio', 'building'],
   },
   planting: {
     id: 'planting', name: 'Growing & animals', icon: '🌱',
@@ -104,8 +109,8 @@ const TYPE_LAYER: Record<ElType, LayerId> = {
 
 const LINE_LAYER: Record<LineKind, LayerId> = {
   pipe: 'water', swale: 'water', drip: 'water', contour: 'water',
-  fence: 'access', path: 'access', windbreak: 'planting',
-  building: 'existing',
+  fence: 'access', path: 'access', driveway: 'access', windbreak: 'planting',
+  building: 'existing', patio: 'structures',
 };
 
 export function defaultLayerForType(t: ElType): LayerId { return TYPE_LAYER[t]; }

@@ -86,6 +86,18 @@ export const PRICE_BOOK: Record<string, PriceEntry> = {
     zar: 80,
     note: 'Compacted gravel path, per running metre, standard width.',
   },
+  driveway_per_m2: {
+    label: 'Driveway (compacted gravel)',
+    unit: 'per_m2',
+    zar: 250,
+    note: 'Compacted gravel driveway surface, per square metre; concrete/paved will cost more.',
+  },
+  patio_per_m2: {
+    label: 'Patio (paved)',
+    unit: 'per_m2',
+    zar: 450,
+    note: 'Paved outdoor patio/work area, per square metre, incl. base prep.',
+  },
   swale_per_m: {
     label: 'Hand-dug swale',
     unit: 'per_m',
@@ -375,6 +387,33 @@ export function costForLine(
 
   const zar = Math.round(lengthM * entry.zar);
   return { zar, basis: `${entry.label}: ${lengthM.toFixed(1)} m × ${formatZar(entry.zar)}/m` };
+}
+
+/**
+ * Area (polygon) line kinds priced per m² of paved/covered ground, not by
+ * outline length — a driveway or patio costs by the surface it covers.
+ */
+const AREA_LINE_KIND_MAP: Record<string, string> = {
+  driveway: 'driveway_per_m2',
+  patio: 'patio_per_m2',
+};
+
+/**
+ * Estimate cost for an area-type facilitator line (driveway, patio) from its
+ * traced polygon area. Returns null for unknown kinds or a non-positive area.
+ */
+export function costForAreaLine(
+  kind: string,
+  areaM2: number
+): { zar: number; basis: string } | null {
+  const key = AREA_LINE_KIND_MAP[kind];
+  if (!key || areaM2 <= 0) return null;
+
+  const entry = PRICE_BOOK[key];
+  if (!entry) return null;
+
+  const zar = Math.round(areaM2 * entry.zar);
+  return { zar, basis: `${entry.label}: ${areaM2.toFixed(1)} m² × ${formatZar(entry.zar)}/m²` };
 }
 
 /**
