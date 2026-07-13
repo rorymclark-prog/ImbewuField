@@ -2523,14 +2523,13 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   }
 
   // Producer: POST the composited scene to nano banana, get the beautified image.
-  // focused = a single-layer map: the model must KEEP the satellite ground and
-  // only illustrate that layer's marked features (so a sparse layer never blanks
-  // the plot). Full-design maps (focused=false) illustrate the whole garden.
-  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string, focused = false): Promise<string> {
+  // Every map (whole-design hero AND single-layer base maps) is AI-illustrated;
+  // the route prompt forbids leaving the plot blank/white.
+  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string): Promise<string> {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', focused }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro' }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.image) {
@@ -2660,18 +2659,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         stageScaleRef.current = prevScale; stagePosRef.current = prevPos;
         setHiddenLayers(prevHidden);
 
-        setAiPolish({ phase: combined ? 'painting' : 'preparing', label: job.label + counter });
-        // WHOLE-DESIGN map → the AI beautifies the entire garden (the hero poster).
-        // PER-LAYER maps are DETERMINISTIC: the captured scene (real satellite +
-        // this layer's elements + boundary) IS the map — its satellite, elements and
-        // (burned below) labels can never be blanked by the model, and it's instant.
-        const model = combined
-          ? await requestProducer(stripDataUrl(composite), job.label, elementsText, false)
-          : stripDataUrl(composite);
+        setAiPolish({ phase: 'painting', label: job.label + counter });
+        // EVERY map is AI-polished — the whole-design hero AND each single-layer
+        // "base map" (illustrate the existing house/trees + that layer's elements
+        // on a rich painted ground). The prompt forbids leaving the plot blank.
+        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText);
 
-        // Deterministic composite-back: satellite outside the boundary, the map
-        // (illustrated for full design / real capture for a layer) inside, crisp
-        // boundary + TRUE labels on top.
+        // Composite-back: satellite outside the boundary, the AI-illustrated plot
+        // inside, crisp boundary + TRUE labels on top.
         const final = await compositeAccurateMap({
           modelImage: model,
           satelliteImage: bg.img,
@@ -3630,7 +3625,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 )}
               </div>
               <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
-                {aiPolish.phase === 'pick' && 'Full design = one AI-illustrated map of everything. Uncheck to a single layer for a quick satellite map of just that layer (kept exact, no AI). Your 👁 visibility is restored after.'}
+                {aiPolish.phase === 'pick' && 'Full design = one illustrated map of everything. Uncheck down to a single layer to polish just that layer — e.g. a base map of what is already on the land. Your 👁 visibility is restored after.'}
                 {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `${aiPolish.label}`}
                 {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>

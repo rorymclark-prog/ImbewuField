@@ -35,7 +35,6 @@ function buildProducerPrompt(
   layerLabel: string | undefined,
   stylePreset: StylePreset,
   elementsText: string,
-  focused = false,
 ): string {
   const noWrite =
     `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
@@ -45,26 +44,17 @@ function buildProducerPrompt(
     `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building. `;
   const orient =
     `Keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
-
-  if (focused) {
-    // Single-layer "focused" map: the ground MUST stay the real satellite photo,
-    // only this layer's marked features get illustrated. Otherwise a sparse layer
-    // (e.g. two tanks) makes the model blank the whole plot to white.
-    const rules =
-      noWrite + noInvent +
-      `\nTASK: this is a FOCUSED single-topic map${layerLabel ? ' (the ' + layerLabel + ')' : ''} of a REAL South African smallholding. ` +
-      `KEEP THE ENTIRE SATELLITE PHOTOGRAPH EXACTLY AS IT IS — do NOT restyle, repaint, flatten, lighten or blank the ground, buildings, vegetation, roads or surroundings. The photo stays the base. ` +
-      `ONLY add attractive, instantly-recognisable illustrations of the specific marked features, exactly where they are marked and at the same count — ` +
-      featureLegend +
-      (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-      `Everything not marked must remain the untouched original photograph. ${orient}`;
-    return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
-  }
+  // The recurring failure is a sparse plot being painted plain/white ("blank").
+  // This forbids it explicitly and demands the WHOLE plot be illustrated —
+  // essential for a "base map" that may only have a house + one tree marked.
+  const fillIt =
+    `PAINT THE WHOLE PLOT: illustrate the ENTIRE area inside the property boundary as a complete, richly hand-painted garden map — the ground (grass, soil, cultivated earth), every building (painted from the real rooftops visible in the photo, keep their exact footprint), existing trees and shrubs, and paths. NEVER leave any area blank, white, plain, empty or unpainted — even if only a few features are marked, the whole plot must be a finished, beautiful illustration that matches the real photo's layout. `;
 
   const rules =
     // Lead with the two most-violated rules, stated absolutely.
     noWrite + noInvent +
     `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
+    fillIt +
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
     featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
@@ -141,7 +131,6 @@ export async function POST(req: NextRequest) {
     elementsText?: string;
     model?: GeminiModel;
     stylePreset?: StylePreset;
-    focused?: boolean;
   };
   try {
     body = await req.json();
@@ -167,7 +156,7 @@ export async function POST(req: NextRequest) {
   const stylePreset: StylePreset =
     body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
   const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, body.focused === true);
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText);
 
   return callGemini(geminiKey, imageBase64, prompt, model);
 }

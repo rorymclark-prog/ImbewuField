@@ -106,6 +106,34 @@ function loadImage(input: ImageInput): Promise<HTMLImageElement> {
   });
 }
 
+/**
+ * Safety net against the model "blanking" a sparse plot to white. Redraw the
+ * model onto its own canvas and turn near-pure-white pixels transparent, so the
+ * real satellite drawn underneath shows through anywhere the model left blank.
+ * A good rich illustration has almost no pure-white, so this is a no-op there;
+ * it only rescues the failure case (a plot painted plain white). Conservative
+ * threshold (>248 on all channels) leaves cream/beige paper backgrounds intact.
+ */
+function knockOutNearWhite(src: HTMLImageElement, width: number, height: number): HTMLCanvasElement {
+  const c = document.createElement('canvas');
+  c.width = width; c.height = height;
+  const cx = c.getContext('2d');
+  if (!cx) return c;
+  cx.drawImage(src, 0, 0, width, height);
+  try {
+    const img = cx.getImageData(0, 0, width, height);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i] > 248 && d[i + 1] > 248 && d[i + 2] > 248) d[i + 3] = 0;
+    }
+    cx.putImageData(img, 0, 0);
+  } catch {
+    // Tainted canvas (should not happen — inputs are same-origin data URLs).
+    // Fall back to the untouched model rather than throwing.
+  }
+  return c;
+}
+
 /** Trace the boundary polygon (output px) onto a 2D context as a closed path. */
 function traceBoundary(ctx: CanvasRenderingContext2D, pts: number[]): void {
   ctx.beginPath();
@@ -132,16 +160,20 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   if (!ctx) throw new Error('composite: 2D context unavailable');
 
   const hasBoundary = Array.isArray(boundaryPx) && boundaryPx.length >= 6;
+  // The model, minus any pure-white blanking — so the satellite shows through
+  // instead of a blank plot (see knockOutNearWhite).
+  const modelLayer = knockOutNearWhite(model, width, height);
 
   if (hasBoundary) {
-    // 1. Original satellite fills everything (truth outside the plot).
+    // 1. Original satellite fills everything (truth outside the plot, and the
+    //    fallback anywhere the model blanked to white inside).
     ctx.drawImage(satellite, 0, 0, width, height);
     // 2. Beautified scene (elements illustrated by the model), clipped to the
     //    boundary interior — anything the model sprawled outside is erased.
     ctx.save();
     traceBoundary(ctx, boundaryPx!);
     ctx.clip();
-    ctx.drawImage(model, 0, 0, width, height);
+    ctx.drawImage(modelLayer, 0, 0, width, height);
     ctx.restore();
     // 3. Crisp boundary — the single highest-contrast line on the map.
     traceBoundary(ctx, boundaryPx!);
@@ -150,9 +182,9 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
     ctx.strokeStyle = inp.boundaryColor ?? '#C2A878'; ctx.lineWidth = 4; ctx.stroke();
   } else {
     // No boundary traced — satellite as the base first (so a model that returns a
-    // partial/transparent frame can never leave the map blank), then the model.
+    // partial/transparent/blank frame can never leave the map blank), then the model.
     ctx.drawImage(satellite, 0, 0, width, height);
-    ctx.drawImage(model, 0, 0, width, height);
+    ctx.drawImage(modelLayer, 0, 0, width, height);
   }
 
   // 4. True labels burned in-frame — hybrid-c identity + position guarantee.
