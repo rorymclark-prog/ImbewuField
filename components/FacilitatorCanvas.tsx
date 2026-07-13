@@ -2580,7 +2580,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // (satellite + that layer's elements + boundary), let nano banana beautify it,
   // then deterministically composite-back (clip to boundary, paint the farmer's
   // exact elements on top) so nothing invented survives. One accurate map per layer.
-  async function runProducer(chosen: LayerId[]) {
+  async function runProducer(chosen: LayerId[], forceCombined = false) {
     if (!bg || chosen.length === 0 || aiPolishBusy) return;
 
     const prevScale = stageScaleRef.current;
@@ -2609,8 +2609,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
     const labelStyle: LabelStyle = PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label ?? 'clean';
     // Selecting the whole design → ONE combined map (all your elements together);
-    // selecting a subset → one focused map per layer.
-    const combined = aiPolishCandidates.length > 1 && chosen.length === aiPolishCandidates.length;
+    // selecting a subset → one focused map per layer. forceCombined is set by the
+    // primary "Produce full-design map" button so the whole-design case never
+    // depends on chosen exactly matching a re-derived candidate list.
+    const combined = (forceCombined && chosen.length > 1) || (aiPolishCandidates.length > 1 && chosen.length === aiPolishCandidates.length);
+    // eslint-disable-next-line no-console
+    console.log('[PRODUCE]', JSON.stringify({ chosen, forceCombined, candidates: aiPolishCandidates, combined, itemsByLayer, linesByLayer }));
     const jobs: { layers: LayerId[]; label: string }[] = combined
       ? [{ layers: chosen, label: designTitle || bgSite?.name || 'Your design' }]
       : chosen.map((l) => ({ layers: [l], label: /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map` }));
@@ -3649,17 +3653,44 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                       </div>
                     </div>
                   )}
-                  <button
-                    onClick={() => (aiPolish.phase === 'pick' && aiPolish.mode === 'producer' ? runProducer(aiPolish.selected) : runAiPolishWith(aiPolish.selected))}
-                    disabled={aiPolish.selected.length === 0}
-                    className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                    style={aiPolish.selected.length === 0
-                      ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
-                      : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
-                    <Sparkles size={14} /> {aiPolish.phase === 'pick' && aiPolish.mode === 'producer'
-                      ? (aiPolishCandidates.length > 1 && aiPolish.selected.length === aiPolishCandidates.length ? 'Produce full-design map' : 'Produce map per layer')
-                      : 'Polish'}
-                  </button>
+                  {aiPolish.mode === 'producer' ? (() => {
+                    // Whole-design produce is the DEFAULT and is bulletproof: it
+                    // always runs every content layer as ONE map, computed here
+                    // from aiPolishCandidates (not from the checkbox state), so a
+                    // stray selection can never collapse it to a single layer.
+                    const isSubset = aiPolish.selected.length > 0 && aiPolish.selected.length < aiPolishCandidates.length;
+                    return (
+                      <div className="space-y-1.5">
+                        <button
+                          onClick={() => runProducer(aiPolishCandidates, true)}
+                          disabled={aiPolishCandidates.length === 0}
+                          className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                          style={aiPolishCandidates.length === 0
+                            ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+                            : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
+                          <Sparkles size={14} /> Produce full-design map
+                        </button>
+                        {isSubset && (
+                          <button
+                            onClick={() => runProducer(aiPolish.selected, false)}
+                            className="w-full py-1.5 rounded-lg text-[11px] font-mono transition-all"
+                            style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                            or produce {aiPolish.selected.length} checked layer{aiPolish.selected.length > 1 ? 's' : ''} separately
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })() : (
+                    <button
+                      onClick={() => runAiPolishWith(aiPolish.selected)}
+                      disabled={aiPolish.selected.length === 0}
+                      className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                      style={aiPolish.selected.length === 0
+                        ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+                        : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
+                      <Sparkles size={14} /> Polish
+                    </button>
+                  )}
                 </div>
               )}
               {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting') && (
