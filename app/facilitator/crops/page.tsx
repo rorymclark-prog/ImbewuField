@@ -13,6 +13,8 @@ import Link from 'next/link';
 import { Search, X } from 'lucide-react';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
+import type { Design } from '@/lib/db/types';
+import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
@@ -79,7 +81,50 @@ const COL_PCT = 100 / 12;
 const leftPct = (m: number) => (m - 1) * COL_PCT;
 const widthPct = (seg: Segment) => (seg.end - seg.start + 1) * COL_PCT;
 
+/** Linear-interpolate between two '#rrggbb' hex colours, t clamped to [0,1]. */
+function lerpHex(a: string, b: string, t: number): string {
+  const c = Math.max(0, Math.min(1, t));
+  const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
+  const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
+  const mix = pa.map((v, i) => Math.round(v + (pb[i] - v) * c));
+  return `#${mix.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+}
+
+/**
+ * CSS gradient for one bar segment, representing its slice of the OVERALL
+ * sow→harvest span (not just the segment alone) — so a wrapped bar (e.g.
+ * Nov→Feb, drawn as two DOM pieces either side of the Dec/Jan seam) still
+ * reads as one continuous "growing → ready to harvest" fade across both.
+ */
+function barGradient(seg: Segment, sowMonth: number, totalMonths: number, from: string, to: string): string {
+  const startFrac = ((seg.start - sowMonth + 12) % 12) / totalMonths;
+  const endFrac = (((seg.end - sowMonth + 12) % 12) + 1) / totalMonths;
+  return `linear-gradient(to right, ${lerpHex(from, to, startFrac)}, ${lerpHex(from, to, endFrac)})`;
+}
+
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
+
+/**
+ * A saved cloud design's items/lines already carry wM/hM in real metres
+ * regardless of geomVersion (only x/y/points differ between px-v1 and
+ * metres-v2) — so no coordinate conversion is needed just to read bed areas
+ * and the site info. Only the fields the crop planner actually reads.
+ */
+function designStateFromCloudRow(d: Design): FacilitatorDesignState {
+  const data = (d.data ?? {}) as Partial<FacilitatorDesignState>;
+  return {
+    version: 1,
+    items: data.items ?? [],
+    lines: data.lines ?? [],
+    sectors: data.sectors ?? [],
+    pxPerM: data.pxPerM ?? 26,
+    activeLayer: data.activeLayer ?? 'base',
+    hiddenLayers: data.hiddenLayers ?? [],
+    title: d.title,
+    bgSite: data.bgSite ?? undefined,
+    savedAt: Date.now(),
+  };
+}
 
 /** Beds = design items of type 'bed'/'hugel', in placement (array) order. */
 function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
@@ -128,12 +173,27 @@ export default function FacilitatorCropsPage() {
 
   const [activePlanting, setActivePlanting] = useState<Planting | null>(null);
 
+  // Site picker — only matters once there's real ambiguity (2+ saved cloud
+  // designs); with 0 or 1, behaviour is unchanged (straight to the device's
+  // local design, same as before this feature existed).
+  const [myDesignsList, setMyDesignsList] = useState<Design[] | null>(null);
+  const [chosenDesignId, setChosenDesignId] = useState<string | null>(null);
+  const needsSitePicker = !!myDesignsList && myDesignsList.length > 1 && chosenDesignId === null;
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
     setMounted(true);
+    myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
+
+  function chooseSite(id: string) {
+    setChosenDesignId(id);
+    if (id === 'local') return; // keep the device's local design already loaded above
+    const row = myDesignsList?.find((d) => d.id === id);
+    if (row) setDesign(designStateFromCloudRow(row));
+  }
 
   // Debounced persistence — saves ~400ms after the last edit.
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -261,6 +321,31 @@ export default function FacilitatorCropsPage() {
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <span className="font-display text-sm" style={{ color: '#8C7A62' }}>Loading crop plan…</span>
+        </div>
+      ) : needsSitePicker ? (
+        <div className="flex-1 overflow-y-auto flex items-start justify-center py-8 px-4">
+          <div className="w-full space-y-2" style={{ maxWidth: 480 }}>
+            <h1 className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>Which site are you planning?</h1>
+            <p className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040' }}>You have {myDesignsList?.length} saved designs — pick one to see its beds.</p>
+            {myDesignsList?.map((d) => (
+              <button
+                key={d.id}
+                onClick={() => chooseSite(d.id)}
+                className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
+                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+              >
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{d.title || 'Untitled design'}</span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
+              </button>
+            ))}
+            <button
+              onClick={() => chooseSite('local')}
+              className="w-full px-4 py-3 rounded-xl text-left font-sans transition-all"
+              style={{ background: 'transparent', border: '1px dashed #C7BCA6', color: '#8C7A62', fontSize: 13 }}
+            >
+              or use whatever design is currently open on this device
+            </button>
+          </div>
         </div>
       ) : beds.length === 0 ? (
         <EmptyState onVirtual={() => setUseVirtual(true)} />
@@ -502,8 +587,11 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
   // Existing (already-growing) crops get a muted olive treatment so the eye
-  // separates "already there" from "still to sow" at a glance.
-  const barColor = planting.existing ? '#8C8654' : '#3F7A3C';
+  // separates "already there" from "still to sow" at a glance. Each bar also
+  // fades from "just sown" to a golden "ready to harvest" tone across its
+  // length, so you can see how far along a planting is at a glance.
+  const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
+  const totalMonths = segments.reduce((s, seg) => s + (seg.end - seg.start + 1), 0);
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
@@ -514,7 +602,7 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
           className="font-sans"
           style={{
             position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: barColor, color: '#fff', border: 'none', borderRadius: 6,
+            background: barGradient(seg, planting.sowMonth, totalMonths, barFrom, barTo), color: '#fff', border: 'none', borderRadius: 6,
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
           }}

@@ -2282,8 +2282,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const fs = 13, hh = fs * 0.9, pad = 6, gap = hh * 2 + 6;
     const centerX = (minX + maxX) / 2;
     const groups = [...byLabel.entries()].map(([label, g]) => {
-      const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
-      const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      const avgX = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
+      const avgY = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      // Anchor the leader line + marker dot to the REAL instance nearest the
+      // group's average, not the raw average itself — when a label's items
+      // are spread across the plot (e.g. 3 fruit trees at opposite corners),
+      // the mathematical centroid can land in empty ground with no actual
+      // feature there, making the leader look like it points at nothing.
+      let cx = avgX, cy = avgY, bestD = Infinity;
+      for (let i = 0; i < g.cxs.length; i++) {
+        const d = (g.cxs[i] - avgX) ** 2 + (g.cys[i] - avgY) ** 2;
+        if (d < bestD) { bestD = d; cx = g.cxs[i]; cy = g.cys[i]; }
+      }
       const type = g.type, icon = CATALOG[type].icon, count = g.cxs.length;
       const pw = pad * 2 + (label.length + (count > 1 ? 4 : 0)) * fs * 0.6 + fs * 1.3; // icon + text est.
       const side: 'left' | 'right' = cx < centerX ? 'left' : 'right';
@@ -2786,8 +2796,16 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
     });
     const groups = [...byType.entries()].map(([label, g]) => {
-      const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
-      const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      const avgX = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
+      const avgY = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
+      // Same fix as labelCallouts: anchor to the REAL instance nearest the
+      // average rather than the raw average, which can land on empty ground
+      // when a label's items are scattered (e.g. trees at opposite corners).
+      let cx = avgX, cy = avgY, bestD = Infinity;
+      for (let i = 0; i < g.cxs.length; i++) {
+        const d = (g.cxs[i] - avgX) ** 2 + (g.cys[i] - avgY) ** 2;
+        if (d < bestD) { bestD = d; cx = g.cxs[i]; cy = g.cys[i]; }
+      }
       const count = g.cxs.length;
       const text = `${g.icon} ${label}${count > 1 ? ` ×${count}` : ''}`;
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
@@ -3712,7 +3730,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 margin beside the property with a leader line to the group centre,
                 instead of a cramped label under every element. */}
             {showLabels && !captureCleanMode && labelCallouts.map((g) => (
-              <Group key={`lbl-${g.type}`} listening={false}>
+              <Group key={`lbl-${g.label}`} listening={false}>
                 {/* Leader — light with a soft dark under-stroke so it reads on any
                     background (dark satellite or pale parchment wash). */}
                 <Line points={[g.cx, g.cy, g.lx, g.ay]} stroke="#1A140A" strokeWidth={2.4} opacity={0.28} lineCap="round" />
