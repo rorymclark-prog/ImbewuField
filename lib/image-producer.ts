@@ -107,31 +107,61 @@ function loadImage(input: ImageInput): Promise<HTMLImageElement> {
 }
 
 /**
- * Safety net against the model "blanking" a sparse plot to white. Redraw the
- * model onto its own canvas and turn near-pure-white pixels transparent, so the
- * real satellite drawn underneath shows through anywhere the model left blank.
- * A good rich illustration has almost no pure-white, so this is a no-op there;
- * it only rescues the failure case (a plot painted plain white). Conservative
- * threshold (>248 on all channels) leaves cream/beige paper backgrounds intact.
+ * Detect a FAILED render: the model "blanking" the plot to white/cream/paper
+ * instead of painting it. Returns the fraction of pixels inside the boundary
+ * (or the whole frame if none) that are near-white. Callers treat > ~0.6 as a
+ * failed render and retry / fall back — this replaces the per-pixel white
+ * knockout, which shredded styles that legitimately use white.
+ * Runs on a small downscale (fast) and never throws.
  */
-function knockOutNearWhite(src: HTMLImageElement, width: number, height: number): HTMLCanvasElement {
-  const c = document.createElement('canvas');
-  c.width = width; c.height = height;
-  const cx = c.getContext('2d');
-  if (!cx) return c;
-  cx.drawImage(src, 0, 0, width, height);
+export async function estimateBlankFraction(
+  image: ImageInput,
+  frameW: number,
+  frameH: number,
+  boundaryPx?: number[],
+): Promise<number> {
   try {
-    const img = cx.getImageData(0, 0, width, height);
-    const d = img.data;
-    for (let i = 0; i < d.length; i += 4) {
-      if (d[i] > 248 && d[i + 1] > 248 && d[i + 2] > 248) d[i + 3] = 0;
+    const img = await loadImage(image);
+    const w = 200;
+    const h = Math.max(1, Math.round((frameH / Math.max(1, frameW)) * w));
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const cx = c.getContext('2d');
+    if (!cx) return 0;
+    cx.drawImage(img, 0, 0, w, h);
+    const d = cx.getImageData(0, 0, w, h).data;
+    // Boundary scaled into the small canvas' coordinate space.
+    const pts = boundaryPx && boundaryPx.length >= 6
+      ? boundaryPx.map((v, i) => (i % 2 === 0 ? (v / frameW) * w : (v / frameH) * h))
+      : null;
+    const inPoly = (x: number, y: number): boolean => {
+      if (!pts) return true;
+      let inside = false;
+      for (let i = 0, j = pts.length - 2; i < pts.length; j = i, i += 2) {
+        const xi = pts[i], yi = pts[i + 1], xj = pts[j], yj = pts[j + 1];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    let total = 0, blank = 0;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        if (!inPoly(x + 0.5, y + 0.5)) continue;
+        total++;
+        const i = (y * w + x) * 4;
+        const r = d[i], g = d[i + 1], b = d[i + 2];
+        // Blanked-plot signature: BRIGHT and NEAR-GREY. Catches pure white,
+        // light grey AND warm cream/"paper" tones (the field-tested failures),
+        // while painted land (saturated greens/earth) stays untouched.
+        const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        const chroma = Math.max(r, g, b) - Math.min(r, g, b);
+        if (lum > 216 && chroma < 30) blank++;
+      }
     }
-    cx.putImageData(img, 0, 0);
+    return total ? blank / total : 0;
   } catch {
-    // Tainted canvas (should not happen — inputs are same-origin data URLs).
-    // Fall back to the untouched model rather than throwing.
+    return 0; // Never block a produce on the detector itself.
   }
-  return c;
 }
 
 /** Trace the boundary polygon (output px) onto a 2D context as a closed path. */
@@ -160,20 +190,17 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   if (!ctx) throw new Error('composite: 2D context unavailable');
 
   const hasBoundary = Array.isArray(boundaryPx) && boundaryPx.length >= 6;
-  // The model, minus any pure-white blanking — so the satellite shows through
-  // instead of a blank plot (see knockOutNearWhite).
-  const modelLayer = knockOutNearWhite(model, width, height);
 
   if (hasBoundary) {
-    // 1. Original satellite fills everything (truth outside the plot, and the
-    //    fallback anywhere the model blanked to white inside).
+    // 1. Original satellite fills everything (truth outside the plot).
     ctx.drawImage(satellite, 0, 0, width, height);
     // 2. Beautified scene (elements illustrated by the model), clipped to the
     //    boundary interior — anything the model sprawled outside is erased.
+    //    (Blanked/failed renders are caught BEFORE this via estimateBlankFraction.)
     ctx.save();
     traceBoundary(ctx, boundaryPx!);
     ctx.clip();
-    ctx.drawImage(modelLayer, 0, 0, width, height);
+    ctx.drawImage(model, 0, 0, width, height);
     ctx.restore();
     // 3. Crisp boundary — the single highest-contrast line on the map.
     traceBoundary(ctx, boundaryPx!);
@@ -182,9 +209,9 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
     ctx.strokeStyle = inp.boundaryColor ?? '#C2A878'; ctx.lineWidth = 4; ctx.stroke();
   } else {
     // No boundary traced — satellite as the base first (so a model that returns a
-    // partial/transparent/blank frame can never leave the map blank), then the model.
+    // partial/transparent frame can never leave the map blank), then the model.
     ctx.drawImage(satellite, 0, 0, width, height);
-    ctx.drawImage(modelLayer, 0, 0, width, height);
+    ctx.drawImage(model, 0, 0, width, height);
   }
 
   // 4. True labels burned in-frame — hybrid-c identity + position guarantee.

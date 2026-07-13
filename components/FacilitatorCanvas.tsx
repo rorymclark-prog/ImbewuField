@@ -22,7 +22,7 @@ import {
 import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
-import { compositeAccurateMap, boundaryStageToOutput, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
+import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
 
 // The four researched producer styles (see /api/image-producer STYLE_LINES).
 const PRODUCER_STYLES: { key: string; name: string; blurb: string; label: LabelStyle }[] = [
@@ -694,7 +694,20 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // — used to capture the transparent "element sticker" the producer paints back
   // on top of the model's beautified output.
   const [captureStickerMode, setCaptureStickerMode] = useState(false);
-  const [producerStyle, setProducerStyle] = useState('field_ledger');
+  // Map style for the producer. Default = the warm storybook look (the pale
+  // "ledger" default was reading as washed-out/blank); the user's last choice
+  // is remembered per device (see chooseProducerStyle).
+  const [producerStyle, setProducerStyle] = useState('homestead_storybook');
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('imbewu_producer_style');
+      if (saved && PRODUCER_STYLES.some((s) => s.key === saved)) setProducerStyle(saved);
+    } catch { /* unavailable */ }
+  }, []);
+  const chooseProducerStyle = (key: string) => {
+    setProducerStyle(key);
+    try { localStorage.setItem('imbewu_producer_style', key); } catch { /* best effort */ }
+  };
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -2524,12 +2537,16 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
   // Producer: POST the composited scene to nano banana, get the beautified image.
   // Every map (whole-design hero AND single-layer base maps) is AI-illustrated;
-  // the route prompt forbids leaving the plot blank/white.
-  async function requestProducer(imageBase64: string, layerLabel: string, elementsText: string): Promise<string> {
+  // mapKind 'base' = paint the land as it is today, 'full' = the design map.
+  // retry=true tells the prompt the previous attempt blanked the plot.
+  async function requestProducer(
+    imageBase64: string, layerLabel: string, elementsText: string,
+    mapKind: 'base' | 'full' = 'full', retry = false,
+  ): Promise<string> {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro' }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', mapKind, retry }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.image) {
@@ -2537,7 +2554,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       // captured composite back as the "model" image. This exercises the whole
       // deterministic pipeline (composite-back + boundary clip + burned labels)
       // so the producer is verifiable in dev without the model. Never fires in prod.
-      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') return imageBase64;
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+        // eslint-disable-next-line no-console
+        console.warn('[producer] dev stub: API failed, echoing composite —', data.error || res.status);
+        return imageBase64;
+      }
       throw new Error(data.error || `Producer failed (${res.status})`);
     }
     return data.image as string; // bare base64
@@ -2661,9 +2682,26 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         setAiPolish({ phase: 'painting', label: job.label + counter });
         // EVERY map is AI-polished — the whole-design hero AND each single-layer
-        // "base map" (illustrate the existing house/trees + that layer's elements
-        // on a rich painted ground). The prompt forbids leaving the plot blank.
-        const model = await requestProducer(stripDataUrl(composite), job.label, elementsText);
+        // "base map" (mapKind 'base' when the job is the existing layer alone).
+        // FAILED-RENDER GUARD: if the model blanked the plot (near-white interior),
+        // retry once with an explicit correction; if it blanks again, fall back to
+        // the accurate captured photo scene — a blank map can never ship.
+        const isBaseJob = job.layers.length === 1 && job.layers[0] === 'existing';
+        const kind = isBaseJob ? 'base' : 'full';
+        const compositeB64 = stripDataUrl(composite);
+        let model = await requestProducer(compositeB64, job.label, elementsText, kind);
+        if (await estimateBlankFraction(model, outW, outH, boundaryPx) > 0.6) {
+          // Retry once with an explicit correction; if the retry ITSELF fails
+          // (flaky 502 etc.) fall back rather than aborting the whole produce.
+          try {
+            model = await requestProducer(compositeB64, job.label, elementsText, kind, true);
+          } catch {
+            model = compositeB64;
+          }
+          if (await estimateBlankFraction(model, outW, outH, boundaryPx) > 0.6) {
+            model = compositeB64; // accurate satellite scene — never a blank map
+          }
+        }
 
         // Composite-back: satellite outside the boundary, the AI-illustrated plot
         // inside, crisp boundary + TRUE labels on top.
@@ -3660,7 +3698,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                       <div className="text-[10px] font-mono uppercase tracking-wider px-0.5" style={{ color: '#9A8268' }}>Map style</div>
                       <div className="grid grid-cols-2 gap-1.5">
                         {PRODUCER_STYLES.map((s) => (
-                          <button key={s.key} onClick={() => setProducerStyle(s.key)}
+                          <button key={s.key} onClick={() => chooseProducerStyle(s.key)}
                             className="py-1.5 px-2 rounded-lg text-left transition-all"
                             style={tile(producerStyle === s.key)}>
                             <div className="text-xs font-display font-semibold">{s.name}</div>

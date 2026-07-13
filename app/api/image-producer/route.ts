@@ -15,13 +15,15 @@ type GeminiModel = keyof typeof GEMINI_MODELS;
 // Four researched site-plan styles (permaculture/landscape-plan traditions).
 type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk';
 
+// Every style MUST render the ground as living land — a style that swaps the
+// plot for "paper" or blank white is exactly the satellite-disappears failure.
 const STYLE_LINES: Record<StylePreset, string> = {
   field_ledger:
-    'STYLE — Field Ledger: a hand-inked site-plan illustration in fine black pen on aged cream paper, precise linework for boundaries/fences/paths, soft sparse watercolour tint washes (gentle green for planting, pale blue for water), warm but credible surveyor character.',
+    'STYLE — Field Ledger: a hand-inked site-plan illustration — fine dark pen linework over rich watercolour. The ground inside the plot is painted as living land in greens, olive and warm earth tones with visible lawn/veld/soil texture; it must NEVER read as blank, cream or paper. Warm, credible surveyor character.',
   homestead_storybook:
     'STYLE — Homestead Storybook: a saturated gouache-painted illustrated garden map, warm picture-book quality, rounded stylised beds bursting with vegetables, canopy-textured fruit trees, an earthy palette of ochre, leaf green and terracotta, whimsical but legible.',
   extension_blueprint:
-    'STYLE — Extension Blueprint: a clean isometric/axonometric technical site plan, slight 3D height on structures while beds and paths stay flat, muted professional palette (slate blue, sage, warm grey), thin consistent linework, high legibility at small print size.',
+    'STYLE — Extension Blueprint: a clean technical site plan with slight isometric character on structures, muted professional palette (slate blue, sage, warm grey) — but the ground is still softly tinted living land (sage lawn, buff soil, olive veld), never blank white; thin consistent linework, high legibility at small print size.',
   karoo_folk:
     'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, saturated colours (barn red, cobalt, sunflower yellow, pine green), decorative South African folk pattern textures, oversized clearly-iconic feature shapes, charming handmade brushwork.',
 };
@@ -35,6 +37,8 @@ function buildProducerPrompt(
   layerLabel: string | undefined,
   stylePreset: StylePreset,
   elementsText: string,
+  mapKind: 'base' | 'full' = 'full',
+  retry = false,
 ): string {
   const noWrite =
     `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
@@ -48,13 +52,22 @@ function buildProducerPrompt(
   // This forbids it explicitly and demands the WHOLE plot be illustrated —
   // essential for a "base map" that may only have a house + one tree marked.
   const fillIt =
-    `PAINT THE WHOLE PLOT: illustrate the ENTIRE area inside the property boundary as a complete, richly hand-painted garden map — the ground (grass, soil, cultivated earth), every building (painted from the real rooftops visible in the photo, keep their exact footprint), existing trees and shrubs, and paths. NEVER leave any area blank, white, plain, empty or unpainted — even if only a few features are marked, the whole plot must be a finished, beautiful illustration that matches the real photo's layout. `;
+    `PAINT THE WHOLE PLOT: illustrate the ENTIRE area inside the property boundary as a complete, richly hand-painted garden map — the ground (grass, veld, soil, cultivated earth), every building, existing trees and shrubs, and paths. NEVER leave any area blank, white, plain, empty or unpainted — even if only a few features are marked, the whole plot must be a finished, beautiful illustration that matches the real photo's layout. `;
+  // Field-tested failure: styles with "plan" character redraw the house as a
+  // white architectural floor plan. Buildings must stay top-down roofs.
+  const roofs =
+    `BUILDINGS ARE ROOFS: paint every building as its roof seen from directly above, matching the exact roof outline and colour visible in the photo — never as a floor plan, never with interior walls, never as a plain white shape. `;
+
+  const task = mapKind === 'base'
+    ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint only what the photo actually shows — the house and outbuildings, existing trees and vegetation, lawn, bare ground, paths and driveway — plus the marked existing features. `
+    : `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. `;
 
   const rules =
+    (retry ? `IMPORTANT — YOUR PREVIOUS ATTEMPT FAILED: it left the plot blank / plain white. That is unacceptable. Every part of the plot must be painted as living land this time. ` : '') +
     // Lead with the two most-violated rules, stated absolutely.
     noWrite + noInvent +
-    `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. ` +
-    fillIt +
+    task +
+    fillIt + roofs +
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
     featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
@@ -131,6 +144,8 @@ export async function POST(req: NextRequest) {
     elementsText?: string;
     model?: GeminiModel;
     stylePreset?: StylePreset;
+    mapKind?: 'base' | 'full';
+    retry?: boolean;
   };
   try {
     body = await req.json();
@@ -156,7 +171,8 @@ export async function POST(req: NextRequest) {
   const stylePreset: StylePreset =
     body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
   const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText);
+  const mapKind = body.mapKind === 'base' ? 'base' : 'full';
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true);
 
   return callGemini(geminiKey, imageBase64, prompt, model);
 }
