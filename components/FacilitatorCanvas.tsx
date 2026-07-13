@@ -13,7 +13,7 @@ import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMer
 import type { LocationData } from '@/lib/types';
 import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect, FacilitatorDesignState } from '@/lib/facilitator-design';
 import {
-  LAYERS, LAYER_ORDER, SECTOR_DEFS, defaultLayerForType, defaultLayerForLine, layerForPlacement,
+  LAYERS, LAYER_ORDER, SECTOR_DEFS, layerForItem, layerForLine,
   coachTip, type CoachCounts,
   saveFacilitatorState, loadFacilitatorState, clearFacilitatorState,
   buildGhosts,
@@ -694,6 +694,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // — used to capture the transparent "element sticker" the producer paints back
   // on top of the model's beautified output.
   const [captureStickerMode, setCaptureStickerMode] = useState(false);
+  // During a producer capture: hide UI chrome that lives in the Stage (live
+  // label callouts, line endpoint handles, ✕ delete pills) so the AI never
+  // sees — and never repaints — our interface furniture.
+  const [captureCleanMode, setCaptureCleanMode] = useState(false);
   // Map style for the producer. Default = the warm storybook look (the pale
   // "ledger" default was reading as washed-out/blank); the user's last choice
   // is remembered per device (see chooseProducerStyle).
@@ -1310,7 +1314,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     pushHistory();
     const c = CATALOG[type];
     const id = `${type}-${Date.now()}-${Math.round(Math.random() * 999)}`;
-    const layer = layerForPlacement(activeLayer, defaultLayerForType(type));
+    const layer = layerForItem(activeLayer, type);
     setItems((prev) => [...prev, { id, type, x: cx - (c.w * pxPerM) / 2, y: cy - (c.h * pxPerM) / 2, wM: c.w, hM: c.h, rotation: 0, litres: c.litres, layer }]);
     setSelectedId(id);
   };
@@ -1725,7 +1729,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       if (!draftPt) { setDraftPt([p.x, p.y]); }
       else {
         pushHistory();
-        const layer = layerForPlacement(activeLayer, defaultLayerForLine(lineKind));
+        const layer = layerForLine(activeLayer, lineKind);
         setLines((prev) => [...prev, { id: `line-${Date.now()}`, kind: lineKind, points: [draftPt[0], draftPt[1], p.x, p.y], layer }]);
         setDraftPt(null); setLineKind(null);
       }
@@ -1997,8 +2001,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // boundary/house, detected trees, imported roads) is what's THERE, not what
   // the farmer is building — so it must not be costed. Everything on the design
   // layers (water/access/structures/planting) is the plan, and gets a price.
-  const isExistingItem = (i: Item) => (i.layer ?? defaultLayerForType(i.type)) === 'existing';
-  const isExistingLine = (l: LineEl) => (l.layer ?? defaultLayerForLine(l.kind)) === 'existing';
+  const isExistingItem = (i: Item) => layerForItem(i.layer, i.type) === 'existing';
+  const isExistingLine = (l: LineEl) => (layerForLine(l.layer, l.kind)) === 'existing';
 
   const groupItems = (list: Item[]) => (Object.keys(CATALOG) as ElType[]).map((type) => {
     const of = list.filter((i) => i.type === type); if (!of.length) return null;
@@ -2097,7 +2101,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // the labels pan/zoom with the design and sit beside the property.
   const labelCallouts = useMemo(() => {
     if (!showLabels) return [];
-    const vis = items.filter((it) => !hiddenLayers.includes(it.layer ?? defaultLayerForType(it.type)));
+    const vis = items.filter((it) => !hiddenLayers.includes(layerForItem(it.layer, it.type)));
     if (!vis.length) return [];
     // Group centres (rotation-aware).
     const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
@@ -2139,12 +2143,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // ── Layer bookkeeping for the stepper + coach ──
   const itemsByLayer: Partial<Record<LayerId, number>> = {};
   items.forEach((it) => {
-    const l = it.layer ?? defaultLayerForType(it.type);
+    const l = layerForItem(it.layer, it.type);
     itemsByLayer[l] = (itemsByLayer[l] ?? 0) + 1;
   });
   const linesByLayer: Partial<Record<LayerId, number>> = {};
   lines.forEach((l) => {
-    const layer = l.layer ?? defaultLayerForLine(l.kind);
+    const layer = layerForLine(l.layer, l.kind);
     linesByLayer[layer] = (linesByLayer[layer] ?? 0) + 1;
   });
   const layerHasContent = (id: LayerId): boolean =>
@@ -2155,6 +2159,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // or label), and offering it traps the producer into a fruit-tree-only map that
   // hides every placed element. The full design lives on the other layers.
   const aiPolishCandidates = LAYER_ORDER.filter((id) => id !== 'sectors' && id !== 'base' && layerHasContent(id));
+  // Producer candidates DO include sectors: the Sector map is a real map type
+  // (exact wedge overlay on the AI-polished land — see runProducer).
+  const producerCandidates = LAYER_ORDER.filter((id) => id !== 'base' && layerHasContent(id));
   const coachCounts: CoachCounts = {
     hasBg: !!bg,
     scaleSet,
@@ -2358,14 +2365,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const layerName = (l: LayerId) => LAYERS[l].name;
     const itemDescs = visItems.map((it) => {
       const c = CATALOG[it.type];
-      const layer = layerName(it.layer ?? defaultLayerForType(it.type));
+      const layer = layerName(layerForItem(it.layer, it.type));
       const size = c.shape === 'circle' ? `${it.wM.toFixed(1)} m across` : `${it.wM.toFixed(1)}×${it.hM.toFixed(1)} m`;
       const spec = it.litres ? `${it.litres.toLocaleString()} L ${c.label.toLowerCase()} ${size}` : `${c.label.toLowerCase()} ${size}`;
       return `${spec} (${layer})`;
     });
     const lineDescs = visLines.map((l) => {
       const L = LINES[l.kind];
-      const layer = layerName(l.layer ?? defaultLayerForLine(l.kind));
+      const layer = layerName(layerForLine(l.layer, l.kind));
       const m = lineLengthM(l.points, l.closed);
       return `${L.label.toLowerCase()} ${m.toFixed(0)} m${l.closed ? ', closed loop' : ''} (${layer})`;
     });
@@ -2414,9 +2421,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   function openAiPolishPicker(mode: 'polish' | 'producer' = 'polish') {
     if (!canAiPolish || aiPolishBusy) return;
     // Producer defaults to the WHOLE design (one combined map showing every
-    // element); polish defaults to the currently-visible layers.
+    // element, sectors as their own map); polish defaults to the visible layers.
     const visible = aiPolishCandidates.filter((id) => !hiddenLayers.includes(id));
-    const selected = mode === 'producer' ? aiPolishCandidates : (visible.length ? visible : aiPolishCandidates);
+    const selected = mode === 'producer' ? producerCandidates : (visible.length ? visible : aiPolishCandidates);
     setAiPolish({ phase: 'pick', selected, mode });
   }
 
@@ -2431,8 +2438,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   function toggleFullDesignPick() {
     setAiPolish((prev) => {
       if (prev.phase !== 'pick') return prev;
-      const isFull = aiPolishCandidates.length > 0 && aiPolishCandidates.every((id) => prev.selected.includes(id));
-      return { phase: 'pick', selected: isFull ? [] : [...aiPolishCandidates], mode: prev.mode };
+      const cands = prev.mode === 'producer' ? producerCandidates : aiPolishCandidates;
+      const isFull = cands.length > 0 && cands.every((id) => prev.selected.includes(id));
+      return { phase: 'pick', selected: isFull ? [] : [...cands], mode: prev.mode };
     });
   }
 
@@ -2505,8 +2513,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       // Same membership the Stage itself just rendered with — including the
       // force-included 'existing' layer, so the boundary/house/roads are in
       // BOTH the composite and the pixel-lock mask.
-      const visItems = items.filter((it) => effectiveChosen.includes(it.layer ?? defaultLayerForType(it.type)));
-      const visLines = lines.filter((l) => effectiveChosen.includes(l.layer ?? defaultLayerForLine(l.kind)));
+      const visItems = items.filter((it) => effectiveChosen.includes(layerForItem(it.layer, it.type)));
+      const visLines = lines.filter((l) => effectiveChosen.includes(layerForLine(l.layer, l.kind)));
 
       const maskDataUrl = buildAiPolishMask(bg, visItems, visLines, outW, outH);
 
@@ -2566,7 +2574,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
   // True labels to burn into a produced map: one clustered callout per element
   // type, positioned in OUTPUT px, clamped inside the frame (so nothing is cropped).
-  function producerLabelsFor(layerItems: Item[], outW: number, outH: number): ProducerLabel[] {
+  function producerLabelsFor(layerItems: Item[], layerLines: LineEl[], outW: number, outH: number): ProducerLabel[] {
     if (!bg) return [];
     const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
     for (const it of layerItems) {
@@ -2578,13 +2586,36 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
     }
     const fs = 26;
+    // Lines get labels too — the base map is mostly lines (fence, path, pipe,
+    // house outline), and "only the fruit tree got a label" was a real complaint.
+    // One label per kind, anchored on the midpoint vertex of the longest line.
+    const byKind = new Map<LineKind, { best: LineEl; bestLen: number; count: number }>();
+    for (const l of layerLines) {
+      if (l.points.length < 4) continue;
+      let len = 0;
+      for (let i = 2; i + 1 < l.points.length; i += 2) {
+        len += Math.hypot(l.points[i] - l.points[i - 2], l.points[i + 1] - l.points[i - 1]);
+      }
+      const g = byKind.get(l.kind);
+      if (!g) byKind.set(l.kind, { best: l, bestLen: len, count: 1 });
+      else { g.count++; if (len > g.bestLen) { g.best = l; g.bestLen = len; } }
+    }
+    const lineGroups = [...byKind.entries()].map(([kind, g]) => {
+      const pts = g.best.points;
+      const mid = 2 * Math.floor(pts.length / 4); // middle vertex, x-index
+      const cx = (pts[mid] - bg.x) * 2;
+      const cy = (pts[mid + 1] - bg.y) * 2;
+      const L = LINES[kind];
+      const text = `${L.icon} ${L.label}${g.count > 1 ? ` ×${g.count}` : ''}`;
+      return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
+    });
     const groups = [...byType.entries()].map(([type, g]) => {
       const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
       const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
       const c = CATALOG[type]; const count = g.cxs.length;
       const text = `${c.icon} ${c.label}${count > 1 ? ` ×${count}` : ''}`;
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
-    }).sort((a, b) => a.cy - b.cy);
+    }).concat(lineGroups).sort((a, b) => a.cy - b.cy);
     // Split left/right: a cluster on the left half gets a left-margin pill, one on
     // the right half a right-margin pill — leaders stay short, no pile-up. Distribute
     // vertically per side.
@@ -2623,6 +2654,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       stageScaleRef.current = prevScale; stagePosRef.current = prevPos;
       setStageScale(prevScale); setStagePos(prevPos);
       setCaptureStickerMode(false);
+      setCaptureCleanMode(false);
       setHiddenLayers(prevHidden);
     };
     const nextFrame = () => new Promise<void>((resolve) => {
@@ -2640,10 +2672,19 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     // selecting a subset → one focused map per layer. forceCombined is set by the
     // primary "Produce full-design map" button so the whole-design case never
     // depends on chosen exactly matching a re-derived candidate list.
-    const combined = (forceCombined && chosen.length > 1) || (aiPolishCandidates.length > 1 && chosen.length === aiPolishCandidates.length);
+    // Sectors are their own map (wedge overlay on the polished land) and are
+    // kept OFF the combined hero, which stays clean.
+    const combined = (forceCombined && chosen.length > 1) || (producerCandidates.length > 1 && chosen.length === producerCandidates.length);
+    const mapName = (l: LayerId) =>
+      l === 'existing' ? 'Base map' :
+      l === 'sectors' ? 'Sector map' :
+      /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map`;
     const jobs: { layers: LayerId[]; label: string }[] = combined
-      ? [{ layers: chosen, label: designTitle || bgSite?.name || 'Your design' }]
-      : chosen.map((l) => ({ layers: [l], label: /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map` }));
+      ? [
+          { layers: chosen.filter((l) => l !== 'sectors'), label: designTitle || bgSite?.name || 'Your design' },
+          ...(chosen.includes('sectors') ? [{ layers: ['sectors'] as LayerId[], label: 'Sector map' }] : []),
+        ]
+      : chosen.map((l) => ({ layers: [l], label: mapName(l) }));
 
     let lastFinal: string | null = null;
     let lastLabel = '';
@@ -2654,9 +2695,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const counter = jobs.length > 1 ? ` (${i + 1}/${jobs.length})` : '';
         setAiPolish({ phase: 'preparing', label: job.label + counter });
 
+        // A sector map is the wedge overlay ON the polished land: the AI paints
+        // the ground from an existing-only capture, and the wedges are captured
+        // separately as an exact transparent sticker composited on top — the
+        // model never gets a chance to repaint them.
+        const isSectorJob = job.layers.length === 1 && job.layers[0] === 'sectors';
+
         // Show the job's layers + the existing base features (boundary/house/roads),
         // and reset the view so the capture crop aligns exactly with the satellite rect.
-        const inThisMap = (id: LayerId) => job.layers.includes(id) || id === 'existing';
+        // captureCleanMode strips Stage UI chrome (live label pills, line handles,
+        // ✕ delete buttons) from everything the AI sees.
+        const inThisMap = (id: LayerId) => (isSectorJob ? false : job.layers.includes(id)) || id === 'existing';
+        setCaptureCleanMode(true);
         setHiddenLayers(LAYER_ORDER.filter((id) => !inThisMap(id)));
         setStageScale(1); setStagePos({ x: 0, y: 0 });
         stageScaleRef.current = 1; stagePosRef.current = { x: 0, y: 0 };
@@ -2669,25 +2719,37 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const outW = Math.round(bg.w * 2);
         const outH = Math.round(bg.h * 2);
 
-        const visItems = items.filter((it) => inThisMap(it.layer ?? defaultLayerForType(it.type)));
-        const visLines = lines.filter((l) => inThisMap(l.layer ?? defaultLayerForLine(l.kind)));
+        // Sector job: second capture — the wedges alone on transparency (sticker
+        // mode hides the satellite/grid/wash), pixel-exact for the overlay.
+        let sectorSticker: string | null = null;
+        if (isSectorJob) {
+          setCaptureStickerMode(true);
+          setHiddenLayers(LAYER_ORDER.filter((id) => id !== 'sectors'));
+          await nextFrame();
+          sectorSticker = stage.toDataURL(crop);
+          setCaptureStickerMode(false);
+        }
+
+        const visItems = items.filter((it) => inThisMap(layerForItem(it.layer, it.type)));
+        const visLines = lines.filter((l) => inThisMap(layerForLine(l.layer, l.kind)));
         const elementsText = describePlacedElements(visItems, visLines);
 
         // Restore the user's real view immediately after the capture, so the canvas
         // behind the modal keeps showing their design (not a blank reset) while the
         // whole-design AI paints.
+        setCaptureCleanMode(false);
         setStageScale(prevScale); setStagePos(prevPos);
         stageScaleRef.current = prevScale; stagePosRef.current = prevPos;
         setHiddenLayers(prevHidden);
 
         setAiPolish({ phase: 'painting', label: job.label + counter });
         // EVERY map is AI-polished — the whole-design hero AND each single-layer
-        // "base map" (mapKind 'base' when the job is the existing layer alone).
+        // "base map" (mapKind 'base' when the ground is the land as it is today).
         // FAILED-RENDER GUARD: if the model blanked the plot (near-white interior),
         // retry once with an explicit correction; if it blanks again, fall back to
         // the accurate captured photo scene — a blank map can never ship.
         const isBaseJob = job.layers.length === 1 && job.layers[0] === 'existing';
-        const kind = isBaseJob ? 'base' : 'full';
+        const kind = isBaseJob || isSectorJob ? 'base' : 'full';
         const compositeB64 = stripDataUrl(composite);
         let model = await requestProducer(compositeB64, job.label, elementsText, kind);
         if (await estimateBlankFraction(model, outW, outH, boundaryPx) > 0.6) {
@@ -2704,12 +2766,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         }
 
         // Composite-back: satellite outside the boundary, the AI-illustrated plot
-        // inside, crisp boundary + TRUE labels on top.
+        // inside, exact sector wedges (if a sector map) overlaid, crisp boundary
+        // + TRUE labels on top.
         const final = await compositeAccurateMap({
           modelImage: model,
           satelliteImage: bg.img,
           boundaryPx,
-          labels: producerLabelsFor(visItems, outW, outH),
+          overlayImage: sectorSticker ?? undefined,
+          labels: isSectorJob ? [] : producerLabelsFor(visItems, visLines, outW, outH),
           labelStyle,
           width: outW,
           height: outH,
@@ -3186,7 +3250,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               );
             })}
             {/* lines */}
-            {lines.filter((l) => !hiddenLayers.includes(l.layer ?? defaultLayerForLine(l.kind))).map((l) => {
+            {lines.filter((l) => !hiddenLayers.includes(layerForLine(l.layer, l.kind))).map((l) => {
               const L = LINES[l.kind];
               const n = l.points.length;
               const mx = (l.points[0] + l.points[n - 2]) / 2, my = (l.points[1] + l.points[n - 1]) / 2;
@@ -3195,16 +3259,22 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               return (
                 <Group key={l.id}>
                   <Line points={l.points} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" closed={l.closed ?? false} />
-                  <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
-                  <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
-                  <Group x={mx} y={my} onClick={deleteLine} onTap={deleteLine}>
-                    <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
-                  </Group>
+                  {/* Edit chrome (endpoint handles + delete pill) never goes into a
+                      producer capture — it would be painted into the map. */}
+                  {!captureCleanMode && (
+                    <>
+                      <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
+                      <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
+                      <Group x={mx} y={my} onClick={deleteLine} onTap={deleteLine}>
+                        <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
+                      </Group>
+                    </>
+                  )}
                 </Group>
               );
             })}
             {/* items */}
-            {items.filter((it) => !hiddenLayers.includes(it.layer ?? defaultLayerForType(it.type))).map((it) => {
+            {items.filter((it) => !hiddenLayers.includes(layerForItem(it.layer, it.type))).map((it) => {
               const c = CATALOG[it.type];
               const w = it.wM * pxPerM, h = it.hM * pxPerM;
               return (
@@ -3229,7 +3299,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             {/* Smart labels — one summary callout per element type, stacked in the
                 margin beside the property with a leader line to the group centre,
                 instead of a cramped label under every element. */}
-            {showLabels && labelCallouts.map((g) => (
+            {showLabels && !captureCleanMode && labelCallouts.map((g) => (
               <Group key={`lbl-${g.type}`} listening={false}>
                 {/* Leader — light with a soft dark under-stroke so it reads on any
                     background (dark satellite or pale parchment wash). */}
@@ -3672,17 +3742,21 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               {aiPolish.phase === 'pick' && (
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    {aiPolishCandidates.map((id) => {
+                    {(aiPolish.mode === 'producer' ? producerCandidates : aiPolishCandidates).map((id) => {
                       const def = LAYERS[id];
-                      const count = (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0);
+                      const count = id === 'sectors' ? sectors.length : (itemsByLayer[id] ?? 0) + (linesByLayer[id] ?? 0);
                       const checked = aiPolish.selected.includes(id);
+                      // In the producer, the existing layer IS the base map —
+                      // say so, since "base map vs what's there" reads ambiguous.
+                      const rowName = aiPolish.mode === 'producer' && id === 'existing'
+                        ? "Base map — what's there" : def.name;
                       return (
                         <label key={id}
                           className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-display cursor-pointer transition-all"
                           style={{ background: checked ? 'rgba(31,77,43,0.10)' : '#FFFFFF', border: `1px solid ${checked ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}` }}>
                           <input type="checkbox" checked={checked} onChange={() => toggleAiPolishLayer(id)} style={{ accentColor: '#1F4D2B' }} />
                           <span>{def.icon}</span>
-                          <span className="flex-1" style={{ color: '#3A352C' }}>{def.name}</span>
+                          <span className="flex-1" style={{ color: '#3A352C' }}>{rowName}</span>
                           {count > 0 && <span className="font-mono" style={{ color: '#9A8268' }}>({count})</span>}
                         </label>
                       );
@@ -3690,7 +3764,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   </div>
                   <button onClick={toggleFullDesignPick}
                     className="w-full py-1.5 rounded-lg text-xs font-mono transition-all"
-                    style={tile(aiPolishCandidates.length > 0 && aiPolish.selected.length === aiPolishCandidates.length)}>
+                    style={tile((aiPolish.mode === 'producer' ? producerCandidates : aiPolishCandidates).length > 0 && aiPolish.selected.length === (aiPolish.mode === 'producer' ? producerCandidates : aiPolishCandidates).length)}>
                     🖼 Full design
                   </button>
                   {aiPolish.mode === 'producer' && (
@@ -3710,17 +3784,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   )}
                   {aiPolish.mode === 'producer' ? (() => {
                     // Whole-design produce is the DEFAULT and is bulletproof: it
-                    // always runs every content layer as ONE map, computed here
-                    // from aiPolishCandidates (not from the checkbox state), so a
-                    // stray selection can never collapse it to a single layer.
-                    const isSubset = aiPolish.selected.length > 0 && aiPolish.selected.length < aiPolishCandidates.length;
+                    // always runs every content layer as ONE map (plus a Sector
+                    // map if sectors exist), computed from producerCandidates —
+                    // never from checkbox state, so a stray selection can never
+                    // collapse it to a single layer.
+                    const isSubset = aiPolish.selected.length > 0 && aiPolish.selected.length < producerCandidates.length;
                     return (
                       <div className="space-y-1.5">
                         <button
-                          onClick={() => runProducer(aiPolishCandidates, true)}
-                          disabled={aiPolishCandidates.length === 0}
+                          onClick={() => runProducer(producerCandidates, true)}
+                          disabled={producerCandidates.length === 0}
                           className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                          style={aiPolishCandidates.length === 0
+                          style={producerCandidates.length === 0
                             ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
                             : { background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
                           <Sparkles size={14} /> Produce full-design map

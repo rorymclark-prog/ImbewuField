@@ -38,6 +38,9 @@ export interface CompositeInputs {
   /** Boundary polygon in OUTPUT-pixel coordinates: [x0,y0,x1,y1,...]. Clips the
    *  model to the plot interior (erasing sprawl) and is stroked crisp on top. */
   boundaryPx?: number[];
+  /** Exact transparent overlay (e.g. the sector-wedge sticker) drawn UNCLIPPED
+   *  over the model — pixel-true content the AI never gets to repaint. */
+  overlayImage?: ImageInput;
   /** True labels burned in-frame — hybrid-c: the model illustrates the element
    *  bodies, we guarantee identity + position with these. */
   labels?: ProducerLabel[];
@@ -178,9 +181,10 @@ function traceBoundary(ctx: CanvasRenderingContext2D, pts: number[]): void {
  */
 export async function compositeAccurateMap(inp: CompositeInputs): Promise<string> {
   const { width, height, boundaryPx } = inp;
-  const [model, satellite] = await Promise.all([
+  const [model, satellite, overlay] = await Promise.all([
     loadImage(inp.modelImage),
     loadImage(inp.satelliteImage),
+    inp.overlayImage ? loadImage(inp.overlayImage) : Promise.resolve(null),
   ]);
 
   const canvas = document.createElement('canvas');
@@ -213,6 +217,10 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
     ctx.drawImage(satellite, 0, 0, width, height);
     ctx.drawImage(model, 0, 0, width, height);
   }
+
+  // Exact overlay (sector wedges etc.) — drawn UNCLIPPED so arrows that
+  // deliberately reach past the boundary survive; sits under the labels.
+  if (overlay) ctx.drawImage(overlay, 0, 0, width, height);
 
   // 4. True labels burned in-frame — hybrid-c identity + position guarantee.
   if (inp.labels && inp.labels.length) burnLabels(ctx, inp.labels, inp.labelStyle ?? 'clean');

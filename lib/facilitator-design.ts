@@ -111,9 +111,24 @@ const LINE_LAYER: Record<LineKind, LayerId> = {
 export function defaultLayerForType(t: ElType): LayerId { return TYPE_LAYER[t]; }
 export function defaultLayerForLine(k: LineKind): LayerId { return LINE_LAYER[k]; }
 
-/** Which layer new geometry lands on: the active layer if it belongs there, else the type's home layer. */
-export function layerForPlacement(active: LayerId, home: LayerId): LayerId {
-  return active === 'base' || active === 'review' ? home : active;
+/**
+ * The layer an item TRULY belongs to — used for maps, BOQ grouping, visibility
+ * and placement alike. The stored/active layer wins only when that layer
+ * legitimately hosts the type: 'existing' hosts anything (a real feature is a
+ * real feature whatever its kind), and a step layer hosts the types its
+ * palette lists. Anything else re-homes to the type's semantic layer — so a
+ * JoJo tank placed from the full drawer while the Structures step was active
+ * still lives on the Water map, which is what the farmer means.
+ */
+export function layerForItem(layer: LayerId | undefined, type: ElType): LayerId {
+  if (layer === 'existing') return 'existing';
+  if (layer && LAYERS[layer]?.elementTypes.includes(type)) return layer;
+  return TYPE_LAYER[type];
+}
+export function layerForLine(layer: LayerId | undefined, kind: LineKind): LayerId {
+  if (layer === 'existing') return 'existing';
+  if (layer && LAYERS[layer]?.lineKinds.includes(kind)) return layer;
+  return LINE_LAYER[kind];
 }
 
 // ── Coach ──────────────────────────────────────────────────────────────────
