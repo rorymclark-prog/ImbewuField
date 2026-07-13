@@ -56,7 +56,11 @@ function buildProducerPrompt(
   // Field-tested failure: styles with "plan" character redraw the house as a
   // white architectural floor plan. Buildings must stay top-down roofs.
   const roofs =
-    `BUILDINGS ARE ROOFS: paint every building as its roof seen from directly above, matching the exact roof outline and colour visible in the photo — never as a floor plan, never with interior walls, never as a plain white shape. `;
+    `BUILDINGS ARE ROOFS: paint every building as its roof seen from directly above, matching the exact roof outline and colour visible in the photo — never as a floor plan, never with interior walls, never as a plain white shape. ` +
+    // Field-tested failure #2: the model reads ambiguous photo blobs (shadows,
+    // rocks, tanks, tree crowns, light patches) as sheds and adds buildings the
+    // farmer never drew. Buildings need positive evidence; otherwise ground.
+    `STRICT BUILDING RULE: draw a building ONLY where one is explicitly marked, or where the photo unmistakably shows a real roof. An ambiguous light patch, shadow, rock, vehicle or bush must NEVER become a shed or structure — when unsure, paint open ground instead. `;
 
   const task = mapKind === 'base'
     ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint only what the photo actually shows — the house and outbuildings, existing trees and vegetation, lawn, bare ground, paths and driveway — plus the marked existing features. `

@@ -26,11 +26,28 @@ import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, typ
 
 // The four researched producer styles (see /api/image-producer STYLE_LINES).
 const PRODUCER_STYLES: { key: string; name: string; blurb: string; label: LabelStyle }[] = [
-  { key: 'field_ledger',        name: 'Field Ledger',      blurb: 'hand-inked survey',   label: 'ink' },
-  { key: 'homestead_storybook', name: 'Homestead Storybook', blurb: 'warm watercolour',  label: 'storybook' },
-  { key: 'extension_blueprint', name: 'Extension Blueprint', blurb: 'clean technical',    label: 'blueprint' },
-  { key: 'karoo_folk',          name: 'Karoo Folk Map',    blurb: 'bold folk-art',       label: 'folk' },
+  { key: 'field_ledger',        name: 'Field Ledger',        blurb: 'simple hand-drawn plan',            label: 'ink' },
+  { key: 'homestead_storybook', name: 'Homestead Storybook', blurb: 'warm illustrated map',              label: 'storybook' },
+  { key: 'extension_blueprint', name: 'Extension Blueprint', blurb: 'clear plan for funders & mentors',  label: 'blueprint' },
+  { key: 'karoo_folk',          name: 'Karoo Folk Map',      blurb: 'colourful community presentation',  label: 'folk' },
 ];
+
+// ── Guided mode ─────────────────────────────────────────────────────────────
+// The simple farmer-facing flow: four plain questions, one at a time, with a
+// tiny tool tray. The full designer ("Pro") stays intact behind a toggle.
+// There are NO layer tabs here — semantic layer resolution (layerForItem /
+// layerForLine) files whatever the farmer adds onto the right map underneath.
+const GUIDED_STEPS: { key: string; icon: string; title: string; instruction: string; layer: LayerId }[] = [
+  { key: 'setup', icon: '🛰', title: 'Set up your land',        instruction: 'Load your land — the photo, boundary and scale come in from the map.', layer: 'base' },
+  { key: 'here',  icon: '🏠', title: 'What is here now?',       instruction: 'Tap a button below, then tap the map to mark what already exists.',    layer: 'existing' },
+  { key: 'add',   icon: '🌱', title: 'What do you want to add?', instruction: 'Pick a thing, then tap the map where it should go.',                  layer: 'planting' },
+  { key: 'plan',  icon: '🎨', title: 'Your farm plan',           instruction: 'Check the cost, then make your finished map.',                        layer: 'review' },
+];
+// Small curated palettes — the full catalog lives in Pro mode.
+const GUIDED_HERE_TYPES: ElType[] = ['tree', 'shed', 'well'];
+const GUIDED_HERE_LINES: LineKind[] = ['building', 'fence', 'path'];
+const GUIDED_ADD_TYPES: ElType[] = ['tank', 'bed', 'tree', 'coop', 'compost', 'beehive', 'greenhouse', 'shed'];
+const GUIDED_ADD_LINES: LineKind[] = ['fence', 'path', 'pipe'];
 import { getFirebase } from '@/lib/firebase/init';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
@@ -628,6 +645,16 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [washOn, setWashOn] = useState(false);
   // Mobile: palette + properties are slide-in drawers over a full-screen canvas
   const [mobilePanel, setMobilePanel] = useState<null | 'palette' | 'props'>(null);
+  // Guided (simple, default) vs Pro (the full designer). Persisted per device.
+  const [uiMode, setUiMode] = useState<'guided' | 'pro'>('guided');
+  const [guidedStep, setGuidedStep] = useState(0);
+  useEffect(() => {
+    try { const m = localStorage.getItem('imbewu_facilitator_uimode'); if (m === 'pro' || m === 'guided') setUiMode(m); } catch { /* unavailable */ }
+  }, []);
+  const chooseUiMode = (m: 'guided' | 'pro') => {
+    setUiMode(m);
+    try { localStorage.setItem('imbewu_facilitator_uimode', m); } catch { /* best effort */ }
+  };
   const [stageScale, setStageScale] = useState(1);
   const [stagePos, setStagePos] = useState({ x: 0, y: 0 });
   // Refs mirror state so native event handlers always read current values
@@ -2677,7 +2704,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const combined = (forceCombined && chosen.length > 1) || (producerCandidates.length > 1 && chosen.length === producerCandidates.length);
     const mapName = (l: LayerId) =>
       l === 'existing' ? 'Base map' :
-      l === 'sectors' ? 'Sector map' :
+      l === 'sectors' ? 'Sun & wind map' :
       /map$/i.test(LAYERS[l].name) ? LAYERS[l].name : `${LAYERS[l].name} map`;
     const jobs: { layers: LayerId[]; label: string }[] = combined
       ? [
@@ -2830,6 +2857,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const layerIndex = LAYER_ORDER.indexOf(activeLayer);
   const goPrevLayer = () => setActiveLayer(LAYER_ORDER[Math.max(0, layerIndex - 1)]);
   const goNextLayer = () => setActiveLayer(LAYER_ORDER[Math.min(LAYER_ORDER.length - 1, layerIndex + 1)]);
+  // Guided step navigation — keeps activeLayer in sync so placement, coach
+  // counts and the palette all agree with the guided step underneath.
+  const gotoGuidedStep = (i: number) => {
+    const idx = Math.max(0, Math.min(GUIDED_STEPS.length - 1, i));
+    setGuidedStep(idx);
+    setActiveLayer(GUIDED_STEPS[idx].layer);
+    setPlaceType(null); setLineKind(null); setScaleMode(false); setArmedSector(null);
+  };
 
   const toggleLayerVisible = (id: LayerId) =>
     setHiddenLayers((prev) => prev.includes(id) ? prev.filter((l) => l !== id) : [...prev, id]);
@@ -2838,7 +2873,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
   return (
     <div className="flex h-full w-full overflow-hidden relative">
-      {/* ── Palette ── (static column on desktop; slide-in drawer on mobile) */}
+      {/* ── Palette ── (static column on desktop; slide-in drawer on mobile).
+          PRO MODE ONLY — guided mode has its own small tool tray on the canvas. */}
+      {uiMode === 'pro' && (
       <div
         className={`flex-shrink-0 overflow-y-auto overflow-x-hidden p-2.5 space-y-3 absolute inset-y-0 left-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'palette' ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
         style={{ width: 150, background: '#F5F0E8', borderRight: '1px solid #E2D8C4' }}
@@ -3059,6 +3096,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           </>
         )}
       </div>
+      )}
 
       {/* ── Canvas ── */}
       <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : panMode ? 'grab' : 'default' }}>
@@ -3085,7 +3123,29 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           </button>
         </div>
 
-        {/* Stepper + coach — docked at the top of the canvas */}
+        {/* GUIDED header — one step, one question, one next button. */}
+        {uiMode === 'guided' && (
+          <div className="absolute top-2 left-2 right-36 z-10 rounded-xl pointer-events-auto px-3 py-2"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-mono flex-shrink-0" style={{ color: '#9A8268' }}>Step {guidedStep + 1} of {GUIDED_STEPS.length}</span>
+              <span className="text-sm font-display font-semibold truncate" style={{ color: '#1F4D2B' }}>
+                {GUIDED_STEPS[guidedStep].icon} {GUIDED_STEPS[guidedStep].title}
+              </span>
+              <span className="flex items-center gap-1 ml-auto flex-shrink-0">
+                {GUIDED_STEPS.map((s, i) => (
+                  <button key={s.key} onClick={() => gotoGuidedStep(i)} title={s.title}
+                    className="rounded-full transition-all"
+                    style={{ width: i === guidedStep ? 16 : 7, height: 7, background: i === guidedStep ? '#1F4D2B' : i < guidedStep ? '#5DCF80' : '#D8CDB8' }} />
+                ))}
+              </span>
+            </div>
+            <p className="text-[11px] font-display mt-0.5" style={{ color: '#5C5040' }}>{GUIDED_STEPS[guidedStep].instruction}</p>
+          </div>
+        )}
+
+        {/* Stepper + coach — docked at the top of the canvas (PRO mode) */}
+        {uiMode === 'pro' && (
         <div className="absolute top-2 left-2 right-12 z-10 rounded-xl pointer-events-auto"
           style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
           <div className="flex items-center gap-1 px-1.5 py-1 overflow-x-auto">
@@ -3105,7 +3165,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               );
             })}
             <button onClick={goNextLayer} disabled={layerIndex === LAYER_ORDER.length - 1} className="text-xs font-mono px-1 flex-shrink-0" style={{ color: layerIndex === LAYER_ORDER.length - 1 ? '#C7BCA6' : '#9A8268' }}>Next ›</button>
-            <div className="relative flex-shrink-0 ml-auto">
+            <div className="relative flex-shrink-0 ml-auto flex items-center gap-1">
               <button onClick={() => setLayersMenuOpen((v) => !v)} title="Layers" className="text-xs px-1.5 py-1 rounded-full" style={{ color: '#5C5040' }}>👁</button>
               {layersMenuOpen && (
                 <div className="absolute right-0 top-full mt-1 rounded-lg p-1.5 space-y-0.5 z-20" style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', width: 180, boxShadow: '0 4px 16px rgba(31,25,15,0.15)' }}>
@@ -3124,10 +3184,18 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               )}
             </div>
           </div>
-          <div className="px-2 pb-1 text-[11px] font-display truncate" style={{ color: '#5C5040' }}>
-            ✨ {coachTip(activeLayer, coachCounts)}
+          <div className="px-2 pb-1 flex items-center gap-2">
+            <span className="text-[11px] font-display truncate flex-1" style={{ color: '#5C5040' }}>
+              ✨ {coachTip(activeLayer, coachCounts)}
+            </span>
+            <button onClick={() => { chooseUiMode('guided'); gotoGuidedStep(guidedStep); }}
+              title="Back to the simple guided flow"
+              className="text-[10px] font-mono flex-shrink-0 px-1.5 py-0.5 rounded-full" style={{ background: '#EDE7DB', color: '#5C5040' }}>
+              ✨ Guided
+            </button>
           </div>
         </div>
+        )}
 
         {/* N badge — moved below the stepper so it doesn't collide */}
         <div className="absolute top-[70px] left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
@@ -3142,6 +3210,108 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               : lineKind ? (draftPt ? `Tap to end the ${LINES[lineKind].label.toLowerCase()}` : `Tap to start the ${LINES[lineKind].label.toLowerCase()}`)
               : armedSector ? 'Tap on the map to place this sector\'s apex'
               : `Tap on the map to place ${placeType ? CATALOG[placeType].label : ''}`} · Esc to cancel
+          </div>
+        )}
+
+        {/* GUIDED tool tray — the step's few tools + one big next button. */}
+        {uiMode === 'guided' && (
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[min(94%,560px)] rounded-2xl p-2.5 pointer-events-auto"
+            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 6px 24px rgba(31,25,15,0.18)' }}>
+            {GUIDED_STEPS[guidedStep].key === 'setup' && (
+              <div className="space-y-1.5">
+                <div className="grid grid-cols-2 gap-1.5">
+                  <button onClick={() => { try { setSitePlaces(loadPlaces()); } catch { setSitePlaces([]); } setSitePickerOpen((v) => !v); }}
+                    className="py-2 rounded-xl text-xs font-display font-semibold" style={tile(sitePickerOpen)}>
+                    🛰 Load my land
+                  </button>
+                  <button onClick={() => runFindMapFeatures()} disabled={!siteFrameRef.current || findingFeatures}
+                    className="py-2 rounded-xl text-xs font-display font-semibold"
+                    style={!siteFrameRef.current || findingFeatures ? { background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#C7BCA6' } : tile(false)}>
+                    {findingFeatures ? 'Finding…' : '🗺 Find my boundary'}
+                  </button>
+                </div>
+                {sitePickerOpen && (
+                  <div className="space-y-1 max-h-40 overflow-y-auto">
+                    {sitePlaces.length === 0 && (
+                      <div className="text-xs font-mono px-1" style={{ color: '#9A8268' }}>No saved places yet — save one on the Farmer map first.</div>
+                    )}
+                    {sitePlaces.map((p) => (
+                      <button key={p.id} onClick={() => !siteLoading && importFromSite(p)}
+                        className="w-full py-1.5 px-2 rounded-lg text-xs font-display flex items-center gap-1.5 text-left"
+                        style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#3A352C', opacity: siteLoading && siteLoading !== p.id ? 0.5 : 1 }}>
+                        <span style={{ width: 8, height: 8, borderRadius: 999, background: resolveColor(p), flexShrink: 0 }} />
+                        <span className="flex-1 truncate">{p.name}</span>
+                        {siteLoading === p.id ? <Loader2 size={12} className="animate-spin" /> : <span style={{ color: '#1F4D2B' }}>→</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <p className="text-[10px] font-mono text-center" style={{ color: '#9A8268' }}>
+                  {bg ? (scaleLocked ? '✓ Photo, boundary and scale are set from the map' : '✓ Photo loaded') : 'Your photo and scale come in automatically.'}
+                </p>
+              </div>
+            )}
+            {(GUIDED_STEPS[guidedStep].key === 'here' || GUIDED_STEPS[guidedStep].key === 'add') && (
+              <div className="flex gap-1.5 overflow-x-auto pb-0.5">
+                {(GUIDED_STEPS[guidedStep].key === 'here' ? GUIDED_HERE_TYPES : GUIDED_ADD_TYPES).map((type) => (
+                  <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
+                    className="flex-shrink-0 flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl text-xs font-display transition-all"
+                    style={{ ...tile(placeType === type), minWidth: 62 }}>
+                    <span style={{ fontSize: 17 }}>{CATALOG[type].icon}</span>
+                    <span style={{ fontSize: 9 }}>{CATALOG[type].label}</span>
+                  </button>
+                ))}
+                {(GUIDED_STEPS[guidedStep].key === 'here' ? GUIDED_HERE_LINES : GUIDED_ADD_LINES).map((kind) => (
+                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                    className="flex-shrink-0 flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl text-xs font-display transition-all"
+                    style={{ ...tile(lineKind === kind), minWidth: 62 }}>
+                    <span style={{ fontSize: 17 }}>{LINES[kind].icon}</span>
+                    <span style={{ fontSize: 9 }}>{LINES[kind].label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {GUIDED_STEPS[guidedStep].key === 'plan' && (
+              <div className="space-y-1.5">
+                {estBudgetTotal > 0 && (
+                  <div className="flex items-center justify-between px-1 text-xs font-display" style={{ color: '#20190F' }}>
+                    <span>Estimated cost of your plan</span>
+                    <span className="font-semibold" style={{ color: '#1F4D2B' }}>{formatZar(estBudgetTotal)}</span>
+                  </div>
+                )}
+                <button onClick={() => openAiPolishPicker('producer')} disabled={!canAiPolish || aiPolishBusy}
+                  className="w-full py-2.5 rounded-xl text-sm font-display font-semibold inline-flex items-center justify-center gap-1.5"
+                  style={!canAiPolish || aiPolishBusy
+                    ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+                    : { background: '#1F4D2B', color: '#fff' }}>
+                  <Sparkles size={15} /> Make my finished maps
+                </button>
+                {polishGallery.length > 0 && (
+                  <button onClick={() => setGalleryOpen(true)} className="w-full py-1.5 rounded-xl text-xs font-mono" style={tile(false)}>
+                    🖼 My maps ({polishGallery.length})
+                  </button>
+                )}
+              </div>
+            )}
+            <div className="flex items-center gap-1.5 mt-2">
+              {guidedStep > 0 && (
+                <button onClick={() => gotoGuidedStep(guidedStep - 1)} className="px-3 py-2 rounded-xl text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                  ‹ Back
+                </button>
+              )}
+              {guidedStep < GUIDED_STEPS.length - 1 && (
+                <button onClick={() => gotoGuidedStep(guidedStep + 1)}
+                  className="flex-1 py-2 rounded-xl text-sm font-display font-semibold"
+                  style={{ background: '#1F4D2B', color: '#fff' }}>
+                  Done — next step ›
+                </button>
+              )}
+              <button onClick={() => chooseUiMode('pro')}
+                title="The full designer: all layers, sun & wind sectors, every element"
+                className="px-2 py-2 rounded-xl text-[10px] font-mono flex-shrink-0" style={{ color: '#9A8268' }}>
+                Pro ›
+              </button>
+            </div>
           </div>
         )}
 
@@ -3359,7 +3529,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         </Stage>
       </div>
 
-      {/* ── Right panel ── (static column on desktop; slide-in drawer on mobile) */}
+      {/* ── Right panel ── (static column on desktop; slide-in drawer on mobile).
+          PRO MODE ONLY — guided mode surfaces cost + produce in its own tray. */}
+      {uiMode === 'pro' && (
       <div
         className={`flex-shrink-0 overflow-y-auto absolute inset-y-0 right-0 z-30 md:static md:z-auto transition-transform duration-300 md:translate-x-0 ${mobilePanel === 'props' ? 'translate-x-0 shadow-2xl' : 'translate-x-full md:translate-x-0'}`}
         style={{ width: 252, maxWidth: '85vw', background: '#F5F0E8', borderLeft: '1px solid #E2D8C4' }}
@@ -3698,12 +3870,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           )}
         </div>
       </div>
+      )}
 
-      {/* ── Mobile: scrim + drawer toggle buttons (hidden on desktop) ── */}
-      {mobilePanel && (
+      {/* ── Mobile: scrim + drawer toggle buttons (hidden on desktop; PRO only) ── */}
+      {uiMode === 'pro' && mobilePanel && (
         <div className="md:hidden absolute inset-0 z-20" style={{ background: 'rgba(31,25,15,0.12)' }}
           onClick={() => setMobilePanel(null)} aria-hidden="true" />
       )}
+      {uiMode === 'pro' && (
       <div className="md:hidden absolute bottom-4 left-0 right-0 z-40 flex justify-between px-4 pointer-events-none">
         <button onClick={() => setMobilePanel((p) => (p === 'palette' ? null : 'palette'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
@@ -3716,6 +3890,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           {mobilePanel === 'props' ? <><X size={16} /> Close</> : <><ClipboardList size={16} /> Plan</>}
         </button>
       </div>
+      )}
 
       {/* ── AI polish modal ── */}
       {aiPolish.phase !== 'idle' && (
@@ -3724,7 +3899,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
-                  <Sparkles size={15} /> Produce maps
+                  <Sparkles size={15} /> {'mode' in aiPolish && aiPolish.mode === 'polish' ? 'Polish maps' : 'Make my finished maps'}
                 </span>
                 {!aiPolishBusy && (
                   <button onClick={() => setAiPolish({ phase: 'idle' })} className="flex items-center justify-center rounded-lg" style={{ width: 24, height: 24, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
@@ -3733,7 +3908,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 )}
               </div>
               <p className="text-[10px] font-mono mt-1 leading-snug" style={{ color: '#9A8268' }}>
-                {aiPolish.phase === 'pick' && 'Full design = one illustrated map of everything. Uncheck down to a single layer to polish just that layer — e.g. a base map of what is already on the land. Your 👁 visibility is restored after.'}
+                {aiPolish.phase === 'pick' && 'Choose the maps you would like to create — the app makes them clear and ready to print. Nothing on your design will be moved, added or removed.'}
                 {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `${aiPolish.label}`}
                 {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>

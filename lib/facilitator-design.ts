@@ -51,7 +51,7 @@ export interface DesignLayerDef {
 
 export const LAYERS: Record<LayerId, DesignLayerDef> = {
   base: {
-    id: 'base', name: 'Base map', icon: '🗺',
+    id: 'base', name: 'Land setup', icon: '🗺',
     blurb: 'Start here: load your site photo and set the scale. Everything is measured against this.',
     elementTypes: [], lineKinds: [],
   },
@@ -61,7 +61,7 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
     elementTypes: ['shed', 'tree', 'well'], lineKinds: ['fence', 'path'],
   },
   sectors: {
-    id: 'sectors', name: 'Sectors', icon: '🧭',
+    id: 'sectors', name: 'Sun, wind & land', icon: '🧭',
     blurb: 'Map the energies crossing the land: sun, wind, fire risk, water flow. These decide where things go.',
     elementTypes: [], lineKinds: [],
     sectorKinds: ['sun_winter', 'sun_summer', 'wind', 'fire', 'water_flow', 'view'],
@@ -72,17 +72,17 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
     elementTypes: ['tank', 'pond', 'reedbed', 'swalew', 'well'], lineKinds: ['swale', 'pipe', 'drip', 'contour'],
   },
   access: {
-    id: 'access', name: 'Access', icon: '🚶',
+    id: 'access', name: 'Paths & access', icon: '🚶',
     blurb: 'Paths and access next. A bed you cannot reach with a wheelbarrow will not be tended.',
     elementTypes: ['firebreak'], lineKinds: ['path', 'fence'],
   },
   structures: {
-    id: 'structures', name: 'Structures', icon: '🏗',
+    id: 'structures', name: 'Buildings', icon: '🏗',
     blurb: 'Place structures: compost near the kitchen, chickens between garden and orchard, nursery in morning sun.',
     elementTypes: ['coop', 'compost', 'greenhouse', 'tunnel', 'beehive', 'biogas', 'nursery', 'shed'], lineKinds: [],
   },
   planting: {
-    id: 'planting', name: 'Planting', icon: '🌱',
+    id: 'planting', name: 'Growing & animals', icon: '🌱',
     blurb: 'Now plant: daily veg within 10 m of the door (zone 1), orchard further out, food forest beyond.',
     elementTypes: ['bed', 'hugel', 'banana', 'tree', 'foodforest', 'herb', 'shrub'], lineKinds: ['windbreak'],
   },
