@@ -12,12 +12,22 @@ export type ElType =
   | 'coop' | 'compost' | 'greenhouse' | 'tunnel' | 'shed' | 'beehive' | 'biogas'
   | 'swalew' | 'firebreak' | 'nursery';
 
-export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour' | 'building' | 'driveway' | 'patio';
+export type LineKind = 'pipe' | 'swale' | 'fence' | 'path' | 'windbreak' | 'drip' | 'contour' | 'building' | 'driveway' | 'patio' | 'waterbody';
 
 // Area (polygon) kinds — drawn by tapping each corner then finishing the
 // shape, unlike the other line kinds which are a simple 2-tap segment.
 // Rendered filled, not just stroked, and priced/measured per m².
-export const POLYGON_LINE_KINDS: LineKind[] = ['building', 'driveway', 'patio'];
+export const POLYGON_LINE_KINDS: LineKind[] = ['building', 'driveway', 'patio', 'waterbody'];
+
+// Kinds measured/priced by AREA (m²) rather than outline length — a driveway,
+// patio or dam costs by the ground/water it covers. 'building' stays
+// length-based/free (existing-features roof, not a new purchase). SINGLE
+// SOURCE OF TRUTH — every BOQ builder (FacilitatorCanvas.tsx's live estimate,
+// app/facilitator/print/page.tsx's printed pack) must import this rather than
+// keep its own copy: a second, un-synced list is exactly how the print pack
+// silently dropped driveway/patio/waterbody costs before (costForLine was
+// called for every kind, costForAreaLine for none — see lib/price-book.ts).
+export const AREA_LINE_KINDS: LineKind[] = ['driveway', 'patio', 'waterbody'];
 
 export type SectorKind = 'sun_winter' | 'sun_summer' | 'wind' | 'fire' | 'water_flow' | 'view';
 
@@ -74,7 +84,7 @@ export const LAYERS: Record<LayerId, DesignLayerDef> = {
   water: {
     id: 'water', name: 'Water', icon: '💧',
     blurb: 'Water first — it is the hardest thing to move later. Tanks at roofs, swales on contour, ponds at low points.',
-    elementTypes: ['tank', 'pond', 'reedbed', 'swalew', 'well'], lineKinds: ['swale', 'pipe', 'drip', 'contour'],
+    elementTypes: ['tank', 'pond', 'reedbed', 'swalew', 'well'], lineKinds: ['swale', 'pipe', 'drip', 'contour', 'waterbody'],
   },
   access: {
     id: 'access', name: 'Paths & access', icon: '🚶',
@@ -108,7 +118,7 @@ const TYPE_LAYER: Record<ElType, LayerId> = {
 };
 
 const LINE_LAYER: Record<LineKind, LayerId> = {
-  pipe: 'water', swale: 'water', drip: 'water', contour: 'water',
+  pipe: 'water', swale: 'water', drip: 'water', contour: 'water', waterbody: 'water',
   fence: 'access', path: 'access', driveway: 'access', windbreak: 'planting',
   building: 'existing', patio: 'structures',
 };

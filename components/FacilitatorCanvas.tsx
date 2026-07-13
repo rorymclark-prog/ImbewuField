@@ -13,7 +13,7 @@ import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMer
 import type { LocationData } from '@/lib/types';
 import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect, FacilitatorDesignState } from '@/lib/facilitator-design';
 import {
-  LAYERS, LAYER_ORDER, SECTOR_DEFS, layerForItem, layerForLine, POLYGON_LINE_KINDS,
+  LAYERS, LAYER_ORDER, SECTOR_DEFS, layerForItem, layerForLine, POLYGON_LINE_KINDS, AREA_LINE_KINDS,
   coachTip, type CoachCounts,
   saveFacilitatorState, loadFacilitatorState, clearFacilitatorState,
   buildGhosts,
@@ -101,12 +101,8 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   building:  { label: 'Building',   icon: '▢', color: '#5A5448', dash: [],       width: 2.5, fill: 'rgba(90,84,72,0.28)' },
   driveway:  { label: 'Driveway',   icon: '🚗', color: '#8A7F6B', dash: [],       width: 2.5, fill: 'rgba(138,127,107,0.32)' },
   patio:     { label: 'Patio',      icon: '▦', color: '#B08A5A', dash: [],       width: 2.5, fill: 'rgba(176,138,90,0.30)' },
+  waterbody: { label: 'Dam / pond', icon: '🌊', color: '#3E7BB0', dash: [],       width: 2.5, fill: 'rgba(62,123,176,0.32)' },
 };
-
-// Kinds measured/priced by AREA (m²) rather than outline length — a driveway
-// or patio costs by the ground it covers. 'building' stays length-based/free
-// (existing-features roof, not a new purchase) — unchanged from before.
-const AREA_LINE_KINDS: LineKind[] = ['driveway', 'patio'];
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; label?: string }
 
@@ -132,12 +128,16 @@ type AiPolishState =
   | { phase: 'pick'; selected: LayerId[]; mode?: 'polish' | 'producer' }
   | { phase: 'preparing'; label: string }
   | { phase: 'painting'; label: string }
-  | { phase: 'done'; image: string; label: string }
+  | { phase: 'done'; image: string; imageClean?: string; label: string }
   | { phase: 'error'; message: string };
 
 // A polish run's result, kept for the session so switching layers/maps never
 // throws away a beautified image — see the gallery state + '🖼 Polished (n)' button.
-interface PolishGalleryItem { id: string; label: string; image: string; at: number }
+// imageClean is the same composite with the burned identification labels
+// omitted — produced alongside `image` at zero extra API cost (both are a
+// client-side canvas recomposite of the same AI result, see runProducer) so
+// the labelled/clean views can be swapped instantly with no regeneration.
+interface PolishGalleryItem { id: string; label: string; image: string; imageClean?: string; at: number }
 
 // ── Clip-to-image geometry helpers ──────────────────────────────────────────
 // "Find map features" pulls OSM ways for the satellite's bbox, but a way can run
@@ -740,6 +740,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [polishGallery, setPolishGallery] = useState<PolishGalleryItem[]>([]);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
+  // Labels toggle for the gallery's single-item viewer — separate from the
+  // fresh-result toggle above so browsing old maps doesn't inherit whatever
+  // state the last live result was left in; resets per item.
+  const [galleryShowClean, setGalleryShowClean] = useState(false);
   // When true, the background Layer paints elements ONLY (no satellite/grid/wash)
   // — used to capture the transparent "element sticker" the producer paints back
   // on top of the model's beautified output.
@@ -762,6 +766,50 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     setProducerStyle(key);
     try { localStorage.setItem('imbewu_producer_style', key); } catch { /* best effort */ }
   };
+  // Second producer engine (Pro mode only — "advanced models" toggle). Gemini
+  // Pro stays the default (settled winner, see memory); ChatGPT/gpt-image-1 is
+  // an opt-in A/B for anyone who wants to compare.
+  const [producerEngine, setProducerEngine] = useState<'gemini' | 'openai'>('gemini');
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('imbewu_producer_engine');
+      if (saved === 'gemini' || saved === 'openai') setProducerEngine(saved);
+    } catch { /* unavailable */ }
+  }, []);
+  const chooseProducerEngine = (e: 'gemini' | 'openai') => {
+    setProducerEngine(e);
+    try { localStorage.setItem('imbewu_producer_engine', e); } catch { /* best effort */ }
+  };
+  // Whether the burned-in identification labels show on produced maps — was
+  // hardcoded always-on; now a real toggle so a clean shareable version and a
+  // labelled compare-against-reality version are both one tap away, without
+  // re-running the AI (both are composited client-side from the same result).
+  const [producerLabelsOn, setProducerLabelsOn] = useState(true);
+  useEffect(() => {
+    try { if (localStorage.getItem('imbewu_producer_labels') === '0') setProducerLabelsOn(false); } catch { /* unavailable */ }
+  }, []);
+  const chooseProducerLabels = (on: boolean) => {
+    setProducerLabelsOn(on);
+    try { localStorage.setItem('imbewu_producer_labels', on ? '1' : '0'); } catch { /* best effort */ }
+  };
+  // Which variant the 'done' result view currently shows — defaults to the
+  // saved preference every time a fresh result lands; flipping it (see the
+  // 🏷 toggle below) also updates the saved preference via chooseProducerLabels,
+  // same "last choice wins" pattern as chooseProducerStyle/chooseProducerEngine.
+  const [showCleanResult, setShowCleanResult] = useState(false);
+  useEffect(() => {
+    if (aiPolish.phase === 'done') setShowCleanResult(!producerLabelsOn);
+    // Only re-run when a NEW result lands (its image changes), not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiPolish.phase === 'done' ? aiPolish.image : null]);
+  // Gallery single-item viewer's labels toggle — same saved preference as
+  // above, reset per item so browsing old maps doesn't inherit whatever the
+  // main result view happened to be showing.
+  useEffect(() => {
+    setGalleryShowClean(!producerLabelsOn);
+    // Only re-run when a DIFFERENT item is opened, not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [galleryViewId]);
   const [shareOpen, setShareOpen] = useState(false);
   const [sharedTo, setSharedTo] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -1065,7 +1113,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         if (ring && ring.length >= 3) {
           const clipped = clipPolygonToRect(flatten(ring), importClipRect);
           if (clipped.length >= 6) {
-            newLines.push({ id: `mapshape-water-${i}`, kind: 'pipe', points: clipped, closed: true, layer: 'existing' });
+            newLines.push({ id: `mapshape-water-${i}`, kind: 'waterbody', points: clipped, closed: true, layer: 'existing' });
           }
         }
       });
@@ -1304,7 +1352,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         return [bgX + (ix * drawnW) / frame.imgW, bgY + (iy * drawnH) / frame.imgH];
       };
 
-      const KIND_TO_LINE: Record<'building' | 'road' | 'water', LineKind> = { building: 'building', road: 'path', water: 'pipe' };
+      const KIND_TO_LINE: Record<'building' | 'road' | 'water', LineKind> = { building: 'building', road: 'path', water: 'waterbody' };
       const KIND_TO_GHOST: Record<'building' | 'road' | 'water', GhostFeature['kind']> = { building: 'osm_building', road: 'osm_road', water: 'osm_water' };
       const clipRect: ClipRect = { x: bgX, y: bgY, w: drawnW, h: drawnH };
 
@@ -2639,7 +2687,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', mapKind, retry }),
+      body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro', mapKind, retry, engine: producerEngine }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.image) {
@@ -2775,6 +2823,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       : chosen.map((l) => ({ layers: [l], label: mapName(l) }));
 
     let lastFinal: string | null = null;
+    let lastFinalClean: string | null = null;
     let lastLabel = '';
     try {
       for (let i = 0; i < jobs.length; i++) {
@@ -2888,22 +2937,29 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         // Composite-back: satellite outside the boundary, the AI-illustrated plot
         // inside, exact sector wedges (if a sector map) overlaid, crisp boundary
-        // + TRUE labels on top.
-        const final = await compositeAccurateMap({
+        // + TRUE labels on top. Composited TWICE (labelled + clean) — cheap,
+        // client-side-only canvas work, no extra API call — so the result can
+        // be viewed either way with an instant toggle, never a re-produce.
+        const jobLabels = isSectorJob ? [] : producerLabelsFor(visItems, visLines, outW, outH);
+        const compositeArgs = {
           modelImage: model,
           satelliteImage: bg.img,
           boundaryPx,
           overlayImage: sectorSticker ?? undefined,
-          labels: isSectorJob ? [] : producerLabelsFor(visItems, visLines, outW, outH),
           labelStyle,
           width: outW,
           height: outH,
-        });
+        };
+        const [final, finalClean] = await Promise.all([
+          compositeAccurateMap({ ...compositeArgs, labels: jobLabels }),
+          compositeAccurateMap({ ...compositeArgs, labels: [] }),
+        ]);
         lastFinal = final;
-        setPolishGallery((prev) => [...prev, { id: `producer-${i}-${Date.now()}`, label: job.label, image: final, at: Date.now() }]);
+        lastFinalClean = finalClean;
+        setPolishGallery((prev) => [...prev, { id: `producer-${i}-${Date.now()}`, label: job.label, image: final, imageClean: finalClean, at: Date.now() }]);
       }
       restoreAll();
-      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, label: jobs.length > 1 ? `${jobs.length} maps produced` : lastLabel });
+      if (lastFinal) setAiPolish({ phase: 'done', image: lastFinal, imageClean: lastFinalClean ?? undefined, label: jobs.length > 1 ? `${jobs.length} maps produced` : lastLabel });
       else setAiPolish({ phase: 'idle' });
       if (jobs.length > 1) setGalleryOpen(true);
     } catch (e) {
@@ -4057,6 +4113,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 {(aiPolish.phase === 'preparing' || aiPolish.phase === 'painting' || aiPolish.phase === 'done') && `${aiPolish.label}`}
                 {aiPolish.phase === 'error' && 'Something went wrong — nothing about your layers was changed.'}
               </p>
+              {aiPolish.phase === 'pick' && aiPolish.mode === 'producer' && (
+                <p className="text-[10px] font-mono mt-1.5 leading-snug" style={{ color: '#9E5C08' }}>
+                  🧪 Beta — the AI illustration can vary between tries and sometimes gets a detail wrong. Your exact boundary and labels are always accurate; if the picture itself isn&apos;t right, produce again for another attempt.
+                </p>
+              )}
             </div>
             <div className="p-4">
               {aiPolish.phase === 'pick' && (
@@ -4101,6 +4162,30 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                         ))}
                       </div>
                     </div>
+                  )}
+                  {aiPolish.mode === 'producer' && uiMode === 'pro' && (
+                    <div className="space-y-1">
+                      <div className="text-[10px] font-mono uppercase tracking-wider px-0.5" style={{ color: '#9A8268' }}>Engine (advanced)</div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        <button onClick={() => chooseProducerEngine('gemini')}
+                          className="py-1.5 px-2 rounded-lg text-left transition-all"
+                          style={tile(producerEngine === 'gemini')}>
+                          <div className="text-xs font-display font-semibold">Gemini Pro</div>
+                          <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>Default — most reliable so far</div>
+                        </button>
+                        <button onClick={() => chooseProducerEngine('openai')}
+                          className="py-1.5 px-2 rounded-lg text-left transition-all"
+                          style={tile(producerEngine === 'openai')}>
+                          <div className="text-xs font-display font-semibold">ChatGPT</div>
+                          <div className="text-[9px] font-mono" style={{ color: '#9A8268' }}>gpt-image-1 — try as an alternative</div>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {aiPolish.mode === 'producer' && uiMode !== 'pro' && (
+                    <p className="text-[10px] font-mono px-0.5" style={{ color: '#9A8268' }}>
+                      Close this and switch to Pro mode to also try the ChatGPT engine.
+                    </p>
                   )}
                   {aiPolish.mode === 'producer' ? (() => {
                     // Whole-design produce is the DEFAULT and is bulletproof: it
@@ -4151,30 +4236,43 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   </p>
                 </div>
               )}
-              {aiPolish.phase === 'done' && (
-                <div className="space-y-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={aiPolish.image} alt={`AI-polished ${aiPolish.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
-                  <p className="text-xs font-display" style={{ color: '#5C5040' }}>{aiPolish.label}</p>
-                  <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>PNG download only — the Print pack draws its own plan sheets.</p>
-                  <div className="flex flex-wrap gap-2">
-                    <a href={aiPolish.image} download={`${(designTitle || 'garden-plan').toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-${aiPolish.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`}
-                      className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
-                      style={{ background: '#1F4D2B', color: '#fff' }}>
-                      <Download size={14} /> Download
-                    </a>
-                    <button onClick={() => openAiPolishPicker('producer')}
-                      className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                      style={{ background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
-                      🖼 Add another map
-                    </button>
-                    <button onClick={() => setAiPolish({ phase: 'idle' })}
-                      className="px-4 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                      <X size={14} /> Close
-                    </button>
+              {aiPolish.phase === 'done' && (() => {
+                const displayedImage = showCleanResult && aiPolish.imageClean ? aiPolish.imageClean : aiPolish.image;
+                const fileTag = `${(designTitle || 'garden-plan').toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-${aiPolish.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}${showCleanResult ? '-clean' : ''}.png`;
+                return (
+                  <div className="space-y-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={displayedImage} alt={`AI-polished ${aiPolish.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-xs font-display" style={{ color: '#5C5040' }}>{aiPolish.label}</p>
+                      {aiPolish.imageClean && (
+                        <button onClick={() => { const next = !showCleanResult; setShowCleanResult(next); chooseProducerLabels(!next); }}
+                          className="shrink-0 py-1 px-2.5 rounded-lg text-[10px] font-mono transition-all inline-flex items-center gap-1"
+                          style={tile(!showCleanResult)}>
+                          🏷 {showCleanResult ? 'Show labels' : 'Hide labels'}
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>PNG download only — the Print pack draws its own plan sheets.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <a href={displayedImage} download={fileTag}
+                        className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
+                        style={{ background: '#1F4D2B', color: '#fff' }}>
+                        <Download size={14} /> Download
+                      </a>
+                      <button onClick={() => openAiPolishPicker('producer')}
+                        className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                        style={{ background: 'rgba(158,92,8,0.14)', border: '1px solid rgba(158,92,8,0.5)', color: '#9E5C08' }}>
+                        🖼 Add another map
+                      </button>
+                      <button onClick={() => setAiPolish({ phase: 'idle' })}
+                        className="px-4 py-2 rounded-xl text-xs font-mono transition-all inline-flex items-center gap-1.5" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                        <X size={14} /> Close
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
               {aiPolish.phase === 'error' && (
                 <div className="space-y-3">
                   <p className="text-xs font-display leading-relaxed" style={{ color: '#C0531E' }}>⚠ {aiPolish.message}</p>
@@ -4202,13 +4300,24 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               </button>
             </div>
             <div className="p-4">
-              {galleryViewItem ? (
+              {galleryViewItem ? (() => {
+                const displayedImage = galleryShowClean && galleryViewItem.imageClean ? galleryViewItem.imageClean : galleryViewItem.image;
+                return (
                 <div className="space-y-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={galleryViewItem.image} alt={`Polished ${galleryViewItem.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
-                  <p className="text-xs font-display" style={{ color: '#5C5040' }}>{galleryViewItem.label}</p>
+                  <img src={displayedImage} alt={`Polished ${galleryViewItem.label}`} className="w-full rounded-xl" style={{ border: '1px solid #E2D8C4' }} />
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs font-display" style={{ color: '#5C5040' }}>{galleryViewItem.label}</p>
+                    {galleryViewItem.imageClean && (
+                      <button onClick={() => { const next = !galleryShowClean; setGalleryShowClean(next); chooseProducerLabels(!next); }}
+                        className="shrink-0 py-1 px-2.5 rounded-lg text-[10px] font-mono transition-all inline-flex items-center gap-1"
+                        style={tile(!galleryShowClean)}>
+                        🏷 {galleryShowClean ? 'Show labels' : 'Hide labels'}
+                      </button>
+                    )}
+                  </div>
                   <div className="flex flex-wrap gap-2">
-                    <a href={galleryViewItem.image} download={`${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-ai-polished.png`}
+                    <a href={displayedImage} download={`${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}-ai-polished${galleryShowClean ? '-clean' : ''}.png`}
                       className="flex-1 py-2 rounded-xl text-xs font-display font-semibold text-center transition-all inline-flex items-center justify-center gap-1.5"
                       style={{ background: '#1F4D2B', color: '#fff' }}>
                       <Download size={14} /> Download
@@ -4223,7 +4332,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     </button>
                   </div>
                 </div>
-              ) : (
+                );
+              })() : (
                 <div className="space-y-3">
                   {polishGallery.length === 0 ? (
                     <p className="text-xs font-display" style={{ color: '#9A8268' }}>No polished maps yet this session.</p>

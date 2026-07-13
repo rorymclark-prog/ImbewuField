@@ -98,6 +98,12 @@ export const PRICE_BOOK: Record<string, PriceEntry> = {
     zar: 450,
     note: 'Paved outdoor patio/work area, per square metre, incl. base prep.',
   },
+  waterbody_per_m2: {
+    label: 'Dam / pond (excavated)',
+    unit: 'per_m2',
+    zar: 180,
+    note: 'Basic machine-dug, unlined dam/pond excavation, per square metre of surface area; lining or a bigger dam adds cost. Only applies when planning a NEW dam — an existing one traced from the map is not costed.',
+  },
   swale_per_m: {
     label: 'Hand-dug swale',
     unit: 'per_m',
@@ -396,6 +402,7 @@ export function costForLine(
 const AREA_LINE_KIND_MAP: Record<string, string> = {
   driveway: 'driveway_per_m2',
   patio: 'patio_per_m2',
+  waterbody: 'waterbody_per_m2',
 };
 
 /**

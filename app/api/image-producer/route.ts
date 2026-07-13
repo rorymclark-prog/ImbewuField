@@ -6,6 +6,32 @@ import { NextRequest, NextResponse } from 'next/server';
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
 
+// BEST-EFFORT per-IP rate limit — this route calls billed external AI APIs
+// (Gemini and, since the second engine was added, OpenAI's gpt-image-1 at
+// 'high' quality) and the site currently has NO auth wall at all (see
+// middleware.ts — the shared-password gate was deliberately disabled during
+// prototyping), so without SOME limit any anonymous caller could script an
+// unbounded loop against real API keys. This in-memory sliding window is NOT
+// a real security boundary (it resets on cold start and isn't shared across
+// serverless instances/regions) — it only raises the bar above a trivial
+// unthrottled loop. The durable fix is re-enabling the site's auth wall or a
+// proper shared store (Vercel KV etc.); that's a product call, not made here.
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 20; // generous enough for a real editing session (style/engine A-B, retries)
+const requestLog = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (requestLog.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  recent.push(now);
+  requestLog.set(ip, recent);
+  return recent.length > RATE_LIMIT_MAX;
+}
+
+function clientIp(req: NextRequest): string {
+  return req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+}
+
 const GEMINI_MODELS = {
   flash: 'gemini-3.1-flash-image',
   pro: 'gemini-3-pro-image',
@@ -46,7 +72,7 @@ function buildProducerPrompt(
     `DO NOT INVENT: draw only what is already visible or marked — no extra gardens, beds, paths, ponds, trees, buildings, fences, vehicles, animals, people or decorations. `;
   const featureLegend =
     `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
-    `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size. `;
+    `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size. `;
   const orient =
     `Keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
   // The recurring failure is a sparse plot being painted plain/white ("blank").
@@ -95,7 +121,12 @@ async function callGemini(
   ];
   const geminiBody = {
     contents: [{ parts }],
-    generationConfig: { responseModalities: ['image', 'text'] },
+    // Lower temperature (default ~1) trades a little creative range for more
+    // repeatable output — an attempt at tightening the roof-shape/colour
+    // variance Rory saw across repeated produces of the same design. Image
+    // generation still isn't deterministic at any temperature, so this is a
+    // lever, not a guarantee.
+    generationConfig: { responseModalities: ['image', 'text'], temperature: 0.4 },
   };
 
   let res: Response;
@@ -143,7 +174,71 @@ async function callGemini(
   return NextResponse.json({ image: out, model: modelId });
 }
 
+// Second engine, opt-in ("advanced models" toggle, Pro mode only) — same
+// restyle-never-redesign prompt, OpenAI's gpt-image-1 via the images/edits
+// endpoint. gpt-image-1 (not -2) is the one proven to fit Vercel's 60s cap
+// with a single reference image (see app/api/ai-render/route.ts callOpenAI —
+// same endpoint/shape, reused here). Returns a BARE base64 string, matching
+// callGemini's convention (lib/image-producer.ts's asDataUrl prefixes either).
+async function callOpenAI(key: string, imageBase64: string, prompt: string): Promise<NextResponse> {
+  const form = new FormData();
+  form.append('model', 'gpt-image-1');
+  form.append('prompt', prompt);
+  form.append('n', '1');
+  form.append('size', 'auto'); // composite isn't square — let the model match the input aspect
+  form.append('quality', 'high'); // single reference image (no separate satellite ref) — room for 'high' within the 60s cap
+
+  const compositeBuffer = Buffer.from(imageBase64, 'base64');
+  form.append('image[]', new Blob([compositeBuffer], { type: 'image/jpeg' }), 'composite.jpg');
+
+  let res: Response;
+  try {
+    res = await fetch('https://api.openai.com/v1/images/edits', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}` },
+      body: form,
+    });
+  } catch (e) {
+    return NextResponse.json({ error: `Network error: ${String(e)}` }, { status: 502 });
+  }
+
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    return NextResponse.json(
+      { error: `OpenAI error ${res.status}`, detail: detail.slice(0, 400) },
+      { status: 502 },
+    );
+  }
+
+  let data: unknown;
+  try {
+    data = await res.json();
+  } catch {
+    const raw = await res.text().catch(() => '(unreadable)');
+    return NextResponse.json(
+      { error: 'OpenAI returned non-JSON response.', detail: raw.slice(0, 400) },
+      { status: 502 },
+    );
+  }
+
+  const b64 = (data as { data?: { b64_json?: string }[] }).data?.[0]?.b64_json;
+  if (!b64) {
+    return NextResponse.json(
+      { error: 'OpenAI returned no image.', detail: JSON.stringify(data).slice(0, 400) },
+      { status: 502 },
+    );
+  }
+  return NextResponse.json({ image: b64, model: 'gpt-image-1' });
+}
+
 export async function POST(req: NextRequest) {
+  if (isRateLimited(clientIp(req))) {
+    return NextResponse.json(
+      { error: 'Too many produce requests from this connection — please wait a few minutes and try again.' },
+      { status: 429 },
+    );
+  }
+
   let body: {
     imageBase64?: string;
     layerLabel?: string;
@@ -152,6 +247,7 @@ export async function POST(req: NextRequest) {
     stylePreset?: StylePreset;
     mapKind?: 'base' | 'full';
     retry?: boolean;
+    engine?: 'gemini' | 'openai';
   };
   try {
     body = await req.json();
@@ -165,6 +261,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No image supplied.' }, { status: 400 });
   }
 
+  const stylePreset: StylePreset =
+    body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
+  const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
+  const mapKind = body.mapKind === 'base' ? 'base' : 'full';
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true);
+
+  if (body.engine === 'openai') {
+    const openaiKey = process.env.OPENAI_API_KEY;
+    if (!openaiKey) {
+      return NextResponse.json(
+        { error: 'OPENAI_API_KEY is not configured — add it with: vercel env add OPENAI_API_KEY production' },
+        { status: 500 },
+      );
+    }
+    return callOpenAI(openaiKey, imageBase64, prompt);
+  }
+
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) {
     return NextResponse.json(
@@ -172,13 +285,6 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
-
   const model: GeminiModel = body.model && body.model in GEMINI_MODELS ? body.model : 'flash';
-  const stylePreset: StylePreset =
-    body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
-  const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
-  const mapKind = body.mapKind === 'base' ? 'base' : 'full';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true);
-
   return callGemini(geminiKey, imageBase64, prompt, model);
 }
