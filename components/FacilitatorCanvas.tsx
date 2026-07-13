@@ -108,7 +108,13 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
 // (existing-features roof, not a new purchase) — unchanged from before.
 const AREA_LINE_KINDS: LineKind[] = ['driveway', 'patio'];
 
-interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
+interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; label?: string }
+
+// A custom label (e.g. "Mango tree" instead of the generic "Fruit tree")
+// overrides the catalog name everywhere a label is shown or grouped — live
+// map pills, produced-map labels, and the AI prompt context. BOQ rows stay
+// grouped by TYPE regardless (pricing is per-type, not per custom name).
+const effectiveLabel = (it: { type: ElType; label?: string }): string => it.label?.trim() || CATALOG[it.type].label;
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
 
 // ── AI polish ────────────────────────────────────────────────────────────
@@ -2177,16 +2183,20 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     if (!showLabels) return [];
     const vis = items.filter((it) => !hiddenLayers.includes(layerForItem(it.layer, it.type)));
     if (!vis.length) return [];
-    // Group centres (rotation-aware).
-    const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
+    // Group centres (rotation-aware) — by EFFECTIVE label (a custom label if the
+    // farmer set one, else the type's catalog name), not by raw type. So two
+    // trees renamed "Mango" / "Lemon" get their own pills instead of merging
+    // into one generic "Fruit tree ×2".
+    const byLabel = new Map<string, { type: ElType; cxs: number[]; cys: number[] }>();
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     for (const it of vis) {
       const w = it.wM * pxPerM, h = it.hM * pxPerM;
       const r = (it.rotation * Math.PI) / 180, cos = Math.cos(r), sin = Math.sin(r);
       const cx = it.x + (w / 2) * cos - (h / 2) * sin;
       const cy = it.y + (w / 2) * sin + (h / 2) * cos;
-      const g = byType.get(it.type) ?? { cxs: [], cys: [] };
-      g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
+      const key = effectiveLabel(it);
+      const g = byLabel.get(key) ?? { type: it.type, cxs: [], cys: [] };
+      g.cxs.push(cx); g.cys.push(cy); byLabel.set(key, g);
       minX = Math.min(minX, cx); maxX = Math.max(maxX, cx); minY = Math.min(minY, cy); maxY = Math.max(maxY, cy);
     }
     // Split labels to the side each cluster is nearest — left clusters get
@@ -2194,10 +2204,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     // stay short and don't all pile up crossing the whole plot.
     const fs = 13, hh = fs * 0.9, pad = 6, gap = hh * 2 + 6;
     const centerX = (minX + maxX) / 2;
-    const groups = [...byType.entries()].map(([type, g]) => {
+    const groups = [...byLabel.entries()].map(([label, g]) => {
       const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
       const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
-      const label = CATALOG[type].label, icon = CATALOG[type].icon, count = g.cxs.length;
+      const type = g.type, icon = CATALOG[type].icon, count = g.cxs.length;
       const pw = pad * 2 + (label.length + (count > 1 ? 4 : 0)) * fs * 0.6 + fs * 1.3; // icon + text est.
       const side: 'left' | 'right' = cx < centerX ? 'left' : 'right';
       const ax = side === 'left' ? minX - pw - 34 : maxX + 34;
@@ -2439,9 +2449,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const layerName = (l: LayerId) => LAYERS[l].name;
     const itemDescs = visItems.map((it) => {
       const c = CATALOG[it.type];
+      const name = effectiveLabel(it).toLowerCase();
       const layer = layerName(layerForItem(it.layer, it.type));
       const size = c.shape === 'circle' ? `${it.wM.toFixed(1)} m across` : `${it.wM.toFixed(1)}×${it.hM.toFixed(1)} m`;
-      const spec = it.litres ? `${it.litres.toLocaleString()} L ${c.label.toLowerCase()} ${size}` : `${c.label.toLowerCase()} ${size}`;
+      const spec = it.litres ? `${it.litres.toLocaleString()} L ${name} ${size}` : `${name} ${size}`;
       return `${spec} (${layer})`;
     });
     const lineDescs = visLines.map((l) => {
@@ -2650,14 +2661,17 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // type, positioned in OUTPUT px, clamped inside the frame (so nothing is cropped).
   function producerLabelsFor(layerItems: Item[], layerLines: LineEl[], outW: number, outH: number): ProducerLabel[] {
     if (!bg) return [];
-    const byType = new Map<ElType, { cxs: number[]; cys: number[] }>();
+    // Grouped by EFFECTIVE label (custom label if set, else the catalog name) —
+    // a renamed "Mango tree" gets its own labelled pill on the produced map too.
+    const byType = new Map<string, { icon: string; cxs: number[]; cys: number[] }>();
     for (const it of layerItems) {
       const w = it.wM * pxPerM, h = it.hM * pxPerM;
       const r = (it.rotation * Math.PI) / 180, cos = Math.cos(r), sin = Math.sin(r);
       const cx = (it.x + (w / 2) * cos - (h / 2) * sin - bg.x) * 2;
       const cy = (it.y + (w / 2) * sin + (h / 2) * cos - bg.y) * 2;
-      const g = byType.get(it.type) ?? { cxs: [], cys: [] };
-      g.cxs.push(cx); g.cys.push(cy); byType.set(it.type, g);
+      const key = effectiveLabel(it);
+      const g = byType.get(key) ?? { icon: CATALOG[it.type].icon, cxs: [], cys: [] };
+      g.cxs.push(cx); g.cys.push(cy); byType.set(key, g);
     }
     const fs = 26;
     // Lines get labels too — the base map is mostly lines (fence, path, pipe,
@@ -2683,11 +2697,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       const text = `${L.icon} ${L.label}${g.count > 1 ? ` ×${g.count}` : ''}`;
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
     });
-    const groups = [...byType.entries()].map(([type, g]) => {
+    const groups = [...byType.entries()].map(([label, g]) => {
       const cx = g.cxs.reduce((a, b) => a + b, 0) / g.cxs.length;
       const cy = g.cys.reduce((a, b) => a + b, 0) / g.cys.length;
-      const c = CATALOG[type]; const count = g.cxs.length;
-      const text = `${c.icon} ${c.label}${count > 1 ? ` ×${count}` : ''}`;
+      const count = g.cxs.length;
+      const text = `${g.icon} ${label}${count > 1 ? ` ×${count}` : ''}`;
       return { cx, cy, text, pw: 28 + text.length * fs * 0.6 };
     }).concat(lineGroups).sort((a, b) => a.cy - b.cy);
     // Split left/right: a cluster on the left half gets a left-margin pill, one on
@@ -3672,6 +3686,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   <button onClick={deleteSelected} title="Delete" className="text-xs px-1.5 py-0.5 rounded font-mono inline-flex items-center" style={{ background: 'rgba(192,83,30,0.12)', border: '1px solid rgba(192,83,30,0.35)', color: '#C0531E' }}><X size={13} /></button>
                 </div>
               </div>
+              <label className="text-xs font-mono block" style={{ color: '#9A8268' }}>
+                label on the map
+                <input type="text" value={selected.label ?? ''} placeholder={CATALOG[selected.type].label}
+                  onChange={(e) => updateSel({ label: e.target.value || undefined })}
+                  className="w-full mt-0.5 px-1.5 py-1 rounded font-display text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+              </label>
               <div className="grid grid-cols-2 gap-2">
                 <label className="text-xs font-mono" style={{ color: '#9A8268' }}>
                   {selectedIsCircle ? 'diameter m' : 'width m'}

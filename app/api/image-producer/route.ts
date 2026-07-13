@@ -57,14 +57,15 @@ function buildProducerPrompt(
   // Field-tested failure: styles with "plan" character redraw the house as a
   // white architectural floor plan. Buildings must stay top-down roofs.
   const roofs =
-    `BUILDINGS ARE ROOFS: paint every building as its roof seen from directly above, matching the exact roof outline and colour visible in the photo — never as a floor plan, never with interior walls, never as a plain white shape. ` +
-    // Field-tested failure #2: the model reads ambiguous photo blobs (shadows,
-    // rocks, tanks, tree crowns, light patches) as sheds and adds buildings the
-    // farmer never drew. Buildings need positive evidence; otherwise ground.
-    `STRICT BUILDING RULE: draw a building ONLY where one is explicitly marked, or where the photo unmistakably shows a real roof. An ambiguous light patch, shadow, rock, vehicle or bush must NEVER become a shed or structure — when unsure, paint open ground instead. `;
+    `BUILDINGS ARE ROOFS: paint the main house as its roof seen from directly above, matching the exact roof outline and colour visible in the photo — never as a floor plan, never with interior walls, never as a plain white shape. ` +
+    // Field-tested failure #2 (recurring — happened twice): the model reads
+    // ambiguous photo blobs near driveways/gates/shadows as a small shed and
+    // paints an outbuilding the farmer never drew or marked. This is now the
+    // single loudest rule in the prompt because softer wording kept losing.
+    `STRICT BUILDING RULE — READ THIS TWICE: paint ONLY the main house's roof, plus any building explicitly marked in the list below. Do NOT paint a second building, shed, carport, garage or any other outbuilding ANYWHERE on the plot, even if a shape near the driveway, a gate, a shadow or a tree canopy looks roof-like to you — those are ALWAYS ground, vegetation or hardstanding, never a structure, unless that exact structure is named in the marked-features list. When in doubt, it is not a building. `;
 
   const task = mapKind === 'base'
-    ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint only what the photo actually shows — the house and outbuildings, existing trees and vegetation, lawn, bare ground, paths and driveway — plus the marked existing features. `
+    ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint what the photo actually shows — the main house, existing trees and vegetation, lawn, bare ground, paths and driveway — plus exactly the marked existing features, and no other buildings (see the strict building rule below). `
     : `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. `;
 
   const rules =
@@ -76,7 +77,7 @@ function buildProducerPrompt(
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
     featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-    `Keep every real building, roof, driveway, road and the property boundary exactly in their true position, shape and size; ${orient}`;
+    `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ${orient}`;
   return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
