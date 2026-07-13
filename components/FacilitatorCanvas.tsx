@@ -13,13 +13,13 @@ import { computeCanvasFrame, fetchImageAsDataUrl, makeMercatorProjector, makeMer
 import type { LocationData } from '@/lib/types';
 import type { ElType, LineKind, LayerId, SectorKind, SectorEl, GhostFeature, DetectResponse, FacItem, FacLine, FacSector, BgRect, FacilitatorDesignState } from '@/lib/facilitator-design';
 import {
-  LAYERS, LAYER_ORDER, SECTOR_DEFS, layerForItem, layerForLine,
+  LAYERS, LAYER_ORDER, SECTOR_DEFS, layerForItem, layerForLine, POLYGON_LINE_KINDS,
   coachTip, type CoachCounts,
   saveFacilitatorState, loadFacilitatorState, clearFacilitatorState,
   buildGhosts,
   DEFAULT_PX_PER_M, geomPxToM, geomMToPx,
 } from '@/lib/facilitator-design';
-import { costForItem, costForLine, formatZar, DISCLAIMER } from '@/lib/price-book';
+import { costForItem, costForLine, costForAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
 import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
@@ -45,9 +45,9 @@ const GUIDED_STEPS: { key: string; icon: string; title: string; instruction: str
 ];
 // Small curated palettes — the full catalog lives in Pro mode.
 const GUIDED_HERE_TYPES: ElType[] = ['tree', 'shed', 'well'];
-const GUIDED_HERE_LINES: LineKind[] = ['building', 'fence', 'path'];
+const GUIDED_HERE_LINES: LineKind[] = ['building', 'driveway', 'fence', 'path'];
 const GUIDED_ADD_TYPES: ElType[] = ['tank', 'bed', 'tree', 'coop', 'compost', 'beehive', 'greenhouse', 'shed'];
-const GUIDED_ADD_LINES: LineKind[] = ['fence', 'path', 'pipe'];
+const GUIDED_ADD_LINES: LineKind[] = ['driveway', 'patio', 'fence', 'path', 'pipe'];
 import { getFirebase } from '@/lib/firebase/init';
 
 interface Cat { label: string; icon: string; shape: 'rect' | 'circle'; w: number; h: number; spec?: string; litres?: number; fill: string }
@@ -87,7 +87,10 @@ const GROUPS: { name: string; types: ElType[] }[] = [
   { name: 'Earthworks', types: ['swalew', 'firebreak'] },
 ];
 
-const LINES: Record<LineKind, { label: string; icon: string; color: string; dash: number[]; width: number }> = {
+// Area (polygon) kinds get a `fill` — drawn as a tinted shape, not just a
+// stroked outline, since they represent ground coverage (roof/driveway/patio)
+// rather than a linear run like a fence or pipe.
+const LINES: Record<LineKind, { label: string; icon: string; color: string; dash: number[]; width: number; fill?: string }> = {
   pipe:      { label: 'Pipe',       icon: '〰', color: '#5B9ED4', dash: [9, 5],   width: 3 },
   swale:     { label: 'Swale',      icon: '⌇', color: '#7AAA50', dash: [3, 5],   width: 4 },
   windbreak: { label: 'Windbreak',  icon: '🌿', color: '#3A7A30', dash: [],       width: 8 },
@@ -95,8 +98,15 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   contour:   { label: 'Contour',    icon: '~', color: '#B89A60', dash: [6, 4],   width: 2 },
   fence:     { label: 'Fence',      icon: '┃', color: '#C2A878', dash: [],       width: 2.5 },
   path:      { label: 'Path',       icon: '⋯', color: '#C9B896', dash: [],       width: 7 },
-  building:  { label: 'Building',   icon: '▢', color: '#5A5448', dash: [],       width: 2.5 },
+  building:  { label: 'Building',   icon: '▢', color: '#5A5448', dash: [],       width: 2.5, fill: 'rgba(90,84,72,0.28)' },
+  driveway:  { label: 'Driveway',   icon: '🚗', color: '#8A7F6B', dash: [],       width: 2.5, fill: 'rgba(138,127,107,0.32)' },
+  patio:     { label: 'Patio',      icon: '▦', color: '#B08A5A', dash: [],       width: 2.5, fill: 'rgba(176,138,90,0.30)' },
 };
+
+// Kinds measured/priced by AREA (m²) rather than outline length — a driveway
+// or patio costs by the ground it covers. 'building' stays length-based/free
+// (existing-features roof, not a new purchase) — unchanged from before.
+const AREA_LINE_KINDS: LineKind[] = ['driveway', 'patio'];
 
 interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId }
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
@@ -686,6 +696,13 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [lineKind, setLineKind] = useState<LineKind | null>(null);
   const [scaleMode, setScaleMode] = useState(false);
   const [draftPt, setDraftPt] = useState<number[] | null>(null);
+  // Multi-vertex polygon drafting (roof/driveway/patio areas): tap each corner,
+  // then Finish. Flat [x,y,x,y,...] like every other points array in this file.
+  // Only used when the armed lineKind is one of POLYGON_LINE_KINDS — every
+  // other line kind keeps the simple 2-tap draftPt segment above.
+  const [polyDraft, setPolyDraft] = useState<number[]>([]);
+  const isArmedPolygon = !!lineKind && POLYGON_LINE_KINDS.includes(lineKind);
+  const [contoursHidden, setContoursHidden] = useState(false);
   const restoredRef = useRef(false);
   // Flips true once the mount-restore effect's OWN background load (if any — a map
   // site's satellite fetch is async) has settled, so the auto-pick-site-from-URL
@@ -893,7 +910,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // undoes, Ctrl/Cmd+Shift+Z (and Ctrl+Y) redoes.
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }
+      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); }
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) {
         const t = e.target as HTMLElement;
         if (t.tagName !== 'INPUT' && t.tagName !== 'TEXTAREA') { e.preventDefault(); deleteSelected(); }
@@ -1752,6 +1769,13 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       }
       return;
     }
+    if (isArmedPolygon) {
+      // Each tap adds a corner; the shape is closed via the "Finish shape"
+      // button (needs 3+ points) rather than a second tap, since a polygon's
+      // vertex count is open-ended.
+      setPolyDraft((prev) => [...prev, p.x, p.y]);
+      return;
+    }
     if (lineKind) {
       if (!draftPt) { setDraftPt([p.x, p.y]); }
       else {
@@ -1778,6 +1802,19 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     }
     if (e.target === stage) setSelectedId(null);
   }
+
+  // Commit the in-progress polygon draft (roof/driveway/patio) as a closed
+  // area line, then disarm the tool — same one-shot pattern as every other
+  // placement in this file (2-point lines, single items, sectors).
+  const finishPolygonDraft = () => {
+    if (!lineKind || polyDraft.length < 6) return; // need 3+ points
+    pushHistory();
+    const layer = layerForLine(activeLayer, lineKind);
+    setLines((prev) => [...prev, { id: `line-${Date.now()}`, kind: lineKind, points: polyDraft, closed: true, layer }]);
+    setPolyDraft([]); setLineKind(null);
+  };
+  const undoPolygonVertex = () => setPolyDraft((prev) => prev.slice(0, -2));
+  const cancelPolygonDraft = () => { setPolyDraft([]); setLineKind(null); };
 
   const deleteSelected = () => {
     if (!selectedId) return;
@@ -2058,12 +2095,30 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     if (closed && points.length >= 4) d += Math.hypot(points[0] - points[points.length - 2], points[1] - points[points.length - 1]);
     return d / pxPerM;
   };
+  // Shoelace polygon area, px² — shared by the roof-catchment calc below and
+  // by groupLines' per-kind area for driveway/patio (paved AREA kinds are
+  // priced/measured by m², not by outline length — a driveway costs by the
+  // ground it covers, not by its edge).
+  const shoelaceAreaPx2 = (points: number[]): number => {
+    let sum = 0;
+    const n = points.length / 2;
+    for (let i = 0; i < n; i++) {
+      const [x0, y0] = [points[i * 2], points[i * 2 + 1]];
+      const j = (i + 1) % n;
+      const [x1, y1] = [points[j * 2], points[j * 2 + 1]];
+      sum += x0 * y1 - x1 * y0;
+    }
+    return Math.abs(sum) / 2;
+  };
 
   const groupLines = (list: LineEl[]) => (Object.keys(LINES) as LineKind[]).map((kind) => {
     const of = list.filter((l) => l.kind === kind); if (!of.length) return null;
     const m = of.reduce((s, l) => s + lineLengthM(l.points, l.closed), 0);
-    return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: of.length, m };
-  }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number }[];
+    const areaM2 = AREA_LINE_KINDS.includes(kind)
+      ? of.filter((l) => l.closed && l.points.length >= 6).reduce((s, l) => s + shoelaceAreaPx2(l.points) / (pxPerM * pxPerM), 0)
+      : undefined;
+    return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: of.length, m, areaM2 };
+  }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number; areaM2?: number }[];
 
   const plannedLines = lines.filter((l) => !isExistingLine(l));
   const existingLines = lines.filter(isExistingLine);
@@ -2085,7 +2140,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const zar = list.reduce((s, i) => s + (costForItem(i.type, i.wM, i.hM, i.litres)?.zar ?? 0), 0);
     return { type: b.type, zar: zar > 0 ? zar : null };
   });
-  const lineCosts = plannedLineTotals.map((l) => ({ kind: l.kind, ...(costForLine(l.kind, l.m) ?? { zar: null }) }));
+  const lineCosts = plannedLineTotals.map((l) => ({
+    kind: l.kind,
+    ...((AREA_LINE_KINDS.includes(l.kind) ? costForAreaLine(l.kind, l.areaM2 ?? 0) : costForLine(l.kind, l.m)) ?? { zar: null }),
+  }));
   const estBudgetTotal =
     boqCosts.reduce((s, b) => s + (b.zar ?? 0), 0) + lineCosts.reduce((s, l) => s + (l.zar ?? 0), 0);
 
@@ -2094,17 +2152,6 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // the rect footprint of shed/greenhouse/tunnel/coop items — all roofed
   // structures a downpipe could realistically be hung off.
   const roofM2 = useMemo(() => {
-    const shoelaceAreaPx2 = (points: number[]): number => {
-      let sum = 0;
-      const n = points.length / 2;
-      for (let i = 0; i < n; i++) {
-        const [x0, y0] = [points[i * 2], points[i * 2 + 1]];
-        const j = (i + 1) % n;
-        const [x1, y1] = [points[j * 2], points[j * 2 + 1]];
-        sum += x0 * y1 - x1 * y0;
-      }
-      return Math.abs(sum) / 2;
-    };
     const buildingM2 = lines
       .filter((l) => l.kind === 'building' && l.closed && l.points.length >= 6)
       .reduce((s, l) => s + shoelaceAreaPx2(l.points) / (pxPerM * pxPerM), 0);
@@ -2732,7 +2779,13 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         // and reset the view so the capture crop aligns exactly with the satellite rect.
         // captureCleanMode strips Stage UI chrome (live label pills, line handles,
         // ✕ delete buttons) from everything the AI sees.
-        const inThisMap = (id: LayerId) => (isSectorJob ? false : job.layers.includes(id)) || id === 'existing';
+        // 'base' (the satellite photo) is always shown in the capture, regardless
+        // of which design layers are chosen — Gemini needs to see the real ground
+        // to paint it accurately, and compositeAccurateMap's own fallback (using
+        // this same capture as the model image on failure) needs real ground too,
+        // not a transparent/black hole. ('base' never hosts any item/line type, so
+        // this can't accidentally pull extra elements into the job.)
+        const inThisMap = (id: LayerId) => id === 'base' || (isSectorJob ? false : job.layers.includes(id)) || id === 'existing';
         setCaptureCleanMode(true);
         setHiddenLayers(LAYER_ORDER.filter((id) => !inThisMap(id)));
         setStageScale(1); setStagePos({ x: 0, y: 0 });
@@ -2742,7 +2795,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         if (!stage) throw new Error('Canvas is not ready — please try again.');
 
         // Capture the real scene: satellite + this job's element markers + boundary.
-        const composite = stage.toDataURL(crop);
+        // JPEG, not Konva's default PNG — a busy design's PNG composite can run into
+        // MBs; JPEG at high quality is a fraction of that, which meaningfully cuts
+        // upload + processing time against Gemini and lowers the odds of tripping
+        // Vercel's 60s function ceiling on the model call below.
+        const composite = stage.toDataURL({ ...crop, mimeType: 'image/jpeg', quality: 0.9 });
         const outW = Math.round(bg.w * 2);
         const outH = Math.round(bg.h * 2);
 
@@ -2778,8 +2835,31 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         const isBaseJob = job.layers.length === 1 && job.layers[0] === 'existing';
         const kind = isBaseJob || isSectorJob ? 'base' : 'full';
         const compositeB64 = stripDataUrl(composite);
-        let model = await requestProducer(compositeB64, job.label, elementsText, kind);
-        if (await estimateBlankFraction(model, outW, outH, boundaryPx) > 0.6) {
+        // THROW GUARD: the initial call itself can fail outright — a network
+        // blip, or a 502/504 gateway timeout (Gemini image generation can
+        // occasionally exceed Vercel's 60s function ceiling on a busy composite).
+        // This used to have no try/catch at all, so any such failure aborted the
+        // ENTIRE produce run with an opaque "Producer failed (504)" error — the
+        // exact asymmetry the blank-render guard below was built to avoid, just
+        // one call earlier. One retry before falling back to the accurate photo.
+        let model: string;
+        let onForcedFallback = false;
+        try {
+          model = await requestProducer(compositeB64, job.label, elementsText, kind);
+        } catch {
+          try {
+            model = await requestProducer(compositeB64, job.label, elementsText, kind, true);
+          } catch {
+            model = compositeB64;
+            onForcedFallback = true; // already the real photo — skip the blank-check below
+          }
+        }
+        // Skip when we're already on the forced-photo fallback: estimateBlankFraction
+        // is tuned to catch an AI render blanking the plot, not to judge a real photo —
+        // pale/sandy real terrain could misfire the heuristic and burn a 3rd API call
+        // against an endpoint that has already failed twice for this job, for no gain
+        // (the outcome is the same compositeB64 either way).
+        if (!onForcedFallback && await estimateBlankFraction(model, outW, outH, boundaryPx) > 0.6) {
           // Retry once with an explicit correction; if the retry ITSELF fails
           // (flaky 502 etc.) fall back rather than aborting the whole produce.
           try {
@@ -2958,7 +3038,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <button onClick={() => setBg(null)} className="w-full py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>remove</button>
             </div>
           )}
-          <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); setArmedSector(null); }}
+          <button onClick={() => { setScaleMode(true); setDraftPt(null); setPlaceType(null); setLineKind(null); setArmedSector(null); setPolyDraft([]); }}
             className="w-full mt-1.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={tile(scaleMode)}>
             <Ruler size={14} /> Set scale
           </button>
@@ -2971,6 +3051,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <button onClick={() => setShowGrid((g) => !g)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showGrid)}>grid</button>
               <button onClick={() => setShowLabels((l) => !l)} className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(showLabels)}>labels</button>
               <button onClick={() => setWashOn((w) => !w)} title="Dim the satellite so placed elements stand out" className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(washOn)}>wash</button>
+              <button onClick={() => setContoursHidden((h) => !h)} title="Show/hide contour lines independently of the Water layer, so you can reference them while placing other elements" className="text-xs font-mono px-1.5 py-0.5 rounded" style={tile(!contoursHidden)}>contours</button>
             </div>
           </div>
           <button onClick={startFresh} className="w-full mt-1.5 py-1 rounded-lg text-xs font-mono" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
@@ -3021,14 +3102,14 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             )}
             <div className="grid grid-cols-2 gap-1.5">
               {stepElementTypes.map((type) => (
-                <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
+                <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); setPolyDraft([]); }}
                   className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
                   <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
                   <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
                 </button>
               ))}
               {stepLineKinds.map((kind) => (
-                <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); }}
                   className="flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(lineKind === kind)}>
                   <span>{LINES[kind].icon}</span><span style={{ fontSize: 10 }}>{LINES[kind].label}</span>
                 </button>
@@ -3044,7 +3125,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               {stepSectorKinds.map((kind) => {
                 const def = SECTOR_DEFS[kind];
                 return (
-                  <button key={kind} onClick={() => { setArmedSector(kind); setPlaceType(null); setLineKind(null); setScaleMode(false); }}
+                  <button key={kind} onClick={() => { setArmedSector(kind); setPlaceType(null); setLineKind(null); setScaleMode(false); setPolyDraft([]); }}
                     className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(armedSector === kind)} title={def.hint}>
                     <span style={{ fontSize: 15 }}>{def.icon}</span>
                     <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{def.label}</span>
@@ -3071,7 +3152,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>{g.name}</div>
                 <div className="grid grid-cols-2 gap-1.5">
                   {g.types.map((type) => (
-                    <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
+                    <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); setPolyDraft([]); }}
                       className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(placeType === type)} title={CATALOG[type].label}>
                       <span style={{ fontSize: 15 }}>{CATALOG[type].icon}</span>
                       <span className="truncate w-full text-center" style={{ fontSize: 9.5 }}>{CATALOG[type].label}</span>
@@ -3086,7 +3167,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Lines</div>
               <div className="grid grid-cols-2 gap-1.5">
                 {(Object.keys(LINES) as LineKind[]).map((kind) => (
-                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); }}
                     className="flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-display transition-all" style={tile(lineKind === kind)}>
                     <span>{LINES[kind].icon}</span><span style={{ fontSize: 10 }}>{LINES[kind].label}</span>
                   </button>
@@ -3203,13 +3284,38 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>N ↑</span>
         </div>
 
-        {armed && (
+        {armed && !isArmedPolygon && (
           <div className="absolute top-[70px] left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-display"
             style={{ background: '#1F4D2B', color: '#fff' }}>
             {scaleMode ? (draftPt ? 'Tap the end of the known distance' : 'Tap the start of a known distance')
               : lineKind ? (draftPt ? `Tap to end the ${LINES[lineKind].label.toLowerCase()}` : `Tap to start the ${LINES[lineKind].label.toLowerCase()}`)
               : armedSector ? 'Tap on the map to place this sector\'s apex'
               : `Tap on the map to place ${placeType ? CATALOG[placeType].label : ''}`} · Esc to cancel
+          </div>
+        )}
+
+        {/* Polygon drafting controls (roof/driveway/patio): tap each corner on
+            the map, then Finish. Undo removes just the last corner. */}
+        {isArmedPolygon && (
+          <div className="absolute top-[70px] left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 pointer-events-auto">
+            <div className="px-3 py-1 rounded-full text-xs font-display" style={{ background: '#1F4D2B', color: '#fff' }}>
+              {polyDraft.length < 6
+                ? `Tap corners of the ${lineKind ? LINES[lineKind].label.toLowerCase() : ''} (${polyDraft.length / 2} so far)`
+                : `${polyDraft.length / 2} corners — tap more, or finish`} · Esc to cancel
+            </div>
+            {polyDraft.length > 0 && (
+              <button onClick={undoPolygonVertex} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                ↩ point
+              </button>
+            )}
+            {polyDraft.length >= 6 && (
+              <button onClick={finishPolygonDraft} className="px-3 py-1 rounded-full text-xs font-display font-semibold" style={{ background: '#5DCF80', color: '#1F4D2B' }}>
+                ✓ Finish shape
+              </button>
+            )}
+            <button onClick={cancelPolygonDraft} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+              ✕
+            </button>
           </div>
         )}
 
@@ -3254,7 +3360,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
             {(GUIDED_STEPS[guidedStep].key === 'here' || GUIDED_STEPS[guidedStep].key === 'add') && (
               <div className="flex gap-1.5 overflow-x-auto pb-0.5">
                 {(GUIDED_STEPS[guidedStep].key === 'here' ? GUIDED_HERE_TYPES : GUIDED_ADD_TYPES).map((type) => (
-                  <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); }}
+                  <button key={type} onClick={() => { setPlaceType(type); setLineKind(null); setScaleMode(false); setArmedSector(null); setPolyDraft([]); }}
                     className="flex-shrink-0 flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl text-xs font-display transition-all"
                     style={{ ...tile(placeType === type), minWidth: 62 }}>
                     <span style={{ fontSize: 17 }}>{CATALOG[type].icon}</span>
@@ -3262,7 +3368,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   </button>
                 ))}
                 {(GUIDED_STEPS[guidedStep].key === 'here' ? GUIDED_HERE_LINES : GUIDED_ADD_LINES).map((kind) => (
-                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); }}
+                  <button key={kind} onClick={() => { setLineKind(kind); setPlaceType(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); }}
                     className="flex-shrink-0 flex flex-col items-center gap-0.5 py-1.5 px-2 rounded-xl text-xs font-display transition-all"
                     style={{ ...tile(lineKind === kind), minWidth: 62 }}>
                     <span style={{ fontSize: 17 }}>{LINES[kind].icon}</span>
@@ -3420,7 +3526,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               );
             })}
             {/* lines */}
-            {lines.filter((l) => !hiddenLayers.includes(layerForLine(l.layer, l.kind))).map((l) => {
+            {lines.filter((l) => !hiddenLayers.includes(layerForLine(l.layer, l.kind)) && !(l.kind === 'contour' && contoursHidden)).map((l) => {
               const L = LINES[l.kind];
               const n = l.points.length;
               const mx = (l.points[0] + l.points[n - 2]) / 2, my = (l.points[1] + l.points[n - 1]) / 2;
@@ -3428,7 +3534,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               const deleteLine = () => { pushHistory(); setLines((prev) => prev.filter((q) => q.id !== l.id)); };
               return (
                 <Group key={l.id}>
-                  <Line points={l.points} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" closed={l.closed ?? false} />
+                  <Line points={l.points} fill={L.fill} closed={l.closed ?? false} stroke={L.color} strokeWidth={L.width} dash={L.dash} lineCap="round" lineJoin="round" />
                   {/* Edit chrome (endpoint handles + delete pill) never goes into a
                       producer capture — it would be painted into the map. */}
                   {!captureCleanMode && (
@@ -3443,6 +3549,25 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 </Group>
               );
             })}
+            {/* Live polygon draft (roof/driveway/patio being traced): the real
+                corners placed so far, a dashed "closing" segment back to the
+                first corner so the shape reads before it's finished, and a
+                dot on each vertex. Never enters a producer capture. */}
+            {isArmedPolygon && polyDraft.length >= 2 && !captureCleanMode && (() => {
+              const n = polyDraft.length;
+              const closing = n >= 4 ? [polyDraft[n - 2], polyDraft[n - 1], polyDraft[0], polyDraft[1]] : null;
+              const style = lineKind ? LINES[lineKind] : null;
+              return (
+                <Group listening={false}>
+                  <Line points={polyDraft} stroke={style?.color ?? '#1F4D2B'} strokeWidth={2.5} lineCap="round" lineJoin="round" />
+                  {closing && <Line points={closing} stroke={style?.color ?? '#1F4D2B'} strokeWidth={2} dash={[6, 5]} opacity={0.7} />}
+                  {Array.from({ length: n / 2 }, (_, i) => (
+                    <Circle key={i} x={polyDraft[i * 2]} y={polyDraft[i * 2 + 1]} radius={i === 0 ? 7 : 5}
+                      fill={i === 0 ? '#5DCF80' : (style?.color ?? '#1F4D2B')} stroke="#fff" strokeWidth={1.3} />
+                  ))}
+                </Group>
+              );
+            })()}
             {/* items */}
             {items.filter((it) => !hiddenLayers.includes(layerForItem(it.layer, it.type))).map((it) => {
               const c = CATALOG[it.type];
@@ -3642,7 +3767,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     {existingLineRows.map((l) => (
                       <div key={`ex-${l.kind}`} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.35)' }}>
                         <span style={{ color: '#9A8268' }}>{l.icon} {l.label}</span>
-                        <span className="font-mono" style={{ color: '#9A8268' }}>~{l.m.toFixed(1)} m</span>
+                        <span className="font-mono" style={{ color: '#9A8268' }}>{l.areaM2 != null ? `${l.areaM2.toFixed(0)} m²` : `~${l.m.toFixed(1)} m`}</span>
                       </div>
                     ))}
                     <p className="text-[9px] font-mono px-0.5" style={{ color: '#B0A288' }}>Existing — not counted in the budget.</p>
@@ -3672,7 +3797,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                         <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
                           <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
                           <span className="flex items-center gap-2">
-                            <span className="font-mono" style={{ color: '#20190F' }}>~{l.m.toFixed(1)} m</span>
+                            <span className="font-mono" style={{ color: '#20190F' }}>{l.areaM2 != null ? `${l.areaM2.toFixed(0)} m²` : `~${l.m.toFixed(1)} m`}</span>
                             {cost?.zar != null && <span className="font-mono text-right" style={{ color: '#1F4D2B', minWidth: 62 }}>{formatZar(cost.zar)}</span>}
                           </span>
                         </div>
