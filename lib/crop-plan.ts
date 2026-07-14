@@ -398,3 +398,54 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
 
   return paragraphs;
 }
+
+export type FoodAvailabilityStatus = 'fresh' | 'stored';
+
+export interface FoodAvailabilityItem {
+  cropKey: string;
+  name: string;
+  icon: string;
+  status: FoodAvailabilityStatus;
+}
+
+/**
+ * What should actually be on hand to eat each month — not just "what's being
+ * picked this instant" (harvestMonth alone gives a one-month blip for every
+ * crop), but also crops that keep producing after their first picking
+ * (harvestWindowMonths — cut-and-come-again greens, fruiting veg) and crops
+ * that are harvested once then keep in storage for months (storageMonths —
+ * roots, bulbs, grain). Each catalog crop carries at most one of those two
+ * traits, so a planting is either "fresh window" or "stored afterwards",
+ * never both stacked on top of each other.
+ *
+ * Includes existing (already-growing) plantings, not just new ones — this
+ * answers "what will be on the table", the food-security question, which is
+ * different from buildYearReport's "what's new from this plan" framing.
+ * 1-indexed like kgByMonth above ([0] unused, months are 1-12).
+ */
+export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[]): FoodAvailabilityItem[][] {
+  const byMonth: Map<string, FoodAvailabilityStatus>[] = Array.from({ length: 13 }, () => new Map());
+  for (const p of plantings) {
+    const crop = cropByKey(p.cropKey);
+    const bed = beds.find((b) => b.id === p.bedId);
+    if (!crop || !bed) continue;
+    const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+    const freshSpan = crop.harvestWindowMonths ?? 0;
+    for (let off = 0; off <= freshSpan; off++) {
+      byMonth[wrapMonth(hMonth + off)].set(crop.key, 'fresh');
+    }
+    const storageSpan = crop.storageMonths ?? 0;
+    for (let off = 1; off <= storageSpan; off++) {
+      const m = wrapMonth(hMonth + freshSpan + off);
+      if (byMonth[m].get(crop.key) !== 'fresh') byMonth[m].set(crop.key, 'stored');
+    }
+  }
+  return byMonth.map((map) =>
+    [...map.entries()]
+      .map(([cropKey, status]) => {
+        const crop = cropByKey(cropKey)!;
+        return { cropKey, name: crop.name, icon: crop.icon, status };
+      })
+      .sort((a, b) => (a.status === b.status ? a.name.localeCompare(b.name) : a.status === 'fresh' ? -1 : 1)),
+  );
+}

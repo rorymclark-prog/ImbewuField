@@ -19,18 +19,33 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, CropTask } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, suggestSubstituteCrop,
+  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, suggestSubstituteCrop,
   loadFavouriteCropKeys, saveFavouriteCropKeys,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
-import { FOOD_GROUP_META } from '@/lib/crop-groups';
+import { FOOD_GROUP_META, foodGroupOf } from '@/lib/crop-groups';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
+
+// Rotation order + "why" blurbs for the explanation card at the bottom of
+// the crop plan — general permaculture practice, not a precise schedule.
+// Ordered roughly as a rotation would move through beds: nitrogen-fixers
+// first, then the hungry crops that benefit from them, then the groups that
+// want what's left behind.
+const ROTATION_GROUP_ORDER: FoodGroup[] = ['legume', 'leafy_green', 'fruiting_veg', 'root_tuber', 'allium_aromatic', 'staple_grain'];
+const ROTATION_BLURB: Record<FoodGroup, string> = {
+  legume: 'Pulls nitrogen from the air into the soil as it grows — the best group to plant right before a hungry leafy green or fruiting crop.',
+  leafy_green: 'Fast turnover, heavy nitrogen feeders — do best following legumes, and quick enough to only hold a bed for part of a season.',
+  fruiting_veg: 'Heavy feeders with their own soil-borne pests and diseases — the group most worth never repeating in the same bed two seasons running.',
+  root_tuber: "Dig deep and don't want freshly-manured soil — a good match for a bed that carried heavy feeders the season before.",
+  allium_aromatic: 'Light feeders with natural pest-deterrent oils — a gentle "rest" crop between hungrier groups.',
+  staple_grain: 'Bulk biomass with moderate needs — often the long "reset" year in a multi-bed rotation.',
+};
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
@@ -489,6 +504,7 @@ export default function FacilitatorCropsPage() {
 
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
+  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds), [plantings, beds]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -832,6 +848,9 @@ export default function FacilitatorCropsPage() {
               </div>
             </div>
 
+            <FoodAvailabilityChart monthOrder={monthOrder} availability={foodAvailability} />
+            <RotationExplanationCard />
+
             <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
@@ -932,6 +951,101 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
   );
 }
 
+// ── Food availability + rotation explanation ────────────────────────────
+
+function FoodAvailabilityChart({ monthOrder, availability }: { monthOrder: number[]; availability: FoodAvailabilityItem[][] }) {
+  const cols = monthOrder.map((m) => {
+    const items = availability[m] ?? [];
+    return { m, fresh: items.filter((it) => it.status === 'fresh'), stored: items.filter((it) => it.status === 'stored') };
+  });
+  const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
+  const BAR_MAX_H = 56;
+  const isEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
+
+  return (
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food availability — resilience by month</div>
+      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+        What this plan should put on the table each month — fresh picks, plus anything still keeping in storage
+        from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
+        an exact kg count — see Estimated harvest above for that.
+      </p>
+      <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
+        <span className="inline-flex items-center gap-1.5">
+          <span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh harvest
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> In storage
+        </span>
+      </div>
+      {isEmpty ? (
+        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add some plantings to see what&apos;s available month to month.</div>
+      ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <div className="flex" style={{ minWidth: 760, gap: 6 }}>
+            {cols.map(({ m, fresh, stored }, i) => {
+              const total = fresh.length + stored.length;
+              const hPx = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
+              const storedHPx = total === 0 ? 0 : Math.round((stored.length / total) * hPx);
+              const freshHPx = hPx - storedHPx;
+              const title = [...stored, ...fresh]
+                .map((it) => `${it.icon} ${it.name} — ${it.status === 'fresh' ? 'fresh' : 'stored'}`)
+                .join('\n');
+              return (
+                <div key={m} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                  <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                    {total === 0 ? (
+                      <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
+                    ) : (
+                      <div
+                        style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}
+                        title={title}
+                      >
+                        {storedHPx > 0 && <div style={{ height: storedHPx, background: '#D4A017' }} />}
+                        {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FBF6EC' }} />}
+                        {freshHPx > 0 && <div style={{ height: freshHPx, background: '#7FAE6E' }} />}
+                      </div>
+                    )}
+                  </div>
+                  <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
+                    {MONTHS_SHORT[m - 1]}
+                  </div>
+                  <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16 }}>{fresh.map((it) => it.icon).join('')}</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16, opacity: 0.6 }}>{stored.map((it) => it.icon).join('')}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RotationExplanationCard() {
+  return (
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Why rotate by food group</div>
+      <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+        Each bed&apos;s label above shows which food group is currently growing there. Moving a different group
+        into a bed each season, rather than replanting the same one, keeps soil-borne pests and diseases from
+        building up, and matches each group&apos;s needs to what the last crop left behind — general permaculture
+        practice, not an exact schedule.
+      </p>
+      <div className="space-y-1.5">
+        {ROTATION_GROUP_ORDER.map((g) => {
+          const meta = FOOD_GROUP_META[g];
+          return (
+            <div key={g} className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+              <strong style={{ color: '#20190F' }}>{meta.icon} {meta.label}</strong> — {ROTATION_BLURB[g]}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Bed row + planting bars ─────────────────────────────────────────────
 
 function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
@@ -941,11 +1055,30 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
   onAddCrop: () => void;
   onTapPlanting: (p: Planting) => void;
 }) {
+  // Which food group(s) are currently in this bed — usually just one, but an
+  // intercropped/split bed or a rolling window spanning a succession swap can
+  // show more than one. Purely informational (rotation is chosen by the
+  // farmer or the auto-suggest engine, not enforced here).
+  const bedGroups = Array.from(new Set(
+    plantings.map((p) => cropByKey(p.cropKey)).filter((c): c is CropDef => !!c).map((c) => foodGroupOf(c)),
+  ));
+
   return (
     <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
       <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
         <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{bed.label}</div>
         <div className="font-mono" style={{ fontSize: 11, color: '#8C7A62' }}>{bed.areaM2.toFixed(1)} m²</div>
+        {bedGroups.length > 0 && (
+          <div
+            className="font-sans"
+            style={{ fontSize: 10, color: '#5C5040', marginTop: 3, lineHeight: 1.3 }}
+            title={bedGroups.map((g) => FOOD_GROUP_META[g].label).join(', ')}
+          >
+            {bedGroups.length === 1
+              ? `${FOOD_GROUP_META[bedGroups[0]].icon} ${FOOD_GROUP_META[bedGroups[0]].label}`
+              : bedGroups.map((g) => FOOD_GROUP_META[g].icon).join(' ')}
+          </div>
+        )}
       </div>
       <div style={{ flex: '1 1 auto', position: 'relative' }}>
         {/* month gridlines (background) — column 0 is always "this month" now */}

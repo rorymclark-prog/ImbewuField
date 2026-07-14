@@ -46,6 +46,19 @@ export interface CropDef {
   yieldKgPerM2: number;
   note: string;
   varieties?: CropVariety[];
+  /** Harvest is NOT always a single-instant event — cut-and-come-again leafy
+   *  greens and "keeps producing" fruiting veg go on yielding for months
+   *  after the first picking. Extra whole months of ongoing FRESH harvest
+   *  after daysToHarvest, on top of the harvest month itself. Undefined/0 =
+   *  a one-shot harvest (pull the whole root/head/fruit at once). General
+   *  home-gardener estimates, not lab-precise. */
+  harvestWindowMonths?: number;
+  /** How many months a harvested crop keeps in storage (root cellar, dry
+   *  storage, cured) before it's no longer good — undefined/0 = eat fresh,
+   *  doesn't meaningfully store. This is what makes "food security" more
+   *  than just "what's being harvested this exact month": a cured pumpkin
+   *  or a bag of onions is still food on hand well after harvest day. */
+  storageMonths?: number;
 }
 
 export const CROPS: CropDef[] = [
@@ -63,6 +76,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 30,
     yieldKgPerM2: 1,
     note: 'Direct-sow once frost risk has passed; block-plant several rows together for good pollination.',
+    storageMonths: 10,
   },
   {
     key: 'dry-beans',
@@ -78,6 +92,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 10,
     yieldKgPerM2: 0.4,
     note: 'Leave pods to dry and rattle on the plant before shelling and storing.',
+    storageMonths: 12,
   },
   {
     key: 'green-beans',
@@ -93,6 +108,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 10,
     yieldKgPerM2: 3,
     note: 'Sow every 2-3 weeks for a continuous harvest through the season.',
+    harvestWindowMonths: 1,
   },
   {
     key: 'butternut',
@@ -108,6 +124,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 100,
     yieldKgPerM2: 3,
     note: 'Vigorous vine — give it room to sprawl or train it up a trellis.',
+    storageMonths: 4,
   },
   {
     key: 'pumpkin',
@@ -123,6 +140,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 120,
     yieldKgPerM2: 3,
     note: 'Needs bees for pollination; hand-pollinate with a small brush if fruit set is poor.',
+    storageMonths: 4,
   },
   {
     key: 'swiss-chard',
@@ -140,6 +158,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 30,
     yieldKgPerM2: 3,
     note: 'Cut-and-come-again — harvest outer leaves and it keeps producing for months.',
+    harvestWindowMonths: 3,
   },
   {
     key: 'kale',
@@ -158,6 +177,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 45,
     yieldKgPerM2: 2.5,
     note: 'Transplant seedlings once they have 4-5 true leaves; a light frost sweetens the flavour.',
+    harvestWindowMonths: 2,
   },
   {
     key: 'cabbage',
@@ -180,6 +200,7 @@ export const CROPS: CropDef[] = [
       { name: 'Optima F1 (or similar summer-bred hybrid)', bestFor: 'Sep-Mar (summer) sowings', note: "Selected for summer production; the reverse mistake — a winter-bred variety sown in summer — tends to bolt before heading." },
       { name: 'Conquistador (or similar dual-season type)', bestFor: 'Either season', note: 'Marketed as tolerating both extremes — the safer pick if you only want to keep one cabbage seed packet.' },
     ],
+    storageMonths: 1,
   },
   {
     key: 'carrots',
@@ -200,6 +221,7 @@ export const CROPS: CropDef[] = [
       { name: 'Nantes type', bestFor: 'Either season', note: 'The reliable general-purpose choice — good bolt tolerance, forgiving of an off-season sowing.' },
       { name: 'Allyance F1 (or similar season-tuned hybrid)', bestFor: 'Timing awareness', note: 'Maturity runs faster in summer (~90-105 days) than winter (~110-120 days) — expect a longer wait for a winter sowing, not a failed one.' },
     ],
+    storageMonths: 3,
   },
   {
     key: 'beetroot',
@@ -216,6 +238,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 10,
     yieldKgPerM2: 3,
     note: 'Thin seedlings early — each "seed" is actually a cluster of several.',
+    storageMonths: 2,
   },
   {
     key: 'onions',
@@ -236,6 +259,7 @@ export const CROPS: CropDef[] = [
       { name: 'Short-day type', bestFor: 'Highveld / northern & central interior', note: "Onions bulb by day-length, not just temperature — this is the one crop where variety is nearly mandatory, not a refinement: the wrong day-length type for your area simply won't bulb properly no matter when you sow it." },
       { name: 'Intermediate-day type', bestFor: 'Central & southern regions, coastal areas', note: "Suits areas with a bigger swing in day length through the growing season. Check the day-length rating on the seed packet — it matters more here than the sowing month." },
     ],
+    storageMonths: 5,
   },
   {
     key: 'tomatoes',
@@ -255,6 +279,7 @@ export const CROPS: CropDef[] = [
     varieties: [
       { name: 'Floradade (or similar heat-tolerant variety)', bestFor: 'Hot summer / subtropical coastal growing', note: 'Bred specifically for heat tolerance — worth seeking out if your area gets properly hot in summer, since an ordinary variety can drop flowers/stop setting fruit in extreme heat.' },
     ],
+    harvestWindowMonths: 2,
   },
   {
     key: 'peppers',
@@ -271,6 +296,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 40,
     yieldKgPerM2: 3,
     note: 'Slow to germinate — start indoors or in a warm spot for a head start.',
+    harvestWindowMonths: 2,
   },
   {
     key: 'sweet-potato',
@@ -291,6 +317,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 60,
     yieldKgPerM2: 3,
     note: 'Grown from rooted slips, not seed — plant into ridged soil for easy digging later.',
+    storageMonths: 3,
   },
   {
     key: 'potato',
@@ -306,6 +333,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 30,
     yieldKgPerM2: 3,
     note: 'Plant certified seed potatoes and earth up the stems as they grow to prevent greening.',
+    storageMonths: 3,
   },
   {
     key: 'lettuce',
@@ -325,6 +353,7 @@ export const CROPS: CropDef[] = [
     varieties: [
       { name: 'Heat-tolerant / bolt-resistant type', bestFor: 'Summer sowings', note: "Look for a variety specifically marketed as bolt-resistant for summer — 'triple red' and similar red-leaf types are noticeably more heat-susceptible, so save those for cooler-season sowings instead." },
     ],
+    harvestWindowMonths: 1,
   },
   {
     key: 'amadumbe',
@@ -340,6 +369,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 45,
     yieldKgPerM2: 2,
     note: 'Needs consistently moist soil; thrives in warm, wet subtropical conditions.',
+    storageMonths: 2,
   },
   {
     key: 'groundnuts',
@@ -355,6 +385,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 20,
     yieldKgPerM2: 1.5,
     note: 'Needs sandy, well-drained soil and a long frost-free growing season.',
+    storageMonths: 6,
   },
   {
     key: 'garlic',
@@ -370,6 +401,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 10,
     yieldKgPerM2: 1.5,
     note: 'Plant individual cloves pointy-side up; a cool spell early on helps bulbs form properly.',
+    storageMonths: 6,
   },
   {
     key: 'peas',
@@ -387,6 +419,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 8,
     yieldKgPerM2: 2,
     note: 'Give climbing types a trellis; pick pods while still glossy for the sweetest peas.',
+    harvestWindowMonths: 1,
   },
   {
     key: 'broad-beans',
@@ -406,6 +439,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 20,
     yieldKgPerM2: 1.5,
     note: "The classic 'grows through winter' legume — sow in autumn, it stands through frost and pods in spring.",
+    harvestWindowMonths: 1,
   },
   {
     key: 'broccoli',
@@ -423,6 +457,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 45,
     yieldKgPerM2: 2,
     note: 'Harvest the central head before the flowers open, then side shoots keep coming.',
+    harvestWindowMonths: 1,
   },
   {
     key: 'cucumber',
@@ -438,6 +473,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 40,
     yieldKgPerM2: 4,
     note: 'Keep watering even — irregular water is the main cause of bitter fruit.',
+    harvestWindowMonths: 2,
   },
   {
     key: 'watermelon',
@@ -453,6 +489,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 150,
     yieldKgPerM2: 4,
     note: 'Needs a long hot season and plenty of room to vine out.',
+    storageMonths: 1,
   },
   {
     key: 'coriander',
