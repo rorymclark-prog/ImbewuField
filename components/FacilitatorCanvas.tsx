@@ -250,6 +250,24 @@ const SITE_DIFF_DEG = 0.001;
 const BACKUP_KEY = 'imbewu_facilitator_design_backup';
 type BackupPayload = FacilitatorDesignState & { backedUpAt: number };
 
+/**
+ * Which Transformer resize handles show for the current selection. Veg beds
+ * are standardised at a 1m width so crop-plan m² calcs stay accurate — a
+ * free corner/side drag would silently distort that width, so a selected bed
+ * only gets top-center/bottom-center (lengthwise resize, in the node's own
+ * un-rotated local axes regardless of screen rotation). Width is still
+ * changeable deliberately via the numeric field in the property panel.
+ * A single shared function (not duplicated inline) so the imperative
+ * `tr.enabledAnchors(...)` call and the JSX `<Transformer enabledAnchors>`
+ * prop can never drift apart.
+ */
+function enabledAnchorsFor(isSector: boolean, isBed: boolean, isCircle: boolean): string[] {
+  if (isSector) return [];
+  if (isBed) return ['top-center', 'bottom-center'];
+  if (isCircle) return ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+  return ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right'];
+}
+
 // ── Top-view vector icons ──────────────────────────────────────────────────
 // Each function receives the pixel w/h of the element and returns an array of
 // Konva JSX nodes to render. They are ALWAYS centered at (0,0)...(w,h) so
@@ -970,9 +988,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const node = selectedId ? nodeRefs.current[selectedId] : null;
     tr.nodes(node ? [node] : []);
     tr.rotateEnabled(true);
-    tr.enabledAnchors(selectedSector ? [] : selectedIsCircle
-      ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
-      : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']);
+    tr.enabledAnchors(enabledAnchorsFor(!!selectedSector, selected?.type === 'bed', selectedIsCircle));
     tr.getLayer()?.batchDraw();
   }, [selectedId, selectedSector, selectedIsCircle, items, sectors, pxPerM]);
 
@@ -1451,7 +1467,38 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
   const acceptGhost = (g: GhostFeature, skipHistory = false) => {
     if (!skipHistory) pushHistory();
-    if (g.elType) {
+    if (g.kind === 'veg_area') {
+      // Ring → bed footprint from the bounding box. Checked BEFORE g.elType
+      // below — buildGhosts (lib/facilitator-design.ts) sets elType:'bed' on
+      // every veg_area ghost too (so existing point-feature code can share
+      // its icon), which used to make this whole branch unreachable dead
+      // code: the generic point-feature branch always won first, planting a
+      // 1x1 bed centered on the ring's raw first vertex instead of a bed
+      // sized/positioned from the actual detected shape. `kind` is the more
+      // specific signal for a multi-point ring and must be checked first.
+      //
+      // A raw detected/traced bbox can be any odd width (e.g. a wide
+      // vegetable patch), which then silently feeds inaccurate m² into every
+      // crop-plan yield/overlap calc downstream. Veg beds are standardised
+      // at a 1m width — snap to that here and derive the length from the
+      // DETECTED AREA (not just the longer bbox side) so the imported bed's
+      // total m² still matches what was actually traced/detected, just
+      // reshaped into a 1m-wide strip.
+      const xs = g.pxPoints.filter((_, i) => i % 2 === 0);
+      const ys = g.pxPoints.filter((_, i) => i % 2 === 1);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const rawWM = (maxX - minX) / pxPerM;
+      const rawHM = (maxY - minY) / pxPerM;
+      const detectedAreaM2 = rawWM * rawHM;
+      const STANDARD_BED_WIDTH_M = 1;
+      const lengthM = Math.max(STANDARD_BED_WIDTH_M, detectedAreaM2 / STANDARD_BED_WIDTH_M);
+      const id = `bed-${Date.now()}-${Math.round(Math.random() * 999)}`;
+      setItems((prev) => [...prev, {
+        id, type: 'bed', x: minX, y: minY,
+        wM: STANDARD_BED_WIDTH_M, hM: lengthM, rotation: 0, layer: 'existing',
+      }]);
+    } else if (g.elType) {
       // Point feature — a single [x, y] pair; footprint is square (wM = hM).
       const c = CATALOG[g.elType];
       const px = g.pxPoints[0], py = g.pxPoints[1];
@@ -1461,17 +1508,6 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       setItems((prev) => [...prev, {
         id, type: g.elType!, x: px - sizePx / 2, y: py - sizePx / 2,
         wM: sizeM, hM: sizeM, rotation: 0, litres: c.litres, layer: 'existing',
-      }]);
-    } else if (g.kind === 'veg_area') {
-      // Ring → bed footprint from the bounding box.
-      const xs = g.pxPoints.filter((_, i) => i % 2 === 0);
-      const ys = g.pxPoints.filter((_, i) => i % 2 === 1);
-      const minX = Math.min(...xs), maxX = Math.max(...xs);
-      const minY = Math.min(...ys), maxY = Math.max(...ys);
-      const id = `bed-${Date.now()}-${Math.round(Math.random() * 999)}`;
-      setItems((prev) => [...prev, {
-        id, type: 'bed', x: minX, y: minY,
-        wM: (maxX - minX) / pxPerM, hM: (maxY - minY) / pxPerM, rotation: 0, layer: 'existing',
       }]);
     } else if (g.kind === 'osm_building' || g.kind === 'osm_road' || g.kind === 'osm_water') {
       // Surveyed map data — building/water rings close, roads stay open polylines.
@@ -3744,11 +3780,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                   fill="#20190F" fontStyle="600" fontFamily="sans-serif" />
               </Group>
             ))}
-            {/* Transformer: proportional for circles/sectors rotate-only, free for rects */}
+            {/* Transformer: proportional for circles/sectors rotate-only, length-only for beds, free for other rects */}
             <Transformer ref={trRef} rotateEnabled keepRatio={selectedIsCircle}
-              enabledAnchors={selectedSector ? [] : selectedIsCircle
-                ? ['top-left', 'top-right', 'bottom-left', 'bottom-right']
-                : ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right']}
+              enabledAnchors={enabledAnchorsFor(!!selectedSector, selected?.type === 'bed', selectedIsCircle)}
               anchorSize={8} anchorStroke="#1F4D2B" anchorFill="rgba(31,77,43,0.7)"
               borderEnabled={false}
               boundBoxFunc={(o, n) => (n.width < 8 || n.height < 8 ? o : n)} />

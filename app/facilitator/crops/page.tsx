@@ -21,7 +21,7 @@ import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, CropTask } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction,
+  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META } from '@/lib/crop-groups';
@@ -108,6 +108,16 @@ function barGradient(seg: Segment, sowMonth: number, totalMonths: number, from: 
   return `linear-gradient(to right, ${lerpHex(from, to, startFrac)}, ${lerpHex(from, to, endFrac)})`;
 }
 
+/**
+ * 2026-07-14: Rory asked to try a Tend-style flat colour + boundary line
+ * instead of the smooth growing→harvest gradient blend (the gradient reads
+ * as smudgy at a glance; a solid block + a crisp "ready" marker line reads
+ * faster). `barGradient`/`lerpHex` above are kept fully intact — flip this
+ * one constant back to 'gradient' to revert instantly if the solid style
+ * doesn't work out in practice.
+ */
+const BAR_STYLE: 'gradient' | 'solid' = 'solid';
+
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
 /**
@@ -141,10 +151,10 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
   for (const it of state.items) {
     if (it.type === 'bed') {
       bedN += 1;
-      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2: (it.wM || 1) * (it.hM || 1) });
+      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2: (it.wM || 1) * (it.hM || 1), minDimM: Math.min(it.wM || 1, it.hM || 1) });
     } else if (it.type === 'hugel') {
       hugelN += 1;
-      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2: (it.wM || 1) * (it.hM || 1) });
+      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2: (it.wM || 1) * (it.hM || 1), minDimM: Math.min(it.wM || 1, it.hM || 1) });
     }
   }
   return beds;
@@ -156,9 +166,20 @@ const PATTERN_META: Record<RainPattern, { icon: string; label: string }> = {
   'all-year': { icon: '🌦️', label: 'All-year rainfall' },
 };
 
+// Verb phrase per task action — 'prep'/'mulch' need a bit more than a single
+// word to say what's actually involved (compost/kraal manure, water-in), the
+// others read fine as plain verbs.
+const TASK_VERB: Record<CropTask['action'], string> = {
+  prep: 'prep bed (compost + kraal manure, then let it rest) for',
+  sow: 'sow',
+  transplant: 'transplant',
+  mulch: 'water in & mulch',
+  harvest: 'harvest',
+};
+
 function taskSentence(tasks: CropTask[]): string {
   if (tasks.length === 0) return 'nothing due';
-  return tasks.map((t) => `${t.action} ${t.cropName.toLowerCase()} (${t.bedLabel})`).join(' · ');
+  return tasks.map((t) => `${TASK_VERB[t.action]} ${t.cropName.toLowerCase()} (${t.bedLabel})`).join(' · ');
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────
@@ -166,6 +187,13 @@ function taskSentence(tasks: CropTask[]): string {
 export default function FacilitatorCropsPage() {
   const [design, setDesign] = useState<FacilitatorDesignState | null | undefined>(undefined);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
+  // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
+  // pattern — mainly for undoing a whole auto-suggested batch in one tap
+  // instead of deleting every planting by hand, but it covers manual
+  // add/edit/remove too since they all go through the same mutating
+  // functions below. Capped so it can't grow unbounded across a long session.
+  const [planHistory, setPlanHistory] = useState<CropPlanState[]>([]);
+  const PLAN_HISTORY_LIMIT = 10;
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [useVirtual, setUseVirtual] = useState(false);
@@ -192,6 +220,12 @@ export default function FacilitatorCropsPage() {
   const [aFocusCount, setAFocusCount] = useState(1);
   const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
   const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
+  // Default on — good rotation practice, and it's how "plan for next season
+  // too" actually works here: there's no separate multi-year planner, but a
+  // rotation-aware plan today naturally leaves next season's beds able to
+  // rotate correctly once you run this again with today's plantings still
+  // showing (see the toggle's own blurb in the modal for the honest caveat).
+  const [aRotateCrops, setARotateCrops] = useState(true);
   const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
 
   function openAutoSuggest() {
@@ -200,6 +234,7 @@ export default function FacilitatorCropsPage() {
     setAFocusCount(1);
     setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
     setARhythm('steady');
+    setARotateCrops(true);
     setAutoResult(null);
     setAutoPhase('questions');
   }
@@ -217,12 +252,26 @@ export default function FacilitatorCropsPage() {
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
       groups: aGroups,
       rhythm: aRhythm,
+      rotateCrops: aRotateCrops,
     };
     setAutoResult(autoSuggestPlan(answers, pattern, beds, plantings, currentMonth));
     setAutoPhase('review');
   }
+  // Snapshot the plan as it stood BEFORE a mutation, onto the undo stack —
+  // called at the top of every plan-mutating action below. No-ops on an
+  // empty plan (nothing to undo back to).
+  function pushPlanHistory() {
+    if (!plan) return;
+    setPlanHistory((prev) => [...prev.slice(-(PLAN_HISTORY_LIMIT - 1)), plan]);
+  }
+  function undoLastChange() {
+    if (!planHistory.length) return;
+    setPlan(planHistory[planHistory.length - 1]);
+    setPlanHistory((prev) => prev.slice(0, -1));
+  }
   function acceptAutoSuggest() {
     if (!autoResult) return;
+    pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       return { version: 1, plantings: [...base.plantings, ...autoResult.plantings], updatedAt: Date.now() };
@@ -277,6 +326,7 @@ export default function FacilitatorCropsPage() {
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
+    pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
       const next: Planting = {
@@ -288,6 +338,7 @@ export default function FacilitatorCropsPage() {
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
+    pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
       return {
@@ -300,6 +351,7 @@ export default function FacilitatorCropsPage() {
     });
   }
   function removePlanting(id: string) {
+    pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
       return { version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
@@ -323,6 +375,9 @@ export default function FacilitatorCropsPage() {
       kg: plantings.filter((p) => p.bedId === b.id).reduce((sum, p) => sum + estimatedYieldKg(p, b.areaM2), 0),
     }))
     .filter((row) => row.kg > 0);
+
+  const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
+  const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -456,13 +511,25 @@ export default function FacilitatorCropsPage() {
               </div>
             )}
 
-            <button
-              onClick={openAutoSuggest}
-              className="w-full mb-3 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-              style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
-            >
-              ✨ Auto-suggest a plan
-            </button>
+            <div className="flex gap-2 mb-3">
+              <button
+                onClick={openAutoSuggest}
+                className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
+              >
+                ✨ Auto-suggest a plan
+              </button>
+              {planHistory.length > 0 && (
+                <button
+                  onClick={undoLastChange}
+                  className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
+                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                  title="Undo the last change to this plan"
+                >
+                  ↩ Undo
+                </button>
+              )}
+            </div>
 
             {/* Timeline */}
             <div className="rounded-2xl overflow-hidden mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
@@ -566,6 +633,40 @@ export default function FacilitatorCropsPage() {
               </div>
             </div>
 
+            {/* Seed BOQ + year-ahead report */}
+            <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds & seedlings to get</div>
+                <div className="space-y-1">
+                  {seedBoq.map((row) => (
+                    <div key={row.cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                      <span>{row.icon} {row.cropName}</span>
+                      <span className="font-mono" style={{ color: '#20190F' }}>~{row.count} {row.unit}</span>
+                    </div>
+                  ))}
+                  {seedBoq.length === 0 && (
+                    <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing new to buy yet.</div>
+                  )}
+                </div>
+                <p className="font-mono mt-2" style={{ fontSize: 10, color: '#9A8268' }}>
+                  Estimated from bed area and each crop's usual spacing — direct-sow counts include a buffer for germination loss.
+                </p>
+              </div>
+
+              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📖 Year ahead</div>
+                {yearReport.length > 0 ? (
+                  <div className="space-y-2">
+                    {yearReport.map((line, i) => (
+                      <p key={i} className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>{line}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add some plantings to see a year-ahead summary.</div>
+                )}
+              </div>
+            </div>
+
             <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
@@ -615,6 +716,7 @@ export default function FacilitatorCropsPage() {
           focusCount={aFocusCount} onFocusCount={setAFocusCount}
           groups={aGroups} onToggleGroup={toggleGroup}
           rhythm={aRhythm} onRhythm={setARhythm}
+          rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -716,6 +818,7 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
   // length, so you can see how far along a planting is at a glance.
   const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
   const totalMonths = segments.reduce((s, seg) => s + (seg.end - seg.start + 1), 0);
+  const lastSegIdx = segments.length - 1;
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
@@ -726,13 +829,25 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
           className="font-sans"
           style={{
             position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: barGradient(seg, planting.sowMonth, totalMonths, barFrom, barTo), color: '#fff', border: 'none', borderRadius: 6,
+            background: BAR_STYLE === 'gradient' ? barGradient(seg, planting.sowMonth, totalMonths, barFrom, barTo) : barFrom,
+            color: '#fff', border: 'none', borderRadius: 6,
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
           }}
           title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${monthLabel(harvest)}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
         >
           {i === 0 ? `${crop.icon} ${crop.name}${fLabel ? ` (${fLabel})` : ''}` : ''}
+          {BAR_STYLE === 'solid' && i === lastSegIdx && (
+            // The "ready to harvest" marker — a hard colour + a line, not a
+            // blend: a solid gold cap over the last month of the span, with a
+            // crisp divider where it meets the growing colour.
+            <div
+              style={{
+                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 / (seg.end - seg.start + 1)}%`,
+                background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
+              }}
+            />
+          )}
         </button>
       ))}
       {trMonth !== null && (
@@ -1015,7 +1130,7 @@ const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
 
 function AutoSuggestModal({
   phase, goal, onGoal, household, onHousehold, focusCount, onFocusCount,
-  groups, onToggleGroup, rhythm, onRhythm, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  groups, onToggleGroup, rhythm, onRhythm, rotateCrops, onRotateCrops, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -1023,6 +1138,7 @@ function AutoSuggestModal({
   focusCount: number; onFocusCount: (n: number) => void;
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
+  rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
@@ -1120,6 +1236,22 @@ function AutoSuggestModal({
                 ))}
               </div>
             </div>
+
+            <button
+              onClick={() => onRotateCrops(!rotateCrops)}
+              className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
+              style={tileStyle(rotateCrops)}
+            >
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{rotateCrops ? '🔁' : '⭘'}</span>
+              <span>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Rotate crops between beds</div>
+                <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
+                  Avoids repeating the same crop family on a bed that just grew it — good practice, and keeps
+                  next season's beds rotation-friendly too (run this again next season with this year's plan still
+                  showing, and it reads that history).
+                </div>
+              </span>
+            </button>
 
             <button
               onClick={onGenerate}
