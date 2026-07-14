@@ -189,6 +189,88 @@ export function estimatedYieldKg(p: Planting, bedAreaM2: number): number {
 }
 
 /**
+ * True only for GENUINE intercropping — a fractional planting whose
+ * sow→harvest window actually overlaps, in time, with a DIFFERENT crop on
+ * the same bed. A fractional slice that doesn't overlap anything (e.g. one
+ * batch of a staggered same-crop succession, sown in its own month with no
+ * other crop sharing that window) is bed-SPLITTING over time, not
+ * intercropping, and calling it "intercropped" would be a mislabel — the
+ * same wrap-safe overlap test as bedOverlapFraction, but keyed to a specific
+ * OTHER planting rather than summed across all of them, and explicitly
+ * excluding same-cropKey matches (a succession batch isn't "intercropped
+ * with itself").
+ */
+export function isGenuinelyIntercropped(p: Planting, allPlantings: Planting[]): boolean {
+  if ((p.areaFraction ?? 1) >= 1) return false;
+  const crop = cropByKey(p.cropKey);
+  if (!crop) return false;
+  const pHarvest = harvestMonth(p.sowMonth, crop.daysToHarvest);
+  const norm = (s: number, e: number): [number, number] => (e >= s ? [s, e] : [s, e + 12]);
+  const [as, ae] = norm(p.sowMonth, pHarvest);
+  return allPlantings.some((other) => {
+    if (other.id === p.id || other.bedId !== p.bedId || other.cropKey === p.cropKey) return false;
+    const oc = cropByKey(other.cropKey);
+    if (!oc) return false;
+    const oHarvest = harvestMonth(other.sowMonth, oc.daysToHarvest);
+    for (const [bs, be] of [norm(other.sowMonth, oHarvest), norm(other.sowMonth + 12, oHarvest + 12)]) {
+      if (as <= be && bs <= ae) return true;
+    }
+    return false;
+  });
+}
+
+// A modest, deliberately conservative yield discount for genuine
+// intercropping. Real companion-planting yield is genuinely mixed in
+// practice — well-matched pairs can have a combined Land Equivalent Ratio
+// above 1 (more total food than either grown alone), poorly-matched pairs
+// competing for light/water/nutrients can yield less — and this app has no
+// per-pair compatibility data to tell the two apart. Assuming perfectly
+// independent full yields for both crops sharing the same ground at the
+// same time would overstate the honest case; a flat discount is a more
+// conservative default than claiming false precision either way.
+const INTERCROP_YIELD_DISCOUNT = 0.9;
+
+/** estimatedYieldKg, discounted by INTERCROP_YIELD_DISCOUNT when genuinely intercropped — see isGenuinelyIntercropped. */
+export function estimatedYieldKgAdjusted(p: Planting, bedAreaM2: number, allPlantings: Planting[]): number {
+  const base = estimatedYieldKg(p, bedAreaM2);
+  return isGenuinelyIntercropped(p, allPlantings) ? base * INTERCROP_YIELD_DISCOUNT : base;
+}
+
+// Whether the crop picker offers bed-SHARING (splitting a bed by fraction —
+// intercropping or a manual split) at all. Off by default: sharing a bed
+// well needs some gardening judgement (companion compatibility, genuine
+// space), so — same reasoning as space-hungry vines defaulting to "grow
+// elsewhere" — this is an opt-in the farmer turns on once they want it,
+// not a choice offered unprompted on every single crop added. Note this is
+// SEPARATE from staggered succession (lib/crop-autosuggest.ts's own
+// same-crop bed-thirds staggering, and the manual "half/third/quarter"
+// picker use for a NEW succession slot of the SAME crop) — those aren't
+// gated by this, only genuinely DIFFERENT crops sharing space are the
+// concern this toggle exists for. In practice the picker gates the whole
+// fraction-choice UI behind it for simplicity, since re-deriving "is this
+// specific pick going to be same-crop-succession or genuine intercropping"
+// before the crop is even chosen isn't reliably knowable up front.
+const ALLOW_BED_SHARING_KEY = 'imbewu_allow_bed_sharing_v1';
+
+export function loadAllowBedSharing(): boolean {
+  if (typeof window === 'undefined' || !window.localStorage) return false;
+  try {
+    return window.localStorage.getItem(ALLOW_BED_SHARING_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function saveAllowBedSharing(allow: boolean): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    window.localStorage.setItem(ALLOW_BED_SHARING_KEY, allow ? '1' : '0');
+  } catch {
+    // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
+  }
+}
+
+/**
  * Space-hungry crops (vigorous vines, block-planted grains) don't share a
  * bed well — recommend a dedicated area instead of splitting/intercropping.
  * Threshold matches the catalog's own "give it room"/"vigorous vine" notes:
@@ -331,7 +413,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
-    const kg = estimatedYieldKg(p, bed.areaM2);
+    const kg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
     kgByMonth[harvestMonth(p.sowMonth, crop.daysToHarvest)] += kg;
     kgByCrop.set(crop.key, (kgByCrop.get(crop.key) ?? 0) + kg);
   }

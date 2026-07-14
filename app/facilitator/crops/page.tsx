@@ -21,9 +21,9 @@ import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem } from '@/lib/crop-plan';
 import {
-  loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
+  loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, suggestSubstituteCrop,
-  loadFavouriteCropKeys, saveFavouriteCropKeys,
+  loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, loadAllowBedSharing, saveAllowBedSharing,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
@@ -356,11 +356,25 @@ export default function FacilitatorCropsPage() {
     });
   }
 
+  // Off by default — sharing a bed between crops (intercropping, or just a
+  // manual split) needs a bit of gardening judgement, so it's a one-time
+  // opt-in rather than offered unprompted on every crop added (same
+  // reasoning as space-hungry vines defaulting to "grow elsewhere").
+  const [allowBedSharing, setAllowBedSharing] = useState(false);
+  function toggleAllowBedSharing() {
+    setAllowBedSharing((prev) => {
+      const next = !prev;
+      saveAllowBedSharing(next);
+      return next;
+    });
+  }
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
     setFavouriteCropKeys(loadFavouriteCropKeys());
+    setAllowBedSharing(loadAllowBedSharing());
     setMounted(true);
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
@@ -474,16 +488,16 @@ export default function FacilitatorCropsPage() {
   // never shows six already-past months before anything useful starts.
   const monthOrder = useMemo(() => Array.from({ length: 12 }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
-  const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKg(p, bedAreaFor(p.bedId)), 0);
+  const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
   // Already-growing crops are informational (the farmer planted them before
   // using the app) — split them out of the "to plant" total the same way
   // the design map's BOQ keeps existing features out of the budget.
-  const existingYieldKg = plantings.filter((p) => p.existing).reduce((sum, p) => sum + estimatedYieldKg(p, bedAreaFor(p.bedId)), 0);
+  const existingYieldKg = plantings.filter((p) => p.existing).reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
   const newYieldKg = totalYieldKg - existingYieldKg;
   const yieldByBed = beds
     .map((b) => ({
       bed: b,
-      kg: plantings.filter((p) => p.bedId === b.id).reduce((sum, p) => sum + estimatedYieldKg(p, b.areaM2), 0),
+      kg: plantings.filter((p) => p.bedId === b.id).reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, b.areaM2, plantings), 0),
     }))
     .filter((row) => row.kg > 0);
 
@@ -859,6 +873,8 @@ export default function FacilitatorCropsPage() {
           isEditing={!!editingPlantingId}
           favouriteCropKeys={favouriteCropKeys}
           onToggleFavourite={toggleFavourite}
+          allowBedSharing={allowBedSharing}
+          onEnableBedSharing={toggleAllowBedSharing}
           onPick={pickCrop}
           onBack={() => setPickerCrop(null)}
           onMonth={setPickerMonth}
@@ -872,6 +888,7 @@ export default function FacilitatorCropsPage() {
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
+          allPlantings={plantings}
           substitute={suggestSubstituteCrop(activePlanting, plantings)}
           onEdit={() => { openEditPicker(activePlanting); setActivePlanting(null); }}
           onRemove={() => { removePlanting(activePlanting.id); setActivePlanting(null); }}
@@ -1099,7 +1116,16 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
-  const segments = barSegments(planting.sowMonth, harvest, currentMonth);
+  // Harvest isn't always a single-month instant — cut-and-come-again crops
+  // (harvestWindowMonths) go on yielding for several more months after the
+  // first picking, and the bar should show the WHOLE window you can pick
+  // from, not just claim "ready" for one month then vanish while the plant
+  // is still actively producing. storageMonths crops (one-shot harvest,
+  // kept afterward) are deliberately NOT extended here — that's a
+  // fresh-in-the-BED question, not a stored-on-the-shelf one; see the Food
+  // availability chart for the storage story.
+  const harvestEnd = harvest + (crop.harvestWindowMonths ?? 0);
+  const segments = barSegments(planting.sowMonth, harvestEnd, currentMonth);
   if (!segments.length) return null; // entirely outside the visible 12-month window
   // The transplant marker is anchored to THIS crop's own sow offset (not
   // re-derived independently) so it always lands right after the sow
@@ -1116,6 +1142,11 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
   const totalMonths = segments.reduce((s, seg) => s + segMonthCount(seg), 0);
   const lastSegIdx = segments.length - 1;
+  // How many of the LAST segment's months are the "ready to pick" window —
+  // clipped to that segment's own length, since barSegments may have
+  // trimmed the window at the visible edge.
+  const readyMonths = Math.min((crop.harvestWindowMonths ?? 0) + 1, segMonthCount(segments[lastSegIdx]));
+  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
@@ -1131,16 +1162,18 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${monthLabel(harvest)}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${harvestLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
         >
           {i === 0 ? `${crop.icon} ${crop.name}${fLabel ? ` (${fLabel})` : ''}` : ''}
           {BAR_STYLE === 'solid' && i === lastSegIdx && (
             // The "ready to harvest" marker — a hard colour + a line, not a
-            // blend: a solid gold cap over the last month of the span, with a
-            // crisp divider where it meets the growing colour.
+            // blend: a solid gold cap over the crop's WHOLE fresh-harvest
+            // window (one month for a one-shot harvest, several for a
+            // cut-and-come-again crop), with a crisp divider where it meets
+            // the growing colour.
             <div
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 / segMonthCount(seg)}%`,
+                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonths) / segMonthCount(seg)}%`,
                 background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
               }}
             />
@@ -1166,7 +1199,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 
 function CropPickerModal({
   search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
-  isEditing, favouriteCropKeys, onToggleFavourite, onPick, onBack, onMonth, onConfirm, onClose,
+  isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
 }: {
   search: string;
   onSearch: (v: string) => void;
@@ -1181,6 +1214,8 @@ function CropPickerModal({
   isEditing: boolean;
   favouriteCropKeys: Set<string>;
   onToggleFavourite: (cropKey: string) => void;
+  allowBedSharing: boolean;
+  onEnableBedSharing: () => void;
   onPick: (c: CropDef) => void;
   onBack: () => void;
   onMonth: (m: number) => void;
@@ -1343,27 +1378,46 @@ function CropPickerModal({
             )}
 
             <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How much of the bed?</div>
-            <div className="grid grid-cols-4 gap-1.5 mb-2">
-              {FRACTION_PRESETS.map((f) => (
+            {allowBedSharing || fraction < 1 ? (
+              <>
+                <div className="grid grid-cols-4 gap-1.5 mb-2">
+                  {FRACTION_PRESETS.map((f) => (
+                    <button
+                      key={f.label}
+                      onClick={() => onFraction(f.value)}
+                      className="font-sans font-semibold rounded-lg py-1.5"
+                      style={{
+                        fontSize: 11.5,
+                        background: fraction === f.value ? '#1F4D2B' : '#F5F0E8',
+                        color: fraction === f.value ? '#F7F2E9' : '#5C5040',
+                        border: `1px solid ${fraction === f.value ? '#1F4D2B' : '#E2D8C4'}`,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+                {overlap + fraction > 1.001 && (
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
+                    ⚠ This bed already has {Math.round(overlap * 100)}% committed to other crops over this period — {Math.round((overlap + fraction) * 100)}% total is more than the bed. Still allowed, but they'll compete for space.
+                  </div>
+                )}
+              </>
+            ) : (
+              // Off by default — splitting/intercropping a bed needs a bit of
+              // gardening judgement, so it's a one-time opt-in rather than
+              // offered unprompted on every crop (same reasoning as vines
+              // defaulting to "grow elsewhere"). Once enabled it stays on.
+              <div className="flex items-center justify-between mb-2 px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+                <span className="font-sans font-semibold" style={{ fontSize: 12, color: '#5C5040' }}>Whole bed</span>
                 <button
-                  key={f.label}
-                  onClick={() => onFraction(f.value)}
-                  className="font-sans font-semibold rounded-lg py-1.5"
-                  style={{
-                    fontSize: 11.5,
-                    background: fraction === f.value ? '#1F4D2B' : '#F5F0E8',
-                    color: fraction === f.value ? '#F7F2E9' : '#5C5040',
-                    border: `1px solid ${fraction === f.value ? '#1F4D2B' : '#E2D8C4'}`,
-                    cursor: 'pointer',
-                  }}
+                  onClick={onEnableBedSharing}
+                  className="font-sans underline"
+                  style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
-                  {f.label}
+                  Split this bed (intercrop or stagger a succession)?
                 </button>
-              ))}
-            </div>
-            {overlap + fraction > 1.001 && (
-              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
-                ⚠ This bed already has {Math.round(overlap * 100)}% committed to other crops over this period — {Math.round((overlap + fraction) * 100)}% total is more than the bed. Still allowed, but they'll compete for space.
               </div>
             )}
 
@@ -1388,9 +1442,10 @@ function CropPickerModal({
 
 // ── Planting popover ─────────────────────────────────────────────────────
 
-function PlantingPopover({ planting, bedAreaM2, substitute, onEdit, onRemove, onReplace, onClose }: {
+function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit, onRemove, onReplace, onClose }: {
   planting: Planting;
   bedAreaM2: number;
+  allPlantings: Planting[];
   substitute: CropDef | null;
   onEdit: () => void;
   onRemove: () => void;
@@ -1405,7 +1460,8 @@ function PlantingPopover({ planting, bedAreaM2, substitute, onEdit, onRemove, on
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
-  const yieldKg = estimatedYieldKg(planting, bedAreaM2);
+  const yieldKg = estimatedYieldKgAdjusted(planting, bedAreaM2, allPlantings);
+  const genuinelyIntercropped = isGenuinelyIntercropped(planting, allPlantings);
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 61, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
@@ -1423,8 +1479,13 @@ function PlantingPopover({ planting, bedAreaM2, substitute, onEdit, onRemove, on
         </div>
         {(planting.areaFraction ?? 1) < 1 && (
           <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
-            {fractionLabel(planting.areaFraction ?? 1)} of bed — intercropped
+            {fractionLabel(planting.areaFraction ?? 1)} of bed{genuinelyIntercropped ? ' — intercropped' : ''}
           </div>
+        )}
+        {genuinelyIntercropped && (
+          <p className="font-sans mb-2" style={{ fontSize: 11, color: '#9A8268' }}>
+            Sharing this bed with another crop at the same time — yield estimated at 90% to allow for the two competing a little, not counted as fully independent.
+          </p>
         )}
         {planting.existing && (
           <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: '#5C5040' }}>
