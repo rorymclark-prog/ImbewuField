@@ -19,16 +19,18 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem, FoodValueMonth } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, suggestSubstituteCrop,
+  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth, suggestSubstituteCrop,
   loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, loadAllowBedSharing, saveAllowBedSharing,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
+import type { CropPrice } from '@/lib/crop-prices';
+import { UNPRICED_CROPS, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
@@ -369,12 +371,24 @@ export default function FacilitatorCropsPage() {
     });
   }
 
+  // Farmer edits to the researched default retail/wholesale prices (see
+  // lib/crop-prices.ts) — persisted so a correction sticks across sessions.
+  const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
+  function updatePriceOverride(cropKey: string, price: CropPrice) {
+    setPriceOverrides((prev) => {
+      const next = { ...prev, [cropKey]: price };
+      saveCropPriceOverrides(next);
+      return next;
+    });
+  }
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
     setFavouriteCropKeys(loadFavouriteCropKeys());
     setAllowBedSharing(loadAllowBedSharing());
+    setPriceOverrides(loadCropPriceOverrides());
     setMounted(true);
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
@@ -504,6 +518,7 @@ export default function FacilitatorCropsPage() {
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
   const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds), [plantings, beds]);
+  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides), [plantings, beds, priceOverrides]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -847,7 +862,14 @@ export default function FacilitatorCropsPage() {
               </div>
             </div>
 
-            <FoodAvailabilityChart monthOrder={monthOrder} availability={foodAvailability} />
+            <FoodAvailabilityChart
+              monthOrder={monthOrder}
+              availability={foodAvailability}
+              valueByMonth={foodValueByMonth}
+              plantings={plantings}
+              priceOverrides={priceOverrides}
+              onPriceOverrideChange={updatePriceOverride}
+            />
             <RotationExplanationCard />
 
             <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
@@ -955,7 +977,19 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
 
 // ── Food availability + rotation explanation ────────────────────────────
 
-function FoodAvailabilityChart({ monthOrder, availability }: { monthOrder: number[]; availability: FoodAvailabilityItem[][] }) {
+type FoodValueMode = 'availability' | 'retail' | 'wholesale';
+
+function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantings, priceOverrides, onPriceOverrideChange }: {
+  monthOrder: number[];
+  availability: FoodAvailabilityItem[][];
+  valueByMonth: FoodValueMonth[];
+  plantings: Planting[];
+  priceOverrides: Record<string, CropPrice>;
+  onPriceOverrideChange: (cropKey: string, price: CropPrice) => void;
+}) {
+  const [mode, setMode] = useState<FoodValueMode>('availability');
+  const [editingPrices, setEditingPrices] = useState(false);
+
   const cols = monthOrder.map((m) => {
     const items = availability[m] ?? [];
     return { m, fresh: items.filter((it) => it.status === 'fresh'), stored: items.filter((it) => it.status === 'stored') };
@@ -963,61 +997,168 @@ function FoodAvailabilityChart({ monthOrder, availability }: { monthOrder: numbe
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const BAR_MAX_H = 56;
   const isEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
+  const moneyMax = Math.max(1, ...monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue)));
+
+  const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((k) => !UNPRICED_CROPS.has(k)).sort();
 
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food availability — resilience by month</div>
-      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-        What this plan should put on the table each month — fresh picks, plus anything still keeping in storage
-        from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
-        an exact kg count — see Estimated harvest above for that.
-      </p>
-      <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
-        <span className="inline-flex items-center gap-1.5">
-          <span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh harvest
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> In storage
-        </span>
+
+      <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        {([['availability', '🍽️ Availability'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
+          <button
+            key={m}
+            onClick={() => setMode(m)}
+            className="font-sans font-semibold"
+            style={{
+              fontSize: 11.5, padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
+              background: mode === m ? '#1F4D2B' : 'transparent',
+              color: mode === m ? '#F7F2E9' : '#5C5040',
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
+
+      {mode === 'availability' ? (
+        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+          What this plan should put on the table each month — fresh picks, plus anything still keeping in storage
+          from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
+          an exact kg count — see Estimated harvest above for that.
+        </p>
+      ) : (
+        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+          Estimated Rand value of what&apos;s harvested each month, using researched South African {mode} prices
+          (2026-07-14) — a one-time researched snapshot, not a live market feed, spread across each crop&apos;s own
+          harvest window so the same batch is never counted twice. Edit the prices below to match your own market.
+        </p>
+      )}
+
       {isEmpty ? (
         <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add some plantings to see what&apos;s available month to month.</div>
+      ) : mode === 'availability' ? (
+        <>
+          <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
+            <span className="inline-flex items-center gap-1.5">
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh harvest
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> In storage
+            </span>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <div className="flex" style={{ minWidth: 760, gap: 6 }}>
+              {cols.map(({ m, fresh, stored }, i) => {
+                const total = fresh.length + stored.length;
+                const hPx = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
+                const storedHPx = total === 0 ? 0 : Math.round((stored.length / total) * hPx);
+                const freshHPx = hPx - storedHPx;
+                const title = [...stored, ...fresh]
+                  .map((it) => `${it.icon} ${it.name} — ${it.status === 'fresh' ? 'fresh' : 'stored'}`)
+                  .join('\n');
+                return (
+                  <div key={m} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                    <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                      {total === 0 ? (
+                        <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
+                      ) : (
+                        <div
+                          style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}
+                          title={title}
+                        >
+                          {storedHPx > 0 && <div style={{ height: storedHPx, background: '#D4A017' }} />}
+                          {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FBF6EC' }} />}
+                          {freshHPx > 0 && <div style={{ height: freshHPx, background: '#7FAE6E' }} />}
+                        </div>
+                      )}
+                    </div>
+                    <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
+                      {MONTHS_SHORT[m - 1]}
+                    </div>
+                    <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16 }}>{fresh.map((it) => it.icon).join('')}</div>
+                    <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16, opacity: 0.6 }}>{stored.map((it) => it.icon).join('')}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </>
       ) : (
         <div style={{ overflowX: 'auto' }}>
           <div className="flex" style={{ minWidth: 760, gap: 6 }}>
-            {cols.map(({ m, fresh, stored }, i) => {
-              const total = fresh.length + stored.length;
-              const hPx = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
-              const storedHPx = total === 0 ? 0 : Math.round((stored.length / total) * hPx);
-              const freshHPx = hPx - storedHPx;
-              const title = [...stored, ...fresh]
-                .map((it) => `${it.icon} ${it.name} — ${it.status === 'fresh' ? 'fresh' : 'stored'}`)
-                .join('\n');
+            {monthOrder.map((m, i) => {
+              const val = mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue;
+              const hPx = val <= 0 ? 0 : Math.max(4, Math.round((val / moneyMax) * BAR_MAX_H));
               return (
                 <div key={m} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
                   <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    {total === 0 ? (
+                    {val <= 0 ? (
                       <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
                     ) : (
                       <div
-                        style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}
-                        title={title}
-                      >
-                        {storedHPx > 0 && <div style={{ height: storedHPx, background: '#D4A017' }} />}
-                        {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FBF6EC' }} />}
-                        {freshHPx > 0 && <div style={{ height: freshHPx, background: '#7FAE6E' }} />}
-                      </div>
+                        style={{ width: '60%', height: hPx, borderRadius: 4, background: mode === 'retail' ? '#D4A017' : '#C4A46A' }}
+                        title={`R${val.toFixed(0)} ${mode} value`}
+                      />
                     )}
                   </div>
                   <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
                     {MONTHS_SHORT[m - 1]}
                   </div>
-                  <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16 }}>{fresh.map((it) => it.icon).join('')}</div>
-                  <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16, opacity: 0.6 }}>{stored.map((it) => it.icon).join('')}</div>
+                  <div className="font-mono font-semibold" style={{ fontSize: 11, color: '#20190F', marginTop: 2 }}>
+                    {val > 0 ? `R${Math.round(val)}` : ''}
+                  </div>
                 </div>
               );
             })}
           </div>
+        </div>
+      )}
+
+      {!isEmpty && pricedCropKeys.length > 0 && (
+        <div className="mt-3" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
+          <button
+            onClick={() => setEditingPrices((v) => !v)}
+            className="font-sans underline"
+            style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            {editingPrices ? 'Hide prices' : '✏️ Edit prices used above'}
+          </button>
+          {editingPrices && (
+            <div className="mt-2 space-y-1.5">
+              {pricedCropKeys.map((cropKey) => {
+                const crop = cropByKey(cropKey);
+                const price = priceFor(cropKey, priceOverrides);
+                if (!crop || !price) return null;
+                return (
+                  <div key={cropKey} className="flex items-center gap-2 font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
+                    <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
+                    <label className="flex items-center gap-1">
+                      R
+                      <input
+                        type="number"
+                        value={price.retailPerKg}
+                        onChange={(e) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
+                        style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
+                      />
+                      /kg retail
+                    </label>
+                    <label className="flex items-center gap-1">
+                      R
+                      <input
+                        type="number"
+                        value={price.wholesalePerKg}
+                        onChange={(e) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
+                        style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
+                      />
+                      /kg wholesale
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>

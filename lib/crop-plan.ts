@@ -1,6 +1,7 @@
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, MONTHS_SHORT } from './crop-catalog';
 import { foodGroupOf } from './crop-groups';
+import { priceFor, type CropPrice } from './crop-prices';
 
 export interface PlanBed {
   id: string;
@@ -530,4 +531,51 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[]): F
       })
       .sort((a, b) => (a.status === b.status ? a.name.localeCompare(b.name) : a.status === 'fresh' ? -1 : 1)),
   );
+}
+
+export interface FoodValueMonth {
+  kg: number;
+  retailValue: number;
+  wholesaleValue: number;
+}
+
+/**
+ * A per-month kg/Rand FLOW (not a stock level) — deliberately different
+ * from buildFoodAvailability's "full planting kg shown in every month of
+ * its window" presence framing, which explicitly must NOT be summed (it
+ * would double-count the same batch across every month it's still on the
+ * shelf). This instead spreads a planting's TOTAL estimated yield evenly
+ * across its actual fresh-harvest window (1 month for a one-shot harvest,
+ * harvestWindowMonths+1 for cut-and-come-again) — so summing across all 12
+ * months always equals the planting's real total yield exactly once, safe
+ * to sum for a "value harvested this month" chart. storageMonths crops get
+ * their full value in the harvest month only: shelf life extends how long
+ * the SAME harvest stays usable, it doesn't create additional yield.
+ */
+export function buildFoodValueByMonth(
+  plantings: Planting[],
+  beds: PlanBed[],
+  priceOverrides: Record<string, CropPrice>,
+): FoodValueMonth[] {
+  const byMonth: FoodValueMonth[] = Array.from({ length: 13 }, () => ({ kg: 0, retailValue: 0, wholesaleValue: 0 }));
+  for (const p of plantings) {
+    const crop = cropByKey(p.cropKey);
+    const bed = beds.find((b) => b.id === p.bedId);
+    if (!crop || !bed) continue;
+    const price = priceFor(crop.key, priceOverrides);
+    const totalKg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
+    const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+    const freshSpan = crop.harvestWindowMonths ?? 0;
+    const monthsCount = freshSpan + 1;
+    const kgPerMonth = totalKg / monthsCount;
+    for (let off = 0; off <= freshSpan; off++) {
+      const m = wrapMonth(hMonth + off);
+      byMonth[m].kg += kgPerMonth;
+      if (price) {
+        byMonth[m].retailValue += kgPerMonth * price.retailPerKg;
+        byMonth[m].wholesaleValue += kgPerMonth * price.wholesalePerKg;
+      }
+    }
+  }
+  return byMonth;
 }
