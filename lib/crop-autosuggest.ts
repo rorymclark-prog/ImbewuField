@@ -31,6 +31,15 @@ export interface AutoSuggestAnswers {
   // function reads last season's plantings as existingPlantings, so a
   // rotation-aware year 1 naturally leaves year 2 room to rotate correctly.
   rotateCrops: boolean;
+  // family/hybrid only (commercial mode's whole-bed concentration is a
+  // deliberate farmer choice, not gated by this). Default false: a
+  // space-hungry vine dedicating a whole veg bed to itself for months only
+  // to sit there half-used is a poor default (real permaculture practice
+  // grows these in a dedicated plot/edge/food-forest area, not a precious
+  // rotational veg bed) — so by default they're only RECOMMENDED elsewhere,
+  // never auto-placed. Turning this on restores the old auto-placement
+  // behaviour as an explicit, informed choice.
+  allowVinesInBeds: boolean;
 }
 
 export interface AutoSuggestResult {
@@ -556,9 +565,24 @@ export function autoSuggestPlan(
   // hungry crops compete as ordinary ranked candidates below — a farmer who
   // asked to focus on 2 crops shouldn't have both beds silently claimed by
   // vines before their actual choice is even considered.
+  //
+  // Default (allowVinesInBeds=false): don't auto-place these at all — a vine
+  // dedicating a whole veg bed for months, filling it with nothing else all
+  // year, is a bad outcome for precious rotational bed space (confirmed by a
+  // live farmer report of exactly that). Recommend a dedicated plot / property
+  // edge / food-forest area instead, and only fall back to a veg bed when the
+  // farmer explicitly opts in via the toggle — that opt-in IS the "are you
+  // sure" confirmation this batch engine can offer (there's no farmer-in-the-
+  // loop mid-generation; the review-before-accept screen plus this toggle
+  // together serve the same purpose a runtime popup would).
   if (answers.goal !== 'commercial') {
     const spaceHungry = pool.filter(isSpaceHungry).sort((a, b) => b.yieldKgPerM2 - a.yieldKgPerM2);
+    if (spaceHungry.length && !answers.allowVinesInBeds) {
+      const names = spaceHungry.map((c) => c.name).join(', ');
+      notes.push(`${names} want more room to sprawl than a veg bed can give — grow them in a dedicated plot, along your property edges, or in a food forest area instead. Turn on "Grow big vines in a veg bed anyway" if you'd rather use one of your beds for them.`);
+    }
     for (const crop of spaceHungry) {
+      if (!answers.allowVinesInBeds) continue;
       const bed = beds.filter((b) => !dedicated.has(b.id)).sort((a, b) => b.areaM2 - a.areaM2)[0];
       if (!bed) { notes.push(`${crop.name} wants a whole bed to itself — none free this round.`); continue; }
       // A standard narrow veg bed is too tight for a sprawling vine — its

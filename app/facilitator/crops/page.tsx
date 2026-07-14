@@ -226,6 +226,11 @@ export default function FacilitatorCropsPage() {
   // rotate correctly once you run this again with today's plantings still
   // showing (see the toggle's own blurb in the modal for the honest caveat).
   const [aRotateCrops, setARotateCrops] = useState(true);
+  // Default off — a vine dedicating a whole veg bed for months, filling it
+  // with nothing else all year, is a bad outcome for precious rotational bed
+  // space. Off by default = recommend a dedicated plot/edge/food-forest area
+  // instead; the farmer has to actively opt in to place one in a veg bed.
+  const [aAllowVinesInBeds, setAAllowVinesInBeds] = useState(false);
   const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
 
   function openAutoSuggest() {
@@ -235,6 +240,7 @@ export default function FacilitatorCropsPage() {
     setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
     setARhythm('steady');
     setARotateCrops(true);
+    setAAllowVinesInBeds(false);
     setAutoResult(null);
     setAutoPhase('questions');
   }
@@ -253,6 +259,7 @@ export default function FacilitatorCropsPage() {
       groups: aGroups,
       rhythm: aRhythm,
       rotateCrops: aRotateCrops,
+      allowVinesInBeds: aAllowVinesInBeds,
     };
     setAutoResult(autoSuggestPlan(answers, pattern, beds, plantings, currentMonth));
     setAutoPhase('review');
@@ -322,7 +329,17 @@ export default function FacilitatorCropsPage() {
   const patternMeta = PATTERN_META[pattern];
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
-  const plantings = plan?.plantings ?? [];
+  // Plantings whose bed no longer exists in the current design (a bed was
+  // deleted/replaced since they were added) are dropped from every computed
+  // view — they'd otherwise surface as a confusing "Unknown bed" in tasks/
+  // yield/BOQ/report while already being invisible on the bed grid itself
+  // (each BedRow only ever shows plantings matching its OWN bed.id). The
+  // underlying plan.plantings array is left untouched, only this derived
+  // read is filtered, so nothing is actually deleted.
+  const plantings = useMemo(() => {
+    const bedIds = new Set(beds.map((b) => b.id));
+    return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
+  }, [plan, beds]);
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
@@ -717,6 +734,7 @@ export default function FacilitatorCropsPage() {
           groups={aGroups} onToggleGroup={toggleGroup}
           rhythm={aRhythm} onRhythm={setARhythm}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
+          allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -1130,7 +1148,8 @@ const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
 
 function AutoSuggestModal({
   phase, goal, onGoal, household, onHousehold, focusCount, onFocusCount,
-  groups, onToggleGroup, rhythm, onRhythm, rotateCrops, onRotateCrops, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  groups, onToggleGroup, rhythm, onRhythm, rotateCrops, onRotateCrops,
+  allowVinesInBeds, onAllowVinesInBeds, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -1139,6 +1158,7 @@ function AutoSuggestModal({
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
+  allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
@@ -1249,6 +1269,22 @@ function AutoSuggestModal({
                   Avoids repeating the same crop family on a bed that just grew it — good practice, and keeps
                   next season's beds rotation-friendly too (run this again next season with this year's plan still
                   showing, and it reads that history).
+                </div>
+              </span>
+            </button>
+
+            <button
+              onClick={() => onAllowVinesInBeds(!allowVinesInBeds)}
+              className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
+              style={tileStyle(allowVinesInBeds)}
+            >
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{allowVinesInBeds ? '🍉' : '⭘'}</span>
+              <span>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Grow big vines in a veg bed anyway</div>
+                <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
+                  Off by default: watermelon, pumpkin and butternut sprawl too much for a veg bed and only fill it
+                  for part of the year — we'll recommend a dedicated plot, a property edge, or a food forest area
+                  instead. Turn this on only if you'd rather use one of your regular beds for them anyway.
                 </div>
               </span>
             </button>
