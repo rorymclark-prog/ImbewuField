@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Shape, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
-import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList, Plus, Minus } from 'lucide-react';
+import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList, Plus, Minus, ChevronDown, ChevronUp } from 'lucide-react';
 import { listFarmers, saveDesign, updateDesign, myDesigns, deleteDesign, shareDesign } from '@/lib/db/queries';
 import type { Profile, Design } from '@/lib/db/types';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
@@ -697,6 +697,19 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const chooseUiMode = (m: 'guided' | 'pro') => {
     setUiMode(m);
     try { localStorage.setItem('imbewu_facilitator_uimode', m); } catch { /* best effort */ }
+  };
+  // Bill of quantities: collapsed by default (gogo-first — a facilitator/funder
+  // opens it on demand rather than having cost line-items always on screen).
+  const [boqOpen, setBoqOpen] = useState(false);
+  useEffect(() => {
+    try { const v = localStorage.getItem('imbewu_facilitator_boq_open'); if (v === '1') setBoqOpen(true); } catch { /* unavailable */ }
+  }, []);
+  const toggleBoqOpen = () => {
+    setBoqOpen((prev) => {
+      const next = !prev;
+      try { localStorage.setItem('imbewu_facilitator_boq_open', next ? '1' : '0'); } catch { /* best effort */ }
+      return next;
+    });
   };
   const [stageScale, setStageScale] = useState(1);
   const [stagePos, setStagePos] = useState({ x: 0, y: 0 });
@@ -3966,10 +3979,19 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           )}
 
           {/* BOQ — split into what's ALREADY on the land (no cost) and what you're
-              adding (costed), so the budget only counts things you'll actually buy. */}
+              adding (costed), so the budget only counts things you'll actually buy.
+              Collapsed by default: a gogo laying out a food forest doesn't need cost
+              line-items always on screen; a facilitator/funder opens it on demand. */}
           <div>
-            <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#9A8268' }}>Bill of quantities</div>
-            {items.length || lines.length ? (
+            <button onClick={toggleBoqOpen} aria-expanded={boqOpen}
+              className="w-full flex items-center justify-between text-xs font-mono uppercase tracking-wider mb-1.5 py-1"
+              style={{ color: '#9A8268' }}>
+              <span className="inline-flex items-center gap-1.5"><ClipboardList size={13} /> Budget / Bill of quantities</span>
+              {boqOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+            {!boqOpen ? (
+              <p className="text-[11px] font-display" style={{ color: '#9A8268' }}>Tap to view costed quantities.</p>
+            ) : items.length || lines.length ? (
               <div className="space-y-2.5">
 
                 {/* Already on the land — existing features, not a purchase */}
