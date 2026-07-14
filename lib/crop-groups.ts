@@ -25,6 +25,7 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   maize: 'staple_grain',
   'dry-beans': 'legume',
   'green-beans': 'legume',
+  'broad-beans': 'legume',
   groundnuts: 'legume',
   peas: 'legume',
   'swiss-chard': 'leafy_green',

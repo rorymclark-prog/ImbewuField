@@ -113,7 +113,9 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
-      'mild-frost': [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
+      // Genuinely frost-hardy — light frost doesn't touch it, so a
+      // mild-frost hinterland site can sow it right through June/July too.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 60,
     spacingCm: 30,
@@ -128,7 +130,9 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8, 9],
       winter: [1, 2, 3, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      // Kale shrugs off far worse than light frost — its own note below says
+      // frost sweetens it — so it's a genuine May-Jul winter crop here.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 70,
     transplant: true,
@@ -144,7 +148,8 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8, 9],
       winter: [1, 2, 3, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10],
+      // Classic winter crop — heads firm up better with a cool spell.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     },
     daysToHarvest: 90,
     transplant: true,
@@ -160,7 +165,8 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Foliage handles light frost fine and the root's underground anyway.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     },
     daysToHarvest: 80,
     spacingCm: 8,
@@ -175,7 +181,8 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Same logic as carrots — root crop, foliage tolerates light frost.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     },
     daysToHarvest: 60,
     spacingCm: 10,
@@ -268,7 +275,8 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      // Lettuce bolts in heat, not cold — winter is actually its easy season.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 45,
     spacingCm: 25,
@@ -328,12 +336,33 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8],
       winter: [2, 3, 4],
       'all-year': [1, 2, 3, 4, 8, 9],
-      'mild-frost': [1, 2, 3, 4, 8, 9],
+      // Peas are famously frost-hardy — a cold snap sweetens the pods, same
+      // idea as kale — so this is one of the best true winter crops here.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9],
     },
     daysToHarvest: 65,
     spacingCm: 8,
     yieldKgPerM2: 2,
     note: 'Give climbing types a trellis; pick pods while still glossy for the sweetest peas.',
+  },
+  {
+    key: 'broad-beans',
+    name: 'Broad beans (fava beans)',
+    icon: '🫘',
+    sowMonths: {
+      // Unlike dry-beans/green-beans, broad beans are bred to overwinter —
+      // real frost doesn't kill them, so unlike every other 'summer'-pattern
+      // crop they get genuine May-Jul coverage even under hard-frost
+      // interior conditions, not just the mild-frost hinterland pattern.
+      summer: [3, 4, 5, 6, 7],
+      winter: [3, 4, 5],
+      'all-year': [2, 3, 4, 5, 6, 7, 8],
+      'mild-frost': [2, 3, 4, 5, 6, 7, 8],
+    },
+    daysToHarvest: 100,
+    spacingCm: 20,
+    yieldKgPerM2: 1.5,
+    note: "The classic 'grows through winter' legume — sow in autumn, it stands through frost and pods in spring.",
   },
   {
     key: 'broccoli',
@@ -343,7 +372,8 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8],
       winter: [1, 2, 3, 8],
       'all-year': [1, 2, 3, 4, 8, 9],
-      'mild-frost': [1, 2, 3, 4, 8, 9],
+      // Another crop that heads up better after a cool spell.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9],
     },
     daysToHarvest: 80,
     transplant: true,
@@ -389,7 +419,8 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9],
       winter: [2, 3, 4, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
-      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
+      // Bolts in heat, not cold — same logic as lettuce.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     },
     daysToHarvest: 45,
     spacingCm: 10,
