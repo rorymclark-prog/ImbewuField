@@ -1176,9 +1176,10 @@ function FoodAvailabilityChart({
   // width — buildFoodValueByMonth is keyed by calendar month regardless of
   // how many columns DISPLAY_MONTHS happens to show, so this is the honest
   // "whole year" figure even when the timeline itself is showing 15+ columns.
-  const totalHarvestableValue = (mode === 'retail' || mode === 'wholesale')
-    ? valueByMonth.slice(1, 13).reduce((s, v) => s + (mode === 'retail' ? v.retailValue : v.wholesaleValue), 0) * lossFactor
+  const fullHarvestableValue = (mode === 'retail' || mode === 'wholesale')
+    ? valueByMonth.slice(1, 13).reduce((s, v) => s + (mode === 'retail' ? v.retailValue : v.wholesaleValue), 0)
     : 0;
+  const totalHarvestableValue = fullHarvestableValue * lossFactor;
   const totalCashIncome = totalHarvestableValue * sellFactor;
   const totalHomeValue = totalHarvestableValue * (1 - sellFactor);
 
@@ -1219,7 +1220,17 @@ function FoodAvailabilityChart({
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
           Estimated Rand value of what&apos;s harvested each month, using researched South African {mode} prices
           (2026-07-14) — a one-time researched snapshot, not a live market feed, spread across each crop&apos;s own
-          harvest window so the same batch is never counted twice. Edit the prices below to match your own market.
+          harvest window so the same batch is never counted twice.{' '}
+          {mode === 'retail' ? (
+            <>This is what you&apos;d get selling direct to the customer yourself — a farm stall, neighbours, a
+            local market stand — at ordinary non-organic retail prices, not a premium organic markup. You keep the
+            full retail margin because there&apos;s no middleman.</>
+          ) : (
+            <>This is what you&apos;d get selling in bulk to someone else who then resells it — another retailer,
+            a stall-holder, a trader — lower per-kg than retail, but in volume and off your hands in one sale
+            rather than piece by piece.</>
+          )}{' '}
+          Edit the prices below to match your own market.
         </p>
       )}
 
@@ -1257,6 +1268,11 @@ function FoodAvailabilityChart({
             {totalHomeValue > 0.5 && (
               <div className="font-mono" style={{ fontSize: 13, color: '#5C5040', marginTop: 2 }}>
                 + R{Math.round(totalHomeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-consumption value (not cash — what you&apos;d have paid to buy it)</span>
+              </div>
+            )}
+            {(cashflowSettings.sellPercent < 100 || cashflowSettings.lossPercent > 0) && (
+              <div className="font-mono" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 6, paddingTop: 6, borderTop: '1px dashed #E2D8C4' }}>
+                R{Math.round(fullHarvestableValue).toLocaleString()} full {mode} value if everything sold, nothing lost
               </div>
             )}
           </div>
