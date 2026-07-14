@@ -579,3 +579,69 @@ export function buildFoodValueByMonth(
   }
   return byMonth;
 }
+
+/**
+ * What fraction of the total bed area is actually working for you each
+ * month — a bed is "occupied" from sow month through the end of its
+ * fresh-harvest window (harvestWindowMonths), same span PlantingBar draws:
+ * a cut-and-come-again crop still physically holds the bed while it keeps
+ * producing, but a storageMonths crop's shelf life happens OFF the bed (in
+ * a shed/pantry), so that doesn't extend occupancy. 1-indexed 13-slot like
+ * the other month aggregations here ([0] unused). Not capped at 100% — a
+ * bed genuinely over-committed (stacked fractional plantings summing past
+ * 1) should show as an honest >100%, not be silently clamped.
+ */
+export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[]): number[] {
+  const totalArea = beds.reduce((s, b) => s + b.areaM2, 0);
+  const occupiedArea = Array<number>(13).fill(0);
+  if (totalArea <= 0) return occupiedArea;
+  for (const p of plantings) {
+    const crop = cropByKey(p.cropKey);
+    const bed = beds.find((b) => b.id === p.bedId);
+    if (!crop || !bed) continue;
+    const areaHere = bed.areaM2 * (p.areaFraction ?? 1);
+    const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+    const hEnd = hMonth + (crop.harvestWindowMonths ?? 0);
+    const spanMonths = ((hEnd - p.sowMonth) % 12 + 12) % 12 + 1;
+    let m = p.sowMonth;
+    for (let i = 0; i < spanMonths; i++) {
+      occupiedArea[m] += areaHere;
+      m = m === 12 ? 1 : m + 1;
+    }
+  }
+  return occupiedArea.map((a) => a / totalArea);
+}
+
+export interface CashflowSettings {
+  /** % of the harvestable value actually SOLD (the rest is assumed home-consumed). */
+  sellPercent: number;
+  /** % of yield assumed LOST to disease, failure or underperformance before it ever reaches "harvestable". */
+  lossPercent: number;
+}
+
+const CASHFLOW_SETTINGS_KEY = 'imbewu_cashflow_settings_v1';
+const DEFAULT_CASHFLOW_SETTINGS: CashflowSettings = { sellPercent: 100, lossPercent: 0 };
+
+export function loadCashflowSettings(): CashflowSettings {
+  if (typeof window === 'undefined' || !window.localStorage) return DEFAULT_CASHFLOW_SETTINGS;
+  try {
+    const raw = window.localStorage.getItem(CASHFLOW_SETTINGS_KEY);
+    if (!raw) return DEFAULT_CASHFLOW_SETTINGS;
+    const parsed = JSON.parse(raw);
+    return {
+      sellPercent: typeof parsed.sellPercent === 'number' ? parsed.sellPercent : DEFAULT_CASHFLOW_SETTINGS.sellPercent,
+      lossPercent: typeof parsed.lossPercent === 'number' ? parsed.lossPercent : DEFAULT_CASHFLOW_SETTINGS.lossPercent,
+    };
+  } catch {
+    return DEFAULT_CASHFLOW_SETTINGS;
+  }
+}
+
+export function saveCashflowSettings(settings: CashflowSettings): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    window.localStorage.setItem(CASHFLOW_SETTINGS_KEY, JSON.stringify(settings));
+  } catch {
+    // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
+  }
+}

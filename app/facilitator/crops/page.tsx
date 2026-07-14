@@ -19,11 +19,12 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem, FoodValueMonth } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem, FoodValueMonth, CashflowSettings } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth, suggestSubstituteCrop,
-  loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, loadAllowBedSharing, saveAllowBedSharing,
+  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth,
+  buildFieldUtilizationByMonth, suggestSubstituteCrop, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
@@ -35,12 +36,13 @@ import { UNPRICED_CROPS, priceFor, loadCropPriceOverrides, saveCropPriceOverride
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
 // The rolling timeline shows this many months ahead from today (column 0),
-// scrollable — a full 2 years rather than a hard 12-month wall, so a
-// genuinely-reachable future planting (or a farmer just wanting to look
-// ahead into "next year") isn't cut off arbitrarily at column 12. Grid
-// container min-widths below scale off this so columns stay a readable
-// size rather than getting squeezed as this grows.
-const DISPLAY_MONTHS = 24;
+// scrollable — a full year plus a few months' overflow (not a hard
+// 12-month wall, and not a full 2nd year either — "today's date till next
+// this date, overflow by 2-3 months" is the ask this matches), so a
+// genuinely-reachable future planting isn't cut off arbitrarily at column
+// 12. Grid container min-widths below scale off this so columns stay a
+// readable size rather than getting squeezed as this grows.
+const DISPLAY_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
@@ -102,17 +104,28 @@ interface Segment { start: number; end: number }
 // A sowMonth on its own is ambiguous without a year (there's no year field
 // anywhere in this data model) — it could mean "the next time this month
 // comes around" OR "the most recent time it happened" (e.g. an `existing`
-// crop sown a couple of months ago, already growing). Resolving it as
-// ALWAYS-FORWARD broke exactly that case: an existing tomato planting sown
-// in May rendered as if it wouldn't be sown for another 10 months, instead
-// of showing it already in progress with harvest coming up soon. Instead,
-// pick whichever direction (forward or back) is NEARER to today — auto-
-// suggest's own output is always ≤5 months forward anyway (its own
-// DELAYED_START_THRESHOLD_MONTHS gate), so this never changes behaviour
-// there; it only fixes the ambiguous manual/existing cases.
+// crop sown a couple of months ago, already growing). For an EXISTING crop,
+// picking whichever direction (forward or back) is NEARER to today is
+// correct — that's specifically for a farmer-confirmed already-growing
+// crop, which really could be a few months in the past.
 function nearestSignedOffset(m: number, originMonth: number): number {
   const fwd = ((m - originMonth) % 12 + 12) % 12; // 0..11
   return fwd > 6 ? fwd - 12 : fwd; // prefer whichever direction is closer; ties favour forward
+}
+
+// For a NOT-YET-existing (planned/suggested, never confirmed as actually
+// sown) planting, "nearest direction" is the WRONG resolution — it's never
+// legitimately in the past; it hasn't happened yet. This matters concretely
+// now that fillRemainingGaps (lib/crop-autosuggest.ts) can place a sowMonth
+// up to 11 months forward: nearestSignedOffset flips anything past 6 months
+// forward to read as "months ago" instead, making a freshly-suggested,
+// never-sown crop render as an already-concluded phantom the moment it's
+// generated (not just after time passes) — exactly the "why does this
+// start from Feb" bug this was built to fix. Always resolves forward
+// (0-11), matching how the auto-suggest engine itself always chooses a
+// sowMonth for a non-existing entry in the first place.
+function forwardOnlyOffset(m: number, originMonth: number): number {
+  return ((m - originMonth) % 12 + 12) % 12;
 }
 
 /**
@@ -120,13 +133,13 @@ function nearestSignedOffset(m: number, originMonth: number): number {
  * space, clipped to the DISPLAY_MONTHS-column window. `harvest` is always
  * the crop's OWN forward span from `sowMonth` (a crop never takes longer
  * than ~12 months, so this offset is unambiguous regardless of "today");
- * only the sow event's OWN position relative to today needs the
- * nearest-direction resolution above. Returns [] if the whole span falls
- * outside the visible window (a long-since-fully-harvested existing crop,
- * or a genuinely far-future manual entry).
+ * `sowOffset` is the CALLER's already-resolved position of the sow event
+ * itself (nearest-direction for an existing crop, forward-only otherwise —
+ * see nearestSignedOffset/forwardOnlyOffset above). Returns [] if the whole
+ * span falls outside the visible window (a long-since-fully-harvested
+ * existing crop, or a genuinely far-future manual entry).
  */
-function barSegments(sowMonth: number, harvest: number, originMonth: number): Segment[] {
-  const sowOffset = nearestSignedOffset(sowMonth, originMonth);
+function barSegments(sowOffset: number, sowMonth: number, harvest: number): Segment[] {
   const spanMonths = ((harvest - sowMonth) % 12 + 12) % 12; // crop's own forward duration, 0-11
   const harvestOffset = sowOffset + spanMonths;
   const start = Math.max(sowOffset, 0);
@@ -391,6 +404,17 @@ export default function FacilitatorCropsPage() {
     });
   }
 
+  // Cashflow view settings — % of harvestable value actually sold (the rest
+  // feeds the household) and % assumed lost to disease/failure/underperformance
+  // before it ever becomes harvestable. No default loss (0%) — inventing a
+  // "typical" loss rate isn't something to guess at; it's the farmer's own
+  // estimate to set.
+  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>({ sellPercent: 100, lossPercent: 0 });
+  function updateCashflowSettings(next: CashflowSettings) {
+    setCashflowSettings(next);
+    saveCashflowSettings(next);
+  }
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
@@ -398,6 +422,7 @@ export default function FacilitatorCropsPage() {
     setFavouriteCropKeys(loadFavouriteCropKeys());
     setAllowBedSharing(loadAllowBedSharing());
     setPriceOverrides(loadCropPriceOverrides());
+    setCashflowSettings(loadCashflowSettings());
     setMounted(true);
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
@@ -529,6 +554,7 @@ export default function FacilitatorCropsPage() {
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
   const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds), [plantings, beds]);
   const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides), [plantings, beds, priceOverrides]);
+  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds), [plantings, beds]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -882,9 +908,12 @@ export default function FacilitatorCropsPage() {
               monthOrder={monthOrder}
               availability={foodAvailability}
               valueByMonth={foodValueByMonth}
+              utilizationByMonth={fieldUtilizationByMonth}
               plantings={plantings}
               priceOverrides={priceOverrides}
               onPriceOverrideChange={updatePriceOverride}
+              cashflowSettings={cashflowSettings}
+              onCashflowSettingsChange={updateCashflowSettings}
             />
             <RotationExplanationCard />
 
@@ -993,18 +1022,25 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
 
 // ── Food availability + rotation explanation ────────────────────────────
 
-type FoodValueMode = 'availability' | 'retail' | 'wholesale';
+type FoodValueMode = 'availability' | 'utilization' | 'retail' | 'wholesale';
 
-function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantings, priceOverrides, onPriceOverrideChange }: {
+function FoodAvailabilityChart({
+  monthOrder, availability, valueByMonth, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
+  cashflowSettings, onCashflowSettingsChange,
+}: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
   valueByMonth: FoodValueMonth[];
+  utilizationByMonth: number[];
   plantings: Planting[];
   priceOverrides: Record<string, CropPrice>;
   onPriceOverrideChange: (cropKey: string, price: CropPrice) => void;
+  cashflowSettings: CashflowSettings;
+  onCashflowSettingsChange: (s: CashflowSettings) => void;
 }) {
   const [mode, setMode] = useState<FoodValueMode>('availability');
   const [editingPrices, setEditingPrices] = useState(false);
+  const isMoneyMode = mode === 'retail' || mode === 'wholesale';
 
   const cols = monthOrder.map((m) => {
     const items = availability[m] ?? [];
@@ -1013,16 +1049,29 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const BAR_MAX_H = 56;
   const isEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
-  const moneyMax = Math.max(1, ...monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue)));
+  const lossFactor = 1 - cashflowSettings.lossPercent / 100;
+  const sellFactor = cashflowSettings.sellPercent / 100;
+  const moneyMax = Math.max(1, ...monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue) * lossFactor));
+  const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
 
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((k) => !UNPRICED_CROPS.has(k)).sort();
 
+  // Total across the TRUE 12-month cycle (indices 1-12), not the display
+  // width — buildFoodValueByMonth is keyed by calendar month regardless of
+  // how many columns DISPLAY_MONTHS happens to show, so this is the honest
+  // "whole year" figure even when the timeline itself is showing 15+ columns.
+  const totalHarvestableValue = (mode === 'retail' || mode === 'wholesale')
+    ? valueByMonth.slice(1, 13).reduce((s, v) => s + (mode === 'retail' ? v.retailValue : v.wholesaleValue), 0) * lossFactor
+    : 0;
+  const totalCashIncome = totalHarvestableValue * sellFactor;
+  const totalHomeValue = totalHarvestableValue * (1 - sellFactor);
+
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food availability — resilience by month</div>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & cashflow — resilience by month</div>
 
-      <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-        {([['availability', '🍽️ Availability'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
+      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        {([['availability', '🍽️ Availability'], ['utilization', '🌱 Field utilization'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
           <button
             key={m}
             onClick={() => setMode(m)}
@@ -1044,12 +1093,58 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
           from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
           an exact kg count — see Estimated harvest above for that.
         </p>
+      ) : mode === 'utilization' ? (
+        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+          How much of your total bed area is actually growing something each month — a quick way to spot a bed
+          sitting idle between plantings. A bed counts as occupied from sowing through the end of its harvest
+          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground).
+        </p>
       ) : (
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
           Estimated Rand value of what&apos;s harvested each month, using researched South African {mode} prices
           (2026-07-14) — a one-time researched snapshot, not a live market feed, spread across each crop&apos;s own
           harvest window so the same batch is never counted twice. Edit the prices below to match your own market.
         </p>
+      )}
+
+      {isMoneyMode && !isEmpty && (
+        <div className="rounded-xl p-3 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+              % sold (rest feeds the household)
+            </span>
+            <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.sellPercent}%</span>
+          </div>
+          <input
+            type="range" min={0} max={100} value={cashflowSettings.sellPercent}
+            onChange={(e) => onCashflowSettingsChange({ ...cashflowSettings, sellPercent: Number(e.target.value) })}
+            style={{ width: '100%', accentColor: '#1F4D2B' }}
+          />
+          <div className="flex items-center justify-between mb-2 mt-2">
+            <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+              % expected loss (disease, failure, underperformance)
+            </span>
+            <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.lossPercent}%</span>
+          </div>
+          <input
+            type="range" min={0} max={100} value={cashflowSettings.lossPercent}
+            onChange={(e) => onCashflowSettingsChange({ ...cashflowSettings, lossPercent: Number(e.target.value) })}
+            style={{ width: '100%', accentColor: '#B33A3A' }}
+          />
+          <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+            <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
+              Estimated for the year
+            </div>
+            <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>
+              R{Math.round(totalCashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#8C7A62' }}>cash income ({cashflowSettings.sellPercent}% sold)</span>
+            </div>
+            {totalHomeValue > 0.5 && (
+              <div className="font-mono" style={{ fontSize: 13, color: '#5C5040', marginTop: 2 }}>
+                + R{Math.round(totalHomeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-consumption value (not cash — what you&apos;d have paid to buy it)</span>
+              </div>
+            )}
+          </div>
+        </div>
       )}
 
       {isEmpty ? (
@@ -1101,11 +1196,42 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
             </div>
           </div>
         </>
+      ) : mode === 'utilization' ? (
+        <div style={{ overflowX: 'auto' }}>
+          <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
+            {monthOrder.map((m, i) => {
+              const util = utilizationByMonth[m] ?? 0;
+              const hPx = util <= 0 ? 0 : Math.max(4, Math.round((util / utilMax) * BAR_MAX_H));
+              const pct = Math.round(util * 100);
+              return (
+                <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                  <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                    {util <= 0 ? (
+                      <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
+                    ) : (
+                      <div
+                        style={{ width: '60%', height: hPx, borderRadius: 4, background: pct > 100 ? '#B33A3A' : '#5C7FA6' }}
+                        title={`${pct}% of bed area occupied`}
+                      />
+                    )}
+                  </div>
+                  <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
+                    {MONTHS_SHORT[m - 1]}
+                  </div>
+                  <div className="font-mono font-semibold" style={{ fontSize: 11, color: pct > 100 ? '#B33A3A' : '#20190F', marginTop: 2 }}>
+                    {pct}%
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       ) : (
         <div style={{ overflowX: 'auto' }}>
           <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
             {monthOrder.map((m, i) => {
-              const val = mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue;
+              const rawVal = mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue;
+              const val = rawVal * lossFactor;
               const hPx = val <= 0 ? 0 : Math.max(4, Math.round((val / moneyMax) * BAR_MAX_H));
               return (
                 <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
@@ -1115,7 +1241,7 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
                     ) : (
                       <div
                         style={{ width: '60%', height: hPx, borderRadius: 4, background: mode === 'retail' ? '#D4A017' : '#C4A46A' }}
-                        title={`R${val.toFixed(0)} ${mode} value`}
+                        title={`R${val.toFixed(0)} ${mode} value${cashflowSettings.lossPercent ? ` (after ${cashflowSettings.lossPercent}% assumed loss)` : ''}`}
                       />
                     )}
                   </div>
@@ -1287,12 +1413,19 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // fresh-in-the-BED question, not a stored-on-the-shelf one; see the Food
   // availability chart for the storage story.
   const harvestEnd = harvest + (crop.harvestWindowMonths ?? 0);
-  const segments = barSegments(planting.sowMonth, harvestEnd, currentMonth);
-  if (!segments.length) return null; // entirely outside the visible 12-month window
+  // A farmer-confirmed already-growing crop can legitimately be a few
+  // months in the past (nearest direction); a planned-but-not-yet-sown one
+  // (auto-suggested or manually added) never can be — it hasn't happened,
+  // so it always resolves to its NEXT reachable occurrence. See
+  // forwardOnlyOffset's own comment for why this matters concretely now.
+  const sowOffset = planting.existing
+    ? nearestSignedOffset(planting.sowMonth, currentMonth)
+    : forwardOnlyOffset(planting.sowMonth, currentMonth);
+  const segments = barSegments(sowOffset, planting.sowMonth, harvestEnd);
+  if (!segments.length) return null; // entirely outside the visible window
   // The transplant marker is anchored to THIS crop's own sow offset (not
   // re-derived independently) so it always lands right after the sow
   // segment, never contradicting it.
-  const sowOffset = nearestSignedOffset(planting.sowMonth, currentMonth);
   const trOffset = crop.transplant && !planting.existing ? sowOffset + 1 : null;
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
@@ -1630,6 +1763,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
+  const harvestEnd = harvest + (crop.harvestWindowMonths ?? 0);
+  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
   const yieldKg = estimatedYieldKgAdjusted(planting, bedAreaM2, allPlantings);
   const genuinelyIntercropped = isGenuinelyIntercropped(planting, allPlantings);
   return (
@@ -1663,7 +1798,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
           </div>
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-          <div>Sow {monthLabel(planting.sowMonth)} → harvest {monthLabel(harvest)}</div>
+          <div>Sow {monthLabel(planting.sowMonth)} → harvest {harvestLabel}</div>
           <div>Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest</div>
           <div>{crop.note}</div>
         </div>
