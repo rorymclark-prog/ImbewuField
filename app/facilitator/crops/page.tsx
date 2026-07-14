@@ -23,6 +23,7 @@ import type { PlanBed, Planting, CropPlanState, CropTask } from '@/lib/crop-plan
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, suggestSubstituteCrop,
+  loadFavouriteCropKeys, saveFavouriteCropKeys,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META } from '@/lib/crop-groups';
@@ -345,10 +346,21 @@ export default function FacilitatorCropsPage() {
   const [switchingSite, setSwitchingSite] = useState(false);
   const needsSitePicker = !!myDesignsList && (switchingSite || (myDesignsList.length > 1 && chosenDesignId === null));
 
+  const [favouriteCropKeys, setFavouriteCropKeys] = useState<Set<string>>(new Set());
+  function toggleFavourite(cropKey: string) {
+    setFavouriteCropKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(cropKey)) next.delete(cropKey); else next.add(cropKey);
+      saveFavouriteCropKeys(next);
+      return next;
+    });
+  }
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
+    setFavouriteCropKeys(loadFavouriteCropKeys());
     setMounted(true);
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
@@ -841,6 +853,8 @@ export default function FacilitatorCropsPage() {
           onExisting={setPickerExisting}
           overlap={pickerOverlap}
           isEditing={!!editingPlantingId}
+          favouriteCropKeys={favouriteCropKeys}
+          onToggleFavourite={toggleFavourite}
           onPick={pickCrop}
           onBack={() => setPickerCrop(null)}
           onMonth={setPickerMonth}
@@ -1033,7 +1047,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 
 function CropPickerModal({
   search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
-  isEditing, onPick, onBack, onMonth, onConfirm, onClose,
+  isEditing, favouriteCropKeys, onToggleFavourite, onPick, onBack, onMonth, onConfirm, onClose,
 }: {
   search: string;
   onSearch: (v: string) => void;
@@ -1046,13 +1060,20 @@ function CropPickerModal({
   onExisting: (v: boolean) => void;
   overlap: number;
   isEditing: boolean;
+  favouriteCropKeys: Set<string>;
+  onToggleFavourite: (cropKey: string) => void;
   onPick: (c: CropDef) => void;
   onBack: () => void;
   onMonth: (m: number) => void;
   onConfirm: () => void;
   onClose: () => void;
 }) {
-  const filtered = CROPS.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
+  // Favourites sort to the top of whatever's currently filtered — a quick-
+  // access shortlist, same idea as Tend's personal Crop Library, just
+  // without per-farmer custom crop data.
+  const filtered = CROPS
+    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => Number(favouriteCropKeys.has(b.key)) - Number(favouriteCropKeys.has(a.key)));
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
@@ -1085,27 +1106,40 @@ function CropPickerModal({
             <div className="space-y-1">
               {filtered.map((c) => {
                 const windowMonths = c.sowMonths[pattern];
+                const isFav = favouriteCropKeys.has(c.key);
                 return (
-                  <button
+                  <div
                     key={c.key}
-                    onClick={() => onPick(c)}
-                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left"
-                    style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', cursor: 'pointer' }}
+                    className="w-full flex items-center gap-1 pl-2.5 pr-1.5 py-2 rounded-xl"
+                    style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
                   >
-                    <span style={{ fontSize: 20 }}>{c.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</span>
-                        <SeedBadge transplant={!!c.transplant} />
-                        {isSpaceHungry(c) && <span title="Space-hungry — wants its own bed" style={{ fontSize: 11 }}>📏</span>}
+                    <button
+                      onClick={() => onPick(c)}
+                      className="flex-1 min-w-0 flex items-center gap-2.5 text-left"
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    >
+                      <span style={{ fontSize: 20 }}>{c.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</span>
+                          <SeedBadge transplant={!!c.transplant} />
+                          {isSpaceHungry(c) && <span title="Space-hungry — wants its own bed" style={{ fontSize: 11 }}>📏</span>}
+                        </div>
+                        <div className="flex gap-0.5 mt-1">
+                          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                            <span key={m} style={{ width: 6, height: 6, borderRadius: 2, background: windowMonths.includes(m) ? '#3F7A3C' : '#E2D8C4' }} />
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex gap-0.5 mt-1">
-                        {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                          <span key={m} style={{ width: 6, height: 6, borderRadius: 2, background: windowMonths.includes(m) ? '#3F7A3C' : '#E2D8C4' }} />
-                        ))}
-                      </div>
-                    </div>
-                  </button>
+                    </button>
+                    <button
+                      onClick={() => onToggleFavourite(c.key)}
+                      aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
+                    >
+                      {isFav ? '★' : '☆'}
+                    </button>
+                  </div>
                 );
               })}
               {filtered.length === 0 && (
@@ -1115,9 +1149,18 @@ function CropPickerModal({
           </div>
         ) : (
           <div className="p-4">
-            <button onClick={onBack} className="font-sans mb-3" style={{ fontSize: 12, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-              ‹ Back to list
-            </button>
+            <div className="flex items-center justify-between mb-3">
+              <button onClick={onBack} className="font-sans" style={{ fontSize: 12, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                ‹ Back to list
+              </button>
+              <button
+                onClick={() => onToggleFavourite(crop.key)}
+                aria-label={favouriteCropKeys.has(crop.key) ? 'Remove from favourites' : 'Add to favourites'}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? '#C07A1E' : '#D8CFBC' }}
+              >
+                {favouriteCropKeys.has(crop.key) ? '★' : '☆'}
+              </button>
+            </div>
             <div className="flex items-center gap-1.5 mb-2">
               <SeedBadge transplant={!!crop.transplant} large />
               {isSpaceHungry(crop) && (
@@ -1133,6 +1176,20 @@ function CropPickerModal({
             {isSpaceHungry(crop) && (
               <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
                 📏 {crop.name} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.
+              </div>
+            )}
+            {crop.varieties && crop.varieties.length > 0 && (
+              <div className="mb-3">
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Which variety?</div>
+                <div className="space-y-1.5">
+                  {crop.varieties.map((v, i) => (
+                    <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+                      <div className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>{v.name}</div>
+                      <div className="font-mono" style={{ fontSize: 10.5, color: '#8C7A62', marginBottom: 2 }}>Best for: {v.bestFor}</div>
+                      <div className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>{v.note}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Sow month</div>

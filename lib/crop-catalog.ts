@@ -17,6 +17,24 @@
 
 export type RainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
 
+/**
+ * Purely advisory — surfaced to the farmer as "which variety to look for",
+ * never consulted by the sow-window/auto-suggest logic. Deliberately only
+ * populated for crops where South African seed suppliers/extension guidance
+ * shows variety choice is a REAL season/region-driven decision (researched
+ * 2026-07-14) — not added uniformly to every crop, since for most of this
+ * catalog (peppers, pumpkin/butternut, chard, sweet potato...) the published
+ * SA guidance is purely about sow-timing, and inventing a variety
+ * distinction there would be fake precision, not a real recommendation.
+ */
+export interface CropVariety {
+  name: string;
+  /** Which part of the crop's own sow window this variety suits — free-text
+   *  guidance (e.g. "Apr-Aug sowings", "Highveld/interior"), not a filter. */
+  bestFor: string;
+  note: string;
+}
+
 export interface CropDef {
   key: string;
   name: string;
@@ -27,6 +45,7 @@ export interface CropDef {
   spacingCm: number;
   yieldKgPerM2: number;
   note: string;
+  varieties?: CropVariety[];
 }
 
 export const CROPS: CropDef[] = [
@@ -156,6 +175,11 @@ export const CROPS: CropDef[] = [
     spacingCm: 45,
     yieldKgPerM2: 3,
     note: 'Firm the soil well at transplanting to help heads form tightly.',
+    varieties: [
+      { name: 'Accord F1 (or similar cold-tolerant hybrid)', bestFor: 'Apr-Aug (winter) sowings', note: 'Bred for the winter slot — avoid growing a summer-type variety over winter, heads form poorly and bolt risk rises.' },
+      { name: 'Optima F1 (or similar summer-bred hybrid)', bestFor: 'Sep-Mar (summer) sowings', note: "Selected for summer production; the reverse mistake — a winter-bred variety sown in summer — tends to bolt before heading." },
+      { name: 'Conquistador (or similar dual-season type)', bestFor: 'Either season', note: 'Marketed as tolerating both extremes — the safer pick if you only want to keep one cabbage seed packet.' },
+    ],
   },
   {
     key: 'carrots',
@@ -172,6 +196,10 @@ export const CROPS: CropDef[] = [
     spacingCm: 8,
     yieldKgPerM2: 3,
     note: "Direct-sow only — carrots don't transplant well. Keep the bed loose and stone-free.",
+    varieties: [
+      { name: 'Nantes type', bestFor: 'Either season', note: 'The reliable general-purpose choice — good bolt tolerance, forgiving of an off-season sowing.' },
+      { name: 'Allyance F1 (or similar season-tuned hybrid)', bestFor: 'Timing awareness', note: 'Maturity runs faster in summer (~90-105 days) than winter (~110-120 days) — expect a longer wait for a winter sowing, not a failed one.' },
+    ],
   },
   {
     key: 'beetroot',
@@ -204,6 +232,10 @@ export const CROPS: CropDef[] = [
     spacingCm: 10,
     yieldKgPerM2: 3,
     note: 'Long-season crop — sow into trays in autumn, transplant seedlings about six weeks later.',
+    varieties: [
+      { name: 'Short-day type', bestFor: 'Highveld / northern & central interior', note: "Onions bulb by day-length, not just temperature — this is the one crop where variety is nearly mandatory, not a refinement: the wrong day-length type for your area simply won't bulb properly no matter when you sow it." },
+      { name: 'Intermediate-day type', bestFor: 'Central & southern regions, coastal areas', note: "Suits areas with a bigger swing in day length through the growing season. Check the day-length rating on the seed packet — it matters more here than the sowing month." },
+    ],
   },
   {
     key: 'tomatoes',
@@ -220,6 +252,9 @@ export const CROPS: CropDef[] = [
     spacingCm: 50,
     yieldKgPerM2: 4,
     note: 'Stake or cage plants early; feed consistently once fruit starts to set.',
+    varieties: [
+      { name: 'Floradade (or similar heat-tolerant variety)', bestFor: 'Hot summer / subtropical coastal growing', note: 'Bred specifically for heat tolerance — worth seeking out if your area gets properly hot in summer, since an ordinary variety can drop flowers/stop setting fruit in extreme heat.' },
+    ],
   },
   {
     key: 'peppers',
@@ -287,6 +322,9 @@ export const CROPS: CropDef[] = [
     spacingCm: 25,
     yieldKgPerM2: 2,
     note: 'Bolts quickly in heat — sow little and often rather than one big batch.',
+    varieties: [
+      { name: 'Heat-tolerant / bolt-resistant type', bestFor: 'Summer sowings', note: "Look for a variety specifically marketed as bolt-resistant for summer — 'triple red' and similar red-leaf types are noticeably more heat-susceptible, so save those for cooler-season sowings instead." },
+    ],
   },
   {
     key: 'amadumbe',

@@ -69,6 +69,34 @@ export function saveCropPlan(s: CropPlanState): void {
   }
 }
 
+// A personal shortlist of crop keys — purely a UI convenience (quick access
+// + sorted to the top of the picker), never consulted by auto-suggest or
+// any planning logic. Same idea as Tend's "Crop Library", simpler: no
+// per-farmer custom crop data, just which of the catalog's crops to surface
+// first.
+const FAVOURITES_KEY = 'imbewu_favourite_crops_v1';
+
+export function loadFavouriteCropKeys(): Set<string> {
+  if (typeof window === 'undefined' || !window.localStorage) return new Set();
+  try {
+    const raw = window.localStorage.getItem(FAVOURITES_KEY);
+    if (!raw) return new Set();
+    const parsed = JSON.parse(raw);
+    return new Set(Array.isArray(parsed) ? parsed.filter((k) => typeof k === 'string') : []);
+  } catch {
+    return new Set();
+  }
+}
+
+export function saveFavouriteCropKeys(keys: Set<string>): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    window.localStorage.setItem(FAVOURITES_KEY, JSON.stringify([...keys]));
+  } catch {
+    // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
+  }
+}
+
 function wrapMonth(m: number): number {
   return ((m - 1) % 12 + 12) % 12 + 1;
 }
