@@ -8,7 +8,7 @@
 // own crop-plan store (lib/crop-plan.ts) for what's actually sown where.
 // Zero network, zero new deps.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { Search, X } from 'lucide-react';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -23,6 +23,12 @@ import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction,
 } from '@/lib/crop-plan';
+import type { FoodGroup } from '@/lib/crop-groups';
+import { FOOD_GROUP_META } from '@/lib/crop-groups';
+import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
+import { autoSuggestPlan } from '@/lib/crop-autosuggest';
+
+const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
@@ -170,8 +176,63 @@ export default function FacilitatorCropsPage() {
   const [pickerMonth, setPickerMonth] = useState(1);
   const [pickerFraction, setPickerFraction] = useState(1);
   const [pickerExisting, setPickerExisting] = useState(false);
+  // Set when the picker was opened via "Edit" on an existing planting rather
+  // than "+ crop" on a bed — confirmAdd checks this to update in place.
+  const [editingPlantingId, setEditingPlantingId] = useState<string | null>(null);
 
   const [activePlanting, setActivePlanting] = useState<Planting | null>(null);
+
+  // Auto-suggest — a short goals questionnaire that generates a proposed
+  // plan (via lib/crop-autosuggest.ts, a deterministic rules engine — no
+  // network call). Reviewed before anything is saved; never replaces
+  // existing plantings, only adds to them (safe to re-run).
+  const [autoPhase, setAutoPhase] = useState<'idle' | 'questions' | 'review'>('idle');
+  const [aGoal, setAGoal] = useState<GardenGoal>('family');
+  const [aHousehold, setAHousehold] = useState<HouseholdSize>('medium');
+  const [aFocusCount, setAFocusCount] = useState(1);
+  const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
+  const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
+  const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
+
+  function openAutoSuggest() {
+    setAGoal('family');
+    setAHousehold('medium');
+    setAFocusCount(1);
+    setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
+    setARhythm('steady');
+    setAutoResult(null);
+    setAutoPhase('questions');
+  }
+  function chooseGoal(g: GardenGoal) {
+    setAGoal(g);
+    setAGroups(g === 'commercial' ? [] : ALL_GROUPS); // commercial starts empty — must actively concentrate
+  }
+  function toggleGroup(g: FoodGroup) {
+    setAGroups((prev) => (prev.includes(g) ? prev.filter((x) => x !== g) : [...prev, g]));
+  }
+  function runAutoSuggest() {
+    const answers: AutoSuggestAnswers = {
+      goal: aGoal,
+      householdSize: aGoal !== 'commercial' ? aHousehold : undefined,
+      focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
+      groups: aGroups,
+      rhythm: aRhythm,
+    };
+    setAutoResult(autoSuggestPlan(answers, pattern, beds, plantings, currentMonth));
+    setAutoPhase('review');
+  }
+  function acceptAutoSuggest() {
+    if (!autoResult) return;
+    setPlan((prev) => {
+      const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
+      return { version: 1, plantings: [...base.plantings, ...autoResult.plantings], updatedAt: Date.now() };
+    });
+    // Clear immediately (not just close the modal) — a second click landing
+    // before React re-renders would otherwise still see a non-null
+    // autoResult and append the same suggestions twice.
+    setAutoResult(null);
+    setAutoPhase('idle');
+  }
 
   // Site picker — only matters once there's real ambiguity (2+ saved cloud
   // designs); with 0 or 1, behaviour is unchanged (straight to the device's
@@ -226,6 +287,18 @@ export default function FacilitatorCropsPage() {
       return { version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
     });
   }
+  function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
+    setPlan((prev) => {
+      if (!prev) return prev;
+      return {
+        version: 1,
+        plantings: prev.plantings.map((p) => p.id === id
+          ? { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined }
+          : p),
+        updatedAt: Date.now(),
+      };
+    });
+  }
   function removePlanting(id: string) {
     setPlan((prev) => {
       if (!prev) return prev;
@@ -257,15 +330,33 @@ export default function FacilitatorCropsPage() {
   }
 
   function openPicker(bedId: string) {
+    setEditingPlantingId(null);
     setPickerBedId(bedId);
     setPickerSearch('');
     setPickerCrop(null);
     setPickerFraction(1);
     setPickerExisting(false);
   }
+  // Reopens the same picker pre-filled with an existing planting's values —
+  // the crop is already set so the modal opens straight on the detail view
+  // (the crop-search list only shows when pickerCrop is null), skipping the
+  // "pick a crop" step. confirmAdd below detects editingPlantingId and
+  // updates in place instead of creating a new planting.
+  function openEditPicker(p: Planting) {
+    const crop = cropByKey(p.cropKey);
+    if (!crop) return;
+    setEditingPlantingId(p.id);
+    setPickerBedId(p.bedId);
+    setPickerSearch('');
+    setPickerCrop(crop);
+    setPickerMonth(p.sowMonth);
+    setPickerFraction(p.areaFraction ?? 1);
+    setPickerExisting(!!p.existing);
+  }
   function closePicker() {
     setPickerBedId(null);
     setPickerCrop(null);
+    setEditingPlantingId(null);
   }
   function pickCrop(crop: CropDef) {
     setPickerCrop(crop);
@@ -276,7 +367,11 @@ export default function FacilitatorCropsPage() {
   }
   function confirmAdd() {
     if (!pickerBedId || !pickerCrop) return;
-    addPlanting(pickerBedId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
+    if (editingPlantingId) {
+      updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
+    } else {
+      addPlanting(pickerBedId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
+    }
     closePicker();
   }
   // Overlap warning: how much of the bed is already committed (by OTHER
@@ -285,8 +380,10 @@ export default function FacilitatorCropsPage() {
   const pickerOverlap = useMemo(() => {
     if (!pickerBedId || !pickerCrop) return 0;
     const harvest = harvestMonth(pickerMonth, pickerCrop.daysToHarvest);
-    return bedOverlapFraction(pickerBedId, pickerMonth, harvest, plantings);
-  }, [pickerBedId, pickerCrop, pickerMonth, plantings]);
+    // Exclude the planting being edited from its own overlap check — otherwise
+    // editing would always see itself as "already committed" on this bed.
+    return bedOverlapFraction(pickerBedId, pickerMonth, harvest, plantings, editingPlantingId ?? undefined);
+  }, [pickerBedId, pickerCrop, pickerMonth, plantings, editingPlantingId]);
 
   const loading = design === undefined || plan === null || !mounted;
 
@@ -358,6 +455,14 @@ export default function FacilitatorCropsPage() {
                 <Link href="/facilitator" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Place real beds on the Planting step</Link> to replace it.
               </div>
             )}
+
+            <button
+              onClick={openAutoSuggest}
+              className="w-full mb-3 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+              style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
+            >
+              ✨ Auto-suggest a plan
+            </button>
 
             {/* Timeline */}
             <div className="rounded-2xl overflow-hidden mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
@@ -481,6 +586,7 @@ export default function FacilitatorCropsPage() {
           existing={pickerExisting}
           onExisting={setPickerExisting}
           overlap={pickerOverlap}
+          isEditing={!!editingPlantingId}
           onPick={pickCrop}
           onBack={() => setPickerCrop(null)}
           onMonth={setPickerMonth}
@@ -494,8 +600,26 @@ export default function FacilitatorCropsPage() {
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
+          onEdit={() => { openEditPicker(activePlanting); setActivePlanting(null); }}
           onRemove={() => { removePlanting(activePlanting.id); setActivePlanting(null); }}
           onClose={() => setActivePlanting(null)}
+        />
+      )}
+
+      {/* Auto-suggest: questionnaire + review */}
+      {autoPhase !== 'idle' && (
+        <AutoSuggestModal
+          phase={autoPhase}
+          goal={aGoal} onGoal={chooseGoal}
+          household={aHousehold} onHousehold={setAHousehold}
+          focusCount={aFocusCount} onFocusCount={setAFocusCount}
+          groups={aGroups} onToggleGroup={toggleGroup}
+          rhythm={aRhythm} onRhythm={setARhythm}
+          result={autoResult}
+          onGenerate={runAutoSuggest}
+          onAccept={acceptAutoSuggest}
+          onBackToQuestions={() => setAutoPhase('questions')}
+          onClose={() => setAutoPhase('idle')}
         />
       )}
     </div>
@@ -630,7 +754,7 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
 
 function CropPickerModal({
   search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
-  onPick, onBack, onMonth, onConfirm, onClose,
+  isEditing, onPick, onBack, onMonth, onConfirm, onClose,
 }: {
   search: string;
   onSearch: (v: string) => void;
@@ -642,6 +766,7 @@ function CropPickerModal({
   existing: boolean;
   onExisting: (v: boolean) => void;
   overlap: number;
+  isEditing: boolean;
   onPick: (c: CropDef) => void;
   onBack: () => void;
   onMonth: (m: number) => void;
@@ -797,7 +922,7 @@ function CropPickerModal({
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
               style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
-              {existing ? 'Add as existing' : 'Add to bed'}
+              {isEditing ? 'Save changes' : existing ? 'Add as existing' : 'Add to bed'}
             </button>
           </div>
         )}
@@ -808,9 +933,10 @@ function CropPickerModal({
 
 // ── Planting popover ─────────────────────────────────────────────────────
 
-function PlantingPopover({ planting, bedAreaM2, onRemove, onClose }: {
+function PlantingPopover({ planting, bedAreaM2, onEdit, onRemove, onClose }: {
   planting: Planting;
   bedAreaM2: number;
+  onEdit: () => void;
   onRemove: () => void;
   onClose: () => void;
 }) {
@@ -849,13 +975,213 @@ function PlantingPopover({ planting, bedAreaM2, onRemove, onClose }: {
           <div>{crop.note}</div>
         </div>
         <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>≈ {yieldKg.toFixed(1)} kg est. yield</div>
-        <button
-          onClick={onRemove}
-          className="w-full font-display font-semibold rounded-xl py-2"
-          style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
-        >
-          Remove
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={onEdit}
+            className="flex-1 font-display font-semibold rounded-xl py-2"
+            style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={onRemove}
+            className="flex-1 font-display font-semibold rounded-xl py-2"
+            style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Auto-suggest: goals questionnaire + review ──────────────────────────
+
+const GOAL_OPTIONS: { key: GardenGoal; label: string; blurb: string }[] = [
+  { key: 'family', label: 'Feed my family', blurb: 'Grow a variety for the household' },
+  { key: 'commercial', label: 'Grow extra to sell', blurb: 'Concentrate on a few crops' },
+  { key: 'hybrid', label: 'Both', blurb: 'Feed us first, sell the surplus' },
+];
+const HOUSEHOLD_OPTIONS: { key: HouseholdSize; label: string }[] = [
+  { key: 'small', label: '1-2 people' },
+  { key: 'medium', label: '3-5 people' },
+  { key: 'large', label: '6+ people' },
+];
+const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
+  { key: 'steady', label: 'Steady supply', blurb: 'A little, regularly' },
+  { key: 'few-big', label: 'A few big harvests', blurb: 'One flush at a time is fine' },
+];
+
+function AutoSuggestModal({
+  phase, goal, onGoal, household, onHousehold, focusCount, onFocusCount,
+  groups, onToggleGroup, rhythm, onRhythm, result, onGenerate, onAccept, onBackToQuestions, onClose,
+}: {
+  phase: 'questions' | 'review';
+  goal: GardenGoal; onGoal: (g: GardenGoal) => void;
+  household: HouseholdSize; onHousehold: (h: HouseholdSize) => void;
+  focusCount: number; onFocusCount: (n: number) => void;
+  groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
+  rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
+  result: AutoSuggestResult | null;
+  onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
+}) {
+  const tileStyle = (active: boolean): CSSProperties => ({
+    background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#F7F2E9' : '#5C5040',
+    border: `1px solid ${active ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer',
+  });
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
+      <div
+        className="rounded-2xl"
+        style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+      >
+        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FBF6EC', zIndex: 1 }}>
+          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: '#20190F' }}>
+            ✨ {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
+          </span>
+          <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62' }}>
+            <X size={18} />
+          </button>
+        </div>
+
+        {phase === 'questions' ? (
+          <div className="p-4 space-y-4">
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>What's the main reason you're growing this year?</div>
+              <div className="space-y-1.5">
+                {GOAL_OPTIONS.map((o) => (
+                  <button key={o.key} onClick={() => onGoal(o.key)} className="w-full text-left px-3 py-2 rounded-xl transition-all" style={tileStyle(goal === o.key)}>
+                    <div className="font-display font-semibold" style={{ fontSize: 13 }}>{o.label}</div>
+                    <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>{o.blurb}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {goal !== 'commercial' && (
+              <div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>About how many people eat from this garden?</div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {HOUSEHOLD_OPTIONS.map((o) => (
+                    <button key={o.key} onClick={() => onHousehold(o.key)} className="py-1.5 rounded-lg text-center font-display font-semibold transition-all" style={{ ...tileStyle(household === o.key), fontSize: 12.5 }}>
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {goal !== 'family' && (
+              <div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How many crops do you want to focus on selling?</div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {[1, 2, 3].map((n) => (
+                    <button key={n} onClick={() => onFocusCount(n)} className="py-1.5 rounded-lg text-center font-display font-semibold transition-all" style={{ ...tileStyle(focusCount === n), fontSize: 12.5 }}>
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
+                What do you want to grow? {goal === 'commercial' ? '(pick 1-3)' : ''}
+              </div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {ALL_GROUPS.map((g) => {
+                  const meta = FOOD_GROUP_META[g];
+                  return (
+                    <button key={g} onClick={() => onToggleGroup(g)} className="py-1.5 px-2 rounded-lg text-left font-sans font-semibold transition-all inline-flex items-center gap-1.5" style={{ ...tileStyle(groups.includes(g)), fontSize: 12 }}>
+                      <span>{meta.icon}</span> {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
+                {groups.length === 0
+                  ? (goal === 'commercial'
+                    ? 'Nothing picked yet — leave it this way to rank the whole catalogue by productivity, or pick 1-3 to focus on a specific kind of crop.'
+                    : "Not sure — we'll suggest for you.")
+                  : `${groups.length} of ${ALL_GROUPS.length} selected.`}
+              </p>
+            </div>
+
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How do you want your harvests spread out?</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {RHYTHM_OPTIONS.map((o) => (
+                  <button key={o.key} onClick={() => onRhythm(o.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(rhythm === o.key)}>
+                    <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>{o.label}</div>
+                    <div className="font-mono" style={{ fontSize: 10, opacity: 0.85 }}>{o.blurb}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={onGenerate}
+              className="w-full font-display font-semibold rounded-xl py-2.5"
+              style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+            >
+              ✨ Suggest a plan
+            </button>
+          </div>
+        ) : (
+          <div className="p-4 space-y-3">
+            {!result || result.plantings.length === 0 ? (
+              <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                Nothing fit this time — your beds may already be full, or the crops you picked are all out of season right now. Try different food groups, or check "Later this year" below.
+              </p>
+            ) : (
+              <>
+                <p className="font-sans mb-2" style={{ fontSize: 13, color: '#5C5040' }}>{result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} suggested:</p>
+                <div className="space-y-1 mb-2">
+                  {result.plantings.map((p) => {
+                    const crop = cropByKey(p.cropKey);
+                    if (!crop) return null;
+                    const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
+                    return (
+                      <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
+                        <span>{crop.icon} {crop.name}{p.areaFraction && p.areaFraction < 1 ? ` (${fractionLabel(p.areaFraction)})` : ''}</span>
+                        <span style={{ color: '#8C7A62' }}>sow {monthLabel(p.sowMonth)} → harvest {monthLabel(h)}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+            {result && result.notes.length > 0 && (
+              <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+                {result.notes.map((n, i) => <div key={i}>{n}</div>)}
+              </div>
+            )}
+            {result && result.laterThisYear.length > 0 && (
+              <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                <div className="font-display font-semibold mb-1" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
+                {result.laterThisYear.map((l) => {
+                  const crop = cropByKey(l.cropKey);
+                  return <div key={l.cropKey}>{crop?.icon} {crop?.name} — best sown around {monthLabel(l.nextWindowMonth)}</div>;
+                })}
+              </div>
+            )}
+            <div className="flex gap-2 pt-1">
+              <button onClick={onBackToQuestions} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                ‹ Back
+              </button>
+              {result && result.plantings.length > 0 && (
+                <button onClick={onAccept} className="flex-1 font-display font-semibold rounded-xl py-2" style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
+                  Add {result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} to my plan
+                </button>
+              )}
+              <button onClick={onClose} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                Discard
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1562,7 +1562,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // time via the row's name). Stored on the feature so it persists + shows in lists. ──
   const SHAPE_CATEGORIES: Record<'site' | 'water', string[]> = {
     site: ['Home plot', 'Vegetable garden', 'Staple crop plot', 'Field', 'Orchard', 'Grazing', 'Other'],
-    water: ['Roof', 'Swale', 'Contour bank', 'Road run-off', 'Earthwork', 'Other'],
+    // 'Dam / pond' was missing — every other water category (Roof/Swale/Contour
+    // bank/Road run-off/Earthwork) got silently reclassified as a dam/pond
+    // downstream anyway (lib/design-studio.ts's classifyFeature short-circuited
+    // ALL water-tool shapes to 'water_body' regardless of category — fixed
+    // alongside this), so there was no explicit way to say "this really is one".
+    water: ['Dam / pond', 'Roof', 'Swale', 'Contour bank', 'Road run-off', 'Earthwork', 'Other'],
   };
   const [shapeNaming, setShapeNaming] = useState<{ id: string; type: 'site' | 'water' } | null>(null);
   const [shapeName, setShapeName] = useState('');

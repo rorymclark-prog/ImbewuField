@@ -189,6 +189,22 @@ function featureId(feature: Feature, index: number, areaM2: number): string {
   return `shape-${index}-${geometry}-${Math.round(areaM2)}`;
 }
 
+// Explicit category the farmer picked in the shape-naming sheet (components/Map.tsx's
+// SHAPE_CATEGORIES water list) — respected ahead of the blanket "every water-tool
+// shape is a dam/pond" fallback below. A swale, contour bank, road run-off or
+// earthwork is water-RELATED infrastructure, not a body of water itself; forcing
+// all of them to 'water_body' is what made farmer-traced swales/earthworks show up
+// mislabelled (and costed) as dams downstream. 'Other' is deliberately omitted —
+// it falls through to the keyword rules below, same as every other feature type.
+const WATER_CATEGORY_LAYER: Partial<Record<string, DesignLayerType>> = {
+  'Dam / pond': 'water_body',
+  Roof: 'roof',
+  Swale: 'unknown',
+  'Contour bank': 'unknown',
+  'Road run-off': 'unknown',
+  Earthwork: 'unknown',
+};
+
 function classifyFeature(feature: Feature, index: number, largestLandIndex: number): DesignLayerType {
   const props = (feature.properties ?? {}) as Record<string, unknown>;
   const featureType = props.featureType === 'water' ? 'water' : props.featureType === 'site' ? 'site' : 'unknown';
@@ -196,10 +212,14 @@ function classifyFeature(feature: Feature, index: number, largestLandIndex: numb
   const rawCat  = String(props.category ?? '');
   const text = `${rawName} ${rawCat}`.toLowerCase().trim();
 
-  // Water polygons are always water — check this before any text rules
-  if (featureType === 'water') return 'water_body';
+  if (featureType === 'water') {
+    const explicit = WATER_CATEGORY_LAYER[rawCat];
+    if (explicit) return explicit;
+  }
 
-  // ---- Named-keyword rules (high specificity first) ----
+  // ---- Named-keyword rules (high specificity first) — now also reachable for
+  // water-tool shapes with no/an 'Other' category, instead of skipping straight
+  // to water_body regardless of what the shape is actually named.
   // Roof/catchment: must include an explicit roof/house/home/dwelling/structure keyword
   if (/(^|\s|\/)(roof|house roof|main roof|catchment)(\s|\/|$)/.test(text)) return 'roof';
   // Access / roads / paths
@@ -213,6 +233,11 @@ function classifyFeature(feature: Feature, index: number, largestLandIndex: numb
   if (/(veg|vegetable|garden|bed|crop|field|food garden|market garden|pasture|paddock|nursery|polyculture)/.test(text)) return 'cultivation';
   // Water body named explicitly
   if (/(dam|pond|swale|tank|reservoir|wetland|vlei|stream|river|canal|irrigation)/.test(text)) return 'water_body';
+
+  // A water-tool shape with no more specific signal above (category 'Other' or
+  // unset, name doesn't say what it is) — the honest fallback is still "water",
+  // since that's the tool the farmer chose to draw it with.
+  if (featureType === 'water') return 'water_body';
 
   // ---- Boundary: the LARGEST non-water land polygon that is not a small named structure ----
   // Exclude shapes that are almost certainly a structure (small area) even without a keyword name
