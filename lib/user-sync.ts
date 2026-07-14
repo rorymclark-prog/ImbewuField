@@ -8,7 +8,7 @@ import type { WaterPoint } from './water-points';
 const FARM_KEY      = 'imbewu_farm_shapes';
 const PLACES_KEY    = 'permamap_saved_places';
 const WATER_KEY     = 'imbewu_water_points';
-const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per place: imbewu_site_survey_<placeId>
+const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per site: imbewu_site_survey_<siteId> (legacy blobs are keyed by placeId instead)
 const COLL          = 'user_map_data';
 const TOMB_TTL_MS = 90 * 24 * 60 * 60 * 1000; // prune deletion tombstones after 90 days
 
@@ -16,19 +16,25 @@ function db() { return getFirebase()?.db ?? null; }
 
 type ShapeFC = { type: string; features: { id?: string | number }[] };
 type Tombstones = Record<string, number>; // id → deletedAt (ms)
-type SurveyLike = { placeId: string; updatedAt?: number; savedAt?: string };
+type SurveyLike = { siteId?: string; placeId: string; updatedAt?: number; savedAt?: string };
 type SurveyMap = Record<string, SurveyLike>;
 
 const surveyTs = (s: SurveyLike) => s.updatedAt ?? (s.savedAt ? Date.parse(s.savedAt) || 0 : 0);
 
-// Read every per-place survey out of localStorage into a {placeId: survey} map.
+// Read every per-site survey out of localStorage into a {siteId: survey} map. Legacy blobs
+// saved before the siteId field existed are keyed by placeId instead — fall back to that so
+// they still round-trip until they get migrated (see lib/site-survey.ts migrateLegacySurvey).
 function readLocalSurveys(): SurveyMap {
   const out: SurveyMap = {};
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
       if (k && k.startsWith(SURVEY_PREFIX)) {
-        try { const s = JSON.parse(localStorage.getItem(k) ?? 'null'); if (s?.placeId) out[s.placeId] = s; } catch {}
+        try {
+          const s = JSON.parse(localStorage.getItem(k) ?? 'null');
+          const id = s?.siteId ?? s?.placeId;
+          if (id) out[id] = s;
+        } catch {}
       }
     }
   } catch {}
@@ -221,7 +227,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
         }
       }
 
-      // Site surveys: per-place survey objects collected in one doc keyed by placeId.
+      // Site surveys: per-site survey objects collected in one doc keyed by siteId.
       await runTransaction(d, async (tx) => {
         const snap = await tx.get(surveysRef);
         const remote: SurveyMap = (snap.exists() ? snap.data().surveys : {}) ?? {};
@@ -341,7 +347,7 @@ export async function upsertSurvey(uid: string, survey: SurveyLike): Promise<voi
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
       const surveys: SurveyMap = (snap.exists() ? snap.data().surveys : {}) ?? {};
-      surveys[survey.placeId] = survey;
+      surveys[survey.siteId ?? survey.placeId] = survey;
       tx.set(ref, { surveys, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] upsertSurvey', e); }

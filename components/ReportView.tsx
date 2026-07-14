@@ -8,6 +8,7 @@ import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -297,7 +298,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           photoAnalysis: photoAnalysis || undefined,
           siteData: siteData || undefined,
           waterData: waterData || undefined,
-          surveyData: activePlaceId ? loadSurvey(activePlaceId) ?? undefined : undefined,
+          surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
           sections: Array.from(selected),
           language,

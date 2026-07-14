@@ -422,7 +422,11 @@ export default function FacilitatorPrintPage() {
     const itemTally: Partial<Record<ElType, { count: number; areaM2: number; litres: number }>> = {};
     itemPts.forEach(({ it }) => {
       const cur = itemTally[it.type] ?? { count: 0, areaM2: 0, litres: 0 };
-      cur.count += 1;
+      // A marker can represent several trees at once (Item.count, e.g. "5
+      // mango trees" placed as one pin) — the printed BOQ must reflect the
+      // real quantity, not the marker count. Mirrors FacilitatorCanvas's
+      // groupItems() (components/FacilitatorCanvas.tsx).
+      cur.count += it.count ?? 1;
       const c = CATALOG[it.type];
       if (c.shape === 'circle') {
         const w = it.wM || c.w;

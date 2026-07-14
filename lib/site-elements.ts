@@ -18,7 +18,10 @@ export interface SiteElement {
   lat: number;
   lon: number;
   label?: string;    // optional custom label; falls back to the type's display name
-  note?: string;      // e.g. "5000 L" for a tank
+  note?: string;      // e.g. "leaking, needs new tap" for a tank
+  litres?: number;    // structured capacity, for type 'jojo_tank'
+  species?: string;   // structured species, for type 'tree'
+  count?: number;      // how many of this species at this pin, for type 'tree' — defaults to 1 when absent
   createdAt: string;  // ISO string
   updatedAt?: number; // ms — last edit time, drives cross-device newest-wins merge
 }

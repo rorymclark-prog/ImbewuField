@@ -1,8 +1,10 @@
 'use client';
 import { useState, useCallback } from 'react';
-import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles } from 'lucide-react';
 import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import { loadPlaces } from '@/lib/saved-places';
+import { designSiteIdFromLocation, computeTracedAreaTotals } from '@/lib/design-studio';
+import type { LocationData } from '@/lib/types';
 
 interface Props {
   placeId: string;
@@ -81,9 +83,20 @@ function NumInput({ value, onChange, placeholder, hint }: { value: string; onCha
   );
 }
 
+function AutoFillNote({ areaM2 }: { areaM2: number }) {
+  return (
+    <div className="font-sans flex items-center gap-1.5 mt-1.5" style={{ fontSize: 12, color: '#1F4D2B' }}>
+      <Sparkles size={12} />
+      Auto-filled from your traced map shapes ({Math.round(areaM2)} m²) — tap to adjust
+    </div>
+  );
+}
+
 export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
-  const existing = loadSurvey(placeId);
   const place = loadPlaces().find(p => p.id === placeId);
+  const siteId = designSiteIdFromLocation(place ? ({ lat: place.lat, lon: place.lon } as LocationData) : null);
+  const existing = loadSurvey(siteId);
+  const tracedAreas = computeTracedAreaTotals(siteId, place?.lat ?? null, place?.lon ?? null);
 
   const [step, setStep] = useState(0);
 
@@ -99,7 +112,22 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
   const [waterStorage, setWaterStorage] = useState<string[]>(existing?.waterStorage ?? []);
 
   // Step 2 — Roof catchment
-  const [roofMain, setRoofMain] = useState(existing?.roofMainM2?.toString() ?? '');
+  // Surveys saved before roofAreaSource existed have no such field at all (undefined, not
+  // 'manual') — but the only way roofMainM2/roofSecondaryM2 could already be nonzero on a
+  // pre-existing record is a farmer having typed it in. Treat that case as manual too, or
+  // auto-fill silently clobbers it the moment this sheet mounts.
+  const roofAreaSourceIsManual = !!existing && (
+    existing.roofAreaSource === 'manual' ||
+    (existing.roofAreaSource == null && (((existing.roofMainM2 ?? 0) !== 0) || ((existing.roofSecondaryM2 ?? 0) !== 0)))
+  );
+  const [roofMain, setRoofMain] = useState(() => {
+    if (existing?.roofMainM2 != null && roofAreaSourceIsManual) return existing.roofMainM2.toString();
+    if (tracedAreas.roofAreaM2 > 0) return String(Math.round(tracedAreas.roofAreaM2));
+    return existing?.roofMainM2?.toString() ?? '';
+  });
+  const [roofSource, setRoofSource] = useState<'auto' | 'manual' | undefined>(() =>
+    roofAreaSourceIsManual ? 'manual' : (tracedAreas.roofAreaM2 > 0 ? 'auto' : undefined)
+  );
   const [roofSecondary, setRoofSecondary] = useState(existing?.roofSecondaryM2?.toString() ?? '');
   const [hasGutters, setHasGutters] = useState(existing?.hasGutters ?? false);
 
@@ -111,6 +139,14 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
 
   // Step 4 — What exists
   const [crops, setCrops] = useState<string[]>(existing?.existingCrops ?? []);
+  const [existingGrowingArea, setExistingGrowingArea] = useState(() => {
+    if (existing?.existingGrowingAreaM2 != null && existing.existingGrowingAreaSource === 'manual') return existing.existingGrowingAreaM2.toString();
+    if (tracedAreas.cultivationAreaM2 > 0) return String(Math.round(tracedAreas.cultivationAreaM2));
+    return existing?.existingGrowingAreaM2?.toString() ?? '';
+  });
+  const [growingAreaSource, setGrowingAreaSource] = useState<'auto' | 'manual' | undefined>(() =>
+    existing?.existingGrowingAreaSource === 'manual' ? 'manual' : (tracedAreas.cultivationAreaM2 > 0 ? 'auto' : undefined)
+  );
   const [livestock, setLivestock] = useState<string[]>(existing?.livestock ?? []);
   const [otherInfra, setOtherInfra] = useState<string[]>(existing?.otherInfra ?? []);
 
@@ -135,6 +171,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
 
   const handleSave = useCallback(() => {
     const survey: SiteSurvey = {
+      siteId,
       placeId,
       savedAt: new Date().toISOString(),
       siteType,
@@ -146,12 +183,15 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
       waterStorage,
       roofMainM2: roofMain ? Number(roofMain) : null,
       roofSecondaryM2: roofSecondary ? Number(roofSecondary) : null,
+      roofAreaSource: roofSource,
       hasGutters,
       landPrepMethod: landPrep,
       soilCondition,
       soilAmendments,
       hasFencing: fencing,
       existingCrops: crops,
+      existingGrowingAreaM2: existingGrowingArea ? Number(existingGrowingArea) : null,
+      existingGrowingAreaSource: growingAreaSource,
       livestock,
       otherInfra,
       farmingPractice: practice,
@@ -162,7 +202,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
     };
     saveSurvey(survey);
     onSaved(survey);
-  }, [placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, livestock, otherInfra, practice, challenges, isCommercial, marketType, notes, onSaved]);
+  }, [siteId, placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, roofSource, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, existingGrowingArea, growingAreaSource, livestock, otherInfra, practice, challenges, isCommercial, marketType, notes, onSaved]);
 
   const Icon = STEP_ICONS[step];
 
@@ -326,7 +366,8 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
             <div>
               <SectionLabel>Main building roof area (m²)</SectionLabel>
               <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>Rough guide: 2-bedroom house ≈ 60 m², 3-bedroom ≈ 100 m², large farmhouse ≈ 150+ m²</div>
-              <NumInput value={roofMain} onChange={setRoofMain} placeholder="e.g. 100" hint="Floor area of the building, not the footprint of the roof pitch" />
+              <NumInput value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder="e.g. 100" hint="Floor area of the building, not the footprint of the roof pitch" />
+              {roofSource === 'auto' && <AutoFillNote areaM2={tracedAreas.roofAreaM2} />}
             </div>
 
             <div>
@@ -436,6 +477,12 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
                   <Chip key={o.v} label={o.label} on={crops.includes(o.v)} onClick={() => setCrops(toggle(crops, o.v))} />
                 ))}
               </div>
+            </div>
+
+            <div>
+              <SectionLabel>Existing growing area (m²)</SectionLabel>
+              <NumInput value={existingGrowingArea} onChange={v => { setExistingGrowingArea(v); setGrowingAreaSource('manual'); }} placeholder="e.g. 80" hint="Total area of beds, fields or gardens already under cultivation" />
+              {growingAreaSource === 'auto' && <AutoFillNote areaM2={tracedAreas.cultivationAreaM2} />}
             </div>
 
             <div>

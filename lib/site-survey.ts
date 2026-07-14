@@ -1,8 +1,10 @@
 import { getFirebase } from './firebase/init';
 import { upsertSurvey } from './user-sync';
+import { loadPlaces } from './saved-places';
 
 export interface SiteSurvey {
-  placeId: string;
+  siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
+  placeId: string;  // legacy key (SavedPlace id) — kept for provenance/migration, no longer used to store
   savedAt: string;
   updatedAt?: number; // ms — drives cross-device newest-wins merge
 
@@ -23,6 +25,7 @@ export interface SiteSurvey {
   roofMainM2: number | null;
   roofSecondaryM2: number | null;
   hasGutters: boolean;
+  roofAreaSource?: 'auto' | 'manual'; // 'auto' = last set from traced map shapes, farmer hasn't overridden
 
   // Screen 3 — Land & soil
   landPrepMethod: string;   // 'hand' | 'tractor' | 'animal' | 'none'
@@ -32,6 +35,8 @@ export interface SiteSurvey {
 
   // Screen 4 — What exists
   existingCrops: string[];  // 'vegetables' | 'fruit-trees' | 'herbs' | 'indigenous' | 'fodder' | 'grain' | 'nothing'
+  existingGrowingAreaM2: number | null;
+  existingGrowingAreaSource?: 'auto' | 'manual'; // 'auto' = last set from traced map shapes, farmer hasn't overridden
   livestock: string[];      // 'chickens' | 'goats' | 'cattle' | 'pigs' | 'bees' | 'none'
   otherInfra: string[];     // 'shade-tunnel' | 'greenhouse' | 'compost-bay' | 'shed' | 'kraal'
 
@@ -113,6 +118,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('');
   lines.push('--- EXISTING RESOURCES ---');
   lines.push(`Crops growing now: ${s.existingCrops.filter(v => v !== 'nothing').join(', ') || 'nothing yet'}`);
+  if (s.existingGrowingAreaM2) lines.push(`Existing growing area (traced or entered): ${s.existingGrowingAreaM2} m²`);
   lines.push(`Livestock: ${s.livestock.filter(v => v !== 'none').join(', ') || 'none'}`);
   lines.push(`Other infrastructure: ${s.otherInfra.length ? s.otherInfra.join(', ') : 'none mentioned'}`);
 
@@ -135,17 +141,50 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   return lines.join('\n');
 }
 
-const key = (placeId: string) => `imbewu_site_survey_${placeId}`;
+const key = (id: string) => `imbewu_site_survey_${id}`;
 
-export function loadSurvey(placeId: string): SiteSurvey | null {
+// Matches designSiteIdFromLocation()'s exact output format (site-survey.ts can't import
+// lib/design-studio.ts — design-studio.ts already imports loadSurvey from here, and importing
+// back would be circular).
+const SITE_ID_RE = /^site:(-?\d+\.\d+),(-?\d+\.\d+)$/;
+
+// One-time read-repair: survey answers saved under the old placeId-keyed scheme (before the
+// storage key was switched to the lat/lon-derived siteId) would otherwise never be found by
+// callers that only know the coordinate-derived siteId. Coordinate-match against SavedPlace,
+// look up the legacy key, and copy the data forward (localStorage + Firestore) so it's found
+// directly next time and syncs to other devices.
+function migrateLegacySurvey(siteId: string): SiteSurvey | null {
   if (typeof window === 'undefined') return null;
-  try { return JSON.parse(localStorage.getItem(key(placeId)) ?? 'null'); } catch { return null; }
+  const match = SITE_ID_RE.exec(siteId);
+  if (!match) return null;
+  const [, latStr, lonStr] = match;
+  const place = loadPlaces().find((p) => p.lat.toFixed(5) === latStr && p.lon.toFixed(5) === lonStr);
+  if (!place) return null;
+
+  let legacy: SiteSurvey | null;
+  try { legacy = JSON.parse(localStorage.getItem(key(place.id)) ?? 'null'); } catch { legacy = null; }
+  if (!legacy) return null;
+
+  const migrated: SiteSurvey = { ...legacy, siteId };
+  try { localStorage.setItem(key(siteId), JSON.stringify(migrated)); } catch {}
+  const uid = getFirebase()?.auth?.currentUser?.uid;
+  if (uid) upsertSurvey(uid, migrated).catch(() => {});
+  return migrated;
+}
+
+export function loadSurvey(siteId: string): SiteSurvey | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const direct = JSON.parse(localStorage.getItem(key(siteId)) ?? 'null');
+    if (direct) return direct;
+  } catch {}
+  return migrateLegacySurvey(siteId);
 }
 
 export function saveSurvey(survey: SiteSurvey): void {
   if (typeof window === 'undefined') return;
   const stamped = { ...survey, updatedAt: Date.now() };
-  try { localStorage.setItem(key(stamped.placeId), JSON.stringify(stamped)); } catch {}
+  try { localStorage.setItem(key(stamped.siteId), JSON.stringify(stamped)); } catch {}
   window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
   const uid = getFirebase()?.auth?.currentUser?.uid;
   if (uid) upsertSurvey(uid, stamped).catch(() => {});

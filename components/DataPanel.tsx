@@ -5,7 +5,8 @@ import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
-import { savePlace, generateId } from '@/lib/saved-places';
+import { savePlace, generateId, loadPlaces } from '@/lib/saved-places';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadReports, deleteReport, type SavedReport } from '@/lib/saved-reports';
 import InsightsPanel from './InsightsPanel';
 import AreaPanel from './AreaPanel';
@@ -286,18 +287,23 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return () => window.removeEventListener('imbewu-reports-changed', refresh);
   }, []);
   const [tab, setTab] = useState<Tab>('Overview');
+  // Survey is keyed by the lat/lon-derived siteId (designSiteIdFromLocation), not the
+  // SavedPlace id — derive it from the active place's own coordinates so it matches the key
+  // the AI design-plan generator reads (lib/design-studio.ts).
+  const activePlace = activePlaceId ? loadPlaces().find(p => p.id === activePlaceId) : undefined;
+  const surveySiteId = designSiteIdFromLocation(activePlace ? ({ lat: activePlace.lat, lon: activePlace.lon } as LocationData) : null);
   const [survey, setSurvey] = useState<SiteSurvey | null>(null);
-  useEffect(() => { setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null); }, [activePlaceId]);
+  useEffect(() => { setSurvey(loadSurvey(surveySiteId)); }, [surveySiteId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
-  useEffect(() => { if (!surveySheetOpen && activePlaceId) setSurvey(loadSurvey(activePlaceId)); }, [surveySheetOpen]);
+  useEffect(() => { if (!surveySheetOpen) setSurvey(loadSurvey(surveySiteId)); }, [surveySheetOpen, surveySiteId]);
   // Refresh live when a survey syncs in from another browser/device.
   useEffect(() => {
-    const refresh = () => setSurvey(activePlaceId ? loadSurvey(activePlaceId) : null);
+    const refresh = () => setSurvey(loadSurvey(surveySiteId));
     window.addEventListener('imbewu-surveys-changed', refresh);
     return () => window.removeEventListener('imbewu-surveys-changed', refresh);
-  }, [activePlaceId]);
+  }, [surveySiteId]);
   const [photoAnalysis, setPhotoAnalysis] = useState<string | undefined>();
   useEffect(() => {
     setPhotoAnalysis(undefined);
@@ -736,7 +742,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Primary CTA */}
             <button
               onClick={() => {
-                if (activePlaceId && !loadSurvey(activePlaceId)) {
+                if (activePlaceId && !loadSurvey(surveySiteId)) {
                   setSurveyPromptOpen(true);
                 } else {
                   openPhotoOrReport();

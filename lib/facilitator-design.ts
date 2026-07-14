@@ -270,7 +270,7 @@ export function buildGhosts(res: DetectResponse, bg: BgRect): GhostFeature[] {
 // a freshly computed bgRect + pxPerM at load time converts m→px again, so the
 // geometry always lines up with whatever satellite frame is actually on screen.
 
-export interface FacItem { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; xM?: number; yM?: number; label?: string }
+export interface FacItem { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; xM?: number; yM?: number; label?: string; species?: string; count?: number }
 export interface FacLine { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId; pointsM?: number[] }
 export interface FacSector extends SectorEl { xM?: number; yM?: number }
 

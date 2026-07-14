@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Stage, Layer, Rect, Circle, Line, Text, Transformer, Group, Arc, Shape, Image as KonvaImage } from 'react-konva';
 import type Konva from 'konva';
-import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList } from 'lucide-react';
+import { ImageIcon, Ruler, Copy, X, Loader2, Sparkles, Download, Share2, Sprout, Check, LayoutGrid, ClipboardList, Plus, Minus } from 'lucide-react';
 import { listFarmers, saveDesign, updateDesign, myDesigns, deleteDesign, shareDesign } from '@/lib/db/queries';
 import type { Profile, Design } from '@/lib/db/types';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
@@ -104,13 +104,22 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   waterbody: { label: 'Dam / pond', icon: '🌊', color: '#3E7BB0', dash: [],       width: 2.5, fill: 'rgba(62,123,176,0.32)' },
 };
 
-interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; label?: string }
+interface Item { id: string; type: ElType; x: number; y: number; wM: number; hM: number; rotation: number; litres?: number; layer?: LayerId; label?: string; species?: string; count?: number }
 
 // A custom label (e.g. "Mango tree" instead of the generic "Fruit tree")
 // overrides the catalog name everywhere a label is shown or grouped — live
 // map pills, produced-map labels, and the AI prompt context. BOQ rows stay
 // grouped by TYPE regardless (pricing is per-type, not per custom name).
 const effectiveLabel = (it: { type: ElType; label?: string }): string => it.label?.trim() || CATALOG[it.type].label;
+
+// Placement-time prompt vocabularies — common JoJo tank sizes (SA market) and
+// common SA fruit tree species. "Banana (single plant)" is deliberately
+// distinct from CATALOG.banana ("Banana circle", a guild-planting element
+// priced per_m2) — this picks the species for a single 🌳 Fruit tree marker,
+// not the guild circle.
+const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
+const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
+
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
 
 // ── AI polish ────────────────────────────────────────────────────────────
@@ -718,6 +727,15 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const [bgDataUrl, setBgDataUrl] = useState<string | null>(null);
   const [placeType, setPlaceType] = useState<ElType | null>(null);
   const [lineKind, setLineKind] = useState<LineKind | null>(null);
+  // Placement-time capacity/species prompt — opens right after a tank or tree
+  // is placed (see placeItem below), targeting the just-placed item via the
+  // existing selectedId/updateSel plumbing rather than a new update-by-id path.
+  const [placementPrompt, setPlacementPrompt] = useState<{ id: string; type: ElType } | null>(null);
+  const [tankCustomOpen, setTankCustomOpen] = useState(false);
+  const [tankCustomValue, setTankCustomValue] = useState('');
+  const [treeSpecies, setTreeSpecies] = useState('');
+  const [treeCustomOpen, setTreeCustomOpen] = useState(false);
+  const [treeCount, setTreeCount] = useState(1);
   const [scaleMode, setScaleMode] = useState(false);
   const [draftPt, setDraftPt] = useState<number[] | null>(null);
   // Multi-vertex polygon drafting (roof/driveway/patio areas): tap each corner,
@@ -996,7 +1014,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // undoes, Ctrl/Cmd+Shift+Z (and Ctrl+Y) redoes.
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); }
+      if (e.key === 'Escape') { setPlaceType(null); setLineKind(null); setScaleMode(false); setDraftPt(null); setArmedSector(null); setPolyDraft([]); setPlacementPrompt(null); }
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId) {
         const t = e.target as HTMLElement;
         if (t.tagName !== 'INPUT' && t.tagName !== 'TEXTAREA') { e.preventDefault(); deleteSelected(); }
@@ -1455,6 +1473,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const layer = layerForItem(activeLayer, type);
     setItems((prev) => [...prev, { id, type, x: cx - (c.w * pxPerM) / 2, y: cy - (c.h * pxPerM) / 2, wM: c.w, hM: c.h, rotation: 0, litres: c.litres, layer }]);
     setSelectedId(id);
+    if (type === 'tank' || type === 'tree') {
+      setTankCustomOpen(false); setTankCustomValue('');
+      setTreeSpecies(''); setTreeCustomOpen(false); setTreeCount(1);
+      setPlacementPrompt({ id, type });
+    }
   };
 
   // ── AI-detect ghost accept/dismiss ──────────────────────────────────────
@@ -2194,7 +2217,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     const litres = type === 'pond'
       ? areaM2 * POND_ASSUMED_DEPTH_M * 1000
       : of.reduce((s, i) => s + (i.litres ?? 0), 0);
-    return { type, label: c.label, icon: c.icon, count: of.length, areaM2, litres };
+    // Markers vs. real quantity diverge for trees: one marker can represent
+    // several trees (Item.count, e.g. "5 mango trees" placed as one pin) — the
+    // BOQ/budget must reflect the real count, not the marker count.
+    const count = of.reduce((s, i) => s + (i.count ?? 1), 0);
+    return { type, label: c.label, icon: c.icon, count, areaM2, litres };
   }).filter(Boolean) as { type: ElType; label: string; icon: string; count: number; areaM2: number; litres: number }[];
 
   const plannedItems = items.filter((i) => !isExistingItem(i));
@@ -2256,7 +2283,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // Costs are computed over PLANNED geometry only — existing features are not purchases.
   const boqCosts = plannedBoq.map((b) => {
     const list = plannedItems.filter((i) => i.type === b.type);
-    const zar = list.reduce((s, i) => s + (costForItem(i.type, i.wM, i.hM, i.litres)?.zar ?? 0), 0);
+    const zar = list.reduce((s, i) => s + (costForItem(i.type, i.wM, i.hM, i.litres)?.zar ?? 0) * (i.count ?? 1), 0);
     return { type: b.type, zar: zar > 0 ? zar : null };
   });
   const lineCosts = plannedLineTotals.map((l) => ({
@@ -2412,8 +2439,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     if (!items.length) return;
     setReviewing(true); setReview('');
     const desc = items.map((it) => {
-      const c = CATALOG[it.type];
-      return `- ${c.label}${it.litres ? ` (${it.litres}L)` : ''} at (${(it.x / pxPerM).toFixed(1)}m east, ${(it.y / pxPerM).toFixed(1)}m south), size ${it.wM.toFixed(1)}×${it.hM.toFixed(1)}m`;
+      const name = effectiveLabel(it);
+      const qty = it.count && it.count > 1 ? ` ×${it.count}` : '';
+      return `- ${name}${qty}${it.litres ? ` (${it.litres}L)` : ''} at (${(it.x / pxPerM).toFixed(1)}m east, ${(it.y / pxPerM).toFixed(1)}m south), size ${it.wM.toFixed(1)}×${it.hM.toFixed(1)}m`;
     }).join('\n');
     const ld = lineTotals.map((l) => `- ${l.count} ${l.label.toLowerCase()} run(s), ~${l.m.toFixed(1)}m total`).join('\n');
     const layoutText = `${desc}${ld ? '\n' + ld : ''}\nThe top of the plan is NORTH.`;
@@ -2576,7 +2604,8 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       const name = effectiveLabel(it).toLowerCase();
       const layer = layerName(layerForItem(it.layer, it.type));
       const size = c.shape === 'circle' ? `${it.wM.toFixed(1)} m across` : `${it.wM.toFixed(1)}×${it.hM.toFixed(1)} m`;
-      const spec = it.litres ? `${it.litres.toLocaleString()} L ${name} ${size}` : `${name} ${size}`;
+      const qty = it.count && it.count > 1 ? ` ×${it.count}` : '';
+      const spec = it.litres ? `${it.litres.toLocaleString()} L ${name}${qty} ${size}` : `${name}${qty} ${size}`;
       return `${spec} (${layer})`;
     });
     const lineDescs = visLines.map((l) => {
@@ -3868,6 +3897,20 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                       className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
                   </label>
                 )}
+                {selected.type === 'tree' && (
+                  <>
+                    <label className="text-xs font-mono" style={{ color: '#9A8268' }}>species
+                      <input type="text" value={selected.species ?? ''} placeholder="e.g. Mango"
+                        onChange={(e) => { const species = e.target.value; updateSel({ species: species || undefined, label: species || undefined }); }}
+                        className="w-full mt-0.5 px-1.5 py-1 rounded font-display text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                    </label>
+                    <label className="text-xs font-mono" style={{ color: '#9A8268' }}>count
+                      <input type="number" step={1} min={1} value={selected.count ?? 1}
+                        onChange={(e) => updateSel({ count: Math.max(1, parseInt(e.target.value, 10) || 1) })}
+                        className="w-full mt-0.5 px-1.5 py-1 rounded font-mono text-xs" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                    </label>
+                  </>
+                )}
                 <label className="text-xs font-mono" style={{ color: '#9A8268' }}>rotate °
                   <input type="number" step={5} value={Math.round(selected.rotation)}
                     onChange={(e) => updateSel({ rotation: parseFloat(e.target.value) || 0 })}
@@ -4190,6 +4233,111 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
           {mobilePanel === 'props' ? <><X size={16} /> Close</> : <><ClipboardList size={16} /> Plan</>}
         </button>
       </div>
+      )}
+
+      {/* ── Placement prompt: capacity/species capture right when a tank or tree is placed ── */}
+      {placementPrompt && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
+          <div className="w-full max-w-sm rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+            <div className="px-4 py-3 flex items-center justify-between gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
+              <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
+                {placementPrompt.type === 'tank' ? '🛢 Tank size' : '🌳 Tree species'}
+              </span>
+              <button onClick={() => setPlacementPrompt(null)} className="flex items-center justify-center rounded-lg" style={{ width: 24, height: 24, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+                <X size={13} />
+              </button>
+            </div>
+            <div className="p-4 space-y-3">
+              {placementPrompt.type === 'tank' && (
+                <>
+                  <p className="text-[11px] font-mono leading-snug" style={{ color: '#9A8268' }}>What size is this tank? Defaults to 5000 L if skipped.</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {TANK_SIZE_OPTIONS_L.map((l) => (
+                      <button key={l} onClick={() => { updateSel({ litres: l }); setPlacementPrompt(null); }}
+                        className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all"
+                        style={selected?.litres === l ? { background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff' } : { background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                        {l.toLocaleString()} L
+                      </button>
+                    ))}
+                    <button onClick={() => setTankCustomOpen((o) => !o)}
+                      className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all"
+                      style={tankCustomOpen ? { background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff' } : { background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      Custom
+                    </button>
+                  </div>
+                  {tankCustomOpen && (
+                    <div className="flex gap-1.5">
+                      <input type="number" min={0} step={100} autoFocus value={tankCustomValue}
+                        onChange={(e) => setTankCustomValue(e.target.value)}
+                        placeholder="litres"
+                        className="flex-1 px-2.5 py-1.5 rounded-lg font-mono text-xs" style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                      <button onClick={() => {
+                        const v = Math.max(0, parseInt(tankCustomValue, 10) || 0);
+                        if (v > 0) { updateSel({ litres: v }); setPlacementPrompt(null); }
+                      }}
+                        className="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold" style={{ background: '#1F4D2B', border: 'none', color: '#fff' }}>
+                        Set
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+              {placementPrompt.type === 'tree' && (
+                <>
+                  <p className="text-[11px] font-mono leading-snug" style={{ color: '#9A8268' }}>What species, and how many?</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {TREE_SPECIES_OPTIONS.map((s) => (
+                      <button key={s} onClick={() => { setTreeSpecies(s); setTreeCustomOpen(false); }}
+                        className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all"
+                        style={treeSpecies === s ? { background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff' } : { background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                        {s}
+                      </button>
+                    ))}
+                    <button onClick={() => { setTreeCustomOpen((o) => !o); setTreeSpecies(''); }}
+                      className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all"
+                      style={treeCustomOpen ? { background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff' } : { background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      Other
+                    </button>
+                  </div>
+                  {treeCustomOpen && (
+                    <input type="text" autoFocus value={treeSpecies}
+                      onChange={(e) => setTreeSpecies(e.target.value)}
+                      placeholder="species name"
+                      className="w-full px-2.5 py-1.5 rounded-lg font-display text-xs" style={{ background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                  )}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono" style={{ color: '#9A8268' }}>how many</span>
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => setTreeCount((c) => Math.max(1, c - 1))}
+                        className="flex items-center justify-center rounded-lg" style={{ width: 26, height: 26, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                        <Minus size={13} />
+                      </button>
+                      <span className="text-sm font-mono font-semibold w-6 text-center" style={{ color: '#20190F' }}>{treeCount}</span>
+                      <button onClick={() => setTreeCount((c) => c + 1)}
+                        className="flex items-center justify-center rounded-lg" style={{ width: 26, height: 26, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                        <Plus size={13} />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <button onClick={() => setPlacementPrompt(null)}
+                      className="px-3 py-2 rounded-xl text-xs font-mono font-semibold" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+                      Skip
+                    </button>
+                    <button onClick={() => {
+                      const species = treeSpecies.trim();
+                      updateSel({ species: species || undefined, count: treeCount, label: species || undefined });
+                      setPlacementPrompt(null);
+                    }}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-mono font-semibold" style={{ background: '#1F4D2B', border: 'none', color: '#fff' }}>
+                      <Check size={14} /> Confirm
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* ── AI polish modal ── */}

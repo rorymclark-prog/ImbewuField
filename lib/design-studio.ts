@@ -1,8 +1,8 @@
 'use client';
 
 import turfArea from '@turf/area';
-import type { Feature, FeatureCollection, Geometry } from 'geojson';
-import { markLocalStorageKeyUpdated } from '@/lib/map-sync';
+import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
+import { markLocalStorageKeyUpdated, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import type { SiteSurvey } from '@/lib/site-survey';
@@ -260,6 +260,15 @@ export function mergeFarmShapesIntoDesignState(
   previous: DesignStudioState,
   siteId: string,
 ): DesignStudioState {
+  // `shapes` is drawn from ONE global localStorage pool shared by every site the farmer
+  // has ever visited. Shapes tagged with a siteId (Map.tsx stamps this at creation/edit
+  // time) only belong here if it matches; untagged legacy shapes pass through unfiltered
+  // so they keep behaving as they always have until the farmer re-saves them.
+  //
+  // The "genuinely nothing to merge" check must be against the GLOBAL pool, not the
+  // site-scoped subset — a site whose shapes haven't been re-tagged yet (or that has zero
+  // currently-traced shapes but previously-approved/renamed/locked Design Studio layers)
+  // is a much more common case than the pool being empty, and must not wipe those layers.
   if (!shapes?.features?.length) {
     return {
       ...previous,
@@ -269,7 +278,22 @@ export function mergeFarmShapesIntoDesignState(
     };
   }
 
-  const featuresWithArea = shapes.features.map((feature, index) => ({
+  const scopedFeatures = shapes.features.filter((feature) => {
+    const featureSiteId = (feature.properties as Record<string, unknown> | null)?.siteId;
+    return typeof featureSiteId !== 'string' || featureSiteId === siteId;
+  });
+
+  if (!scopedFeatures.length) {
+    // Pool isn't empty, just nothing matches THIS site right now — keep this site's
+    // existing layers instead of overwriting them with an empty array.
+    return {
+      ...previous,
+      siteId,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  const featuresWithArea = scopedFeatures.map((feature, index) => ({
     feature,
     index,
     areaM2: featureAreaM2(feature),
@@ -321,6 +345,57 @@ export function mergeFarmShapesIntoDesignState(
     generatedPlan,
     updatedAt: new Date().toISOString(),
   };
+}
+
+// Matches the ring/line coordinate extraction in app/design/page.tsx and
+// components/GeometryDesignStudio.tsx exactly — kept local here since neither of those
+// modules exports it.
+function ringFromGeometry(geom: Geometry | undefined): Position[] {
+  if (!geom) return [];
+  if (geom.type === 'Polygon') return geom.coordinates[0] ?? [];
+  if (geom.type === 'MultiPolygon') return geom.coordinates[0]?.[0] ?? [];
+  return [];
+}
+
+function lineFromGeometry(geom: Geometry | undefined): Position[] {
+  if (!geom) return [];
+  if (geom.type === 'LineString') return geom.coordinates ?? [];
+  if (geom.type === 'MultiLineString') return geom.coordinates[0] ?? [];
+  if (geom.type === 'Polygon') return geom.coordinates[0] ?? [];
+  return [];
+}
+
+// Read-only convenience wrapper for callers (e.g. the site survey sheet) that just want
+// today's traced area totals and must NOT trigger a save/Firestore push as a side effect of
+// merely looking. Sums ALL traced shapes of the relevant type regardless of `approved` state —
+// unlike generateGeometryDesignPlan's use of mergeFarmShapesIntoDesignState, which only counts
+// layers a farmer has explicitly approved in Design Studio. Requiring that approval pass before
+// the survey can ever show a pre-fill would defeat the point (most farmers filling in the
+// survey will never have opened Design Studio).
+//
+// mergeFarmShapesIntoDesignState passes untagged legacy shapes through into EVERY site
+// unconditionally (by design, for backward compatibility) — FacilitatorCanvas.tsx and
+// app/design/page.tsx both layer an additional ~0.02deg (~2km) proximity filter on top of
+// that merge to contain legacy-shape bleed across a farmer's other sites. Match that same
+// guard here, or a farmer with multiple mapped sites gets a distant site's shapes silently
+// summed into this site's auto-filled survey figures.
+export function computeTracedAreaTotals(
+  siteId: string,
+  siteLat: number | null,
+  siteLon: number | null,
+): { roofAreaM2: number; cultivationAreaM2: number } {
+  const merged = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), loadDesignStudioState(siteId), siteId);
+  const NEAR_DEG = 0.02;
+  const nearLayers = siteLat != null && siteLon != null
+    ? merged.layers.filter((l) => {
+        const c = ringFromGeometry(l.geometry)[0] ?? lineFromGeometry(l.geometry)[0];
+        if (!c) return false;
+        return Math.abs(c[1] - siteLat) < NEAR_DEG && Math.abs(c[0] - siteLon) < NEAR_DEG;
+      })
+    : merged.layers;
+  const roofAreaM2 = nearLayers.filter((l) => l.layerType === 'roof').reduce((sum, l) => sum + l.areaM2, 0);
+  const cultivationAreaM2 = nearLayers.filter((l) => l.layerType === 'cultivation').reduce((sum, l) => sum + l.areaM2, 0);
+  return { roofAreaM2, cultivationAreaM2 };
 }
 
 function layerList(layers: DesignLayer[], fallback: string): string {
@@ -401,8 +476,13 @@ function computeWaterCalc(
     roofHarvestAnnualKL = Math.round(roofHarvestAnnualLitres / 1000);
   }
 
-  // Garden irrigation: 2–5 L/m2/day dry season; use 3.5 as midpoint estimate
-  const cultivationAreaM2 = cultivationLayers.reduce((sum, layer) => sum + (layer.areaM2 ?? 0), 0);
+  // Garden irrigation: 2–5 L/m2/day dry season; use 3.5 as midpoint estimate.
+  // Prefer mapped cultivation layers, fall back to the survey's existing-growing-area figure —
+  // mirrors the roof-area fallback above.
+  let cultivationAreaM2 = cultivationLayers.reduce((sum, layer) => sum + (layer.areaM2 ?? 0), 0);
+  if (cultivationAreaM2 === 0 && survey?.existingGrowingAreaM2) {
+    cultivationAreaM2 = survey.existingGrowingAreaM2;
+  }
   let gardenIrrigationDrySeasonDailyLitres: number | null = null;
   let gardenIrrigationDrySeasonMonthlyLitres: number | null = null;
   if (cultivationAreaM2 > 0) {
@@ -451,7 +531,8 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const minTemp = locationData?.climate?.minTemp;
   const elevation = locationData?.elevation?.elevation;
 
-  // Load site survey — key is the placeId which matches siteId in this context
+  // Load site survey by siteId. loadSurvey() also runs a one-time legacy-placeId migration
+  // internally if nothing is filed under this key yet (see lib/site-survey.ts).
   const survey: SiteSurvey | null = loadSurvey(state.siteId);
 
   // Normalise survey arrays defensively

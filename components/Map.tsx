@@ -15,7 +15,7 @@ import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PL
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -154,6 +154,14 @@ interface Props {
   onTogglePeople?: () => void;
 }
 
+// Placement-time prompt vocabularies for the site element sheet — common
+// JoJo tank sizes (SA market) and common SA fruit tree species. "Banana
+// (single plant)" is kept distinct from a guild-planting banana circle
+// concept (that's a FacilitatorCanvas-only element) — this just names the
+// species at a single 🌳 tree marker.
+const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
+const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
+
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
@@ -232,6 +240,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [elementEditing, setElementEditing] = useState<SiteElement | null>(null); // element open in the rename/note sheet
   const [elName, setElName] = useState('');
   const [elNote, setElNote] = useState('');
+  // Structured fields — capacity for jojo_tank, species+count for tree. Seeded
+  // from the element whenever the sheet opens (see the two setElementEditing
+  // call sites below), same pattern as elName/elNote.
+  const [elLitres, setElLitres] = useState<number | undefined>(undefined);
+  const [elSpecies, setElSpecies] = useState('');
+  const [elCount, setElCount] = useState(1);
+  const [elTankCustomOpen, setElTankCustomOpen] = useState(false);
+  const [elTreeCustomOpen, setElTreeCustomOpen] = useState(false);
   const [pendingDeleteElement, setPendingDeleteElement] = useState<string | null>(null);
   const pendingElementTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [shareState, setShareState] = useState<'idle'|'saving'|'copied'|'error'>('idle');
@@ -251,7 +267,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [editPoints, setEditPoints] = useState<[number, number][]>([]); // working ring (open — no closing dup)
   const [selCorner, setSelCorner] = useState<number | null>(null);      // index currently lifted onto the crosshair
   const editOriginal = useRef<[number, number][] | null>(null);          // snapshot for Cancel
-  const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number; placeId?: string } | null>(null); // snapshot across edit
+  const editNameRef = useRef<{ name?: string; category?: string; hatchIdx?: number; placeId?: string; siteId?: string } | null>(null); // snapshot across edit
   const nativeEditBackupRef = useRef<GeoJSON.Feature | null>(null);      // snapshot for native-edit Undo
 
   // Saved-place pins: load + keep in sync with the Places tab
@@ -278,6 +294,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     window.addEventListener('imbewu-site-elements-changed', refresh);
     return () => window.removeEventListener('imbewu-site-elements-changed', refresh);
   }, [siteIdForElements]);
+
+  // The draw.create handler is registered once inside ensureDraw (which only ever runs
+  // once per map instance), so it can't close over siteIdForElements directly — that
+  // value would go stale the first time the farmer switches sites without a reload.
+  // This ref is the one source of truth the handler reads at tag time.
+  const activeSiteIdRef = useRef(siteIdForElements);
+  useEffect(() => { activeSiteIdRef.current = siteIdForElements; }, [siteIdForElements]);
 
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
@@ -506,6 +529,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             feat.id !== f.id
           ).length;
           draw.setFeatureProperty(fid, 'hatchIdx', existingCount);
+          draw.setFeatureProperty(fid, 'siteId', activeSiteIdRef.current);
           createdId = fid;
         }
       });
@@ -787,6 +811,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         feat.id !== id
       ).length;
       draw.setFeatureProperty(id, 'hatchIdx', existingCount);
+      draw.setFeatureProperty(id, 'siteId', activeSiteIdRef.current);
     }
     setPinDraw(null);
     setDraftPoints([]);
@@ -822,7 +847,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9) ring.pop();
     }
     editOriginal.current = ring.map((c) => [c[0], c[1]] as [number, number]);
-    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined, placeId: f.properties?.placeId as string | undefined };
+    editNameRef.current = { name: f.properties?.name as string | undefined, category: f.properties?.category as string | undefined, hatchIdx: f.properties?.hatchIdx as number | undefined, placeId: f.properties?.placeId as string | undefined, siteId: f.properties?.siteId as string | undefined };
     try { draw.delete(featureId); } catch {}
     // Lock remaining shapes so tapping them doesn't accidentally activate a different layer
     try { draw.changeMode('static'); } catch {}
@@ -968,6 +993,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
       if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
       if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
+      // Preserve the shape's original siteId across edits; a legacy untagged shape gets
+      // stamped with the currently active site the moment it's next edited.
+      draw.setFeatureProperty(id, 'siteId', snap?.siteId ?? activeSiteIdRef.current);
     }
     editNameRef.current = null;
     setEditPin(null);
@@ -996,7 +1024,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (snap?.name) draw.setFeatureProperty(id, 'name', snap.name);
           if (snap?.category) draw.setFeatureProperty(id, 'category', snap.category);
           if (snap?.hatchIdx != null) draw.setFeatureProperty(id, 'hatchIdx', snap.hatchIdx);
-      if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
+          if (snap?.placeId) draw.setFeatureProperty(id, 'placeId', snap.placeId); // keep parcel↔place link across edits
+          draw.setFeatureProperty(id, 'siteId', snap?.siteId ?? activeSiteIdRef.current);
         }
       } catch {}
     }
@@ -1640,6 +1669,21 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     });
   }, [siteIdForElements]);
 
+  // Opens the element sheet, seeding both the free-text fields and the
+  // structured capacity/species/count fields from whatever the element
+  // already has — shared by the marker tap, the drop-list edit button, and
+  // the "Place here" placement flow below, so all three stay in sync.
+  const openElementEditor = (el: SiteElement) => {
+    setElementEditing(el);
+    setElName(el.label ?? '');
+    setElNote(el.note ?? '');
+    setElLitres(el.litres);
+    setElSpecies(el.species ?? '');
+    setElCount(el.count ?? 1);
+    setElTankCustomOpen(false);
+    setElTreeCustomOpen(false);
+  };
+
   return (
     <div className="relative w-full h-full">
       <ReactMapGL
@@ -1740,7 +1784,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           return (
             <Marker key={el.id} longitude={el.lon} latitude={el.lat} anchor="center">
               <button
-                onClick={(e) => { e.stopPropagation(); setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                onClick={(e) => { e.stopPropagation(); openElementEditor(el); }}
                 title={`${display}${el.note ? ` — ${el.note}` : ''}`}
                 className="flex flex-col items-center group"
                 style={{ cursor: 'pointer', padding: 6 }}
@@ -2171,6 +2215,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               setElementEditing(newElement);
               setElName('');
               setElNote('');
+              setElLitres(droppingElement === 'jojo_tank' ? 5000 : undefined);
+              setElSpecies('');
+              setElCount(1);
+              setElTankCustomOpen(false);
+              setElTreeCustomOpen(false);
             }}
               className="flex-1 flex items-center justify-center gap-2 font-sans font-bold"
               style={{ height: 48, borderRadius: 13, background: getElementMeta(droppingElement).color, border: 'none', color: '#fff', fontSize: 15, cursor: 'pointer' }}>
@@ -2936,18 +2985,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                         return (
                           <div key={el.id} className="flex items-center gap-3 font-sans"
                             style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
-                            <button onClick={() => { setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                            <button onClick={() => openElementEditor(el)}
                               title="Edit name or note"
                               className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
                               style={{ width: 36, height: 36, background: meta.color, cursor: 'pointer', border: 'none', fontSize: 16 }}>
                               <span aria-hidden="true">{meta.icon}</span>
                             </button>
                             <button
-                              onClick={() => { setElementEditing(el); setElName(el.label ?? ''); setElNote(el.note ?? ''); }}
+                              onClick={() => openElementEditor(el)}
                               className="flex-1 min-w-0 text-left transition-all"
                               style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>
                               <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{el.label || meta.label}</div>
-                              {el.note && <div className="truncate" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{el.note}</div>}
+                              {(() => {
+                                const detail = el.type === 'jojo_tank' && el.litres
+                                  ? `${el.litres.toLocaleString()} L`
+                                  : el.type === 'tree' && el.species
+                                    ? `${el.species}${el.count && el.count > 1 ? ` ×${el.count}` : ''}`
+                                    : el.note;
+                                return detail ? <div className="truncate" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{detail}</div> : null;
+                              })()}
                             </button>
                             <button onClick={() => requestDeleteElement(el.id)}
                               aria-label={`Delete ${el.label || meta.label}`} title="Delete this element"
@@ -3524,8 +3580,74 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 placeholder={`e.g. ${getElementMeta(elementEditing.type).label}`}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+
+              {elementEditing.type === 'jojo_tank' && (
+                <div className="mb-3">
+                  <div className="flex flex-wrap gap-1.5 mb-1.5">
+                    {TANK_SIZE_OPTIONS_L.map((l) => (
+                      <button key={l} type="button" onClick={() => { setElLitres(l); setElTankCustomOpen(false); }}
+                        className="px-3 py-1.5 rounded-full font-sans font-semibold"
+                        style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        {l.toLocaleString()} L
+                      </button>
+                    ))}
+                    <button type="button" onClick={() => setElTankCustomOpen((o) => !o)}
+                      className="px-3 py-1.5 rounded-full font-sans font-semibold"
+                      style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                      Custom
+                    </button>
+                  </div>
+                  {elTankCustomOpen && (
+                    <input type="number" min={0} step={100} value={elLitres ?? ''}
+                      onChange={(e) => setElLitres(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                      placeholder="litres" autoFocus
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none"
+                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+                  )}
+                </div>
+              )}
+
+              {elementEditing.type === 'tree' && (
+                <div className="mb-3">
+                  <div className="flex flex-wrap gap-1.5 mb-1.5">
+                    {TREE_SPECIES_OPTIONS.map((s) => (
+                      <button key={s} type="button" onClick={() => { setElSpecies(s); setElTreeCustomOpen(false); }}
+                        className="px-3 py-1.5 rounded-full font-sans font-semibold"
+                        style={elSpecies === s ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        {s}
+                      </button>
+                    ))}
+                    <button type="button" onClick={() => { setElTreeCustomOpen((o) => !o); setElSpecies(''); }}
+                      className="px-3 py-1.5 rounded-full font-sans font-semibold"
+                      style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                      Other
+                    </button>
+                  </div>
+                  {elTreeCustomOpen && (
+                    <input type="text" value={elSpecies} onChange={(e) => setElSpecies(e.target.value)}
+                      placeholder="species name" autoFocus
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none mb-1.5"
+                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+                  )}
+                  <div className="flex items-center justify-between px-0.5">
+                    <span className="font-sans" style={{ fontSize: 13, color: '#9A8268' }}>how many</span>
+                    <div className="flex items-center gap-2">
+                      <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
+                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        <Minus size={14} />
+                      </button>
+                      <span className="font-sans font-semibold w-6 text-center" style={{ fontSize: 15, color: '#20190F' }}>{elCount}</span>
+                      <button type="button" onClick={() => setElCount((c) => c + 1)}
+                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <input value={elNote} onChange={(e) => setElNote(e.target.value)}
-                placeholder="Note — e.g. 5000 L"
+                placeholder="Note — e.g. leaking, needs new tap"
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               <div className="flex gap-2">
@@ -3540,7 +3662,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   Skip
                 </button>
                 <button onClick={() => {
-                  const updated: SiteElement = { ...elementEditing, label: elName.trim() || undefined, note: elNote.trim() || undefined };
+                  const updated: SiteElement = {
+                    ...elementEditing,
+                    label: elName.trim() || undefined,
+                    note: elNote.trim() || undefined,
+                    litres: elementEditing.type === 'jojo_tank' ? elLitres : elementEditing.litres,
+                    species: elementEditing.type === 'tree' ? (elSpecies.trim() || undefined) : elementEditing.species,
+                    count: elementEditing.type === 'tree' ? elCount : elementEditing.count,
+                  };
                   saveSiteElement(siteIdForElements, updated);
                   setSiteElements(loadSiteElements(siteIdForElements));
                   setElementEditing(null);
