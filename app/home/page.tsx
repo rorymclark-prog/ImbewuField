@@ -19,6 +19,9 @@ import {
   DollarSign,
   MessageCircle,
   Wheat,
+  Circle,
+  CheckCircle2,
+  CalendarPlus,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ThemePanel from '@/components/ThemePanel';
@@ -30,6 +33,7 @@ import PopiaConsent from '@/components/PopiaConsent';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
+import { loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
 // Falls back to 'en-ZA' for any code not listed (covers future additions).
@@ -92,16 +96,89 @@ function LastSiteCard({ site }: { site: LastSite }) {
   );
 }
 
+// Soonest 4 by monthsAway, with completed items sorted to the bottom of that
+// set rather than removed — avoids a task vanishing (and the card jumping in
+// height) the instant it's ticked off.
+const VISIBLE_TASK_COUNT = 4;
+function visibleBoardTasks(tasks: BoardTask[]): BoardTask[] {
+  return tasks.slice(0, VISIBLE_TASK_COUNT).sort((a, b) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1));
+}
+
+function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id: string) => void }) {
+  const { t } = useLanguage();
+  const visible = visibleBoardTasks(tasks);
+  return (
+    <section>
+      <div className="flex items-center justify-between" style={{ padding: '2px 2px' }}>
+        <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em' }}>
+          {t('homeUpcomingTasks')}
+        </span>
+        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: '#1F4D2B', textDecoration: 'none' }}>
+          {t('homeTaskBoardViewPlan')}<ChevronRight size={13} />
+        </Link>
+      </div>
+      <div className="mt-2.5" style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
+        {visible.map((task, i) => (
+          <div
+            key={task.id}
+            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderBottom: i < visible.length - 1 ? '1px solid #E2D8C4' : 'none' }}
+          >
+            <button
+              onClick={() => onToggle(task.id)}
+              aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#1F4D2B', flexShrink: 0 }}
+            >
+              {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
+            </button>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 17 }}>
+              {task.icon}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div
+                className="font-display"
+                style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1 }}
+              >
+                {task.title}
+              </div>
+              <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>{task.subtitle}</div>
+            </div>
+            <button
+              onClick={() => downloadTaskIcs(task)}
+              aria-label="Add to calendar"
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#8C7A62', flexShrink: 0 }}
+            >
+              <CalendarPlus size={18} strokeWidth={1.6} />
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
+  const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
 
-  useEffect(() => { setLastSite(getLastSite()); }, []);
+  useEffect(() => {
+    setLastSite(getLastSite());
+    const completedIds = loadCompletedTaskIds();
+    setBoardTasks(loadCropBoardTasks(completedIds));
+  }, []);
+
+  function toggleTaskComplete(id: string) {
+    setBoardTasks((prev) => {
+      const next = prev.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task));
+      saveCompletedTaskIds(new Set(next.filter((task) => task.completed).map((task) => task.id)));
+      return next;
+    });
+  }
 
   const ROLES = [
     { href: '/farmer',  Icon: Sprout,        label: t('homeRoleFarmerLabel'),  desc: t('homeRoleFarmerDesc') },
@@ -221,6 +298,8 @@ function HomeLandingInner() {
             </Link>
           ))}
         </div>
+
+        {boardTasks.length > 0 && <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />}
 
         {/* ── Dashboards disclosure ── */}
         <section>

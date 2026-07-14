@@ -108,6 +108,10 @@ export function harvestMonth(sowMonth: number, days: number): number {
 }
 
 export interface CropTask {
+  /** `${planting.id}:${action}` — stable across recomputation, since a single
+   *  planting produces at most one task per action. Used by lib/task-board.ts
+   *  for completion tracking and calendar-event UIDs. */
+  id: string;
   month: number;
   bedLabel: string;
   cropName: string;
@@ -134,6 +138,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
       // gives roughly the usual 2-4 week rest window without needing a
       // separate week-level task granularity.
       tasks.push({
+        id: `${p.id}:prep`,
         month: wrapMonth(p.sowMonth - 1),
         bedLabel: label,
         cropName: crop.name,
@@ -142,6 +147,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
       });
 
       tasks.push({
+        id: `${p.id}:sow`,
         month: wrapMonth(p.sowMonth),
         bedLabel: label,
         cropName: crop.name,
@@ -151,6 +157,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
 
       if (crop.transplant) {
         tasks.push({
+          id: `${p.id}:transplant`,
           month: wrapMonth(p.sowMonth + 1),
           bedLabel: label,
           cropName: crop.name,
@@ -163,6 +170,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
       // the transplant month for anything raised as a seedling first, the
       // sow month itself for everything direct-sown.
       tasks.push({
+        id: `${p.id}:mulch`,
         month: wrapMonth(crop.transplant ? p.sowMonth + 1 : p.sowMonth),
         bedLabel: label,
         cropName: crop.name,
@@ -172,6 +180,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
     }
 
     tasks.push({
+      id: `${p.id}:harvest`,
       month: harvestMonth(p.sowMonth, crop.daysToHarvest),
       bedLabel: label,
       cropName: crop.name,

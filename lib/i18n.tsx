@@ -647,6 +647,8 @@ const T: Record<string, Dict> = {
     homeQuickCropPlannerDesc: 'Plan the season',
     homeQuickMyRecords: 'My Records',
     homeQuickMyRecordsDesc: 'Crops & sales',
+    homeUpcomingTasks: 'Upcoming tasks',
+    homeTaskBoardViewPlan: 'View full plan',
     homeDashboards: 'Dashboards',
     homeDashboardsHide: 'Hide',
     homeDashboardsSummary: 'Farmer · Mentor · NGO · Funder · Student',
