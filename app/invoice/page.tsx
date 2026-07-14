@@ -9,12 +9,14 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import {
   loadCustomers, addCustomer, loadProducts, addProduct,
-  loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId, type SavedInvoice,
+  loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
+  paymentMethodLabel, type SavedInvoice, type PaymentMethod,
 } from '@/lib/invoices';
 
 interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
 
 const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
+const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
 const SEQ_KEY = 'imbewu_invoice_seq';
 
 function todayLong() {
@@ -308,28 +310,43 @@ export default function InvoicePage() {
                     No saved invoices yet — Print or Share one and it&apos;s kept here.
                   </div>
                 ) : saved.map((inv) => (
-                  <div key={inv.id} className="flex items-center gap-2 px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
-                    <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer' }}>
-                      <div className="font-display text-sm" style={{ color: '#20190F' }}>
-                        #{String(inv.no).padStart(4, '0')} · {inv.billTo || 'No buyer'}
+                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer' }}>
+                        <div className="font-display text-sm" style={{ color: '#20190F' }}>
+                          #{String(inv.no).padStart(4, '0')} · {inv.billTo || 'No buyer'}
+                        </div>
+                        <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+                          {new Date(inv.dateISO).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} · {money(inv.total)}
+                        </div>
+                      </button>
+                      <button
+                        onClick={() => setSaved(setInvoiceStatus(inv.id, inv.status === 'paid' ? 'unpaid' : 'paid'))}
+                        aria-label={inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
+                        className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                        style={inv.status === 'paid'
+                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
+                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
+                        {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
+                      </button>
+                      <button onClick={() => deleteInvoice(inv.id)} aria-label="Delete invoice"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
+                        <X size={15} />
+                      </button>
+                    </div>
+                    {inv.status === 'paid' && (
+                      <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
+                        {PAYMENT_METHODS.map((m) => (
+                          <button key={m} onClick={() => setSaved(setInvoiceStatus(inv.id, 'paid', m))}
+                            className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
+                            style={inv.paymentMethod === m
+                              ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                              : { background: '#FBF6EC', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                            {paymentMethodLabel(m)}
+                          </button>
+                        ))}
                       </div>
-                      <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
-                        {new Date(inv.dateISO).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} · {money(inv.total)}
-                      </div>
-                    </button>
-                    <button
-                      onClick={() => setSaved(setInvoiceStatus(inv.id, inv.status === 'paid' ? 'unpaid' : 'paid'))}
-                      aria-label={inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
-                      className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
-                      style={inv.status === 'paid'
-                        ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
-                        : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
-                      {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
-                    </button>
-                    <button onClick={() => deleteInvoice(inv.id)} aria-label="Delete invoice"
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
-                      <X size={15} />
-                    </button>
+                    )}
                   </div>
                 ))}
               </div>

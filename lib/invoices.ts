@@ -5,6 +5,7 @@
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
 export type InvoiceStatus = 'unpaid' | 'paid';
+export type PaymentMethod = 'cash' | 'eft' | 'card' | 'mobile' | 'other';
 export interface SavedInvoice {
   id: string;
   no: number;
@@ -14,6 +15,14 @@ export interface SavedInvoice {
   dateISO: string;
   status: InvoiceStatus;
   paidAt?: string;
+  paymentMethod?: PaymentMethod;
+}
+
+const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
+  cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other',
+};
+export function paymentMethodLabel(m: PaymentMethod): string {
+  return PAYMENT_METHOD_LABELS[m];
 }
 
 const C_KEY = 'imbewu_invoice_customers';
@@ -71,10 +80,15 @@ export function deleteInvoice(id: string): SavedInvoice[] {
   notify();
   return updated;
 }
-export function setInvoiceStatus(id: string, status: InvoiceStatus): SavedInvoice[] {
+export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMethod?: PaymentMethod): SavedInvoice[] {
   const list = loadInvoices();
   const updated = list.map((x) => (x.id === id
-    ? { ...x, status, paidAt: status === 'paid' ? new Date().toISOString() : undefined }
+    ? {
+      ...x,
+      status,
+      paidAt: status === 'paid' ? new Date().toISOString() : undefined,
+      paymentMethod: status === 'paid' ? (paymentMethod ?? x.paymentMethod) : undefined,
+    }
     : x));
   write(I_KEY, updated);
   notify();

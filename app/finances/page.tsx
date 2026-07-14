@@ -10,7 +10,8 @@ import {
   updateSale, updateExpense, deleteSale, deleteExpense,
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
-import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, type SavedInvoice } from '@/lib/invoices';
+import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
+import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -172,7 +173,8 @@ function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedI
     .filter((i) => i.status === 'paid')
     .map((i) => ({
       kind: 'invoice', id: i.id, iso: i.paidAt ?? i.dateISO,
-      title: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, subtitle: 'Paid invoice',
+      title: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`,
+      subtitle: i.paymentMethod ? `Paid · ${paymentMethodLabel(i.paymentMethod)}` : 'Paid invoice',
       amount: i.total ?? 0, positive: true,
     }));
   return [...saleRows, ...expenseRows, ...paidInvoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
@@ -325,7 +327,10 @@ export type EditTarget = { type: 'sale'; row: SalesLog } | { type: 'expense'; ro
 
 const emptyForm = (): SaleFormState => ({ crop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
 
-function LogSaleForm({ onSaved, editing, onCancelEdit }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void }) {
+// `alwaysOpen` skips the collapsed "New entry" button state (the desktop modal
+// provides its own open/close chrome); `onDone` fires on cancel or successful
+// save so that chrome can dismiss itself.
+function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void }) {
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<'in' | 'out'>('in');
   const [form, setForm] = useState<SaleFormState>(emptyForm());
@@ -336,9 +341,17 @@ function LogSaleForm({ onSaved, editing, onCancelEdit }: { onSaved: () => void; 
   const isIn = kind === 'in';
   const reset = () => { setForm(emptyForm()); setScanNote(''); };
 
-  // Prefill the form when a row is handed in for editing (from the ledger's ✎ button).
+  // Prefill the form when a row is handed in for editing (from the ledger's ✎
+  // button). When the edit ends elsewhere (e.g. saved via the desktop modal
+  // while this instance sits hidden in the phone branch), close and reset so
+  // stale prefill can't be re-submitted as a NEW entry later.
   useEffect(() => {
-    if (!editing) return;
+    if (!editing) {
+      setOpen(false);
+      setForm(emptyForm());
+      setScanNote('');
+      return;
+    }
     setOpen(true);
     setScanNote('');
     if (editing.type === 'sale') {
@@ -420,6 +433,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit }: { onSaved: () => void; 
       setOpen(false);
       onCancelEdit();
       onSaved();
+      onDone?.();
     } catch {
       setForm((f) => ({ ...f, loading: false, error: 'Failed to save. Try again.' }));
     }
@@ -429,9 +443,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit }: { onSaved: () => void; 
     setOpen(false);
     reset();
     onCancelEdit();
+    onDone?.();
   }
 
-  if (!open) {
+  if (!open && !alwaysOpen) {
     return (
       <button
         type="button"
@@ -628,23 +643,23 @@ function inPeriod(iso: string | null | undefined, period: Period, now: Date): bo
   return saSeasonMonths(now.getMonth()).includes(d.getMonth());
 }
 
-interface LedgerRow { iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null }
+interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null }
 
 // Builds the unified ledger (sales + expenses + harvest + paid invoices) for a period.
 // Shared by the desktop sheet and the phone CSV export so both stay in sync.
 function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: ProductionLog[], invoices: SavedInvoice[], period: Period, now: Date): LedgerRow[] {
   const saleRows: LedgerRow[] = sales
     .filter((s) => inPeriod(s.sold_at, period, now))
-    .map((s) => ({ iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
+    .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
   const expenseRows: LedgerRow[] = expenses
     .filter((x) => inPeriod(x.spent_at, period, now))
-    .map((x) => ({ iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category) || '—', inAmt: null, source: x.supplier || 'Cost', outAmt: x.amount ?? 0 }));
+    .map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category) || '—', inAmt: null, source: x.supplier || 'Cost', outAmt: x.amount ?? 0 }));
   const harvestRows: LedgerRow[] = production
     .filter((p) => inPeriod(p.logged_at, period, now))
-    .map((p) => ({ iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
+    .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && inPeriod(i.paidAt, period, now))
-    .map((i) => ({ iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: 'Invoice', outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
   return [...saleRows, ...expenseRows, ...harvestRows, ...invoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
 }
 
@@ -658,8 +673,7 @@ function exportLedgerCsv(rows: LedgerRow[], period: Period) {
   URL.revokeObjectURL(url);
 }
 
-function FinancialSheet({ sales, production, expenses, invoices, name, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean }) {
-  const [period, setPeriod] = useState<Period>('month');
+function FinancialSheet({ sales, production, expenses, invoices, name, loading, period, setPeriod, onAddEntry, onEditSale, onEditExpense }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean; period: Period; setPeriod: (p: Period) => void; onAddEntry: () => void; onEditSale: (s: SalesLog) => void; onEditExpense: (x: ExpenseLog) => void }) {
   const now = useMemo(() => new Date(), []);
 
   const rows: LedgerRow[] = useMemo(
@@ -708,6 +722,11 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading }
           <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />New invoice
           </Link>
+          <button onClick={onAddEntry}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
+            style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.22)', color: '#F7F2E9', fontSize: 14, cursor: 'pointer' }}>
+            <Plus size={15} />Add entry
+          </button>
         </div>
       </div>
 
@@ -730,28 +749,46 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading }
                 <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
                   style={{ fontSize: 11, color: '#94876F', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
               ))}
+              <th style={{ width: 40 }} />
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={6} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>
-                No entries for this {period}. Log a sale on your phone or the Invoice tool, and it appears here.
+              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>
+                No entries for this {period}. Use the Add-entry button, the Invoice tool, or your phone — everything shows here.
               </td></tr>
             ) : rows.map((r, i) => (
-              <tr key={i} style={{ borderBottom: i < rows.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
+              <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.date}</td>
                 <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: '#20190F' }}>{r.desc}</td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.qty}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#2E6B3A', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>{r.source}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#C07A1E', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
+                <td className="pr-4 py-3">
+                  {(r.kind === 'sale' || r.kind === 'expense') && (
+                    <button type="button" aria-label="Edit"
+                      onClick={() => {
+                        if (r.kind === 'sale') {
+                          const src = sales.find((s) => s.id === r.id);
+                          if (src) onEditSale(src);
+                        } else {
+                          const src = expenses.find((x) => x.id === r.id);
+                          if (src) onEditExpense(src);
+                        }
+                      }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.55 }}>
+                      <Pencil size={14} />
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <p className="font-sans mt-3" style={{ fontSize: 12, color: '#94876F' }}>
-        Mirrors your phone entries · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Log a sale or cost with the New-entry button on your phone.
+        Synced with your phone · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Add or edit sales and costs here, or with the New-entry button on your phone.
       </p>
     </div>
   );
@@ -814,7 +851,10 @@ export default function FinancesPage() {
   const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
   const [editing, setEditing] = useState<EditTarget>(null);
+  const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
   const [seeding, setSeeding] = useState(false);
+  const [period, setPeriod] = useState<Period>('month');
+  const now = useMemo(() => new Date(), []);
 
   // Auth: same pattern as MyRecords
   useEffect(() => {
@@ -935,7 +975,7 @@ export default function FinancesPage() {
         ) : (
           <>
             {/* Wide / laptop: the financial-sheet ledger workspace (frame 15) */}
-            <div className="hidden lg:block">
+            <div className="hidden lg:block space-y-6">
               <FinancialSheet
                 sales={sales}
                 production={production}
@@ -943,7 +983,32 @@ export default function FinancesPage() {
                 invoices={invoices}
                 name={user.displayName ?? 'My farm'}
                 loading={dataLoading}
+                period={period}
+                setPeriod={setPeriod}
+                onAddEntry={() => { setEditing(null); setDesktopEntryOpen(true); }}
+                onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
+                onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
               />
+              <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} />
+              {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
+                  only while open so every dismissal starts the next entry fresh. */}
+              {desktopEntryOpen && (
+                <div
+                  className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
+                  style={{ background: 'rgba(32,25,15,0.45)' }}
+                  onClick={() => { setEditing(null); setDesktopEntryOpen(false); }}
+                >
+                  <div className="w-full max-w-md" style={{ boxShadow: '0 16px 48px rgba(32,25,15,0.25)', borderRadius: 16 }} onClick={(e) => e.stopPropagation()}>
+                    <LogSaleForm
+                      alwaysOpen
+                      onSaved={loadData}
+                      editing={editing}
+                      onCancelEdit={() => setEditing(null)}
+                      onDone={() => setDesktopEntryOpen(false)}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
             {/* Phone / tablet: the simple money view */}
             <div className="lg:hidden space-y-4">
@@ -954,6 +1019,7 @@ export default function FinancesPage() {
                 invoices={invoices}
                 loading={dataLoading}
               />
+              <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
               {!dataLoading && !hasAnyData && (
                 <button
                   type="button"
