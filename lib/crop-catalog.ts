@@ -1,15 +1,21 @@
 // South African home-garden crop catalog.
 // Sow windows are keyed by rainfall pattern:
-//   summer  = summer-rainfall interior (KZN / Gauteng / Limpopo / Mpumalanga / Free State / North West)
-//             — frost risk May-Aug, warm-season crops sown after last frost.
+//   summer  = summer-rainfall interior (Gauteng / Limpopo / Mpumalanga / Free State / North West,
+//             KZN Midlands) — real hard frost risk May-Aug, warm-season crops wait for it to pass.
 //   winter  = winter-rainfall Western Cape (Mediterranean climate)
 //             — mild wet winters, hot dry summers; warm crops grown spring-summer under irrigation.
 //   all-year = frost-free subtropical/coastal Eastern Cape style climate
 //             — broader, more forgiving windows.
+//   mild-frost = summer-rainfall coastal hinterland (e.g. Durban's Upper Highway belt —
+//             Hillcrest/Kloof/Gillitts-type elevated ground 20-40km inland of the coast):
+//             real but light frost in low pockets on clear winter nights, not Highveld-severe.
+//             Frost-tender warm-season crops still wait for it to pass (same windows as
+//             'summer'); frost-hardy cool-season crops (brassicas, alliums, root veg, legumes,
+//             leafy greens) shrug it off and get the same forgiving windows as 'all-year'.
 // Months are 1-12 (Jan-Dec). Windows are conservative (home-gardener friendly, not
 // commercial-agronomy edge cases).
 
-export type RainPattern = 'summer' | 'winter' | 'all-year';
+export type RainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
 
 export interface CropDef {
   key: string;
@@ -32,6 +38,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [2, 3, 8, 9, 10, 11],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 120,
     spacingCm: 30,
@@ -46,6 +53,7 @@ export const CROPS: CropDef[] = [
       summer: [11, 12],
       winter: [9, 10],
       'all-year': [2, 3, 8, 9, 10],
+      'mild-frost': [11, 12],
     },
     daysToHarvest: 100,
     spacingCm: 10,
@@ -60,6 +68,7 @@ export const CROPS: CropDef[] = [
       summer: [9, 10, 11, 12, 1],
       winter: [8, 9, 10, 11],
       'all-year': [2, 3, 4, 8, 9, 10, 11],
+      'mild-frost': [9, 10, 11, 12, 1],
     },
     daysToHarvest: 60,
     spacingCm: 10,
@@ -74,6 +83,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 110,
     spacingCm: 100,
@@ -88,6 +98,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 110,
     spacingCm: 120,
@@ -102,6 +113,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
+      'mild-frost': [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 60,
     spacingCm: 30,
@@ -116,6 +128,7 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8, 9],
       winter: [1, 2, 3, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 70,
     transplant: true,
@@ -131,6 +144,7 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8, 9],
       winter: [1, 2, 3, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10],
     },
     daysToHarvest: 90,
     transplant: true,
@@ -146,6 +160,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
     },
     daysToHarvest: 80,
     spacingCm: 8,
@@ -160,6 +175,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
     },
     daysToHarvest: 60,
     spacingCm: 10,
@@ -174,6 +190,7 @@ export const CROPS: CropDef[] = [
       summer: [3, 4, 5],
       winter: [2, 3, 4],
       'all-year': [2, 3, 4, 5],
+      'mild-frost': [2, 3, 4, 5],
     },
     daysToHarvest: 150,
     transplant: true,
@@ -189,6 +206,7 @@ export const CROPS: CropDef[] = [
       summer: [8, 9, 10],
       winter: [8, 9, 10],
       'all-year': [2, 3, 7, 8, 9],
+      'mild-frost': [8, 9, 10],
     },
     daysToHarvest: 80,
     transplant: true,
@@ -204,6 +222,7 @@ export const CROPS: CropDef[] = [
       summer: [8, 9, 10],
       winter: [8, 9, 10],
       'all-year': [2, 3, 7, 8, 9],
+      'mild-frost': [8, 9, 10],
     },
     daysToHarvest: 90,
     transplant: true,
@@ -219,6 +238,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 120,
     spacingCm: 30,
@@ -233,6 +253,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9],
       winter: [7, 8, 9],
       'all-year': [2, 3, 7, 8, 9],
+      'mild-frost': [2, 3, 7, 8, 9],
     },
     daysToHarvest: 100,
     spacingCm: 30,
@@ -247,6 +268,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11, 12],
     },
     daysToHarvest: 45,
     spacingCm: 25,
@@ -261,6 +283,7 @@ export const CROPS: CropDef[] = [
       summer: [9, 10, 11],
       winter: [9, 10],
       'all-year': [8, 9, 10, 11],
+      'mild-frost': [9, 10, 11],
     },
     daysToHarvest: 200,
     spacingCm: 45,
@@ -275,6 +298,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [9, 10, 11],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 130,
     spacingCm: 20,
@@ -289,6 +313,7 @@ export const CROPS: CropDef[] = [
       summer: [4, 5],
       winter: [3, 4, 5],
       'all-year': [4, 5, 6],
+      'mild-frost': [4, 5, 6],
     },
     daysToHarvest: 180,
     spacingCm: 10,
@@ -303,6 +328,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8],
       winter: [2, 3, 4],
       'all-year': [1, 2, 3, 4, 8, 9],
+      'mild-frost': [1, 2, 3, 4, 8, 9],
     },
     daysToHarvest: 65,
     spacingCm: 8,
@@ -317,6 +343,7 @@ export const CROPS: CropDef[] = [
       summer: [1, 2, 3, 8],
       winter: [1, 2, 3, 8],
       'all-year': [1, 2, 3, 4, 8, 9],
+      'mild-frost': [1, 2, 3, 4, 8, 9],
     },
     daysToHarvest: 80,
     transplant: true,
@@ -332,6 +359,7 @@ export const CROPS: CropDef[] = [
       summer: [9, 10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
+      'mild-frost': [9, 10, 11, 12],
     },
     daysToHarvest: 55,
     spacingCm: 40,
@@ -346,6 +374,7 @@ export const CROPS: CropDef[] = [
       summer: [10, 11, 12],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10],
+      'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 90,
     spacingCm: 150,
@@ -360,6 +389,7 @@ export const CROPS: CropDef[] = [
       summer: [2, 3, 8, 9],
       winter: [2, 3, 4, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11],
+      'mild-frost': [1, 2, 3, 4, 8, 9, 10, 11],
     },
     daysToHarvest: 45,
     spacingCm: 10,

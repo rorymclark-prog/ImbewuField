@@ -10,7 +10,8 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { Search, X } from 'lucide-react';
+import { Search, X, Menu, ChevronDown } from 'lucide-react';
+import NavDrawer from '@/components/NavDrawer';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
@@ -164,6 +165,7 @@ const PATTERN_META: Record<RainPattern, { icon: string; label: string }> = {
   summer: { icon: '☀️', label: 'Summer rainfall' },
   winter: { icon: '🌧️', label: 'Winter rainfall' },
   'all-year': { icon: '🌦️', label: 'All-year rainfall' },
+  'mild-frost': { icon: '🌤️', label: 'Summer rainfall · mild winter frost' },
 };
 
 // Verb phrase per task action — 'prep'/'mulch' need a bit more than a single
@@ -197,6 +199,7 @@ export default function FacilitatorCropsPage() {
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [useVirtual, setUseVirtual] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
 
   const [pickerBedId, setPickerBedId] = useState<string | null>(null);
   const [pickerSearch, setPickerSearch] = useState('');
@@ -295,7 +298,11 @@ export default function FacilitatorCropsPage() {
   // local design, same as before this feature existed).
   const [myDesignsList, setMyDesignsList] = useState<Design[] | null>(null);
   const [chosenDesignId, setChosenDesignId] = useState<string | null>(null);
-  const needsSitePicker = !!myDesignsList && myDesignsList.length > 1 && chosenDesignId === null;
+  // Reopened on demand (e.g. "switch site") so the picker acts as a proper
+  // crop-planning landing page you can always get back to, not just a
+  // one-time gate on first load.
+  const [switchingSite, setSwitchingSite] = useState(false);
+  const needsSitePicker = !!myDesignsList && (switchingSite || (myDesignsList.length > 1 && chosenDesignId === null));
 
   useEffect(() => {
     setDesign(loadFacilitatorState());
@@ -307,6 +314,7 @@ export default function FacilitatorCropsPage() {
 
   function chooseSite(id: string) {
     setChosenDesignId(id);
+    setSwitchingSite(false);
     if (id === 'local') return; // keep the device's local design already loaded above
     const row = myDesignsList?.find((d) => d.id === id);
     if (row) setDesign(designStateFromCloudRow(row));
@@ -325,7 +333,12 @@ export default function FacilitatorCropsPage() {
   const beds = designBeds.length > 0 ? designBeds : (useVirtual ? [VIRTUAL_BED] : []);
 
   const region = design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null;
-  const pattern: RainPattern = region?.pattern ?? 'summer';
+  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) still
+  // gets the same warm-season windows as plain 'summer' — those crops don't
+  // shrug off even light frost — but frost-hardy crops get 'mild-frost'
+  // windows (as forgiving as 'all-year') instead of sitting idle May-Aug.
+  const pattern: RainPattern =
+    region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
   const patternMeta = PATTERN_META[pattern];
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
@@ -463,6 +476,14 @@ export default function FacilitatorCropsPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        <button
+          onClick={() => setNavOpen(true)}
+          aria-label="Open navigation"
+          className="flex-shrink-0 flex items-center justify-center rounded-xl"
+          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+        >
+          <Menu size={17} strokeWidth={1.7} />
+        </button>
         <Link
           href="/facilitator"
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
@@ -471,10 +492,24 @@ export default function FacilitatorCropsPage() {
           ‹ Back to design
         </Link>
         <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
-        <div className="flex flex-col min-w-0 flex-shrink-0">
-          <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
-          <span className="font-sans truncate" style={{ fontSize: 11, color: '#8C7A62', maxWidth: 220 }}>{designTitle}</span>
-        </div>
+        {myDesignsList && myDesignsList.length > 0 ? (
+          <button
+            onClick={() => setSwitchingSite(true)}
+            className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
+          >
+            <div className="flex flex-col min-w-0">
+              <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
+              <span className="font-sans truncate" style={{ fontSize: 11, color: '#8C7A62', maxWidth: 220 }}>{designTitle}</span>
+            </div>
+            <ChevronDown size={13} style={{ color: '#9A8268', flexShrink: 0 }} />
+          </button>
+        ) : (
+          <div className="flex flex-col min-w-0 flex-shrink-0">
+            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
+            <span className="font-sans truncate" style={{ fontSize: 11, color: '#8C7A62', maxWidth: 220 }}>{designTitle}</span>
+          </div>
+        )}
         <div className="flex-1" />
         {region ? (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}>
@@ -494,7 +529,19 @@ export default function FacilitatorCropsPage() {
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto flex items-start justify-center py-8 px-4">
           <div className="w-full space-y-2" style={{ maxWidth: 480 }}>
-            <h1 className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>Which site are you planning?</h1>
+            <div className="flex items-start justify-between gap-3">
+              <h1 className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>Which site are you planning?</h1>
+              {chosenDesignId !== null && (
+                <button
+                  onClick={() => setSwitchingSite(false)}
+                  aria-label="Cancel"
+                  className="flex-shrink-0 flex items-center justify-center rounded-full"
+                  style={{ width: 28, height: 28, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
             <p className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040' }}>You have {myDesignsList?.length} saved designs — pick one to see its beds.</p>
             {myDesignsList?.map((d) => (
               <button
@@ -742,6 +789,8 @@ export default function FacilitatorCropsPage() {
           onClose={() => setAutoPhase('idle')}
         />
       )}
+
+      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
 }

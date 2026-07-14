@@ -35,6 +35,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       items: [
         { href: '/journal',  Icon: Leaf,        label: t('navFieldJournal') },
         { href: '/plan',     Icon: CalendarDays, label: t('homeQuickCropPlanner') },
+        { href: '/facilitator/crops', Icon: FileText, label: 'Bed-by-Bed Crop Plan' },
         { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
         { href: '/survey',   Icon: LayoutGrid,   label: t('navGardenSurvey') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },

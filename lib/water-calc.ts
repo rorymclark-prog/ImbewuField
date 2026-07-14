@@ -30,6 +30,18 @@ export interface RegionalRainfall {
   lon: number;
   annualMm: number;
   pattern: 'summer' | 'winter' | 'all-year';
+  /**
+   * Frost severity for this reference point's catchment — independent of
+   * rainfall timing (`pattern`). Only 'mild' is used today: it flags a
+   * region whose ~40km catchment spans both truly frost-free ground (e.g.
+   * beachfront Durban) and real-but-light frost in elevated hinterland
+   * pockets (e.g. Hillcrest/Kloof on Durban's Upper Highway) — enough to
+   * widen crop-catalog windows for frost-hardy crops without pretending the
+   * whole catchment is frost-free. Omitted elsewhere: unset means "use the
+   * `pattern`-driven crop windows as-is", so no other region's behaviour
+   * changes. See lib/crop-catalog.ts's 'mild-frost' RainPattern.
+   */
+  frostRisk?: 'mild';
 }
 
 /**
@@ -38,7 +50,7 @@ export interface RegionalRainfall {
  * representative location in each region, not precise site data.
  */
 export const REGIONAL_RAINFALL: RegionalRainfall[] = [
-  { name: 'Durban / KZN coast', lat: -29.86, lon: 31.02, annualMm: 915, pattern: 'summer' },
+  { name: 'Durban / KZN coast & hinterland', lat: -29.86, lon: 31.02, annualMm: 915, pattern: 'summer', frostRisk: 'mild' },
   { name: 'KZN midlands', lat: -29.6, lon: 30.4, annualMm: 1000, pattern: 'summer' },
   { name: 'Johannesburg / Gauteng', lat: -26.2, lon: 28.05, annualMm: 779, pattern: 'summer' },
   { name: 'Cape Town / W Cape', lat: -33.93, lon: 18.42, annualMm: 686, pattern: 'winter' },
