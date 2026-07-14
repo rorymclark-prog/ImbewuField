@@ -385,6 +385,9 @@ export default function FacilitatorCropsPage() {
   // opt-in rather than offered unprompted on every crop added (same
   // reasoning as space-hungry vines defaulting to "grow elsewhere").
   const [allowBedSharing, setAllowBedSharing] = useState(false);
+  const [showLookingAhead, setShowLookingAhead] = useState(false);
+  const monthHeaderScrollRef = useRef<HTMLDivElement>(null);
+  const bedRowsScrollRef = useRef<HTMLDivElement>(null);
   function toggleAllowBedSharing() {
     setAllowBedSharing((prev) => {
       const next = !prev;
@@ -762,40 +765,70 @@ export default function FacilitatorCropsPage() {
               )}
             </div>
 
-            {/* Timeline */}
-            <div className="rounded-2xl overflow-hidden mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
-              <div style={{ overflowX: 'auto' }}>
-                <div style={{ minWidth: GRID_MIN_WIDTH }}>
-                  {/* Month header row */}
-                  <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
-                    <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
-                      <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
-                    </div>
-                    <div className="flex" style={{ flex: '1 1 auto' }}>
-                      {monthOrder.map((m, i) => (
-                        <div
-                          key={i}
-                          className="text-center font-sans"
-                          style={{
-                            flex: 1, padding: '8px 2px', fontSize: 11,
-                            fontWeight: i === 0 ? 700 : 500,
-                            color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#8C7A62',
-                            background: i === 0 ? 'rgba(31,77,43,0.08)' : 'transparent',
-                            // A month label repeats every 12 columns (no year field
-                            // anywhere in this data model) — a visible seam at the
-                            // 1-year mark stops "Jul" (this year) and "Jul" (next
-                            // year) reading as the same column.
-                            borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
-                          }}
-                          title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}
-                        >
-                          {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
-                        </div>
-                      ))}
-                    </div>
+            {/* Timeline. The month header and the bed-rows body are TWO
+                separate horizontal-scroll regions kept in sync by JS
+                (headerScrollRef mirrors bodyScrollRef's scrollLeft on every
+                scroll), not one shared overflow-x:auto wrapper. This is
+                deliberate, not an oversight: position:sticky only tracks the
+                real page scroll if NO ancestor between it and the page has
+                overflow set to anything but 'visible' — but overflow-x:auto
+                on a shared wrapper implicitly forces overflow-y:auto too
+                (CSS spec: a 'visible'/non-'visible' pair on the two axes
+                isn't allowed, the visible one is promoted), which silently
+                turns that wrapper into the sticky row's containing block
+                instead of the page — so the header would scroll away with
+                the body instead of freezing, exactly the bug this fixes. */}
+            <div className="rounded-2xl mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              {/* Month header row — sticky top so it stays visible past many
+                  bed rows; the Bed-label cell below keeps its own
+                  sticky-left independently, so both axes pin correctly. */}
+              <div
+                className="flex"
+                style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 52, zIndex: 3, background: '#FBF6EC', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+              >
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
+                  <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
+                </div>
+                <div
+                  ref={monthHeaderScrollRef}
+                  className="flex-1"
+                  style={{ overflowX: 'hidden' }}
+                >
+                  <div className="flex" style={{ minWidth: GRID_MIN_WIDTH - 128 }}>
+                    {monthOrder.map((m, i) => (
+                      <div
+                        key={i}
+                        className="text-center font-sans"
+                        style={{
+                          flex: 1, padding: '8px 2px', fontSize: 11,
+                          fontWeight: i === 0 ? 700 : 500,
+                          color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#8C7A62',
+                          background: i === 0 ? 'rgba(31,77,43,0.08)' : 'transparent',
+                          // A month label repeats every 12 columns (no year field
+                          // anywhere in this data model) — a visible seam at the
+                          // 1-year mark stops "Jul" (this year) and "Jul" (next
+                          // year) reading as the same column.
+                          borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
+                        }}
+                        title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}
+                      >
+                        {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
+                      </div>
+                    ))}
                   </div>
+                </div>
+              </div>
 
-                  {/* Bed rows */}
+              {/* Bed rows — the body owns the REAL horizontal scrollbar; its
+                  onScroll mirrors scrollLeft onto the header above. */}
+              <div
+                ref={bedRowsScrollRef}
+                onScroll={(e) => {
+                  if (monthHeaderScrollRef.current) monthHeaderScrollRef.current.scrollLeft = e.currentTarget.scrollLeft;
+                }}
+                style={{ overflowX: 'auto' }}
+              >
+                <div style={{ minWidth: GRID_MIN_WIDTH }}>
                   {beds.map((bed) => (
                     <BedRow
                       key={bed.id}
@@ -818,6 +851,22 @@ export default function FacilitatorCropsPage() {
               season is how &quot;planning next year&quot; actually works here.
             </div>
 
+            {/* Food/field/cashflow resilience — moved directly under the plan
+                itself (Tend-style) rather than buried below Tasks/BOQ/Year-ahead,
+                since it's the single view most likely to answer "am I actually
+                covered month to month" at a glance. */}
+            <FoodAvailabilityChart
+              monthOrder={monthOrder}
+              availability={foodAvailability}
+              valueByMonth={foodValueByMonth}
+              utilizationByMonth={fieldUtilizationByMonth}
+              plantings={plantings}
+              priceOverrides={priceOverrides}
+              onPriceOverrideChange={updatePriceOverride}
+              cashflowSettings={cashflowSettings}
+              onCashflowSettingsChange={updateCashflowSettings}
+            />
+
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
@@ -836,21 +885,32 @@ export default function FacilitatorCropsPage() {
                   📱 Share tasks
                 </button>
                 <div style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
-                  <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Looking ahead</div>
-                  <div className="space-y-1">
-                    {monthOrder.map((m, i) => {
-                      const t = allTasks.filter((task) => task.month === m);
-                      if (t.length === 0) return null;
-                      return (
-                        <div key={i} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
-                          <strong style={{ color: '#20190F' }}>{monthLabel(m)}{i >= 12 ? ' (next year)' : ''}</strong> — {taskSentence(t)}
-                        </div>
-                      );
-                    })}
-                    {allTasks.length === 0 && (
-                      <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>No plantings yet — tap + crop on a bed above.</div>
-                    )}
-                  </div>
+                  <button
+                    onClick={() => setShowLookingAhead((v) => !v)}
+                    className="font-sans uppercase tracking-widest w-full flex items-center justify-between"
+                    style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  >
+                    <span>Looking ahead</span>
+                    <span>{showLookingAhead ? '▾' : '▸'}</span>
+                  </button>
+                  {showLookingAhead && (
+                    <div className="space-y-1 mt-1.5">
+                      {/* i<2 (this month, next month) is already shown above — repeating it here just eats space for no new information. */}
+                      {monthOrder.map((m, i) => {
+                        if (i < 2) return null;
+                        const t = allTasks.filter((task) => task.month === m);
+                        if (t.length === 0) return null;
+                        return (
+                          <div key={i} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
+                            <strong style={{ color: '#20190F' }}>{monthLabel(m)}{i >= 12 ? ' (next year)' : ''}</strong> — {taskSentence(t)}
+                          </div>
+                        );
+                      })}
+                      {allTasks.length === 0 && (
+                        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>No plantings yet — tap + crop on a bed above.</div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -912,17 +972,6 @@ export default function FacilitatorCropsPage() {
               </div>
             </div>
 
-            <FoodAvailabilityChart
-              monthOrder={monthOrder}
-              availability={foodAvailability}
-              valueByMonth={foodValueByMonth}
-              utilizationByMonth={fieldUtilizationByMonth}
-              plantings={plantings}
-              priceOverrides={priceOverrides}
-              onPriceOverrideChange={updatePriceOverride}
-              cashflowSettings={cashflowSettings}
-              onCashflowSettingsChange={updateCashflowSettings}
-            />
             <RotationExplanationCard />
 
             <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
@@ -1029,6 +1078,65 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
 }
 
 // ── Food availability + rotation explanation ────────────────────────────
+
+/**
+ * Shared line-chart renderer for utilization/retail/wholesale — a
+ * continuous trend over the month axis reads a gap or a dip far faster
+ * than comparing adjacent bar heights, and a dashed reference line (100%
+ * bed capacity) only makes sense as a line a series can cross. Availability
+ * stays a stacked bar (fresh vs storage is a composition, not a single
+ * trend, so a bar reads better there).
+ */
+function MonthLineChart({
+  monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue,
+}: {
+  monthOrder: number[];
+  values: number[];
+  max: number;
+  color: string;
+  formatLabel: (v: number) => string;
+  labelColor?: (v: number) => string;
+  dotColor?: (v: number) => string;
+  referenceValue?: number;
+}) {
+  const H = 56;
+  const colW = 56;
+  const W = monthOrder.length * colW;
+  const xAt = (i: number) => (i + 0.5) * colW;
+  const yAt = (v: number) => H - Math.max(0, Math.min(1, v / max)) * (H - 6) - 3;
+  const points = monthOrder.map((_, i) => ({ x: xAt(i), y: yAt(values[i]), v: values[i] }));
+  const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+  const areaPath = `${linePath} L ${points[points.length - 1].x.toFixed(1)} ${H} L ${points[0].x.toFixed(1)} ${H} Z`;
+  const defaultDotColor = (v: number) => (v <= 0 ? '#D8CFBC' : color);
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <div style={{ minWidth: GRID_MIN_WIDTH }}>
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" style={{ display: 'block' }}>
+          {referenceValue !== undefined && (
+            <line x1={0} x2={W} y1={yAt(referenceValue)} y2={yAt(referenceValue)} stroke="#C4A46A" strokeWidth={1} strokeDasharray="4 3" />
+          )}
+          <path d={areaPath} fill={color} opacity={0.15} />
+          <path d={linePath} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          {points.map((p, i) => (
+            <circle key={i} cx={p.x} cy={p.y} r={4} fill={(dotColor ?? defaultDotColor)(p.v)} stroke="#FBF6EC" strokeWidth={1.5} />
+          ))}
+        </svg>
+        <div className="flex" style={{ width: W }}>
+          {monthOrder.map((m, i) => (
+            <div key={i} style={{ width: colW, textAlign: 'center' }}>
+              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
+                {MONTHS_SHORT[m - 1]}
+              </div>
+              <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : '#20190F', marginTop: 2 }}>
+                {formatLabel(values[i])}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 type FoodValueMode = 'availability' | 'utilization' | 'retail' | 'wholesale';
 
@@ -1205,65 +1313,24 @@ function FoodAvailabilityChart({
           </div>
         </>
       ) : mode === 'utilization' ? (
-        <div style={{ overflowX: 'auto' }}>
-          <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
-            {monthOrder.map((m, i) => {
-              const util = utilizationByMonth[m] ?? 0;
-              const hPx = util <= 0 ? 0 : Math.max(4, Math.round((util / utilMax) * BAR_MAX_H));
-              const pct = Math.round(util * 100);
-              return (
-                <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
-                  <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    {util <= 0 ? (
-                      <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
-                    ) : (
-                      <div
-                        style={{ width: '60%', height: hPx, borderRadius: 4, background: pct > 100 ? '#B33A3A' : '#5C7FA6' }}
-                        title={`${pct}% of bed area occupied`}
-                      />
-                    )}
-                  </div>
-                  <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
-                    {MONTHS_SHORT[m - 1]}
-                  </div>
-                  <div className="font-mono font-semibold" style={{ fontSize: 11, color: pct > 100 ? '#B33A3A' : '#20190F', marginTop: 2 }}>
-                    {pct}%
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <MonthLineChart
+          monthOrder={monthOrder}
+          values={monthOrder.map((m) => utilizationByMonth[m] ?? 0)}
+          max={utilMax}
+          color="#5C7FA6"
+          referenceValue={1}
+          dotColor={(v) => (v <= 0 ? '#D8CFBC' : v > 1 ? '#B33A3A' : '#5C7FA6')}
+          labelColor={(v) => (v > 1 ? '#B33A3A' : '#20190F')}
+          formatLabel={(v) => `${Math.round(v * 100)}%`}
+        />
       ) : (
-        <div style={{ overflowX: 'auto' }}>
-          <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
-            {monthOrder.map((m, i) => {
-              const rawVal = mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue;
-              const val = rawVal * lossFactor;
-              const hPx = val <= 0 ? 0 : Math.max(4, Math.round((val / moneyMax) * BAR_MAX_H));
-              return (
-                <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
-                  <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    {val <= 0 ? (
-                      <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
-                    ) : (
-                      <div
-                        style={{ width: '60%', height: hPx, borderRadius: 4, background: mode === 'retail' ? '#D4A017' : '#C4A46A' }}
-                        title={`R${val.toFixed(0)} ${mode} value${cashflowSettings.lossPercent ? ` (after ${cashflowSettings.lossPercent}% assumed loss)` : ''}`}
-                      />
-                    )}
-                  </div>
-                  <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
-                    {MONTHS_SHORT[m - 1]}
-                  </div>
-                  <div className="font-mono font-semibold" style={{ fontSize: 11, color: '#20190F', marginTop: 2 }}>
-                    {val > 0 ? `R${Math.round(val)}` : ''}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <MonthLineChart
+          monthOrder={monthOrder}
+          values={monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue) * lossFactor)}
+          max={moneyMax}
+          color={mode === 'retail' ? '#D4A017' : '#C4A46A'}
+          formatLabel={(v) => (v > 0 ? `R${Math.round(v)}` : '')}
+        />
       )}
 
       {!isEmpty && pricedCropKeys.length > 0 && (
@@ -1445,10 +1512,20 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
   const totalMonths = segments.reduce((s, seg) => s + segMonthCount(seg), 0);
   const lastSegIdx = segments.length - 1;
-  // How many of the LAST segment's months are the "ready to pick" window —
-  // clipped to that segment's own length, since barSegments may have
-  // trimmed the window at the visible edge.
-  const readyMonths = Math.min((crop.harvestWindowMonths ?? 0) + 1, segMonthCount(segments[lastSegIdx]));
+  // How many of the LAST segment's months are the "ready to pick" window.
+  // Anchored to where harvest actually STARTS (sowOffset + green duration),
+  // not just a flat harvestWindowMonths+1 count — a flat count is only
+  // correct when nothing gets clipped. When the display window's right edge
+  // clips the segment (a long harvestWindowMonths crop landing near the far
+  // edge of the rolling timeline), a flat count swallows still-green months
+  // into the gold cap, painting the whole bar as "ready" when part of it
+  // hasn't started growing yet. Clamping against seg.start also still
+  // correctly renders 100% gold for an existing crop whose green phase is
+  // entirely in the past (harvestStartOffset < seg.start).
+  const greenSpan = ((harvest - planting.sowMonth) % 12 + 12) % 12;
+  const harvestStartOffset = sowOffset + greenSpan;
+  const lastSeg = segments[lastSegIdx];
+  const readyMonths = Math.max(0, Math.min(lastSeg.end - Math.max(harvestStartOffset, lastSeg.start) + 1, segMonthCount(lastSeg)));
   const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
 
   return (
