@@ -226,7 +226,7 @@ export const CROPS: CropDef[] = [
   {
     key: 'beetroot',
     name: 'Beetroot',
-    icon: '🟣',
+    icon: '🫜',
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],

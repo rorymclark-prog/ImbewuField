@@ -555,31 +555,44 @@ function backfillWinterGaps(
 // this is a little headroom above that for safety.
 const MAX_GAP_FILLS_PER_BED = 16;
 
+// The rolling display already shows a full 12 months ahead (nowMonth through
+// nowMonth+11) — every one of those columns is already "committed to" just
+// by being on screen, so the LAST-RESORT gap-filling pass (fillRemainingGaps
+// / reportStillRestingBeds) can reach all the way to the far edge of that
+// same window rather than the tighter 5-month horizon the FIRST-CHOICE
+// recommendation passes (planSuccession, backfillWinterGaps) use — those
+// exist to avoid forcing an immediate, this-week decision on the farmer;
+// this pass exists to avoid a visibly blank column in a view that's already
+// showing the whole year, a different job with a different honest horizon.
+const GAP_FILL_HORIZON_MONTHS = 11;
+
 /**
  * Every (crop, sowMonth) pairing from `crops` that is BOTH reachable from
- * nowMonth (within DELAYED_START_THRESHOLD_MONTHS) AND whose resulting
- * occupied span actually includes `targetMonth` — tries EVERY valid sow
- * month in EVERY cluster, not just whichever one lands nearest to
- * targetMonth. A single nearest-candidate search (the first version of this
- * pass) can only ever find sowMonth===targetMonth itself, since
- * occupiedMonths() always counts forward from sowMonth — missing every crop
- * that's already growing by the time targetMonth arrives because it was sown
- * a month or two earlier. Shared by fillRemainingGaps (to actually place
- * something) and reportStillRestingBeds (to honestly know whether it could
- * have) so the two can never disagree about what "reaches" a month.
+ * nowMonth (within `maxStartGap`) AND whose resulting occupied span
+ * actually includes `targetMonth` — tries EVERY valid sow month in EVERY
+ * cluster, not just whichever one lands nearest to targetMonth. A single
+ * nearest-candidate search (the first version of this pass) can only ever
+ * find sowMonth===targetMonth itself, since occupiedMonths() always counts
+ * forward from sowMonth — missing every crop that's already growing by the
+ * time targetMonth arrives because it was sown a month or two earlier.
+ * Shared by fillRemainingGaps (to actually place something) and
+ * reportStillRestingBeds (to honestly know whether it could have) so the
+ * two can never disagree about what "reaches" a month — both must be
+ * called with the SAME `maxStartGap` for that guarantee to hold.
  */
 function reachingCandidates(
   crops: CropDef[],
   pattern: RainPattern,
   nowMonth: number,
   targetMonth: number,
+  maxStartGap: number = DELAYED_START_THRESHOLD_MONTHS,
 ): { crop: CropDef; sowMonth: number; startGap: number }[] {
   const out: { crop: CropDef; sowMonth: number; startGap: number }[] = [];
   for (const crop of crops) {
     for (const cluster of clusterSowMonths(crop.sowMonths[pattern])) {
       for (const sowMonth of cluster.months) {
         const startGap = monthsForward(nowMonth, sowMonth);
-        if (startGap > DELAYED_START_THRESHOLD_MONTHS) continue;
+        if (startGap > maxStartGap) continue;
         if (!occupiedMonths(sowMonth, crop.daysToHarvest).includes(targetMonth)) continue;
         out.push({ crop, sowMonth, startGap });
       }
@@ -656,7 +669,7 @@ function fillRemainingGaps(
       }
       if (gapMonth === null) break; // every still-empty month already tried, or bed is fully covered
 
-      const reaching = reachingCandidates(eligiblePool, pattern, nowMonth, gapMonth);
+      const reaching = reachingCandidates(eligiblePool, pattern, nowMonth, gapMonth, GAP_FILL_HORIZON_MONTHS);
       let chosen: { crop: CropDef; sowMonth: number; fraction: number } | null = null;
 
       for (const fraction of BED_FRACTION_PRESETS) {
@@ -718,7 +731,7 @@ function reportStillRestingBeds(
   const notes: string[] = [];
   const smallestFraction = BED_FRACTION_PRESETS[BED_FRACTION_PRESETS.length - 1];
   const canFill = (crops: CropDef[], bedId: string, month: number): boolean =>
-    reachingCandidates(crops, pattern, nowMonth, month).some((c) => occupancy.fits(bedId, c.sowMonth, c.crop.daysToHarvest, smallestFraction));
+    reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS).some((c) => occupancy.fits(bedId, c.sowMonth, c.crop.daysToHarvest, smallestFraction));
 
   for (const bed of beds) {
     const emptyMonths: number[] = [];
