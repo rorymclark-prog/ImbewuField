@@ -248,7 +248,12 @@ export const CROPS: CropDef[] = [
       'mild-frost': [10, 11, 12],
     },
     daysToHarvest: 120,
-    spacingCm: 30,
+    // Bumped from 30cm: the tubers themselves don't need much room, but the
+    // VINES sprawl well beyond a bush potato's footprint — not enough to
+    // need a fully dedicated bed like a true isSpaceHungry vine (pumpkin/
+    // butternut/watermelon can spread 2-4m+), but more than a plain root
+    // crop, so it gets a middle-ground spacing instead of either extreme.
+    spacingCm: 60,
     yieldKgPerM2: 3,
     note: 'Grown from rooted slips, not seed — plant into ridged soil for easy digging later.',
   },

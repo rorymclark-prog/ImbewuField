@@ -22,7 +22,7 @@ import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, CropTask } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKg, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport,
+  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, suggestSubstituteCrop,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META } from '@/lib/crop-groups';
@@ -386,6 +386,17 @@ export default function FacilitatorCropsPage() {
       if (!prev) return prev;
       return { version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
     });
+  }
+  // Swap a planting for a different crop in place (same bed/fraction/
+  // existing-flag) — re-derives the sow month for the NEW crop nearest the
+  // old one's, since the replacement crop's own valid sow window may not
+  // include the original month at all.
+  function replacePlanting(id: string, newCropKey: string) {
+    const p = plantings.find((pl) => pl.id === id);
+    const newCrop = cropByKey(newCropKey);
+    if (!p || !newCrop) return;
+    const sowMonth = nextValidSowMonth(newCrop, pattern, p.sowMonth);
+    updatePlanting(id, newCropKey, sowMonth, p.areaFraction ?? 1, !!p.existing);
   }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
@@ -798,8 +809,10 @@ export default function FacilitatorCropsPage() {
         <PlantingPopover
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
+          substitute={suggestSubstituteCrop(activePlanting, plantings)}
           onEdit={() => { openEditPicker(activePlanting); setActivePlanting(null); }}
           onRemove={() => { removePlanting(activePlanting.id); setActivePlanting(null); }}
+          onReplace={(cropKey) => { replacePlanting(activePlanting.id, cropKey); setActivePlanting(null); }}
           onClose={() => setActivePlanting(null)}
         />
       )}
@@ -1148,13 +1161,20 @@ function CropPickerModal({
 
 // ── Planting popover ─────────────────────────────────────────────────────
 
-function PlantingPopover({ planting, bedAreaM2, onEdit, onRemove, onClose }: {
+function PlantingPopover({ planting, bedAreaM2, substitute, onEdit, onRemove, onReplace, onClose }: {
   planting: Planting;
   bedAreaM2: number;
+  substitute: CropDef | null;
   onEdit: () => void;
   onRemove: () => void;
+  onReplace: (cropKey: string) => void;
   onClose: () => void;
 }) {
+  // Remove asks first, rather than removing immediately — the substitute
+  // suggestion (when there is one) IS the "can't get this seed, what
+  // instead?" answer, and this is the natural place to offer it: right when
+  // the farmer has already decided this crop isn't happening.
+  const [confirmingRemove, setConfirmingRemove] = useState(false);
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
@@ -1190,22 +1210,53 @@ function PlantingPopover({ planting, bedAreaM2, onEdit, onRemove, onClose }: {
           <div>{crop.note}</div>
         </div>
         <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>≈ {yieldKg.toFixed(1)} kg est. yield</div>
-        <div className="flex gap-2">
-          <button
-            onClick={onEdit}
-            className="flex-1 font-display font-semibold rounded-xl py-2"
-            style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
-          >
-            Edit
-          </button>
-          <button
-            onClick={onRemove}
-            className="flex-1 font-display font-semibold rounded-xl py-2"
-            style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
-          >
-            Remove
-          </button>
-        </div>
+        {confirmingRemove ? (
+          <div className="space-y-2">
+            <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040' }}>Remove {crop.name}?</div>
+            {substitute && (
+              <button
+                onClick={() => onReplace(substitute.key)}
+                className="w-full text-left font-display font-semibold rounded-xl py-2 px-3"
+                style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
+              >
+                🔄 Replace with {substitute.icon} {substitute.name} instead
+              </button>
+            )}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setConfirmingRemove(false)}
+                className="flex-1 font-display font-semibold rounded-xl py-2"
+                style={{ fontSize: 13, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onRemove}
+                className="flex-1 font-display font-semibold rounded-xl py-2"
+                style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
+              >
+                Remove without replacing
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button
+              onClick={onEdit}
+              className="flex-1 font-display font-semibold rounded-xl py-2"
+              style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => setConfirmingRemove(true)}
+              className="flex-1 font-display font-semibold rounded-xl py-2"
+              style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
+            >
+              Remove
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import type { CropDef, RainPattern } from './crop-catalog';
-import { cropByKey, MONTHS_SHORT } from './crop-catalog';
+import { cropByKey, CROPS, MONTHS_SHORT } from './crop-catalog';
+import { foodGroupOf } from './crop-groups';
 
 export interface PlanBed {
   id: string;
@@ -200,6 +201,28 @@ export function bedOverlapFraction(
     }, 0);
 }
 
+/**
+ * If a farmer can't get hold of a crop (no seed, wrong season locally, etc)
+ * and wants to remove it, suggest the best same-food-group replacement
+ * instead of leaving them to search the whole catalog themselves. Prefers a
+ * crop not already growing elsewhere in the plan (keeps variety rather than
+ * doubling down on something already covered), falling back to any
+ * same-group crop if every option is already in use. Ranked by yieldKgPerM2
+ * as a simple "generally worthwhile" proxy — the farmer still picks via Edit
+ * if they want something else.
+ */
+export function suggestSubstituteCrop(planting: Planting, allPlantings: Planting[]): CropDef | null {
+  const current = cropByKey(planting.cropKey);
+  if (!current) return null;
+  const group = foodGroupOf(current);
+  const usedKeys = new Set(allPlantings.filter((p) => p.id !== planting.id).map((p) => p.cropKey));
+  const candidates = CROPS.filter((c) => c.key !== current.key && foodGroupOf(c) === group);
+  if (!candidates.length) return null;
+  const fresh = candidates.filter((c) => !usedKeys.has(c.key));
+  const pool = fresh.length ? fresh : candidates;
+  return [...pool].sort((a, b) => b.yieldKgPerM2 - a.yieldKgPerM2)[0];
+}
+
 export function nextValidSowMonth(crop: CropDef, pattern: RainPattern, fromMonth: number): number {
   const months = crop.sowMonths[pattern];
   if (!months || months.length === 0) return wrapMonth(fromMonth);
@@ -322,6 +345,27 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
   if (topCrop && topCrop[1] > 0) {
     const crop = cropByKey(topCrop[0])!;
     paragraphs.push(`Your biggest crop by volume is ${crop.name} at ~${topCrop[1].toFixed(0)}kg — if that's more than your household eats fresh, that's your natural surplus to sell or preserve.`);
+  }
+
+  // Same bed + same crop, 2+ times = a staggered succession (planted in
+  // slices over consecutive months for a continuous harvest, rather than
+  // one full-bed batch then a gap before resowing) — worth calling out as a
+  // planning win, not just an incidental repeat.
+  const staggeredCounts = new Map<string, number>();
+  for (const p of toPlant) {
+    const key = `${p.bedId}::${p.cropKey}`;
+    staggeredCounts.set(key, (staggeredCounts.get(key) ?? 0) + 1);
+  }
+  const staggeredExample = [...staggeredCounts.entries()].find(([, count]) => count >= 2);
+  const staggeredBedCount = [...staggeredCounts.values()].filter((count) => count >= 2).length;
+  if (staggeredExample) {
+    const [key, count] = staggeredExample;
+    const cropKey = key.split('::')[1];
+    const crop = cropByKey(cropKey);
+    if (crop) {
+      const others = staggeredBedCount > 1 ? ` (and ${staggeredBedCount - 1} other bed${staggeredBedCount > 2 ? 's' : ''} too)` : '';
+      paragraphs.push(`${crop.name} is staggered ${count} times on the same bed${others} — sown in slices a few weeks apart so harvests keep coming instead of one big flush followed by a gap.`);
+    }
   }
 
   return paragraphs;

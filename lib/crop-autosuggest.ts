@@ -280,7 +280,6 @@ function planSuccession(
   if (rhythm === 'few-big') cap = 1;
   if (goal === 'commercial') cap = Math.max(cap, 2);
 
-  const perBatchFraction = wholeBed ? 1 : fractionIfShared;
   const startIdx = nearestCluster.months.indexOf(nearest.month);
   // NOT capped by bedsForCrop.length — a fast crop can cycle back through the
   // SAME bed for a later cohort once the earlier one has been harvested (the
@@ -290,6 +289,26 @@ function planSuccession(
   // the crop's own succession cap, even when a bed would free up in time.
   const numBatches = Math.min(nearestCluster.months.length - startIdx, cap);
   const sowMonthsToTry = nearestCluster.months.slice(startIdx, startIdx + numBatches);
+
+  // A whole-bed crop with more than one batch claiming the FULL bed per
+  // batch can never overlap with its own next batch — each cohort has to
+  // completely finish (sow→harvest span) before the next can start, so a
+  // 3-4 month sow window collapses to just 1-2 widely-spaced cycles with a
+  // dead gap between them (confirmed live: a cucumber bed sowing once in
+  // Sep, sitting empty Oct-Nov, resowing in Dec). Splitting each batch to a
+  // THIRD of the bed instead lets successive cohorts overlap in time — the
+  // classic "staggered succession" technique for a continuously-available
+  // harvest instead of one big flush then a gap. Single-batch whole-bed
+  // crops (numBatches===1 — onions, garlic) are unaffected: there's nothing
+  // to stagger against. Genuinely space-hungry vines (isSpaceHungry) are
+  // ALSO excluded even with numBatches>1 — that classification means the
+  // plant physically needs the full bed's ground while it's growing (that's
+  // the whole reason it's "space-hungry"), so two sprawling half-bed vines
+  // "overlapping" on paper would actually smother each other in the ground.
+  const STAGGER_SLICES = 3;
+  const perBatchFraction = wholeBed
+    ? (numBatches > 1 && !isSpaceHungry(crop) ? closestPreset(1 / Math.min(numBatches, STAGGER_SLICES)) : 1)
+    : fractionIfShared;
 
   const plantings: Planting[] = [];
   let bedCursor = rotation.nextIndex(bedsForCrop);
