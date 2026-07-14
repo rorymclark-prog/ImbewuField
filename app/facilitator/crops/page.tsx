@@ -76,16 +76,57 @@ function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean
   );
 }
 
+// Segment.start/end are already DISPLAY-COLUMN indices (0-11, 0 = this
+// month) — not real calendar months. There's only ever one segment now (see
+// barSegments below), clipped to the visible window if it runs off either
+// edge.
 interface Segment { start: number; end: number }
 
-/** Bar segments for a sow→harvest span, split in two when it crosses the year boundary. */
-function barSegments(sowMonth: number, harvest: number): Segment[] {
-  if (harvest >= sowMonth) return [{ start: sowMonth, end: harvest }];
-  return [{ start: sowMonth, end: 12 }, { start: 1, end: harvest }];
+// The grid is a ROLLING 12-month window starting from the current real
+// month (column 0 = this month), not a fixed Jan-Dec calendar year — a
+// farmer opening the plan in July should see Jul-Jun ahead, not stare at
+// six already-past, unfillable months before anything useful starts.
+//
+// A sowMonth on its own is ambiguous without a year (there's no year field
+// anywhere in this data model) — it could mean "the next time this month
+// comes around" OR "the most recent time it happened" (e.g. an `existing`
+// crop sown a couple of months ago, already growing). Resolving it as
+// ALWAYS-FORWARD broke exactly that case: an existing tomato planting sown
+// in May rendered as if it wouldn't be sown for another 10 months, instead
+// of showing it already in progress with harvest coming up soon. Instead,
+// pick whichever direction (forward or back) is NEARER to today — auto-
+// suggest's own output is always ≤5 months forward anyway (its own
+// DELAYED_START_THRESHOLD_MONTHS gate), so this never changes behaviour
+// there; it only fixes the ambiguous manual/existing cases.
+function nearestSignedOffset(m: number, originMonth: number): number {
+  const fwd = ((m - originMonth) % 12 + 12) % 12; // 0..11
+  return fwd > 6 ? fwd - 12 : fwd; // prefer whichever direction is closer; ties favour forward
+}
+
+/**
+ * The single visible bar segment for a sow→harvest span, in display-column
+ * space, clipped to the 12-column window. `harvest` is always the crop's
+ * OWN forward span from `sowMonth` (a crop never takes longer than ~12
+ * months, so this offset is unambiguous regardless of "today"); only the
+ * sow event's OWN position relative to today needs the nearest-direction
+ * resolution above. Returns [] if the whole span falls outside the visible
+ * window (a long-since-fully-harvested existing crop, or a genuinely
+ * far-future manual entry).
+ */
+function barSegments(sowMonth: number, harvest: number, originMonth: number): Segment[] {
+  const sowOffset = nearestSignedOffset(sowMonth, originMonth);
+  const spanMonths = ((harvest - sowMonth) % 12 + 12) % 12; // crop's own forward duration, 0-11
+  const harvestOffset = sowOffset + spanMonths;
+  const start = Math.max(sowOffset, 0);
+  const end = Math.min(harvestOffset, 11);
+  if (end < start) return [];
+  return [{ start, end }];
 }
 
 const COL_PCT = 100 / 12;
-const leftPct = (m: number) => (m - 1) * COL_PCT;
+// Segment values are already clipped display-column indices (0-11), so
+// position/width are now a plain, always-safe index calculation.
+const leftPct = (idx: number) => idx * COL_PCT;
 const widthPct = (seg: Segment) => (seg.end - seg.start + 1) * COL_PCT;
 
 /** Linear-interpolate between two '#rrggbb' hex colours, t clamped to [0,1]. */
@@ -416,6 +457,10 @@ export default function FacilitatorCropsPage() {
   const nextMonth = wrapMonth(currentMonth + 1);
   const currentTasks = allTasks.filter((t) => t.month === currentMonth);
   const nextTasks = allTasks.filter((t) => t.month === nextMonth);
+  // The rolling 12-month display order — column 0 (and the first "Full year"
+  // row) is always THIS month, not always January, so opening the plan
+  // never shows six already-past months before anything useful starts.
+  const monthOrder = useMemo(() => Array.from({ length: 12 }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
   const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKg(p, bedAreaFor(p.bedId)), 0);
   // Already-growing crops are informational (the farmer planted them before
@@ -649,18 +694,18 @@ export default function FacilitatorCropsPage() {
                       <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
                     </div>
                     <div className="flex" style={{ flex: '1 1 auto' }}>
-                      {MONTHS_SHORT.map((m, i) => (
+                      {monthOrder.map((m, i) => (
                         <div
                           key={m}
                           className="text-center font-sans"
                           style={{
                             flex: 1, padding: '8px 2px', fontSize: 11,
-                            fontWeight: (i + 1) === currentMonth ? 700 : 500,
-                            color: (i + 1) === currentMonth ? '#1F4D2B' : '#8C7A62',
-                            background: (i + 1) === currentMonth ? 'rgba(31,77,43,0.08)' : 'transparent',
+                            fontWeight: i === 0 ? 700 : 500,
+                            color: i === 0 ? '#1F4D2B' : '#8C7A62',
+                            background: i === 0 ? 'rgba(31,77,43,0.08)' : 'transparent',
                           }}
                         >
-                          {m}
+                          {MONTHS_SHORT[m - 1]}
                         </div>
                       ))}
                     </div>
@@ -699,9 +744,9 @@ export default function FacilitatorCropsPage() {
                   📱 Share tasks
                 </button>
                 <div style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
-                  <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Full year</div>
+                  <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Next 12 months</div>
                   <div className="space-y-1">
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
+                    {monthOrder.map((m) => {
                       const t = allTasks.filter((task) => task.month === m);
                       if (t.length === 0) return null;
                       return (
@@ -889,18 +934,18 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
         <div className="font-mono" style={{ fontSize: 11, color: '#8C7A62' }}>{bed.areaM2.toFixed(1)} m²</div>
       </div>
       <div style={{ flex: '1 1 auto', position: 'relative' }}>
-        {/* month gridlines (background) */}
+        {/* month gridlines (background) — column 0 is always "this month" now */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none' }}>
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+          {Array.from({ length: 12 }, (_, i) => i).map((i) => (
             <div
-              key={m}
-              style={{ flex: 1, borderRight: m < 12 ? '1px solid #EDE7DB' : 'none', background: m === currentMonth ? 'rgba(31,77,43,0.05)' : 'transparent' }}
+              key={i}
+              style={{ flex: 1, borderRight: i < 11 ? '1px solid #EDE7DB' : 'none', background: i === 0 ? 'rgba(31,77,43,0.05)' : 'transparent' }}
             />
           ))}
         </div>
         <div style={{ position: 'relative', padding: '6px 0' }}>
           {plantings.map((p) => (
-            <PlantingBar key={p.id} planting={p} onTap={() => onTapPlanting(p)} />
+            <PlantingBar key={p.id} planting={p} currentMonth={currentMonth} onTap={() => onTapPlanting(p)} />
           ))}
           <div style={{ padding: '2px 8px' }}>
             <button
@@ -917,12 +962,17 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
   );
 }
 
-function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => void }) {
+function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; currentMonth: number; onTap: () => void }) {
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
-  const segments = barSegments(planting.sowMonth, harvest);
-  const trMonth = crop.transplant && !planting.existing ? wrapMonth(planting.sowMonth + 1) : null;
+  const segments = barSegments(planting.sowMonth, harvest, currentMonth);
+  if (!segments.length) return null; // entirely outside the visible 12-month window
+  // The transplant marker is anchored to THIS crop's own sow offset (not
+  // re-derived independently) so it always lands right after the sow
+  // segment, never contradicting it.
+  const sowOffset = nearestSignedOffset(planting.sowMonth, currentMonth);
+  const trOffset = crop.transplant && !planting.existing ? sowOffset + 1 : null;
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
   // Existing (already-growing) crops get a muted olive treatment so the eye
@@ -930,7 +980,8 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
   // fades from "just sown" to a golden "ready to harvest" tone across its
   // length, so you can see how far along a planting is at a glance.
   const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
-  const totalMonths = segments.reduce((s, seg) => s + (seg.end - seg.start + 1), 0);
+  const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
+  const totalMonths = segments.reduce((s, seg) => s + segMonthCount(seg), 0);
   const lastSegIdx = segments.length - 1;
 
   return (
@@ -942,7 +993,7 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
           className="font-sans"
           style={{
             position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: BAR_STYLE === 'gradient' ? barGradient(seg, planting.sowMonth, totalMonths, barFrom, barTo) : barFrom,
+            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, totalMonths, barFrom, barTo) : barFrom,
             color: '#fff', border: 'none', borderRadius: 6,
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
@@ -956,17 +1007,17 @@ function PlantingBar({ planting, onTap }: { planting: Planting; onTap: () => voi
             // crisp divider where it meets the growing colour.
             <div
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 / (seg.end - seg.start + 1)}%`,
+                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 / segMonthCount(seg)}%`,
                 background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
               }}
             />
           )}
         </button>
       ))}
-      {trMonth !== null && (
+      {trOffset !== null && trOffset >= 0 && trOffset <= 11 && (
         <div
           style={{
-            position: 'absolute', left: `${leftPct(trMonth) + COL_PCT / 2}%`, top: -2, transform: 'translateX(-50%)',
+            position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -2, transform: 'translateX(-50%)',
             fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FBF6EC', padding: '0 2px', borderRadius: 3,
             pointerEvents: 'none', whiteSpace: 'nowrap',
           }}
