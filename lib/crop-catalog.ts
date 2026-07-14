@@ -97,7 +97,7 @@ export const CROPS: CropDef[] = [
   {
     key: 'green-beans',
     name: 'Green beans',
-    icon: '🟢',
+    icon: '🫛',
     sowMonths: {
       summer: [9, 10, 11, 12, 1],
       winter: [8, 9, 10, 11],
@@ -226,7 +226,7 @@ export const CROPS: CropDef[] = [
   {
     key: 'beetroot',
     name: 'Beetroot',
-    icon: '🔴',
+    icon: '🟣',
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
@@ -406,7 +406,7 @@ export const CROPS: CropDef[] = [
   {
     key: 'peas',
     name: 'Peas',
-    icon: '🫛',
+    icon: '🟢',
     sowMonths: {
       summer: [2, 3, 8],
       winter: [2, 3, 4],

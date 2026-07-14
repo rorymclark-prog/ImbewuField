@@ -26,26 +26,11 @@ import {
   loadFavouriteCropKeys, saveFavouriteCropKeys,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
-import { FOOD_GROUP_META, foodGroupOf } from '@/lib/crop-groups';
+import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
-
-// Rotation order + "why" blurbs for the explanation card at the bottom of
-// the crop plan — general permaculture practice, not a precise schedule.
-// Ordered roughly as a rotation would move through beds: nitrogen-fixers
-// first, then the hungry crops that benefit from them, then the groups that
-// want what's left behind.
-const ROTATION_GROUP_ORDER: FoodGroup[] = ['legume', 'leafy_green', 'fruiting_veg', 'root_tuber', 'allium_aromatic', 'staple_grain'];
-const ROTATION_BLURB: Record<FoodGroup, string> = {
-  legume: 'Pulls nitrogen from the air into the soil as it grows — the best group to plant right before a hungry leafy green or fruiting crop.',
-  leafy_green: 'Fast turnover, heavy nitrogen feeders — do best following legumes, and quick enough to only hold a bed for part of a season.',
-  fruiting_veg: 'Heavy feeders with their own soil-borne pests and diseases — the group most worth never repeating in the same bed two seasons running.',
-  root_tuber: "Dig deep and don't want freshly-manured soil — a good match for a bed that carried heavy feeders the season before.",
-  allium_aromatic: 'Light feeders with natural pest-deterrent oils — a gentle "rest" crop between hungrier groups.',
-  staple_grain: 'Bulk biomass with moderate needs — often the long "reset" year in a multi-bed rotation.',
-};
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
@@ -1027,13 +1012,14 @@ function RotationExplanationCard() {
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Why rotate by food group</div>
       <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-        Each bed&apos;s label above shows which food group is currently growing there. Moving a different group
-        into a bed each season, rather than replanting the same one, keeps soil-borne pests and diseases from
-        building up, and matches each group&apos;s needs to what the last crop left behind — general permaculture
-        practice, not an exact schedule.
+        Each bed&apos;s label above shows which food group is currently growing there. With &quot;Rotate crops&quot;
+        turned on in Auto-suggest, each bed actively targets the NEXT group in this order (falling back to
+        whatever fits if nothing from that group is available) — not just avoiding a repeat, but following the
+        cycle below. This keeps soil-borne pests and diseases from building up, and matches each group&apos;s
+        needs to what the last crop left behind — general permaculture practice, not a guaranteed schedule.
       </p>
       <div className="space-y-1.5">
-        {ROTATION_GROUP_ORDER.map((g) => {
+        {ROTATION_SEQUENCE.map((g) => {
           const meta = FOOD_GROUP_META[g];
           return (
             <div key={g} className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
