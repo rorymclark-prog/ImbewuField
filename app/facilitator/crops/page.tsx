@@ -809,6 +809,14 @@ export default function FacilitatorCropsPage() {
                 </div>
               </div>
             </div>
+            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12 }}>
+              ↻ marks where the timeline wraps into next year — this plan repeats on the same annual cycle rather
+              than holding a separate plan per year. When a new season actually starts, tap{' '}
+              <strong style={{ color: '#5C5040' }}>Auto-suggest a plan</strong> again with{' '}
+              <strong style={{ color: '#5C5040' }}>Rotate crops</strong> on: it reads what&apos;s currently in each
+              bed as last season&apos;s history and plans the next rotation around it, so re-running this each
+              season is how &quot;planning next year&quot; actually works here.
+            </div>
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
