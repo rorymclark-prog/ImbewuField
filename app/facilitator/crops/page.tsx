@@ -387,6 +387,19 @@ export default function FacilitatorCropsPage() {
       return { version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
     });
   }
+  // Only drops plantings on beds actually shown right now (matches the
+  // `plantings` derived read below) — never touches plantings parked under a
+  // bed id that no longer exists in this design, same care as removePlanting.
+  function clearAllPlantings() {
+    if (!plantings.length) return;
+    if (!window.confirm(`Clear all ${plantings.length} planting${plantings.length > 1 ? 's' : ''} from every bed? You can undo this once right after.`)) return;
+    pushPlanHistory();
+    setPlan((prev) => {
+      if (!prev) return prev;
+      const bedIds = new Set(beds.map((b) => b.id));
+      return { version: 1, plantings: prev.plantings.filter((p) => !bedIds.has(p.bedId)), updatedAt: Date.now() };
+    });
+  }
 
   const allTasks = useMemo(() => (mounted ? tasksForPlan(plantings, beds) : []), [mounted, plantings, beds]);
   const nextMonth = wrapMonth(currentMonth + 1);
@@ -591,6 +604,16 @@ export default function FacilitatorCropsPage() {
                   title="Undo the last change to this plan"
                 >
                   ↩ Undo
+                </button>
+              )}
+              {plantings.length > 0 && (
+                <button
+                  onClick={clearAllPlantings}
+                  className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
+                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
+                  title="Clear every planting from this plan"
+                >
+                  🗑 Clear all
                 </button>
               )}
             </div>
