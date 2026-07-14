@@ -504,6 +504,16 @@ export default function FacilitatorCropsPage() {
         >
           ‹ Back to design
         </Link>
+        {myDesignsList && myDesignsList.length > 0 && (
+          <button
+            onClick={() => setSwitchingSite(true)}
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
+            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}
+            title="Switch to a different design's crop plan"
+          >
+            ‹ All crop plans
+          </button>
+        )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
         {myDesignsList && myDesignsList.length > 0 ? (
           <button
