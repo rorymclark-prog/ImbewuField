@@ -34,6 +34,15 @@ import { UNPRICED_CROPS, priceFor, loadCropPriceOverrides, saveCropPriceOverride
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
+// The rolling timeline shows this many months ahead from today (column 0),
+// scrollable — a full 2 years rather than a hard 12-month wall, so a
+// genuinely-reachable future planting (or a farmer just wanting to look
+// ahead into "next year") isn't cut off arbitrarily at column 12. Grid
+// container min-widths below scale off this so columns stay a readable
+// size rather than getting squeezed as this grows.
+const DISPLAY_MONTHS = 24;
+const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
+
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
 const FRACTION_PRESETS: { label: string; value: number }[] = [
@@ -108,26 +117,26 @@ function nearestSignedOffset(m: number, originMonth: number): number {
 
 /**
  * The single visible bar segment for a sow→harvest span, in display-column
- * space, clipped to the 12-column window. `harvest` is always the crop's
- * OWN forward span from `sowMonth` (a crop never takes longer than ~12
- * months, so this offset is unambiguous regardless of "today"); only the
- * sow event's OWN position relative to today needs the nearest-direction
- * resolution above. Returns [] if the whole span falls outside the visible
- * window (a long-since-fully-harvested existing crop, or a genuinely
- * far-future manual entry).
+ * space, clipped to the DISPLAY_MONTHS-column window. `harvest` is always
+ * the crop's OWN forward span from `sowMonth` (a crop never takes longer
+ * than ~12 months, so this offset is unambiguous regardless of "today");
+ * only the sow event's OWN position relative to today needs the
+ * nearest-direction resolution above. Returns [] if the whole span falls
+ * outside the visible window (a long-since-fully-harvested existing crop,
+ * or a genuinely far-future manual entry).
  */
 function barSegments(sowMonth: number, harvest: number, originMonth: number): Segment[] {
   const sowOffset = nearestSignedOffset(sowMonth, originMonth);
   const spanMonths = ((harvest - sowMonth) % 12 + 12) % 12; // crop's own forward duration, 0-11
   const harvestOffset = sowOffset + spanMonths;
   const start = Math.max(sowOffset, 0);
-  const end = Math.min(harvestOffset, 11);
+  const end = Math.min(harvestOffset, DISPLAY_MONTHS - 1);
   if (end < start) return [];
   return [{ start, end }];
 }
 
-const COL_PCT = 100 / 12;
-// Segment values are already clipped display-column indices (0-11), so
+const COL_PCT = 100 / DISPLAY_MONTHS;
+// Segment values are already clipped display-column indices, so
 // position/width are now a plain, always-safe index calculation.
 const leftPct = (idx: number) => idx * COL_PCT;
 const widthPct = (seg: Segment) => (seg.end - seg.start + 1) * COL_PCT;
@@ -497,10 +506,11 @@ export default function FacilitatorCropsPage() {
   const nextMonth = wrapMonth(currentMonth + 1);
   const currentTasks = allTasks.filter((t) => t.month === currentMonth);
   const nextTasks = allTasks.filter((t) => t.month === nextMonth);
-  // The rolling 12-month display order — column 0 (and the first "Full year"
-  // row) is always THIS month, not always January, so opening the plan
-  // never shows six already-past months before anything useful starts.
-  const monthOrder = useMemo(() => Array.from({ length: 12 }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  // The rolling DISPLAY_MONTHS-month display order — column 0 is always THIS
+  // month, not always January, so opening the plan never shows already-past
+  // months before anything useful starts. Scrollable out to a full 2 years
+  // ahead rather than a hard 12-month wall.
+  const monthOrder = useMemo(() => Array.from({ length: DISPLAY_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
   const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
   // Already-growing crops are informational (the farmer planted them before
@@ -729,7 +739,7 @@ export default function FacilitatorCropsPage() {
             {/* Timeline */}
             <div className="rounded-2xl overflow-hidden mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
               <div style={{ overflowX: 'auto' }}>
-                <div style={{ minWidth: 760 }}>
+                <div style={{ minWidth: GRID_MIN_WIDTH }}>
                   {/* Month header row */}
                   <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
                     <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
@@ -738,16 +748,22 @@ export default function FacilitatorCropsPage() {
                     <div className="flex" style={{ flex: '1 1 auto' }}>
                       {monthOrder.map((m, i) => (
                         <div
-                          key={m}
+                          key={i}
                           className="text-center font-sans"
                           style={{
                             flex: 1, padding: '8px 2px', fontSize: 11,
                             fontWeight: i === 0 ? 700 : 500,
-                            color: i === 0 ? '#1F4D2B' : '#8C7A62',
+                            color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#8C7A62',
                             background: i === 0 ? 'rgba(31,77,43,0.08)' : 'transparent',
+                            // A month label repeats every 12 columns (no year field
+                            // anywhere in this data model) — a visible seam at the
+                            // 1-year mark stops "Jul" (this year) and "Jul" (next
+                            // year) reading as the same column.
+                            borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
                           }}
+                          title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}
                         >
-                          {MONTHS_SHORT[m - 1]}
+                          {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
                         </div>
                       ))}
                     </div>
@@ -786,14 +802,14 @@ export default function FacilitatorCropsPage() {
                   📱 Share tasks
                 </button>
                 <div style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
-                  <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Next 12 months</div>
+                  <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Looking ahead</div>
                   <div className="space-y-1">
-                    {monthOrder.map((m) => {
+                    {monthOrder.map((m, i) => {
                       const t = allTasks.filter((task) => task.month === m);
                       if (t.length === 0) return null;
                       return (
-                        <div key={m} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
-                          <strong style={{ color: '#20190F' }}>{monthLabel(m)}</strong> — {taskSentence(t)}
+                        <div key={i} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
+                          <strong style={{ color: '#20190F' }}>{monthLabel(m)}{i >= 12 ? ' (next year)' : ''}</strong> — {taskSentence(t)}
                         </div>
                       );
                     })}
@@ -1049,7 +1065,7 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
             </span>
           </div>
           <div style={{ overflowX: 'auto' }}>
-            <div className="flex" style={{ minWidth: 760, gap: 6 }}>
+            <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
               {cols.map(({ m, fresh, stored }, i) => {
                 const total = fresh.length + stored.length;
                 const hPx = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
@@ -1059,7 +1075,7 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
                   .map((it) => `${it.icon} ${it.name} — ${it.status === 'fresh' ? 'fresh' : 'stored'}`)
                   .join('\n');
                 return (
-                  <div key={m} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                  <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
                     <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                       {total === 0 ? (
                         <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
@@ -1087,12 +1103,12 @@ function FoodAvailabilityChart({ monthOrder, availability, valueByMonth, plantin
         </>
       ) : (
         <div style={{ overflowX: 'auto' }}>
-          <div className="flex" style={{ minWidth: 760, gap: 6 }}>
+          <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
             {monthOrder.map((m, i) => {
               const val = mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue;
               const hPx = val <= 0 ? 0 : Math.max(4, Math.round((val / moneyMax) * BAR_MAX_H));
               return (
-                <div key={m} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
                   <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                     {val <= 0 ? (
                       <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
@@ -1227,10 +1243,15 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
       <div style={{ flex: '1 1 auto', position: 'relative' }}>
         {/* month gridlines (background) — column 0 is always "this month" now */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none' }}>
-          {Array.from({ length: 12 }, (_, i) => i).map((i) => (
+          {Array.from({ length: DISPLAY_MONTHS }, (_, i) => i).map((i) => (
             <div
               key={i}
-              style={{ flex: 1, borderRight: i < 11 ? '1px solid #EDE7DB' : 'none', background: i === 0 ? 'rgba(31,77,43,0.05)' : 'transparent' }}
+              style={{
+                flex: 1,
+                borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid #EDE7DB' : 'none',
+                borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
+                background: i === 0 ? 'rgba(31,77,43,0.05)' : 'transparent',
+              }}
             />
           ))}
         </div>
@@ -1305,19 +1326,27 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           }}
           title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${harvestLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
         >
-          {i === 0 ? `${crop.icon} ${crop.name}${fLabel ? ` (${fLabel})` : ''}` : ''}
           {BAR_STYLE === 'solid' && i === lastSegIdx && (
             // The "ready to harvest" marker — a hard colour + a line, not a
             // blend: a solid gold cap over the crop's WHOLE fresh-harvest
             // window (one month for a one-shot harvest, several for a
             // cut-and-come-again crop), with a crisp divider where it meets
-            // the growing colour.
+            // the growing colour. Can legitimately reach 100% width (viewing
+            // a crop from partway through its own harvest window, once the
+            // growing part has scrolled off the left edge) — MUST render
+            // behind the name label below, or a wide "ready" cap blots the
+            // name out entirely.
             <div
               style={{
                 position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonths) / segMonthCount(seg)}%`,
                 background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
               }}
             />
+          )}
+          {i === 0 && (
+            <span style={{ position: 'relative', zIndex: 1 }}>
+              {crop.icon} {crop.name}{fLabel ? ` (${fLabel})` : ''}
+            </span>
           )}
         </button>
       ))}
