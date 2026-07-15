@@ -20,6 +20,8 @@ import {
   type DesignLayer,
 } from '@/lib/design-studio';
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
+import { pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
+import { useAuth } from '@/lib/auth';
 import {
   computeCanvasFrame,
   fetchImageAsDataUrl,
@@ -84,6 +86,16 @@ function withSelfSaveFlag<T>(fn: () => T): T {
       selfSaveInProgress = false;
     });
   }
+}
+
+// Every local save also pushes to the cloud (lib/design-canvas-sync.ts) — fire-and-forget,
+// no-ops when signed out or offline, so this is safe to call unconditionally from every
+// call site that used to just call saveCanvasState directly.
+function persistCanvasState(state: DesignCanvasState): void {
+  // Push the RESTAMPED state saveCanvasState just wrote locally, not the pre-stamp `state` —
+  // otherwise the cloud gets a stale updatedAt and a real edit can lose the last-write-wins race.
+  const stamped = withSelfSaveFlag(() => saveCanvasState(state));
+  pushDesignCanvas(stamped).catch(() => {});
 }
 
 // Pre-seed mapping: existing traced site-element types → Design Studio catalog defIds.
@@ -195,7 +207,10 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
 function readCachedLocationData(lat: number, lon: number): LocationData | null {
   if (typeof window === 'undefined') return null;
   try {
-    const cacheKey = `imbewu_loc_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    // v2: bump the version when the location-data shape gains a field (e.g. BRU zones) so
+    // already-analysed sites refetch instead of serving a stale pre-field cache. Keep the
+    // key in sync with app/farmer/page.tsx.
+    const cacheKey = `imbewu_loc_v2_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     const raw = localStorage.getItem(cacheKey);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
@@ -298,6 +313,7 @@ function EmptyState() {
 }
 
 function DesignStudioInner() {
+  const { user } = useAuth();
   const params = useSearchParams();
   const latRaw = params.get('lat');
   const lonRaw = params.get('lon');
@@ -477,12 +493,12 @@ function DesignStudioInner() {
         const existing = loadCanvasState(siteId);
         if (existing) {
           const migrated = migrateStateToFrame(existing, frameNoImg, project);
-          if (migrated !== existing) withSelfSaveFlag(() => saveCanvasState(migrated));
+          if (migrated !== existing) persistCanvasState(migrated);
           return migrated;
         }
         if (prev && prev.siteId === siteId) {
           const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
-          if (migratedPrev !== prev) withSelfSaveFlag(() => saveCanvasState(migratedPrev));
+          if (migratedPrev !== prev) persistCanvasState(migratedPrev);
           return migratedPrev;
         }
 
@@ -511,6 +527,19 @@ function DesignStudioInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasSite, lat, lon, siteId]);
 
+  // Cloud sync for this site's canvas state — a SEPARATE effect (own deps, own lifecycle)
+  // from the frame/refresh effect above, so a sync hiccup can never affect satellite fitting
+  // or vice versa. Reconcile once per site (merges + applies any newer remote state, which
+  // surfaces here via the DESIGN_CANVAS_CHANGED_EVENT listener above — no direct state
+  // update needed), then keep listening live while this device has the site open. No-ops
+  // entirely when signed out; localStorage-only behaviour is unchanged.
+  useEffect(() => {
+    const uid = user?.uid;
+    if (!uid || !hasSite) return;
+    reconcileDesignCanvas(siteId).catch(() => {});
+    return subscribeDesignCanvasLive(siteId);
+  }, [user?.uid, hasSite, siteId]);
+
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
     (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
@@ -519,7 +548,7 @@ function DesignStudioInner() {
         if (!prev) return prev;
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         const next = updater(prev);
-        withSelfSaveFlag(() => saveCanvasState(next));
+        persistCanvasState(next);
         setSaved(true);
         return next;
       });
@@ -535,7 +564,7 @@ function DesignStudioInner() {
         setSaved(true);
         return prev;
       }
-      withSelfSaveFlag(() => saveCanvasState(popped));
+      persistCanvasState(popped);
       setSaved(true);
       return popped;
     });
@@ -563,7 +592,7 @@ function DesignStudioInner() {
     setCanvasState((prev) => {
       if (!prev) return prev;
       const next = { ...prev, step, updatedAt: new Date().toISOString() };
-      withSelfSaveFlag(() => saveCanvasState(next));
+      persistCanvasState(next);
       return next;
     });
   }, []);

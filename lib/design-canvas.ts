@@ -335,11 +335,29 @@ export function loadCanvasState(siteId: string): DesignCanvasState | null {
   }
 }
 
-export function saveCanvasState(state: DesignCanvasState): void {
-  if (typeof window === 'undefined') return;
+// Returns the restamped state (fresh updatedAt) so a caller that also syncs to the cloud
+// pushes the SAME timestamp that was persisted locally — pushing the pre-stamp object would
+// send a stale updatedAt and lose a genuine edit to last-write-wins on a two-device race.
+export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
   const stamped: DesignCanvasState = { ...state, updatedAt: new Date().toISOString() };
+  if (typeof window === 'undefined') return stamped;
   try {
     localStorage.setItem(keyFor(state.siteId), JSON.stringify(stamped));
+  } catch {
+    return stamped;
+  }
+  window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+  return stamped;
+}
+
+// Applies a state that a cloud merge (lib/design-canvas-sync.ts) already decided is newest —
+// written verbatim, WITHOUT restamping updatedAt (restamping would make a same-tick re-reconcile
+// think this device just edited it, when it only received someone else's edit). Still dispatches
+// the change event so the page's normal refresh() path picks it up like any external change.
+export function applyRemoteCanvasState(state: DesignCanvasState): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
   } catch {
     return;
   }

@@ -156,7 +156,9 @@ function HomeInner() {
     // Check localStorage cache. MUST key at 5 dp (~1.1 m) to match designSiteIdFromLocation —
     // 2 dp (~1.1 km) made two different nearby sites collide on the same key, so the second
     // site loaded the first site's cached data (incl. its lat/lon) → satellite of the WRONG place.
-    const cacheKey = `imbewu_loc_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    // v2: bump when the location-data shape gains a field (e.g. BRU zones) so already-analysed
+    // sites refetch instead of serving a stale pre-field cache. Keep in sync with app/design/page.tsx.
+    const cacheKey = `imbewu_loc_v2_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
