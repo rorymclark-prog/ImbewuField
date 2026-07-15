@@ -983,6 +983,7 @@ function DesignStudioInner() {
               onSelect={setSelectedId}
               suggestions={suggestions}
               onEditItem={setEditItemId}
+              onToolChange={setTool}
             />
             {pendingSuggestions.length > 0 && (
               <div

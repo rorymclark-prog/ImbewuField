@@ -44,6 +44,10 @@ export interface DesignCanvasProps {
   onSelect: (id: string | null) => void;
   suggestions?: DetectSuggestion[];
   onEditItem?: (id: string) => void;
+  // Called with 'select' right after a zone/line is committed, so the very next tap on
+  // the shape you just drew selects it instead of being swallowed by the still-armed
+  // draw tool. Left unset, tool stays whatever the palette last chose (unchanged today).
+  onToolChange?: (t: ToolKind) => void;
 }
 
 const GOLD = '#F7C97E';
@@ -185,6 +189,7 @@ export default function DesignCanvas({
   onSelect,
   suggestions,
   onEditItem,
+  onToolChange,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
@@ -215,13 +220,32 @@ export default function DesignCanvas({
   const dragResizeId = useRef<string | null>(null);
   const [resizePreview, setResizePreview] = useState<{ wM: number; hM: number } | null>(null);
 
-  // One-finger background pan (select tool only). Tracks whether the current background
-  // pointerdown has moved past the tap threshold, so a still tap still deselects.
-  const panState = useRef<{ pointerId: number; startX: number; startY: number; startTx: number; startTy: number; moved: boolean } | null>(null);
+  // Whole-shape (zone/line) translate drag — press-and-drag the body moves every point by
+  // the same delta, mirroring startDragItem's press-drag-moves-the-whole-thing pattern.
+  // originPoints is snapshotted at drag start so the delta is always relative to the
+  // pre-drag shape, not the (already-translated) preview from the previous pointermove.
+  const dragShape = useRef<{ id: string; kind: 'zone' | 'line'; originPoints: Array<[number, number]>; startWorldX: number; startWorldY: number } | null>(null);
+  const [shapeDragDelta, setShapeDragDelta] = useState<[number, number] | null>(null);
+
+  // Drag state for a vertex of the IN-PROGRESS (not yet committed) draft shape. Unlike
+  // dragVertex below, draftPoints is local-only uncommitted state, so this mutates it
+  // directly on every pointermove — no preview-then-commit-on-release dance needed since
+  // there's no undo-stack entry to protect yet.
+  const dragDraftVertex = useRef<number | null>(null);
+
+  // One-finger background pan. Primed on EVERY tool's background pointerdown (not just
+  // 'select'): the tool-specific tap action (place/draft-point/deselect) is deferred to
+  // pointerup's "didn't move past threshold" branch, so a genuine tap still does the
+  // expected thing but a drag pans the map instead of drawing/placing — see runTapAction.
+  const panState = useRef<{ pointerId: number; startX: number; startY: number; startTx: number; startTy: number; moved: boolean; isMiddleButton?: boolean } | null>(null);
 
   // Active pointers for pinch-zoom (two-pointer gesture on the svg background).
   const activePointers = useRef<Map<number, { x: number; y: number }>>(new Map());
-  const pinchState = useRef<{ startDist: number; startK: number; startTx: number; startTy: number; midX: number; midY: number } | null>(null);
+  // Per-FRAME (not gesture-start) previous dist/midpoint, so a pure two-finger drag (no
+  // distance change) still pans — anchoring the incremental zoom+translate to the last
+  // frame (rather than a frozen gesture-start point) is what makes drift-while-pinching
+  // and pure two-finger pan both fall out of the same formula. See handleBackgroundPointerMove.
+  const pinchState = useRef<{ prevDist: number; prevMidX: number; prevMidY: number } | null>(null);
 
   function vbFromClient(clientX: number, clientY: number): [number, number] | null {
     const svg = svgRef.current;
@@ -246,6 +270,16 @@ export default function DesignCanvas({
     const wx = (vb[0] - tx) / k;
     const wy = (vb[1] - ty) / k;
     return [clamp01(wx / imgW), clamp01(wy / imgH)];
+  }
+
+  // Like clientToNorm but UNclamped and left in world-space viewBox px (not divided by
+  // imgW/imgH) — needed for whole-shape drag deltas, where clamping/normalizing each
+  // intermediate point would distort the shape before the final commit.
+  function worldFromClient(clientX: number, clientY: number): [number, number] | null {
+    const vb = vbFromClient(clientX, clientY);
+    if (!vb) return null;
+    const { k, tx, ty } = viewRef.current;
+    return [(vb[0] - tx) / k, (vb[1] - ty) / k];
   }
 
   // Computes the auto-fit view for the current boundary: ≥3 points → frame its bbox to
@@ -298,9 +332,21 @@ export default function DesignCanvas({
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const vb = vbFromClient(e.clientX, e.clientY);
-      if (!vb) return;
-      zoomAbout(vb[0], vb[1], e.deltaY < 0 ? 1.18 : 1 / 1.18);
+      // Browsers report a trackpad pinch gesture as a synthetic ctrlKey=true wheel event
+      // (also true for a literal Ctrl+scroll) — so ctrlKey distinguishes "pinch" from a
+      // plain two-finger trackpad scroll. Tradeoff: a literal mouse's scroll wheel (no
+      // ctrlKey) now PANS instead of zooming, matching the owner's "two fingers on the
+      // touchpad should pan" ask; zoom is still reachable via pinch, +/-, or fit.
+      if (e.ctrlKey) {
+        const vb = vbFromClient(e.clientX, e.clientY);
+        if (!vb) return;
+        zoomAbout(vb[0], vb[1], e.deltaY < 0 ? 1.18 : 1 / 1.18);
+        return;
+      }
+      const rect = svg.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const scale = Math.min(rect.width / imgW, rect.height / imgH);
+      setView((prev) => ({ k: prev.k, tx: prev.tx - e.deltaX / scale, ty: prev.ty - e.deltaY / scale }));
     };
     svg.addEventListener('wheel', onWheel, { passive: false });
     return () => svg.removeEventListener('wheel', onWheel);
@@ -333,6 +379,11 @@ export default function DesignCanvas({
     const shape: ZoneShape = { id: newId(), zone: zoneDraw, points: cleaned };
     onChange({ ...state, zones: [...state.zones, shape] });
     setDraftPoints([]);
+    // Auto-select + revert to 'select' so the very next tap (the natural "let me check
+    // it" gesture right after Finish) selects/edits the shape instead of being swallowed
+    // by the still-armed zone tool as a stray new draft point.
+    onSelect(shape.id);
+    onToolChange?.('select');
   }
 
   function commitLine(points: Array<[number, number]>) {
@@ -341,36 +392,16 @@ export default function DesignCanvas({
     const shape: LineShape = { id: newId(), kind: lineKind, points: cleaned };
     onChange({ ...state, lines: [...state.lines, shape] });
     setDraftPoints([]);
+    onSelect(shape.id);
+    onToolChange?.('select');
   }
 
   function handleBackgroundPointerDown(e: React.PointerEvent<SVGSVGElement>) {
-    // Track every active pointer on the background for pinch-zoom, regardless of tool.
-    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    (e.target as Element).setPointerCapture?.(e.pointerId);
-
-    if (activePointers.current.size === 2) {
-      // Entering a two-finger pinch — cancel any in-progress pan.
-      panState.current = null;
-      const pts = Array.from(activePointers.current.values());
-      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
-      const midClientX = (pts[0].x + pts[1].x) / 2;
-      const midClientY = (pts[0].y + pts[1].y) / 2;
-      const mid = vbFromClient(midClientX, midClientY);
-      pinchState.current = {
-        startDist: dist,
-        startK: viewRef.current.k,
-        startTx: viewRef.current.tx,
-        startTy: viewRef.current.ty,
-        midX: mid ? mid[0] : imgW / 2,
-        midY: mid ? mid[1] : imgH / 2,
-      };
-      return;
-    }
-    if (activePointers.current.size > 2) return;
-
-    // Single-pointer: in 'select' tool, background pointerdown starts a potential pan —
-    // a tap without movement (<6px) still deselects (handled in the pointerup fallback).
-    if (tool === 'select') {
+    // Middle mouse button always pans, regardless of tool — preventDefault stops the
+    // browser's native middle-click auto-scroll cursor from taking over.
+    if (e.button === 1) {
+      e.preventDefault();
+      (e.target as Element).setPointerCapture?.(e.pointerId);
       panState.current = {
         pointerId: e.pointerId,
         startX: e.clientX,
@@ -378,7 +409,50 @@ export default function DesignCanvas({
         startTx: view.tx,
         startTy: view.ty,
         moved: false,
+        isMiddleButton: true,
       };
+      return;
+    }
+
+    // Track every active pointer on the background for pinch-zoom, regardless of tool.
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+
+    if (activePointers.current.size === 2) {
+      // Entering a two-finger gesture (pinch and/or two-finger pan) — cancel any
+      // in-progress one-finger pan.
+      panState.current = null;
+      const pts = Array.from(activePointers.current.values());
+      const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
+      const midClientX = (pts[0].x + pts[1].x) / 2;
+      const midClientY = (pts[0].y + pts[1].y) / 2;
+      const mid = vbFromClient(midClientX, midClientY);
+      pinchState.current = {
+        prevDist: dist,
+        prevMidX: mid ? mid[0] : imgW / 2,
+        prevMidY: mid ? mid[1] : imgH / 2,
+      };
+      return;
+    }
+    if (activePointers.current.size > 2) return;
+
+    // Single-pointer: prime a potential pan for EVERY tool. The tool-specific tap action
+    // (place item / append draft point / deselect) is deferred to pointerup's
+    // "didn't move past threshold" branch (runTapAction) — so a clean tap still draws/
+    // places/deselects exactly as before, but a drag pans instead.
+    panState.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startTx: view.tx,
+      startTy: view.ty,
+      moved: false,
+    };
+  }
+
+  function runTapAction(e: React.PointerEvent<SVGSVGElement>) {
+    if (tool === 'select') {
+      onSelect(null);
       return;
     }
 
@@ -394,17 +468,8 @@ export default function DesignCanvas({
       return;
     }
 
-    if (tool === 'zone') {
-      setDraftPoints((prev) => {
-        const next = [...prev, pt];
-        return next;
-      });
-      return;
-    }
-
-    if (tool === 'line') {
+    if (tool === 'zone' || tool === 'line') {
       setDraftPoints((prev) => [...prev, pt]);
-      return;
     }
   }
 
@@ -416,12 +481,24 @@ export default function DesignCanvas({
     if (pinchState.current && activePointers.current.size >= 2) {
       const pts = Array.from(activePointers.current.values()).slice(0, 2);
       const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
+      const midClientX = (pts[0].x + pts[1].x) / 2;
+      const midClientY = (pts[0].y + pts[1].y) / 2;
+      const mid = vbFromClient(midClientX, midClientY);
+      if (!mid) return;
       const ps = pinchState.current;
-      const nextK = clamp((dist / ps.startDist) * ps.startK, 1, 6);
-      const ratio = nextK / ps.startK;
-      const tx = ps.midX - (ps.midX - ps.startTx) * ratio;
-      const ty = ps.midY - (ps.midY - ps.startTy) * ratio;
+      const prevK = viewRef.current.k;
+      const scaleStep = dist / ps.prevDist;
+      const nextK = clamp(prevK * scaleStep, 1, 6);
+      // Re-derive the step from the (possibly clamped) k so translate stays consistent
+      // with the zoom actually applied, then anchor it to the LAST frame's tx/ty/mid —
+      // not the gesture-start values — so a pure two-finger drag (distance unchanged,
+      // effectiveStep=1) still carries the midpoint's drift into tx/ty. Pinch-with-drift
+      // and pure two-finger pan fall out of this same incremental formula.
+      const effectiveStep = nextK / prevK;
+      const tx = effectiveStep * (viewRef.current.tx - ps.prevMidX) + mid[0];
+      const ty = effectiveStep * (viewRef.current.ty - ps.prevMidY) + mid[1];
       setView({ k: nextK, tx, ty });
+      pinchState.current = { prevDist: dist, prevMidX: mid[0], prevMidY: mid[1] };
       return;
     }
 
@@ -445,9 +522,29 @@ export default function DesignCanvas({
 
     const pan = panState.current;
     if (pan && pan.pointerId === e.pointerId) {
-      if (!pan.moved && tool === 'select') onSelect(null);
       panState.current = null;
+      if (pan.moved || pan.isMiddleButton) return; // a drag (or explicit middle-mouse pan) — no tool action
+      runTapAction(e);
     }
+  }
+
+  // A gesture interrupted by the OS/browser (app-switch, alert, etc.) fires
+  // pointercancel, not pointerup — clear every live drag/pan/pinch ref WITHOUT
+  // committing a partial edit, so an interrupted gesture can't leave state half-moved
+  // or a ref permanently "stuck" armed.
+  function handleBackgroundPointerCancel(e: React.PointerEvent<SVGSVGElement>) {
+    activePointers.current.delete(e.pointerId);
+    if (activePointers.current.size < 2) pinchState.current = null;
+    if (panState.current?.pointerId === e.pointerId) panState.current = null;
+    dragItemId.current = null;
+    setDragPos(null);
+    dragVertex.current = null;
+    setVertexPos(null);
+    dragResizeId.current = null;
+    setResizePreview(null);
+    dragShape.current = null;
+    setShapeDragDelta(null);
+    dragDraftVertex.current = null;
   }
 
   function handleBackgroundDoubleClick() {
@@ -522,6 +619,70 @@ export default function DesignCanvas({
     }
     dragVertex.current = null;
     setVertexPos(null);
+  }
+
+  // Whole-shape (zone/line) translate drag: press-and-drag the body moves every point by
+  // the same delta in one gesture — mirroring startDragItem's press-drag-moves pattern,
+  // which zones/lines previously lacked entirely (only single-vertex drag existed).
+  function startDragShape(e: React.PointerEvent, id: string, kind: 'zone' | 'line') {
+    if (tool !== 'select') return;
+    e.stopPropagation();
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    onSelect(id);
+    const shape = kind === 'zone' ? state.zones.find((z) => z.id === id) : state.lines.find((l) => l.id === id);
+    if (!shape) return;
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    dragShape.current = { id, kind, originPoints: shape.points, startWorldX: w[0], startWorldY: w[1] };
+  }
+
+  function moveDragShape(e: React.PointerEvent) {
+    const ds = dragShape.current;
+    if (!ds) return;
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    // Normalized-space delta, not yet clamped per-point — clamping mid-drag would distort
+    // the shape if one vertex reaches the [0..1] edge before the others.
+    setShapeDragDelta([(w[0] - ds.startWorldX) / imgW, (w[1] - ds.startWorldY) / imgH]);
+  }
+
+  function endDragShape() {
+    const ds = dragShape.current;
+    if (ds && shapeDragDelta) {
+      const [dx, dy] = shapeDragDelta;
+      const translated = ds.originPoints.map(([x, y]) => [clamp01(x + dx), clamp01(y + dy)] as [number, number]);
+      if (ds.kind === 'zone') {
+        onChange({ ...state, zones: state.zones.map((z) => (z.id === ds.id ? { ...z, points: translated } : z)) });
+      } else {
+        onChange({ ...state, lines: state.lines.map((l) => (l.id === ds.id ? { ...l, points: translated } : l)) });
+      }
+    }
+    dragShape.current = null;
+    setShapeDragDelta(null);
+  }
+
+  // Vertex drag for the IN-PROGRESS draft shape (mid-draw) — the owner's explicit ask:
+  // "if i hover over a point it should be selectable to move even if i haven't completed
+  // putting the polygon". draftPoints is local/uncommitted, so this writes through
+  // directly on every move rather than the preview-then-commit-on-release pattern used
+  // for already-committed shapes above (there's no undo entry to protect yet).
+  function startDragDraftVertex(e: React.PointerEvent, index: number) {
+    if (tool !== 'zone' && tool !== 'line') return;
+    e.stopPropagation();
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragDraftVertex.current = index;
+  }
+
+  function moveDragDraftVertex(e: React.PointerEvent) {
+    const idx = dragDraftVertex.current;
+    if (idx === null) return;
+    const pt = clientToNorm(e.clientX, e.clientY);
+    if (!pt) return;
+    setDraftPoints((prev) => prev.map((p, i) => (i === idx ? pt : p)));
+  }
+
+  function endDragDraftVertex() {
+    dragDraftVertex.current = null;
   }
 
   function startDragResize(e: React.PointerEvent, id: string) {
@@ -599,13 +760,18 @@ export default function DesignCanvas({
           moveDragItem(e);
           moveDragVertex(e);
           moveDragResize(e);
+          moveDragShape(e);
+          moveDragDraftVertex(e);
         }}
         onPointerUp={(e) => {
           handleBackgroundPointerUp(e);
           endDragItem();
           endDragVertex();
           endDragResize();
+          endDragShape();
+          endDragDraftVertex();
         }}
+        onPointerCancel={handleBackgroundPointerCancel}
         onDoubleClick={handleBackgroundDoubleClick}
       >
         <g transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k})`}>
@@ -662,13 +828,28 @@ export default function DesignCanvas({
           state.zones.map((z) => {
             const def = ZONE_DEFS[z.zone];
             const isSelected = selectedId === z.id;
-            const isDraggingThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
-            const effectivePoints = isDraggingThisShape
+            const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
+            const isDraggingWholeShape = dragShape.current?.id === z.id && dragShape.current.kind === 'zone' && shapeDragDelta;
+            const effectivePoints = isDraggingVertexOfThisShape
               ? z.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
+              : isDraggingWholeShape
+              ? z.points.map(([x, y]) => [clamp01(x + shapeDragDelta![0]), clamp01(y + shapeDragDelta![1])] as [number, number])
               : z.points;
             const centroid = ringCentroid(effectivePoints);
+            const onZonePointerDown = (e: React.PointerEvent) => startDragShape(e, z.id, 'zone');
             return (
               <g key={z.id}>
+                {/* Invisible fat hit-stroke along the edge — thin/narrow beds have little
+                    fill area to tap, so a wide transparent perimeter catches the pointer
+                    even when the interior fill is only a sliver. */}
+                <polygon
+                  points={ringToPx(effectivePoints, imgW, imgH)}
+                  fill="none"
+                  stroke="transparent"
+                  strokeWidth={16}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'stroke' : 'none' }}
+                  onPointerDown={onZonePointerDown}
+                />
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
                   fill={def.color}
@@ -676,14 +857,14 @@ export default function DesignCanvas({
                   stroke={def.color}
                   strokeWidth={1.5}
                   strokeDasharray="6 4"
-                  style={{ cursor: tool === 'select' ? 'pointer' : 'default' }}
-                  onPointerDown={(e) => {
-                    if (tool !== 'select') return;
-                    e.stopPropagation();
-                    onSelect(z.id);
-                  }}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
+                  onPointerDown={onZonePointerDown}
                 />
-                <g transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}>
+                <g
+                  transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}
+                  onPointerDown={onZonePointerDown}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
+                >
                   <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
                   <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
                     {z.zone}
@@ -699,17 +880,27 @@ export default function DesignCanvas({
                       strokeDasharray="4 3"
                     />
                     {effectivePoints.map(([x, y], i) => (
-                      <circle
-                        key={i}
-                        cx={x * imgW}
-                        cy={y * imgH}
-                        r={7}
-                        fill="#FFFEFA"
-                        stroke={GOLD}
-                        strokeWidth={2}
-                        style={{ cursor: 'grab', touchAction: 'none' }}
-                        onPointerDown={(e) => startDragVertex(e, z.id, 'zone', i)}
-                      />
+                      <g key={i}>
+                        {/* Invisible enlarged hit circle behind the visible ring — reliable
+                            touch target without visually enlarging the handle. */}
+                        <circle
+                          cx={x * imgW}
+                          cy={y * imgH}
+                          r={14}
+                          fill="transparent"
+                          style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
+                          onPointerDown={(e) => startDragVertex(e, z.id, 'zone', i)}
+                        />
+                        <circle
+                          cx={x * imgW}
+                          cy={y * imgH}
+                          r={7}
+                          fill="#FFFEFA"
+                          stroke={GOLD}
+                          strokeWidth={2}
+                          pointerEvents="none"
+                        />
+                      </g>
                     ))}
                     <g
                       transform={`translate(${(centroid[0] * imgW + 16).toFixed(1)},${(centroid[1] * imgH - 16).toFixed(1)})`}
@@ -735,9 +926,12 @@ export default function DesignCanvas({
           state.lines.map((line) => {
             const style = lineStroke(line.kind);
             const isSelected = selectedId === line.id;
-            const isDraggingThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
-            const effectivePoints = isDraggingThisShape
+            const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
+            const isDraggingWholeShape = dragShape.current?.id === line.id && dragShape.current.kind === 'line' && shapeDragDelta;
+            const effectivePoints = isDraggingVertexOfThisShape
               ? line.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
+              : isDraggingWholeShape
+              ? line.points.map(([x, y]) => [clamp01(x + shapeDragDelta![0]), clamp01(y + shapeDragDelta![1])] as [number, number])
               : line.points;
             const mid = effectivePoints[Math.floor(effectivePoints.length / 2)] ?? effectivePoints[0];
             return (
@@ -750,12 +944,8 @@ export default function DesignCanvas({
                   stroke="transparent"
                   strokeWidth={18}
                   strokeLinecap="round"
-                  style={{ cursor: tool === 'select' ? 'pointer' : 'default', pointerEvents: 'stroke' }}
-                  onPointerDown={(e) => {
-                    if (tool !== 'select') return;
-                    e.stopPropagation();
-                    onSelect(line.id);
-                  }}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: 'stroke' }}
+                  onPointerDown={(e) => startDragShape(e, line.id, 'line')}
                 />
                 <polyline
                   points={polylinePoints(effectivePoints, imgW, imgH)}
@@ -773,17 +963,25 @@ export default function DesignCanvas({
                 {isSelected && (
                   <>
                     {effectivePoints.map(([x, y], i) => (
-                      <circle
-                        key={i}
-                        cx={x * imgW}
-                        cy={y * imgH}
-                        r={7}
-                        fill="#FFFEFA"
-                        stroke={GOLD}
-                        strokeWidth={2}
-                        style={{ cursor: 'grab', touchAction: 'none' }}
-                        onPointerDown={(e) => startDragVertex(e, line.id, 'line', i)}
-                      />
+                      <g key={i}>
+                        <circle
+                          cx={x * imgW}
+                          cy={y * imgH}
+                          r={14}
+                          fill="transparent"
+                          style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
+                          onPointerDown={(e) => startDragVertex(e, line.id, 'line', i)}
+                        />
+                        <circle
+                          cx={x * imgW}
+                          cy={y * imgH}
+                          r={7}
+                          fill="#FFFEFA"
+                          stroke={GOLD}
+                          strokeWidth={2}
+                          pointerEvents="none"
+                        />
+                      </g>
                     ))}
                     {mid && (
                       <g
@@ -826,8 +1024,23 @@ export default function DesignCanvas({
             strokeDasharray="3 3"
           />
         )}
+        {/* Draft vertex handles — grabbable mid-draw (before the shape is closed/accepted),
+            matching the committed-shape handle's visual language so "show all corners"
+            reads consistently whether a shape is being drawn or already placed. */}
         {(tool === 'zone' || tool === 'line') &&
-          draftPoints.map(([x, y], i) => <circle key={i} cx={x * imgW} cy={y * imgH} r={3.5} fill={GOLD} />)}
+          draftPoints.map(([x, y], i) => (
+            <g key={i}>
+              <circle
+                cx={x * imgW}
+                cy={y * imgH}
+                r={14}
+                fill="transparent"
+                style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
+                onPointerDown={(e) => startDragDraftVertex(e, i)}
+              />
+              <circle cx={x * imgW} cy={y * imgH} r={7} fill="#FFFEFA" stroke={GOLD} strokeWidth={2} pointerEvents="none" />
+            </g>
+          ))}
 
         {/* Placed items at true scale */}
         {state.items.map((item) => {
