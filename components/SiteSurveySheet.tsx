@@ -8,6 +8,10 @@ import type { LocationData } from '@/lib/types';
 
 interface Props {
   placeId: string;
+  /** The current pin's coords — when provided, the survey is keyed by these (matching the
+   *  completion score / design / crop stores) instead of the place lookup, so a survey
+   *  filled on a freshly-saved pin lands under the same key it's read back from. */
+  coords?: { lat: number; lon: number } | null;
   onSaved: (survey: SiteSurvey) => void;
   onClose: () => void;
 }
@@ -92,11 +96,13 @@ function AutoFillNote({ areaM2 }: { areaM2: number }) {
   );
 }
 
-export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
+export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: Props) {
   const place = loadPlaces().find(p => p.id === placeId);
-  const siteId = designSiteIdFromLocation(place ? ({ lat: place.lat, lon: place.lon } as LocationData) : null);
+  // Prefer the live pin's coords (per-site canonical key); fall back to the place lookup.
+  const siteLoc = coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
+  const siteId = designSiteIdFromLocation(siteLoc ? ({ lat: siteLoc.lat, lon: siteLoc.lon } as LocationData) : null);
   const existing = loadSurvey(siteId);
-  const tracedAreas = computeTracedAreaTotals(siteId, place?.lat ?? null, place?.lon ?? null);
+  const tracedAreas = computeTracedAreaTotals(siteId, siteLoc?.lat ?? null, siteLoc?.lon ?? null);
 
   const [step, setStep] = useState(0);
 

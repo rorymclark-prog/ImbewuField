@@ -300,7 +300,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // SavedPlace id — derive it from the active place's own coordinates so it matches the key
   // the AI design-plan generator reads (lib/design-studio.ts).
   const activePlace = activePlaceId ? loadPlaces().find(p => p.id === activePlaceId) : undefined;
-  const surveySiteId = designSiteIdFromLocation(activePlace ? ({ lat: activePlace.lat, lon: activePlace.lon } as LocationData) : null);
+  // Key the survey by the CURRENT pin's coords — the same key gatherSiteInputs and the
+  // design/crop stores use — so a survey filled on a freshly-saved pin (before it becomes
+  // the "active" place) is still credited and the guided coach advances. Falls back to the
+  // active place's coords when there's no live pin (e.g. opened straight from Places).
+  const surveySiteId = designSiteIdFromLocation(
+    coords ? ({ lat: coords.lat, lon: coords.lon } as LocationData)
+      : activePlace ? ({ lat: activePlace.lat, lon: activePlace.lon } as LocationData)
+      : null,
+  );
   const [survey, setSurvey] = useState<SiteSurvey | null>(null);
   useEffect(() => { setSurvey(loadSurvey(surveySiteId)); }, [surveySiteId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
@@ -1683,6 +1691,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {surveySheetOpen && activePlaceId && (
         <SiteSurveySheet
           placeId={activePlaceId}
+          coords={coords}
           onSaved={() => { setSurveySheetOpen(false); openPhotoOrReport(); }}
           onClose={() => setSurveySheetOpen(false)}
         />

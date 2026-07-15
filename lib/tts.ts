@@ -85,13 +85,11 @@ function matchVoiceForLang(voices: SpeechSynthesisVoice[], appLang: string): Spe
   return prefixMatch ?? null;
 }
 
-/** 'en' prefix first, else the voice list's marked default, else the first voice. */
+/** An actual English voice, or null. We do NOT fall back to the device default / first
+ *  voice: reading the English source string in a non-English voice mispronounces it, so
+ *  the caller resolves 'unavailable' instead (honours the "never non-English voice" contract). */
 function findEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  const enVoice = voices.find((v) => primarySubtag(v.lang) === 'en');
-  if (enVoice) return enVoice;
-  const defaultVoice = voices.find((v) => v.default);
-  if (defaultVoice) return defaultVoice;
-  return voices[0] ?? null;
+  return voices.find((v) => primarySubtag(v.lang) === 'en') ?? null;
 }
 
 /** Find a device voice for the app language. Match order:

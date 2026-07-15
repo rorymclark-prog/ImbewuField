@@ -2523,7 +2523,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* Guided pin instruction bar (onboarding) — replaces the Tools pill for a novice:
           one instruction + Search / Use-my-location. Self-retires when a pin is dropped
           (parent passes `guided && !selected`). */}
-      {guided && !pinDraw && !editPin && !activeDraw && (
+      {guided && toolbarMin && !pinDraw && !editPin && !activeDraw && (
         <div
           className="absolute font-sans"
           style={{
