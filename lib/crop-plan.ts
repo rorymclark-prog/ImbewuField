@@ -116,7 +116,7 @@ export interface CropTask {
   bedLabel: string;
   cropName: string;
   icon: string;
-  action: 'prep' | 'sow' | 'transplant' | 'mulch' | 'harvest';
+  action: 'prep' | 'sow' | 'transplant' | 'mulch' | 'harvest' | 'weed-early' | 'weed-mid';
 }
 
 export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[] {
@@ -177,6 +177,34 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         icon: crop.icon,
         action: 'mulch',
       });
+
+      // A light, general weeding cadence — one early pass (~3-4 weeks after
+      // sowing, weeds compete hardest while the crop is still small) and one
+      // mid-growth pass, skipped if it would land in the same month as the
+      // early pass or the harvest itself (short-season crops like lettuce or
+      // coriander don't need a second call-out). Not a per-crop schedule —
+      // general home-garden practice, deliberately not over-engineered.
+      tasks.push({
+        id: `${p.id}:weed-early`,
+        month: wrapMonth(p.sowMonth + 1),
+        bedLabel: label,
+        cropName: crop.name,
+        icon: crop.icon,
+        action: 'weed-early',
+      });
+      const midGrowthOffset = Math.round(crop.daysToHarvest / 60); // roughly halfway through the grow period, in months
+      const midWeedMonth = wrapMonth(p.sowMonth + midGrowthOffset);
+      const cropHarvestMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+      if (midGrowthOffset > 1 && midWeedMonth !== wrapMonth(p.sowMonth + 1) && midWeedMonth !== cropHarvestMonth) {
+        tasks.push({
+          id: `${p.id}:weed-mid`,
+          month: midWeedMonth,
+          bedLabel: label,
+          cropName: crop.name,
+          icon: crop.icon,
+          action: 'weed-mid',
+        });
+      }
     }
 
     tasks.push({

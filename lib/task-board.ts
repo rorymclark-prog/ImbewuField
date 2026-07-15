@@ -87,6 +87,8 @@ const BOARD_VERB: Record<CropTask['action'], string> = {
   transplant: 'Transplant',
   mulch: 'Water in & mulch',
   harvest: 'Harvest',
+  'weed-early': 'Weed around',
+  'weed-mid': 'Weed & check on',
 };
 
 function dueLabel(monthsAway: number): string {
