@@ -662,10 +662,12 @@ function fillRemainingGaps(
 
     for (let fillCount = 0; fillCount < MAX_GAP_FILLS_PER_BED; fillCount++) {
       let gapMonth: number | null = null;
+      let gapMonthRoom = 0;
       for (let i = 0; i < 12; i++) {
         const m = wrapMonth(nowMonth + i);
         if (stuckMonths.has(m)) continue;
-        if (occupancy.fractionAt(bed.id, m) === 0) { gapMonth = m; break; }
+        const room = 1 - occupancy.fractionAt(bed.id, m);
+        if (room > 0.0001 && room > gapMonthRoom) { gapMonth = m; gapMonthRoom = room; }
       }
       if (gapMonth === null) break; // every still-empty month already tried, or bed is fully covered
 

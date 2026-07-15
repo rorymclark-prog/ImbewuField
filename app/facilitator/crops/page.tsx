@@ -90,7 +90,11 @@ function sowingInstruction(crop: CropDef): string {
   if (crop.rowSpacingCm) parts.push(`rows ${crop.rowSpacingCm}cm apart`);
   if (crop.inRowSpacingCm) parts.push(`${crop.inRowSpacingCm}cm apart in the row`);
   if (crop.sowDepthCm) parts.push(`sow ${crop.sowDepthCm}cm deep`);
-  if (parts.length === 0) parts.push(`plant spacing ~${crop.spacingCm}cm`);
+  // Always surface an actual plant-spacing figure when there is no row/in-row split — a crop
+  // with only a sow-depth (carrots, onions) must still show spacing, not just depth.
+  if (!crop.rowSpacingCm && !crop.inRowSpacingCm && crop.spacingCm) {
+    parts.unshift(`plant spacing ~${crop.spacingCm}cm`);
+  }
   return parts.join(' · ');
 }
 
@@ -265,7 +269,13 @@ const TASK_VERB: Record<CropTask['action'], string> = {
 
 function taskSentence(tasks: CropTask[]): string {
   if (tasks.length === 0) return 'nothing due';
-  return tasks.map((t) => `${TASK_VERB[t.action]} ${t.cropName.toLowerCase()} (${t.bedLabel})`).join(' · ');
+  return tasks.map((t) => {
+    // Spacing only matters at sowing time — by transplant/mulch/weed/harvest
+    // the bed is already laid out, so repeating it there would just be noise.
+    const crop = t.action === 'sow' ? cropByKey(t.cropKey) : undefined;
+    const spacing = crop ? ` — ${sowingInstruction(crop)}` : '';
+    return `${TASK_VERB[t.action]} ${t.cropName.toLowerCase()}${spacing} (${t.bedLabel})`;
+  }).join(' · ');
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────
@@ -1127,7 +1137,7 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
  * trend, so a bar reads better there).
  */
 function MonthLineChart({
-  monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue,
+  monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
 }: {
   monthOrder: number[];
   values: number[];
@@ -1137,6 +1147,8 @@ function MonthLineChart({
   labelColor?: (v: number) => string;
   dotColor?: (v: number) => string;
   referenceValue?: number;
+  /** Optional per-point hover text (e.g. a crop-by-crop kg breakdown) — rendered as a native SVG <title>. */
+  tooltipFor?: (i: number) => string | undefined;
 }) {
   const H = 56;
   const colW = 56;
@@ -1157,7 +1169,9 @@ function MonthLineChart({
           <path d={areaPath} fill={color} opacity={0.15} />
           <path d={linePath} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           {points.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r={4} fill={(dotColor ?? defaultDotColor)(p.v)} stroke="#FBF6EC" strokeWidth={1.5} />
+            <circle key={i} cx={p.x} cy={p.y} r={4} fill={(dotColor ?? defaultDotColor)(p.v)} stroke="#FBF6EC" strokeWidth={1.5}>
+              {tooltipFor?.(i) && <title>{tooltipFor(i)}</title>}
+            </circle>
           ))}
         </svg>
         <div className="flex" style={{ width: W }}>
@@ -1177,7 +1191,7 @@ function MonthLineChart({
   );
 }
 
-type FoodValueMode = 'availability' | 'utilization' | 'retail' | 'wholesale';
+type FoodValueMode = 'availability' | 'harvest' | 'utilization' | 'retail' | 'wholesale';
 
 function FoodAvailabilityChart({
   monthOrder, availability, valueByMonth, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
@@ -1208,6 +1222,12 @@ function FoodAvailabilityChart({
   const sellFactor = cashflowSettings.sellPercent / 100;
   const moneyMax = Math.max(1, ...monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue) * lossFactor));
   const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
+  const kgMax = Math.max(1, ...monthOrder.map((m) => valueByMonth[m].kg));
+  // Whole-year total from the SAME per-month figures the chart plots — always
+  // reconciles to "Estimated harvest" above by construction (buildFoodValueByMonth
+  // spreads each planting's total yield across its real harvest window, so
+  // summing all 12 calendar months recovers that total exactly once).
+  const totalHarvestKg = valueByMonth.slice(1, 13).reduce((s, v) => s + v.kg, 0);
 
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((k) => !UNPRICED_CROPS.has(k)).sort();
 
@@ -1227,7 +1247,7 @@ function FoodAvailabilityChart({
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & cashflow — resilience by month</div>
 
       <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-        {([['availability', '🍽️ Availability'], ['utilization', '🌱 Field utilization'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
+        {([['availability', '🍽️ Availability'], ['harvest', '⚖️ Kg harvested'], ['utilization', '🌱 Field utilization'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
           <button
             key={m}
             onClick={() => setMode(m)}
@@ -1247,7 +1267,15 @@ function FoodAvailabilityChart({
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
           What this plan should put on the table each month — fresh picks, plus anything still keeping in storage
           from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
-          an exact kg count — see Estimated harvest above for that.
+          an exact kg count — see the &quot;Kg harvested&quot; view for that.
+        </p>
+      ) : mode === 'harvest' ? (
+        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+          How many kg actually come off the beds each month — each planting&apos;s total estimated yield spread
+          evenly across its real fresh-harvest window (one lump for a one-shot crop like onions, several months
+          for a cut-and-come-again crop like Swiss chard), so every month is only counted once and the 12 months
+          add up to the {totalHarvestKg.toFixed(1)}kg/yr total exactly. Hover a point for which crops make up
+          that month.
         </p>
       ) : mode === 'utilization' ? (
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
@@ -1367,6 +1395,20 @@ function FoodAvailabilityChart({
             </div>
           </div>
         </>
+      ) : mode === 'harvest' ? (
+        <MonthLineChart
+          monthOrder={monthOrder}
+          values={monthOrder.map((m) => valueByMonth[m].kg)}
+          max={kgMax}
+          color="#7FAE6E"
+          formatLabel={(v) => (v > 0 ? `${v.toFixed(1)}kg` : '')}
+          tooltipFor={(i) => {
+            const byCrop = valueByMonth[monthOrder[i]].byCrop;
+            const rows = Object.entries(byCrop).filter(([, kg]) => kg > 0.05).sort((a, b) => b[1] - a[1]);
+            if (!rows.length) return undefined;
+            return rows.map(([cropKey, kg]) => `${cropByKey(cropKey)?.name ?? cropKey}: ${kg.toFixed(1)}kg`).join('\n');
+          }}
+        />
       ) : mode === 'utilization' ? (
         <MonthLineChart
           monthOrder={monthOrder}

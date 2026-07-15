@@ -115,6 +115,10 @@ export interface CropTask {
   month: number;
   bedLabel: string;
   cropName: string;
+  /** Lets task-string builders (app/facilitator/crops/page.tsx's taskSentence)
+   *  look the crop back up via cropByKey — e.g. to append sowingInstruction's
+   *  row/in-row spacing to a sow task — without re-deriving it from cropName. */
+  cropKey: string;
   icon: string;
   action: 'prep' | 'sow' | 'transplant' | 'mulch' | 'harvest' | 'weed-early' | 'weed-mid';
 }
@@ -142,6 +146,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         month: wrapMonth(p.sowMonth - 1),
         bedLabel: label,
         cropName: crop.name,
+        cropKey: crop.key,
         icon: crop.icon,
         action: 'prep',
       });
@@ -151,6 +156,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         month: wrapMonth(p.sowMonth),
         bedLabel: label,
         cropName: crop.name,
+        cropKey: crop.key,
         icon: crop.icon,
         action: 'sow',
       });
@@ -161,6 +167,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
           month: wrapMonth(p.sowMonth + 1),
           bedLabel: label,
           cropName: crop.name,
+          cropKey: crop.key,
           icon: crop.icon,
           action: 'transplant',
         });
@@ -174,6 +181,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         month: wrapMonth(crop.transplant ? p.sowMonth + 1 : p.sowMonth),
         bedLabel: label,
         cropName: crop.name,
+        cropKey: crop.key,
         icon: crop.icon,
         action: 'mulch',
       });
@@ -189,6 +197,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         month: wrapMonth(p.sowMonth + 1),
         bedLabel: label,
         cropName: crop.name,
+        cropKey: crop.key,
         icon: crop.icon,
         action: 'weed-early',
       });
@@ -201,6 +210,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
           month: midWeedMonth,
           bedLabel: label,
           cropName: crop.name,
+          cropKey: crop.key,
           icon: crop.icon,
           action: 'weed-mid',
         });
@@ -212,6 +222,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
       month: harvestMonth(p.sowMonth, crop.daysToHarvest),
       bedLabel: label,
       cropName: crop.name,
+      cropKey: crop.key,
       icon: crop.icon,
       action: 'harvest',
     });
@@ -574,6 +585,12 @@ export interface FoodValueMonth {
   kg: number;
   retailValue: number;
   wholesaleValue: number;
+  /** kg for this month broken down by crop key — additive on top of `kg`,
+   *  which stays the authoritative total (kept as a plain sum rather than
+   *  derived from this map, so nothing that only reads `kg` needs to change).
+   *  Lets the UI show "which crops" alongside "how much" without a second
+   *  pass over plantings. */
+  byCrop: Record<string, number>;
 }
 
 /**
@@ -594,7 +611,7 @@ export function buildFoodValueByMonth(
   beds: PlanBed[],
   priceOverrides: Record<string, CropPrice>,
 ): FoodValueMonth[] {
-  const byMonth: FoodValueMonth[] = Array.from({ length: 13 }, () => ({ kg: 0, retailValue: 0, wholesaleValue: 0 }));
+  const byMonth: FoodValueMonth[] = Array.from({ length: 13 }, () => ({ kg: 0, retailValue: 0, wholesaleValue: 0, byCrop: {} }));
   for (const p of plantings) {
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
@@ -608,6 +625,7 @@ export function buildFoodValueByMonth(
     for (let off = 0; off <= freshSpan; off++) {
       const m = wrapMonth(hMonth + off);
       byMonth[m].kg += kgPerMonth;
+      byMonth[m].byCrop[crop.key] = (byMonth[m].byCrop[crop.key] ?? 0) + kgPerMonth;
       if (price) {
         byMonth[m].retailValue += kgPerMonth * price.retailPerKg;
         byMonth[m].wholesaleValue += kgPerMonth * price.wholesalePerKg;

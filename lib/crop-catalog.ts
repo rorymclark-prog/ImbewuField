@@ -188,7 +188,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 30,
     rowSpacingCm: 47, // 45-50cm — Starke Ayres Swiss Chard Production Guideline 2019
     inRowSpacingCm: 12, // 10-15cm direct-sown, same guideline
-    yieldKgPerM2: 3,
+    yieldKgPerM2: 3, // = 30 t/ha, the "likely" commercial yield — KZN DARD Expected Yields Table 8 (Swiss chard 20/30/40 conservative/likely/target)
     note: 'Cut-and-come-again — harvest outer leaves and it keeps producing for months.',
     harvestWindowMonths: 3,
   },
@@ -207,6 +207,11 @@ export const CROPS: CropDef[] = [
     daysToHarvest: 70,
     transplant: true,
     spacingCm: 45,
+    // NOT source-backed — kale doesn't appear as its own line in the KZN DARD
+    // Expected Yields table (checked 2026-07-15; the table only has "Spinach,
+    // true" and "Swiss chard" among leafy greens) and no other SA
+    // production-guide figure was found. Left as the pre-existing estimate;
+    // still needs an agronomist/grower-survey figure to verify.
     yieldKgPerM2: 2.5,
     note: 'Transplant seedlings once they have 4-5 true leaves; a light frost sweetens the flavour.',
     harvestWindowMonths: 2,
@@ -227,7 +232,7 @@ export const CROPS: CropDef[] = [
     spacingCm: 45,
     rowSpacingCm: 65, // 60-70cm loose-head market (45-55cm for bagging market) — Starke Ayres Cabbage Production Guideline 2019 sec 3.4
     inRowSpacingCm: 60, // 25cm for baby cabbage — same guideline
-    yieldKgPerM2: 3,
+    yieldKgPerM2: 3, // = 30 t/ha, the "conservative" commercial yield — KZN DARD Expected Yields Table 8 (Cabbage 30/50/80-90 conservative/likely/target); kept deliberately conservative since a home garden without commercial inputs won't reach the 50-90 t/ha likely/target range
     note: 'Firm the soil well at transplanting to help heads form tightly.',
     varieties: [
       { name: 'Accord F1 (or similar cold-tolerant hybrid)', bestFor: 'Apr-Aug (winter) sowings', note: 'Bred for the winter slot — avoid growing a summer-type variety over winter, heads form poorly and bolt risk rises.' },
@@ -322,7 +327,7 @@ export const CROPS: CropDef[] = [
     // used instead — an estimate to adjust, not a verified number.
     rowSpacingCm: 90,
     inRowSpacingCm: 40, // not closer than 35-40cm — same guideline (high confidence)
-    yieldKgPerM2: 4,
+    yieldKgPerM2: 4, // = 40 t/ha, between the "conservative" (30) and "likely" (45-50) commercial tiers — KZN DARD Expected Yields Table 8 (Tomato 30/45-50/60-80)
     note: 'Stake or cage plants early; feed consistently once fruit starts to set.',
     varieties: [
       { name: 'Floradade (or similar heat-tolerant variety)', bestFor: 'Hot summer / subtropical coastal growing', note: 'Bred specifically for heat tolerance — worth seeking out if your area gets properly hot in summer, since an ordinary variety can drop flowers/stop setting fruit in extreme heat.' },
@@ -404,7 +409,7 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 45,
     spacingCm: 25,
-    yieldKgPerM2: 2,
+    yieldKgPerM2: 2, // = 20 t/ha, the "likely" commercial yield's lower end — KZN DARD Expected Yields Table 8 (Lettuce 12-15/20-25/30-40 conservative/likely/target)
     note: 'Bolts quickly in heat — sow little and often rather than one big batch.',
     varieties: [
       { name: 'Heat-tolerant / bolt-resistant type', bestFor: 'Summer sowings', note: "Look for a variety specifically marketed as bolt-resistant for summer — 'triple red' and similar red-leaf types are noticeably more heat-susceptible, so save those for cooler-season sowings instead." },
@@ -577,6 +582,11 @@ export const CROPS: CropDef[] = [
     rowSpacingCm: 35, // Starke Ayres Garden Centre coriander grow guide
     inRowSpacingCm: 20, // thin to 20cm, same guide
     sowDepthCm: 1, // ~1cm, same guide
+    // NOT source-backed — coriander/dhania isn't a line item in the KZN DARD
+    // Expected Yields table, and the only SA-adjacent figures found (Kenyan
+    // commercial dhania seed yields, ~0.4-0.5 t/ha) are for a different
+    // product (dried SEED, not fresh leaf) and region, so not usable here.
+    // Left as the pre-existing estimate; still needs an agronomist figure.
     yieldKgPerM2: 1.5,
     note: 'Bolts fast in heat and long days — sow in cooler months for leafy growth.',
   },
