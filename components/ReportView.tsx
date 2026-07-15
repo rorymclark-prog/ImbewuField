@@ -667,13 +667,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {/* Site summary bar */}
-              <div className={`mt-5 grid gap-3 ${['', '', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4', 'grid-cols-5', 'grid-cols-6'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0)]}`}>
+              <div className={`mt-5 grid gap-3 ${['', '', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4', 'grid-cols-5', 'grid-cols-6', 'grid-cols-7', 'grid-cols-8'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0) + (d.bru ? 1 : 0)]}`}>
                 {[
                   { label: 'Biome', value: d.biome.name, color: bColor },
                   { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
                   { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
                   { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C' },
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
+                  ...(d.bru ? [{ label: 'BRU Zone', value: `${d.bru.brucode} · approx. ${d.bru.nearestBrg}`, color: bColor }] : []),
                   ...(siteData ? [{ label: 'Site Area', value: `${siteData.areaHa} ha`, color: '#2D6B3C' }] : []),
                   ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL`, color: '#235E86' }] : []),
                 ].map(({ label, value, color }) => (
@@ -690,6 +691,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 {d.rainfall.pattern} rainfall · {d.rainfall.wetSeason} wet / {d.rainfall.drySeason} dry ·
                 {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
               </div>
+
+              {d.bru && (
+                <div className="mt-1 text-xs font-mono" style={{ color: '#94876F' }}>
+                  {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.map}mm/yr, {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
+                  Zone name &ldquo;{d.bru.nearestBrg}&rdquo; is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.
+                </div>
+              )}
             </div>
 
             {/* Saved places — GPS points for the farm (home, fields, water) */}

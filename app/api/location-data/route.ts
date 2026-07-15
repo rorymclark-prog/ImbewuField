@@ -4,6 +4,7 @@ import { fetchSoilData } from '@/lib/isric-soil';
 import { fetchElevation } from '@/lib/elevation';
 import { fetchVegetation } from '@/lib/sanbi';
 import { classifyBiome } from '@/lib/biome';
+import { lookupBRU } from '@/lib/bru';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -50,7 +51,17 @@ export async function GET(req: NextRequest) {
 
     const veg = vegetation.status === 'fulfilled' ? vegetation.value : null;
 
-    return NextResponse.json({ lat, lon, biome, rainfall, climate, soil: soilData, elevation: elevData, vegetation: veg });
+    // KZN-only finer zone (bundled BRU data — see lib/bru.ts). Never throws;
+    // returns null outside KZN or if no polygon match, so classifyBiome's
+    // result and non-KZN behavior are always unaffected.
+    let bru = null;
+    try {
+      bru = lookupBRU(lat, lon);
+    } catch (err) {
+      console.error('BRU lookup error:', err);
+    }
+
+    return NextResponse.json({ lat, lon, biome, rainfall, climate, soil: soilData, elevation: elevData, vegetation: veg, bru });
   } catch (err) {
     console.error('location-data error:', err);
     return NextResponse.json({ error: 'Failed to fetch location data' }, { status: 500 });

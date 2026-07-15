@@ -78,6 +78,18 @@ export interface VegetationData {
   bioregion: string;
 }
 
+export interface BruZoneData {
+  brucode: string;        // full zone code, e.g. "STa4a"
+  bruParent: string;      // parent BRU code, e.g. "STa4"
+  map: number;            // per-zone mean annual rainfall, mm (KZN DARD BRU data)
+  tmin: number;           // per-zone mean annual min temp, °C
+  tmean: number;          // per-zone mean annual temp, °C
+  tmax: number;           // per-zone mean annual max temp, °C
+  nearestBrg: string;     // best-effort nearest of the 23 named Bioresource Groups
+  isApproximateName: true; // nearestBrg is a climate-similarity heuristic, NOT a verified BRU->BRG crosswalk
+  attribution: string;    // source line to display alongside the zone
+}
+
 export interface LocationData {
   lat: number;
   lon: number;
@@ -87,5 +99,6 @@ export interface LocationData {
   soil: SoilData;
   elevation: ElevationData;
   vegetation?: VegetationData | null;
+  bru?: BruZoneData | null;
   site?: SiteData;
 }

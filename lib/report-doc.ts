@@ -214,6 +214,11 @@ export function buildSkeletonReportDoc(args: {
   const lang = args.lang ?? 'en';
   const wc = plan?.waterCalc;
   const biome = location.biome?.name ?? 'this region';
+  // KZN sites get a finer zone note appended (BRU code + best-effort named
+  // Bioresource Group). Non-KZN sites are unaffected — location.bru is null.
+  const bruNote = location.bru
+    ? ` (BRU ${location.bru.brucode}, approx. ${location.bru.nearestBrg})`
+    : '';
   const rainMm = Math.round(location.rainfall?.annual ?? 0);
   const approved = layers.filter((l) => l.approved);
   const totalM2 = approved
@@ -243,7 +248,7 @@ export function buildSkeletonReportDoc(args: {
   if (!challenges.length) challenges.push('Building soil fertility and year-round food production.');
 
   const executive: ExecutiveSummary = {
-    farmOverview: `A ${sizeHa ? `${sizeHa} ha` : ''} site in the ${biome}${rainMm ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
+    farmOverview: `A ${sizeHa ? `${sizeHa} ha` : ''} site in the ${biome}${bruNote}${rainMm ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
     topOpportunities: opportunities.slice(0, 5),
     topChallenges: challenges.slice(0, 5),
     priorityActions12mo: [
@@ -258,7 +263,7 @@ export function buildSkeletonReportDoc(args: {
   // ── Existing site ──
   const existingSite: ExistingSite = {
     sizeHa: sizeHa ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
-    climateSummary: `${biome}. ~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall), ${location.climate ? `${Math.round(location.climate.minTemp)}–${Math.round(location.climate.maxTemp)} °C` : 'temperate'}.`,
+    climateSummary: `${biome}${bruNote}. ~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall), ${location.climate ? `${Math.round(location.climate.minTemp)}–${Math.round(location.climate.maxTemp)} °C` : 'temperate'}.`,
     currentLandUses: [garden ? 'vegetable garden' : '', tree ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
     infrastructure: clean(survey?.otherInfra),
     existingCrops: crops,

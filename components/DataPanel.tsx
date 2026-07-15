@@ -489,9 +489,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {data.vegetation.vegUnit}
               </div>
             )}
+            {data.bru && (
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: placeName ? '#94876F' : '#5C5040' }}>
+                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.map}mm/yr, {data.bru.tmean}°C
+              </div>
+            )}
             <div className="font-mono mt-1" style={{ fontSize: 11, color: '#94876F' }}>
               {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
             </div>
+            {data.bru && (
+              <div className="font-mono mt-0.5" style={{ fontSize: 9.5, color: '#B0A48C' }}>
+                {data.bru.attribution} — zone name is a best-effort climate match, not verified
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg flex-shrink-0"
                style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
