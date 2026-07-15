@@ -9,7 +9,6 @@ import {
   GraduationCap,
   ChevronRight,
   ChevronDown,
-  ArrowRight,
   Settings,
   Leaf,
   CalendarDays,
@@ -30,6 +29,7 @@ import TabBar from '@/components/TabBar';
 import NavDrawer from '@/components/NavDrawer';
 import Onboarding from '@/components/Onboarding';
 import PopiaConsent from '@/components/PopiaConsent';
+import HomeHeroCard from '@/components/home/HomeHeroCard';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
@@ -195,7 +195,9 @@ function HomeLandingInner() {
   const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
-  const [places, setPlaces] = useState<SavedPlace[]>([]);
+  // null until the places effect runs → HomeHeroCard paints its DEFAULT (today's CTA)
+  // on SSR/first render, so returning users never flash the new-user welcome.
+  const [places, setPlaces] = useState<SavedPlace[] | null>(null);
   const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
@@ -213,7 +215,7 @@ function HomeLandingInner() {
     return () => window.removeEventListener('permamap-places-changed', refreshPlaces);
   }, []);
 
-  const mainSite = resolveMainSite(places);
+  const mainSite = resolveMainSite(places ?? []);
 
   function toggleTaskComplete(id: string) {
     setBoardTasks((prev) => {
@@ -283,48 +285,12 @@ function HomeLandingInner() {
 
         {lastSite && <LastSiteCard site={lastSite} />}
 
-        {mainSite && (
+        {places && mainSite && (
           <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
         )}
 
-        {/* ── Analyse a site — CTA card ── */}
-        <Link
-          href="/farmer"
-          style={{
-            display: 'block',
-            background: '#1F4D2B',
-            backgroundImage:
-              'repeating-radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 40px), ' +
-              'repeating-radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 60px)',
-            borderRadius: 20,
-            padding: '22px 20px 20px',
-            textDecoration: 'none',
-            boxShadow: '0 4px 20px rgba(31,77,43,0.35)',
-          }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20, flexShrink: 0 }}>
-              <path d="M12 21V11" />
-              <path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" />
-              <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
-            </svg>
-            <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'rgba(234,243,226,0.65)', letterSpacing: '0.12em' }}>
-              {t('homeLimaSuggests')}
-            </span>
-          </div>
-
-          <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
-            {t('homeSurveyNew')}
-          </h2>
-
-          <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
-            {t('homeSurveyDesc')}
-          </p>
-
-          <span className="inline-flex items-center font-sans font-semibold" style={{ background: '#E4DCC6', color: '#1F4D2B', borderRadius: 100, padding: '8px 16px', fontSize: 13, letterSpacing: '-0.01em' }}>
-            <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
-          </span>
-        </Link>
+        {/* ── Hero: new-user welcome / returner Continue / default analyse-CTA ── */}
+        <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
 
         {/* ── Quick actions ── */}
         <div className="grid grid-cols-3 gap-3">

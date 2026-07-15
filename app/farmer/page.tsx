@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useCallback, useEffect, Suspense } from 'react';
+import { useState, useCallback, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Settings, AlertTriangle, ChevronUp, Menu } from 'lucide-react';
 import DataPanel from '@/components/DataPanel';
@@ -128,6 +128,13 @@ function HomeInner() {
   const [showDesign, setShowDesign] = useState(false);
   const [designPresent, setDesignPresent] = useState(false);
 
+  // Guided pin mode: on for "?guided=1" (from the home welcome / start-new-site) OR for a
+  // farmer who has no saved places yet. Client-only (default false) so SSR paints no bar.
+  const [guidedMode, setGuidedMode] = useState(false);
+  useEffect(() => {
+    setGuidedMode(searchParams.get('guided') === '1' || loadPlaces().length === 0);
+  }, [searchKey]);
+
   useEffect(() => {
     const panel = searchParams.get('panel');
     const chat = searchParams.get('chat');
@@ -190,6 +197,24 @@ function HomeInner() {
     setJumpTo({ lat, lon });
     handleLocationSelect(lat, lon);
   }, [handleLocationSelect]);
+
+  // Deep link: /farmer?site=<placeId> (from the home "Continue" card). Load that saved
+  // site's report immediately (correct regardless of map state), then fly the camera once
+  // the dynamically-imported Map has had a beat to mount. One-shot per navigation.
+  const siteParamHandled = useRef(false);
+  useEffect(() => {
+    if (siteParamHandled.current) return;
+    const siteId = searchParams.get('site');
+    if (!siteId) return;
+    siteParamHandled.current = true;
+    const p = loadPlaces().find((pl) => pl.id === siteId);
+    if (!p) return;
+    handlePlaceSelect({ name: p.name, id: p.id });
+    handleLocationSelect(p.lat, p.lon);
+    const t = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchKey]);
 
   const handleOpenReport = useCallback((photoAnalysis?: string) => {
     setReportPhotoAnalysis(photoAnalysis);
@@ -363,6 +388,7 @@ function HomeInner() {
             <PermaMap
               onLocationSelect={handleLocationSelect}
               selectedLocation={selected}
+              guided={guidedMode && !selected}
               loading={loading}
               onMapCapture={setMapCapture}
               onSiteDrawn={setSiteData}

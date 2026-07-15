@@ -1,8 +1,32 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, type LucideIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
+import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
+import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
+
+// Small pill switch, matching the app's toggle style (used for the Guidance rows).
+function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
+  return (
+    <button
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      onClick={onClick}
+      style={{
+        width: 46, height: 28, borderRadius: 999, border: 'none', cursor: 'pointer', flexShrink: 0,
+        background: on ? 'var(--emerald)' : 'var(--border)', position: 'relative',
+        transition: 'background 0.15s ease', padding: 0,
+      }}
+    >
+      <span style={{
+        position: 'absolute', top: 3, left: on ? 21 : 3, width: 22, height: 22, borderRadius: '50%',
+        background: '#fff', transition: 'left 0.15s ease', boxShadow: '0 1px 2px rgba(0,0,0,0.25)',
+      }} />
+    </button>
+  );
+}
 
 const THEMES: { key: ThemeName; label: string; desc: string; swatches: string[] }[] = [
   {
@@ -33,6 +57,25 @@ interface Props {
 export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
   const panelRef = useRef<HTMLDivElement>(null);
+
+  // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
+  const [guidedOn, setGuidedOn] = useState(true);
+  const [voiceOn, setVoiceOn] = useState(true);
+  const [ttsSupported, setTtsSupported] = useState(false);
+  useEffect(() => {
+    const refresh = () => {
+      setGuidedOn(getGuidedState().enabled);
+      setTtsSupported(isTtsSupported());
+      setVoiceOn(!getTtsMuted());
+    };
+    refresh();
+    window.addEventListener(GUIDED_CHANGED_EVENT, refresh);
+    window.addEventListener('imbewu-tts-changed', refresh);
+    return () => {
+      window.removeEventListener(GUIDED_CHANGED_EVENT, refresh);
+      window.removeEventListener('imbewu-tts-changed', refresh);
+    };
+  }, [open]);
 
   const TEXT_SIZES: { label: string; value: number }[] = [
     { label: 'Normal', value: 1 },
@@ -156,6 +199,42 @@ export default function ThemePanel({ open, onClose }: Props) {
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
               Makes the whole app bigger — text, buttons and menus.
+            </div>
+          </div>
+
+          {/* Guidance (Lima) section */}
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              Guidance
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {/* Guide me */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                <Footprints size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>Guide me</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>Show the next-step guide on your site report.</div>
+                </div>
+                <PillToggle
+                  on={guidedOn}
+                  label="Guide me"
+                  onClick={() => {
+                    if (guidedOn) setGuidedState({ enabled: false });
+                    else setGuidedState({ enabled: true, retired: false, dismissals: 0 });
+                  }}
+                />
+              </div>
+              {/* Lima reads aloud — only when the device supports speech */}
+              {ttsSupported && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                  <Volume2 size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>Lima reads aloud</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>Speak tips out loud when a voice is available.</div>
+                  </div>
+                  <PillToggle on={voiceOn} label="Lima reads aloud" onClick={() => setTtsMuted(voiceOn)} />
+                </div>
+              )}
             </div>
           </div>
 

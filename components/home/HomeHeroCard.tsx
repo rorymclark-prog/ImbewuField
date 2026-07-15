@@ -1,0 +1,220 @@
+'use client';
+
+import type { CSSProperties } from 'react';
+import Link from 'next/link';
+import { ArrowRight, MapPin, Eye } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
+import { useSiteProgress, STEP_COPY, getGuidedState } from '@/lib/site-progress';
+import type { SavedPlace } from '@/lib/saved-places';
+
+export interface HomeHeroCardProps {
+  /** null until the places effect has run — render the DEFAULT variant (today's
+   *  analyse-CTA) so first paint is unchanged and returning users never see a
+   *  welcome flash. */
+  places: SavedPlace[] | null;
+  mainSite: SavedPlace | null; // resolveMainSite(places) — parent already computes it
+  firstName: string | null;    // user?.displayName?.split(' ')[0] — parent has it
+}
+
+// Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
+// across all three variants so the card never visually jumps when the variant swaps.
+const SHELL_STYLE: CSSProperties = {
+  display: 'block',
+  background: '#1F4D2B',
+  backgroundImage:
+    'repeating-radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 40px), ' +
+    'repeating-radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 60px)',
+  borderRadius: 20,
+  padding: '22px 20px 20px',
+  boxShadow: '0 4px 20px rgba(31,77,43,0.35)',
+};
+
+const PILL_STYLE: CSSProperties = {
+  background: '#E4DCC6',
+  color: '#1F4D2B',
+  borderRadius: 100,
+  padding: '8px 16px',
+  fontSize: 13,
+  letterSpacing: '-0.01em',
+};
+
+// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT +
+// CONTINUE variants share it — same brand marker, same overline copy).
+function LimaMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20, flexShrink: 0 }}>
+      <path d="M12 21V11" />
+      <path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" />
+      <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
+    </svg>
+  );
+}
+
+function Overline({ children }: { children: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-2">
+      <LimaMark />
+      <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'rgba(234,243,226,0.65)', letterSpacing: '0.12em' }}>
+        {children}
+      </span>
+    </div>
+  );
+}
+
+export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCardProps) {
+  const { t } = useLanguage();
+
+  // Hooks run unconditionally, before any early return, so the null-until-mounted
+  // pattern stays hydration-safe (progress is null on SSR and on the very first
+  // client render, matching each other exactly).
+  const coords = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
+  const progress = useSiteProgress(coords);
+
+  // ── DEFAULT — pre-hydration paint (places === null). This is today's exact
+  // analyse-CTA markup: the whole card is one Link, so returning users never see
+  // a flash of the welcome, and the SSR/first-client-render output matches. ──
+  if (places === null) {
+    return (
+      <Link href="/farmer" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+        <Overline>{t('homeLimaSuggests')}</Overline>
+
+        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+          {t('homeSurveyNew')}
+        </h2>
+
+        <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
+          {t('homeSurveyDesc')}
+        </p>
+
+        <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+          <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
+        </span>
+      </Link>
+    );
+  }
+
+  // ── WELCOME — first-run, no saved sites. Two actions max. ──
+  if (places.length === 0) {
+    return (
+      <div style={SHELL_STYLE}>
+        <div className="font-display" style={{ fontSize: 26, fontWeight: 700, color: 'rgba(234,243,226,0.88)', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 2 }}>
+          {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
+        </div>
+
+        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+          {t('welcomeHeroTitle')}
+        </h2>
+
+        <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
+          {t('welcomeHeroSub')}
+        </p>
+
+        <Link
+          href="/farmer?guided=1"
+          className="font-sans font-semibold"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            width: '100%', minHeight: 52,
+            background: '#E4DCC6', color: '#1F4D2B',
+            borderRadius: 100, fontSize: 15, letterSpacing: '-0.01em',
+            textDecoration: 'none', marginBottom: 12,
+          }}
+        >
+          <MapPin size={18} strokeWidth={1.8} />
+          {t('welcomeFindLand')}
+        </Link>
+
+        <Link
+          href="/example"
+          className="font-sans"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44,
+            fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+          }}
+        >
+          <Eye size={15} strokeWidth={1.7} />
+          {t('welcomeShowExample')}
+        </Link>
+      </div>
+    );
+  }
+
+  // ── CONTINUE — returner with at least one saved site. ──
+  if (mainSite) {
+    const pct = progress?.pct;
+    const rawNextStep = progress?.nextStep ?? null;
+    const nextStepEntry = rawNextStep && rawNextStep !== 'located' ? STEP_COPY[rawNextStep] : null;
+    const guided = progress ? getGuidedState() : null; // gated on `progress` — post-mount only, hydration-safe
+    const showNextStepLine = !!guided?.enabled && !guided?.retired && !!nextStepEntry;
+
+    return (
+      <div style={SHELL_STYLE}>
+        <Overline>{t('homeLimaSuggests')}</Overline>
+
+        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 12 }}>
+          {t('continueSiteTitle').replace('{site}', mainSite.name)}
+        </h2>
+
+        {pct != null && (
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ height: 4, borderRadius: 2, background: 'rgba(234,243,226,0.25)', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${pct}%`, background: '#F7C97E', borderRadius: 2 }} />
+            </div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.78)', marginTop: 6 }}>
+              {t('continueSitePct').replace('{pct}', String(pct))}
+            </div>
+          </div>
+        )}
+
+        {showNextStepLine && nextStepEntry && (
+          <div className="font-sans" style={{ fontSize: 13, color: 'rgba(234,243,226,0.85)', marginBottom: 16 }}>
+            {t('coachOverline')}: {t(nextStepEntry.titleKey)}
+          </div>
+        )}
+
+        <div className="flex items-center gap-4 flex-wrap">
+          <Link
+            href={`/farmer?site=${mainSite.id}`}
+            style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, textDecoration: 'none' }}
+          >
+            <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+              <span className="flex items-center gap-1.5">{t('continueSiteCta')}<ArrowRight size={14} /></span>
+            </span>
+          </Link>
+
+          <Link
+            href="/farmer?guided=1&new=1"
+            className="font-sans"
+            style={{
+              display: 'inline-flex', alignItems: 'center', minHeight: 44,
+              fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+            }}
+          >
+            {t('startNewSite')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Defensive fallback — places.length > 0 but the parent's resolveMainSite() somehow
+  // returned null (should not happen; resolveMainSite always yields a site for a
+  // non-empty list). Render the same safe DEFAULT shell rather than nothing.
+  return (
+    <Link href="/farmer" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+      <Overline>{t('homeLimaSuggests')}</Overline>
+
+      <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+        {t('homeSurveyNew')}
+      </h2>
+
+      <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
+        {t('homeSurveyDesc')}
+      </p>
+
+      <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+        <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
+      </span>
+    </Link>
+  );
+}

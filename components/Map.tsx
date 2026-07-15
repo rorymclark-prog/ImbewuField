@@ -19,6 +19,7 @@ import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
+import SpeakButton from './SpeakButton';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
@@ -236,6 +237,10 @@ interface Props {
   // exists for this site so the parent can enable/disable its "Design" toggle.
   showDesign?: boolean;
   onDesignPresenceChange?: (present: boolean) => void;
+  // Guided pin mode (onboarding): show a single instruction bar telling a novice to search
+  // their town or tap their home, in place of the "Find your land" pill. Self-retires the
+  // instant a pin exists (parent passes `guided && !selected`).
+  guided?: boolean;
 }
 
 // Placement-time prompt vocabularies for the site element sheet — common
@@ -246,7 +251,7 @@ interface Props {
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
@@ -899,6 +904,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setDraftPoints([]);
     setPinDraw(type);
   }, [ensureDraw]);
+
+  // The NextStepCoach fires 'imbewu-arm-draw' to send a farmer straight into boundary
+  // tracing from the report ("Trace now"). Arming the draw collapses the sheet via the
+  // parent's drawing effect, so one tap lands them on the map with the reticle up.
+  useEffect(() => {
+    const arm = (e: Event) => startPinDraw((e as CustomEvent).detail === 'water' ? 'water' : 'site');
+    window.addEventListener('imbewu-arm-draw', arm);
+    return () => window.removeEventListener('imbewu-arm-draw', arm);
+  }, [startPinDraw]);
 
   // Re-enable map rotation after a reticle-draw session ends
   const unlockRotation = useCallback(() => {
@@ -2506,7 +2520,49 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         Hidden entirely while drawing/editing so it can't overlap the instruction
         banner or crowd the map — the bottom action bar is all you need then.
       */}
-      {!pinDraw && !editPin && !activeDraw && toolbarMin && (
+      {/* Guided pin instruction bar (onboarding) — replaces the Tools pill for a novice:
+          one instruction + Search / Use-my-location. Self-retires when a pin is dropped
+          (parent passes `guided && !selected`). */}
+      {guided && !pinDraw && !editPin && !activeDraw && (
+        <div
+          className="absolute font-sans"
+          style={{
+            top: 12, left: 12, right: 12, zIndex: 10,
+            background: 'rgba(22,30,18,0.86)', border: '1px solid rgba(234,243,226,0.12)',
+            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+            boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)', borderRadius: 14, padding: '12px 14px',
+          }}
+        >
+          <div className="flex items-start gap-2.5" style={{ marginBottom: 10 }}>
+            <span className="flex items-center justify-center flex-shrink-0" style={{ width: 26, height: 26, borderRadius: 8, background: '#1F4D2B', color: '#A8D88A' }}>
+              <Sprout size={15} strokeWidth={1.7} />
+            </span>
+            <span style={{ color: '#F7F2E9', fontSize: 14.5, fontWeight: 600, lineHeight: 1.35, flex: 1, minWidth: 0 }}>{t('guidedBarSearch')}</span>
+            <SpeakButton text={t('guidedBarSearch')} color="#F7F2E9" />
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                setToolbarMin(false);
+                requestAnimationFrame(() => (document.querySelector('.map-search-input') as HTMLInputElement | null)?.focus());
+              }}
+              className="flex-1 flex items-center justify-center gap-1.5 active:scale-95"
+              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: '#F7F2E9', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
+            >
+              <Search size={16} /> {t('searchPlaceholder')}
+            </button>
+            <button
+              onClick={goToMyLocation}
+              className="flex-1 flex items-center justify-center gap-1.5 active:scale-95"
+              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: '#F7F2E9', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
+            >
+              <LocateFixed size={16} /> {t('guidedBarLocate')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!pinDraw && !editPin && !activeDraw && toolbarMin && !guided && (
         <button
           onClick={openPanel}
           aria-label="Show map tools"

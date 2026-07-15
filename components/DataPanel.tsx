@@ -19,10 +19,11 @@ import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
 import WeatherWidget from './WeatherWidget';
 import CompletionScore from './report/CompletionScore';
-import { loadCanvasState } from '@/lib/design-canvas';
-import { loadCropPlan } from '@/lib/crop-plan';
+import NextStepCoach from './NextStepCoach';
+import SpeakButton from './SpeakButton';
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
+import { gatherSiteInputs } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage } from '@/lib/i18n';
@@ -337,58 +338,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // surveySiteId; the crop plan store is user-global, so it only counts once this site
   // has a design to hang it on.
   const completionInputs: CompletionScoreInputs = useMemo(() => {
-    const canvas = loadCanvasState(surveySiteId);
-    const s = survey;
-    const surveyChecks = s ? [
-      !!s.adults,
-      (s.goals?.length ?? 0) > 0,
-      (s.waterSource?.length ?? 0) > 0,
-      (s.waterStorage?.length ?? 0) > 0,
-      s.roofMainM2 != null,
-      !!s.landPrepMethod,
-      !!s.soilCondition,
-      !!s.hasFencing,
-      (s.existingCrops?.length ?? 0) > 0,
-      !!s.farmingPractice,
-    ] : [];
-
-    // Boundary traced *here*: any non-water polygon whose first vertex lies within
-    // ~0.02° (~2 km) of this site's coords. Drawn shapes are stored user-globally,
-    // so without this filter a polygon traced on one farm credits every site.
-    let boundaryNearSite = false;
-    if (coords) {
-      const fc = readLocalFarmShapes();
-      boundaryNearSite = !!fc?.features?.some((f) => {
-        if (f.properties?.featureType === 'water') return false;
-        if (f.geometry?.type !== 'Polygon' && f.geometry?.type !== 'MultiPolygon') return false;
-        const ring = f.geometry.type === 'Polygon'
-          ? f.geometry.coordinates[0]
-          : f.geometry.coordinates[0]?.[0];
-        const pt = ring?.[0];
-        return Array.isArray(pt)
-          && Math.abs(pt[0] - coords.lon) < 0.02
-          && Math.abs(pt[1] - coords.lat) < 0.02;
-      });
-    }
-
-    // Located = a saved place exists AT these coords (~55 m). Not "any saved place"
-    // (that credited every new pin) nor activePlaceId (a fresh save doesn't set it) —
-    // a coords match is per-site and survives reload. placeSaved forces a re-derive
-    // the instant the farmer taps Save, before loadPlaces() is re-read.
-    const savedHere = !!coords && (placeSaved || loadPlaces().some((p) =>
-      Math.abs(p.lat - coords.lat) < 0.0005 && Math.abs(p.lon - coords.lon) < 0.0005));
-
-    const zoneCount = canvas?.zones.length ?? 0;
-    const elementCount = canvas?.items.length ?? 0;
-    return {
-      hasSite: savedHere,
-      boundaryPointCount: boundaryNearSite ? 3 : 0,
-      surveyFilledFields: surveyChecks.filter(Boolean).length,
-      surveyTotalFields: 10,
-      zoneCount,
-      elementCount,
-      hasCropPlan: (zoneCount > 0 || elementCount > 0) && loadCropPlan().plantings.length > 0,
-    };
+    // Single source of truth (lib/site-progress.ts) — the coach + home Continue card
+    // read the same per-site inputs, so the scoping conventions can't drift apart.
+    // survey/siteData/tab stay in the deps as change-signals so this re-derives when
+    // the underlying stores move; gatherSiteInputs re-reads them fresh from storage.
+    if (!coords) return gatherSiteInputs({ lat: 0, lon: 0 });
+    return gatherSiteInputs(coords, { assumeSaved: placeSaved });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, placeSaved, tab]);
 
@@ -751,6 +706,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Site-lifecycle completion leaderboard — only once this is your saved site */}
             {isSaved && <CompletionScore inputs={completionInputs} />}
 
+            {/* Guided "next step" card — the ONE thing to do next (the checklist above says
+                where you are; this says what to do). Self-hides when guided mode is off/retired. */}
+            {isSaved && coords && (
+              <NextStepCoach
+                inputs={completionInputs}
+                coords={coords}
+                onOpenSurvey={() => setSurveySheetOpen(true)}
+              />
+            )}
+
             {/* Live forecast — only for a saved site; the home hub carries weather until then */}
             {isSaved && coords && <WeatherWidget lat={coords.lat} lon={coords.lon} />}
 
@@ -912,10 +877,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
               </div>
-              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0 }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: '#1F4D2B' }}>Lima · </span>
                 {limaRead}
               </p>
+              <SpeakButton text={limaRead} size={15} color="#5C5040" />
             </div>
 
             {/* 12-month planting calendar strip */}
