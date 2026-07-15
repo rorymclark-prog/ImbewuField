@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
-import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, type SiteElement, type SiteElementType } from '@/lib/site-elements';
+import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
@@ -382,6 +382,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     window.addEventListener('imbewu-site-elements-changed', refresh);
     return () => window.removeEventListener('imbewu-site-elements-changed', refresh);
   }, [siteIdForElements]);
+
+  // Cross-device sync for site elements. site-elements.ts used to be push-only (no pull
+  // path), so a JoJo tank/beehive added on one device never reached another. Reconcile
+  // local+remote once per (user, site) then subscribe for realtime remote writes; both
+  // fire 'imbewu-site-elements-changed', which the loader effect above already listens
+  // for → the element appears without a reload. Keyed on siteId too: the Firestore doc
+  // is per-site (site_elements_{siteId}), so switching sites must re-reconcile/re-subscribe.
+  useEffect(() => {
+    const uid = user?.uid;
+    if (!uid) return;
+    reconcileSiteElements(uid, siteIdForElements).catch(() => {});
+    const unsub = subscribeSiteElementsLive(uid, siteIdForElements);
+    return () => unsub();
+  }, [user?.uid, siteIdForElements]);
 
   // The draw.create handler is registered once inside ensureDraw (which only ever runs
   // once per map instance), so it can't close over siteIdForElements directly — that
