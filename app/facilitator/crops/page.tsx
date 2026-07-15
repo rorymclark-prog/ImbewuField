@@ -10,7 +10,7 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { Search, X, Menu, ChevronDown } from 'lucide-react';
+import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
@@ -76,6 +76,22 @@ function fractionLabel(f: number): string {
   if (Math.abs(f - 1 / 3) < 0.01) return '⅓';
   if (Math.abs(f - 0.25) < 0.01) return '¼';
   return `${Math.round(f * 100)}%`;
+}
+
+/**
+ * Farmer-facing "how to sow" line — row spacing / in-row spacing / sow depth
+ * where a sourced split exists (lib/crop-catalog.ts rowSpacingCm/
+ * inRowSpacingCm/sowDepthCm), falling back to the single spacingCm figure
+ * for the crops with no sourced split. Never fabricates a number that isn't
+ * on the crop record.
+ */
+function sowingInstruction(crop: CropDef): string {
+  const parts: string[] = [];
+  if (crop.rowSpacingCm) parts.push(`rows ${crop.rowSpacingCm}cm apart`);
+  if (crop.inRowSpacingCm) parts.push(`${crop.inRowSpacingCm}cm apart in the row`);
+  if (crop.sowDepthCm) parts.push(`sow ${crop.sowDepthCm}cm deep`);
+  if (parts.length === 0) parts.push(`plant spacing ~${crop.spacingCm}cm`);
+  return parts.join(' · ');
 }
 
 /** 🌱 = sown direct from seed, 🪴 = started as a seedling/transplant. */
@@ -243,6 +259,8 @@ const TASK_VERB: Record<CropTask['action'], string> = {
   transplant: 'transplant',
   mulch: 'water in & mulch',
   harvest: 'harvest',
+  'weed-early': 'weed around',
+  'weed-mid': 'weed & check for pests around',
 };
 
 function taskSentence(tasks: CropTask[]): string {
@@ -635,6 +653,15 @@ export default function FacilitatorCropsPage() {
           <Menu size={17} strokeWidth={1.7} />
         </button>
         <Link
+          href="/home"
+          aria-label="Home"
+          title="Home"
+          className="flex-shrink-0 flex items-center justify-center rounded-xl"
+          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', textDecoration: 'none' }}
+        >
+          <Home size={16} strokeWidth={1.7} />
+        </Link>
+        <Link
           href="/facilitator"
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
@@ -941,20 +968,31 @@ export default function FacilitatorCropsPage() {
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds & seedlings to get</div>
-                <div className="space-y-1">
-                  {seedBoq.map((row) => (
-                    <div key={row.cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                      <span>{row.icon} {row.cropName}</span>
-                      <span className="font-mono" style={{ color: '#20190F' }}>~{row.count} {row.unit}</span>
-                    </div>
-                  ))}
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds & seedlings — and how to sow them</div>
+                <div className="space-y-2">
+                  {seedBoq.map((row) => {
+                    const crop = cropByKey(row.cropKey);
+                    return (
+                      <div key={row.cropKey} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
+                        <div className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                          <span>{row.icon} {row.cropName}</span>
+                          <span className="font-mono" style={{ color: '#20190F' }}>~{row.count} {row.unit}</span>
+                        </div>
+                        {crop && (
+                          <div className="font-sans mt-0.5 flex items-center gap-1" style={{ fontSize: 11, color: '#8C7A62' }}>
+                            <SeedBadge transplant={!!crop.transplant} />
+                            <span>{crop.transplant ? 'transplant' : 'direct-sow'} · {sowingInstruction(crop)}</span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                   {seedBoq.length === 0 && (
                     <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing new to buy yet.</div>
                   )}
                 </div>
                 <p className="font-mono mt-2" style={{ fontSize: 10, color: '#9A8268' }}>
-                  Estimated from bed area and each crop's usual spacing — direct-sow counts include a buffer for germination loss.
+                  Quantities estimated from bed area and each crop's usual spacing — direct-sow counts include a buffer for germination loss. Row/in-row spacing and sowing depth are shown where a source confirms them; otherwise just the overall plant spacing.
                 </p>
               </div>
 
@@ -973,6 +1011,7 @@ export default function FacilitatorCropsPage() {
             </div>
 
             <RotationExplanationCard />
+            <OrganicGuideCard />
 
             <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
@@ -1419,6 +1458,89 @@ function RotationExplanationCard() {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Static organic-inputs reference (2026-07-15 agronomy handoff) — read-only
+ * guidance, NOT per-crop numeric fields and NOT auto-scheduled spray tasks.
+ * Fertilisation is the derived-from-commercial-rate general amounts the
+ * handoff explicitly said are safe to ship as a reference card, not a fixed
+ * per-crop schedule (Talborne's own FAQ says rates should come from soil/
+ * leaf testing). Pest section is monitoring-first — "if you see X, consider
+ * Y" — deliberately no numeric economic thresholds and no auto-inserted
+ * spray tasks, since no SA-specific source backs either.
+ */
+function OrganicGuideCard() {
+  const [openSection, setOpenSection] = useState<'feed' | 'protect' | null>(null);
+  return (
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🌿 Growing organically</div>
+      <p className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
+        General guidance, not a fixed schedule — adjust to your soil, local conditions and (if certified) your organic certifier&apos;s rules. Not a substitute for an extension officer.
+      </p>
+
+      <button
+        onClick={() => setOpenSection((s) => (s === 'feed' ? null : 'feed'))}
+        className="w-full flex items-center justify-between font-display font-semibold"
+        style={{ fontSize: 13, color: '#20190F', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
+      >
+        <span>🌾 Feeding your crops</span><span>{openSection === 'feed' ? '▾' : '▸'}</span>
+      </button>
+      {openSection === 'feed' && (
+        <div className="space-y-2 pb-2 mb-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+            <strong>Bed prep:</strong> compost worked into the top 15-20cm (~2-3 kg/m²), plus well-rotted kraal (cattle) manure — ~0.5-1 kg/m² for most crops, up to 2-4 kg/m² for heavy feeders. Manure must be well-rotted and worked in at least 3-4 weeks before sowing/transplanting — fresh manure is a food-safety risk, especially for root crops and leafy greens.
+          </p>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+            <strong>Legumes help the next crop:</strong> dry beans, green beans, peas, broad beans and groundnuts all reduce the following crop&apos;s fertiliser need — already built into this plan&apos;s bed rotation.
+          </p>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.5 }}>
+            <strong>Real SA organic products</strong> (label rates, not universal science — check the current label):
+          </p>
+          <ul className="font-sans space-y-1" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5, paddingLeft: 16 }}>
+            <li>Talborne Vita Veg 6:3:4(16) — leafy/fruiting veg, apply at the base and water in, reapply every 6-8 weeks.</li>
+            <li>Talborne Vita Bone Phos 4:10:0(14) (bonemeal) — till into new beds before planting, especially low-phosphorus soils.</li>
+            <li>Talborne Soft Rock Phosphate — ~25g/m²/year, broadcast, banded, or in the planting hole.</li>
+            <li>Atlantic Bio Ocean (seaweed, fishmeal, humic acid, poultry manure pellets) — 1-2 handfuls/m² every 6 weeks, pH-neutral and won&apos;t burn plants.</li>
+            <li>Biogrow Bio Ganic / Bio Rock — real SA organic products; confirm the current application rate on the label.</li>
+          </ul>
+          <p className="font-sans" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
+            No fixed per-crop feeding schedule is given here on purpose — even Talborne&apos;s own guidance says rates should come from a soil or leaf test, not a blanket number. PGS SA (Participatory Guarantee System) is a realistic low-cost organic-certification route for smallholders, if that&apos;s a goal.
+          </p>
+        </div>
+      )}
+
+      <button
+        onClick={() => setOpenSection((s) => (s === 'protect' ? null : 'protect'))}
+        className="w-full flex items-center justify-between font-display font-semibold"
+        style={{ fontSize: 13, color: '#20190F', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
+      >
+        <span>🐛 Protecting your crops</span><span>{openSection === 'protect' ? '▾' : '▸'}</span>
+      </button>
+      {openSection === 'protect' && (
+        <div className="space-y-2">
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+            <strong>Prevent first:</strong> rotate crops (built into this plan), companion planting (marigold against nematodes/whitefly; garlic, onion or wild garlic/Artemisia afra as general repellents; basil near tomatoes; let some carrot, fennel, dill or yarrow flower for beneficial insects), sanitation (remove diseased material — don&apos;t compost it unless hot-composting; clean tools; avoid late-day overhead watering), disease-resistant varieties where labelled, and insect mesh over brassica/seedling beds.
+          </p>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+            <strong>Scout weekly:</strong> walk your beds and note what you see — no diagnosis needed, just catching problems while they&apos;re small. Yellow sticky traps give early warning of flying pests.
+          </p>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.5 }}>
+            <strong>If you see it, consider this</strong> — confirm the diagnosis before spraying anything:
+          </p>
+          <ul className="font-sans space-y-1" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5, paddingLeft: 16 }}>
+            <li><strong>Caterpillars</strong> — Bt (Bacillus thuringiensis kurstaki), e.g. Margaret Roberts Biological Caterpillar Insecticide — targets caterpillars only, safe for other insects.</li>
+            <li><strong>Aphids, whitefly, mites, mealybug, thrips, scale</strong> — rotate between neem (Biogrow Bioneem), insecticidal soap (Biogrow Neudosan) and pyrethrum (Biogrow Pyrol — evening only, toxic to bees while wet), or a garlic/canola contact spray (Margaret Roberts Organic Insecticide).</li>
+            <li><strong>Fungal disease</strong> (powdery/downy mildew, rust, blight, black rot) — sulphur-based sprays (watch temperatures above 30°C) or preventive copper soap. Go easy on copper — it builds up in soil over years; check your certifier&apos;s limit rather than assuming a number.</li>
+            <li><strong>Slugs, snails, cutworms</strong> — physical barriers and hand-removal first; an iron/ferric-phosphate bait as a spot treatment if it&apos;s still a problem.</li>
+          </ul>
+          <p className="font-sans" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
+            This is a starting point, not a spray calendar — nothing in this plan auto-schedules a spray. Confirm what you&apos;re seeing before treating it, and check your organic certifier&apos;s current approved-input list if you&apos;re certified.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
