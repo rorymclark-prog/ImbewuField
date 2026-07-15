@@ -285,6 +285,33 @@ export function estimatedYieldKgAdjusted(p: Planting, bedAreaM2: number, allPlan
   return isGenuinelyIntercropped(p, allPlantings) ? base * INTERCROP_YIELD_DISCOUNT : base;
 }
 
+/**
+ * Per-crop breakdown of estimatedYieldKgAdjusted, aggregated across every
+ * planting on every bed — same source set as a per-bed breakdown built with
+ * `plantings.filter(p => p.bedId === b.id)` over all beds, just grouped by
+ * cropKey instead of bedId. Deliberately does NOT exclude `existing`
+ * plantings (per-bed totals don't either) so the two are two views of the
+ * SAME annual total, not different subsets. Sorted biggest-first: that's
+ * the useful reading order for "what am I actually growing most of".
+ */
+export function yieldByCrop(plantings: Planting[], beds: PlanBed[]): { cropKey: string; name: string; icon: string; kg: number }[] {
+  const bedArea = new Map(beds.map((b) => [b.id, b.areaM2]));
+  const totals = new Map<string, number>();
+  for (const p of plantings) {
+    const area = bedArea.get(p.bedId);
+    if (area === undefined) continue;
+    const kg = estimatedYieldKgAdjusted(p, area, plantings);
+    totals.set(p.cropKey, (totals.get(p.cropKey) ?? 0) + kg);
+  }
+  return Array.from(totals.entries())
+    .map(([cropKey, kg]) => {
+      const crop = cropByKey(cropKey);
+      return { cropKey, name: crop?.name ?? cropKey, icon: crop?.icon ?? '🌱', kg };
+    })
+    .filter((row) => row.kg > 0)
+    .sort((a, b) => b.kg - a.kg);
+}
+
 // Whether the crop picker offers bed-SHARING (splitting a bed by fraction —
 // intercropping or a manual split) at all. Off by default: sharing a bed
 // well needs some gardening judgement (companion compatibility, genuine

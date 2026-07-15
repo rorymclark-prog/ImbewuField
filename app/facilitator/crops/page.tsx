@@ -24,7 +24,7 @@ import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth,
   buildFieldUtilizationByMonth, suggestSubstituteCrop, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped,
-  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, yieldByCrop,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
@@ -446,6 +446,11 @@ export default function FacilitatorCropsPage() {
     saveCashflowSettings(next);
   }
 
+  // Estimated-harvest box view — defaults to per-crop since that's the more
+  // commonly wanted read ("how much tomato will I get"), with per-bed as the
+  // other view of the exact same underlying total (see yieldByCrop's doc comment).
+  const [harvestBoxView, setHarvestBoxView] = useState<'crop' | 'bed'>('crop');
+
   useEffect(() => {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
@@ -580,6 +585,11 @@ export default function FacilitatorCropsPage() {
       kg: plantings.filter((p) => p.bedId === b.id).reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, b.areaM2, plantings), 0),
     }))
     .filter((row) => row.kg > 0);
+  const yieldByCropList = useMemo(() => yieldByCrop(plantings, beds), [plantings, beds]);
+  // Same loss% the Retail/Wholesale value tabs use (cashflowSettings,
+  // shared/persisted state) — one loss control for the whole plan, not a
+  // second independent slider that could disagree with it.
+  const harvestLossFactor = 1 - cashflowSettings.lossPercent / 100;
 
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
@@ -952,24 +962,75 @@ export default function FacilitatorCropsPage() {
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🥬 Estimated harvest</div>
-                <div className="font-mono font-bold mb-2" style={{ fontSize: 26, color: '#1F4D2B' }}>
-                  {newYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr to plant</span>
+                <div className="flex items-center justify-between mb-2 gap-2">
+                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🥬 Estimated harvest</div>
+                  <div className="flex rounded-lg overflow-hidden flex-shrink-0" style={{ border: '1px solid #E2D8C4' }}>
+                    {(['crop', 'bed'] as const).map((v) => (
+                      <button
+                        key={v}
+                        onClick={() => setHarvestBoxView(v)}
+                        className="font-sans"
+                        style={{
+                          fontSize: 11, padding: '3px 9px', cursor: 'pointer',
+                          background: harvestBoxView === v ? '#1F4D2B' : 'transparent',
+                          color: harvestBoxView === v ? '#FFFEFA' : '#5C5040',
+                        }}
+                      >
+                        {v === 'crop' ? 'By crop' : 'By bed'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: '#1F4D2B' }}>
+                  {(newYieldKg * harvestLossFactor).toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr to plant</span>
+                </div>
+                <div className="font-sans mb-2" style={{ fontSize: 11, color: '#8C7A62' }}>
+                  {cashflowSettings.lossPercent > 0 ? `after ~${cashflowSettings.lossPercent}% loss` : 'no loss assumed yet'} · gross {newYieldKg.toFixed(1)} kg/yr
                 </div>
                 {existingYieldKg > 0 && (
                   <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                    + {existingYieldKg.toFixed(1)} kg/yr already growing (not new)
+                    + {(existingYieldKg * harvestLossFactor).toFixed(1)} kg/yr already growing (not new)
                   </div>
                 )}
+
+                {/* Same loss% as the Retail/Wholesale value-tab slider below (shared
+                    cashflowSettings) — dragging either one moves both, so there's
+                    exactly one "expected loss" number for the whole plan. */}
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>% expected loss (disease, failure, underperformance)</span>
+                  <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.lossPercent}%</span>
+                </div>
+                <input
+                  type="range" min={0} max={100} value={cashflowSettings.lossPercent}
+                  onChange={(e) => updateCashflowSettings({ ...cashflowSettings, lossPercent: Number(e.target.value) })}
+                  className="w-full mb-3" style={{ accentColor: '#1F4D2B' }}
+                />
+
                 <div className="space-y-1">
-                  {yieldByBed.map(({ bed, kg }) => (
-                    <div key={bed.id} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                      <span>{bed.label}</span>
-                      <span className="font-mono" style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
-                    </div>
-                  ))}
-                  {yieldByBed.length === 0 && (
-                    <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
+                  {harvestBoxView === 'crop' ? (
+                    <>
+                      {yieldByCropList.map(({ cropKey, name, icon, kg }) => (
+                        <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                          <span>{icon} {name}</span>
+                          <span className="font-mono" style={{ color: '#20190F' }}>{(kg * harvestLossFactor).toFixed(1)} kg</span>
+                        </div>
+                      ))}
+                      {yieldByCropList.length === 0 && (
+                        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {yieldByBed.map(({ bed, kg }) => (
+                        <div key={bed.id} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                          <span>{bed.label}</span>
+                          <span className="font-mono" style={{ color: '#20190F' }}>{(kg * harvestLossFactor).toFixed(1)} kg</span>
+                        </div>
+                      ))}
+                      {yieldByBed.length === 0 && (
+                        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
