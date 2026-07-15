@@ -1,13 +1,23 @@
 import { NextResponse } from 'next/server';
 
+// Evaluate BUILD_ID once at build time (not per request) so the worker body is
+// stable within a deploy but changes between deploys.
+export const dynamic = 'force-static';
+
 // WHY a route handler instead of a static public/sw.js: a static file is byte-identical
 // across deploys, so the browser's spec-mandated byte-comparison update check never fires
 // and old workers (and the stale JS they serve) persist forever. Vercel bakes a fresh
 // commit SHA into every deployment's environment, so reading it here at build/cold-start
 // time gives every deploy a different sw.js body "for free" — no manual version bump,
 // no separate build script to maintain.
+// Use || not ?? — in this GitHub-Action + `vercel build` flow VERCEL_GIT_COMMIT_SHA
+// is an EMPTY STRING (not undefined), which ?? would keep, freezing the version and
+// defeating update detection. || falls through empty strings to a build-time stamp.
 const BUILD_ID =
-  process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.VERCEL_DEPLOYMENT_ID ?? String(Date.now());
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.VERCEL_DEPLOYMENT_ID ||
+  process.env.GITHUB_SHA ||
+  String(Date.now());
 
 const SW_SOURCE = `
 const CACHE_VERSION = ${JSON.stringify(BUILD_ID)};
