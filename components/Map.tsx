@@ -136,6 +136,56 @@ const contourLabelMinor: LayerProps = {
   paint: { 'text-color': '#8ab860', 'text-halo-color': '#0a150a', 'text-halo-width': 1.5 },
 };
 
+// ── Fine (5m minor / 25m major) contours — server-generated geojson isolines from
+// /api/contours, swapped in above FINE_CONTOUR_MIN_ZOOM in place of the fixed-10m
+// Mapbox vector tileset above. Same styling, no `source-layer` (geojson sources don't
+// have one) and reading from the 'contours-fine' source instead of 'contours'.
+const FINE_CONTOUR_MIN_ZOOM = 15;
+const contourFineMinor: LayerProps = {
+  id: 'contour-fine-minor', type: 'line', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 0],
+  paint: {
+    'line-color': '#7aaa50',
+    'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 15, 1.2],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 13, 0.6, 15, 0.85],
+  },
+};
+const contourFineMajor: LayerProps = {
+  id: 'contour-fine-major', type: 'line', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 1],
+  paint: {
+    'line-color': '#b8d470',
+    'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 15, 2],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 10, 0.7, 15, 1],
+  },
+};
+const contourFineLabel: LayerProps = {
+  id: 'contour-fine-label', type: 'symbol', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 1], minzoom: 10,
+  layout: {
+    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm'],
+    'symbol-placement': 'line',
+    'text-font': ['DIN Offc Pro Regular', 'Arial Unicode MS Regular'],
+    'text-size': ['interpolate', ['linear'], ['zoom'], 10, 9, 15, 12],
+    'text-letter-spacing': 0.05,
+    'symbol-spacing': 300,
+  },
+  paint: { 'text-color': '#d4e8a0', 'text-halo-color': '#0a150a', 'text-halo-width': 2 },
+};
+const contourFineLabelMinor: LayerProps = {
+  id: 'contour-fine-label-minor', type: 'symbol', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 0], minzoom: 14,
+  layout: {
+    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm'],
+    'symbol-placement': 'line',
+    'text-font': ['DIN Offc Pro Regular', 'Arial Unicode MS Regular'],
+    'text-size': 9,
+    'text-letter-spacing': 0.03,
+    'symbol-spacing': 400,
+  },
+  paint: { 'text-color': '#8ab860', 'text-halo-color': '#0a150a', 'text-halo-width': 1.5 },
+};
+
 interface Props {
   onLocationSelect: (lat: number, lon: number) => void;
   selectedLocation: { lat: number; lon: number } | null;
@@ -173,6 +223,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // grey tile, so it's opt-in via the HD toggle, not the default.
   const [hdImagery, setHdImagery] = useState(false);
   const [contours, setContours] = useState(true);
+  // Fine (5m) contour geojson fetched from /api/contours once zoomed past FINE_CONTOUR_MIN_ZOOM.
+  // null = not loaded yet / fetch failed → render falls back to the fixed-10m vector 'contours' source.
+  const [fineContours, setFineContours] = useState<GeoJSON.FeatureCollection | null>(null);
+  const fineContourTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [terrain3d, setTerrain3d] = useState(false);  // flat by default — 3D can block close-zoom needed to draw boundaries
   const [show3dWarning, setShow3dWarning] = useState(false);
   const [placeSaved, setPlaceSaved] = useState(false);  // "✓ Saved" feedback for the Save-place tool
@@ -656,6 +710,59 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     }, 200);
     return () => clearInterval(iv);
   }, [restoreShapes]);
+
+  // Fine (5m) contours: debounced fetch to /api/contours for the current viewport, once
+  // zoomed past FINE_CONTOUR_MIN_ZOOM (farm-scale). Falls back silently to the fixed-10m
+  // Mapbox vector contours (still mounted in JSX below) on any error or while loading —
+  // this whole feature is additive/revertible behind the existing `contours` toggle.
+  useEffect(() => {
+    if (!contours) { setFineContours(null); return; }
+    let cancelled = false;
+    let attachedMap: mapboxgl.Map | null = null;
+    let moveHandler: (() => void) | null = null;
+    let pollId: ReturnType<typeof setInterval> | null = null;
+
+    const requestFineContours = (map: mapboxgl.Map) => {
+      if (fineContourTimer.current) clearTimeout(fineContourTimer.current);
+      fineContourTimer.current = setTimeout(async () => {
+        if (cancelled) return;
+        if (map.getZoom() < FINE_CONTOUR_MIN_ZOOM) { setFineContours(null); return; }
+        const b = map.getBounds();
+        if (!b) return;
+        try {
+          const url = `/api/contours?minLon=${b.getWest()}&minLat=${b.getSouth()}&maxLon=${b.getEast()}&maxLat=${b.getNorth()}&interval=5&major=25`;
+          const res = await fetch(url);
+          if (!res.ok) { if (!cancelled) setFineContours(null); return; }
+          const json = await res.json();
+          if (!cancelled) setFineContours(json);
+        } catch {
+          if (!cancelled) setFineContours(null);
+        }
+      }, 500);
+    };
+
+    let tries = 0;
+    pollId = setInterval(() => {
+      tries += 1;
+      const map = mapRef.current?.getMap();
+      if (map) {
+        attachedMap = map;
+        moveHandler = () => requestFineContours(map);
+        map.on('moveend', moveHandler);
+        requestFineContours(map);
+        if (pollId) clearInterval(pollId);
+      } else if (tries > 50) {
+        if (pollId) clearInterval(pollId);
+      }
+    }, 200);
+
+    return () => {
+      cancelled = true;
+      if (pollId) clearInterval(pollId);
+      if (fineContourTimer.current) clearTimeout(fineContourTimer.current);
+      if (attachedMap && moveHandler) attachedMap.off('moveend', moveHandler);
+    };
+  }, [contours]);
 
   // Live cross-device sync: while signed in, subscribe to the user's Firestore docs.
   // A save in ANY browser pushes here in realtime → localStorage updates → pins, water
@@ -1747,12 +1854,26 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Source>
         )}
 
-        {contours && (
+        {/* Below FINE_CONTOUR_MIN_ZOOM, or whenever the fine fetch hasn't produced data yet
+            (still loading / errored / bbox too large), keep the fixed-10m Mapbox vector
+            contours as the always-available fallback. */}
+        {contours && (zoom < FINE_CONTOUR_MIN_ZOOM || !fineContours) && (
           <Source id="contours" type="vector" url="mapbox://mapbox.mapbox-terrain-v2">
             <Layer {...contourMinor} />
             <Layer {...contourMajor} />
             <Layer {...contourLabel} />
             <Layer {...contourLabelMinor} />
+          </Source>
+        )}
+
+        {/* Fine (5m minor / 25m major) contours — site-scale, generated server-side from the
+            terrain-RGB DEM. Swapped in above FINE_CONTOUR_MIN_ZOOM once the fetch succeeds. */}
+        {contours && zoom >= FINE_CONTOUR_MIN_ZOOM && fineContours && (
+          <Source id="contours-fine" type="geojson" data={fineContours}>
+            <Layer {...contourFineMinor} />
+            <Layer {...contourFineMajor} />
+            <Layer {...contourFineLabel} />
+            <Layer {...contourFineLabelMinor} />
           </Source>
         )}
 
