@@ -41,7 +41,7 @@ import {
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
-import { suggestZones, suggestWater, suggestStructures, suggestPlanting } from '@/lib/design-suggest';
+import { suggestZones, suggestZonesFromPlan, suggestWater, suggestStructures, suggestPlanting, type ZonePlan } from '@/lib/design-suggest';
 import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
@@ -366,6 +366,15 @@ function DesignStudioInner() {
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [tool, setTool] = useState<'select' | 'place' | 'zone' | 'line'>('select');
+  // Arming a draw/place tool clears any lingering selection — otherwise the previously
+  // committed shape keeps its editing handles (vertex grips + delete ✕) live on top of the
+  // drawing surface, and a tap meant to drop the first corner of a NEW zone lands on the old
+  // zone's ✕ and deletes it instead. Reverting to 'select' (e.g. right after Finish) keeps
+  // the selection, so the just-drawn shape stays immediately editable.
+  const handleSetTool = useCallback((t: 'select' | 'place' | 'zone' | 'line') => {
+    setTool(t);
+    if (t !== 'select') setSelectedId(null);
+  }, []);
   const [placeDefId, setPlaceDefId] = useState<string | null>(null);
   const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5>(1);
   const [lineKind, setLineKind] = useState<LineShape['kind']>('swale');
@@ -647,9 +656,10 @@ function DesignStudioInner() {
     }
   }, [frame]);
 
-  // Per-step suggest: 'base' keeps the existing AI vision detect; the other four steps
-  // use the instant local geometry generators from lib/design-suggest.ts.
-  const handleSuggest = useCallback(() => {
+  // Per-step suggest: 'base' keeps the existing AI vision detect; 'zones' uses the HYBRID
+  // AI-vision planner (reason over the satellite → clean geometry) with a deterministic
+  // fallback; the remaining steps use the instant local geometry generators.
+  const handleSuggest = useCallback(async () => {
     if (!canvasState) return;
     if (canvasState.step === 'base') {
       handleVisionDetect();
@@ -660,33 +670,81 @@ function DesignStudioInner() {
       return;
     }
     setDetectError(null);
+
+    const mergePending = (next: DetectSuggestion[]) =>
+      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
+
+    if (canvasState.step === 'zones') {
+      if (!frame) return;
+      // Only ACCEPTED placements count as ground truth here — raw pending vision-detect
+      // suggestions are unconfirmed and would let a false-positive distort the zone plan.
+      const structures = canvasState.items
+        .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
+        .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
+      // Only close-in annual veg (zoneRec includes 1 or 2) may anchor Zone 2. An orchard
+      // tree (zoneRec [3]) placed far from the house must NOT drag Zone 2 across the plot to
+      // reach it — it belongs in Zone 3. Items with no zone hint are left out (conservative).
+      const existingVeg = canvasState.items
+        .filter((i) => {
+          const def = ELEMENTS_BY_ID[i.defId];
+          return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
+        })
+        .map((i) => ({ x: i.x, y: i.y }));
+      const zoneOpts = {
+        frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
+        driveway: refLayers.driveway,
+        site,
+        structures,
+        existingVeg,
+      };
+      const deterministic = () => suggestZones(refLayers.boundary, refLayers.house, zoneOpts);
+
+      // No satellite loaded → the AI has nothing to look at; use the deterministic plan.
+      if (!frame.satDataUrl) {
+        mergePending(deterministic());
+        return;
+      }
+
+      setDetecting(true);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 25_000);
+      try {
+        const res = await fetch('/api/suggest-zones-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            imageBase64: stripDataUrl(frame.satDataUrl),
+            imgW: frame.imgW,
+            imgH: frame.imgH,
+            mPerPx: frame.mPerPx,
+            boundary: refLayers.boundary,
+            house: refLayers.house,
+            driveway: refLayers.driveway,
+            slopeDeg: site?.slopeDeg,
+            aspectLabel: site?.aspectLabel,
+            rainfallMm: site?.rainfallMm,
+            biome: site?.biome,
+          }),
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error('suggest-zones-ai failed');
+        const data = await res.json();
+        const plan: ZonePlan | null = data && Array.isArray(data.zones) ? (data as ZonePlan) : null;
+        const aiZones = plan ? suggestZonesFromPlan(refLayers.boundary, refLayers.house, zoneOpts, plan) : [];
+        // Any AI hiccup (empty/garbled plan, geometry that clipped to nothing) still leaves
+        // the farmer with a usable suggestion via the deterministic path.
+        mergePending(aiZones.length > 0 ? aiZones : deterministic());
+      } catch {
+        mergePending(deterministic());
+      } finally {
+        clearTimeout(timeout);
+        setDetecting(false);
+      }
+      return;
+    }
+
     let next: DetectSuggestion[] = [];
     switch (canvasState.step) {
-      case 'zones': {
-        if (!frame) return;
-        // Only ACCEPTED placements count as ground truth here — raw pending vision-detect
-        // suggestions are unconfirmed and would let a false-positive distort the zone plan.
-        const structures = canvasState.items
-          .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
-          .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
-        // Only close-in annual veg (zoneRec includes 1 or 2) may anchor Zone 2. An orchard
-        // tree (zoneRec [3]) placed far from the house must NOT drag Zone 2 across the plot to
-        // reach it — it belongs in Zone 3. Items with no zone hint are left out (conservative).
-        const existingVeg = canvasState.items
-          .filter((i) => {
-            const def = ELEMENTS_BY_ID[i.defId];
-            return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
-          })
-          .map((i) => ({ x: i.x, y: i.y }));
-        next = suggestZones(refLayers.boundary, refLayers.house, {
-          frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
-          driveway: refLayers.driveway,
-          site,
-          structures,
-          existingVeg,
-        });
-        break;
-      }
       case 'water':
         if (!frame) return;
         next = suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
@@ -702,8 +760,8 @@ function DesignStudioInner() {
       default:
         return;
     }
-    setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
-  }, [canvasState, refLayers, frame, handleVisionDetect]);
+    mergePending(next);
+  }, [canvasState, refLayers, frame, site, handleVisionDetect]);
 
   // Pure per-suggestion state transform, shared by acceptSuggestion (one undo entry) and
   // acceptAllSuggestions (folded into a single undo entry) — see below.
@@ -1013,7 +1071,7 @@ function DesignStudioInner() {
               onSelect={setSelectedId}
               suggestions={suggestions}
               onEditItem={setEditItemId}
-              onToolChange={setTool}
+              onToolChange={handleSetTool}
             />
             {pendingSuggestions.length > 0 && (
               <div
@@ -1169,7 +1227,7 @@ function DesignStudioInner() {
           step={canvasState.step}
           mode={designMode}
           tool={tool}
-          setTool={setTool}
+          setTool={handleSetTool}
           placeDefId={placeDefId}
           setPlaceDefId={setPlaceDefId}
           zoneDraw={zoneDraw}

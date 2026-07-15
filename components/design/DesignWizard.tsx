@@ -119,8 +119,8 @@ function SuggestButton({
         width: '100%',
       }}
     >
-      {step === 'base' && detecting ? <Loader2 size={big ? 20 : 15} className="animate-spin" /> : <Sparkles size={big ? 20 : 15} />}
-      {step === 'base' && detecting ? 'Detecting… (~20s)' : SUGGEST_LABEL[step]}
+      {detecting ? <Loader2 size={big ? 20 : 15} className="animate-spin" /> : <Sparkles size={big ? 20 : 15} />}
+      {detecting ? (step === 'base' ? 'Detecting… (~20s)' : 'Designing… (a few seconds)') : SUGGEST_LABEL[step]}
       {!detecting && !!suggestionsCount && suggestionsCount > 0 && (
         <span
           style={{

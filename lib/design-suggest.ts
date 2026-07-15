@@ -529,6 +529,106 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
   return out;
 }
 
+// ── suggestZonesFromPlan (hybrid AI-vision) ─────────────────────────────────────
+// The AI (app/api/suggest-zones-ai) does the spatial JUDGEMENT — where each zone belongs on
+// THIS real plot — and returns INTENT (anchor + size + outward direction) per zone. This
+// converts that intent into CLEAN geometry using the exact same open-space/disk/carve
+// machinery as suggestZones, just anchored/sized per the plan instead of concentric bands
+// around the door. suggestZones stays untouched as the deterministic fallback.
+
+export interface ZonePlanZone {
+  zone: number; // 0..5 (validated/clamped by the route; re-checked here)
+  anchor: [number, number]; // normalised [0..1] on the image
+  extentM: number; // approx radius/reach in metres
+  outwardDir?: string | null; // aspect label, unused for geometry but carried for future use
+  rationale?: string;
+}
+
+export interface ZonePlan {
+  zones: ZonePlanZone[];
+  overall?: string;
+}
+
+export function suggestZonesFromPlan(
+  boundary: Ring,
+  house: Ring,
+  opts: ZoneSuggestOpts,
+  plan: ZonePlan,
+): DetectSuggestion[] {
+  if (boundary.length < 3) return [];
+  const { frame } = opts;
+  if (!frame || !frame.imgW || !frame.imgH || !frame.mPerPx) return [];
+
+  const out: DetectSuggestion[] = [];
+
+  // Zone 0 — the house itself, verbatim (same as suggestZones).
+  if (house.length >= 3) {
+    out.push({ id: newId(), kind: 'zone', zone: 0, points: house, note: 'The home', status: 'pending' });
+  }
+
+  const boundaryPx = toPx(closeRing(boundary), frame);
+  const housePx = house.length >= 3 ? toPx(closeRing(house), frame) : [];
+  const boundaryMulti: PcMulti = [[boundaryPx]];
+
+  // Open space = boundary minus house minus accepted structures — identical to suggestZones.
+  const obstaclePolys: PcPoly[] = [];
+  if (housePx.length >= 3) obstaclePolys.push([housePx]);
+  for (const s of opts.structures ?? []) {
+    obstaclePolys.push(rectPolyM(s.x * frame.imgW, s.y * frame.imgH, s.wM ?? 4, s.hM ?? 4, frame.mPerPx));
+  }
+  const obstacleUnion = unionPolys(obstaclePolys);
+  let open: PcMulti = boundaryMulti;
+  if (obstacleUnion.length) {
+    const diffed = safePc(() => polygonClipping.difference(boundaryMulti, obstacleUnion));
+    if (diffed.length) open = diffed;
+  }
+
+  // Keep AI extents within the same walking-effort envelope suggestZones uses, so a wild
+  // over/under-estimate can't produce a pinprick or a plot-swallowing disk.
+  const boundaryAreaM2 = ringArea(boundaryPx) * frame.mPerPx * frame.mPerPx;
+  const scaleM = Math.sqrt(Math.max(boundaryAreaM2, 1));
+  const mToPx = (m: number) => m / frame.mPerPx;
+
+  // Dedupe by zone number (keep the first), drop 0 (house handled above) and out-of-range,
+  // process ascending so each zone carves the ground the closer/lower zones already claimed.
+  const seen = new Set<number>();
+  const planZones = plan.zones
+    .filter((z) => Number.isFinite(z.zone) && z.zone >= 1 && z.zone <= 5)
+    .filter((z) => (seen.has(z.zone) ? false : (seen.add(z.zone), true)))
+    .sort((a, b) => a.zone - b.zone);
+
+  const maxZone = planZones.length ? planZones[planZones.length - 1].zone : 0;
+
+  const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
+    if (ring.length < 3) return;
+    out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
+  };
+
+  let rest: PcMulti = open;
+  for (const pz of planZones) {
+    const zone = pz.zone as 1 | 2 | 3 | 4 | 5;
+    const note = pz.rationale && pz.rationale.trim() ? pz.rationale.trim() : `Zone ${zone} (approximate)`;
+
+    // The outermost recommended zone (usually 5, the wild/buffer) takes ALL remaining open
+    // ground, so the plan always tiles out to the boundary instead of leaving a bare gap.
+    if (zone === maxZone) {
+      emit(zone, largestOuterRing(rest), note);
+      rest = [];
+      continue;
+    }
+
+    const ax = clamp01(pz.anchor[0]) * frame.imgW;
+    const ay = clamp01(pz.anchor[1]) * frame.imgH;
+    const rPx = mToPx(Math.max(2, Math.min(pz.extentM, 0.95 * scaleM)));
+    const disk = asMulti(diskPoly(ax, ay, rPx));
+    const claim = rest.length ? safePc(() => polygonClipping.intersection(rest, disk)) : [];
+    emit(zone, largestOuterRing(claim), note);
+    rest = rest.length && disk.length ? safePc(() => polygonClipping.difference(rest, disk)) : rest;
+  }
+
+  return out;
+}
+
 // ── suggestWater ────────────────────────────────────────────────────────────────
 
 export function suggestWater(

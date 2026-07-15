@@ -727,6 +727,59 @@ export default function DesignCanvas({
     setResizePreview(null);
   }
 
+  // Add a vertex at the midpoint of edge `afterIndex → afterIndex+1` of a committed shape —
+  // the owner's "add another corner" need, which only existed for in-progress drafts before.
+  // Emits one onChange (= one undo entry), same commit pattern as endDragVertex.
+  function insertZoneVertex(id: string, afterIndex: number) {
+    onChange({
+      ...state,
+      zones: state.zones.map((z) => {
+        if (z.id !== id) return z;
+        const pts = z.points.slice();
+        const a = pts[afterIndex];
+        const b = pts[(afterIndex + 1) % pts.length];
+        if (!a || !b) return z;
+        pts.splice(afterIndex + 1, 0, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
+        return { ...z, points: pts };
+      }),
+    });
+  }
+
+  // Remove a single vertex — guarded so a zone ring never drops below 3 points (a polygon).
+  function removeZoneVertex(id: string, index: number) {
+    onChange({
+      ...state,
+      zones: state.zones.map((z) =>
+        z.id === id && z.points.length > 3 ? { ...z, points: z.points.filter((_, i) => i !== index) } : z,
+      ),
+    });
+  }
+
+  function insertLineVertex(id: string, afterIndex: number) {
+    onChange({
+      ...state,
+      lines: state.lines.map((l) => {
+        if (l.id !== id) return l;
+        const pts = l.points.slice();
+        const a = pts[afterIndex];
+        const b = pts[afterIndex + 1];
+        if (!a || !b) return l;
+        pts.splice(afterIndex + 1, 0, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
+        return { ...l, points: pts };
+      }),
+    });
+  }
+
+  // A line needs at least 2 points to remain a line.
+  function removeLineVertex(id: string, index: number) {
+    onChange({
+      ...state,
+      lines: state.lines.map((l) =>
+        l.id === id && l.points.length > 2 ? { ...l, points: l.points.filter((_, i) => i !== index) } : l,
+      ),
+    });
+  }
+
   function deleteItem(id: string) {
     onChange({ ...state, items: state.items.filter((it) => it.id !== id) });
     if (selectedId === id) onSelect(null);
@@ -870,7 +923,11 @@ export default function DesignCanvas({
                     {z.zone}
                   </text>
                 </g>
-                {isSelected && (
+                {/* Editing handles show only in Select mode — while a draw tool is armed
+                    they'd sit on top of the drawing surface and a stray tap on the ✕ (or a
+                    vertex) would delete/grab the old zone instead of dropping the next corner
+                    of the NEW one. Arming a tool also clears the selection upstream. */}
+                {isSelected && tool === 'select' && (
                   <>
                     <polygon
                       points={ringToPx(effectivePoints, imgW, imgH)}
@@ -879,6 +936,31 @@ export default function DesignCanvas({
                       strokeWidth={2.5}
                       strokeDasharray="4 3"
                     />
+                    {/* Edge-midpoint "+" handles — tap to insert a new corner on that edge. */}
+                    {effectivePoints.map(([x, y], i) => {
+                      const nxt = effectivePoints[(i + 1) % effectivePoints.length];
+                      const mx = ((x + nxt[0]) / 2) * imgW;
+                      const my = ((y + nxt[1]) / 2) * imgH;
+                      return (
+                        <g key={`add-${i}`}>
+                          <circle
+                            cx={mx}
+                            cy={my}
+                            r={13}
+                            fill="transparent"
+                            style={{ cursor: 'copy', touchAction: 'none', pointerEvents: 'fill' }}
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              insertZoneVertex(z.id, i);
+                            }}
+                          />
+                          <circle cx={mx} cy={my} r={6} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={1.5} pointerEvents="none" />
+                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={10} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
+                            +
+                          </text>
+                        </g>
+                      );
+                    })}
                     {effectivePoints.map(([x, y], i) => (
                       <g key={i}>
                         {/* Invisible enlarged hit circle behind the visible ring — reliable
@@ -902,6 +984,25 @@ export default function DesignCanvas({
                         />
                       </g>
                     ))}
+                    {/* Per-vertex "−" badges to delete a corner — only while the ring has more
+                        than the 3 points a polygon needs, so it can never be made degenerate. */}
+                    {effectivePoints.length > 3 &&
+                      effectivePoints.map(([x, y], i) => (
+                        <g
+                          key={`del-${i}`}
+                          transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}
+                          onPointerDown={(e) => {
+                            e.stopPropagation();
+                            removeZoneVertex(z.id, i);
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <circle r={7} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
+                          <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
+                            −
+                          </text>
+                        </g>
+                      ))}
                     <g
                       transform={`translate(${(centroid[0] * imgW + 16).toFixed(1)},${(centroid[1] * imgH - 16).toFixed(1)})`}
                       onPointerDown={(e) => {
@@ -960,8 +1061,33 @@ export default function DesignCanvas({
                 {line.kind === 'fence' && (
                   <path d={fenceTicks(effectivePoints, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
                 )}
-                {isSelected && (
+                {isSelected && tool === 'select' && (
                   <>
+                    {/* Edge-midpoint "+" handles — tap to insert a new corner on that segment. */}
+                    {effectivePoints.slice(0, -1).map(([x, y], i) => {
+                      const nxt = effectivePoints[i + 1];
+                      const mx = ((x + nxt[0]) / 2) * imgW;
+                      const my = ((y + nxt[1]) / 2) * imgH;
+                      return (
+                        <g key={`add-${i}`}>
+                          <circle
+                            cx={mx}
+                            cy={my}
+                            r={13}
+                            fill="transparent"
+                            style={{ cursor: 'copy', touchAction: 'none', pointerEvents: 'fill' }}
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              insertLineVertex(line.id, i);
+                            }}
+                          />
+                          <circle cx={mx} cy={my} r={6} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={1.5} pointerEvents="none" />
+                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={10} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
+                            +
+                          </text>
+                        </g>
+                      );
+                    })}
                     {effectivePoints.map(([x, y], i) => (
                       <g key={i}>
                         <circle
@@ -983,6 +1109,25 @@ export default function DesignCanvas({
                         />
                       </g>
                     ))}
+                    {/* Per-vertex "−" badges to delete a corner — kept above the 2-point
+                        minimum a line needs to stay a line. */}
+                    {effectivePoints.length > 2 &&
+                      effectivePoints.map(([x, y], i) => (
+                        <g
+                          key={`del-${i}`}
+                          transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}
+                          onPointerDown={(e) => {
+                            e.stopPropagation();
+                            removeLineVertex(line.id, i);
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <circle r={7} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
+                          <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
+                            −
+                          </text>
+                        </g>
+                      ))}
                     {mid && (
                       <g
                         transform={`translate(${(mid[0] * imgW + 12).toFixed(1)},${(mid[1] * imgH - 12).toFixed(1)})`}
