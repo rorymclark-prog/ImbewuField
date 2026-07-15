@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -18,6 +18,10 @@ import ChatPanel from './ChatPanel';
 import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
 import WeatherWidget from './WeatherWidget';
+import CompletionScore from './report/CompletionScore';
+import { loadCanvasState } from '@/lib/design-canvas';
+import { loadCropPlan } from '@/lib/crop-plan';
+import type { CompletionScoreInputs } from '@/lib/completion-score';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
@@ -317,6 +321,38 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [evidenceTick, setEvidenceTick] = useState(0);
   const completeness = getReportCompleteness(siteId);
 
+  // Site-lifecycle completion score (located → boundary → survey → design → crop plan) —
+  // the report dashboard's "how far along am I" leaderboard. Pure inputs gathered here;
+  // recomputed when the active site, survey, measured boundary, or Overview tab changes
+  // (the design canvas + crop plan are read from local storage at that point).
+  const completionInputs: CompletionScoreInputs = useMemo(() => {
+    const canvas = loadCanvasState(surveySiteId);
+    const s = survey;
+    const surveyChecks = s ? [
+      !!s.adults,
+      (s.goals?.length ?? 0) > 0,
+      (s.waterSource?.length ?? 0) > 0,
+      (s.waterStorage?.length ?? 0) > 0,
+      s.roofMainM2 != null,
+      !!s.landPrepMethod,
+      !!s.soilCondition,
+      !!s.hasFencing,
+      (s.existingCrops?.length ?? 0) > 0,
+      !!s.farmingPractice,
+    ] : [];
+    return {
+      hasSite: loadPlaces().length > 0,
+      // A closed boundary that yields a real measured area counts as traced.
+      boundaryPointCount: siteData && siteData.areaM2 > 0 ? 3 : 0,
+      surveyFilledFields: surveyChecks.filter(Boolean).length,
+      surveyTotalFields: 10,
+      zoneCount: canvas?.zones.length ?? 0,
+      elementCount: canvas?.items.length ?? 0,
+      hasCropPlan: loadCropPlan().plantings.length > 0,
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [surveySiteId, survey, siteData, tab]);
+
   // Photo prompt (pre-report interstitial)
   const [photoPromptOpen, setPhotoPromptOpen] = useState(false);
   const [promptPreviews, setPromptPreviews] = useState<string[]>([]);
@@ -558,6 +594,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* OVERVIEW */}
         {tab === 'Overview' && (
           <>
+            {/* Site-lifecycle completion leaderboard — the report's "how far along am I" hero */}
+            <CompletionScore inputs={completionInputs} />
+
             {/* Live forecast — the forward-looking counterpart to the climate-normals stats below */}
             {coords && <WeatherWidget lat={coords.lat} lon={coords.lon} />}
 
