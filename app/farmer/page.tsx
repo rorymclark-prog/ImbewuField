@@ -303,13 +303,13 @@ function HomeInner() {
           <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#94876F' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
-          {/* ONE design door in the top nav — Design Studio (the canonical /design surface).
-              The older Konva canvas at /facilitator (which still hosts the AI map producer) stays
-              reachable via the burger menu, so nothing is lost. Design + role switcher are
-              desktop-only power-user nav; on a phone reach them via the home hub (tap the logo). */}
+          {/* ONE design door — Design Studio (canonical /design surface; Zones + the AI suggest
+              live here). Now visible ON MOBILE too: farmers on phones could not find the zones
+              because this was desktop-only. The older Konva canvas at /facilitator (still hosts
+              the AI producer) stays reachable via the burger menu; role switcher stays desktop-only. */}
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
+            className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
           >
             <span aria-hidden>🎨</span> <span>Design Studio</span>

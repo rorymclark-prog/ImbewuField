@@ -102,7 +102,7 @@ Anchor every zone at a REAL feature you can see in the image. Keep rationales un
     try {
       msg = await client.messages.create(
         {
-          model: 'claude-sonnet-4-6',
+          model: 'claude-opus-4-8', // most advanced reasoning for the spatial zone judgement
           max_tokens: 1500,
           messages: [
             {
