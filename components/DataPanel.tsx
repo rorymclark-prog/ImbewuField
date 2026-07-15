@@ -491,7 +491,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
             {data.bru && (
               <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: placeName ? '#94876F' : '#5C5040' }}>
-                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.map}mm/yr, {data.bru.tmean}°C
+                {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
+                    single measured figure; showing BRU's zone-average mm/yr too reads as a second,
+                    competing rainfall number for the same site. */}
+                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}°C avg
               </div>
             )}
             <div className="font-mono mt-1" style={{ fontSize: 11, color: '#94876F' }}>

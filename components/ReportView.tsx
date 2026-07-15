@@ -693,8 +693,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {d.bru && (
+                // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
+                // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
+                // here reads as a second, conflicting rainfall claim for a non-expert reader.
                 <div className="mt-1 text-xs font-mono" style={{ color: '#94876F' }}>
-                  {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.map}mm/yr, {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
+                  {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
                   Zone name &ldquo;{d.bru.nearestBrg}&rdquo; is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.
                 </div>
               )}
