@@ -104,6 +104,14 @@
         { "fieldPath": "for_uid", "order": "ASCENDING" },
         { "fieldPath": "replied_at", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "board_posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": [

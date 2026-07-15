@@ -15,6 +15,16 @@ service cloud.firestore {
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
     function sameOrg(d)    { return isStaff() && d.org_id == myOrg(); }
+    // Backend kill switch for the community layer — evaluated ONLY inside the
+    // community_* match blocks below, so it never adds a read to unrelated
+    // collections. Doc absent or enabled != true => every community read/write
+    // is denied here regardless of the client env flag (NEXT_PUBLIC_COMMUNITY_ENABLED).
+    // Toggle by writing { enabled: true|false } to app_config/community via the
+    // Firebase console or an Admin-SDK script (this doc has no client-facing rule).
+    function communityOn() {
+      return exists(/databases/$(database)/documents/app_config/community)
+        && get(/databases/$(database)/documents/app_config/community).data.enabled == true;
+    }
 
     match /profiles/{uid} {
       allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
@@ -150,6 +160,59 @@ service cloud.firestore {
         && request.resource.data.code is string
         && request.resource.data.code.size() == 6
         && request.resource.data.geojson is map;
+      allow update, delete: if false;
+    }
+
+    // ─── Community layer (opt-in profiles, trade board, 1:1 messaging) ──────
+    // All additive/new collections behind the NEXT_PUBLIC_COMMUNITY_ENABLED
+    // kill switch on the client — these rules are the backstop regardless.
+    // Deliberately separate from /profiles: nothing here ever loosens the
+    // existing profiles/gardens/logs isolation above.
+
+    match /community_profiles/{uid} {
+      // Doc existing == the farmer opted in. Only public-safe, farmer-typed
+      // fields are ever written here (coarse lat/lon computed client-side).
+      allow read:   if communityOn() && signedIn();
+      allow create, update: if communityOn() && signedIn() && uid == request.auth.uid
+        && request.resource.data.uid == uid;
+      allow delete: if communityOn() && signedIn() && uid == request.auth.uid;
+    }
+
+    match /board_posts/{id} {
+      allow read:   if communityOn() && signedIn();
+      allow create: if communityOn() && signedIn() && request.resource.data.owner_id == request.auth.uid;
+      // owner_id is immutable on update — a farmer can edit their own post but
+      // can never reassign authorship to another farmer's uid.
+      allow update: if communityOn() && signedIn() && resource.data.owner_id == request.auth.uid
+        && request.resource.data.owner_id == resource.data.owner_id;
+      allow delete: if communityOn() && signedIn() && resource.data.owner_id == request.auth.uid;
+    }
+
+    match /message_threads/{threadId} {
+      allow read:   if communityOn() && signedIn() && request.auth.uid in resource.data.participants;
+      allow create: if communityOn() && signedIn() && request.auth.uid in request.resource.data.participants
+        && request.resource.data.participants.size() == 2;
+      // Membership AND participant_names are immutable after creation — only
+      // last_message/last_message_at may change (set when a message is sent).
+      // Otherwise either participant could rewrite the other's denormalised
+      // display name or forge the message preview.
+      allow update: if communityOn() && signedIn() && request.auth.uid in resource.data.participants
+        && request.resource.data.participants == resource.data.participants
+        && request.resource.data.participant_names == resource.data.participant_names;
+
+      match /messages/{msgId} {
+        allow read:   if communityOn() && signedIn() && request.auth.uid in
+          get(/databases/$(database)/documents/message_threads/$(threadId)).data.participants;
+        allow create: if communityOn() && signedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/message_threads/$(threadId)).data.participants
+          && request.resource.data.sender_id == request.auth.uid;
+        allow update, delete: if false; // messages are immutable, no edit/unsend in v1
+      }
+    }
+
+    match /community_reports/{id} {
+      allow create: if communityOn() && signedIn() && request.resource.data.reporter_id == request.auth.uid;
+      allow read:   if communityOn() && signedIn() && myRole() == 'admin';
       allow update, delete: if false;
     }
   }

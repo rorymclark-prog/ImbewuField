@@ -81,3 +81,68 @@ export type SurveyQType = 'yesno' | 'choice' | 'text';
 export interface SurveyQuestion { id: string; text: string; type: SurveyQType; options: string[] }
 export interface Survey { id: string; org_name: string; title: string; questions: SurveyQuestion[]; created_by: string; created_at: string }
 export interface SurveyResponse { id: string; survey_id: string; profile_id: string; answers: Record<string, string>; created_at: string }
+
+// ─── Community layer (opt-in profiles, trade board, 1:1 messaging) ──────────
+// All additive/new — none of this touches the Profile/Garden model above.
+// Deliberately a separate doc from Profile.showOnMap/mapLat/mapLon, which
+// stays org-internal and precise; this is cross-org, opt-in, and coarse.
+
+export interface CommunityProfile {
+  uid: string;
+  display_name: string;
+  area_text: string; // freeform town/district — never an exact address
+  bio: string;
+  crops: string[];
+  photos: string[]; // up to 4, via the existing uploadPhoto('community') pipeline
+  show_on_map: boolean;
+  coarse_lat: number | null; // rounded/jittered to ~1km, computed client-side before write
+  coarse_lon: number | null;
+  updated_at?: unknown;
+}
+
+export type BoardCategory = 'seed' | 'seedlings' | 'produce' | 'tools' | 'other';
+export type BoardKind = 'have' | 'want' | 'free';
+export type BoardStatus = 'active' | 'closed';
+
+export interface BoardPost {
+  id: string;
+  owner_id: string;
+  owner_name: string; // denormalised at post time
+  category: BoardCategory;
+  kind: BoardKind;
+  description: string;
+  photo_url?: string | null;
+  area_text: string;
+  coarse_lat?: number | null;
+  coarse_lon?: number | null;
+  status: BoardStatus;
+  created_at?: unknown;
+}
+
+export interface MessageThread {
+  id: string;
+  participants: string[]; // exactly 2 uids
+  participant_names: Record<string, string>;
+  last_message: string;
+  last_message_at?: unknown;
+  created_at?: unknown;
+}
+
+export interface ThreadMessage {
+  id: string;
+  sender_id: string;
+  body: string;
+  created_at?: unknown;
+}
+
+export type CommunityReportTargetType = 'profile' | 'board_post' | 'message';
+
+export interface CommunityReport {
+  id: string;
+  reporter_id: string;
+  target_type: CommunityReportTargetType;
+  target_id: string;
+  target_owner_id: string;
+  reason: string;
+  created_at?: unknown;
+}

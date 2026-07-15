@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Sprout, Palette,
+  Camera, Home, User, Users, BarChart3, Building2, Sprout, Palette, Handshake,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { communityEnabled } from '@/lib/community/flag';
 
 interface NavDrawerProps {
   open: boolean;
@@ -19,16 +20,20 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
   const { t } = useLanguage();
 
+  const mainItems = [
+    { href: '/home',    Icon: Home,          label: t('tabHome') },
+    { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
+    { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
+    { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
+    { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
+    // Invisible when the master kill switch is off — no entry point, no reads.
+    ...(communityEnabled() ? [{ href: '/community', Icon: Handshake, label: t('navCommunity') }] : []),
+  ];
+
   const NAV_SECTIONS = [
     {
       label: t('navSectionMain'),
-      items: [
-        { href: '/home',    Icon: Home,          label: t('tabHome') },
-        { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
-        { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
-        { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
-        { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
-      ],
+      items: mainItems,
     },
     {
       label: t('navSectionFarmTools'),
