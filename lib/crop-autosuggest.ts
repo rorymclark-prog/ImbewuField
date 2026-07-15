@@ -252,6 +252,178 @@ interface SuccessionOutcome {
 }
 
 /**
+ * True when committing (sowMonth, daysToHarvest, fraction) on this bed would
+ * NOT strand any currently-empty month on the same bed — i.e. every empty
+ * calendar month outside the placement's own span that some crop could still
+ * be sown to cover (at even the smallest bed fraction) remains coverable
+ * after the placement. This is the anti-self-inflicted-saturation invariant:
+ * a placement is judged by what it forecloses later in the bed's calendar,
+ * not just whether its own target months currently fit. Deliberately scoped
+ * to EMPTY months only: an empty month is a whole bed-month of lost growing
+ * space (and the trigger for "this bed rests" copy), so it always outweighs
+ * whatever single placement would have walled it off — whereas guarding
+ * partially-committed months' remaining headroom the same way proved
+ * over-protective in the 36-scenario sweep (it refuses every fill that
+ * cashes in an inherent trade-off, and the hoarded headroom then goes
+ * unused). Checked against both the farmer's pool AND the full catalog so
+ * the final reportStillRestingBeds copy ("widen your selection" vs "real
+ * seasonal limit") stays honest — a placement must never manufacture a
+ * blank month that either set could have legitimately filled.
+ */
+type PlacementGuard = (bedId: string, sowMonth: number, daysToHarvest: number, fraction: number) => boolean;
+
+interface PlacementOracle {
+  guard: PlacementGuard;
+  /**
+   * Like `guard`, but additionally protects the REMAINING headroom of
+   * partially-committed months (any month that could still take at least the
+   * smallest preset share). Used by the breadth scheduler only: its
+   * placements are plentiful and flexible (a vetoed batch simply tries the
+   * crop's next candidate month, and the gap-fill passes reclaim whatever
+   * space it leaves), so it can afford never to be the one that walls off a
+   * neighbour's leftover share. The gap-fill passes must NOT use this strict
+   * form — verified by sweep: hard-vetoing last-resort fills hoards headroom
+   * that then goes unused and manufactures brand-new blank months.
+   */
+  strictGuard: PlacementGuard;
+  /**
+   * How much single-fill plantable capacity (bed-month fraction, summed over
+   * months outside the placement's own span) this placement would destroy —
+   * for each such month, the largest preset share some pool crop could still
+   * be sown to add there, before vs after. The quantitative companion to
+   * `guard`: guard keeps empty months binarily fillable, this prices the
+   * capacity a placement forecloses on partially-committed months so
+   * fillRemainingGaps can weigh it against the coverage the placement adds.
+   */
+  capacityLossOf: (bedId: string, sowMonth: number, daysToHarvest: number, fraction: number) => number;
+}
+
+function makePlacementOracle(
+  pool: CropDef[],
+  pattern: RainPattern,
+  nowMonth: number,
+  occupancy: Occupancy,
+  allowVinesInBeds: boolean,
+): PlacementOracle {
+  const smallestFraction = BED_FRACTION_PRESETS[BED_FRACTION_PRESETS.length - 1];
+  // Candidate universe must match what fillRemainingGaps/backfillWinterGaps
+  // can ACTUALLY place (their eligiblePool) — space-hungry vines are never
+  // placed in a shared bed unless allowVinesInBeds, so a guard that still
+  // reserves headroom "for" them vetoes real fills to protect a placement
+  // that can never happen.
+  const eligiblePool = allowVinesInBeds ? pool : pool.filter((c) => !isSpaceHungry(c));
+  const eligibleCrops = allowVinesInBeds ? CROPS : CROPS.filter((c) => !isSpaceHungry(c));
+  const candidateSets = [eligiblePool, eligibleCrops].map((crops) => {
+    const byMonth = new Map<number, { sowMonth: number; days: number }[]>();
+    for (let m = 1; m <= 12; m++) {
+      byMonth.set(m, reachingCandidates(crops, pattern, nowMonth, m, GAP_FILL_HORIZON_MONTHS)
+        .map((c) => ({ sowMonth: c.sowMonth, days: c.crop.daysToHarvest })));
+    }
+    return byMonth;
+  });
+  const poolCandidates = candidateSets[0];
+
+  const makeGuard = (protectPartialHeadroom: boolean): PlacementGuard => (bedId, sowMonth, daysToHarvest, fraction) => {
+    const span = new Set(occupiedMonths(sowMonth, daysToHarvest));
+    // Strict form also refuses to leave sub-preset "dust" on the placement's
+    // OWN span months (e.g. a 1/3 stagger batch landing on a half-committed
+    // month leaves 1/6 — no preset share fits that ever again). The span is
+    // otherwise exempt from stranding checks, so this is the only place that
+    // fragmentation can be caught.
+    if (protectPartialHeadroom) {
+      for (const mo of span) {
+        const left = 1 - (occupancy.fractionAt(bedId, mo) + fraction);
+        if (left > 0.0001 && left < smallestFraction - 0.0001) return false;
+      }
+    }
+    const canCover = (cands: { sowMonth: number; days: number }[], withPlacement: boolean): boolean =>
+      cands.some((c) => occupiedMonths(c.sowMonth, c.days).every((mo) =>
+        occupancy.fractionAt(bedId, mo) + (withPlacement && span.has(mo) ? fraction : 0) + smallestFraction <= 1.0001));
+    for (let m = 1; m <= 12; m++) {
+      if (span.has(m)) continue;
+      const committed = occupancy.fractionAt(bedId, m);
+      if (protectPartialHeadroom ? committed + smallestFraction > 1.0001 : committed > 0) continue;
+      for (const byMonth of candidateSets) {
+        const cands = byMonth.get(m)!;
+        if (cands.length && canCover(cands, false) && !canCover(cands, true)) return false;
+      }
+    }
+    return true;
+  };
+  const guard = makeGuard(false);
+  const strictGuard = makeGuard(true);
+
+  const capacityLossOf = (bedId: string, sowMonth: number, daysToHarvest: number, fraction: number): number => {
+    const span = new Set(occupiedMonths(sowMonth, daysToHarvest));
+    const achievable = (m: number, withPlacement: boolean): number => {
+      const cands = poolCandidates.get(m)!;
+      for (const f of BED_FRACTION_PRESETS) {
+        if (cands.some((c) => occupiedMonths(c.sowMonth, c.days).every((mo) =>
+          occupancy.fractionAt(bedId, mo) + (withPlacement && span.has(mo) ? fraction : 0) + f <= 1.0001))) return f;
+      }
+      return 0;
+    };
+    let loss = 0;
+    for (let m = 1; m <= 12; m++) {
+      if (span.has(m)) continue;
+      if (occupancy.fractionAt(bedId, m) + smallestFraction > 1.0001) continue;
+      const before = achievable(m, false);
+      if (before === 0) continue;
+      loss += before - achievable(m, true);
+    }
+    return loss;
+  };
+
+  return { guard, strictGuard, capacityLossOf };
+}
+
+/**
+ * Try to place ONE succession batch of `crop` at `sowMonth`, round-robining
+ * across `bedsForCrop` via the shared BedRotation cursor. Extracted out of
+ * planSuccession (which now just calls this once per sow month it wants to
+ * try) so runFamilyBreadthFirst's pass-based scheduler can also place a
+ * single batch at a time, interleaved with every other crop's own turns,
+ * without duplicating the bed-search/commit logic. `rotation.nextIndex` is
+ * re-derived fresh from the shared cursor on every call rather than threaded
+ * through as a local variable — since `recordUse` updates that same shared
+ * cursor on every successful placement (here or in any other caller), this
+ * produces byte-identical bed selection to a hand-tracked local cursor, just
+ * without needing one.
+ */
+function placeOneBatch(
+  crop: CropDef,
+  sowMonth: number,
+  bedsForCrop: PlanBed[],
+  occupancy: Occupancy,
+  fraction: number,
+  rotation: BedRotation,
+  conflictedBedIds: Set<string>,
+  guard?: PlacementGuard,
+): Planting | null {
+  const group = foodGroupOf(crop);
+  const bedCursor = rotation.nextIndex(bedsForCrop);
+  // Two passes: first try only beds that don't repeat this food group (real
+  // rotation), then fall back to any bed that fits — rotation is a
+  // preference, never a reason to leave a bed unplanted.
+  for (let pass = 0; pass < 2; pass++) {
+    for (let i = 0; i < bedsForCrop.length; i++) {
+      const bed = bedsForCrop[(bedCursor + i) % bedsForCrop.length];
+      if (pass === 0 && conflictedBedIds.has(bed.id)) continue;
+      if (occupancy.fits(bed.id, sowMonth, crop.daysToHarvest, fraction)) {
+        if (guard && !guard(bed.id, sowMonth, crop.daysToHarvest, fraction)) continue;
+        occupancy.add(bed.id, sowMonth, crop.daysToHarvest, fraction);
+        rotation.recordUse(bed.id, group);
+        return {
+          id: genId(), bedId: bed.id, cropKey: crop.key, sowMonth,
+          areaFraction: fraction < 1 ? fraction : undefined,
+        };
+      }
+    }
+  }
+  return null;
+}
+
+/**
  * Stagger one crop's sowings across consecutive months within its NEAREST
  * valid window (never across a disjoint gap), round-robining across the
  * beds it's allowed to use. The occupancy ledger naturally caps how many
@@ -270,6 +442,7 @@ function planSuccession(
   goal: GardenGoal,
   fractionIfShared: number,
   rotation: BedRotation,
+  guard?: PlacementGuard,
 ): SuccessionOutcome {
   const clusters = clusterSowMonths(crop.sowMonths[pattern]);
   if (!clusters.length || !bedsForCrop.length) return { plantings: [], status: 'NO_WINDOW' };
@@ -318,40 +491,37 @@ function planSuccession(
     ? (numBatches > 1 && !isSpaceHungry(crop) ? closestPreset(1 / Math.min(numBatches, STAGGER_SLICES)) : 1)
     : fractionIfShared;
 
-  const plantings: Planting[] = [];
-  let bedCursor = rotation.nextIndex(bedsForCrop);
   const group = foodGroupOf(crop);
   // Snapshot taken BEFORE this call places anything — see BedRotation's own
   // doc comment for why this must not see this call's own later placements.
   const conflictedBedIds = new Set(bedsForCrop.filter((b) => rotation.conflicts(b.id, group)).map((b) => b.id));
+  const plantings: Planting[] = [];
   for (const sowMonth of sowMonthsToTry) {
-    let placed = false;
-    // Two passes: first try only beds that don't repeat this food group
-    // (real rotation), then fall back to any bed that fits — rotation is a
-    // preference, never a reason to leave a bed unplanted.
-    for (let pass = 0; pass < 2 && !placed; pass++) {
-      for (let i = 0; i < bedsForCrop.length; i++) {
-        const bed = bedsForCrop[(bedCursor + i) % bedsForCrop.length];
-        if (pass === 0 && conflictedBedIds.has(bed.id)) continue;
-        if (occupancy.fits(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction)) {
-          occupancy.add(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction);
-          plantings.push({
-            id: genId(), bedId: bed.id, cropKey: crop.key, sowMonth,
-            areaFraction: perBatchFraction < 1 ? perBatchFraction : undefined,
-          });
-          rotation.recordUse(bed.id, group);
-          bedCursor = (bedCursor + i + 1) % bedsForCrop.length;
-          placed = true;
-          break;
-        }
-      }
-    }
+    const planting = placeOneBatch(crop, sowMonth, bedsForCrop, occupancy, perBatchFraction, rotation, conflictedBedIds, guard);
+    if (planting) plantings.push(planting);
   }
   return { plantings, status: plantings.length < sowMonthsToTry.length ? 'PARTIAL_FIT' : 'OK' };
 }
 
 function commercialScore(crop: CropDef): number {
   return crop.yieldKgPerM2 * (365 / crop.daysToHarvest);
+}
+
+/** Per-crop cursor for runFamilyBreadthFirst's pass-based scheduler below. */
+interface CropTurnState {
+  // Candidate sow months still worth attempting (nearest cluster, from the
+  // nearest reachable entry forward), in calendar order. A month whose
+  // occupancy.fits failed on every bed is removed permanently — Occupancy
+  // never frees capacity once granted, so retrying it can never succeed —
+  // but a month blocked only by the stranding guard is KEPT: the guard is
+  // not monotone (once the month it was protecting gets filled by someone
+  // else, the same placement becomes harmless), so a later pass may
+  // legitimately succeed there.
+  months: number[];
+  cap: number;
+  batchesPlaced: number;
+  done: boolean;
+  conflictedBedIds: Set<string>;
 }
 
 /**
@@ -361,6 +531,27 @@ function commercialScore(crop: CropDef): number {
  * regardless of which of the two callers it came from; hybrid's own
  * "sell the surplus" behaviour is layered on afterward by the caller using
  * whatever beds this leaves untouched — see autoSuggestPlan's hybrid branch.
+ *
+ * Untangles two things HEAD's queue.shift()-per-round conflated into one
+ * repeatBudget knob:
+ *  - BREADTH (which crops ever get tried): every crop in every active food
+ *    group, always, regardless of household size — no slice/cap on the
+ *    sorted-by-yield candidate list. This alone is what makes a 5-6-member
+ *    group's lower-yield tail (lettuce, broccoli, potato...) reachable.
+ *  - DEPTH (how many succession batches a crop accumulates): repeatBudget
+ *    now bounds total PASSES over the full crop list (totalPasses =
+ *    1 + repeatBudget), where each pass gives every still-active crop
+ *    exactly one more batch — never its whole succession cap in one go.
+ *    Every crop/group takes its one-batch turn before any crop takes its
+ *    second, so no single crop or group can front-load several consecutive
+ *    months of shared bed capacity before its neighbours get first refusal
+ *    on the intervening calendar.
+ *
+ * The single-bed (wholeBed) case is structurally different — one bed shared
+ * by whole-bed claims, not fraction-shared — and keeps calling planSuccession
+ * with its untouched STAGGER_SLICES multi-batch-per-call logic; what changes
+ * there is only the SET of crops offered a turn (same breadth fix) plus the
+ * per-batch stranding guard.
  */
 function runFamilyBreadthFirst(
   pool: CropDef[],
@@ -372,38 +563,101 @@ function runFamilyBreadthFirst(
   nowMonth: number,
   rhythm: HarvestRhythm,
   rotation: BedRotation,
+  guard: PlacementGuard,
 ): { plantings: Planting[]; laterThisYear: { cropKey: string; nextWindowMonth: number }[] } {
   const plantings: Planting[] = [];
   const laterThisYear: { cropKey: string; nextWindowMonth: number }[] = [];
   if (!sharedBeds.length) return { plantings, laterThisYear };
 
-  const repeatBudget = householdSize === 'large' ? 3 : householdSize === 'medium' ? 2 : 1;
-  const sharedFraction = sharedBeds.length <= 1 ? 1 : sharedBeds.length === 2 ? 0.5 : closestPreset(1 / 3);
   const activeGroups = GROUP_PRIORITY.filter((g) => !selectedGroups || selectedGroups.has(g));
-  const queues = new Map<FoodGroup, CropDef[]>(
+  const groupCrops = new Map<FoodGroup, CropDef[]>(
     activeGroups.map((g) => [g, pool.filter((c) => foodGroupOf(c) === g && !isSpaceHungry(c)).sort((a, b) => b.yieldKgPerM2 - a.yieldKgPerM2)]),
   );
 
-  let round = 0;
-  // Loops up to repeatBudget rounds as long as SOME queue still has an
-  // untried crop — a round where every group's front candidate happens to
-  // fail (out of season etc.) must not end the loop early and strand
-  // better-ranked candidates sitting right behind them in the same queues.
-  while (round <= repeatBudget) {
-    let anyQueueHasItems = false;
+  if (sharedBeds.length === 1) {
     for (const g of activeGroups) {
-      const queue = queues.get(g)!;
-      if (!queue.length) continue;
-      anyQueueHasItems = true;
-      const crop = queue.shift()!;
-      const wholeBed = sharedBeds.length === 1;
-      const outcome = planSuccession(crop, pattern, sharedBeds, occupancy, nowMonth, wholeBed, rhythm, 'family', sharedFraction, rotation);
-      if (outcome.status === 'NO_WINDOW') continue;
-      if (outcome.status === 'DELAYED_START') { laterThisYear.push({ cropKey: crop.key, nextWindowMonth: outcome.nextWindowMonth! }); continue; }
-      plantings.push(...outcome.plantings);
+      for (const crop of groupCrops.get(g)!) {
+        // Same untouched whole-bed STAGGER_SLICES mechanics as always — no
+        // guard here (requirement: single-bed behaves exactly as HEAD, which
+        // never vetoed a stagger batch to protect a neighbour's headroom).
+        const outcome = planSuccession(crop, pattern, sharedBeds, occupancy, nowMonth, true, rhythm, 'family', 1, rotation);
+        if (outcome.status === 'NO_WINDOW') continue;
+        if (outcome.status === 'DELAYED_START') { laterThisYear.push({ cropKey: crop.key, nextWindowMonth: outcome.nextWindowMonth! }); continue; }
+        plantings.push(...outcome.plantings);
+      }
     }
-    if (!anyQueueHasItems) break;
-    round += 1;
+    return { plantings, laterThisYear };
+  }
+
+  const repeatBudget = householdSize === 'large' ? 3 : householdSize === 'medium' ? 2 : 1;
+  const totalPasses = 1 + repeatBudget;
+  const sharedFraction = closestPreset(1 / sharedBeds.length);
+
+  // One state per crop, all initialized up front (before any turn is taken)
+  // so that a crop's rotation-conflict snapshot is always taken relative to
+  // the SAME baseline rotation state, before this function's own placements
+  // start altering it — computing it lazily on each crop's first turn would
+  // otherwise let an earlier group's already-committed choices leak into a
+  // later group's snapshot, and worse, recomputing it fresh on a crop's OWN
+  // later passes would misread that crop's own earlier batch (which just
+  // recorded its own group on the bed it used) as a rotation conflict
+  // against itself.
+  const states = new Map<string, CropTurnState>();
+  for (const g of activeGroups) {
+    for (const crop of groupCrops.get(g)!) {
+      const clusters = clusterSowMonths(crop.sowMonths[pattern]);
+      if (!clusters.length) continue;
+      let nearestCluster = clusters[0];
+      let nearest = nearestEntry(nowMonth, clusters[0].months);
+      for (const c of clusters.slice(1)) {
+        const e = nearestEntry(nowMonth, c.months);
+        if (e.gap < nearest.gap) { nearest = e; nearestCluster = c; }
+      }
+      if (nearest.gap > DELAYED_START_THRESHOLD_MONTHS) {
+        laterThisYear.push({ cropKey: crop.key, nextWindowMonth: nearest.month });
+        continue;
+      }
+      let cap = capForCrop(crop);
+      if (rhythm === 'few-big') cap = 1;
+      const startIdx = nearestCluster.months.indexOf(nearest.month);
+      const conflictedBedIds = new Set(sharedBeds.filter((b) => rotation.conflicts(b.id, g)).map((b) => b.id));
+      states.set(crop.key, { months: nearestCluster.months.slice(startIdx), cap, batchesPlaced: 0, done: false, conflictedBedIds });
+    }
+  }
+
+  for (let pass = 0; pass < totalPasses; pass++) {
+    let anyPlaced = false;
+    for (const g of activeGroups) {
+      for (const crop of groupCrops.get(g)!) {
+        const state = states.get(crop.key);
+        if (!state || state.done) continue;
+        // One batch per turn, but a turn may scan PAST months that can't
+        // take it — burning the whole turn on the first full month (an
+        // earlier version did) permanently under-places every crop whose
+        // nearest window is contested, which is most of them.
+        let guardTripped = false;
+        const recordingGuard: PlacementGuard = (...args) => {
+          const ok = guard(...args);
+          if (!ok) guardTripped = true;
+          return ok;
+        };
+        for (let i = 0; i < state.months.length; ) {
+          guardTripped = false;
+          const planting = placeOneBatch(crop, state.months[i], sharedBeds, occupancy, sharedFraction, rotation, state.conflictedBedIds, recordingGuard);
+          if (planting) {
+            plantings.push(planting);
+            anyPlaced = true;
+            state.batchesPlaced += 1;
+            state.months.splice(i, 1);
+            break;
+          }
+          if (guardTripped) i += 1; // see CropTurnState.months — may succeed on a later pass
+          else state.months.splice(i, 1);
+        }
+        if (!state.months.length || state.batchesPlaced >= state.cap) state.done = true;
+      }
+    }
+    if (!anyPlaced) break;
   }
   return { plantings, laterThisYear };
 }
@@ -507,6 +761,7 @@ function backfillWinterGaps(
   pattern: RainPattern,
   nowMonth: number,
   rotation: BedRotation,
+  guard: PlacementGuard,
 ): { plantings: Planting[]; notes: string[]; laterThisYear: { cropKey: string; nextWindowMonth: number }[] } {
   const plantings: Planting[] = [];
   const notes: string[] = [];
@@ -519,6 +774,7 @@ function backfillWinterGaps(
       .map((crop) => ({ crop, sowMonth: nearestWinterCoveringSowMonth(crop, pattern, nowMonth) }))
       .filter((x): x is { crop: CropDef; sowMonth: number } => x.sowMonth !== null)
       .filter((x) => occupancy.fits(bed.id, x.sowMonth, x.crop.daysToHarvest, 1))
+      .filter((x) => guard(bed.id, x.sowMonth, x.crop.daysToHarvest, 1))
       .sort((a, b) => commercialScore(b.crop) - commercialScore(a.crop));
 
     if (!candidates.length) {
@@ -549,11 +805,12 @@ function backfillWinterGaps(
 
 // Safety cap on how many times fillRemainingGaps' per-bed loop can iterate —
 // not a real planning limit, just a termination backstop. Each iteration
-// either fills one calendar month (permanently removing it from the "empty"
-// search) or marks one as stuck (permanently removing it too, see below), and
-// there are only 12 calendar months, so the loop is naturally bounded by 12;
-// this is a little headroom above that for safety.
-const MAX_GAP_FILLS_PER_BED = 16;
+// either commits at least the smallest preset fraction (1/4) over a span of
+// at least 3 months (so at most 12×1.0 / (3×0.25) = 16 successful fills can
+// ever fit in one bed's calendar) or permanently marks one of the 12 months
+// as stuck — so the loop is naturally bounded by 16 + 12 = 28; this is a
+// little headroom above that for safety.
+const MAX_GAP_FILLS_PER_BED = 32;
 
 // The rolling display already shows a full 12 months ahead (nowMonth through
 // nowMonth+11) — every one of those columns is already "committed to" just
@@ -565,6 +822,12 @@ const MAX_GAP_FILLS_PER_BED = 16;
 // this pass exists to avoid a visibly blank column in a view that's already
 // showing the whole year, a different job with a different honest horizon.
 const GAP_FILL_HORIZON_MONTHS = 11;
+
+// fillRemainingGaps runs the (relatively expensive) placement-oracle checks
+// on at most this many of its gain-ranked candidates per gap — a cost bound,
+// not a quality knob: past the first dozen, candidates differ mostly in crop
+// identity, not in the occupancy geometry the oracle is pricing.
+const MAX_NET_RANKED_CANDIDATES = 12;
 
 /**
  * Every (crop, sowMonth) pairing from `crops` that is BOTH reachable from
@@ -610,17 +873,18 @@ function monthRangeLabel(months: number[]): string {
 
 /**
  * Runs after every other allocation pass (including backfillWinterGaps) over
- * the FULL bed list. Where those earlier passes cap how many DISTINCT crops
- * a food group contributes (runFamilyBreadthFirst's repeatBudget — a
- * deliberate "variety, don't let one group hog every bed" limit) or only
- * bridge the exact May-Aug frost window with a single all-in-one crop
- * (backfillWinterGaps), this pass has no such cap: it keeps adding plantings
- * to any bed with a genuinely idle month ANYWHERE in the rolling 12-month
- * window, for as long as something in the pool can still reach it.
+ * the FULL bed list. Where those earlier passes cap how many succession
+ * batches each crop accumulates (runFamilyBreadthFirst's repeatBudget-bounded
+ * passes — a deliberate household-size throttle) or only bridge the exact
+ * May-Aug frost window with a single all-in-one crop (backfillWinterGaps),
+ * this pass has no such cap: it keeps adding plantings to any bed with a
+ * genuinely idle (or partially-idle) month ANYWHERE in the rolling 12-month
+ * window, for as long as something in the pool can still reach it and fit
+ * the remaining headroom.
  *
  * This is the fix for "half the year sits empty" in a climate (e.g. Durban's
  * mild-frost, summer-rainfall pattern) that actually has a sowable crop for
- * nearly every month — the earlier passes' diversity cap was never meant to
+ * nearly every month — the earlier passes' throttle was never meant to
  * also cap total YEAR coverage, but it had that side effect. Space-hungry
  * vines are excluded unless allowVinesInBeds, matching the same policy the
  * space-hungry pre-pass above already applies to shared beds.
@@ -639,6 +903,7 @@ function fillRemainingGaps(
   nowMonth: number,
   rotation: BedRotation,
   allowVinesInBeds: boolean,
+  oracle: PlacementOracle,
 ): { plantings: Planting[] } {
   const plantings: Planting[] = [];
   const eligiblePool = allowVinesInBeds ? pool : pool.filter((c) => !isSpaceHungry(c));
@@ -647,6 +912,7 @@ function fillRemainingGaps(
   // left to offer (a real farm can end up growing one thing all year
   // otherwise, in a small-garden/narrow-selection case).
   const lastCropByBed = new Map<string, string>();
+  const smallestFraction = BED_FRACTION_PRESETS[BED_FRACTION_PRESETS.length - 1];
 
   for (const bed of beds) {
     // Months this bed's search has already tried and failed to fill — without
@@ -654,10 +920,9 @@ function fillRemainingGaps(
     // bed, silently skipping over other, genuinely-fillable months later in
     // the rolling window (confirmed live: a bed can have its nearest gap
     // blocked by an occupancy collision while a later gap is perfectly
-    // fillable). Each of the 12 calendar months can only ever be found as a
-    // gap once — it's either filled (occupancy becomes non-zero, permanently
-    // leaving the search) or marked stuck here — so this also guarantees
-    // termination without relying on fillCount alone.
+    // fillable). A month leaves the search either by running out of headroom
+    // (occupancy only ever grows) or by being marked stuck here — so this
+    // also guarantees termination without relying on fillCount alone.
     const stuckMonths = new Set<number>();
 
     for (let fillCount = 0; fillCount < MAX_GAP_FILLS_PER_BED; fillCount++) {
@@ -665,25 +930,74 @@ function fillRemainingGaps(
       for (let i = 0; i < 12; i++) {
         const m = wrapMonth(nowMonth + i);
         if (stuckMonths.has(m)) continue;
-        if (occupancy.fractionAt(bed.id, m) === 0) { gapMonth = m; break; }
+        // Not just fully-EMPTY months: a month left at e.g. 1/3 committed by
+        // the fraction-shared family pass still has real growing space, and
+        // leaving it partial is exactly the "coverage quietly lost to
+        // sharing" failure mode — top it up as long as at least the smallest
+        // preset share still fits.
+        if (occupancy.fractionAt(bed.id, m) + smallestFraction <= 1.0001) { gapMonth = m; break; }
       }
-      if (gapMonth === null) break; // every still-empty month already tried, or bed is fully covered
+      if (gapMonth === null) break; // every month with headroom already tried, or bed is fully covered
 
       const reaching = reachingCandidates(eligiblePool, pattern, nowMonth, gapMonth, GAP_FILL_HORIZON_MONTHS);
       let chosen: { crop: CropDef; sowMonth: number; fraction: number } | null = null;
 
-      for (const fraction of BED_FRACTION_PRESETS) {
+      // "Biggest share first" alone manufactures dead slivers: topping a
+      // 1/3-committed month with 1/2 leaves 1/6 — below the smallest preset,
+      // so no future fill can ever use it. Order the ladder to leave no such
+      // dust at the gap month: exact fills first, then shares whose remainder
+      // is still at least the smallest preset (re-toppable later), and only
+      // then dust-leaving shares — largest first within each class.
+      const headroom = 1 - occupancy.fractionAt(bed.id, gapMonth);
+      const dustClass = (f: number): number => {
+        const dust = headroom - f;
+        return dust < 0.0001 ? 0 : dust >= smallestFraction - 0.0001 ? 1 : 2;
+      };
+      const ladder = BED_FRACTION_PRESETS
+        .filter((f) => f <= headroom + 0.0001)
+        .sort((a, b) => (dustClass(a) - dustClass(b)) || (b - a));
+
+      for (const fraction of ladder) {
+        // How much genuinely-new coverage a candidate adds — its fraction
+        // clipped to each span month's remaining headroom, summed. Ranking by
+        // this (rather than by nearest-start alone) steers a fill whose span
+        // could extend into a NEIGHBOURING month's leftover headroom to
+        // actually do so, instead of walling that headroom off behind a
+        // saturated month — the main way fraction-shared plans quietly lose
+        // packing density with no visible blank to flag.
+        const gainOf = (c: { crop: CropDef; sowMonth: number }): number =>
+          occupiedMonths(c.sowMonth, c.crop.daysToHarvest)
+            .reduce((s, mo) => s + Math.max(0, Math.min(fraction, 1 - occupancy.fractionAt(bed.id, mo))), 0);
         const fitting = reaching
           .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop.daysToHarvest, fraction))
-          .sort((a, b) => (a.startGap - b.startGap) || (commercialScore(b.crop) - commercialScore(a.crop)));
+          .map((c) => ({ ...c, gain: gainOf(c) }))
+          .sort((a, b) => (b.gain - a.gain) || (a.startGap - b.startGap) || (commercialScore(b.crop) - commercialScore(a.crop)));
         if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
         const nonConflicting = fitting.filter((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop)));
         const pool2 = nonConflicting.length ? nonConflicting : fitting;
         const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
-        const pick = nonRepeat[0] ?? pool2[0];
-        chosen = { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
-        break; // biggest fraction with ANY fitting candidate wins — never shrink the share more than necessary
+        // Oracle checks run only on the top few candidates in preference
+        // order (not pre-filtered over the whole list) — they're the
+        // costliest checks here, and the gain sort already put the most
+        // valuable options first.
+        const ordered = [...nonRepeat, ...pool2.filter((c) => c.crop.key === lastCropByBed.get(bed.id))]
+          .slice(0, MAX_NET_RANKED_CANDIDATES);
+        let best: { crop: CropDef; sowMonth: number; net: number } | null = null;
+        for (const c of ordered) {
+          if (!oracle.guard(bed.id, c.sowMonth, c.crop.daysToHarvest, fraction)) continue;
+          const net = c.gain - oracle.capacityLossOf(bed.id, c.sowMonth, c.crop.daysToHarvest, fraction);
+          if (!best || net > best.net + 1e-9) best = { crop: c.crop, sowMonth: c.sowMonth, net };
+        }
+        if (!best) continue; // everything at this fraction would strand another month — try a smaller share
+        // A net-NEGATIVE top-up destroys more future plantable capacity than
+        // it adds — walk away and let a smaller share (or nothing) win. An
+        // EMPTY gap month is different: leaving it blank is the worst
+        // outcome this pass exists to prevent, so it's filled even at a
+        // capacity loss.
+        if (best.net < -1e-9 && occupancy.fractionAt(bed.id, gapMonth) > 0) continue;
+        chosen = { crop: best.crop, sowMonth: best.sowMonth, fraction };
+        break; // biggest fraction with an acceptable candidate wins — never shrink the share more than necessary
       }
 
       if (!chosen) { stuckMonths.add(gapMonth); continue; } // this month can't be filled — remember it, keep trying the bed's OTHER gaps
@@ -860,6 +1174,12 @@ export function autoSuggestPlan(
   }
   const sharedBeds = beds.filter((b) => !dedicated.has(b.id));
 
+  // One placement oracle for every non-commercial placement pass (commercial
+  // concentration is a deliberate whole-bed monocrop choice — deliberately
+  // ungated). Closes over the live occupancy ledger, so it always judges a
+  // placement against the CURRENT state of the bed's calendar.
+  const oracle = makePlacementOracle(pool, pattern, nowMonth, occupancy, answers.allowVinesInBeds);
+
   if (answers.goal === 'commercial') {
     const result = runCommercialConcentration(pool, sharedBeds, answers.focusCropCount ?? 1, pattern, occupancy, nowMonth, answers.rhythm, rotation);
     added.push(...result.plantings);
@@ -895,7 +1215,7 @@ export function autoSuggestPlan(
           notes.push('Only one bed free — kept it for feeding the family; add more beds to also set some aside for selling.');
         }
       }
-      const familyResult = runFamilyBreadthFirst(pool, familyBeds, selectedGroups, answers.householdSize, pattern, occupancy, nowMonth, answers.rhythm, rotation);
+      const familyResult = runFamilyBreadthFirst(pool, familyBeds, selectedGroups, answers.householdSize, pattern, occupancy, nowMonth, answers.rhythm, rotation, oracle.strictGuard);
       added.push(...familyResult.plantings);
       laterThisYear.push(...familyResult.laterThisYear);
     }
@@ -904,7 +1224,7 @@ export function autoSuggestPlan(
     if (!sharedBeds.length) {
       notes.push('No beds free for family crops once space-hungry vines were placed.');
     } else {
-      const familyResult = runFamilyBreadthFirst(pool, sharedBeds, selectedGroups, answers.householdSize, pattern, occupancy, nowMonth, answers.rhythm, rotation);
+      const familyResult = runFamilyBreadthFirst(pool, sharedBeds, selectedGroups, answers.householdSize, pattern, occupancy, nowMonth, answers.rhythm, rotation, oracle.strictGuard);
       added.push(...familyResult.plantings);
       laterThisYear.push(...familyResult.laterThisYear);
     }
@@ -915,7 +1235,7 @@ export function autoSuggestPlan(
   // production" ask. Comes after every other pass so it only ever fills a
   // genuinely still-empty winter gap, never displaces anything already
   // planned above.
-  const winterResult = backfillWinterGaps(pool, beds, occupancy, pattern, nowMonth, rotation);
+  const winterResult = backfillWinterGaps(pool, beds, occupancy, pattern, nowMonth, rotation, oracle.guard);
   added.push(...winterResult.plantings);
   notes.push(...winterResult.notes);
   laterThisYear.push(...winterResult.laterThisYear);
@@ -924,9 +1244,23 @@ export function autoSuggestPlan(
   // support continuous cropping" pass — see fillRemainingGaps's own doc
   // comment for why this is a separate, uncapped pass rather than just
   // raising runFamilyBreadthFirst's repeatBudget (that budget is a
-  // deliberate variety cap, not meant to also cap total year coverage).
-  const gapResult = fillRemainingGaps(pool, beds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds);
+  // deliberate household-size throttle on succession depth, not meant to
+  // also cap total year coverage).
+  const gapResult = fillRemainingGaps(pool, beds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds, oracle);
   added.push(...gapResult.plantings);
+
+  // Two REAL crops can each be the guard's only reason to protect a DIFFERENT
+  // still-empty month from the other — protecting either one unconditionally
+  // deadlocks both (each vetoes the other's only remaining path in turn), so
+  // the scarce headroom goes completely unused instead of covering at least
+  // one of them. There is no pass after this one, so once fillRemainingGaps
+  // above has taken everything the guard was willing to allow, protecting
+  // capacity for a placement that will now never happen is pure waste — mop
+  // up whatever headroom is still there (bypassing the guard, not the
+  // physical fit check) as a final, unconditional pass.
+  const permissiveOracle: PlacementOracle = { ...oracle, guard: () => true };
+  const mopUpResult = fillRemainingGaps(pool, beds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds, permissiveOracle);
+  added.push(...mopUpResult.plantings);
 
   // Computed LAST, against final occupancy — the only honest place to say
   // "this bed rests" (see reportStillRestingBeds's own doc comment).
