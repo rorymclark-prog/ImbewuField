@@ -4,7 +4,6 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
-import GeometryDesignStudio from './GeometryDesignStudio';
 
 interface Props {
   locationData: LocationData | null;
@@ -122,24 +121,33 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
 
   return (
     <div className="space-y-5">
-      {/* Geometry-first design studio — locks traced site geometry, then AI styles overlays */}
-      {/* Design Studio — the farmer-driven true-scale canvas (build your own design) */}
+      {/* Design Studio — the single canonical true-scale canvas. Opens /design for THIS
+          site (carrying lat/lon, plus the saved-place name where we have it, the same way
+          the "Design this" links do). The old embedded rival canvas was removed so farmers
+          have one clear place to design. */}
       {locationData && (
         <Link
-          href={`/design?lat=${locationData.lat.toFixed(5)}&lon=${locationData.lon.toFixed(5)}`}
-          className="flex items-center justify-between rounded-2xl px-4 py-3 transition-all"
+          href={`/design?lat=${locationData.lat.toFixed(5)}&lon=${locationData.lon.toFixed(5)}${placeName ? `&name=${encodeURIComponent(placeName)}` : ''}`}
+          className="block rounded-2xl p-4 transition-all"
           style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: '#FBF6EC', textDecoration: 'none' }}
         >
           <span className="flex items-center gap-2 font-display font-semibold" style={{ fontSize: 15 }}>
-            <PencilRuler size={17} /> Design Studio — build your own design
+            <PencilRuler size={18} /> Open the Design Studio
           </span>
-          <span className="font-sans" style={{ fontSize: 12, color: '#F7C97E' }}>
-            Place tanks, trees & zones at real scale →
+          <p className="font-display leading-relaxed mt-1.5" style={{ fontSize: 12.5, color: '#F7C97E' }}>
+            Place tanks, trees &amp; zones on your land at real scale — step-by-step guidance, or one-tap auto-design.
+          </p>
+          <span className="inline-flex items-center gap-1 font-sans mt-2" style={{ fontSize: 12, color: '#FBF6EC', opacity: 0.85 }}>
+            Start designing this site →
           </span>
         </Link>
       )}
 
-      <GeometryDesignStudio locationData={locationData} siteName={placeName} />
+      {!locationData && (
+        <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: '#9A8268', background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+          Select a location on the map to open the Design Studio for it.
+        </p>
+      )}
 
       <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
         Sketch → AI Design
@@ -200,10 +208,6 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#5C5040' }}>
           <Check size={13} /> Your photo analysis will be used in the design
         </div>
-      )}
-
-      {!locationData && (
-        <p className="text-xs font-display text-center" style={{ color: '#9A8268' }}>Select a location on the map first</p>
       )}
 
       {error && <p className="text-xs font-mono" style={{ color: '#C0531E' }}>{error}</p>}
