@@ -42,9 +42,21 @@ import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones, suggestWater, suggestStructures, suggestPlanting } from '@/lib/design-suggest';
 import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas from '@/components/design/DesignCanvas';
-import DesignPalette from '@/components/design/DesignPalette';
+import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard from '@/components/design/DesignWizard';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
+
+const DESIGN_MODE_KEY = 'imbewu_design_mode';
+
+function readStoredDesignMode(): DesignMode {
+  if (typeof window === 'undefined') return 'guided';
+  try {
+    const raw = window.localStorage.getItem(DESIGN_MODE_KEY);
+    return raw === 'pro' ? 'pro' : 'guided';
+  } catch {
+    return 'guided';
+  }
+}
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -309,6 +321,24 @@ function DesignStudioInner() {
       setPlaceName(null);
     }
   }, [hasSite, lat, lon]);
+
+  // GUIDED/PRO mode — read from localStorage in an effect (SSR has no localStorage, so a
+  // render-time read would hydration-mismatch), defaulting to 'guided'.
+  const [designMode, setDesignMode] = useState<DesignMode>('guided');
+  useEffect(() => {
+    setDesignMode(readStoredDesignMode());
+  }, []);
+  const toggleDesignMode = useCallback(() => {
+    setDesignMode((prev) => {
+      const next: DesignMode = prev === 'pro' ? 'guided' : 'pro';
+      try {
+        window.localStorage.setItem(DESIGN_MODE_KEY, next);
+      } catch {
+        /* localStorage unavailable */
+      }
+      return next;
+    });
+  }, []);
 
   const [locationData, setLocationData] = useState<LocationData | null>(null);
   const [layers, setLayers] = useState<DesignLayer[]>([]);
@@ -821,7 +851,48 @@ function DesignStudioInner() {
           <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
           <span style={{ fontSize: 12, opacity: 0.65 }}>{siteName}</span>
         </div>
-        <div style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }}>
+        <button
+          type="button"
+          onClick={toggleDesignMode}
+          aria-label={`Switch to ${designMode === 'pro' ? 'Guided' : 'Pro'} mode`}
+          title={designMode === 'pro' ? 'Pro: full catalog, jump any step' : 'Guided: palette filtered to this step'}
+          style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            minHeight: 32,
+            padding: '0 4px',
+            borderRadius: 999,
+            border: `1px solid ${GREEN}`,
+            background: 'transparent',
+            cursor: 'pointer',
+            fontSize: 11.5,
+            fontWeight: 700,
+            overflow: 'hidden',
+          }}
+        >
+          <span
+            style={{
+              padding: '5px 10px',
+              borderRadius: 999,
+              background: designMode === 'guided' ? GREEN : 'transparent',
+              color: designMode === 'guided' ? PAPER : GREEN,
+            }}
+          >
+            Guided
+          </span>
+          <span
+            style={{
+              padding: '5px 10px',
+              borderRadius: 999,
+              background: designMode === 'pro' ? GREEN : 'transparent',
+              color: designMode === 'pro' ? PAPER : GREEN,
+            }}
+          >
+            Pro
+          </span>
+        </button>
+        <div style={{ fontSize: 12, opacity: 0.6 }}>
           {saved ? 'Saved' : 'Saving…'}
         </div>
       </header>
@@ -839,6 +910,7 @@ function DesignStudioInner() {
           onAutoDetect={handleSuggest}
           detecting={detecting}
           suggestionsCount={pendingSuggestions.length}
+          mode={designMode}
         />
       )}
       {detectError && (
@@ -1035,6 +1107,7 @@ function DesignStudioInner() {
       {canvasState && canvasState.step !== 'glossy' && (
         <DesignPalette
           step={canvasState.step}
+          mode={designMode}
           tool={tool}
           setTool={setTool}
           placeDefId={placeDefId}

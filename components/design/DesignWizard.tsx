@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Sparkles, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -23,6 +24,7 @@ interface DesignWizardProps {
   onAutoDetect?: () => void;
   detecting?: boolean;
   suggestionsCount?: number;
+  mode?: DesignMode;
 }
 
 const STEP_ORDER: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
@@ -89,6 +91,7 @@ export default function DesignWizard({
   onAutoDetect,
   detecting,
   suggestionsCount,
+  mode = 'guided',
 }: DesignWizardProps) {
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
@@ -200,6 +203,11 @@ export default function DesignWizard({
         }}
       >
         {STEP_GUIDANCE[step]}
+        {mode === 'pro' && (
+          <div style={{ marginTop: 4, fontWeight: 600, color: GREEN }}>
+            PRO — tap any step above to jump straight there.
+          </div>
+        )}
       </div>
 
       {/* Suggest button — shown on base/water/zones/planting/structures. Spinner only

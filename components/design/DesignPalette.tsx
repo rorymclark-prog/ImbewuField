@@ -20,8 +20,11 @@ interface ActiveLayers {
   lines: boolean;
 }
 
+export type DesignMode = 'guided' | 'pro';
+
 export interface DesignPaletteProps {
   step: WizardStep;
+  mode: DesignMode;
   tool: ToolKind;
   setTool: (t: ToolKind) => void;
   placeDefId: string | null;
@@ -99,6 +102,7 @@ function toolButtonStyle(active: boolean): React.CSSProperties {
 
 export default function DesignPalette({
   step,
+  mode,
   tool,
   setTool,
   placeDefId,
@@ -115,8 +119,11 @@ export default function DesignPalette({
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
 
-  const allowedCategories = categoriesForStep(step);
+  // PRO reuses the existing 'all' path unconditionally — same catalog GUIDED already shows
+  // on base/review/glossy, just no longer gated by step.
+  const allowedCategories = mode === 'pro' ? 'all' : categoriesForStep(step);
   const isReadOnlyStep = step === 'base' || step === 'review' || step === 'glossy';
+  const showFullCatalogNote = mode === 'pro' || isReadOnlyStep;
   const catalog =
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
@@ -216,9 +223,11 @@ export default function DesignPalette({
 
       {/* Element chips: always visible for this step, regardless of tool */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {isReadOnlyStep && (
+        {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-            Showing the full catalog — switch to a Water/Planting/Structures step to filter.
+            {mode === 'pro'
+              ? 'PRO mode — full catalog, every step. Jump between steps freely.'
+              : 'Showing the full catalog — switch to a Water/Planting/Structures step to filter.'}
           </div>
         )}
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
