@@ -602,8 +602,15 @@ export function buildFoodValueByMonth(
  */
 export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[]): number[] {
   const totalArea = beds.reduce((s, b) => s + b.areaM2, 0);
-  const occupiedArea = Array<number>(13).fill(0);
-  if (totalArea <= 0) return occupiedArea;
+  if (totalArea <= 0) return Array<number>(13).fill(0);
+  // Occupancy is accumulated PER BED per month, then each bed is clamped to its
+  // own area before summing — a single physical bed can never be more than 100%
+  // occupied. Without the clamp, a cut-and-come-again crop's harvest-window tail
+  // (which this metric deliberately counts, unlike the planner's occupancy model
+  // which frees the bed at maturity to allow replanting) gets summed on top of
+  // the successor already sown in that same bed-third, pushing a bed past 100%
+  // and the whole chart over 100% — physically impossible and confusing.
+  const perBed = new Map<string, number[]>();
   for (const p of plantings) {
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
@@ -612,11 +619,19 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
     const hEnd = hMonth + (crop.harvestWindowMonths ?? 0);
     const spanMonths = ((hEnd - p.sowMonth) % 12 + 12) % 12 + 1;
+    let arr = perBed.get(bed.id);
+    if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
     let m = p.sowMonth;
     for (let i = 0; i < spanMonths; i++) {
-      occupiedArea[m] += areaHere;
+      arr[m] += areaHere;
       m = m === 12 ? 1 : m + 1;
     }
+  }
+  const occupiedArea = Array<number>(13).fill(0);
+  for (const bed of beds) {
+    const arr = perBed.get(bed.id);
+    if (!arr) continue;
+    for (let m = 1; m <= 12; m++) occupiedArea[m] += Math.min(arr[m], bed.areaM2);
   }
   return occupiedArea.map((a) => a / totalArea);
 }
