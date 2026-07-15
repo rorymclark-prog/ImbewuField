@@ -7,6 +7,8 @@ _Last updated: 2026-07-15_
 ---
 
 ## ✅ SHIPPED & LIVE (on imbewufield.vercel.app)
+- **Merge Phase 1 — Guided/Pro mode toggle** on the Design Studio (layered over the palette's existing per-step filter; localStorage-persisted; fully revertible). Commit 2c4e253.
+- **KZN BRU zone + per-zone climate** on the site report — for KZN sites, real rainfall + min/mean/max temp + exact zone code, with a best-effort (flagged-approximate) zone name and KZN DARD attribution. Non-KZN unchanged. Commit 09fa853. _Note: dept has no public code→name crosswalk, so friendly names are approximate by design._
 - Crop-plan polish — harvest-window gold-cap fix, retail/wholesale plain-English copy, full-year total, collapsible tasks, sticky month header
 - Field-utilization chart clamped to 100% (no more impossible >100%)
 - Survey/design pipeline — one site-ID scheme + migration, per-site shape isolation, JoJo-size & tree species/count prompts, survey auto-fill from traced shapes
@@ -25,9 +27,10 @@ _Last updated: 2026-07-15_
 - **Finer 5m contours** (git stash) — modest improvement; does NOT show your 3m bank (that needs drone data). Parked pending decision.
 
 ## 🔄 IN FLIGHT (running now)
-- **KZN BRU upgrade — BUILDING IN PARALLEL** (your call, this session)
+- **Dataset hunt** — read-only research sweep (KZN dept catalog + SA-national + global datasets, multi-country ready) → returns a **ranked menu for you to pick from at review**. Builds nothing. Driven by your "deep data, radically simple for the farmer" north-star.
+- KZN dept server mapped: beyond BRU it only holds **KZNFarmPortions** (cadastral farm boundaries — high value, auto-load legal boundary), Offices, admin boundaries. The real depth is national/global (that's what the hunt targets).
 
-## 🗺️ MERGE PLAN — DONE (recommendation ready, awaiting your go on Phase 1)
+## 🗺️ MERGE — IN PROGRESS (Phase 1 ✅ SHIPPED; later phases await your review)
 - **Recommended: Approach C — "one shell, sequence the best pieces."** Don't fuse the render engines (they're genuinely incompatible: Map = WebGL, Design Studio = SVG, old FacilitatorCanvas = Konva). Instead: one flow where the live map hosts *tracing*, the Design Studio hosts *design*, and BOQ/report/AI-render (mostly pure functions) plug in — retiring the duplicate doors + second AI review.
 - **Great news from the code:** the layer-aware palette you asked for ("features pop up as you select layers") ALREADY EXISTS (`categoriesForStep`); the stepper you like is there; Design Studio already reads the live-traced boundary.
 - **Phase 1 = tiny + near-zero risk:** add an explicit Guided/Pro toggle over the palette filter that's already built. No data change, no new route. Fully revertible.
