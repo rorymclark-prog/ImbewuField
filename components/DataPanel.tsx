@@ -17,6 +17,7 @@ import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
+import WeatherWidget from './WeatherWidget';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
@@ -557,6 +558,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* OVERVIEW */}
         {tab === 'Overview' && (
           <>
+            {/* Live forecast — the forward-looking counterpart to the climate-normals stats below */}
+            {coords && <WeatherWidget lat={coords.lat} lon={coords.lon} />}
+
             {/* Measured land / water — updates LIVE as a boundary is drawn or edited */}
             {(siteData || (waterData && waterData.count > 0)) && (
               <div className="space-y-2">
