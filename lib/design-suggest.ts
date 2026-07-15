@@ -101,6 +101,11 @@ export interface ZoneSuggestOpts {
   site?: ZoneSuggestSite | null;
   structures?: ZoneSuggestStructure[]; // ACCEPTED items only (canvasState.items, category 'structure')
   existingVeg?: Array<{ x: number; y: number }>; // ACCEPTED items only (category 'growing')
+  // OPTIONAL, backward-compatible: extra adopted ground-feature outlines (normalised [0..1]
+  // rings — e.g. a traced driveway edge, a dam bank, an existing bed) that a suggested zone
+  // edge should SNAP onto when it runs within a couple of metres of one. The plot boundary and
+  // any `structures` are always snap targets; this adds the rest. Used only if provided.
+  snapEdges?: Ring[];
 }
 
 // Wrap every boolean op so a degenerate/self-intersecting input can never crash the caller.
@@ -438,6 +443,78 @@ function downhillVector(aspectLabel: string): Pt | null {
   return [Math.sin(rad), -Math.cos(rad)];
 }
 
+// ── Clip + snap to the real site ────────────────────────────────────────────────
+// A Voronoi cell is built by intersecting the open space with half-plane cuts, so in the
+// ideal case it already sits inside the plot — but half-plane booleans on a hand-traced
+// outline can leave hairline slivers that poke past the boundary, and there is no guarantee
+// for the AI-planned variants. These two steps make the invariant explicit: (1) intersect the
+// finished cell with the boundary so a zone can NEVER exceed the plot, then (2) pull any zone
+// vertex that lands within a small tolerance of the boundary — or an adopted ground feature —
+// exactly onto that edge, so zones read as clean, land-following regions rather than shapes
+// that almost-but-not-quite meet the fence line.
+
+// Snap targets in px: the plot boundary (always), every accepted structure footprint, plus any
+// caller-supplied adopted-feature outlines (opts.snapEdges). All are closed rings that lie on
+// or inside the plot, so snapping onto them can never push a vertex outside the boundary.
+function buildSnapTargetsPx(boundaryPx: Ring, opts: ZoneSuggestOpts, frame: ZoneSuggestFrame): Ring[] {
+  const targets: Ring[] = [];
+  if (boundaryPx.length >= 3) targets.push(boundaryPx);
+  for (const s of opts.structures ?? []) {
+    targets.push(rectPolyM(s.x * frame.imgW, s.y * frame.imgH, s.wM ?? 4, s.hM ?? 4, frame.mPerPx)[0]);
+  }
+  for (const e of opts.snapEdges ?? []) {
+    if (e && e.length >= 2) targets.push(toPx(closeRing(e), frame));
+  }
+  return targets;
+}
+
+// Snap tolerance in px: ~2.5 m on the ground, but capped to a small fraction of the plot so it
+// stays sensible on a tiny stand where 2.5 m would be a large share of the whole outline.
+function snapTolerancePx(boundaryPx: Ring, frame: ZoneSuggestFrame): number {
+  return Math.min(2.5 / frame.mPerPx, 0.04 * bboxExtent(boundaryPx));
+}
+
+// Move each vertex to the nearest point on any snap target within `tolPx`; otherwise leave it.
+// Vertex-only snap (edges aren't re-split) — enough to close hairline gaps against the boundary
+// and align a zone to an adopted feature, without the machinery of a full topological snap.
+function snapRingToTargets(ring: Ring, targets: Ring[], tolPx: number): Ring {
+  if (ring.length < 3 || targets.length === 0 || tolPx <= 0) return ring;
+  const tol2 = tolPx * tolPx;
+  return ring.map((v): Pt => {
+    let best: Pt = v;
+    let bestD2 = tol2;
+    for (const t of targets) {
+      const { point, d2 } = nearestPointAndDist(t, v);
+      if (d2 < bestD2) {
+        bestD2 = d2;
+        best = point;
+      }
+    }
+    return best;
+  });
+}
+
+// Finish a zone: clip its multipolygon to the boundary (the hard "never exceed the plot"
+// guarantee), collapse to one ring (mergeAllRings for the multi-piece zone 2, largestOuterRing
+// otherwise — same rule the callers already use), then snap that ring to the site edges.
+// Clipping the MULTIPOLYGON (not the collapsed ring) matters: mergeAllRings emits a
+// keyhole-bridged self-touching ring that a follow-up boolean op could choke on.
+function finalizeZoneRing(
+  mp: PcMulti,
+  boundaryMulti: PcMulti,
+  keepAllPieces: boolean,
+  snapTargets: Ring[],
+  tolPx: number,
+): Ring {
+  if (!mp.length) return [];
+  const clipped = boundaryMulti.length
+    ? safePc(() => polygonClipping.intersection(mp, boundaryMulti))
+    : mp;
+  const base = clipped.length ? clipped : mp;
+  const ring = keepAllPieces ? mergeAllRings(base) : largestOuterRing(base);
+  return snapRingToTargets(ring, snapTargets, tolPx);
+}
+
 export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts): DetectSuggestion[] {
   if (boundary.length < 3) return [];
   const { frame } = opts;
@@ -539,18 +616,24 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
   }
   const zone2 = unionAll([cells[1], vegClaim]);
 
+  // Clip-to-plot + snap-to-edges context, shared by every emitted zone below.
+  const snapTargets = buildSnapTargetsPx(boundaryPx, opts, frame);
+  const snapTol = snapTolerancePx(boundaryPx, frame);
+  const finish = (mp: PcMulti, keepAllPieces: boolean) =>
+    finalizeZoneRing(mp, boundaryMulti, keepAllPieces, snapTargets, snapTol);
+
   const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
     if (ring.length < 3) return;
     out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
   };
 
-  emit(1, largestOuterRing(cells[0]), `Daily-use — ${anchorNote}`);
-  emit(2, mergeAllRings(zone2), 'Veg beds & intensive care');
-  emit(3, largestOuterRing(cells[2]), 'Orchard / food forest');
-  emit(4, largestOuterRing(cells[3]), usedSlope ? 'Low-care — uphill/level side' : 'Low-care & support');
+  emit(1, finish(cells[0], false), `Daily-use — ${anchorNote}`);
+  emit(2, finish(zone2, true), 'Veg beds & intensive care');
+  emit(3, finish(cells[2], false), 'Orchard / food forest');
+  emit(4, finish(cells[3], false), usedSlope ? 'Low-care — uphill/level side' : 'Low-care & support');
   emit(
     5,
-    largestOuterRing(cells[4]),
+    finish(cells[4], false),
     usedSlope
       ? `Conservation / buffer — downhill side (${slopeDeg?.toFixed(0)}° slope facing ${aspect})`
       : 'Wild edge & buffer — the ground farthest from the door',
@@ -634,10 +717,14 @@ export function suggestZonesFromPlan(
     (pz): Pt => [clamp01(pz.anchor[0]) * frame.imgW, clamp01(pz.anchor[1]) * frame.imgH],
   );
   const cells = voronoiCells(open, seedsPx, bboxExtent(boundaryPx));
+  // Same clip-to-plot + snap-to-edges guarantee the deterministic path uses. AI-placed anchors
+  // make an out-of-plot sliver more likely here, so the boundary clip matters more, not less.
+  const snapTargets = buildSnapTargetsPx(boundaryPx, opts, frame);
+  const snapTol = snapTolerancePx(boundaryPx, frame);
   planZones.forEach((pz, i) => {
     const zone = pz.zone as 1 | 2 | 3 | 4 | 5;
     const note = pz.rationale && pz.rationale.trim() ? pz.rationale.trim() : `Zone ${zone} (approximate)`;
-    emit(zone, largestOuterRing(cells[i]), note);
+    emit(zone, finalizeZoneRing(cells[i], boundaryMulti, false, snapTargets, snapTol), note);
   });
 
   return out;
