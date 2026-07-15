@@ -41,12 +41,23 @@ import {
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
-import { suggestZones, suggestZonesFromPlan, suggestWater, suggestStructures, suggestPlanting, type ZonePlan } from '@/lib/design-suggest';
+import {
+  suggestZones,
+  suggestZonesFromPlan,
+  suggestFromAutoDesignPlan,
+  suggestWater,
+  suggestStructures,
+  suggestPlanting,
+  type ZonePlan,
+  type AutoDesignPlan,
+  type AutoDesignAnswers,
+} from '@/lib/design-suggest';
 import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard from '@/components/design/DesignWizard';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
+import AutoDesignSheet from '@/components/design/AutoDesignSheet';
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 
@@ -401,6 +412,11 @@ function DesignStudioInner() {
   const [suggestions, setSuggestions] = useState<DetectSuggestion[]>([]);
   const [detecting, setDetecting] = useState(false);
   const [detectError, setDetectError] = useState<string | null>(null);
+
+  // AI Auto-Design — one action designs the whole farm. 'questions' shows the lightweight
+  // sheet; 'running' drives the "Designing your farm…" overlay. Answers are all optional.
+  const [autoDesignPhase, setAutoDesignPhase] = useState<'idle' | 'questions' | 'running'>('idle');
+  const [autoAnswers, setAutoAnswers] = useState<AutoDesignAnswers>({});
 
   const undoStack = useRef<DesignCanvasState[]>([]);
   const siteId = useMemo(
@@ -763,6 +779,109 @@ function DesignStudioInner() {
     mergePending(next);
   }, [canvasState, refLayers, frame, site, handleVisionDetect]);
 
+  // Open the Auto-Design questionnaire sheet (guarded on a traced boundary, same as suggest).
+  const openAutoDesign = useCallback(() => {
+    if (refLayers.boundary.length < 3) {
+      setDetectError('Trace your boundary on the main map first.');
+      return;
+    }
+    setDetectError(null);
+    setAutoDesignPhase('questions');
+  }, [refLayers.boundary.length]);
+
+  // Run the whole-farm AI Auto-Design. ONE vision call returns intent → code makes geometry
+  // (suggestFromAutoDesignPlan) → everything lands as PENDING suggestions. Any failure path
+  // (no key/502, timeout, no satellite, empty plan, geometry clipped to nothing) falls back to
+  // the full deterministic suite so the farmer always gets a complete farm design.
+  const runAutoDesign = useCallback(async (answersOverride?: AutoDesignAnswers) => {
+    // Take answers as an arg so "Skip" can pass {} synchronously — a setAutoAnswers({})
+    // right before calling would not have landed in state yet (stale-closure trap).
+    const answers = answersOverride ?? autoAnswers;
+    if (!canvasState || !frame) return;
+    if (refLayers.boundary.length < 3) {
+      setAutoDesignPhase('idle');
+      setDetectError('Trace your boundary on the main map first.');
+      return;
+    }
+    setDetectError(null);
+    setAutoDesignPhase('running');
+
+    const structures = canvasState.items
+      .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
+      .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
+    const existingVeg = canvasState.items
+      .filter((i) => {
+        const def = ELEMENTS_BY_ID[i.defId];
+        return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
+      })
+      .map((i) => ({ x: i.x, y: i.y }));
+    const zoneOpts = {
+      frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
+      driveway: refLayers.driveway,
+      site,
+      structures,
+      existingVeg,
+    };
+
+    const mergePending = (next: DetectSuggestion[]) =>
+      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
+
+    // Full deterministic whole-farm suite — the guaranteed fallback (and offline path).
+    const deterministic = (): DetectSuggestion[] => [
+      ...suggestZones(refLayers.boundary, refLayers.house, zoneOpts),
+      ...suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
+      ...suggestStructures(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
+      ...suggestPlanting(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
+    ];
+
+    // No satellite → the AI has nothing to look at; use the deterministic plan immediately.
+    if (!frame.satDataUrl) {
+      mergePending(deterministic());
+      setAutoDesignPhase('idle');
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 55_000);
+    try {
+      const res = await fetch('/api/auto-design', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64: stripDataUrl(frame.satDataUrl),
+          imgW: frame.imgW,
+          imgH: frame.imgH,
+          mPerPx: frame.mPerPx,
+          boundary: refLayers.boundary,
+          house: refLayers.house,
+          driveway: refLayers.driveway,
+          slopeDeg: site?.slopeDeg,
+          aspectLabel: site?.aspectLabel,
+          windFromSummer: site?.windFromSummer,
+          rainfallMm: site?.rainfallMm,
+          biome: site?.biome,
+          goal: answers.goal,
+          people: answers.people,
+          accessSide: answers.accessSide,
+          waterSource: answers.waterSource,
+        }),
+        signal: controller.signal,
+      });
+      if (!res.ok) throw new Error('auto-design failed');
+      const data = await res.json();
+      const plan: AutoDesignPlan | null = data && Array.isArray(data.zones) ? (data as AutoDesignPlan) : null;
+      const aiSuggestions = plan
+        ? suggestFromAutoDesignPlan(refLayers.boundary, refLayers.house, zoneOpts, plan, answers)
+        : [];
+      mergePending(aiSuggestions.length > 0 ? aiSuggestions : deterministic());
+    } catch {
+      mergePending(deterministic());
+    } finally {
+      clearTimeout(timeout);
+      setAutoDesignPhase('idle');
+    }
+  }, [canvasState, frame, refLayers, site, autoAnswers]);
+
   // Pure per-suggestion state transform, shared by acceptSuggestion (one undo entry) and
   // acceptAllSuggestions (folded into a single undo entry) — see below.
   const applySuggestion = useCallback(
@@ -1014,6 +1133,37 @@ function DesignStudioInner() {
         </div>
       </header>
 
+      {/* AI Auto-Design hero — one tap designs the whole farm. Above the wizard so it's
+          visible on every step, independent of the per-step Suggest button. */}
+      {canvasState && canvasState.step !== 'glossy' && (
+        <div style={{ padding: '10px 14px 0' }}>
+          <button
+            type="button"
+            onClick={openAutoDesign}
+            disabled={autoDesignPhase === 'running'}
+            style={{
+              width: '100%',
+              minHeight: 48,
+              borderRadius: 14,
+              border: 'none',
+              background: `linear-gradient(90deg, ${GOLD}, #F3B85C)`,
+              color: DARK,
+              fontWeight: 800,
+              fontSize: 15,
+              cursor: autoDesignPhase === 'running' ? 'default' : 'pointer',
+              opacity: autoDesignPhase === 'running' ? 0.7 : 1,
+              boxShadow: '0 2px 10px rgba(247,201,126,0.5)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+            }}
+          >
+            {autoDesignPhase === 'running' ? 'Designing your farm…' : '✨ Auto-design my farm'}
+          </button>
+        </div>
+      )}
+
       {/* Wizard (top) */}
       {canvasState && (
         <DesignWizard
@@ -1250,6 +1400,55 @@ function DesignStudioInner() {
           houseXY={houseXY}
           lastChangeId={canvasState.updatedAt}
         />
+      )}
+
+      {/* AI Auto-Design questionnaire sheet */}
+      <AutoDesignSheet
+        open={autoDesignPhase === 'questions'}
+        answers={autoAnswers}
+        onChange={(patch) => setAutoAnswers((prev) => ({ ...prev, ...patch }))}
+        onSubmit={() => runAutoDesign()}
+        onSkip={() => {
+          setAutoAnswers({});
+          runAutoDesign({}); // pass empty explicitly — don't rely on the setState landing first
+        }}
+        onClose={() => setAutoDesignPhase('idle')}
+      />
+
+      {/* "Designing your farm…" overlay while the whole-farm plan is running */}
+      {autoDesignPhase === 'running' && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 50,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 14,
+            background: 'rgba(11,18,11,0.55)',
+            color: PAPER,
+            textAlign: 'center',
+            padding: 24,
+          }}
+        >
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: '50%',
+              border: `3px solid ${GOLD}`,
+              borderTopColor: 'transparent',
+              animation: 'imbewu-spin 0.9s linear infinite',
+            }}
+          />
+          <div style={{ fontWeight: 700, fontSize: 16 }}>Designing your farm…</div>
+          <div style={{ fontSize: 12.5, opacity: 0.85, maxWidth: 260 }}>
+            Reading your satellite image and placing zones, veg, water and a wind belt.
+          </div>
+          <style>{`@keyframes imbewu-spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
       )}
 
       {/* Item edit sheet */}

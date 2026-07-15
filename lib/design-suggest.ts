@@ -629,6 +629,174 @@ export function suggestZonesFromPlan(
   return out;
 }
 
+// ── suggestFromAutoDesignPlan (AI Auto-Design — whole-farm intent → geometry) ─────
+// The AI (app/api/auto-design) plans the ENTIRE farm and returns INTENT only. This turns
+// that intent into clean PENDING suggestions the farmer Accept/Dismisses: zones via
+// suggestZonesFromPlan (so Zone 0 = house is preserved verbatim), plus a veg-garden zone,
+// a windward tree belt, key water items, and the main path. Every emitted kind is already
+// handled by applySuggestion() in app/design/page.tsx — zero new accept plumbing.
+
+export interface AutoDesignAnswers {
+  goal?: 'food' | 'income' | 'both';
+  people?: 'small' | 'medium' | 'large';
+  accessSide?: string | null;
+  waterSource?: 'tank' | 'borehole' | 'municipal' | null;
+}
+
+export interface AutoDesignPlan {
+  zones: ZonePlanZone[];
+  vegGarden?: { anchor: [number, number]; extentM: number; rationale?: string } | null;
+  windbreak?: { anchor: [number, number]; dir: string; lengthM: number; rationale?: string } | null;
+  water?: Array<{ kind: 'tank' | 'dam' | 'swale'; anchor: [number, number]; extentM?: number; rationale?: string }>;
+  path?: { anchor: [number, number]; dir: string } | null;
+  overall?: string;
+}
+
+// Aspect label → the OUTWARD unit vector in image space (x east+, y south+) — the direction
+// the label points toward (N = up). Reused for both the windbreak axis and the path heading.
+function aspectVector(aspectLabel: string): Pt | null {
+  const idx = ASPECT_ORDER.indexOf(aspectLabel.trim().toUpperCase());
+  if (idx === -1) return null;
+  const rad = (idx * 22.5 * Math.PI) / 180;
+  return [Math.sin(rad), -Math.cos(rad)];
+}
+
+export function suggestFromAutoDesignPlan(
+  boundary: Ring,
+  house: Ring,
+  opts: ZoneSuggestOpts,
+  plan: AutoDesignPlan,
+  answers: AutoDesignAnswers,
+): DetectSuggestion[] {
+  if (boundary.length < 3) return [];
+  const { frame } = opts;
+  if (!frame || !frame.imgW || !frame.imgH || !frame.mPerPx) return [];
+
+  // Zones first — this already emits Zone 0 = house verbatim and carves 1-5 (fallback-safe).
+  const out: DetectSuggestion[] = suggestZonesFromPlan(boundary, house, opts, { zones: plan.zones });
+
+  const boundaryPx = toPx(closeRing(boundary), frame);
+  const housePx = house.length >= 3 ? toPx(closeRing(house), frame) : [];
+  const boundaryMulti: PcMulti = [[boundaryPx]];
+  const h = houseCentre(boundary, house);
+  const { dxNorm, dyNorm } = metresToNormFactory(frame.mPerPx, frame.imgW, frame.imgH);
+
+  const boundaryAreaM2 = ringArea(boundaryPx) * frame.mPerPx * frame.mPerPx;
+  const scaleM = Math.sqrt(Math.max(boundaryAreaM2, 1));
+  const mToPx = (m: number) => m / frame.mPerPx;
+
+  // Open space = boundary minus house — same as the zone builders, so the veg garden lands
+  // on real open ground rather than overlapping the dwelling.
+  const obstaclePolys: PcPoly[] = [];
+  if (housePx.length >= 3) obstaclePolys.push([housePx]);
+  const obstacleUnion = unionPolys(obstaclePolys);
+  let open: PcMulti = boundaryMulti;
+  if (obstacleUnion.length) {
+    const diffed = safePc(() => polygonClipping.difference(boundaryMulti, obstacleUnion));
+    if (diffed.length) open = diffed;
+  }
+
+  // ── Veg garden — a zone-2 area disk ∩ open space at the AI anchor ────────────────────
+  if (plan.vegGarden) {
+    const ax = clamp01(plan.vegGarden.anchor[0]) * frame.imgW;
+    const ay = clamp01(plan.vegGarden.anchor[1]) * frame.imgH;
+    const rPx = mToPx(Math.max(2, Math.min(plan.vegGarden.extentM, 0.4 * scaleM)));
+    const disk = asMulti(diskPoly(ax, ay, rPx));
+    const claim = open.length ? safePc(() => polygonClipping.intersection(open, disk)) : [];
+    const ring = largestOuterRing(claim);
+    const note = plan.vegGarden.rationale?.trim() || 'Veg garden — flat, sunny, near the house';
+    if (ring.length >= 3) {
+      out.push({ id: newId(), kind: 'veg_area', points: toNorm(ring, frame), note, status: 'pending' });
+    } else {
+      // Ring clipped to nothing (anchor outside open space) — fall back to a single bed point.
+      const pt = nudgeInside([clamp01(plan.vegGarden.anchor[0]), clamp01(plan.vegGarden.anchor[1])], h, boundary);
+      out.push({ id: newId(), kind: 'veg_bed', points: [pt], note, status: 'pending' });
+    }
+  }
+
+  // ── Windbreak — a line of trees across the windward side ─────────────────────────────
+  if (plan.windbreak) {
+    const dirVec = aspectVector(plan.windbreak.dir);
+    if (dirVec) {
+      // Belt runs PERPENDICULAR to the wind direction (a wall facing the wind).
+      const perp: Pt = [-dirVec[1], dirVec[0]];
+      const half = plan.windbreak.lengthM / 2;
+      const anchor: Pt = [clamp01(plan.windbreak.anchor[0]), clamp01(plan.windbreak.anchor[1])];
+      const nTrees = Math.max(4, Math.min(6, Math.round(plan.windbreak.lengthM / 6)));
+      const note = plan.windbreak.rationale?.trim() || 'Wind belt — windward side';
+      for (let i = 0; i < nTrees; i++) {
+        const t = nTrees > 1 ? (i / (nTrees - 1)) * 2 - 1 : 0; // -1..1
+        const offM = t * half;
+        const raw: Pt = [anchor[0] + perp[0] * dxNorm(offM), anchor[1] + perp[1] * dyNorm(offM)];
+        const pt = nudgeInside(raw, h, boundary);
+        out.push({ id: newId(), kind: 'tree', points: [pt], sizeM: 5, note, status: 'pending' });
+      }
+    }
+  }
+
+  // ── Water — tanks / dam / swale at the AI anchors, biased by the stated source ───────
+  const skipTanks = answers.waterSource === 'borehole' || answers.waterSource === 'municipal';
+  for (const w of plan.water ?? []) {
+    const anchor: Pt = [clamp01(w.anchor[0]), clamp01(w.anchor[1])];
+    if (w.kind === 'tank') {
+      if (skipTanks) continue;
+      const pt = nudgeInside(anchor, h, boundary);
+      out.push({
+        id: newId(),
+        kind: 'water_tank',
+        points: [pt],
+        sizeM: 1.8,
+        note: w.rationale?.trim() || '5000 L JoJo at the biggest roof',
+        status: 'pending',
+      });
+    } else if (w.kind === 'dam') {
+      const pt = nudgeInside(anchor, h, boundary);
+      out.push({
+        id: newId(),
+        kind: 'pond',
+        points: [pt],
+        sizeM: Math.max(2, Math.min(w.extentM ?? 6, 40)),
+        note: w.rationale?.trim() || 'Dam / pond on the downslope side',
+        status: 'pending',
+      });
+    } else {
+      // Swale — a short contour chord centred on the anchor, run E-W as a level line proxy.
+      const halfM = Math.max(4, Math.min((w.extentM ?? 20) / 2, 0.4 * scaleM));
+      const pts: Ring = [];
+      for (let k = 0; k <= 4; k++) {
+        const t = k / 4 - 0.5; // -0.5..0.5
+        const raw: Pt = [anchor[0] + dxNorm(t * halfM * 2), anchor[1]];
+        pts.push(nudgeInside(raw, h, boundary));
+      }
+      out.push({
+        id: newId(),
+        kind: 'swale',
+        points: pts,
+        note: w.rationale?.trim() || 'Swale on contour — check levels on the ground',
+        status: 'pending',
+      });
+    }
+  }
+
+  // ── Path — only meaningful when no driveway is traced (page.tsx gates this too) ──────
+  if (plan.path && (!opts.driveway || opts.driveway.length < 2)) {
+    const dirVec = aspectVector(plan.path.dir);
+    if (dirVec && housePx.length >= 3) {
+      // From the access edge (anchor) to the house — two-point path line.
+      const start: Pt = nudgeInside([clamp01(plan.path.anchor[0]), clamp01(plan.path.anchor[1])], h, boundary);
+      out.push({
+        id: newId(),
+        kind: 'driveway',
+        points: [start, h],
+        note: 'Main path from the access to the house',
+        status: 'pending',
+      });
+    }
+  }
+
+  return out;
+}
+
 // ── suggestWater ────────────────────────────────────────────────────────────────
 
 export function suggestWater(
