@@ -17,6 +17,28 @@ import type { DesignLayerType } from '@/lib/design-studio';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
+// Diagonal hatch fill for zone/ground-feature polygons — reproduces the subtle diagonal
+// hatch the farmer map uses for traced parcels (components/Map.tsx LAND_PALETTE/
+// WATER_PALETTE raster sprites) as an SVG <pattern> instead, so a designed zone in the
+// Studio reads as the same kind of shape as a traced parcel on the map. One pattern per
+// catalog colour, defined once in a single <defs> block below — never regenerated
+// per-render/per-frame. Only the fill value changes at call sites; colour, fillOpacity,
+// stroke and all selection/edit affordances are untouched.
+function hatchPatternId(color: string): string {
+  return `hatch-${color.replace('#', '')}`;
+}
+function hatchFill(color: string): string {
+  return `url(#${hatchPatternId(color)})`;
+}
+// ZONE_DEFS + GROUND_FEATURES are both static catalogs, so their colour set is fixed at
+// module load — compute it once here rather than per-render.
+const HATCH_COLORS: string[] = Array.from(
+  new Set([
+    ...Object.values(ZONE_DEFS).map((d) => d.color),
+    ...Object.values(GROUND_FEATURES).map((f) => f.color),
+  ])
+);
+
 // A shape the farmer already traced on the live map, classified + projected to this
 // frame's normalised [0..1] coords by the parent (app/design/page.tsx, via the shared
 // project()). Rendered as a visible, tappable "traced" reference so nothing has to be
@@ -960,6 +982,22 @@ export default function DesignCanvas({
         onPointerCancel={handleBackgroundPointerCancel}
         onDoubleClick={handleBackgroundDoubleClick}
       >
+        <defs>
+          {/* Subtle diagonal hatch, one per zone/ground-feature colour — see hatchFill() above. */}
+          {HATCH_COLORS.map((c) => (
+            <pattern
+              key={c}
+              id={hatchPatternId(c)}
+              width={8}
+              height={8}
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
+              <rect width={8} height={8} fill={c} fillOpacity={0.12} />
+              <line x1={0} y1={0} x2={0} y2={8} stroke={c} strokeWidth={2.5} strokeOpacity={0.55} />
+            </pattern>
+          ))}
+        </defs>
         <g transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k})`}>
         {/* Satellite underlay */}
         {satDataUrl ? (
@@ -1150,7 +1188,7 @@ export default function DesignCanvas({
                 />
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
-                  fill={color}
+                  fill={hatchFill(color)}
                   fillOpacity={feat ? 0.32 : 0.2}
                   stroke={color}
                   strokeWidth={feat ? 2 : 1.5}
@@ -1427,7 +1465,7 @@ export default function DesignCanvas({
           return (
             <polygon
               points={ringToPx(draftPoints, imgW, imgH)}
-              fill={draftColor}
+              fill={hatchFill(draftColor)}
               fillOpacity={0.18}
               stroke={draftColor}
               strokeWidth={2}
