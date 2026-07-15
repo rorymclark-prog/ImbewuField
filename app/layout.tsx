@@ -5,6 +5,7 @@ import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
 import { LanguageProvider } from '@/lib/i18n';
 import ChatWidget from '@/components/ChatWidget';
+import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <LanguageProvider>
               {children}
               <ChatWidget />
+              <PWAUpdateNotifier />
             </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>
