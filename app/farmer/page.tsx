@@ -21,6 +21,8 @@ import ProfileSheet from '@/components/ProfileSheet';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
+import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces } from '@/lib/saved-places';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -266,20 +268,32 @@ function HomeInner() {
   }, [searchKey]);
 
   // Remember the analysed site so the global chat assistant is site-aware everywhere.
+  // Skipped in sample mode — the demo site must never overwrite the real farmer's
+  // actual last-visited site once they exit sample mode.
   useEffect(() => {
-    if (data) setLastSite({ locationData: data, siteData, waterData });
+    if (data && !isSampleMode()) setLastSite({ locationData: data, siteData, waterData });
   }, [data, siteData, waterData]);
 
   // Auth guard — redirect to login when backend is configured and no user is signed in.
   // Thread the current path + query through ?from= so login can send the farmer back
   // to the exact map/panel they were trying to reach instead of dropping them at /home.
+  // Sample mode bypasses this entirely — an NGO evaluator isn't signed in.
   useEffect(() => {
-    if (!authLoading && !user && isBackendConfigured()) {
+    if (!authLoading && !user && isBackendConfigured() && !isSampleMode()) {
       const qs = searchParams.toString();
       const currentPathAndQuery = qs ? `${pathname}?${qs}` : pathname;
       router.replace(`/login?from=${encodeURIComponent(currentPathAndQuery)}`);
     }
   }, [user, authLoading, router, pathname, searchParams]);
+
+  // Sample mode: auto-load the real Ubhejane Creche site so the evaluator lands
+  // straight on a populated map instead of an empty "tap to survey" state.
+  useEffect(() => {
+    if (isSampleMode() && !selected) {
+      handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Close sheet on Escape key
   useEffect(() => {
@@ -319,8 +333,9 @@ function HomeInner() {
       photoUrl: p.photo_url,
     }));
 
-  // Render nothing while auth resolves (or while redirecting to /login)
-  if (isBackendConfigured() && (authLoading || !user)) return null;
+  // Render nothing while auth resolves (or while redirecting to /login) —
+  // except in sample mode, where there's no real user to wait for.
+  if (isBackendConfigured() && (authLoading || !user) && !isSampleMode()) return null;
 
   return (
     <>

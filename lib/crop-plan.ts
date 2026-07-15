@@ -2,6 +2,13 @@ import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, MONTHS_SHORT } from './crop-catalog';
 import { foodGroupOf } from './crop-groups';
 import { priceFor, type CropPrice } from './crop-prices';
+import {
+  isSampleMode,
+  getSandboxCropPlan, setSandboxCropPlan,
+  getSandboxFavouriteCropKeys, setSandboxFavouriteCropKeys,
+  getSandboxAllowBedSharing, setSandboxAllowBedSharing,
+  getSandboxCashflowSettings, setSandboxCashflowSettings,
+} from './sample-mode';
 
 export interface PlanBed {
   id: string;
@@ -43,6 +50,7 @@ function emptyPlan(): CropPlanState {
 }
 
 export function loadCropPlan(): CropPlanState {
+  if (isSampleMode()) return getSandboxCropPlan();
   if (typeof window === 'undefined' || !window.localStorage) {
     return emptyPlan();
   }
@@ -62,6 +70,7 @@ export function loadCropPlan(): CropPlanState {
 }
 
 export function saveCropPlan(s: CropPlanState): void {
+  if (isSampleMode()) { setSandboxCropPlan(s); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
@@ -78,6 +87,7 @@ export function saveCropPlan(s: CropPlanState): void {
 const FAVOURITES_KEY = 'imbewu_favourite_crops_v1';
 
 export function loadFavouriteCropKeys(): Set<string> {
+  if (isSampleMode()) return getSandboxFavouriteCropKeys();
   if (typeof window === 'undefined' || !window.localStorage) return new Set();
   try {
     const raw = window.localStorage.getItem(FAVOURITES_KEY);
@@ -90,6 +100,7 @@ export function loadFavouriteCropKeys(): Set<string> {
 }
 
 export function saveFavouriteCropKeys(keys: Set<string>): void {
+  if (isSampleMode()) { setSandboxFavouriteCropKeys(keys); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
     window.localStorage.setItem(FAVOURITES_KEY, JSON.stringify([...keys]));
@@ -329,6 +340,7 @@ export function yieldByCrop(plantings: Planting[], beds: PlanBed[]): { cropKey: 
 const ALLOW_BED_SHARING_KEY = 'imbewu_allow_bed_sharing_v1';
 
 export function loadAllowBedSharing(): boolean {
+  if (isSampleMode()) return getSandboxAllowBedSharing();
   if (typeof window === 'undefined' || !window.localStorage) return false;
   try {
     return window.localStorage.getItem(ALLOW_BED_SHARING_KEY) === '1';
@@ -338,6 +350,7 @@ export function loadAllowBedSharing(): boolean {
 }
 
 export function saveAllowBedSharing(allow: boolean): void {
+  if (isSampleMode()) { setSandboxAllowBedSharing(allow); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
     window.localStorage.setItem(ALLOW_BED_SHARING_KEY, allow ? '1' : '0');
@@ -720,6 +733,7 @@ const CASHFLOW_SETTINGS_KEY = 'imbewu_cashflow_settings_v1';
 const DEFAULT_CASHFLOW_SETTINGS: CashflowSettings = { sellPercent: 100, lossPercent: 0 };
 
 export function loadCashflowSettings(): CashflowSettings {
+  if (isSampleMode()) return getSandboxCashflowSettings();
   if (typeof window === 'undefined' || !window.localStorage) return DEFAULT_CASHFLOW_SETTINGS;
   try {
     const raw = window.localStorage.getItem(CASHFLOW_SETTINGS_KEY);
@@ -735,6 +749,7 @@ export function loadCashflowSettings(): CashflowSettings {
 }
 
 export function saveCashflowSettings(settings: CashflowSettings): void {
+  if (isSampleMode()) { setSandboxCashflowSettings(settings); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
     window.localStorage.setItem(CASHFLOW_SETTINGS_KEY, JSON.stringify(settings));

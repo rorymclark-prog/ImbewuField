@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/lib/theme';
 import { LanguageProvider } from '@/lib/i18n';
 import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
+import SampleModeBanner from '@/components/SampleModeBanner';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
               <ChatWidget />
               <PWAUpdateNotifier />
+              <SampleModeBanner />
             </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>

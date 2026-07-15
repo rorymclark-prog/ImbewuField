@@ -11,6 +11,12 @@ import {
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
 import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
+import {
+  isSampleMode,
+  getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
+  getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
+  getSandboxProduction,
+} from '@/lib/sample-mode';
 import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -417,17 +423,22 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
+      const sampling = isSampleMode();
       if (isIn) {
         if (editing?.type === 'sale') {
-          await updateSale(editing.row.id, { crop: what, kg, amount, buyer: form.buyer.trim() || null });
+          const patch = { crop: what, kg, amount, buyer: form.buyer.trim() || null };
+          if (sampling) updateSandboxSale(editing.row.id, patch); else await updateSale(editing.row.id, patch);
         } else {
-          await addSale({ crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() });
+          const row = { crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
+          if (sampling) addSandboxSale(row); else await addSale(row);
         }
       } else {
         if (editing?.type === 'expense') {
-          await updateExpense(editing.row.id, { item: what, amount, supplier: form.buyer.trim() || null, category: form.category });
+          const patch = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category };
+          if (sampling) updateSandboxExpense(editing.row.id, patch); else await updateExpense(editing.row.id, patch);
         } else {
-          await addExpense({ item: what, amount, supplier: form.buyer.trim() || null, category: form.category, spent_at: new Date().toISOString() });
+          const row = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, spent_at: new Date().toISOString() };
+          if (sampling) addSandboxExpense(row); else await addExpense(row);
         }
       }
       reset();
@@ -871,6 +882,13 @@ export default function FinancesPage() {
   }, []);
 
   const loadData = useCallback(async () => {
+    if (isSampleMode()) {
+      setProduction(getSandboxProduction());
+      setSales(getSandboxSales());
+      setExpenses(getSandboxExpenses());
+      setInvoices(loadInvoices());
+      return;
+    }
     setDataLoading(true);
     try {
       // allSettled, NOT all: one failing read (e.g. a missing Firestore composite index
@@ -894,7 +912,9 @@ export default function FinancesPage() {
   }, []);
 
   useEffect(() => {
-    if (user && user !== 'loading') {
+    if (isSampleMode()) {
+      void loadData();
+    } else if (user && user !== 'loading') {
       void loadData();
     } else if (user === null) {
       setSales([]);
@@ -915,11 +935,11 @@ export default function FinancesPage() {
 
   async function handleDeleteSale(id: string) {
     setSales((prev) => prev.filter((s) => s.id !== id));
-    try { await deleteSale(id); } finally { void loadData(); }
+    try { if (isSampleMode()) deleteSandboxSale(id); else await deleteSale(id); } finally { void loadData(); }
   }
   async function handleDeleteExpense(id: string) {
     setExpenses((prev) => prev.filter((x) => x.id !== id));
-    try { await deleteExpense(id); } finally { void loadData(); }
+    try { if (isSampleMode()) deleteSandboxExpense(id); else await deleteExpense(id); } finally { void loadData(); }
   }
 
   const hasAnyData = sales.length > 0 || expenses.length > 0 || production.length > 0 || invoices.length > 0;
@@ -972,7 +992,7 @@ export default function FinancesPage() {
             </div>
             <Skeleton className="h-48 rounded-2xl" />
           </>
-        ) : !user ? (
+        ) : !user && !isSampleMode() ? (
           <SignInPrompt />
         ) : (
           <>
@@ -983,7 +1003,7 @@ export default function FinancesPage() {
                 production={production}
                 expenses={expenses}
                 invoices={invoices}
-                name={user.displayName ?? 'My farm'}
+                name={user ? (user.displayName ?? 'My farm') : 'Ubhejane Creche (sample)'}
                 loading={dataLoading}
                 period={period}
                 setPeriod={setPeriod}

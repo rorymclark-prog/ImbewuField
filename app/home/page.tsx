@@ -21,8 +21,11 @@ import {
   Circle,
   CheckCircle2,
   CalendarPlus,
+  Sparkles,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { enterSampleMode } from '@/lib/sample-mode';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
@@ -191,6 +194,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
 
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
+  const router = useRouter();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
@@ -291,6 +295,34 @@ function HomeLandingInner() {
 
         {/* ── Hero: new-user welcome / returner Continue / default analyse-CTA ── */}
         <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
+
+        {/* ── See a sample farm — NGO/onboarding "show me how it works" entry point.
+            Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —
+            it never reads or writes any real farmer's saved data. ── */}
+        <button
+          type="button"
+          onClick={() => { enterSampleMode(); router.push('/farmer?panel=Overview'); }}
+          style={{
+            display: 'block',
+            width: '100%',
+            textAlign: 'left',
+            background: 'transparent',
+            border: '1.5px dashed rgba(192,122,30,0.45)',
+            borderRadius: 20,
+            padding: '16px 18px',
+            cursor: 'pointer',
+          }}
+        >
+          <div className="flex items-center gap-2 mb-1.5">
+            <Sparkles size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
+            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>
+              See a sample farm — Ubhejane Creche
+            </span>
+          </div>
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>
+            A real site, a full crop plan and finances — see how it all fits together.
+          </p>
+        </button>
 
         {/* ── Quick actions ── */}
         <div className="grid grid-cols-3 gap-3">

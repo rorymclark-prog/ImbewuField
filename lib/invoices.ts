@@ -2,6 +2,13 @@
 // and past invoices the farmer can call up and reprint. localStorage-backed
 // (offline-first, same as the rest of the app).
 
+import {
+  isSampleMode,
+  getSandboxCustomers, setSandboxCustomers,
+  getSandboxProducts, setSandboxProducts,
+  getSandboxInvoices, setSandboxInvoices,
+} from './sample-mode';
+
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
 export type InvoiceStatus = 'unpaid' | 'paid';
@@ -40,23 +47,32 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-invoices-changed'));
 }
 
+// Sample-mode-aware read/write per key — the only thing that changes vs the
+// real read<T>/write<T> above is where the data actually lives.
+function readCustomers(): string[] { return isSampleMode() ? getSandboxCustomers() : read<string>(C_KEY); }
+function writeCustomers(v: string[]): void { if (isSampleMode()) setSandboxCustomers(v); else write(C_KEY, v); }
+function readProducts(): Product[] { return isSampleMode() ? getSandboxProducts() : read<Product>(P_KEY); }
+function writeProducts(v: Product[]): void { if (isSampleMode()) setSandboxProducts(v); else write(P_KEY, v); }
+function readInvoicesRaw(): SavedInvoice[] { return isSampleMode() ? getSandboxInvoices() : read<SavedInvoice>(I_KEY); }
+function writeInvoices(v: SavedInvoice[]): void { if (isSampleMode()) setSandboxInvoices(v); else write(I_KEY, v); }
+
 /* ── Customers ──────────────────────────────── */
-export function loadCustomers(): string[] { return read<string>(C_KEY); }
+export function loadCustomers(): string[] { return readCustomers(); }
 export function addCustomer(name: string) {
   const n = name.trim();
   if (!n) return;
   const list = loadCustomers().filter((c) => c.toLowerCase() !== n.toLowerCase());
-  write(C_KEY, [n, ...list].slice(0, 100));
+  writeCustomers([n, ...list].slice(0, 100));
   notify();
 }
 
 /* ── Item / product presets ─────────────────── */
-export function loadProducts(): Product[] { return read<Product>(P_KEY); }
+export function loadProducts(): Product[] { return readProducts(); }
 export function addProduct(p: Product) {
   const desc = p.desc.trim();
   if (!desc) return;
   const list = loadProducts().filter((x) => x.desc.toLowerCase() !== desc.toLowerCase());
-  write(P_KEY, [{ desc, unit: p.unit, price: p.price }, ...list].slice(0, 200));
+  writeProducts([{ desc, unit: p.unit, price: p.price }, ...list].slice(0, 200));
   notify();
 }
 
@@ -66,17 +82,17 @@ export function addProduct(p: Product) {
 function migrate(inv: SavedInvoice): SavedInvoice {
   return inv.status ? inv : { ...inv, status: 'unpaid' };
 }
-export function loadInvoices(): SavedInvoice[] { return read<SavedInvoice>(I_KEY).map(migrate); }
+export function loadInvoices(): SavedInvoice[] { return readInvoicesRaw().map(migrate); }
 export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
   const list = loadInvoices().filter((x) => x.id !== inv.id);
   const updated = [migrate(inv), ...list].slice(0, 100);
-  write(I_KEY, updated);
+  writeInvoices(updated);
   notify();
   return updated;
 }
 export function deleteInvoice(id: string): SavedInvoice[] {
   const updated = loadInvoices().filter((x) => x.id !== id);
-  write(I_KEY, updated);
+  writeInvoices(updated);
   notify();
   return updated;
 }
@@ -90,7 +106,7 @@ export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMetho
       paymentMethod: status === 'paid' ? (paymentMethod ?? x.paymentMethod) : undefined,
     }
     : x));
-  write(I_KEY, updated);
+  writeInvoices(updated);
   notify();
   return updated;
 }
