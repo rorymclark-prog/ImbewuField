@@ -4,6 +4,21 @@ The almanac-direction handoff. Mockups live in `design/handoff/` (27 frames);
 the authoritative build brief is `design/BUILD-INSTRUCTIONS.md`. When the build
 and a mockup disagree, the mockup wins unless a newer decision is recorded here.
 
+## Newer decisions (newest first)
+
+- **2026-07-15 — Farmer map = the report dashboard; the report is STAGE-GATED.**
+  The `/farmer` map + `DataPanel` is the site's living report, not a one-off document.
+  A site has a **stage** — `scout → saved → traced → designed → planned`
+  (`deriveSiteStage`, `lib/completion-score.ts`) derived from the per-site completion
+  inputs — and the report only shows what the stage supports. A fresh scouting pin
+  (`scout`) shows ONLY the climate/soil/BRU scouting report + a **Save this site** hero;
+  it must NEVER show another site's parcels, weather forecast, or crop plan. Weather lives
+  on `/home` (main-site card) until a site is saved. A **completion score** (donut +
+  5-step checklist, `components/report/CompletionScore.tsx`) is the report's progress
+  spine and appears once the site is saved. Report header collapses to a slim row on
+  scroll. Full rationale + roadmap: `docs/ONBOARDING-PLAN.md`. (Design Studio `/design`
+  remains the canonical editing workshop — this is a view/edit split, not a new surface.)
+
 ## ⚠️ #1 recurring mistake — RESPONSIVE FONT SIZES (BUILD-INSTRUCTIONS §0)
 
 Phone mockups are ~392px wide; their 24–26px text is correct **for phones only.**

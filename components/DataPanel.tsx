@@ -22,7 +22,9 @@ import CompletionScore from './report/CompletionScore';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { loadCropPlan } from '@/lib/crop-plan';
 import { readLocalFarmShapes } from '@/lib/map-sync';
-import type { CompletionScoreInputs } from '@/lib/completion-score';
+import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
+import turfArea from '@turf/area';
+import turfLength from '@turf/length';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
@@ -322,6 +324,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [evidenceTick, setEvidenceTick] = useState(0);
   const completeness = getReportCompleteness(siteId);
 
+  // Has THIS pin been saved as a place? Tracks a just-saved click; the score/gating
+  // below also does a coords match against loadPlaces() so it survives a reload.
+  const [placeSaved, setPlaceSaved] = useState(false);
+  useEffect(() => { setPlaceSaved(false); }, [coords]);
+
   // Site-lifecycle completion score (located → boundary → survey → design → crop plan) —
   // the report dashboard's "how far along am I" leaderboard. Every input is scoped to
   // THIS site (a brand-new location must start near 0%, not inherit another site's work):
@@ -364,10 +371,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       });
     }
 
+    // Located = a saved place exists AT these coords (~55 m). Not "any saved place"
+    // (that credited every new pin) nor activePlaceId (a fresh save doesn't set it) —
+    // a coords match is per-site and survives reload. placeSaved forces a re-derive
+    // the instant the farmer taps Save, before loadPlaces() is re-read.
+    const savedHere = !!coords && (placeSaved || loadPlaces().some((p) =>
+      Math.abs(p.lat - coords.lat) < 0.0005 && Math.abs(p.lon - coords.lon) < 0.0005));
+
     const zoneCount = canvas?.zones.length ?? 0;
     const elementCount = canvas?.items.length ?? 0;
     return {
-      hasSite: !!activePlace,
+      hasSite: savedHere,
       boundaryPointCount: boundaryNearSite ? 3 : 0,
       surveyFilledFields: surveyChecks.filter(Boolean).length,
       surveyTotalFields: 10,
@@ -376,7 +390,83 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       hasCropPlan: (zoneCount > 0 || elementCount > 0) && loadCropPlan().plantings.length > 0,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, activePlace, tab]);
+  }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, placeSaved, tab]);
+
+  // Per-site land + water, re-derived from ONLY the polygons traced near THIS site
+  // (~2 km). The map's siteData/waterData props sum EVERY polygon the user ever drew
+  // across all farms, so at a fresh pin they show another site's parcels — this scopes
+  // them. `siteData` is in the deps so it recomputes whenever the map reports a draw edit.
+  const siteMetrics = useMemo<{ land: SiteData | null; water: WaterData | null }>(() => {
+    if (!coords) return { land: null, water: null };
+    const near = (f: GeoJSON.Feature) => {
+      const g = f.geometry;
+      if (g?.type !== 'Polygon' && g?.type !== 'MultiPolygon') return false;
+      const ring = g.type === 'Polygon' ? g.coordinates[0] : g.coordinates[0]?.[0];
+      const pt = ring?.[0];
+      return Array.isArray(pt)
+        && Math.abs(pt[0] - coords.lon) < 0.02
+        && Math.abs(pt[1] - coords.lat) < 0.02;
+    };
+    const polys = (readLocalFarmShapes()?.features ?? []).filter(near);
+    const landPolys = polys.filter((f) => f.properties?.featureType !== 'water');
+    const waterPolys = polys.filter((f) => f.properties?.featureType === 'water');
+    const AVG_DEPTH = 1.5;
+
+    let land: SiteData | null = null;
+    if (landPolys.length) {
+      const areaM2 = landPolys.reduce((s, f) => s + turfArea(f), 0);
+      const perimKm = landPolys.reduce((s, f) => {
+        try { return s + turfLength(f as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>, { units: 'kilometers' }); }
+        catch { return s; }
+      }, 0);
+      land = {
+        areaM2: Math.round(areaM2),
+        areaHa: Math.round((areaM2 / 10000) * 100) / 100,
+        perimeterM: Math.round(perimKm * 1000),
+        perimeterKm: Math.round(perimKm * 100) / 100,
+        count: landPolys.length,
+        features: landPolys.map((f) => ({
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
+        })),
+      };
+    }
+
+    let water: WaterData | null = null;
+    if (waterPolys.length) {
+      const areaM2 = waterPolys.reduce((s, f) => s + turfArea(f), 0);
+      water = {
+        count: waterPolys.length,
+        areaM2: Math.round(areaM2),
+        estVolumeKL: Math.round(areaM2 * AVG_DEPTH),
+        avgDepthM: AVG_DEPTH,
+        features: waterPolys.map((f) => ({
+          name: f.properties?.name as string | undefined,
+          category: f.properties?.category as string | undefined,
+          estVolumeKL: Math.round(turfArea(f) * AVG_DEPTH),
+        })),
+      };
+    }
+    return { land, water };
+    // siteData/waterData are here purely as change-signals: the map mints a fresh object
+    // on every draw edit (incl. clearing to null), so either one flipping tells us the
+    // farm shapes changed and this per-site recompute should re-run.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coords?.lat, coords?.lon, siteData, waterData, tab]);
+
+  // Stage-gating: what the report is allowed to show. A fresh scouting pin
+  // shows only the climate/soil scouting report + a Save hero — never another site's
+  // weather, parcels or crop plan. Each card keys off the specific signal it needs.
+  // (deriveSiteStage/SiteStage exist for the Phase-B guided coach; Phase A gates on
+  // the specific booleans below.)
+  const isSaved = completionInputs.hasSite;
+  const scorePct = useMemo(() => computeCompletionScore(completionInputs).overallPct, [completionInputs]);
+
+  // Report header collapses to a slim row once the farmer scrolls into the content,
+  // freeing space for what they came for. Reset to expanded when the site changes.
+  const [headerCollapsed, setHeaderCollapsed] = useState(false);
+  useEffect(() => { setHeaderCollapsed(false); }, [coords?.lat, coords?.lon]);
 
   // Photo prompt (pre-report interstitial)
   const [photoPromptOpen, setPhotoPromptOpen] = useState(false);
@@ -464,9 +554,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     }
   }
 
-  const [placeSaved, setPlaceSaved] = useState(false);
-  useEffect(() => { setPlaceSaved(false); }, [coords]);
-
   // One-tap save of the current location (prominent, vs the Places tab form).
   const quickSavePlace = () => {
     if (!data || !coords) return;
@@ -522,7 +609,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   return (
     <div className="h-full flex flex-col overflow-hidden">
 
-      {/* ── Site report header (Screen 3 design) ─── */}
+      {/* ── Site report header (Screen 3 design) — collapses to a slim row on scroll ─── */}
+      {headerCollapsed ? (
+        <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
+          <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: '#20190F' }}>
+            {placeName || data.biome.name}
+          </span>
+          <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
+                style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: suitability.dot, display: 'inline-block' }} />
+            <span className="font-sans font-bold" style={{ fontSize: 11, color: suitability.text, whiteSpace: 'nowrap' }}>{suitability.label}</span>
+          </span>
+          {isSaved && (
+            <span className="ml-auto font-mono flex-shrink-0" style={{ fontSize: 11, color: '#C07A1E' }}>{scorePct}%</span>
+          )}
+        </div>
+      ) : (
       <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
         {/* Overline */}
         <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.16em' }}>
@@ -577,6 +679,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Tabs (wrap so all are always visible) ──── */}
       <div
@@ -614,21 +717,48 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
       {/* ── Tab content ───────────────────────────── */}
       <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-3"
+        onScroll={(e) => {
+          // Collapse the header once scrolled in; expand near the top. The gap between
+          // thresholds is hysteresis so it can't flip-flop on the reflow it causes.
+          const y = e.currentTarget.scrollTop;
+          setHeaderCollapsed((prev) => (y > 64 ? true : y < 24 ? false : prev));
+        }}
         style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}>
 
         {/* OVERVIEW */}
         {tab === 'Overview' && (
           <>
-            {/* Site-lifecycle completion leaderboard — the report's "how far along am I" hero */}
-            <CompletionScore inputs={completionInputs} />
+            {/* Save this site — the one obvious action at a fresh scouting pin. Once saved,
+                the pin becomes a project and the leaderboard + live weather appear below. */}
+            {!isSaved && (
+              <button
+                onClick={quickSavePlace}
+                className="w-full flex items-start gap-3 text-left rounded-2xl p-4 transition-opacity hover:opacity-95 active:opacity-90"
+                style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', cursor: 'pointer' }}
+              >
+                <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 34, height: 34, background: 'rgba(247,201,126,0.18)' }}>
+                  <Bookmark size={18} style={{ color: '#F7C97E' }} />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display font-semibold" style={{ fontSize: 14.5, color: '#FBF6EC' }}>{t('saveThisPlace')}</div>
+                  <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#F7C97E', lineHeight: 1.4 }}>
+                    {placeName || data.biome.name}
+                  </div>
+                </div>
+              </button>
+            )}
 
-            {/* Live forecast — the forward-looking counterpart to the climate-normals stats below */}
-            {coords && <WeatherWidget lat={coords.lat} lon={coords.lon} />}
+            {/* Site-lifecycle completion leaderboard — only once this is your saved site */}
+            {isSaved && <CompletionScore inputs={completionInputs} />}
 
-            {/* Measured land / water — updates LIVE as a boundary is drawn or edited */}
-            {(siteData || (waterData && waterData.count > 0)) && (
+            {/* Live forecast — only for a saved site; the home hub carries weather until then */}
+            {isSaved && coords && <WeatherWidget lat={coords.lat} lon={coords.lon} />}
+
+            {/* Measured land / water — scoped to THIS site (near-coords polygons only),
+                shown once a boundary is actually traced here — never another farm's parcels. */}
+            {(siteMetrics.land || (siteMetrics.water && siteMetrics.water.count > 0)) && (
               <div className="space-y-2">
-                {siteData && (
+                {siteMetrics.land && (
                   <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
                     <div className="flex items-center gap-3 px-3.5 py-2.5">
                       <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
@@ -636,24 +766,24 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
-                          {t('yourLand')}{siteData.count && siteData.count > 1 ? ` · ${siteData.count} ${t('parcelsSectionLabel').toLowerCase()}` : ''}
+                          {t('yourLand')}{siteMetrics.land.count && siteMetrics.land.count > 1 ? ` · ${siteMetrics.land.count} ${t('parcelsSectionLabel').toLowerCase()}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteData.perimeterM >= 1000 ? `${(siteData.perimeterM / 1000).toFixed(2)} km` : `${siteData.perimeterM} m`} {t('perimeterUnit')} · {siteData.areaM2.toLocaleString()} m²
+                          {siteMetrics.land.perimeterM >= 1000 ? `${(siteMetrics.land.perimeterM / 1000).toFixed(2)} km` : `${siteMetrics.land.perimeterM} m`} {t('perimeterUnit')} · {siteMetrics.land.areaM2.toLocaleString()} m²
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        {siteData.areaHa < 1
-                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteData.areaM2.toLocaleString()}</div>
+                        {siteMetrics.land.areaHa < 1
+                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaM2.toLocaleString()}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>m²</div></>
-                          : <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteData.areaHa}</div>
+                          : <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaHa}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>{t('hectaresUnit')}</div></>
                         }
                       </div>
                     </div>
-                    {siteData.features && siteData.features.some(f => f.name) && (
+                    {siteMetrics.land.features && siteMetrics.land.features.some(f => f.name) && (
                       <div className="px-3.5 pb-2.5 space-y-1">
-                        {siteData.features.map((f, i) => f.name ? (
+                        {siteMetrics.land.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
@@ -665,7 +795,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     )}
                   </div>
                 )}
-                {waterData && waterData.count > 0 && (
+                {siteMetrics.water && siteMetrics.water.count > 0 && (
                   <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
                     <div className="flex items-center gap-3 px-3.5 py-2.5">
                       <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
@@ -673,20 +803,20 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
-                          {t('harvestingAreas')}{waterData.count > 1 ? ` · ${waterData.count}` : ''}
+                          {t('harvestingAreas')}{siteMetrics.water.count > 1 ? ` · ${siteMetrics.water.count}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {waterData.areaM2.toLocaleString()} m² {t('catchmentAreaLabel')}
+                          {siteMetrics.water.areaM2.toLocaleString()} m² {t('catchmentAreaLabel')}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{waterData.estVolumeKL.toLocaleString()}</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.water.estVolumeKL.toLocaleString()}</div>
                         <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
                       </div>
                     </div>
-                    {waterData.features && waterData.features.some(f => f.name) && (
+                    {siteMetrics.water.features && siteMetrics.water.features.some(f => f.name) && (
                       <div className="px-3.5 pb-2.5 space-y-1">
-                        {waterData.features.map((f, i) => f.name ? (
+                        {siteMetrics.water.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
@@ -834,23 +964,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             >
               <Sprout size={16} />
               {t('generateFullReport')}
-              {siteData && <span className="font-mono font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteData.areaHa} ha</span>}
+              {siteMetrics.land && <span className="font-mono font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteMetrics.land.areaHa} ha</span>}
             </button>
 
-            {/* Save place — secondary */}
-            <button
-              onClick={quickSavePlace}
-              disabled={placeSaved}
-              className="w-full flex items-center justify-center gap-2 font-sans font-semibold transition-opacity"
-              style={{
-                height: 36, borderRadius: 11, border: '1px solid #E2D8C4', cursor: 'pointer',
-                background: placeSaved ? 'rgba(31,77,43,0.06)' : '#FFFEFA',
-                color: placeSaved ? '#5C5040' : '#1F4D2B', fontSize: 13,
-              }}
-            >
-              <Bookmark size={14} />
-              {placeSaved ? t('savedToPlaces') : t('saveThisPlace')}
-            </button>
+            {/* (Saving is the Save-this-site hero at the top of a scouting pin; no second
+                save button needed once the pin is a saved place.) */}
 
             {/* Key species */}
             <Card>

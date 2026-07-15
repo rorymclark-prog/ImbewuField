@@ -26,6 +26,10 @@ export interface CompletionScoreResult {
   steps: CompletionStep[];
 }
 
+/** The furthest lifecycle stage a site has reached — drives what the report shows
+ *  and the guided "next step". Ordered: scout → saved → traced → designed → planned. */
+export type SiteStage = 'scout' | 'saved' | 'traced' | 'designed' | 'planned';
+
 /**
  * Already-loaded inputs the caller must gather before calling
  * {@link computeCompletionScore}. Every field is a plain boolean or count —
@@ -124,4 +128,21 @@ export function computeCompletionScore(inputs: CompletionScoreInputs): Completio
   const overallPct = totalWeight > 0 ? clampPct(weightedSum / totalWeight) : 0;
 
   return { overallPct, steps };
+}
+
+/**
+ * The furthest lifecycle stage a site has reached, from its completion inputs.
+ * Used to gate what the report shows (a fresh scouting pin is `scout` and must not
+ * display another site's parcels/weather/crop plan) and to drive the guided next
+ * step. Returns the MAX stage reached — because a farmer can fill the survey before
+ * tracing, card visibility should still key off the specific input where it matters
+ * (e.g. only show "Your land" when a boundary is actually traced near this site).
+ */
+export function deriveSiteStage(inputs: CompletionScoreInputs): SiteStage {
+  const hasDesign = inputs.zoneCount > 0 || inputs.elementCount > 0;
+  if (inputs.hasCropPlan && hasDesign) return 'planned';
+  if (hasDesign || inputs.surveyFilledFields > 0) return 'designed';
+  if (inputs.boundaryPointCount >= 3) return 'traced';
+  if (inputs.hasSite) return 'saved';
+  return 'scout';
 }
