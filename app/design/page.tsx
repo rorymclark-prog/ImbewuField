@@ -654,9 +654,31 @@ function DesignStudioInner() {
     setDetectError(null);
     let next: DetectSuggestion[] = [];
     switch (canvasState.step) {
-      case 'zones':
-        next = suggestZones(refLayers.boundary, refLayers.house);
+      case 'zones': {
+        if (!frame) return;
+        // Only ACCEPTED placements count as ground truth here — raw pending vision-detect
+        // suggestions are unconfirmed and would let a false-positive distort the zone plan.
+        const structures = canvasState.items
+          .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
+          .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
+        // Only close-in annual veg (zoneRec includes 1 or 2) may anchor Zone 2. An orchard
+        // tree (zoneRec [3]) placed far from the house must NOT drag Zone 2 across the plot to
+        // reach it — it belongs in Zone 3. Items with no zone hint are left out (conservative).
+        const existingVeg = canvasState.items
+          .filter((i) => {
+            const def = ELEMENTS_BY_ID[i.defId];
+            return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
+          })
+          .map((i) => ({ x: i.x, y: i.y }));
+        next = suggestZones(refLayers.boundary, refLayers.house, {
+          frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
+          driveway: refLayers.driveway,
+          site,
+          structures,
+          existingVeg,
+        });
         break;
+      }
       case 'water':
         if (!frame) return;
         next = suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
