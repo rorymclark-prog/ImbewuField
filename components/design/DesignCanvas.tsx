@@ -10,9 +10,9 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useEffect, useRef, useState } from 'react';
-import type { CanvasFrame, DesignCanvasState, DetectSuggestion, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -62,6 +62,9 @@ export interface DesignCanvasProps {
   tool: ToolKind;
   placeDefId: string | null;
   zoneDraw: 0 | 1 | 2 | 3 | 4 | 5;
+  // When set, the armed zone tool draws a labelled GROUND FEATURE (house/patio/…) instead
+  // of a permaculture effort-zone — stamped onto the committed ring's optional `feature`.
+  areaFeature?: GroundFeatureKind | null;
   lineKind: LineShape['kind'];
   activeLayers: ActiveLayers;
   refLayers: RefLayers;
@@ -244,9 +247,15 @@ function adoptTracedLayer(
   if (adoptedFeatureIds(state).has(layer.featureId)) return null;
   const src = layer.featureId;
 
-  const addZone = (zone: ZoneShape['zone']): DesignCanvasState | null => {
+  const addZone = (zone: ZoneShape['zone'], feature?: GroundFeatureKind): DesignCanvasState | null => {
     if (layer.points.length < 3) return null;
-    const shape: WithSource<ZoneShape> = { id: newId(), zone, points: layer.points, sourceFeatureId: src };
+    const shape: WithSource<ZoneShape> = {
+      id: newId(),
+      zone,
+      points: layer.points,
+      sourceFeatureId: src,
+      ...(feature ? { feature } : {}),
+    };
     return { ...state, zones: [...state.zones, shape] };
   };
   const addItem = (defId: string): DesignCanvasState | null => {
@@ -266,16 +275,19 @@ function adoptTracedLayer(
   };
 
   switch (layer.layerType) {
+    // A traced cultivation/tree-belt/roof outline is more faithfully adopted as the matching
+    // ground FEATURE (filled, labelled) than as a bare effort-zone or a generic shed item.
     case 'cultivation':
+      return addZone(2, 'veg_garden');
     case 'unknown':
       return addZone(2);
     case 'tree_belt':
-      return addZone(3);
+      return addZone(3, 'orchard');
     case 'water_body':
       return addItem('pond_small');
     case 'roof':
     case 'structure':
-      return addItem('shed');
+      return addZone(0, 'house');
     case 'access': {
       if (layer.points.length < 2) return null;
       const line: WithSource<LineShape> = { id: newId(), kind: 'path', points: layer.points, sourceFeatureId: src };
@@ -293,6 +305,7 @@ export default function DesignCanvas({
   tool,
   placeDefId,
   zoneDraw,
+  areaFeature,
   lineKind,
   activeLayers,
   refLayers,
@@ -491,7 +504,9 @@ export default function DesignCanvas({
   function commitZone(points: Array<[number, number]>) {
     const cleaned = dropTrailingDuplicates(points);
     if (cleaned.length < 3) return;
-    const shape: ZoneShape = { id: newId(), zone: zoneDraw, points: cleaned };
+    // An armed area feature stamps the ring as a ground feature; otherwise it's a plain
+    // permaculture effort-zone (feature omitted → today's behaviour verbatim).
+    const shape: ZoneShape = { id: newId(), zone: zoneDraw, points: cleaned, ...(areaFeature ? { feature: areaFeature } : {}) };
     onChange({ ...state, zones: [...state.zones, shape] });
     setDraftPoints([]);
     // Auto-select + revert to 'select' so the very next tap (the natural "let me check
@@ -1106,6 +1121,10 @@ export default function DesignCanvas({
         {activeLayers.zones &&
           state.zones.map((z) => {
             const def = ZONE_DEFS[z.zone];
+            // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
+            // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
+            const feat = z.feature ? GROUND_FEATURES[z.feature] : null;
+            const color = feat ? feat.color : def.color;
             const isSelected = selectedId === z.id;
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
             const isDraggingWholeShape = dragShape.current?.id === z.id && dragShape.current.kind === 'zone' && shapeDragDelta;
@@ -1131,11 +1150,11 @@ export default function DesignCanvas({
                 />
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
-                  fill={def.color}
-                  fillOpacity={0.2}
-                  stroke={def.color}
-                  strokeWidth={1.5}
-                  strokeDasharray="6 4"
+                  fill={color}
+                  fillOpacity={feat ? 0.32 : 0.2}
+                  stroke={color}
+                  strokeWidth={feat ? 2 : 1.5}
+                  strokeDasharray={feat ? undefined : '6 4'}
                   style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
                   onPointerDown={onZonePointerDown}
                 />
@@ -1144,10 +1163,37 @@ export default function DesignCanvas({
                   onPointerDown={onZonePointerDown}
                   style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
                 >
-                  <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
-                    {z.zone}
-                  </text>
+                  {feat ? (
+                    <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
+                      <div
+                        style={{
+                          fontSize: 9.5,
+                          fontWeight: 700,
+                          lineHeight: '18px',
+                          textAlign: 'center',
+                          color: '#FBF6EC',
+                          background: 'rgba(32,25,15,0.78)',
+                          border: `1px solid ${color}`,
+                          borderRadius: 9,
+                          padding: '1px 7px',
+                          display: 'inline-block',
+                          maxWidth: 112,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {feat.icon} {feat.label}
+                      </div>
+                    </foreignObject>
+                  ) : (
+                    <>
+                      <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
+                        {z.zone}
+                      </text>
+                    </>
+                  )}
                 </g>
                 {/* Editing handles show only in Select mode — while a draw tool is armed
                     they'd sit on top of the drawing surface and a stray tap on the ✕ (or a
@@ -1376,16 +1422,19 @@ export default function DesignCanvas({
           })}
 
         {/* Draft (in-progress) zone/line while drawing */}
-        {tool === 'zone' && draftPoints.length > 0 && (
-          <polygon
-            points={ringToPx(draftPoints, imgW, imgH)}
-            fill={ZONE_DEFS[zoneDraw].color}
-            fillOpacity={0.18}
-            stroke={ZONE_DEFS[zoneDraw].color}
-            strokeWidth={2}
-            strokeDasharray="4 3"
-          />
-        )}
+        {tool === 'zone' && draftPoints.length > 0 && (() => {
+          const draftColor = areaFeature ? GROUND_FEATURES[areaFeature].color : ZONE_DEFS[zoneDraw].color;
+          return (
+            <polygon
+              points={ringToPx(draftPoints, imgW, imgH)}
+              fill={draftColor}
+              fillOpacity={0.18}
+              stroke={draftColor}
+              strokeWidth={2}
+              strokeDasharray="4 3"
+            />
+          );
+        })()}
         {tool === 'line' && draftPoints.length > 0 && (
           <polyline
             points={polylinePoints(draftPoints, imgW, imgH)}

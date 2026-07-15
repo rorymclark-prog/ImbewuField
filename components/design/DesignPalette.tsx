@@ -7,8 +7,8 @@
 // parent; this just renders controls and calls the setters.
 
 import { useState } from 'react';
-import type { LineShape, WizardStep } from '@/lib/design-canvas';
-import { CATEGORY_META, ELEMENT_CATALOG, ZONE_DEFS, type DesignElementDef } from '@/lib/design-elements';
+import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, type DesignElementDef } from '@/lib/design-elements';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -31,6 +31,8 @@ export interface DesignPaletteProps {
   setPlaceDefId: (id: string | null) => void;
   zoneDraw: 0 | 1 | 2 | 3 | 4 | 5;
   setZoneDraw: (z: 0 | 1 | 2 | 3 | 4 | 5) => void;
+  areaFeature: GroundFeatureKind | null;
+  setAreaFeature: (f: GroundFeatureKind | null) => void;
   lineKind: LineShape['kind'];
   setLineKind: (k: LineShape['kind']) => void;
   activeLayers: ActiveLayers;
@@ -53,6 +55,10 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
   { id: 'drip', label: 'Drip', icon: '💧' },
   { id: 'windbreak', label: 'Windbreak', icon: '🌬️' },
 ];
+
+// Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
+// draw tool to record a real built/ground feature. Order = kitchen-out (house first).
+const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: string }> = [
   { key: 'water', label: 'Water', icon: '💧' },
@@ -112,6 +118,8 @@ export default function DesignPalette({
   setPlaceDefId,
   zoneDraw,
   setZoneDraw,
+  areaFeature,
+  setAreaFeature,
   lineKind,
   setLineKind,
   activeLayers,
@@ -138,6 +146,7 @@ export default function DesignPalette({
 
   // Which chip-driven controls are relevant for this step.
   const showZoneChips = step === 'zones';
+  const showAreaChips = step === 'base';
   const showLineChips = step === 'water' || step === 'structures';
   const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
@@ -146,6 +155,7 @@ export default function DesignPalette({
   );
 
   function pickElement(def: DesignElementDef) {
+    setAreaFeature(null); // arming a real element must not leave an area label armed
     if (placeDefId === def.id && tool === 'place') {
       // Tapping the armed chip again disarms.
       setPlaceDefId(null);
@@ -160,6 +170,7 @@ export default function DesignPalette({
 
   function pickZone(z: 0 | 1 | 2 | 3 | 4 | 5) {
     setHintDefId(null);
+    setAreaFeature(null); // a real permaculture zone must draw with feature=null
     if (zoneDraw === z && tool === 'zone') {
       setTool('select');
     } else {
@@ -168,8 +179,23 @@ export default function DesignPalette({
     }
   }
 
+  // Arm the (shared) polygon-draw tool to record a ground feature. Same tool as zones —
+  // the areaFeature label is what makes the committed ring a built/ground feature.
+  function pickArea(kind: GroundFeatureKind) {
+    setHintDefId(null);
+    setPlaceDefId(null);
+    if (areaFeature === kind && tool === 'zone') {
+      setAreaFeature(null);
+      setTool('select');
+    } else {
+      setAreaFeature(kind);
+      setTool('zone');
+    }
+  }
+
   function pickLine(kind: LineShape['kind']) {
     setHintDefId(null);
+    setAreaFeature(null);
     if (lineKind === kind && tool === 'line') {
       setTool('select');
     } else {
@@ -181,11 +207,13 @@ export default function DesignPalette({
   const armedHintLabel =
     tool === 'place' && armedDef
       ? `Tap the map to place ${armedDef.name}`
-      : tool === 'zone'
-        ? `Tap the map to paint Zone ${zoneDraw}`
-        : tool === 'line'
-          ? `Tap corners, then ✓ Finish`
-          : null;
+      : tool === 'zone' && areaFeature
+        ? `Draw your ${GROUND_FEATURES[areaFeature].label} — tap corners, then ✓ Finish`
+        : tool === 'zone'
+          ? `Tap the map to paint Zone ${zoneDraw}`
+          : tool === 'line'
+            ? `Tap corners, then ✓ Finish`
+            : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, fontFamily: 'inherit' }}>
@@ -268,6 +296,55 @@ export default function DesignPalette({
           })}
         </div>
       </div>
+
+      {/* Base step: ground-feature chips — draw the real house / paving / lawn / veg garden /
+          orchard / cleared ground that's already on site (filled labelled areas). */}
+      {showAreaChips && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontSize: 11.5, color: '#6B6355' }}>Draw what&apos;s already here — tap a feature, then trace its corners.</div>
+          <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+            {GROUND_FEATURE_KINDS.map((kind) => {
+              const gf = GROUND_FEATURES[kind];
+              const active = areaFeature === kind && tool === 'zone';
+              return (
+                <button
+                  key={kind}
+                  type="button"
+                  onClick={() => pickArea(kind)}
+                  style={{
+                    minHeight: guided ? 52 : 44,
+                    padding: guided ? '8px 14px' : '6px 12px',
+                    borderRadius: 10,
+                    border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                    background: active ? GREEN : PAPER,
+                    color: active ? PAPER : DARK,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    flexShrink: 0,
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                    fontSize: guided ? 13.5 : 12,
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 13,
+                      height: 13,
+                      borderRadius: 3,
+                      flexShrink: 0,
+                      background: gf.color,
+                      border: '1px solid rgba(11,18,11,0.3)',
+                    }}
+                  />
+                  <span style={{ whiteSpace: 'nowrap' }}>{gf.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Zones step: always show the zone 0-5 colour chips row */}
       {showZoneChips && (

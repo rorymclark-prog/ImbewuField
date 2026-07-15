@@ -154,11 +154,13 @@ export function evaluateDesign(
   }
 
   // ── ZONE FIT ──
-  if (state.zones.length > 0) {
+  // Ground-feature areas (house/patio/lawn…) ride on ZoneShape but aren't effort-zones.
+  const effortZones = state.zones.filter((z) => !z.feature);
+  if (effortZones.length > 0) {
     for (const item of state.items) {
       const def = defFor(defs, item);
       if (!def?.zoneRec || def.zoneRec.length === 0) continue;
-      const actual = findZoneForPoint([item.x, item.y], state.zones);
+      const actual = findZoneForPoint([item.x, item.y], effortZones);
       if (actual !== null && !def.zoneRec.includes(actual)) {
         tips.push({
           severity: 'tip',

@@ -32,10 +32,20 @@ export interface PlacedItem {
   note?: string;
 }
 
+// Real ground/built features the farmer traces on their own site (house outline, paving,
+// lawn, existing veg garden, orchard, cleared ground) — WHAT IS THERE, as opposed to the
+// permaculture effort-zones. Rides on ZoneShape via the optional `feature` tag so it reuses
+// the whole zone draw/edit/persist/adopt engine rather than a parallel shape system.
+export type GroundFeatureKind = 'house' | 'patio' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared';
+
 export interface ZoneShape {
   id: string;
   zone: 0 | 1 | 2 | 3 | 4 | 5;
   points: Array<[number, number]>; // normalised ring
+  // When set, this ring is a real ground/built feature (filled, labelled) rather than a
+  // permaculture effort-zone ring; `zone` then rides along as an inert value. Optional so
+  // it is JSON-safe and survives migrateStateToFrame's spread untouched.
+  feature?: GroundFeatureKind;
 }
 
 export interface LineShape {

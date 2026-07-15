@@ -52,18 +52,21 @@ function zoneForItem(item: PlacedItem, zones: ZoneShape[]): number | null {
 }
 
 function buildDesignSummary(state: DesignCanvasState) {
+  // Ground-feature areas (house/patio/lawn…) ride on ZoneShape but are NOT effort-zones —
+  // exclude them from the advisor's zone reasoning.
+  const effortZones = state.zones.filter((z) => !z.feature);
   const items = state.items.map((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
     const dx = it.x - 0.5;
     const dy = it.y - 0.5;
     return {
       name: def?.name ?? it.defId,
-      zone: zoneForItem(it, state.zones),
+      zone: zoneForItem(it, effortZones),
       approxPos: compassEighth(dx, dy),
     };
   });
 
-  const zones = state.zones.map((z) => {
+  const zones = effortZones.map((z) => {
     // Rough shoelace area in normalised units, scaled by frame metres for a ballpark m².
     let area2 = 0;
     for (let i = 0, j = z.points.length - 1; i < z.points.length; j = i++) {

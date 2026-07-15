@@ -34,6 +34,7 @@ import {
   type CanvasFrame,
   type DesignCanvasState,
   type DetectSuggestion,
+  type GroundFeatureKind,
   type PlacedItem,
   type WizardStep,
   type ZoneShape,
@@ -392,6 +393,9 @@ function DesignStudioInner() {
   }, []);
   const [placeDefId, setPlaceDefId] = useState<string | null>(null);
   const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5>(1);
+  // Armed ground-feature label (house/patio/…) for the shared polygon-draw tool; null = the
+  // zone tool draws a plain permaculture effort-zone.
+  const [areaFeature, setAreaFeature] = useState<GroundFeatureKind | null>(null);
   const [lineKind, setLineKind] = useState<LineShape['kind']>('swale');
   const [activeLayers, setActiveLayers] = useState({
     water: true,
@@ -657,6 +661,9 @@ function DesignStudioInner() {
   // between wizard steps instead of reverting their last content edit (item/zone/line
   // change). Saves + persists like handleChange, just skips the undoStack push.
   const setStep = useCallback((step: WizardStep) => {
+    // The ground-feature chips live only on the Base step; clear any armed feature on a step
+    // change so a still-armed 'house' can't silently stamp a plain zone drawn on another step.
+    setAreaFeature(null);
     setCanvasState((prev) => {
       if (!prev) return prev;
       const next = { ...prev, step, updatedAt: new Date().toISOString() };
@@ -1249,6 +1256,7 @@ function DesignStudioInner() {
               tool={tool}
               placeDefId={placeDefId}
               zoneDraw={zoneDraw}
+              areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
               refLayers={refLayers}
@@ -1418,6 +1426,8 @@ function DesignStudioInner() {
           setPlaceDefId={setPlaceDefId}
           zoneDraw={zoneDraw}
           setZoneDraw={setZoneDraw}
+          areaFeature={areaFeature}
+          setAreaFeature={setAreaFeature}
           lineKind={lineKind}
           setLineKind={setLineKind}
           activeLayers={activeLayers}

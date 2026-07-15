@@ -118,7 +118,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
 
   // Zones — translucent fill
   for (const zone of state.zones) {
-    if (zone.points.length < 3) continue;
+    if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
     ctx.beginPath();
     zone.points.forEach(([x, y], i) => {
@@ -259,7 +259,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
 
   // Zone ring stroke bands (edges locked; interior remains editable background).
   for (const zone of state.zones) {
-    if (zone.points.length < 3) continue;
+    if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
     zone.points.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -423,7 +423,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
               locationHint: `${compass8(item.x, item.y)} part of the property`,
             };
           });
-          const zones = state.zones.map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }));
+          const zones = state.zones.filter((z) => !z.feature).map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }));
           const polygons = state.lines.map((l) => ({ name: l.kind, type: 'line' }));
           image = await requestRender({
             imageBase64: stripDataUrl(composite),

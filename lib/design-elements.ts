@@ -63,6 +63,22 @@ export const ZONE_DEFS: Record<0 | 1 | 2 | 3 | 4 | 5, { label: string; color: st
   5: { label: ZONE_KEY[5].label, color: ZONE_COLORS[5] },
 };
 
+import type { GroundFeatureKind } from '@/lib/design-canvas';
+
+// Ground/built features the farmer draws to record WHAT IS THERE (house, paving, lawn,
+// existing veg garden, orchard, cleared ground). Rendered as filled, labelled polygons —
+// deliberately reading as solid ground, distinct from the dashed permaculture effort-zone
+// rings. Colours: roof grey, light paving grey, soft lawn green, kitchen-green veg,
+// deeper orchard green, neutral cleared.
+export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: string; icon: string }> = {
+  house: { label: 'House', color: '#8A8D91', icon: '🏠' },
+  patio: { label: 'Patio / Paving', color: '#C7C3BB', icon: '▦' },
+  lawn: { label: 'Lawn', color: '#8FBF6B', icon: '🟩' },
+  veg_garden: { label: 'Veg garden', color: '#4E8B3B', icon: '🥬' },
+  orchard: { label: 'Orchard / food forest', color: '#2F7A4A', icon: '🌳' },
+  cleared: { label: 'Cleared / other', color: '#B8AF9E', icon: '⬚' },
+};
+
 export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'jojo_1000',
