@@ -376,6 +376,14 @@ function DesignStudioInner() {
     structures: true,
     lines: true,
   });
+  // Guided hides the layer-toggle row entirely (one less decision for a first-timer), so
+  // switching INTO guided must force every layer back on — otherwise a layer a Pro-mode
+  // user hid would stay invisibly hidden with no control left to bring it back.
+  useEffect(() => {
+    if (designMode === 'guided') {
+      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true });
+    }
+  }, [designMode]);
 
   // Item edit sheet — the item currently being edited via DesignCanvas's onEditItem.
   const [editItemId, setEditItemId] = useState<string | null>(null);
@@ -906,7 +914,7 @@ function DesignStudioInner() {
           type="button"
           onClick={toggleDesignMode}
           aria-label={`Switch to ${designMode === 'pro' ? 'Guided' : 'Pro'} mode`}
-          title={designMode === 'pro' ? 'Pro: full catalog, jump any step' : 'Guided: palette filtered to this step'}
+          title={designMode === 'pro' ? 'Pro — full designer: every tool, jump any step' : 'Guided — simple step-by-step, one focus at a time'}
           style={{
             marginLeft: 'auto',
             display: 'flex',
