@@ -294,6 +294,39 @@ function bboxExtent(ring: Ring): number {
   return Math.max(maxX - minX, maxY - minY, 1);
 }
 
+function midpoint(a: Pt, b: Pt): Pt {
+  return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+}
+
+function unitVec(from: Pt, to: Pt): Pt | null {
+  const dx = to[0] - from[0];
+  const dy = to[1] - from[1];
+  const len = Math.hypot(dx, dy);
+  if (len < 1e-9) return null;
+  return [dx / len, dy / len];
+}
+
+// Nearest-anchor (Voronoi) partition of `open` into one cell per seed: cell i is the part of
+// open that is closer to seed i than to every other seed, built by intersecting open with each
+// perpendicular-bisector half-plane. This is the fix for the "concentric circles" complaint —
+// the cells TILE the open space exactly (no gaps, no overlaps) and hug the real boundary,
+// because the geometry is bisector cuts clipped to `open`, not discs stacked around one point.
+function voronoiCells(open: PcMulti, seedsPx: Pt[], pad: number): PcMulti[] {
+  // Deterministic per-index nudge so two coincident seeds can't yield a degenerate bisector.
+  const seeds = seedsPx.map((s, i): Pt => [s[0] + i * 1e-3, s[1] + i * 1e-3]);
+  return seeds.map((si, i) => {
+    let cell: PcMulti = open;
+    for (let j = 0; j < seeds.length && cell.length; j++) {
+      if (j === i) continue;
+      const dir = unitVec(seeds[j], si); // toward si → half-plane keeps the closer-to-si side
+      if (!dir) continue;
+      const half = asMulti(halfPlanePoly(midpoint(si, seeds[j]), dir, pad));
+      cell = safePc(() => polygonClipping.intersection(cell, half));
+    }
+    return cell;
+  });
+}
+
 // Nearest point ON segment ab to p (clamped — not the infinite line).
 function nearestOnSegment(p: Pt, a: Pt, b: Pt): { point: Pt; d2: number } {
   const abx = b[0] - a[0];
@@ -451,7 +484,10 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
     if (diffed.length) open = diffed;
   }
 
-  // ── Plot-scale-adaptive radii — bounded by human walking effort, not just plot size ─────
+  // ── Plot-scale-adaptive band distances — bounded by human walking effort, not just plot
+  // size. These are no longer disc radii: they set how far each zone's SEED sits from the
+  // access point along the inward axis, so nearest-anchor cells reproduce the intended band
+  // DISTANCES while following the real land shape instead of stacking as circles. ───────────
   const boundaryAreaM2 = ringArea(boundaryPx) * frame.mPerPx * frame.mPerPx;
   const scaleM = Math.sqrt(Math.max(boundaryAreaM2, 1));
   const mToPx = (m: number) => m / frame.mPerPx;
@@ -460,67 +496,61 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
   const r3 = mToPx(Math.min(70, 0.85 * scaleM));
   const r4 = mToPx(Math.min(110, 0.95 * scaleM));
 
-  // Zone 1 — daily-use disk around the anchor ∩ open space.
-  const disk1M = asMulti(diskPoly(anchorPx[0], anchorPx[1], r1));
-  const zone1 = open.length ? safePc(() => polygonClipping.intersection(open, disk1M)) : [];
-  let rest = open.length ? safePc(() => polygonClipping.difference(open, disk1M)) : [];
+  const pad = bboxExtent(boundaryPx);
+  // March seeds from the access point INTO the plot; the cut between consecutive seeds falls at
+  // their midpoint, so placing seed_k at the mid-distance of each old band keeps the boundaries
+  // near r1..r4 while the cells stay boundary-clipped regions rather than arcs.
+  const inward = unitVec(anchorPx, centroid(boundaryPx)) ?? [0, 1];
+  const bandDist = [r1 / 2, (r1 + r2) / 2, (r2 + r3) / 2, (r3 + r4) / 2, (r4 + pad) / 2];
+  const seedsPx: Pt[] = bandDist.map((d): Pt => [anchorPx[0] + inward[0] * d, anchorPx[1] + inward[1] * d]);
 
-  // Existing accepted veg outside zone 1 gets folded into zone 2 rather than left to fall
-  // into whatever distance band it happens to sit in — a farmer's established beds shouldn't
-  // get re-classified as "orchard" just because they're 15 m from the door.
-  const vegPx = (opts.existingVeg ?? []).map((v): Pt => [v.x * frame.imgW, v.y * frame.imgH]);
-  const vegDisks = vegPx.map((v) => diskPoly(v[0], v[1], mToPx(3)));
-  const vegUnion = unionPolys(vegDisks);
-  const vegClaim = (vegUnion.length && rest.length)
-    ? safePc(() => polygonClipping.intersection(rest, vegUnion))
-    : [];
-
-  // Zone 2 — next disk out ∪ the existing-veg claim, both ∩/carved from `rest`.
-  const disk2M = asMulti(diskPoly(anchorPx[0], anchorPx[1], r2));
-  const zone2Band = rest.length ? safePc(() => polygonClipping.intersection(rest, disk2M)) : [];
-  const zone2 = unionAll([zone2Band, vegClaim]);
-  const zone2Claim = unionAll([disk2M, vegClaim]);
-  rest = (rest.length && zone2Claim.length) ? safePc(() => polygonClipping.difference(rest, zone2Claim)) : rest;
-
-  // Zone 3 — orchard/food-forest disk.
-  const disk3M = asMulti(diskPoly(anchorPx[0], anchorPx[1], r3));
-  const zone3 = rest.length ? safePc(() => polygonClipping.intersection(rest, disk3M)) : [];
-  rest = (rest.length && disk3M.length) ? safePc(() => polygonClipping.difference(rest, disk3M)) : rest;
-
-  // Zone 4/5 — split by slope direction when the coarse site reading says something real;
-  // a flat site (or no reading) falls back to one more distance band instead of guessing a
-  // direction, with zone 5 simply "whatever ground is left" (still door-anchored, unlike the
-  // old centroid rings).
-  let zone4: PcMulti;
-  let zone5: PcMulti;
+  // Slope: split the two OUTER zones across the slope (uphill vs downhill) instead of continuing
+  // the inward march, by offsetting their seeds laterally along the downhill vector.
   let usedSlope = false;
   const slopeDeg = opts.site?.slopeDeg;
   const aspect = opts.site?.aspectLabel;
   const dir = typeof slopeDeg === 'number' && Math.abs(slopeDeg) > 3 && aspect ? downhillVector(aspect) : null;
   if (dir) {
     usedSlope = true;
-    const pad = bboxExtent(boundaryPx);
-    const downhillHalfM = asMulti(halfPlanePoly(anchorPx, dir, pad));
-    zone5 = rest.length ? safePc(() => polygonClipping.intersection(rest, downhillHalfM)) : [];
-    zone4 = rest.length ? safePc(() => polygonClipping.difference(rest, downhillHalfM)) : [];
-  } else {
-    const disk4M = asMulti(diskPoly(anchorPx[0], anchorPx[1], r4));
-    zone4 = rest.length ? safePc(() => polygonClipping.intersection(rest, disk4M)) : [];
-    zone5 = rest.length ? safePc(() => polygonClipping.difference(rest, disk4M)) : [];
+    const base: Pt = [anchorPx[0] + inward[0] * bandDist[3], anchorPx[1] + inward[1] * bandDist[3]];
+    const lat = pad * 0.4;
+    seedsPx[3] = [base[0] - dir[0] * lat, base[1] - dir[1] * lat]; // zone 4 — uphill/level side
+    seedsPx[4] = [base[0] + dir[0] * lat, base[1] + dir[1] * lat]; // zone 5 — downhill side
   }
+
+  const cells = voronoiCells(open, seedsPx, pad);
+
+  // Existing accepted veg belongs to zone 2 whichever cell it lands in — pull it out of the
+  // outer cells and fold it into zone 2 so a farmer's established beds aren't re-classified as
+  // "orchard" just because they're 15 m from the door.
+  const vegPx = (opts.existingVeg ?? []).map((v): Pt => [v.x * frame.imgW, v.y * frame.imgH]);
+  const vegDisks = vegPx.map((v) => diskPoly(v[0], v[1], mToPx(3)));
+  const vegUnion = unionPolys(vegDisks);
+  const vegClaim = (vegUnion.length && open.length)
+    ? safePc(() => polygonClipping.intersection(open, vegUnion))
+    : [];
+  if (vegClaim.length) {
+    // Remove the veg claim from EVERY cell (incl. zone 1) before folding it into zone 2, so a
+    // veg patch that fell in zone 1's Voronoi cell can't leave zone 1 and zone 2 overlapping.
+    // largestOuterRing/mergeAllRings bridge the resulting notch, so no interior hole remains.
+    for (let k = 0; k < cells.length; k++) {
+      if (cells[k].length) cells[k] = safePc(() => polygonClipping.difference(cells[k], vegClaim));
+    }
+  }
+  const zone2 = unionAll([cells[1], vegClaim]);
 
   const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
     if (ring.length < 3) return;
     out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
   };
 
-  emit(1, largestOuterRing(zone1), `Daily-use — ${anchorNote}`);
+  emit(1, largestOuterRing(cells[0]), `Daily-use — ${anchorNote}`);
   emit(2, mergeAllRings(zone2), 'Veg beds & intensive care');
-  emit(3, largestOuterRing(zone3), 'Orchard / food forest');
-  emit(4, largestOuterRing(zone4), usedSlope ? 'Low-care — uphill/level side' : 'Low-care & support');
+  emit(3, largestOuterRing(cells[2]), 'Orchard / food forest');
+  emit(4, largestOuterRing(cells[3]), usedSlope ? 'Low-care — uphill/level side' : 'Low-care & support');
   emit(
     5,
-    largestOuterRing(zone5),
+    largestOuterRing(cells[4]),
     usedSlope
       ? `Conservation / buffer — downhill side (${slopeDeg?.toFixed(0)}° slope facing ${aspect})`
       : 'Wild edge & buffer — the ground farthest from the door',
@@ -583,48 +613,32 @@ export function suggestZonesFromPlan(
     if (diffed.length) open = diffed;
   }
 
-  // Keep AI extents within the same walking-effort envelope suggestZones uses, so a wild
-  // over/under-estimate can't produce a pinprick or a plot-swallowing disk.
-  const boundaryAreaM2 = ringArea(boundaryPx) * frame.mPerPx * frame.mPerPx;
-  const scaleM = Math.sqrt(Math.max(boundaryAreaM2, 1));
-  const mToPx = (m: number) => m / frame.mPerPx;
-
   // Dedupe by zone number (keep the first), drop 0 (house handled above) and out-of-range,
-  // process ascending so each zone carves the ground the closer/lower zones already claimed.
+  // sort ascending so zone numbers read low→high (order no longer affects geometry — the
+  // partition below assigns ground by nearest anchor, not by carve sequence).
   const seen = new Set<number>();
   const planZones = plan.zones
     .filter((z) => Number.isFinite(z.zone) && z.zone >= 1 && z.zone <= 5)
     .filter((z) => (seen.has(z.zone) ? false : (seen.add(z.zone), true)))
     .sort((a, b) => a.zone - b.zone);
 
-  const maxZone = planZones.length ? planZones[planZones.length - 1].zone : 0;
-
   const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
     if (ring.length < 3) return;
     out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
   };
 
-  let rest: PcMulti = open;
-  for (const pz of planZones) {
+  // The AI already placed each zone's anchor where it belongs on THIS real plot; a nearest-anchor
+  // partition of the open space over those anchors tiles the plot into land-following regions —
+  // no leftover-catch hack needed, since Voronoi cells already fill open completely.
+  const seedsPx: Pt[] = planZones.map(
+    (pz): Pt => [clamp01(pz.anchor[0]) * frame.imgW, clamp01(pz.anchor[1]) * frame.imgH],
+  );
+  const cells = voronoiCells(open, seedsPx, bboxExtent(boundaryPx));
+  planZones.forEach((pz, i) => {
     const zone = pz.zone as 1 | 2 | 3 | 4 | 5;
     const note = pz.rationale && pz.rationale.trim() ? pz.rationale.trim() : `Zone ${zone} (approximate)`;
-
-    // The outermost recommended zone (usually 5, the wild/buffer) takes ALL remaining open
-    // ground, so the plan always tiles out to the boundary instead of leaving a bare gap.
-    if (zone === maxZone) {
-      emit(zone, largestOuterRing(rest), note);
-      rest = [];
-      continue;
-    }
-
-    const ax = clamp01(pz.anchor[0]) * frame.imgW;
-    const ay = clamp01(pz.anchor[1]) * frame.imgH;
-    const rPx = mToPx(Math.max(2, Math.min(pz.extentM, 0.95 * scaleM)));
-    const disk = asMulti(diskPoly(ax, ay, rPx));
-    const claim = rest.length ? safePc(() => polygonClipping.intersection(rest, disk)) : [];
-    emit(zone, largestOuterRing(claim), note);
-    rest = rest.length && disk.length ? safePc(() => polygonClipping.difference(rest, disk)) : rest;
-  }
+    emit(zone, largestOuterRing(cells[i]), note);
+  });
 
   return out;
 }
