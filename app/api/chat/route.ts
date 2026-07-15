@@ -55,6 +55,7 @@ Climate: Köppen ${loc.climate.koppen}; mean ${loc.climate.meanTemp}°C (winter 
 Rainfall: ${loc.rainfall.annual}mm/yr, ${loc.rainfall.pattern} pattern (wet ${loc.rainfall.wetSeason}, dry ${loc.rainfall.drySeason})
 Terrain: ${loc.elevation.elevation}m ASL, slope ${loc.elevation.slopeDeg}°, ${loc.elevation.aspectLabel}-facing
 Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.organicCarbon}%`
+      + (loc.bru ? `\nKZN Bioresource Unit: zone ${loc.bru.brucode}, closest to ${loc.bru.nearestBrg} Bioresource Group (best-effort climate match, not confirmed), zone temps ${loc.bru.tmin}–${loc.bru.tmax}°C — extra local zone context only, do not quote its rainfall figure, use the Rainfall above` : '')
       + (ctx.siteData ? `\nDrawn land area: ${ctx.siteData.areaHa} ha (${ctx.siteData.areaM2.toLocaleString()} m²)` : '')
       + (ctx.waterData ? `\nWater storage drawn: ~${ctx.waterData.estVolumeKL.toLocaleString()} kL` : ''));
   }

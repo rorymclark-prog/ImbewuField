@@ -19,7 +19,7 @@ function buildPrompt(d: LocationData): string {
 --- SITE DATA ---
 Coordinates: ${d.lat.toFixed(4)}°S, ${d.lon.toFixed(4)}°E
 Biome: ${d.biome.name} (${d.biome.code}) — ${d.biome.description}
-Known biome challenges: ${d.biome.challenges.join('; ')}
+Known biome challenges: ${d.biome.challenges.join('; ')}${d.bru ? `\nKZN Bioresource Unit: zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest matching Bioresource Group ${d.bru.nearestBrg} (best-effort climate match — treat as approximate, not confirmed). Zone temps ${d.bru.tmin}–${d.bru.tmax}°C. Use as extra zone context (frost/mistbelt/grassveld character) — do NOT quote its rainfall figure, only the Annual rainfall above.` : ''}
 
 CLIMATE
 - Köppen: ${d.climate.koppen} (${d.climate.koppenDesc})

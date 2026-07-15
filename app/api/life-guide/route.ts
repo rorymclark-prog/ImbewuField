@@ -97,11 +97,11 @@ export async function POST(req: NextRequest) {
   const { locationData }: { locationData: LocationData } = await req.json();
   if (!locationData?.biome) return NextResponse.json({ error: 'No location data' }, { status: 400 });
 
-  const { biome, rainfall, climate, soil, vegetation } = locationData;
+  const { biome, rainfall, climate, soil, vegetation, bru } = locationData;
 
   const prompt = `Living-systems guide for a smallholder in the ${biome.name} biome, South Africa.
-${Math.abs(locationData.lat).toFixed(2)}°S ${locationData.lon.toFixed(2)}°E · ${rainfall.annual}mm (${rainfall.pattern}) · ${climate.koppen} · ${soil.textureClass} pH${soil.ph.toFixed(1)}${vegetation?.vegUnit ? ' · ' + vegetation.vegUnit : ''}
-Keep all responses concise — names and short phrases only, no long descriptions.`;
+${Math.abs(locationData.lat).toFixed(2)}°S ${locationData.lon.toFixed(2)}°E · ${rainfall.annual}mm (${rainfall.pattern}) · ${climate.koppen} · ${soil.textureClass} pH${soil.ph.toFixed(1)}${vegetation?.vegUnit ? ' · ' + vegetation.vegUnit : ''}${bru ? ` · KZN BRU zone ${bru.brucode}, ~${bru.nearestBrg} character (approximate climate match, not confirmed), ${bru.tmin}–${bru.tmax}°C` : ''}
+Keep all responses concise — names and short phrases only, no long descriptions. If a BRU zone is given, treat it as soft local-climate context only — never restate its rainfall, only the mm figure already given above.`;
 
   try {
     const response = await client.messages.create({

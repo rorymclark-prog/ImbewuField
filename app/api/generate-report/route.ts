@@ -180,7 +180,7 @@ export async function POST(req: NextRequest) {
 
 ---
 SITE DATA
-Biome: ${d.biome.name} (${d.biome.code}) — ${d.biome.description}${d.vegetation ? `\nExact vegetation type (SANBI 2018 National Vegetation Map): ${d.vegetation.vegUnit} — biome ${d.vegetation.biome}. Use this precise vegetation unit to name truly local indigenous species and the natural plant community.` : ''}
+Biome: ${d.biome.name} (${d.biome.code}) — ${d.biome.description}${d.vegetation ? `\nExact vegetation type (SANBI 2018 National Vegetation Map): ${d.vegetation.vegUnit} — biome ${d.vegetation.biome}. Use this precise vegetation unit to name truly local indigenous species and the natural plant community.` : ''}${d.bru ? `\nKZN Bioresource Unit (KZN DARD): zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest matching Bioresource Group: ${d.bru.nearestBrg} — this is a BEST-EFFORT climate-similarity match, NOT a verified BRU→BRG crosswalk, so name it as approximate, never as confirmed fact. Zone temperature range ${d.bru.tmin}–${d.bru.tmax}°C (mean ${d.bru.tmean}°C). Use this as extra agro-ecological zone context (e.g. frost/mistbelt character, local grassveld type) alongside the vegetation unit above. Do NOT quote the BRU's own zone-average rainfall as a rainfall figure — Annual rainfall below is the ONLY rainfall number to use; never present two conflicting rainfall figures.` : ''}
 Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E
 ${admin ? `Administrative area (reverse-geocoded — use these REAL names, do not invent): ${admin.label}${admin.municipality ? `\n  · Local municipality: ${admin.municipality}` : ''}${admin.district ? `\n  · District municipality: ${admin.district}` : ''}${admin.province ? `\n  · Province: ${admin.province}` : ''}` : 'Administrative area: identify the local & district municipality and province from the coordinates.'}
 Elevation: ${d.elevation.elevation}m ASL · Slope: ${d.elevation.slopeDeg}° (${d.elevation.slopePct}%) · Aspect: ${d.elevation.aspectLabel} (${facingNote})
@@ -248,7 +248,7 @@ ${sections.includes('Executive Summary') ? `## Executive Summary
 ${d.vegetation
   ? `The SANBI 2018 National Vegetation Map places this site in the **${d.vegetation.vegUnit}** vegetation unit (biome: ${d.vegetation.biome}${d.vegetation.bioregion ? `, bioregion: ${d.vegetation.bioregion}` : ''}).`
   : `The biome at this location is **${d.biome.name}** (${d.biome.code}).`}
-
+${d.bru ? `\nThis site also falls in KZN Bioresource Unit zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest to the **${d.bru.nearestBrg}** Bioresource Group — a best-effort climate-similarity match, so refer to it as approximate ("similar to...", "in the ${d.bru.nearestBrg} zone character") rather than a confirmed classification. Zone temperatures run ${d.bru.tmin}–${d.bru.tmax}°C. Use this to sharpen frost risk and local vegetation character (e.g. mistbelt, grassveld type) — do not restate its rainfall figure, only the Annual rainfall given elsewhere in this brief.\n` : ''}
 Using the site data above, write this section:
 
 1. **Natural plant community:** Name the exact natural vegetation type at this spot. Use the SANBI vegetation unit and biome name (${d.vegetation ? `${d.vegetation.vegUnit}, ${d.vegetation.biome}` : d.biome.name}). Describe what this plant community looks like — its structure, dominant plants, and natural cycles.
