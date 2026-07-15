@@ -33,7 +33,9 @@ import PopiaConsent from '@/components/PopiaConsent';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
+import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
 // Falls back to 'en-ZA' for any code not listed (covers future additions).
@@ -93,6 +95,37 @@ function LastSiteCard({ site }: { site: LastSite }) {
         </div>
       </div>
     </Link>
+  );
+}
+
+// Weather for the farmer's designated MAIN site — separate from LastSiteCard
+// (which tracks the last-VIEWED map point, not necessarily a saved/main site).
+function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void }) {
+  const { t } = useLanguage();
+  const showPicker = places.length > 1;
+  return (
+    <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
+          <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{site.name}</div>
+        </div>
+        {showPicker && (
+          <select
+            value={site.id}
+            onChange={(e) => onSetMain(e.target.value)}
+            aria-label={t('homeSetAsMain')}
+            className="font-sans"
+            style={{ fontSize: 11, border: '1px solid #E2D8C4', borderRadius: 8, background: '#FFFEFA', color: '#5C5040', padding: '4px 6px', maxWidth: 120 }}
+          >
+            {places.map((p) => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
+        )}
+      </div>
+      <WeatherWidget lat={site.lat} lon={site.lon} compact />
+    </div>
   );
 }
 
@@ -162,6 +195,7 @@ function HomeLandingInner() {
   const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
+  const [places, setPlaces] = useState<SavedPlace[]>([]);
   const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);
   const { user } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
@@ -170,7 +204,16 @@ function HomeLandingInner() {
     setLastSite(getLastSite());
     const completedIds = loadCompletedTaskIds();
     setBoardTasks(loadCropBoardTasks(completedIds));
+
+    const refreshPlaces = () => setPlaces(loadPlaces());
+    refreshPlaces();
+    // setMainSiteId() fires this same event, so the picker + weather block
+    // update immediately without a page reload.
+    window.addEventListener('permamap-places-changed', refreshPlaces);
+    return () => window.removeEventListener('permamap-places-changed', refreshPlaces);
   }, []);
+
+  const mainSite = resolveMainSite(places);
 
   function toggleTaskComplete(id: string) {
     setBoardTasks((prev) => {
@@ -239,6 +282,10 @@ function HomeLandingInner() {
       <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
 
         {lastSite && <LastSiteCard site={lastSite} />}
+
+        {mainSite && (
+          <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
+        )}
 
         {/* ── Analyse a site — CTA card ── */}
         <Link

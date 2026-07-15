@@ -7,6 +7,7 @@ import { fetchWeatherForecast, describeWeatherCode, type WeatherForecast } from 
 interface Props {
   lat: number;
   lon: number;
+  compact?: boolean; // tighter spacing + shorter forecast strip for the home-hub mount
 }
 
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -19,7 +20,7 @@ function dayLabel(isoDate: string, index: number): string {
   return DAY_LABELS[new Date(y, m - 1, d).getDay()];
 }
 
-export default function WeatherWidget({ lat, lon }: Props) {
+export default function WeatherWidget({ lat, lon, compact = false }: Props) {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
 
@@ -67,6 +68,7 @@ export default function WeatherWidget({ lat, lon }: Props) {
   const frostDays = daily.filter((d) => d.frostWarning);
   const heatDays = daily.filter((d) => d.heatWarning);
   const rainDays = daily.filter((d) => d.heavyRainWarning);
+  const stripDays = compact ? daily.slice(0, 4) : daily;
 
   return (
     <div className="space-y-2">
@@ -102,9 +104,9 @@ export default function WeatherWidget({ lat, lon }: Props) {
       {/* Current conditions + today's irrigation hint */}
       <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <div className="flex items-center gap-3 px-3.5 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
-          <span style={{ fontSize: 26, lineHeight: 1 }}>{currentDesc.icon}</span>
+          <span style={{ fontSize: compact ? 22 : 26, lineHeight: 1 }}>{currentDesc.icon}</span>
           <div className="flex-1 min-w-0">
-            <div className="font-display font-bold" style={{ fontSize: 18, color: '#20190F', lineHeight: 1.1 }}>
+            <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: '#20190F', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
             </div>
             <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{currentDesc.label}</div>
@@ -124,15 +126,15 @@ export default function WeatherWidget({ lat, lon }: Props) {
           </div>
         )}
 
-        {/* 7-day strip */}
+        {/* Forecast strip — full 7 days, or first 4 in compact mode */}
         <div className="flex overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
-          {daily.map((d, i) => {
+          {stripDays.map((d, i) => {
             const desc = describeWeatherCode(d.weatherCode);
             return (
               <div
                 key={d.date}
                 className="flex flex-col items-center flex-shrink-0 px-2.5 py-2.5"
-                style={{ minWidth: 62, borderRight: i < daily.length - 1 ? '1px solid #F0E9D8' : 'none' }}
+                style={{ minWidth: 62, borderRight: i < stripDays.length - 1 ? '1px solid #F0E9D8' : 'none' }}
               >
                 <div className="font-sans font-medium" style={{ fontSize: 10.5, color: '#94876F' }}>{dayLabel(d.date, i)}</div>
                 <div style={{ fontSize: 18, lineHeight: 1.4 }}>{desc.icon}</div>
