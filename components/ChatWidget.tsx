@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
@@ -22,6 +22,50 @@ export default function ChatWidget() {
     return () => window.removeEventListener('imbewu-drawing', h);
   }, []);
 
+  // Draggable launcher: no single fixed corner is free on every page (map
+  // controls own bottom-right, palettes/nav own the others), so let the user
+  // park Lima wherever suits their screen. Position persists per device; a tap
+  // (movement under the drag threshold) still opens Lima.
+  const FAB_SIZE = 56;
+  const [fabPos, setFabPos] = useState<{ x: number; y: number } | null>(null);
+  const dragRef = useRef<{ sx: number; sy: number; ox: number; oy: number; moved: boolean; lx: number; ly: number } | null>(null);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('imbewu_lima_fab_pos');
+      if (!raw) return;
+      const p = JSON.parse(raw);
+      if (typeof p?.x !== 'number' || typeof p?.y !== 'number') return;
+      // Clamp a saved position back into view in case the viewport shrank.
+      const x = Math.max(8, Math.min(window.innerWidth - FAB_SIZE - 8, p.x));
+      const y = Math.max(8, Math.min(window.innerHeight - FAB_SIZE - 8, p.y));
+      setFabPos({ x, y });
+    } catch { /* ignore */ }
+  }, []);
+
+  function onFabPointerDown(e: React.PointerEvent<HTMLButtonElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    dragRef.current = { sx: e.clientX, sy: e.clientY, ox: e.clientX - rect.left, oy: e.clientY - rect.top, moved: false, lx: rect.left, ly: rect.top };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+  }
+  function onFabPointerMove(e: React.PointerEvent<HTMLButtonElement>) {
+    const d = dragRef.current;
+    if (!d) return;
+    if (!d.moved && Math.hypot(e.clientX - d.sx, e.clientY - d.sy) < 6) return;
+    d.moved = true;
+    const x = Math.max(8, Math.min(window.innerWidth - FAB_SIZE - 8, e.clientX - d.ox));
+    const y = Math.max(8, Math.min(window.innerHeight - FAB_SIZE - 8, e.clientY - d.oy));
+    d.lx = x; d.ly = y;
+    setFabPos({ x, y });
+  }
+  function onFabPointerUp(e: React.PointerEvent<HTMLButtonElement>) {
+    const d = dragRef.current;
+    dragRef.current = null;
+    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
+    if (!d) return;
+    if (!d.moved) { setOpen(true); return; } // it was a tap, not a drag → open Lima
+    try { localStorage.setItem('imbewu_lima_fab_pos', JSON.stringify({ x: d.lx, y: d.ly })); } catch { /* ignore */ }
+  }
+
   // Skip on auth pages, home (which has LimaBar), and the Design Studio (its
   // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select).
   if (
@@ -33,15 +77,21 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Launcher FAB — bottom-left to avoid the map's bottom-right controls */}
+      {/* Launcher FAB — draggable; defaults bottom-left, remembers where you park it */}
       {!open && !drawing && (
         <button
-          onClick={() => setOpen(true)}
-          aria-label="Open Lima, your field guide"
-          className="no-print fixed z-[60] bottom-[72px] left-4 flex items-center justify-center rounded-full w-14 h-14 shadow-lg transition-all"
+          onPointerDown={onFabPointerDown}
+          onPointerMove={onFabPointerMove}
+          onPointerUp={onFabPointerUp}
+          aria-label="Open Lima, your field guide — drag to move"
+          title="Tap to ask Lima · drag to move"
+          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 shadow-lg ${fabPos ? '' : 'bottom-[72px] left-4'}`}
           style={{
             backgroundColor: '#1F4D2B',
             boxShadow: '0 4px 16px rgba(32,25,15,0.20)',
+            touchAction: 'none',
+            cursor: 'grab',
+            ...(fabPos ? { left: fabPos.x, top: fabPos.y } : {}),
           }}
         >
           <Sprout size={22} className="text-white" strokeWidth={1.75} />

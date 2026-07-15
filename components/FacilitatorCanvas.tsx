@@ -3387,8 +3387,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
       {/* ── Canvas ── */}
       <div ref={wrapRef} className="relative flex-1" style={{ background: '#E4DCC6', minWidth: 0, cursor: armed ? 'crosshair' : panMode ? 'grab' : 'default' }}>
-        {/* Fit / re-centre + undo/redo — overlaid top-right, above the stepper bar */}
-        <div className="absolute top-2 right-2 z-20 flex items-center gap-1 pointer-events-auto">
+        {/* Fit / re-centre + undo/redo — bottom-right map controls, clear of the
+            top tab/stepper row (which used to run under them) and clear of the
+            bottom-centre action bar and bottom-left Lima button. */}
+        <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1 pointer-events-auto">
           <button onClick={undo} disabled={!canUndo} title="Undo (Ctrl/Cmd+Z)"
             className="flex items-center justify-center rounded-lg"
             style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: canUndo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
@@ -3412,7 +3414,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         {/* GUIDED header — one step, one question, one next button. */}
         {uiMode === 'guided' && (
-          <div className="absolute top-2 left-2 right-36 z-10 rounded-xl pointer-events-auto px-3 py-2"
+          <div className="absolute top-2 left-2 right-2 z-10 rounded-xl pointer-events-auto px-3 py-2"
             style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-mono flex-shrink-0" style={{ color: '#9A8268' }}>Step {guidedStep + 1} of {GUIDED_STEPS.length}</span>
@@ -3433,7 +3435,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         {/* Stepper + coach — docked at the top of the canvas (PRO mode) */}
         {uiMode === 'pro' && (
-        <div className="absolute top-2 left-2 right-12 z-10 rounded-xl pointer-events-auto"
+        <div className="absolute top-2 left-2 right-2 z-10 rounded-xl pointer-events-auto"
           style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
           <div className="flex items-center gap-1 px-1.5 py-1 overflow-x-auto">
             <button onClick={goPrevLayer} disabled={layerIndex === 0} className="text-xs font-mono px-1 flex-shrink-0" style={{ color: layerIndex === 0 ? '#C7BCA6' : '#9A8268' }}>‹ Back</button>
