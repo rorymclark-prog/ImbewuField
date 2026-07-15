@@ -1,4 +1,5 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { isSampleMode } from './sample-mode';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -17,6 +18,7 @@ export interface SavedReport {
 const KEY = 'imbewu_saved_reports';
 
 export function loadReports(): SavedReport[] {
+  if (isSampleMode()) return []; // never surface the real signed-in user's own saved reports inside a demo
   if (typeof window === 'undefined') return [];
   try {
     const v = JSON.parse(localStorage.getItem(KEY) ?? '[]');
@@ -31,6 +33,7 @@ function notify() {
 }
 
 export function saveReport(r: SavedReport): { reports: SavedReport[]; saved: boolean } {
+  if (isSampleMode()) return { reports: [], saved: false }; // demo "save" no-ops — never writes real storage
   const others = loadReports().filter((x) => x.id !== r.id);
   const updated = [r, ...others].slice(0, 50); // keep the 50 most recent
   let saved = false;
@@ -43,6 +46,7 @@ export function saveReport(r: SavedReport): { reports: SavedReport[]; saved: boo
 }
 
 export function deleteReport(id: string): SavedReport[] {
+  if (isSampleMode()) return []; // no-op — nothing real was ever saved to delete
   const updated = loadReports().filter((x) => x.id !== id);
   try { localStorage.setItem(KEY, JSON.stringify(updated)); } catch {}
   notify();

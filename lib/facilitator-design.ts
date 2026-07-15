@@ -6,6 +6,8 @@
 // structures → planting → review. Each layer is saved independently and the
 // coach guides the farmer from one to the next.
 
+import { isSampleMode, getSandboxFacilitatorState, setSandboxFacilitatorState, clearSandboxFacilitatorState } from './sample-mode';
+
 export type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
   | 'bed' | 'hugel' | 'banana' | 'tree' | 'foodforest' | 'herb' | 'shrub'
@@ -362,6 +364,7 @@ export function geomMToPx(
 const STORE_KEY = 'imbewu_facilitator_design_v1';
 
 export function saveFacilitatorState(s: FacilitatorDesignState): void {
+  if (isSampleMode()) { setSandboxFacilitatorState(s); return; }
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(s));
   } catch {
@@ -373,6 +376,7 @@ export function saveFacilitatorState(s: FacilitatorDesignState): void {
 }
 
 export function loadFacilitatorState(): FacilitatorDesignState | null {
+  if (isSampleMode()) return getSandboxFacilitatorState();
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return null;
@@ -385,5 +389,6 @@ export function loadFacilitatorState(): FacilitatorDesignState | null {
 }
 
 export function clearFacilitatorState(): void {
+  if (isSampleMode()) { clearSandboxFacilitatorState(); return; }
   try { localStorage.removeItem(STORE_KEY); } catch { /* noop */ }
 }

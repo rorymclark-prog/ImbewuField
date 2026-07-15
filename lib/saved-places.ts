@@ -1,5 +1,6 @@
 import { upsertPlace, removePlace } from './user-sync';
 import { getFirebase } from './firebase/init';
+import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -34,6 +35,7 @@ export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string 
 const KEY = 'permamap_saved_places';
 
 export function loadPlaces(): SavedPlace[] {
+  if (isSampleMode()) return getSandboxPlaces();
   if (typeof window === 'undefined') return [];
   try {
     const v = JSON.parse(localStorage.getItem(KEY) ?? '[]');
@@ -53,6 +55,11 @@ function currentUid(): string | undefined {
 
 export function savePlace(place: SavedPlace): SavedPlace[] {
   const stamped = { ...place, updatedAt: Date.now() };
+  if (isSampleMode()) {
+    const updated = upsertSandboxPlace(stamped);
+    notify();
+    return updated;
+  }
   const places = loadPlaces().filter(p => p.id !== stamped.id);
   const updated = [stamped, ...places];
   localStorage.setItem(KEY, JSON.stringify(updated));
@@ -63,6 +70,11 @@ export function savePlace(place: SavedPlace): SavedPlace[] {
 }
 
 export function deletePlace(id: string): SavedPlace[] {
+  if (isSampleMode()) {
+    const updated = deleteSandboxPlace(id);
+    notify();
+    return updated;
+  }
   const updated = loadPlaces().filter(p => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
@@ -72,6 +84,13 @@ export function deletePlace(id: string): SavedPlace[] {
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
+  if (isSampleMode()) {
+    const existing = getSandboxPlaces().find(p => p.id === id);
+    if (!existing) { notify(); return getSandboxPlaces(); }
+    const updated = upsertSandboxPlace({ ...existing, lat, lon, updatedAt: Date.now() });
+    notify();
+    return updated;
+  }
   let moved: SavedPlace | undefined;
   const updated = loadPlaces().map(p => {
     if (p.id !== id) return p;
