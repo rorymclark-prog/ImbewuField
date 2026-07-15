@@ -21,6 +21,7 @@ import WeatherWidget from './WeatherWidget';
 import CompletionScore from './report/CompletionScore';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { loadCropPlan } from '@/lib/crop-plan';
+import { readLocalFarmShapes } from '@/lib/map-sync';
 import type { CompletionScoreInputs } from '@/lib/completion-score';
 import { useLanguage } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
@@ -322,9 +323,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const completeness = getReportCompleteness(siteId);
 
   // Site-lifecycle completion score (located → boundary → survey → design → crop plan) —
-  // the report dashboard's "how far along am I" leaderboard. Pure inputs gathered here;
-  // recomputed when the active site, survey, measured boundary, or Overview tab changes
-  // (the design canvas + crop plan are read from local storage at that point).
+  // the report dashboard's "how far along am I" leaderboard. Every input is scoped to
+  // THIS site (a brand-new location must start near 0%, not inherit another site's work):
+  // located = this place is saved; boundary = a traced polygon NEAR these coords (~2 km,
+  // the same proximity convention the design studio uses); survey/design are keyed by
+  // surveySiteId; the crop plan store is user-global, so it only counts once this site
+  // has a design to hang it on.
   const completionInputs: CompletionScoreInputs = useMemo(() => {
     const canvas = loadCanvasState(surveySiteId);
     const s = survey;
@@ -340,18 +344,39 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       (s.existingCrops?.length ?? 0) > 0,
       !!s.farmingPractice,
     ] : [];
+
+    // Boundary traced *here*: any non-water polygon whose first vertex lies within
+    // ~0.02° (~2 km) of this site's coords. Drawn shapes are stored user-globally,
+    // so without this filter a polygon traced on one farm credits every site.
+    let boundaryNearSite = false;
+    if (coords) {
+      const fc = readLocalFarmShapes();
+      boundaryNearSite = !!fc?.features?.some((f) => {
+        if (f.properties?.featureType === 'water') return false;
+        if (f.geometry?.type !== 'Polygon' && f.geometry?.type !== 'MultiPolygon') return false;
+        const ring = f.geometry.type === 'Polygon'
+          ? f.geometry.coordinates[0]
+          : f.geometry.coordinates[0]?.[0];
+        const pt = ring?.[0];
+        return Array.isArray(pt)
+          && Math.abs(pt[0] - coords.lon) < 0.02
+          && Math.abs(pt[1] - coords.lat) < 0.02;
+      });
+    }
+
+    const zoneCount = canvas?.zones.length ?? 0;
+    const elementCount = canvas?.items.length ?? 0;
     return {
-      hasSite: loadPlaces().length > 0,
-      // A closed boundary that yields a real measured area counts as traced.
-      boundaryPointCount: siteData && siteData.areaM2 > 0 ? 3 : 0,
+      hasSite: !!activePlace,
+      boundaryPointCount: boundaryNearSite ? 3 : 0,
       surveyFilledFields: surveyChecks.filter(Boolean).length,
       surveyTotalFields: 10,
-      zoneCount: canvas?.zones.length ?? 0,
-      elementCount: canvas?.items.length ?? 0,
-      hasCropPlan: loadCropPlan().plantings.length > 0,
+      zoneCount,
+      elementCount,
+      hasCropPlan: (zoneCount > 0 || elementCount > 0) && loadCropPlan().plantings.length > 0,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [surveySiteId, survey, siteData, tab]);
+  }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, activePlace, tab]);
 
   // Photo prompt (pre-report interstitial)
   const [photoPromptOpen, setPhotoPromptOpen] = useState(false);
