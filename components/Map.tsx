@@ -15,6 +15,8 @@ import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PL
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
+import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { useLanguage } from '@/lib/i18n';
@@ -186,6 +188,33 @@ const contourFineLabelMinor: LayerProps = {
   paint: { 'text-color': '#8ab860', 'text-halo-color': '#0a150a', 'text-halo-width': 1.5 },
 };
 
+// ── Design-on-map overlay layers (read-only). Data-driven colours/widths come from each
+// feature's properties (see lib/design-overlay.ts). Split by geometry type + a `dashed`
+// flag because Mapbox line-dasharray isn't data-driven per feature. ──
+const designFillLayer: LayerProps = {
+  id: 'design-fill', type: 'fill',
+  filter: ['==', ['geometry-type'], 'Polygon'],
+  paint: { 'fill-color': ['get', 'fill'], 'fill-opacity': 0.28 },
+};
+const designOutlineLayer: LayerProps = {
+  id: 'design-outline', type: 'line',
+  filter: ['==', ['geometry-type'], 'Polygon'],
+  layout: { 'line-join': 'round' },
+  paint: { 'line-color': ['get', 'stroke'], 'line-width': 2, 'line-opacity': 0.9 },
+};
+const designLineSolidLayer: LayerProps = {
+  id: 'design-line-solid', type: 'line',
+  filter: ['all', ['==', ['geometry-type'], 'LineString'], ['!=', ['get', 'dashed'], true]],
+  layout: { 'line-join': 'round', 'line-cap': 'round' },
+  paint: { 'line-color': ['get', 'stroke'], 'line-width': ['get', 'width'], 'line-opacity': 0.95 },
+};
+const designLineDashedLayer: LayerProps = {
+  id: 'design-line-dashed', type: 'line',
+  filter: ['all', ['==', ['geometry-type'], 'LineString'], ['==', ['get', 'dashed'], true]],
+  layout: { 'line-join': 'round', 'line-cap': 'round' },
+  paint: { 'line-color': ['get', 'stroke'], 'line-width': ['get', 'width'], 'line-opacity': 0.95, 'line-dasharray': [2, 2] },
+};
+
 interface Props {
   onLocationSelect: (lat: number, lon: number) => void;
   selectedLocation: { lat: number; lon: number } | null;
@@ -202,6 +231,11 @@ interface Props {
   people?: PeopleMarker[];
   showPeople?: boolean;
   onTogglePeople?: () => void;
+  // Design-on-map overlay (read-only): when true, the current site's saved Design Studio
+  // design is drawn over the satellite. onDesignPresenceChange reports whether a design
+  // exists for this site so the parent can enable/disable its "Design" toggle.
+  showDesign?: boolean;
+  onDesignPresenceChange?: (present: boolean) => void;
 }
 
 // Placement-time prompt vocabularies for the site element sheet — common
@@ -212,7 +246,7 @@ interface Props {
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
@@ -355,6 +389,26 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // This ref is the one source of truth the handler reads at tag time.
   const activeSiteIdRef = useRef(siteIdForElements);
   useEffect(() => { activeSiteIdRef.current = siteIdForElements; }, [siteIdForElements]);
+
+  // ── Design-on-map overlay (read-only) ──────────────────────────────────────────
+  // The current site's saved Design Studio design, projected onto the live map. Keyed per
+  // site (same siteId as site elements) and refreshed on the same change event the Studio
+  // dispatches, so a design edited in the Studio shows up here without a reload. null when
+  // this site has no saved design — the parent uses that to disable its Design toggle.
+  const [designOverlay, setDesignOverlay] = useState<DesignOverlay | null>(null);
+  useEffect(() => {
+    const refresh = () => setDesignOverlay(buildDesignOverlay(siteIdForElements));
+    refresh();
+    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, [siteIdForElements]);
+
+  const designPresent = !!designOverlay;
+  useEffect(() => { onDesignPresenceChange?.(designPresent); }, [designPresent, onDesignPresenceChange]);
 
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
@@ -1876,6 +1930,35 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <Layer {...contourFineLabelMinor} />
           </Source>
         )}
+
+        {/* ── Design-on-map overlay (READ-ONLY) — the farmer's saved Design Studio design
+            drawn over the satellite. Non-interactive: not in interactiveLayerIds, so it
+            never intercepts a location-select tap. react-map-gl removes the source/layers
+            automatically when hidden or on unmount. ── */}
+        {showDesign && designOverlay && (
+          <Source id="design-overlay" type="geojson" data={designOverlay.collection}>
+            <Layer {...designFillLayer} />
+            <Layer {...designOutlineLayer} />
+            <Layer {...designLineSolidLayer} />
+            <Layer {...designLineDashedLayer} />
+          </Source>
+        )}
+
+        {/* Design element markers (read-only) — emoji footprints from the saved design.
+            pointer-events off so a tap falls through to the map (location select). */}
+        {showDesign && designOverlay && designOverlay.items.map((it) => (
+          <Marker key={`design-${it.id}`} longitude={it.lng} latitude={it.lat} anchor="center">
+            <div
+              title={it.label}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none' }}
+            >
+              <div className="flex items-center justify-center rounded-full"
+                style={{ width: 26, height: 26, background: it.color, border: '2px solid rgba(255,255,255,0.85)', boxShadow: '0 1px 4px rgba(6,16,10,0.5)', fontSize: 13, lineHeight: 1 }}>
+                <span aria-hidden="true">{it.icon}</span>
+              </div>
+            </div>
+          </Marker>
+        ))}
 
         {/* Water infrastructure point markers */}
         {!activeDraw && waterPoints.map((wp) => (

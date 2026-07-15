@@ -122,6 +122,11 @@ function HomeInner() {
   const [showPeople, setShowPeople] = useState(false);
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
+  // Design-on-map overlay: show the saved Design Studio design over the satellite as a
+  // read-only layer, turning the map into the report dashboard. designPresent is reported
+  // by the map (true only when the current site actually has a saved design).
+  const [showDesign, setShowDesign] = useState(false);
+  const [designPresent, setDesignPresent] = useState(false);
 
   useEffect(() => {
     const panel = searchParams.get('panel');
@@ -371,7 +376,39 @@ function HomeInner() {
               people={peopleMarkers}
               showPeople={showPeople}
               onTogglePeople={() => setShowPeople(v => !v)}
+              showDesign={showDesign}
+              onDesignPresenceChange={setDesignPresent}
             />
+
+            {/* ── Design overlay toggle ── */}
+            {/* Only shown when the current site has a saved Design Studio design; hidden
+                while drawing a boundary so it can't overlap the draw action bar. Turns the
+                map into the report dashboard: the design is visible without opening the Studio. */}
+            {designPresent && !drawing && (
+              <button
+                onClick={() => setShowDesign(v => !v)}
+                aria-pressed={showDesign}
+                className="absolute z-20 flex items-center gap-1.5 rounded-full font-sans font-semibold transition-all active:scale-95"
+                style={{
+                  top: 12,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  height: 40,
+                  padding: '0 16px',
+                  fontSize: 13.5,
+                  background: showDesign ? '#1F4D2B' : 'rgba(22,30,18,0.86)',
+                  border: `1px solid ${showDesign ? 'rgba(168,216,138,0.5)' : 'rgba(234,243,226,0.16)'}`,
+                  color: showDesign ? '#EAF3E2' : 'rgba(234,243,226,0.9)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
+                  cursor: 'pointer',
+                }}
+              >
+                <span aria-hidden>🎨</span>
+                {showDesign ? 'Hide design' : 'Show design'}
+              </button>
+            )}
           </div>
 
           {/* ── Drag handle to resize the side panel ── */}
