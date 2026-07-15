@@ -53,7 +53,7 @@ import {
   type AutoDesignAnswers,
 } from '@/lib/design-suggest';
 import { stripDataUrl } from '@/lib/ai-render-client';
-import DesignCanvas from '@/components/design/DesignCanvas';
+import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard from '@/components/design/DesignWizard';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
@@ -370,6 +370,10 @@ function DesignStudioInner() {
   const [locationData, setLocationData] = useState<LocationData | null>(null);
   const [layers, setLayers] = useState<DesignLayer[]>([]);
   const [refLayers, setRefLayers] = useState<RefLayers>({ boundary: [], house: [], driveway: [] });
+  // Everything the farmer traced near this site (except the boundary), classified + projected
+  // into this frame — rendered as tappable, adoptable shapes in the canvas so nothing has to
+  // be re-drawn. Phase 1 of docs/ONE-SURFACE-PLAN.md.
+  const [tracedLayers, setTracedLayers] = useState<TracedLayer[]>([]);
   const [houseXY, setHouseXY] = useState<[number, number] | null>(null);
   const [frame, setFrame] = useState<CanvasFrame | null>(null);
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
@@ -498,6 +502,37 @@ function DesignStudioInner() {
 
       setRefLayers({ boundary: boundaryRing, house: houseRing, driveway: driveLine });
       setHouseXY(centroidOf(houseRing));
+
+      // Build the tappable/adoptable traced layers: every near-site classified layer EXCEPT
+      // the one used as the boundary fence (which stays a non-adopted reference). Access
+      // shapes become polylines (adopt → path); everything else a polygon (adopt → zone/item).
+      // Geometry is projected here with the same project() the satellite fit uses, so the
+      // adopted normalised coords line up pixel-for-pixel — no redraw, no drift.
+      const boundaryFeatureId = boundaryLayer?.featureId;
+      const traced: TracedLayer[] = [];
+      for (const l of merged.layers) {
+        if (boundaryFeatureId && l.featureId === boundaryFeatureId) continue;
+        const isAccess = l.layerType === 'access';
+        const rawCoords = isAccess
+          ? (l.geometry?.type === 'Polygon' || l.geometry?.type === 'MultiPolygon'
+              ? ringFromGeometry(l.geometry)
+              : lineFromGeometry(l.geometry))
+          : ringFromGeometry(l.geometry);
+        if (rawCoords.length === 0) continue;
+        const points = rawCoords.map((c) => project(c));
+        const render: TracedLayer['render'] = isAccess ? 'line' : 'polygon';
+        if (render === 'polygon' && points.length < 3) continue;
+        if (render === 'line' && points.length < 2) continue;
+        traced.push({
+          featureId: l.featureId,
+          name: l.name,
+          layerType: l.layerType,
+          color: l.color,
+          render,
+          points,
+        });
+      }
+      setTracedLayers(traced);
 
       // Only touch the satellite (clear + refetch) when the frame centre/zoom actually
       // changed — otherwise keep whatever is already loaded and just update the non-image
@@ -1222,6 +1257,7 @@ function DesignStudioInner() {
               suggestions={suggestions}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
+              tracedLayers={tracedLayers}
             />
             {pendingSuggestions.length > 0 && (
               <div

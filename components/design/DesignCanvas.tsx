@@ -13,8 +13,33 @@ import { useEffect, useRef, useState } from 'react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
+import type { DesignLayerType } from '@/lib/design-studio';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
+
+// A shape the farmer already traced on the live map, classified + projected to this
+// frame's normalised [0..1] coords by the parent (app/design/page.tsx, via the shared
+// project()). Rendered as a visible, tappable "traced" reference so nothing has to be
+// re-drawn — one tap adopts it into an editable design object. `featureId` is the
+// back-link stamped onto the adopted shape's sourceFeatureId (Phase 1 of ONE-SURFACE-PLAN).
+export interface TracedLayer {
+  featureId: string;
+  name: string;
+  layerType: DesignLayerType;
+  color: string;
+  render: 'polygon' | 'line';
+  points: Array<[number, number]>;
+}
+
+// Adopted design shapes carry a sourceFeatureId back-link. The canonical shape types live
+// in lib/design-canvas.ts (out of scope to edit for Phase 1), so the link rides as an
+// extra optional field — structurally assignable to the base type and preserved verbatim
+// through JSON persistence and migrateStateToFrame's spreads.
+type WithSource<T> = T & { sourceFeatureId?: string };
+
+function readSourceFeatureId(shape: unknown): string | undefined {
+  return (shape as { sourceFeatureId?: string }).sourceFeatureId;
+}
 
 interface ActiveLayers {
   water: boolean;
@@ -48,6 +73,10 @@ export interface DesignCanvasProps {
   // the shape you just drew selects it instead of being swallowed by the still-armed
   // draw tool. Left unset, tool stays whatever the palette last chose (unchanged today).
   onToolChange?: (t: ToolKind) => void;
+  // Everything the farmer traced on the live map (except the boundary, which stays the
+  // fence reference), pre-projected to this frame. Tapping one offers "Use in design",
+  // which adopts it into an editable shape — the trace-then-redraw killer.
+  tracedLayers?: TracedLayer[];
 }
 
 const GOLD = '#F7C97E';
@@ -175,6 +204,88 @@ function pickScaleBarM(imgW: number, mPerPx: number): number {
   return chosen;
 }
 
+// Every featureId already adopted into the design (scanned across items/zones/lines), so a
+// traced layer is never adopted twice.
+function adoptedFeatureIds(state: DesignCanvasState): Set<string> {
+  const ids = new Set<string>();
+  for (const s of [...state.items, ...state.zones, ...state.lines]) {
+    const src = readSourceFeatureId(s);
+    if (src) ids.add(src);
+  }
+  return ids;
+}
+
+// Normalised-ring bbox → centre + metre extents, for turning a traced water/roof polygon
+// into a true-scale placed item (matches page.tsx's ringBboxM clamping).
+function normBboxM(
+  points: Array<[number, number]>,
+  frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
+): { cx: number; cy: number; wM: number; hM: number } {
+  const xs = points.map((p) => p[0]);
+  const ys = points.map((p) => p[1]);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const wM = Math.min(40, Math.max(1, (maxX - minX) * frame.imgW * frame.mPerPx));
+  const hM = Math.min(40, Math.max(1, (maxY - minY) * frame.imgH * frame.mPerPx));
+  return { cx: (minX + maxX) / 2, cy: (minY + maxY) / 2, wM, hM };
+}
+
+// Converts a traced layer into the matching design object and returns the next state, or
+// null when there's nothing to do (already adopted / degenerate geometry / boundary). The
+// geometry is already normalised, so it drops straight into the normalised shape model.
+function adoptTracedLayer(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  layer: TracedLayer,
+): DesignCanvasState | null {
+  if (layer.layerType === 'property_boundary') return null;
+  if (adoptedFeatureIds(state).has(layer.featureId)) return null;
+  const src = layer.featureId;
+
+  const addZone = (zone: ZoneShape['zone']): DesignCanvasState | null => {
+    if (layer.points.length < 3) return null;
+    const shape: WithSource<ZoneShape> = { id: newId(), zone, points: layer.points, sourceFeatureId: src };
+    return { ...state, zones: [...state.zones, shape] };
+  };
+  const addItem = (defId: string): DesignCanvasState | null => {
+    if (layer.points.length < 3) return null;
+    const { cx, cy, wM, hM } = normBboxM(layer.points, frame);
+    const isCircle = ELEMENTS_BY_ID[defId]?.shape === 'circle';
+    const item: WithSource<PlacedItem> = {
+      id: newId(),
+      defId,
+      x: cx,
+      y: cy,
+      wM: isCircle ? Math.max(wM, hM) : wM,
+      hM: isCircle ? Math.max(wM, hM) : hM,
+      sourceFeatureId: src,
+    };
+    return { ...state, items: [...state.items, item] };
+  };
+
+  switch (layer.layerType) {
+    case 'cultivation':
+    case 'unknown':
+      return addZone(2);
+    case 'tree_belt':
+      return addZone(3);
+    case 'water_body':
+      return addItem('pond_small');
+    case 'roof':
+    case 'structure':
+      return addItem('shed');
+    case 'access': {
+      if (layer.points.length < 2) return null;
+      const line: WithSource<LineShape> = { id: newId(), kind: 'path', points: layer.points, sourceFeatureId: src };
+      return { ...state, lines: [...state.lines, line] };
+    }
+    default:
+      return null;
+  }
+}
+
 export default function DesignCanvas({
   frame,
   state,
@@ -190,9 +301,13 @@ export default function DesignCanvas({
   suggestions,
   onEditItem,
   onToolChange,
+  tracedLayers,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
+
+  // Which traced layer is currently tapped (shows its "Use in design" affordance).
+  const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
 
   // Zoom/pan view transform — world-space (viewBox px) is drawn inside a single
   // <g transform="translate(tx ty) scale(k)">; fixed overlays (north arrow, scale bar,
@@ -453,6 +568,7 @@ export default function DesignCanvas({
   function runTapAction(e: React.PointerEvent<SVGSVGElement>) {
     if (tool === 'select') {
       onSelect(null);
+      setActiveTracedId(null); // tapping empty canvas also dismisses a stray "Use in design" popup
       return;
     }
 
@@ -795,6 +911,8 @@ export default function DesignCanvas({
     if (selectedId === id) onSelect(null);
   }
 
+  const adoptedIds = adoptedFeatureIds(state);
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -835,32 +953,10 @@ export default function DesignCanvas({
           <rect x={0} y={0} width={imgW} height={imgH} fill="#FFFEFA" />
         )}
 
-        {/* Reference outlines: driveway, house, boundary (drawn in this order so boundary reads
-            on top). Plain thin dashes, butt caps, no vertex dots — these are non-interactive
-            traced references, not editable shapes, and must not look draggable. */}
-        {refLayers.driveway.length >= 2 && (
-          <polyline
-            points={polylinePoints(refLayers.driveway, imgW, imgH)}
-            fill="none"
-            stroke="#E8D9B8"
-            strokeWidth={1.5}
-            strokeDasharray="4 4"
-            strokeLinecap="butt"
-            opacity={0.85}
-            pointerEvents="none"
-          />
-        )}
-        {refLayers.house.length >= 3 && (
-          <polygon
-            points={ringToPx(refLayers.house, imgW, imgH)}
-            fill="rgba(78,166,216,0.15)"
-            stroke="#4EA6D8"
-            strokeWidth={1.25}
-            strokeDasharray="4 4"
-            strokeLinecap="butt"
-            pointerEvents="none"
-          />
-        )}
+        {/* Boundary reference — the property fence. House/driveway and every other traced
+            shape are now rendered below as tappable `tracedLayers` (adoptable in one tap),
+            so they're no longer drawn here as dead non-interactive outlines. The boundary
+            stays special: fence styling, never adopted as a zone. */}
         {refLayers.boundary.length >= 3 && (() => {
           const boundaryPx = refLayers.boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
           const boundaryPts = ringToPx(refLayers.boundary, imgW, imgH);
@@ -875,6 +971,136 @@ export default function DesignCanvas({
             </g>
           );
         })()}
+
+        {/* Traced layers — everything the farmer drew on the live map, shown here as
+            dotted, colour-coded reference shapes. Tap one (in Select mode) to reveal
+            "Use in design", which adopts it into an editable shape — no redraw. Adopted
+            ones dim and drop the affordance so they can't be added twice. */}
+        {(tracedLayers ?? []).map((layer) => {
+          const adopted = adoptedIds.has(layer.featureId);
+          const interactive = tool === 'select' && !adopted;
+          // Only reveal the adopt button in Select mode, so an armed draw tool can neither
+          // trigger adoption nor have the button overlap the drawing surface.
+          const isActive = activeTracedId === layer.featureId && interactive;
+          const centroid = ringCentroid(layer.points);
+          const cx = centroid[0] * imgW;
+          const cy = centroid[1] * imgH;
+          const onTracedDown = (e: React.PointerEvent) => {
+            if (!interactive) return;
+            e.stopPropagation();
+            setActiveTracedId((prev) => (prev === layer.featureId ? null : layer.featureId));
+          };
+          const hitProps = {
+            // 'all' (not 'stroke') so the whole interior of a big traced shape is tappable, not
+            // just within ~16px of its outline — the core "one tap on your veg garden" goal.
+            style: { cursor: interactive ? 'pointer' : 'default', pointerEvents: interactive ? 'all' : 'none' } as React.CSSProperties,
+            onPointerDown: onTracedDown,
+          };
+          return (
+            <g key={`traced-${layer.featureId}`} opacity={adopted ? 0.4 : 1}>
+              {layer.render === 'polygon' ? (
+                <>
+                  <polygon
+                    points={ringToPx(layer.points, imgW, imgH)}
+                    fill="none"
+                    stroke="transparent"
+                    strokeWidth={16}
+                    {...hitProps}
+                  />
+                  <polygon
+                    points={ringToPx(layer.points, imgW, imgH)}
+                    fill={layer.color}
+                    fillOpacity={isActive ? 0.16 : 0.08}
+                    stroke={layer.color}
+                    strokeWidth={isActive ? 2.5 : 1.75}
+                    strokeDasharray="2 4"
+                    strokeLinecap="round"
+                    pointerEvents="none"
+                  />
+                </>
+              ) : (
+                <>
+                  <polyline
+                    points={polylinePoints(layer.points, imgW, imgH)}
+                    fill="none"
+                    stroke="transparent"
+                    strokeWidth={18}
+                    strokeLinecap="round"
+                    {...hitProps}
+                  />
+                  <polyline
+                    points={polylinePoints(layer.points, imgW, imgH)}
+                    fill="none"
+                    stroke={layer.color}
+                    strokeWidth={isActive ? 3 : 2}
+                    strokeDasharray="2 4"
+                    strokeLinecap="round"
+                    pointerEvents="none"
+                  />
+                </>
+              )}
+              {/* Name tag — sits at the centroid so the farmer can see what each traced
+                  shape is. When active, the tag is replaced by the "Use in design" button. */}
+              {!isActive && (
+                <g transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`} pointerEvents="none">
+                  <foreignObject x={-56} y={-10} width={112} height={20} style={{ overflow: 'visible' }}>
+                    <div
+                      style={{
+                        fontSize: 9,
+                        lineHeight: '16px',
+                        textAlign: 'center',
+                        color: '#F4EDD8',
+                        background: 'rgba(32,25,15,0.72)',
+                        border: `1px solid ${layer.color}`,
+                        borderRadius: 8,
+                        padding: '1px 6px',
+                        display: 'inline-block',
+                        maxWidth: 112,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {adopted ? `✓ ${layer.name}` : layer.name}
+                    </div>
+                  </foreignObject>
+                </g>
+              )}
+              {isActive && (
+                <g
+                  transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}
+                  style={{ cursor: 'pointer' }}
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    const next = adoptTracedLayer(state, frame, layer);
+                    setActiveTracedId(null);
+                    if (next) onChange(next);
+                  }}
+                >
+                  <foreignObject x={-52} y={-13} width={104} height={26} style={{ overflow: 'visible' }}>
+                    <div
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        lineHeight: '24px',
+                        textAlign: 'center',
+                        color: '#FBF6EC',
+                        background: '#1F4D2B',
+                        borderRadius: 13,
+                        padding: '0 10px',
+                        display: 'inline-block',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Use in design
+                    </div>
+                  </foreignObject>
+                </g>
+              )}
+            </g>
+          );
+        })}
 
         {/* Zones */}
         {activeLayers.zones &&
