@@ -58,7 +58,10 @@ export default function AccountPage() {
   async function handleSignOut() {
     setSigningOut(true);
     await signOutUser();
-    router.push('/gate');
+    // /gate is the old site-wide password wall, disabled in middleware — sending a
+    // signed-out user there dead-ends them. /login is the real Firebase auth entry
+    // (and is already what this page uses for the unauthenticated redirect above).
+    router.push('/login');
   }
 
   async function saveProfile() {
