@@ -52,6 +52,7 @@ _Last updated: 2026-07-15_
 - Send data-request emails to ARC-ISCW / KZN DARD (only needed before public/commercial launch)
 
 ## 💡 CAPTURED IDEAS (not started)
+- **📋 Dataset opportunities menu → [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md)** (researched 2026-07-15). Top of the list: **Open-Meteo forecast+ET0** (closes the backward-looking gap, global), **KZN Farm Portions** (auto-load legal boundary, companion to BRU), **ESA WorldCover / FAO Crop Calendar / NASA FIRMS** (clean quick wins). License traps to avoid: WorldClim-NC, FAO GAEZ-NC, iNaturalist (bars commercial AI). **Awaiting your pick at review.**
 - **Hybrid AI auto-suggest** (AI reasons over slope/aspect/sun/vision the app already has → code makes clean zone geometry). The real fix for the "concentric circles" problem.
 - Weather + 7-day forecast + frost/hail/heat warnings (new: Open-Meteo)
 - Harvest breakdown per crop/month + retail/wholesale values + loss/consumption sliders
