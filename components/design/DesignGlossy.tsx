@@ -14,7 +14,7 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
 
-const PAPER = '#FBF6EC';
+const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';

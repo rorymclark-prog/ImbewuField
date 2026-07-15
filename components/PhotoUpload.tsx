@@ -231,7 +231,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         onClick={() => inputRef.current?.click()}
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
         style={{
-          background: '#FBF6EC',
+          background: '#FFFEFA',
           border: `1px dashed ${previews.length ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
         }}
       >
@@ -287,7 +287,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               onAnalysisComplete('');
             }}
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#8C7A62' }}
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#8C7A62' }}
           >
             Clear
           </button>

@@ -106,7 +106,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,
           width: 'min(310px, 85vw)',
-          background: '#FBF6EC',
+          background: '#FFFEFA',
           borderRight: '1px solid #E2D8C4',
           boxShadow: '4px 0 32px rgba(32,25,15,0.16)',
           display: 'flex', flexDirection: 'column',

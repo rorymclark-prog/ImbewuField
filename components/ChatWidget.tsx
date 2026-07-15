@@ -61,7 +61,7 @@ export default function ChatWidget() {
             style={{
               height: '82dvh',
               maxHeight: 720,
-              background: '#FBF6EC',
+              background: '#FFFEFA',
               border: '1px solid #E2D8C4',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
             }}

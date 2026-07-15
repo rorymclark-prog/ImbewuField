@@ -11,7 +11,7 @@ export function Overline({ children, className }: { children: ReactNode; classNa
 
 // AlmanacCard — the main raised surface
 export function AlmanacCard({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('rounded-lg border', className)} style={{ backgroundColor: '#FBF6EC', borderColor: '#E2D8C4', boxShadow: '0 1px 3px rgba(32,25,15,0.08)' }} {...props}>{children}</div>;
+  return <div className={cn('rounded-lg border', className)} style={{ backgroundColor: '#FFFEFA', borderColor: '#E2D8C4', boxShadow: '0 1px 3px rgba(32,25,15,0.08)' }} {...props}>{children}</div>;
 }
 
 // LimaAvatar — forest square with sprout icon
@@ -30,7 +30,7 @@ const btnBase = 'inline-flex items-center justify-center gap-2 rounded-full font
 const btnSizes = { sm: 'h-8 px-3 text-sm', md: 'h-10 px-4 text-sm', lg: 'h-12 px-6 text-base' };
 const btnStyles: Record<BtnVariant, React.CSSProperties> = {
   primary:   { backgroundColor: '#1F4D2B', color: '#fff' },
-  secondary: { backgroundColor: '#FBF6EC', color: '#20190F', border: '1px solid #E2D8C4' },
+  secondary: { backgroundColor: '#FFFEFA', color: '#20190F', border: '1px solid #E2D8C4' },
   ghost:     { color: '#20190F' },
   ochre:     { backgroundColor: '#C07A1E', color: '#fff' },
 };

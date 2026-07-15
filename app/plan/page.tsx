@@ -158,10 +158,10 @@ export default function PlanPage() {
     : `${seasonName} planting window — add the crops you'll grow and set how many beds, so I can project your yield and seed needs.`;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
         <BackButton fallback="/home" />
         <BrandLogo />
@@ -180,7 +180,7 @@ export default function PlanPage() {
         <div className="max-w-md mx-auto px-4 pt-4">
           <Link href="/facilitator/crops"
             className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
             🌱 New: plan crops bed-by-bed on your design map →
           </Link>
         </div>
@@ -225,7 +225,7 @@ export default function PlanPage() {
                 const y = yieldFor(crop);
                 const off = suit === 'off';
                 return (
-                  <div key={crop} className="rounded-2xl px-4 py-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <div key={crop} className="rounded-2xl px-4 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                     <div className="flex items-center gap-2.5">
                       <Leaf size={15} style={{ color: '#1F4D2B', flexShrink: 0, opacity: off ? 0.3 : 1 }} />
                       <span className="flex-1 font-display text-sm font-semibold" style={{ color: off ? '#8C7A62' : '#20190F' }}>{crop}</span>
@@ -243,7 +243,7 @@ export default function PlanPage() {
                       <div className="flex items-center gap-1.5 rounded-full px-1 py-1 flex-shrink-0" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
                         <button onClick={() => changeBeds(crop, -1)} aria-label="Fewer beds"
                           className="flex items-center justify-center rounded-full"
-                          style={{ width: 26, height: 26, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                          style={{ width: 26, height: 26, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
                           <Minus size={13} />
                         </button>
                         <span className="font-display font-semibold text-sm tabular-nums" style={{ color: '#20190F', minWidth: 46, textAlign: 'center', whiteSpace: 'nowrap' }}>
@@ -270,7 +270,7 @@ export default function PlanPage() {
               onKeyDown={(e) => e.key === 'Enter' && addCrop()}
               placeholder="Add a crop (e.g. Kale, Garlic...)"
               className="flex-1 text-sm font-display outline-none rounded-xl px-3 py-2.5"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
             />
             <button onClick={addCrop} className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display font-semibold transition-all" style={{ background: '#1F4D2B', color: '#EAF3E2', border: 'none', cursor: 'pointer' }}>
               <Plus size={15} />
@@ -279,7 +279,7 @@ export default function PlanPage() {
           </div>
 
           {/* Link to journal */}
-          <Link href="/journal" className="flex items-center justify-between w-full px-4 py-3.5 rounded-2xl text-sm font-display" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}>
+          <Link href="/journal" className="flex items-center justify-between w-full px-4 py-3.5 rounded-2xl text-sm font-display" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}>
             <span>Log a harvest in your Field Journal</span>
             <Leaf size={15} style={{ color: '#8C7A62' }} />
           </Link>

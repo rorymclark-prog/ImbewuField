@@ -14,10 +14,10 @@ export default {
         forest: { DEFAULT: '#1F4D2B', light: '#2D6B3C', dark: '#163820' },
         ochre:  { DEFAULT: '#C07A1E', light: '#D4922A', dark: '#9A6018' },
         water:    '#235E86',
-        paper:    '#F7F2E9',
-        card:     '#FBF6EC',
+        paper:    '#E4DCC6',
+        card:     '#FFFEFA',
         ink:    { DEFAULT: '#20190F', muted: '#5C5040', faint: '#8C7A62' },
-        hairline: '#E2D8C4',
+        hairline: '#ECE3C9',
       },
       borderRadius: {
         sm: '6px', md: '10px', lg: '14px', xl: '20px', '2xl': '28px',

@@ -7,12 +7,12 @@
   --color-ochre-light: #D4922A;
   --color-ochre-dark: #9A6018;
   --color-water: #235E86;
-  --color-paper: #F7F2E9;
-  --color-card: #FBF6EC;
+  --color-paper: #E4DCC6;
+  --color-card: #FFFEFA;
   --color-ink: #20190F;
   --color-ink-muted: #5C5040;
   --color-ink-faint: #8C7A62;
-  --color-hairline: #E2D8C4;
+  --color-hairline: #ECE3C9;
   --font-display: 'Newsreader', Georgia, serif;
   --font-sans: 'Public Sans', system-ui, sans-serif;
   /* Two-face system (design kit, frame 27): Newsreader + Public Sans only.
@@ -105,15 +105,19 @@ body { font-size: 16px; }
    EARTH LIGHT  (default)
    ═══════════════════════════════════════════════════════ */
 html[data-theme="earth"] {
-  --bg-0: #FDFAF6;
-  --bg-1: #F5F0E8;
-  --bg-2: #EDE7DB;
-  --bg-3: #E2D8CB;
-  --bg-4: #D3C8B5;
-  --bg-5: #C3B5A0;
+  /* Option 1b contrast: page darker (#E4DCC6), cards near-white (#FFFEFA) —
+     surface vars aligned to the :root almanac default so the earth theme
+     (the always-active default) matches the card-contrast handoff. Accent
+     vars (emerald/gold/blue/text) below are deliberately left as earth's own. */
+  --bg-0: #E4DCC6;
+  --bg-1: #FFFEFA;
+  --bg-2: rgba(236,227,201,0.35);
+  --bg-3: rgba(236,227,201,0.55);
+  --bg-4: rgba(236,227,201,0.70);
+  --bg-5: rgba(236,227,201,0.85);
 
-  --border: #DDD2C0;
-  --border-bright: #C5B5A0;
+  --border: #ECE3C9;
+  --border-bright: #ECE3C9;
   --border-glow: rgba(90,148,45,0.35);
 
   --text-primary: #261B10;
@@ -128,10 +132,10 @@ html[data-theme="earth"] {
   --orange: #B83A18;
   --teal: #1A7868;
 
-  --header-bg: rgba(253,250,246,0.97);
-  --glass-bg: rgba(245,240,232,0.88);
+  --header-bg: rgba(255,254,250,0.97);
+  --glass-bg: rgba(255,254,250,0.90);
   --glass-shadow: 0 2px 16px rgba(0,0,0,0.08);
-  --glass-border: rgba(180,160,135,0.45);
+  --glass-border: rgba(236,227,201,0.55);
   --badge-bg: rgba(58,117,24,0.1);
 
   --gradient-from: #3A7518;
@@ -280,14 +284,14 @@ html, body {
   /* Almanac palette aliased into the legacy var names so any
      component still using var(--bg-0) / var(--emerald) / etc.
      automatically gets almanac colours without a per-file edit. */
-  --bg-0: #F7F2E9;
-  --bg-1: #FBF6EC;
-  --bg-2: rgba(226,216,196,0.35);
-  --bg-3: rgba(226,216,196,0.55);
-  --bg-4: rgba(226,216,196,0.70);
-  --bg-5: rgba(226,216,196,0.85);
-  --border:        #E2D8C4;
-  --border-bright: #E2D8C4;
+  --bg-0: #E4DCC6;
+  --bg-1: #FFFEFA;
+  --bg-2: rgba(236,227,201,0.35);
+  --bg-3: rgba(236,227,201,0.55);
+  --bg-4: rgba(236,227,201,0.70);
+  --bg-5: rgba(236,227,201,0.85);
+  --border:        #ECE3C9;
+  --border-bright: #ECE3C9;
   --border-glow:   rgba(31,77,43,0.25);
   --text-primary:  #20190F;
   --text-secondary:#20190F;
@@ -299,10 +303,10 @@ html, body {
   --blue:          #235E86;
   --orange:        #D4922A;
   --teal:          #2D6B3C;
-  --header-bg:     #FBF6EC;
-  --glass-bg:      rgba(251,246,236,0.94);
+  --header-bg:     #FFFEFA;
+  --glass-bg:      rgba(255,254,250,0.94);
   --glass-shadow:  0 2px 12px rgba(32,25,15,0.08);
-  --glass-border:  #E2D8C4;
+  --glass-border:  #ECE3C9;
   --badge-bg:      rgba(31,77,43,0.08);
   --gradient-from: #1F4D2B;
   --gradient-mid:  #2D6B3C;

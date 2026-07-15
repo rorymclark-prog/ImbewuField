@@ -78,7 +78,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
       {...props}
       className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
       style={{
-        background: '#FBF6EC',
+        background: '#FFFEFA',
         border: '1px solid #E2D8C4',
         color: '#20190F',
         ...props.style,
@@ -303,7 +303,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <label
             className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={{
-              background: '#FBF6EC',
+              background: '#FFFEFA',
               border: '1px dashed #E2D8C4',
               color: '#9A8268',
             }}
@@ -458,7 +458,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
           style={{
-            background: '#FBF6EC',
+            background: '#FFFEFA',
             border: '1px solid #E2D8C4',
           }}
         >
@@ -520,7 +520,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FBF6EC',
+            background: '#FFFEFA',
             border: '1px solid #E2D8C4',
           }}
         >
@@ -576,7 +576,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           key={design.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FBF6EC',
+            background: '#FFFEFA',
             border: '1px solid #E2D8C4',
           }}
         >

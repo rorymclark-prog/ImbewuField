@@ -94,7 +94,7 @@ export default function AccountPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
+      <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <div className="flex-1 flex items-center justify-center">
           <Sprout size={32} style={{ color: '#1F4D2B', opacity: 0.4 }} />
         </div>
@@ -108,15 +108,15 @@ export default function AccountPage() {
   const langLabel = profile?.language ? (APP_LANGS.find((l) => l.code === profile.language)?.label ?? profile.language) : null;
 
   return (
-    <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+    <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Account</span>
         <div className="flex-1" />
         <button onClick={() => setSettingsOpen(true)} aria-label="Settings"
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}>
+          style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}>
           <Settings size={13} strokeWidth={1.7} />
           <span className="hidden sm:inline">Settings</span>
         </button>
@@ -126,7 +126,7 @@ export default function AccountPage() {
         <div className="max-w-md mx-auto px-4 py-6 space-y-5">
 
           {/* Avatar + name */}
-          <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="relative flex-shrink-0">
               {profile?.photo_url ? (
                 <img src={profile.photo_url} alt={displayName ?? 'Avatar'}
@@ -168,7 +168,7 @@ export default function AccountPage() {
 
           {/* Edit form */}
           {editing ? (
-            <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>Edit profile</div>
 
               <label className="block">
@@ -205,13 +205,13 @@ export default function AccountPage() {
                 </button>
                 <button onClick={() => setEditing(false)} disabled={saving}
                   className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
-                  style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   <X size={14} />Cancel
                 </button>
               </div>
             </div>
           ) : (
-            <div className="rounded-2xl px-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl px-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <Row icon={Mail} label="Email" value={user.email} />
               <Row icon={Phone} label="Phone" value={profile?.phone ?? null} />
               <Row icon={Globe} label="Language" value={langLabel} />
@@ -223,12 +223,12 @@ export default function AccountPage() {
           {!changingPw ? (
             <button onClick={() => setChangingPw(true)}
               className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
               <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#8C7A62' }} />Change password</span>
               <ChevronRight size={16} style={{ color: '#8C7A62' }} />
             </button>
           ) : (
-            <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>Change password</div>
 
               {pwSuccess ? (
@@ -264,7 +264,7 @@ export default function AccountPage() {
                     </button>
                     <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}
                       className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
-                      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                      style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                       <X size={14} />Cancel
                     </button>
                   </div>
@@ -276,7 +276,7 @@ export default function AccountPage() {
           {/* Settings shortcut */}
           <button onClick={() => setSettingsOpen(true)}
             className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
             <span>Appearance &amp; language</span>
             <ChevronRight size={16} style={{ color: '#8C7A62' }} />
           </button>
@@ -284,7 +284,7 @@ export default function AccountPage() {
           {/* Sign out */}
           <button onClick={handleSignOut} disabled={signingOut}
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
-            style={{ background: signingOut ? '#FBF6EC' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#8C7A62' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
+            style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#8C7A62' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
             <LogOut size={15} />
             {signingOut ? 'Signing out...' : 'Sign out'}
           </button>

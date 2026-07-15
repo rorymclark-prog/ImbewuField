@@ -180,7 +180,7 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
 
 function Stat({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
-    <div className="rounded-xl p-3 flex-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-xl p-3 flex-1" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#9A8268' }}>{label}</div>
       <div className="font-display font-bold text-2xl mt-0.5" style={{ color }}>{value}</div>
       <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{sub}</div>
@@ -424,7 +424,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {/* CENTRE — map. Fixed-height band on mobile, hidden once a garden is selected;
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
-          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}>
               {gardener
                 ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {`${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
@@ -444,7 +444,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               </Marker>
             )}
           </ReactMapGL>
-          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             {(Object.keys(STATUS) as Status[]).map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: STATUS[s].color }} />
@@ -455,7 +455,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           {/* "Select a garden" placeholder — shown only when no garden is selected */}
           {!garden && (
             <div className="absolute inset-0 flex items-end justify-center pb-16 pointer-events-none z-10">
-              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#9A8268' }}>
                 Select a garden from the list to drill in
               </div>
             </div>

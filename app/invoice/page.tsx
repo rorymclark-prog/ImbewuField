@@ -191,9 +191,9 @@ export default function InvoicePage() {
   const money = (n: number) => `R${n.toLocaleString('en-ZA')}`;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton fallback="/finances" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -223,7 +223,7 @@ export default function InvoicePage() {
         <div className="max-w-md mx-auto px-4 py-5 space-y-4">
 
           {/* ── Invoice document (printable) ───────────────────────────── */}
-          <div id="invoice-doc" className="rounded-2xl p-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div id="invoice-doc" className="rounded-2xl p-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             {/* Seller + logo */}
             <div className="flex items-start justify-between mb-4">
               <div>
@@ -289,12 +289,12 @@ export default function InvoicePage() {
             <div className="flex items-center gap-2">
               <button onClick={newInvoice}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
                 <FilePlus2 size={14} />New invoice
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
                 <Clock size={14} />Saved{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
@@ -304,7 +304,7 @@ export default function InvoicePage() {
 
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
-              <div className="rounded-xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 {saved.length === 0 ? (
                   <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
                     No saved invoices yet — Print or Share one and it&apos;s kept here.
@@ -341,7 +341,7 @@ export default function InvoicePage() {
                             className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                             style={inv.paymentMethod === m
                               ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                              : { background: '#FBF6EC', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                              : { background: '#FFFEFA', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
                             {paymentMethodLabel(m)}
                           </button>
                         ))}
@@ -359,14 +359,14 @@ export default function InvoicePage() {
                 list="customers-list" autoComplete="off"
                 placeholder="e.g. Spar Nquthu (wholesale)"
                 className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }} />
             </label>
 
             {/* Line item editors */}
             <div className="space-y-2.5">
               <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62' }}>Line items</div>
               {items.map((it) => (
-                <div key={it.id} className="rounded-xl p-3 space-y-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div key={it.id} className="rounded-xl p-3 space-y-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                   <div className="flex items-center gap-2">
                     <input value={it.desc} onChange={(e) => updateItem(it.id, { desc: e.target.value })}
                       list="products-list" autoComplete="off"

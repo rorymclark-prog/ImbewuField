@@ -16,9 +16,9 @@ interface Props {
 
 export default function RolePlaceholder({ role, icon, title, subtitle, blurb, features }: Props) {
   return (
-    <div className="h-screen flex flex-col" style={{ background: '#F7F2E9' }}>
+    <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton />
         <BrandLogo icon={icon} />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.7 }} />
@@ -33,7 +33,7 @@ export default function RolePlaceholder({ role, icon, title, subtitle, blurb, fe
           fits but can scroll when it's taller than the screen (centring alone would clip it). */}
       <div className="flex-1 overflow-y-auto">
         <div className="min-h-full flex items-center justify-center p-6">
-        <div className="w-full max-w-lg rounded-2xl p-7 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 1px 3px rgba(31,25,15,0.08)' }}>
+        <div className="w-full max-w-lg rounded-2xl p-7 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 1px 3px rgba(31,25,15,0.08)' }}>
           <div className="text-4xl mb-3">{icon}</div>
           <h1 className="font-display font-bold text-2xl mb-2" style={{ color: '#1F4D2B' }}>{title}</h1>
           <p className="font-display text-sm leading-relaxed mb-6" style={{ color: '#5C5040' }}>{blurb}</p>

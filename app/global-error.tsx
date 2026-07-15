@@ -7,7 +7,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
 
   return (
     <html>
-      <body style={{ margin: 0, background: '#F7F2E9', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', textAlign: 'center', padding: 24 }}>
+      <body style={{ margin: 0, background: '#E4DCC6', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', textAlign: 'center', padding: 24 }}>
         <div>
           <h2 style={{ fontSize: 22, fontWeight: 600, color: '#20190F', marginBottom: 8 }}>Something went wrong</h2>
           <p style={{ fontSize: 14, color: '#5C5040', marginBottom: 24 }}>{error.message}</p>

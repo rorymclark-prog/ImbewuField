@@ -162,15 +162,15 @@ export default function CommunityProfilePage() {
 
   if (!ready) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#F7F2E9' }}>
+      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F7F2E9', color: '#20190F' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
@@ -195,7 +195,7 @@ export default function CommunityProfilePage() {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder={t('communityDisplayNamePlaceholder')}
               className="w-full rounded-xl px-3 py-2.5 font-sans"
-              style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
+              style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
             />
           </div>
 
@@ -209,7 +209,7 @@ export default function CommunityProfilePage() {
               onChange={(e) => setAreaText(e.target.value)}
               placeholder={t('communityAreaPlaceholder')}
               className="w-full rounded-xl px-3 py-2.5 font-sans"
-              style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
+              style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
             />
             <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 4 }}>{t('communityAreaHint')}</div>
           </div>
@@ -224,7 +224,7 @@ export default function CommunityProfilePage() {
               placeholder={t('communityBioPlaceholder')}
               rows={3}
               className="w-full rounded-xl px-3 py-2.5 font-sans"
-              style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }}
+              style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }}
             />
           </div>
 
@@ -259,7 +259,7 @@ export default function CommunityProfilePage() {
                 <button
                   onClick={() => fileRef.current?.click()}
                   disabled={uploading}
-                  style={{ width: 72, height: 72, borderRadius: 10, background: '#FBF6EC', border: '1px dashed #C8BCA8', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                  style={{ width: 72, height: 72, borderRadius: 10, background: '#FFFEFA', border: '1px dashed #C8BCA8', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                 >
                   {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: '#8C7A62' }} /> : <Camera size={20} style={{ color: '#8C7A62' }} strokeWidth={1.6} />}
                 </button>

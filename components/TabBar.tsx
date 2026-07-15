@@ -25,7 +25,7 @@ export default function TabBar() {
     <div
       className="flex"
       style={{
-        background: '#FBF6EC',
+        background: '#FFFEFA',
         borderTop: '1px solid #E2D8C4',
         flexShrink: 0,
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',

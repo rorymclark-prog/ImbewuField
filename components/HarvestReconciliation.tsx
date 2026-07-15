@@ -105,7 +105,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
     || result.unmatchedPlanned.length > 0 || result.unplannedActivity.length > 0;
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
         <ClipboardList size={14} style={{ color: '#5C5040' }} />
         <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>

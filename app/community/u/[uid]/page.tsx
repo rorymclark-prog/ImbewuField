@@ -49,15 +49,15 @@ export default function PublicCommunityProfilePage() {
 
   if (busy || loading || !communityEnabled()) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#F7F2E9' }}>
+      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F7F2E9', color: '#20190F' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
@@ -67,7 +67,7 @@ export default function PublicCommunityProfilePage() {
 
       <main className="flex-1 overflow-y-auto" style={{ padding: '20px 16px', maxWidth: 480, width: '100%', margin: '0 auto' }}>
         {!profile ? (
-          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>This profile is no longer available.</p>
           </div>
         ) : (
@@ -129,7 +129,7 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {reportOpen && (
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', marginTop: 12 }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', marginTop: 12 }}>
                 <textarea
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}

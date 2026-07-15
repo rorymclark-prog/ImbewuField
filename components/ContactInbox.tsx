@@ -118,7 +118,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   if (!isLive) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>Backend not connected</p>
         <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Connect Firebase to receive messages</p>
@@ -136,7 +136,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   if (messages.length === 0) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <Mail size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>No messages yet</p>
         <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Messages from learners appear here</p>
@@ -167,7 +167,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
             key={msg.id}
             className="rounded-2xl overflow-hidden transition-all"
             style={{
-              background: isUnread ? 'rgba(31,77,43,0.04)' : '#FBF6EC',
+              background: isUnread ? 'rgba(31,77,43,0.04)' : '#FFFEFA',
               border: `1px solid ${isUnread ? 'rgba(31,77,43,0.25)' : '#E2D8C4'}`,
             }}
           >

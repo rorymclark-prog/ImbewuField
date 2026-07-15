@@ -342,7 +342,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#F7F2E9' }}>
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#E4DCC6' }}>
 
       {/* ── Toolbar ──────────────────────────────── */}
       <div
@@ -440,7 +440,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
         {/* ── Section controls sidebar ─────────── */}
         <div className="no-print flex-shrink-0 overflow-y-auto py-4 px-3"
-             style={{ width: 232, background: '#FBF6EC', borderRight: '1px solid #E2D8C4' }}>
+             style={{ width: 232, background: '#FFFEFA', borderRight: '1px solid #E2D8C4' }}>
 
           {/* Saved reports — reopen a past report without regenerating */}
           {savedList.length > 0 && (

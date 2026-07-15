@@ -388,11 +388,11 @@ export default function CalendarPage() {
         flexDirection: 'column',
         height: '100dvh',
         overflow: 'hidden',
-        background: '#F7F2E9',
+        background: '#E4DCC6',
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Planting Calendar</span>
@@ -405,13 +405,13 @@ export default function CalendarPage() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          background: '#F7F2E9',
+          background: '#E4DCC6',
         }}
       >
         {/* ---- Month strip ---- */}
         <div
           style={{
-            background: '#FBF6EC',
+            background: '#FFFEFA',
             borderBottom: '1px solid #E2D8C4',
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
@@ -460,7 +460,7 @@ export default function CalendarPage() {
           {/* ---- What to do this month ---- */}
           <div
             style={{
-              background: '#FBF6EC',
+              background: '#FFFEFA',
               border: '1px solid #E2D8C4',
               borderRadius: 14,
               padding: '16px',
@@ -661,7 +661,7 @@ export default function CalendarPage() {
           {/* ---- SA Planting Calendar Grid ---- */}
           <div
             style={{
-              background: '#FBF6EC',
+              background: '#FFFEFA',
               border: '1px solid #E2D8C4',
               borderRadius: 14,
               overflow: 'hidden',
@@ -742,7 +742,7 @@ export default function CalendarPage() {
                 aria-label="South African planting calendar"
               >
                 <thead>
-                  <tr style={{ background: '#F7F2E9' }}>
+                  <tr style={{ background: '#E4DCC6' }}>
                     <th
                       style={{
                         padding: '7px 14px',
@@ -758,7 +758,7 @@ export default function CalendarPage() {
                         minWidth: 110,
                         position: 'sticky',
                         left: 0,
-                        background: '#F7F2E9',
+                        background: '#E4DCC6',
                         zIndex: 1,
                       }}
                     >
@@ -778,7 +778,7 @@ export default function CalendarPage() {
                           borderBottom: '1px solid #E2D8C4',
                           borderLeft: '1px solid #E2D8C420',
                           background:
-                            idx === selectedMonth ? '#1F4D2B12' : '#F7F2E9',
+                            idx === selectedMonth ? '#1F4D2B12' : '#E4DCC6',
                           minWidth: 36,
                         }}
                       >
@@ -792,7 +792,7 @@ export default function CalendarPage() {
                     <tr
                       key={crop.name}
                       style={{
-                        background: rowIdx % 2 === 0 ? '#FBF6EC' : '#F7F2E9',
+                        background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
                       }}
                     >
                       {/* Crop name — sticky left */}
@@ -807,7 +807,7 @@ export default function CalendarPage() {
                           whiteSpace: 'nowrap',
                           position: 'sticky',
                           left: 0,
-                          background: rowIdx % 2 === 0 ? '#FBF6EC' : '#F7F2E9',
+                          background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
                           zIndex: 1,
                         }}
                       >

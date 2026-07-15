@@ -32,7 +32,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'As
     <div
       className="flex items-center gap-2.5 px-4 py-2.5"
       style={{
-        background: '#FBF6EC',
+        background: '#FFFEFA',
         borderTop: '1px solid #E2D8C4',
         flexShrink: 0,
       }}

@@ -8,7 +8,7 @@ export default function LangSwitcher() {
 
   return (
     <div className="flex items-center gap-1.5 px-3.5 rounded-full flex-shrink-0"
-      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', minHeight: 56 }}>
+      style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', minHeight: 56 }}>
       <Globe size={18} style={{ color: '#5C5040' }} />
       <select
         value={lang}
@@ -18,7 +18,7 @@ export default function LangSwitcher() {
         style={{ background: 'transparent', color: '#20190F', border: 'none', fontSize: 20 }}
       >
         {APP_LANGS.map((l) => (
-          <option key={l.code} value={l.code} style={{ background: '#FBF6EC', color: '#20190F' }}>
+          <option key={l.code} value={l.code} style={{ background: '#FFFEFA', color: '#20190F' }}>
             {l.native}
           </option>
         ))}

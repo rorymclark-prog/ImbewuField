@@ -143,9 +143,9 @@ function SurveyInner() {
   const tanksPhrase = resources.includes('rain-tanks') ? `${tanks} tank${tanks > 1 ? 's' : ''}` : 'no tanks yet';
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -183,7 +183,7 @@ function SurveyInner() {
             <div className="space-y-4">
               {/* Which parcel is this survey for? */}
               {savedPins.length > 0 && (
-                <div className="rounded-2xl p-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div className="rounded-2xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                   <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>Survey for</div>
                   <div className="flex flex-wrap gap-2">
                     {savedPins.map(p => (
@@ -218,7 +218,7 @@ function SurveyInner() {
               <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
                 Size and water come straight from your map analysis. The next steps only ask what the map can&rsquo;t see.
               </p>
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="flex items-center gap-2 mb-3">
                   <Check size={14} style={{ color: '#1F4D2B' }} />
                   <span className="text-xs font-sans uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>Already known from the map</span>
@@ -257,7 +257,7 @@ function SurveyInner() {
                     return (
                       <button key={v} onClick={() => setSun(v)}
                         className="flex flex-col items-center gap-1.5 py-3 rounded-2xl transition-all"
-                        style={{ background: on ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                        style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                         <Icon size={20} style={{ color: on ? '#EAF3E2' : '#1F4D2B' }} strokeWidth={1.6} />
                         <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
                       </button>
@@ -273,7 +273,7 @@ function SurveyInner() {
                     return (
                       <button key={v} onClick={() => setSlope(v)}
                         className="flex flex-col items-center gap-1.5 py-3 rounded-2xl transition-all"
-                        style={{ background: on ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                        style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                         <Mountain size={20} style={{ color: on ? '#EAF3E2' : '#1F4D2B', opacity: v === 'flat' ? 0.5 : v === 'gentle' ? 0.8 : 1 }} strokeWidth={1.6} />
                         <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
                       </button>
@@ -295,7 +295,7 @@ function SurveyInner() {
                   return (
                     <button key={v} onClick={() => toggleResource(v)}
                       className="flex items-center gap-2 px-3.5 py-2.5 rounded-full transition-all"
-                      style={{ background: on ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                      style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <Icon size={15} style={{ color: on ? '#EAF3E2' : '#1F4D2B' }} strokeWidth={1.7} />
                       <span className="font-display text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
                       {on && <Check size={13} style={{ color: '#EAF3E2' }} />}
@@ -304,10 +304,10 @@ function SurveyInner() {
                 })}
               </div>
               {resources.includes('rain-tanks') && (
-                <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                   <span className="font-display text-sm" style={{ color: '#20190F' }}>How many rain tanks?</span>
                   <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                    <button onClick={() => setTanks((t) => Math.max(1, t - 1))} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={13} /></button>
+                    <button onClick={() => setTanks((t) => Math.max(1, t - 1))} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={13} /></button>
                     <span className="font-display font-semibold text-sm tabular-nums" style={{ color: '#20190F', minWidth: 20, textAlign: 'center' }}>{tanks}</span>
                     <button onClick={() => setTanks((t) => Math.min(20, t + 1))} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: '#1F4D2B', border: 'none', color: '#EAF3E2', cursor: 'pointer' }}><Plus size={13} /></button>
                   </div>
@@ -326,7 +326,7 @@ function SurveyInner() {
                   return (
                     <button key={v} onClick={() => setGoal(v)}
                       className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all"
-                      style={{ background: on ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                      style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <div className="flex-1">
                         <div className="font-display font-semibold text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</div>
                         <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#8C7A62' }}>{desc}</div>
@@ -353,13 +353,13 @@ function SurveyInner() {
               </div>
 
               {/* Bed count stepper */}
-              <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div>
                   <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{beds} beds</div>
                   <div className="font-sans text-xs" style={{ color: '#8C7A62' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                  <button onClick={() => setBeds((b) => Math.max(1, b - 1))} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={14} /></button>
+                  <button onClick={() => setBeds((b) => Math.max(1, b - 1))} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={14} /></button>
                   <span className="font-display font-semibold text-sm tabular-nums" style={{ color: '#20190F', minWidth: 22, textAlign: 'center' }}>{beds}</span>
                   <button onClick={() => setBeds((b) => Math.min(20, b + 1))} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#1F4D2B', border: 'none', color: '#EAF3E2', cursor: 'pointer' }}><Plus size={14} /></button>
                 </div>
@@ -391,7 +391,7 @@ function SurveyInner() {
               {/* Beds */}
               <div className="grid grid-cols-2 gap-2.5">
                 {bedCrops.map((crop, i) => (
-                  <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                     <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
                     <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{crop}</div>
                   </div>
@@ -407,7 +407,7 @@ function SurveyInner() {
                     return (
                       <button key={w.wk} onClick={() => setWeek(w.wk)}
                         className="flex-shrink-0 px-3 py-1.5 rounded-full font-display text-xs font-semibold transition-all"
-                        style={{ background: on ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, color: on ? '#EAF3E2' : '#5C5040', cursor: 'pointer' }}>
+                        style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, color: on ? '#EAF3E2' : '#5C5040', cursor: 'pointer' }}>
                         Week {w.wk}
                       </button>
                     );
@@ -415,7 +415,7 @@ function SurveyInner() {
                 </div>
                 {/* Screen: selected week. Print: all weeks. */}
                 {WEEK_PLAN.filter((w) => w.wk === week).map((w) => (
-                  <div key={w.wk} className="no-print rounded-2xl px-4 py-3.5 mt-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <div key={w.wk} className="no-print rounded-2xl px-4 py-3.5 mt-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                     <div className="font-display font-semibold text-sm mb-2" style={{ color: '#1F4D2B' }}>Week {w.wk} · {w.title}</div>
                     {w.tasks.map((t, i) => (
                       <div key={i} className="flex items-start gap-2 py-1">
@@ -428,7 +428,7 @@ function SurveyInner() {
                 {/* Print-only: every week stacked */}
                 <div className="print-only space-y-2 mt-2">
                   {WEEK_PLAN.map((w) => (
-                    <div key={w.wk} className="rounded-2xl px-4 py-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                    <div key={w.wk} className="rounded-2xl px-4 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                       <div className="font-display font-semibold text-sm mb-1" style={{ color: '#1F4D2B' }}>Week {w.wk} · {w.title}</div>
                       {w.tasks.map((t, i) => <div key={i} className="font-sans text-sm" style={{ color: '#20190F' }}>· {t}</div>)}
                     </div>
@@ -445,7 +445,7 @@ function SurveyInner() {
                 </button>
                 <Link href="/plan"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: '#FBF6EC', color: '#1F4D2B', border: '1px solid #E2D8C4', textDecoration: 'none' }}>
+                  style={{ background: '#FFFEFA', color: '#1F4D2B', border: '1px solid #E2D8C4', textDecoration: 'none' }}>
                   Open the Crop Planner<ChevronRight size={15} />
                 </Link>
               </div>
@@ -461,7 +461,7 @@ function SurveyInner() {
             {step > 0 && step <= 5 && (
               <button onClick={() => setStep((s) => Math.max(0, s - 1))}
                 className="flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                 <ChevronLeft size={15} />Back
               </button>
             )}
@@ -482,7 +482,7 @@ function SurveyInner() {
             {step === 5 && (
               <button onClick={() => router.push('/home')}
                 className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                 Done
               </button>
             )}

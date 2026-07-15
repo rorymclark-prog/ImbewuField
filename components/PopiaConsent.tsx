@@ -119,7 +119,7 @@ export default function PopiaConsent() {
       <div
         className="w-full max-w-sm rounded-2xl p-6"
         style={{
-          background: '#FBF6EC',
+          background: '#FFFEFA',
           border: '1px solid #E2D8C4',
           boxShadow: '0 4px 24px rgba(32,25,15,0.12)',
         }}
@@ -167,7 +167,7 @@ export default function PopiaConsent() {
               {/* Required toggle */}
               <div
                 className="flex items-center gap-3 px-4 py-3.5"
-                style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
+                style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
               >
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
@@ -181,7 +181,7 @@ export default function PopiaConsent() {
               </div>
 
               {/* Optional toggle */}
-              <div className="flex items-center gap-3 px-4 py-3.5" style={{ background: '#FBF6EC' }}>
+              <div className="flex items-center gap-3 px-4 py-3.5" style={{ background: '#FFFEFA' }}>
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
                     {t('popiaShareLabel')}
@@ -248,7 +248,7 @@ export default function PopiaConsent() {
                     onClick={() => setGoal(v)}
                     className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all"
                     style={{
-                      background: on ? '#1F4D2B' : '#FBF6EC',
+                      background: on ? '#1F4D2B' : '#FFFEFA',
                       border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
                       cursor: 'pointer',
                     }}

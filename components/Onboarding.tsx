@@ -15,7 +15,7 @@ export default function Onboarding() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       style={{ background: 'rgba(4,10,6,0.92)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-md rounded-2xl p-6"
-        style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
+        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
 
         {/* Hero */}
         <div className="text-center mb-6">

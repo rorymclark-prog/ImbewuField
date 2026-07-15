@@ -76,7 +76,7 @@ function TraineeCard({ trainee, doneIds, isLive }: {
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <button onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
@@ -140,7 +140,7 @@ function TraineeCard({ trainee, doneIds, isLive }: {
                 </button>
                 <button onClick={() => { setLogging(false); setNotes(''); setSaveError(false); }}
                   className="px-3 py-2 rounded-xl text-xs font-display"
-                  style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Cancel
                 </button>
               </div>
@@ -200,8 +200,8 @@ export default function MentorPage() {
 
   if (!loading && user && isLive && role && !MENTOR_ALLOWED_ROLES.has(role)) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
-        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
           <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
@@ -209,7 +209,7 @@ export default function MentorPage() {
           <SettingsButton />
         </header>
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
               <Users size={22} style={{ color: '#1F4D2B' }} />
             </div>
@@ -243,8 +243,8 @@ export default function MentorPage() {
   const totalPartial = trainees.filter((t) => { const s = doneIdsFor(t.id).size; return s > 0 && s < TOTAL_MODULES; }).length;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
@@ -253,7 +253,7 @@ export default function MentorPage() {
       </header>
 
       {/* Tab strip */}
-      <div className="flex-shrink-0 flex" style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16, gap: 0 }}>
+      <div className="flex-shrink-0 flex" style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16, gap: 0 }}>
         {([
           { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
@@ -296,7 +296,7 @@ export default function MentorPage() {
             { label: 'Graduated',     value: totalFull,        color: '#1F4D2B' },
             { label: 'In progress',   value: totalPartial,     color: '#C07A1E' },
           ].map(({ label, value, color }) => (
-            <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
               <div className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>{label}</div>
             </div>
@@ -304,7 +304,7 @@ export default function MentorPage() {
         </div>
 
         {/* Curriculum chip cloud */}
-        <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+        <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <div className="flex items-center gap-2 mb-2.5">
             <GraduationCap size={14} style={{ color: '#1F4D2B' }} />
             <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>
@@ -327,7 +327,7 @@ export default function MentorPage() {
           <input value={search} onChange={(e) => setSearch(e.target.value)}
             placeholder="Search learners..."
             className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }} />
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }} />
         </div>
 
         {/* List */}
@@ -336,7 +336,7 @@ export default function MentorPage() {
             <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <Users size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
             <p className="text-sm font-display" style={{ color: '#5C5040' }}>
               {search ? 'No learners match that search.' : 'Learners will appear here once they enrol.'}

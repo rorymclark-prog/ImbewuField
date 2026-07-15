@@ -154,12 +154,12 @@ export default function VisionPage() {
   const errResult = result && !result.ok ? (result as ErrorResult) : null;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
 
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center px-4 gap-3"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
         <BackButton fallback="/home" />
         <BrandLogo />
@@ -176,7 +176,7 @@ export default function VisionPage() {
           {/* Mode toggle */}
           <div
             className="flex rounded-2xl p-1 gap-1"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
           >
             {([
               { v: 'crop' as Mode,  label: "What's growing?",   Icon: Leaf  },
@@ -219,7 +219,7 @@ export default function VisionPage() {
               onClick={() => inputRef.current?.click()}
               className="w-full rounded-2xl transition-all"
               style={{
-                background: '#FBF6EC',
+                background: '#FFFEFA',
                 border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
                 cursor: 'pointer',
                 padding: 0,
@@ -273,7 +273,7 @@ export default function VisionPage() {
           {loading && (
             <div
               className="flex items-center gap-3 rounded-2xl px-4 py-4"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
             >
               <Loader2 size={20} className="animate-spin flex-shrink-0" style={{ color: '#1F4D2B' }} />
               <div>
@@ -301,7 +301,7 @@ export default function VisionPage() {
           {result && !loading && (
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', borderLeft: '3px solid #1F4D2B' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderLeft: '3px solid #1F4D2B' }}
             >
               <div className="px-4 pt-4 pb-3">
                 {/* Header row */}

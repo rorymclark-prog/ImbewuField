@@ -108,12 +108,12 @@ export default function ContactPage() {
   return (
     <div
       className="h-[100dvh] flex flex-col font-sans"
-      style={{ background: '#F7F2E9', color: '#20190F' }}
+      style={{ background: '#E4DCC6', color: '#20190F' }}
     >
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center gap-3 px-4"
-        style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}
+        style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}
       >
         <Link
           href="/home"
@@ -172,7 +172,7 @@ export default function ContactPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {replies.map((r) => (
                     <div key={r.id} className="rounded-2xl overflow-hidden"
-                      style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.2)' }}>
+                      style={{ background: '#FFFEFA', border: '1px solid rgba(31,77,43,0.2)' }}>
                       <button
                         onClick={() => setExpandedReply(expandedReply === r.id ? null : r.id)}
                         className="w-full flex items-start gap-3 px-4 py-3 text-left"
@@ -238,7 +238,7 @@ export default function ContactPage() {
               <a
                 href={`tel:${profile.phone}`}
                 className="flex items-center gap-3 rounded-xl p-4 mb-3"
-                style={{ textDecoration: 'none', background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+                style={{ textDecoration: 'none', background: '#FFFEFA', border: '1px solid #E2D8C4' }}
               >
                 <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Phone size={17} style={{ color: '#1F4D2B' }} strokeWidth={1.6} />
@@ -254,7 +254,7 @@ export default function ContactPage() {
               <a
                 href={`mailto:${user.email}?subject=ImbewuField enquiry`}
                 className="flex items-center gap-3 rounded-xl p-4 mb-5"
-                style={{ textDecoration: 'none', background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+                style={{ textDecoration: 'none', background: '#FFFEFA', border: '1px solid #E2D8C4' }}
               >
                 <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Mail size={17} style={{ color: '#1F4D2B' }} strokeWidth={1.6} />
@@ -282,7 +282,7 @@ export default function ContactPage() {
                       onClick={() => setRecipient(value)}
                       className="flex items-center gap-3 rounded-xl p-3 text-left transition-all"
                       style={{
-                        background: recipient === value ? 'rgba(31,77,43,0.08)' : '#FBF6EC',
+                        background: recipient === value ? 'rgba(31,77,43,0.08)' : '#FFFEFA',
                         border: `1px solid ${recipient === value ? 'rgba(31,77,43,0.35)' : '#E2D8C4'}`,
                         cursor: 'pointer',
                       }}
@@ -306,7 +306,7 @@ export default function ContactPage() {
                         boxSizing: 'border-box', position: 'relative',
                       }}>
                         {recipient === value && (
-                          <div style={{ position: 'absolute', inset: 3, borderRadius: 4, background: '#F7F2E9' }} />
+                          <div style={{ position: 'absolute', inset: 3, borderRadius: 4, background: '#E4DCC6' }} />
                         )}
                       </div>
                     </button>
@@ -326,7 +326,7 @@ export default function ContactPage() {
                   onChange={(e) => setSubject(e.target.value)}
                   className="w-full rounded-xl px-3 py-2.5 font-sans"
                   style={{
-                    fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4',
+                    fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4',
                     color: '#20190F', outline: 'none',
                   }}
                 />
@@ -345,7 +345,7 @@ export default function ContactPage() {
                   required
                   className="w-full rounded-xl px-3 py-2.5 font-sans"
                   style={{
-                    fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4',
+                    fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4',
                     color: '#20190F', outline: 'none', resize: 'vertical', lineHeight: 1.5,
                   }}
                 />
@@ -356,7 +356,7 @@ export default function ContactPage() {
               )}
 
               {!isLive && (
-                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: '#8C7A62', background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: '#8C7A62', background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                   Backend not connected — messages will be logged locally only. Connect Firebase to enable delivery.
                 </p>
               )}

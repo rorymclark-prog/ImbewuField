@@ -122,7 +122,7 @@ function LoginPageInner() {
   }
 
   const card: React.CSSProperties = {
-    background: '#FBF6EC',
+    background: '#FFFEFA',
     border: '1px solid #E2D8C4',
     boxShadow: '0 4px 24px rgba(32,25,15,0.10)',
   };
@@ -135,7 +135,7 @@ function LoginPageInner() {
   });
 
   return (
-    <div className="min-h-[100dvh] flex items-start justify-center overflow-y-auto px-4 py-6 md:items-center" style={{ background: '#F7F2E9' }}>
+    <div className="min-h-[100dvh] flex items-start justify-center overflow-y-auto px-4 py-6 md:items-center" style={{ background: '#E4DCC6' }}>
       <div className="w-full max-w-sm rounded-2xl p-6 my-auto" style={card}>
 
         {/* Logo */}
@@ -210,7 +210,7 @@ function LoginPageInner() {
                 <input id="full-name" ref={fullNameRef} type="text" value={fullName}
                   onChange={(e) => { setFullName(e.target.value); setError(null); }}
                   placeholder="Full name" autoComplete="name" required disabled={!backendReady}
-                  className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
+                  className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
                   style={inputStyle()} />
               </>
             )}
@@ -222,7 +222,7 @@ function LoginPageInner() {
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
               placeholder="Email address" required disabled={!backendReady}
               autoComplete="email" inputMode="email"
-              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
+              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
               style={inputStyle(!!error && mode !== 'create')} />
 
             {mode !== 'reset' && (
@@ -234,7 +234,7 @@ function LoginPageInner() {
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
                 placeholder="Password" required disabled={!backendReady}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
                 style={inputStyle(!!error)} />
               </>
             )}
@@ -246,7 +246,7 @@ function LoginPageInner() {
                 </label>
                 <select id="role" value={role} onChange={(e) => setRole(e.target.value as UserRole)}
                 disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBF6EC]"
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
                 style={inputStyle()}>
                 {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
                 </select>

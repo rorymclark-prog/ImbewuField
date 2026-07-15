@@ -613,7 +613,7 @@ export default function DesignCanvas({
         {satDataUrl ? (
           <image href={satDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
         ) : (
-          <rect x={0} y={0} width={imgW} height={imgH} fill="#FBF6EC" />
+          <rect x={0} y={0} width={imgW} height={imgH} fill="#FFFEFA" />
         )}
 
         {/* Reference outlines: driveway, house, boundary (drawn in this order so boundary reads
@@ -704,7 +704,7 @@ export default function DesignCanvas({
                         cx={x * imgW}
                         cy={y * imgH}
                         r={7}
-                        fill="#FBF6EC"
+                        fill="#FFFEFA"
                         stroke={GOLD}
                         strokeWidth={2}
                         style={{ cursor: 'grab', touchAction: 'none' }}
@@ -778,7 +778,7 @@ export default function DesignCanvas({
                         cx={x * imgW}
                         cy={y * imgH}
                         r={7}
-                        fill="#FBF6EC"
+                        fill="#FFFEFA"
                         stroke={GOLD}
                         strokeWidth={2}
                         style={{ cursor: 'grab', touchAction: 'none' }}
@@ -1192,7 +1192,7 @@ export default function DesignCanvas({
             padding: '0 16px',
             borderRadius: 22,
             border: '1px solid rgba(0,0,0,0.15)',
-            background: 'rgba(251,246,236,0.92)',
+            background: 'rgba(255,254,250,0.92)',
             color: '#0B120B',
             fontWeight: 600,
             fontSize: 14,
@@ -1215,7 +1215,7 @@ export default function DesignCanvas({
             padding: '0 16px',
             borderRadius: 22,
             border: '1px solid rgba(0,0,0,0.15)',
-            background: 'rgba(251,246,236,0.92)',
+            background: 'rgba(255,254,250,0.92)',
             color: '#0B120B',
             fontWeight: 600,
             fontSize: 14,

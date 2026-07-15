@@ -26,7 +26,7 @@ export default function NgoPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
@@ -38,7 +38,7 @@ export default function NgoPage() {
       </header>
 
       {/* Tab strip */}
-      <div className="flex-shrink-0 flex" style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16 }}>
+      <div className="flex-shrink-0 flex" style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16 }}>
         {([
           { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: 0 },
           { key: 'messages',  label: 'Messages',  icon: Inbox,          badge: msgUnread },

@@ -623,9 +623,9 @@ export default function FacilitatorCropsPage() {
   const loading = design === undefined || plan === null || !mounted;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <button
           onClick={() => setNavOpen(true)}
           aria-label="Open navigation"
@@ -708,7 +708,7 @@ export default function FacilitatorCropsPage() {
                 key={d.id}
                 onClick={() => chooseSite(d.id)}
                 className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
               >
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{d.title || 'Untitled design'}</span>
                 <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
@@ -778,15 +778,15 @@ export default function FacilitatorCropsPage() {
                 turns that wrapper into the sticky row's containing block
                 instead of the page — so the header would scroll away with
                 the body instead of freezing, exactly the bug this fixes. */}
-            <div className="rounded-2xl mb-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl mb-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               {/* Month header row — sticky top so it stays visible past many
                   bed rows; the Bed-label cell below keeps its own
                   sticky-left independently, so both axes pin correctly. */}
               <div
                 className="flex"
-                style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 52, zIndex: 3, background: '#FBF6EC', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+                style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 52, zIndex: 3, background: '#FFFEFA', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
               >
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
                 </div>
                 <div
@@ -869,7 +869,7 @@ export default function FacilitatorCropsPage() {
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📋 Tasks</div>
                 <div className="font-sans mb-1" style={{ fontSize: 13, color: '#20190F' }}>
                   <strong>{monthLabel(currentMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(currentTasks)}</span>
@@ -914,7 +914,7 @@ export default function FacilitatorCropsPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🥬 Estimated harvest</div>
                 <div className="font-mono font-bold mb-2" style={{ fontSize: 26, color: '#1F4D2B' }}>
                   {newYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr to plant</span>
@@ -940,7 +940,7 @@ export default function FacilitatorCropsPage() {
 
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds & seedlings to get</div>
                 <div className="space-y-1">
                   {seedBoq.map((row) => (
@@ -958,7 +958,7 @@ export default function FacilitatorCropsPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📖 Year ahead</div>
                 {yearReport.length > 0 ? (
                   <div className="space-y-2">
@@ -1184,7 +1184,7 @@ function FoodAvailabilityChart({
   const totalHomeValue = totalHarvestableValue * (1 - sellFactor);
 
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & cashflow — resilience by month</div>
 
       <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
@@ -1312,7 +1312,7 @@ function FoodAvailabilityChart({
                           title={title}
                         >
                           {storedHPx > 0 && <div style={{ height: storedHPx, background: '#D4A017' }} />}
-                          {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FBF6EC' }} />}
+                          {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FFFEFA' }} />}
                           {freshHPx > 0 && <div style={{ height: freshHPx, background: '#7FAE6E' }} />}
                         </div>
                       )}
@@ -1400,7 +1400,7 @@ function FoodAvailabilityChart({
 
 function RotationExplanationCard() {
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Why rotate by food group</div>
       <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
         Each bed&apos;s label above shows which food group is currently growing there. With &quot;Rotate crops&quot;
@@ -1442,7 +1442,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
 
   return (
     <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FBF6EC', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
         <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{bed.label}</div>
         <div className="font-mono" style={{ fontSize: 11, color: '#8C7A62' }}>{bed.areaM2.toFixed(1)} m²</div>
         {bedGroups.length > 0 && (
@@ -1588,7 +1588,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
         <div
           style={{
             position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -2, transform: 'translateX(-50%)',
-            fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FBF6EC', padding: '0 2px', borderRadius: 3,
+            fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA', padding: '0 2px', borderRadius: 3,
             pointerEvents: 'none', whiteSpace: 'nowrap',
           }}
         >
@@ -1637,9 +1637,9 @@ function CropPickerModal({
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl"
-        style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
-        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FBF6EC', zIndex: 1 }}>
+        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
           <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
             {crop ? `${crop.icon} ${crop.name}` : 'Add a crop'}
           </span>
@@ -1669,7 +1669,7 @@ function CropPickerModal({
                   <div
                     key={c.key}
                     className="w-full flex items-center gap-1 pl-2.5 pr-1.5 py-2 rounded-xl"
-                    style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+                    style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
                   >
                     <button
                       onClick={() => onPick(c)}
@@ -1873,7 +1873,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl p-4"
-        style={{ position: 'relative', width: '100%', maxWidth: 300, background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 300, background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
           <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
@@ -1999,9 +1999,9 @@ function AutoSuggestModal({
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl"
-        style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
-        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FBF6EC', zIndex: 1 }}>
+        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
           <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: '#20190F' }}>
             ✨ {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>

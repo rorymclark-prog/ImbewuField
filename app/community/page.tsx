@@ -88,15 +88,15 @@ export default function CommunityHubPage() {
 
   if (!communityEnabled() || loading || !user) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#F7F2E9' }}>
+      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F7F2E9', color: '#20190F' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         <Link href="/home" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
@@ -110,7 +110,7 @@ export default function CommunityHubPage() {
         </Link>
       </header>
 
-      <div className="flex-shrink-0 flex" style={{ borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+      <div className="flex-shrink-0 flex" style={{ borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         {(['nearby', 'board', 'messages'] as Tab[]).map((tb) => (
           <button
             key={tb}
@@ -180,7 +180,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
         </div>
       )}
       {nearby.length === 0 ? (
-        <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+        <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <MapPin size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
           <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityNearbyEmpty')}</p>
         </div>
@@ -191,7 +191,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
               key={p.uid}
               onClick={() => onOpenProfile(p.uid)}
               className="flex items-center gap-3 rounded-xl p-3 text-left w-full"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', cursor: 'pointer' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', cursor: 'pointer' }}
             >
               <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {p.photos?.[0]
@@ -234,13 +234,13 @@ function BoardTab({
       {showNewPost && <NewBoardPostForm myAreaText={myAreaText} onPosted={onPosted} onCancel={onToggleNewPost} />}
 
       {posts.length === 0 ? (
-        <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+        <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityBoardEmpty')}</p>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {posts.map((p) => (
-            <div key={p.id} className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div key={p.id} className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
                 <span className="font-sans font-bold" style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {KIND_LABEL[p.kind]}
@@ -316,7 +316,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
   }
 
   return (
-    <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div>
         <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{t('communityBoardKind')}</div>
         <div className="flex gap-2">
@@ -391,7 +391,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
   const { t } = useLanguage();
   if (threads.length === 0) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityMessagesEmpty')}</p>
       </div>
@@ -407,7 +407,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             key={th.id}
             onClick={() => onOpen(th.id)}
             className="flex items-center gap-3 rounded-xl p-3 text-left w-full"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', cursor: 'pointer' }}
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', cursor: 'pointer' }}
           >
             <div style={{ width: 40, height: 40, borderRadius: '50%', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 15 }}>{(otherName?.[0] ?? '?').toUpperCase()}</span>

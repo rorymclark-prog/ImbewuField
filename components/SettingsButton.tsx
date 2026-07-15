@@ -19,7 +19,7 @@ export default function SettingsButton() {
         title="Settings"
         className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
         style={{
-          background: '#FBF6EC',
+          background: '#FFFEFA',
           border: '1px solid #E2D8C4',
           color: '#20190F',
           cursor: 'pointer',

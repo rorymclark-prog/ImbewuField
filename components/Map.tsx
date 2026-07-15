@@ -1902,7 +1902,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               onClose={() => setActivePin(null)}
               style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}
             >
-              <div className="flex items-center font-sans" style={{ background: '#F7F2E9', border: '1px solid rgba(32,25,15,0.1)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 6px 24px rgba(0,0,0,0.25)', whiteSpace: 'nowrap' }}>
+              <div className="flex items-center font-sans" style={{ background: '#E4DCC6', border: '1px solid rgba(32,25,15,0.1)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 6px 24px rgba(0,0,0,0.25)', whiteSpace: 'nowrap' }}>
                 <button
                   onClick={() => { mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.({ name: p.name, id: p.id }); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
@@ -2355,7 +2355,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
                   style={{
                     top: 44, right: 0,
-                    background: '#F7F2E9', color: '#20190F',
+                    background: '#E4DCC6', color: '#20190F',
                     fontSize: 12, borderRadius: 8, padding: '5px 10px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
                   }}>
@@ -2366,7 +2366,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <span className="absolute pointer-events-none font-sans font-bold whitespace-nowrap"
                   style={{
                     top: 44, right: 0,
-                    background: '#F7F2E9', color: '#C0492A',
+                    background: '#E4DCC6', color: '#C0492A',
                     fontSize: 12, borderRadius: 8, padding: '5px 10px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
                   }}>
@@ -3383,7 +3383,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => setNamingPlace(null)} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
                 <MapPin size={16} style={{ color: resolveColor({ label: placeLabel, color: customPlaceColor || undefined }) }} />
                 <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{editingPlaceId ? t('savePlaceSheetTitleEdit') : t('savePlaceSheetTitleNew')}</span>
@@ -3423,7 +3423,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <div className="flex gap-2">
                 <button onClick={() => setNamingPlace(null)}
-                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Cancel
                 </button>
                 <button onClick={confirmSavePlace}
@@ -3443,7 +3443,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => setShapeNaming(null)} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
                 {shapeNaming.type === 'water'
                   ? <Droplets size={16} style={{ color: '#235E86' }} />
@@ -3490,7 +3490,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               )}
               <div className="flex gap-2">
                 <button onClick={() => setShapeNaming(null)}
-                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Skip
                 </button>
                 <button onClick={confirmShapeNaming}
@@ -3510,7 +3510,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => setWaterPointNaming(null)} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
                 <Pipette size={16} style={{ color: '#235E86' }} />
                 <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
@@ -3540,11 +3540,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   setWaterPoints(loadWaterPoints());
                   setWaterPointNaming(null);
                 }}
-                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
                   Delete
                 </button>
                 <button onClick={() => setWaterPointNaming(null)}
-                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Skip
                 </button>
                 <button onClick={() => {
@@ -3569,7 +3569,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[71] w-full"
             style={{ bottom: 'calc(72px + env(safe-area-inset-bottom))', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
+            <div className="rounded-2xl p-4 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 -4px 24px rgba(32,25,15,0.2)' }}>
               <div className="flex items-center gap-2 mb-3">
                 <span style={{ fontSize: 18, lineHeight: 1 }} aria-hidden="true">{getElementMeta(elementEditing.type).icon}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
@@ -3633,12 +3633,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <span className="font-sans" style={{ fontSize: 13, color: '#9A8268' }}>how many</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
-                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
                         <Minus size={14} />
                       </button>
                       <span className="font-sans font-semibold w-6 text-center" style={{ fontSize: 15, color: '#20190F' }}>{elCount}</span>
                       <button type="button" onClick={() => setElCount((c) => c + 1)}
-                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
+                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
                         <Plus size={14} />
                       </button>
                     </div>
@@ -3654,11 +3654,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <button onClick={() => requestDeleteElement(elementEditing.id)}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={pendingDeleteElement === elementEditing.id
                     ? { fontSize: 14, background: '#C0492A', border: '1px solid #C0492A', color: '#fff', cursor: 'pointer' }
-                    : { fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
+                    : { fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#C0492A', cursor: 'pointer' }}>
                   {pendingDeleteElement === elementEditing.id ? 'Sure?' : 'Delete'}
                 </button>
                 <button onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }}
-                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                  className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
                   Skip
                 </button>
                 <button onClick={() => {
@@ -3691,7 +3691,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => setGuideOpen(false)} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[73] w-full px-3"
             style={{ top: '50%', transform: 'translate(-50%, -50%)', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-5 font-sans" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(32,25,15,0.28)' }}>
+            <div className="rounded-2xl p-5 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(32,25,15,0.28)' }}>
               {/* Lima header */}
               <div className="flex items-center gap-2.5 mb-1">
                 <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 36, height: 36, background: '#1F4D2B' }}>

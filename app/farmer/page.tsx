@@ -266,7 +266,7 @@ function HomeInner() {
         />
       )}
 
-      <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
+      <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
 
         {/* ── Header ────────────────────────────── */}
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
@@ -275,7 +275,7 @@ function HomeInner() {
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto overflow-y-hidden"
           style={{
             height: 60,
-            background: '#FBF6EC',
+            background: '#FFFEFA',
             borderBottom: '1px solid #E2D8C4',
             WebkitOverflowScrolling: 'touch',
           }}
@@ -381,7 +381,7 @@ function HomeInner() {
             onPointerDown={startPanelResize}
             className="hidden lg:flex items-center justify-center flex-shrink-0 group"
             title="Drag to resize the panel"
-            style={{ width: 8, cursor: 'col-resize', background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: 8, cursor: 'col-resize', background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
           >
             <div style={{ width: 3, height: 36, borderRadius: 3, background: 'rgba(92,80,64,0.25)' }} className="group-hover:bg-stone-400 transition-colors" />
           </div>
@@ -389,7 +389,7 @@ function HomeInner() {
           {/* ── Desktop side panel (md+) ── */}
           <div
             className="hidden lg:flex flex-shrink-0 overflow-hidden flex-col"
-            style={{ width: panelWidth, background: '#FBF6EC', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: panelWidth, background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
           >
             <DataPanel
               data={data}
@@ -459,7 +459,7 @@ function HomeInner() {
               bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
-              background: '#F7F2E9',
+              background: '#E4DCC6',
               borderTop: '1px solid #E2D8C4',
               borderRadius: '20px 20px 0 0',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',

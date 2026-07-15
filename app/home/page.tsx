@@ -72,7 +72,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
     <Link href="/farmer" style={{ textDecoration: 'none' }}>
       <div
         className="rounded-2xl p-4"
-        style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
       >
         <div className="flex items-center justify-between mb-3">
           <div>
@@ -117,7 +117,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           {t('homeTaskBoardViewPlan')}<ChevronRight size={13} />
         </Link>
       </div>
-      <div className="mt-2.5" style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
+      <div className="mt-2.5" style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
         {visible.map((task, i) => (
           <div
             key={task.id}
@@ -200,7 +200,7 @@ function HomeLandingInner() {
   return (
     <div
       className="h-[100dvh] flex flex-col font-sans overflow-hidden"
-      style={{ background: '#F7F2E9', color: '#20190F' }}
+      style={{ background: '#E4DCC6', color: '#20190F' }}
     >
       {/* ── Header ── */}
       <header
@@ -274,7 +274,7 @@ function HomeLandingInner() {
             {t('homeSurveyDesc')}
           </p>
 
-          <span className="inline-flex items-center font-sans font-semibold" style={{ background: '#F7F2E9', color: '#1F4D2B', borderRadius: 100, padding: '8px 16px', fontSize: 13, letterSpacing: '-0.01em' }}>
+          <span className="inline-flex items-center font-sans font-semibold" style={{ background: '#E4DCC6', color: '#1F4D2B', borderRadius: 100, padding: '8px 16px', fontSize: 13, letterSpacing: '-0.01em' }}>
             <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
           </span>
         </Link>
@@ -286,7 +286,7 @@ function HomeLandingInner() {
               key={q.href}
               href={q.href}
               className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
-              style={{ textDecoration: 'none', background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+              style={{ textDecoration: 'none', background: '#FFFEFA', border: '1px solid #E2D8C4' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
                 <q.Icon size={20} strokeWidth={1.6} />
@@ -319,7 +319,7 @@ function HomeLandingInner() {
           </button>
 
           {rolesOpen && (
-            <div className="mt-2.5" style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
+            <div className="mt-2.5" style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
               {ROLES.map((r, i) => (
                 <Link
                   key={r.href}

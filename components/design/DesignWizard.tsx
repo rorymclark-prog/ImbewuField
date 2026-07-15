@@ -12,7 +12,7 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
-const PAPER = '#FBF6EC';
+const PAPER = '#FFFEFA';
 const DARK = '#0B120B';
 
 interface DesignWizardProps {

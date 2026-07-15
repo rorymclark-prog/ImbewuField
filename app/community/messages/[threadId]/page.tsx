@@ -74,7 +74,7 @@ export default function MessageThreadPage() {
 
   if (busy || loading || !communityEnabled() || !user) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#F7F2E9' }}>
+      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
@@ -84,8 +84,8 @@ export default function MessageThreadPage() {
   const otherName = thread?.participant_names?.[otherUid] ?? 'Farmer';
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#F7F2E9', color: '#20190F' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
@@ -104,7 +104,7 @@ export default function MessageThreadPage() {
       </header>
 
       {reportOpen && (
-        <div className="rounded-2xl p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', margin: '12px 16px 0' }}>
+        <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', margin: '12px 16px 0' }}>
           <textarea
             value={reportReason}
             onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
@@ -134,7 +134,7 @@ export default function MessageThreadPage() {
                   className="font-sans"
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
-                    background: mine ? '#1F4D2B' : '#FBF6EC',
+                    background: mine ? '#1F4D2B' : '#FFFEFA',
                     color: mine ? '#F7F2E9' : '#20190F',
                     border: mine ? 'none' : '1px solid #E2D8C4',
                     borderBottomRightRadius: mine ? 4 : 16,
@@ -154,7 +154,7 @@ export default function MessageThreadPage() {
         <div ref={bottomRef} />
       </main>
 
-      <div className="flex-shrink-0 flex items-center gap-2 px-3 py-3" style={{ borderTop: '1px solid #E2D8C4', background: '#FBF6EC', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
+      <div className="flex-shrink-0 flex items-center gap-2 px-3 py-3" style={{ borderTop: '1px solid #E2D8C4', background: '#FFFEFA', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
         <input
           type="text"
           value={body}

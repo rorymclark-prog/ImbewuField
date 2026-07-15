@@ -46,7 +46,7 @@ import DesignPalette from '@/components/design/DesignPalette';
 import DesignWizard from '@/components/design/DesignWizard';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
 
-const PAPER = '#FBF6EC';
+const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
@@ -892,7 +892,7 @@ function DesignStudioInner() {
                   width: 260,
                   maxHeight: '40%',
                   overflowY: 'auto',
-                  background: 'rgba(251,246,236,0.97)',
+                  background: 'rgba(255,254,250,0.97)',
                   border: `1px solid ${GOLD}`,
                   borderRadius: 14,
                   boxShadow: '0 4px 16px rgba(0,0,0,0.25)',

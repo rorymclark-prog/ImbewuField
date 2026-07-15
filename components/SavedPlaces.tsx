@@ -91,7 +91,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               onChange={e => setName(e.target.value)}
               placeholder="Place name..."
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
             />
             <textarea
               value={notes}
@@ -99,7 +99,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               placeholder="Notes (optional)..."
               rows={2}
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
-              style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F' }}
+              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
             />
             <div className="flex gap-2">
               <button
@@ -146,7 +146,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               <div
                 key={place.id}
                 className="rounded-xl p-3 transition-all group"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
               >
                 <div className="flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: dotColor }} />

@@ -17,9 +17,9 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
 
 export default function FunderPage() {
   return (
-    <div className="h-screen flex flex-col" style={{ background: '#F7F2E9' }}>
+    <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton />
         <BrandLogo icon="🏛" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />

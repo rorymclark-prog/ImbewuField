@@ -149,9 +149,9 @@ export default function CropPlanPage() {
   ];
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 56, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton fallback="/plan" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -166,7 +166,7 @@ export default function CropPlanPage() {
           {/* New: flagship bed-timeline crop planner on the design map */}
           <Link href="/facilitator/crops"
             className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
             🌱 New: plan crops bed-by-bed on your design map →
           </Link>
 
@@ -183,8 +183,8 @@ export default function CropPlanPage() {
             </div>
             {view !== 'season' && (
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => step(-1)} aria-label="Previous" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => step(1)} aria-label="Next" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => step(-1)} aria-label="Previous" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => step(1)} aria-label="Next" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>
@@ -209,7 +209,7 @@ export default function CropPlanPage() {
               <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
                 {dayLabel} — {dayJobs.length} {dayJobs.length === 1 ? 'job' : 'jobs'}
               </div>
-              <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 {dayJobs.map((job, i) => {
                   const m = JOB_META[job.type];
                   return (
@@ -235,7 +235,7 @@ export default function CropPlanPage() {
                 const jobs = jobsForDate(d, beds);
                 const td = mounted && sameDay(d, safeToday);
                 return (
-                  <div key={d.toISOString()} className="rounded-2xl p-3" style={{ background: '#FBF6EC', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
+                  <div key={d.toISOString()} className="rounded-2xl p-3" style={{ background: '#FFFEFA', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
                     <div className="flex md:flex-col md:items-start items-center gap-2 mb-2">
                       <span className="font-sans font-semibold" style={{ fontSize: 13, color: td ? '#1F4D2B' : '#5C5040' }}>{DOW[(d.getDay() + 6) % 7]}</span>
                       <span className="font-display" style={{ fontSize: 13, color: '#8C7A62' }}>{d.getDate()}</span>
@@ -258,7 +258,7 @@ export default function CropPlanPage() {
 
           {/* ── MONTH ── */}
           {view === 'month' && (
-            <div className="rounded-2xl p-3 md:p-4" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl p-3 md:p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="grid grid-cols-7 gap-1 mb-1">
                 {DOW.map((d) => <div key={d} className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{d}</div>)}
               </div>
@@ -309,7 +309,7 @@ export default function CropPlanPage() {
                 </div>
               </div>
               {season.months.map((m) => (
-                <div key={m} className="rounded-2xl px-4 py-3.5" style={{ background: '#FBF6EC', border: `1px solid ${mounted && m === safeToday.getMonth() ? '#1F4D2B40' : '#E2D8C4'}` }}>
+                <div key={m} className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: `1px solid ${mounted && m === safeToday.getMonth() ? '#1F4D2B40' : '#E2D8C4'}` }}>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{MONTHS[m]}</span>
                     {mounted && m === safeToday.getMonth() && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
@@ -321,7 +321,7 @@ export default function CropPlanPage() {
           )}
 
           {/* Footer link */}
-          <Link href="/plan" className="flex items-center justify-center gap-1.5 mt-6 py-3 rounded-xl font-display font-semibold" style={{ fontSize: 14, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+          <Link href="/plan" className="flex items-center justify-center gap-1.5 mt-6 py-3 rounded-xl font-display font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
             Manage crops &amp; beds<ChevronRight size={15} />
           </Link>
         </div>

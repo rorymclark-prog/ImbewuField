@@ -3125,7 +3125,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     closedFences.reduce((best, l) => (lineLengthM(l.points, l.closed) > lineLengthM(best.points, best.closed) ? l : best));
 
   const tile = (active: boolean) => ({
-    background: active ? 'rgba(31,77,43,0.22)' : '#FBF6EC',
+    background: active ? 'rgba(31,77,43,0.22)' : '#FFFEFA',
     border: `1px solid ${active ? 'rgba(31,77,43,0.55)' : '#E2D8C4'}`,
     color: active ? '#1F4D2B' : '#5C5040',
   });
@@ -3273,7 +3273,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         {/* Rainwater harvest potential — surfaced here too while working the water layer */}
         {activeLayer === 'water' && harvest && (
-          <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.35)' }}>
+          <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FFFEFA', border: '1px solid rgba(47,111,158,0.35)' }}>
             <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#2F6F9E' }}>💧 Rainwater potential</div>
             <p className="text-[11px] font-display leading-snug" style={{ color: '#20190F' }}>{harvest.sentence}</p>
             <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
@@ -3386,26 +3386,26 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       )}
 
       {/* ── Canvas ── */}
-      <div ref={wrapRef} className="relative flex-1" style={{ background: '#F7F2E9', minWidth: 0, cursor: armed ? 'crosshair' : panMode ? 'grab' : 'default' }}>
+      <div ref={wrapRef} className="relative flex-1" style={{ background: '#E4DCC6', minWidth: 0, cursor: armed ? 'crosshair' : panMode ? 'grab' : 'default' }}>
         {/* Fit / re-centre + undo/redo — overlaid top-right, above the stepper bar */}
         <div className="absolute top-2 right-2 z-20 flex items-center gap-1 pointer-events-auto">
           <button onClick={undo} disabled={!canUndo} title="Undo (Ctrl/Cmd+Z)"
             className="flex items-center justify-center rounded-lg"
-            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: canUndo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
+            style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: canUndo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
             ↩
           </button>
           <button onClick={redo} disabled={!canRedo} title="Redo (Ctrl/Cmd+Shift+Z)"
             className="flex items-center justify-center rounded-lg"
-            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: canRedo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
+            style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: canRedo ? '#1F4D2B' : '#C7BCA6', fontSize: 14 }}>
             ↪
           </button>
           <button onClick={() => setPanTool((v) => !v)} title={panTool ? 'Pan on — tap to edit again' : 'Pan the map (or hold Space, or drag with two fingers)'}
             className="flex items-center justify-center rounded-lg"
-            style={{ width: 28, height: 28, background: panMode ? '#1F4D2B' : '#FBF6EC', border: `1px solid ${panMode ? '#1F4D2B' : '#E2D8C4'}`, color: panMode ? '#fff' : '#1F4D2B', fontSize: 13 }}>
+            style={{ width: 28, height: 28, background: panMode ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${panMode ? '#1F4D2B' : '#E2D8C4'}`, color: panMode ? '#fff' : '#1F4D2B', fontSize: 13 }}>
             ✋
           </button>
           <button onClick={resetView} title="Re-centre" className="flex items-center justify-center rounded-lg"
-            style={{ width: 28, height: 28, background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
+            style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', fontSize: 14 }}>
             ⤢
           </button>
         </div>
@@ -3413,7 +3413,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         {/* GUIDED header — one step, one question, one next button. */}
         {uiMode === 'guided' && (
           <div className="absolute top-2 left-2 right-36 z-10 rounded-xl pointer-events-auto px-3 py-2"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-mono flex-shrink-0" style={{ color: '#9A8268' }}>Step {guidedStep + 1} of {GUIDED_STEPS.length}</span>
               <span className="text-sm font-display font-semibold truncate" style={{ color: '#1F4D2B' }}>
@@ -3434,7 +3434,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         {/* Stepper + coach — docked at the top of the canvas (PRO mode) */}
         {uiMode === 'pro' && (
         <div className="absolute top-2 left-2 right-12 z-10 rounded-xl pointer-events-auto"
-          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
+          style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)' }}>
           <div className="flex items-center gap-1 px-1.5 py-1 overflow-x-auto">
             <button onClick={goPrevLayer} disabled={layerIndex === 0} className="text-xs font-mono px-1 flex-shrink-0" style={{ color: layerIndex === 0 ? '#C7BCA6' : '#9A8268' }}>‹ Back</button>
             {LAYER_ORDER.map((id) => {
@@ -3486,7 +3486,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
         {/* N badge — moved below the stepper so it doesn't collide */}
         <div className="absolute top-[70px] left-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg pointer-events-none"
-          style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>N ↑</span>
         </div>
 
@@ -3510,7 +3510,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 : `${polyDraft.length / 2} corners — tap more, or finish`} · Esc to cancel
             </div>
             {polyDraft.length > 0 && (
-              <button onClick={undoPolygonVertex} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+              <button onClick={undoPolygonVertex} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
                 ↩ point
               </button>
             )}
@@ -3519,7 +3519,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                 ✓ Finish shape
               </button>
             )}
-            <button onClick={cancelPolygonDraft} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#9A8268' }}>
+            <button onClick={cancelPolygonDraft} className="px-2 py-1 rounded-full text-xs font-mono" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#9A8268' }}>
               ✕
             </button>
           </div>
@@ -3528,7 +3528,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         {/* GUIDED tool tray — the step's few tools + one big next button. */}
         {uiMode === 'guided' && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 w-[min(94%,560px)] rounded-2xl p-2.5 pointer-events-auto"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 6px 24px rgba(31,25,15,0.18)' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 6px 24px rgba(31,25,15,0.18)' }}>
             {GUIDED_STEPS[guidedStep].key === 'setup' && (
               <div className="space-y-1.5">
                 <div className="grid grid-cols-2 gap-1.5">
@@ -3630,7 +3630,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         {/* AI scale suggestion — just under the stepper; never shown once the scale is map-locked */}
         {scaleSuggestion && !scaleLocked && (
           <div className="absolute top-[70px] left-1/2 -translate-x-1/2 z-10 px-3 py-2 rounded-xl text-xs font-display flex items-center gap-2"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
             <span>✨ AI: this image looks ≈ {scaleSuggestion.metresAcross} m across → 1 m = {scaleSuggestion.pxPerM.toFixed(1)} px</span>
             <button onClick={() => { setPxPerM(scaleSuggestion.pxPerM); setScaleSet(true); setScaleSuggestion(null); }}
               className="px-2 py-0.5 rounded-full font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff' }}>
@@ -3646,7 +3646,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         {/* AI-detect approve bar — bottom-centre while ghosts await review */}
         {ghosts && ghosts.length > 0 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full text-xs font-display flex items-center gap-2 pointer-events-auto"
-            style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 2px 8px rgba(31,25,15,0.08)', color: '#5C5040' }}>
             <span>{ghostSource === 'osm' ? `🗺 Map data: ${ghosts.length} feature${ghosts.length > 1 ? 's' : ''} found` : `✨ AI found ${ghosts.length} feature${ghosts.length > 1 ? 's' : ''}`}</span>
             <button onClick={acceptAllGhosts}
               className="px-2.5 py-1 rounded-full font-display font-semibold" style={{ background: '#1F4D2B', color: '#fff' }}>
@@ -3755,7 +3755,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                       <Circle x={l.points[0]} y={l.points[1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(0, e.target.x(), e.target.y())} />
                       <Circle x={l.points[n - 2]} y={l.points[n - 1]} radius={6} fill={L.color} stroke="#fff" strokeWidth={1.3} draggable onDragStart={pushHistory} onDragMove={(e) => setPt(n - 2, e.target.x(), e.target.y())} />
                       <Group x={mx} y={my} onClick={deleteLine} onTap={deleteLine}>
-                        <Circle radius={7} fill="#F7F2E9" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
+                        <Circle radius={7} fill="#E4DCC6" stroke="#C0531E" strokeWidth={1.3} /><Text text="✕" fontSize={9} fill="#C0531E" x={-3} y={-4.5} />
                       </Group>
                     </>
                   )}
@@ -3813,9 +3813,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     background (dark satellite or pale parchment wash). */}
                 <Line points={[g.cx, g.cy, g.lx, g.ay]} stroke="#1A140A" strokeWidth={2.4} opacity={0.28} lineCap="round" />
                 <Line points={[g.cx, g.cy, g.lx, g.ay]} stroke="#FBF6EC" strokeWidth={1.1} opacity={0.9} dash={[4, 3]} lineCap="round" />
-                <Circle x={g.cx} y={g.cy} radius={3} fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={1} />
+                <Circle x={g.cx} y={g.cy} radius={3} fill="#FFFEFA" stroke="#1F4D2B" strokeWidth={1} />
                 <Rect x={g.ax} y={g.ay - g.hh} width={g.pw} height={g.hh * 2} cornerRadius={g.hh}
-                  fill="#FBF6EC" stroke="#1F4D2B" strokeWidth={0.8} opacity={0.97}
+                  fill="#FFFEFA" stroke="#1F4D2B" strokeWidth={0.8} opacity={0.97}
                   shadowColor="#1A140A" shadowBlur={4} shadowOpacity={0.25} shadowOffsetY={1} />
                 <Text text={`${g.icon} ${g.label}${g.count > 1 ? `  ×${g.count}` : ''}`}
                   x={g.ax + g.pad} y={g.ay - g.fs * 0.55} fontSize={g.fs}
@@ -3875,7 +3875,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
         <div className="p-3 space-y-3">
           {/* Properties */}
           {selected ? (
-            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.25)' }}>
+            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FFFEFA', border: '1px solid rgba(31,77,43,0.25)' }}>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-display font-semibold" style={{ color: '#1F4D2B' }}>{CATALOG[selected.type].icon} {CATALOG[selected.type].label}</span>
                 <div className="flex gap-1">
@@ -3933,7 +3933,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <p className="text-[9px] font-mono" style={{ color: '#9A8268' }}>⌘C / ⌘V to duplicate</p>
             </div>
           ) : selectedSector ? (
-            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FBF6EC', border: `1px solid ${SECTOR_DEFS[selectedSector.kind].color}66` }}>
+            <div className="rounded-xl p-2.5 space-y-2" style={{ background: '#FFFEFA', border: `1px solid ${SECTOR_DEFS[selectedSector.kind].color}66` }}>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-display font-semibold" style={{ color: SECTOR_DEFS[selectedSector.kind].color }}>
                   {SECTOR_DEFS[selectedSector.kind].icon} {SECTOR_DEFS[selectedSector.kind].label}
@@ -3969,7 +3969,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
 
           {/* Rainwater harvest potential */}
           {harvest && (
-            <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.35)' }}>
+            <div className="rounded-xl p-2.5 space-y-1" style={{ background: '#FFFEFA', border: '1px solid rgba(47,111,158,0.35)' }}>
               <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#2F6F9E' }}>💧 Rainwater potential</div>
               <p className="text-[11px] font-display leading-snug" style={{ color: '#20190F' }}>{harvest.sentence}</p>
               <p className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
@@ -4021,7 +4021,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     {plannedBoq.map((b) => {
                       const cost = boqCosts.find((c) => c.type === b.type);
                       return (
-                        <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}
+                        <div key={b.type} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FFFEFA' }}
                           title={b.type === 'pond' ? `Estimated at an assumed average depth of ${POND_ASSUMED_DEPTH_M} m — actual capacity depends on the dug profile.` : undefined}>
                           <span style={{ color: '#5C5040' }}>{b.icon} {b.label}</span>
                           <span className="flex items-center gap-2">
@@ -4034,7 +4034,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
                     {plannedLineTotals.map((l) => {
                       const cost = lineCosts.find((c) => c.kind === l.kind);
                       return (
-                        <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FBF6EC' }}>
+                        <div key={l.kind} className="flex items-center justify-between text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#FFFEFA' }}>
                           <span style={{ color: '#2F6F9E' }}>{l.icon} {l.label}</span>
                           <span className="flex items-center gap-2">
                             <span className="font-mono" style={{ color: '#20190F' }}>{l.areaM2 != null ? `${l.areaM2.toFixed(0)} m²` : `~${l.m.toFixed(1)} m`}</span>
@@ -4149,7 +4149,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               📂 My designs
             </button>
             {myDesignsOpen && (
-              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 {designsLoading && (
                   <div className="text-xs font-display px-2 py-1 flex items-center gap-1.5" style={{ color: '#9A8268' }}>
                     <Loader2 className="animate-spin" size={14} /> Loading…
@@ -4186,7 +4186,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
               <span className="inline-flex items-center justify-center gap-1.5"><Share2 size={14} /> Share this design with a farmer</span>
             </button>
             {shareOpen && !sharedTo && !shareError && (
-              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="mt-1.5 rounded-xl p-2 space-y-1" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="text-xs font-mono uppercase tracking-wider px-1 mb-1" style={{ color: '#9A8268' }}>
                   {farmersLoading ? 'Loading…' : 'Send to'}
                 </div>
@@ -4246,12 +4246,12 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       <div className="md:hidden absolute bottom-4 left-0 right-0 z-40 flex justify-between px-4 pointer-events-none">
         <button onClick={() => setMobilePanel((p) => (p === 'palette' ? null : 'palette'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: '#FBF6EC', border: '1px solid rgba(31,77,43,0.5)', color: '#1F4D2B', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
+          style={{ background: '#FFFEFA', border: '1px solid rgba(31,77,43,0.5)', color: '#1F4D2B', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
           {mobilePanel === 'palette' ? <><X size={16} /> Close</> : <><LayoutGrid size={16} /> Elements</>}
         </button>
         <button onClick={() => setMobilePanel((p) => (p === 'props' ? null : 'props'))}
           className="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-display font-semibold active:scale-95 transition-transform"
-          style={{ background: '#FBF6EC', border: '1px solid rgba(47,111,158,0.5)', color: '#2F6F9E', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
+          style={{ background: '#FFFEFA', border: '1px solid rgba(47,111,158,0.5)', color: '#2F6F9E', boxShadow: '0 4px 16px rgba(31,25,15,0.12)' }}>
           {mobilePanel === 'props' ? <><X size={16} /> Close</> : <><ClipboardList size={16} /> Plan</>}
         </button>
       </div>
@@ -4260,7 +4260,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       {/* ── Placement prompt: capacity/species capture right when a tank or tree is placed ── */}
       {placementPrompt && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
-          <div className="w-full max-w-sm rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+          <div className="w-full max-w-sm rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
             <div className="px-4 py-3 flex items-center justify-between gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
               <span className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
                 {placementPrompt.type === 'tank' ? '🛢 Tank size' : '🌳 Tree species'}
@@ -4365,7 +4365,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       {/* ── AI polish modal ── */}
       {aiPolish.phase !== 'idle' && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
-          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
             <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
@@ -4559,7 +4559,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
       {/* ── Polished-maps gallery (session-only) ── */}
       {galleryOpen && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,16,10,0.55)' }}>
-          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
+          <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(20,16,10,0.35)' }}>
             <div className="px-4 py-3 flex items-center justify-between gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
               <span className="text-sm font-display font-semibold inline-flex items-center gap-1.5" style={{ color: '#9E5C08' }}>
                 🖼 Polished maps ({polishGallery.length})

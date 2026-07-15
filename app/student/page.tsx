@@ -192,8 +192,8 @@ export default function StudentPage() {
   // Gate: do not render protected content while auth is resolving or user is absent
   if (isLive && (loading || !user)) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
-        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
           <BrandLogo />
         </header>
         <main className="flex-1 flex items-center justify-center">
@@ -205,8 +205,8 @@ export default function StudentPage() {
 
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
-        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+        <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
           <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>
@@ -214,7 +214,7 @@ export default function StudentPage() {
           <SettingsButton />
         </header>
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
               <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
             </div>
@@ -247,8 +247,8 @@ export default function StudentPage() {
   const dashOffset = C - (C * pct) / 100;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>
@@ -259,7 +259,7 @@ export default function StudentPage() {
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
         {/* Progress hero */}
-        <div className="rounded-2xl p-5 flex items-center gap-5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+        <div className="rounded-2xl p-5 flex items-center gap-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           {/* Ring */}
           <div className="flex-shrink-0 relative" style={{ width: 100, height: 100 }}>
             <svg width="100" height="100" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
@@ -322,7 +322,7 @@ export default function StudentPage() {
 
             return (
               <div key={mod.id} className="rounded-2xl overflow-hidden"
-                style={{ background: '#FBF6EC', border: `1px solid ${done ? '#1F4D2B30' : '#E2D8C4'}` }}>
+                style={{ background: '#FFFEFA', border: `1px solid ${done ? '#1F4D2B30' : '#E2D8C4'}` }}>
 
                 {/* Module header row */}
                 <div className="flex items-start gap-3 px-4 py-3.5">

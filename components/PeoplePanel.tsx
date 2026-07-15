@@ -105,7 +105,7 @@ function SkeletonCard() {
         gap: 12,
         padding: '12px 14px',
         borderRadius: 12,
-        background: '#FBF6EC',
+        background: '#FFFEFA',
         border: '1px solid #E2D8C4',
       }}
     >
@@ -152,7 +152,7 @@ function PersonCard({
         gap: 12,
         padding: '12px 14px',
         borderRadius: 12,
-        background: '#FBF6EC',
+        background: '#FFFEFA',
         border: `1px solid ${isCurrentUser ? 'rgba(31,77,43,0.3)' : '#E2D8C4'}`,
         cursor: isCurrentUser ? 'pointer' : 'default',
         transition: 'border-color 0.15s',

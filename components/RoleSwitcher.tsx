@@ -21,7 +21,7 @@ export default function RoleSwitcher({ current }: { current: string }) {
   const effectiveCurrent = ROLE_ALIASES[current] ?? current;
   return (
     <div className="flex items-center gap-1 px-1.5 py-1 rounded-full"
-      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+      style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       {ROLES.map((r) => {
         const active = r.key === effectiveCurrent;
         const isAliasMatch = active && current !== r.key;

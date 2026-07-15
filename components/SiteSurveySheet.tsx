@@ -77,7 +77,7 @@ function NumInput({ value, onChange, placeholder, hint }: { value: string; onCha
     <>
       <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? 'e.g. 120'}
         className="w-full font-sans"
-        style={{ padding: '10px 14px', borderRadius: 11, background: '#FBF6EC', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none' }} />
+        style={{ padding: '10px 14px', borderRadius: 11, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none' }} />
       {hint && <div className="font-sans mt-1" style={{ fontSize: 12, color: '#94876F' }}>{hint}</div>}
     </>
   );
@@ -207,9 +207,9 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
   const Icon = STEP_ICONS[step];
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#F7F2E9' }}>
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#E4DCC6' }}>
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <button onClick={onClose}
           style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
           <X size={18} />
@@ -585,7 +585,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…"
                 rows={4} className="w-full font-sans"
-                style={{ padding: '10px 14px', borderRadius: 11, background: '#FBF6EC', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
+                style={{ padding: '10px 14px', borderRadius: 11, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
             </div>
           </div>
         )}
@@ -593,7 +593,7 @@ export default function SiteSurveySheet({ placeId, onSaved, onClose }: Props) {
 
       {/* Footer */}
       <div className="flex gap-3 flex-shrink-0"
-        style={{ padding: '14px 20px', paddingBottom: 'calc(14px + env(safe-area-inset-bottom))', background: '#FBF6EC', borderTop: '1px solid #E2D8C4' }}>
+        style={{ padding: '14px 20px', paddingBottom: 'calc(14px + env(safe-area-inset-bottom))', background: '#FFFEFA', borderTop: '1px solid #E2D8C4' }}>
         {step > 0 && (
           <button onClick={() => setStep(s => s - 1)}
             className="flex items-center gap-1.5 font-sans font-semibold transition-all"

@@ -138,7 +138,7 @@ export default function AreaPanel({ coords }: Props) {
           onClick={() => load(coords, true)} disabled={loading}
           className="px-2.5 py-1 rounded-lg text-xs font-display font-semibold flex items-center gap-1.5"
           style={loading
-            ? { background: '#FBF6EC', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
+            ? { background: '#FFFEFA', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
             : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: '#C07A1E' }}>
           {loading
             ? <><Loader2 size={14} className="animate-spin" /> Loading...</>
@@ -156,7 +156,7 @@ export default function AreaPanel({ coords }: Props) {
       {loading && !profile && (
         <div className="space-y-2.5 animate-pulse">
           {[60, 95, 80, 100, 70, 90, 55].map((w, i) => (
-            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: '#FBF6EC' }} />
+            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: '#FFFEFA' }} />
           ))}
         </div>
       )}

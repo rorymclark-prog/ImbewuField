@@ -263,12 +263,12 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: '#F7F2E9' }}
+      style={{ background: '#E4DCC6' }}
     >
       {/* ── Header ── */}
       <div
         className="flex items-center gap-3 px-4 flex-shrink-0"
-        style={{ height: 60, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
         <button
           type="button"
@@ -384,7 +384,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
-                background: '#FBF6EC',
+                background: '#FFFEFA',
                 border: '1px solid #E2D8C4',
                 fontSize: 14,
                 color: '#20190F',
@@ -446,7 +446,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
-                background: '#FBF6EC',
+                background: '#FFFEFA',
                 border: '1px solid #E2D8C4',
                 fontSize: 14,
                 color: '#20190F',
@@ -527,7 +527,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         style={{
           padding: '14px 20px',
           paddingBottom: 'calc(14px + env(safe-area-inset-bottom))',
-          background: '#FBF6EC',
+          background: '#FFFEFA',
           borderTop: '1px solid #E2D8C4',
         }}
       >

@@ -21,9 +21,9 @@ export default function GatePage() {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center p-4" style={{ background: '#F7F2E9' }}>
+    <div className="h-screen flex items-center justify-center p-4" style={{ background: '#E4DCC6' }}>
       <form onSubmit={submit} className="w-full max-w-sm rounded-2xl p-6"
-        style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
+        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
         <div className="text-center mb-5">
           {/* Lima icon */}
           <div className="flex items-center justify-center mb-3">

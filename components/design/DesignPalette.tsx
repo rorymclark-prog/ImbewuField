@@ -39,7 +39,7 @@ export interface DesignPaletteProps {
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
-const PAPER = '#FBF6EC';
+const PAPER = '#FFFEFA';
 const DARK = '#0B120B';
 
 const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> = [

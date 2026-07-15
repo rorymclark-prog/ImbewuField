@@ -33,10 +33,10 @@ function FacilitatorPageInner() {
     : undefined;
 
   return (
-    <div className="flex flex-col" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <BackButton />
         <BrandLogo icon="✎" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />
@@ -65,7 +65,7 @@ function FacilitatorPageInner() {
 
 export default function FacilitatorPage() {
   return (
-    <Suspense fallback={<div style={{ height: '100dvh', background: '#F7F2E9' }} />}>
+    <Suspense fallback={<div style={{ height: '100dvh', background: '#E4DCC6' }} />}>
       <FacilitatorPageInner />
     </Suspense>
   );

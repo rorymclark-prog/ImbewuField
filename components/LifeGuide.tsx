@@ -63,7 +63,7 @@ function AnimalCard({ a }: { a: AnimalEntry }) {
   return (
     <div
       className="rounded-xl p-3 mb-2"
-      style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}
+      style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}
     >
       <div className="flex items-center justify-between gap-2 mb-1">
         <span className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{a.type}</span>
@@ -171,7 +171,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       <SectionHead icon={<Sprout size={14} />} label={t('lifeGuideVegetables')} />
       <div className="grid grid-cols-2 gap-1.5">
         {(data.vegetables ?? []).map((v, i) => (
-          <div key={i} className="rounded-lg p-2" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
+          <div key={i} className="rounded-lg p-2" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{v.name}</p>
             {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#C07A1E', fontSize: 10 }}>{v.season}</p>}
             {v.notes && <p className="text-xs font-display mt-0.5 leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{v.notes}</p>}
@@ -183,7 +183,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       <SectionHead icon={<Apple size={14} />} label={t('lifeGuideFruitTrees')} />
       <div className="flex flex-wrap gap-1.5">
         {(data.fruitTrees ?? []).map((f, i) => (
-          <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
+          <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{f.name}</p>
             {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{f.notes}</p>}
           </div>
@@ -200,7 +200,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       <SectionHead icon={<Nut size={14} />} label={t('lifeGuideNutTrees')} />
       <div className="flex flex-wrap gap-1.5">
         {(data.nuts ?? []).map((n, i) => (
-          <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FBF6EC', border: '1px solid rgba(226,216,196,0.8)' }}>
+          <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{n.name}</p>
             {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{n.notes}</p>}
           </div>

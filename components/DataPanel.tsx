@@ -141,7 +141,7 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
     <div
       className={`rounded-xl transition-all duration-200 ${className}`}
       style={{
-        backgroundColor: '#FBF6EC',
+        backgroundColor: '#FFFEFA',
         border: '1px solid #E2D8C4',
         borderRadius: 12,
         padding: 16,
@@ -506,7 +506,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Tabs (wrap so all are always visible) ──── */}
       <div
         className="flex-shrink-0"
-        style={{ borderBottom: '1px solid #E2D8C4', background: '#FBF6EC' }}
+        style={{ borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}
       >
         <div
           className="flex overflow-x-auto"
@@ -621,7 +621,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
 
             {/* Stats ledger — Screen 3 design */}
-            <div style={{ background: '#FBF6EC', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
+            <div style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
                 <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
                 <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statAnnualRainfall')}</span>
@@ -687,7 +687,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   ? { color: '#C07A1E', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: '#1F4D2B', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (
-                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(251,246,236,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
+                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(255,254,250,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
                   <span>{ins.text}</span>
                 </div>
@@ -695,7 +695,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* Lima contextual read card */}
-            <div className="flex gap-3 items-start" style={{ background: '#FBF6EC', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
+            <div className="flex gap-3 items-start" style={{ background: '#FFFEFA', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
               <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B' }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
@@ -763,7 +763,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               className="w-full flex items-center justify-center gap-2 font-sans font-semibold transition-opacity"
               style={{
                 height: 36, borderRadius: 11, border: '1px solid #E2D8C4', cursor: 'pointer',
-                background: placeSaved ? 'rgba(31,77,43,0.06)' : '#FBF6EC',
+                background: placeSaved ? 'rgba(31,77,43,0.06)' : '#FFFEFA',
                 color: placeSaved ? '#5C5040' : '#1F4D2B', fontSize: 13,
               }}
             >
@@ -1458,7 +1458,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {t('savedReportsHeader')}
                 </div>
                 {savedReports.map((r) => (
-                  <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+                  <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                     <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
                       <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{r.name}</div>
                       <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
@@ -1484,7 +1484,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Pre-report survey prompt ── */}
       {surveyPromptOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }}>
-          <div className="w-full max-w-md font-sans" style={{ background: '#F7F2E9', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: '#E4DCC6', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
             <div className="flex items-start gap-3 mb-4">
               <div style={{ width: 44, height: 44, borderRadius: 13, background: '#1F4D2B', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -1526,7 +1526,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Pre-report photo prompt ── */}
       {photoPromptOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(4px)' }}>
-          <div className="w-full max-w-md font-sans" style={{ background: '#F7F2E9', borderRadius: '24px 24px 0 0', padding: '24px 20px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))', maxHeight: '90dvh', overflowY: 'auto' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: '#E4DCC6', borderRadius: '24px 24px 0 0', padding: '24px 20px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))', maxHeight: '90dvh', overflowY: 'auto' }}>
 
             {/* Header */}
             <div className="flex items-start gap-3 mb-4">

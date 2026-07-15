@@ -523,7 +523,7 @@ export default function FacilitatorPrintPage() {
 
   if (state === null) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: 'sans-serif', color: '#5C5040', background: '#F7F2E9' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: 'sans-serif', color: '#5C5040', background: '#E4DCC6' }}>
         <div style={{ fontSize: 15 }}>No design on this device yet.</div>
         <button
           onClick={() => history.back()}

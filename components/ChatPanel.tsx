@@ -178,7 +178,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
       {/* Intro / empty state */}
       {messages.length === 0 && (
         <div className="space-y-3">
-          <div className="rounded-xl p-3" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="flex items-center gap-1.5 mb-1">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D2B" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/>
@@ -206,7 +206,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
             {SUGGESTIONS.map((s) => (
               <button key={s} onClick={() => send(s)}
                 className="text-left px-3 py-2 rounded-lg font-display hover:bg-[rgba(31,77,43,0.05)] transition-colors"
-                style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 13 }}>
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 13 }}>
                 {s}
               </button>
             ))}
@@ -220,7 +220,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
           <div className="px-3.5 py-2.5 text-sm"
             style={m.role === 'user'
               ? { maxWidth: '85%', background: '#1F4D2B', color: '#F2EBDD', borderRadius: '16px 4px 16px 16px', whiteSpace: 'pre-wrap' }
-              : { maxWidth: '92%', background: '#FBF6EC', border: '1px solid #E7DDC9', color: '#20190F', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
+              : { maxWidth: '92%', background: '#FFFEFA', border: '1px solid #E7DDC9', color: '#20190F', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
               ? <span style={{ color: '#D4922A' }}>{m.content}</span>
@@ -231,7 +231,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
       <div ref={endRef} />
 
       {/* Input — sticks to the bottom of the scrolling panel */}
-      <div className="sticky bottom-0 pt-2" style={{ background: 'linear-gradient(to top, #F7F2E9 70%, transparent)' }}>
+      <div className="sticky bottom-0 pt-2" style={{ background: 'linear-gradient(to top, #E4DCC6 70%, transparent)' }}>
         {pendingImage && (
           <div className="flex items-center gap-2 mb-1.5">
             <img src={pendingImage.preview} alt="" className="rounded-lg" style={{ width: 44, height: 44, objectFit: 'cover' }} />

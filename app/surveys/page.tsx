@@ -98,7 +98,7 @@ function QuestionBuilder({
   ];
 
   return (
-    <div className="rounded-2xl p-3.5 space-y-2.5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-3.5 space-y-2.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="flex gap-2 items-start">
         <input
           value={q.text}
@@ -227,7 +227,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
   const canSend = title.trim() && orgName.trim() && questions.some((q) => q.text.trim());
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
@@ -326,7 +326,7 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
   }, [survey.id, isLive]);
 
   return (
-    <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
@@ -383,7 +383,7 @@ function FarmerSurveyCard({
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <button
         onClick={() => { if (!submitted) setOpen((o) => !o); }}
         disabled={submitted}
@@ -537,11 +537,11 @@ export default function SurveysPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#F7F2E9' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-4 gap-3"
-        style={{ height: 52, background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
         <BackButton fallback="/home" />
         <BrandLogo />
@@ -571,7 +571,7 @@ export default function SurveysPage() {
                 <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
               </div>
             ) : surveys.length === 0 ? (
-              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
                   No surveys yet. Build the first one above.
@@ -600,7 +600,7 @@ export default function SurveysPage() {
                 <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
               </div>
             ) : surveys.length === 0 ? (
-              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FBF6EC', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
                   No surveys available right now.
