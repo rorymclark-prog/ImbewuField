@@ -7,7 +7,7 @@
 // placed.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Download, RefreshCw, Sparkles, Gem } from 'lucide-react';
+import { Download, RefreshCw, Gem } from 'lucide-react';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
@@ -491,9 +491,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          Generate an artist&apos;s impression of your design. Gemini (fast) keeps your layout
-          while it repaints the scene; Strict map pixel-locks every item, zone, and line you
-          placed so only the background is repainted and map rules stay fixed.
+          Generate an artist&apos;s impression of your design. It pixel-locks every item, zone
+          and line you placed — only the background is repainted — so the picture stays true
+          to your plan. Takes about a minute.
         </p>
       )}
 
@@ -545,54 +545,36 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <button
-            onClick={() => generate('gemini')}
-            disabled={loading !== null}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              minHeight: 44,
-              padding: '10px 18px',
-              borderRadius: 12,
-              border: 'none',
-              background: GOLD,
-              color: DARK,
-              fontWeight: 700,
-              opacity: loading && loading !== 'gemini' ? 0.5 : 1,
-            }}
-          >
-            {resultImage ? <RefreshCw size={18} /> : <Sparkles size={18} />}
-            {loading === 'gemini' ? 'Generating…' : resultImage ? 'Regenerate — Gemini (fast)' : 'Gemini (fast)'}
-          </button>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <button
-              onClick={() => generate('falgpt')}
-              disabled={loading !== null}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                minHeight: 44,
-                padding: '10px 18px',
-                borderRadius: 12,
-                border: `2px solid ${GREEN}`,
-                background: 'transparent',
-                color: GREEN,
-                fontWeight: 700,
-                opacity: loading && loading !== 'falgpt' ? 0.5 : 1,
-              }}
-            >
-              {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
-              {loading === 'falgpt'
-                ? 'Generating strict map… 30–90s'
-                : resultImage
-                  ? 'Regenerate — Strict map (~1 min)'
-                  : 'Strict map (~1 min)'}
-            </button>
-          </div>
-        </div>
+        {/* Single best-quality render (geometry-locked). The looser "Gemini (fast)" option
+            was retired — it repainted the scene and lost your exact layout. */}
+        <button
+          onClick={() => generate('falgpt')}
+          disabled={loading !== null}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            minHeight: 48,
+            padding: '12px 22px',
+            borderRadius: 12,
+            border: 'none',
+            background: GOLD,
+            color: DARK,
+            fontWeight: 800,
+            fontSize: 15,
+            cursor: loading !== null ? 'default' : 'pointer',
+            opacity: loading !== null ? 0.7 : 1,
+            alignSelf: 'flex-start',
+          }}
+        >
+          {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
+          {loading === 'falgpt'
+            ? 'Generating your map… 30–90s'
+            : resultImage
+              ? 'Regenerate my map (~1 min)'
+              : 'Generate my map (~1 min)'}
+        </button>
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
       </div>
     </div>
