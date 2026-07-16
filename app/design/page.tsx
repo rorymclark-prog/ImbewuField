@@ -146,6 +146,9 @@ interface RefLayers {
   boundary: Array<[number, number]>;
   house: Array<[number, number]>;
   driveway: Array<[number, number]>;
+  // True when the driveway was traced as an AREA (polygon) rather than a track (line) — it's
+  // then filled as a tar surface instead of outlined (outlining a polygon looked like a maze).
+  drivewayClosed?: boolean;
 }
 
 interface SiteCtx {
@@ -479,14 +482,12 @@ function DesignStudioInner() {
 
       const boundaryRing = ringFromGeometry(boundaryLayer?.geometry).map((c) => project(c));
       const houseRing = ringFromGeometry(houseLayer?.geometry).map((c) => project(c));
+      const driveIsArea = driveLayer?.geometry?.type === 'Polygon' || driveLayer?.geometry?.type === 'MultiPolygon';
       const driveLine = driveLayer
-        ? (driveLayer.geometry?.type === 'Polygon' || driveLayer.geometry?.type === 'MultiPolygon'
-            ? ringFromGeometry(driveLayer.geometry)
-            : lineFromGeometry(driveLayer.geometry)
-          ).map((c) => project(c))
+        ? (driveIsArea ? ringFromGeometry(driveLayer.geometry) : lineFromGeometry(driveLayer.geometry)).map((c) => project(c))
         : [];
 
-      setRefLayers({ boundary: boundaryRing, house: houseRing, driveway: driveLine });
+      setRefLayers({ boundary: boundaryRing, house: houseRing, driveway: driveLine, drivewayClosed: driveIsArea });
       setHouseXY(centroidOf(houseRing));
 
       // Build the tappable/adoptable traced layers: every near-site classified layer EXCEPT

@@ -18,6 +18,7 @@ type RefLayers = {
   boundary: Array<[number, number]>;
   house: Array<[number, number]>;
   driveway: Array<[number, number]>;
+  drivewayClosed?: boolean;
 };
 
 interface DesignPrintProps {

@@ -222,6 +222,7 @@ export interface DesignGlossyProps {
     boundary: Array<[number, number]>;
     house: Array<[number, number]>;
     driveway: Array<[number, number]>;
+    drivewayClosed?: boolean; // driveway traced as an AREA (polygon) → fill as tar, don't outline
   };
   site: { biome?: string; rainfallMm?: number } | null;
   placeName?: string;
@@ -273,7 +274,6 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
     ctx.save();
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    const roadW = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
     const tracePath = () => {
       ctx.beginPath();
       refLayers.driveway.forEach(([x, y], i) => {
@@ -281,14 +281,28 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
         fn.call(ctx, px(x), py(y));
       });
     };
-    tracePath(); // light kerb casing
-    ctx.strokeStyle = 'rgba(233,229,221,0.92)';
-    ctx.lineWidth = roadW + 5;
-    ctx.stroke();
-    tracePath(); // tar surface
-    ctx.strokeStyle = '#3B3A3E';
-    ctx.lineWidth = roadW;
-    ctx.stroke();
+    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+      // Traced as an AREA → fill the polygon as one tar surface (outlining it looked like a
+      // jagged maze — Rory: "look at the driveway?").
+      tracePath();
+      ctx.closePath();
+      ctx.fillStyle = '#3B3A3E';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+    } else {
+      // Traced as a track → a tar carriageway with a light kerb casing.
+      const roadW = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
+      tracePath();
+      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+      ctx.lineWidth = roadW + 5;
+      ctx.stroke();
+      tracePath();
+      ctx.strokeStyle = '#3B3A3E';
+      ctx.lineWidth = roadW;
+      ctx.stroke();
+    }
     ctx.restore();
   }
 
