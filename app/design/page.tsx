@@ -660,6 +660,28 @@ function DesignStudioInner() {
       }
     : null;
 
+  // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
+  // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
+  // element · Escape = deselect. Ignored while typing in a field.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'z' || e.key === 'Z') && !e.shiftKey) {
+        if (undoStack.current.length > 0) { e.preventDefault(); handleUndo(); }
+        return;
+      }
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId && onDeleteSelected) {
+        e.preventDefault();
+        onDeleteSelected();
+        return;
+      }
+      if (e.key === 'Escape' && selectedId) setSelectedId(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [handleUndo, onDeleteSelected, selectedId]);
+
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line
   // change). Saves + persists like handleChange, just skips the undoStack push.
