@@ -660,7 +660,7 @@ function producerLabels(
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
   image: string;
-  provider: 'gemini' | 'falgpt';
+  provider: 'gemini' | 'falgpt' | 'exact';
   at: string;
 }
 
@@ -701,13 +701,14 @@ function relativeDate(iso: string): string {
   return new Date(iso).toLocaleDateString();
 }
 
-const PROVIDER_LABEL: Record<'gemini' | 'falgpt', string> = {
+const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
   gemini: 'Gemini Pro',
   falgpt: 'gpt-image-2',
+  exact: 'Exact map · no AI',
 };
 
 export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
-  const [loading, setLoading] = useState<'gemini' | 'falgpt' | null>(null);
+  const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
@@ -906,6 +907,32 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery]);
 
+  // Deterministic design-layer map — the ACCURATE-BY-CONSTRUCTION reference map.
+  // Real satellite + your EXACT zones / elements / lines / labels drawn on top, and
+  // NOTHING else. No model runs, so nothing can be invented (no imaginary lavender
+  // field, orchard or veg beds — the "amazing picture but completely wrong" failure).
+  // Instant, free, always correct. The illustrated "Style" buttons remain the AI
+  // beautify path for when a farmer wants the artist's impression instead.
+  const renderDesignMap = useCallback(async () => {
+    setLoading('exact');
+    setError(null);
+    try {
+      const composite = await buildComposite(state, frame, refLayers, filter, true);
+      setResultImage(composite);
+      const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
+      saveGlossy(state.siteId, mapKey, record);
+      setSaved(record);
+      const mapLabel = filter === 'all'
+        ? 'Whole design'
+        : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
+      pushGallery(mapLabel, composite);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [state, frame, refLayers, filter, mapKey, pushGallery]);
+
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
     const img = new Image();
@@ -1091,8 +1118,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
-                ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
-                : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
+                ? 'Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn straight from your plan, so it’s always accurate. Instant, no AI. Want an artist’s impression? Pick a Style below.'
+                : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Instant and accurate, no AI guessing. For an illustrated version, add a Style below.`}
         </p>
       )}
 
@@ -1171,17 +1198,19 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Engine picker — only for design maps. Analysis maps are drawn by Gemini (the strict
-            gpt-image-2 mask-edit can't produce sun/wind arrows or opportunity annotations);
-            illustrated Styles render via the boundary-locked image-producer pipeline. */}
-        {analysisStyle ? (
-          <div style={{ fontSize: 11.5, opacity: 0.7 }}>
-            Analysis maps are drawn by <strong>Gemini Pro</strong>.
-          </div>
+        {/* Engine picker — only for illustrated Styles (they render via the boundary-locked
+            image-producer pipeline, gpt-image-2 or Gemini). Analysis maps are Gemini-only.
+            Bare Design maps are drawn deterministically from your plan — no model, no engine. */}
+        {!producerStyle ? (
+          analysisStyle ? (
+            <div style={{ fontSize: 11.5, opacity: 0.7 }}>
+              Analysis maps are drawn by <strong>Gemini Pro</strong>.
+            </div>
+          ) : null
         ) : (
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-            {producerStyle ? 'Engine for this style · both experimental' : 'Engine · both experimental'}
+            Engine for this style · both experimental
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {ENGINES.map((e) => {
@@ -1217,7 +1246,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         )}
 
         <button
-          onClick={() => (producerStyle ? generateProducer() : generate(engine))}
+          onClick={() =>
+            producerStyle
+              ? generateProducer()
+              : analysisStyle
+                ? generate('gemini')
+                : renderDesignMap()
+          }
           disabled={loading !== null}
           style={{
             display: 'flex',
@@ -1239,27 +1274,33 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         >
           {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
           {loading !== null
-            ? 'Generating your map… 30–90s'
-            : `${resultImage ? 'Regenerate' : 'Generate'} ${
-                producerStyle
-                  ? `my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
-                  : analysisStyle
-                    ? `my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
-                    : filter === 'all'
-                      ? 'my map'
-                      : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
-              } (~1 min)`}
+            ? loading === 'exact'
+              ? 'Drawing your exact map…'
+              : 'Generating your map… 30–90s'
+            : producerStyle
+              ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`
+              : analysisStyle
+                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
+                : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
         </button>
         <div style={{ fontSize: 11, opacity: 0.6 }}>
-          Using{' '}
-          <strong>
-            {analysisStyle
-              ? 'Gemini Pro'
-              : producerStyle
-                ? `${ENGINES.find((e) => e.key === engine)?.label} · polished pipeline`
-                : ENGINES.find((e) => e.key === engine)?.label}
-          </strong>
-          . If the result looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
+          {!producerStyle && !analysisStyle ? (
+            <>
+              Drawn straight from your design — <strong>exact, no AI</strong>. Your satellite,
+              boundary, zones, elements and labels, nothing invented. For an illustrated
+              version, pick a <strong>Style</strong> below.
+            </>
+          ) : (
+            <>
+              Using{' '}
+              <strong>
+                {analysisStyle
+                  ? 'Gemini Pro'
+                  : `${ENGINES.find((e) => e.key === engine)?.label} · polished pipeline`}
+              </strong>
+              . If the result looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
+            </>
+          )}
         </div>
         {!resultImage && gallery.length > 0 && (
           <button
