@@ -129,6 +129,11 @@ const LINE_COLORS: Record<string, string> = {
 // the chosen layer are locked; everything else is repainted as background.
 export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
 
+const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
+  { key: 'falgpt', label: 'gpt-image-2', sub: 'best overall' },
+  { key: 'gemini', label: 'Gemini Pro', sub: 'may retire' },
+];
+
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
   { key: 'all', label: 'Whole design' },
   { key: 'water', label: 'Water' },
@@ -503,8 +508,8 @@ function relativeDate(iso: string): string {
 }
 
 const PROVIDER_LABEL: Record<'gemini' | 'falgpt', string> = {
-  gemini: 'Gemini',
-  falgpt: 'Strict map',
+  gemini: 'Gemini Pro',
+  falgpt: 'gpt-image-2',
 };
 
 export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
@@ -513,6 +518,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
+  // Render engine — both experimental. gpt-image-2 (default, best overall) + Gemini Pro
+  // (kept for comparison; may be retired after more experimenting).
+  const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Load the cached render for this site + chosen layer. Runs on mount and whenever the
@@ -759,10 +767,46 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Single best-quality render (geometry-locked). The looser "Gemini (fast)" option
-            was retired — it repainted the scene and lost your exact layout. */}
+        {/* Engine picker — both are experimental. gpt-image-2 is the default (best overall so
+            far); Gemini Pro is here to compare and may be retired after more testing. */}
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+            Engine · both experimental
+          </div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {ENGINES.map((e) => {
+              const active = engine === e.key;
+              return (
+                <button
+                  key={e.key}
+                  type="button"
+                  onClick={() => setEngine(e.key)}
+                  disabled={loading !== null}
+                  aria-pressed={active}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    minHeight: 44,
+                    padding: '6px 14px',
+                    borderRadius: 12,
+                    border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                    background: active ? GREEN : 'transparent',
+                    color: active ? PAPER : DARK,
+                    cursor: loading !== null ? 'default' : 'pointer',
+                    opacity: loading !== null && !active ? 0.5 : 1,
+                  }}
+                >
+                  <span style={{ fontWeight: 800, fontSize: 13 }}>{e.label}</span>
+                  <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{e.sub}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <button
-          onClick={() => generate('falgpt')}
+          onClick={() => generate(engine)}
           disabled={loading !== null}
           style={{
             display: 'flex',
@@ -783,12 +827,16 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           }}
         >
           {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
-          {loading === 'falgpt'
+          {loading !== null
             ? 'Generating your map… 30–90s'
             : resultImage
               ? `Regenerate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`
               : `Generate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`}
         </button>
+        <div style={{ fontSize: 11, opacity: 0.6 }}>
+          Using <strong>{ENGINES.find((e) => e.key === engine)?.label}</strong>. If the result looks
+          off, try generating again or switch engine — results vary shot to shot.
+        </div>
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
       </div>
     </div>
