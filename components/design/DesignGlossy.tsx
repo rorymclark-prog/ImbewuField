@@ -47,10 +47,11 @@ const STRICT_MAP_CRITERIA = {
 } as const;
 
 const STRICT_PROMPT =
-  'Repaint ONLY the unprotected background as a beautiful hand-illustrated permaculture map ' +
-  '(soft earth tones, gentle textures, subtle grass/soil detail). This design was drawn by the ' +
-  'farmer: do NOT add, move, remove, resize or restyle ANY element, zone, line or label — every ' +
-  'feature stays exactly where and how it is. Follow the strict map criteria.';
+  'Repaint the editable ground — the open ground AND the inside of the drawn zone areas — as a ' +
+  'beautiful hand-illustrated permaculture map (soft earth tones, gentle textures, subtle ' +
+  'grass/soil/planting detail). Keep every drawn OUTLINE, LINE, ICON and LABEL exactly where and ' +
+  'how it is — do NOT move, resize, reshape or duplicate them — but you MAY add gentle illustration ' +
+  'and colour INSIDE the shapes. Follow the strict map criteria.';
 
 // Per-layer theming. HARD RULE: a theme may only style the EDITABLE BACKGROUND (palette, mood,
 // ground texture, labels beside features). It must NEVER instruct the model to draw, render,
@@ -76,7 +77,8 @@ const FILTER_THEME: Record<GlossyLayerFilter, { title: string; focus: string; em
     title: 'zone map',
     focus: 'a ZONE-MAP background: calm, slightly desaturated ground texture so the coloured zone shapes already painted on the image are the loudest thing on the map',
     emphasise: [
-      'the coloured shapes already painted on the image ARE the zones — their painted outlines are final; do not move, bend, extend, shrink or re-cut any of them, and do not paint zone colour outside a painted outline',
+      'the coloured shapes already painted on the image ARE the zones — their painted outlines are final; do not move, bend, extend, shrink or re-cut any of them, and never paint any zone colour OUTSIDE a painted outline or past the property boundary',
+      'you MAY illustrate richly INSIDE each zone outline (gentle planting texture, soil/grass detail in the zone colour) — just keep the outline and its shape exactly',
       'do not add any zone that is not already painted, and do not rearrange zones around the house — the farmer chose where each zone is',
       'add one small numbered badge inside each painted zone shape, matching the number shown on it',
     ],
@@ -216,7 +218,7 @@ export interface DesignGlossyProps {
 
 const SCALE = 2;
 
-function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all') {
+function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
 
@@ -260,8 +262,9 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
     ctx.stroke();
   }
 
-  // Zones — translucent fill (only when this layer is in the chosen filter)
-  for (const zone of zonesInFilter(filter) ? state.zones : []) {
+  // Zones — translucent fill (only when this layer is in the chosen filter, and design marks
+  // are wanted — analysis maps like sector/base draw NO design overlay so Gemini renders clean)
+  for (const zone of drawDesign && zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
     ctx.beginPath();
@@ -297,7 +300,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   }
 
   // Lines
-  for (const line of state.lines) {
+  for (const line of drawDesign ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
@@ -316,7 +319,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
   // width — sizing in logical px here would draw every footprint at half scale.
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
-  for (const item of state.items) {
+  for (const item of drawDesign ? state.items : []) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = item.wM ?? def.wM;
@@ -354,7 +357,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   }
 }
 
-async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): Promise<string> {
+async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all', drawDesign = true): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -371,7 +374,7 @@ async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refL
     ctx.fillRect(0, 0, imgW, imgH);
   }
 
-  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign);
 
   // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
   // softens them. The route wraps this as image/png — keep the formats in lockstep.
@@ -443,10 +446,10 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
     ctx.stroke();
   }
 
-  // Zones. On the dedicated ZONES map, protect the whole FILLED polygon so its interior can't
-  // drift (the composite already draws the zone colour there). On other maps zones are secondary
-  // context, so only the edge band is locked and interiors stay editable illustration.
-  const lockZoneInteriors = filter === 'zones';
+  // Zones — lock only the OUTLINE band, never the interior. Locking the whole fill made the
+  // model unable to illustrate inside a zone → flat, plain outline maps. The edge band + the
+  // outside-boundary protection + "stay inside the outline" prompt hold the shape while the
+  // interior stays free for rich illustration. (Reverted the interior fill-lock, 1871db9→.)
   for (const zone of zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
@@ -455,8 +458,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
-    if (lockZoneInteriors) ctx.fill();
-    ctx.lineWidth = 8 * SCALE;
+    ctx.lineWidth = 10 * SCALE; // a little wider so the locked outline reads clearly
     ctx.stroke();
   }
 
@@ -612,10 +614,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const isAnalysis = analysisStyle !== null;
       const useProvider = isAnalysis ? 'gemini' : provider;
       const compositeFilter: GlossyLayerFilter = isAnalysis ? 'all' : filter;
+      // Sun & Wind (sector) and What's-here (base) are pure analysis — draw NO design overlay so
+      // they don't come out as a zone map with a sun compass tacked on (Rory: "it combined
+      // sector and zone"). Opportunities/Implementation build on the design, so keep it.
+      const drawDesign = !(analysisStyle === 'sector' || analysisStyle === 'base');
       setLoading(useProvider);
       setError(null);
       try {
-        const composite = await buildComposite(state, frame, refLayers, compositeFilter);
+        const composite = await buildComposite(state, frame, refLayers, compositeFilter, drawDesign);
         let image: string;
         if (useProvider === 'falgpt') {
           const mask = await buildProtectMask(state, frame, refLayers, filter);
