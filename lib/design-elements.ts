@@ -521,6 +521,100 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     castsShade: true,
     tip: 'Use for windbreaks and wildlife corridors on the property edge.',
   },
+  // Temperate / cold-climate fruit & nut trees — for Highveld grassland, Afromontane and other
+  // frosty areas where the subtropical trees above won't set fruit. Suitability by climate is
+  // in TREE_CLIMATES below.
+  {
+    id: 'tree_apple',
+    category: 'growing',
+    name: 'Apple Tree',
+    icon: '🍎',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    tip: 'Needs winter cold (chill) to fruit — good on the Highveld; pick a low-chill variety in milder spots.',
+  },
+  {
+    id: 'tree_pear',
+    category: 'growing',
+    name: 'Pear Tree',
+    icon: '🍐',
+    shape: 'circle',
+    wM: 5,
+    hM: 5,
+    color: '#4E8B3B',
+    zoneRec: [3],
+    castsShade: true,
+    tip: 'Cold-hardy and long-lived; needs a second variety nearby for good pollination.',
+  },
+  {
+    id: 'tree_plum',
+    category: 'growing',
+    name: 'Plum Tree',
+    icon: '🍑',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    tip: 'Frost-hardy stone fruit; blossoms early so avoid the coldest frost pockets.',
+  },
+  {
+    id: 'tree_peach',
+    category: 'growing',
+    name: 'Peach Tree',
+    icon: '🍑',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    tip: 'Prune to an open vase each winter; needs some chill but tolerates mild-frost hinterland too.',
+  },
+  {
+    id: 'tree_fig',
+    category: 'growing',
+    name: 'Fig Tree',
+    icon: '🫒',
+    shape: 'circle',
+    wM: 5,
+    hM: 5,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    tip: 'Very adaptable — handles frost, heat and dry spells. Roots are vigorous, keep clear of walls/pipes.',
+  },
+  {
+    id: 'tree_pomegranate',
+    category: 'growing',
+    name: 'Pomegranate',
+    icon: '🔴',
+    shape: 'circle',
+    wM: 3,
+    hM: 3,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: false,
+    tip: 'Loves hot dry summers; drought-hardy once established. Good for Karoo and Highveld gardens.',
+  },
+  {
+    id: 'tree_olive',
+    category: 'growing',
+    name: 'Olive Tree',
+    icon: '🫒',
+    shape: 'circle',
+    wM: 6,
+    hM: 6,
+    color: '#4E8B3B',
+    zoneRec: [3, 4],
+    castsShade: true,
+    tip: 'Mediterranean and Karoo star — drought- and frost-tolerant; needs a dry, sunny, well-drained spot.',
+  },
   {
     id: 'pollinator_strip',
     category: 'growing',
@@ -735,3 +829,63 @@ export const ELEMENTS_BY_ID: Record<string, DesignElementDef> = ELEMENT_CATALOG.
   },
   {} as Record<string, DesignElementDef>,
 );
+
+// ── Climate suitability for fruit/nut trees ─────────────────────────────────────
+// The owner's ask: "depending on the climate zone we must have specific trees accordingly."
+// Coarse SA climate buckets a tree can crop in. Frost-tenderness and chill needs are the main
+// drivers here (well-established horticulture), not fine-grained cultivar advice.
+export type ClimateZone = 'subtropical' | 'temperate' | 'mediterranean' | 'arid';
+
+// Which climates each tree crops well in. A tree NOT listed here (e.g. the indigenous shade
+// tree, or non-tree growing items) is treated as climate-agnostic and always shown.
+export const TREE_CLIMATES: Record<string, ClimateZone[]> = {
+  tree_citrus: ['subtropical', 'mediterranean'],
+  tree_mango: ['subtropical'],
+  tree_avocado: ['subtropical'],
+  tree_macadamia: ['subtropical'],
+  tree_guava: ['subtropical'],
+  tree_litchi: ['subtropical'],
+  tree_pawpaw: ['subtropical'],
+  tree_moringa: ['subtropical', 'arid'],
+  banana_clump: ['subtropical'],
+  banana_circle: ['subtropical'],
+  tree_apple: ['temperate'],
+  tree_pear: ['temperate'],
+  tree_plum: ['temperate'],
+  tree_peach: ['temperate', 'subtropical'],
+  tree_fig: ['temperate', 'mediterranean', 'arid', 'subtropical'],
+  tree_pomegranate: ['arid', 'mediterranean', 'temperate'],
+  tree_olive: ['mediterranean', 'arid', 'temperate'],
+};
+
+// SA biome NAME (as stored on site.biome, from lib/biome.ts BIOMES[].name) → the climates that
+// grow there. Returns null when the biome is unknown/outside SA, meaning "show every tree".
+export function biomeClimates(biomeName?: string | null): ClimateZone[] | null {
+  switch ((biomeName ?? '').trim().toLowerCase()) {
+    case 'indian ocean coastal belt':
+    case 'savanna':
+      return ['subtropical'];
+    case 'albany thicket':
+      return ['subtropical', 'arid'];
+    case 'afromontane forest':
+      return ['temperate', 'subtropical'];
+    case 'grassland':
+      return ['temperate'];
+    case 'fynbos':
+      return ['mediterranean', 'temperate'];
+    case 'succulent karoo':
+    case 'nama-karoo':
+    case 'desert':
+      return ['arid'];
+    default:
+      return null; // unknown / outside SA → don't filter
+  }
+}
+
+// Is this element suited to the site's climate? Non-trees and unmapped trees are always suited.
+export function elementSuitsClimate(defId: string, siteClimates: ClimateZone[] | null): boolean {
+  if (!siteClimates) return true; // unknown site climate → show everything
+  const treeClimates = TREE_CLIMATES[defId];
+  if (!treeClimates) return true; // climate-agnostic (indigenous, support planting, etc.)
+  return treeClimates.some((c) => siteClimates.includes(c));
+}

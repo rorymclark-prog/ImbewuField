@@ -1687,6 +1687,7 @@ function DesignStudioInner() {
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
+          siteBiome={site?.biome}
         />
       )}
 

@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -42,6 +42,9 @@ export interface DesignPaletteProps {
   onUndo: () => void;
   canUndo: boolean;
   onDeleteSelected: (() => void) | null;
+  // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
+  // planting step. Undefined = unknown, show all.
+  siteBiome?: string;
 }
 
 const GOLD = '#F7C97E';
@@ -131,6 +134,7 @@ export default function DesignPalette({
   onUndo,
   canUndo,
   onDeleteSelected,
+  siteBiome,
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
@@ -150,6 +154,17 @@ export default function DesignPalette({
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
       : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category));
+
+  // Climate-appropriate trees: on the planting step, float the trees that crop in this site's
+  // climate to the front and dim the ones that won't (frost/chill mismatch). Never hides them —
+  // a farmer with a warm microclimate can still pick one.
+  const siteClimates = biomeClimates(siteBiome);
+  const climateFilterActive = step === 'planting' && !!siteClimates;
+  const orderedCatalog = climateFilterActive
+    ? [...catalog].sort(
+        (a, b) => Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates)),
+      )
+    : catalog;
 
   const hintDef = hintDefId ? catalog.find((d) => d.id === hintDefId) : null;
   const armedDef = placeDefId ? ELEMENT_CATALOG.find((d) => d.id === placeDefId) : null;
@@ -271,15 +286,23 @@ export default function DesignPalette({
             PRO — full catalog, every step. Jump between steps freely.
           </div>
         )}
+        {climateFilterActive && (
+          <div style={{ fontSize: 11.5, color: '#6B6355' }}>
+            🌡️ Trees that suit your climate{siteBiome ? ` (${siteBiome})` : ''} are shown first. Dimmed ones need a warmer or cooler spot.
+          </div>
+        )}
         <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
-          {catalog.map((def) => {
+          {orderedCatalog.map((def) => {
             const active = placeDefId === def.id && tool === 'place';
+            const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
             return (
               <button
                 key={def.id}
                 type="button"
                 onClick={() => pickElement(def)}
+                title={suited ? undefined : `Better in a different climate — ${def.name} may struggle here`}
                 style={{
+                  position: 'relative',
                   minHeight: guided ? 64 : 44,
                   padding: guided ? '8px 14px' : '6px 10px',
                   borderRadius: 10,
@@ -293,6 +316,7 @@ export default function DesignPalette({
                   flexShrink: 0,
                   minWidth: guided ? 84 : 68,
                   cursor: 'pointer',
+                  opacity: suited ? 1 : 0.45,
                 }}
               >
                 <span style={{ fontSize: guided ? 24 : 18, lineHeight: 1 }}>{def.icon}</span>
