@@ -391,6 +391,10 @@ function DesignStudioInner() {
 
   const [detectError, setDetectError] = useState<string | null>(null);
 
+  // Copy/paste clipboard for placed items (Cmd/Ctrl+C / +V). Ref, not state — it never needs
+  // to trigger a render, and paste reads it synchronously.
+  const clipboard = useRef<PlacedItem[]>([]);
+
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
@@ -643,6 +647,27 @@ function DesignStudioInner() {
         if (undoStack.current.length > 0) { e.preventDefault(); handleUndo(); }
         return;
       }
+      // Cmd/Ctrl+C — copy the selected placed items to the clipboard.
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'c' || e.key === 'C')) {
+        const sel = new Set(selectedIds);
+        const copied = (canvasState?.items ?? []).filter((it) => sel.has(it.id));
+        if (copied.length) { e.preventDefault(); clipboard.current = copied; }
+        return;
+      }
+      // Cmd/Ctrl+V — paste copies, nudged down-right, and select the new ones.
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'v' || e.key === 'V')) {
+        if (!clipboard.current.length) return;
+        e.preventDefault();
+        const pasted: PlacedItem[] = clipboard.current.map((it) => ({
+          ...it,
+          id: newId(),
+          x: Math.min(0.98, it.x + 0.03),
+          y: Math.min(0.98, it.y + 0.03),
+        }));
+        handleChange((prev) => ({ ...prev, items: [...prev.items, ...pasted], updatedAt: new Date().toISOString() }));
+        setSelectedIds(pasted.map((p) => p.id));
+        return;
+      }
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIds.length && onDeleteSelected) {
         e.preventDefault();
         onDeleteSelected();
@@ -652,7 +677,7 @@ function DesignStudioInner() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleUndo, onDeleteSelected, selectedIds]);
+  }, [handleUndo, onDeleteSelected, selectedIds, canvasState, handleChange]);
 
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line

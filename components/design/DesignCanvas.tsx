@@ -1711,16 +1711,35 @@ export default function DesignCanvas({
                   the rotated footprint so they read against the strip's real orientation. */}
               {isSelected && tool === 'select' && (
                 <g transform={rotXf}>
+                  {/* Fat invisible hit area so the handle is easy to grab on a phone. */}
                   <rect
-                    x={wPx / 2 - 5}
-                    y={hPx / 2 - 5}
-                    width={10}
-                    height={10}
-                    fill="#FFFFFF"
-                    stroke={GOLD}
-                    strokeWidth={2}
+                    x={wPx / 2 - 16}
+                    y={hPx / 2 - 16}
+                    width={32}
+                    height={32}
+                    fill="transparent"
                     style={{ cursor: 'nwse-resize', touchAction: 'none' }}
                     onPointerDown={(e) => startDragResize(e, item.id)}
+                  />
+                  {/* Visible handle — a corner grip with diagonal arrows, larger than before. */}
+                  <rect
+                    x={wPx / 2 - 7}
+                    y={hPx / 2 - 7}
+                    width={14}
+                    height={14}
+                    rx={3}
+                    fill={GOLD}
+                    stroke="#0B120B"
+                    strokeWidth={1.5}
+                    style={{ cursor: 'nwse-resize', touchAction: 'none' }}
+                    onPointerDown={(e) => startDragResize(e, item.id)}
+                  />
+                  <path
+                    d={`M ${wPx / 2 - 3.5} ${hPx / 2 + 3.5} L ${wPx / 2 + 3.5} ${hPx / 2 - 3.5}`}
+                    stroke="#0B120B"
+                    strokeWidth={1.5}
+                    strokeLinecap="round"
+                    pointerEvents="none"
                   />
                   {canRotate && (
                     <g>
