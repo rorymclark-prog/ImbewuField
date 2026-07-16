@@ -372,6 +372,19 @@ ${brief.access.map((a) => `• ${a}`).join('\n')}
 Whatever this specific map emphasises, keep all of the above in the SAME positions it has on the other maps. The orchard is always in the same place; the vegetable beds are always in the same place; the tanks are always in the same place.\n`
     : '';
 
+  // Sun/azimuth diagram belongs ONLY on the sector (Sun & Wind) map. On every other map it
+  // was leaking a sun compass into the corner (e.g. on the zones map). Forbid it elsewhere.
+  const sunRule = layer === 'sector'
+    ? `SOUTHERN HEMISPHERE SUN RULE:
+This property is in South Africa. The NORTH side receives the strongest useful solar energy.
+• Do NOT draw a sun arc randomly across the property map.
+• Place a clean sun-sector inset diagram in a corner only.
+  - North face = strongest useful sun exposure
+  - East = sunrise, West = sunset
+  - Summer sun = high arc, strong and hot
+  - Winter sun = lower arc, weaker`
+    : `SUN: Do NOT draw any sun arc, compass, azimuth, or solar inset diagram anywhere on this map — that belongs only on the Sun & Wind (sector) map.`;
+
   // Farmer-placed point features (tanks, taps, boreholes, etc.) — same 'base' exclusion as
   // designBrief: the existing-site map shows only what's physically there today, not plans.
   const placedElements = layer === 'base' ? undefined : ctx.placedElements;
@@ -415,14 +428,7 @@ CRITICAL — THIS IS A TOP-DOWN MAP, NOT AN ILLUSTRATION:
 • The HOUSE ROOF is a building. NEVER place plants, beds, trees, crops, icons, or planting labels ON TOP OF the roof. The roof stays clean — only the roof itself (and roof-water items like gutters/downpipe arrows) may sit there. All planting goes on the OPEN GROUND around the house.
 • Keep every plant, bed and feature on real open ground inside the boundary — never on the roof, never on the driveway, never outside the green line.
 
-SOUTHERN HEMISPHERE SUN RULE:
-This property is in South Africa. The NORTH side receives the strongest useful solar energy.
-• Do NOT draw a sun arc randomly across the property map.
-• If showing the sun sector: place a clean inset diagram in a corner only.
-  - North face = strongest useful sun exposure
-  - East = sunrise, West = sunset
-  - Summer sun = high arc, strong and hot
-  - Winter sun = lower arc, weaker
+${sunRule}
 
 ${briefBlock}
 ${placedElementsBlock}

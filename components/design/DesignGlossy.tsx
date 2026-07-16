@@ -656,7 +656,17 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             : [];
           const polygons = state.lines.filter((l) => lineInFilter(l.kind, compositeFilter)).map((l) => ({ name: l.kind, type: 'line' }));
           // Analysis style → its own RenderLayer theme; design filter → the layer it maps to.
-          const layer = analysisStyle ?? (filter === 'all' ? 'overall' : filter);
+          // IMPORTANT: the API's layerTheme cases are 'overall'|'water'|'zone'|'planting'|… —
+          // NOT the plural GlossyLayerFilter keys. Passing 'zones'/'structures' fell through to
+          // the full-design theme, which invents ponds/orchards + a sun compass on the zones map.
+          const FILTER_TO_LAYER: Record<GlossyLayerFilter, string> = {
+            all: 'overall',
+            water: 'water',
+            zones: 'zone',
+            planting: 'planting',
+            structures: 'overall',
+          };
+          const layer = analysisStyle ?? FILTER_TO_LAYER[filter];
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
             satBase64: frame.satDataUrl ? stripDataUrl(frame.satDataUrl) : undefined,
