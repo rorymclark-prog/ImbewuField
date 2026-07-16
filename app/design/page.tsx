@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, Image as ImageIcon, Sprout, X } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -29,11 +29,9 @@ import {
   saveCanvasState,
   migrateStateToFrame,
   newId,
-  pointInRing,
   DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
-  type DetectSuggestion,
   type GroundFeatureKind,
   type PlacedItem,
   type WizardStep,
@@ -42,18 +40,7 @@ import {
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
-import {
-  suggestZones,
-  suggestZonesFromPlan,
-  suggestFromAutoDesignPlan,
-  suggestWater,
-  suggestStructures,
-  suggestPlanting,
-  type ZonePlan,
-  type AutoDesignPlan,
-  type AutoDesignAnswers,
-} from '@/lib/design-suggest';
-import { stripDataUrl } from '@/lib/ai-render-client';
+import { suggestZones } from '@/lib/design-suggest';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
@@ -62,8 +49,6 @@ import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
 import StepGuide from '@/components/design/StepGuide';
 import type { SubStepArm } from '@/lib/design-substeps';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
-import AutoDesignSheet from '@/components/design/AutoDesignSheet';
-import AdvancedToolsSheet, { type AdvancedAction } from '@/components/design/AdvancedToolsSheet';
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
 
@@ -155,47 +140,6 @@ function centroidOf(ring: Array<[number, number]>): [number, number] | null {
     sy += y;
   }
   return [sx / ring.length, sy / ring.length];
-}
-
-// Normalised-ring bbox centroid + metre extent (imgW/imgH aspect-aware), clamped to a
-// sane building footprint range — used to convert a detected building ring into a shed.
-function ringBboxM(
-  points: Array<[number, number]>,
-  frame: { imgW: number; imgH: number; mPerPx: number },
-): { center: [number, number]; wM: number; hM: number } {
-  const xs = points.map((p) => p[0]);
-  const ys = points.map((p) => p[1]);
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs);
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-  const wM = Math.min(20, Math.max(2, (maxX - minX) * frame.imgW * frame.mPerPx));
-  const hM = Math.min(20, Math.max(2, (maxY - minY) * frame.imgH * frame.mPerPx));
-  return { center: [(minX + maxX) / 2, (minY + maxY) / 2], wM, hM };
-}
-
-const SUGGESTION_ICON: Record<DetectSuggestion['kind'], string> = {
-  tree: '🌳',
-  building: '🏠',
-  water_tank: '🛢',
-  pond: '🌊',
-  veg_area: '🥬',
-  driveway: '🛣',
-  zone: '🎯',
-  greywater: '♻️',
-  compost: '♻️',
-  beehive: '🐝',
-  veg_bed: '🥬',
-  nursery: '🌱',
-  swale: '🌊',
-};
-
-// Zone suggestions get their real zone colour dot instead of the generic 🎯 icon.
-function suggestionIconFor(s: DetectSuggestion): string {
-  if (s.kind === 'zone' && s.zone !== undefined && ZONE_DEFS[s.zone]) {
-    return ZONE_DEFS[s.zone].color;
-  }
-  return SUGGESTION_ICON[s.kind];
 }
 
 interface RefLayers {
@@ -445,23 +389,14 @@ function DesignStudioInner() {
   // Item edit sheet — the item currently being edited via DesignCanvas's onEditItem.
   const [editItemId, setEditItemId] = useState<string | null>(null);
 
-  // Auto-detect — AI suggestions awaiting farmer review.
-  const [suggestions, setSuggestions] = useState<DetectSuggestion[]>([]);
-  const [detecting, setDetecting] = useState(false);
   const [detectError, setDetectError] = useState<string | null>(null);
 
-  // AI Auto-Design — one action designs the whole farm. 'questions' shows the lightweight
-  // sheet; 'running' drives the "Designing your farm…" overlay. Answers are all optional.
-  const [autoDesignPhase, setAutoDesignPhase] = useState<'idle' | 'questions' | 'running'>('idle');
-  const [autoAnswers, setAutoAnswers] = useState<AutoDesignAnswers>({});
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
   // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
   // this layer over the studio, without leaving the current step. null = closed.
   const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
-  // Advanced (beta) sheet — the quiet home for the demoted auto-draw / auto-design tools.
-  const [advancedOpen, setAdvancedOpen] = useState(false);
   // Zone ADVICE (the guidance half of the hybrid): Lima's spatial suggestions shown as short
   // text advice the farmer taps to ARM a zone chip and then draws themselves — never committed.
   const [zoneAdvice, setZoneAdvice] = useState<ZoneAdvicePin[]>([]);
@@ -791,192 +726,6 @@ function DesignStudioInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasState]);
 
-  const handleVisionDetect = useCallback(async () => {
-    if (!frame?.satDataUrl) {
-      setDetectError('Satellite image not loaded yet — wait a moment and try again.');
-      return;
-    }
-    setDetectError(null);
-    setDetecting(true);
-    try {
-      const res = await fetch('/api/design-detect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageBase64: stripDataUrl(frame.satDataUrl),
-          imgW: frame.imgW,
-          imgH: frame.imgH,
-          mPerPx: frame.mPerPx,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setDetectError(typeof data?.error === 'string' ? data.error : 'Auto-detect failed — please try again.');
-        return;
-      }
-      const rawFeatures = Array.isArray(data?.features) ? data.features : [];
-      const next: DetectSuggestion[] = rawFeatures.map(
-        (f: { kind: DetectSuggestion['kind']; points: Array<[number, number]>; sizeM?: number; note?: string }) => ({
-          id: newId(),
-          kind: f.kind,
-          points: f.points,
-          sizeM: f.sizeM,
-          note: f.note,
-          status: 'pending' as const,
-        }),
-      );
-      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
-    } catch {
-      setDetectError('Auto-detect failed — please try again.');
-    } finally {
-      setDetecting(false);
-    }
-  }, [frame]);
-
-  // Per-step suggest: 'base' keeps the existing AI vision detect; 'zones' uses the HYBRID
-  // AI-vision planner (reason over the satellite → clean geometry) with a deterministic
-  // fallback; the remaining steps use the instant local geometry generators.
-  //
-  // Takes `step` as an argument (not `canvasState.step`) so the Advanced sheet can run any
-  // step's generator regardless of the wizard's current step. The Pro-mode pill passes the
-  // current step via `handleSuggest` below.
-  const runSuggestForStep = useCallback(async (step: WizardStep) => {
-    if (!canvasState) return;
-    if (step === 'base') {
-      handleVisionDetect();
-      return;
-    }
-    if (refLayers.boundary.length < 3) {
-      setDetectError('Trace your boundary on the main map first.');
-      return;
-    }
-    setDetectError(null);
-
-    const mergePending = (next: DetectSuggestion[]) =>
-      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
-
-    if (step === 'zones') {
-      if (!frame) return;
-      // Only ACCEPTED placements count as ground truth here — raw pending vision-detect
-      // suggestions are unconfirmed and would let a false-positive distort the zone plan.
-      const structures = canvasState.items
-        .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
-        .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
-      // Only close-in annual veg (zoneRec includes 1 or 2) may anchor Zone 2. An orchard
-      // tree (zoneRec [3]) placed far from the house must NOT drag Zone 2 across the plot to
-      // reach it — it belongs in Zone 3. Items with no zone hint are left out (conservative).
-      const existingVeg = canvasState.items
-        .filter((i) => {
-          const def = ELEMENTS_BY_ID[i.defId];
-          return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
-        })
-        .map((i) => ({ x: i.x, y: i.y }));
-      const zoneOpts = {
-        frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
-        driveway: refLayers.driveway,
-        site,
-        structures,
-        existingVeg,
-      };
-      const deterministic = () => suggestZones(refLayers.boundary, refLayers.house, zoneOpts);
-
-      // No satellite loaded → the AI has nothing to look at; use the deterministic plan.
-      if (!frame.satDataUrl) {
-        mergePending(deterministic());
-        return;
-      }
-
-      setDetecting(true);
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 25_000);
-      try {
-        const res = await fetch('/api/suggest-zones-ai', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            imageBase64: stripDataUrl(frame.satDataUrl),
-            imgW: frame.imgW,
-            imgH: frame.imgH,
-            mPerPx: frame.mPerPx,
-            boundary: refLayers.boundary,
-            house: refLayers.house,
-            driveway: refLayers.driveway,
-            slopeDeg: site?.slopeDeg,
-            aspectLabel: site?.aspectLabel,
-            rainfallMm: site?.rainfallMm,
-            biome: site?.biome,
-          }),
-          signal: controller.signal,
-        });
-        if (!res.ok) throw new Error('suggest-zones-ai failed');
-        const data = await res.json();
-        const plan: ZonePlan | null = data && Array.isArray(data.zones) ? (data as ZonePlan) : null;
-        const aiZones = plan ? suggestZonesFromPlan(refLayers.boundary, refLayers.house, zoneOpts, plan) : [];
-        // Any AI hiccup (empty/garbled plan, geometry that clipped to nothing) still leaves
-        // the farmer with a usable suggestion via the deterministic path.
-        mergePending(aiZones.length > 0 ? aiZones : deterministic());
-      } catch {
-        mergePending(deterministic());
-      } finally {
-        clearTimeout(timeout);
-        setDetecting(false);
-      }
-      return;
-    }
-
-    let next: DetectSuggestion[] = [];
-    switch (step) {
-      case 'water':
-        if (!frame) return;
-        next = suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
-        break;
-      case 'structures':
-        if (!frame) return;
-        next = suggestStructures(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
-        break;
-      case 'planting':
-        if (!frame) return;
-        next = suggestPlanting(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
-        break;
-      default:
-        return;
-    }
-    mergePending(next);
-  }, [canvasState, refLayers, frame, site, handleVisionDetect]);
-
-  // Open the Auto-Design questionnaire sheet (guarded on a traced boundary, same as suggest).
-  // Declared before runAdvancedAction, which depends on it.
-  const openAutoDesign = useCallback(() => {
-    if (refLayers.boundary.length < 3) {
-      setDetectError('Trace your boundary on the main map first.');
-      return;
-    }
-    setDetectError(null);
-    setAutoDesignPhase('questions');
-  }, [refLayers.boundary.length]);
-
-  // Pro-mode compact pill: run the suggest generator for whatever step is showing.
-  const handleSuggest = useCallback(() => {
-    if (canvasState) runSuggestForStep(canvasState.step);
-  }, [canvasState, runSuggestForStep]);
-
-  // Advanced (beta) sheet actions — decoupled from the current wizard step by design.
-  const runAdvancedAction = useCallback(
-    (action: AdvancedAction) => {
-      setAdvancedOpen(false);
-      if (action === 'detect') {
-        handleVisionDetect();
-        return;
-      }
-      if (action === 'autoDesign') {
-        openAutoDesign();
-        return;
-      }
-      runSuggestForStep(action); // 'zones' | 'water' | 'planting' | 'structures'
-    },
-    [handleVisionDetect, openAutoDesign, runSuggestForStep],
-  );
-
   // Arm a zone chip so the FARMER draws it — the tap-a-pin half of the guidance hybrid.
   // Never commits geometry.
   const armZoneFromAdvice = useCallback(
@@ -1015,253 +764,6 @@ function DesignStudioInner() {
     };
     setZoneAdvice(zoneAdviceFromSuggestions(suggestZones(refLayers.boundary, refLayers.house, zoneOpts)));
   }, [canvasState, frame, refLayers, site]);
-
-  // Run the whole-farm AI Auto-Design. ONE vision call returns intent → code makes geometry
-  // (suggestFromAutoDesignPlan) → everything lands as PENDING suggestions. Any failure path
-  // (no key/502, timeout, no satellite, empty plan, geometry clipped to nothing) falls back to
-  // the full deterministic suite so the farmer always gets a complete farm design.
-  const runAutoDesign = useCallback(async (answersOverride?: AutoDesignAnswers) => {
-    // Take answers as an arg so "Skip" can pass {} synchronously — a setAutoAnswers({})
-    // right before calling would not have landed in state yet (stale-closure trap).
-    const answers = answersOverride ?? autoAnswers;
-    if (!canvasState || !frame) return;
-    if (refLayers.boundary.length < 3) {
-      setAutoDesignPhase('idle');
-      setDetectError('Trace your boundary on the main map first.');
-      return;
-    }
-    setDetectError(null);
-    setAutoDesignPhase('running');
-
-    const structures = canvasState.items
-      .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
-      .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
-    const existingVeg = canvasState.items
-      .filter((i) => {
-        const def = ELEMENTS_BY_ID[i.defId];
-        return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
-      })
-      .map((i) => ({ x: i.x, y: i.y }));
-    const zoneOpts = {
-      frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
-      driveway: refLayers.driveway,
-      site,
-      structures,
-      existingVeg,
-    };
-
-    const mergePending = (next: DetectSuggestion[]) =>
-      setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
-
-    // Full deterministic whole-farm suite — the guaranteed fallback (and offline path).
-    const deterministic = (): DetectSuggestion[] => [
-      ...suggestZones(refLayers.boundary, refLayers.house, zoneOpts),
-      ...suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
-      ...suggestStructures(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
-      ...suggestPlanting(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH),
-    ];
-
-    // No satellite → the AI has nothing to look at; use the deterministic plan immediately.
-    if (!frame.satDataUrl) {
-      mergePending(deterministic());
-      setAutoDesignPhase('idle');
-      return;
-    }
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 55_000);
-    try {
-      const res = await fetch('/api/auto-design', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageBase64: stripDataUrl(frame.satDataUrl),
-          imgW: frame.imgW,
-          imgH: frame.imgH,
-          mPerPx: frame.mPerPx,
-          boundary: refLayers.boundary,
-          house: refLayers.house,
-          driveway: refLayers.driveway,
-          slopeDeg: site?.slopeDeg,
-          aspectLabel: site?.aspectLabel,
-          windFromSummer: site?.windFromSummer,
-          rainfallMm: site?.rainfallMm,
-          biome: site?.biome,
-          goal: answers.goal,
-          people: answers.people,
-          accessSide: answers.accessSide,
-          waterSource: answers.waterSource,
-        }),
-        signal: controller.signal,
-      });
-      if (!res.ok) throw new Error('auto-design failed');
-      const data = await res.json();
-      const plan: AutoDesignPlan | null = data && Array.isArray(data.zones) ? (data as AutoDesignPlan) : null;
-      const aiSuggestions = plan
-        ? suggestFromAutoDesignPlan(refLayers.boundary, refLayers.house, zoneOpts, plan, answers)
-        : [];
-      mergePending(aiSuggestions.length > 0 ? aiSuggestions : deterministic());
-    } catch {
-      mergePending(deterministic());
-    } finally {
-      clearTimeout(timeout);
-      setAutoDesignPhase('idle');
-    }
-  }, [canvasState, frame, refLayers, site, autoAnswers]);
-
-  // Pure per-suggestion state transform, shared by acceptSuggestion (one undo entry) and
-  // acceptAllSuggestions (folded into a single undo entry) — see below.
-  const applySuggestion = useCallback(
-    (prev: DesignCanvasState, suggestion: DetectSuggestion, frameArg: CanvasFrame): { next: DesignCanvasState; rejectedInstead: boolean } => {
-      const point0 = suggestion.points[0];
-      switch (suggestion.kind) {
-        case 'tree': {
-          if (!point0) break;
-          const item: PlacedItem = {
-            id: newId(),
-            defId: 'tree_indigenous',
-            x: point0[0],
-            y: point0[1],
-            wM: suggestion.sizeM ?? 6,
-            hM: suggestion.sizeM ?? 6,
-          };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'water_tank': {
-          if (!point0) break;
-          const item: PlacedItem = {
-            id: newId(),
-            defId: 'jojo_5000',
-            x: point0[0],
-            y: point0[1],
-            ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
-          };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'pond': {
-          if (!point0) break;
-          const item: PlacedItem = {
-            id: newId(),
-            defId: 'pond_small',
-            x: point0[0],
-            y: point0[1],
-            ...(suggestion.sizeM ? { wM: suggestion.sizeM, hM: suggestion.sizeM } : {}),
-          };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'building': {
-          if (suggestion.points.length === 0) break;
-          const { center, wM, hM } = ringBboxM(suggestion.points, frameArg);
-          if (pointInRing(center, refLayers.house)) {
-            return { next: prev, rejectedInstead: true };
-          }
-          const item: PlacedItem = { id: newId(), defId: 'shed', x: center[0], y: center[1], wM, hM };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'veg_area': {
-          if (suggestion.points.length < 3) break;
-          const zone: ZoneShape = { id: newId(), zone: 2, points: suggestion.points };
-          return { next: { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'driveway': {
-          if (suggestion.points.length < 2) break;
-          const line: LineShape = { id: newId(), kind: 'path', points: suggestion.points };
-          return { next: { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'zone': {
-          if (suggestion.points.length < 3) break;
-          const zone: ZoneShape = { id: newId(), zone: suggestion.zone ?? 2, points: suggestion.points };
-          return { next: { ...prev, zones: [...prev.zones, zone], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'greywater': {
-          if (!point0) break;
-          const item: PlacedItem = { id: newId(), defId: 'greywater_basin', x: point0[0], y: point0[1] };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'compost': {
-          if (!point0) break;
-          const item: PlacedItem = { id: newId(), defId: 'compost_bay', x: point0[0], y: point0[1] };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'beehive': {
-          if (!point0) break;
-          const item: PlacedItem = { id: newId(), defId: 'beehive', x: point0[0], y: point0[1] };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'veg_bed': {
-          if (!point0) break;
-          const item: PlacedItem = { id: newId(), defId: 'veg_bed', x: point0[0], y: point0[1] };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'nursery': {
-          if (!point0) break;
-          const item: PlacedItem = { id: newId(), defId: 'nursery_table', x: point0[0], y: point0[1] };
-          return { next: { ...prev, items: [...prev.items, item], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-        case 'swale': {
-          if (suggestion.points.length < 2) break;
-          const line: LineShape = { id: newId(), kind: 'swale', points: suggestion.points };
-          return { next: { ...prev, lines: [...prev.lines, line], updatedAt: new Date().toISOString() }, rejectedInstead: false };
-        }
-      }
-      return { next: prev, rejectedInstead: false };
-    },
-    [refLayers.house],
-  );
-
-  const acceptSuggestion = useCallback(
-    (id: string) => {
-      const suggestion = suggestions.find((s) => s.id === id);
-      if (!suggestion || !frame) return;
-
-      let rejectedInstead = false;
-
-      handleChange((prev) => {
-        const result = applySuggestion(prev, suggestion, frame);
-        rejectedInstead = result.rejectedInstead;
-        return result.next;
-      });
-
-      setSuggestions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status: rejectedInstead ? 'rejected' : 'accepted' } : s)),
-      );
-    },
-    [suggestions, frame, applySuggestion, handleChange],
-  );
-
-  const rejectSuggestion = useCallback((id: string) => {
-    setSuggestions((prev) => prev.map((s) => (s.id === id ? { ...s, status: 'rejected' } : s)));
-  }, []);
-
-  // Applies every pending suggestion inside a SINGLE handleChange call, so accepting a
-  // batch of AI suggestions produces one undo entry (undo reverts the whole batch), not
-  // one entry per suggestion.
-  const acceptAllSuggestions = useCallback(() => {
-    const pending = suggestions.filter((s) => s.status === 'pending');
-    if (pending.length === 0 || !frame) return;
-
-    const outcomes = new Map<string, boolean>(); // id -> rejectedInstead
-
-    handleChange((prev) => {
-      let acc = prev;
-      for (const s of pending) {
-        const result = applySuggestion(acc, s, frame);
-        outcomes.set(s.id, result.rejectedInstead);
-        acc = result.next;
-      }
-      return acc;
-    });
-
-    setSuggestions((prev) =>
-      prev.map((s) => (outcomes.has(s.id) ? { ...s, status: outcomes.get(s.id) ? 'rejected' : 'accepted' } : s)),
-    );
-  }, [suggestions, frame, applySuggestion, handleChange]);
-
-  const dismissAllSuggestions = useCallback(() => {
-    setSuggestions((prev) => prev.map((s) => (s.status === 'pending' ? { ...s, status: 'rejected' } : s)));
-  }, []);
-
-  const pendingSuggestions = suggestions.filter((s) => s.status === 'pending');
 
   const editItem = editItemId ? canvasState?.items.find((i) => i.id === editItemId) ?? null : null;
 
