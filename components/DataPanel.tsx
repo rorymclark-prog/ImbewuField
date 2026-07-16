@@ -21,6 +21,7 @@ import WeatherWidget from './WeatherWidget';
 import CompletionScore from './report/CompletionScore';
 import NextStepCoach from './NextStepCoach';
 import SpeakButton from './SpeakButton';
+import SiteManageMenu from './SiteManageMenu';
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
 import { gatherSiteInputs } from '@/lib/site-progress';
@@ -338,6 +339,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [placeSaved, setPlaceSaved] = useState(false);
   useEffect(() => { setPlaceSaved(false); }, [coords]);
 
+  // Bumped on any saved-places change (rename/delete/set-main/save). In the completion
+  // deps below so isSaved re-derives when the viewed site is deleted (reverts to the
+  // Save-hero) or saved; and in currentPlace's deps so the ⋯ menu + name stay fresh.
+  const [placesTick, setPlacesTick] = useState(0);
+  useEffect(() => {
+    const bump = () => setPlacesTick((n) => n + 1);
+    window.addEventListener('permamap-places-changed', bump);
+    return () => window.removeEventListener('permamap-places-changed', bump);
+  }, []);
+
   // Site-lifecycle completion score (located → boundary → survey → design → crop plan) —
   // the report dashboard's "how far along am I" leaderboard. Every input is scoped to
   // THIS site (a brand-new location must start near 0%, not inherit another site's work):
@@ -353,7 +364,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     if (!coords) return gatherSiteInputs({ lat: 0, lon: 0 });
     return gatherSiteInputs(coords, { assumeSaved: placeSaved });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, placeSaved, tab]);
+  }, [surveySiteId, survey, siteData, coords?.lat, coords?.lon, placeSaved, placesTick, tab]);
 
   // Per-site land + water, re-derived from ONLY the polygons traced near THIS site
   // (~2 km). The map's siteData/waterData props sum EVERY polygon the user ever drew
@@ -425,6 +436,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // the specific booleans below.)
   const isSaved = completionInputs.hasSite;
   const scorePct = useMemo(() => computeCompletionScore(completionInputs).overallPct, [completionInputs]);
+
+  // The saved place backing this site — powers the header "⋯" manage menu (rename / set
+  // main / delete), so a beginner manages the site where they see it, not in the map's
+  // tools box. Re-looked-up on any places change (placesTick) so edits reflect immediately.
+  const currentPlace = useMemo(() => {
+    if (activePlaceId) return loadPlaces().find((p) => p.id === activePlaceId) ?? null;
+    if (!coords) return null;
+    return loadPlaces().find((p) => Math.abs(p.lat - coords.lat) < 0.0005 && Math.abs(p.lon - coords.lon) < 0.0005) ?? null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePlaceId, coords?.lat, coords?.lon, placesTick]);
+  const displayName = currentPlace?.name ?? placeName;
 
   // Report header collapses to a slim row once the farmer scrolls into the content,
   // freeing space for what they came for. Reset to expanded when the site changes.
@@ -576,7 +598,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {headerCollapsed ? (
         <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
           <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: '#20190F' }}>
-            {placeName || data.biome.name}
+            {displayName || data.biome.name}
           </span>
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
                 style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
@@ -586,6 +608,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           {isSaved && (
             <span className="ml-auto font-mono flex-shrink-0" style={{ fontSize: 11, color: '#C07A1E' }}>{scorePct}%</span>
           )}
+          {isSaved && currentPlace && <SiteManageMenu place={currentPlace} />}
         </div>
       ) : (
       <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
@@ -597,10 +620,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* Name + suitability badge */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            {placeName ? (
+            {displayName ? (
               <>
                 <div className="font-display font-semibold leading-tight" style={{ fontSize: 16, color: '#20190F', letterSpacing: '-0.01em' }}>
-                  {placeName}
+                  {displayName}
                 </div>
                 <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: '#5C5040' }}>
                   {data.biome.name}
@@ -612,12 +635,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
             {data.vegetation && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: placeName ? '#94876F' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: displayName ? '#94876F' : '#5C5040' }}>
                 {data.vegetation.vegUnit}
               </div>
             )}
             {data.bru && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: placeName ? '#94876F' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: displayName ? '#94876F' : '#5C5040' }}>
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
@@ -633,12 +656,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg flex-shrink-0"
-               style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: suitability.dot, display: 'inline-block', flexShrink: 0 }} />
-            <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>
-              {suitability.label}
-            </span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
+                 style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: suitability.dot, display: 'inline-block', flexShrink: 0 }} />
+              <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>
+                {suitability.label}
+              </span>
+            </div>
+            {isSaved && currentPlace && <SiteManageMenu place={currentPlace} />}
           </div>
         </div>
       </div>
