@@ -943,7 +943,7 @@ function buildEditMask(clip: AiClipFrame, pxW: number, pxH: number): string | nu
 // (handleTouchUp) — SAME 45×3000ms polling loop and error messages either way.
 async function pollFalRender(statusUrl: string, responseUrl: string): Promise<string> {
   let finalImage: string | undefined;
-  for (let i = 0; i < 45 && !finalImage; i++) {
+  for (let i = 0; i < 60 && !finalImage; i++) {
     await new Promise((r) => setTimeout(r, 3000));
     const pr = await fetch('/api/ai-render/poll', {
       method: 'POST',

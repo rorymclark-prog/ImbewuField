@@ -25,13 +25,15 @@ const STRICT_MAP_CRITERIA = {
     'the traced property boundary, house roof, and driveway exactly where the farmer drew them',
     'north-up orientation with no rotation',
     'only on-map labels placed directly on or touching the feature they name',
-    'a square canvas that reaches all four edges',
+    'the exact framing and aspect of the source image, repainted edge to edge — no crop, no zoom, no rotation, no borders',
   ],
   mustAvoid: [
     'invented buildings, paths, trees, beds, ponds, or decorations',
     'legends, keys, side panels, title cards, or borders',
     '3D perspective, tilt, or a redesign of the site',
     'labels stacked in a column with long leader lines',
+    'changing the shape, size or position of ANY drawn outline, line or coloured area — drawn geometry is final',
+    'painting any zone colour, canopy or texture beyond the edge of the drawn shape it belongs to',
   ],
   labelPolicy: [
     'use short dark pills only',
@@ -50,47 +52,49 @@ const STRICT_PROMPT =
   'farmer: do NOT add, move, remove, resize or restyle ANY element, zone, line or label — every ' +
   'feature stays exactly where and how it is. Follow the strict map criteria.';
 
-// Per-layer theming so each map READS as its own kind of map instead of one generic look.
-// `title` names it; `focus` steers the background repaint; `emphasise` becomes extra
-// must-include criteria pointing the AI at the features that matter for this map type.
+// Per-layer theming. HARD RULE: a theme may only style the EDITABLE BACKGROUND (palette, mood,
+// ground texture, labels beside features). It must NEVER instruct the model to draw, render,
+// move, resize or rearrange any feature — the farmer's drawn marks are final geometry. (This
+// rule is why an earlier "render each zone as a coloured band" version made gpt-image-2 redraw
+// the zones and drift the boundaries — see docs/GLOSSY-PROMPT-AUDIT.md.)
 const FILTER_THEME: Record<GlossyLayerFilter, { title: string; focus: string; emphasise: string[] }> = {
   all: {
     title: 'whole-farm permaculture design',
-    focus: 'a complete permaculture homestead — zones, water, planting and structures reading together as one plan',
+    focus: 'a beautiful hand-illustrated permaculture map (soft earth tones, gentle textures, subtle grass/soil detail)',
     emphasise: [],
   },
   water: {
     title: 'water plan',
-    focus: 'a WATER-HARVESTING map: cool blue-green palette, rainwater tanks reading as tanks beside the roofs, swale lines as soft earth contours holding water, drip/pipe runs, ponds and greywater basins',
+    focus: 'a WATER-PLAN background: cool blue-green ground wash and damp soil tones on the open ground, so the blue water marks already drawn on the image stand out',
     emphasise: [
-      'render the water background so it clearly reads as a water plan (subtle blue tint around tanks, swales and ponds; damp soil tones)',
-      'make each rainwater tank, tap point, swale line, pipe/drip run and pond visually obvious and labelled',
-      'suggest water soaking into the land along the swale lines, not running off',
+      'tint the editable open ground with a soft blue-green wash so the map reads as a water plan',
+      'every blue mark already drawn (tank circles, swale/pipe/drip lines, ponds) stays exactly as drawn — brighten the ground AROUND each one, never redraw, thicken, move or duplicate the mark itself',
+      'add one short label pill BESIDE (never covering) each drawn water mark, naming it',
     ],
   },
   zones: {
     title: 'zone map',
-    focus: 'a permaculture ZONE map: each numbered zone (0–5) as a clearly coloured band radiating out from the house, warm near the home and wilder toward the edges',
+    focus: 'a ZONE-MAP background: calm, slightly desaturated ground texture so the coloured zone shapes already painted on the image are the loudest thing on the map',
     emphasise: [
-      'render each zone as a distinct, clearly coloured and numbered area (Zone 1 nearest the house, higher numbers further out)',
-      'keep the zone colours strong and legible so the zoning is the story of the map',
+      'the coloured shapes already painted on the image ARE the zones — their painted outlines are final; do not move, bend, extend, shrink or re-cut any of them, and do not paint zone colour outside a painted outline',
+      'do not add any zone that is not already painted, and do not rearrange zones around the house — the farmer chose where each zone is',
+      'add one small numbered badge inside each painted zone shape, matching the number shown on it',
     ],
   },
   planting: {
     title: 'planting plan',
-    focus: 'a PLANTING map: fruit and nut trees drawn at their mature canopy size, vegetable beds in neat rows, pollinator strips and mulch banks, lush green growing palette',
+    focus: 'a PLANTING-PLAN background: lush green growing ground texture on the open soil BETWEEN the drawn features',
     emphasise: [
-      'draw each tree as a leafy canopy at roughly its real mature size; show beds as tidy planted rows',
-      'render tree shade falling to the south side so the planting logic is visible',
-      'keep a rich, green, growing feel across the planted areas',
+      'the circles and rectangles already drawn ARE the trees and beds — keep every one at exactly its drawn size and position; do not enlarge canopies, do not regroup beds into rows, do not add plants anywhere',
+      'style only the open ground between the drawn features with a rich, green, growing feel',
     ],
   },
   structures: {
     title: 'structures & animals plan',
-    focus: 'a STRUCTURES map: sheds, coops, kraals, compost bays and beehives as clear little buildings, with access paths and fences, on a calm neutral palette',
+    focus: 'a STRUCTURES-PLAN background: calm neutral paper-like ground tones so the drawn footprints read clearly',
     emphasise: [
-      'render each structure as a clear, simple building footprint with a roof',
-      'make animal housing, compost and beehives easy to pick out; show fences and access paths',
+      'the drawn footprints ARE the structures — keep each exactly where and how it is drawn; do not add roofs, sheds, pens or paths anywhere else',
+      'add one short label pill BESIDE each drawn footprint, naming it',
     ],
   },
 };
@@ -99,16 +103,19 @@ function strictPromptFor(filter: GlossyLayerFilter): string {
   const theme = FILTER_THEME[filter];
   if (filter === 'all') return STRICT_PROMPT;
   return (
-    `Repaint ONLY the unprotected background as ${theme.focus}. Keep it a beautiful hand-illustrated ` +
-    'map. This design was drawn by the farmer: do NOT add, move, remove, resize or restyle ANY element, ' +
-    'zone, line or label — every feature stays exactly where and how it is. Follow the strict map criteria.'
+    `Repaint ONLY the unprotected background in the style of ${theme.focus}. ` +
+    'Every shape, line, coloured area and icon already visible in the source image was drawn by the farmer and is FINAL GEOMETRY: ' +
+    'do NOT add, move, remove, resize, reshape or restyle any of them — style the ground around them only. ' +
+    'The output must overlay the source image exactly: same framing, same north-up orientation, every drawn feature in the same pixels. ' +
+    'Follow the strict map criteria.'
   );
 }
 
 function mapCriteriaFor(filter: GlossyLayerFilter) {
   const theme = FILTER_THEME[filter];
   return {
-    mustInclude: [...theme.emphasise, ...STRICT_MAP_CRITERIA.mustInclude],
+    // Geometry-preservation criteria FIRST, theme styling last (recency should not favour theming).
+    mustInclude: [...STRICT_MAP_CRITERIA.mustInclude, ...theme.emphasise],
     mustAvoid: STRICT_MAP_CRITERIA.mustAvoid,
     labelPolicy: STRICT_MAP_CRITERIA.labelPolicy,
     composition: STRICT_MAP_CRITERIA.composition,
@@ -244,11 +251,30 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
-    ctx.fillStyle = `${def.color}33`;
+    // On the dedicated zones map the interior is mask-locked, so make the composite's own zone
+    // fill strong + add a number badge — the protected interior then already looks like the
+    // finished zone map and the model only touches the ground outside.
+    ctx.fillStyle = `${def.color}${filter === 'zones' ? '59' : '33'}`;
     ctx.fill();
     ctx.strokeStyle = `${def.color}CC`;
     ctx.lineWidth = 2;
     ctx.stroke();
+    if (filter === 'zones') {
+      const cx = px(zone.points.reduce((s, p) => s + p[0], 0) / zone.points.length);
+      const cy = py(zone.points.reduce((s, p) => s + p[1], 0) / zone.points.length);
+      ctx.beginPath();
+      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
+      ctx.fillStyle = def.color;
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.font = 'bold 18px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(String(zone.zone), cx, cy);
+    }
   }
 
   // Lines
@@ -328,7 +354,9 @@ async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refL
 
   drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter);
 
-  return canvas.toDataURL('image/jpeg', 0.9);
+  // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
+  // softens them. The route wraps this as image/png — keep the formats in lockstep.
+  return canvas.toDataURL('image/png');
 }
 
 async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): Promise<string> {
@@ -359,7 +387,21 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
     ctx.fill();
   }
 
-  // Boundary ring stroke band.
+  // Protect ALL land OUTSIDE the property boundary (all filters). Even-odd fill = the whole
+  // canvas rect minus the boundary polygon → pins the boundary from the outside and stops the
+  // model repainting the neighbours' land or re-cutting the fence line. See GLOSSY-PROMPT-AUDIT §2.3.
+  if (refLayers.boundary.length >= 3) {
+    ctx.beginPath();
+    ctx.rect(0, 0, imgW, imgH);
+    refLayers.boundary.forEach(([x, y], i) => {
+      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+      fn.call(ctx, px(x), py(y));
+    });
+    ctx.closePath();
+    ctx.fill('evenodd');
+  }
+
+  // Boundary ring stroke band (pins it from the inside too).
   if (refLayers.boundary.length >= 3) {
     ctx.beginPath();
     refLayers.boundary.forEach(([x, y], i) => {
@@ -382,7 +424,10 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
     ctx.stroke();
   }
 
-  // Zone ring stroke bands (edges locked; interior remains editable background).
+  // Zones. On the dedicated ZONES map, protect the whole FILLED polygon so its interior can't
+  // drift (the composite already draws the zone colour there). On other maps zones are secondary
+  // context, so only the edge band is locked and interiors stay editable illustration.
+  const lockZoneInteriors = filter === 'zones';
   for (const zone of zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
@@ -391,6 +436,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
+    if (lockZoneInteriors) ctx.fill();
     ctx.lineWidth = 8 * SCALE;
     ctx.stroke();
   }

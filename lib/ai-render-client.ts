@@ -8,7 +8,7 @@
 // components/GeometryDesignStudio.tsx's pollFalRender.
 export async function pollFalRender(statusUrl: string, responseUrl: string): Promise<string> {
   let finalImage: string | undefined;
-  for (let i = 0; i < 45 && !finalImage; i++) {
+  for (let i = 0; i < 60 && !finalImage; i++) {
     await new Promise((r) => setTimeout(r, 3000));
     const pr = await fetch('/api/ai-render/poll', {
       method: 'POST',

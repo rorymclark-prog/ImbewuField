@@ -467,6 +467,8 @@ function buildStrictMapTouchupPrompt(basePrompt: string, ctx: RenderContext): st
     criteriaBlock,
     'BASE INSTRUCTION',
     basePrompt.trim(),
+    'FINAL RULE — GEOMETRY LOCK',
+    'If anything above could be read as permission to redraw, move, resize or restyle a drawn feature, it is not. The farmer-drawn geometry in the source image is final. Repaint the background only, and return the image at the same framing as the source.',
   ]
     .filter(Boolean)
     .join('\n\n');
@@ -484,7 +486,8 @@ async function callGemini(
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
   const parts: Array<{ text: string } | { inline_data: { mime_type: string; data: string } }> = [
     { text: prompt },
-    { inline_data: { mime_type: 'image/jpeg', data: imageBase64 } },
+    // The composite is PNG (see buildComposite); the satellite/photos remain JPEG.
+    { inline_data: { mime_type: 'image/png', data: imageBase64 } },
     ...(satBase64 ? [{ inline_data: { mime_type: 'image/jpeg', data: satBase64 } }] : []),
     ...photos.map((d) => ({ inline_data: { mime_type: 'image/jpeg', data: d } })),
   ];
@@ -699,11 +702,15 @@ async function submitFalGptQueue(
 ): Promise<NextResponse> {
   const body: Record<string, unknown> = {
     prompt,
-    image_urls: [`data:image/jpeg;base64,${imageBase64}`],
-    quality: 'medium',
+    image_urls: [`data:image/png;base64,${imageBase64}`],
+    // High quality: the 60s-cap rationale on the sync path does NOT apply here — this is the
+    // async fal queue (submit + poll), so generation runs off-request. High keeps the thin
+    // geometry lines crisp so the model tracks the drawn shapes. PNG in/out avoids JPEG ringing
+    // along those lines. See docs/GLOSSY-PROMPT-AUDIT.md §2.4.
+    quality: 'high',
     image_size: 'auto',
     num_images: 1,
-    output_format: 'jpeg',
+    output_format: 'png',
   };
   // Mask (OpenAI convention: transparent = editable) protects the house/driveway so only
   // the open ground is repainted. PNG, same dims as the composite.
