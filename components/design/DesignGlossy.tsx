@@ -7,12 +7,13 @@
 // placed.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, X } from 'lucide-react';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { ZONE_DEFS } from '@/lib/design-elements';
-import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
+import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
+import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -158,7 +159,7 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
 // valid RenderLayer strings on the API side.
 type AnalysisStyle = 'sector' | 'base' | 'opportunity' | 'implementation';
 const GLOSSY_STYLES: Array<{ key: AnalysisStyle; label: string }> = [
-  { key: 'sector', label: 'Sun & Wind' },
+  { key: 'sector', label: 'Sun & Wind (sector)' },
   { key: 'base', label: "What's here now" },
   { key: 'opportunity', label: 'Opportunities' },
   { key: 'implementation', label: 'Implementation' },
@@ -169,6 +170,18 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
   opportunity: 'opportunities map',
   implementation: 'implementation plan',
 };
+
+// ── Illustrated "producer" styles — the superior image-producer pipeline ──────
+// These render via app/api/image-producer + lib/image-producer's compositeAccurateMap:
+// the model beautifies the whole scene, then we deterministically composite (satellite
+// everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
+// so accuracy is guaranteed by construction. Four researched site-plan styles.
+const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelStyle: LabelStyle }> = [
+  { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink' },
+  { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook' },
+  { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint' },
+  { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk' },
+];
 
 function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
   switch (filter) {
@@ -529,6 +542,88 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+// ── image-producer helpers (adapted from FacilitatorCanvas) ───────────────────
+
+// POST the composited scene to the image-producer route and get the beautified image.
+// The route is engine-agnostic; we always use the gemini engine here (its bare-base64
+// {image} path). The openai engine's async fal-queue {pending} branch is handled too,
+// exactly like FacilitatorCanvas.requestProducer, in case it is ever switched on.
+async function requestProducer(
+  imageBase64: string,
+  layerLabel: string,
+  elementsText: string,
+  stylePreset: string,
+): Promise<string> {
+  const res = await fetch('/api/image-producer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      imageBase64,
+      layerLabel,
+      elementsText,
+      stylePreset,
+      model: 'pro-preview',
+      mapKind: 'full',
+      engine: 'gemini',
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (res.ok && data.pending && data.statusUrl && data.responseUrl) {
+    return pollFalRender(data.statusUrl, data.responseUrl);
+  }
+  if (!res.ok || !data.image) {
+    throw new Error(data.error || `Producer failed (${res.status})`);
+  }
+  return data.image as string; // bare base64 (compositeAccurateMap's asDataUrl normalises it)
+}
+
+// Short comma list of placed element names + counts, e.g. "🥬 Vegetable Bed ×6, 🛢 JoJo Tank".
+function producerElementsText(state: DesignCanvasState): string {
+  const counts = new Map<string, { icon: string; n: number }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue;
+    const name = it.label ?? def.name;
+    const g = counts.get(name) ?? { icon: def.icon, n: 0 };
+    g.n += 1;
+    counts.set(name, g);
+  }
+  return [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`).join(', ');
+}
+
+// True labels burned onto the produced map: one pill per element-name group at the group's
+// centroid (OUTPUT px). SIMPLIFIED vs FacilitatorCanvas — no left/right column split, just a
+// short leader from the cluster to a pill placed above-left of it, clamped inside the WxH
+// frame so nothing is cropped. (Refine later toward the facilitator's column layout.)
+function producerLabels(state: DesignCanvasState, W: number, H: number): ProducerLabel[] {
+  const groups = new Map<string, { xs: number[]; ys: number[]; icon: string }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue;
+    const name = it.label ?? def.name;
+    const g = groups.get(name) ?? { xs: [], ys: [], icon: def.icon };
+    g.xs.push(it.x);
+    g.ys.push(it.y);
+    groups.set(name, g);
+  }
+  const fs = 26, padX = 14;
+  const out: ProducerLabel[] = [];
+  for (const [name, g] of groups) {
+    const n = g.xs.length;
+    const cx = (g.xs.reduce((a, b) => a + b, 0) / n) * W;
+    const cy = (g.ys.reduce((a, b) => a + b, 0) / n) * H;
+    const text = `${g.icon} ${name}${n > 1 ? ` ×${n}` : ''}`;
+    // Rough pill width (burnLabels measures exactly at 600 26px; this only needs to keep the
+    // pill in-frame, so an estimate is fine): 2·padX + ~0.6·fs per char.
+    const pillW = Math.min(W - 28, padX * 2 + text.length * fs * 0.6);
+    const ax = Math.max(14, Math.min(W - pillW - 14, cx - pillW - 20));
+    const ay = Math.max(40, Math.min(H - 40, cy - 30));
+    const lx = ax + pillW; // leader meets the pill's inner (right) edge
+    out.push({ cx, cy, ax, ay, lx, text });
+  }
+  return out;
+}
+
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
@@ -588,13 +683,29 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // When set, an analysis map style is chosen instead of a design-layer filter — it always
   // renders via Gemini's generative path (see GLOSSY_STYLES). null = a design-layer map.
   const [analysisStyle, setAnalysisStyle] = useState<AnalysisStyle | null>(null);
+  // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
+  // image-producer pipeline (compositeAccurateMap). null = a design/analysis map.
+  const [producerStyle, setProducerStyle] = useState<string | null>(null);
   // Render engine — both experimental. gpt-image-2 (default, best overall) + Gemini Pro
   // (kept for comparison; may be retired after more experimenting).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
+  // Session-only gallery of every successful render (producer OR the strict/analysis paths).
+  // Never persisted — kept only until the component unmounts.
+  const [gallery, setGallery] = useState<Array<{ id: string; label: string; image: string }>>([]);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // A stable cache key per chosen map (design filter OR analysis style).
-  const mapKey = analysisStyle ?? filter;
+  // A stable cache key per chosen map (producer style OR design filter OR analysis style).
+  const mapKey = producerStyle ? `producer:${producerStyle}` : (analysisStyle ?? filter);
+  const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
+
+  const pushGallery = useCallback((label: string, image: string) => {
+    setGallery((prev) => [
+      ...prev,
+      { id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, image },
+    ]);
+  }, []);
 
   // Load the cached render for this site + chosen map. Runs on mount and whenever the map
   // changes, so each map keeps its own last render.
@@ -690,14 +801,71 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         const record: SavedGlossy = { image: finalImage, provider: useProvider, at: new Date().toISOString() };
         saveGlossy(state.siteId, mapKey, record);
         setSaved(record);
+        const mapLabel = analysisStyle
+          ? `${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label ?? 'Analysis'} map`
+          : filter === 'all'
+            ? 'Whole design'
+            : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
+        pushGallery(mapLabel, finalImage);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
       } finally {
         setLoading(null);
       }
     },
-    [state, frame, refLayers, site, placeName, filter, analysisStyle, mapKey],
+    [state, frame, refLayers, site, placeName, filter, analysisStyle, mapKey, pushGallery],
   );
+
+  // Producer render path — the boundary-locked image-producer pipeline. The model beautifies
+  // the whole design composite; we then composite deterministically (satellite outside the
+  // boundary, model clipped inside, crisp boundary, burned true labels) so the result is
+  // beautiful AND accurate by construction.
+  const generateProducer = useCallback(async () => {
+    if (!producerStyle) return;
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === producerStyle);
+    if (!styleDef) return;
+    setLoading('gemini');
+    setError(null);
+    try {
+      const W = frame.imgW * SCALE;
+      const H = frame.imgH * SCALE;
+      // a. Model input — the whole design composite (all layers, design marks on).
+      const composite = await buildComposite(state, frame, refLayers, 'all');
+      // b. Short comma list of placed elements + counts.
+      const elementsText = producerElementsText(state);
+      // c. Beautify via the image-producer route (gemini engine; async path handled inside).
+      const modelImage = await requestProducer(stripDataUrl(composite), 'Full design', elementsText, producerStyle);
+      // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
+      const boundaryPx =
+        refLayers.boundary.length >= 3
+          ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
+          : undefined;
+      // e. True labels (one pill per element-name group at its centroid).
+      const labels = producerLabels(state, W, H);
+      // f. Deterministic composite-back — accuracy guaranteed by construction.
+      const final = await compositeAccurateMap({
+        modelImage,
+        // Satellite is the ground truth OUTSIDE the boundary; fall back to the composite when
+        // there's no satellite so the map is never left blank/transparent there.
+        satelliteImage: frame.satDataUrl ?? composite,
+        boundaryPx,
+        labels,
+        labelStyle: styleDef.labelStyle,
+        width: W,
+        height: H,
+      });
+      // g. Show, cache (mapKey = producer:<style>) and add to the session gallery.
+      setResultImage(final);
+      const record: SavedGlossy = { image: final, provider: 'gemini', at: new Date().toISOString() };
+      saveGlossy(state.siteId, mapKey, record);
+      setSaved(record);
+      pushGallery(`${styleDef.label} map`, final);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [producerStyle, state, frame, refLayers, mapKey, pushGallery]);
 
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
@@ -776,12 +944,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {GLOSSY_FILTERS.map((f) => {
-            const active = analysisStyle === null && filter === f.key;
+            const active = analysisStyle === null && producerStyle === null && filter === f.key;
             return (
               <button
                 key={f.key}
                 type="button"
-                onClick={() => { setFilter(f.key); setAnalysisStyle(null); }}
+                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setProducerStyle(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -808,12 +976,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {GLOSSY_STYLES.map((s) => {
-            const active = analysisStyle === s.key;
+            const active = producerStyle === null && analysisStyle === s.key;
             return (
               <button
                 key={s.key}
                 type="button"
-                onClick={() => setAnalysisStyle(s.key)}
+                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -834,15 +1002,55 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             );
           })}
         </div>
+
+        {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND accurate). */}
+        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
+          Styles · illustrated
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {PRODUCER_STYLES.map((s) => {
+            const active = producerStyle === s.key;
+            return (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); }}
+                disabled={loading !== null}
+                aria-pressed={active}
+                title={s.blurb}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  minHeight: 38,
+                  padding: '6px 14px',
+                  borderRadius: 19,
+                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                  background: active ? GREEN : 'transparent',
+                  color: active ? PAPER : DARK,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: loading !== null ? 'default' : 'pointer',
+                  opacity: loading !== null && !active ? 0.5 : 1,
+                }}
+              >
+                <span>{s.label}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>{s.blurb}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          {analysisStyle
-            ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
-            : filter === 'all'
-              ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
-              : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
+          {producerStyle
+            ? `Generate the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} — an illustrated map rendered through the polished pipeline. The model beautifies the whole scene, then your real satellite, boundary and labels are composited back on top, so the picture is beautiful AND accurate (boundary-locked by construction). Takes about a minute.`
+            : analysisStyle
+              ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
+              : filter === 'all'
+                ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
+                : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
         </p>
       )}
 
@@ -858,11 +1066,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
-              {analysisStyle
-                ? ` · ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
-                : filter !== 'all'
-                  ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
-                  : ''}
+              {producerStyle
+                ? ` · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
+                : analysisStyle
+                  ? ` · ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
+                  : filter !== 'all'
+                    ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
+                    : ''}
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={resultImage} alt="AI artist's impression of the design" style={{ width: '100%', display: 'block' }} />
@@ -894,14 +1104,39 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <Download size={18} />
               Download
             </button>
+            {gallery.length > 0 && (
+              <button
+                onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  minHeight: 44,
+                  padding: '10px 18px',
+                  borderRadius: 12,
+                  border: '1px solid rgba(0,0,0,0.18)',
+                  background: 'transparent',
+                  color: DARK,
+                  fontWeight: 700,
+                }}
+              >
+                <Images size={18} />
+                Saved maps ({gallery.length})
+              </button>
+            )}
           </div>
         </div>
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {/* Engine picker — only for design maps. Analysis maps are drawn by Gemini (the strict
-            gpt-image-2 mask-edit can't produce sun/wind arrows or opportunity annotations). */}
-        {analysisStyle ? (
+            gpt-image-2 mask-edit can't produce sun/wind arrows or opportunity annotations);
+            illustrated Styles render via the boundary-locked image-producer pipeline. */}
+        {producerStyle ? (
+          <div style={{ fontSize: 11.5, opacity: 0.7 }}>
+            Illustrated styles render via the polished pipeline (boundary-locked).
+          </div>
+        ) : analysisStyle ? (
           <div style={{ fontSize: 11.5, opacity: 0.7 }}>
             Analysis maps are drawn by <strong>Gemini Pro</strong>.
           </div>
@@ -944,7 +1179,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         )}
 
         <button
-          onClick={() => generate(engine)}
+          onClick={() => (producerStyle ? generateProducer() : generate(engine))}
           disabled={loading !== null}
           style={{
             display: 'flex',
@@ -968,19 +1203,132 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           {loading !== null
             ? 'Generating your map… 30–90s'
             : `${resultImage ? 'Regenerate' : 'Generate'} ${
-                analysisStyle
-                  ? `my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
-                  : filter === 'all'
-                    ? 'my map'
-                    : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
+                producerStyle
+                  ? `my ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
+                  : analysisStyle
+                    ? `my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
+                    : filter === 'all'
+                      ? 'my map'
+                      : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
               } (~1 min)`}
         </button>
         <div style={{ fontSize: 11, opacity: 0.6 }}>
-          Using <strong>{analysisStyle ? 'Gemini Pro' : ENGINES.find((e) => e.key === engine)?.label}</strong>. If the result
-          looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
+          Using{' '}
+          <strong>
+            {producerStyle ? 'the polished pipeline' : analysisStyle ? 'Gemini Pro' : ENGINES.find((e) => e.key === engine)?.label}
+          </strong>
+          . If the result looks off, try generating again{producerStyle || analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
         </div>
+        {!resultImage && gallery.length > 0 && (
+          <button
+            onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              minHeight: 40,
+              padding: '8px 16px',
+              borderRadius: 12,
+              border: '1px solid rgba(0,0,0,0.18)',
+              background: 'transparent',
+              color: DARK,
+              fontWeight: 700,
+              fontSize: 13,
+              alignSelf: 'flex-start',
+              cursor: 'pointer',
+            }}
+          >
+            <Images size={16} />
+            Saved maps ({gallery.length})
+          </button>
+        )}
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
       </div>
+
+      {/* ── Saved-maps gallery (session-only) ── */}
+      {galleryOpen && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+            background: 'rgba(20,16,10,0.55)',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 520,
+              maxHeight: '90%',
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: 16,
+              overflow: 'hidden',
+              background: PAPER,
+              border: '1px solid #E2D8C4',
+              boxShadow: '0 12px 40px rgba(20,16,10,0.35)',
+            }}
+          >
+            <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>🖼 Saved maps ({gallery.length})</span>
+              <button
+                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); }}
+                aria-label="Close saved maps"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
+              >
+                <X size={14} />
+              </button>
+            </div>
+            <div style={{ padding: 16, overflowY: 'auto' }}>
+              {galleryViewItem ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
+                  <p style={{ fontSize: 13, color: '#5C5040', margin: 0 }}>{galleryViewItem.label}</p>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <a
+                      href={galleryViewItem.image}
+                      download={`imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: GREEN, color: PAPER, fontWeight: 700, fontSize: 13, textDecoration: 'none' }}
+                    >
+                      <Download size={15} /> Download
+                    </a>
+                    <button
+                      onClick={() => setGalleryViewId(null)}
+                      style={{ padding: '8px 14px', borderRadius: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
+                    >
+                      ‹ Back
+                    </button>
+                  </div>
+                </div>
+              ) : gallery.length === 0 ? (
+                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>No saved maps yet this session.</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                    {gallery.map((g) => (
+                      <button
+                        key={g.id}
+                        onClick={() => setGalleryViewId(g.id)}
+                        style={{ position: 'relative', padding: 0, borderRadius: 10, overflow: 'hidden', border: '1px solid #E2D8C4', aspectRatio: '1 / 1', cursor: 'pointer', background: DARK }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={g.image} alt={g.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <p style={{ fontSize: 10, color: '#9A8268', margin: 0 }}>Session-only — kept until you leave this screen.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
