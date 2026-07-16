@@ -759,6 +759,292 @@ function buildZoneOverlay(state: DesignCanvasState, W: number, H: number): strin
   return canvas.toDataURL('image/png');
 }
 
+function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+// Deterministic "Blueprint" ZONE map — the flat cartographic style ChatGPT nailed, but drawn
+// exactly from our geometry (guaranteed accurate, instant, reproducible). Dark scrim + hatched
+// zone fills + dashed coloured outlines + fence-tick boundary + tar driveway + number badges +
+// title + legend panel + scale bar, all on the real satellite. NO AI.
+async function buildBlueprintZoneMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const ring = (pts: Array<[number, number]>) => {
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    ctx.closePath();
+  };
+  const centroid = (pts: Array<[number, number]>): [number, number] => {
+    const n = pts.length;
+    return [px(pts.reduce((s, p) => s + p[0], 0) / n), py(pts.reduce((s, p) => s + p[1], 0) / n)];
+  };
+
+  // 1. Satellite base + blueprint scrim (so the graphics pop on a moody dark ground).
+  if (frame.satDataUrl) {
+    const img = await loadImage(frame.satDataUrl);
+    ctx.drawImage(img, 0, 0, W, H);
+  } else {
+    ctx.fillStyle = '#22303a';
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.fillStyle = 'rgba(8,14,22,0.5)';
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. Zones 1..5 — translucent wash + diagonal hatch (clipped) + dashed coloured outline.
+  const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3 && z.zone !== 0);
+  const step = Math.max(12, W * 0.009);
+  for (const z of zones) {
+    const def = ZONE_DEFS[z.zone];
+    ctx.save();
+    ring(z.points);
+    ctx.clip();
+    ctx.fillStyle = `${def.color}2E`;
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = `${def.color}99`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let d = -H; d < W; d += step) {
+      ctx.moveTo(d, 0);
+      ctx.lineTo(d + H, H);
+    }
+    ctx.stroke();
+    ctx.restore();
+    ring(z.points);
+    ctx.setLineDash([12, 8]);
+    ctx.strokeStyle = def.color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // 3. Driveway — tar (dark) with a light dashed edge.
+  if (refLayers.driveway.length >= 2) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    const trace = () => {
+      ctx.beginPath();
+      refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    };
+    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+      trace();
+      ctx.closePath();
+      ctx.fillStyle = '#2A2A2E';
+      ctx.fill();
+      ctx.setLineDash([10, 7]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    } else {
+      const roadW = Math.min(46, Math.max(11, (W / (frame.imgW * frame.mPerPx)) * 3));
+      trace();
+      ctx.strokeStyle = '#2A2A2E';
+      ctx.lineWidth = roadW;
+      ctx.stroke();
+      trace();
+      ctx.setLineDash([10, 7]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.restore();
+  }
+
+  // 4. House = Zone 0 — solid fill + white outline.
+  const hasHouse = refLayers.house.length >= 3;
+  if (hasHouse) {
+    ring(refLayers.house);
+    ctx.fillStyle = `${ZONE_DEFS[0].color}D9`;
+    ctx.fill();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  // 5. Boundary — green line with perpendicular fence ticks.
+  if (refLayers.boundary.length >= 3) {
+    const b = refLayers.boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
+    ctx.beginPath();
+    b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+    ctx.closePath();
+    ctx.strokeStyle = '#8CEB6A';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    const tick = Math.max(7, W * 0.006);
+    const tstep = Math.max(26, W * 0.02);
+    ctx.lineWidth = 2;
+    for (let i = 0; i < b.length; i++) {
+      const [x1, y1] = b[i];
+      const [x2, y2] = b[(i + 1) % b.length];
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      for (let t = tstep; t < len; t += tstep) {
+        const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + nx * tick, cy + ny * tick);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // 6. Number badges (house = 0, then zones).
+  const badge = (cx: number, cy: number, color: string, n: number) => {
+    const r = Math.max(15, W * 0.011);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = `bold ${Math.round(r * 1.1)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(n), cx, cy);
+  };
+  if (hasHouse) {
+    const [cx, cy] = centroid(refLayers.house);
+    badge(cx, cy, ZONE_DEFS[0].color, 0);
+  }
+  for (const z of zones) {
+    const [cx, cy] = centroid(z.points);
+    badge(cx, cy, ZONE_DEFS[z.zone].color, z.zone);
+  }
+
+  // 7. Title (top-left).
+  const pad = Math.round(W * 0.02);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
+  ctx.fillText('PERMACULTURE ZONE MAP', pad, pad + Math.round(W * 0.028));
+  ctx.fillStyle = '#B9C2C8';
+  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
+  ctx.fillText(placeName ?? 'Zone plan', pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+
+  // 8. Legend panel (top-right).
+  const zoneNums = [...(hasHouse ? [0] : []), ...zones.map((z) => z.zone)].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b) as Array<0 | 1 | 2 | 3 | 4 | 5>;
+  const rowH = Math.round(W * 0.026);
+  const lgW = Math.round(W * 0.27);
+  const lgH = Math.round(rowH * (zoneNums.length + 3 + 2.2));
+  const lgX = W - pad - lgW, lgY = pad;
+  ctx.fillStyle = 'rgba(10,16,22,0.82)';
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1.5;
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.stroke();
+  const ip = Math.round(lgW * 0.07);
+  const sw = Math.round(rowH * 0.62);
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  let ry = lgY + ip + rowH * 0.4;
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
+  ctx.fillText('LEGEND', lgX + ip, ry);
+  ry += rowH * 0.9;
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.beginPath();
+  ctx.moveTo(lgX + ip, ry - rowH * 0.25);
+  ctx.lineTo(lgX + lgW - ip, ry - rowH * 0.25);
+  ctx.stroke();
+  ry += rowH * 0.3;
+  const textX = lgX + ip + sw * 1.5 + 12;
+  for (const n of zoneNums) {
+    const def = ZONE_DEFS[n];
+    ctx.fillStyle = `${def.color}CC`;
+    roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+    ctx.fill();
+    ctx.strokeStyle = def.color;
+    ctx.lineWidth = 1.5;
+    roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+    ctx.stroke();
+    ctx.fillStyle = '#EDE7DA';
+    ctx.font = `700 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
+    const zLbl = `ZONE ${n}`;
+    ctx.fillText(zLbl, textX, ry);
+    const nameX = textX + ctx.measureText(zLbl).width + 8;
+    ctx.fillStyle = '#B9C2C8';
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    let name = `— ${ZONE_DEFS[n].label}`;
+    const maxW = lgX + lgW - ip - nameX;
+    while (ctx.measureText(name).width > maxW && name.length > 4) name = name.slice(0, -2);
+    ctx.fillText(name, nameX, ry);
+    ry += rowH;
+  }
+  // Fence + driveway + scale-note rows.
+  ctx.strokeStyle = '#8CEB6A';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(lgX + ip, ry);
+  ctx.lineTo(lgX + ip + sw * 1.5, ry);
+  ctx.stroke();
+  ctx.fillStyle = '#EDE7DA';
+  ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+  ctx.fillText('Fence / site boundary', textX, ry);
+  ry += rowH;
+  ctx.fillStyle = '#2A2A2E';
+  roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+  ctx.fill();
+  ctx.fillStyle = '#EDE7DA';
+  ctx.fillText('Tarred driveway', textX, ry);
+  ry += rowH;
+  ctx.fillStyle = '#9AA6AC';
+  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
+  ctx.fillText('Zones show frequency of access.', lgX + ip, ry);
+
+  // 9. Scale bar (bottom-left).
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const niceM = [5, 10, 20, 25, 50, 100, 200];
+  let m = niceM[0];
+  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
+  const barW = m * pxPerM;
+  const bx = pad, by = H - pad - rowH * 0.3;
+  ctx.strokeStyle = '#F3EEE2';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(bx + barW, by);
+  ctx.moveTo(bx, by - 8);
+  ctx.lineTo(bx, by + 8);
+  ctx.moveTo(bx + barW, by - 8);
+  ctx.lineTo(bx + barW, by + 8);
+  ctx.stroke();
+  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
+  ctx.textBaseline = 'bottom';
+  ctx.textAlign = 'left';
+  ctx.fillText(`${m} m`, bx, by - 12);
+
+  return canvas.toDataURL('image/png');
+}
+
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
@@ -1024,7 +1310,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     setLoading('exact');
     setError(null);
     try {
-      const composite = await buildComposite(state, frame, refLayers, filter, true);
+      // The Zones map gets the deterministic "Blueprint" treatment (hatched zones, legend, scale,
+      // fence ticks) — the flat cartographic look ChatGPT nailed, but drawn exactly from geometry.
+      const composite = filter === 'zones'
+        ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
+        : await buildComposite(state, frame, refLayers, filter, true);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -1038,7 +1328,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, filter, mapKey, pushGallery]);
+  }, [state, frame, refLayers, filter, mapKey, pushGallery, placeName]);
 
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
