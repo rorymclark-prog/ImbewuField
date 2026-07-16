@@ -70,6 +70,8 @@ interface ActiveLayers {
   planting: boolean;
   structures: boolean;
   lines: boolean;
+  ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
+  baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
 }
 
 interface RefLayers {
@@ -90,6 +92,9 @@ export interface DesignCanvasProps {
   areaFeature?: GroundFeatureKind | null;
   lineKind: LineShape['kind'];
   activeLayers: ActiveLayers;
+  // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
+  // still renders if a caller doesn't wire it.
+  onToggleBaseMap?: () => void;
   refLayers: RefLayers;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
@@ -331,6 +336,7 @@ export default function DesignCanvas({
   areaFeature,
   lineKind,
   activeLayers,
+  onToggleBaseMap,
   refLayers,
   selectedId,
   onSelect,
@@ -345,11 +351,6 @@ export default function DesignCanvas({
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
 
-  // Reference-layer declutter. The traced/adopted underlay + the boundary fence reference
-  // clutter the satellite while the farmer is PLACING/DRAWING. This cycles their visibility
-  // shown → dimmed → hidden (via the Eye/EyeOff toggle) so the view can be cleared. Purely
-  // local/visual — it NEVER touches the farmer's own placed items/zones/lines.
-  const [refVisibility, setRefVisibility] = useState<'shown' | 'dimmed' | 'hidden'>('shown');
 
   // Zoom/pan view transform — world-space (viewBox px) is drawn inside a single
   // <g transform="translate(tx ty) scale(k)">; fixed overlays (north arrow, scale bar,
@@ -376,6 +377,11 @@ export default function DesignCanvas({
   // on release via onChange, same single-undo pattern as move/vertex drags.
   const dragResizeId = useRef<string | null>(null);
   const [resizePreview, setResizePreview] = useState<{ wM: number; hM: number } | null>(null);
+
+  // Rotate-handle drag state for a selected rect item (strips/beds/rows). Same local-preview-
+  // then-commit-on-release pattern as resize. Degrees clockwise; snaps to 5° for steadiness.
+  const dragRotateId = useRef<string | null>(null);
+  const [rotPreview, setRotPreview] = useState<number | null>(null);
 
   // Whole-shape (zone/line) translate drag — press-and-drag the body moves every point by
   // the same delta, mirroring startDragItem's press-drag-moves-the-whole-thing pattern.
@@ -887,6 +893,47 @@ export default function DesignCanvas({
     setResizePreview(null);
   }
 
+  function startDragRotate(e: React.PointerEvent, id: string) {
+    if (tool !== 'select') return;
+    e.stopPropagation();
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragRotateId.current = id;
+  }
+
+  function moveDragRotate(e: React.PointerEvent) {
+    const id = dragRotateId.current;
+    if (!id) return;
+    const item = state.items.find((it) => it.id === id);
+    if (!item) return;
+    // Convert the pointer into the same world space as the item centre (see moveDragResize),
+    // then take the bearing from centre → pointer. 0° points "up" (north) so the handle,
+    // which sits at the strip's top edge, tracks the finger. Snap to 5° for a steady feel.
+    const centreWorld: [number, number] = [item.x * imgW, item.y * imgH];
+    const vb = vbFromClient(e.clientX, e.clientY);
+    if (!vb) return;
+    const { k, tx, ty } = viewRef.current;
+    const pointerWorld: [number, number] = [(vb[0] - tx) / k, (vb[1] - ty) / k];
+    const dx = pointerWorld[0] - centreWorld[0];
+    const dy = pointerWorld[1] - centreWorld[1];
+    if (Math.hypot(dx, dy) < 1) return;
+    const deg = (Math.atan2(dx, -dy) * 180) / Math.PI; // 0 = up, clockwise
+    const snapped = Math.round(deg / 5) * 5;
+    setRotPreview(((snapped % 360) + 360) % 360);
+  }
+
+  function endDragRotate() {
+    const id = dragRotateId.current;
+    if (id && rotPreview !== null) {
+      const rot = rotPreview % 360;
+      onChange({
+        ...state,
+        items: state.items.map((it) => (it.id === id ? { ...it, rot: rot === 0 ? undefined : rot } : it)),
+      });
+    }
+    dragRotateId.current = null;
+    setRotPreview(null);
+  }
+
   // Add a vertex at the midpoint of edge `afterIndex → afterIndex+1` of a committed shape —
   // the owner's "add another corner" need, which only existed for in-progress drafts before.
   // Emits one onChange (= one undo entry), same commit pattern as endDragVertex.
@@ -960,8 +1007,10 @@ export default function DesignCanvas({
   // Reference-layer (boundary + traced/adopted underlay) visibility, derived from the toggle.
   // 'hidden' drops them from the tree entirely (so they neither clutter nor interact);
   // 'dimmed' fades them to a faint context layer; 'shown' is today's full-strength render.
-  const refShown = refVisibility !== 'hidden';
-  const refOpacityFactor = refVisibility === 'dimmed' ? 0.3 : 1;
+  // Base-map reference (boundary + auto-detected/traced underlay) is shown/hidden by the
+  // "Base map" layer toggle now — one consistent control alongside every other layer.
+  const refShown = activeLayers.baseMap;
+  const refOpacityFactor = 1;
 
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
@@ -981,6 +1030,7 @@ export default function DesignCanvas({
           moveDragItem(e);
           moveDragVertex(e);
           moveDragResize(e);
+          moveDragRotate(e);
           moveDragShape(e);
           moveDragDraftVertex(e);
         }}
@@ -989,6 +1039,7 @@ export default function DesignCanvas({
           endDragItem();
           endDragVertex();
           endDragResize();
+          endDragRotate();
           endDragShape();
           endDragDraftVertex();
         }}
@@ -1168,9 +1219,10 @@ export default function DesignCanvas({
           );
         })}
 
-        {/* Zones */}
-        {activeLayers.zones &&
-          state.zones.map((z) => {
+        {/* Zones + ground features. Effort-zone rings follow the Zones toggle; farmer-drawn
+            ground areas (house/patio/lawn/…) follow the separate Ground toggle. */}
+        {state.zones.map((z) => {
+            if (z.feature ? !activeLayers.ground : !activeLayers.zones) return null;
             const def = ZONE_DEFS[z.zone];
             // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
             // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
@@ -1534,6 +1586,11 @@ export default function DesignCanvas({
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
+          // Rotation applies to rect strips/beds/rows only (circles are rotation-invariant).
+          const isRotatingThis = item.id === dragRotateId.current && rotPreview !== null;
+          const rot = def.shape === 'rect' ? (isRotatingThis ? rotPreview! : item.rot ?? 0) : 0;
+          const rotXf = rot ? `rotate(${rot})` : undefined;
+          const canRotate = def.shape === 'rect';
 
           return (
             <g
@@ -1542,31 +1599,35 @@ export default function DesignCanvas({
               onPointerDown={(e) => startDragItem(e, item.id)}
               style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
             >
-              {isSelected && (
-                <>
-                  {def.shape === 'circle' ? (
-                    <circle r={Math.max(wPx, hPx) / 2 + 4} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" />
-                  ) : (
-                    <rect
-                      x={-wPx / 2 - 4}
-                      y={-hPx / 2 - 4}
-                      width={wPx + 8}
-                      height={hPx + 8}
-                      fill="none"
-                      stroke={GOLD}
-                      strokeWidth={2.5}
-                      strokeDasharray="4 3"
-                      rx={4}
-                    />
-                  )}
-                </>
-              )}
-              {/* True-scale footprint (soft fill + stroke) */}
-              {def.shape === 'circle' ? (
-                <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
-              ) : (
-                <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
-              )}
+              {/* Footprint + selection outline rotate together (rect only); the icon disc,
+                  label and action handles below stay upright/screen-aligned. */}
+              <g transform={rotXf}>
+                {isSelected && (
+                  <>
+                    {def.shape === 'circle' ? (
+                      <circle r={Math.max(wPx, hPx) / 2 + 4} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" />
+                    ) : (
+                      <rect
+                        x={-wPx / 2 - 4}
+                        y={-hPx / 2 - 4}
+                        width={wPx + 8}
+                        height={hPx + 8}
+                        fill="none"
+                        stroke={GOLD}
+                        strokeWidth={2.5}
+                        strokeDasharray="4 3"
+                        rx={4}
+                      />
+                    )}
+                  </>
+                )}
+                {/* True-scale footprint (soft fill + stroke) */}
+                {def.shape === 'circle' ? (
+                  <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
+                ) : (
+                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
+                )}
+              </g>
               {/* Centred icon disc: colour-filled, white-stroked, emoji centred */}
               <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
               <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
@@ -1625,9 +1686,10 @@ export default function DesignCanvas({
                   </text>
                 </g>
               )}
-              {/* Direct-resize handle — bottom-right corner of the footprint bbox */}
+              {/* Resize handle (bottom-right corner) + rotate knob (top edge) — both attach to
+                  the rotated footprint so they read against the strip's real orientation. */}
               {isSelected && tool === 'select' && (
-                <g>
+                <g transform={rotXf}>
                   <rect
                     x={wPx / 2 - 5}
                     y={hPx / 2 - 5}
@@ -1639,14 +1701,31 @@ export default function DesignCanvas({
                     style={{ cursor: 'nwse-resize', touchAction: 'none' }}
                     onPointerDown={(e) => startDragResize(e, item.id)}
                   />
-                  {isResizingThis && (
-                    <g transform={`translate(${wPx / 2 + 14}, ${hPx / 2 + 14})`} pointerEvents="none">
-                      <rect x={-20} y={-9} width={40} height={18} rx={9} fill="rgba(11,18,11,0.85)" stroke={GOLD} strokeWidth={1} />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
-                        {wM.toFixed(1)} m
-                      </text>
+                  {canRotate && (
+                    <g>
+                      <line x1={0} y1={-hPx / 2 - 4} x2={0} y2={-hPx / 2 - 22} stroke={GOLD} strokeWidth={1.5} />
+                      <circle
+                        cx={0}
+                        cy={-hPx / 2 - 26}
+                        r={9}
+                        fill={GOLD}
+                        stroke="#FFFFFF"
+                        strokeWidth={2}
+                        style={{ cursor: 'grab', touchAction: 'none' }}
+                        onPointerDown={(e) => startDragRotate(e, item.id)}
+                      />
+                      <circle cx={0} cy={-hPx / 2 - 26} r={2.5} fill="#0B120B" pointerEvents="none" />
                     </g>
                   )}
+                </g>
+              )}
+              {/* Upright drag readout — resize shows metres, rotate shows degrees */}
+              {isSelected && (isResizingThis || isRotatingThis) && (
+                <g transform={`translate(0, ${(-hPx / 2 - 34).toFixed(1)})`} pointerEvents="none">
+                  <rect x={-24} y={-9} width={48} height={18} rx={9} fill="rgba(11,18,11,0.9)" stroke={GOLD} strokeWidth={1} />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
+                    {isRotatingThis ? `${Math.round(rot)}°` : `${wM.toFixed(1)} m`}
+                  </text>
                 </g>
               )}
             </g>
@@ -1802,49 +1881,36 @@ export default function DesignCanvas({
         })()}
       </svg>
 
-      {/* Reference-layer declutter toggle — top-left, unobtrusive. Cycles the traced/adopted
-          underlay + boundary reference between shown → dimmed → hidden so the farmer can clear
-          the satellite while placing/drawing. Local-only; never affects the farmer's own placed
-          items/zones/lines. */}
-      <button
-        type="button"
-        aria-label={
-          refVisibility === 'shown'
-            ? 'Dim reference layers'
-            : refVisibility === 'dimmed'
-            ? 'Hide reference layers'
-            : 'Show reference layers'
-        }
-        title={
-          refVisibility === 'shown'
-            ? 'Reference layers: shown — tap to dim'
-            : refVisibility === 'dimmed'
-            ? 'Reference layers: dimmed — tap to hide'
-            : 'Reference layers: hidden — tap to show'
-        }
-        onClick={() =>
-          setRefVisibility((v) => (v === 'shown' ? 'dimmed' : v === 'dimmed' ? 'hidden' : 'shown'))
-        }
-        style={{
-          position: 'absolute',
-          top: 12,
-          left: 12,
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          border: 'none',
-          background: 'rgba(11,18,11,0.82)',
-          color: '#FBF6EC',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-          cursor: 'pointer',
-          opacity: refVisibility === 'dimmed' ? 0.7 : 1,
-        }}
-      >
-        {refVisibility === 'hidden' ? <EyeOff size={18} /> : <Eye size={18} />}
-      </button>
+      {/* Quick base-map declutter — top-left. Toggles the "Base map" layer (boundary +
+          auto-detected/traced underlay) so the farmer can clear the satellite in one tap
+          while placing/drawing. Same state as the "Base map" chip in the palette. */}
+      {onToggleBaseMap && (
+        <button
+          type="button"
+          aria-label={activeLayers.baseMap ? 'Hide base map' : 'Show base map'}
+          title={activeLayers.baseMap ? 'Base map: shown — tap to hide' : 'Base map: hidden — tap to show'}
+          onClick={onToggleBaseMap}
+          style={{
+            position: 'absolute',
+            top: 12,
+            left: 12,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            border: 'none',
+            background: 'rgba(11,18,11,0.82)',
+            color: '#FBF6EC',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            opacity: activeLayers.baseMap ? 1 : 0.7,
+          }}
+        >
+          {activeLayers.baseMap ? <Eye size={18} /> : <EyeOff size={18} />}
+        </button>
+      )}
 
       {/* Zoom controls — floating column bottom-right, above the scale bar. */}
       <div

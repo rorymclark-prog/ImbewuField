@@ -28,6 +28,8 @@ export interface PlacedItem {
   y: number; // normalised [0..1] centre position in the frame
   wM?: number;
   hM?: number; // optional per-item size override in metres
+  rot?: number; // clockwise rotation in degrees (0 = footprint's natural orientation). Only
+  // meaningful for rect-shaped elements (strips/beds/rows) — circles are rotation-invariant.
   label?: string;
   note?: string;
 }

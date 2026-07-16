@@ -18,6 +18,8 @@ interface ActiveLayers {
   planting: boolean;
   structures: boolean;
   lines: boolean;
+  ground: boolean;
+  baseMap: boolean;
 }
 
 export type DesignMode = 'guided' | 'pro';
@@ -61,6 +63,8 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
 const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: string }> = [
+  { key: 'baseMap', label: 'Base map', icon: '🛰️' },
+  { key: 'ground', label: 'Ground', icon: '🟫' },
   { key: 'water', label: 'Water', icon: '💧' },
   { key: 'zones', label: 'Zones', icon: '🗺️' },
   { key: 'planting', label: 'Planting', icon: '🌱' },
@@ -437,17 +441,29 @@ export default function DesignPalette({
         </div>
       )}
 
-      {/* Layer visibility toggles — PRO only. Guided keeps every layer always on (the
-          page forces activeLayers back to all-true on switching into guided) so there's
-          no manual control to hide by accident; one less decision for a first-timer. */}
-      {mode === 'pro' && (
-      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingTop: 2 }}>
+      {/* Layer show/hide toggles — available in BOTH modes now. Every layer, including the
+          base map and drawn ground areas, can be turned off to declutter the satellite. */}
+      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingTop: 2, alignItems: 'center' }}>
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 800,
+            letterSpacing: 0.4,
+            textTransform: 'uppercase',
+            color: 'rgba(11,18,11,0.5)',
+            flexShrink: 0,
+            paddingRight: 2,
+          }}
+        >
+          Layers
+        </span>
         {LAYER_TOGGLES.map((lt) => {
           const on = activeLayers[lt.key];
           return (
             <button
               key={lt.key}
               type="button"
+              aria-pressed={on}
               onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
               style={{
                 minHeight: 32,
@@ -471,7 +487,6 @@ export default function DesignPalette({
           );
         })}
       </div>
-      )}
     </div>
   );
 }

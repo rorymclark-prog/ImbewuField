@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, X } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, Image as ImageIcon, X } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -58,6 +58,7 @@ import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
+import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
 import AutoDesignSheet from '@/components/design/AutoDesignSheet';
 import AdvancedToolsSheet, { type AdvancedAction } from '@/components/design/AdvancedToolsSheet';
@@ -79,6 +80,7 @@ function readStoredDesignMode(): DesignMode {
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
+const OCHRE = '#C07A1E';
 const DARK = '#0B120B';
 
 const MAX_UNDO = 25;
@@ -407,13 +409,15 @@ function DesignStudioInner() {
     planting: true,
     structures: true,
     lines: true,
+    ground: true,
+    baseMap: true,
   });
-  // Guided hides the layer-toggle row entirely (one less decision for a first-timer), so
-  // switching INTO guided must force every layer back on — otherwise a layer a Pro-mode
-  // user hid would stay invisibly hidden with no control left to bring it back.
+  // Switching INTO guided restores every layer — a first-timer should never land in guided
+  // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
+  // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true });
+      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true });
     }
   }, [designMode]);
 
@@ -432,6 +436,9 @@ function DesignStudioInner() {
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
+  // this layer over the studio, without leaving the current step. null = closed.
+  const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
   // Advanced (beta) sheet — the quiet home for the demoted auto-draw / auto-design tools.
   const [advancedOpen, setAdvancedOpen] = useState(false);
   // Zone ADVICE (the guidance half of the hybrid): Lima's spatial suggestions shown as short
@@ -1364,8 +1371,29 @@ function DesignStudioInner() {
           {canvasState.step !== 'glossy' && (
             <button
               type="button"
+              onClick={() =>
+                setPreviewFilter(
+                  canvasState.step === 'water'
+                    ? 'water'
+                    : canvasState.step === 'zones'
+                      ? 'zones'
+                      : canvasState.step === 'planting'
+                        ? 'planting'
+                        : canvasState.step === 'structures'
+                          ? 'structures'
+                          : 'all',
+                )
+              }
+              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+            >
+              <ImageIcon size={15} /> Preview map
+            </button>
+          )}
+          {canvasState.step !== 'glossy' && (
+            <button
+              type="button"
               onClick={() => setAdvancedOpen(true)}
-              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
             >
               <SlidersHorizontal size={15} /> Advanced
             </button>
@@ -1402,6 +1430,7 @@ function DesignStudioInner() {
               areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
+              onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               refLayers={refLayers}
               selectedId={selectedId}
               onSelect={setSelectedId}
@@ -1727,6 +1756,34 @@ function DesignStudioInner() {
         />
       )}
 
+      {/* Per-layer glossy preview overlay — opened by "Preview map" on any design step, so the
+          farmer can generate a beautiful single-layer map without leaving their place in the flow. */}
+      {canvasState && frame && previewFilter && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: PAPER, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid #E2D8C4', flexShrink: 0 }}>
+            <ImageIcon size={18} color={OCHRE} />
+            <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>Preview map</span>
+            <button
+              type="button"
+              onClick={() => setPreviewFilter(null)}
+              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', minHeight: 40, padding: '0 6px' }}
+            >
+              <X size={18} /> Close
+            </button>
+          </div>
+          <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
+            <DesignGlossyLazy
+              state={canvasState}
+              frame={frame}
+              refLayers={refLayers}
+              site={site ? { biome: site.biome, rainfallMm: site.rainfallMm } : null}
+              placeName={siteName}
+              initialFilter={previewFilter}
+            />
+          </div>
+        </div>
+      )}
+
       {/* AI Auto-Design questionnaire sheet */}
       <AutoDesignSheet
         open={autoDesignPhase === 'questions'}
@@ -2026,6 +2083,7 @@ function DesignGlossyLazy(props: {
   refLayers: RefLayers;
   site: { biome?: string; rainfallMm?: number } | null;
   placeName?: string;
+  initialFilter?: GlossyLayerFilter;
 }) {
   const [Comp, setComp] = useState<React.ComponentType<typeof props> | null>(null);
   useEffect(() => {

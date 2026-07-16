@@ -58,6 +58,51 @@ const LINE_COLORS: Record<string, string> = {
   windbreak: '#2F7A4A',
 };
 
+// Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
+// base map + ground context always kept so the picture is legible). Only the drawn marks in
+// the chosen layer are locked; everything else is repainted as background.
+export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
+
+const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
+  { key: 'all', label: 'Whole design' },
+  { key: 'water', label: 'Water' },
+  { key: 'zones', label: 'Zones' },
+  { key: 'planting', label: 'Planting' },
+  { key: 'structures', label: 'Structures' },
+];
+
+function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
+  switch (filter) {
+    case 'all':
+      return true;
+    case 'water':
+      return category === 'water';
+    case 'planting':
+      return category === 'growing';
+    case 'structures':
+      return category === 'structure' || category === 'animal' || category === 'access';
+    case 'zones':
+      return false;
+  }
+}
+
+function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
+  switch (filter) {
+    case 'all':
+      return true;
+    case 'water':
+      return kind === 'swale' || kind === 'pipe' || kind === 'drip';
+    case 'structures':
+      return kind === 'fence' || kind === 'path' || kind === 'windbreak';
+    default:
+      return false;
+  }
+}
+
+function zonesInFilter(filter: GlossyLayerFilter): boolean {
+  return filter === 'all' || filter === 'zones';
+}
+
 export interface DesignGlossyProps {
   state: DesignCanvasState;
   frame: CanvasFrame;
@@ -68,11 +113,13 @@ export interface DesignGlossyProps {
   };
   site: { biome?: string; rainfallMm?: number } | null;
   placeName?: string;
+  // Seed the layer selector (e.g. a per-step "Preview this map" opener). Defaults to 'all'.
+  initialFilter?: GlossyLayerFilter;
 }
 
 const SCALE = 2;
 
-function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number) {
+function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all') {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
 
@@ -116,8 +163,8 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
     ctx.stroke();
   }
 
-  // Zones — translucent fill
-  for (const zone of state.zones) {
+  // Zones — translucent fill (only when this layer is in the chosen filter)
+  for (const zone of zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
     ctx.beginPath();
@@ -135,7 +182,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
 
   // Lines
   for (const line of state.lines) {
-    if (line.points.length < 2) continue;
+    if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -155,7 +202,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def) continue;
+    if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = item.wM ?? def.wM;
     const hM = item.hM ?? def.hM;
     const wLogical = wM * pxPerM;
@@ -171,10 +218,17 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
       ctx.fill();
       ctx.stroke();
     } else {
+      // Rect strips/beds/rows can be rotated in the studio — mirror that here about the
+      // footprint centre so the glossy matches exactly. Icon is drawn upright afterwards.
+      const rot = def.shape === 'rect' ? item.rot ?? 0 : 0;
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (rot) ctx.rotate((rot * Math.PI) / 180);
       ctx.beginPath();
-      ctx.rect(cx - wLogical / 2, cy - hLogical / 2, wLogical, hLogical);
+      ctx.rect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
       ctx.fill();
       ctx.stroke();
+      ctx.restore();
     }
     ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
     ctx.textAlign = 'center';
@@ -184,7 +238,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   }
 }
 
-async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers']): Promise<string> {
+async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -201,12 +255,12 @@ async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refL
     ctx.fillRect(0, 0, imgW, imgH);
   }
 
-  drawMarks(ctx, state, frame, refLayers, imgW, imgH);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter);
 
   return canvas.toDataURL('image/jpeg', 0.9);
 }
 
-async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers']): Promise<string> {
+async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -258,7 +312,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   }
 
   // Zone ring stroke bands (edges locked; interior remains editable background).
-  for (const zone of state.zones) {
+  for (const zone of zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
     zone.points.forEach(([x, y], i) => {
@@ -272,7 +326,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
 
   // Line strokes.
   for (const line of state.lines) {
-    if (line.points.length < 2) continue;
+    if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -288,20 +342,28 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def) continue;
+    if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = (item.wM ?? def.wM) * 1.25;
     const hM = (item.hM ?? def.hM) * 1.25;
     const wLogical = wM * maskPxPerM;
     const hLogical = hM * maskPxPerM;
     const cx = px(item.x);
     const cy = py(item.y);
-    ctx.beginPath();
     if (def.shape === 'circle') {
+      ctx.beginPath();
       ctx.arc(cx, cy, wLogical / 2, 0, Math.PI * 2);
+      ctx.fill();
     } else {
-      ctx.rect(cx - wLogical / 2, cy - hLogical / 2, wLogical, hLogical);
+      // Match the rotated footprint so the protect-mask covers exactly what's drawn.
+      const rot = item.rot ?? 0;
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (rot) ctx.rotate((rot * Math.PI) / 180);
+      ctx.beginPath();
+      ctx.rect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
+      ctx.fill();
+      ctx.restore();
     }
-    ctx.fill();
   }
 
   return canvas.toDataURL('image/png');
@@ -337,11 +399,14 @@ interface SavedGlossy {
   at: string;
 }
 
-const glossyKey = (siteId: string) => `imbewu_design_glossy_${siteId}`;
+// 'all' keeps the original site-scoped key (so existing saved renders survive); each other
+// layer gets its own suffixed key so per-layer renders don't overwrite each other.
+const glossyKey = (siteId: string, filter: GlossyLayerFilter = 'all') =>
+  filter === 'all' ? `imbewu_design_glossy_${siteId}` : `imbewu_design_glossy_${siteId}_${filter}`;
 
-function loadSavedGlossy(siteId: string): SavedGlossy | null {
+function loadSavedGlossy(siteId: string, filter: GlossyLayerFilter = 'all'): SavedGlossy | null {
   try {
-    const raw = localStorage.getItem(glossyKey(siteId));
+    const raw = localStorage.getItem(glossyKey(siteId, filter));
     if (!raw) return null;
     return JSON.parse(raw) as SavedGlossy;
   } catch {
@@ -349,9 +414,9 @@ function loadSavedGlossy(siteId: string): SavedGlossy | null {
   }
 }
 
-function saveGlossy(siteId: string, saved: SavedGlossy) {
+function saveGlossy(siteId: string, filter: GlossyLayerFilter, saved: SavedGlossy) {
   try {
-    localStorage.setItem(glossyKey(siteId), JSON.stringify(saved));
+    localStorage.setItem(glossyKey(siteId, filter), JSON.stringify(saved));
   } catch {
     // QuotaExceededError or similar — skip persisting, non-fatal.
   }
@@ -376,33 +441,34 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt', string> = {
   falgpt: 'Strict map',
 };
 
-export default function DesignGlossy({ state, frame, refLayers, site, placeName }: DesignGlossyProps) {
+export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
+  const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Load any cached render for this site on mount.
+  // Load the cached render for this site + chosen layer. Runs on mount and whenever the
+  // farmer switches layer, so each map keeps its own last render.
   useEffect(() => {
-    const cached = loadSavedGlossy(state.siteId);
-    if (cached) {
-      setSaved(cached);
-      setResultImage(cached.image);
-    }
-    // Only re-check when the site changes, not on every state edit.
+    const cached = loadSavedGlossy(state.siteId, filter);
+    setSaved(cached);
+    setResultImage(cached ? cached.image : null);
+    setError(null);
+    // Only re-check when the site or layer changes, not on every state edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.siteId]);
+  }, [state.siteId, filter]);
 
   const generate = useCallback(
     async (provider: 'gemini' | 'falgpt') => {
       setLoading(provider);
       setError(null);
       try {
-        const composite = await buildComposite(state, frame, refLayers);
+        const composite = await buildComposite(state, frame, refLayers, filter);
         let image: string;
         if (provider === 'falgpt') {
-          const mask = await buildProtectMask(state, frame, refLayers);
+          const mask = await buildProtectMask(state, frame, refLayers, filter);
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
             maskBase64: stripDataUrl(mask),
@@ -414,17 +480,24 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             touchupPrompt: STRICT_PROMPT,
           });
         } else {
-          const placedElements = state.items.map((item) => {
-            const def = ELEMENTS_BY_ID[item.defId];
-            return {
-              type: item.defId,
-              label: item.label ?? def?.name ?? item.defId,
-              note: item.note,
-              locationHint: `${compass8(item.x, item.y)} part of the property`,
-            };
-          });
-          const zones = state.zones.filter((z) => !z.feature).map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }));
-          const polygons = state.lines.map((l) => ({ name: l.kind, type: 'line' }));
+          const placedElements = state.items
+            .filter((item) => {
+              const def = ELEMENTS_BY_ID[item.defId];
+              return def && itemInFilter(def.category, filter);
+            })
+            .map((item) => {
+              const def = ELEMENTS_BY_ID[item.defId];
+              return {
+                type: item.defId,
+                label: item.label ?? def?.name ?? item.defId,
+                note: item.note,
+                locationHint: `${compass8(item.x, item.y)} part of the property`,
+              };
+            });
+          const zones = zonesInFilter(filter)
+            ? state.zones.filter((z) => !z.feature).map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }))
+            : [];
+          const polygons = state.lines.filter((l) => lineInFilter(l.kind, filter)).map((l) => ({ name: l.kind, type: 'line' }));
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
             satBase64: frame.satDataUrl ? stripDataUrl(frame.satDataUrl) : undefined,
@@ -432,7 +505,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
             geminiModel: 'pro-preview',
             context: {
               placeName,
-              layer: 'overall',
+              layer: filter === 'all' ? 'overall' : filter,
               biome: site?.biome,
               rainfallMm: site?.rainfallMm,
               placedElements,
@@ -444,7 +517,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
         const finalImage = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
         setResultImage(finalImage);
         const record: SavedGlossy = { image: finalImage, provider, at: new Date().toISOString() };
-        saveGlossy(state.siteId, record);
+        saveGlossy(state.siteId, filter, record);
         setSaved(record);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
@@ -452,7 +525,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
         setLoading(null);
       }
     },
-    [state, frame, refLayers, site, placeName],
+    [state, frame, refLayers, site, placeName, filter],
   );
 
   const handleDownload = useCallback(() => {
@@ -489,11 +562,46 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
     >
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
+      {/* Which map? — render the whole design, or a single-theme glossy (water/zones/…). */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+          Which map?
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {GLOSSY_FILTERS.map((f) => {
+            const active = filter === f.key;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                onClick={() => setFilter(f.key)}
+                disabled={loading !== null}
+                aria-pressed={active}
+                style={{
+                  minHeight: 38,
+                  padding: '6px 14px',
+                  borderRadius: 19,
+                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                  background: active ? GREEN : 'transparent',
+                  color: active ? PAPER : DARK,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: loading !== null ? 'default' : 'pointer',
+                  opacity: loading !== null && !active ? 0.5 : 1,
+                }}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          Generate an artist&apos;s impression of your design. It pixel-locks every item, zone
-          and line you placed — only the background is repainted — so the picture stays true
-          to your plan. Takes about a minute.
+          {filter === 'all'
+            ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
+            : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
         </p>
       )}
 
@@ -509,6 +617,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
+              {filter !== 'all' ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map` : ''}
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={resultImage} alt="AI artist's impression of the design" style={{ width: '100%', display: 'block' }} />
@@ -572,8 +681,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName 
           {loading === 'falgpt'
             ? 'Generating your map… 30–90s'
             : resultImage
-              ? 'Regenerate my map (~1 min)'
-              : 'Generate my map (~1 min)'}
+              ? `Regenerate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`
+              : `Generate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`}
         </button>
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
       </div>
