@@ -612,7 +612,7 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
   }
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
-  if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a dark TAR / ASPHALT road, kept clear with no plantings on it');
+  if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a simple dark TAR / ASPHALT access track of the exact traced shape (NOT a loop, roundabout or circular drive), kept clear with no plantings on it');
   return parts.join(', ');
 }
 

@@ -105,7 +105,8 @@ function buildProducerPrompt(
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
     featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-    `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ${orient}`;
+    `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ` +
+    `the driveway is a simple access track of the exact traced shape — do NOT turn it into a loop, roundabout, circular drive or turning circle, and do not add extra branches to it; ${orient}`;
   return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
