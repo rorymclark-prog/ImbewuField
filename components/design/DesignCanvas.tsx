@@ -408,6 +408,11 @@ export default function DesignCanvas({
   const dragShape = useRef<{ id: string; kind: 'zone' | 'line'; originPoints: Array<[number, number]>; startWorldX: number; startWorldY: number } | null>(null);
   const [shapeDragDelta, setShapeDragDelta] = useState<[number, number] | null>(null);
 
+  // Drag state for a zone/feature NAME LABEL — moves just the label (a normalised offset from the
+  // ring centroid), not the shape, so a farmer can pull a label off a feature it overlaps.
+  const dragLabel = useRef<{ id: string; startWorldX: number; startWorldY: number; originDx: number; originDy: number } | null>(null);
+  const [labelDragDelta, setLabelDragDelta] = useState<[number, number] | null>(null);
+
   // Drag state for a vertex of the IN-PROGRESS (not yet committed) draft shape. Unlike
   // dragVertex below, draftPoints is local-only uncommitted state, so this mutates it
   // directly on every pointermove — no preview-then-commit-on-release dance needed since
@@ -728,6 +733,8 @@ export default function DesignCanvas({
     setResizePreview(null);
     dragShape.current = null;
     setShapeDragDelta(null);
+    dragLabel.current = null;
+    setLabelDragDelta(null);
     dragDraftVertex.current = null;
   }
 
@@ -847,6 +854,40 @@ export default function DesignCanvas({
     }
     dragShape.current = null;
     setShapeDragDelta(null);
+  }
+
+  // Drag a zone/feature's NAME LABEL independently of its shape. Press the label and drag: the
+  // label moves by a normalised offset (stored on the shape as labelDx/labelDy), the polygon
+  // stays put. A tap (no move) still selects the shape. Mirrors the shape-drag preview→commit.
+  function startDragLabel(e: React.PointerEvent, id: string) {
+    if (tool !== 'select') return;
+    e.stopPropagation();
+    onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
+    const shape = state.zones.find((z) => z.id === id);
+    if (!shape) return;
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragLabel.current = { id, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0 };
+  }
+
+  function moveDragLabel(e: React.PointerEvent) {
+    const dl = dragLabel.current;
+    if (!dl) return;
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    setLabelDragDelta([(w[0] - dl.startWorldX) / imgW, (w[1] - dl.startWorldY) / imgH]);
+  }
+
+  function endDragLabel() {
+    const dl = dragLabel.current;
+    if (dl && labelDragDelta) {
+      const ndx = dl.originDx + labelDragDelta[0];
+      const ndy = dl.originDy + labelDragDelta[1];
+      onChange({ ...state, zones: state.zones.map((z) => (z.id === dl.id ? { ...z, labelDx: ndx, labelDy: ndy } : z)) });
+    }
+    dragLabel.current = null;
+    setLabelDragDelta(null);
   }
 
   // Vertex drag for the IN-PROGRESS draft shape (mid-draw) — the owner's explicit ask:
@@ -1083,6 +1124,7 @@ export default function DesignCanvas({
           moveDragResize(e);
           moveDragRotate(e);
           moveDragShape(e);
+          moveDragLabel(e);
           moveDragDraftVertex(e);
         }}
         onPointerUp={(e) => {
@@ -1092,6 +1134,7 @@ export default function DesignCanvas({
           endDragResize();
           endDragRotate();
           endDragShape();
+          endDragLabel();
           endDragDraftVertex();
         }}
         onPointerCancel={handleBackgroundPointerCancel}
@@ -1317,6 +1360,15 @@ export default function DesignCanvas({
               : z.points;
             const centroid = ringCentroid(effectivePoints);
             const onZonePointerDown = (e: React.PointerEvent) => startDragShape(e, z.id, 'zone');
+            // The name label can be dragged off the shape (labelDx/labelDy); show a live preview
+            // while dragging, and a thin leader back to the centroid once it's been moved.
+            const isDraggingThisLabel = dragLabel.current?.id === z.id && labelDragDelta;
+            const ldx = (z.labelDx ?? 0) + (isDraggingThisLabel ? labelDragDelta![0] : 0);
+            const ldy = (z.labelDy ?? 0) + (isDraggingThisLabel ? labelDragDelta![1] : 0);
+            const labelCx = centroid[0] + ldx;
+            const labelCy = centroid[1] + ldy;
+            const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003;
+            const labelVisible = feat ? activeLayers.labels : true;
             return (
               <g key={z.id}>
                 {/* Invisible fat hit-stroke along the edge — thin/narrow beds have little
@@ -1343,10 +1395,23 @@ export default function DesignCanvas({
                 {isHighlighted && (
                   <polygon points={ringToPx(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" pointerEvents="none" />
                 )}
+                {labelMoved && labelVisible && (
+                  <line
+                    x1={(centroid[0] * imgW).toFixed(1)}
+                    y1={(centroid[1] * imgH).toFixed(1)}
+                    x2={(labelCx * imgW).toFixed(1)}
+                    y2={(labelCy * imgH).toFixed(1)}
+                    stroke={color}
+                    strokeWidth={1}
+                    strokeDasharray="2 2"
+                    opacity={0.75}
+                    pointerEvents="none"
+                  />
+                )}
                 <g
-                  transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}
-                  onPointerDown={onZonePointerDown}
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
+                  transform={`translate(${(labelCx * imgW).toFixed(1)},${(labelCy * imgH).toFixed(1)})`}
+                  onPointerDown={(e) => startDragLabel(e, z.id)}
+                  style={{ cursor: tool === 'select' ? 'move' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                 >
                   {feat ? (
                     activeLayers.labels ? (
@@ -1369,7 +1434,7 @@ export default function DesignCanvas({
                           textOverflow: 'ellipsis',
                         }}
                       >
-                        {feat.icon} {feat.label}
+                        {feat.label}
                       </div>
                     </foreignObject>
                     ) : null

@@ -48,6 +48,10 @@ export interface ZoneShape {
   // permaculture effort-zone ring; `zone` then rides along as an inert value. Optional so
   // it is JSON-safe and survives migrateStateToFrame's spread untouched.
   feature?: GroundFeatureKind;
+  // Optional normalised offset of the name label from the ring centroid — lets the farmer drag a
+  // label off a feature it overlaps (e.g. a lawn wrapping the house). Undefined = at centroid.
+  labelDx?: number;
+  labelDy?: number;
 }
 
 export interface LineShape {
