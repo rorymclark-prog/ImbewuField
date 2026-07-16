@@ -149,6 +149,25 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
   { key: 'structures', label: 'Structures' },
 ];
 
+// Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
+// / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
+// gpt-image-2 mask-edit can't draw, so they always render via the Gemini generative path with
+// the matching `layer` theme (see app/api/ai-render/route.ts layerTheme). `layer` values are
+// valid RenderLayer strings on the API side.
+type AnalysisStyle = 'sector' | 'base' | 'opportunity' | 'implementation';
+const GLOSSY_STYLES: Array<{ key: AnalysisStyle; label: string }> = [
+  { key: 'sector', label: 'Sun & Wind' },
+  { key: 'base', label: "What's here now" },
+  { key: 'opportunity', label: 'Opportunities' },
+  { key: 'implementation', label: 'Implementation' },
+];
+const STYLE_TITLE: Record<AnalysisStyle, string> = {
+  sector: 'sun & wind (sector analysis)',
+  base: 'existing site map',
+  opportunity: 'opportunities map',
+  implementation: 'implementation plan',
+};
+
 function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
   switch (filter) {
     case 'all':
@@ -518,12 +537,12 @@ interface SavedGlossy {
 
 // 'all' keeps the original site-scoped key (so existing saved renders survive); each other
 // layer gets its own suffixed key so per-layer renders don't overwrite each other.
-const glossyKey = (siteId: string, filter: GlossyLayerFilter = 'all') =>
-  filter === 'all' ? `imbewu_design_glossy_${siteId}` : `imbewu_design_glossy_${siteId}_${filter}`;
+const glossyKey = (siteId: string, mapKey: string = 'all') =>
+  mapKey === 'all' ? `imbewu_design_glossy_${siteId}` : `imbewu_design_glossy_${siteId}_${mapKey}`;
 
-function loadSavedGlossy(siteId: string, filter: GlossyLayerFilter = 'all'): SavedGlossy | null {
+function loadSavedGlossy(siteId: string, mapKey: string = 'all'): SavedGlossy | null {
   try {
-    const raw = localStorage.getItem(glossyKey(siteId, filter));
+    const raw = localStorage.getItem(glossyKey(siteId, mapKey));
     if (!raw) return null;
     return JSON.parse(raw) as SavedGlossy;
   } catch {
@@ -531,9 +550,9 @@ function loadSavedGlossy(siteId: string, filter: GlossyLayerFilter = 'all'): Sav
   }
 }
 
-function saveGlossy(siteId: string, filter: GlossyLayerFilter, saved: SavedGlossy) {
+function saveGlossy(siteId: string, mapKey: string, saved: SavedGlossy) {
   try {
-    localStorage.setItem(glossyKey(siteId, filter), JSON.stringify(saved));
+    localStorage.setItem(glossyKey(siteId, mapKey), JSON.stringify(saved));
   } catch {
     // QuotaExceededError or similar — skip persisting, non-fatal.
   }
@@ -564,30 +583,41 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
+  // When set, an analysis map style is chosen instead of a design-layer filter — it always
+  // renders via Gemini's generative path (see GLOSSY_STYLES). null = a design-layer map.
+  const [analysisStyle, setAnalysisStyle] = useState<AnalysisStyle | null>(null);
   // Render engine — both experimental. gpt-image-2 (default, best overall) + Gemini Pro
   // (kept for comparison; may be retired after more experimenting).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Load the cached render for this site + chosen layer. Runs on mount and whenever the
-  // farmer switches layer, so each map keeps its own last render.
+  // A stable cache key per chosen map (design filter OR analysis style).
+  const mapKey = analysisStyle ?? filter;
+
+  // Load the cached render for this site + chosen map. Runs on mount and whenever the map
+  // changes, so each map keeps its own last render.
   useEffect(() => {
-    const cached = loadSavedGlossy(state.siteId, filter);
+    const cached = loadSavedGlossy(state.siteId, mapKey);
     setSaved(cached);
     setResultImage(cached ? cached.image : null);
     setError(null);
-    // Only re-check when the site or layer changes, not on every state edit.
+    // Only re-check when the site or chosen map changes, not on every state edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.siteId, filter]);
+  }, [state.siteId, mapKey]);
 
   const generate = useCallback(
     async (provider: 'gemini' | 'falgpt') => {
-      setLoading(provider);
+      // Analysis styles are illustrated/analytical maps only Gemini can draw — force Gemini and
+      // composite ALL geometry as context (they show the whole site, not one design layer).
+      const isAnalysis = analysisStyle !== null;
+      const useProvider = isAnalysis ? 'gemini' : provider;
+      const compositeFilter: GlossyLayerFilter = isAnalysis ? 'all' : filter;
+      setLoading(useProvider);
       setError(null);
       try {
-        const composite = await buildComposite(state, frame, refLayers, filter);
+        const composite = await buildComposite(state, frame, refLayers, compositeFilter);
         let image: string;
-        if (provider === 'falgpt') {
+        if (useProvider === 'falgpt') {
           const mask = await buildProtectMask(state, frame, refLayers, filter);
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
@@ -604,7 +634,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           const placedElements = state.items
             .filter((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
-              return def && itemInFilter(def.category, filter);
+              return def && itemInFilter(def.category, compositeFilter);
             })
             .map((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
@@ -615,10 +645,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                 locationHint: `${compass8(item.x, item.y)} part of the property`,
               };
             });
-          const zones = zonesInFilter(filter)
+          const zones = zonesInFilter(compositeFilter)
             ? state.zones.filter((z) => !z.feature).map((z) => ({ n: z.zone, title: ZONE_DEFS[z.zone].label }))
             : [];
-          const polygons = state.lines.filter((l) => lineInFilter(l.kind, filter)).map((l) => ({ name: l.kind, type: 'line' }));
+          const polygons = state.lines.filter((l) => lineInFilter(l.kind, compositeFilter)).map((l) => ({ name: l.kind, type: 'line' }));
+          // Analysis style → its own RenderLayer theme; design filter → the layer it maps to.
+          const layer = analysisStyle ?? (filter === 'all' ? 'overall' : filter);
           image = await requestRender({
             imageBase64: stripDataUrl(composite),
             satBase64: frame.satDataUrl ? stripDataUrl(frame.satDataUrl) : undefined,
@@ -626,9 +658,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             geminiModel: 'pro-preview',
             context: {
               placeName,
-              layer: filter === 'all' ? 'overall' : filter,
-              mapType: FILTER_THEME[filter].title,
-              mapFocus: FILTER_THEME[filter].focus,
+              layer,
+              mapType: analysisStyle ? STYLE_TITLE[analysisStyle] : FILTER_THEME[filter].title,
+              mapFocus: analysisStyle ? undefined : FILTER_THEME[filter].focus,
               biome: site?.biome,
               rainfallMm: site?.rainfallMm,
               placedElements,
@@ -639,8 +671,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         }
         const finalImage = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
         setResultImage(finalImage);
-        const record: SavedGlossy = { image: finalImage, provider, at: new Date().toISOString() };
-        saveGlossy(state.siteId, filter, record);
+        const record: SavedGlossy = { image: finalImage, provider: useProvider, at: new Date().toISOString() };
+        saveGlossy(state.siteId, mapKey, record);
         setSaved(record);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
@@ -648,7 +680,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         setLoading(null);
       }
     },
-    [state, frame, refLayers, site, placeName, filter],
+    [state, frame, refLayers, site, placeName, filter, analysisStyle, mapKey],
   );
 
   const handleDownload = useCallback(() => {
@@ -721,19 +753,19 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         </div>
       </div>
 
-      {/* Which map? — render the whole design, or a single-theme glossy (water/zones/…). */}
+      {/* Which map? — a design-overlay layer (locks your geometry) OR a richer analysis style. */}
       <div>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          Which map?
+          Design maps
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {GLOSSY_FILTERS.map((f) => {
-            const active = filter === f.key;
+            const active = analysisStyle === null && filter === f.key;
             return (
               <button
                 key={f.key}
                 type="button"
-                onClick={() => setFilter(f.key)}
+                onClick={() => { setFilter(f.key); setAnalysisStyle(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -754,13 +786,47 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             );
           })}
         </div>
+
+        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
+          Analysis maps · Gemini
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {GLOSSY_STYLES.map((s) => {
+            const active = analysisStyle === s.key;
+            return (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => setAnalysisStyle(s.key)}
+                disabled={loading !== null}
+                aria-pressed={active}
+                style={{
+                  minHeight: 38,
+                  padding: '6px 14px',
+                  borderRadius: 19,
+                  border: active ? `2px solid ${OCHRE}` : '1px solid rgba(0,0,0,0.18)',
+                  background: active ? OCHRE : 'transparent',
+                  color: active ? PAPER : DARK,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: loading !== null ? 'default' : 'pointer',
+                  opacity: loading !== null && !active ? 0.5 : 1,
+                }}
+              >
+                {s.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          {filter === 'all'
-            ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
-            : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
+          {analysisStyle
+            ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
+            : filter === 'all'
+              ? 'Generate an artist’s impression of your whole design. It pixel-locks every item, zone and line you placed — only the background is repainted — so the picture stays true to your plan. Takes about a minute.'
+              : `Generate a glossy map of just your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} layer. The base map stays as context; only that layer is locked and drawn. Takes about a minute.`}
         </p>
       )}
 
@@ -776,7 +842,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
-              {filter !== 'all' ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map` : ''}
+              {analysisStyle
+                ? ` · ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
+                : filter !== 'all'
+                  ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
+                  : ''}
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={resultImage} alt="AI artist's impression of the design" style={{ width: '100%', display: 'block' }} />
@@ -813,8 +883,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Engine picker — both are experimental. gpt-image-2 is the default (best overall so
-            far); Gemini Pro is here to compare and may be retired after more testing. */}
+        {/* Engine picker — only for design maps. Analysis maps are drawn by Gemini (the strict
+            gpt-image-2 mask-edit can't produce sun/wind arrows or opportunity annotations). */}
+        {analysisStyle ? (
+          <div style={{ fontSize: 11.5, opacity: 0.7 }}>
+            Analysis maps are drawn by <strong>Gemini Pro</strong>.
+          </div>
+        ) : (
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
             Engine · both experimental
@@ -850,6 +925,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             })}
           </div>
         </div>
+        )}
 
         <button
           onClick={() => generate(engine)}
@@ -875,13 +951,17 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
           {loading !== null
             ? 'Generating your map… 30–90s'
-            : resultImage
-              ? `Regenerate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`
-              : `Generate ${filter === 'all' ? 'my map' : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} (~1 min)`}
+            : `${resultImage ? 'Regenerate' : 'Generate'} ${
+                analysisStyle
+                  ? `my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
+                  : filter === 'all'
+                    ? 'my map'
+                    : `my ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
+              } (~1 min)`}
         </button>
         <div style={{ fontSize: 11, opacity: 0.6 }}>
-          Using <strong>{ENGINES.find((e) => e.key === engine)?.label}</strong>. If the result looks
-          off, try generating again or switch engine — results vary shot to shot.
+          Using <strong>{analysisStyle ? 'Gemini Pro' : ENGINES.find((e) => e.key === engine)?.label}</strong>. If the result
+          looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
         </div>
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
       </div>
