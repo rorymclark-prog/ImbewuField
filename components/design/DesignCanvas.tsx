@@ -382,8 +382,10 @@ export default function DesignCanvas({
   const [vertexPos, setVertexPos] = useState<[number, number] | null>(null);
 
   // Resize-handle drag state for a selected item. Local preview (wM/hM) committed once
-  // on release via onChange, same single-undo pattern as move/vertex drags.
+  // on release via onChange, same single-undo pattern as move/vertex drags. `mode` picks which
+  // handle: 'both' = corner (uniform), 'w' = breadth only, 'h' = length only.
   const dragResizeId = useRef<string | null>(null);
+  const dragResizeMode = useRef<'both' | 'w' | 'h'>('both');
   const [resizePreview, setResizePreview] = useState<{ wM: number; hM: number } | null>(null);
 
   // Rotate-handle drag state for a selected rect item (strips/beds/rows). Same local-preview-
@@ -863,11 +865,12 @@ export default function DesignCanvas({
     dragDraftVertex.current = null;
   }
 
-  function startDragResize(e: React.PointerEvent, id: string) {
+  function startDragResize(e: React.PointerEvent, id: string, mode: 'both' | 'w' | 'h' = 'both') {
     if (tool !== 'select') return;
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragResizeId.current = id;
+    dragResizeMode.current = mode;
   }
 
   function moveDragResize(e: React.PointerEvent) {
@@ -886,11 +889,29 @@ export default function DesignCanvas({
     if (!vb) return;
     const { k, tx, ty } = viewRef.current;
     const pointerWorld: [number, number] = [(vb[0] - tx) / k, (vb[1] - ty) / k];
-    const distWorldPx = Math.hypot(pointerWorld[0] - centreWorld[0], pointerWorld[1] - centreWorld[1]);
-    const distM = distWorldPx * mPerPx;
-    const newWM = clamp(2 * distM, 0.3, 40);
-    const newHM = hM * (newWM / wM);
-    setResizePreview({ wM: newWM, hM: def.shape === 'circle' ? newWM : newHM });
+    const dx = pointerWorld[0] - centreWorld[0];
+    const dy = pointerWorld[1] - centreWorld[1];
+    const mode = dragResizeMode.current;
+    if (def.shape === 'circle' || mode === 'both') {
+      // Uniform (corner / circle) — radial distance drives an aspect-locked scale.
+      const distM = Math.hypot(dx, dy) * mPerPx;
+      const newWM = clamp(2 * distM, 0.3, 40);
+      const newHM = hM * (newWM / wM);
+      setResizePreview({ wM: newWM, hM: def.shape === 'circle' ? newWM : newHM });
+      return;
+    }
+    // Per-axis (edge handle): project the pointer onto the item's LOCAL axes so breadth/length
+    // stay correct even when the item is rotated. rot is clockwise degrees (0 for circles).
+    const rot = ((item.rot ?? 0) * Math.PI) / 180;
+    const cos = Math.cos(rot);
+    const sin = Math.sin(rot);
+    const localX = dx * cos + dy * sin; // along the item's width axis
+    const localY = -dx * sin + dy * cos; // along the item's length axis
+    if (mode === 'w') {
+      setResizePreview({ wM: clamp(2 * Math.abs(localX) * mPerPx, 0.3, 40), hM });
+    } else {
+      setResizePreview({ wM, hM: clamp(2 * Math.abs(localY) * mPerPx, 0.3, 40) });
+    }
   }
 
   function endDragResize() {
@@ -1741,6 +1762,19 @@ export default function DesignCanvas({
                     strokeLinecap="round"
                     pointerEvents="none"
                   />
+                  {/* Edge handles for rectangles — breadth (side) and length (bottom) resize
+                      ONE dimension each, so a bed's width and length are independent. Circles
+                      only get the uniform corner handle above. */}
+                  {def.shape === 'rect' && (
+                    <>
+                      {/* Breadth — mid-right edge */}
+                      <rect x={wPx / 2 - 14} y={-14} width={28} height={28} fill="transparent" style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
+                      <rect x={wPx / 2 - 4} y={-9} width={8} height={18} rx={4} fill={GOLD} stroke="#0B120B" strokeWidth={1.5} style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
+                      {/* Length — mid-bottom edge */}
+                      <rect x={-14} y={hPx / 2 - 14} width={28} height={28} fill="transparent" style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
+                      <rect x={-9} y={hPx / 2 - 4} width={18} height={8} rx={4} fill={GOLD} stroke="#0B120B" strokeWidth={1.5} style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
+                    </>
+                  )}
                   {canRotate && (
                     <g>
                       <line x1={0} y1={-hPx / 2 - 4} x2={0} y2={-hPx / 2 - 22} stroke={GOLD} strokeWidth={1.5} />
@@ -1762,9 +1796,13 @@ export default function DesignCanvas({
               {/* Upright drag readout — resize shows metres, rotate shows degrees */}
               {isSelected && (isResizingThis || isRotatingThis) && (
                 <g transform={`translate(0, ${(-hPx / 2 - 34).toFixed(1)})`} pointerEvents="none">
-                  <rect x={-24} y={-9} width={48} height={18} rx={9} fill="rgba(11,18,11,0.9)" stroke={GOLD} strokeWidth={1} />
+                  <rect x={-34} y={-9} width={68} height={18} rx={9} fill="rgba(11,18,11,0.9)" stroke={GOLD} strokeWidth={1} />
                   <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
-                    {isRotatingThis ? `${Math.round(rot)}°` : `${wM.toFixed(1)} m`}
+                    {isRotatingThis
+                      ? `${Math.round(rot)}°`
+                      : def.shape === 'circle'
+                        ? `⌀ ${wM.toFixed(1)} m`
+                        : `${wM.toFixed(1)} × ${hM.toFixed(1)} m`}
                   </text>
                 </g>
               )}
