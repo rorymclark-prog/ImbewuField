@@ -579,7 +579,7 @@ async function requestProducer(
 }
 
 // Short comma list of placed element names + counts, e.g. "🥬 Vegetable Bed ×6, 🛢 JoJo Tank".
-function producerElementsText(state: DesignCanvasState): string {
+function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers']): string {
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -589,14 +589,27 @@ function producerElementsText(state: DesignCanvasState): string {
     g.n += 1;
     counts.set(name, g);
   }
-  return [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`).join(', ');
+  const parts = [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`);
+  // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
+  // not a placed item — Rory: "it's not picking up driveway").
+  if (refLayers.driveway.length >= 2) parts.push('the existing driveway / vehicle track (keep it clear, no plantings on it)');
+  return parts.join(', ');
 }
 
 // True labels burned onto the produced map: one pill per element-name group at the group's
 // centroid (OUTPUT px). SIMPLIFIED vs FacilitatorCanvas — no left/right column split, just a
 // short leader from the cluster to a pill placed above-left of it, clamped inside the WxH
 // frame so nothing is cropped. (Refine later toward the facilitator's column layout.)
-function producerLabels(state: DesignCanvasState, W: number, H: number): ProducerLabel[] {
+function producerLabels(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): ProducerLabel[] {
+  const fs = 26, padX = 14;
+  const pillWidth = (text: string) => Math.min(W - 28, padX * 2 + text.length * fs * 0.6);
+
+  // One cluster per element name (renamed items get their own pill).
   const groups = new Map<string, { xs: number[]; ys: number[]; icon: string }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -607,21 +620,39 @@ function producerLabels(state: DesignCanvasState, W: number, H: number): Produce
     g.ys.push(it.y);
     groups.set(name, g);
   }
-  const fs = 26, padX = 14;
-  const out: ProducerLabel[] = [];
+
+  type Cluster = { cx: number; cy: number; text: string; pw: number };
+  const clusters: Cluster[] = [];
   for (const [name, g] of groups) {
     const n = g.xs.length;
     const cx = (g.xs.reduce((a, b) => a + b, 0) / n) * W;
     const cy = (g.ys.reduce((a, b) => a + b, 0) / n) * H;
     const text = `${g.icon} ${name}${n > 1 ? ` ×${n}` : ''}`;
-    // Rough pill width (burnLabels measures exactly at 600 26px; this only needs to keep the
-    // pill in-frame, so an estimate is fine): 2·padX + ~0.6·fs per char.
-    const pillW = Math.min(W - 28, padX * 2 + text.length * fs * 0.6);
-    const ax = Math.max(14, Math.min(W - pillW - 14, cx - pillW - 20));
-    const ay = Math.max(40, Math.min(H - 40, cy - 30));
-    const lx = ax + pillW; // leader meets the pill's inner (right) edge
-    out.push({ cx, cy, ax, ay, lx, text });
+    clusters.push({ cx, cy, text, pw: pillWidth(text) });
   }
+  // Driveway isn't a placed item — label it at the midpoint of the traced access line.
+  if (refLayers.driveway.length >= 2) {
+    const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
+    const text = '🚗 Driveway';
+    clusters.push({ cx: mid[0] * W, cy: mid[1] * H, text, pw: pillWidth(text) });
+  }
+
+  // Split into a LEFT and a RIGHT column (by which half of the map the cluster sits in), then
+  // stack each column vertically with a fixed gap so pills never overlap. Leaders point from
+  // the real feature to the pill's inner edge — the old FacilitatorCanvas layout.
+  const gap = fs + 22;
+  const out: ProducerLabel[] = [];
+  (['left', 'right'] as const).forEach((side) => {
+    const col = clusters.filter((c) => (c.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+    let y = 40;
+    for (const c of col) {
+      const ax = side === 'left' ? Math.max(14, c.cx - c.pw - 60) : Math.min(W - c.pw - 14, c.cx + 60);
+      const lx = side === 'left' ? ax + c.pw : ax; // leader meets the pill's inner edge
+      const ay = Math.max(y, Math.max(40, Math.min(H - 40, c.cy)));
+      y = ay + gap;
+      out.push({ cx: c.cx, cy: c.cy, ax, ay, lx, text: c.text });
+    }
+  });
   return out;
 }
 
@@ -840,7 +871,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // a. Model input — the composite for the chosen layer.
       const composite = await buildComposite(state, frame, refLayers, filter);
       // b. Short comma list of placed elements + counts.
-      const elementsText = producerElementsText(state);
+      const elementsText = producerElementsText(state, refLayers);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
@@ -849,7 +880,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined;
       // e. True labels (one pill per element-name group at its centroid).
-      const labels = producerLabels(state, W, H);
+      const labels = producerLabels(state, refLayers, W, H);
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage,
