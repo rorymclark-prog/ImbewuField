@@ -242,8 +242,10 @@ export default function DesignPalette({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, fontFamily: 'inherit' }}>
-      {/* Tool row: Select · Undo · Delete only — arming happens via chips below */}
-      <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+      {/* Tool row: Select · Undo · Delete (scrolls) + Layers pinned right (always visible, so
+          it can never fall off the bottom of the page). */}
+      <div style={{ display: 'flex', gap: guided ? 10 : 6, alignItems: 'center', paddingBottom: 2 }}>
+        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', flex: 1, minWidth: 0 }}>
         <button
           type="button"
           style={toolButtonStyle(tool === 'select', guided)}
@@ -276,6 +278,86 @@ export default function DesignPalette({
         >
           🗑️ Delete
         </button>
+        </div>
+        {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
+            the map (its wrapper isn't an overflow container, so it's never clipped). */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          <button
+            type="button"
+            onClick={() => setLayersOpen((v) => !v)}
+            aria-expanded={layersOpen}
+            style={{
+              minHeight: guided ? 40 : 32,
+              padding: '4px 12px',
+              borderRadius: 16,
+              border: '1px solid rgba(0,0,0,0.15)',
+              background: layersOpen ? GREEN : hiddenLayerCount ? 'rgba(31,77,43,0.10)' : PAPER,
+              color: layersOpen ? PAPER : DARK,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              cursor: 'pointer',
+              fontSize: 11.5,
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <span aria-hidden>🛰️</span>
+            <span>Layers</span>
+            {hiddenLayerCount > 0 && (
+              <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} off</span>
+            )}
+          </button>
+          {layersOpen && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 'calc(100% + 6px)',
+                right: 0,
+                zIndex: 30,
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 6,
+                width: 300,
+                maxWidth: '80vw',
+                padding: 10,
+                borderRadius: 12,
+                background: PAPER,
+                border: '1px solid rgba(0,0,0,0.15)',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+              }}
+            >
+              {LAYER_TOGGLES.map((lt) => {
+                const on = activeLayers[lt.key];
+                return (
+                  <button
+                    key={lt.key}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                    style={{
+                      minHeight: 36,
+                      padding: '5px 11px',
+                      borderRadius: 16,
+                      border: on ? `1.5px solid ${GREEN}` : '1px solid rgba(0,0,0,0.15)',
+                      background: on ? 'rgba(31,77,43,0.12)' : 'transparent',
+                      color: DARK,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      cursor: 'pointer',
+                      fontSize: 11.5,
+                      opacity: on ? 1 : 0.5,
+                    }}
+                  >
+                    <span>{lt.icon}</span>
+                    <span>{lt.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Element chips: shown on placing steps (and all steps in Pro) */}
@@ -303,25 +385,25 @@ export default function DesignPalette({
                 title={suited ? undefined : `Better in a different climate — ${def.name} may struggle here`}
                 style={{
                   position: 'relative',
-                  minHeight: guided ? 64 : 44,
-                  padding: guided ? '8px 14px' : '6px 10px',
-                  borderRadius: 10,
+                  minHeight: guided ? 50 : 40,
+                  padding: guided ? '5px 10px' : '4px 8px',
+                  borderRadius: 9,
                   border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
                   background: active ? GREEN : PAPER,
                   color: active ? PAPER : DARK,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 2,
+                  gap: 0,
                   flexShrink: 0,
-                  minWidth: guided ? 84 : 68,
+                  minWidth: guided ? 66 : 54,
                   cursor: 'pointer',
                   opacity: suited ? 1 : 0.45,
                 }}
               >
-                <span style={{ fontSize: guided ? 24 : 18, lineHeight: 1 }}>{def.icon}</span>
-                <span style={{ fontSize: guided ? 12 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-                <span style={{ fontSize: guided ? 10.5 : 9, opacity: 0.75 }}>
+                <span style={{ fontSize: guided ? 19 : 15, lineHeight: 1.1 }}>{def.icon}</span>
+                <span style={{ fontSize: guided ? 11 : 9.5, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
+                <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.7 }}>
                   {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
                 </span>
               </button>
@@ -470,84 +552,6 @@ export default function DesignPalette({
           )}
         </div>
       )}
-
-      {/* Layers — collapsed to a single button + popover so the toggle row no longer eats a
-          whole strip under the map. Popup opens upward (palette is docked at the bottom). */}
-      <div style={{ position: 'relative' }}>
-        <button
-          type="button"
-          onClick={() => setLayersOpen((v) => !v)}
-          aria-expanded={layersOpen}
-          style={{
-            minHeight: 32,
-            padding: '4px 12px',
-            borderRadius: 16,
-            border: '1px solid rgba(0,0,0,0.15)',
-            background: hiddenLayerCount ? 'rgba(31,77,43,0.10)' : 'transparent',
-            color: DARK,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            cursor: 'pointer',
-            fontSize: 11.5,
-            fontWeight: 700,
-          }}
-        >
-          <span aria-hidden>🛰️</span>
-          <span>Layers</span>
-          {hiddenLayerCount > 0 && (
-            <span style={{ fontSize: 10, fontWeight: 800, color: GREEN }}>{hiddenLayerCount} hidden</span>
-          )}
-        </button>
-        {layersOpen && (
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 'calc(100% + 6px)',
-              left: 0,
-              zIndex: 20,
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 6,
-              maxWidth: 320,
-              padding: 10,
-              borderRadius: 12,
-              background: PAPER,
-              border: '1px solid rgba(0,0,0,0.15)',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-            }}
-          >
-            {LAYER_TOGGLES.map((lt) => {
-              const on = activeLayers[lt.key];
-              return (
-                <button
-                  key={lt.key}
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
-                  style={{
-                    minHeight: 34,
-                    padding: '5px 11px',
-                    borderRadius: 16,
-                    border: on ? `1.5px solid ${GREEN}` : '1px solid rgba(0,0,0,0.15)',
-                    background: on ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: DARK,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 4,
-                    cursor: 'pointer',
-                    fontSize: 11.5,
-                    opacity: on ? 1 : 0.5,
-                  }}
-                >
-                  <span>{lt.icon}</span>
-                  <span>{lt.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
