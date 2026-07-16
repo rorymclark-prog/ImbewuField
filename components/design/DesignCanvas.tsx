@@ -410,8 +410,16 @@ export default function DesignCanvas({
 
   // Drag state for a zone/feature NAME LABEL — moves just the label (a normalised offset from the
   // ring centroid), not the shape, so a farmer can pull a label off a feature it overlaps.
-  const dragLabel = useRef<{ id: string; startWorldX: number; startWorldY: number; originDx: number; originDy: number } | null>(null);
+  const dragLabel = useRef<{ id: string; startWorldX: number; startWorldY: number; originDx: number; originDy: number; startClientX: number; startClientY: number; moved: boolean } | null>(null);
   const [labelDragDelta, setLabelDragDelta] = useState<[number, number] | null>(null);
+  // Inline rename: tap a feature label (no drag) to edit its text.
+  const [editingLabelId, setEditingLabelId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState('');
+  const skipLabelCommit = useRef(false); // set on Escape so the blur that follows cancels instead of saving
+  // Drop a stuck editor if its shape disappears (deleted, or replaced by a remote sync).
+  useEffect(() => {
+    if (editingLabelId && !state.zones.some((z) => z.id === editingLabelId)) setEditingLabelId(null);
+  }, [editingLabelId, state.zones]);
 
   // Drag state for a vertex of the IN-PROGRESS (not yet committed) draft shape. Unlike
   // dragVertex below, draftPoints is local-only uncommitted state, so this mutates it
@@ -868,7 +876,7 @@ export default function DesignCanvas({
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
     (e.target as Element).setPointerCapture?.(e.pointerId);
-    dragLabel.current = { id, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0 };
+    dragLabel.current = { id, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0, startClientX: e.clientX, startClientY: e.clientY, moved: false };
   }
 
   function moveDragLabel(e: React.PointerEvent) {
@@ -876,18 +884,44 @@ export default function DesignCanvas({
     if (!dl) return;
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
+    // Tap-vs-drag is decided in CLIENT pixels (6px, matching the pan threshold) so it's stable
+    // across zoom/letterbox — a normalized-space threshold is ~3px on a phone (below finger jitter).
+    if (!dl.moved && Math.hypot(e.clientX - dl.startClientX, e.clientY - dl.startClientY) > 6) dl.moved = true;
     setLabelDragDelta([(w[0] - dl.startWorldX) / imgW, (w[1] - dl.startWorldY) / imgH]);
   }
 
   function endDragLabel() {
     const dl = dragLabel.current;
-    if (dl && labelDragDelta) {
-      const ndx = dl.originDx + labelDragDelta[0];
-      const ndy = dl.originDy + labelDragDelta[1];
-      onChange({ ...state, zones: state.zones.map((z) => (z.id === dl.id ? { ...z, labelDx: ndx, labelDy: ndy } : z)) });
+    if (dl) {
+      if (dl.moved && labelDragDelta) {
+        // Real drag → commit the new label offset.
+        const ndx = dl.originDx + labelDragDelta[0];
+        const ndy = dl.originDy + labelDragDelta[1];
+        onChange({ ...state, zones: state.zones.map((z) => (z.id === dl.id ? { ...z, labelDx: ndx, labelDy: ndy } : z)) });
+      } else {
+        // Tapped (no real move) → open the inline rename (features only — they carry text labels).
+        const shape = state.zones.find((z) => z.id === dl.id);
+        if (shape?.feature) {
+          setEditingText(shape.name ?? GROUND_FEATURES[shape.feature].label);
+          setEditingLabelId(dl.id);
+        }
+      }
     }
     dragLabel.current = null;
     setLabelDragDelta(null);
+  }
+
+  function commitLabelEdit(id: string) {
+    setEditingLabelId(null);
+    const shape = state.zones.find((z) => z.id === id);
+    if (!shape) return;
+    const typed = editingText.trim();
+    const defaultLabel = shape.feature ? GROUND_FEATURES[shape.feature].label : '';
+    // Empty, or unchanged from the default, → store no custom name (falls back to the default).
+    const nextName = typed && typed !== defaultLabel ? typed : undefined;
+    // No actual change → don't write (avoids a spurious undo entry + sync-timestamp bump on a no-op tap).
+    if ((nextName ?? '') === (shape.name ?? '')) return;
+    onChange({ ...state, zones: state.zones.map((z) => (z.id === id ? { ...z, name: nextName } : z)) });
   }
 
   // Vertex drag for the IN-PROGRESS draft shape (mid-draw) — the owner's explicit ask:
@@ -1362,7 +1396,7 @@ export default function DesignCanvas({
             const onZonePointerDown = (e: React.PointerEvent) => startDragShape(e, z.id, 'zone');
             // The name label can be dragged off the shape (labelDx/labelDy); show a live preview
             // while dragging, and a thin leader back to the centroid once it's been moved.
-            const isDraggingThisLabel = dragLabel.current?.id === z.id && labelDragDelta;
+            const isDraggingThisLabel = dragLabel.current?.id === z.id && dragLabel.current?.moved && labelDragDelta;
             const ldx = (z.labelDx ?? 0) + (isDraggingThisLabel ? labelDragDelta![0] : 0);
             const ldy = (z.labelDy ?? 0) + (isDraggingThisLabel ? labelDragDelta![1] : 0);
             const labelCx = centroid[0] + ldx;
@@ -1414,7 +1448,44 @@ export default function DesignCanvas({
                   style={{ cursor: tool === 'select' ? 'move' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                 >
                   {feat ? (
-                    activeLayers.labels ? (
+                    editingLabelId === z.id ? (
+                      <foreignObject x={-75} y={-14} width={150} height={28} style={{ overflow: 'visible' }}>
+                        <input
+                          autoFocus
+                          value={editingText}
+                          onChange={(e) => setEditingText(e.target.value)}
+                          onPointerDown={(e) => e.stopPropagation()}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') e.currentTarget.blur();
+                            else if (e.key === 'Escape') {
+                              skipLabelCommit.current = true;
+                              e.currentTarget.blur();
+                            }
+                          }}
+                          onBlur={() => {
+                            if (skipLabelCommit.current) {
+                              skipLabelCommit.current = false;
+                              setEditingLabelId(null);
+                              return;
+                            }
+                            commitLabelEdit(z.id);
+                          }}
+                          style={{
+                            width: 150,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            textAlign: 'center',
+                            color: '#FBF6EC',
+                            background: '#20190F',
+                            border: `1px solid ${color}`,
+                            borderRadius: 9,
+                            padding: '2px 6px',
+                            outline: 'none',
+                            boxSizing: 'border-box',
+                          }}
+                        />
+                      </foreignObject>
+                    ) : activeLayers.labels ? (
                     <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
                       <div
                         style={{
@@ -1434,7 +1505,7 @@ export default function DesignCanvas({
                           textOverflow: 'ellipsis',
                         }}
                       >
-                        {feat.label}
+                        {z.name ?? feat.label}
                       </div>
                     </foreignObject>
                     ) : null
