@@ -712,6 +712,53 @@ function producerLabels(
   return out;
 }
 
+// Zones are an ABSTRACT overlay (translucent coloured regions), not physical objects — the
+// image model repaints the land and wipes them. So on a Zones Style map we draw the exact zone
+// regions deterministically and hand them to compositeAccurateMap's overlay slot: the AI paints
+// the pretty land, then the true zones are burned back on top (accuracy by construction).
+function buildZoneOverlay(state: DesignCanvasState, W: number, H: number): string | undefined {
+  const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3);
+  if (!zones.length) return undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
+  // Region fills + bold outline (white halo so it reads on busy illustration).
+  for (const z of zones) {
+    const def = ZONE_DEFS[z.zone];
+    ctx.beginPath();
+    z.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+    ctx.closePath();
+    ctx.fillStyle = `${def.color}3D`;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 7;
+    ctx.stroke();
+    ctx.strokeStyle = def.color;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+  }
+  // Number badge at each zone centroid.
+  for (const z of zones) {
+    const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
+    const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 20, 0, Math.PI * 2);
+    ctx.fillStyle = ZONE_DEFS[z.zone].color;
+    ctx.fill();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(z.zone), cx, cy);
+  }
+  return canvas.toDataURL('image/png');
+}
+
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
@@ -938,6 +985,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           : undefined;
       // e. True labels (one pill per element-name group at its centroid) — this layer only.
       const labels = producerLabels(state, refLayers, W, H, filter);
+      // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
+      //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
+      const overlayImage = filter === 'zones' ? buildZoneOverlay(state, W, H) : undefined;
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage,
@@ -945,6 +995,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         // there's no satellite so the map is never left blank/transparent there.
         satelliteImage: frame.satDataUrl ?? composite,
         boundaryPx,
+        overlayImage,
         labels,
         labelStyle: styleDef.labelStyle,
         width: W,
