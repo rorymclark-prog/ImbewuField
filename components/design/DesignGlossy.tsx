@@ -759,6 +759,81 @@ function buildZoneOverlay(state: DesignCanvasState, W: number, H: number): strin
   return canvas.toDataURL('image/png');
 }
 
+// Water infrastructure is also wiped by the image model (it paints land, not overlays). Burn the
+// exact tanks / taps / water lines back on top of a Water Style render — same trick as zones.
+function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: number, H: number): string | undefined {
+  const items = state.items.filter((it) => ELEMENTS_BY_ID[it.defId]?.category === 'water');
+  const lines = state.lines.filter((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
+  if (!items.length && !lines.length) return undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Water routes — white casing under a coloured line (swale/pipe/drip).
+  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
+    swale: { color: '#4EA6D8', dash: [] },
+    pipe: { color: '#2B6FA6', dash: [] },
+    drip: { color: '#4E8B3B', dash: [3, 7] },
+  };
+  for (const l of lines) {
+    if (l.points.length < 2) continue;
+    const trace = () => {
+      ctx.beginPath();
+      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    const st = LINE_STYLE[l.kind];
+    trace();
+    ctx.setLineDash(st.dash);
+    ctx.strokeStyle = st.color;
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Tanks / taps / ponds — blue markers sized to their footprint, with the element icon on top.
+  for (const it of items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue;
+    const cx = it.x * W, cy = it.y * H;
+    const r = Math.max(9, ((it.wM ?? def.wM) * pxPerM) / 2);
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#2E7FC2';
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - r * 0.35, r * 0.72, r * 0.4, 0, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(120,190,240,0.9)';
+      ctx.fill();
+    } else {
+      ctx.fillStyle = '#2E7FC2';
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2.5;
+      roundRectPath(ctx, cx - r, cy - r * 0.7, r * 2, r * 1.4, 4);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(def.icon, cx, cy);
+  }
+  return canvas.toDataURL('image/png');
+}
+
 function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
   const rr = Math.min(r, w / 2, h / 2);
   ctx.beginPath();
@@ -1273,7 +1348,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const labels = producerLabels(state, refLayers, W, H, filter);
       // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
       //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
-      const overlayImage = filter === 'zones' ? buildZoneOverlay(state, W, H) : undefined;
+      const overlayImage =
+        filter === 'zones' ? buildZoneOverlay(state, W, H)
+        : filter === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : undefined;
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage,
