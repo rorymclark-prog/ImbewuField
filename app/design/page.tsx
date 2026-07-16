@@ -1376,9 +1376,6 @@ function DesignStudioInner() {
             boundary: refLayers.boundary.length > 2,
             house: refLayers.house.length > 2,
           }}
-          onAutoDetect={handleSuggest}
-          detecting={detecting}
-          suggestionsCount={pendingSuggestions.length}
           mode={designMode}
         />
       )}
@@ -1448,19 +1445,10 @@ function DesignStudioInner() {
               <ImageIcon size={15} /> Preview map
             </button>
           )}
-          {canvasState.step !== 'glossy' && (
-            <button
-              type="button"
-              onClick={() => setAdvancedOpen(true)}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
-            >
-              <SlidersHorizontal size={15} /> Advanced
-            </button>
-          )}
           <button
             type="button"
             onClick={() => setChromeCollapsed((c) => !c)}
-            style={{ marginLeft: canvasState.step !== 'glossy' ? 0 : 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+            style={{ marginLeft: canvasState.step !== 'glossy' ? 'auto' : 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
           >
             {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
           </button>
@@ -1497,141 +1485,10 @@ function DesignStudioInner() {
               onSelect={handleSelect}
               additiveSelect={multiSelectMode}
               onToggleAdditive={() => setMultiSelectMode((m) => !m)}
-              suggestions={suggestions}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
               tracedLayers={tracedLayers}
             />
-            {pendingSuggestions.length > 0 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 12,
-                  width: 260,
-                  maxHeight: '40%',
-                  overflowY: 'auto',
-                  background: 'rgba(255,254,250,0.97)',
-                  border: `1px solid ${GOLD}`,
-                  borderRadius: 14,
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
-                  zIndex: 15,
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid rgba(11,18,11,0.1)',
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: 12.5 }}>AI suggestions</span>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <button
-                      type="button"
-                      onClick={acceptAllSuggestions}
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 600,
-                        color: GREEN,
-                        background: 'transparent',
-                        border: `1px solid ${GREEN}`,
-                        borderRadius: 8,
-                        padding: '4px 8px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Accept all
-                    </button>
-                    <button
-                      type="button"
-                      onClick={dismissAllSuggestions}
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 600,
-                        color: '#B53A3A',
-                        background: 'transparent',
-                        border: '1px solid #B53A3A',
-                        borderRadius: 8,
-                        padding: '4px 8px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Dismiss all
-                    </button>
-                  </div>
-                </div>
-                {pendingSuggestions.map((s) => (
-                  <div
-                    key={s.id}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 8,
-                      padding: '8px 10px',
-                      borderBottom: '1px solid rgba(11,18,11,0.06)',
-                    }}
-                  >
-                    {s.kind === 'zone' && s.zone !== undefined && ZONE_DEFS[s.zone] ? (
-                      <span
-                        aria-hidden
-                        style={{
-                          width: 14,
-                          height: 14,
-                          borderRadius: '50%',
-                          flexShrink: 0,
-                          background: ZONE_DEFS[s.zone].color,
-                          border: '1px solid rgba(11,18,11,0.25)',
-                        }}
-                      />
-                    ) : (
-                      <span style={{ fontSize: 18, flexShrink: 0 }}>{suggestionIconFor(s)}</span>
-                    )}
-                    <span style={{ flex: 1, minWidth: 0, fontSize: 12, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {s.note ?? s.kind}
-                    </span>
-                    <button
-                      type="button"
-                      aria-label="Accept suggestion"
-                      onClick={() => acceptSuggestion(s.id)}
-                      style={{
-                        width: 28,
-                        height: 28,
-                        flexShrink: 0,
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: GREEN,
-                        color: PAPER,
-                        fontSize: 13,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      ✓
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Reject suggestion"
-                      onClick={() => rejectSuggestion(s.id)}
-                      style={{
-                        width: 28,
-                        height: 28,
-                        flexShrink: 0,
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: '#B53A3A',
-                        color: PAPER,
-                        fontSize: 13,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      ✗
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
           </>
         ) : (
           <div
@@ -1843,17 +1700,6 @@ function DesignStudioInner() {
         />
       )}
 
-      {/* Advanced (beta) tools sheet — the quiet home for auto-draw / auto-design. */}
-      {canvasState && (
-        <AdvancedToolsSheet
-          open={advancedOpen}
-          step={canvasState.step}
-          detecting={detecting}
-          onClose={() => setAdvancedOpen(false)}
-          onRun={runAdvancedAction}
-        />
-      )}
-
       {/* Per-layer glossy preview overlay — opened by "Preview map" on any design step, so the
           farmer can generate a beautiful single-layer map without leaving their place in the flow. */}
       {canvasState && frame && previewFilter && (
@@ -1879,55 +1725,6 @@ function DesignStudioInner() {
               initialFilter={previewFilter}
             />
           </div>
-        </div>
-      )}
-
-      {/* AI Auto-Design questionnaire sheet */}
-      <AutoDesignSheet
-        open={autoDesignPhase === 'questions'}
-        answers={autoAnswers}
-        onChange={(patch) => setAutoAnswers((prev) => ({ ...prev, ...patch }))}
-        onSubmit={() => runAutoDesign()}
-        onSkip={() => {
-          setAutoAnswers({});
-          runAutoDesign({}); // pass empty explicitly — don't rely on the setState landing first
-        }}
-        onClose={() => setAutoDesignPhase('idle')}
-      />
-
-      {/* "Designing your farm…" overlay while the whole-farm plan is running */}
-      {autoDesignPhase === 'running' && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 50,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 14,
-            background: 'rgba(11,18,11,0.55)',
-            color: PAPER,
-            textAlign: 'center',
-            padding: 24,
-          }}
-        >
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              border: `3px solid ${GOLD}`,
-              borderTopColor: 'transparent',
-              animation: 'imbewu-spin 0.9s linear infinite',
-            }}
-          />
-          <div style={{ fontWeight: 700, fontSize: 16 }}>Designing your farm…</div>
-          <div style={{ fontSize: 12.5, opacity: 0.85, maxWidth: 260 }}>
-            Reading your satellite photo and drafting zones, veg, water and a wind belt for review.
-          </div>
-          <style>{`@keyframes imbewu-spin { to { transform: rotate(360deg); } }`}</style>
         </div>
       )}
 

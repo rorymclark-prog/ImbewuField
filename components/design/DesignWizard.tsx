@@ -14,9 +14,6 @@ import {
   ChevronDown,
   ChevronUp,
   Check,
-  Sparkles,
-  FlaskConical,
-  Loader2,
   HelpCircle,
   Sprout,
   Lightbulb,
@@ -37,9 +34,6 @@ interface DesignWizardProps {
   setStep: (s: WizardStep) => void;
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
-  onAutoDetect?: () => void;
-  detecting?: boolean;
-  suggestionsCount?: number;
   mode?: DesignMode;
 }
 
@@ -62,19 +56,7 @@ const STEP_GUIDANCE: Record<WizardStep, string> = {
   planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
   structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path.',
   review: 'Toggle layers to check each map: water, zones, planting.',
-  glossy: "Happy? Generate the artist's impression of YOUR design.",
-};
-
-const SUGGEST_STEPS: ReadonlySet<WizardStep> = new Set(['base', 'water', 'zones', 'planting', 'structures']);
-
-// base = "Auto-detect features" traces what EXISTS (not auto-design), so it stays unlabelled.
-// The four design steps are demoted to a beta affordance — labelled and iconed as such.
-const SUGGEST_LABEL: Partial<Record<WizardStep, string>> = {
-  base: 'Auto-detect features (AI)',
-  zones: 'Suggest zones (beta)',
-  water: 'Suggest water setup (beta)',
-  planting: 'Suggest planting (beta)',
-  structures: 'Suggest structures (beta)',
+  glossy: "Glossy map (beta · experimental) — the AI isn't reliable yet, and you may need a few tries.",
 };
 
 function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPresent: { boundary: boolean; house: boolean }): boolean {
@@ -101,74 +83,6 @@ function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPre
   }
 }
 
-// Suggest button — shared between the two layouts but styled very differently by the
-// caller (guided wraps it full-width/hero, pro wraps it as a compact inline pill).
-function SuggestButton({
-  step,
-  detecting,
-  suggestionsCount,
-  onAutoDetect,
-  big,
-}: {
-  step: WizardStep;
-  detecting?: boolean;
-  suggestionsCount?: number;
-  onAutoDetect: () => void;
-  big: boolean;
-}) {
-  // The four design steps are beta (auto-DRAW); base is auto-DETECT (reads reality). Show a
-  // FlaskConical on beta so "beta" reads visually, Sparkles on base.
-  const isBeta = step !== 'base';
-  return (
-    <button
-      onClick={() => !detecting && onAutoDetect()}
-      disabled={detecting}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 8,
-        minHeight: big ? 56 : 40,
-        borderRadius: big ? 14 : 10,
-        border: `1.5px solid ${GREEN}`,
-        background: detecting ? 'transparent' : big ? GOLD : 'transparent',
-        color: detecting ? 'rgba(31,77,43,0.5)' : GREEN,
-        fontWeight: 700,
-        fontSize: big ? 16 : 13,
-        cursor: detecting ? 'default' : 'pointer',
-        width: '100%',
-      }}
-    >
-      {detecting ? (
-        <Loader2 size={big ? 20 : 15} className="animate-spin" />
-      ) : isBeta ? (
-        <FlaskConical size={big ? 20 : 15} />
-      ) : (
-        <Sparkles size={big ? 20 : 15} />
-      )}
-      {detecting ? (step === 'base' ? 'Detecting… (~20s)' : 'Designing… (a few seconds)') : SUGGEST_LABEL[step]}
-      {!detecting && !!suggestionsCount && suggestionsCount > 0 && (
-        <span
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minWidth: 20,
-            height: 20,
-            padding: '0 6px',
-            borderRadius: 999,
-            background: GREEN,
-            color: PAPER,
-            fontSize: 11,
-            fontWeight: 700,
-          }}
-        >
-          {suggestionsCount}
-        </span>
-      )}
-    </button>
-  );
-}
 
 // "Why this step?" — per-step permaculture lesson (Lane 4, docs/DISCOVERABILITY-SIMPLE-PLAN.md
 // §4.2/§4.3). Split into a state hook + a pure content panel so guided and pro can place the
@@ -445,17 +359,11 @@ function ProWizard({
   setStep,
   state,
   refLayersPresent,
-  onAutoDetect,
-  detecting,
-  suggestionsCount,
 }: {
   step: WizardStep;
   setStep: (s: WizardStep) => void;
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
-  onAutoDetect?: () => void;
-  detecting?: boolean;
-  suggestionsCount?: number;
 }) {
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
@@ -572,11 +480,6 @@ function ProWizard({
           {STEP_GUIDANCE[step]}
         </div>
         {lessonButton}
-        {SUGGEST_STEPS.has(step) && onAutoDetect && (
-          <div style={{ width: 190, flexShrink: 0 }}>
-            <SuggestButton step={step} detecting={detecting} suggestionsCount={suggestionsCount} onAutoDetect={onAutoDetect} big={false} />
-          </div>
-        )}
       </div>
 
       {lessonPanel}
@@ -589,23 +492,10 @@ export default function DesignWizard({
   setStep,
   state,
   refLayersPresent,
-  onAutoDetect,
-  detecting,
-  suggestionsCount,
   mode = 'guided',
 }: DesignWizardProps) {
   if (mode === 'pro') {
-    return (
-      <ProWizard
-        step={step}
-        setStep={setStep}
-        state={state}
-        refLayersPresent={refLayersPresent}
-        onAutoDetect={onAutoDetect}
-        detecting={detecting}
-        suggestionsCount={suggestionsCount}
-      />
-    );
+    return <ProWizard step={step} setStep={setStep} state={state} refLayersPresent={refLayersPresent} />;
   }
   return <GuidedWizard step={step} setStep={setStep} />;
 }

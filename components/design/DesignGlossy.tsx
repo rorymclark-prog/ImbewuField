@@ -7,7 +7,7 @@
 // placed.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Download, RefreshCw, Gem } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical } from 'lucide-react';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
@@ -17,6 +17,7 @@ import { requestRender, stripDataUrl } from '@/lib/ai-render-client';
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
+const OCHRE = '#C07A1E';
 const DARK = '#0B120B';
 
 const STRICT_MAP_CRITERIA = {
@@ -629,6 +630,42 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       }}
     >
       <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+      {/* Beta / experimental notice — the AI render is not reliable yet; set expectations up front. */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 10,
+          padding: '10px 12px',
+          borderRadius: 12,
+          background: 'rgba(192,122,30,0.12)',
+          border: '1px solid rgba(192,122,30,0.4)',
+        }}
+      >
+        <FlaskConical size={18} color={OCHRE} style={{ flexShrink: 0, marginTop: 1 }} />
+        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>
+          <span
+            style={{
+              display: 'inline-block',
+              fontSize: 10,
+              fontWeight: 900,
+              letterSpacing: 0.5,
+              textTransform: 'uppercase',
+              color: PAPER,
+              background: OCHRE,
+              borderRadius: 6,
+              padding: '2px 7px',
+              marginRight: 6,
+            }}
+          >
+            Beta · Experimental
+          </span>
+          The glossy map is an experiment — the AI isn&apos;t reliable enough yet to depend on. It
+          may get things wrong, and you often need to <strong>generate a few times</strong> before
+          you get a decent result. Your actual design (the canvas) is always the exact version.
+        </div>
+      </div>
 
       {/* Which map? — render the whole design, or a single-theme glossy (water/zones/…). */}
       <div>

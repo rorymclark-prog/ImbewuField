@@ -22,6 +22,18 @@ const OCHRE = '#C07A1E';
 const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 
+// Per-layer accent so the guide bar visibly says WHICH layer you're on — the owner's note that
+// the current layer "doesn't stand out". Each step wears its layer's colour as a bold badge.
+const STEP_ACCENT: Record<WizardStep, string> = {
+  base: '#6B6355',
+  water: '#3E8FBF',
+  zones: '#C07A1E',
+  planting: '#2F7A4A',
+  structures: '#7A5C3E',
+  review: '#1F4D2B',
+  glossy: '#C07A1E',
+};
+
 const COLLAPSE_KEY = 'imbewu_stepguide_collapsed_v1';
 const skipsKey = (siteId: string) => `imbewu_stepguide_skips_${siteId}`;
 
@@ -115,6 +127,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
   if (subSteps.length === 0) return null;
 
   const stepLabel = STEP_LABELS[step];
+  const accent = STEP_ACCENT[step];
   const idx = STEP_ORDER.indexOf(step);
   const nextLabel = idx >= 0 && idx < STEP_ORDER.length - 1 ? STEP_LABELS[STEP_ORDER[idx + 1]] : null;
   const current: SubStep | null = allResolved ? null : subSteps[currentIndex];
@@ -133,24 +146,43 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            minHeight: 40,
-            padding: '6px 12px',
+            minHeight: 44,
+            padding: '5px 10px 5px 5px',
             borderRadius: 12,
-            border: `1px solid ${GOLD}`,
-            background: 'rgba(247,201,126,0.12)',
+            border: `1.5px solid ${accent}`,
+            background: PAPER,
             color: DARK,
             cursor: 'pointer',
             textAlign: 'left',
           }}
         >
-          <Compass size={16} color={OCHRE} style={{ flexShrink: 0 }} />
-          <span style={{ fontWeight: 800, fontSize: 12.5, color: GREEN, flexShrink: 0 }}>
-            {stepLabel} · {doneCount}/{subSteps.length}
+          {/* Bold, colour-coded LAYER badge so it's obvious which layer you're on */}
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              flexShrink: 0,
+              background: accent,
+              color: PAPER,
+              fontWeight: 900,
+              fontSize: 12,
+              letterSpacing: 0.4,
+              textTransform: 'uppercase',
+              padding: '6px 10px',
+              borderRadius: 9,
+            }}
+          >
+            <Compass size={14} />
+            {stepLabel}
+          </span>
+          <span style={{ fontSize: 11.5, fontWeight: 700, color: accent, flexShrink: 0 }}>
+            {doneCount}/{subSteps.length}
           </span>
           <span style={{ fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
             {allResolved ? 'All done — open to review' : current?.title}
           </span>
-          <ChevronDown size={16} color={GREEN} style={{ flexShrink: 0 }} />
+          <ChevronDown size={16} color={accent} style={{ flexShrink: 0 }} />
         </button>
       </div>
     );
@@ -164,24 +196,25 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
       <div
         style={{
           borderRadius: 14,
-          border: `1px solid ${GOLD}`,
+          border: `1.5px solid ${accent}`,
           background: PAPER,
           boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
           overflow: 'hidden',
         }}
       >
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 12px', background: 'rgba(247,201,126,0.14)' }}>
-          <Compass size={17} color={OCHRE} style={{ flexShrink: 0 }} />
-          <span style={{ fontWeight: 800, fontSize: 13.5, color: GREEN }}>Step-by-step: {stepLabel}</span>
-          <span style={{ marginLeft: 'auto', fontSize: 12, fontWeight: 700, color: OCHRE }}>
+        {/* Header — accent-coloured band naming the current layer */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: accent }}>
+          <Compass size={17} color={PAPER} style={{ flexShrink: 0 }} />
+          <span style={{ fontWeight: 900, fontSize: 13.5, color: PAPER, letterSpacing: 0.3, textTransform: 'uppercase' }}>{stepLabel}</span>
+          <span style={{ fontSize: 11.5, fontWeight: 600, color: PAPER, opacity: 0.85 }}>step-by-step</span>
+          <span style={{ marginLeft: 'auto', fontSize: 12, fontWeight: 800, color: PAPER }}>
             {doneCount}/{subSteps.length}
           </span>
           <button
             type="button"
             onClick={toggleCollapsed}
             aria-label="Minimise guide"
-            style={{ display: 'inline-flex', border: 'none', background: 'transparent', color: GREEN, cursor: 'pointer', padding: 4 }}
+            style={{ display: 'inline-flex', border: 'none', background: 'transparent', color: PAPER, cursor: 'pointer', padding: 4 }}
           >
             <ChevronUp size={17} />
           </button>
