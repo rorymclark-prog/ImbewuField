@@ -1120,6 +1120,264 @@ async function buildBlueprintZoneMap(
   return canvas.toDataURL('image/png');
 }
 
+// Deterministic "Blueprint" WATER map — the same clean dark-satellite treatment as the zone
+// blueprint, but the content layer is water infrastructure (tanks as blue cylinders, swale/pipe/
+// drip routes, taps) drawn exactly from geometry. Reliable, instant, no AI.
+async function buildBlueprintWaterMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+  const ring = (pts: Array<[number, number]>) => {
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    ctx.closePath();
+  };
+
+  // 1. Satellite + blueprint scrim.
+  if (frame.satDataUrl) {
+    const img = await loadImage(frame.satDataUrl);
+    ctx.drawImage(img, 0, 0, W, H);
+  } else {
+    ctx.fillStyle = '#22303a';
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.fillStyle = 'rgba(8,14,22,0.5)';
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. House + driveway context (drawn first, under the water infrastructure).
+  if (refLayers.house.length >= 3) {
+    ring(refLayers.house);
+    ctx.fillStyle = 'rgba(58,63,74,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+  }
+  if (refLayers.driveway.length >= 2) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    const trace = () => {
+      ctx.beginPath();
+      refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    };
+    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+      trace();
+      ctx.closePath();
+      ctx.fillStyle = '#2A2A2E';
+      ctx.fill();
+    } else {
+      trace();
+      ctx.strokeStyle = '#2A2A2E';
+      ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3));
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // 3. Water routes — white casing under a coloured line (swale/pipe/drip).
+  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
+    swale: { color: '#4EA6D8', dash: [] },
+    pipe: { color: '#2B6FA6', dash: [] },
+    drip: { color: '#7FD46B', dash: [4, 8] },
+  };
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const l of state.lines) {
+    const st = LINE_STYLE[l.kind];
+    if (!st || l.points.length < 2) continue;
+    const trace = () => {
+      ctx.beginPath();
+      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    trace();
+    ctx.setLineDash(st.dash);
+    ctx.strokeStyle = st.color;
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // 4. Tanks / taps / ponds — blue markers (cylinders) sized to footprint, icon on top.
+  const waterItems = state.items.filter((it) => ELEMENTS_BY_ID[it.defId]?.category === 'water');
+  for (const it of waterItems) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue;
+    const cx = px(it.x), cy = py(it.y);
+    const r = Math.max(9, ((it.wM ?? def.wM) * pxPerM) / 2);
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#2E7FC2';
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - r * 0.35, r * 0.72, r * 0.4, 0, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(120,190,240,0.9)';
+      ctx.fill();
+    } else {
+      ctx.fillStyle = '#2E7FC2';
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2.5;
+      roundRectPath(ctx, cx - r, cy - r * 0.7, r * 2, r * 1.4, 4);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(def.icon, cx, cy);
+  }
+
+  // 5. Boundary — green line with perpendicular fence ticks.
+  if (refLayers.boundary.length >= 3) {
+    const b = refLayers.boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
+    ctx.beginPath();
+    b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+    ctx.closePath();
+    ctx.strokeStyle = '#8CEB6A';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    const tick = Math.max(7, W * 0.006);
+    const tstep = Math.max(26, W * 0.02);
+    ctx.lineWidth = 2;
+    for (let i = 0; i < b.length; i++) {
+      const [x1, y1] = b[i];
+      const [x2, y2] = b[(i + 1) % b.length];
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      for (let t = tstep; t < len; t += tstep) {
+        const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + nx * tick, cy + ny * tick);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // 6. Title (top-left).
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
+  ctx.fillText('WATER PLAN', pad, pad + Math.round(W * 0.028));
+  ctx.fillStyle = '#B9C2C8';
+  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
+  ctx.fillText(placeName ?? 'Water plan', pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+
+  // 7. Legend panel (top-right) — only the water elements actually present.
+  type Row = { color: string; label: string; style: 'fill' | 'line' | 'dashline' };
+  const rows: Row[] = [];
+  if (waterItems.length) rows.push({ color: '#2E7FC2', label: 'Tanks / storage', style: 'fill' });
+  const kinds = new Set(state.lines.map((l) => l.kind));
+  if (kinds.has('swale')) rows.push({ color: '#4EA6D8', label: 'Swale (contour)', style: 'line' });
+  if (kinds.has('pipe')) rows.push({ color: '#2B6FA6', label: 'Pipe', style: 'line' });
+  if (kinds.has('drip')) rows.push({ color: '#7FD46B', label: 'Drip line', style: 'dashline' });
+  rows.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
+  if (refLayers.driveway.length >= 2) rows.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+
+  const rowH = Math.round(W * 0.026);
+  const lgW = Math.round(W * 0.27);
+  const lgH = Math.round(rowH * (rows.length + 2.4));
+  const lgX = W - pad - lgW, lgY = pad;
+  ctx.fillStyle = 'rgba(10,16,22,0.82)';
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1.5;
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.stroke();
+  const ip = Math.round(lgW * 0.07);
+  const sw = Math.round(rowH * 0.62);
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  let ry = lgY + ip + rowH * 0.4;
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
+  ctx.fillText('LEGEND', lgX + ip, ry);
+  ry += rowH * 0.9;
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.beginPath();
+  ctx.moveTo(lgX + ip, ry - rowH * 0.25);
+  ctx.lineTo(lgX + lgW - ip, ry - rowH * 0.25);
+  ctx.stroke();
+  ry += rowH * 0.3;
+  const textX = lgX + ip + sw * 1.5 + 12;
+  for (const row of rows) {
+    if (row.style === 'fill') {
+      ctx.fillStyle = `${row.color}CC`;
+      roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+      ctx.fill();
+      ctx.strokeStyle = row.color;
+      ctx.lineWidth = 1.5;
+      roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = row.color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash(row.style === 'dashline' ? [4, 4] : []);
+      ctx.beginPath();
+      ctx.moveTo(lgX + ip, ry);
+      ctx.lineTo(lgX + ip + sw * 1.5, ry);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = '#EDE7DA';
+    ctx.font = `600 ${Math.round(rowH * 0.46)}px system-ui, sans-serif`;
+    ctx.fillText(row.label, textX, ry);
+    ry += rowH;
+  }
+  ctx.fillStyle = '#9AA6AC';
+  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
+  ctx.fillText('Blue = water storage & flow.', lgX + ip, ry);
+
+  // 8. Scale bar (bottom-left).
+  const niceM = [5, 10, 20, 25, 50, 100, 200];
+  let m = niceM[0];
+  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
+  const barW = m * pxPerM;
+  const bx = pad, by = H - pad - rowH * 0.3;
+  ctx.strokeStyle = '#F3EEE2';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(bx + barW, by);
+  ctx.moveTo(bx, by - 8);
+  ctx.lineTo(bx, by + 8);
+  ctx.moveTo(bx + barW, by - 8);
+  ctx.lineTo(bx + barW, by + 8);
+  ctx.stroke();
+  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
+  ctx.textBaseline = 'bottom';
+  ctx.textAlign = 'left';
+  ctx.fillText(`${m} m`, bx, by - 12);
+
+  return canvas.toDataURL('image/png');
+}
+
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
@@ -1392,7 +1650,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // fence ticks) — the flat cartographic look ChatGPT nailed, but drawn exactly from geometry.
       const composite = filter === 'zones'
         ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
-        : await buildComposite(state, frame, refLayers, filter, true);
+        : filter === 'water'
+          ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
+          : await buildComposite(state, frame, refLayers, filter, true);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
