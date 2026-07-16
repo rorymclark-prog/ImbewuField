@@ -9,12 +9,13 @@
 // via `onChange`. Pointer-event driven (phone-first); the clientToViewBox conversion
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
+import { computeContourLines } from '@/lib/contours';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -73,6 +74,7 @@ interface ActiveLayers {
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
   labels: boolean; // the text name pills on every feature — off = declutter the map
+  contours: boolean; // approximate on-contour guide lines (from slope + aspect)
 }
 
 interface RefLayers {
@@ -96,6 +98,9 @@ export interface DesignCanvasProps {
   // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
+  // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
+  slopeDeg?: number;
+  aspectDeg?: number;
   refLayers: RefLayers;
   selectedId: string | null; // the SINGLE selection (edit/resize/rotate handles); null if 0 or >1
   selectedIds: string[]; // every selected id (highlight rings + group delete)
@@ -343,6 +348,8 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   onToggleBaseMap,
+  slopeDeg,
+  aspectDeg,
   refLayers,
   selectedId,
   selectedIds,
@@ -1046,6 +1053,16 @@ export default function DesignCanvas({
   const refShown = activeLayers.baseMap;
   const refOpacityFactor = 1;
 
+  // Approximate on-contour guide lines (parallel, perpendicular to the slope). Cheap to compute
+  // and only used when the Contours layer is on. `tooFlat` when the site is <1.5° or no slope data.
+  const contours = useMemo(
+    () =>
+      slopeDeg != null && aspectDeg != null && refLayers.boundary.length >= 3
+        ? computeContourLines(slopeDeg, aspectDeg, refLayers.boundary, mPerPx, imgW, imgH)
+        : { lines: [], intervalM: 0, tooFlat: true },
+    [slopeDeg, aspectDeg, refLayers.boundary, mPerPx, imgW, imgH],
+  );
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -1095,6 +1112,12 @@ export default function DesignCanvas({
               <line x1={0} y1={0} x2={0} y2={8} stroke={c} strokeWidth={2.5} strokeOpacity={0.55} />
             </pattern>
           ))}
+          {/* Clip contour lines to the property so they don't spill onto neighbours' land. */}
+          {refLayers.boundary.length >= 3 && (
+            <clipPath id="contour-clip">
+              <polygon points={ringToPx(refLayers.boundary, imgW, imgH)} />
+            </clipPath>
+          )}
         </defs>
         <g transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k})`}>
         {/* Satellite underlay */}
@@ -1102,6 +1125,26 @@ export default function DesignCanvas({
           <image href={satDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
         ) : (
           <rect x={0} y={0} width={imgW} height={imgH} fill="#FFFEFA" />
+        )}
+
+        {/* Contour guide lines — approximate, on-contour direction from slope+aspect. Clipped to
+            the property. Off by default; toggled via the Contours layer. */}
+        {activeLayers.contours && contours.lines.length > 0 && (
+          <g clipPath="url(#contour-clip)" pointerEvents="none">
+            {contours.lines.map((ln, i) => (
+              <line
+                key={i}
+                x1={ln.a[0] * imgW}
+                y1={ln.a[1] * imgH}
+                x2={ln.b[0] * imgW}
+                y2={ln.b[1] * imgH}
+                stroke="#8B5A2B"
+                strokeWidth={ln.elevM === 0 ? 2 : 1}
+                strokeOpacity={0.55}
+                strokeDasharray={ln.elevM === 0 ? undefined : '5 4'}
+              />
+            ))}
+          </g>
         )}
 
         {/* Boundary reference — the property fence. House/driveway and every other traced
@@ -1964,6 +2007,32 @@ export default function DesignCanvas({
           );
         })()}
       </svg>
+
+      {/* Contours note — top-centre. Shown only when the layer is on so the farmer knows the
+          lines are a slope-based guide (and why they're absent on flat ground). */}
+      {activeLayers.contours && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 12,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            maxWidth: '80%',
+            padding: '5px 12px',
+            borderRadius: 14,
+            background: 'rgba(11,18,11,0.82)',
+            color: '#F4EDD8',
+            fontSize: 11.5,
+            fontWeight: 600,
+            textAlign: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          {contours.tooFlat
+            ? 'Ground reads flat here — no useful contours to show'
+            : `Approx. contours ~${contours.intervalM} m apart — lay swales/vetiver along these lines`}
+        </div>
+      )}
 
       {/* Quick base-map declutter — top-left. Toggles the "Base map" layer (boundary +
           auto-detected/traced underlay) so the farmer can clear the satellite in one tap

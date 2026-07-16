@@ -377,13 +377,14 @@ function DesignStudioInner() {
     ground: true,
     baseMap: true,
     labels: true,
+    contours: false, // opt-in overlay (approximate, from slope + aspect)
   });
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true, labels: true });
+      setActiveLayers((a) => ({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
     }
   }, [designMode]);
 
@@ -1007,6 +1008,8 @@ function DesignStudioInner() {
               lineKind={lineKind}
               activeLayers={activeLayers}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
+              slopeDeg={locationData?.elevation?.slopeDeg}
+              aspectDeg={locationData?.elevation?.aspectDeg}
               refLayers={refLayers}
               selectedId={selectedId}
               selectedIds={selectedIds}

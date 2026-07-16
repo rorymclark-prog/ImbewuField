@@ -21,6 +21,7 @@ interface ActiveLayers {
   ground: boolean;
   baseMap: boolean;
   labels: boolean;
+  contours: boolean;
 }
 
 export type DesignMode = 'guided' | 'pro';
@@ -75,6 +76,7 @@ const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: strin
   { key: 'structures', label: 'Structures', icon: '🏚️' },
   { key: 'lines', label: 'Lines', icon: '〰️' },
   { key: 'labels', label: 'Labels', icon: '🏷️' },
+  { key: 'contours', label: 'Contours', icon: '⛰️' },
 ];
 
 // Step → which element categories are placeable in the palette.
