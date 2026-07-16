@@ -140,8 +140,8 @@ const LINE_COLORS: Record<string, string> = {
 export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
 
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'best overall' },
-  { key: 'gemini', label: 'Gemini Pro', sub: 'may retire' },
+  { key: 'falgpt', label: 'gpt-image-2', sub: 'best overall · slow (~5 min)' },
+  { key: 'gemini', label: 'Gemini Pro', sub: 'faster (~1 min)' },
 ];
 
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
@@ -234,6 +234,8 @@ const SCALE = 2;
 function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
+  // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
+  const pxPerM = imgW / (frame.imgW * frame.mPerPx);
 
   // Boundary ring
   if (refLayers.boundary.length >= 3) {
@@ -263,16 +265,31 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
     ctx.stroke();
   }
 
-  // Driveway
+  // Driveway — a real tar/asphalt road (dark carriageway + light kerb casing) so it reads as a
+  // surfaced vehicle track on EVERY map, exact or illustrated (Rory: "build in the driveway as
+  // tar coloured for all designs"). Drawing it dark in the composite also nudges the AI Styles to
+  // render it as tar rather than repainting it as a garden path.
   if (refLayers.driveway.length >= 2) {
-    ctx.beginPath();
-    refLayers.driveway.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
-    ctx.strokeStyle = 'rgba(217,145,51,0.85)';
-    ctx.lineWidth = 8;
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    const roadW = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
+    const tracePath = () => {
+      ctx.beginPath();
+      refLayers.driveway.forEach(([x, y], i) => {
+        const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+        fn.call(ctx, px(x), py(y));
+      });
+    };
+    tracePath(); // light kerb casing
+    ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+    ctx.lineWidth = roadW + 5;
     ctx.stroke();
+    tracePath(); // tar surface
+    ctx.strokeStyle = '#3B3A3E';
+    ctx.lineWidth = roadW;
+    ctx.stroke();
+    ctx.restore();
   }
 
   // Zones — translucent fill (only when this layer is in the chosen filter, and design marks
@@ -330,8 +347,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
 
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
-  // width — sizing in logical px here would draw every footprint at half scale.
-  const pxPerM = imgW / (frame.imgW * frame.mPerPx);
+  // width (pxPerM, computed above) — sizing in logical px would draw every footprint at half scale.
   for (const item of drawDesign ? state.items : []) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
@@ -592,7 +608,7 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
   const parts = [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
-  if (refLayers.driveway.length >= 2) parts.push('the existing driveway / vehicle track (keep it clear, no plantings on it)');
+  if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a dark TAR / ASPHALT road, kept clear with no plantings on it');
   return parts.join(', ');
 }
 
@@ -1123,7 +1139,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND accurate (boundary-locked by construction). Takes about a minute.`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND boundary-accurate by construction. ${engine === 'falgpt' ? 'gpt-image-2 is slow — up to ~5 min. For a quick preview, switch the engine to Gemini (~1 min).' : 'Gemini takes about a minute.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -1285,7 +1301,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           {loading !== null
             ? loading === 'exact'
               ? 'Drawing your exact map…'
-              : 'Generating your map… 30–90s'
+              : loading === 'falgpt'
+                ? 'Generating… gpt-image-2 is slow (up to ~5 min)'
+                : 'Generating your map… ~1 min'
             : producerStyle
               ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`
               : analysisStyle
