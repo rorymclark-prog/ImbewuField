@@ -10,7 +10,7 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useEffect, useRef, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -96,8 +96,13 @@ export interface DesignCanvasProps {
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
   refLayers: RefLayers;
-  selectedId: string | null;
-  onSelect: (id: string | null) => void;
+  selectedId: string | null; // the SINGLE selection (edit/resize/rotate handles); null if 0 or >1
+  selectedIds: string[]; // every selected id (highlight rings + group delete)
+  onSelect: (id: string | null, additive?: boolean) => void;
+  // Touch multi-select: when on, a plain tap ADDS to the selection (phones have no Shift/Cmd
+  // key). The toggle button + the desktop Shift/Cmd+tap both feed the same additive path.
+  additiveSelect?: boolean;
+  onToggleAdditive?: () => void;
   suggestions?: DetectSuggestion[];
   onEditItem?: (id: string) => void;
   // Called with 'select' right after a zone/line is committed, so the very next tap on
@@ -339,6 +344,9 @@ export default function DesignCanvas({
   onToggleBaseMap,
   refLayers,
   selectedId,
+  selectedIds,
+  additiveSelect,
+  onToggleAdditive,
   onSelect,
   suggestions,
   onEditItem,
@@ -721,9 +729,11 @@ export default function DesignCanvas({
   function startDragItem(e: React.PointerEvent, id: string) {
     if (tool !== 'select') return;
     e.stopPropagation();
+    const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
+    onSelect(id, additive);
+    if (additive) return; // toggle membership — no drag, no handles.
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragItemId.current = id;
-    onSelect(id);
   }
 
   function moveDragItem(e: React.PointerEvent) {
@@ -793,8 +803,10 @@ export default function DesignCanvas({
   function startDragShape(e: React.PointerEvent, id: string, kind: 'zone' | 'line') {
     if (tool !== 'select') return;
     e.stopPropagation();
+    const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
+    onSelect(id, additive);
+    if (additive) return; // toggle membership — no drag.
     (e.target as Element).setPointerCapture?.(e.pointerId);
-    onSelect(id);
     const shape = kind === 'zone' ? state.zones.find((z) => z.id === id) : state.lines.find((l) => l.id === id);
     if (!shape) return;
     const w = worldFromClient(e.clientX, e.clientY);
@@ -1229,6 +1241,7 @@ export default function DesignCanvas({
             const feat = z.feature ? GROUND_FEATURES[z.feature] : null;
             const color = feat ? feat.color : def.color;
             const isSelected = selectedId === z.id;
+            const isHighlighted = selectedIds.includes(z.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
             const isDraggingWholeShape = dragShape.current?.id === z.id && dragShape.current.kind === 'zone' && shapeDragDelta;
             const effectivePoints = isDraggingVertexOfThisShape
@@ -1261,6 +1274,9 @@ export default function DesignCanvas({
                   style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
+                {isHighlighted && (
+                  <polygon points={ringToPx(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" pointerEvents="none" />
+                )}
                 <g
                   transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}
                   onPointerDown={onZonePointerDown}
@@ -1402,6 +1418,7 @@ export default function DesignCanvas({
           state.lines.map((line) => {
             const style = lineStroke(line.kind);
             const isSelected = selectedId === line.id;
+            const isHighlighted = selectedIds.includes(line.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
             const isDraggingWholeShape = dragShape.current?.id === line.id && dragShape.current.kind === 'line' && shapeDragDelta;
             const effectivePoints = isDraggingVertexOfThisShape
@@ -1435,6 +1452,9 @@ export default function DesignCanvas({
                 />
                 {line.kind === 'fence' && (
                   <path d={fenceTicks(effectivePoints, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
+                )}
+                {isHighlighted && (
+                  <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={3} strokeDasharray="4 3" strokeLinecap="round" pointerEvents="none" />
                 )}
                 {isSelected && tool === 'select' && (
                   <>
@@ -1582,6 +1602,7 @@ export default function DesignCanvas({
           const cx = px * imgW;
           const cy = py * imgH;
           const isSelected = selectedId === item.id;
+          const isHighlighted = selectedIds.includes(item.id);
           const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
@@ -1602,7 +1623,7 @@ export default function DesignCanvas({
               {/* Footprint + selection outline rotate together (rect only); the icon disc,
                   label and action handles below stay upright/screen-aligned. */}
               <g transform={rotXf}>
-                {isSelected && (
+                {isHighlighted && (
                   <>
                     {def.shape === 'circle' ? (
                       <circle r={Math.max(wPx, hPx) / 2 + 4} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" />
@@ -1909,6 +1930,42 @@ export default function DesignCanvas({
           }}
         >
           {activeLayers.baseMap ? <Eye size={18} /> : <EyeOff size={18} />}
+        </button>
+      )}
+
+      {/* Multi-select toggle (top-left, below base-map). On phones there's no Shift/Cmd, so
+          this makes a plain tap ADD to the selection; tap it off to go back to single-select.
+          A count pill appears when 2+ are selected — Delete (palette/keyboard) removes them all. */}
+      {onToggleAdditive && tool === 'select' && (
+        <button
+          type="button"
+          aria-pressed={!!additiveSelect}
+          aria-label={additiveSelect ? 'Multi-select on — tap to turn off' : 'Select multiple'}
+          title={additiveSelect ? 'Selecting multiple — tap items to add, then Delete' : 'Select multiple items'}
+          onClick={onToggleAdditive}
+          style={{
+            position: 'absolute',
+            top: 60,
+            left: 12,
+            minWidth: 40,
+            height: 40,
+            padding: selectedIds.length > 1 ? '0 12px' : 0,
+            borderRadius: 20,
+            border: additiveSelect ? `2px solid ${GOLD}` : 'none',
+            background: additiveSelect ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
+            color: additiveSelect ? GOLD : '#FBF6EC',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 6,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            fontSize: 12.5,
+            fontWeight: 800,
+          }}
+        >
+          <CopyCheck size={18} />
+          {selectedIds.length > 1 && <span>{selectedIds.length}</span>}
         </button>
       )}
 

@@ -388,7 +388,23 @@ function DesignStudioInner() {
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
   const [saved, setSaved] = useState(true);
 
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Multi-select: Shift/Cmd+tap adds to the selection; a plain tap replaces it. Edit/resize/
+  // rotate handles only appear on a SINGLE selection; a group just gets highlight rings and
+  // can be deleted together (Rory's "command-select for multiple + delete" ask).
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const selectedId = selectedIds.length === 1 ? selectedIds[0] : null;
+  const handleSelect = useCallback((id: string | null, additive?: boolean) => {
+    if (id === null) {
+      setSelectedIds([]);
+      return;
+    }
+    setSelectedIds((prev) => {
+      if (additive) return prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+      return [id];
+    });
+  }, []);
+  // Touch multi-select mode (phones have no Shift/Cmd) — a plain tap adds while this is on.
+  const [multiSelectMode, setMultiSelectMode] = useState(false);
   const [tool, setTool] = useState<'select' | 'place' | 'zone' | 'line'>('select');
   // Arming a draw/place tool clears any lingering selection — otherwise the previously
   // committed shape keeps its editing handles (vertex grips + delete ✕) live on top of the
@@ -397,7 +413,10 @@ function DesignStudioInner() {
   // the selection, so the just-drawn shape stays immediately editable.
   const handleSetTool = useCallback((t: 'select' | 'place' | 'zone' | 'line') => {
     setTool(t);
-    if (t !== 'select') setSelectedId(null);
+    if (t !== 'select') {
+      setSelectedIds([]);
+      setMultiSelectMode(false);
+    }
   }, []);
   const [placeDefId, setPlaceDefId] = useState<string | null>(null);
   const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5>(1);
@@ -663,16 +682,16 @@ function DesignStudioInner() {
     });
   }, []);
 
-  // Delete whatever is selected (item, zone or line) — used by the palette's Delete button.
-  const onDeleteSelected = selectedId
+  // Delete whatever is selected (one or many items/zones/lines) — palette Delete + keyboard.
+  const onDeleteSelected = selectedIds.length
     ? () => {
-        const id = selectedId;
-        setSelectedId(null);
+        const ids = new Set(selectedIds);
+        setSelectedIds([]);
         handleChange((prev) => ({
           ...prev,
-          items: prev.items.filter((i) => i.id !== id),
-          zones: prev.zones.filter((z) => z.id !== id),
-          lines: prev.lines.filter((l) => l.id !== id),
+          items: prev.items.filter((i) => !ids.has(i.id)),
+          zones: prev.zones.filter((z) => !ids.has(z.id)),
+          lines: prev.lines.filter((l) => !ids.has(l.id)),
           updatedAt: new Date().toISOString(),
         }));
       }
@@ -689,16 +708,16 @@ function DesignStudioInner() {
         if (undoStack.current.length > 0) { e.preventDefault(); handleUndo(); }
         return;
       }
-      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedId && onDeleteSelected) {
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIds.length && onDeleteSelected) {
         e.preventDefault();
         onDeleteSelected();
         return;
       }
-      if (e.key === 'Escape' && selectedId) setSelectedId(null);
+      if (e.key === 'Escape' && selectedIds.length) setSelectedIds([]);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleUndo, onDeleteSelected, selectedId]);
+  }, [handleUndo, onDeleteSelected, selectedIds]);
 
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line
@@ -1460,7 +1479,10 @@ function DesignStudioInner() {
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               refLayers={refLayers}
               selectedId={selectedId}
-              onSelect={setSelectedId}
+              selectedIds={selectedIds}
+              onSelect={handleSelect}
+              additiveSelect={multiSelectMode}
+              onToggleAdditive={() => setMultiSelectMode((m) => !m)}
               suggestions={suggestions}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
@@ -1889,7 +1911,7 @@ function DesignStudioInner() {
               items: prev.items.filter((i) => i.id !== id),
               updatedAt: new Date().toISOString(),
             }));
-            if (selectedId === id) setSelectedId(null);
+            setSelectedIds((prev) => prev.filter((x) => x !== id));
           }}
           onSave={(patch) => {
             const id = editItem.id;
