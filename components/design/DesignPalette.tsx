@@ -154,10 +154,18 @@ export default function DesignPalette({
   // catalog there is pure clutter that buried the map. Pro keeps everything.
   const showElementCatalog = mode === 'pro' || allowedCategories !== 'all';
   const showFullCatalogNote = mode === 'pro';
-  const catalog =
+  const stepCatalog =
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
       : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category));
+
+  // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
+  // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
+  // show"). Category → layer: water→water, growing→planting, structure/animal/access→structures.
+  const layerForCategory = (cat: DesignElementDef['category']): keyof ActiveLayers =>
+    cat === 'water' ? 'water' : cat === 'growing' ? 'planting' : 'structures';
+  const catalog =
+    mode === 'pro' ? stepCatalog.filter((def) => activeLayers[layerForCategory(def.category)]) : stepCatalog;
 
   // Climate-appropriate trees: on the planting step, float the trees that crop in this site's
   // climate to the front and dim the ones that won't (frost/chill mismatch). Never hides them —
@@ -369,7 +377,9 @@ export default function DesignPalette({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-            PRO — full catalog, every step. Jump between steps freely.
+            {orderedCatalog.length === 0
+              ? 'No layers on — turn on Water, Planting or Structures (Layers ▸) to place their elements.'
+              : 'PRO — showing elements for your switched-on layers. Toggle more in Layers ▸.'}
           </div>
         )}
         {climateFilterActive && (
