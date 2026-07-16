@@ -183,7 +183,7 @@ const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelS
   { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk' },
 ];
 
-function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
+export function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
   switch (filter) {
     case 'all':
       return true;
@@ -198,7 +198,7 @@ function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
   }
 }
 
-function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
+export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
   switch (filter) {
     case 'all':
       return true;
@@ -211,7 +211,7 @@ function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
   }
 }
 
-function zonesInFilter(filter: GlossyLayerFilter): boolean {
+export function zonesInFilter(filter: GlossyLayerFilter): boolean {
   return filter === 'all' || filter === 'zones';
 }
 
@@ -229,9 +229,9 @@ export interface DesignGlossyProps {
   initialFilter?: GlossyLayerFilter;
 }
 
-const SCALE = 2;
+export const SCALE = 2;
 
-function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
+export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
@@ -386,7 +386,7 @@ function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, fram
   }
 }
 
-async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all', drawDesign = true): Promise<string> {
+export async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all', drawDesign = true): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');

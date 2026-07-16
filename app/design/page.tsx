@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -400,6 +400,7 @@ function DesignStudioInner() {
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  const [printOpen, setPrintOpen] = useState(false);
   // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
   // this layer over the studio, without leaving the current step. null = closed.
   const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
@@ -884,10 +885,44 @@ function DesignStudioInner() {
             Pro
           </span>
         </button>
+        {canvasState && frame && (
+          <button
+            type="button"
+            onClick={() => setPrintOpen(true)}
+            aria-label="Print / Export plan set"
+            title="Print / Export — export your exact maps as a PDF plan set or PNGs"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              minHeight: 32,
+              padding: '5px 12px',
+              borderRadius: 999,
+              border: `1px solid ${GREEN}`,
+              background: 'transparent',
+              color: GREEN,
+              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 800,
+            }}
+          >
+            <Printer size={15} /> Print
+          </button>
+        )}
         <div style={{ fontSize: 12, opacity: 0.6 }}>
           {saved ? 'Saved' : 'Saving…'}
         </div>
       </header>
+
+      {printOpen && canvasState && frame && (
+        <DesignPrintLazy
+          state={canvasState}
+          frame={frame}
+          refLayers={refLayers}
+          placeName={placeName ?? siteName}
+          onClose={() => setPrintOpen(false)}
+        />
+      )}
 
       {!chromeCollapsed && (
       <>
@@ -1526,6 +1561,35 @@ function DesignGlossyLazy(props: {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         Loading glossy render…
+      </div>
+    );
+  }
+  return <Comp {...props} />;
+}
+
+// DesignPrint (the plan-set composer) pulls in jsPDF — lazy-load it only when the farmer
+// opens Print / Export.
+function DesignPrintLazy(props: {
+  state: DesignCanvasState;
+  frame: CanvasFrame;
+  refLayers: RefLayers;
+  placeName?: string;
+  onClose: () => void;
+}) {
+  const [Comp, setComp] = useState<React.ComponentType<typeof props> | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    import('@/components/design/DesignPrint').then((mod) => {
+      if (!cancelled) setComp(() => mod.default as React.ComponentType<typeof props>);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  if (!Comp) {
+    return (
+      <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(15,12,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: PAPER, fontWeight: 700 }}>
+        Loading Print / Export…
       </div>
     );
   }

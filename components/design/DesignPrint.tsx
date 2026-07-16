@@ -1,0 +1,430 @@
+'use client';
+
+// Design Studio — Print / Export composer. Turns the EXACT (deterministic) design maps into a
+// publishable plan set: pick layers, paper size + orientation, and title-block / legend / scale
+// bar / north-arrow furniture, then export a multi-page PDF (one exact map per layer) or PNGs.
+// Everything here is built on buildComposite (the accurate-by-construction renderer) — no AI,
+// so the output is always correct and print-ready.
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { X, FileDown, Images, Loader2 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+
+import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
+import { buildComposite, itemInFilter, type GlossyLayerFilter } from './DesignGlossy';
+
+type RefLayers = {
+  boundary: Array<[number, number]>;
+  house: Array<[number, number]>;
+  driveway: Array<[number, number]>;
+};
+
+interface DesignPrintProps {
+  state: DesignCanvasState;
+  frame: CanvasFrame;
+  refLayers: RefLayers;
+  placeName?: string;
+  onClose: () => void;
+}
+
+const PAPER = '#FFFEFA';
+const GOLD = '#F7C97E';
+const GREEN = '#1F4D2B';
+const DARK = '#0B120B';
+
+type PrintLayer = { key: string; label: string; filter: GlossyLayerFilter; drawDesign: boolean };
+const PRINT_LAYERS: PrintLayer[] = [
+  { key: 'base', label: 'Base map', filter: 'all', drawDesign: false },
+  { key: 'all', label: 'Whole design', filter: 'all', drawDesign: true },
+  { key: 'zones', label: 'Zones', filter: 'zones', drawDesign: true },
+  { key: 'water', label: 'Water', filter: 'water', drawDesign: true },
+  { key: 'planting', label: 'Planting', filter: 'planting', drawDesign: true },
+  { key: 'structures', label: 'Structures', filter: 'structures', drawDesign: true },
+];
+
+// Paper pixel sizes at ~150 DPI, portrait [w, h].
+const PAPER_PX: Record<'a4' | 'a3', [number, number]> = {
+  a4: [1240, 1754],
+  a3: [1754, 2480],
+};
+
+const slug = (s: string) => s.replace(/[^a-z0-9.\-]+/gi, '_').replace(/^_+|_+$/g, '') || 'site';
+
+function loadImg(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Could not load image'));
+    img.src = src;
+  });
+}
+
+// Legend rows for a layer — what the reader needs to decode the map.
+function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch: string; icon?: string; text: string }> {
+  if (!layer.drawDesign) {
+    return [
+      { swatch: '#8CEB6A', text: 'Property boundary' },
+      { swatch: '#3A352C', text: 'House / roof' },
+      { swatch: '#3B3A3E', text: 'Driveway (tar)' },
+    ];
+  }
+  const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
+  if (layer.filter === 'zones' || layer.filter === 'all') {
+    for (const z of state.zones) {
+      if (z.feature || z.points.length < 3) continue;
+      rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
+    }
+  }
+  if (layer.filter !== 'zones') {
+    const groups = new Map<string, { icon: string; color: string; n: number }>();
+    for (const it of state.items) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def || !itemInFilter(def.category, layer.filter)) continue;
+      const name = it.label ?? def.name;
+      const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
+      g.n += 1;
+      groups.set(name, g);
+    }
+    for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
+  }
+  return rows;
+}
+
+// Render ONE print page (map + furniture) to a canvas at the chosen paper size.
+async function renderPage(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: RefLayers,
+  placeName: string,
+  layer: PrintLayer,
+  opts: { paper: 'a4' | 'a3'; landscape: boolean; titleBlock: boolean; legend: boolean; scaleBar: boolean; northArrow: boolean; dateStr: string },
+): Promise<HTMLCanvasElement> {
+  const [pw, ph] = PAPER_PX[opts.paper];
+  const W = opts.landscape ? ph : pw;
+  const H = opts.landscape ? pw : ph;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d')!;
+  ctx.fillStyle = PAPER;
+  ctx.fillRect(0, 0, W, H);
+
+  const M = Math.round(W * 0.038);
+  const titleH = opts.titleBlock ? Math.round(H * 0.062) : 0;
+  const legendW = opts.legend ? Math.min(440, Math.max(300, Math.round(W * 0.24))) : 0;
+  const footH = opts.scaleBar || opts.northArrow ? Math.round(H * 0.05) : 0;
+
+  // ── Title block ──
+  if (opts.titleBlock) {
+    ctx.fillStyle = DARK;
+    ctx.fillRect(M, M, W - 2 * M, titleH);
+    ctx.fillStyle = GOLD;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    ctx.font = `800 ${Math.round(titleH * 0.34)}px Georgia, serif`;
+    ctx.fillText(placeName || 'Your design', M + 24, M + titleH * 0.38);
+    ctx.fillStyle = '#EFE7D6';
+    ctx.font = `600 ${Math.round(titleH * 0.24)}px system-ui, sans-serif`;
+    ctx.fillText(`${layer.label} plan`, M + 24, M + titleH * 0.74);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#C9BFA0';
+    ctx.font = `600 ${Math.round(titleH * 0.2)}px system-ui, sans-serif`;
+    ctx.fillText('ImbewuField', W - M - 24, M + titleH * 0.36);
+    ctx.fillText(opts.dateStr, W - M - 24, M + titleH * 0.68);
+    ctx.textAlign = 'left';
+  }
+
+  // ── Map area ──
+  const mapX = M;
+  const mapY = M + titleH + (titleH ? 18 : 0);
+  const mapAreaW = W - 2 * M - (legendW ? legendW + 24 : 0);
+  const mapAreaH = H - mapY - M - footH;
+
+  // Fit the exact composite into the map area, preserving aspect (letterbox).
+  const composite = await buildComposite(state, frame, refLayers, layer.filter, layer.drawDesign);
+  const img = await loadImg(composite);
+  const scale = Math.min(mapAreaW / img.width, mapAreaH / img.height);
+  const drawW = img.width * scale;
+  const drawH = img.height * scale;
+  const dx = mapX + (mapAreaW - drawW) / 2;
+  const dy = mapY + (mapAreaH - drawH) / 2;
+  ctx.drawImage(img, dx, dy, drawW, drawH);
+  // Thin frame around the drawn map.
+  ctx.strokeStyle = 'rgba(11,18,11,0.55)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(dx, dy, drawW, drawH);
+
+  // ── Legend column ──
+  if (opts.legend) {
+    const lx = W - M - legendW;
+    const ly = mapY;
+    ctx.fillStyle = '#F3ECDD';
+    ctx.strokeStyle = 'rgba(11,18,11,0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.rect(lx, ly, legendW, mapAreaH);
+    ctx.fill();
+    ctx.stroke();
+    const pad = 22;
+    ctx.fillStyle = GREEN;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = '800 30px Georgia, serif';
+    ctx.fillText('Legend', lx + pad, ly + pad + 26);
+    const rows = legendRows(state, layer);
+    const rowH = 44;
+    let ry = ly + pad + 62;
+    ctx.font = '500 25px system-ui, sans-serif';
+    for (const row of rows) {
+      if (ry > ly + mapAreaH - 30) {
+        ctx.fillStyle = '#6B6355';
+        ctx.fillText('…', lx + pad, ry);
+        break;
+      }
+      // swatch
+      ctx.fillStyle = row.swatch;
+      ctx.strokeStyle = 'rgba(11,18,11,0.35)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(lx + pad + 12, ry - 8, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      let tx = lx + pad + 34;
+      if (row.icon) {
+        ctx.fillStyle = DARK;
+        ctx.font = '24px sans-serif';
+        ctx.fillText(row.icon, tx, ry);
+        tx += 34;
+      }
+      ctx.fillStyle = '#241E12';
+      ctx.font = '500 25px system-ui, sans-serif';
+      const maxTextW = legendW - (tx - lx) - pad;
+      let text = row.text;
+      while (ctx.measureText(text).width > maxTextW && text.length > 4) text = text.slice(0, -2);
+      if (text !== row.text) text = text.slice(0, -1) + '…';
+      ctx.fillText(text, tx, ry);
+      ry += rowH;
+    }
+    if (!rows.length) {
+      ctx.fillStyle = '#6B6355';
+      ctx.font = 'italic 24px system-ui, sans-serif';
+      ctx.fillText('Nothing placed on this layer.', lx + pad, ry);
+    }
+  }
+
+  // ── Scale bar + north arrow (in the footer strip under the map) ──
+  const fy = H - M - footH * 0.4;
+  if (opts.scaleBar) {
+    const pxPerM = drawW / (frame.imgW * frame.mPerPx);
+    const nice = [5, 10, 20, 25, 50, 100, 200, 500];
+    const target = mapAreaW * 0.22;
+    let metres = nice[0];
+    for (const n of nice) if (n * pxPerM <= target) metres = n;
+    const barW = metres * pxPerM;
+    const bx = mapX + 4;
+    ctx.strokeStyle = DARK;
+    ctx.fillStyle = DARK;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(bx, fy);
+    ctx.lineTo(bx + barW, fy);
+    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bx, fy - 8); ctx.lineTo(bx, fy + 8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bx + barW, fy - 8); ctx.lineTo(bx + barW, fy + 8); ctx.stroke();
+    ctx.font = '600 24px system-ui, sans-serif';
+    ctx.textBaseline = 'bottom';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${metres} m`, bx, fy - 12);
+  }
+  if (opts.northArrow) {
+    const nx = mapX + mapAreaW - 30;
+    const ny = fy;
+    ctx.fillStyle = DARK;
+    ctx.strokeStyle = DARK;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(nx, ny - 34);
+    ctx.lineTo(nx - 11, ny);
+    ctx.lineTo(nx, ny - 10);
+    ctx.lineTo(nx + 11, ny);
+    ctx.closePath();
+    ctx.fill();
+    ctx.font = '700 24px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('N', nx, ny - 40);
+  }
+
+  return canvas;
+}
+
+export default function DesignPrint({ state, frame, refLayers, placeName, onClose }: DesignPrintProps) {
+  const [selected, setSelected] = useState<Set<string>>(new Set(PRINT_LAYERS.map((l) => l.key)));
+  const [paper, setPaper] = useState<'a4' | 'a3'>('a4');
+  const [landscape, setLandscape] = useState(true);
+  const [furniture, setFurniture] = useState({ titleBlock: true, legend: true, scaleBar: true, northArrow: true });
+  const [busy, setBusy] = useState<null | 'pdf' | 'png' | 'preview'>('preview');
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
+
+  const dateStr = new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
+  const chosen = PRINT_LAYERS.filter((l) => selected.has(l.key));
+
+  const optsFor = useCallback(
+    () => ({ paper, landscape, ...furniture, dateStr }),
+    [paper, landscape, furniture, dateStr],
+  );
+
+  // Live preview of the first selected page whenever the composition changes.
+  useEffect(() => {
+    let cancelled = false;
+    const first = PRINT_LAYERS.find((l) => selected.has(l.key));
+    if (!first) { setPreviewUrl(null); return; }
+    setBusy('preview');
+    renderPage(state, frame, refLayers, placeName ?? 'Your design', first, optsFor())
+      .then((cv) => { if (!cancelled) { setPreviewUrl(cv.toDataURL('image/jpeg', 0.85)); setBusy(null); } })
+      .catch(() => { if (!cancelled) setBusy(null); });
+    return () => { cancelled = true; };
+  }, [state, frame, refLayers, placeName, selected, paper, landscape, furniture, optsFor]);
+
+  const toggle = (key: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+
+  const exportPdf = useCallback(async () => {
+    if (!chosen.length) return;
+    setBusy('pdf');
+    try {
+      const [pw, ph] = PAPER_PX[paper];
+      const W = landscape ? ph : pw;
+      const H = landscape ? pw : ph;
+      const doc = new jsPDF({ unit: 'px', format: [W, H], orientation: landscape ? 'landscape' : 'portrait', hotfixes: ['px_scaling'] });
+      for (let i = 0; i < chosen.length; i++) {
+        const cv = await renderPage(state, frame, refLayers, placeName ?? 'Your design', chosen[i], optsFor());
+        if (i > 0) doc.addPage([W, H], landscape ? 'landscape' : 'portrait');
+        doc.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
+      }
+      doc.save(`${slug(placeName ?? 'site')}-plan-set.pdf`);
+    } finally {
+      setBusy(null);
+    }
+  }, [chosen, paper, landscape, state, frame, refLayers, placeName, optsFor]);
+
+  const exportPngs = useCallback(async () => {
+    if (!chosen.length) return;
+    setBusy('png');
+    try {
+      for (const layer of chosen) {
+        const cv = await renderPage(state, frame, refLayers, placeName ?? 'Your design', layer, optsFor());
+        const a = document.createElement('a');
+        a.href = cv.toDataURL('image/png');
+        a.download = `${slug(placeName ?? 'site')}-${layer.key}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        await new Promise((r) => setTimeout(r, 250)); // let each download start
+      }
+    } finally {
+      setBusy(null);
+    }
+  }, [chosen, state, frame, refLayers, placeName, optsFor]);
+
+  const chk = (on: boolean) => ({
+    display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10,
+    border: on ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)', background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
+    color: DARK, fontWeight: 700, fontSize: 13.5, cursor: 'pointer',
+  } as const);
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(15,12,8,0.5)', display: 'flex', justifyContent: 'center', padding: 0 }}>
+      <div style={{ width: '100%', maxWidth: 1180, background: PAPER, display: 'flex', flexDirection: 'column', height: '100%' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
+          <FileDown size={20} color={GREEN} />
+          <div style={{ fontWeight: 800, fontSize: 16, color: DARK }}>Print / Export</div>
+          <div style={{ fontSize: 12, color: '#6B6355' }}>exact maps · print-ready</div>
+          <button onClick={onClose} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+            <X size={18} /> Close
+          </button>
+        </div>
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, flexDirection: 'column', overflowY: 'auto' }}>
+          {/* Controls */}
+          <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Layers (one page each)</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {PRINT_LAYERS.map((l) => (
+                  <button key={l.key} onClick={() => toggle(l.key)} aria-pressed={selected.has(l.key)} style={chk(selected.has(l.key))}>
+                    <span>{selected.has(l.key) ? '☑' : '☐'}</span> {l.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Paper</div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  {(['a4', 'a3'] as const).map((p) => (
+                    <button key={p} onClick={() => setPaper(p)} style={chk(paper === p)}>{p.toUpperCase()}</button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Orientation</div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button onClick={() => setLandscape(true)} style={chk(landscape)}>Landscape</button>
+                  <button onClick={() => setLandscape(false)} style={chk(!landscape)}>Portrait</button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Include</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {([['titleBlock', 'Title block'], ['legend', 'Legend'], ['scaleBar', 'Scale bar'], ['northArrow', 'North arrow']] as const).map(([k, label]) => (
+                  <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
+                    <span>{furniture[k] ? '☑' : '☐'}</span> {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button onClick={exportPdf} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'pdf' ? 1 : 0.6 }}>
+                {busy === 'pdf' ? <Loader2 size={18} className="animate-spin" /> : <FileDown size={18} />}
+                {busy === 'pdf' ? 'Building PDF…' : `Export PDF (${chosen.length} page${chosen.length === 1 ? '' : 's'})`}
+              </button>
+              <button onClick={exportPngs} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `1px solid ${GREEN}`, background: 'transparent', color: GREEN, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'png' ? 1 : 0.6 }}>
+                {busy === 'png' ? <Loader2 size={18} className="animate-spin" /> : <Images size={18} />}
+                {busy === 'png' ? 'Saving PNGs…' : 'Export PNGs'}
+              </button>
+            </div>
+          </div>
+
+          {/* Preview */}
+          <div ref={previewRef} style={{ padding: 16, borderTop: '1px solid rgba(0,0,0,0.1)', background: '#EDE7DA', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: '#6B6355', alignSelf: 'flex-start' }}>
+              Preview · first page{chosen.length > 1 ? ` of ${chosen.length}` : ''}
+            </div>
+            {busy === 'preview' && !previewUrl ? (
+              <div style={{ padding: 40, color: '#6B6355', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Loader2 size={20} className="animate-spin" /> Rendering…
+              </div>
+            ) : previewUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={previewUrl} alt="Print preview" style={{ maxWidth: '100%', maxHeight: 620, boxShadow: '0 6px 24px rgba(0,0,0,0.25)', borderRadius: 4 }} />
+            ) : (
+              <div style={{ padding: 40, color: '#6B6355' }}>Select at least one layer.</div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
