@@ -8,10 +8,13 @@
 // own crop-plan store (lib/crop-plan.ts) for what's actually sown where.
 // Zero network, zero new deps.
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
+import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
@@ -280,8 +283,18 @@ function taskSentence(tasks: CropTask[]): string {
 
 // ── Page ─────────────────────────────────────────────────────────────────
 
-export default function FacilitatorCropsPage() {
+function FacilitatorCropsPageInner() {
+  // Deep-link entry from the Design Studio Simple Path: ?canvasSite=<siteId> feeds
+  // beds straight from the DesignCanvasState (via the bridge) instead of the
+  // facilitator/Firestore design picker; &auto=1 opens the auto-suggest
+  // questionnaire once beds are loaded. Absent → behaviour 100% unchanged.
+  const searchParams = useSearchParams();
+  const canvasSite = searchParams.get('canvasSite');
+  const autoParam = searchParams.get('auto');
+
   const [design, setDesign] = useState<FacilitatorDesignState | null | undefined>(undefined);
+  // Beds read from the Design Studio canvas when arriving via ?canvasSite.
+  const [canvasBeds, setCanvasBeds] = useState<PlanBed[]>([]);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
@@ -396,7 +409,9 @@ export default function FacilitatorCropsPage() {
   // crop-planning landing page you can always get back to, not just a
   // one-time gate on first load.
   const [switchingSite, setSwitchingSite] = useState(false);
-  const needsSitePicker = !!myDesignsList && (switchingSite || (myDesignsList.length > 1 && chosenDesignId === null));
+  // When beds come from the Design Studio (?canvasSite) the facilitator/Firestore
+  // picker is bypassed entirely — there's exactly one source of beds.
+  const needsSitePicker = !canvasSite && !!myDesignsList && (switchingSite || (myDesignsList.length > 1 && chosenDesignId === null));
 
   const [favouriteCropKeys, setFavouriteCropKeys] = useState<Set<string>>(new Set());
   function toggleFavourite(cropKey: string) {
@@ -463,6 +478,18 @@ export default function FacilitatorCropsPage() {
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
   }, []);
 
+  // Live bed feed from the Design Studio canvas when arriving via ?canvasSite —
+  // loads on mount and re-reads on every canvas change (mirrors how the planner
+  // reloads facilitator state), so placing another bed in the Studio (another
+  // tab) refreshes the bed list here without a reload.
+  useEffect(() => {
+    if (!canvasSite) return;
+    const refresh = () => setCanvasBeds(bedsFromDesignCanvas(loadCanvasState(canvasSite)));
+    refresh();
+    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+    return () => window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+  }, [canvasSite]);
+
   function chooseSite(id: string) {
     setChosenDesignId(id);
     setSwitchingSite(false);
@@ -481,9 +508,37 @@ export default function FacilitatorCropsPage() {
   }, [plan]);
 
   const designBeds = useMemo(() => computeDesignBeds(design ?? null), [design]);
-  const beds = designBeds.length > 0 ? designBeds : (useVirtual ? [VIRTUAL_BED] : []);
+  const beds = canvasSite
+    ? canvasBeds
+    : (designBeds.length > 0 ? designBeds : (useVirtual ? [VIRTUAL_BED] : []));
 
-  const region = design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null;
+  // ?canvasSite carries the real lat/lon in its "site:<lat>,<lon>" form (5 dp) —
+  // parse it so the Simple-Path plan uses the correct rainfall pattern rather
+  // than whatever facilitator design happens to be cached on the device.
+  const canvasLatLon = useMemo(() => {
+    if (!canvasSite) return null;
+    const m = /^site:(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(canvasSite);
+    if (!m) return null;
+    const lat = parseFloat(m[1]);
+    const lon = parseFloat(m[2]);
+    return Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null;
+  }, [canvasSite]);
+
+  const region = canvasLatLon
+    ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
+    : (design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null);
+
+  // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
+  // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
+  // can't reopen it after the farmer has moved on.
+  const autoParamHandled = useRef(false);
+  useEffect(() => {
+    if (autoParamHandled.current) return;
+    if (!mounted || autoParam !== '1' || beds.length < 1) return;
+    autoParamHandled.current = true;
+    openAutoSuggest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, autoParam, beds.length]);
   // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) still
   // gets the same warm-season windows as plain 'summer' — those crops don't
   // shrug off even light frost — but frost-hardy crops get 'mild-frost'
@@ -688,7 +743,7 @@ export default function FacilitatorCropsPage() {
         >
           ‹ Back to design
         </Link>
-        {myDesignsList && myDesignsList.length > 0 && (
+        {!canvasSite && myDesignsList && myDesignsList.length > 0 && (
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
@@ -699,7 +754,7 @@ export default function FacilitatorCropsPage() {
           </button>
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
-        {myDesignsList && myDesignsList.length > 0 ? (
+        {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1.5 min-w-0"
@@ -714,7 +769,9 @@ export default function FacilitatorCropsPage() {
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
             <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
-            <span className="font-sans truncate" style={{ fontSize: 11, color: '#8C7A62', maxWidth: 220 }}>{designTitle}</span>
+            <span className="font-sans truncate" style={{ fontSize: 11, color: '#8C7A62', maxWidth: 220 }}>
+              {canvasSite ? 'Beds from your Design Studio map' : designTitle}
+            </span>
           </div>
         )}
         <div className="flex-1" />
@@ -1152,6 +1209,14 @@ export default function FacilitatorCropsPage() {
 
       <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
+  );
+}
+
+export default function FacilitatorCropsPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100dvh', background: '#FBF7EF' }} />}>
+      <FacilitatorCropsPageInner />
+    </Suspense>
   );
 }
 

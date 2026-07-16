@@ -914,6 +914,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => window.removeEventListener('imbewu-arm-draw', arm);
   }, [startPinDraw]);
 
+  // The shared "+ Add" sheet (spec §2.3) arms a point element (tree/tank/tap) the same way
+  // the elements palette does — reticle-drop. Guarded by ELEMENT_TYPES so a bogus detail is
+  // a no-op. Opens the tools panel so the reticle drop-bar has its usual chrome around it.
+  useEffect(() => {
+    const armEl = (e: Event) => {
+      const type = (e as CustomEvent).detail as SiteElementType;
+      if (ELEMENT_TYPES.includes(type)) { setToolbarMin(false); setDroppingElement(type); }
+    };
+    window.addEventListener('imbewu-arm-element', armEl);
+    return () => window.removeEventListener('imbewu-arm-element', armEl);
+  }, []);
+
   // Re-enable map rotation after a reticle-draw session ends
   const unlockRotation = useCallback(() => {
     const map = mapRef.current?.getMap();
@@ -1581,7 +1593,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
   // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
   useEffect(() => {
-    const active = pinDraw !== null || editPin !== null;
+    // Reticle boundary/water draw, ring edit, OR point-element drop — all put a
+    // bottom-anchored action bar up, so bottom FABs (Results, + Add) must step aside.
+    const active = pinDraw !== null || editPin !== null || droppingElement !== null;
     onDrawingChange?.(active);
     if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-drawing', { detail: active }));
     // On unmount (e.g. navigating away mid-draw), tell the world drawing stopped
@@ -1589,7 +1603,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     return () => {
       if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-drawing', { detail: false }));
     };
-  }, [pinDraw, editPin, onDrawingChange]);
+  }, [pinDraw, editPin, droppingElement, onDrawingChange]);
 
   // Reset the Cancel-confirm whenever a draw session ends
   useEffect(() => { if (!pinDraw) setCancelArmed(false); }, [pinDraw]);
@@ -2844,6 +2858,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             {t('toolsSectionLabel')}
           </div>
           <div className="flex gap-1.5 flex-wrap font-sans">
+          {/* Add to my map — the shared "+ Add" door (spec §2.3). Farmer page hosts the sheet;
+              this row just asks it to open. Loud (Gold) so it reads as the primary action. */}
+          <button onClick={() => window.dispatchEvent(new CustomEvent('imbewu-open-add'))}
+            className="flex items-center gap-2 transition-all active:scale-95"
+            style={{
+              background: '#F7C97E', border: '1px solid #E0A94A',
+              borderRadius: 13, height: 48, padding: '0 15px', fontSize: 14.5, fontWeight: 700,
+              color: '#3A2A12', cursor: 'pointer',
+            }}>
+            <Plus size={19} strokeWidth={2.2} style={{ color: '#3A2A12' }} /> {t('addToolsPanelRow')}
+          </button>
+
           {/* My location */}
           <button onClick={goToMyLocation} disabled={locating}
             className="flex items-center gap-2 transition-all active:scale-95"

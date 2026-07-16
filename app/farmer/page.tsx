@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Settings, AlertTriangle, ChevronUp, Menu } from 'lucide-react';
+import { Settings, AlertTriangle, ChevronUp, Menu, Plus } from 'lucide-react';
+import AddSheet from '@/components/AddSheet';
+import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
@@ -117,6 +119,7 @@ function HomeInner() {
     window.addEventListener('pointerup', up);
   }, []);
   const [drawing, setDrawing] = useState(false); // boundary/water draw active → hide the Results FAB
+  const [addOpen, setAddOpen] = useState(false); // shared "+ Add" catalog sheet (spec §2.3)
   const [people, setPeople] = useState<Profile[]>([]);
   const [peopleLoading, setPeopleLoading] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
@@ -220,6 +223,47 @@ function HomeInner() {
     setReportPhotoAnalysis(photoAnalysis);
     setShowReport(true);
   }, []);
+
+  // ── "+ Add" catalog (spec §2.3) ──
+  // The tools-panel row and any other door dispatch 'imbewu-open-add'; we host the sheet.
+  useEffect(() => {
+    const open = () => setAddOpen(true);
+    window.addEventListener('imbewu-open-add', open);
+    return () => window.removeEventListener('imbewu-open-add', open);
+  }, []);
+
+  // The map executes what it owns (boundary / water body via 'imbewu-arm-draw';
+  // tree / tank / tap via 'imbewu-arm-element'); everything else hands off to the Studio
+  // pre-armed with ?add=<id>. Always close the sheet first — draw modes need it gone.
+  const handleAddPick = useCallback((action: AddAction) => {
+    setAddOpen(false);
+    const id = action.id;
+    if (id === 'boundary') {
+      window.dispatchEvent(new CustomEvent('imbewu-arm-draw', { detail: 'site' }));
+    } else if (id === 'water_body') {
+      window.dispatchEvent(new CustomEvent('imbewu-arm-draw', { detail: 'water' }));
+    } else if (MAP_ELEMENT_FOR[id]) {
+      window.dispatchEvent(new CustomEvent('imbewu-arm-element', { detail: MAP_ELEMENT_FOR[id] }));
+    } else {
+      router.push(selected
+        ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}&add=${id}`
+        : `/design?add=${id}`);
+    }
+  }, [selected, router]);
+
+  // Studio → map handoff: /farmer?arm=site|water (boundary/water rows tapped in the Studio)
+  // arm the reticle here. One-shot (mirrors the ?site= pattern above); 800 ms lets the
+  // dynamically-imported Map mount before we fire the event.
+  const armParamHandled = useRef(false);
+  useEffect(() => {
+    if (armParamHandled.current) return;
+    const arm = searchParams.get('arm');
+    if (arm !== 'site' && arm !== 'water') return;
+    armParamHandled.current = true;
+    const timer = setTimeout(() => window.dispatchEvent(new CustomEvent('imbewu-arm-draw', { detail: arm })), 800);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchKey]);
 
   // Remember the analysed site so the global chat assistant is site-aware everywhere.
   useEffect(() => {
@@ -435,6 +479,25 @@ function HomeInner() {
                 {showDesign ? 'Hide design' : 'Show design'}
               </button>
             )}
+
+            {/* ── Desktop "+ Add" pill ── */}
+            {/* On lg+ there is no TabBar overlap, so anchor the Add door to the map
+                container, bottom-left (mirrors the mobile pill). Hidden while drawing. */}
+            <button
+              onClick={() => setAddOpen(true)}
+              className="hidden lg:flex absolute left-4 bottom-4 z-20 items-center gap-2 px-4 py-2.5 rounded-full font-display font-semibold transition-all active:scale-95"
+              style={{
+                background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
+                border: '1px solid rgba(31,77,43,0.6)',
+                color: '#fff', fontSize: 14,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+                opacity: drawing ? 0 : 1,
+                pointerEvents: drawing ? 'none' : 'auto',
+              }}
+              aria-label={t('addButton')}
+            >
+              <Plus size={16} /> {t('addButton')}
+            </button>
           </div>
 
           {/* ── Drag handle to resize the side panel ── */}
@@ -476,6 +539,29 @@ function HomeInner() {
               onChatDeepLinkConsumed={() => { setInitialChatQuery(null); setInitialChatPhoto(false); }}
             />
           </div>
+
+          {/* ── Mobile: floating "+ Add" pill (bottom-LEFT, mirrors Details) ── */}
+          {/* The headline discoverability door. Hidden when the sheet is open, while
+              drawing, or while the Add sheet itself is up. LimaBar is not mounted on
+              /farmer, so bottom-left is free. */}
+          <button
+            className="lg:hidden fixed left-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
+            style={{
+              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 16px)',
+              background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
+              border: '1px solid rgba(31,77,43,0.6)',
+              color: '#fff',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+              backdropFilter: 'blur(10px)',
+              opacity: sheetOpen || drawing || addOpen ? 0 : 1,
+              pointerEvents: sheetOpen || drawing || addOpen ? 'none' : 'auto',
+            }}
+            onClick={() => setAddOpen(true)}
+            aria-label={t('addButton')}
+          >
+            <Plus size={16} />
+            {t('addButton')}
+          </button>
 
           {/* ── Mobile: floating "Details" toggle button ── */}
           {/* Visible only below md, hidden when sheet is open or while drawing a boundary */}
@@ -582,6 +668,13 @@ function HomeInner() {
         profile={myProfile}
         mapCenter={selected ? { lat: selected.lat, lon: selected.lon } : undefined}
         onSaved={(updated) => setMyProfile(updated)}
+      />
+
+      <AddSheet
+        open={addOpen}
+        surface="map"
+        onClose={() => setAddOpen(false)}
+        onPick={handleAddPick}
       />
     </>
   );

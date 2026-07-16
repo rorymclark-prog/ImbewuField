@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, X } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -57,8 +57,12 @@ import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
+import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
 import AutoDesignSheet from '@/components/design/AutoDesignSheet';
+import AdvancedToolsSheet, { type AdvancedAction } from '@/components/design/AdvancedToolsSheet';
+import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
+import SpeakButton from '@/components/SpeakButton';
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 
@@ -428,6 +432,11 @@ function DesignStudioInner() {
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  // Advanced (beta) sheet — the quiet home for the demoted auto-draw / auto-design tools.
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  // Zone ADVICE (the guidance half of the hybrid): Lima's spatial suggestions shown as short
+  // text advice the farmer taps to ARM a zone chip and then draws themselves — never committed.
+  const [zoneAdvice, setZoneAdvice] = useState<ZoneAdvicePin[]>([]);
 
   const undoStack = useRef<DesignCanvasState[]>([]);
   const siteId = useMemo(
@@ -689,6 +698,8 @@ function DesignStudioInner() {
     // The ground-feature chips live only on the Base step; clear any armed feature on a step
     // change so a still-armed 'house' can't silently stamp a plain zone drawn on another step.
     setAreaFeature(null);
+    // Zone advice pins are only meaningful on the zones step — clear them on any step change.
+    setZoneAdvice([]);
     setCanvasState((prev) => {
       if (!prev) return prev;
       const next = { ...prev, step, updatedAt: new Date().toISOString() };
@@ -696,6 +707,23 @@ function DesignStudioInner() {
       return next;
     });
   }, []);
+
+  // One-shot: a "+ Add → Lawn / Veg garden / New bed" tap on the farmer map deep-links here
+  // as /design?add=<id>. Arm the matching ground-feature area tool on the Base step so the
+  // farmer lands ready to draw the thing they picked (the discoverability handoff).
+  const addParamHandled = useRef(false);
+  useEffect(() => {
+    if (addParamHandled.current || !canvasState) return;
+    const add = params.get('add') as AddActionId | null;
+    if (!add) return;
+    addParamHandled.current = true;
+    const feature = STUDIO_AREA_FOR[add];
+    if (!feature) return;
+    setStep('base');            // clears any armed feature…
+    setAreaFeature(feature);    // …so set the picked one AFTER
+    handleSetTool('zone');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvasState]);
 
   const handleVisionDetect = useCallback(async () => {
     if (!frame?.satDataUrl) {
@@ -742,9 +770,13 @@ function DesignStudioInner() {
   // Per-step suggest: 'base' keeps the existing AI vision detect; 'zones' uses the HYBRID
   // AI-vision planner (reason over the satellite → clean geometry) with a deterministic
   // fallback; the remaining steps use the instant local geometry generators.
-  const handleSuggest = useCallback(async () => {
+  //
+  // Takes `step` as an argument (not `canvasState.step`) so the Advanced sheet can run any
+  // step's generator regardless of the wizard's current step. The Pro-mode pill passes the
+  // current step via `handleSuggest` below.
+  const runSuggestForStep = useCallback(async (step: WizardStep) => {
     if (!canvasState) return;
-    if (canvasState.step === 'base') {
+    if (step === 'base') {
       handleVisionDetect();
       return;
     }
@@ -757,7 +789,7 @@ function DesignStudioInner() {
     const mergePending = (next: DetectSuggestion[]) =>
       setSuggestions((prev) => [...prev.filter((s) => s.status !== 'pending'), ...next]);
 
-    if (canvasState.step === 'zones') {
+    if (step === 'zones') {
       if (!frame) return;
       // Only ACCEPTED placements count as ground truth here — raw pending vision-detect
       // suggestions are unconfirmed and would let a false-positive distort the zone plan.
@@ -827,7 +859,7 @@ function DesignStudioInner() {
     }
 
     let next: DetectSuggestion[] = [];
-    switch (canvasState.step) {
+    switch (step) {
       case 'water':
         if (!frame) return;
         next = suggestWater(refLayers.boundary, refLayers.house, frame.mPerPx, frame.imgW, frame.imgH);
@@ -847,6 +879,7 @@ function DesignStudioInner() {
   }, [canvasState, refLayers, frame, site, handleVisionDetect]);
 
   // Open the Auto-Design questionnaire sheet (guarded on a traced boundary, same as suggest).
+  // Declared before runAdvancedAction, which depends on it.
   const openAutoDesign = useCallback(() => {
     if (refLayers.boundary.length < 3) {
       setDetectError('Trace your boundary on the main map first.');
@@ -855,6 +888,67 @@ function DesignStudioInner() {
     setDetectError(null);
     setAutoDesignPhase('questions');
   }, [refLayers.boundary.length]);
+
+  // Pro-mode compact pill: run the suggest generator for whatever step is showing.
+  const handleSuggest = useCallback(() => {
+    if (canvasState) runSuggestForStep(canvasState.step);
+  }, [canvasState, runSuggestForStep]);
+
+  // Advanced (beta) sheet actions — decoupled from the current wizard step by design.
+  const runAdvancedAction = useCallback(
+    (action: AdvancedAction) => {
+      setAdvancedOpen(false);
+      if (action === 'detect') {
+        handleVisionDetect();
+        return;
+      }
+      if (action === 'autoDesign') {
+        openAutoDesign();
+        return;
+      }
+      runSuggestForStep(action); // 'zones' | 'water' | 'planting' | 'structures'
+    },
+    [handleVisionDetect, openAutoDesign, runSuggestForStep],
+  );
+
+  // Arm a zone chip so the FARMER draws it — the tap-a-pin half of the guidance hybrid.
+  // Never commits geometry.
+  const armZoneFromAdvice = useCallback(
+    (zone: 0 | 1 | 2 | 3 | 4 | 5) => {
+      setZoneDraw(zone);
+      setAreaFeature(null);
+      handleSetTool('zone');
+    },
+    [handleSetTool],
+  );
+
+  // "Where do my zones go?" — run the INSTANT deterministic zone planner (no network) and
+  // convert its rings to advice pins. Nothing lands in canvasState.zones.
+  const runZoneAdvice = useCallback(() => {
+    if (!canvasState || !frame) return;
+    if (refLayers.boundary.length < 3) {
+      setDetectError('Trace your boundary on the main map first.');
+      return;
+    }
+    setDetectError(null);
+    const structures = canvasState.items
+      .filter((i) => ELEMENTS_BY_ID[i.defId]?.category === 'structure')
+      .map((i) => ({ x: i.x, y: i.y, wM: i.wM ?? ELEMENTS_BY_ID[i.defId].wM, hM: i.hM ?? ELEMENTS_BY_ID[i.defId].hM }));
+    const existingVeg = canvasState.items
+      .filter((i) => {
+        const def = ELEMENTS_BY_ID[i.defId];
+        return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
+      })
+      .map((i) => ({ x: i.x, y: i.y }));
+    const zoneOpts = {
+      frame: { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx },
+      driveway: refLayers.driveway,
+      site,
+      structures,
+      existingVeg,
+    };
+    setZoneAdvice(zoneAdviceFromSuggestions(suggestZones(refLayers.boundary, refLayers.house, zoneOpts)));
+  }, [canvasState, frame, refLayers, site]);
 
   // Run the whole-farm AI Auto-Design. ONE vision call returns intent → code makes geometry
   // (suggestFromAutoDesignPlan) → everything lands as PENDING suggestions. Any failure path
@@ -1202,36 +1296,9 @@ function DesignStudioInner() {
 
       {!chromeCollapsed && (
       <>
-      {/* AI Auto-Design hero — one tap designs the whole farm. Above the wizard so it's
-          visible on every step, independent of the per-step Suggest button. */}
-      {canvasState && canvasState.step !== 'glossy' && (
-        <div style={{ padding: '10px 14px 0' }}>
-          <button
-            type="button"
-            onClick={openAutoDesign}
-            disabled={autoDesignPhase === 'running'}
-            style={{
-              width: '100%',
-              minHeight: 48,
-              borderRadius: 14,
-              border: 'none',
-              background: `linear-gradient(90deg, ${GOLD}, #F3B85C)`,
-              color: DARK,
-              fontWeight: 800,
-              fontSize: 15,
-              cursor: autoDesignPhase === 'running' ? 'default' : 'pointer',
-              opacity: autoDesignPhase === 'running' ? 0.7 : 1,
-              boxShadow: '0 2px 10px rgba(247,201,126,0.5)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-            }}
-          >
-            {autoDesignPhase === 'running' ? 'Designing your farm…' : '✨ Auto-design my farm'}
-          </button>
-        </div>
-      )}
+      {/* Auto-design is no longer a hero bar — it lives in the quiet Advanced (beta) sheet
+          reached from the slim chrome row below. Guidance (wizard + advisor + zone advice)
+          is the first-class path now. */}
 
       {/* Wizard (top) */}
       {canvasState && (
@@ -1294,10 +1361,19 @@ function DesignStudioInner() {
               </>
             );
           })()}
+          {canvasState.step !== 'glossy' && (
+            <button
+              type="button"
+              onClick={() => setAdvancedOpen(true)}
+              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+            >
+              <SlidersHorizontal size={15} /> Advanced
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setChromeCollapsed((c) => !c)}
-            style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+            style={{ marginLeft: canvasState.step !== 'glossy' ? 0 : 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
           >
             {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
           </button>
@@ -1482,6 +1558,131 @@ function DesignStudioInner() {
         )}
       </div>
 
+      {/* Zone ADVICE (guided mode, zones step) — the guidance half of the hybrid. Lima's
+          spatial suggestions as short text advice; tap a row to ARM that zone chip and draw
+          it yourself. Nothing is committed to the canvas. */}
+      {canvasState && canvasState.step === 'zones' && designMode === 'guided' && (
+        <div style={{ padding: '8px 14px 0' }}>
+          {zoneAdvice.length === 0 ? (
+            <button
+              type="button"
+              onClick={runZoneAdvice}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                width: '100%',
+                minHeight: 48,
+                borderRadius: 12,
+                border: `1.5px solid ${GREEN}`,
+                background: 'transparent',
+                color: GREEN,
+                fontWeight: 700,
+                fontSize: 14.5,
+                cursor: 'pointer',
+              }}
+            >
+              <Lightbulb size={18} /> Where do my zones go?
+            </button>
+          ) : (
+            <div
+              style={{
+                border: `1px solid ${GOLD}`,
+                borderRadius: 12,
+                background: 'rgba(31,77,43,0.04)',
+                padding: '8px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+                <Lightbulb size={16} color={GREEN} style={{ flexShrink: 0, marginTop: 2 }} />
+                <span style={{ flex: 1, fontSize: 12.5, lineHeight: 1.35, color: DARK }}>
+                  Lima marked where each zone would work well. Tap a zone, then draw it yourself.
+                </span>
+                <SpeakButton
+                  text="Lima marked where each zone would work well. Tap a zone, then draw it yourself."
+                  size={16}
+                  color={GREEN}
+                />
+                <button
+                  type="button"
+                  onClick={() => setZoneAdvice([])}
+                  aria-label="Hide advice"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    minHeight: 32,
+                    padding: '0 6px',
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#8A7C63',
+                    fontSize: 11.5,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                >
+                  <X size={13} /> Hide
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {zoneAdvice.map((pin) => (
+                  <button
+                    key={pin.id}
+                    type="button"
+                    onClick={() => armZoneFromAdvice(pin.zone)}
+                    title={pin.note}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      maxWidth: '100%',
+                      minHeight: 44,
+                      padding: '4px 10px',
+                      borderRadius: 999,
+                      border: zoneDraw === pin.zone && tool === 'zone' ? `2px solid ${GREEN}` : '1px solid #E2D8C4',
+                      background: '#FFFFFF',
+                      color: DARK,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      style={{
+                        width: 16,
+                        height: 16,
+                        flexShrink: 0,
+                        borderRadius: '50%',
+                        background: ZONE_DEFS[pin.zone].color,
+                        border: '1px solid rgba(11,18,11,0.25)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 9,
+                        fontWeight: 800,
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      {pin.zone}
+                    </span>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {pin.note}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Palette (docked bottom) */}
       {canvasState && canvasState.step !== 'glossy' && (
         <DesignPalette
@@ -1512,6 +1713,17 @@ function DesignStudioInner() {
           site={site}
           houseXY={houseXY}
           lastChangeId={canvasState.updatedAt}
+        />
+      )}
+
+      {/* Advanced (beta) tools sheet — the quiet home for auto-draw / auto-design. */}
+      {canvasState && (
+        <AdvancedToolsSheet
+          open={advancedOpen}
+          step={canvasState.step}
+          detecting={detecting}
+          onClose={() => setAdvancedOpen(false)}
+          onRun={runAdvancedAction}
         />
       )}
 
@@ -1558,7 +1770,7 @@ function DesignStudioInner() {
           />
           <div style={{ fontWeight: 700, fontSize: 16 }}>Designing your farm…</div>
           <div style={{ fontSize: 12.5, opacity: 0.85, maxWidth: 260 }}>
-            Reading your satellite image and placing zones, veg, water and a wind belt.
+            Reading your satellite photo and drafting zones, veg, water and a wind belt for review.
           </div>
           <style>{`@keyframes imbewu-spin { to { transform: rotate(360deg); } }`}</style>
         </div>

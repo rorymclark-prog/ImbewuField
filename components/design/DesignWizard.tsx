@@ -7,7 +7,7 @@
 // They share only the step data/labels below, not layout.
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Sparkles, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Sparkles, FlaskConical, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import type { DesignMode } from './DesignPalette';
@@ -42,22 +42,24 @@ export const STEP_LABELS: Record<WizardStep, string> = {
 
 const STEP_GUIDANCE: Record<WizardStep, string> = {
   base: "Check your boundary and house are showing — trace them on the main map if not.",
-  water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope — or tap ✨ Suggest water setup and approve the overlay.',
-  zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow — or tap ✨ Suggest zones and approve the overlay.',
-  planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map — or tap ✨ Suggest planting and approve the overlay.",
-  structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path — or tap ✨ Suggest structures and approve the overlay.',
+  water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope.',
+  zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow. Tap "Where do my zones go?" if you want Lima\'s advice.',
+  planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
+  structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path.',
   review: 'Toggle layers to check each map: water, zones, planting.',
   glossy: "Happy? Generate the artist's impression of YOUR design.",
 };
 
 const SUGGEST_STEPS: ReadonlySet<WizardStep> = new Set(['base', 'water', 'zones', 'planting', 'structures']);
 
+// base = "Auto-detect features" traces what EXISTS (not auto-design), so it stays unlabelled.
+// The four design steps are demoted to a beta affordance — labelled and iconed as such.
 const SUGGEST_LABEL: Partial<Record<WizardStep, string>> = {
   base: 'Auto-detect features (AI)',
-  zones: 'Suggest zones',
-  water: 'Suggest water setup',
-  planting: 'Suggest planting',
-  structures: 'Suggest structures',
+  zones: 'Suggest zones (beta)',
+  water: 'Suggest water setup (beta)',
+  planting: 'Suggest planting (beta)',
+  structures: 'Suggest structures (beta)',
 };
 
 function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPresent: { boundary: boolean; house: boolean }): boolean {
@@ -99,6 +101,9 @@ function SuggestButton({
   onAutoDetect: () => void;
   big: boolean;
 }) {
+  // The four design steps are beta (auto-DRAW); base is auto-DETECT (reads reality). Show a
+  // FlaskConical on beta so "beta" reads visually, Sparkles on base.
+  const isBeta = step !== 'base';
   return (
     <button
       onClick={() => !detecting && onAutoDetect()}
@@ -119,7 +124,13 @@ function SuggestButton({
         width: '100%',
       }}
     >
-      {detecting ? <Loader2 size={big ? 20 : 15} className="animate-spin" /> : <Sparkles size={big ? 20 : 15} />}
+      {detecting ? (
+        <Loader2 size={big ? 20 : 15} className="animate-spin" />
+      ) : isBeta ? (
+        <FlaskConical size={big ? 20 : 15} />
+      ) : (
+        <Sparkles size={big ? 20 : 15} />
+      )}
       {detecting ? (step === 'base' ? 'Detecting… (~20s)' : 'Designing… (a few seconds)') : SUGGEST_LABEL[step]}
       {!detecting && !!suggestionsCount && suggestionsCount > 0 && (
         <span
@@ -152,15 +163,9 @@ function SuggestButton({
 function GuidedWizard({
   step,
   setStep,
-  onAutoDetect,
-  detecting,
-  suggestionsCount,
 }: {
   step: WizardStep;
   setStep: (s: WizardStep) => void;
-  onAutoDetect?: () => void;
-  detecting?: boolean;
-  suggestionsCount?: number;
 }) {
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
@@ -214,10 +219,6 @@ function GuidedWizard({
       >
         {STEP_GUIDANCE[step]}
       </div>
-
-      {SUGGEST_STEPS.has(step) && onAutoDetect && (
-        <SuggestButton step={step} detecting={detecting} suggestionsCount={suggestionsCount} onAutoDetect={onAutoDetect} big />
-      )}
 
       <div style={{ display: 'flex', gap: 10 }}>
         <button
@@ -434,13 +435,5 @@ export default function DesignWizard({
       />
     );
   }
-  return (
-    <GuidedWizard
-      step={step}
-      setStep={setStep}
-      onAutoDetect={onAutoDetect}
-      detecting={detecting}
-      suggestionsCount={suggestionsCount}
-    />
-  );
+  return <GuidedWizard step={step} setStep={setStep} />;
 }

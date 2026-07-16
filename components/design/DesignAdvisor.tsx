@@ -278,8 +278,14 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
           }}
         >
           {rest.map((a, i) => (
-            <div key={i} style={{ display: 'flex', gap: 6, fontSize: 12.5, lineHeight: 1.3 }}>
-              <span>{a.severity === 'warn' ? '⚠️' : '💡'}</span>
+            <div key={i} style={{ display: 'flex', gap: 6, fontSize: 12.5, lineHeight: 1.3, alignItems: 'flex-start' }}>
+              <span style={{ flexShrink: 0, marginTop: 1 }}>
+                {a.severity === 'warn' ? (
+                  <TriangleAlert size={14} color="#E8974A" />
+                ) : (
+                  <Lightbulb size={14} color="#7ED694" />
+                )}
+              </span>
               <span>{a.msg}</span>
             </div>
           ))}
