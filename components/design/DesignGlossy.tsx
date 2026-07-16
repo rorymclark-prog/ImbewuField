@@ -697,7 +697,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
-  const mapKey = producerStyle ? `producer:${producerStyle}` : (analysisStyle ?? filter);
+  // Each map+style combination caches its own render (e.g. producer:storybook:zones).
+  const mapKey = producerStyle ? `producer:${producerStyle}:${filter}` : (analysisStyle ?? filter);
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
   const pushGallery = useCallback((label: string, image: string) => {
@@ -829,12 +830,15 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     try {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
-      // a. Model input — the whole design composite (all layers, design marks on).
-      const composite = await buildComposite(state, frame, refLayers, 'all');
+      // Style renders the CURRENTLY-CHOSEN design layer (Whole design / Water / Zones / …) —
+      // so "Zones + Homestead Storybook" illustrates just the zones in that style.
+      const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? 'Full design';
+      // a. Model input — the composite for the chosen layer.
+      const composite = await buildComposite(state, frame, refLayers, filter);
       // b. Short comma list of placed elements + counts.
       const elementsText = producerElementsText(state);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
-      const modelImage = await requestProducer(stripDataUrl(composite), 'Full design', elementsText, producerStyle);
+      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
       const boundaryPx =
         refLayers.boundary.length >= 3
@@ -859,13 +863,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const record: SavedGlossy = { image: final, provider: 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery(`${styleDef.label} map`, final);
+      pushGallery(`${layerLabel} · ${styleDef.label}`, final);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, mapKey, pushGallery]);
+  }, [producerStyle, filter, state, frame, refLayers, mapKey, pushGallery]);
 
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
@@ -944,12 +948,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {GLOSSY_FILTERS.map((f) => {
-            const active = analysisStyle === null && producerStyle === null && filter === f.key;
+            // A design layer stays selected even with an illustrated style chosen — the two
+            // combine (e.g. Zones + Homestead Storybook). Analysis maps override the layer.
+            const active = analysisStyle === null && filter === f.key;
             return (
               <button
                 key={f.key}
                 type="button"
-                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setProducerStyle(null); }}
+                onClick={() => { setFilter(f.key); setAnalysisStyle(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -1003,9 +1009,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           })}
         </div>
 
-        {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND accurate). */}
+        {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
+            accurate). These COMBINE with the chosen Design map above (e.g. Zones + Storybook). */}
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Styles · illustrated
+          Style · illustrated {producerStyle && analysisStyle === null ? `(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)` : '· tap a Design map + a style'}
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {PRODUCER_STYLES.map((s) => {
@@ -1014,7 +1021,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); }}
+                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={s.blurb}
@@ -1045,7 +1052,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {producerStyle
-            ? `Generate the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} — an illustrated map rendered through the polished pipeline. The model beautifies the whole scene, then your real satellite, boundary and labels are composited back on top, so the picture is beautiful AND accurate (boundary-locked by construction). Takes about a minute.`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND accurate (boundary-locked by construction). Takes about a minute.`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -1067,7 +1074,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
               {producerStyle
-                ? ` · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
+                ? ` · ${filter === 'all' ? 'Whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : analysisStyle
                   ? ` · ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
                   : filter !== 'all'
@@ -1204,7 +1211,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             ? 'Generating your map… 30–90s'
             : `${resultImage ? 'Regenerate' : 'Generate'} ${
                 producerStyle
-                  ? `my ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
+                  ? `my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                   : analysisStyle
                     ? `my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
                     : filter === 'all'
