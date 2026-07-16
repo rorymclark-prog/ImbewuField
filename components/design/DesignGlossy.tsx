@@ -595,17 +595,21 @@ async function requestProducer(
 }
 
 // Short comma list of placed element names + counts, e.g. "🥬 Vegetable Bed ×6, 🛢 JoJo Tank".
-function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers']): string {
+function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): string {
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def) continue;
+    if (!def || !itemInFilter(def.category, filter)) continue; // only this layer's elements
     const name = it.label ?? def.name;
     const g = counts.get(name) ?? { icon: def.icon, n: 0 };
     g.n += 1;
     counts.set(name, g);
   }
   const parts = [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`);
+  // On the zones layer, describe the effort-zone areas instead of individual elements.
+  if (zonesInFilter(filter)) {
+    for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
+  }
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
   if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a dark TAR / ASPHALT road, kept clear with no plantings on it');
@@ -621,15 +625,18 @@ function producerLabels(
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
   H: number,
+  filter: GlossyLayerFilter = 'all',
 ): ProducerLabel[] {
   const fs = 26, padX = 14;
   const pillWidth = (text: string) => Math.min(W - 28, padX * 2 + text.length * fs * 0.6);
 
-  // One cluster per element name (renamed items get their own pill).
+  // One cluster per element name (renamed items get their own pill) — only for THIS layer, so a
+  // Zones/Water/Planting map isn't cluttered with every other layer's labels (Rory: a "Zones"
+  // map was showing JoJo Tanks + veg beds).
   const groups = new Map<string, { xs: number[]; ys: number[]; icon: string }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def) continue;
+    if (!def || !itemInFilter(def.category, filter)) continue;
     const name = it.label ?? def.name;
     const g = groups.get(name) ?? { xs: [], ys: [], icon: def.icon };
     g.xs.push(it.x);
@@ -645,6 +652,16 @@ function producerLabels(
     const cy = (g.ys.reduce((a, b) => a + b, 0) / n) * H;
     const text = `${g.icon} ${name}${n > 1 ? ` ×${n}` : ''}`;
     clusters.push({ cx, cy, text, pw: pillWidth(text) });
+  }
+  // On the zones layer, label the effort-zone areas (not individual elements).
+  if (zonesInFilter(filter)) {
+    for (const z of state.zones) {
+      if (z.feature || z.points.length < 3) continue;
+      const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
+      const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
+      const text = `${z.zone}️⃣ ${ZONE_DEFS[z.zone].label}`;
+      clusters.push({ cx, cy, text, pw: pillWidth(text) });
+    }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
   if (refLayers.driveway.length >= 2) {
@@ -896,8 +913,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? 'Full design';
       // a. Model input — the composite for the chosen layer.
       const composite = await buildComposite(state, frame, refLayers, filter);
-      // b. Short comma list of placed elements + counts.
-      const elementsText = producerElementsText(state, refLayers);
+      // b. Short comma list of placed elements + counts (this layer only).
+      const elementsText = producerElementsText(state, refLayers, filter);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
@@ -905,8 +922,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         refLayers.boundary.length >= 3
           ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined;
-      // e. True labels (one pill per element-name group at its centroid).
-      const labels = producerLabels(state, refLayers, W, H);
+      // e. True labels (one pill per element-name group at its centroid) — this layer only.
+      const labels = producerLabels(state, refLayers, W, H, filter);
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage,
