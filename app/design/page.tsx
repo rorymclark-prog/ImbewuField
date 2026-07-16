@@ -376,13 +376,14 @@ function DesignStudioInner() {
     lines: true,
     ground: true,
     baseMap: true,
+    labels: true,
   });
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true });
+      setActiveLayers({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true, labels: true });
     }
   }, [designMode]);
 

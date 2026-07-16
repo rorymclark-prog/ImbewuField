@@ -72,6 +72,7 @@ interface ActiveLayers {
   lines: boolean;
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
+  labels: boolean; // the text name pills on every feature — off = declutter the map
 }
 
 interface RefLayers {
@@ -1190,8 +1191,9 @@ export default function DesignCanvas({
                 </>
               )}
               {/* Name tag — sits at the centroid so the farmer can see what each traced
-                  shape is. When active, the tag is replaced by the "Use in design" button. */}
-              {!isActive && (
+                  shape is. When active, the tag is replaced by the "Use in design" button.
+                  Hidden when the Labels layer is off (declutter). */}
+              {!isActive && activeLayers.labels && (
                 <g transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`} pointerEvents="none">
                   <foreignObject x={-56} y={-10} width={112} height={20} style={{ overflow: 'visible' }}>
                     <div
@@ -1304,6 +1306,7 @@ export default function DesignCanvas({
                   style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                 >
                   {feat ? (
+                    activeLayers.labels ? (
                     <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
                       <div
                         style={{
@@ -1326,6 +1329,7 @@ export default function DesignCanvas({
                         {feat.icon} {feat.label}
                       </div>
                     </foreignObject>
+                    ) : null
                   ) : (
                     <>
                       <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
@@ -1675,7 +1679,8 @@ export default function DesignCanvas({
               <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
                 {def.icon}
               </text>
-              {/* Label pill below, app style */}
+              {/* Label pill below, app style — hidden when the Labels layer is off (declutter). */}
+              {activeLayers.labels && (
               <g transform={`translate(0, ${hPx / 2 + 9})`}>
                 <foreignObject x={-45} y={-8} width={90} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
                   <div
@@ -1698,6 +1703,7 @@ export default function DesignCanvas({
                   </div>
                 </foreignObject>
               </g>
+              )}
               {isSelected && onEditItem && (
                 <g
                   transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 26})`}
