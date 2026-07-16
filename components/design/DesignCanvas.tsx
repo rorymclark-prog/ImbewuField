@@ -10,6 +10,7 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useEffect, useRef, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -343,6 +344,12 @@ export default function DesignCanvas({
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
+
+  // Reference-layer declutter. The traced/adopted underlay + the boundary fence reference
+  // clutter the satellite while the farmer is PLACING/DRAWING. This cycles their visibility
+  // shown → dimmed → hidden (via the Eye/EyeOff toggle) so the view can be cleared. Purely
+  // local/visual — it NEVER touches the farmer's own placed items/zones/lines.
+  const [refVisibility, setRefVisibility] = useState<'shown' | 'dimmed' | 'hidden'>('shown');
 
   // Zoom/pan view transform — world-space (viewBox px) is drawn inside a single
   // <g transform="translate(tx ty) scale(k)">; fixed overlays (north arrow, scale bar,
@@ -950,6 +957,12 @@ export default function DesignCanvas({
 
   const adoptedIds = adoptedFeatureIds(state);
 
+  // Reference-layer (boundary + traced/adopted underlay) visibility, derived from the toggle.
+  // 'hidden' drops them from the tree entirely (so they neither clutter nor interact);
+  // 'dimmed' fades them to a faint context layer; 'shown' is today's full-strength render.
+  const refShown = refVisibility !== 'hidden';
+  const refOpacityFactor = refVisibility === 'dimmed' ? 0.3 : 1;
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -1010,12 +1023,12 @@ export default function DesignCanvas({
             shape are now rendered below as tappable `tracedLayers` (adoptable in one tap),
             so they're no longer drawn here as dead non-interactive outlines. The boundary
             stays special: fence styling, never adopted as a zone. */}
-        {refLayers.boundary.length >= 3 && (() => {
+        {refShown && refLayers.boundary.length >= 3 && (() => {
           const boundaryPx = refLayers.boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
           const boundaryPts = ringToPx(refLayers.boundary, imgW, imgH);
           const picketPath = fencePicketPath(boundaryPx, 26, 6);
           return (
-            <g pointerEvents="none">
+            <g pointerEvents="none" opacity={refOpacityFactor}>
               {/* Crisp fence style ported from HybridRender.tsx: dark casing + green line + pickets. */}
               <polygon points={boundaryPts} fill="none" stroke="#0B120B" strokeWidth={5} strokeLinejoin="round" opacity={0.5} />
               <polygon points={boundaryPts} fill="none" stroke="#9BE86B" strokeWidth={3} strokeLinejoin="round" />
@@ -1029,7 +1042,7 @@ export default function DesignCanvas({
             dotted, colour-coded reference shapes. Tap one (in Select mode) to reveal
             "Use in design", which adopts it into an editable shape — no redraw. Adopted
             ones dim and drop the affordance so they can't be added twice. */}
-        {(tracedLayers ?? []).map((layer) => {
+        {refShown && (tracedLayers ?? []).map((layer) => {
           const adopted = adoptedIds.has(layer.featureId);
           const interactive = tool === 'select' && !adopted;
           // Only reveal the adopt button in Select mode, so an armed draw tool can neither
@@ -1050,7 +1063,7 @@ export default function DesignCanvas({
             onPointerDown: onTracedDown,
           };
           return (
-            <g key={`traced-${layer.featureId}`} opacity={adopted ? 0.4 : 1}>
+            <g key={`traced-${layer.featureId}`} opacity={(adopted ? 0.4 : 1) * refOpacityFactor}>
               {layer.render === 'polygon' ? (
                 <>
                   <polygon
@@ -1193,13 +1206,13 @@ export default function DesignCanvas({
                   stroke={color}
                   strokeWidth={feat ? 2 : 1.5}
                   strokeDasharray={feat ? undefined : '6 4'}
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
                 <g
                   transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}
                   onPointerDown={onZonePointerDown}
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                 >
                   {feat ? (
                     <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
@@ -1355,7 +1368,7 @@ export default function DesignCanvas({
                   stroke="transparent"
                   strokeWidth={18}
                   strokeLinecap="round"
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: 'stroke' }}
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'stroke' : 'none' }}
                   onPointerDown={(e) => startDragShape(e, line.id, 'line')}
                 />
                 <polyline
@@ -1527,7 +1540,7 @@ export default function DesignCanvas({
               key={item.id}
               transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}
               onPointerDown={(e) => startDragItem(e, item.id)}
-              style={{ cursor: tool === 'select' ? 'grab' : 'default' }}
+              style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
             >
               {isSelected && (
                 <>
@@ -1788,6 +1801,50 @@ export default function DesignCanvas({
           );
         })()}
       </svg>
+
+      {/* Reference-layer declutter toggle — top-left, unobtrusive. Cycles the traced/adopted
+          underlay + boundary reference between shown → dimmed → hidden so the farmer can clear
+          the satellite while placing/drawing. Local-only; never affects the farmer's own placed
+          items/zones/lines. */}
+      <button
+        type="button"
+        aria-label={
+          refVisibility === 'shown'
+            ? 'Dim reference layers'
+            : refVisibility === 'dimmed'
+            ? 'Hide reference layers'
+            : 'Show reference layers'
+        }
+        title={
+          refVisibility === 'shown'
+            ? 'Reference layers: shown — tap to dim'
+            : refVisibility === 'dimmed'
+            ? 'Reference layers: dimmed — tap to hide'
+            : 'Reference layers: hidden — tap to show'
+        }
+        onClick={() =>
+          setRefVisibility((v) => (v === 'shown' ? 'dimmed' : v === 'dimmed' ? 'hidden' : 'shown'))
+        }
+        style={{
+          position: 'absolute',
+          top: 12,
+          left: 12,
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          border: 'none',
+          background: 'rgba(11,18,11,0.82)',
+          color: '#FBF6EC',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          cursor: 'pointer',
+          opacity: refVisibility === 'dimmed' ? 0.7 : 1,
+        }}
+      >
+        {refVisibility === 'hidden' ? <EyeOff size={18} /> : <Eye size={18} />}
+      </button>
 
       {/* Zoom controls — floating column bottom-right, above the scale bar. */}
       <div

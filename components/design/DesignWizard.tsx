@@ -6,10 +6,25 @@
 // step-jumping). PRO renders a dense, fully-tappable toolbar (speed, everything visible).
 // They share only the step data/labels below, not layout.
 
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Sparkles, FlaskConical, Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Check,
+  Sparkles,
+  FlaskConical,
+  Loader2,
+  HelpCircle,
+  Sprout,
+  Lightbulb,
+} from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { DESIGN_STEP_LESSONS, type StepLesson } from '@/lib/design-lessons';
+import SpeakButton from '@/components/SpeakButton';
 import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
@@ -155,6 +170,157 @@ function SuggestButton({
   );
 }
 
+// "Why this step?" — per-step permaculture lesson (Lane 4, docs/DISCOVERABILITY-SIMPLE-PLAN.md
+// §4.2/§4.3). Split into a state hook + a pure content panel so guided and pro can place the
+// toggle button and the panel in different spots of their own chrome (pro puts the button
+// inline in the dense guidance row but the panel full-width below it) while sharing the same
+// collapsed-by-default, reset-on-step-change behaviour and exact lesson content.
+function useLessonExpand(step: WizardStep) {
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    setExpanded(false);
+  }, [step]);
+
+  // The 'glossy' step has no lesson (it's the artist's-impression export, not a design step).
+  const lesson = step === 'glossy' ? undefined : DESIGN_STEP_LESSONS[step];
+  return { expanded, toggle: () => setExpanded((v) => !v), lesson };
+}
+
+function LessonPanel({ lesson }: { lesson: StepLesson }) {
+  const narration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8,
+        background: 'rgba(31,77,43,0.06)',
+        borderRadius: 12,
+        padding: '12px 14px',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+        <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: DARK }}>{lesson.title}</div>
+        <SpeakButton text={narration} englishText={narration} size={16} color={GREEN} />
+      </div>
+      <div style={{ fontSize: 13.5, lineHeight: 1.5, color: DARK }}>{lesson.body}</div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+        <Sprout size={13} color={GREEN} style={{ flexShrink: 0, marginTop: 3 }} />
+        <div style={{ fontSize: 12.5, lineHeight: 1.4, color: DARK }}>
+          <span
+            style={{
+              display: 'block',
+              fontSize: 10.5,
+              fontWeight: 700,
+              letterSpacing: 0.3,
+              textTransform: 'uppercase',
+              color: GREEN,
+            }}
+          >
+            The principle
+          </span>
+          {lesson.principle}
+        </div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+        <Lightbulb size={13} color={GREEN} style={{ flexShrink: 0, marginTop: 3 }} />
+        <div style={{ fontSize: 12.5, lineHeight: 1.4, color: DARK }}>
+          <span
+            style={{
+              display: 'block',
+              fontSize: 10.5,
+              fontWeight: 700,
+              letterSpacing: 0.3,
+              textTransform: 'uppercase',
+              color: GREEN,
+            }}
+          >
+            Try this
+          </span>
+          {lesson.tip}
+        </div>
+      </div>
+      {lesson.courseModuleId && (
+        <Link
+          href={`/student?module=${lesson.courseModuleId}`}
+          style={{ alignSelf: 'flex-start', fontSize: 12, fontWeight: 700, color: GREEN, textDecoration: 'underline' }}
+        >
+          Learn more in the course
+        </Link>
+      )}
+    </div>
+  );
+}
+
+// Guided: quiet, full-width 44px labelled row under the guidance blurb — matches the
+// hand-holding tone of the rest of GuidedWizard.
+function GuidedLessonExpander({ step }: { step: WizardStep }) {
+  const { expanded, toggle, lesson } = useLessonExpand(step);
+  if (!lesson) return null;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <button
+        type="button"
+        onClick={toggle}
+        aria-expanded={expanded}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
+          alignSelf: 'flex-start',
+          minHeight: 44,
+          padding: '0 4px',
+          border: 'none',
+          background: 'transparent',
+          color: GREEN,
+          fontSize: 13.5,
+          fontWeight: 700,
+          cursor: 'pointer',
+        }}
+      >
+        <HelpCircle size={15} />
+        Why this step?
+        {expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+      </button>
+      {expanded && <LessonPanel lesson={lesson} />}
+    </div>
+  );
+}
+
+// Pro: compact 30px icon button matching the existing Back/Next controls (density over
+// hand-holding); caller places the button inline and the returned panel wherever full-width
+// space is available (below the toolbar row), so the two pieces are exposed separately.
+function useProLessonExpander(step: WizardStep) {
+  const { expanded, toggle, lesson } = useLessonExpand(step);
+  if (!lesson) return { button: null, panel: null };
+  const button = (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label="Why this step?"
+      aria-expanded={expanded}
+      style={{
+        minHeight: 30,
+        minWidth: 30,
+        flexShrink: 0,
+        borderRadius: 8,
+        border: `1px solid ${GREEN}`,
+        background: expanded ? GREEN : 'transparent',
+        color: expanded ? PAPER : GREEN,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <HelpCircle size={15} />
+    </button>
+  );
+  const panel = expanded ? <LessonPanel lesson={lesson} /> : null;
+  return { button, panel };
+}
+
 // ---------------------------------------------------------------------------------------
 // GUIDED — one big hero step. No clickable step-jumping (pips are progress-only), no
 // collapse toggle (guidance always visible — hand-holding is the point), oversized
@@ -219,6 +385,8 @@ function GuidedWizard({
       >
         {STEP_GUIDANCE[step]}
       </div>
+
+      <GuidedLessonExpander step={step} />
 
       <div style={{ display: 'flex', gap: 10 }}>
         <button
@@ -292,6 +460,7 @@ function ProWizard({
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
+  const { button: lessonButton, panel: lessonPanel } = useProLessonExpander(step);
 
   return (
     <div
@@ -402,12 +571,15 @@ function ProWizard({
         <div style={{ flex: 1, fontSize: 11.5, lineHeight: 1.3, color: 'rgba(11,18,11,0.75)' }}>
           {STEP_GUIDANCE[step]}
         </div>
+        {lessonButton}
         {SUGGEST_STEPS.has(step) && onAutoDetect && (
           <div style={{ width: 190, flexShrink: 0 }}>
             <SuggestButton step={step} detecting={detecting} suggestionsCount={suggestionsCount} onAutoDetect={onAutoDetect} big={false} />
           </div>
         )}
       </div>
+
+      {lessonPanel}
     </div>
   );
 }
