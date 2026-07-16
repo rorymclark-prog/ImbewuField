@@ -553,6 +553,7 @@ async function requestProducer(
   layerLabel: string,
   elementsText: string,
   stylePreset: string,
+  engine: 'gemini' | 'openai' = 'openai',
 ): Promise<string> {
   const res = await fetch('/api/image-producer', {
     method: 'POST',
@@ -564,7 +565,7 @@ async function requestProducer(
       stylePreset,
       model: 'pro-preview',
       mapKind: 'full',
-      engine: 'gemini',
+      engine, // 'openai' = gpt-image-2 via fal's async queue; 'gemini' = Gemini Pro image
     }),
   });
   const data = await res.json().catch(() => ({}));
@@ -825,7 +826,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     if (!producerStyle) return;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === producerStyle);
     if (!styleDef) return;
-    setLoading('gemini');
+    // The engine picker applies to styles too: gpt-image-2 (the "used to be very good" one, via
+    // the image-producer's 'openai' path) or Gemini Pro.
+    const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
+    setLoading(engine);
     setError(null);
     try {
       const W = frame.imgW * SCALE;
@@ -838,7 +842,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // b. Short comma list of placed elements + counts.
       const elementsText = producerElementsText(state);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
-      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle);
+      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
       const boundaryPx =
         refLayers.boundary.length >= 3
@@ -860,7 +864,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       });
       // g. Show, cache (mapKey = producer:<style>) and add to the session gallery.
       setResultImage(final);
-      const record: SavedGlossy = { image: final, provider: 'gemini', at: new Date().toISOString() };
+      const record: SavedGlossy = { image: final, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
       pushGallery(`${layerLabel} · ${styleDef.label}`, final);
@@ -869,7 +873,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     } finally {
       setLoading(null);
     }
-  }, [producerStyle, filter, state, frame, refLayers, mapKey, pushGallery]);
+  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery]);
 
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
@@ -1139,18 +1143,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         {/* Engine picker — only for design maps. Analysis maps are drawn by Gemini (the strict
             gpt-image-2 mask-edit can't produce sun/wind arrows or opportunity annotations);
             illustrated Styles render via the boundary-locked image-producer pipeline. */}
-        {producerStyle ? (
-          <div style={{ fontSize: 11.5, opacity: 0.7 }}>
-            Illustrated styles render via the polished pipeline (boundary-locked).
-          </div>
-        ) : analysisStyle ? (
+        {analysisStyle ? (
           <div style={{ fontSize: 11.5, opacity: 0.7 }}>
             Analysis maps are drawn by <strong>Gemini Pro</strong>.
           </div>
         ) : (
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-            Engine · both experimental
+            {producerStyle ? 'Engine for this style · both experimental' : 'Engine · both experimental'}
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {ENGINES.map((e) => {
@@ -1222,9 +1222,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           Using{' '}
           <strong>
-            {producerStyle ? 'the polished pipeline' : analysisStyle ? 'Gemini Pro' : ENGINES.find((e) => e.key === engine)?.label}
+            {analysisStyle
+              ? 'Gemini Pro'
+              : producerStyle
+                ? `${ENGINES.find((e) => e.key === engine)?.label} · polished pipeline`
+                : ENGINES.find((e) => e.key === engine)?.label}
           </strong>
-          . If the result looks off, try generating again{producerStyle || analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
+          . If the result looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
         </div>
         {!resultImage && gallery.length > 0 && (
           <button
