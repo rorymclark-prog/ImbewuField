@@ -28,9 +28,9 @@ interface DesignWizardProps {
   mode?: DesignMode;
 }
 
-const STEP_ORDER: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
+export const STEP_ORDER: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
 
-const STEP_LABELS: Record<WizardStep, string> = {
+export const STEP_LABELS: Record<WizardStep, string> = {
   base: 'Base',
   water: 'Water',
   zones: 'Zones',

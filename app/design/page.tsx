@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -56,7 +56,7 @@ import {
 import { stripDataUrl } from '@/lib/ai-render-client';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
-import DesignWizard from '@/components/design/DesignWizard';
+import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
 import AutoDesignSheet from '@/components/design/AutoDesignSheet';
 
@@ -425,6 +425,9 @@ function DesignStudioInner() {
   // sheet; 'running' drives the "Designing your farm…" overlay. Answers are all optional.
   const [autoDesignPhase, setAutoDesignPhase] = useState<'idle' | 'questions' | 'running'>('idle');
   const [autoAnswers, setAutoAnswers] = useState<AutoDesignAnswers>({});
+  // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
+  // gets the full screen — the design surface was cramped into ~half the height.
+  const [chromeCollapsed, setChromeCollapsed] = useState(false);
 
   const undoStack = useRef<DesignCanvasState[]>([]);
   const siteId = useMemo(
@@ -1175,6 +1178,8 @@ function DesignStudioInner() {
         </div>
       </header>
 
+      {!chromeCollapsed && (
+      <>
       {/* AI Auto-Design hero — one tap designs the whole farm. Above the wizard so it's
           visible on every step, independent of the per-step Suggest button. */}
       {canvasState && canvasState.step !== 'glossy' && (
@@ -1234,6 +1239,46 @@ function DesignStudioInner() {
           }}
         >
           {detectError}
+        </div>
+      )}
+      </>
+      )}
+
+      {/* Slim chrome toggle — reclaim canvas height (the design surface was cramped into
+          ~half the screen). Collapsed: a one-line step nav + "Show steps"; expanded: a
+          quiet "More space" that folds the auto-design bar + wizard away. */}
+      {canvasState && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none' }}>
+          {chromeCollapsed && (() => {
+            const idx = STEP_ORDER.indexOf(canvasState.step);
+            const navBtn = (disabled: boolean): React.CSSProperties => ({
+              width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA',
+              color: disabled ? '#C9BFAD' : GREEN, cursor: disabled ? 'default' : 'pointer',
+              opacity: disabled ? 0.5 : 1, flexShrink: 0, padding: 0,
+            });
+            return (
+              <>
+                <button type="button" aria-label="Previous step" disabled={idx <= 0} onClick={() => idx > 0 && setStep(STEP_ORDER[idx - 1])} style={navBtn(idx <= 0)}>
+                  <ChevronLeft size={16} />
+                </button>
+                <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
+                  {STEP_LABELS[canvasState.step]}
+                  <span style={{ color: '#9A8268', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
+                </span>
+                <button type="button" aria-label="Next step" disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
+                  <ChevronRight size={16} />
+                </button>
+              </>
+            );
+          })()}
+          <button
+            type="button"
+            onClick={() => setChromeCollapsed((c) => !c)}
+            style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+          >
+            {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
+          </button>
         </div>
       )}
 
