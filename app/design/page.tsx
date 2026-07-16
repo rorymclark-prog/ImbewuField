@@ -59,6 +59,8 @@ import DesignPalette, { type DesignMode } from '@/components/design/DesignPalett
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
+import StepGuide from '@/components/design/StepGuide';
+import type { SubStepArm } from '@/lib/design-substeps';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
 import AutoDesignSheet from '@/components/design/AutoDesignSheet';
 import AdvancedToolsSheet, { type AdvancedAction } from '@/components/design/AdvancedToolsSheet';
@@ -714,6 +716,31 @@ function DesignStudioInner() {
       return next;
     });
   }, []);
+
+  // Step-by-step guide "Do this" → arm the matching palette tool for the current micro-task.
+  const armSubStep = useCallback((arm: SubStepArm) => {
+    if (!arm) return;
+    switch (arm.kind) {
+      case 'place':
+        setAreaFeature(null);
+        setPlaceDefId(arm.defId);
+        handleSetTool('place');
+        break;
+      case 'line':
+        setLineKind(arm.lineKind);
+        handleSetTool('line');
+        break;
+      case 'zone':
+        setAreaFeature(null);
+        setZoneDraw(arm.zone);
+        handleSetTool('zone');
+        break;
+      case 'area':
+        setAreaFeature(arm.feature);
+        handleSetTool('zone');
+        break;
+    }
+  }, [handleSetTool]);
 
   // One-shot: a "+ Add → Lawn / Veg garden / New bed" tap on the farmer map deep-links here
   // as /design?add=<id>. Arm the matching ground-feature area tool on the Base step so the
@@ -1586,6 +1613,22 @@ function DesignStudioInner() {
           </div>
         )}
       </div>
+
+      {/* Step-by-step guide — the walked micro-task checklist for the current step, with a
+          "Do this" that arms the right tool and a "Why this matters" lesson. */}
+      {canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
+        <StepGuide
+          step={canvasState.step}
+          state={canvasState}
+          ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
+          mode={designMode}
+          onArm={armSubStep}
+          onNextStep={() => {
+            const i = STEP_ORDER.indexOf(canvasState.step);
+            if (i >= 0 && i < STEP_ORDER.length - 1) setStep(STEP_ORDER[i + 1]);
+          }}
+        />
+      )}
 
       {/* Zone ADVICE (guided mode, zones step) — the guidance half of the hybrid. Lima's
           spatial suggestions as short text advice; tap a row to ARM that zone chip and draw

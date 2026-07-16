@@ -1,0 +1,254 @@
+// Design Studio — the per-step "step-by-step guide" (Rory's ask: "1st add jojo tanks, great,
+// now add tap points, great, now add drip… in a little Lima bubble" + "a step-by-step guide
+// through everything so nothing is missed").
+//
+// Each design step (Base/Water/Zones/Planting/Structures) has an ORDERED list of micro-tasks.
+// The StepGuide component walks the farmer through them: shows the current task + a placement
+// hint, arms the right tool when they tap "Do this", and auto-ticks each task off as the
+// canvas fills in. Content is plain English (the whole Studio is hardcoded English — see
+// lib/design-lessons.ts / DesignWizard.tsx for the same convention).
+
+import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+
+// What tapping "Do this" arms in the palette. `null` = nothing to arm (e.g. a check-only task
+// like "confirm your boundary is traced", which is done on the main map).
+export type SubStepArm =
+  | { kind: 'place'; defId: string }
+  | { kind: 'line'; lineKind: LineShape['kind'] }
+  | { kind: 'zone'; zone: 0 | 1 | 2 | 3 | 4 | 5 }
+  | { kind: 'area'; feature: GroundFeatureKind }
+  | null;
+
+// Extra context the completion checks need that doesn't live in DesignCanvasState (boundary /
+// house come from the traced reference layers on the page).
+export interface SubStepCtx {
+  hasBoundary: boolean;
+  hasHouse: boolean;
+}
+
+export interface SubStep {
+  id: string;
+  title: string; // short imperative — "Add your rainwater tanks"
+  instruction: string; // how — "Tap a tank size, then tap the map next to a roof."
+  where: string; // placement advice (the "where" the farmer kept asking for)
+  arm: SubStepArm;
+  optional?: boolean; // nice-to-have; the guide can complete without it
+  done: (s: DesignCanvasState, ctx: SubStepCtx) => boolean;
+}
+
+// ── completion helpers ─────────────────────────────────────────────────────────
+function hasItem(s: DesignCanvasState, ids: string[]): boolean {
+  const set = new Set(ids);
+  return s.items.some((it) => set.has(it.defId));
+}
+function hasItemCategory(s: DesignCanvasState, category: string): boolean {
+  return s.items.some((it) => ELEMENTS_BY_ID[it.defId]?.category === category);
+}
+function hasLine(s: DesignCanvasState, kinds: LineShape['kind'][]): boolean {
+  const set = new Set(kinds);
+  return s.lines.some((l) => set.has(l.kind));
+}
+function hasZoneN(s: DesignCanvasState, ns: number[]): boolean {
+  const set = new Set(ns);
+  return s.zones.some((z) => !z.feature && set.has(z.zone));
+}
+function hasFeature(s: DesignCanvasState, feats: GroundFeatureKind[]): boolean {
+  const set = new Set(feats);
+  return s.zones.some((z) => z.feature && set.has(z.feature));
+}
+
+const TANK_IDS = ['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000', 'rain_barrel'];
+const TREE_IDS = [
+  'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_guava', 'tree_litchi',
+  'tree_pawpaw', 'tree_moringa', 'banana_clump', 'tree_indigenous', 'banana_circle',
+];
+const BED_IDS = ['veg_bed', 'keyhole_bed', 'herb_spiral'];
+
+// ── the catalog ─────────────────────────────────────────────────────────────────
+export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, SubStep[]> = {
+  base: [
+    {
+      id: 'base-boundary',
+      title: 'Check your boundary is traced',
+      instruction: 'Your fence line should already show on the map. If it doesn’t, go back to the main map and trace it first — everything is measured against it.',
+      where: 'The outer edge of your land, corner to corner.',
+      arm: null,
+      done: (_s, ctx) => ctx.hasBoundary,
+    },
+    {
+      id: 'base-house',
+      title: 'Mark your house',
+      instruction: 'Tap "Do this", then trace around your house roof on the map.',
+      where: 'The building you live in — tanks and Zone 1 go closest to it.',
+      arm: { kind: 'area', feature: 'house' },
+      done: (s, ctx) => ctx.hasHouse || hasFeature(s, ['house']),
+    },
+    {
+      id: 'base-paving',
+      title: 'Mark paving & driveway',
+      instruction: 'Trace hard surfaces — the driveway, yard paving, or a concrete slab.',
+      where: 'Anywhere rain runs straight off instead of soaking in.',
+      arm: { kind: 'area', feature: 'patio' },
+      optional: true,
+      done: (s) => hasFeature(s, ['patio']),
+    },
+    {
+      id: 'base-areas',
+      title: 'Mark existing lawn, veg or orchard',
+      instruction: 'Trace the ground you already use — a lawn, an old veg patch, existing trees.',
+      where: 'What’s already growing, so your plan builds on it.',
+      arm: { kind: 'area', feature: 'lawn' },
+      optional: true,
+      done: (s) => hasFeature(s, ['lawn', 'veg_garden', 'orchard', 'cleared']),
+    },
+  ],
+  water: [
+    {
+      id: 'water-tanks',
+      title: 'Add your rainwater tanks',
+      instruction: 'Tap a JoJo tank size, then tap the map next to a roof.',
+      where: 'Within 3 m of a roof downpipe, on level, compacted ground.',
+      arm: { kind: 'place', defId: 'jojo_2500' },
+      done: (s) => hasItem(s, TANK_IDS),
+    },
+    {
+      id: 'water-taps',
+      title: 'Mark your tap points',
+      instruction: 'Tap "Do this", then drop a tap point wherever you’ll fill a can or hose.',
+      where: 'At bed corners — so a hose reaches without crossing a path.',
+      arm: { kind: 'place', defId: 'tap_point' },
+      done: (s) => hasItem(s, ['tap_point']),
+    },
+    {
+      id: 'water-swales',
+      title: 'Draw swale lines across the slope',
+      instruction: 'Draw a line ACROSS the slope (on contour), not down it, so rain sinks in.',
+      where: 'Along the hillside, level end to end — above your beds and trees.',
+      arm: { kind: 'line', lineKind: 'swale' },
+      done: (s) => hasLine(s, ['swale']),
+    },
+    {
+      id: 'water-drip',
+      title: 'Add drip or pipe lines',
+      instruction: 'Draw where water will travel — a drip line to the beds or a pipe from a tank.',
+      where: 'Tank → beds, the shortest sensible run.',
+      arm: { kind: 'line', lineKind: 'drip' },
+      optional: true,
+      done: (s) => hasLine(s, ['drip', 'pipe']),
+    },
+    {
+      id: 'water-store',
+      title: 'Add a pond or greywater basin',
+      instruction: 'Optional: a pond in a low spot, or a greywater basin off the kitchen outlet.',
+      where: 'Ponds in a natural low point; greywater by a fruit tree or banana.',
+      arm: { kind: 'place', defId: 'greywater_basin' },
+      optional: true,
+      done: (s) => hasItem(s, ['pond_small', 'dam', 'greywater_basin', 'borehole']),
+    },
+  ],
+  zones: [
+    {
+      id: 'zone-1',
+      title: 'Zone 1 — nearest the kitchen door',
+      instruction: 'Paint the area you can reach in about 20 steps from the door.',
+      where: 'Right around the house — herbs, salad, the things you pick daily.',
+      arm: { kind: 'zone', zone: 1 },
+      done: (s) => hasZoneN(s, [1]),
+    },
+    {
+      id: 'zone-2',
+      title: 'Zone 2 — your main veg beds',
+      instruction: 'Paint the next ring out — where the bulk of your vegetables grow.',
+      where: 'A short walk from the door; visited most days.',
+      arm: { kind: 'zone', zone: 2 },
+      done: (s) => hasZoneN(s, [2]),
+    },
+    {
+      id: 'zone-3',
+      title: 'Zone 3 — orchard & food forest',
+      instruction: 'Paint where your fruit trees and bigger plots will live.',
+      where: 'Further out — visited weekly, not daily.',
+      arm: { kind: 'zone', zone: 3 },
+      done: (s) => hasZoneN(s, [3]),
+    },
+    {
+      id: 'zone-45',
+      title: 'Zone 4 / 5 — grazing & wild edge',
+      instruction: 'Optional: paint low-care land — grazing, woodlot, or a wild buffer strip.',
+      where: 'The outer edges you visit least.',
+      arm: { kind: 'zone', zone: 4 },
+      optional: true,
+      done: (s) => hasZoneN(s, [4, 5]),
+    },
+  ],
+  planting: [
+    {
+      id: 'plant-trees',
+      title: 'Place your fruit & nut trees first',
+      instruction: 'Trees are biggest and last longest — place them, then fit beds around them.',
+      where: 'South or west of veg beds (SA sun is in the north) so they don’t shade them. Give each its full-grown width.',
+      arm: { kind: 'place', defId: 'tree_moringa' },
+      done: (s) => hasItem(s, TREE_IDS),
+    },
+    {
+      id: 'plant-beds',
+      title: 'Add your vegetable beds',
+      instruction: 'Drop beds in full sun, within easy reach of a tap and the kitchen.',
+      where: 'Open, sunny ground in Zone 1–2 — not under a tree canopy.',
+      arm: { kind: 'place', defId: 'veg_bed' },
+      done: (s) => hasItem(s, BED_IDS),
+    },
+    {
+      id: 'plant-support',
+      title: 'Add support planting',
+      instruction: 'Optional: pollinator strips, mulch banks, a banana circle — they feed the system.',
+      where: 'Pollinators along orchard edges; mulch banks beside the beds that need it.',
+      arm: { kind: 'place', defId: 'pollinator_strip' },
+      optional: true,
+      done: (s) => hasItem(s, ['pollinator_strip', 'mulch_bank', 'banana_circle', 'spekboom_hedge', 'vetiver_row']),
+    },
+  ],
+  structures: [
+    {
+      id: 'struct-compost',
+      title: 'Set up compost',
+      instruction: 'Place a compost bay or worm farm on the path between kitchen and beds.',
+      where: 'On the way out with scraps, on the way in with finished compost.',
+      arm: { kind: 'place', defId: 'compost_bay' },
+      done: (s) => hasItem(s, ['compost_bay', 'worm_farm']),
+    },
+    {
+      id: 'struct-animals',
+      title: 'Place animal housing',
+      instruction: 'Optional: a chicken coop, kraal or pen — close enough for daily care, downwind of the house.',
+      where: 'Downwind and a little downhill; manure feeds the compost.',
+      arm: { kind: 'place', defId: 'chicken_coop' },
+      optional: true,
+      done: (s) => hasItemCategory(s, 'animal') || hasItem(s, ['chicken_coop', 'chicken_tractor', 'kraal']),
+    },
+    {
+      id: 'struct-storage',
+      title: 'Add storage & work space',
+      instruction: 'Optional: a shed, nursery table or shade house near your main work zone.',
+      where: 'By the beds you work most, out of the prevailing rain.',
+      arm: { kind: 'place', defId: 'shed' },
+      optional: true,
+      done: (s) => hasItem(s, ['shed', 'nursery_table', 'shade_house', 'greenhouse_tunnel']),
+    },
+    {
+      id: 'struct-extras',
+      title: 'Extras — beehive, bench, gate',
+      instruction: 'Optional: finishing touches. Mind the beehive flight path — keep it clear of foot traffic.',
+      where: 'Beehive facing east, well clear of paths; benches in the shade.',
+      arm: { kind: 'place', defId: 'beehive' },
+      optional: true,
+      done: (s) => hasItem(s, ['beehive', 'bench', 'gate', 'market_stall']),
+    },
+  ],
+};
+
+export function subStepsForStep(step: WizardStep): SubStep[] {
+  if (step === 'glossy' || step === 'review') return [];
+  return STEP_SUBSTEPS[step] ?? [];
+}

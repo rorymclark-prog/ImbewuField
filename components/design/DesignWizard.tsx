@@ -187,7 +187,7 @@ function useLessonExpand(step: WizardStep) {
   return { expanded, toggle: () => setExpanded((v) => !v), lesson };
 }
 
-function LessonPanel({ lesson }: { lesson: StepLesson }) {
+export function LessonPanel({ lesson }: { lesson: StepLesson }) {
   const narration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
   return (
     <div
