@@ -9,7 +9,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, Image as ImageIcon, X } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, SlidersHorizontal, Image as ImageIcon, Sprout, X } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -775,6 +775,19 @@ function DesignStudioInner() {
     setStep('base');            // clears any armed feature…
     setAreaFeature(feature);    // …so set the picked one AFTER
     handleSetTool('zone');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvasState]);
+
+  // One-shot: the "Just beds & trees" quick start deep-links here as /design?simple=1 — drop
+  // the farmer straight onto the Planting step in Guided mode (skip the water/zones planning
+  // they said they don't want). The step guide then walks trees → beds → "Plan my crops".
+  const simpleHandled = useRef(false);
+  useEffect(() => {
+    if (simpleHandled.current || !canvasState) return;
+    if (params.get('simple') !== '1') return;
+    simpleHandled.current = true;
+    setDesignMode('guided');
+    setStep('planting');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasState]);
 
@@ -1636,6 +1649,24 @@ function DesignStudioInner() {
         )}
       </div>
 
+      {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
+          plan. Offered on the first (Base) step; jumps straight to Planting. */}
+      {canvasState && canvasState.step === 'base' && designMode === 'guided' && (
+        <div style={{ padding: '6px 12px 0' }}>
+          <button
+            type="button"
+            onClick={() => { setDesignMode('guided'); setStep('planting'); }}
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(31,77,43,0.4)', background: 'transparent', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
+          >
+            <Sprout size={15} style={{ flexShrink: 0 }} />
+            <span style={{ flex: 1 }}>
+              <span style={{ fontWeight: 800 }}>Just want beds &amp; trees?</span> Skip ahead — place them, then plan your crops.
+            </span>
+            <ChevronRight size={16} style={{ flexShrink: 0 }} />
+          </button>
+        </div>
+      )}
+
       {/* Step-by-step guide — the walked micro-task checklist for the current step, with a
           "Do this" that arms the right tool and a "Why this matters" lesson. */}
       {canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
@@ -1649,6 +1680,7 @@ function DesignStudioInner() {
             const i = STEP_ORDER.indexOf(canvasState.step);
             if (i >= 0 && i < STEP_ORDER.length - 1) setStep(STEP_ORDER[i + 1]);
           }}
+          planCropsHref={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}&auto=1`}
         />
       )}
 

@@ -6,9 +6,11 @@
 // this", ticks each off as the canvas fills in, and links to the full "Why this matters" lesson.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Check, ChevronDown, ChevronUp, MapPin, Compass, HelpCircle, PartyPopper, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Check, ChevronDown, ChevronUp, MapPin, Compass, HelpCircle, PartyPopper, ArrowRight, Sprout } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { subStepsForStep, type SubStep, type SubStepArm, type SubStepCtx } from '@/lib/design-substeps';
+import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
 import { STEP_LABELS, STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
@@ -38,9 +40,12 @@ export interface StepGuideProps {
   mode: DesignMode;
   onArm: (arm: SubStepArm) => void;
   onNextStep: () => void;
+  // Simple Path handoff — link to the crop planner (shown on the Planting step once beds
+  // exist), so a "just beds & trees" farmer can jump straight to planning what to grow.
+  planCropsHref?: string;
 }
 
-export default function StepGuide({ step, state, ctx, mode, onArm, onNextStep }: StepGuideProps) {
+export default function StepGuide({ step, state, ctx, mode, onArm, onNextStep, planCropsHref }: StepGuideProps) {
   const subSteps = useMemo(() => subStepsForStep(step), [step]);
 
   // Collapsed by default in Pro (speed), expanded in Guided (hand-holding). Pref persists.
@@ -112,6 +117,8 @@ export default function StepGuide({ step, state, ctx, mode, onArm, onNextStep }:
   const idx = STEP_ORDER.indexOf(step);
   const nextLabel = idx >= 0 && idx < STEP_ORDER.length - 1 ? STEP_LABELS[STEP_ORDER[idx + 1]] : null;
   const current: SubStep | null = allResolved ? null : subSteps[currentIndex];
+  const hasBeds = state.items.some((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId));
+  const showPlanCrops = step === 'planting' && hasBeds && !!planCropsHref;
 
   // ── Collapsed: one slim line ────────────────────────────────────────────────
   if (collapsed) {
@@ -250,6 +257,21 @@ export default function StepGuide({ step, state, ctx, mode, onArm, onNextStep }:
             );
           })}
         </div>
+
+        {/* Simple-Path handoff — beds are down, so offer "plan my crops" straight away. */}
+        {showPlanCrops && (
+          <div style={{ padding: '2px 12px 10px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <Link
+              href={planCropsHref!}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, alignSelf: 'flex-start', minHeight: 42, padding: '8px 16px', borderRadius: 10, background: OCHRE, color: PAPER, fontWeight: 800, fontSize: 13, textDecoration: 'none' }}
+            >
+              <Sprout size={16} /> Plan my crops <ArrowRight size={15} />
+            </Link>
+            <div style={{ fontSize: 11, color: 'rgba(11,18,11,0.6)' }}>
+              Just beds & trees? Jump straight to planning what to grow — you can always come back.
+            </div>
+          </div>
+        )}
 
         {/* All-resolved banner → advance to next step */}
         {allResolved && (
