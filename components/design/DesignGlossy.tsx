@@ -637,21 +637,30 @@ function producerLabels(
     clusters.push({ cx: mid[0] * W, cy: mid[1] * H, text, pw: pillWidth(text) });
   }
 
-  // Split into a LEFT and a RIGHT column (by which half of the map the cluster sits in), then
-  // stack each column vertically with a fixed gap so pills never overlap. Leaders point from
-  // the real feature to the pill's inner edge — the old FacilitatorCanvas layout.
-  const gap = fs + 22;
+  // Pin each pill to the LEFT or RIGHT margin (by which half its element sits in) and hug the
+  // element's real vertical position, then DE-COLLIDE: keep pills in anchor order and push the
+  // minimum amount to remove overlaps, shifting the whole column up if it runs off the bottom.
+  // Because the column stays sorted by cy, leaders never cross each other — the "labels all over
+  // the place" mess was the old top-stacked layout letting leaders tangle.
+  const pillH = fs + 14;
+  const minGap = pillH + 8;
+  const top = 36, bot = H - 36;
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
     const col = clusters.filter((c) => (c.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
-    let y = 40;
-    for (const c of col) {
-      const ax = side === 'left' ? Math.max(14, c.cx - c.pw - 60) : Math.min(W - c.pw - 14, c.cx + 60);
+    if (!col.length) return;
+    // Ideal pill y = the element's own y, clamped into the frame.
+    const ys = col.map((c) => Math.min(bot, Math.max(top, c.cy)));
+    // Push each pill down just enough to clear the one above it (preserves vertical order).
+    for (let i = 1; i < ys.length; i++) if (ys[i] < ys[i - 1] + minGap) ys[i] = ys[i - 1] + minGap;
+    // If the stack overran the bottom, slide the whole column up so it fits (clamped at top).
+    const overflow = ys[ys.length - 1] - bot;
+    if (overflow > 0) for (let i = 0; i < ys.length; i++) ys[i] = Math.max(top, ys[i] - overflow);
+    col.forEach((c, i) => {
+      const ax = side === 'left' ? 16 : Math.max(16, W - c.pw - 16);
       const lx = side === 'left' ? ax + c.pw : ax; // leader meets the pill's inner edge
-      const ay = Math.max(y, Math.max(40, Math.min(H - 40, c.cy)));
-      y = ay + gap;
-      out.push({ cx: c.cx, cy: c.cy, ax, ay, lx, text: c.text });
-    }
+      out.push({ cx: c.cx, cy: c.cy, ax, ay: ys[i], lx, text: c.text });
+    });
   });
   return out;
 }
