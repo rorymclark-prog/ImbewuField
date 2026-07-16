@@ -45,11 +45,12 @@ export interface StepGuideProps {
   planCropsHref?: string;
 }
 
-export default function StepGuide({ step, state, ctx, mode, onArm, onNextStep, planCropsHref }: StepGuideProps) {
+export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCropsHref }: StepGuideProps) {
   const subSteps = useMemo(() => subStepsForStep(step), [step]);
 
-  // Collapsed by default in Pro (speed), expanded in Guided (hand-holding). Pref persists.
-  const [collapsed, setCollapsed] = useState(mode === 'pro');
+  // Collapsed by default — the one-line form still shows the current task, so guidance stays
+  // visible while the map keeps its space. Farmers expand for the full checklist; pref persists.
+  const [collapsed, setCollapsed] = useState(true);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(COLLAPSE_KEY);

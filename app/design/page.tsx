@@ -1467,8 +1467,9 @@ function DesignStudioInner() {
         </div>
       )}
 
-      {/* Canvas (middle) */}
-      <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
+      {/* Canvas (middle). minHeight floor (not 0) so the map can never be squeezed to a sliver
+          on a phone by the tool chrome below it — it always keeps ~45% of the screen. */}
+      <div style={{ flex: 1, position: 'relative', minHeight: '45dvh' }}>
         {canvasState && frame && canvasState.step === 'glossy' ? (
           <DesignGlossyLazy
             state={canvasState}

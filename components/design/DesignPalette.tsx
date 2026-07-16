@@ -133,13 +133,19 @@ export default function DesignPalette({
   onDeleteSelected,
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
+  const [layersOpen, setLayersOpen] = useState(false);
   const guided = mode === 'guided';
+  const hiddenLayerCount = LAYER_TOGGLES.filter((lt) => !activeLayers[lt.key]).length;
 
   // PRO reuses the existing 'all' path unconditionally — same catalog GUIDED already shows
   // on base/review/glossy, just no longer gated by step.
   const allowedCategories = mode === 'pro' ? 'all' : categoriesForStep(step);
   const isReadOnlyStep = step === 'base' || step === 'review' || step === 'glossy';
-  const showFullCatalogNote = mode === 'pro' || isReadOnlyStep;
+  // In guided mode the element catalog only belongs on the placing steps (water/planting/
+  // structures). Base traces ground features, zones paints zones — showing the whole element
+  // catalog there is pure clutter that buried the map. Pro keeps everything.
+  const showElementCatalog = mode === 'pro' || allowedCategories !== 'all';
+  const showFullCatalogNote = mode === 'pro';
   const catalog =
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
@@ -257,13 +263,12 @@ export default function DesignPalette({
         </button>
       </div>
 
-      {/* Element chips: always visible for this step, regardless of tool */}
+      {/* Element chips: shown on placing steps (and all steps in Pro) */}
+      {showElementCatalog && (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-            {mode === 'pro'
-              ? 'PRO — full catalog, every step. Jump between steps freely.'
-              : 'Showing the full catalog — switch to a Water/Planting/Structures step to filter.'}
+            PRO — full catalog, every step. Jump between steps freely.
           </div>
         )}
         <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
@@ -300,6 +305,7 @@ export default function DesignPalette({
           })}
         </div>
       </div>
+      )}
 
       {/* Base step: ground-feature chips — draw the real house / paving / lawn / veg garden /
           orchard / cleared ground that's already on site (filled labelled areas). */}
@@ -441,51 +447,82 @@ export default function DesignPalette({
         </div>
       )}
 
-      {/* Layer show/hide toggles — available in BOTH modes now. Every layer, including the
-          base map and drawn ground areas, can be turned off to declutter the satellite. */}
-      <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingTop: 2, alignItems: 'center' }}>
-        <span
+      {/* Layers — collapsed to a single button + popover so the toggle row no longer eats a
+          whole strip under the map. Popup opens upward (palette is docked at the bottom). */}
+      <div style={{ position: 'relative' }}>
+        <button
+          type="button"
+          onClick={() => setLayersOpen((v) => !v)}
+          aria-expanded={layersOpen}
           style={{
-            fontSize: 10,
-            fontWeight: 800,
-            letterSpacing: 0.4,
-            textTransform: 'uppercase',
-            color: 'rgba(11,18,11,0.5)',
-            flexShrink: 0,
-            paddingRight: 2,
+            minHeight: 32,
+            padding: '4px 12px',
+            borderRadius: 16,
+            border: '1px solid rgba(0,0,0,0.15)',
+            background: hiddenLayerCount ? 'rgba(31,77,43,0.10)' : 'transparent',
+            color: DARK,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            cursor: 'pointer',
+            fontSize: 11.5,
+            fontWeight: 700,
           }}
         >
-          Layers
-        </span>
-        {LAYER_TOGGLES.map((lt) => {
-          const on = activeLayers[lt.key];
-          return (
-            <button
-              key={lt.key}
-              type="button"
-              aria-pressed={on}
-              onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
-              style={{
-                minHeight: 32,
-                padding: '4px 10px',
-                borderRadius: 16,
-                border: on ? `1.5px solid ${GREEN}` : '1px solid rgba(0,0,0,0.15)',
-                background: on ? 'rgba(31,77,43,0.12)' : 'transparent',
-                color: DARK,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-                flexShrink: 0,
-                cursor: 'pointer',
-                fontSize: 11,
-                opacity: on ? 1 : 0.55,
-              }}
-            >
-              <span>{lt.icon}</span>
-              <span>{lt.label}</span>
-            </button>
-          );
-        })}
+          <span aria-hidden>🛰️</span>
+          <span>Layers</span>
+          {hiddenLayerCount > 0 && (
+            <span style={{ fontSize: 10, fontWeight: 800, color: GREEN }}>{hiddenLayerCount} hidden</span>
+          )}
+        </button>
+        {layersOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 'calc(100% + 6px)',
+              left: 0,
+              zIndex: 20,
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 6,
+              maxWidth: 320,
+              padding: 10,
+              borderRadius: 12,
+              background: PAPER,
+              border: '1px solid rgba(0,0,0,0.15)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+            }}
+          >
+            {LAYER_TOGGLES.map((lt) => {
+              const on = activeLayers[lt.key];
+              return (
+                <button
+                  key={lt.key}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                  style={{
+                    minHeight: 34,
+                    padding: '5px 11px',
+                    borderRadius: 16,
+                    border: on ? `1.5px solid ${GREEN}` : '1px solid rgba(0,0,0,0.15)',
+                    background: on ? 'rgba(31,77,43,0.12)' : 'transparent',
+                    color: DARK,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    cursor: 'pointer',
+                    fontSize: 11.5,
+                    opacity: on ? 1 : 0.5,
+                  }}
+                >
+                  <span>{lt.icon}</span>
+                  <span>{lt.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

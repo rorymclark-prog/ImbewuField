@@ -49,6 +49,71 @@ const STRICT_PROMPT =
   'farmer: do NOT add, move, remove, resize or restyle ANY element, zone, line or label — every ' +
   'feature stays exactly where and how it is. Follow the strict map criteria.';
 
+// Per-layer theming so each map READS as its own kind of map instead of one generic look.
+// `title` names it; `focus` steers the background repaint; `emphasise` becomes extra
+// must-include criteria pointing the AI at the features that matter for this map type.
+const FILTER_THEME: Record<GlossyLayerFilter, { title: string; focus: string; emphasise: string[] }> = {
+  all: {
+    title: 'whole-farm permaculture design',
+    focus: 'a complete permaculture homestead — zones, water, planting and structures reading together as one plan',
+    emphasise: [],
+  },
+  water: {
+    title: 'water plan',
+    focus: 'a WATER-HARVESTING map: cool blue-green palette, rainwater tanks reading as tanks beside the roofs, swale lines as soft earth contours holding water, drip/pipe runs, ponds and greywater basins',
+    emphasise: [
+      'render the water background so it clearly reads as a water plan (subtle blue tint around tanks, swales and ponds; damp soil tones)',
+      'make each rainwater tank, tap point, swale line, pipe/drip run and pond visually obvious and labelled',
+      'suggest water soaking into the land along the swale lines, not running off',
+    ],
+  },
+  zones: {
+    title: 'zone map',
+    focus: 'a permaculture ZONE map: each numbered zone (0–5) as a clearly coloured band radiating out from the house, warm near the home and wilder toward the edges',
+    emphasise: [
+      'render each zone as a distinct, clearly coloured and numbered area (Zone 1 nearest the house, higher numbers further out)',
+      'keep the zone colours strong and legible so the zoning is the story of the map',
+    ],
+  },
+  planting: {
+    title: 'planting plan',
+    focus: 'a PLANTING map: fruit and nut trees drawn at their mature canopy size, vegetable beds in neat rows, pollinator strips and mulch banks, lush green growing palette',
+    emphasise: [
+      'draw each tree as a leafy canopy at roughly its real mature size; show beds as tidy planted rows',
+      'render tree shade falling to the south side so the planting logic is visible',
+      'keep a rich, green, growing feel across the planted areas',
+    ],
+  },
+  structures: {
+    title: 'structures & animals plan',
+    focus: 'a STRUCTURES map: sheds, coops, kraals, compost bays and beehives as clear little buildings, with access paths and fences, on a calm neutral palette',
+    emphasise: [
+      'render each structure as a clear, simple building footprint with a roof',
+      'make animal housing, compost and beehives easy to pick out; show fences and access paths',
+    ],
+  },
+};
+
+function strictPromptFor(filter: GlossyLayerFilter): string {
+  const theme = FILTER_THEME[filter];
+  if (filter === 'all') return STRICT_PROMPT;
+  return (
+    `Repaint ONLY the unprotected background as ${theme.focus}. Keep it a beautiful hand-illustrated ` +
+    'map. This design was drawn by the farmer: do NOT add, move, remove, resize or restyle ANY element, ' +
+    'zone, line or label — every feature stays exactly where and how it is. Follow the strict map criteria.'
+  );
+}
+
+function mapCriteriaFor(filter: GlossyLayerFilter) {
+  const theme = FILTER_THEME[filter];
+  return {
+    mustInclude: [...theme.emphasise, ...STRICT_MAP_CRITERIA.mustInclude],
+    mustAvoid: STRICT_MAP_CRITERIA.mustAvoid,
+    labelPolicy: STRICT_MAP_CRITERIA.labelPolicy,
+    composition: STRICT_MAP_CRITERIA.composition,
+  };
+}
+
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8C8577',
@@ -475,9 +540,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             provider: 'falgpt',
             context: {
               strictMap: true,
-              mapCriteria: STRICT_MAP_CRITERIA,
+              mapType: FILTER_THEME[filter].title,
+              mapCriteria: mapCriteriaFor(filter),
             },
-            touchupPrompt: STRICT_PROMPT,
+            touchupPrompt: strictPromptFor(filter),
           });
         } else {
           const placedElements = state.items
@@ -506,6 +572,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             context: {
               placeName,
               layer: filter === 'all' ? 'overall' : filter,
+              mapType: FILTER_THEME[filter].title,
+              mapFocus: FILTER_THEME[filter].focus,
               biome: site?.biome,
               rainfallMm: site?.rainfallMm,
               placedElements,
