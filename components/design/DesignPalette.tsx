@@ -339,6 +339,32 @@ export default function DesignPalette({
                 boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
               }}
             >
+              {/* Master switch — flip every layer at once instead of tapping nine chips. */}
+              <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.5, marginRight: 'auto' }}>
+                  Layers
+                </span>
+                {([['All on', true], ['All off', false]] as const).map(([label, val]) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => setActiveLayers(LAYER_TOGGLES.reduce((acc, lt) => ({ ...acc, [lt.key]: val }), { ...activeLayers }))}
+                    style={{
+                      minHeight: 28,
+                      padding: '3px 10px',
+                      borderRadius: 14,
+                      border: `1px solid ${GREEN}`,
+                      background: 'transparent',
+                      color: GREEN,
+                      fontSize: 11,
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
               {LAYER_TOGGLES.map((lt) => {
                 const on = activeLayers[lt.key];
                 return (
