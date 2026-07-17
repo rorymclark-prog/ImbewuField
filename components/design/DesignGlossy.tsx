@@ -1378,6 +1378,205 @@ async function buildBlueprintWaterMap(
   return canvas.toDataURL('image/png');
 }
 
+// Legend rows for a Style sheet — the real design content on this layer (zones, grouped
+// elements, line kinds, driveway). Deterministic: read straight from state.
+function sheetLegendRows(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter,
+): Array<{ swatch: string; icon?: string; text: string }> {
+  const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
+  if (zonesInFilter(filter)) {
+    for (const z of state.zones) {
+      if (z.feature || z.points.length < 3) continue;
+      rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
+    }
+  }
+  const groups = new Map<string, { icon: string; color: string; n: number }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def || !itemInFilter(def.category, filter)) continue;
+    const name = it.label ?? def.name;
+    const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
+    g.n += 1;
+    groups.set(name, g);
+  }
+  for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
+  const kinds = new Set<string>();
+  for (const l of state.lines) {
+    if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
+    kinds.add(l.kind);
+    rows.push({ swatch: LINE_COLORS[l.kind] ?? '#8C8577', text: l.kind.charAt(0).toUpperCase() + l.kind.slice(1) });
+  }
+  if (refLayers.driveway.length >= 2) rows.push({ swatch: '#3B3A3E', text: 'Tarred driveway' });
+  return rows;
+}
+
+// Compose the illustrated Style render into a proper SHEET: map left, titled legend panel right,
+// scale bar + north arrow over the map — the layout of the reference plan sets (see
+// docs/PLAN-SET-SPEC.md). The Blueprint maps bake this in; the Style output never had it, which is
+// most of the visible gap vs ChatGPT's sheets. All drawn deterministically from the real design.
+async function composeStyleSheet(
+  mapDataUrl: string,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter,
+  placeName: string | undefined,
+  styleLabel: string,
+  layerLabel: string,
+): Promise<string> {
+  const map = await loadImage(mapDataUrl);
+  const W = map.width;
+  const H = map.height;
+  const legendW = Math.min(620, Math.max(360, Math.round(W * 0.3)));
+  const outW = W + legendW;
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return mapDataUrl;
+  ctx.drawImage(map, 0, 0);
+
+  // ── Legend panel ──
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(W, 0, legendW, H);
+  const pad = Math.round(legendW * 0.075);
+  const lx = W + pad;
+  const maxX = outW - pad;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  let y = pad + Math.round(legendW * 0.09);
+  ctx.fillStyle = '#20190F';
+  ctx.font = `800 ${Math.round(legendW * 0.082)}px Georgia, serif`;
+  ctx.fillText(`${layerLabel.toUpperCase()}`, lx, y);
+  y += Math.round(legendW * 0.055);
+  ctx.fillStyle = '#6B6355';
+  ctx.font = `600 ${Math.round(legendW * 0.045)}px system-ui, sans-serif`;
+  ctx.fillText(styleLabel, lx, y);
+  y += Math.round(legendW * 0.05);
+  ctx.fillStyle = '#8A8172';
+  ctx.font = `500 ${Math.round(legendW * 0.04)}px system-ui, sans-serif`;
+  ctx.fillText(placeName ?? 'Your design', lx, y);
+  y += Math.round(legendW * 0.035);
+  ctx.strokeStyle = 'rgba(11,18,11,0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(lx, y);
+  ctx.lineTo(maxX, y);
+  ctx.stroke();
+
+  y += Math.round(legendW * 0.075);
+  ctx.fillStyle = '#1F4D2B';
+  ctx.font = `800 ${Math.round(legendW * 0.05)}px system-ui, sans-serif`;
+  ctx.fillText('LEGEND', lx, y);
+
+  const rows = sheetLegendRows(state, refLayers, filter);
+  const rowH = Math.round(legendW * 0.072);
+  const fs = Math.round(legendW * 0.042);
+  const sw = Math.round(rowH * 0.42);
+  y += Math.round(rowH * 0.7);
+  ctx.textBaseline = 'middle';
+  for (const row of rows) {
+    if (y > H - pad - rowH) {
+      ctx.fillStyle = '#6B6355';
+      ctx.font = `500 ${fs}px system-ui, sans-serif`;
+      ctx.fillText('…', lx, y);
+      break;
+    }
+    ctx.beginPath();
+    ctx.arc(lx + sw / 2, y, sw / 2, 0, Math.PI * 2);
+    ctx.fillStyle = row.swatch;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(11,18,11,0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    let tx = lx + sw + Math.round(legendW * 0.03);
+    if (row.icon) {
+      ctx.fillStyle = '#20190F';
+      ctx.font = `${fs}px sans-serif`;
+      ctx.fillText(row.icon, tx, y);
+      tx += Math.round(fs * 1.5);
+    }
+    ctx.fillStyle = '#241E12';
+    ctx.font = `500 ${fs}px system-ui, sans-serif`;
+    let text = row.text;
+    while (ctx.measureText(text).width > maxX - tx && text.length > 4) text = text.slice(0, -2);
+    if (text !== row.text) text = `${text.slice(0, -1)}…`;
+    ctx.fillText(text, tx, y);
+    y += rowH;
+  }
+  if (!rows.length) {
+    ctx.fillStyle = '#6B6355';
+    ctx.font = `italic 500 ${fs}px system-ui, sans-serif`;
+    ctx.fillText('Nothing placed on this layer.', lx, y);
+  }
+  // Footer caveat — the Style render is illustrative; the exact map is the record.
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#8A8172';
+  ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
+  ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
+  ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
+  ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+
+  // ── Scale bar (over the map, bottom-left) ──
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const niceM = [5, 10, 20, 25, 50, 100, 200];
+  let m = niceM[0];
+  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
+  const barW = m * pxPerM;
+  const bx = Math.round(W * 0.03);
+  const by = H - Math.round(H * 0.045);
+  ctx.lineCap = 'butt';
+  ctx.strokeStyle = 'rgba(11,14,10,0.55)';
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
+  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
+  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
+  ctx.stroke();
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
+  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
+  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
+  ctx.stroke();
+  ctx.font = `700 ${Math.round(W * 0.016)}px system-ui, sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'bottom';
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(11,14,10,0.6)';
+  ctx.strokeText(`${m} m`, bx, by - 14);
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillText(`${m} m`, bx, by - 14);
+
+  // ── North arrow (over the map, top-right) ──
+  const nx = W - Math.round(W * 0.04);
+  const ny = Math.round(H * 0.08);
+  ctx.beginPath();
+  ctx.moveTo(nx, ny - 30);
+  ctx.lineTo(nx - 11, ny);
+  ctx.lineTo(nx, ny - 9);
+  ctx.lineTo(nx + 11, ny);
+  ctx.closePath();
+  ctx.fillStyle = '#FBF6EC';
+  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.fill();
+  ctx.font = `700 ${Math.round(W * 0.017)}px system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
+  ctx.strokeText('N', nx, ny - 34);
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillText('N', nx, ny - 34);
+
+  return canvas.toDataURL('image/png');
+}
+
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
 // dataURLs can be large; localStorage has a quota, so writes are best-effort.
 interface SavedGlossy {
@@ -1623,18 +1822,21 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         width: W,
         height: H,
       });
-      // g. Show, cache (mapKey = producer:<style>) and add to the session gallery.
-      setResultImage(final);
-      const record: SavedGlossy = { image: final, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
+      // g. Sheet chrome — titled legend panel + scale bar + north arrow, so the Style render comes
+      //    out as a proper plan sheet (see docs/PLAN-SET-SPEC.md), not a bare picture.
+      const sheet = await composeStyleSheet(final, state, frame, refLayers, filter, placeName, styleDef.label, layerLabel);
+      // h. Show, cache (mapKey = producer:<style>) and add to the session gallery.
+      setResultImage(sheet);
+      const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery(`${layerLabel} · ${styleDef.label}`, final);
+      pushGallery(`${layerLabel} · ${styleDef.label}`, sheet);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
     }
-  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery]);
+  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery, placeName]);
 
   // Deterministic design-layer map — the ACCURATE-BY-CONSTRUCTION reference map.
   // Real satellite + your EXACT zones / elements / lines / labels drawn on top, and
