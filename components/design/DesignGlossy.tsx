@@ -17,6 +17,7 @@ import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { buildPhasePlan } from '@/lib/phasing';
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -2257,6 +2258,354 @@ async function buildBlueprintStructuresMap(
   return canvas.toDataURL('image/png');
 }
 
+// ── Sheet 07: Implementation & Phasing ────────────────────────────────────────────────────────
+// Contrast text for a number sitting on a phase-colour chip/pin. The phase palette spans chalk and
+// light green (readable only with dark text) through to deep canopy green and magenta (readable
+// only with white) — so the label colour is chosen from the chip's luminance, never fixed.
+function readableTextOn(hex: string): string {
+  const h = hex.replace('#', '');
+  if (h.length < 6) return '#FFFFFF';
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  // Rec. 601 luma, 0..1. Above ~0.6 the chip is light enough that only dark text is legible.
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#0B120B' : '#FFFFFF';
+}
+
+/** North arrow on a translucent disc so it reads over any satellite. Frames are north-up with no
+ *  rotation (CanvasFrame, lib/design-canvas.ts), so "up" is always true north — no bearing to apply. */
+function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number): void {
+  const R = size * 0.6;
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(10,16,22,0.72)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  // Arrow: filled triangle pointing up, tail notched so it reads as a compass needle, not a play icon.
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - R * 0.5);
+  ctx.lineTo(cx - R * 0.32, cy + R * 0.34);
+  ctx.lineTo(cx, cy + R * 0.16);
+  ctx.lineTo(cx + R * 0.32, cy + R * 0.34);
+  ctx.closePath();
+  ctx.fillStyle = '#F3EEE2';
+  ctx.fill();
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(size * 0.34)}px system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('N', cx, cy - R * 0.52);
+  ctx.restore();
+}
+
+// Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 07 in docs/PLAN-SET-SPEC.md,
+// the product differentiator. This is the EXACT / reliable counterpart to the Gemini
+// 'Implementation' ANALYSIS style: that one is an illustrated free-hand render (great to look at,
+// not guaranteed); THIS one is a RULES-ENGINE render — lib/phasing.buildPhasePlan derives the
+// phases deterministically from the placed design + the permaculture Scale of Permanence + the
+// rainfall season, and we draw them precisely. Same chrome as sheets 02–05 (satellite + scrim, tar
+// driveway, fence-tick boundary, title, scale) plus a north arrow. The content layer is numbered
+// phase PINS at each phase's element centroid + a right-hand panel listing every phase (colour
+// chip, number, title, week range, tasks, Hold Point), a CRITICAL ORDER list and a SITE RULES box.
+async function buildImplementationMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: DesignGlossyProps['site'],
+  placeName?: string,
+): Promise<string> {
+  const plan = buildPhasePlan(state, refLayers, site);
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+
+  // 1. Satellite + scrim.
+  await drawBlueprintBase(ctx, frame, W, H);
+
+  // 2. Built context UNDER the pins — house, driveway, fence-tick boundary. On this sheet the built
+  //    fabric is only orientation context, so the driveway keeps its plain (un-kerbed) treatment.
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  // 3. Resolve each phase's pin position (normalised 0..1) as the centroid of the objects it builds.
+  //    itemIds hold BOTH PlacedItem and LineShape ids (one id space), so a pin averages item points
+  //    and line centroids together. The two bookend phases carry no elements, so they fall back to a
+  //    semantic anchor: set-out starts at the gate (driveway head), commissioning ends at the house
+  //    — distinct points, so the two never stack.
+  const centroidOfPts = (pts: Array<[number, number]>): [number, number] | null => {
+    if (!pts.length) return null;
+    const n = pts.length;
+    return [pts.reduce((s, p) => s + p[0], 0) / n, pts.reduce((s, p) => s + p[1], 0) / n];
+  };
+  const itemById = new Map(state.items.map((it) => [it.id, it]));
+  const lineById = new Map(state.lines.map((l) => [l.id, l]));
+  const boundaryC = centroidOfPts(refLayers.boundary);
+  const houseC = centroidOfPts(refLayers.house);
+  const gateC: [number, number] | null = refLayers.driveway.length >= 1 ? refLayers.driveway[0] : null;
+  const frameC: [number, number] = [0.5, 0.5];
+  const pinPos = (phase: (typeof plan.phases)[number]): [number, number] => {
+    const pts: Array<[number, number]> = [];
+    for (const id of phase.itemIds) {
+      const it = itemById.get(id);
+      if (it) { pts.push([it.x, it.y]); continue; }
+      const ln = lineById.get(id);
+      if (ln) { const c = centroidOfPts(ln.points); if (c) pts.push(c); }
+    }
+    const c = centroidOfPts(pts);
+    if (c) return c;
+    if (phase.key === 'setout') return gateC ?? boundaryC ?? frameC;
+    return houseC ?? boundaryC ?? frameC; // commissioning → hand over at the house
+  };
+
+  // 4. Phase pins. Drawn BEFORE the panel: a pin whose centroid falls under the right-hand panel is
+  //    hidden rather than floating over the legend — it is still fully described in the panel by the
+  //    same number and colour, so nothing is lost. (Every sheet's legend covers some of the map;
+  //    this panel is just taller. The phase palette is chosen to stay distinct on the dark scrim.)
+  const pinR = Math.max(15, W * 0.015);
+  for (const phase of plan.phases) {
+    const [nx, ny] = pinPos(phase);
+    const cx = px(nx), cy = py(ny);
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.55)';
+    ctx.shadowBlur = 9;
+    ctx.beginPath();
+    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
+    ctx.fillStyle = phase.colour;
+    ctx.fill();
+    ctx.restore();
+    ctx.beginPath();
+    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.stroke();
+    ctx.fillStyle = readableTextOn(phase.colour);
+    ctx.font = `bold ${Math.round(pinR * 1.15)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(phase.n), cx, cy);
+  }
+
+  // 5. Title (top-left).
+  drawBlueprintTitle(ctx, W, pad, 'IMPLEMENTATION & PHASING', placeName ?? 'Build sequence & hold points');
+
+  // 6. Scale bar + north arrow. Scale bottom-left as on every sheet; north on a disc just left of
+  //    the panel's foot (this sheet adds a north arrow the other Blueprints still lack).
+  const scaleRowH = Math.round(W * 0.026);
+  drawBlueprintScaleBar(ctx, W, H, pad, scaleRowH, pxPerM);
+
+  // 7. Right-hand panel — the phasing schedule. Wider than the legend panel (0.34 vs 0.27) because
+  //    it carries wrapped phase text. Fonts are FIXED at the established readable size (~W·0.012,
+  //    the legend body size); when content would overflow we shed task bullets and surplus site
+  //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
+  //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
+  const lgW = Math.round(W * 0.34);
+  const lgX = W - pad - lgW;
+  const lgY = pad;
+  const lgBottom = H - pad;
+  const ip = Math.round(lgW * 0.055);
+  const innerX = lgX + ip;
+  const innerW = lgW - ip * 2;
+  const panelBottom = lgBottom - ip;
+
+  ctx.fillStyle = 'rgba(10,16,22,0.86)';
+  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1.5;
+  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
+  ctx.stroke();
+
+  const fsHeader = Math.round(W * 0.019);
+  const fsSection = Math.round(W * 0.0135);
+  const fsBody = Math.round(W * 0.0118);
+  const lineH = Math.round(fsBody * 1.42);
+  const blockGap = Math.round(lineH * 0.55);
+  const headerFont = `800 ${fsHeader}px system-ui, sans-serif`;
+  const sectionFont = `800 ${fsSection}px system-ui, sans-serif`;
+  const titleFont = `800 ${Math.round(W * 0.0135)}px system-ui, sans-serif`;
+  const bodyFont = `500 ${fsBody}px system-ui, sans-serif`;
+  const weekFont = `600 ${fsBody}px system-ui, sans-serif`;
+  const holdFont = `italic 600 ${fsBody}px system-ui, sans-serif`;
+
+  // Word-wrap to a pixel width in the given font. Returns at least one line.
+  const wrap = (text: string, maxW: number, font: string): string[] => {
+    ctx.font = font;
+    const out: string[] = [];
+    let cur = '';
+    for (const word of text.split(/\s+/)) {
+      const test = cur ? `${cur} ${word}` : word;
+      if (cur && ctx.measureText(test).width > maxW) { out.push(cur); cur = word; }
+      else cur = test;
+    }
+    if (cur) out.push(cur);
+    return out.length ? out : [text];
+  };
+
+  // Chip geometry (colour swatch carrying the phase number, mirroring the map pin).
+  const chipS = Math.round(fsBody * 1.7);
+  const titleX = innerX + chipS + Math.round(fsBody * 0.7);
+  const titleW = lgX + lgW - ip - titleX;
+  const bulletDotX = innerX + Math.round(fsBody * 0.2);
+  const bulletTextX = innerX + Math.round(fsBody * 1.0);
+  const bulletTextW = lgX + lgW - ip - bulletTextX;
+
+  // ── Measurement (so we can size the phase area and pick the bullet cap) ──────────────────────
+  const phaseBlockH = (phase: (typeof plan.phases)[number], bulletCap: number): number => {
+    const titleLines = wrap(`${phase.title}`, titleW, titleFont).length;
+    let h = Math.max(chipS, titleLines * lineH); // title row (chip beside wrapped title)
+    h += lineH; // week range
+    for (const t of phase.tasks.slice(0, bulletCap)) h += wrap(t, bulletTextW, bodyFont).length * lineH;
+    h += wrap(phase.holdPoint, bulletTextW, holdFont).length * lineH; // hold point
+    return h + blockGap;
+  };
+  const headerH = Math.round(fsHeader * 1.25) + lineH + Math.round(lineH * 0.6); // title + sub + divider
+  const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
+  const criticalH = plan.criticalOrder.length
+    ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
+    : 0;
+  const siteRulesH = (maxRules: number): number => {
+    if (!plan.siteRules.length) return 0;
+    let h = Math.round(fsSection * 1.3);
+    for (const r of plan.siteRules.slice(0, maxRules)) h += wrap(r, bulletTextW, bodyFont).length * lineH;
+    return h + blockGap;
+  };
+
+  // One line of cushion so a small measurement under-estimate clips gracefully at the foot rather
+  // than crowding it — the header/divider spacing rounds a hair looser than phaseBlockH models.
+  const availH = panelBottom - (lgY + ip) - lineH;
+  // Degrade to fit, most-expendable first: surplus site rules (beyond 4) → bullets to 2 → surplus
+  // rules to 3 → bullets to 1 → rules to 2 → bullets to 0 → rules to 1. Keeps at least two bullets
+  // and several rules for as long as the sheet has room; the type never changes size.
+  let bulletCap = 3;
+  let maxRules = plan.siteRules.length;
+  const fits = () =>
+    headerH + plan.phases.reduce((s, p) => s + phaseBlockH(p, bulletCap), 0) + criticalH + siteRulesH(maxRules) <= availH;
+  while (!fits() && maxRules > 4) maxRules--;
+  while (!fits() && bulletCap > 2) bulletCap--;
+  while (!fits() && maxRules > 3) maxRules--;
+  while (!fits() && bulletCap > 1) bulletCap--;
+  while (!fits() && maxRules > 2) maxRules--;
+  while (!fits() && bulletCap > 0) bulletCap--;
+  while (!fits() && maxRules > 1) maxRules--;
+
+  // ── Render top-down (with a hard clip at the panel foot as a belt-and-braces guard) ──────────
+  let y = lgY + ip + Math.round(fsHeader * 0.9);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = headerFont;
+  ctx.fillText('PHASING PLAN', innerX, y);
+  y += lineH;
+  ctx.fillStyle = '#9AA6AC';
+  ctx.font = `italic 500 ${fsBody}px system-ui, sans-serif`;
+  ctx.fillText('Built exactly from your design — no AI.', innerX, y);
+  y += Math.round(lineH * 0.5);
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(innerX, y);
+  ctx.lineTo(lgX + lgW - ip, y);
+  ctx.stroke();
+  y += Math.round(lineH * 0.75);
+
+  const drawLines = (lines: string[], x: number, font: string, color: string): void => {
+    ctx.font = font;
+    ctx.fillStyle = color;
+    for (const ln of lines) {
+      if (y > panelBottom) return;
+      ctx.fillText(ln, x, y);
+      y += lineH;
+    }
+  };
+
+  for (const phase of plan.phases) {
+    if (y > panelBottom) break;
+    // Chip (colour swatch carrying the phase number) + wrapped title beside it. The chip is lifted
+    // ~one cap-height above the first title baseline so number and title read on the same line.
+    const titleLines = wrap(phase.title, titleW, titleFont);
+    const chipTop = y - Math.round(fsBody * 0.95);
+    ctx.fillStyle = phase.colour;
+    roundRectPath(ctx, innerX, chipTop, chipS, chipS, 4);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 1.5;
+    roundRectPath(ctx, innerX, chipTop, chipS, chipS, 4);
+    ctx.stroke();
+    ctx.fillStyle = readableTextOn(phase.colour);
+    ctx.font = `bold ${Math.round(chipS * 0.62)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(phase.n), innerX + chipS / 2, chipTop + chipS / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = titleFont;
+    ctx.fillStyle = '#F3EEE2';
+    let ty = y;
+    for (const ln of titleLines) { if (ty <= panelBottom) ctx.fillText(ln, titleX, ty); ty += lineH; }
+    // Advance below BOTH the chip and the (possibly multi-line) title.
+    const lastTitleBaseline = y + (titleLines.length - 1) * lineH;
+    y = Math.max(lastTitleBaseline, chipTop + chipS) + Math.round(lineH * 0.35);
+    // Week range.
+    drawLines([phase.weekRange], innerX, weekFont, '#C9D3D9');
+    // Task bullets (capped).
+    for (const t of phase.tasks.slice(0, bulletCap)) {
+      if (y > panelBottom) break;
+      const tl = wrap(t, bulletTextW, bodyFont);
+      ctx.fillStyle = '#8CEB6A';
+      ctx.font = bodyFont;
+      ctx.fillText('•', bulletDotX, y);
+      drawLines(tl, bulletTextX, bodyFont, '#E4E9EC');
+    }
+    // Hold point — the gate — in warm gold so it reads as a stop, not a bullet.
+    const hl = wrap(phase.holdPoint, bulletTextW, holdFont);
+    drawLines(hl, bulletTextX, holdFont, GOLD);
+    y += blockGap;
+  }
+
+  // CRITICAL ORDER — the Scale-of-Permanence sequence made concrete for this design.
+  if (plan.criticalOrder.length && y < panelBottom) {
+    ctx.font = sectionFont;
+    ctx.fillStyle = '#F7C97E';
+    ctx.fillText('CRITICAL ORDER', innerX, y);
+    y += Math.round(fsSection * 1.3);
+    drawLines(coLines, innerX, bodyFont, '#E4E9EC');
+    y += blockGap;
+  }
+
+  // SITE RULES — hard constraints derived from what is actually on the plan.
+  if (plan.siteRules.length && y < panelBottom) {
+    ctx.font = sectionFont;
+    ctx.fillStyle = '#F19E9E';
+    ctx.fillText('SITE RULES', innerX, y);
+    y += Math.round(fsSection * 1.3);
+    for (const r of plan.siteRules.slice(0, maxRules)) {
+      if (y > panelBottom) break;
+      ctx.fillStyle = '#F19E9E';
+      ctx.font = bodyFont;
+      ctx.fillText('!', bulletDotX, y);
+      drawLines(wrap(r, bulletTextW, bodyFont), bulletTextX, bodyFont, '#E4E9EC');
+    }
+  }
+
+  // North arrow, on its disc just left of the panel foot.
+  const naSize = Math.max(30, Math.round(W * 0.026));
+  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+
+  return canvas.toDataURL('image/png');
+}
+
 // Legend rows for a Style sheet — the real design content on this layer (zones, grouped
 // elements, line kinds, driveway). Deterministic: read straight from state.
 function sheetLegendRows(
@@ -2560,6 +2909,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
   // image-producer pipeline (compositeAccurateMap). null = a design/analysis map.
   const [producerStyle, setProducerStyle] = useState<string | null>(null);
+  // The deterministic Implementation & Phasing sheet (plan-set 07). It is the EXACT counterpart to
+  // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
+  // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
+  // overrides filter/analysis/producer for the render dispatch.
+  const [implExact, setImplExact] = useState(false);
   // Render engine — both experimental. gpt-image-2 (default, best overall) + Gemini Pro
   // (kept for comparison; may be retired after more experimenting).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
@@ -2572,7 +2926,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
-  const mapKey = producerStyle ? `producer:${producerStyle}:${filter}` : (analysisStyle ?? filter);
+  const mapKey = implExact
+    ? 'implementation-exact'
+    : producerStyle
+      ? `producer:${producerStyle}:${filter}`
+      : (analysisStyle ?? filter);
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
   const pushGallery = useCallback((label: string, image: string) => {
@@ -2808,6 +3166,35 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [state, frame, refLayers, filter, mapKey, pushGallery, placeName]);
 
+  // Deterministic Implementation & Phasing sheet (plan-set 07) — the RULES-ENGINE render. Unlike
+  // the Gemini 'Implementation' analysis style, nothing here is drawn by a model: lib/phasing
+  // derives the phases from the placed design + the Scale of Permanence + rainfall, and we draw
+  // them exactly. Refuses (with the same "draw it first" honesty as the layer maps) when the design
+  // has nothing to phase, so we never present an empty schedule as a finished plan.
+  const renderImplementationMap = useCallback(async () => {
+    const plan = buildPhasePlan(state, refLayers, site);
+    if (plan.phases.length === 0) {
+      setError(
+        'Nothing to phase yet — trace your boundary and place some elements (water, beds, trees…) first. The implementation plan is built from your real design, never guessed.',
+      );
+      return;
+    }
+    setLoading('exact');
+    setError(null);
+    try {
+      const composite = await buildImplementationMap(state, frame, refLayers, site, placeName);
+      setResultImage(composite);
+      const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
+      saveGlossy(state.siteId, mapKey, record);
+      setSaved(record);
+      pushGallery('Implementation & phasing', composite);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
+
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
     const img = new Image();
@@ -2887,12 +3274,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           {GLOSSY_FILTERS.map((f) => {
             // A design layer stays selected even with an illustrated style chosen — the two
             // combine (e.g. Zones + Homestead Storybook). Analysis maps override the layer.
-            const active = analysisStyle === null && filter === f.key;
+            const active = !implExact && analysisStyle === null && filter === f.key;
             return (
               <button
                 key={f.key}
                 type="button"
-                onClick={() => { setFilter(f.key); setAnalysisStyle(null); }}
+                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setImplExact(false); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -2912,6 +3299,38 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               </button>
             );
           })}
+          {/* Sheet 07 — the deterministic Implementation & Phasing sheet. Exact (rules-engine, no
+              AI), so it sits with the Design maps; a two-line chip marks it apart from the layer
+              filters AND from the Gemini "Implementation" analysis chip below (which is the
+              illustrated, less-reliable version). */}
+          <button
+            key="impl-exact"
+            type="button"
+            onClick={() => { setImplExact(true); setAnalysisStyle(null); setProducerStyle(null); }}
+            disabled={loading !== null}
+            aria-pressed={implExact}
+            title="Deterministic build sequence, hold points and site rules — derived from your design (no AI)"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              minHeight: 38,
+              padding: '5px 14px',
+              borderRadius: 19,
+              border: implExact ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
+              background: implExact ? GREEN : 'transparent',
+              color: implExact ? PAPER : DARK,
+              fontWeight: 700,
+              fontSize: 13,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null && !implExact ? 0.5 : 1,
+            }}
+          >
+            <span>Implementation &amp; phasing</span>
+            <span style={{ fontSize: 10, fontWeight: 600, opacity: implExact ? 0.85 : 0.55 }}>
+              sheet 07 · exact, no AI
+            </span>
+          </button>
         </div>
 
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
@@ -2924,7 +3343,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); }}
+                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setImplExact(false); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -2958,7 +3377,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); }}
+                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); setImplExact(false); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={s.blurb}
@@ -2988,7 +3407,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          {producerStyle
+          {implExact
+            ? 'Draw your Implementation & Phasing sheet (plan-set 07) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
+            : producerStyle
             ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND boundary-accurate by construction. ${engine === 'falgpt' ? 'gpt-image-2 is slow — up to ~5 min. For a quick preview, switch the engine to Gemini (~1 min).' : 'Gemini takes about a minute.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
@@ -3010,7 +3431,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
-              {producerStyle
+              {implExact
+                ? ' · Implementation & phasing (sheet 07)'
+                : producerStyle
                 ? ` · ${filter === 'all' ? 'Whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : analysisStyle
                   ? ` · ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map`
@@ -3019,9 +3442,15 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                     : ''}
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={resultImage} alt="AI artist's impression of the design" style={{ width: '100%', display: 'block' }} />
+            <img
+              src={resultImage}
+              alt={implExact ? 'Deterministic implementation & phasing plan of the design' : "AI artist's impression of the design"}
+              style={{ width: '100%', display: 'block' }}
+            />
             <div style={{ padding: '10px 14px', background: DARK, color: PAPER, fontSize: 12, opacity: 0.75 }}>
-              AI artist&apos;s impression of YOUR design — the canvas is the exact version.
+              {implExact
+                ? 'Deterministic implementation plan — built from your design by the rules engine, no AI.'
+                : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
             </div>
           </div>
           {saved && resultImage === saved.image && (
@@ -3122,11 +3551,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
         <button
           onClick={() =>
-            producerStyle
-              ? generateProducer()
-              : analysisStyle
-                ? generate('gemini')
-                : renderDesignMap()
+            implExact
+              ? renderImplementationMap()
+              : producerStyle
+                ? generateProducer()
+                : analysisStyle
+                  ? generate('gemini')
+                  : renderDesignMap()
           }
           disabled={loading !== null}
           style={{
@@ -3154,11 +3585,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : loading === 'falgpt'
                 ? 'Generating… gpt-image-2 is slow (up to ~5 min)'
                 : 'Generating your map… ~1 min'
-            : producerStyle
-              ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`
-              : analysisStyle
-                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
-                : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
+            : implExact
+              ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
+              : producerStyle
+                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`
+                : analysisStyle
+                  ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
+                  : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
         </button>
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
