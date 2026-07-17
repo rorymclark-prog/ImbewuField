@@ -15,7 +15,13 @@
 
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
-import { applyRemoteCanvasState, loadCanvasState, revOf, type DesignCanvasState } from './design-canvas';
+import {
+  applyRemoteCanvasState,
+  contentCountOf,
+  loadCanvasState,
+  revOf,
+  type DesignCanvasState,
+} from './design-canvas';
 
 const COLL = 'user_map_data';
 const DOC = 'design_canvas';
@@ -24,8 +30,10 @@ type Store = Record<string, DesignCanvasState>;
 
 const ts = (s: DesignCanvasState) => Date.parse(s.updatedAt) || 0;
 
-const contentCount = (s: DesignCanvasState | null) =>
-  s ? s.zones.length + s.items.length + s.lines.length : 0;
+// Shared with the page's auto-persist guard (lib/design-canvas.ts) — the winner rule and the
+// "don't push this" rule must answer "is it empty?" identically or one will push what the other
+// would have refused.
+const contentCount = contentCountOf;
 
 /** Wall-clock last-write-wins is not safe on its own: a device whose localStorage was starved
  *  (quota full → silent save failure) reloads a STALE, near-empty snapshot, then restamps
@@ -56,8 +64,12 @@ const wouldDestroy = (challenger: DesignCanvasState | null, incumbent: DesignCan
  *  We accept that because (a) the failure rev DOES fix is the one seen in the field, and (b) the
  *  loser is never silently destroyed: the cloud keeps the winner, the other device still holds
  *  its own copy in its own localStorage, and one save from that device puts it back. What we
- *  refuse to accept is content vanishing with no copy left anywhere — hence the backstop. */
-function pickWinner(mine: DesignCanvasState, theirs: DesignCanvasState): DesignCanvasState {
+ *  refuse to accept is content vanishing with no copy left anywhere — hence the backstop.
+ *
+ *  Exported because the OPEN PAGE is a fourth party to this race: when reconcile hands it a
+ *  winner, it must decide against its own in-memory state using this exact rule, not a private
+ *  re-implementation of it. */
+export function pickWinner(mine: DesignCanvasState, theirs: DesignCanvasState): DesignCanvasState {
   const byRev = revOf(mine) - revOf(theirs);
   const winner = byRev !== 0 ? (byRev > 0 ? mine : theirs) : ts(mine) >= ts(theirs) ? mine : theirs;
   const loser = winner === mine ? theirs : mine;

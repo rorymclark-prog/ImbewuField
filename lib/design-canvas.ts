@@ -91,6 +91,16 @@ export function revOf(state: Pick<DesignCanvasState, 'rev'> | null | undefined):
   return typeof state?.rev === 'number' && Number.isFinite(state.rev) ? state.rev : 0;
 }
 
+/** How much design a state actually holds. Single source of truth for the "is there anything to
+ *  lose here?" question, which BOTH the cloud winner rule (lib/design-canvas-sync.ts) and the
+ *  auto-persist guard (app/design/page.tsx) hang off — they must never disagree about what counts
+ *  as empty, or one will happily push a state the other would have refused. */
+export function contentCountOf(
+  state: Pick<DesignCanvasState, 'items' | 'zones' | 'lines'> | null | undefined,
+): number {
+  return state ? state.items.length + state.zones.length + state.lines.length : 0;
+}
+
 // ── Web-Mercator helpers (adapted from components/GeometryDesignStudio.tsx) ──────
 // Same maths as the Mapbox Static Images API tile grid — do NOT swap in the
 // hardcoded 156543/2^z formula, tile size assumptions differ.
@@ -221,6 +231,28 @@ export function makeMercatorUnprojector(
   };
 }
 
+// Rebuilds the [lng,lat] → normalised [0..1] projector for an ALREADY-COMPUTED frame, using the
+// same maths computeCanvasFrame uses for its own project() (they share this function, so the two
+// can never drift). Exists for callers that hold a frame but not the layers it was fitted from —
+// e.g. the Design Studio re-normalising a cloud copy into the frame it is currently rendering.
+export function projectorForFrame(
+  frame: Omit<CanvasFrame, 'satDataUrl'>,
+): (lngLat: Position) => [number, number] {
+  const projector = makeMercatorProjector(
+    frame.centerLng,
+    frame.centerLat,
+    frame.zoom,
+    frame.imgW,
+    frame.imgH,
+    0,
+    0,
+  );
+  return (lngLat: Position): [number, number] => {
+    const [px, py] = projector(lngLat);
+    return [px / frame.imgW, py / frame.imgH];
+  };
+}
+
 // Re-normalises saved geometry into a freshly-recomputed frame. If the new frame is
 // (within tolerance) the same as the one the state was saved with, returns state
 // unchanged — this is the common case and must stay a cheap no-op.
@@ -335,11 +367,6 @@ export function computeCanvasFrame(
   const pxDelta = Math.abs(pyA - pyB) || 1e-9;
   const mPerPx = METRES_PER_DEGREE_LAT / pxDelta;
 
-  const project = (lngLat: Position): [number, number] => {
-    const [px, py] = projector(lngLat);
-    return [px / imgW, py / imgH];
-  };
-
   const frame: Omit<CanvasFrame, 'satDataUrl'> = {
     centerLng: fit.centerLng,
     centerLat: fit.centerLat,
@@ -348,6 +375,10 @@ export function computeCanvasFrame(
     imgH,
     mPerPx,
   };
+
+  // Same projector every other frame-holder gets (projectorForFrame) — deliberately not a second
+  // local copy of the divide-by-imgW/imgH step, so a fix to one is a fix to both.
+  const project = projectorForFrame(frame);
 
   return { frame, url, project };
 }
@@ -424,13 +455,11 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
   return stamped;
 }
 
-// Applies a state that a cloud merge (lib/design-canvas-sync.ts) already decided is newest —
-// written verbatim, WITHOUT restamping updatedAt and WITHOUT bumping rev (this device is
-// RECEIVING an edit, not making one; restamping/bumping would make a same-tick re-reconcile think
-// this device just edited it, and would inflate rev on every hop between devices until the
-// counter meant nothing). Still dispatches the change event so the page's normal refresh() path
-// picks it up like any external change.
-export function applyRemoteCanvasState(state: DesignCanvasState): void {
+// Writes `state` to localStorage EXACTLY as handed in — no updatedAt restamp, no rev bump — and
+// dispatches the change event either way. Shared by the two callers that must move a state around
+// WITHOUT claiming it as a new local edit; the difference between them is intent, not mechanics,
+// so they share the mechanics and document the intent separately.
+function writeCanvasStateVerbatim(state: DesignCanvasState): void {
   if (typeof window === 'undefined') return;
   const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
   try {
@@ -446,6 +475,28 @@ export function applyRemoteCanvasState(state: DesignCanvasState): void {
     }
   }
   window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+}
+
+// Applies a state that a cloud merge (lib/design-canvas-sync.ts) already decided is newest —
+// written verbatim, WITHOUT restamping updatedAt and WITHOUT bumping rev (this device is
+// RECEIVING an edit, not making one; restamping/bumping would make a same-tick re-reconcile think
+// this device just edited it, and would inflate rev on every hop between devices until the
+// counter meant nothing). Still dispatches the change event so the page's normal refresh() path
+// picks it up like any external change.
+export function applyRemoteCanvasState(state: DesignCanvasState): void {
+  writeCanvasStateVerbatim(state);
+}
+
+/** Persists a NAVIGATION-ONLY change — today that means `step`, where the farmer is in the wizard
+ *  — WITHOUT restamping updatedAt and WITHOUT bumping rev.
+ *
+ *  WHY this exists instead of just calling saveCanvasState: updatedAt and rev are the two fields
+ *  cloud sync ranks copies by. Moving between wizard steps changes no design content, so counting
+ *  it as an edit hands a device holding a STALE snapshot a free promotion to "newest" — it can
+ *  out-rank and erase a good cloud copy without the farmer ever touching their design. Looking at
+ *  a page is not editing it, and must not move the counters. */
+export function saveCanvasNavigation(state: DesignCanvasState): void {
+  writeCanvasStateVerbatim(state);
 }
 
 // ── Geometry helpers ───────────────────────────────────────────────────────────

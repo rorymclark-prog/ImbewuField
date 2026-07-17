@@ -20,12 +20,15 @@ import {
   type DesignLayer,
 } from '@/lib/design-studio';
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
-import { pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
+import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
 import { useAuth } from '@/lib/auth';
 import {
   computeCanvasFrame,
+  contentCountOf,
   fetchImageAsDataUrl,
   loadCanvasState,
+  projectorForFrame,
+  saveCanvasNavigation,
   saveCanvasState,
   CanvasSaveError,
   migrateStateToFrame,
@@ -296,7 +299,7 @@ function EmptyState() {
 }
 
 function DesignStudioInner() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const params = useSearchParams();
   const latRaw = params.get('lat');
   const lonRaw = params.get('lon');
@@ -431,6 +434,11 @@ function DesignStudioInner() {
   const [zoneAdvice, setZoneAdvice] = useState<ZoneAdvicePin[]>([]);
 
   const undoStack = useRef<DesignCanvasState[]>([]);
+  // False until we know what (if anything) the cloud holds for this site — i.e. until the
+  // reconcile below has settled, or we've established there is no cloud to reconcile with
+  // (signed out). Gates AUTOMATIC persists only; a farmer's own edits are never gated. See
+  // persistMigration in the frame effect for why.
+  const cloudSettled = useRef(false);
   const siteId = useMemo(
     () => designSiteIdFromLocation(hasSite ? ({ lat, lon } as LocationData) : null),
     [hasSite, lat, lon],
@@ -562,19 +570,43 @@ function DesignStudioInner() {
         setFrame((prev) => ({ ...frameNoImg, satDataUrl: prev?.satDataUrl ?? null }));
       }
 
+      // A frame migration is DERIVED, not authored: it fires on its own whenever the satellite
+      // frame is recomputed (e.g. the farm shapes arriving a moment after the page seeded), with
+      // NO user action behind it. persistCanvasState restamps updatedAt and counts rev forward,
+      // so auto-persisting one hands an automatic write the credentials of a real edit — enough
+      // to out-rank, and erase, a good cloud copy. Two rules, both load-bearing:
+      //
+      //  1. Zero content never persists. On a browser with no local snapshot refresh() seeds
+      //     `zones: []`; the frame then recomputes and this empty migration was auto-persisted
+      //     with updatedAt=NOW, which can beat the async reconcile and push EMPTY to the cloud.
+      //     An empty automatic push has nothing to save and everything to lose.
+      //  2. Nothing persists until reconcile has settled. Rule 1 alone is NOT enough: the seed is
+      //     not always empty (loadSiteElements pre-seeds items), and a seed carrying two tanks
+      //     clears rule 1 while still out-ranking the farmer's real cloud design. Until we have
+      //     seen what the cloud holds, this device has no standing to claim it is newest.
+      //
+      // Declining costs nothing: the migration still applies IN MEMORY, and the farmer's next
+      // real edit persists it (handleChange counts rev forward from the migrated state). A
+      // migration is re-derived from the saved geometry on the next load anyway.
+      const persistMigration = (s: DesignCanvasState): DesignCanvasState => {
+        if (contentCountOf(s) === 0 || !cloudSettled.current) return s;
+        return persistCanvasState(s) ?? s;
+      };
+
       // Canvas state: load existing, or seed fresh from traced site elements on first visit.
       setCanvasState((prev) => {
         const existing = loadCanvasState(siteId);
         if (existing) {
           const migrated = migrateStateToFrame(existing, frameNoImg, project);
           // Keep the stamped copy (bumped rev) when a migration was actually persisted; fall back
-          // to the unstamped one if the save failed, so the page still shows the design.
-          if (migrated !== existing) return persistCanvasState(migrated) ?? migrated;
+          // to the unstamped one if the save failed or was declined above, so the page still
+          // shows the design either way.
+          if (migrated !== existing) return persistMigration(migrated);
           return migrated;
         }
         if (prev && prev.siteId === siteId) {
           const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
-          if (migratedPrev !== prev) return persistCanvasState(migratedPrev) ?? migratedPrev;
+          if (migratedPrev !== prev) return persistMigration(migratedPrev);
           return migratedPrev;
         }
 
@@ -611,10 +643,62 @@ function DesignStudioInner() {
   // entirely when signed out; localStorage-only behaviour is unchanged.
   useEffect(() => {
     const uid = user?.uid;
-    if (!uid || !hasSite) return;
-    reconcileDesignCanvas(siteId).catch(() => {});
-    return subscribeDesignCanvasLive(siteId);
-  }, [user?.uid, hasSite, siteId]);
+    // Auth is still resolving: we do not yet know whether a cloud copy exists, so the gate stays
+    // SHUT. Treating "not signed in yet" as "no cloud" would reopen the very race being fixed —
+    // uid arrives a tick later and the automatic write we just allowed pushes after all.
+    if (authLoading) {
+      cloudSettled.current = false;
+      return;
+    }
+    if (!uid || !hasSite) {
+      // Genuinely signed out / no site: no cloud copy is coming, so nothing is waiting on one.
+      // Without this the gate would stay shut forever and local-only farmers would silently stop
+      // getting their frame migrations saved.
+      cloudSettled.current = true;
+      return;
+    }
+    cloudSettled.current = false;
+    let cancelled = false;
+
+    reconcileDesignCanvas(siteId)
+      .then((winner) => {
+        if (cancelled || !winner || winner.siteId !== siteId) return;
+        // USE THE WINNER. reconcile's own applyRemoteCanvasState → change-event → refresh() path
+        // is the normal way this lands, but it has two holes: on a quota-starved device the
+        // localStorage write silently fails and refresh() re-reads the STALE snapshot, and a
+        // concurrent self-save suppresses the refresh entirely. Both leave the open page showing
+        // a copy the cloud already ruled against — i.e. the rescue never arrives. Dropping the
+        // return value was what made those holes unrecoverable.
+        setCanvasState((prev) => {
+          // Nothing seeded yet: the frame effect is about to read this straight out of
+          // localStorage (reconcile already wrote it) and migrate it properly. Don't race it
+          // with an unmigrated copy.
+          if (!prev || prev.siteId !== siteId) return prev;
+          if (prev === winner) return prev;
+          // Same rule reconcile/push/the live listener use — the page is a fourth party to the
+          // same race and must not out-rank them with its own private test. In particular this
+          // is what stops a slow reconcile from clobbering edits the farmer made while it was in
+          // flight (those carry a higher rev and win here).
+          if (pickWinner(prev, winner) !== winner) return prev;
+          // The winner was fitted to whatever frame its own device computed. Re-normalise it into
+          // the frame THIS page is rendering, or the geometry lands in the wrong place. No-ops
+          // (returns `winner` unchanged) when the frames match, which is the common case.
+          return migrateStateToFrame(winner, prev.frame, projectorForFrame(prev.frame));
+        });
+      })
+      .catch(() => {})
+      // Settled either way: a reconcile that FAILED must not hold the gate shut forever, or an
+      // offline farmer would lose their migrations to a promise that never resolves.
+      .finally(() => {
+        if (!cancelled) cloudSettled.current = true;
+      });
+
+    const unsubscribe = subscribeDesignCanvasLive(siteId);
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
+  }, [authLoading, user?.uid, hasSite, siteId]);
 
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
@@ -714,7 +798,7 @@ function DesignStudioInner() {
 
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line
-  // change). Saves + persists like handleChange, just skips the undoStack push.
+  // change). It must ALSO not count as an edit: see saveCanvasNavigation below.
   const setStep = useCallback((step: WizardStep) => {
     // The ground-feature chips live only on the Base step; clear any armed feature on a step
     // change so a still-armed 'house' can't silently stamp a plain zone drawn on another step.
@@ -723,8 +807,22 @@ function DesignStudioInner() {
     setZoneAdvice([]);
     setCanvasState((prev) => {
       if (!prev) return prev;
-      const next = { ...prev, step, updatedAt: new Date().toISOString() };
-      return persistCanvasState(next) ?? next;
+      // NAVIGATION IS NOT AN EDIT. This used to go through persistCanvasState, which restamps
+      // updatedAt AND counts rev forward — the two fields cloud sync ranks copies by. That is
+      // what weaponises a stale snapshot: a device holding an out-of-date copy could promote it
+      // to "newest" just by TAPPING A STEP, then win the merge and clobber a good cloud copy,
+      // with the farmer never having touched their design. Same class of bug as the one that
+      // already destroyed a user's zones.
+      //
+      // Chosen over dropping `step` from the synced payload because that is the bigger change:
+      // step lives inside DesignCanvasState, which is stored/pushed/merged as ONE blob, so
+      // excluding it would mean teaching push, reconcile AND the live listener to merge a single
+      // field specially — three sync paths to keep in agreement, on working code we cannot
+      // click-test. Writing the step through verbatim leaves the counters saying exactly what
+      // they said before the tap, which is the truth, and touches one call site.
+      const next = { ...prev, step };
+      withSelfSaveFlag(() => saveCanvasNavigation(next));
+      return next;
     });
   }, []);
 
