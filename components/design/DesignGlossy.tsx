@@ -2351,10 +2351,18 @@ async function buildImplementationMap(
   };
   const itemById = new Map(state.items.map((it) => [it.id, it]));
   const lineById = new Map(state.lines.map((l) => [l.id, l]));
-  const boundaryC = centroidOfPts(refLayers.boundary);
   const houseC = centroidOfPts(refLayers.house);
   const gateC: [number, number] | null = refLayers.driveway.length >= 1 ? refLayers.driveway[0] : null;
-  const frameC: [number, number] = [0.5, 0.5];
+  // Distinct bookend fallbacks. When NEITHER a driveway nor a house is traced, both bookends used
+  // to collapse onto boundaryC/frameC and stack the "1" and last pins on the same spot. Anchor
+  // set-out to the NW quarter and commissioning to the SE quarter of the boundary bbox (or fixed
+  // offset points if there's no boundary) so they can never coincide.
+  const bpts = refLayers.boundary;
+  const bb = bpts.length
+    ? { x0: Math.min(...bpts.map((p) => p[0])), y0: Math.min(...bpts.map((p) => p[1])), x1: Math.max(...bpts.map((p) => p[0])), y1: Math.max(...bpts.map((p) => p[1])) }
+    : null;
+  const nwAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.28, bb.y0 + (bb.y1 - bb.y0) * 0.28] : [0.4, 0.4];
+  const seAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.72, bb.y0 + (bb.y1 - bb.y0) * 0.72] : [0.6, 0.6];
   const pinPos = (phase: (typeof plan.phases)[number]): [number, number] => {
     const pts: Array<[number, number]> = [];
     for (const id of phase.itemIds) {
@@ -2365,8 +2373,8 @@ async function buildImplementationMap(
     }
     const c = centroidOfPts(pts);
     if (c) return c;
-    if (phase.key === 'setout') return gateC ?? boundaryC ?? frameC;
-    return houseC ?? boundaryC ?? frameC; // commissioning → hand over at the house
+    if (phase.key === 'setout') return gateC ?? nwAnchor;
+    return houseC ?? seAnchor; // commissioning → hand over at the house (SE if no house traced)
   };
 
   // 4. Phase pins. Drawn BEFORE the panel: a pin whose centroid falls under the right-hand panel is
@@ -3080,7 +3088,16 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
-      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+      //    EXCEPTION — the ZONES sheet does NOT run the model at all (Rory: "it musn't for the
+      //    zones invent things underneath — it must just be the clean satellite image"). A zones
+      //    map's whole job is "where are my zones on MY REAL LAND", so the AI can only add risk;
+      //    the photograph IS the truth. We hand the real satellite straight through as the base —
+      //    then buildZoneOverlay burns the exact zone regions + labels + sheet chrome on top,
+      //    exactly as before. Result: instant, free, no ~5-min gpt-image-2 wait, never invented.
+      const modelImage =
+        filter === 'zones'
+          ? (frame.satDataUrl ?? composite)
+          : await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
       const boundaryPx =
         refLayers.boundary.length >= 3
