@@ -11,9 +11,9 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X } from 'lucide-react'
 
 import polygonClipping from 'polygon-clipping';
 
-import type { CanvasFrame, DesignCanvasState, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
@@ -1330,6 +1330,413 @@ function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: n
   ctx.closePath();
 }
 
+// ── Shared Blueprint sheet chrome ─────────────────────────────────────────────────────────────
+// Every deterministic Blueprint sheet (02 Zones, 03 Water, 04 Planting, 05 Structures) wears the
+// SAME chrome — see docs/PLAN-SET-SPEC.md "Sheet anatomy": satellite + dark scrim, tar driveway,
+// fence-tick boundary, title block, legend panel, scale bar. That chrome was written twice (zone +
+// water) and would have been written FOUR times once 04/05 landed. It lives here once instead,
+// because the spec's load-bearing principle is that every sheet in the set agrees with every other
+// — and four hand-maintained copies of the chrome is exactly how that guarantee quietly rots.
+//
+// Each helper is a verbatim extraction of the call sequence the zone/water sheets already ran, in
+// the same order, leaving the same ctx state behind, so both existing sheets stay pixel-identical.
+// Every parameter is a point where those two ALREADY differed (title text, whether the driveway
+// carries a dashed kerb, the house's fill/stroke) — none is a new styling choice.
+//
+// NB: there is deliberately no north-arrow helper. Despite the sheet anatomy listing one, the
+// Blueprint sheets have never drawn a north arrow — only composeStyleSheet does. Adding one here
+// would change the zone/water sheets, which this refactor must not do. Left as a known gap.
+
+/** Satellite base + the blueprint scrim that makes graphics pop on a moody dark ground. */
+async function drawBlueprintBase(
+  ctx: CanvasRenderingContext2D,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+): Promise<void> {
+  if (frame.satDataUrl) {
+    const img = await loadImage(frame.satDataUrl);
+    ctx.drawImage(img, 0, 0, W, H);
+  } else {
+    ctx.fillStyle = '#22303a';
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.fillStyle = 'rgba(8,14,22,0.5)';
+  ctx.fillRect(0, 0, W, H);
+}
+
+/** Trace a normalised ring as a closed path (leaves fill/stroke to the caller). */
+function blueprintRing(
+  ctx: CanvasRenderingContext2D,
+  pts: Array<[number, number]>,
+  px: (n: number) => number,
+  py: (n: number) => number,
+): void {
+  ctx.beginPath();
+  pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+  ctx.closePath();
+}
+
+/** House footprint. The zone sheet paints it as Zone 0 in the zone palette; the other sheets draw
+ *  it as neutral context beneath their own content — hence fill/stroke/width are the caller's. */
+function drawBlueprintHouse(
+  ctx: CanvasRenderingContext2D,
+  house: Array<[number, number]>,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  fill: string,
+  stroke: string,
+  lineWidth: number,
+): void {
+  if (house.length < 3) return;
+  blueprintRing(ctx, house, px, py);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+}
+
+/** Tar driveway — filled when traced as an AREA, else a ~3 m carriageway stroke (clamped).
+ *  `dashedEdge` reproduces the zone sheet's light dashed kerb; the water sheet omits it (there the
+ *  driveway is background context, not content), so it stays a caller's choice rather than a rule. */
+function drawBlueprintDriveway(
+  ctx: CanvasRenderingContext2D,
+  refLayers: DesignGlossyProps['refLayers'],
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+  dashedEdge: boolean,
+): void {
+  if (refLayers.driveway.length < 2) return;
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const trace = () => {
+    ctx.beginPath();
+    refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+  };
+  if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+    trace();
+    ctx.closePath();
+    ctx.fillStyle = '#2A2A2E';
+    ctx.fill();
+    if (dashedEdge) {
+      ctx.setLineDash([10, 7]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  } else {
+    trace();
+    ctx.strokeStyle = '#2A2A2E';
+    ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
+    ctx.stroke();
+    if (dashedEdge) {
+      trace();
+      ctx.setLineDash([10, 7]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+  ctx.restore();
+}
+
+/** Site boundary — green line with perpendicular fence ticks. */
+function drawBlueprintBoundary(
+  ctx: CanvasRenderingContext2D,
+  boundary: Array<[number, number]>,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  W: number,
+): void {
+  if (boundary.length < 3) return;
+  const b = boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
+  ctx.beginPath();
+  b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+  ctx.closePath();
+  ctx.strokeStyle = '#8CEB6A';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  const tick = Math.max(7, W * 0.006);
+  const tstep = Math.max(26, W * 0.02);
+  ctx.lineWidth = 2;
+  for (let i = 0; i < b.length; i++) {
+    const [x1, y1] = b[i];
+    const [x2, y2] = b[(i + 1) % b.length];
+    const dx = x2 - x1, dy = y2 - y1;
+    const len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    for (let t = tstep; t < len; t += tstep) {
+      const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + nx * tick, cy + ny * tick);
+      ctx.stroke();
+    }
+  }
+}
+
+/** Title block, top-left. */
+function drawBlueprintTitle(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  pad: number,
+  title: string,
+  subtitle: string,
+): void {
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
+  ctx.fillText(title, pad, pad + Math.round(W * 0.028));
+  ctx.fillStyle = '#B9C2C8';
+  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
+  ctx.fillText(subtitle, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+}
+
+interface BlueprintLegend {
+  lgX: number;
+  lgY: number;
+  lgW: number;
+  ip: number; // inner padding
+  sw: number; // swatch size
+  textX: number; // x of the row label
+  ry: number; // y of the first row
+}
+
+/** Legend panel shell + "LEGEND" header + divider, top-right. Returns the panel metrics and the y
+ *  of the first row so each sheet can draw its own rows — the zone sheet's rows are bespoke
+ *  two-part text, the rest use drawBlueprintLegendRows. `lgH` stays the caller's job: only the
+ *  caller knows its row count. */
+function drawBlueprintLegendFrame(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  pad: number,
+  rowH: number,
+  lgH: number,
+): BlueprintLegend {
+  const lgW = Math.round(W * 0.27);
+  const lgX = W - pad - lgW, lgY = pad;
+  ctx.fillStyle = 'rgba(10,16,22,0.82)';
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1.5;
+  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
+  ctx.stroke();
+  const ip = Math.round(lgW * 0.07);
+  const sw = Math.round(rowH * 0.62);
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  let ry = lgY + ip + rowH * 0.4;
+  ctx.fillStyle = '#F3EEE2';
+  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
+  ctx.fillText('LEGEND', lgX + ip, ry);
+  ry += rowH * 0.9;
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.beginPath();
+  ctx.moveTo(lgX + ip, ry - rowH * 0.25);
+  ctx.lineTo(lgX + lgW - ip, ry - rowH * 0.25);
+  ctx.stroke();
+  ry += rowH * 0.3;
+  const textX = lgX + ip + sw * 1.5 + 12;
+  return { lgX, lgY, lgW, ip, sw, textX, ry };
+}
+
+interface BlueprintLegendRow {
+  color: string;
+  label: string;
+  style: 'fill' | 'line' | 'dashline';
+  icon?: string;
+}
+
+/** Generic legend rows (swatch + optional icon + label). Returns the y after the last row.
+ *  The icon and the label-ellipsis are both no-ops for the water sheet's short, icon-less rows,
+ *  so it keeps rendering exactly as before; sheets 04/05 need them for long species names. */
+function drawBlueprintLegendRows(
+  ctx: CanvasRenderingContext2D,
+  lg: BlueprintLegend,
+  rowH: number,
+  rows: BlueprintLegendRow[],
+): number {
+  let ry = lg.ry;
+  for (const row of rows) {
+    if (row.style === 'fill') {
+      ctx.fillStyle = `${row.color}CC`;
+      roundRectPath(ctx, lg.lgX + lg.ip, ry - lg.sw / 2, lg.sw * 1.5, lg.sw, 3);
+      ctx.fill();
+      ctx.strokeStyle = row.color;
+      ctx.lineWidth = 1.5;
+      roundRectPath(ctx, lg.lgX + lg.ip, ry - lg.sw / 2, lg.sw * 1.5, lg.sw, 3);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = row.color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash(row.style === 'dashline' ? [4, 4] : []);
+      ctx.beginPath();
+      ctx.moveTo(lg.lgX + lg.ip, ry);
+      ctx.lineTo(lg.lgX + lg.ip + lg.sw * 1.5, ry);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    let tx = lg.textX;
+    if (row.icon) {
+      ctx.fillStyle = '#EDE7DA';
+      ctx.font = `${Math.round(rowH * 0.5)}px sans-serif`;
+      ctx.fillText(row.icon, tx, ry);
+      tx += Math.round(rowH * 0.66);
+    }
+    ctx.fillStyle = '#EDE7DA';
+    ctx.font = `600 ${Math.round(rowH * 0.46)}px system-ui, sans-serif`;
+    // Ellipsise rather than spill past the panel edge — species names + counts get long.
+    let label = row.label;
+    const maxW = lg.lgX + lg.lgW - lg.ip - tx;
+    if (ctx.measureText(label).width > maxW) {
+      while (label.length > 1 && ctx.measureText(`${label}…`).width > maxW) label = label.slice(0, -1);
+      label = `${label}…`;
+    }
+    ctx.fillText(label, tx, ry);
+    ry += rowH;
+  }
+  return ry;
+}
+
+/** Italic caveat line at the foot of the legend. */
+function drawBlueprintLegendNote(
+  ctx: CanvasRenderingContext2D,
+  lg: BlueprintLegend,
+  rowH: number,
+  ry: number,
+  text: string,
+): void {
+  ctx.fillStyle = '#9AA6AC';
+  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
+  ctx.fillText(text, lg.lgX + lg.ip, ry);
+}
+
+/** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
+function drawBlueprintScaleBar(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  H: number,
+  pad: number,
+  rowH: number,
+  pxPerM: number,
+): void {
+  const niceM = [5, 10, 20, 25, 50, 100, 200];
+  let m = niceM[0];
+  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
+  const barW = m * pxPerM;
+  const bx = pad, by = H - pad - rowH * 0.3;
+  ctx.strokeStyle = '#F3EEE2';
+  ctx.fillStyle = '#F3EEE2';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(bx + barW, by);
+  ctx.moveTo(bx, by - 8);
+  ctx.lineTo(bx, by + 8);
+  ctx.moveTo(bx + barW, by - 8);
+  ctx.lineTo(bx + barW, by + 8);
+  ctx.stroke();
+  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
+  ctx.textBaseline = 'bottom';
+  ctx.textAlign = 'left';
+  ctx.fillText(`${m} m`, bx, by - 12);
+}
+
+/** How many legend rows fit the sheet at this size (the panel must not run off the bottom).
+ *  Mirrors the lgH formula the sheets use: pad + rowH × (rows + 2.4) ≤ H − pad. */
+function blueprintLegendCapacity(H: number, pad: number, rowH: number): number {
+  return Math.max(3, Math.floor((H - pad * 2) / rowH - 2.4));
+}
+
+// ── Per-species colour ────────────────────────────────────────────────────────────────────────
+// WHY a palette instead of def.color: def.color is a per-CATEGORY accent — every one of the 21
+// 'growing' elements is the same #4E8B3B, every 'structure' the same #7A5C3E. That's right for the
+// studio canvas (category at a glance) but useless on a planting sheet, where the entire job is
+// telling Macadamia from Citrus. So sheets 04/05 colour by SPECIES.
+//
+// The index is the element's position within ITS OWN SHEET's category set (planting = growing;
+// structures = structure+animal+access). That makes the colour:
+//   • deterministic  — same design → same sheet, always; no hashing, no randomness;
+//   • collision-free — the biggest set is 23 elements against a 24-entry palette, and the two sets
+//     are disjoint, so no two species on one sheet can ever share a colour;
+//   • stable         — a given species keeps its colour across renders and across designs, so this
+//     month's sheet is comparable with last month's.
+// A catalog edit can shift the palette, which is cosmetic only: the legend on the sheet always
+// shows the mapping that sheet actually used.
+const SPECIES_PALETTE = [
+  '#E4572E', '#F4A259', '#F6D55C', '#C9A227', '#A3B565', '#7FD46B',
+  '#4E9F3D', '#2F7A4A', '#3CBBB1', '#4EA6D8', '#2B6FA6', '#5C6BC0',
+  '#9B6FD4', '#C879C0', '#E8639B', '#D64550', '#B5651D', '#8C6239',
+  '#C98A2C', '#7A9E9F', '#B8C4A9', '#E0B0A0', '#6FB1FC', '#D9D06A',
+];
+
+const SPECIES_INDEX: Record<string, number> = (() => {
+  const out: Record<string, number> = {};
+  // 'planting' and 'structures' partition the catalog's placeable elements between them, so one
+  // flat record is unambiguous. Membership comes from itemInFilter — never a category literal —
+  // so a taxonomy change (docs/DESIGN-TAXONOMY.md) can't silently drop a species from its sheet.
+  for (const filter of ['planting', 'structures'] as const) {
+    let i = 0;
+    for (const def of ELEMENT_CATALOG) {
+      if (!itemInFilter(def.category, filter)) continue;
+      out[def.id] = i++;
+    }
+  }
+  return out;
+})();
+
+function speciesColor(defId: string): string {
+  const i = SPECIES_INDEX[defId] ?? 0;
+  return SPECIES_PALETTE[i % SPECIES_PALETTE.length];
+}
+
+/** Group a sheet's items into legend rows: one row per distinct name, with a count, commonest
+ *  first. Grouping is by `it.label ?? def.name` (matching sheetLegendRows) so a renamed item reads
+ *  as its own line; the colour still comes from the def, so the row matches its marks on the map. */
+function speciesRowsFor(
+  state: DesignCanvasState,
+  filter: GlossyLayerFilter,
+): BlueprintLegendRow[] {
+  const groups = new Map<string, { icon: string; color: string; n: number }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def || !itemInFilter(def.category, filter)) continue;
+    const name = it.label ?? def.name;
+    const g = groups.get(name) ?? { icon: def.icon, color: speciesColor(def.id), n: 0 };
+    g.n += 1;
+    groups.set(name, g);
+  }
+  return [...groups.entries()]
+    .sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]))
+    .map(([name, g]) => ({
+      color: g.color,
+      icon: g.icon,
+      label: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+      style: 'fill' as const,
+    }));
+}
+
+/** Fit species rows into the panel, keeping the fixed context rows (boundary/driveway) and
+ *  collapsing whatever spills into a "+N more" row. A food forest can carry 20+ species. */
+function fitLegendRows(
+  species: BlueprintLegendRow[],
+  fixed: BlueprintLegendRow[],
+  capacity: number,
+): BlueprintLegendRow[] {
+  const budget = Math.max(1, capacity - fixed.length);
+  if (species.length <= budget) return [...species, ...fixed];
+  const shown = species.slice(0, Math.max(0, budget - 1));
+  const hidden = species.length - shown.length;
+  return [...shown, { color: '#9AA6AC', label: `+${hidden} more`, style: 'fill' as const }, ...fixed];
+}
+
 // Deterministic "Blueprint" ZONE map — the flat cartographic style ChatGPT nailed, but drawn
 // exactly from our geometry (guaranteed accurate, instant, reproducible). Dark scrim + hatched
 // zone fills + dashed coloured outlines + fence-tick boundary + tar driveway + number badges +
@@ -1349,26 +1756,15 @@ async function buildBlueprintZoneMap(
   if (!ctx) throw new Error('Canvas unavailable');
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
-  const ring = (pts: Array<[number, number]>) => {
-    ctx.beginPath();
-    pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
-    ctx.closePath();
-  };
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
   const centroid = (pts: Array<[number, number]>): [number, number] => {
     const n = pts.length;
     return [px(pts.reduce((s, p) => s + p[0], 0) / n), py(pts.reduce((s, p) => s + p[1], 0) / n)];
   };
 
   // 1. Satellite base + blueprint scrim (so the graphics pop on a moody dark ground).
-  if (frame.satDataUrl) {
-    const img = await loadImage(frame.satDataUrl);
-    ctx.drawImage(img, 0, 0, W, H);
-  } else {
-    ctx.fillStyle = '#22303a';
-    ctx.fillRect(0, 0, W, H);
-  }
-  ctx.fillStyle = 'rgba(8,14,22,0.5)';
-  ctx.fillRect(0, 0, W, H);
+  await drawBlueprintBase(ctx, frame, W, H);
 
   // 2. Zones 1..5 — translucent wash + diagonal hatch (clipped) + dashed coloured outline.
   const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3 && z.zone !== 0);
@@ -1408,78 +1804,14 @@ async function buildBlueprintZoneMap(
   }
 
   // 3. Driveway — tar (dark) with a light dashed edge.
-  if (refLayers.driveway.length >= 2) {
-    ctx.save();
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const trace = () => {
-      ctx.beginPath();
-      refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
-    };
-    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
-      trace();
-      ctx.closePath();
-      ctx.fillStyle = '#2A2A2E';
-      ctx.fill();
-      ctx.setLineDash([10, 7]);
-      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      ctx.setLineDash([]);
-    } else {
-      const roadW = Math.min(46, Math.max(11, (W / (frame.imgW * frame.mPerPx)) * 3));
-      trace();
-      ctx.strokeStyle = '#2A2A2E';
-      ctx.lineWidth = roadW;
-      ctx.stroke();
-      trace();
-      ctx.setLineDash([10, 7]);
-      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-    ctx.restore();
-  }
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, true);
 
   // 4. House = Zone 0 — solid fill + white outline.
   const hasHouse = refLayers.house.length >= 3;
-  if (hasHouse) {
-    ring(refLayers.house);
-    ctx.fillStyle = `${ZONE_DEFS[0].color}D9`;
-    ctx.fill();
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-  }
+  drawBlueprintHouse(ctx, refLayers.house, px, py, `${ZONE_DEFS[0].color}D9`, '#FFFFFF', 3);
 
   // 5. Boundary — green line with perpendicular fence ticks.
-  if (refLayers.boundary.length >= 3) {
-    const b = refLayers.boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
-    ctx.beginPath();
-    b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
-    ctx.closePath();
-    ctx.strokeStyle = '#8CEB6A';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-    const tick = Math.max(7, W * 0.006);
-    const tstep = Math.max(26, W * 0.02);
-    ctx.lineWidth = 2;
-    for (let i = 0; i < b.length; i++) {
-      const [x1, y1] = b[i];
-      const [x2, y2] = b[(i + 1) % b.length];
-      const dx = x2 - x1, dy = y2 - y1;
-      const len = Math.hypot(dx, dy) || 1;
-      const nx = -dy / len, ny = dx / len;
-      for (let t = tstep; t < len; t += tstep) {
-        const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + nx * tick, cy + ny * tick);
-        ctx.stroke();
-      }
-    }
-  }
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
   // 6. Number badges (house = 0, then zones).
   const badge = (cx: number, cy: number, color: string, n: number) => {
@@ -1507,45 +1839,16 @@ async function buildBlueprintZoneMap(
   }
 
   // 7. Title (top-left).
-  const pad = Math.round(W * 0.02);
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
-  ctx.fillText('PERMACULTURE ZONE MAP', pad, pad + Math.round(W * 0.028));
-  ctx.fillStyle = '#B9C2C8';
-  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
-  ctx.fillText(placeName ?? 'Zone plan', pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+  drawBlueprintTitle(ctx, W, pad, 'PERMACULTURE ZONE MAP', placeName ?? 'Zone plan');
 
-  // 8. Legend panel (top-right).
+  // 8. Legend panel (top-right). The rows stay hand-drawn here rather than going through
+  //    drawBlueprintLegendRows: a zone row is two-part text ("ZONE 3" + "— Orchard / food forest"
+  //    in a second colour and weight), which the generic swatch+label row can't express.
   const zoneNums = [...(hasHouse ? [0] : []), ...zones.map((z) => z.zone)].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b) as Array<0 | 1 | 2 | 3 | 4 | 5>;
   const rowH = Math.round(W * 0.026);
-  const lgW = Math.round(W * 0.27);
-  const lgH = Math.round(rowH * (zoneNums.length + 3 + 2.2));
-  const lgX = W - pad - lgW, lgY = pad;
-  ctx.fillStyle = 'rgba(10,16,22,0.82)';
-  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-  ctx.lineWidth = 1.5;
-  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
-  ctx.stroke();
-  const ip = Math.round(lgW * 0.07);
-  const sw = Math.round(rowH * 0.62);
-  ctx.textBaseline = 'middle';
-  ctx.textAlign = 'left';
-  let ry = lgY + ip + rowH * 0.4;
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
-  ctx.fillText('LEGEND', lgX + ip, ry);
-  ry += rowH * 0.9;
-  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-  ctx.beginPath();
-  ctx.moveTo(lgX + ip, ry - rowH * 0.25);
-  ctx.lineTo(lgX + lgW - ip, ry - rowH * 0.25);
-  ctx.stroke();
-  ry += rowH * 0.3;
-  const textX = lgX + ip + sw * 1.5 + 12;
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (zoneNums.length + 3 + 2.2)));
+  const { lgX, lgW, ip, sw, textX } = lg;
+  let ry = lg.ry;
   for (const n of zoneNums) {
     const def = ZONE_DEFS[n];
     ctx.fillStyle = `${def.color}CC`;
@@ -1585,32 +1888,10 @@ async function buildBlueprintZoneMap(
   ctx.fillStyle = '#EDE7DA';
   ctx.fillText('Tarred driveway', textX, ry);
   ry += rowH;
-  ctx.fillStyle = '#9AA6AC';
-  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
-  ctx.fillText('Zones show frequency of access.', lgX + ip, ry);
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Zones show frequency of access.');
 
   // 9. Scale bar (bottom-left).
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
-  const niceM = [5, 10, 20, 25, 50, 100, 200];
-  let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
-  const barW = m * pxPerM;
-  const bx = pad, by = H - pad - rowH * 0.3;
-  ctx.strokeStyle = '#F3EEE2';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(bx, by);
-  ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 8);
-  ctx.lineTo(bx, by + 8);
-  ctx.moveTo(bx + barW, by - 8);
-  ctx.lineTo(bx + barW, by + 8);
-  ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
-  ctx.textBaseline = 'bottom';
-  ctx.textAlign = 'left';
-  ctx.fillText(`${m} m`, bx, by - 12);
+  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
 
   return canvas.toDataURL('image/png');
 }
@@ -1635,53 +1916,13 @@ async function buildBlueprintWaterMap(
   const py = (n: number) => n * H;
   const pxPerM = W / (frame.imgW * frame.mPerPx);
   const pad = Math.round(W * 0.02);
-  const ring = (pts: Array<[number, number]>) => {
-    ctx.beginPath();
-    pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
-    ctx.closePath();
-  };
 
   // 1. Satellite + blueprint scrim.
-  if (frame.satDataUrl) {
-    const img = await loadImage(frame.satDataUrl);
-    ctx.drawImage(img, 0, 0, W, H);
-  } else {
-    ctx.fillStyle = '#22303a';
-    ctx.fillRect(0, 0, W, H);
-  }
-  ctx.fillStyle = 'rgba(8,14,22,0.5)';
-  ctx.fillRect(0, 0, W, H);
+  await drawBlueprintBase(ctx, frame, W, H);
 
   // 2. House + driveway context (drawn first, under the water infrastructure).
-  if (refLayers.house.length >= 3) {
-    ring(refLayers.house);
-    ctx.fillStyle = 'rgba(58,63,74,0.85)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
-  }
-  if (refLayers.driveway.length >= 2) {
-    ctx.save();
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const trace = () => {
-      ctx.beginPath();
-      refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
-    };
-    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
-      trace();
-      ctx.closePath();
-      ctx.fillStyle = '#2A2A2E';
-      ctx.fill();
-    } else {
-      trace();
-      ctx.strokeStyle = '#2A2A2E';
-      ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3));
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
 
   // 3. Water routes — white casing under a coloured line (swale/pipe/drip).
   const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
@@ -1751,45 +1992,13 @@ async function buildBlueprintWaterMap(
   }
 
   // 5. Boundary — green line with perpendicular fence ticks.
-  if (refLayers.boundary.length >= 3) {
-    const b = refLayers.boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
-    ctx.beginPath();
-    b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
-    ctx.closePath();
-    ctx.strokeStyle = '#8CEB6A';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-    const tick = Math.max(7, W * 0.006);
-    const tstep = Math.max(26, W * 0.02);
-    ctx.lineWidth = 2;
-    for (let i = 0; i < b.length; i++) {
-      const [x1, y1] = b[i];
-      const [x2, y2] = b[(i + 1) % b.length];
-      const dx = x2 - x1, dy = y2 - y1;
-      const len = Math.hypot(dx, dy) || 1;
-      const nx = -dy / len, ny = dx / len;
-      for (let t = tstep; t < len; t += tstep) {
-        const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + nx * tick, cy + ny * tick);
-        ctx.stroke();
-      }
-    }
-  }
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
   // 6. Title (top-left).
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
-  ctx.fillText('WATER PLAN', pad, pad + Math.round(W * 0.028));
-  ctx.fillStyle = '#B9C2C8';
-  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
-  ctx.fillText(placeName ?? 'Water plan', pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+  drawBlueprintTitle(ctx, W, pad, 'WATER PLAN', placeName ?? 'Water plan');
 
   // 7. Legend panel (top-right) — only the water elements actually present.
-  type Row = { color: string; label: string; style: 'fill' | 'line' | 'dashline' };
+  type Row = BlueprintLegendRow;
   const rows: Row[] = [];
   if (waterItems.length) rows.push({ color: '#2E7FC2', label: 'Tanks / storage', style: 'fill' });
   const kinds = new Set(state.lines.map((l) => l.kind));
@@ -1800,81 +2009,250 @@ async function buildBlueprintWaterMap(
   if (refLayers.driveway.length >= 2) rows.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
 
   const rowH = Math.round(W * 0.026);
-  const lgW = Math.round(W * 0.27);
-  const lgH = Math.round(rowH * (rows.length + 2.4));
-  const lgX = W - pad - lgW, lgY = pad;
-  ctx.fillStyle = 'rgba(10,16,22,0.82)';
-  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-  ctx.lineWidth = 1.5;
-  roundRectPath(ctx, lgX, lgY, lgW, lgH, 14);
-  ctx.stroke();
-  const ip = Math.round(lgW * 0.07);
-  const sw = Math.round(rowH * 0.62);
-  ctx.textBaseline = 'middle';
-  ctx.textAlign = 'left';
-  let ry = lgY + ip + rowH * 0.4;
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
-  ctx.fillText('LEGEND', lgX + ip, ry);
-  ry += rowH * 0.9;
-  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-  ctx.beginPath();
-  ctx.moveTo(lgX + ip, ry - rowH * 0.25);
-  ctx.lineTo(lgX + lgW - ip, ry - rowH * 0.25);
-  ctx.stroke();
-  ry += rowH * 0.3;
-  const textX = lgX + ip + sw * 1.5 + 12;
-  for (const row of rows) {
-    if (row.style === 'fill') {
-      ctx.fillStyle = `${row.color}CC`;
-      roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
-      ctx.fill();
-      ctx.strokeStyle = row.color;
-      ctx.lineWidth = 1.5;
-      roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
-      ctx.stroke();
-    } else {
-      ctx.strokeStyle = row.color;
-      ctx.lineWidth = 3;
-      ctx.setLineDash(row.style === 'dashline' ? [4, 4] : []);
-      ctx.beginPath();
-      ctx.moveTo(lgX + ip, ry);
-      ctx.lineTo(lgX + ip + sw * 1.5, ry);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-    ctx.fillStyle = '#EDE7DA';
-    ctx.font = `600 ${Math.round(rowH * 0.46)}px system-ui, sans-serif`;
-    ctx.fillText(row.label, textX, ry);
-    ry += rowH;
-  }
-  ctx.fillStyle = '#9AA6AC';
-  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
-  ctx.fillText('Blue = water storage & flow.', lgX + ip, ry);
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
+  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Blue = water storage & flow.');
 
   // 8. Scale bar (bottom-left).
-  const niceM = [5, 10, 20, 25, 50, 100, 200];
-  let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
-  const barW = m * pxPerM;
-  const bx = pad, by = H - pad - rowH * 0.3;
-  ctx.strokeStyle = '#F3EEE2';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(bx, by);
-  ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 8);
-  ctx.lineTo(bx, by + 8);
-  ctx.moveTo(bx + barW, by - 8);
-  ctx.lineTo(bx + barW, by + 8);
-  ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
-  ctx.textBaseline = 'bottom';
-  ctx.textAlign = 'left';
-  ctx.fillText(`${m} m`, bx, by - 12);
+  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+
+  return canvas.toDataURL('image/png');
+}
+
+/** Draw one element at its TRUE ground footprint, species-coloured.
+ *
+ *  This is the whole point of sheets 04/05 and the one thing the AI styles can never guarantee:
+ *  wM/hM are real METRES, so a 10 m mango canopy occupies 10 m of canvas. Nothing here is clamped
+ *  to a "nice" marker size — spacing and canopy OVERLAP are exactly the design decisions these
+ *  sheets exist to expose, and a legibility clamp would silently draw a lie.
+ *
+ *  Legibility is bought back WITHOUT touching the geometry: the icon is only drawn when the true
+ *  footprint is big enough to host it, and anything smaller gets a centre dot so it stays findable
+ *  (a 0.5 × 0.1 m sign is genuinely sub-pixel at site scale). Mirrors drawMarks' rect/rot/circle
+ *  conventions — rot is degrees clockwise about the footprint centre, and is meaningless for
+ *  circles (see PlacedItem in lib/design-canvas.ts). */
+function drawTrueFootprint(
+  ctx: CanvasRenderingContext2D,
+  it: PlacedItem,
+  def: DesignElementDef,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): void {
+  const color = speciesColor(def.id);
+  const wPx = (it.wM ?? def.wM) * pxPerM;
+  const hPx = (it.hM ?? def.hM) * pxPerM;
+  const cx = px(it.x), cy = py(it.y);
+  ctx.fillStyle = `${color}59`; // translucent — overlapping canopies must both stay readable
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  if (def.shape === 'circle') {
+    ctx.beginPath();
+    ctx.arc(cx, cy, wPx / 2, 0, Math.PI * 2); // catalog convention: circles use wM as DIAMETER
+    ctx.fill();
+    ctx.stroke();
+    // Trunk/centre dot: the actual planting point, which is what gets pegged out on site — the
+    // canopy ring alone doesn't tell you where to dig.
+    ctx.beginPath();
+    ctx.arc(cx, cy, Math.max(2, Math.min(5, wPx * 0.05)), 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  } else {
+    const rot = it.rot ?? 0;
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rot) ctx.rotate((rot * Math.PI) / 180);
+    ctx.beginPath();
+    ctx.rect(-wPx / 2, -hPx / 2, wPx, hPx);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+  const shortPx = def.shape === 'circle' ? wPx : Math.min(wPx, hPx);
+  if (shortPx >= 15) {
+    // Icon upright (never rotated with the bed) and never larger than the footprint it sits in.
+    ctx.font = `${Math.max(11, Math.min(26, shortPx * 0.6))}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#0B120B';
+    ctx.fillText(def.icon, cx, cy);
+  } else if (def.shape !== 'circle') {
+    // Too small to host its icon and no trunk dot of its own — mark the spot, don't fake the size.
+    ctx.beginPath();
+    ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+}
+
+/** Biggest footprint first, so a pawpaw under a mango canopy is drawn last and stays visible.
+ *  Ties break on id: two same-size trees must never swap order between renders (determinism is
+ *  the product promise — same design in, same sheet out). */
+function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): PlacedItem[] {
+  return state.items
+    .filter((it) => {
+      const def = ELEMENTS_BY_ID[it.defId];
+      return !!def && itemInFilter(def.category, filter);
+    })
+    .sort((a, b) => {
+      const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
+      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
+      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
+      return areaB - areaA || a.id.localeCompare(b.id);
+    });
+}
+
+// Deterministic "Blueprint" PLANTING map — sheet 04 in docs/PLAN-SET-SPEC.md ("Planting &
+// Agroforestry Plan"). Same chrome as the zone/water sheets; the content layer is every growing
+// element at its TRUE canopy/bed footprint, coloured per SPECIES (def.color is a per-category
+// accent — all 21 growing elements share one green — which is useless on the one sheet whose
+// entire job is telling Macadamia from Citrus). Legend lists only the species actually placed,
+// with counts. NO AI.
+//
+// NB: no lines are drawn here, deliberately. lineInFilter puts 'windbreak' on the STRUCTURES
+// sheet, not this one, and layerContentCount agrees — so a windbreak is never counted as planting
+// content. Drawing it here would make this sheet disagree with the layer it claims to be, which is
+// precisely the guarantee the deterministic sheets exist to hold.
+async function buildBlueprintPlantingMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+
+  // 1. Satellite + blueprint scrim.
+  await drawBlueprintBase(ctx, frame, W, H);
+
+  // 2. House + driveway as neutral context, UNDER the planting (this sheet's content is plants;
+  //    the built stuff is only here so the farmer can orient — hence no dashed kerb).
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+
+  // 3. The planting itself, at true footprint.
+  for (const it of bySizeDesc(state, 'planting')) {
+    drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
+  }
+
+  // 4. Boundary — green line with perpendicular fence ticks.
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  // 5. Title (top-left).
+  drawBlueprintTitle(ctx, W, pad, 'PLANTING & AGROFORESTRY PLAN', placeName ?? 'Planting plan');
+
+  // 6. Legend (top-right) — the species actually present, then the fixed context rows.
+  const rowH = Math.round(W * 0.026);
+  const fixed: BlueprintLegendRow[] = [{ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' }];
+  if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+  const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
+  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Canopies drawn at mature spread.');
+
+  // 7. Scale bar (bottom-left).
+  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+
+  return canvas.toDataURL('image/png');
+}
+
+// Deterministic "Blueprint" STRUCTURES map — sheet 05 in docs/PLAN-SET-SPEC.md ("Small Livestock
+// & Infrastructure Plan"). Structures + animals + access at true footprint, plus the access/
+// boundary LINES (fence/path/windbreak) that lineInFilter assigns to this layer — a farmer who has
+// drawn only paths and fences still has real structures-layer content (layerContentCount counts
+// those lines), so this sheet must draw them or it would render empty on a design that isn't. NO AI.
+async function buildBlueprintStructuresMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+
+  // 1. Satellite + blueprint scrim.
+  await drawBlueprintBase(ctx, frame, W, H);
+
+  // 2. House + driveway. On THIS sheet the built fabric is content, not background, so the
+  //    driveway keeps the zone sheet's dashed kerb and the house gets a brighter outline.
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.9)', '#FFFFFF', 3);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, true);
+
+  // 3. Access / boundary lines — white casing under a coloured line, as on the water sheet.
+  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
+    path: { color: '#C9A227', dash: [] },
+    fence: { color: '#8C8577', dash: [6, 4] },
+    windbreak: { color: '#2F7A4A', dash: [] },
+  };
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const l of state.lines) {
+    const st = LINE_STYLE[l.kind];
+    if (!st || l.points.length < 2) continue;
+    const trace = () => {
+      ctx.beginPath();
+      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    trace();
+    ctx.setLineDash(st.dash);
+    ctx.strokeStyle = st.color;
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  ctx.restore();
+
+  // 4. Structures / animals / access, at true footprint.
+  for (const it of bySizeDesc(state, 'structures')) {
+    drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
+  }
+
+  // 5. Boundary — green line with perpendicular fence ticks.
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  // 6. Title (top-left).
+  drawBlueprintTitle(ctx, W, pad, 'SMALL LIVESTOCK & INFRASTRUCTURE', placeName ?? 'Structures plan');
+
+  // 7. Legend (top-right) — what's actually present, then the line kinds drawn, then context.
+  const rowH = Math.round(W * 0.026);
+  const kinds = new Set(state.lines.filter((l) => l.points.length >= 2).map((l) => l.kind));
+  const fixed: BlueprintLegendRow[] = [];
+  if (kinds.has('path')) fixed.push({ color: '#C9A227', label: 'Path', style: 'line' });
+  if (kinds.has('windbreak')) fixed.push({ color: '#2F7A4A', label: 'Windbreak', style: 'line' });
+  if (kinds.has('fence')) fixed.push({ color: '#8C8577', label: 'Internal fence', style: 'dashline' });
+  fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
+  if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+  const rows = fitLegendRows(speciesRowsFor(state, 'structures'), fixed, blueprintLegendCapacity(H, pad, rowH));
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
+  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Footprints drawn at true size.');
+
+  // 8. Scale bar (bottom-left).
+  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
 
   return canvas.toDataURL('image/png');
 }
@@ -2402,13 +2780,19 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     setLoading('exact');
     setError(null);
     try {
-      // The Zones map gets the deterministic "Blueprint" treatment (hatched zones, legend, scale,
-      // fence ticks) — the flat cartographic look ChatGPT nailed, but drawn exactly from geometry.
+      // Every single-layer map now gets the deterministic "Blueprint" treatment (legend, scale,
+      // fence ticks, true footprints) — the flat cartographic look ChatGPT nailed, but drawn
+      // exactly from geometry. Only 'all' still falls through to the plain composite: the whole-
+      // design sheet (06) has no Blueprint of its own yet — see docs/PLAN-SET-SPEC.md.
       const composite = filter === 'zones'
         ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
         : filter === 'water'
           ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
-          : await buildComposite(state, frame, refLayers, filter, true);
+          : filter === 'planting'
+            ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
+            : filter === 'structures'
+              ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
+              : await buildComposite(state, frame, refLayers, filter, true);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);

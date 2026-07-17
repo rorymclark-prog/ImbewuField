@@ -10,13 +10,17 @@ it is the canonical reference for what ImbewuField's Print/Export plan set shoul
 | 01 | Site Base Map & **Terrace Levels** | Base map (levels = **gap**, see below) |
 | 02 | Permaculture Zone Map | ✅ Zones Blueprint (`buildBlueprintZoneMap`) |
 | 03 | Water, Greywater & Irrigation Plan | ✅ Water Blueprint (`buildBlueprintWaterMap`) |
-| 04 | Planting & Agroforestry Plan | Planting (Blueprint **not built yet**) |
-| 05 | Small Livestock & Infrastructure Plan | Structures/Animals (Blueprint **not built**) |
-| 06 | Final Integrated Permaculture Masterplan | "Whole design" |
+| 04 | Planting & Agroforestry Plan | ✅ Planting Blueprint (`buildBlueprintPlantingMap`) |
+| 05 | Small Livestock & Infrastructure Plan | ✅ Structures Blueprint (`buildBlueprintStructuresMap`) |
+| 06 | Final Integrated Permaculture Masterplan | "Whole design" (still the plain composite) |
 | 07 | **Implementation Map & Phasing** | The differentiator — **not built** |
 
 This maps almost 1:1 onto the Print composer's layer list + the report's north-star 6 maps.
-Sheets 04/05 are the obvious next Blueprints; 07 is the prize.
+Sheets 04/05 landed; 07 is the prize.
+
+All four Blueprints share ONE chrome implementation (the `drawBlueprint*` helpers in
+`DesignGlossy.tsx`) rather than a copy each — see "The load-bearing principle" below: four
+hand-maintained copies of the chrome is exactly how the cross-sheet guarantee quietly rots.
 
 ## Sheet anatomy (copy this)
 Every sheet shares one chrome:
@@ -61,10 +65,13 @@ rules engine, not an image model — we can own it outright.
 1. **Terrace levels** (`+0.0 m`, `−3.0 m`) — we have SRTM slope/aspect (too coarse, see
    `lib/elevation.ts`), not terrace levels. Needs a user input: mark a level change + its drop.
    The reference also shows a **vetiver bank / level change** as a first-class feature.
-2. **Planting + Livestock Blueprints** (sheets 04/05) — not built.
+2. ~~**Planting + Livestock Blueprints** (sheets 04/05)~~ — **built.** Elements draw at TRUE
+   footprint (wM/hM are real metres), colour-coded per SPECIES with a present-only legend.
 3. **Implementation/phasing engine** (sheet 07) — not built; biggest product win.
 4. **Legend pattern swatches** + **grouped label headers** — our versions are flatter.
 5. **Site rules / hold points** — no concept in the app yet.
+6. **North arrow** — the anatomy above lists one, but no Blueprint sheet has ever drawn it (only
+   `composeStyleSheet` does). Known gap; adding it is a one-helper change across all four sheets.
 
 ## Honest read
 The reference proves the *deliverable* is achievable and valuable. It does **not** change the
