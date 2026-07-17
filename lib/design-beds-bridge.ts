@@ -51,10 +51,13 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
 
 /**
  * Fruit/food trees placed on the canvas — for the Simple-Path shopping-list
- * add-on ("Also buy: 2 × Citrus tree"). Any growing-category def that casts
- * shade is a tree/large perennial (see lib/design-elements castsShade), grouped
- * by defId with a count. Pure; [] when state is null. Grouped in first-
- * appearance order so the recap reads in the order the farmer placed them.
+ * add-on ("Also buy: 2 × Citrus tree"). Any growing- or earthworks-category def
+ * that casts shade is a tree/large perennial (see lib/design-elements
+ * castsShade), grouped by defId with a count. Pure; [] when state is null.
+ * Grouped in first-appearance order so the recap reads in the order the farmer
+ * placed them. ('earthworks' is in the gate because the banana circle — a
+ * shade-casting food plant — is an earthworks element; without it the shopping
+ * list would quietly stop listing bananas.)
  */
 export function treesFromDesignCanvas(
   state: DesignCanvasState | null,
@@ -65,7 +68,7 @@ export function treesFromDesignCanvas(
   const names = new Map<string, string>();
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || def.category !== 'growing' || !def.castsShade) continue;
+    if (!def || (def.category !== 'growing' && def.category !== 'earthworks') || !def.castsShade) continue;
     if (!counts.has(item.defId)) {
       order.push(item.defId);
       names.set(item.defId, def.name);

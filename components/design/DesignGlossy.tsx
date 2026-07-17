@@ -185,12 +185,22 @@ const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelS
   { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk' },
 ];
 
+// NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
+// A GlossyLayerFilter is not just a UI filter: FILTER_TO_LAYER below maps it to the API's
+// RenderLayer union ('overall'|'base'|'sector'|'zone'|'water'|'opportunity'|'planting'|
+// 'implementation'), which has no earthworks theme, and an unmapped filter falls through to the
+// full-design theme — the exact bug that made the AI invent ponds and orchards on a layer map.
+// Folding into 'water' is also the honest reading: earthworks IS the water layer's land-shaping
+// (basins, berms and banana circles are how water is slowed, spread and sunk), and the water
+// theme's blue-green "water plan" wash suits them. 'structures' already folds to 'overall' the
+// same way. Adding a real earthworks layer means an API-side RenderLayer + layerTheme prompt
+// block first — see docs/DESIGN-TAXONOMY.md.
 export function itemInFilter(category: string, filter: GlossyLayerFilter): boolean {
   switch (filter) {
     case 'all':
       return true;
     case 'water':
-      return category === 'water';
+      return category === 'water' || category === 'earthworks';
     case 'planting':
       return category === 'growing';
     case 'structures':
@@ -845,8 +855,15 @@ function buildZoneOverlay(
 
 // Water infrastructure is also wiped by the image model (it paints land, not overlays). Burn the
 // exact tanks / taps / water lines back on top of a Water Style render — same trick as zones.
+// Membership MUST come from itemInFilter, not a `category === 'water'` literal: the water layer
+// also carries earthworks now, and the protect mask, legend and burned-on labels all use
+// itemInFilter. A literal here would burn a tree basin's LABEL onto the sheet while leaving its
+// marker to be painted over by the model — a pill pointing at nothing.
 function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: number, H: number): string | undefined {
-  const items = state.items.filter((it) => ELEMENTS_BY_ID[it.defId]?.category === 'water');
+  const items = state.items.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return !!def && itemInFilter(def.category, 'water');
+  });
   const lines = state.lines.filter((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
   if (!items.length && !lines.length) return undefined;
   const canvas = document.createElement('canvas');
@@ -1311,7 +1328,13 @@ async function buildBlueprintWaterMap(
   }
 
   // 4. Tanks / taps / ponds — blue markers (cylinders) sized to footprint, icon on top.
-  const waterItems = state.items.filter((it) => ELEMENTS_BY_ID[it.defId]?.category === 'water');
+  // Via itemInFilter so this deterministic Blueprint sheet shows exactly what the Water layer
+  // claims (earthworks included — tree/greywater basins used to draw here as 'water' elements
+  // and must keep doing so). Each marker carries its own def.icon, so they stay readable.
+  const waterItems = state.items.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return !!def && itemInFilter(def.category, 'water');
+  });
   for (const it of waterItems) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;

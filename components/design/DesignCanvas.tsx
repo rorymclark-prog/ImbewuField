@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 
@@ -67,9 +67,12 @@ function readSourceFeatureId(shape: unknown): string | undefined {
 
 interface ActiveLayers {
   water: boolean;
+  earthworks: boolean; // land-shaping: raised beds, basins, banana circles, berms, terraces
   zones: boolean;
   planting: boolean;
   structures: boolean;
+  access: boolean; // paths/gates/driveway only
+  animals: boolean;
   lines: boolean;
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
@@ -133,20 +136,24 @@ function clamp01(v: number): number {
   return Math.min(1, Math.max(0, v));
 }
 
-// category → activeLayers key, per spec: water→water, growing→planting,
-// structure+animal→structures, access→structures.
-function categoryLayerKey(category: string): keyof ActiveLayers | null {
+// category → activeLayers key (see docs/DESIGN-TAXONOMY.md). Typed to ElementCategory with NO
+// default case on purpose: a new category must be a compile error here. The old `string` +
+// `default: return null` form meant an unmapped category silently returned null, and a null key
+// skips the gate at the call site — the element would render even with its layer switched off.
+function categoryLayerKey(category: ElementCategory): keyof ActiveLayers {
   switch (category) {
     case 'water':
       return 'water';
+    case 'earthworks':
+      return 'earthworks';
     case 'growing':
       return 'planting';
     case 'structure':
-    case 'animal':
-    case 'access':
       return 'structures';
-    default:
-      return null;
+    case 'animal':
+      return 'animals';
+    case 'access':
+      return 'access';
   }
 }
 
@@ -1793,8 +1800,7 @@ export default function DesignCanvas({
         {state.items.map((item) => {
           const def = ELEMENTS_BY_ID[item.defId];
           if (!def) return null;
-          const layerKey = categoryLayerKey(def.category);
-          if (layerKey && !activeLayers[layerKey]) return null;
+          if (!activeLayers[categoryLayerKey(def.category)]) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
           const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;

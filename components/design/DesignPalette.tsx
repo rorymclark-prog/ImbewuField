@@ -14,9 +14,12 @@ type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
 interface ActiveLayers {
   water: boolean;
+  earthworks: boolean;
   zones: boolean;
   planting: boolean;
   structures: boolean;
+  access: boolean;
+  animals: boolean;
   lines: boolean;
   ground: boolean;
   baseMap: boolean;
@@ -67,23 +70,42 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
 // draw tool to record a real built/ground feature. Order = kitchen-out (house first).
 const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
+// Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
+// with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: string }> = [
   { key: 'baseMap', label: 'Base map', icon: '🛰️' },
   { key: 'ground', label: 'Ground', icon: '🟫' },
   { key: 'water', label: 'Water', icon: '💧' },
+  { key: 'earthworks', label: 'Earthworks', icon: '⛏️' },
   { key: 'zones', label: 'Zones', icon: '🗺️' },
   { key: 'planting', label: 'Planting', icon: '🌱' },
   { key: 'structures', label: 'Structures', icon: '🏚️' },
+  { key: 'access', label: 'Access', icon: '🚪' },
+  { key: 'animals', label: 'Animals', icon: '🐔' },
   { key: 'lines', label: 'Lines', icon: '〰️' },
   { key: 'labels', label: 'Labels', icon: '🏷️' },
   { key: 'contours', label: 'Contours', icon: '⛰️' },
 ];
 
-// Step → which element categories are placeable in the palette.
+// Element category → the layer toggle that shows/hides it. A Record (not a ternary chain) so
+// adding an ElementCategory is a compile error here rather than a silent fall-through — the old
+// `cat === 'water' ? … : 'structures'` form would have quietly filed earthworks under Structures.
+const CATEGORY_LAYER: Record<DesignElementDef['category'], keyof ActiveLayers> = {
+  water: 'water',
+  earthworks: 'earthworks',
+  growing: 'planting',
+  structure: 'structures',
+  animal: 'animals',
+  access: 'access',
+};
+
+// Step → which element categories are placeable in the palette. Earthworks rides on the Water
+// step (it IS the land-shaping that makes water behave — Scale of Permanence puts it directly
+// after Water) and access rides with structures, so the step count stays phone-friendly.
 function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | 'all' {
   switch (step) {
     case 'water':
-      return ['water'];
+      return ['water', 'earthworks'];
     case 'planting':
       return ['growing'];
     case 'structures':
@@ -161,11 +183,9 @@ export default function DesignPalette({
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
-  // show"). Category → layer: water→water, growing→planting, structure/animal/access→structures.
-  const layerForCategory = (cat: DesignElementDef['category']): keyof ActiveLayers =>
-    cat === 'water' ? 'water' : cat === 'growing' ? 'planting' : 'structures';
+  // show"). Category → layer mapping lives in CATEGORY_LAYER above.
   const catalog =
-    mode === 'pro' ? stepCatalog.filter((def) => activeLayers[layerForCategory(def.category)]) : stepCatalog;
+    mode === 'pro' ? stepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]) : stepCatalog;
 
   // Climate-appropriate trees: on the planting step, float the trees that crop in this site's
   // climate to the front and dim the ones that won't (frost/chill mismatch). Never hides them —
@@ -404,7 +424,7 @@ export default function DesignPalette({
         {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
             {orderedCatalog.length === 0
-              ? 'No layers on — turn on Water, Planting or Structures (Layers ▸) to place their elements.'
+              ? 'No layers on — turn on an element layer (Layers ▸) to place its elements.'
               : 'PRO — showing elements for your switched-on layers. Toggle more in Layers ▸.'}
           </div>
         )}

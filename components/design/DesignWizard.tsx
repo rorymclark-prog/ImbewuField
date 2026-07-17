@@ -64,7 +64,13 @@ function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPre
     case 'base':
       return refLayersPresent.boundary && refLayersPresent.house;
     case 'water':
-      return state.items.some((it) => ELEMENTS_BY_ID[it.defId]?.category === 'water') ||
+      // Earthworks are placed on the Water step (see DesignPalette categoriesForStep), so they
+      // count as its content — otherwise a farmer who placed a tree basin or a swale berm here
+      // would still be told the step is empty.
+      return state.items.some((it) => {
+        const cat = ELEMENTS_BY_ID[it.defId]?.category;
+        return cat === 'water' || cat === 'earthworks';
+      }) ||
         state.lines.some((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
     case 'zones':
       return state.zones.length > 0;

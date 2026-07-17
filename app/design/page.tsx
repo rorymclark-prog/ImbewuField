@@ -390,11 +390,17 @@ function DesignStudioInner() {
   // zone tool draws a plain permaculture effort-zone.
   const [areaFeature, setAreaFeature] = useState<GroundFeatureKind | null>(null);
   const [lineKind, setLineKind] = useState<LineShape['kind']>('swale');
+  // Every element layer MUST default to true: the Pro catalog filter and the canvas both gate
+  // on these, so a key defaulting to false (or missing) silently hides that category's elements
+  // from the palette AND the map.
   const [activeLayers, setActiveLayers] = useState({
     water: true,
+    earthworks: true,
     zones: true,
     planting: true,
     structures: true,
+    access: true,
+    animals: true,
     lines: true,
     ground: true,
     baseMap: true,
@@ -406,7 +412,7 @@ function DesignStudioInner() {
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, zones: true, planting: true, structures: true, lines: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, lines: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
     }
   }, [designMode]);
 
@@ -907,7 +913,11 @@ function DesignStudioInner() {
     const existingVeg = canvasState.items
       .filter((i) => {
         const def = ELEMENTS_BY_ID[i.defId];
-        return def?.category === 'growing' && !!def.zoneRec?.some((z) => z === 1 || z === 2);
+        // 'earthworks' as well as 'growing': the intensive beds this planner keys off (keyhole
+        // bed, herb spiral, banana circle, mulch bank) are earthworks now, and dropping them
+        // would quietly stop the zone rings being pulled toward the farmer's real growing spots.
+        return (def?.category === 'growing' || def?.category === 'earthworks')
+          && !!def.zoneRec?.some((z) => z === 1 || z === 2);
       })
       .map((i) => ({ x: i.x, y: i.y }));
     const zoneOpts = {
