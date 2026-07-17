@@ -7,7 +7,6 @@
 // They share only the step data/labels below, not layout.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import {
   ChevronLeft,
   ChevronRight,
@@ -15,13 +14,11 @@ import {
   ChevronUp,
   Check,
   HelpCircle,
-  Sprout,
-  Lightbulb,
 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { DESIGN_STEP_LESSONS, type StepLesson } from '@/lib/design-lessons';
-import SpeakButton from '@/components/SpeakButton';
+import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
+import { LessonPanel } from './LessonPanel';
 import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
@@ -107,71 +104,9 @@ function useLessonExpand(step: WizardStep) {
   return { expanded, toggle: () => setExpanded((v) => !v), lesson };
 }
 
-export function LessonPanel({ lesson }: { lesson: StepLesson }) {
-  const narration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
-        background: 'rgba(31,77,43,0.06)',
-        borderRadius: 12,
-        padding: '12px 14px',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-        <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: DARK }}>{lesson.title}</div>
-        <SpeakButton text={narration} englishText={narration} size={16} color={GREEN} />
-      </div>
-      <div style={{ fontSize: 13.5, lineHeight: 1.5, color: DARK }}>{lesson.body}</div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-        <Sprout size={13} color={GREEN} style={{ flexShrink: 0, marginTop: 3 }} />
-        <div style={{ fontSize: 12.5, lineHeight: 1.4, color: DARK }}>
-          <span
-            style={{
-              display: 'block',
-              fontSize: 10.5,
-              fontWeight: 700,
-              letterSpacing: 0.3,
-              textTransform: 'uppercase',
-              color: GREEN,
-            }}
-          >
-            The principle
-          </span>
-          {lesson.principle}
-        </div>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-        <Lightbulb size={13} color={GREEN} style={{ flexShrink: 0, marginTop: 3 }} />
-        <div style={{ fontSize: 12.5, lineHeight: 1.4, color: DARK }}>
-          <span
-            style={{
-              display: 'block',
-              fontSize: 10.5,
-              fontWeight: 700,
-              letterSpacing: 0.3,
-              textTransform: 'uppercase',
-              color: GREEN,
-            }}
-          >
-            Try this
-          </span>
-          {lesson.tip}
-        </div>
-      </div>
-      {lesson.courseModuleId && (
-        <Link
-          href={`/student?module=${lesson.courseModuleId}`}
-          style={{ alignSelf: 'flex-start', fontSize: 12, fontWeight: 700, color: GREEN, textDecoration: 'underline' }}
-        >
-          Learn more in the course
-        </Link>
-      )}
-    </div>
-  );
-}
+// LessonPanel moved to ./LessonPanel (shared with the app-wide <LessonLink>); re-exported so
+// existing importers (StepGuide) keep resolving it from './DesignWizard'.
+export { LessonPanel };
 
 // Guided: quiet, full-width 44px labelled row under the guidance blurb — matches the
 // hand-holding tone of the rest of GuidedWizard.

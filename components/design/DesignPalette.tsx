@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
 import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
+import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -272,6 +273,19 @@ export default function DesignPalette({
           ? `Tap the map to paint Zone ${zoneDraw}`
           : tool === 'line'
             ? `Tap corners, then ✓ Finish`
+            : null;
+
+  // The lesson for whatever's currently armed — connects zones, ground features, drawn lines and
+  // placed elements to their teaching lesson from the same hint box (no extra UI rows).
+  const armedLessonId =
+    tool === 'place' && armedDef
+      ? `element:${armedDef.id}`
+      : tool === 'zone' && areaFeature
+        ? `feature:${areaFeature}`
+        : tool === 'zone'
+          ? `zone:${zoneDraw}`
+          : tool === 'line'
+            ? `line:${lineKind}`
             : null;
 
   return (
@@ -606,11 +620,17 @@ export default function DesignPalette({
           }}
         >
           {hintDef ? (
-            <>
-              {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
-            </>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div>
+                {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
+              </div>
+              <LessonLink id={`element:${hintDef.id}`} label="Learn about this" />
+            </div>
           ) : (
-            armedHintLabel
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div>{armedHintLabel}</div>
+              {armedLessonId && <LessonLink id={armedLessonId} label="Learn about this" />}
+            </div>
           )}
         </div>
       )}
