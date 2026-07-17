@@ -13,10 +13,15 @@ import type { DesignCanvasState, LineShape, PlacedItem, ZoneShape } from '@/lib/
 import { distM, pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 
+// Which design LAYER a piece of advice belongs to, so the advisor can show the farmer only the
+// tips for the layer they're working on (a zones-step advisor showing tank/shade tips is noise).
+export type AdviceLayer = 'water' | 'zones' | 'planting' | 'structures' | 'general';
+
 export interface Advice {
   severity: 'warn' | 'tip';
   msg: string;
   itemId?: string;
+  layer?: AdviceLayer;
 }
 
 export interface SiteContext {
@@ -121,6 +126,7 @@ export function evaluateDesign(
           severity: 'warn',
           msg: `The ${tDef.name} will shade the ${bDef.name} to its south — move the ${bDef.name} north of the tree or shift the tree south.`,
           itemId: b.id,
+          layer: 'planting',
         });
       }
     }
@@ -149,6 +155,7 @@ export function evaluateDesign(
         severity: 'warn',
         msg: `Place the ${def.name} within ~${def.nearRoofM} m of a roof so gutters can feed it.`,
         itemId: item.id,
+        layer: 'water',
       });
     }
   }
@@ -166,6 +173,7 @@ export function evaluateDesign(
           severity: 'tip',
           msg: `${def.name} usually belongs in Zone ${def.zoneRec.join('/')} — it's in Zone ${actual}.`,
           itemId: item.id,
+          layer: 'zones',
         });
       }
     }
@@ -182,6 +190,7 @@ export function evaluateDesign(
           severity: 'tip',
           msg: `${def.name} is ${Math.round(d)} m from the house — daily-use items work best within ${def.nearHouseMaxM} m.`,
           itemId: item.id,
+          layer: 'planting',
         });
       }
     }
@@ -206,6 +215,7 @@ export function evaluateDesign(
         severity: 'warn',
         msg: `Beehive is within 8 m of the house or a path — bees' flight path could cross foot traffic. Move it further away or angle the entrance clear of traffic.`,
         itemId: item.id,
+        layer: 'structures',
       });
     }
   }
@@ -228,6 +238,7 @@ export function evaluateDesign(
           severity: 'tip',
           msg: `${aDef.name} and ${bDef.name} canopies will overlap significantly at maturity — consider more spacing.`,
           itemId: b.id,
+          layer: 'planting',
         });
       }
     }
@@ -247,6 +258,7 @@ export function evaluateDesign(
         severity: 'tip',
         msg: `Feed the Banana Circle with greywater — add a greywater basin or pipe within 10 m.`,
         itemId: bc.id,
+        layer: 'water',
       });
     }
   }
@@ -259,9 +271,20 @@ export function evaluateDesign(
       tips.push({
         severity: 'tip',
         msg: `Summer wind comes from the ${site.windFromSummer} — plant a windbreak row (e.g. indigenous shade trees) along that edge.`,
+        layer: 'planting',
       });
     }
   }
 
-  return [...warns, ...tips].slice(0, 6);
+  // Warnings first, then tips; DEDUPE by message so the same rule firing per-element (e.g. two veg
+  // beds both shaded by one tree, or two tanks both far from a roof) doesn't repeat the identical
+  // sentence. Cap after dedupe so the cap counts distinct advice, not copies.
+  const seen = new Set<string>();
+  const deduped: Advice[] = [];
+  for (const a of [...warns, ...tips]) {
+    if (seen.has(a.msg)) continue;
+    seen.add(a.msg);
+    deduped.push(a);
+  }
+  return deduped.slice(0, 8);
 }

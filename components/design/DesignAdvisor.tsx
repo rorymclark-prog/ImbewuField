@@ -11,7 +11,7 @@ import { Sparkles, X, ChevronUp, ChevronDown, TriangleAlert, Lightbulb, Loader2 
 import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { evaluateDesign, type Advice } from '@/lib/design-rules';
+import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -131,8 +131,30 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.items.length, state.zones.length, state.lines.length, lastChangeId]);
 
-  const top = advice[0];
-  const rest = advice.slice(1);
+  // Lima only surfaces tips for the LAYER the farmer is working on — a zones-step advisor showing
+  // tank/shade tips is noise (Rory). Advice carries a `layer` tag (lib/design-rules.ts). The Base/
+  // Review steps have no single layer, so they show everything.
+  const stepLayer: AdviceLayer | null =
+    state.step === 'water' ? 'water'
+    : state.step === 'zones' ? 'zones'
+    : state.step === 'planting' ? 'planting'
+    : state.step === 'structures' ? 'structures'
+    : null;
+  const layerName =
+    stepLayer === 'water' ? 'Water'
+    : stepLayer === 'zones' ? 'Zones'
+    : stepLayer === 'planting' ? 'Planting'
+    : stepLayer === 'structures' ? 'Structures'
+    : null;
+  // On a specific step: this layer's tips (+ general/untagged ones) here; everything else demoted
+  // to a "+N on other layers" line so a real warning is never fully hidden, just moved down.
+  const forThisLayer = stepLayer
+    ? advice.filter((a) => a.layer === stepLayer || a.layer === 'general' || !a.layer)
+    : advice;
+  const otherLayerCount = stepLayer ? advice.length - forThisLayer.length : 0;
+
+  const top = forThisLayer[0];
+  const rest = forThisLayer.slice(1);
   const moreCount = rest.length;
 
   const designSummary = useMemo(() => buildDesignSummary(state), [state]);
@@ -200,10 +222,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         <div style={inner}>
           <button
             onClick={() => setTipOpen(true)}
-            aria-label={`${advice.length} design tip${advice.length === 1 ? '' : 's'} — tap to read`}
+            aria-label={`Lima: ${forThisLayer.length} ${layerName ?? 'design'} tip${forThisLayer.length === 1 ? '' : 's'} — tap to read`}
             style={{
               minHeight: 32,
-              padding: '4px 10px',
+              padding: '4px 11px',
               borderRadius: 999,
               background: 'rgba(11,18,11,0.85)',
               border: `1px solid ${GOLD}`,
@@ -217,7 +239,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
             }}
           >
             {top.severity === 'warn' ? <TriangleAlert size={14} color="#E8974A" /> : <Lightbulb size={14} color="#7ED694" />}
-            {advice.length} tip{advice.length === 1 ? '' : 's'}
+            Lima · {forThisLayer.length}{layerName ? ` ${layerName}` : ''} tip{forThisLayer.length === 1 ? '' : 's'}
           </button>
           <AskAiButton onClick={askAi} loading={aiLoading} />
           {aiError && <ErrorPill message={aiError} />}
@@ -230,6 +252,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
   return (
     <div style={shell}>
       <div style={inner}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: GOLD, fontSize: 11, fontWeight: 800, letterSpacing: 0.3, paddingLeft: 2 }}>
+        <Sparkles size={12} /> LIMA{layerName ? ` · ${layerName.toUpperCase()}` : ''}
+      </div>
       <div
         style={{
           background: 'rgba(11,18,11,0.92)',
@@ -296,6 +321,12 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         )}
         <AskAiButton onClick={askAi} loading={aiLoading} />
       </div>
+
+      {otherLayerCount > 0 && (
+        <div style={{ fontSize: 11, color: '#B9C2C8', paddingLeft: 2 }}>
+          +{otherLayerCount} tip{otherLayerCount === 1 ? '' : 's'} on other layers
+        </div>
+      )}
 
       {aiError && <ErrorPill message={aiError} />}
 
