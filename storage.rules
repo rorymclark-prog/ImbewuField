@@ -14,5 +14,15 @@ service firebase.storage {
     match /photos/{allPaths=**} {
       allow read: if true;
     }
+
+    // AI-render job images, scoped per user. The browser writes each sheet's INPUT composite and
+    // reads its OUTPUT; the Cloud Function worker writes outputs via the Admin SDK (bypasses these
+    // rules). Private to the owner — not world-readable like photos.
+    match /renders/{uid}/{allPaths=**} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid
+                   && request.resource.size < 12 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
   }
 }

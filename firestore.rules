@@ -215,5 +215,18 @@ service cloud.firestore {
       allow read:   if communityOn() && signedIn() && myRole() == 'admin';
       allow update, delete: if false;
     }
+
+    // Background AI-render jobs (worker: functions/src/index.ts). The browser CREATES a job for
+    // itself (uid must match, must start 'queued') and READS its own job to stream progress. Only
+    // the Admin-SDK worker mutates a job (it bypasses these rules), so update/delete are closed to
+    // the client — a user can never rewrite another user's job or forge a 'complete' state.
+    match /render_jobs/{jobId} {
+      allow read:   if signedIn() && resource.data.uid == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'queued'
+        && request.resource.data.sheets.size() <= 8;
+      allow update, delete: if false;
+    }
   }
 }
