@@ -216,17 +216,35 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Kill switch for the AI-render pipeline — same pattern as communityOn(). Doc absent or
+    // enabled != true => nobody can enqueue a render (one console toggle stops ALL OpenAI spend).
+    // Create app_config/renders = { enabled: true } to turn the pipeline on.
+    function rendersOn() {
+      return exists(/databases/$(database)/documents/app_config/renders)
+        && get(/databases/$(database)/documents/app_config/renders).data.enabled == true;
+    }
+
     // Background AI-render jobs (worker: functions/src/index.ts). The browser CREATES a job for
     // itself (uid must match, must start 'queued') and READS its own job to stream progress. Only
     // the Admin-SDK worker mutates a job (it bypasses these rules), so update/delete are closed to
-    // the client — a user can never rewrite another user's job or forge a 'complete' state.
+    // the client — a user can never rewrite another user's job or forge a 'complete' state. The
+    // WORKER is the real enforcement boundary (quota, path-scoping, prompt clamp); these rules are
+    // the cheap first gate: ownership, the kill switch, and the sheet-count cap.
     match /render_jobs/{jobId} {
       allow read:   if signedIn() && resource.data.uid == request.auth.uid;
       allow create: if signedIn()
+        && rendersOn()
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.status == 'queued'
-        && request.resource.data.sheets.size() <= 8;
+        && request.resource.data.sheets.size() <= 5;
       allow update, delete: if false;
+    }
+
+    // Per-user daily render quota, written ONLY by the Admin-SDK worker. Readable by the owner so
+    // the UI can show "N of your daily renders left"; never client-writable.
+    match /render_usage/{docId} {
+      allow read:  if signedIn() && docId.split('_')[0] == request.auth.uid;
+      allow write: if false;
     }
   }
 }
