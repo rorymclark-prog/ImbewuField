@@ -16,8 +16,8 @@ updates that sheet's status. Every job reaches a terminal status; `sweepStaleRen
    models require it.
 2. **Firebase Blaze plan** — Cloud Functions can't call OpenAI on the free Spark plan. Upgrade the
    `fieldproof-sa` project to Blaze.
-3. **Region** — `REGION` in `src/index.ts` MUST equal this project's Firestore region (assumed
-   `us-central1`; check Firebase console → Firestore). Change the constant or the deploy is rejected.
+3. **Region** — already set: `REGION` in `src/index.ts` is `europe-west1`, matching this project's
+   Firestore database (confirmed via CLI). No action needed unless the DB is ever moved.
 4. **Turn the pipeline ON** (the kill switch, default OFF): in Firestore, create
    `app_config/renders` = `{ enabled: true }`. Set `enabled: false` any time to instantly stop all
    render spend.

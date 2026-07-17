@@ -29,9 +29,9 @@ initializeApp();
 const db = getFirestore();
 const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY');
 
-// Firestore-trigger region MUST equal the database region, or deploy is rejected. Override if
-// fieldproof-sa's Firestore isn't us-central1 (Firebase console → Firestore shows it).
-const REGION = 'us-central1';
+// Firestore-trigger region MUST equal the database region, or deploy is rejected.
+// fieldproof-sa's Firestore database is in europe-west1 (confirmed via firebase CLI 2026-07-18).
+const REGION = 'europe-west1';
 const MODEL = 'gpt-image-2';
 const CONCURRENCY = 3; // parallel sheets within ONE job (instance concurrency is pinned to 1 below)
 const MAX_RETRIES = 2; // network / 5xx
