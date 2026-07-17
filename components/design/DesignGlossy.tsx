@@ -3318,9 +3318,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // gpt-image-2 → Gemini fallback as the single-sheet path, so a fal 403 degrades to Gemini rather
   // than aborting the batch. Slow by nature (one model call per sheet); the button warns about it.
   const generateAllStyledSheets = useCallback(async () => {
-    if (!producerStyle) return;
-    const styleDef = PRODUCER_STYLES.find((s) => s.key === producerStyle);
+    // Default to Extension Blueprint when no Style is chosen, so this button always works.
+    const styleKey = producerStyle ?? 'extension_blueprint';
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
+    if (!producerStyle) setProducerStyle(styleKey); // reflect the default in the Style chips
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
     setLoading(engine);
     setError(null);
@@ -3343,11 +3345,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           modelImage = frame.satDataUrl ?? composite;
         } else {
           try {
-            modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+            modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, styleKey, producerEngine, designBrief);
           } catch (err) {
             if (producerEngine === 'openai') {
               fellBack = true;
-              modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, 'gemini', designBrief);
+              modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, styleKey, 'gemini', designBrief);
             } else {
               throw err;
             }
@@ -3371,7 +3373,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         });
         const sheet = await composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
         try {
-          saveGlossy(state.siteId, `producer:${producerStyle}:${f}`, {
+          saveGlossy(state.siteId, `producer:${styleKey}:${f}`, {
             image: sheet,
             provider: producerEngine === 'openai' && !fellBack ? 'falgpt' : 'gemini',
             at: new Date().toISOString(),
@@ -3703,10 +3705,25 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* One tap → the whole plan set. Rory: "where is the button to design all sheets at once?"
-            The exact deterministic sheets are the reliable all-at-once (never 403, instant); the
-            illustrated AI Styles below remain per-sheet. */}
-        <div>
+        {/* Two "generate everything" paths, side by side, with the trade-off spelled out (Rory:
+            "should say non-ai for all sheets and then ai for all sheets, explaining the drawbacks
+            of both"). Both produce the WHOLE plan set in one tap; they differ exact-vs-beautified. */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            padding: 12,
+            borderRadius: 14,
+            border: '1px solid rgba(31,77,43,0.25)',
+            background: 'rgba(31,77,43,0.04)',
+          }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.6 }}>
+            Generate every sheet at once
+          </div>
+
+          {/* NON-AI — exact deterministic set */}
           <button
             onClick={generateAllSheets}
             disabled={loading !== null}
@@ -3729,12 +3746,44 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             }}
           >
             <Images size={18} />
-            {loading === 'exact' ? 'Generating your plan set…' : 'Generate ALL design sheets · one tap'}
+            {loading === 'exact' ? 'Drawing your plan set…' : 'Non-AI · ALL sheets (exact)'}
           </button>
-          <div style={{ fontSize: 11, opacity: 0.6, marginTop: 4 }}>
-            Every design sheet at once — Whole · Water · Zones · Planting · Structures · Implementation —
-            drawn exactly from your plan. Instant, reliable, never invented, ready to <strong>Print</strong>.
-            The illustrated AI styles below are optional, one sheet at a time.
+          <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5 }}>
+            <strong>Reliable choice.</strong> Your real satellite + exact geometry for every layer
+            (Whole · Water · Zones · Planting · Structures · Implementation). Instant, never invented,
+            ready to <strong>Print</strong>. Drawback: plain — no artistic styling.
+          </div>
+
+          {/* AI — illustrated set in a Style (defaults to Extension Blueprint) */}
+          <button
+            onClick={generateAllStyledSheets}
+            disabled={loading !== null}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              width: '100%',
+              minHeight: 48,
+              padding: '11px 18px',
+              borderRadius: 12,
+              border: `2px solid ${GREEN}`,
+              background: 'transparent',
+              color: GREEN,
+              fontWeight: 800,
+              fontSize: 14.5,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null ? 0.6 : 1,
+            }}
+          >
+            <Gem size={17} />
+            {loading !== null && loading !== 'exact' ? 'Styling every sheet… hang on' : 'AI · ALL sheets (illustrated)'}
+          </button>
+          <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5 }}>
+            <strong>Beautiful, less exact.</strong> An artist's impression of every layer in a Style
+            {producerStyle ? ` (${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label})` : ' (defaults to Extension Blueprint — pick another below)'}.
+            Drawbacks: <strong>slow</strong> (~a minute+ per sheet), <strong>varies shot to shot</strong>,
+            and the sharpest engine (gpt-image-2) is often unavailable — it falls back to Gemini.
           </div>
         </div>
 
@@ -3830,37 +3879,6 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                   : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
         </button>
 
-        {/* AI counterpart to the exact "Generate ALL" button — applies the CHOSEN style to EVERY
-            layer at once (Rory: "generating all images at once was best · gpt gave the best
-            results"). Only shown when a Style is selected. Slow: one model call per sheet. */}
-        {producerStyle && (
-          <button
-            onClick={generateAllStyledSheets}
-            disabled={loading !== null}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              width: '100%',
-              minHeight: 46,
-              padding: '10px 18px',
-              borderRadius: 12,
-              border: `2px solid ${GREEN}`,
-              background: 'transparent',
-              color: GREEN,
-              fontWeight: 800,
-              fontSize: 14,
-              cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null ? 0.6 : 1,
-            }}
-          >
-            <Images size={17} />
-            {loading !== null && loading !== 'exact'
-              ? 'Styling all sheets… this takes a while'
-              : `Generate ALL sheets in ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (AI · slow)`}
-          </button>
-        )}
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
