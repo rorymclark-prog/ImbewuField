@@ -18,8 +18,24 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
+import { buildProducerPrompt, type StylePreset } from '@/lib/producer-prompt';
+import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
 const PAPER = '#FFFEFA';
+
+// Persist the active background render job per site, so closing/reopening the Studio re-attaches to
+// an in-flight render (they take minutes) and still collects the finished sheets instead of wasting
+// the spend. Cleared when the job reaches a terminal state.
+const queueJobKey = (siteId: string) => `imbewu_render_job_${siteId}`;
+function persistJobId(siteId: string, jobId: string) {
+  try { localStorage.setItem(queueJobKey(siteId), jobId); } catch { /* ignore */ }
+}
+function readPersistedJobId(siteId: string): string | null {
+  try { return localStorage.getItem(queueJobKey(siteId)); } catch { return null; }
+}
+function clearPersistedJobId(siteId: string) {
+  try { localStorage.removeItem(queueJobKey(siteId)); } catch { /* ignore */ }
+}
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -147,8 +163,8 @@ export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'struct
 // (fal/OpenAI verification), so it can't be the reliable default. When it IS picked and fails,
 // generateProducer falls back to Gemini automatically (see the try/catch there).
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'gemini', label: 'Gemini Pro', sub: 'recommended · ~1 min' },
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharper · often unavailable (403)' },
+  { key: 'gemini', label: 'Gemini Pro', sub: 'instant · ~1 min' },
+  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
 ];
 
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
@@ -2935,6 +2951,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
   // "N sheets done" during Generate-all. Distinct from `error` so a SUCCESSFUL render never shows red.
   const [notice, setNotice] = useState<string | null>(null);
+  // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
+  const [queueJobId, setQueueJobId] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
@@ -3398,6 +3416,152 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [producerStyle, engine, state, frame, refLayers, site, placeName, pushGallery]);
 
+  // ── Background render queue (Stage 2) — gpt-image-2 direct via the Cloud Function ──────────────
+  // The slow model call runs in functions/runRenderJob, NOT in the browser, so it escapes Vercel's
+  // 60s wall and scales. The browser only builds each composite + prompt (client-side, so all the
+  // exact-map logic stays here), hands them to the queue, then finishes each returned sheet with the
+  // same deterministic composite-back the synchronous path uses.
+
+  // Deterministic composite-back for one sheet: boundary clip + burned labels + sheet chrome.
+  const finishStyledSheet = useCallback(
+    async (modelImage: string, f: GlossyLayerFilter, styleDef: { label: string; labelStyle: LabelStyle }): Promise<string> => {
+      const W = frame.imgW * SCALE;
+      const H = frame.imgH * SCALE;
+      const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+      const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
+      const labels = producerLabels(state, refLayers, W, H, f);
+      const overlayImage =
+        f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
+        : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : undefined;
+      const final = await compositeAccurateMap({
+        modelImage,
+        satelliteImage: frame.satDataUrl ?? modelImage,
+        boundaryPx,
+        overlayImage,
+        labels,
+        labelStyle: styleDef.labelStyle,
+        width: W,
+        height: H,
+      });
+      return composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+    },
+    [state, frame, refLayers, placeName],
+  );
+
+  // "AI · ALL sheets" when the engine is gpt-image-2: enqueue a background job for the model sheets
+  // (Zones is satellite-only → produced exactly, here and now), then the subscription effect below
+  // collects each finished sheet into the gallery as it lands.
+  const generateAllViaQueue = useCallback(async () => {
+    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
+    if (!styleDef) return;
+    if (!producerStyle) setProducerStyle(styleKey);
+    setError(null);
+    setNotice(null);
+    setLoading('falgpt');
+    try {
+      if (layerContentCount(state, refLayers, 'zones') > 0) {
+        const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
+        const zsheet = await finishStyledSheet(base, 'zones', styleDef);
+        try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
+        pushGallery(`Zones map · ${styleDef.label}`, zsheet);
+      }
+      const modelFilters: GlossyLayerFilter[] = ['all', 'water', 'planting', 'structures'];
+      const designBrief = buildDesignBrief(state, refLayers, placeName, site);
+      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string }>;
+      for (const f of modelFilters) {
+        if (layerContentCount(state, refLayers, f) === 0) continue;
+        const composite = await buildComposite(state, frame, refLayers, f);
+        const elementsText = producerElementsText(state, refLayers, f);
+        const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+        const prompt = buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
+        sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite });
+      }
+      if (sheets.length === 0) {
+        setNotice(
+          layerContentCount(state, refLayers, 'zones') > 0
+            ? 'Zones sheet done. Add water, planting or structures for more.'
+            : 'Nothing to render yet — place some elements first.',
+        );
+        setLoading(null);
+        return;
+      }
+      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: 'openai', sheets });
+      persistJobId(state.siteId, jobId);
+      setQueueJobId(jobId);
+      setNotice(`Rendering ${sheets.length} sheet${sheets.length === 1 ? '' : 's'} in the background — they'll appear in your gallery when ready (a few minutes). You can keep working.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setLoading(null);
+    }
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery]);
+
+  // Refs so the subscription effect below doesn't re-subscribe on every design edit.
+  const finishRef = useRef(finishStyledSheet);
+  finishRef.current = finishStyledSheet;
+  const styleRef = useRef(producerStyle);
+  styleRef.current = producerStyle;
+
+  // Stream the active job; finish each sheet as it completes; clear on a terminal status.
+  useEffect(() => {
+    if (!queueJobId) return;
+    const siteId = state.siteId;
+    const finished = new Set<string>();
+    const unsub = subscribeRenderJob(
+      queueJobId,
+      async (job) => {
+        if (!job) return;
+        const styleKey = (styleRef.current ?? 'extension_blueprint') as StylePreset;
+        const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
+        for (const sheet of job.sheets) {
+          if (sheet.status === 'done' && sheet.outputPath && !finished.has(sheet.key)) {
+            finished.add(sheet.key); // BEFORE the await, so a re-fired snapshot can't double-finish
+            try {
+              const raw = await fetchRenderOutput(sheet.outputPath);
+              const finalSheet = styleDef ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef) : raw;
+              try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() }); } catch { /* cache full */ }
+              pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}`, finalSheet);
+            } catch (e) {
+              console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
+            }
+          }
+        }
+        if (job.status === 'complete' || job.status === 'failed' || job.status === 'error') {
+          const done = job.sheets.filter((s) => s.status === 'done').length;
+          const failed = job.sheets.filter((s) => s.status === 'error').length;
+          if (done > 0) {
+            setNotice(`Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${failed ? ` · ${failed} failed, try again` : ''}.`);
+            setGalleryViewId(null);
+            setGalleryOpen(true);
+          } else {
+            setError(job.error || 'The render did not complete — please try again.');
+          }
+          setLoading(null);
+          clearPersistedJobId(siteId);
+          setQueueJobId(null);
+        }
+      },
+      () => {
+        setError('Lost connection to the background render — it may still finish; reopen the Glossy step to check.');
+        setLoading(null);
+      },
+    );
+    return () => unsub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queueJobId, state.siteId, pushGallery]);
+
+  // Re-attach to an in-flight job after a reload / tab reopen (renders take minutes).
+  useEffect(() => {
+    const stored = readPersistedJobId(state.siteId);
+    if (stored) {
+      setLoading('falgpt');
+      setNotice('Reconnecting to your background render…');
+      setQueueJobId(stored);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.siteId]);
+
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
     const img = new Image();
@@ -3754,9 +3918,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             ready to <strong>Print</strong>. Drawback: plain — no artistic styling.
           </div>
 
-          {/* AI — illustrated set in a Style (defaults to Extension Blueprint) */}
+          {/* AI — illustrated set in a Style (defaults to Extension Blueprint). gpt-image-2 runs in
+              the BACKGROUND queue (direct OpenAI, escapes the 60s wall); Gemini stays synchronous. */}
           <button
-            onClick={generateAllStyledSheets}
+            onClick={engine === 'gemini' ? generateAllStyledSheets : generateAllViaQueue}
             disabled={loading !== null}
             style={{
               display: 'flex',
@@ -3782,8 +3947,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5 }}>
             <strong>Beautiful, less exact.</strong> An artist's impression of every layer in a Style
             {producerStyle ? ` (${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label})` : ' (defaults to Extension Blueprint — pick another below)'}.
-            Drawbacks: <strong>slow</strong> (~a minute+ per sheet), <strong>varies shot to shot</strong>,
-            and the sharpest engine (gpt-image-2) is often unavailable — it falls back to Gemini.
+            {engine === 'gemini'
+              ? ' Runs now with Gemini (~a minute per sheet, varies shot to shot).'
+              : ' With gpt-image-2 it renders in the BACKGROUND — sharpest result, takes a few minutes; the sheets drop into your gallery when ready and you can keep working or come back.'}
           </div>
         </div>
 
