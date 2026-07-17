@@ -25,7 +25,16 @@ export interface ProducerLabel {
   cx: number; cy: number; // leader start — the element's TRUE position
   ax: number; ay: number; // pill anchor (top-left-ish, already clamped in-frame)
   lx: number;             // leader END x — the pill's INNER edge (so it meets the pill cleanly)
-  text: string;           // e.g. "🥬 Veg bed ×6"
+  text: string;           // e.g. "🥬 VEG BED ×6"
+  /** 'header' = a CAPS group title ("SOUTHERN TREES") standing over its members; rendered
+   *  bolder so the hierarchy reads. Absent/undefined = 'item' — back-compat for callers
+   *  (FacilitatorCanvas) that emit plain one-pill-per-element labels. */
+  kind?: 'header' | 'item';
+  /** false = draw the pill ONLY (no leader line, no anchor dot). Members listed under a header
+   *  don't get a leader of their own: the header's single leader speaks for the whole group.
+   *  Suppressing them is also what preserves the layout's no-crossing-leaders guarantee — see
+   *  producerLabels in components/design/DesignGlossy.tsx. Absent/undefined = true. */
+  leader?: boolean;
 }
 
 export type LabelStyle = 'ink' | 'storybook' | 'blueprint' | 'folk' | 'clean';
@@ -66,18 +75,23 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
   const s = LABEL_STYLES[style] ?? LABEL_STYLES.clean;
   const fs = 26, padX = 14, h = fs + 14;
   ctx.textBaseline = 'middle';
-  ctx.font = `600 ${fs}px ${s.font}`;
   for (const l of labels) {
-    // Leader — dark under-stroke + light over-stroke reads on any background.
-    ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-    ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-    ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
-    ctx.setLineDash([]);
-    // Anchor dot at the true position.
-    ctx.beginPath(); ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
-    ctx.fillStyle = '#FBF6EC'; ctx.fill(); ctx.strokeStyle = s.stroke; ctx.lineWidth = 2; ctx.stroke();
+    // Headers are group titles standing over their members — heavier weight + a firmer pill edge
+    // so the hierarchy reads at a glance. Set per-label because measureText below depends on it.
+    const isHeader = l.kind === 'header';
+    ctx.font = `${isHeader ? 800 : 600} ${fs}px ${s.font}`;
+    if (l.leader !== false) {
+      // Leader — dark under-stroke + light over-stroke reads on any background.
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
+      ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
+      ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
+      ctx.setLineDash([]);
+      // Anchor dot at the true position.
+      ctx.beginPath(); ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#FBF6EC'; ctx.fill(); ctx.strokeStyle = s.stroke; ctx.lineWidth = 2; ctx.stroke();
+    }
     // Pill.
     const w = padX * 2 + ctx.measureText(l.text).width;
     const x = l.ax, y = l.ay - h / 2, r = h / 2;
@@ -86,7 +100,7 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
     ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
     ctx.fillStyle = s.pill; ctx.shadowColor = 'rgba(20,16,10,0.28)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2;
     ctx.fill(); ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-    ctx.strokeStyle = s.stroke; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.strokeStyle = s.stroke; ctx.lineWidth = isHeader ? 2.5 : 1.5; ctx.stroke();
     ctx.fillStyle = s.text; ctx.fillText(l.text, x + padX, l.ay + 1);
   }
 }

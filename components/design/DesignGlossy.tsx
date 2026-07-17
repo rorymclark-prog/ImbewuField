@@ -12,6 +12,7 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X } from 'lucide-react'
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, ZoneShape } from '@/lib/design-canvas';
+import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
@@ -899,10 +900,96 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
   return parts.join(', ');
 }
 
-// True labels burned onto the produced map: one pill per element-name group at the group's
-// centroid (OUTPUT px). SIMPLIFIED vs FacilitatorCanvas — no left/right column split, just a
-// short leader from the cluster to a pill placed above-left of it, clamped inside the WxH
-// frame so nothing is cropped. (Refine later toward the facilitator's column layout.)
+// ── Burned map labels: CAPS + grouped headers (docs/PLAN-SET-SPEC.md) ─────────
+//
+// The reference plan set labels an AREA once — "SOUTHERN ORCHARD GUILDS" as a header over
+// Macadamia / Citrus / Avocado / Mango — instead of firing one emoji pill AND one leader at
+// every element name. A dozen fruit trees in one orchard used to mean a dozen pills and a
+// dozen leaders: the single worst source of burned-label clutter. So we cluster same-family
+// nearby elements and give the cluster ONE header + its members underneath.
+
+/** The bucket we're willing to put under one header. */
+type LabelFamily = 'trees' | ElementCategory;
+
+const FAMILY_LABEL: Record<LabelFamily, string> = {
+  trees: 'TREES',
+  growing: 'BEDS & CROPS',
+  water: 'WATER',
+  earthworks: 'EARTHWORKS',
+  structure: 'STRUCTURES',
+  animal: 'LIVESTOCK',
+  access: 'ACCESS',
+};
+
+// Trees get their own family because they're the worst offender (a whole orchard of species
+// dropped in one corner). NOTE the category guard: `tree_basin` also starts with 'tree_' but is
+// category 'earthworks' — the mulch ring that shapes the LAND around a tree — and the taxonomy
+// (docs/DESIGN-TAXONOMY.md) deliberately keeps land-shaping apart from planting. It stays in
+// EARTHWORKS.
+function labelFamily(def: DesignElementDef): LabelFamily {
+  return def.category === 'growing' && def.id.startsWith('tree_') ? 'trees' : def.category;
+}
+
+// How many DISTINCT element names a cluster needs before a header earns its row. Below this a
+// header is mostly ceremony: "TREES" over rows that already read CITRUS TREE / MANGO TREE tells
+// the reader nothing, and two nearby pills with two leaders already scan fine.
+// (Measured over 800 simulated designs: dropping this to 2 buys ~16% fewer leader lines for ~5%
+// more rows — a real but marginal trade. 3 matches the reference sheet's 4-member groups.)
+const GROUP_MIN_NAMES = 3;
+// Members listed under one header before we roll the tail up into "+N MORE" — stops a 15-species
+// food forest from turning the header block into a column that overruns the sheet.
+const GROUP_MAX_ROWS = 6;
+// Cluster radius as a fraction of the frame HEIGHT. Single-link, so it chains along a row of
+// trees (a hedgerow IS one label) — which is the behaviour we want.
+const GROUP_PROXIMITY = 0.18;
+
+/** Normalised bbox of the traced plot, falling back to the whole frame when untraced. */
+function plotBox(boundary: Array<[number, number]>): { x0: number; y0: number; x1: number; y1: number } {
+  if (boundary.length < 3) return { x0: 0, y0: 0, x1: 1, y1: 1 };
+  const xs = boundary.map((p) => p[0]);
+  const ys = boundary.map((p) => p[1]);
+  return { x0: Math.min(...xs), y0: Math.min(...ys), x1: Math.max(...xs), y1: Math.max(...ys) };
+}
+
+// Compass word for a header ("SOUTHERN TREES"). Maps are north-up (Web-Mercator satellite), so
+// normalised +y is south. Measured inside the PLOT's bbox, not the photo's, so "SOUTHERN" means
+// the southern part of the farmer's land. Only used when a family has more than one cluster —
+// the prefix exists to tell two clusters apart, and on a single cluster it's just noise.
+function compassWord(x: number, y: number, box: ReturnType<typeof plotBox>): string {
+  const u = box.x1 > box.x0 ? (x - box.x0) / (box.x1 - box.x0) : 0.5;
+  const v = box.y1 > box.y0 ? (y - box.y0) / (box.y1 - box.y0) : 0.5;
+  if (v < 0.34) return 'NORTHERN';
+  if (v > 0.66) return 'SOUTHERN';
+  if (u < 0.34) return 'WESTERN';
+  if (u > 0.66) return 'EASTERN';
+  return 'CENTRAL';
+}
+
+type LabelPt = { x: number; y: number; name: string; icon: string };
+
+/** Single-link clustering by proximity. `aspect` (W/H) makes the metric isotropic despite x and y
+ *  both being normalised 0..1 over a non-square frame. Element counts are tens — O(n²) is fine. */
+function clusterByProximity(pts: LabelPt[], aspect: number): LabelPt[][] {
+  const parent = pts.map((_, i) => i);
+  const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const d = Math.hypot((pts[i].x - pts[j].x) * aspect, pts[i].y - pts[j].y);
+      if (d <= GROUP_PROXIMITY) parent[find(i)] = find(j);
+    }
+  }
+  const by = new Map<number, LabelPt[]>();
+  pts.forEach((p, i) => {
+    const root = find(i);
+    const arr = by.get(root) ?? [];
+    arr.push(p);
+    by.set(root, arr);
+  });
+  return [...by.values()];
+}
+
+// True labels burned onto the produced map (all coords OUTPUT px): grouped CAPS headers with
+// their members beneath, pinned to the left/right margins and de-collided.
 function producerLabels(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
@@ -911,71 +998,182 @@ function producerLabels(
   filter: GlossyLayerFilter = 'all',
 ): ProducerLabel[] {
   const fs = 26, padX = 14;
-  const pillWidth = (text: string) => Math.min(W - 28, padX * 2 + text.length * fs * 0.6);
+  // Pill-width ESTIMATE — only used to right-align the right-hand column (burnLabels measures the
+  // real width for the pill itself). CAPS runs wider than mixed case, and bold headers wider
+  // still, so the per-char factor went up with them; under-estimating here would hang the
+  // right-hand pills off the edge of the frame.
+  const pillWidth = (text: string, bold: boolean) =>
+    Math.min(W - 28, padX * 2 + text.length * fs * (bold ? 0.66 : 0.62));
 
-  // One cluster per element name (renamed items get their own pill) — only for THIS layer, so a
-  // Zones/Water/Planting map isn't cluttered with every other layer's labels (Rory: a "Zones"
-  // map was showing JoJo Tanks + veg beds).
-  const groups = new Map<string, { xs: number[]; ys: number[]; icon: string }>();
+  type Row = { text: string; kind: 'header' | 'item'; leader: boolean; pw: number };
+  /** One margin-pinned unit: a lone pill (head = null, one leader-carrying member), or a header
+   *  plus the members it speaks for. cx/cy is the single point the block's ONE leader points at.
+   *  `hidden` is how many member names got rolled up into a "+N MORE" row. */
+  type Block = { cx: number; cy: number; head: Row | null; members: Row[]; hidden: number };
+  const blocks: Block[] = [];
+
+  const itemRow = (icon: string, name: string, n: number): Row => {
+    // CAPS on every on-map label, per the reference sheets ("On-map labels: CAPS, short").
+    // The emoji stays on members — it's the fastest recognition cue on a busy illustration —
+    // and is dropped from headers, which carry their meaning in the words.
+    const text = `${icon} ${name}${n > 1 ? ` ×${n}` : ''}`.toUpperCase();
+    return { text, kind: 'item', leader: true, pw: pillWidth(text, false) };
+  };
+  const moreRow = (n: number): Row => {
+    const text = `+${n} MORE`;
+    return { text, kind: 'item', leader: false, pw: pillWidth(text, false) };
+  };
+  const rowCount = (b: Block) => (b.head ? 1 : 0) + b.members.length + (b.hidden > 0 ? 1 : 0);
+  const blockRows = (b: Block): Row[] => [
+    ...(b.head ? [b.head] : []),
+    ...b.members,
+    ...(b.hidden > 0 ? [moreRow(b.hidden)] : []),
+  ];
+
+  // Bucket this layer's items by family — only THIS layer, so a Zones/Water/Planting map isn't
+  // cluttered with every other layer's labels (Rory: a "Zones" map was showing JoJo Tanks + veg
+  // beds).
+  const families = new Map<LabelFamily, LabelPt[]>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
-    const name = it.label ?? def.name;
-    const g = groups.get(name) ?? { xs: [], ys: [], icon: def.icon };
-    g.xs.push(it.x);
-    g.ys.push(it.y);
-    groups.set(name, g);
+    const key = labelFamily(def);
+    const arr = families.get(key) ?? [];
+    arr.push({ x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });
+    families.set(key, arr);
   }
 
-  type Cluster = { cx: number; cy: number; text: string; pw: number };
-  const clusters: Cluster[] = [];
-  for (const [name, g] of groups) {
-    const n = g.xs.length;
-    const cx = (g.xs.reduce((a, b) => a + b, 0) / n) * W;
-    const cy = (g.ys.reduce((a, b) => a + b, 0) / n) * H;
-    const text = `${g.icon} ${name}${n > 1 ? ` ×${n}` : ''}`;
-    clusters.push({ cx, cy, text, pw: pillWidth(text) });
+  const box = plotBox(refLayers.boundary);
+  const aspect = H > 0 ? W / H : 1;
+  for (const [family, pts] of families) {
+    const clusters = clusterByProximity(pts, aspect);
+    for (const cluster of clusters) {
+      // Name groups within this cluster (renamed items get their own row), biggest first.
+      const byName = new Map<string, { icon: string; xs: number[]; ys: number[] }>();
+      for (const p of cluster) {
+        const g = byName.get(p.name) ?? { icon: p.icon, xs: [], ys: [] };
+        g.xs.push(p.x);
+        g.ys.push(p.y);
+        byName.set(p.name, g);
+      }
+      const names = [...byName.entries()].sort((a, b) => b[1].xs.length - a[1].xs.length || a[0].localeCompare(b[0]));
+
+      if (names.length < GROUP_MIN_NAMES) {
+        // Too few kinds to be worth a header — one pill per kind with its own leader, as before.
+        // It now anchors on the name's centroid WITHIN this cluster, so two veg patches at
+        // opposite ends of the plot no longer share one pill pointing at the empty middle.
+        for (const [name, g] of names) {
+          const n = g.xs.length;
+          blocks.push({
+            cx: (g.xs.reduce((a, b) => a + b, 0) / n) * W,
+            cy: (g.ys.reduce((a, b) => a + b, 0) / n) * H,
+            head: null,
+            members: [itemRow(g.icon, name, n)],
+            hidden: 0,
+          });
+        }
+        continue;
+      }
+
+      // Header + members: ONE leader, aimed at the cluster's centroid.
+      const nx = cluster.reduce((s, p) => s + p.x, 0) / cluster.length;
+      const ny = cluster.reduce((s, p) => s + p.y, 0) / cluster.length;
+      const prefix = clusters.length > 1 ? `${compassWord(nx, ny, box)} ` : '';
+      const head = `${prefix}${FAMILY_LABEL[family]}`;
+      // Members ride under the header WITHOUT a leader of their own — see the layout note below.
+      const members = names
+        .slice(0, GROUP_MAX_ROWS)
+        .map(([name, g]) => ({ ...itemRow(g.icon, name, g.xs.length), leader: false }));
+      blocks.push({
+        cx: nx * W,
+        cy: ny * H,
+        head: { text: head, kind: 'header', leader: true, pw: pillWidth(head, true) },
+        members,
+        hidden: Math.max(0, names.length - GROUP_MAX_ROWS),
+      });
+    }
   }
-  // On the zones layer, label the effort-zone areas (not individual elements).
+
+  // On the zones layer, label the effort-zone areas (not individual elements). Each zone is its
+  // own distinct region, so there is nothing to group — one pill each, as before.
   if (zonesInFilter(filter)) {
     for (const z of state.zones) {
       if (z.feature || z.points.length < 3) continue;
       const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
-      const text = `${z.zone}️⃣ ${ZONE_DEFS[z.zone].label}`;
-      clusters.push({ cx, cy, text, pw: pillWidth(text) });
+      const text = `${z.zone}️⃣ ${ZONE_DEFS[z.zone].label}`.toUpperCase();
+      blocks.push({ cx, cy, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
     }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
   if (refLayers.driveway.length >= 2) {
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
-    const text = '🚗 Driveway';
-    clusters.push({ cx: mid[0] * W, cy: mid[1] * H, text, pw: pillWidth(text) });
+    const text = '🚗 DRIVEWAY';
+    blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
   }
 
-  // Pin each pill to the LEFT or RIGHT margin (by which half its element sits in) and hug the
-  // element's real vertical position, then DE-COLLIDE: keep pills in anchor order and push the
-  // minimum amount to remove overlaps, shifting the whole column up if it runs off the bottom.
-  // Because the column stays sorted by cy, leaders never cross each other — the "labels all over
-  // the place" mess was the old top-stacked layout letting leaders tangle.
+  // Pin each BLOCK to the LEFT or RIGHT margin (by which half its elements sit in) and hug their
+  // real vertical position, then DE-COLLIDE: keep blocks in anchor order and push the minimum
+  // amount to remove overlaps, shifting the whole column up if it runs off the bottom.
+  // NO-CROSSING LEADERS — the property this layout won and must not lose: the column stays sorted
+  // by cy, AND exactly one row per block carries a leader (a block's members are silent). So the
+  // leaders on a side are still one-per-anchor in anchor order, and cannot tangle. This is also
+  // why members don't keep their own leaders: N leaders fanning out of a block would re-order
+  // against the column and bring the "labels all over the place" mess straight back.
   const pillH = fs + 14;
-  const minGap = pillH + 8;
+  const rowGap = pillH + 4; // rows inside a block hug each other → they read as one group…
+  const blockGap = 14; // …and blocks stay clearly apart
   const top = 36, bot = H - 36;
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
-    const col = clusters.filter((c) => (c.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+    const col = blocks.filter((b) => (b.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
     if (!col.length) return;
-    // Ideal pill y = the element's own y, clamped into the frame.
-    const ys = col.map((c) => Math.min(bot, Math.max(top, c.cy)));
-    // Push each pill down just enough to clear the one above it (preserves vertical order).
-    for (let i = 1; i < ys.length; i++) if (ys[i] < ys[i - 1] + minGap) ys[i] = ys[i - 1] + minGap;
+    // FIT THE COLUMN FIRST. A column only holds ~28 rows; past that the overflow shift below
+    // clamps at `top` and starts stacking pills on top of each other. (That degradation is not
+    // new — the old one-pill-per-name layout hit it on a big design too — but headers add rows,
+    // so grouping must not make it easier to reach.) MEMBERS are the compressible part: the
+    // header's leader carries the group's position, so rolling members up into "+N MORE" costs
+    // detail, never truth, and the legend panel still names everything. Leader-carrying rows are
+    // never dropped — they ARE the identity+position guarantee. Trim the greediest block first.
+    const columnSpan = () =>
+      col.reduce((s, b) => s + (rowCount(b) - 1) * rowGap, 0) + (col.length - 1) * (pillH + blockGap);
+    // Each block can waste one no-op pass (popping its first member adds the "+N MORE" row back),
+    // then every pass shrinks the column — so this always terminates; the cap is belt-and-braces.
+    for (let guard = 0; columnSpan() > bot - top && guard < col.length * GROUP_MAX_ROWS + 8; guard++) {
+      const victim = col.filter((b) => b.members.length > 1).sort((a, b) => b.members.length - a.members.length)[0];
+      if (!victim) break; // nothing compressible left — accept the pre-existing degradation
+      victim.members.pop();
+      victim.hidden += 1;
+    }
+    const rows = col.map(blockRows);
+    // Header centre → last row centre, i.e. how far below its anchor a block reaches.
+    const span = rows.map((r) => (r.length - 1) * rowGap);
+    // Ideal header y = the elements' own y, clamped so the whole block fits in the frame.
+    const ys = col.map((b, i) => Math.max(top, Math.min(b.cy, bot - span[i])));
+    // Push each block down just enough to clear the one above it (preserves vertical order).
+    const pushDown = () => {
+      for (let i = 1; i < ys.length; i++) {
+        const min = ys[i - 1] + span[i - 1] + pillH + blockGap;
+        if (ys[i] < min) ys[i] = min;
+      }
+    };
+    pushDown();
     // If the stack overran the bottom, slide the whole column up so it fits (clamped at top).
-    const overflow = ys[ys.length - 1] - bot;
-    if (overflow > 0) for (let i = 0; i < ys.length; i++) ys[i] = Math.max(top, ys[i] - overflow);
-    col.forEach((c, i) => {
-      const ax = side === 'left' ? 16 : Math.max(16, W - c.pw - 16);
-      const lx = side === 'left' ? ax + c.pw : ax; // leader meets the pill's inner edge
-      out.push({ cx: c.cx, cy: c.cy, ax, ay: ys[i], lx, text: c.text });
+    const overflow = ys[ys.length - 1] + span[span.length - 1] - bot;
+    if (overflow > 0) {
+      for (let i = 0; i < ys.length; i++) ys[i] = Math.max(top, ys[i] - overflow);
+      // …then push down AGAIN. That per-block clamp at `top` is applied blindly, so it silently
+      // re-breaks the separations the first pass just established and stacks pills on top of each
+      // other (an old bug: a full column could land two pills at the same y). Re-pushing restores
+      // them, and because the fit pass above trimmed the column to fit, this cannot re-overflow.
+      pushDown();
+    }
+    col.forEach((b, i) => {
+      rows[i].forEach((row, k) => {
+        const ax = side === 'left' ? 16 : Math.max(16, W - row.pw - 16);
+        const lx = side === 'left' ? ax + row.pw : ax; // leader meets the pill's inner edge
+        out.push({ cx: b.cx, cy: b.cy, ax, ay: ys[i] + k * rowGap, lx, text: row.text, kind: row.kind, leader: row.leader });
+      });
     });
   });
   return out;
