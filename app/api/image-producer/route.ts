@@ -231,7 +231,7 @@ async function callGemini(
 // queue protocol, not anything ai-render-specific) via lib/ai-render-client's
 // pollFalRender, exactly like the existing "Polish" flow already does.
 async function submitGptImage2(key: string, imageBase64: string, prompt: string): Promise<NextResponse> {
-  const body = {
+  const body: Record<string, unknown> = {
     prompt,
     image_urls: [`data:image/jpeg;base64,${imageBase64}`],
     quality: 'high', // no 60s cap to fit under via the async queue — go for the best tier
@@ -239,6 +239,12 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
     num_images: 1,
     output_format: 'jpeg',
   };
+  // BYOK (bring-your-own-key): fal's HOSTED gpt-image-2 bills fal credits, and a fal account with
+  // no balance/billing returns 403 Forbidden on submit (that's the "fal.ai submit error 403" the
+  // farmer hit). If we have our own OpenAI key, hand it to fal so the generation bills OUR OpenAI
+  // account instead — this bypasses the fal-credit gate entirely. (gpt-image on OpenAI still needs
+  // the OpenAI org to be verified; if it isn't, fal relays OpenAI's own 403.)
+  if (process.env.OPENAI_API_KEY) body.openai_api_key = process.env.OPENAI_API_KEY;
   let res: Response;
   try {
     res = await fetch('https://queue.fal.run/openai/gpt-image-2/edit', {
@@ -251,7 +257,9 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    return NextResponse.json({ error: `fal.ai submit error ${res.status}`, detail: detail.slice(0, 400) }, { status: 502 });
+    // Surface fal's own reason text in the message (e.g. "Exhausted balance") so a 403 is
+    // diagnosable from the UI instead of a bare status code.
+    return NextResponse.json({ error: `fal.ai submit error ${res.status}${detail ? ` — ${detail.slice(0, 200)}` : ''}`, detail: detail.slice(0, 400) }, { status: 502 });
   }
   let data: { status_url?: string; response_url?: string };
   try {

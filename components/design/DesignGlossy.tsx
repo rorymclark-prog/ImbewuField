@@ -3311,6 +3311,91 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [state, frame, refLayers, site, placeName, pushGallery]);
 
+  // "Generate ALL sheets in this style" — the AI counterpart Rory asked for ("generating all
+  // images at once was best · gpt gave the best results"). Runs the full boundary-locked producer
+  // pipeline for EVERY design layer in the chosen Style + engine, one after another, so the whole
+  // illustrated plan set lands in the gallery from one tap. Each sheet inherits the same
+  // gpt-image-2 → Gemini fallback as the single-sheet path, so a fal 403 degrades to Gemini rather
+  // than aborting the batch. Slow by nature (one model call per sheet); the button warns about it.
+  const generateAllStyledSheets = useCallback(async () => {
+    if (!producerStyle) return;
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === producerStyle);
+    if (!styleDef) return;
+    const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
+    setLoading(engine);
+    setError(null);
+    setNotice(null);
+    const order: GlossyLayerFilter[] = ['all', 'water', 'zones', 'planting', 'structures'];
+    let made = 0;
+    let fellBack = false;
+    try {
+      const W = frame.imgW * SCALE;
+      const H = frame.imgH * SCALE;
+      for (const f of order) {
+        if (layerContentCount(state, refLayers, f) === 0) continue;
+        const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+        const composite = await buildComposite(state, frame, refLayers, f);
+        const elementsText = producerElementsText(state, refLayers, f);
+        const designBrief = buildDesignBrief(state, refLayers, placeName, site);
+        let modelImage: string;
+        if (f === 'zones') {
+          // Same rule as the single Zones sheet: never let the model invent under the zones.
+          modelImage = frame.satDataUrl ?? composite;
+        } else {
+          try {
+            modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+          } catch (err) {
+            if (producerEngine === 'openai') {
+              fellBack = true;
+              modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, 'gemini', designBrief);
+            } else {
+              throw err;
+            }
+          }
+        }
+        const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
+        const labels = producerLabels(state, refLayers, W, H, f);
+        const overlayImage =
+          f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
+          : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+          : undefined;
+        const final = await compositeAccurateMap({
+          modelImage,
+          satelliteImage: frame.satDataUrl ?? composite,
+          boundaryPx,
+          overlayImage,
+          labels,
+          labelStyle: styleDef.labelStyle,
+          width: W,
+          height: H,
+        });
+        const sheet = await composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+        try {
+          saveGlossy(state.siteId, `producer:${producerStyle}:${f}`, {
+            image: sheet,
+            provider: producerEngine === 'openai' && !fellBack ? 'falgpt' : 'gemini',
+            at: new Date().toISOString(),
+          });
+        } catch { /* cache full — gallery still holds it */ }
+        pushGallery(`${layerLabel} · ${styleDef.label}`, sheet);
+        made += 1;
+        setNotice(`Styling your ${styleDef.label} plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+      }
+      if (made === 0) {
+        setError('Nothing to style yet — trace your boundary and place some elements first.');
+        setNotice(null);
+      } else {
+        setNotice(`Done — ${made} ${styleDef.label} sheets in your gallery${fellBack ? ' (gpt-image-2 unavailable → Gemini)' : ''}. Open it to view or Print.`);
+        setGalleryViewId(null);
+        setGalleryOpen(true);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [producerStyle, engine, state, frame, refLayers, site, placeName, pushGallery]);
+
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
     const img = new Image();
@@ -3744,6 +3829,38 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                   ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
                   : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
         </button>
+
+        {/* AI counterpart to the exact "Generate ALL" button — applies the CHOSEN style to EVERY
+            layer at once (Rory: "generating all images at once was best · gpt gave the best
+            results"). Only shown when a Style is selected. Slow: one model call per sheet. */}
+        {producerStyle && (
+          <button
+            onClick={generateAllStyledSheets}
+            disabled={loading !== null}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              width: '100%',
+              minHeight: 46,
+              padding: '10px 18px',
+              borderRadius: 12,
+              border: `2px solid ${GREEN}`,
+              background: 'transparent',
+              color: GREEN,
+              fontWeight: 800,
+              fontSize: 14,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null ? 0.6 : 1,
+            }}
+          >
+            <Images size={17} />
+            {loading !== null && loading !== 'exact'
+              ? 'Styling all sheets… this takes a while'
+              : `Generate ALL sheets in ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (AI · slow)`}
+          </button>
+        )}
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
