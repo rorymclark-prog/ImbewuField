@@ -96,12 +96,28 @@ function buildProducerPrompt(
     ? `\nTASK: repaint this satellite photo of a REAL South African smallholding as a beautiful illustrated BASE MAP of the land exactly as it is today${layerLabel ? ' (the ' + layerLabel + ')' : ''}. Paint what the photo actually shows — the main house, existing trees and vegetation, lawn, bare ground, paths and driveway — plus exactly the marked existing features, and no other buildings (see the strict building rule below). `
     : `\nTASK: turn this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a beautiful illustrated site map. `;
 
+  // A plan set has ONE sheet per layer (see docs/PLAN-SET-SPEC.md). Without this, the model
+  // painted a lush garden — beds, crop rows, orchards — onto the ZONES sheet, because the rules
+  // above ask for a "garden map" and "cultivated earth" regardless of which layer was requested.
+  // Each sheet must communicate its own layer and leave the others to their own sheet.
+  const isLayerMap = !!layerLabel && layerLabel !== 'Full design';
+  const layerFocus = isLayerMap
+    ? `SINGLE-LAYER SHEET — READ CAREFULLY: this is the ${layerLabel!.toUpperCase()} sheet of a plan set and must communicate ONLY the ${layerLabel} layer. Every other layer has its own sheet. Do NOT illustrate vegetable beds, crop rows, orchards, flower borders, livestock, tanks or structures unless that exact element is named in the marked-features list below. Existing vegetation stays as plain, flat, muted canopy/ground — never elaborated into a designed garden. `
+    : '';
+
+  // On a single-layer sheet the "richly hand-painted garden map / cultivated earth" wording
+  // directly contradicts the layer focus — it's what produced beds and orchards on the ZONES
+  // sheet. Keep the whole plot painted (the blank-plot failure is worse), but keep it QUIET.
+  const fillItCalm =
+    `PAINT THE WHOLE PLOT, BUT CALMLY: illustrate the ENTIRE area inside the property boundary — never leave any area blank, white, plain or unpainted — but keep it a QUIET BASE: plain grass, veld, bare soil and existing tree canopies in flat, muted, low-contrast tones, matching the real photo's layout. The ${layerLabel} content must be the only thing that stands out. `;
+
   const rules =
     (retry ? `IMPORTANT — YOUR PREVIOUS ATTEMPT FAILED: it left the plot blank / plain white. That is unacceptable. Every part of the plot must be painted as living land this time. ` : '') +
     // Lead with the two most-violated rules, stated absolutely.
     noWrite + noInvent +
     task +
-    fillIt + roofs +
+    layerFocus +
+    (isLayerMap ? fillItCalm : fillIt) + roofs +
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
     featureLegend +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +

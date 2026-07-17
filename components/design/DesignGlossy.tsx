@@ -9,7 +9,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, RefreshCw, Gem, FlaskConical, Images, X } from 'lucide-react';
 
-import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
+import polygonClipping from 'polygon-clipping';
+
+import type { CanvasFrame, DesignCanvasState, ZoneShape } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
@@ -232,6 +234,34 @@ export function layerContentCount(
   return n;
 }
 
+/** Zones NEST: Zone 1 is typically drawn as a ring right around the house, which is Zone 0. Drawn
+ *  naively they simply overlap and whatever paints last wins — so Zone 1's fill covers the house
+ *  (the roof came out tinted Zone-1 red) and Zone 1's AREA wrongly counts the house.
+ *  A zone's true extent is its ring MINUS every lower-numbered zone and the house footprint —
+ *  i.e. a donut. polygon-clipping returns a MultiPolygon whose rings are [outer, ...holes];
+ *  canvas' default nonzero fill renders those as holes when each ring is a separate subpath.
+ *  Falls back to the raw ring if the boolean op fails on a degenerate trace. */
+export function zoneFillPolys(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  z: ZoneShape,
+): Array<Array<Array<[number, number]>>> {
+  const subject: Array<Array<Array<[number, number]>>> = [[z.points]];
+  const cutters: Array<Array<Array<[number, number]>>> = [];
+  for (const other of state.zones) {
+    if (other.id === z.id || other.feature || other.points.length < 3) continue;
+    if (other.zone < z.zone) cutters.push([other.points]);
+  }
+  if (z.zone !== 0 && refLayers.house.length >= 3) cutters.push([refLayers.house]);
+  if (!cutters.length) return subject;
+  try {
+    const out = polygonClipping.difference(subject as never, ...(cutters as never[]));
+    return (out as unknown as Array<Array<Array<[number, number]>>>) ?? subject;
+  } catch {
+    return subject; // degenerate ring — better an overlapping zone than a crash
+  }
+}
+
 const EMPTY_LAYER_STEP: Record<GlossyLayerFilter, string> = {
   all: 'design',
   water: 'Water',
@@ -348,17 +378,23 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
   for (const zone of drawDesign && zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
+    // Zones nest: cut each one back by any lower zone + the house so a Zone-1 ring around the
+    // house is a donut, not a tint over the roof (zoneFillPolys).
     ctx.beginPath();
-    zone.points.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
-    ctx.closePath();
+    for (const poly of zoneFillPolys(state, refLayers, zone)) {
+      for (const r of poly) {
+        r.forEach(([x, y], i) => {
+          const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+          fn.call(ctx, px(x), py(y));
+        });
+        ctx.closePath();
+      }
+    }
     // On the dedicated zones map the interior is mask-locked, so make the composite's own zone
     // fill strong + add a number badge — the protected interior then already looks like the
     // finished zone map and the model only touches the ground outside.
     ctx.fillStyle = `${def.color}${filter === 'zones' ? '59' : '33'}`;
-    ctx.fill();
+    ctx.fill('evenodd');
     ctx.strokeStyle = `${def.color}CC`;
     ctx.lineWidth = 2;
     ctx.stroke();
@@ -753,7 +789,12 @@ function producerLabels(
 // image model repaints the land and wipes them. So on a Zones Style map we draw the exact zone
 // regions deterministically and hand them to compositeAccurateMap's overlay slot: the AI paints
 // the pretty land, then the true zones are burned back on top (accuracy by construction).
-function buildZoneOverlay(state: DesignCanvasState, W: number, H: number): string | undefined {
+function buildZoneOverlay(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): string | undefined {
   const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3);
   if (!zones.length) return undefined;
   const canvas = document.createElement('canvas');
@@ -761,14 +802,20 @@ function buildZoneOverlay(state: DesignCanvasState, W: number, H: number): strin
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
-  // Region fills + bold outline (white halo so it reads on busy illustration).
+  // Region fills + bold outline (white halo so it reads on busy illustration). Each zone is cut
+  // back by any lower zone + the house (zoneFillPolys) so a Zone-1 ring around the house reads as
+  // a donut instead of painting over the roof.
   for (const z of zones) {
     const def = ZONE_DEFS[z.zone];
     ctx.beginPath();
-    z.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
-    ctx.closePath();
+    for (const poly of zoneFillPolys(state, refLayers, z)) {
+      for (const ring of poly) {
+        ring.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+        ctx.closePath();
+      }
+    }
     ctx.fillStyle = `${def.color}3D`;
-    ctx.fill();
+    ctx.fill('evenodd'); // outer + hole rings in one path → real holes
     ctx.strokeStyle = 'rgba(255,255,255,0.85)';
     ctx.lineWidth = 7;
     ctx.stroke();
@@ -927,9 +974,19 @@ async function buildBlueprintZoneMap(
   const step = Math.max(12, W * 0.009);
   for (const z of zones) {
     const def = ZONE_DEFS[z.zone];
+    // Cut each zone back by any lower zone + the house so nested rings read as donuts.
+    const zoneRings = () => {
+      ctx.beginPath();
+      for (const poly of zoneFillPolys(state, refLayers, z)) {
+        for (const r of poly) {
+          r.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+          ctx.closePath();
+        }
+      }
+    };
     ctx.save();
-    ring(z.points);
-    ctx.clip();
+    zoneRings();
+    ctx.clip('evenodd');
     ctx.fillStyle = `${def.color}2E`;
     ctx.fillRect(0, 0, W, H);
     ctx.strokeStyle = `${def.color}99`;
@@ -941,7 +998,7 @@ async function buildBlueprintZoneMap(
     }
     ctx.stroke();
     ctx.restore();
-    ring(z.points);
+    zoneRings();
     ctx.setLineDash([12, 8]);
     ctx.strokeStyle = def.color;
     ctx.lineWidth = 3;
@@ -1424,8 +1481,12 @@ function sheetLegendRows(
 ): Array<{ swatch: string; icon?: string; text: string }> {
   const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
   if (zonesInFilter(filter)) {
-    for (const z of state.zones) {
-      if (z.feature || z.points.length < 3) continue;
+    // One row per zone NUMBER, not per polygon — a site with three Zone-3 patches listed
+    // "Zone 3 — Orchard / food forest" three times.
+    const seen = new Set<number>();
+    for (const z of [...state.zones].sort((a, b) => a.zone - b.zone)) {
+      if (z.feature || z.points.length < 3 || seen.has(z.zone)) continue;
+      seen.add(z.zone);
       rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
     }
   }
@@ -1884,7 +1945,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
       //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
       const overlayImage =
-        filter === 'zones' ? buildZoneOverlay(state, W, H)
+        filter === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
         : filter === 'water' ? buildWaterOverlay(state, frame, W, H)
         : undefined;
       // f. Deterministic composite-back — accuracy guaranteed by construction.
