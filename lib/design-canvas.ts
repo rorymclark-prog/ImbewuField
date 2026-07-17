@@ -389,13 +389,31 @@ export const DESIGN_CANVAS_CHANGED_EVENT = 'imbewu-design-canvas-changed';
 
 const keyFor = (siteId: string) => `imbewu_design_canvas_${siteId}`;
 
+// Legacy designs (and some cross-device round-trips) persisted a zone's `zone` as a STRING
+// ("1") rather than the number 1. Object-key access (ZONE_DEFS[z.zone]) and the number badge
+// both tolerate that, so painted zones still RENDER — but strict checks (new Set([1]).has(z.zone))
+// silently fail, which is what made a fully-painted Zones step still read "0/4" on the
+// step-by-step guide. Coerce to a clamped integer on load so every consumer sees a real number.
+export function normalizeZoneNumbers(state: DesignCanvasState): DesignCanvasState {
+  if (!Array.isArray(state.zones)) return state;
+  let changed = false;
+  const zones = state.zones.map((z) => {
+    const raw = Number(z.zone);
+    const n = (Number.isFinite(raw) ? Math.max(0, Math.min(5, Math.round(raw))) : 0) as ZoneShape['zone'];
+    if (n === z.zone) return z;
+    changed = true;
+    return { ...z, zone: n };
+  });
+  return changed ? { ...state, zones } : state;
+}
+
 export function loadCanvasState(siteId: string): DesignCanvasState | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(keyFor(siteId));
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? (parsed as DesignCanvasState) : null;
+    return parsed && typeof parsed === 'object' ? normalizeZoneNumbers(parsed as DesignCanvasState) : null;
   } catch {
     return null;
   }
@@ -484,7 +502,7 @@ function writeCanvasStateVerbatim(state: DesignCanvasState): void {
 // counter meant nothing). Still dispatches the change event so the page's normal refresh() path
 // picks it up like any external change.
 export function applyRemoteCanvasState(state: DesignCanvasState): void {
-  writeCanvasStateVerbatim(state);
+  writeCanvasStateVerbatim(normalizeZoneNumbers(state));
 }
 
 /** Persists a NAVIGATION-ONLY change — today that means `step`, where the farmer is in the wizard

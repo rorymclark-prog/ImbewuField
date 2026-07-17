@@ -1451,7 +1451,11 @@ export default function DesignCanvas({
             const labelCx = centroid[0] + ldx;
             const labelCy = centroid[1] + ldy;
             const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003;
-            const labelVisible = feat ? activeLayers.labels : true;
+            // Ground-feature word-pills (House/Lawn/Paving…) are useful context on most steps but
+            // buried the map in text on the Zones step ("words almost the whole screen"). Hide the
+            // WORDS there — the coloured fills still orient you — while keeping zone number badges.
+            const featureLabelsOn = activeLayers.labels && state.step !== 'zones';
+            const labelVisible = feat ? featureLabelsOn : true;
             return (
               <g key={z.id}>
                 {/* Invisible fat hit-stroke along the edge — thin/narrow beds have little
@@ -1534,7 +1538,7 @@ export default function DesignCanvas({
                           }}
                         />
                       </foreignObject>
-                    ) : activeLayers.labels ? (
+                    ) : featureLabelsOn ? (
                     <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
                       <div
                         style={{

@@ -51,7 +51,10 @@ function hasLine(s: DesignCanvasState, kinds: LineShape['kind'][]): boolean {
 }
 function hasZoneN(s: DesignCanvasState, ns: number[]): boolean {
   const set = new Set(ns);
-  return s.zones.some((z) => !z.feature && set.has(z.zone));
+  // Number(z.zone): legacy data can persist zone as a string ("1"), which a strict Set.has
+  // never matches — that made a painted Zones step still read "0/4". loadCanvasState now
+  // normalises on load; this coercion also covers state already in memory this session.
+  return s.zones.some((z) => !z.feature && set.has(Number(z.zone)));
 }
 function hasFeature(s: DesignCanvasState, feats: GroundFeatureKind[]): boolean {
   const set = new Set(feats);
