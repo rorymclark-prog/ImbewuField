@@ -24,6 +24,18 @@ type Store = Record<string, DesignCanvasState>;
 
 const ts = (s: DesignCanvasState) => Date.parse(s.updatedAt) || 0;
 
+const contentCount = (s: DesignCanvasState | null) =>
+  s ? s.zones.length + s.items.length + s.lines.length : 0;
+
+/** Wall-clock last-write-wins is not safe on its own: a device whose localStorage was starved
+ *  (quota full → silent save failure) reloads a STALE, near-empty snapshot, then restamps
+ *  updatedAt=NOW on the first interaction and pushes — wiping a perfectly good cloud design on
+ *  every device. So an EMPTY challenger never beats a populated incumbent on timestamp alone; a
+ *  real "delete everything" is vanishingly rare next to this failure mode, and is recoverable by
+ *  re-saving from the device that actually holds the design. */
+const wouldDestroy = (challenger: DesignCanvasState | null, incumbent: DesignCanvasState | null) =>
+  contentCount(challenger) === 0 && contentCount(incumbent) > 0;
+
 function parseStore(json: unknown): Store {
   if (typeof json !== 'string') return {};
   try {
@@ -62,7 +74,13 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
       const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
       const remoteEntry = remoteStore[siteId] ?? null;
 
-      winner = !local ? remoteEntry : !remoteEntry ? local : ts(local) >= ts(remoteEntry) ? local : remoteEntry;
+      winner = !local
+        ? remoteEntry
+        : !remoteEntry
+          ? local
+          : ts(local) >= ts(remoteEntry) && !wouldDestroy(local, remoteEntry)
+            ? local
+            : remoteEntry;
 
       // Only ever touch OUR OWN siteId's slot — every other site's entry already in the
       // cloud store is left exactly as-is, so this can never wipe another site's design.
@@ -94,7 +112,8 @@ export async function pushDesignCanvas(state: DesignCanvasState): Promise<void> 
       const snap = await tx.get(ref);
       const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
       const remoteEntry = remoteStore[state.siteId] ?? null;
-      const winner = remoteEntry && ts(remoteEntry) > ts(state) ? remoteEntry : state;
+      const winner =
+        remoteEntry && (ts(remoteEntry) > ts(state) || wouldDestroy(state, remoteEntry)) ? remoteEntry : state;
       const mergedStore: Store = { ...remoteStore, [state.siteId]: winner };
       tx.set(ref, { designCanvasJson: JSON.stringify(mergedStore), updatedAt: serverTimestamp() });
     });

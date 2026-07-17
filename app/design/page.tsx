@@ -27,6 +27,7 @@ import {
   fetchImageAsDataUrl,
   loadCanvasState,
   saveCanvasState,
+  CanvasSaveError,
   migrateStateToFrame,
   newId,
   DESIGN_CANVAS_CHANGED_EVENT,
@@ -96,11 +97,21 @@ function withSelfSaveFlag<T>(fn: () => T): T {
 // Every local save also pushes to the cloud (lib/design-canvas-sync.ts) — fire-and-forget,
 // no-ops when signed out or offline, so this is safe to call unconditionally from every
 // call site that used to just call saveCanvasState directly.
-function persistCanvasState(state: DesignCanvasState): void {
+// Returns false when the design could NOT be persisted locally (device storage full) so the
+// caller can tell the farmer instead of showing a lying "Saved". A silent failure here is what
+// let a design's zones vanish: the save no-opped, the header still said Saved, and the next page
+// load quietly served the last snapshot that DID fit.
+function persistCanvasState(state: DesignCanvasState): boolean {
   // Push the RESTAMPED state saveCanvasState just wrote locally, not the pre-stamp `state` —
   // otherwise the cloud gets a stale updatedAt and a real edit can lose the last-write-wins race.
-  const stamped = withSelfSaveFlag(() => saveCanvasState(state));
-  pushDesignCanvas(stamped).catch(() => {});
+  try {
+    const stamped = withSelfSaveFlag(() => saveCanvasState(state));
+    pushDesignCanvas(stamped).catch(() => {});
+    return true;
+  } catch (e) {
+    if (e instanceof CanvasSaveError) return false;
+    throw e;
+  }
 }
 
 // Pre-seed mapping: existing traced site-element types → Design Studio catalog defIds.
@@ -404,6 +415,9 @@ function DesignStudioInner() {
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
   const [printOpen, setPrintOpen] = useState(false);
+  // Set when a local save genuinely failed (device storage full). Must be shown — a silent
+  // failure here is how a design's zones went missing while the header still said "Saved".
+  const [saveError, setSaveError] = useState<string | null>(null);
   // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
   // this layer over the studio, without leaving the current step. null = closed.
   const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
@@ -603,8 +617,9 @@ function DesignStudioInner() {
         if (!prev) return prev;
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         const next = updater(prev);
-        persistCanvasState(next);
-        setSaved(true);
+        const ok = persistCanvasState(next);
+        setSaved(ok);
+        setSaveError(ok ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
         return next;
       });
     },
@@ -910,10 +925,37 @@ function DesignStudioInner() {
             <Printer size={15} /> Print
           </button>
         )}
-        <div style={{ fontSize: 12, opacity: 0.6 }}>
-          {saved ? 'Saved' : 'Saving…'}
+        <div
+          title={saveError ?? undefined}
+          style={{
+            fontSize: 12,
+            opacity: saveError ? 1 : 0.6,
+            fontWeight: saveError ? 800 : 400,
+            color: saveError ? '#B3261E' : undefined,
+            maxWidth: 130,
+            lineHeight: 1.15,
+          }}
+        >
+          {saveError ? '⚠ NOT saved — storage full' : saved ? 'Saved' : 'Saving…'}
         </div>
       </header>
+
+      {saveError && (
+        <div
+          role="alert"
+          style={{
+            padding: '8px 14px',
+            background: '#FDECEA',
+            borderBottom: '1px solid #F3B4AE',
+            color: '#7A1C15',
+            fontSize: 12.5,
+            fontWeight: 600,
+          }}
+        >
+          {saveError} Your cached glossy renders are the usual culprit — they’ve been cleared
+          automatically; if this persists, clear this site’s data.
+        </div>
+      )}
 
       {printOpen && canvasState && frame && (
         <DesignPrintLazy

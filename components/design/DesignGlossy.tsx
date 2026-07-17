@@ -1637,11 +1637,48 @@ function loadSavedGlossy(siteId: string, mapKey: string = 'all'): SavedGlossy | 
   }
 }
 
-function saveGlossy(siteId: string, mapKey: string, saved: SavedGlossy) {
+// How many cached renders we keep across ALL sites. Each is a full-res dataURL (2–8 MB of
+// base64), and localStorage only has ~5–10 MB total. Unbounded, this cache silently ate the
+// quota and starved the DESIGN's own save — a farmer lost their zones to it. Cached pictures are
+// disposable; the design is not. Keep a couple, prune the rest, newest first.
+const GLOSSY_CACHE_MAX = 2;
+
+function pruneGlossyCache(keepKey: string) {
   try {
-    localStorage.setItem(glossyKey(siteId, mapKey), JSON.stringify(saved));
+    const entries: Array<{ key: string; at: number }> = [];
+    for (const k of Object.keys(localStorage)) {
+      if (!k.startsWith('imbewu_design_glossy_') || k === keepKey) continue;
+      let at = 0;
+      try {
+        at = Date.parse((JSON.parse(localStorage.getItem(k) ?? '{}') as SavedGlossy).at) || 0;
+      } catch {
+        at = 0; // unparseable → oldest → first to go
+      }
+      entries.push({ key: k, at });
+    }
+    entries.sort((a, b) => b.at - a.at); // newest first
+    for (const e of entries.slice(GLOSSY_CACHE_MAX - 1)) localStorage.removeItem(e.key);
   } catch {
-    // QuotaExceededError or similar — skip persisting, non-fatal.
+    /* best effort */
+  }
+}
+
+function saveGlossy(siteId: string, mapKey: string, saved: SavedGlossy) {
+  const key = glossyKey(siteId, mapKey);
+  pruneGlossyCache(key);
+  try {
+    localStorage.setItem(key, JSON.stringify(saved));
+  } catch {
+    // Still no room — drop every other cached render and try once. If it STILL fails we simply
+    // don't cache: the render stays on screen for this session and the design's save is safe.
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (k.startsWith('imbewu_design_glossy_') && k !== key) localStorage.removeItem(k);
+      }
+      localStorage.setItem(key, JSON.stringify(saved));
+    } catch {
+      /* non-fatal — never let a cached picture cost the farmer their design */
+    }
   }
 }
 

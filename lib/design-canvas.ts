@@ -357,13 +357,44 @@ export function loadCanvasState(siteId: string): DesignCanvasState | null {
 // Returns the restamped state (fresh updatedAt) so a caller that also syncs to the cloud
 // pushes the SAME timestamp that was persisted locally — pushing the pre-stamp object would
 // send a stale updatedAt and lose a genuine edit to last-write-wins on a two-device race.
+/** Thrown when the design genuinely could not be persisted. Callers MUST surface this — silently
+ *  returning "saved" is what let a farmer's zones disappear while the header said "Saved". */
+export class CanvasSaveError extends Error {}
+
+/** The glossy render cache keeps multi-MB dataURLs under `imbewu_design_glossy_*` and can exhaust
+ *  the localStorage quota. The DESIGN outranks cached pictures every time — evict them to make
+ *  room. Returns how many were dropped. */
+export function evictGlossyCache(): number {
+  let n = 0;
+  if (typeof window === 'undefined') return 0;
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (k.startsWith('imbewu_design_glossy_')) {
+        localStorage.removeItem(k);
+        n += 1;
+      }
+    }
+  } catch {
+    /* best effort */
+  }
+  return n;
+}
+
 export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
   const stamped: DesignCanvasState = { ...state, updatedAt: new Date().toISOString() };
   if (typeof window === 'undefined') return stamped;
+  const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(stamped));
   try {
-    localStorage.setItem(keyFor(state.siteId), JSON.stringify(stamped));
+    write();
   } catch {
-    return stamped;
+    // Out of quota (almost always the render cache). Drop the pictures and try once more —
+    // never let a cached render cost the farmer their design.
+    evictGlossyCache();
+    try {
+      write();
+    } catch {
+      throw new CanvasSaveError('Could not save your design — this device’s storage is full.');
+    }
   }
   window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
   return stamped;
@@ -375,10 +406,18 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
 // the change event so the page's normal refresh() path picks it up like any external change.
 export function applyRemoteCanvasState(state: DesignCanvasState): void {
   if (typeof window === 'undefined') return;
+  const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
   try {
-    localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
+    write();
   } catch {
-    return;
+    evictGlossyCache(); // same rule: cached pictures never outrank a real design
+    try {
+      write();
+    } catch {
+      /* Couldn't cache it locally — still dispatch below so the OPEN PAGE picks up the cloud
+         copy. Swallowing the event here meant a good remote state could never rescue a
+         quota-starved device (it just kept showing the stale, zone-less snapshot). */
+    }
   }
   window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
 }
