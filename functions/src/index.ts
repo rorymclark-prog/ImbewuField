@@ -17,6 +17,7 @@
 // SETUP (functions/README.md): OpenAI org verified · Blaze plan · REGION matches Firestore ·
 //   `firebase functions:secrets:set OPENAI_API_KEY` · create app_config/renders = { enabled: true }.
 
+import { randomUUID } from 'crypto';
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { defineSecret } from 'firebase-functions/params';
@@ -224,7 +225,13 @@ export const runRenderJob = onDocumentCreated(
             if (!prompt) throw new Error('empty prompt');
             const outB64 = await openaiEdit(key, buf.toString('base64'), prompt);
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.jpg`;
-            await bucket.file(outputPath).save(Buffer.from(outB64, 'base64'), { contentType: 'image/jpeg' });
+            // firebaseStorageDownloadTokens: without it, a client getDownloadURL() on an Admin-SDK
+            // upload fails and the browser can never pull the finished sheet back (job says "done"
+            // but the gallery stays empty). The token makes getDownloadURL return a usable URL.
+            await bucket.file(outputPath).save(Buffer.from(outB64, 'base64'), {
+              contentType: 'image/jpeg',
+              metadata: { metadata: { firebaseStorageDownloadTokens: randomUUID() } },
+            });
             await safePatch(ref, sheet.key, { status: 'done', outputPath });
           } catch (err) {
             logger.error(`render sheet failed: ${sheet.key}`, err);
