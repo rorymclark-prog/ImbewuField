@@ -4,19 +4,31 @@
 2026-07-17). Rory's verdict: *"almost perfect — the technology is DEFINITELY here."* Keep that zip;
 it is the canonical reference for what ImbewuField's Print/Export plan set should produce.
 
-## The 7 sheets
+## The canonical 8 sheets (Rory's spec, 2026-07-18)
+**Ordering rule Rory locked in: ANALYSIS BEFORE DESIGN** — the Sector Analysis moved to **02, before
+Zones**, because the site's energies (sun path, wind, water, fire/frost) are what *dictate* where the
+zones go. The package tells the story in the order the design was actually reasoned.
+
 | # | Sheet | Our layer today |
 |---|---|---|
-| 01 | Site Base Map & **Terrace Levels** | Base map (levels = **gap**, see below) |
-| 02 | Permaculture Zone Map | ✅ Zones Blueprint (`buildBlueprintZoneMap`) |
-| 03 | Water, Greywater & Irrigation Plan | ✅ Water Blueprint (`buildBlueprintWaterMap`) |
-| 04 | Planting & Agroforestry Plan | ✅ Planting Blueprint (`buildBlueprintPlantingMap`) |
-| 05 | Small Livestock & Infrastructure Plan | ✅ Structures Blueprint (`buildBlueprintStructuresMap`) |
-| 06 | Final Integrated Permaculture Masterplan | "Whole design" (still the plain composite) |
-| 07 | **Implementation Map & Phasing** | The differentiator — **not built** |
+| 01 | Existing Site, Boundary & **Terrace** Base | Base map (levels = **gap**, see below) |
+| **02** | **Sector Analysis** (sun · wind · water · fire) | **"Sun & Wind (sector)" — Gemini analysis ONLY today; needs a DETERMINISTIC sheet to join the print set** |
+| 03 | Permaculture Zone Map | ✅ Zones Blueprint (`buildBlueprintZoneMap`) |
+| 04 | Water, Greywater & Irrigation Plan | ✅ Water Blueprint (`buildBlueprintWaterMap`) |
+| 05 | Planting & Agroforestry Plan | ✅ Planting Blueprint (`buildBlueprintPlantingMap`) |
+| 06 | Small Livestock & Infrastructure Plan | ✅ Structures Blueprint (`buildBlueprintStructuresMap`) |
+| 07 | Final Integrated Permaculture Masterplan | "Whole design" (still the plain composite) |
+| 08 | Implementation Map & Phasing | ✅ `buildImplementationMap` (was numbered 07 in the UI — renumber to 08) |
 
-This maps almost 1:1 onto the Print composer's layer list + the report's north-star 6 maps.
-Sheets 04/05 landed; 07 is the prize.
+For a *formal construction* package you'd add a measured land survey, exact dimensions, engineering
+sign-off on the 3 m bank, and detailed plumbing/irrigation specs. For presenting/funding/guiding, the
+eight above are sufficient (Rory's call).
+
+TO IMPLEMENT this ordering: (a) build a **deterministic Sector sheet** (the exact radial sun/wind/
+water/fire renderer — currently sector is Gemini-only) so it can sit in the print set; (b) reorder +
+renumber the Print composer (DesignPrint) and the Glossy design-map tabs to 01–08 above; (c) split
+"Whole design" (07 Masterplan) from Implementation (08). Sheets 03/04/05/06/08 already exist as
+Blueprints; 01 needs terrace levels + existing features; 02 is the new build.
 
 All four Blueprints share ONE chrome implementation (the `drawBlueprint*` helpers in
 `DesignGlossy.tsx`) rather than a copy each — see "The load-bearing principle" below: four
