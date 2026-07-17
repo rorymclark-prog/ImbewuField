@@ -97,19 +97,24 @@ function withSelfSaveFlag<T>(fn: () => T): T {
 // Every local save also pushes to the cloud (lib/design-canvas-sync.ts) — fire-and-forget,
 // no-ops when signed out or offline, so this is safe to call unconditionally from every
 // call site that used to just call saveCanvasState directly.
-// Returns false when the design could NOT be persisted locally (device storage full) so the
-// caller can tell the farmer instead of showing a lying "Saved". A silent failure here is what
-// let a design's zones vanish: the save no-opped, the header still said Saved, and the next page
-// load quietly served the last snapshot that DID fit.
-function persistCanvasState(state: DesignCanvasState): boolean {
+// Returns the STAMPED state (fresh updatedAt + bumped rev) on success, or null when the design
+// could NOT be persisted locally (device storage full) so the caller can tell the farmer instead
+// of showing a lying "Saved". A silent failure here is what let a design's zones vanish: the save
+// no-opped, the header still said Saved, and the next page load quietly served the last snapshot
+// that DID fit.
+// CALLERS MUST KEEP THE RETURNED STATE (that's why it isn't a boolean): rev is counted forward
+// from the state handed in, so feeding React the pre-stamp object would re-derive every later
+// save from the same base and pin rev at base+1 forever — a counter that never counts, silently
+// demoting cloud sync back to the wall-clock tie-break it is meant to replace.
+function persistCanvasState(state: DesignCanvasState): DesignCanvasState | null {
   // Push the RESTAMPED state saveCanvasState just wrote locally, not the pre-stamp `state` —
-  // otherwise the cloud gets a stale updatedAt and a real edit can lose the last-write-wins race.
+  // otherwise the cloud gets a stale updatedAt/rev and a real edit can lose the merge race.
   try {
     const stamped = withSelfSaveFlag(() => saveCanvasState(state));
     pushDesignCanvas(stamped).catch(() => {});
-    return true;
+    return stamped;
   } catch (e) {
-    if (e instanceof CanvasSaveError) return false;
+    if (e instanceof CanvasSaveError) return null;
     throw e;
   }
 }
@@ -562,12 +567,14 @@ function DesignStudioInner() {
         const existing = loadCanvasState(siteId);
         if (existing) {
           const migrated = migrateStateToFrame(existing, frameNoImg, project);
-          if (migrated !== existing) persistCanvasState(migrated);
+          // Keep the stamped copy (bumped rev) when a migration was actually persisted; fall back
+          // to the unstamped one if the save failed, so the page still shows the design.
+          if (migrated !== existing) return persistCanvasState(migrated) ?? migrated;
           return migrated;
         }
         if (prev && prev.siteId === siteId) {
           const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
-          if (migratedPrev !== prev) persistCanvasState(migratedPrev);
+          if (migratedPrev !== prev) return persistCanvasState(migratedPrev) ?? migratedPrev;
           return migratedPrev;
         }
 
@@ -617,10 +624,11 @@ function DesignStudioInner() {
         if (!prev) return prev;
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         const next = updater(prev);
-        const ok = persistCanvasState(next);
-        setSaved(ok);
-        setSaveError(ok ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
-        return next;
+        const stamped = persistCanvasState(next);
+        setSaved(!!stamped);
+        setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+        // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
+        return stamped ?? next;
       });
     },
     [],
@@ -634,9 +642,15 @@ function DesignStudioInner() {
         setSaved(true);
         return prev;
       }
-      persistCanvasState(popped);
+      // An undo restores OLD CONTENT but is itself a NEW edit, so it must count rev forward from
+      // where we are now (`prev`) — not from the stale rev the popped snapshot was saved with.
+      // Bumping the popped rev instead makes consecutive undos emit DESCENDING revs (…13, 12,
+      // 11…): the cloud copy would then out-rank each undo, reject the push, and the live
+      // listener would apply the cloud copy straight back over it — an undo that visibly undoes
+      // itself. Restoring content is never a reason to move the counter backwards.
+      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
       setSaved(true);
-      return popped;
+      return stamped ?? popped;
     });
   }, []);
 
@@ -710,8 +724,7 @@ function DesignStudioInner() {
     setCanvasState((prev) => {
       if (!prev) return prev;
       const next = { ...prev, step, updatedAt: new Date().toISOString() };
-      persistCanvasState(next);
-      return next;
+      return persistCanvasState(next) ?? next;
     });
   }, []);
 

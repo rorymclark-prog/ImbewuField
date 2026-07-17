@@ -15,7 +15,7 @@
 
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
-import { applyRemoteCanvasState, loadCanvasState, type DesignCanvasState } from './design-canvas';
+import { applyRemoteCanvasState, loadCanvasState, revOf, type DesignCanvasState } from './design-canvas';
 
 const COLL = 'user_map_data';
 const DOC = 'design_canvas';
@@ -36,6 +36,37 @@ const contentCount = (s: DesignCanvasState | null) =>
 const wouldDestroy = (challenger: DesignCanvasState | null, incumbent: DesignCanvasState | null) =>
   contentCount(challenger) === 0 && contentCount(incumbent) > 0;
 
+/** THE winner rule for two copies of the SAME site's canvas. `mine` (this device's copy) wins an
+ *  exact tie, which is what every call site below wants. Used by reconcile, push AND the live
+ *  listener so all three can never disagree about who won.
+ *
+ *  1. Higher `rev` wins. Only saveCanvasState bumps rev, so a device that reloaded a STALE
+ *     snapshot re-enters at that snapshot's LOW rev however fresh its updatedAt looks — which is
+ *     precisely the case wall-clock last-write-wins got wrong: a starved device restamped
+ *     updatedAt=NOW and its zone-less state beat a good cloud copy. wouldDestroy only caught the
+ *     FULLY empty version of that; a PARTIAL loss (zones gone, items kept) sailed through.
+ *  2. Equal rev → higher updatedAt. Equal revs mean two devices diverged from the same edit
+ *     count, i.e. genuinely concurrent work, and last-write-wins is as good an answer as any.
+ *  3. wouldDestroy remains the backstop for what rev cannot see (below).
+ *
+ *  DELIBERATE TRADEOFF: rev is a per-lineage counter, not a vector clock — it cannot tell "ahead
+ *  of" from "diverged from". A device that never saw the cloud copy can legitimately hold a HIGH
+ *  local rev against a LOW remote rev (20 offline edits vs 3 online ones) and will win here even
+ *  if the remote is the richer design — much as it would have won on wall-clock by editing last.
+ *  We accept that because (a) the failure rev DOES fix is the one seen in the field, and (b) the
+ *  loser is never silently destroyed: the cloud keeps the winner, the other device still holds
+ *  its own copy in its own localStorage, and one save from that device puts it back. What we
+ *  refuse to accept is content vanishing with no copy left anywhere — hence the backstop. */
+function pickWinner(mine: DesignCanvasState, theirs: DesignCanvasState): DesignCanvasState {
+  const byRev = revOf(mine) - revOf(theirs);
+  const winner = byRev !== 0 ? (byRev > 0 ? mine : theirs) : ts(mine) >= ts(theirs) ? mine : theirs;
+  const loser = winner === mine ? theirs : mine;
+  // Backstop: whatever the counters say, an EMPTY copy never erases a populated one. Applied in
+  // BOTH directions (the old code only guarded local-beats-remote in reconcile, so an empty-but-
+  // newer REMOTE could still wipe a populated local).
+  return wouldDestroy(winner, loser) ? loser : winner;
+}
+
 function parseStore(json: unknown): Store {
   if (typeof json !== 'string') return {};
   try {
@@ -55,7 +86,7 @@ function db() {
 }
 
 // One-shot reconcile for a single site, called on Design Studio mount/site-change. Merges
-// this site's local state with whatever's in the cloud (newest updatedAt wins), writes the
+// this site's local state with whatever's in the cloud (pickWinner decides), writes the
 // merged result back to Firestore, and — if the winner differs from what's already in
 // localStorage — applies it locally so the page's existing DESIGN_CANVAS_CHANGED_EVENT
 // listener reloads it. No-ops (never touches Firestore or clobbers local data) when signed
@@ -74,13 +105,7 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
       const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
       const remoteEntry = remoteStore[siteId] ?? null;
 
-      winner = !local
-        ? remoteEntry
-        : !remoteEntry
-          ? local
-          : ts(local) >= ts(remoteEntry) && !wouldDestroy(local, remoteEntry)
-            ? local
-            : remoteEntry;
+      winner = !local ? remoteEntry : !remoteEntry ? local : pickWinner(local, remoteEntry);
 
       // Only ever touch OUR OWN siteId's slot — every other site's entry already in the
       // cloud store is left exactly as-is, so this can never wipe another site's design.
@@ -99,8 +124,8 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
 
 // Fire-and-forget push after a local save (see app/design/page.tsx's persistCanvasState).
 // Reads-modifies-writes inside a transaction so a concurrent push from another device can't
-// clobber it — the newer of the two (by updatedAt) wins and that's what ends up in the
-// cloud, mirroring lib/user-sync.ts's upsertDesignStudio pattern.
+// clobber it — pickWinner decides which of the two ends up in the cloud, mirroring
+// lib/user-sync.ts's upsertDesignStudio pattern.
 export async function pushDesignCanvas(state: DesignCanvasState): Promise<void> {
   const uid = currentUid();
   const d = db();
@@ -112,8 +137,7 @@ export async function pushDesignCanvas(state: DesignCanvasState): Promise<void> 
       const snap = await tx.get(ref);
       const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
       const remoteEntry = remoteStore[state.siteId] ?? null;
-      const winner =
-        remoteEntry && (ts(remoteEntry) > ts(state) || wouldDestroy(state, remoteEntry)) ? remoteEntry : state;
+      const winner = remoteEntry ? pickWinner(state, remoteEntry) : state;
       const mergedStore: Store = { ...remoteStore, [state.siteId]: winner };
       tx.set(ref, { designCanvasJson: JSON.stringify(mergedStore), updatedAt: serverTimestamp() });
     });
@@ -137,13 +161,19 @@ export function subscribeDesignCanvasLive(siteId: string): () => void {
     (snap) => {
       // hasPendingWrites only skips this client's OPTIMISTIC local writes; our pushes go through
       // runTransaction (a server round-trip) which may not set that flag — so the real guard
-      // against reapplying our own/stale edit is the ts(local) >= ts(remoteEntry) check below.
-      // Keep that check; it is load-bearing, not redundant.
+      // against reapplying our own/stale edit is the pickWinner check below. Keep that check; it
+      // is load-bearing, not redundant (our own echo ties on rev AND updatedAt, so `local` wins
+      // the tie and we correctly do nothing).
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
       const remoteEntry = parseStore(snap.data().designCanvasJson)[siteId];
       if (!remoteEntry) return;
       const local = loadCanvasState(siteId);
-      if (local && ts(local) >= ts(remoteEntry)) return;
+      // Same rule as reconcile/push — this listener is the one path that overwrites local with a
+      // remote copy, so it must not use a weaker test than the paths that chose that copy. On
+      // wall-clock alone it both missed rescues (a good low-updatedAt cloud copy could never
+      // reach a starved device whose stale local was restamped NOW) and could destroy (an empty
+      // but newer remote overwrote a populated local).
+      if (local && pickWinner(local, remoteEntry) !== remoteEntry) return;
       applyRemoteCanvasState(remoteEntry);
     },
     (e) => console.error('[design-canvas-sync] listener', e),

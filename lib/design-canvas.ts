@@ -73,6 +73,22 @@ export interface DesignCanvasState {
   lines: LineShape[];
   step: WizardStep;
   updatedAt: string;
+  // Monotonic edit counter for this site's design lineage. Bumped by saveCanvasState on every
+  // real local save, and NEVER by applyRemoteCanvasState (receiving someone else's edit is not
+  // editing). Cloud sync (lib/design-canvas-sync.ts) ranks by rev FIRST and only falls back to
+  // updatedAt on a tie, because a wall-clock stamp only says "when this device last touched it"
+  // — which a device that reloaded a STALE snapshot forges for free just by being late. rev says
+  // "how many edits this lineage has seen", which a stale snapshot cannot fake: it re-enters the
+  // race at the low rev it was saved with.
+  // OPTIONAL for back-compat: states written before this field existed read as rev 0 (see revOf).
+  rev?: number;
+}
+
+/** Reads a state's rev defensively: missing (pre-rev states) or corrupt (hand-edited/truncated
+ *  localStorage blob) both read as 0 rather than throwing or poisoning comparisons with NaN.
+ *  Single source of truth for the "missing rev = 0" rule — sync imports this too. */
+export function revOf(state: Pick<DesignCanvasState, 'rev'> | null | undefined): number {
+  return typeof state?.rev === 'number' && Number.isFinite(state.rev) ? state.rev : 0;
 }
 
 // ── Web-Mercator helpers (adapted from components/GeometryDesignStudio.tsx) ──────
@@ -381,7 +397,15 @@ export function evictGlossyCache(): number {
 }
 
 export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
-  const stamped: DesignCanvasState = { ...state, updatedAt: new Date().toISOString() };
+  // rev is bumped from the state the CALLER is holding — deliberately NOT from whatever is
+  // currently in localStorage. Taking the max of the two would let a caller working off a stale
+  // in-memory snapshot inherit a high rev and then out-rank the good cloud copy, which is the
+  // very bug this counter exists to stop. A stale caller must produce a LOW rev and lose.
+  const stamped: DesignCanvasState = {
+    ...state,
+    updatedAt: new Date().toISOString(),
+    rev: revOf(state) + 1,
+  };
   if (typeof window === 'undefined') return stamped;
   const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(stamped));
   try {
@@ -401,9 +425,11 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
 }
 
 // Applies a state that a cloud merge (lib/design-canvas-sync.ts) already decided is newest —
-// written verbatim, WITHOUT restamping updatedAt (restamping would make a same-tick re-reconcile
-// think this device just edited it, when it only received someone else's edit). Still dispatches
-// the change event so the page's normal refresh() path picks it up like any external change.
+// written verbatim, WITHOUT restamping updatedAt and WITHOUT bumping rev (this device is
+// RECEIVING an edit, not making one; restamping/bumping would make a same-tick re-reconcile think
+// this device just edited it, and would inflate rev on every hop between devices until the
+// counter meant nothing). Still dispatches the change event so the page's normal refresh() path
+// picks it up like any external change.
 export function applyRemoteCanvasState(state: DesignCanvasState): void {
   if (typeof window === 'undefined') return;
   const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
