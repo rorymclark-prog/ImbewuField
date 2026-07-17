@@ -606,7 +606,10 @@ export default function DesignCanvas({
     // it" gesture right after Finish) selects/edits the shape instead of being swallowed
     // by the still-armed zone tool as a stray new draft point.
     onSelect(shape.id);
-    onToolChange?.('select');
+    // Only drop back to 'select' for a plain effort-zone. For a GROUND FEATURE keep the tool armed
+    // so the farmer can draw patio → lawn → veg-garden in a row without landing in select mode
+    // (where a tap on the traced house would adopt it as House). Sticky ground-feature drawing.
+    if (!areaFeature) onToolChange?.('select');
   }
 
   function commitLine(points: Array<[number, number]>) {
@@ -1279,7 +1282,11 @@ export default function DesignCanvas({
             duplication (Rory: "duplications which I want to avoid"). Filter, don't dim. */}
         {refShown && (tracedLayers ?? []).filter((layer) => !adoptedIds.has(layer.featureId)).map((layer) => {
           const adopted = false;
-          const interactive = tool === 'select' && !adopted;
+          // Also OFF while a ground-feature chip is armed: otherwise, with Lawn/Patio armed, a tap
+          // on the overlapping traced HOUSE would adopt it (adoptTracedLayer hardcodes roof/
+          // structure→house, ignoring areaFeature) — so "add a Lawn" silently became "House"
+          // (Rory). Disarm the chip to adopt intentionally.
+          const interactive = tool === 'select' && !adopted && !areaFeature;
           // Only reveal the adopt button in Select mode, so an armed draw tool can neither
           // trigger adoption nor have the button overlap the drawing surface.
           const isActive = activeTracedId === layer.featureId && interactive;
