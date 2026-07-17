@@ -67,6 +67,8 @@ function buildProducerPrompt(
   elementsText: string,
   mapKind: 'base' | 'full' = 'full',
   retry = false,
+  // The caller's whole-design description (DesignGlossy.buildDesignBrief) — see briefBlock below.
+  designBrief = '',
 ): string {
   const noWrite =
     `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
@@ -123,7 +125,30 @@ function buildProducerPrompt(
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
     `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ` +
     `the driveway is a simple access track of the exact traced shape — do NOT turn it into a loop, roundabout, circular drive or turning circle, and do not add extra branches to it; ${orient}`;
-  return `${rules}\n\n${STYLE_LINES[stylePreset]}`;
+
+  // ── MASTER DESIGN BRIEF — the shared constant across every sheet ────────────
+  // WHY: every sheet of a plan set is an INDEPENDENT call to this route, so each render
+  // re-interprets the scene from scratch and the sheets end up disagreeing with each other. The
+  // caller builds ONE deterministic text description of the whole design from the real geometry
+  // (DesignGlossy.buildDesignBrief) and sends the IDENTICAL string on every layer's request — so
+  // every call reasons about the same fixed design, the way a single one-shot pass would.
+  //
+  // Compatibility with the SINGLE-LAYER SHEET rule above is the whole subtlety here: the brief
+  // names the WHOLE design (all layers), while this sheet may only ILLUSTRATE its own layer. Left
+  // unqualified, the brief would read as a drawing list and put veg beds back on the ZONES sheet —
+  // the exact failure layerFocus exists to stop. The trailer below therefore demotes the brief to
+  // reference and re-asserts that the marked-features list — not the brief — governs what is drawn.
+  // That same trailer is what keeps a mapKind 'base' sheet safe (its marked features are only the
+  // existing ones), so the brief needs no per-sheet exclusion: EVERY prompt gets the same block.
+  const briefBlock = designBrief
+    ? `\n\n=== MASTER DESIGN BRIEF — EVERY SHEET SHARES THIS ONE DESIGN ===\n` +
+      `This site has ONE permaculture design. Every sheet in this plan set (base map, zones, water, planting, structures, whole design) depicts THIS SAME design from a different angle, so every sheet MUST agree with every other about WHERE everything is and WHAT it is. The placements below were measured from the real site and are FINAL: do not re-imagine, re-arrange, re-position, resize, rename or re-invent any of them, and never move anything between sheets. Compass directions are relative to the plot and north is the top of the image.\n` +
+      `${designBrief}\n` +
+      `HOW TO USE THIS BRIEF: it is REFERENCE, not a drawing list. It exists so that this sheet agrees with its sibling sheets — nothing more. You must still draw ONLY this sheet's own layer, exactly as instructed above: anything named in this brief that is NOT in this sheet's marked-features list belongs to a different sheet and must NOT be drawn here.\n` +
+      `=== END MASTER DESIGN BRIEF ===`
+    : '';
+
+  return `${rules}${briefBlock}\n\n${STYLE_LINES[stylePreset]}`;
 }
 
 async function callGemini(
@@ -253,6 +278,7 @@ export async function POST(req: NextRequest) {
     imageBase64?: string;
     layerLabel?: string;
     elementsText?: string;
+    designBrief?: string;
     model?: GeminiModel;
     stylePreset?: StylePreset;
     mapKind?: 'base' | 'full';
@@ -274,8 +300,12 @@ export async function POST(req: NextRequest) {
   const stylePreset: StylePreset =
     body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
   const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
+  // Capped like elementsText. The caller already assembles the brief within the same budget on line
+  // boundaries; this is the server-side guard — request bodies are never trusted, and an unbounded
+  // brief would push the real drawing rules out of the model's attention.
+  const designBrief = typeof body.designBrief === 'string' ? body.designBrief.slice(0, 1500) : '';
   const mapKind = body.mapKind === 'base' ? 'base' : 'full';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true);
+  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true, designBrief);
 
   if (body.engine === 'openai') {
     const falKey = process.env.FAL_KEY;

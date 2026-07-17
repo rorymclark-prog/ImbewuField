@@ -13,7 +13,7 @@ import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, ZoneShape } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { ZONE_DEFS } from '@/lib/design-elements';
+import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 
@@ -655,6 +655,187 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+// ── MASTER DESIGN BRIEF ───────────────────────────────────────────────────────
+// WHY THIS EXISTS (the "one-shot" insight): ChatGPT produced a coherent 7-sheet plan set in ONE
+// pass because a single reasoning pass held the design constant across every sheet. Our sheets are
+// INDEPENDENT API calls — each render re-interprets the scene from scratch, so the sheets of one
+// plan set disagree with each other (the tank that sits NE on the water sheet drifts E on the whole-
+// design sheet). The fix is to hand every call the SAME text description of the WHOLE design, read
+// off the real geometry, so every call reasons about one fixed design the way a one-shot pass does.
+//
+// HARD RULE: the brief MUST be byte-identical for every layer — that is the entire point. It
+// therefore takes NO GlossyLayerFilter and must never be filtered by one. Naming the per-layer
+// marked features is producerElementsText's separate job; this is the shared constant. Everything
+// here is read from real geometry (traced rings, placed items), never guessed — same accuracy
+// contract as the deterministic maps.
+
+const BRIEF_MAX = 1500;
+
+// Compass buckets in a fixed reading order, so a group spanning several buckets always renders them
+// in the same order ("N/NE", never "NE/N") — a Set's insertion order would leak item order into the
+// text and make the brief differ between otherwise-identical designs.
+const COMPASS_ORDER = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'central'];
+
+// Plain-English line names — the model gets no legend, so "drip" alone is ambiguous.
+const LINE_BRIEF_LABELS: Record<string, string> = {
+  swale: 'swale (on-contour infiltration ditch)',
+  fence: 'fence line',
+  path: 'footpath',
+  pipe: 'water pipe',
+  drip: 'drip irrigation line',
+  windbreak: 'windbreak planting line',
+};
+
+function centroidOf(points: Array<[number, number]>): [number, number] {
+  const n = points.length;
+  return [
+    points.reduce((s, p) => s + p[0], 0) / n,
+    points.reduce((s, p) => s + p[1], 0) / n,
+  ];
+}
+
+/** Joins as many parts as fit in `budget`, tailing with a truthful "+N more" count. An over-long
+ *  list degrades to a SHORTER TRUE list — never a name chopped mid-word, and never a silently
+ *  dropped line. */
+function joinWithin(parts: string[], budget: number, noun: string): string {
+  const kept: string[] = [];
+  let len = 0;
+  for (const p of parts) {
+    const add = kept.length ? p.length + 2 : p.length; // '; '
+    if (len + add > budget) break;
+    kept.push(p);
+    len += add;
+  }
+  if (kept.length === parts.length) return parts.join('; ');
+  const more = `…and ${parts.length - kept.length} more ${noun}`;
+  return kept.length ? `${kept.join('; ')}; ${more}` : more;
+}
+
+/** A compact, deterministic TEXT description of the WHOLE design, identical for every layer.
+ *  Sent with every producer render so all sheets in a plan set agree on what the design IS. */
+export function buildDesignBrief(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName: string | undefined,
+  site: DesignGlossyProps['site'],
+): string {
+  // Split so ELEMENTS can be sized against whatever budget the other lines leave (see below).
+  const before: string[] = [];
+  const after: string[] = [];
+
+  before.push(`PLACE: ${placeName ?? 'this smallholding'} — a real South African smallholding.`);
+
+  // ── Traced base geometry (the references every sheet must agree on first) ──
+  if (refLayers.boundary.length >= 3) {
+    before.push('BOUNDARY: the property boundary is traced; the whole design sits inside it.');
+  }
+  if (refLayers.house.length >= 3) {
+    const [hx, hy] = centroidOf(refLayers.house);
+    before.push(
+      `HOUSE: one main house, ${compass8(hx, hy)} on the plot — the ONLY building on this site unless another is named under ELEMENTS below.`,
+    );
+  }
+  if (refLayers.driveway.length >= 2) {
+    const a = refLayers.driveway[0];
+    const b = refLayers.driveway[refLayers.driveway.length - 1];
+    const from = compass8(a[0], a[1]);
+    const to = compass8(b[0], b[1]);
+    // "tar" per the driveway rule the producer prompt already enforces — stated here too so every
+    // sheet renders the same surface, not gravel on one sheet and paving on the next.
+    before.push(
+      `DRIVEWAY: one dark TAR / ASPHALT access track of the exact traced shape (never a loop, roundabout or circular drive)${from === to ? ` at the ${from} of the plot` : `, running ${from} to ${to}`}, kept clear with no plantings on it.`,
+    );
+  }
+
+  // ── Ground / built features the farmer traced (what is really there today) ──
+  const features = state.zones.filter((z) => z.feature && z.points.length >= 3);
+  if (features.length) {
+    const parts = features.map((z) => {
+      const [cx, cy] = centroidOf(z.points);
+      const meta = GROUND_FEATURES[z.feature!];
+      return `${z.name ?? meta.label} (${compass8(cx, cy)})`;
+    });
+    before.push(`GROUND: ${joinWithin(parts, 220, 'ground features')}.`);
+  }
+
+  // ── Permaculture effort-zones (rings), lowest zone first ──
+  // Sorted by zone number rather than draw order: the brief must read the same for two designs
+  // that are identical but were drawn in a different sequence.
+  const zones = state.zones
+    .filter((z) => !z.feature && z.points.length >= 3)
+    .sort((a, b) => a.zone - b.zone);
+  if (zones.length) {
+    const parts = zones.map((z) => {
+      const [cx, cy] = centroidOf(z.points);
+      return `Zone ${z.zone} ${ZONE_DEFS[z.zone].label} (${compass8(cx, cy)})`;
+    });
+    before.push(`ZONES: ${joinWithin(parts, 300, 'zone rings')}.`);
+  }
+
+  // ── Placed elements, grouped by name with counts + the buckets they occupy ──
+  const groups = new Map<string, { icon: string; n: number; dirs: Set<string> }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue; // NO itemInFilter here — see the HARD RULE above
+    const name = it.label ?? def.name;
+    const g = groups.get(name) ?? { icon: def.icon, n: 0, dirs: new Set<string>() };
+    g.n += 1;
+    g.dirs.add(compass8(it.x, it.y));
+    groups.set(name, g);
+  }
+  const elementParts = [...groups.entries()].map(([name, g]) => {
+    const dirs = COMPASS_ORDER.filter((d) => g.dirs.has(d)).join('/');
+    return `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''} (${dirs})`;
+  });
+
+  // ── Line kinds + counts ──
+  // Naturally bounded — only six line kinds exist, so this can never run away.
+  const lineCounts = new Map<string, number>();
+  for (const l of state.lines) {
+    if (l.points.length < 2) continue;
+    lineCounts.set(l.kind, (lineCounts.get(l.kind) ?? 0) + 1);
+  }
+  if (lineCounts.size) {
+    const parts = [...lineCounts.entries()].map(
+      ([kind, n]) => `${n}× ${LINE_BRIEF_LABELS[kind] ?? kind}`,
+    );
+    after.push(`LINES: ${parts.join('; ')}.`);
+  }
+
+  const ctx: string[] = [];
+  if (site?.biome) ctx.push(`${site.biome} biome`);
+  if (typeof site?.rainfallMm === 'number' && Number.isFinite(site.rainfallMm)) {
+    ctx.push(`~${Math.round(site.rainfallMm)} mm rain/year`);
+  }
+  if (ctx.length) after.push(`CONTEXT: ${ctx.join(', ')}.`);
+
+  // ELEMENTS is the only genuinely UNBOUNDED line — a renamed item gets its own group, so a rich
+  // design (exactly our target user) can produce hundreds — AND it is the most load-bearing line
+  // in the brief: it is what actually pins WHERE things are across sheets. So it gets whatever
+  // budget the other, naturally-short lines leave, and degrades to a shorter TRUE list. Sizing it
+  // last is deliberate: an earlier version simply dropped any line that broke the budget, which on
+  // a big design silently threw away ELEMENTS *and* every line after it — the one outcome that
+  // defeats the whole point of a shared brief.
+  const fixedLen = [...before, ...after].reduce((s, l) => s + l.length + 1, 0);
+  const elementsBudget = BRIEF_MAX - fixedLen - 'ELEMENTS: .'.length - 1;
+  const out = [...before];
+  if (elementParts.length && elementsBudget > 40) {
+    out.push(`ELEMENTS: ${joinWithin(elementParts, elementsBudget, 'elements')}.`);
+  }
+  out.push(...after);
+
+  // Backstop: assemble on LINE boundaries, so even a pathological design degrades to a shorter but
+  // still well-formed brief rather than a sentence chopped mid-word. Order is priority order — the
+  // base geometry every sheet hangs off survives first.
+  let text = '';
+  for (const line of out) {
+    const next = text ? `${text}\n${line}` : line;
+    if (next.length > BRIEF_MAX) break;
+    text = next;
+  }
+  return text;
+}
+
 // ── image-producer helpers (adapted from FacilitatorCanvas) ───────────────────
 
 // POST the composited scene to the image-producer route and get the beautified image.
@@ -667,6 +848,10 @@ async function requestProducer(
   elementsText: string,
   stylePreset: string,
   engine: 'gemini' | 'openai' = 'openai',
+  // The shared whole-design description (buildDesignBrief). IDENTICAL on every layer's call —
+  // that's what keeps the sheets of a plan set agreeing with each other. Optional so an older
+  // caller that omits it behaves exactly as before.
+  designBrief = '',
 ): Promise<string> {
   const res = await fetch('/api/image-producer', {
     method: 'POST',
@@ -675,6 +860,7 @@ async function requestProducer(
       imageBase64,
       layerLabel,
       elementsText,
+      designBrief,
       stylePreset,
       model: 'pro-preview',
       mapKind: 'full',
@@ -1956,8 +2142,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const composite = await buildComposite(state, frame, refLayers, filter);
       // b. Short comma list of placed elements + counts (this layer only).
       const elementsText = producerElementsText(state, refLayers, filter);
+      // b2. The WHOLE design as text — deliberately NOT filtered by `filter`, so every layer's
+      //     render is handed the identical brief and the sheets agree with each other.
+      const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
-      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine);
+      const modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
       const boundaryPx =
         refLayers.boundary.length >= 3
@@ -1998,7 +2187,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     } finally {
       setLoading(null);
     }
-  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery, placeName]);
+    // `site` joins the deps because buildDesignBrief reads it for the CONTEXT line.
+  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery, placeName, site]);
 
   // Deterministic design-layer map — the ACCURATE-BY-CONSTRUCTION reference map.
   // Real satellite + your EXACT zones / elements / lines / labels drawn on top, and
