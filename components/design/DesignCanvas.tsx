@@ -2311,77 +2311,62 @@ export default function DesignCanvas({
         ))}
       </div>
 
-      {(tool === 'zone' || tool === 'line') && draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
-        <button
-          type="button"
-          onClick={() => (tool === 'zone' ? commitZone(draftPoints) : commitLine(draftPoints))}
-          style={{
-            position: 'absolute',
-            bottom: 16,
-            right: 12,
-            minHeight: 52,
-            padding: '0 22px',
-            borderRadius: 26,
-            border: '2px solid #FBF6EC',
-            background: '#1F4D2B',
-            color: '#FBF6EC',
-            fontWeight: 800,
-            fontSize: 16,
-            boxShadow: '0 3px 14px rgba(0,0,0,0.4), 0 0 0 4px rgba(31,77,43,0.35)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            animation: 'imbewuFinishPulse 1.8s ease-in-out infinite',
-          }}
-        >
-          <style>{`@keyframes imbewuFinishPulse{0%,100%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 3px rgba(31,77,43,0.30)}50%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 8px rgba(31,77,43,0.12)}}`}</style>
-          ✓ Finish {tool === 'line' ? 'line' : areaFeature ? GROUND_FEATURES[areaFeature].label : `Zone ${zoneDraw}`}
-        </button>
-      )}
+      {/* Draw-action cluster — grouped bottom-LEFT so it never hides behind the Layers popover
+          (which opens bottom-right) or the right-edge zoom controls (Rory: "Finish is hidden
+          behind the Layers window"). Cancel · Point · Finish read left→right; Finish is the
+          prominent, pulsing primary. */}
       {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (
-        <button
-          type="button"
-          onClick={() => setDraftPoints((prev) => prev.slice(0, -1))}
-          style={{
-            position: 'absolute',
-            bottom: 12,
-            right: 108,
-            minHeight: 44,
-            minWidth: 44,
-            padding: '0 16px',
-            borderRadius: 22,
-            border: '1px solid rgba(0,0,0,0.15)',
-            background: 'rgba(255,254,250,0.92)',
-            color: '#0B120B',
-            fontWeight: 600,
-            fontSize: 14,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
-          }}
-        >
-          ↩ Point
-        </button>
-      )}
-      {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (
-        <button
-          type="button"
-          onClick={() => setDraftPoints([])}
+        <div
           style={{
             position: 'absolute',
             bottom: 12,
             left: 12,
-            minHeight: 44,
-            minWidth: 44,
-            padding: '0 16px',
-            borderRadius: 22,
-            border: '1px solid rgba(0,0,0,0.15)',
-            background: 'rgba(255,254,250,0.92)',
-            color: '#0B120B',
-            fontWeight: 600,
-            fontSize: 14,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            flexWrap: 'wrap',
+            maxWidth: 'calc(100% - 24px)',
+            zIndex: 6,
           }}
         >
-          ✕ Cancel
-        </button>
+          <style>{`@keyframes imbewuFinishPulse{0%,100%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 3px rgba(31,77,43,0.30)}50%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 8px rgba(31,77,43,0.12)}}`}</style>
+          <button
+            type="button"
+            onClick={() => setDraftPoints([])}
+            style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+          >
+            ✕ Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => setDraftPoints((prev) => prev.slice(0, -1))}
+            style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+          >
+            ↩ Point
+          </button>
+          {draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
+            <button
+              type="button"
+              onClick={() => (tool === 'zone' ? commitZone(draftPoints) : commitLine(draftPoints))}
+              style={{
+                minHeight: 52,
+                padding: '0 20px',
+                borderRadius: 26,
+                border: '2px solid #FBF6EC',
+                background: '#1F4D2B',
+                color: '#FBF6EC',
+                fontWeight: 800,
+                fontSize: 16,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                animation: 'imbewuFinishPulse 1.8s ease-in-out infinite',
+              }}
+            >
+              ✓ Finish {tool === 'line' ? 'line' : areaFeature ? GROUND_FEATURES[areaFeature].label : `Zone ${zoneDraw}`}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
