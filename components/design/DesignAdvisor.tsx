@@ -6,7 +6,7 @@
 // top advice as a small card. A badge expands the rest, plus an "Ask AI" button that
 // calls /api/design-advice for a few extra farmer-friendly suggestions.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Sparkles, X, ChevronUp, ChevronDown, TriangleAlert, Lightbulb, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
@@ -96,7 +96,11 @@ function buildDesignSummary(state: DesignCanvasState) {
 
 export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: DesignAdvisorProps) {
   const [advice, setAdvice] = useState<Advice[]>([]);
-  const [dismissedTop, setDismissedTop] = useState(false);
+  // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
+  // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
+  // which restamps on every drag/add/delete) — so it reappeared the instant you closed it, on top
+  // of the tool row. A tip must never stand between the farmer and their next action.
+  const [tipOpen, setTipOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [aiSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([]);
   const [aiLoading, setAiLoading] = useState(false);
@@ -118,7 +122,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       houseXY ? { houseXY } : undefined,
     );
     setAdvice(next);
-    setDismissedTop(false);
+    // Deliberately does NOT touch tipOpen: refreshing the advice must never force the card back
+    // open (that was the "can't move on without closing it" bug), nor slam it shut while the
+    // farmer is reading it mid-edit.
     // A fresh state change invalidates any previously-fetched AI suggestions.
     setAiSuggestions([]);
     setAiError(null);
@@ -155,44 +161,75 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
     }
   }
 
-  if (!top || dismissedTop) {
-    // Even with no local advice, still allow asking AI via a compact pill.
-    if (!top) {
-      return (
-        <div
-          style={{
-            position: 'absolute',
-            left: 10,
-            bottom: 10,
-            zIndex: 40,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 6,
-            maxWidth: 280,
-          }}
-        >
+  // Anchored CENTRE-LEFT and click-through. It used to sit bottom-left, which put it directly on
+  // top of the palette's Select/Undo/Delete row with pointer events on — so it physically blocked
+  // the tools until dismissed. Centre-left clears both the bottom tool row and the right-edge zoom
+  // controls; pointerEvents:'none' on the shell means only the visible chip/card ever takes a tap.
+  const shell: CSSProperties = {
+    position: 'absolute',
+    left: 10,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 40,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 6,
+    maxWidth: 300,
+    pointerEvents: 'none',
+  };
+  const inner: CSSProperties = { pointerEvents: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 };
+
+  if (!top) {
+    // No local advice — still offer the AI pill.
+    return (
+      <div style={shell}>
+        <div style={inner}>
           <AskAiButton onClick={askAi} loading={aiLoading} />
           {aiError && <ErrorPill message={aiError} />}
           {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
         </div>
-      );
-    }
-    return null;
+      </div>
+    );
+  }
+
+  if (!tipOpen) {
+    // Collapsed — a small chip that says a tip is waiting. Tap to read; never in the way.
+    return (
+      <div style={shell}>
+        <div style={inner}>
+          <button
+            onClick={() => setTipOpen(true)}
+            aria-label={`${advice.length} design tip${advice.length === 1 ? '' : 's'} — tap to read`}
+            style={{
+              minHeight: 32,
+              padding: '4px 10px',
+              borderRadius: 999,
+              background: 'rgba(11,18,11,0.85)',
+              border: `1px solid ${GOLD}`,
+              color: GOLD,
+              fontSize: 12,
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              cursor: 'pointer',
+            }}
+          >
+            {top.severity === 'warn' ? <TriangleAlert size={14} color="#E8974A" /> : <Lightbulb size={14} color="#7ED694" />}
+            {advice.length} tip{advice.length === 1 ? '' : 's'}
+          </button>
+          <AskAiButton onClick={askAi} loading={aiLoading} />
+          {aiError && <ErrorPill message={aiError} />}
+          {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 10,
-        bottom: 10,
-        zIndex: 40,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 6,
-        maxWidth: 300,
-      }}
-    >
+    <div style={shell}>
+      <div style={inner}>
       <div
         style={{
           background: 'rgba(11,18,11,0.92)',
@@ -215,8 +252,8 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         </span>
         <div style={{ flex: 1, fontSize: 13, lineHeight: 1.35 }}>{top.msg}</div>
         <button
-          onClick={() => setDismissedTop(true)}
-          aria-label="Dismiss"
+          onClick={() => setTipOpen(false)}
+          aria-label="Close tip"
           style={{
             minWidth: 28,
             minHeight: 28,
@@ -292,6 +329,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
           {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} inline />}
         </div>
       )}
+      </div>
     </div>
   );
 }
