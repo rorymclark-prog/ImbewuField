@@ -38,7 +38,7 @@ export interface PlacedItem {
 // lawn, existing veg garden, orchard, cleared ground) — WHAT IS THERE, as opposed to the
 // permaculture effort-zones. Rides on ZoneShape via the optional `feature` tag so it reuses
 // the whole zone draw/edit/persist/adopt engine rather than a parallel shape system.
-export type GroundFeatureKind = 'house' | 'patio' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared';
+export type GroundFeatureKind = 'house' | 'patio' | 'driveway' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared';
 
 export interface ZoneShape {
   id: string;

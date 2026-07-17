@@ -81,6 +81,7 @@ import type { GroundFeatureKind } from '@/lib/design-canvas';
 export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: string; icon: string }> = {
   house: { label: 'House', color: '#8A8D91', icon: '🏠' },
   patio: { label: 'Patio / Paving', color: '#C7C3BB', icon: '▦' },
+  driveway: { label: 'Driveway', color: '#3B3A3E', icon: '🛣️' }, // tar colour, canonical in DesignGlossy
   lawn: { label: 'Lawn', color: '#8FBF6B', icon: '🟩' },
   veg_garden: { label: 'Veg garden', color: '#4E8B3B', icon: '🥬' },
   orchard: { label: 'Orchard / food forest', color: '#2F7A4A', icon: '🌳' },

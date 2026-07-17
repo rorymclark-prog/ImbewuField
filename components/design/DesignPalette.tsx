@@ -20,7 +20,6 @@ interface ActiveLayers {
   structures: boolean;
   access: boolean;
   animals: boolean;
-  lines: boolean;
   ground: boolean;
   baseMap: boolean;
   labels: boolean;
@@ -68,13 +67,16 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
 
 // Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
 // draw tool to record a real built/ground feature. Order = kitchen-out (house first).
-const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'lawn', 'veg_garden', 'orchard', 'cleared'];
+const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: string }> = [
   { key: 'baseMap', label: 'Base map', icon: '🛰️' },
-  { key: 'ground', label: 'Ground', icon: '🟫' },
+  // "Existing", not "Ground": this layer is the farmer's EXISTING site reality (house/patio/lawn/
+  // veg garden the app draws), i.e. the "Draw what's already here" chips — distinct from the
+  // proposed Structures layer and from the satellite Base map. (Fable Q1; internal key stays.)
+  { key: 'ground', label: 'Existing', icon: '🏠' },
   { key: 'water', label: 'Water', icon: '💧' },
   { key: 'earthworks', label: 'Earthworks', icon: '⛏️' },
   { key: 'zones', label: 'Zones', icon: '🗺️' },
@@ -82,7 +84,6 @@ const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: strin
   { key: 'structures', label: 'Structures', icon: '🏚️' },
   { key: 'access', label: 'Access', icon: '🚪' },
   { key: 'animals', label: 'Animals', icon: '🐔' },
-  { key: 'lines', label: 'Lines', icon: '〰️' },
   { key: 'labels', label: 'Labels', icon: '🏷️' },
   { key: 'contours', label: 'Contours', icon: '⛰️' },
 ];
@@ -204,11 +205,12 @@ export default function DesignPalette({
   // Which chip-driven controls are relevant for this step.
   const showZoneChips = step === 'zones';
   const showAreaChips = step === 'base';
-  const showLineChips = step === 'water' || step === 'structures';
+  const showLineChips = step === 'water' || step === 'structures' || step === 'planting';
   const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
+  const PLANTING_LINE_IDS: Array<LineShape['kind']> = ['windbreak']; // was unreachable before
   const lineChipsForStep = LINE_KINDS.filter((lk) =>
-    (step === 'water' ? WATER_LINE_IDS : STRUCTURE_LINE_IDS).includes(lk.id)
+    (step === 'water' ? WATER_LINE_IDS : step === 'planting' ? PLANTING_LINE_IDS : STRUCTURE_LINE_IDS).includes(lk.id)
   );
 
   function pickElement(def: DesignElementDef) {

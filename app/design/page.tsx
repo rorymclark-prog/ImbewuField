@@ -122,6 +122,32 @@ function persistCanvasState(state: DesignCanvasState): DesignCanvasState | null 
   }
 }
 
+// Auto-focus: on a step change, which ELEMENT layers to show. Context layers (baseMap, ground,
+// labels, contours) are NOT touched here — they stay as the farmer set them. Line kinds follow
+// their functional layer (LINE_LAYER in DesignCanvas), so focusing 'water' also shows drip/pipe/
+// swale automatically. Base = trace-only (all element layers off); Review/Glossy = everything on.
+const ELEMENT_LAYER_KEYS = ['water', 'earthworks', 'zones', 'planting', 'structures', 'access', 'animals'] as const;
+function applyStepFocus(step: WizardStep): Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> {
+  const on = (keys: readonly string[]) =>
+    Object.fromEntries(ELEMENT_LAYER_KEYS.map((k) => [k, keys.includes(k)])) as Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean>;
+  switch (step) {
+    case 'water':
+      return on(['water', 'earthworks']);
+    case 'zones':
+      return on(['zones']);
+    case 'planting':
+      return on(['planting']);
+    case 'structures':
+      return on(['structures', 'access', 'animals']);
+    case 'base':
+      return on([]);
+    case 'review':
+    case 'glossy':
+    default:
+      return on(ELEMENT_LAYER_KEYS);
+  }
+}
+
 // Pre-seed mapping: existing traced site-element types → Design Studio catalog defIds.
 const SITE_ELEMENT_TO_DEF: Record<SiteElementType, string> = {
   jojo_tank: 'jojo_5000',
@@ -401,7 +427,6 @@ function DesignStudioInner() {
     structures: true,
     access: true,
     animals: true,
-    lines: true,
     ground: true,
     baseMap: true,
     labels: true,
@@ -412,7 +437,7 @@ function DesignStudioInner() {
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, lines: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
     }
   }, [designMode]);
 
@@ -811,6 +836,12 @@ function DesignStudioInner() {
     setAreaFeature(null);
     // Zone advice pins are only meaningful on the zones step — clear them on any step change.
     setZoneAdvice([]);
+    // AUTO-FOCUS the step's own layer (Rory: "when we move to a layer, switch that layer on and
+    // the others off"). Only the ELEMENT layers are focused; context layers (baseMap, ground/
+    // Existing, labels, contours) are left exactly as the farmer set them — you always need the
+    // satellite + existing site to place against. Fires once per explicit step tap (not on
+    // re-render or remote sync), so a manual toggle mid-step is never stomped until the next tap.
+    setActiveLayers((a) => ({ ...a, ...applyStepFocus(step) }));
     setCanvasState((prev) => {
       if (!prev) return prev;
       // NAVIGATION IS NOT AN EDIT. This used to go through persistCanvasState, which restamps

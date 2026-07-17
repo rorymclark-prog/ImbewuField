@@ -218,8 +218,10 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
       return true;
     case 'water':
       return kind === 'swale' || kind === 'pipe' || kind === 'drip';
+    case 'planting':
+      return kind === 'windbreak'; // a windbreak is a planted row → Planting sheet, not Structures
     case 'structures':
-      return kind === 'fence' || kind === 'path' || kind === 'windbreak';
+      return kind === 'fence' || kind === 'path';
     default:
       return false;
   }

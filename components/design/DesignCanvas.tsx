@@ -73,7 +73,6 @@ interface ActiveLayers {
   structures: boolean;
   access: boolean; // paths/gates/driveway only
   animals: boolean;
-  lines: boolean;
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
   labels: boolean; // the text name pills on every feature — off = declutter the map
@@ -156,6 +155,19 @@ function categoryLayerKey(category: ElementCategory): keyof ActiveLayers {
       return 'access';
   }
 }
+
+// Each line kind shows/hides with its FUNCTIONAL layer — so a drip line drawn on the Water step is
+// visible when Water is on, instead of vanishing behind a separate generic "Lines" toggle (Rory:
+// "I added drip lines but Lines is a separate layer, not connected to Water"). A Record so adding
+// a line kind is a compile error here, not a silent fall-through.
+const LINE_LAYER: Record<LineShape['kind'], keyof ActiveLayers> = {
+  swale: 'water',
+  pipe: 'water',
+  drip: 'water',
+  fence: 'structures',
+  path: 'access',
+  windbreak: 'planting',
+};
 
 function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; dash?: string; opacity?: number } {
   switch (kind) {
@@ -1654,9 +1666,9 @@ export default function DesignCanvas({
             );
           })}
 
-        {/* Lines */}
-        {activeLayers.lines &&
-          state.lines.map((line) => {
+        {/* Lines — each kind follows its functional layer (LINE_LAYER), not one generic toggle. */}
+        {state.lines.map((line) => {
+            if (!activeLayers[LINE_LAYER[line.kind]]) return null;
             const style = lineStroke(line.kind);
             const isSelected = selectedId === line.id;
             const isHighlighted = selectedIds.includes(line.id);
