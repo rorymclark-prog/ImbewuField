@@ -174,10 +174,15 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       }
       const data = await res.json();
       const suggestions: string[] = Array.isArray(data?.suggestions) ? data.suggestions : [];
-      setAiSuggestions(suggestions.map((msg) => ({ msg })));
-      setExpanded(true);
+      // Drop blank/whitespace suggestions — otherwise they render as bare "LIMA" badges with no
+      // text (Rory: "Ask AI does something weird"). If NONE survive, say so instead of showing
+      // empty pills.
+      const clean = suggestions.map((s) => (typeof s === 'string' ? s.trim() : '')).filter(Boolean);
+      setAiSuggestions(clean.map((msg) => ({ msg })));
+      if (clean.length === 0) setAiError('Lima had nothing to add on this one — your design looks sound.');
+      else setExpanded(true);
     } catch (err) {
-      setAiError(err instanceof Error ? err.message : 'Could not reach the AI advisor.');
+      setAiError(err instanceof Error ? err.message : 'Could not reach Lima.');
     } finally {
       setAiLoading(false);
     }
@@ -387,7 +392,7 @@ function AskAiButton({ onClick, loading }: { onClick: () => void; loading: boole
       }}
     >
       {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} color={GOLD} />}
-      Ask AI
+      Ask Lima
     </button>
   );
 }
@@ -431,9 +436,10 @@ function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?:
               padding: '1px 4px',
               alignSelf: 'flex-start',
               marginTop: 2,
+              letterSpacing: 0.3,
             }}
           >
-            AI
+            LIMA
           </span>
           <span>{s.msg}</span>
         </div>

@@ -162,7 +162,10 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
     case 'swale':
       return { stroke: '#4EA6D8', width: 3, dash: '6 4' };
     case 'fence':
-      return { stroke: '#3A352C', width: 2 };
+      // Dusty violet — the one hue not used by boundary-green / zones / water / paths, and the
+      // CAD convention for fencing. Rendered as a SOLID line + round posts (fencePosts), NOT the
+      // perpendicular ticks the property BOUNDARY uses, so the two can never be confused.
+      return { stroke: '#8E7CC3', width: 2 };
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dash: '4 5' };
     case 'pipe':
@@ -178,6 +181,23 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
 
 function polylinePoints(points: Array<[number, number]>, imgW: number, imgH: number): string {
   return points.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' ');
+}
+
+// Post-and-wire fence posts: round dots ON the line at a clamped spacing (never fuse at zoom),
+// including both endpoints. Returns [cx,cy] pairs in px. The standard plan symbol for a fence,
+// and — unlike ticks — unmistakable from the property boundary in colour AND greyscale print.
+function fencePosts(points: Array<[number, number]>, imgW: number, imgH: number, spacing = 22): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
+  if (points.length < 2) return out;
+  out.push([points[0][0] * imgW, points[0][1] * imgH]);
+  for (let i = 0; i < points.length - 1; i++) {
+    const ax = points[i][0] * imgW, ay = points[i][1] * imgH;
+    const bx = points[i + 1][0] * imgW, by = points[i + 1][1] * imgH;
+    const len = Math.hypot(bx - ax, by - ay) || 1;
+    const n = Math.max(1, Math.round(len / spacing));
+    for (let k = 1; k <= n; k++) out.push([ax + (bx - ax) * (k / n), ay + (by - ay) * (k / n)]);
+  }
+  return out;
 }
 
 function fenceTicks(points: Array<[number, number]>, imgW: number, imgH: number, spacing = 18, half = 5): string {
@@ -1254,8 +1274,11 @@ export default function DesignCanvas({
             dotted, colour-coded reference shapes. Tap one (in Select mode) to reveal
             "Use in design", which adopts it into an editable shape — no redraw. Adopted
             ones dim and drop the affordance so they can't be added twice. */}
-        {refShown && (tracedLayers ?? []).map((layer) => {
-          const adopted = adoptedIds.has(layer.featureId);
+        {/* Hide a traced source once it's been ADOPTED into the design — the solid adopted shape
+            IS that geometry now, so the dimmed dotted ghost + its second label were pure
+            duplication (Rory: "duplications which I want to avoid"). Filter, don't dim. */}
+        {refShown && (tracedLayers ?? []).filter((layer) => !adoptedIds.has(layer.featureId)).map((layer) => {
+          const adopted = false;
           const interactive = tool === 'select' && !adopted;
           // Only reveal the adopt button in Select mode, so an armed draw tool can neither
           // trigger adoption nor have the button overlap the drawing surface.
@@ -1661,9 +1684,9 @@ export default function DesignCanvas({
                   strokeLinecap="round"
                   style={{ pointerEvents: 'none' }}
                 />
-                {line.kind === 'fence' && (
-                  <path d={fenceTicks(effectivePoints, imgW, imgH)} stroke={style.stroke} strokeWidth={1.5} />
-                )}
+                {line.kind === 'fence' && fencePosts(effectivePoints, imgW, imgH).map(([cx, cy], i) => (
+                  <circle key={`post-${i}`} cx={cx} cy={cy} r={3} fill={style.stroke} stroke="#FFFEFA" strokeWidth={1} pointerEvents="none" />
+                ))}
                 {isHighlighted && (
                   <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={3} strokeDasharray="4 3" strokeLinecap="round" pointerEvents="none" />
                 )}
@@ -2287,21 +2310,25 @@ export default function DesignCanvas({
           onClick={() => (tool === 'zone' ? commitZone(draftPoints) : commitLine(draftPoints))}
           style={{
             position: 'absolute',
-            bottom: 12,
+            bottom: 16,
             right: 12,
-            minHeight: 44,
-            minWidth: 44,
-            padding: '0 16px',
-            borderRadius: 22,
-            border: 'none',
+            minHeight: 52,
+            padding: '0 22px',
+            borderRadius: 26,
+            border: '2px solid #FBF6EC',
             background: '#1F4D2B',
             color: '#FBF6EC',
-            fontWeight: 700,
-            fontSize: 14,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+            fontWeight: 800,
+            fontSize: 16,
+            boxShadow: '0 3px 14px rgba(0,0,0,0.4), 0 0 0 4px rgba(31,77,43,0.35)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            animation: 'imbewuFinishPulse 1.8s ease-in-out infinite',
           }}
         >
-          ✓ Finish
+          <style>{`@keyframes imbewuFinishPulse{0%,100%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 3px rgba(31,77,43,0.30)}50%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 8px rgba(31,77,43,0.12)}}`}</style>
+          ✓ Finish {tool === 'line' ? 'line' : areaFeature ? GROUND_FEATURES[areaFeature].label : `Zone ${zoneDraw}`}
         </button>
       )}
       {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (

@@ -131,7 +131,7 @@ function mapCriteriaFor(filter: GlossyLayerFilter) {
 
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
-  fence: '#8C8577',
+  fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
   path: '#C9A227',
   pipe: '#2B6FA6',
   drip: '#4E8B3B',
@@ -437,11 +437,30 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
       fn.call(ctx, px(x), py(y));
     });
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
-    ctx.lineWidth = line.kind === 'fence' ? 2 : 4;
-    if (line.kind === 'fence') ctx.setLineDash([6, 4]);
-    else ctx.setLineDash([]);
+    ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
+    if (line.kind === 'swale' || line.kind === 'drip' || line.kind === 'path') ctx.setLineDash([6, 4]);
+    else ctx.setLineDash([]); // fence is SOLID (dashed reads as underground/proposed) — posts mark it
     ctx.stroke();
     ctx.setLineDash([]);
+    // Post-and-wire fence: round posts along the line (violet), never the boundary's ticks.
+    if (line.kind === 'fence') {
+      const pts = line.points;
+      const posts: Array<[number, number]> = [[px(pts[0][0]), py(pts[0][1])]];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const ax = px(pts[i][0]), ay = py(pts[i][1]), bx = px(pts[i + 1][0]), by = py(pts[i + 1][1]);
+        const n = Math.max(1, Math.round((Math.hypot(bx - ax, by - ay) || 1) / (14 * SCALE)));
+        for (let k = 1; k <= n; k++) posts.push([ax + (bx - ax) * (k / n), ay + (by - ay) * (k / n)]);
+      }
+      for (const [cx, cy] of posts) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 3.2 * SCALE, 0, Math.PI * 2);
+        ctx.fillStyle = LINE_COLORS.fence;
+        ctx.fill();
+        ctx.strokeStyle = '#FFFEFA';
+        ctx.lineWidth = 1.2 * SCALE;
+        ctx.stroke();
+      }
+    }
   }
 
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
