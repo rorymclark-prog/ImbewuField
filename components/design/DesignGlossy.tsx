@@ -211,6 +211,43 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
   }
 }
 
+// How many REAL things the farmer has drawn on this layer. A layer map with zero content is always
+// wrong — either that layer hasn't been drawn yet, or something upstream dropped it. Either way we
+// must never render it silently and let the AI invent the layer (Rory: "it should be retrieving my
+// zones layer which is detailed — no guessing"). Callers refuse + explain instead.
+export function layerContentCount(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter,
+): number {
+  let n = 0;
+  if (zonesInFilter(filter)) n += state.zones.filter((z) => !z.feature && z.points.length >= 3).length;
+  n += state.items.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return !!def && itemInFilter(def.category, filter);
+  }).length;
+  n += state.lines.filter((l) => lineInFilter(l.kind, filter) && l.points.length >= 2).length;
+  // The whole-design map also stands up on the traced base alone.
+  if (filter === 'all' && refLayers.boundary.length >= 3) n += 1;
+  return n;
+}
+
+const EMPTY_LAYER_STEP: Record<GlossyLayerFilter, string> = {
+  all: 'design',
+  water: 'Water',
+  zones: 'Zones',
+  planting: 'Planting',
+  structures: 'Structures',
+};
+
+// Shown instead of rendering an empty layer. Names the step to go draw on, AND says plainly that
+// if the farmer HAS drawn it, this is a bug — an empty layer must never be papered over.
+function emptyLayerMessage(filter: GlossyLayerFilter): string {
+  const step = EMPTY_LAYER_STEP[filter];
+  if (filter === 'all') return 'Nothing drawn yet — trace your boundary and place some elements first.';
+  return `No ${step.toLowerCase()} found on this design, so there's nothing to map — draw them on the ${step} step first. (A ${step.toLowerCase()} map is built from your real ${step.toLowerCase()}, never guessed. If you HAVE drawn them and still see this, it's a bug — please report it.)`;
+}
+
 export function zonesInFilter(filter: GlossyLayerFilter): boolean {
   return filter === 'all' || filter === 'zones';
 }
@@ -1782,6 +1819,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     // The engine picker applies to styles too: gpt-image-2 (the "used to be very good" one, via
     // the image-producer's 'openai' path) or Gemini Pro.
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
+    if (layerContentCount(state, refLayers, filter) === 0) {
+      setError(emptyLayerMessage(filter));
+      return;
+    }
     setLoading(engine);
     setError(null);
     try {
@@ -1845,6 +1886,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // Instant, free, always correct. The illustrated "Style" buttons remain the AI
   // beautify path for when a farmer wants the artist's impression instead.
   const renderDesignMap = useCallback(async () => {
+    if (layerContentCount(state, refLayers, filter) === 0) {
+      setError(emptyLayerMessage(filter));
+      return;
+    }
     setLoading('exact');
     setError(null);
     try {
