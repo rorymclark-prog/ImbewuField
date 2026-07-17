@@ -143,9 +143,12 @@ const LINE_COLORS: Record<string, string> = {
 // the chosen layer are locked; everything else is repainted as background.
 export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
 
+// Gemini is listed first and is the DEFAULT: gpt-image-2 (via fal.ai) frequently returns 403
+// (fal/OpenAI verification), so it can't be the reliable default. When it IS picked and fails,
+// generateProducer falls back to Gemini automatically (see the try/catch there).
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'best overall · slow (~5 min)' },
-  { key: 'gemini', label: 'Gemini Pro', sub: 'faster (~1 min)' },
+  { key: 'gemini', label: 'Gemini Pro', sub: 'recommended · ~1 min' },
+  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharper · often unavailable (403)' },
 ];
 
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
@@ -2929,6 +2932,9 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
 export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
+  // "N sheets done" during Generate-all. Distinct from `error` so a SUCCESSFUL render never shows red.
+  const [notice, setNotice] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
@@ -2943,9 +2949,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
   // overrides filter/analysis/producer for the render dispatch.
   const [implExact, setImplExact] = useState(false);
-  // Render engine — both experimental. gpt-image-2 (default, best overall) + Gemini Pro
-  // (kept for comparison; may be retired after more experimenting).
-  const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
+  // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
+  // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
+  const [engine, setEngine] = useState<'falgpt' | 'gemini'>('gemini');
   // Session-only gallery of every successful render (producer OR the strict/analysis paths).
   // Never persisted — kept only until the component unmounts.
   const [gallery, setGallery] = useState<Array<{ id: string; label: string; image: string }>>([]);
@@ -2976,6 +2982,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     setSaved(cached);
     setResultImage(cached ? cached.image : null);
     setError(null);
+    setNotice(null);
     // Only re-check when the site or chosen map changes, not on every state edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.siteId, mapKey]);
@@ -3095,6 +3102,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
     setLoading(engine);
     setError(null);
+    setNotice(null);
     try {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
@@ -3115,10 +3123,23 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       //    the photograph IS the truth. We hand the real satellite straight through as the base —
       //    then buildZoneOverlay burns the exact zone regions + labels + sheet chrome on top,
       //    exactly as before. Result: instant, free, no ~5-min gpt-image-2 wait, never invented.
-      const modelImage =
-        filter === 'zones'
-          ? (frame.satDataUrl ?? composite)
-          : await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+      let modelImage: string;
+      if (filter === 'zones') {
+        modelImage = frame.satDataUrl ?? composite;
+      } else {
+        try {
+          modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+        } catch (err) {
+          // gpt-image-2 (via fal.ai) frequently returns 403 (fal/OpenAI verification). Don't fail
+          // the whole render — fall back to the always-available Gemini engine and say so.
+          if (producerEngine === 'openai') {
+            setNotice('gpt-image-2 was unavailable — generated with Gemini Pro instead.');
+            modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, 'gemini', designBrief);
+          } else {
+            throw err;
+          }
+        }
+      }
       // d. Boundary → flat OUTPUT-px ring (the normalised ring just multiplies by W/H).
       const boundaryPx =
         refLayers.boundary.length >= 3
@@ -3232,6 +3253,63 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       setLoading(null);
     }
   }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
+
+  // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
+  // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
+  // gpt-image-2 — they never 403) for every design layer that has content, plus the exact
+  // Implementation & phasing sheet, dropping them all into the gallery ready to view or Print.
+  // The illustrated AI Styles stay per-sheet (slow / experimental); the exact set IS the reliable
+  // "all at once".
+  const generateAllSheets = useCallback(async () => {
+    setLoading('exact');
+    setError(null);
+    setNotice(null);
+    const order: GlossyLayerFilter[] = ['all', 'water', 'zones', 'planting', 'structures'];
+    let made = 0;
+    try {
+      for (const f of order) {
+        if (layerContentCount(state, refLayers, f) === 0) continue;
+        const composite =
+          f === 'zones'
+            ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
+            : f === 'water'
+              ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
+              : f === 'planting'
+                ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
+                : f === 'structures'
+                  ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
+                  : await buildComposite(state, frame, refLayers, f, true);
+        const label = f === 'all' ? 'Whole design' : `${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`;
+        // Each sheet caches under the same key its single-map render uses (bare filter). saveGlossy
+        // can throw when the 2-slot cache is full — the in-memory gallery still holds every sheet,
+        // so swallow it rather than abort the batch.
+        try { saveGlossy(state.siteId, f, { image: composite, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
+        pushGallery(label, composite);
+        made += 1;
+        setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+      }
+      // Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
+      const plan = buildPhasePlan(state, refLayers, site);
+      if (plan.phases.length > 0) {
+        const impl = await buildImplementationMap(state, frame, refLayers, site, placeName);
+        try { saveGlossy(state.siteId, 'implementation-exact', { image: impl, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
+        pushGallery('Implementation & phasing', impl);
+        made += 1;
+      }
+      if (made === 0) {
+        setError('Nothing to generate yet — trace your boundary and place some elements (water, beds, trees…) first.');
+        setNotice(null);
+      } else {
+        setNotice(`Done — ${made} sheets in your gallery. Open it to view or Print the set.`);
+        setGalleryViewId(null);
+        setGalleryOpen(true);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [state, frame, refLayers, site, placeName, pushGallery]);
 
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
@@ -3540,6 +3618,41 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {/* One tap → the whole plan set. Rory: "where is the button to design all sheets at once?"
+            The exact deterministic sheets are the reliable all-at-once (never 403, instant); the
+            illustrated AI Styles below remain per-sheet. */}
+        <div>
+          <button
+            onClick={generateAllSheets}
+            disabled={loading !== null}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              width: '100%',
+              minHeight: 50,
+              padding: '12px 20px',
+              borderRadius: 12,
+              border: 'none',
+              background: GREEN,
+              color: PAPER,
+              fontWeight: 800,
+              fontSize: 15,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null ? 0.7 : 1,
+            }}
+          >
+            <Images size={18} />
+            {loading === 'exact' ? 'Generating your plan set…' : 'Generate ALL design sheets · one tap'}
+          </button>
+          <div style={{ fontSize: 11, opacity: 0.6, marginTop: 4 }}>
+            Every design sheet at once — Whole · Water · Zones · Planting · Structures · Implementation —
+            drawn exactly from your plan. Instant, reliable, never invented, ready to <strong>Print</strong>.
+            The illustrated AI styles below are optional, one sheet at a time.
+          </div>
+        </div>
+
         {/* Engine picker — only for illustrated Styles (they render via the boundary-locked
             image-producer pipeline, gpt-image-2 or Gemini). Analysis maps are Gemini-only.
             Bare Design maps are drawn deterministically from your plan — no model, no engine. */}
@@ -3674,6 +3787,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           </button>
         )}
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
+        {notice && !error && <p style={{ color: GREEN, fontSize: 12.5, fontWeight: 600 }}>{notice}</p>}
       </div>
 
       {/* ── Saved-maps gallery (session-only) ── */}

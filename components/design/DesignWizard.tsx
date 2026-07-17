@@ -114,7 +114,7 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
   const { expanded, toggle, lesson } = useLessonExpand(step);
   if (!lesson) return null;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <button
         type="button"
         onClick={toggle}
@@ -122,21 +122,21 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 6,
+          gap: 5,
           alignSelf: 'flex-start',
-          minHeight: 44,
+          minHeight: 38,
           padding: '0 4px',
           border: 'none',
           background: 'transparent',
           color: GREEN,
-          fontSize: 13.5,
+          fontSize: 12,
           fontWeight: 700,
           cursor: 'pointer',
         }}
       >
-        <HelpCircle size={15} />
+        <HelpCircle size={13} />
         Why this step?
-        {expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+        {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
       </button>
       {expanded && <LessonPanel lesson={lesson} />}
     </div>
@@ -197,11 +197,11 @@ function GuidedWizard({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 12,
+        gap: 5,
         background: PAPER,
         border: `2px solid ${GOLD}`,
         borderRadius: 18,
-        padding: 16,
+        padding: 8,
       }}
     >
       {/* Progress pips — decorative only, not tappable: guided farmers move forward with
@@ -222,20 +222,20 @@ function GuidedWizard({
       </div>
 
       <div>
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: GREEN, letterSpacing: 0.3, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 11, lineHeight: 1.2, fontWeight: 700, color: GREEN, letterSpacing: 0.3, textTransform: 'uppercase' }}>
           Step {idx + 1} of {STEP_ORDER.length}
         </div>
-        <div style={{ fontSize: 22, fontWeight: 800, color: DARK, marginTop: 2 }}>{STEP_LABELS[step]}</div>
+        <div style={{ fontSize: 17, lineHeight: 1.15, fontWeight: 800, color: DARK, marginTop: 1 }}>{STEP_LABELS[step]}</div>
       </div>
 
       <div
         style={{
-          fontSize: 15.5,
-          lineHeight: 1.5,
+          fontSize: 13.5,
+          lineHeight: 1.4,
           color: DARK,
           background: 'rgba(31,77,43,0.06)',
           borderRadius: 12,
-          padding: '12px 14px',
+          padding: '8px 12px',
         }}
       >
         {STEP_GUIDANCE[step]}
@@ -243,16 +243,16 @@ function GuidedWizard({
 
       <GuidedLessonExpander step={step} />
 
-      <div style={{ display: 'flex', gap: 10 }}>
+      <div style={{ display: 'flex', gap: 6 }}>
         <button
           onClick={() => canBack && setStep(STEP_ORDER[idx - 1])}
           disabled={!canBack}
           aria-label="Back"
           style={{
-            minHeight: 56,
-            width: 56,
+            minHeight: 44,
+            width: 44,
             flexShrink: 0,
-            borderRadius: 14,
+            borderRadius: 12,
             border: `1.5px solid ${GREEN}`,
             background: canBack ? 'transparent' : 'rgba(31,77,43,0.08)',
             color: canBack ? GREEN : 'rgba(31,77,43,0.4)',
@@ -262,28 +262,28 @@ function GuidedWizard({
             cursor: canBack ? 'pointer' : 'default',
           }}
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={18} />
         </button>
         <button
           onClick={() => canNext && setStep(STEP_ORDER[idx + 1])}
           disabled={!canNext}
           style={{
             flex: 1,
-            minHeight: 56,
-            borderRadius: 14,
+            minHeight: 44,
+            borderRadius: 12,
             border: 'none',
             background: canNext ? GREEN : 'rgba(31,77,43,0.08)',
             color: canNext ? PAPER : 'rgba(31,77,43,0.4)',
             fontWeight: 800,
-            fontSize: 17,
+            fontSize: 15,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 6,
+            gap: 5,
             cursor: canNext ? 'pointer' : 'default',
           }}
         >
-          Next: {canNext ? STEP_LABELS[STEP_ORDER[idx + 1]] : ''} <ChevronRight size={20} />
+          Next: {canNext ? STEP_LABELS[STEP_ORDER[idx + 1]] : ''} <ChevronRight size={17} />
         </button>
       </div>
     </div>

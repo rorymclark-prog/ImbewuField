@@ -18,6 +18,7 @@ import type { CommunityProfile, BoardPost, BoardCategory, BoardKind, MessageThre
 import NearbyMap from '@/components/community/NearbyMap';
 import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
+import LessonLink from '@/components/design/LessonLink';
 
 type Tab = 'nearby' | 'board' | 'messages';
 
@@ -102,6 +103,7 @@ export default function CommunityHubPage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
+        <LessonLink id="community:overview" label="Learn" />
         <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#1F4D2B', textDecoration: 'none' }}>
           <User size={16} strokeWidth={1.8} />
           <span className="font-sans font-semibold" style={{ fontSize: 13 }}>

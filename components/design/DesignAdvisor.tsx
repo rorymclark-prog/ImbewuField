@@ -28,7 +28,19 @@ interface DesignAdvisorProps {
   } | null;
   houseXY: [number, number] | null;
   lastChangeId: string | null;
+  // True while the Design Studio header's "Show steps" panel is expanded above the canvas.
+  // That panel is normal document flow (it pushes the canvas down), but this advisor is an
+  // absolutely-positioned overlay anchored to viewport-centre — so without this flag it stays
+  // put while the steps panel grows underneath it and ends up overlapped/hidden by that panel.
+  // Optional + defaulted so existing callers don't need to change. See DESIGN_STEPS_OFFSET_PX.
+  stepsOpen?: boolean;
 }
+
+// Extra downward shift applied to the advisor's vertical centring when the steps panel is open.
+// The panel's height varies (Guided vs Pro wizard, per-step lesson text), so this is a fixed
+// clearance value rather than a measured one — picked generously so the cluster clears the
+// panel in the common (Guided) case rather than sitting flush under it.
+const DESIGN_STEPS_OFFSET_PX = 190;
 
 interface AiSuggestion {
   msg: string;
@@ -94,7 +106,7 @@ function buildDesignSummary(state: DesignCanvasState) {
   };
 }
 
-export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: DesignAdvisorProps) {
+export default function DesignAdvisor({ state, site, houseXY, lastChangeId, stepsOpen = false }: DesignAdvisorProps) {
   const [advice, setAdvice] = useState<Advice[]>([]);
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
   // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
@@ -195,7 +207,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
   const shell: CSSProperties = {
     position: 'absolute',
     left: 10,
-    top: '50%',
+    // When the header's steps panel is expanded it pushes the canvas down but this overlay is
+    // positioned relative to the viewport, not the canvas — so shift the centring point down to
+    // clear the panel instead of drawing on top of it.
+    top: stepsOpen ? `calc(50% + ${DESIGN_STEPS_OFFSET_PX}px)` : '50%',
     transform: 'translateY(-50%)',
     zIndex: 40,
     display: 'flex',
@@ -415,13 +430,27 @@ function ErrorPill({ message }: { message: string }) {
 }
 
 function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?: boolean }) {
+  // Standalone (non-inline) use renders directly over the satellite map — without an opaque
+  // card behind it the text read as messy, low-contrast overlay text that also crowded the
+  // "Lima · N tips" / "Ask Lima" chips right above it. Give it the same solid dark card
+  // treatment as the other advisor bubbles. The `inline` variant already sits inside such a
+  // card (the "expanded" panel below), so it only needs a divider from the rows above it.
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
         gap: 6,
-        ...(inline ? { borderTop: `1px solid ${DARK}`, paddingTop: 6, marginTop: 2 } : {}),
+        ...(inline
+          ? { borderTop: `1px solid ${DARK}`, paddingTop: 6, marginTop: 2 }
+          : {
+              background: 'rgba(11,18,11,0.92)',
+              border: `1px solid ${GOLD}`,
+              borderRadius: 12,
+              padding: '8px 10px',
+              color: '#FBF6EC',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+            }),
       }}
     >
       {suggestions.map((s, i) => (

@@ -15,6 +15,7 @@ import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LessonLink from '@/components/design/LessonLink';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -947,6 +948,7 @@ export default function FinancesPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Finances</span>
         <div className="flex-1" />
+        <LessonLink id="finances:overview" label="Learn" />
         <Link href="/invoice"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
           style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', textDecoration: 'none' }}>

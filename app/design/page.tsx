@@ -1459,6 +1459,7 @@ function DesignStudioInner() {
           site={site}
           houseXY={houseXY}
           lastChangeId={canvasState.updatedAt}
+          stepsOpen={!chromeCollapsed}
         />
       )}
 
