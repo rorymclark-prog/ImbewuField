@@ -121,11 +121,6 @@ function LoginPageInner() {
     setResetSent(false);
   }
 
-  const card: React.CSSProperties = {
-    background: '#FFFEFA',
-    border: '1px solid #E2D8C4',
-    boxShadow: '0 4px 24px rgba(32,25,15,0.10)',
-  };
   const inputStyle = (hasError = false): React.CSSProperties => ({
     background: '#fff',
     border: `1px solid ${hasError ? '#D4922A' : '#E2D8C4'}`,
@@ -135,8 +130,15 @@ function LoginPageInner() {
   });
 
   return (
-    <div className="min-h-[100dvh] flex items-start justify-center overflow-y-auto px-4 py-6 md:items-center" style={{ background: '#E4DCC6' }}>
-      <div className="w-full max-w-sm rounded-2xl p-6 my-auto" style={card}>
+    <div
+      className="min-h-[100dvh] flex items-start justify-center overflow-y-auto px-4 py-6 md:items-center"
+      style={{
+        background:
+          'radial-gradient(ellipse 620px 420px at 6% -8%, rgba(31,77,43,0.10), transparent 60%), ' +
+          'radial-gradient(ellipse 520px 360px at 100% 0%, rgba(247,201,126,0.16), transparent 55%), ' +
+          'var(--bg)',
+      }}>
+      <div className="u-card w-full max-w-sm p-6 my-auto">
 
         {/* Logo */}
         <div className="text-center mb-5">
@@ -148,7 +150,7 @@ function LoginPageInner() {
               </svg>
             </div>
           </div>
-          <div className="font-display font-bold" style={{ fontSize: 22, color: '#20190F', letterSpacing: '-0.02em', marginBottom: 4 }}>ImbewuField</div>
+          <div className="u-display-md" style={{ color: '#20190F', marginBottom: 6 }}>ImbewuField</div>
           <div className="font-sans text-sm" style={{ color: '#5C5040' }}>
             {mode === 'signin' && 'Sign in to your account.'}
             {mode === 'create' && 'Create a new account.'}
@@ -257,10 +259,12 @@ function LoginPageInner() {
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}
-              className="w-full py-2.5 rounded-xl font-sans font-semibold transition-all mt-1"
+              className={`w-full font-sans font-semibold transition-all mt-1 ${
+                loading || !backendReady ? 'py-2.5 rounded-xl' : 'u-btn-primary'
+              }`}
               style={loading || !backendReady
-                ? { background: 'rgba(226,216,196,0.6)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'not-allowed', fontSize: 15 }
-                : { background: '#1F4D2B', color: '#F7F2E9', cursor: 'pointer', fontSize: 15 }}>
+                ? { minHeight: 44, background: 'rgba(226,216,196,0.6)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'not-allowed', fontSize: 15 }
+                : undefined}>
               {loading ? (
                 mode === 'signin' ? 'Signing in...' :
                 mode === 'create' ? 'Creating account...' : 'Sending...'
@@ -303,6 +307,7 @@ function LoginPageInner() {
             <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
               className="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-xl font-sans font-semibold transition-all"
               style={{
+                minHeight: 44,
                 background: '#fff',
                 border: '1px solid #E2D8C4',
                 color: '#20190F',
@@ -333,6 +338,13 @@ function LoginPageInner() {
           <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: '#5C5040' }}>
             <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />Back to app</span>
           </a>
+        </div>
+
+        {/* Trust footer */}
+        <div className="text-center mt-3">
+          <p className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', letterSpacing: '0.01em' }}>
+            Built for South African smallholder farmers
+          </p>
         </div>
       </div>
     </div>

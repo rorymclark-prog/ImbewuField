@@ -213,11 +213,15 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   const Icon = STEP_ICONS[step];
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#E4DCC6' }}>
+    // Full-screen step wizard (fixed inset-0, no viewport margin) rather than a partial-height
+    // bottom sheet — u-anim-sheet still gives it a settle-in entrance; deliberately no grabber
+    // or rounded top corners here, since this view has no drag-to-dismiss gesture and rounding
+    // edge-to-edge corners wouldn't render as anything visible. Close stays the explicit X below.
+    <div className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <button onClick={onClose}
-          style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
+          style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
           <X size={18} />
         </button>
         <div className="flex-1 min-w-0">

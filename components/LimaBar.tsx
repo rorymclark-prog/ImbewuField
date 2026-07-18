@@ -40,7 +40,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'As
       {/* Lima avatar */}
       <div
         className="flex items-center justify-center flex-shrink-0"
-        style={{ width: 36, height: 36, background: '#1F4D2B', borderRadius: 10 }}
+        style={{ width: 36, height: 36, background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))', borderRadius: 10 }}
       >
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 21V11" />
@@ -74,7 +74,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1', placeholder = 'As
           <button
             type="submit"
             className="flex items-center justify-center flex-shrink-0"
-            style={{ width: 40, height: 40, background: '#1F4D2B', borderRadius: 10, border: 'none' }}
+            style={{ width: 40, height: 40, background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))', borderRadius: 10, border: 'none', boxShadow: '0 2px 8px rgba(31,77,43,0.25)' }}
           >
             <Send size={16} color="#F7F2E9" />
           </button>

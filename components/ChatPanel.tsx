@@ -175,6 +175,29 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
 
   return (
     <div className="flex flex-col gap-3">
+      {/* Lima "thinking" shimmer — a calm gradient background-clip sweep over the
+          placeholder text (spec §6), replacing the old opacity-flash animate-pulse.
+          Linear sweep so it never looks "broken" on a slow connection; static
+          fallback under prefers-reduced-motion. Keyframes live here because this
+          component owns the only surface that uses them. */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+@keyframes limaShimmer { 0% { background-position: 150% 50%; } 100% { background-position: -50% 50%; } }
+.lima-shimmer {
+  display: inline-block;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--text-3) 25%, var(--brand-light) 50%, var(--text-3) 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: limaShimmer 1.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lima-shimmer { animation: none; color: var(--text-3); -webkit-text-fill-color: var(--text-3); }
+}`,
+        }}
+      />
       {/* Intro / empty state */}
       {messages.length === 0 && (
         <div className="space-y-3">
@@ -224,7 +247,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
               ? <span style={{ color: '#D4922A' }}>{m.content}</span>
-              : m.content || (loading && i === messages.length - 1 ? <span className="animate-pulse">...</span> : '')}
+              : m.content || (loading && i === messages.length - 1 ? <span className="lima-shimmer">Thinking…</span> : '')}
           </div>
         </div>
       ))}

@@ -14,8 +14,18 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
 
 const GOLD = '#F7C97E';
-const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
+
+// Dark warm-glass treatment (spec §6, adapted to green) — a forest-tinted translucent
+// surface with backdrop blur, replacing the old near-black hard-bordered HUD. Kept
+// dark enough that near-white text stays readable over a bright satellite map even
+// where backdrop-filter is unsupported (the translucent fill alone still reads).
+const GLASS = 'rgba(18,40,24,0.74)';          // cards / panels
+const GLASS_SOFT = 'rgba(18,40,24,0.66)';     // chips / small buttons
+const GLASS_BORDER = 'rgba(247,201,126,0.30)'; // softened warm (gold) hairline
+const GLASS_SHADOW = '0 8px 28px rgba(9,20,12,0.45)'; // warm, forest-tinted throw
+const GLASS_GRAD = 'linear-gradient(135deg, #2D6B3C, #163820)'; // Lima primary action
+const glassBlur = { backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' } as const;
 
 interface DesignAdvisorProps {
   state: DesignCanvasState;
@@ -264,8 +274,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
               minHeight: 32,
               padding: '4px 11px',
               borderRadius: 999,
-              background: 'rgba(11,18,11,0.85)',
-              border: `1px solid ${GOLD}`,
+              background: GLASS_SOFT,
+              ...glassBlur,
+              border: `1px solid ${GLASS_BORDER}`,
               color: GOLD,
               fontSize: 12,
               fontWeight: 700,
@@ -294,12 +305,13 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       </div>
       <div
         style={{
-          background: 'rgba(11,18,11,0.92)',
-          border: `1px solid ${GOLD}`,
+          background: GLASS,
+          ...glassBlur,
+          border: `1px solid ${GLASS_BORDER}`,
           borderRadius: 12,
           padding: '10px 12px',
           color: '#FBF6EC',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+          boxShadow: GLASS_SHADOW,
           display: 'flex',
           alignItems: 'flex-start',
           gap: 8,
@@ -341,8 +353,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
               minHeight: 32,
               padding: '4px 10px',
               borderRadius: 999,
-              background: 'rgba(11,18,11,0.85)',
-              border: `1px solid ${GOLD}`,
+              background: GLASS_SOFT,
+              ...glassBlur,
+              border: `1px solid ${GLASS_BORDER}`,
               color: GOLD,
               fontSize: 12,
               fontWeight: 600,
@@ -370,8 +383,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       {expanded && (rest.length > 0 || aiSuggestions.length > 0) && (
         <div
           style={{
-            background: 'rgba(11,18,11,0.92)',
-            border: `1px solid ${GOLD}`,
+            background: GLASS,
+            ...glassBlur,
+            border: `1px solid ${GLASS_BORDER}`,
             borderRadius: 12,
             padding: '8px 10px',
             color: '#FBF6EC',
@@ -411,8 +425,8 @@ function AskAiButton({ onClick, loading }: { onClick: () => void; loading: boole
         minHeight: 32,
         padding: '4px 10px',
         borderRadius: 999,
-        background: GREEN,
-        border: `1px solid ${GOLD}`,
+        background: GLASS_GRAD,
+        border: `1px solid ${GLASS_BORDER}`,
         color: '#FBF6EC',
         fontSize: 12,
         fontWeight: 600,
@@ -461,12 +475,13 @@ function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?:
         ...(inline
           ? { borderTop: `1px solid ${DARK}`, paddingTop: 6, marginTop: 2 }
           : {
-              background: 'rgba(11,18,11,0.92)',
-              border: `1px solid ${GOLD}`,
+              background: GLASS,
+              ...glassBlur,
+              border: `1px solid ${GLASS_BORDER}`,
               borderRadius: 12,
               padding: '8px 10px',
               color: '#FBF6EC',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+              boxShadow: GLASS_SHADOW,
               // Cap the standalone list so a long reply scrolls within the free canvas area rather
               // than growing the cluster down over the bottom bars.
               maxHeight: 200,

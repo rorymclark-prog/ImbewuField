@@ -85,10 +85,11 @@ export default function ChatWidget() {
           onPointerUp={onFabPointerUp}
           aria-label="Open Lima, your field guide — drag to move"
           title="Tap to ask Lima · drag to move"
-          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 shadow-lg ${fabPos ? '' : 'bottom-[72px] left-4'}`}
+          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : 'bottom-[72px] left-4'}`}
           style={{
-            backgroundColor: '#1F4D2B',
-            boxShadow: '0 4px 16px rgba(32,25,15,0.20)',
+            background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
+            // Soft glow ring — Lima's "2026 AI presence" (spec §6, adapted to green).
+            boxShadow: '0 0 0 6px rgba(31,77,43,0.12), 0 8px 24px rgba(31,77,43,0.30)',
             touchAction: 'none',
             cursor: 'grab',
             ...(fabPos ? { left: fabPos.x, top: fabPos.y } : {}),
@@ -107,23 +108,24 @@ export default function ChatWidget() {
             aria-hidden="true"
           />
           <div
-            className="no-print fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
+            className="no-print u-glass u-anim-sheet fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
             style={{
+              // .u-glass supplies the warm cream glass background + border + blur
+              // (with an @supports solid fallback for low-end Android). .u-anim-sheet
+              // gives the settle entrance. Only the warm shadow is left inline.
               height: '82dvh',
               maxHeight: 720,
-              background: '#FFFEFA',
-              border: '1px solid #E2D8C4',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
             }}
           >
             {/* Header */}
             <div
-              className="flex-shrink-0 flex items-center gap-3 px-4 py-3 bg-white"
-              style={{ borderBottom: '1px solid #E2D8C4' }}
+              className="flex-shrink-0 flex items-center gap-3 px-4 py-3"
+              style={{ borderBottom: '1px solid var(--border)', background: 'rgba(255,254,250,0.55)' }}
             >
               <div
                 className="flex items-center justify-center rounded-lg flex-shrink-0"
-                style={{ backgroundColor: '#1F4D2B', width: 36, height: 36 }}
+                style={{ background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))', width: 36, height: 36 }}
               >
                 <Sprout size={20} className="text-white" strokeWidth={1.75} />
               </div>

@@ -55,9 +55,10 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
         style={{ background: 'rgba(0,0,0,0.38)', backdropFilter: 'blur(2px)', border: 'none', cursor: 'pointer' }}
       />
 
-      {/* Sheet */}
+      {/* Sheet — u-anim-sheet gives it the shared sheet-rise entrance (this sheet is
+          bottom-anchored at every breakpoint, so no desktop scale-settle variant). */}
       <div
-        className="relative flex flex-col overflow-hidden"
+        className="relative flex flex-col overflow-hidden u-anim-sheet"
         style={{
           background: '#F7F2E4',
           borderRadius: '20px 20px 0 0',
@@ -67,6 +68,8 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
         }}
       >
+        <div className="u-sheet-grabber flex-shrink-0" aria-hidden="true" />
+
         {/* Header */}
         <div className="flex-shrink-0 flex items-center gap-2 px-5 pt-4 pb-3" style={{ borderBottom: '1px solid rgba(226,216,196,0.7)' }}>
           <div className="flex flex-col min-w-0 flex-1">
@@ -84,7 +87,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
             onClick={onClose}
             aria-label={t('addSheetClose')}
             className="flex items-center justify-center flex-shrink-0 rounded-full active:scale-95 transition-all"
-            style={{ width: 40, height: 40, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
           >
             <X size={19} />
           </button>

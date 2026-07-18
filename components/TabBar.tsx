@@ -26,7 +26,7 @@ export default function TabBar() {
       className="flex"
       style={{
         background: '#FFFEFA',
-        borderTop: '1px solid #E2D8C4',
+        boxShadow: '0 -2px 12px rgba(22,56,32,0.08)',
         flexShrink: 0,
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
@@ -37,25 +37,39 @@ export default function TabBar() {
           <Link
             key={href}
             href={href}
-            className="flex-1 flex flex-col items-center gap-1 py-2"
+            className="flex-1 flex flex-col items-center py-2"
             style={{ textDecoration: 'none' }}
           >
-            <Icon
-              size={22}
-              strokeWidth={active ? 2.2 : 1.7}
-              style={{ color: active ? '#1F4D2B' : '#94876F' }}
-            />
-            <span
-              className="font-sans"
+            <div
+              className="flex flex-col items-center gap-1"
               style={{
-                fontSize: 11,
-                fontWeight: active ? 700 : 600,
-                color: active ? '#1F4D2B' : '#94876F',
-                letterSpacing: '0.01em',
+                padding: '4px 14px',
+                borderRadius: 12,
+                background: active ? 'var(--brand-soft)' : 'transparent',
+                transition: 'background var(--dur-fast) var(--ease-out)',
               }}
             >
-              {t(key)}
-            </span>
+              <Icon
+                size={22}
+                strokeWidth={active ? 2.2 : 1.7}
+                style={{
+                  color: active ? '#1F4D2B' : '#94876F',
+                  transition: 'color var(--dur-fast) var(--ease-out)',
+                }}
+              />
+              <span
+                className="font-sans"
+                style={{
+                  fontSize: 11,
+                  fontWeight: active ? 700 : 600,
+                  color: active ? '#1F4D2B' : '#94876F',
+                  letterSpacing: '0.01em',
+                  transition: 'color var(--dur-fast) var(--ease-out)',
+                }}
+              >
+                {t(key)}
+              </span>
+            </div>
           </Link>
         );
       })}

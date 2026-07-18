@@ -26,7 +26,11 @@ const SHELL_STYLE: CSSProperties = {
     'repeating-radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 60px)',
   borderRadius: 20,
   padding: '22px 20px 20px',
-  boxShadow: '0 4px 20px rgba(31,77,43,0.35)',
+  // u-card's "lit from above" inset highlight, tuned down for a saturated dark surface
+  // (the primitive's 0.7-alpha white highlight is calibrated for the light --surface card
+  // and would read as a glare here) + the original ambient throw + a longer soft shadow
+  // for a touch more considered depth.
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(31,77,43,0.35), 0 20px 40px -24px rgba(15,30,18,0.5)',
 };
 
 const PILL_STYLE: CSSProperties = {
@@ -36,6 +40,8 @@ const PILL_STYLE: CSSProperties = {
   padding: '8px 16px',
   fontSize: 13,
   letterSpacing: '-0.01em',
+  boxShadow: '0 2px 8px rgba(15,30,18,0.22)',
+  transition: 'transform 150ms var(--ease-out, cubic-bezier(0.16,1,0.3,1)), box-shadow 200ms var(--ease-out, cubic-bezier(0.16,1,0.3,1))',
 };
 
 // The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT +
@@ -61,6 +67,24 @@ function Overline({ children }: { children: string }) {
   );
 }
 
+// Gentle fade/settle on first mount (u-anim-sheet-style timing, but no off-screen slide —
+// this card renders inline, it isn't a modal). `jsx global` so the keyframes are defined
+// once regardless of which of the variant branches below actually renders.
+function HeroEntranceStyle() {
+  return (
+    <style jsx global>{`
+      @keyframes imfHeroSettle {
+        from { opacity: 0; transform: scale(0.985); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .imf-hero-settle { animation: imfHeroSettle 260ms var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.1)); }
+      @media (prefers-reduced-motion: reduce) {
+        .imf-hero-settle { animation: none; }
+      }
+    `}</style>
+  );
+}
+
 export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCardProps) {
   const { t } = useLanguage();
 
@@ -75,10 +99,11 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   // a flash of the welcome, and the SSR/first-client-render output matches. ──
   if (places === null) {
     return (
-      <Link href="/farmer" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+      <Link href="/farmer" className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+        <HeroEntranceStyle />
         <Overline>{t('homeLimaSuggests')}</Overline>
 
-        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
           {t('homeSurveyNew')}
         </h2>
 
@@ -86,7 +111,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
           {t('homeSurveyDesc')}
         </p>
 
-        <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+        <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
           <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
         </span>
       </Link>
@@ -96,12 +121,13 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   // ── WELCOME — first-run, no saved sites. Two actions max. ──
   if (places.length === 0) {
     return (
-      <div style={SHELL_STYLE}>
-        <div className="font-display" style={{ fontSize: 26, fontWeight: 700, color: 'rgba(234,243,226,0.88)', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 2 }}>
+      <div className="imf-hero-settle" style={SHELL_STYLE}>
+        <HeroEntranceStyle />
+        <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>
           {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
         </div>
 
-        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
           {t('welcomeHeroTitle')}
         </h2>
 
@@ -111,13 +137,14 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
 
         <Link
           href="/farmer?guided=1"
-          className="font-sans font-semibold"
+          className="font-sans font-semibold transition-all active:scale-[0.97]"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             width: '100%', minHeight: 52,
             background: '#E4DCC6', color: '#1F4D2B',
             borderRadius: 100, fontSize: 15, letterSpacing: '-0.01em',
             textDecoration: 'none', marginBottom: 12,
+            boxShadow: '0 2px 8px rgba(15,30,18,0.22)',
           }}
         >
           <MapPin size={18} strokeWidth={1.8} />
@@ -148,10 +175,11 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     const showNextStepLine = !!guided?.enabled && !guided?.retired && !!nextStepEntry;
 
     return (
-      <div style={SHELL_STYLE}>
+      <div className="imf-hero-settle" style={SHELL_STYLE}>
+        <HeroEntranceStyle />
         <Overline>{t('homeLimaSuggests')}</Overline>
 
-        <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 12 }}>
+        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
           {t('continueSiteTitle').replace('{site}', mainSite.name)}
         </h2>
 
@@ -177,7 +205,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
             href={`/farmer?site=${mainSite.id}`}
             style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, textDecoration: 'none' }}
           >
-            <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+            <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
               <span className="flex items-center gap-1.5">{t('continueSiteCta')}<ArrowRight size={14} /></span>
             </span>
           </Link>
@@ -201,10 +229,11 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   // returned null (should not happen; resolveMainSite always yields a site for a
   // non-empty list). Render the same safe DEFAULT shell rather than nothing.
   return (
-    <Link href="/farmer" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+    <Link href="/farmer" className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+      <HeroEntranceStyle />
       <Overline>{t('homeLimaSuggests')}</Overline>
 
-      <h2 className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#F7F2E9', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 6 }}>
+      <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
         {t('homeSurveyNew')}
       </h2>
 
@@ -212,7 +241,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
         {t('homeSurveyDesc')}
       </p>
 
-      <span className="inline-flex items-center font-sans font-semibold" style={PILL_STYLE}>
+      <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
         <span className="flex items-center gap-1.5">{t('homeOpenMap')}<ArrowRight size={14} /></span>
       </span>
     </Link>
