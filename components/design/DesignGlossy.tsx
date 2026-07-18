@@ -177,6 +177,25 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
   { key: 'structures', label: 'Structures' },
 ];
 
+// The canonical plan set (docs/PLAN-SET-SPEC.md), shown as ONE numbered 01–08 list in the
+// Design-maps picker so it reads exactly like the printed set — analysis (01–02) before design
+// (03–07) before implementation (08). Three sheets are exact-ONLY (rules-engine, never any AI):
+// 01 Existing site, 02 Sector, 08 Implementation. The four middle layers + the masterplan (03–07)
+// are design layers you can draw exactly OR restyle with a Style below. `'exact' in sheet` narrows.
+type DesignSheet =
+  | { no: string; label: string; exact: 'base' | 'sector' | 'implementation' }
+  | { no: string; label: string; filter: GlossyLayerFilter };
+const DESIGN_SHEETS: DesignSheet[] = [
+  { no: '01', label: 'Existing site', exact: 'base' },
+  { no: '02', label: 'Sector analysis', exact: 'sector' },
+  { no: '03', label: 'Zones', filter: 'zones' },
+  { no: '04', label: 'Water', filter: 'water' },
+  { no: '05', label: 'Planting', filter: 'planting' },
+  { no: '06', label: 'Structures', filter: 'structures' },
+  { no: '07', label: 'Whole design', filter: 'all' },
+  { no: '08', label: 'Implementation & phasing', exact: 'implementation' },
+];
+
 // Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
 // / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
 // gpt-image-2 mask-edit can't draw, so they always render via the Gemini generative path with
@@ -3267,7 +3286,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // Which deterministic EXACT sheet (if any) is selected — the two rules-engine sheets (Sector 02,
   // Implementation 08) that carry their own chrome and override filter/analysis/producer. One union
   // state (not two booleans) makes the selection mutually exclusive by construction.
-  const [exactSheet, setExactSheet] = useState<null | 'sector' | 'implementation'>(null);
+  const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('gemini');
@@ -3280,7 +3299,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
-  const mapKey = exactSheet === 'sector'
+  const mapKey = exactSheet === 'base'
+    ? 'base-exact'
+    : exactSheet === 'sector'
     ? 'sector-exact'
     : exactSheet === 'implementation'
       ? 'implementation-exact'
@@ -3601,6 +3622,25 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       setLoading(null);
     }
   }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
+
+  // Deterministic EXISTING-SITE sheet (plan-set 01) — the plain satellite + boundary with NO design
+  // drawn (drawDesign=false). The honest "before" the whole plan builds on; exact, never invented.
+  const renderBaseMap = useCallback(async () => {
+    setLoading('exact');
+    setError(null);
+    try {
+      const composite = await buildComposite(state, frame, refLayers, 'all', false);
+      setResultImage(composite);
+      const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
+      saveGlossy(state.siteId, mapKey, record);
+      setSaved(record);
+      pushGallery('Existing site & base', composite);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [state, frame, refLayers, mapKey, pushGallery]);
 
   // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
   // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
@@ -4029,52 +4069,33 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           Design maps
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {/* Sheet 02 — the deterministic SECTOR ANALYSIS sheet. Analysis precedes design, so it
-              leads the row. Exact (rules-engine, no AI), like the Implementation sheet. */}
-          <button
-            key="sector-exact"
-            type="button"
-            onClick={() => { setExactSheet('sector'); setAnalysisStyle(null); setProducerStyle(null); }}
-            disabled={loading !== null}
-            aria-pressed={exactSheet === 'sector'}
-            title="Sun path, wind, water flow, fire & frost — drawn from your site's real slope and climate data (no AI)"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              minHeight: 38,
-              padding: '5px 14px',
-              borderRadius: 19,
-              border: exactSheet === 'sector' ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
-              background: exactSheet === 'sector' ? GREEN : 'transparent',
-              color: exactSheet === 'sector' ? PAPER : DARK,
-              fontWeight: 700,
-              fontSize: 13,
-              cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null && exactSheet !== 'sector' ? 0.5 : 1,
-            }}
-          >
-            <span>Sector analysis</span>
-            <span style={{ fontSize: 10, fontWeight: 600, opacity: exactSheet === 'sector' ? 0.85 : 0.55 }}>
-              sheet 02 · exact, no AI
-            </span>
-          </button>
-          {GLOSSY_FILTERS.map((f) => {
-            // A design layer stays selected even with an illustrated style chosen — the two
-            // combine (e.g. Zones + Homestead Storybook). Analysis maps override the layer.
-            const active = exactSheet === null && analysisStyle === null && filter === f.key;
+          {/* The whole plan set as ONE numbered 01–08 row, in canonical order (DESIGN_SHEETS).
+              Exact-only sheets (01 Existing site, 02 Sector, 08 Implementation) set exactSheet;
+              the middle design layers (03–07) set the filter and can be restyled with a Style
+              below. Every chip shows its sheet number so the picker reads like the printed set. */}
+          {DESIGN_SHEETS.map((sheet) => {
+            const isExact = 'exact' in sheet;
+            const active = isExact
+              ? exactSheet === sheet.exact
+              : exactSheet === null && analysisStyle === null && filter === sheet.filter;
             return (
               <button
-                key={f.key}
+                key={sheet.no}
                 type="button"
-                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setExactSheet(null); }}
+                onClick={() => {
+                  if ('exact' in sheet) { setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null); }
+                  else { setFilter(sheet.filter); setAnalysisStyle(null); setExactSheet(null); }
+                }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
                   minHeight: 38,
-                  padding: '6px 14px',
+                  padding: '5px 14px',
                   borderRadius: 19,
-                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.35)',
                   background: active ? GREEN : 'transparent',
                   color: active ? PAPER : DARK,
                   fontWeight: 700,
@@ -4083,42 +4104,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                   opacity: loading !== null && !active ? 0.5 : 1,
                 }}
               >
-                {f.label}
+                <span>{sheet.label}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>
+                  {isExact ? `sheet ${sheet.no} · exact, no AI` : `sheet ${sheet.no}`}
+                </span>
               </button>
             );
           })}
-          {/* Sheet 07 — the deterministic Implementation & Phasing sheet. Exact (rules-engine, no
-              AI), so it sits with the Design maps; a two-line chip marks it apart from the layer
-              filters AND from the Gemini "Implementation" analysis chip below (which is the
-              illustrated, less-reliable version). */}
-          <button
-            key="impl-exact"
-            type="button"
-            onClick={() => { setExactSheet('implementation'); setAnalysisStyle(null); setProducerStyle(null); }}
-            disabled={loading !== null}
-            aria-pressed={exactSheet === 'implementation'}
-            title="Deterministic build sequence, hold points and site rules — derived from your design (no AI)"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              minHeight: 38,
-              padding: '5px 14px',
-              borderRadius: 19,
-              border: exactSheet === 'implementation' ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
-              background: exactSheet === 'implementation' ? GREEN : 'transparent',
-              color: exactSheet === 'implementation' ? PAPER : DARK,
-              fontWeight: 700,
-              fontSize: 13,
-              cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null && exactSheet !== 'implementation' ? 0.5 : 1,
-            }}
-          >
-            <span>Implementation &amp; phasing</span>
-            <span style={{ fontSize: 10, fontWeight: 600, opacity: exactSheet === 'implementation' ? 0.85 : 0.55 }}>
-              sheet 08 · exact, no AI
-            </span>
-          </button>
         </div>
 
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
@@ -4195,7 +4187,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          {exactSheet === 'sector'
+          {exactSheet === 'base'
+            ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
+            : exactSheet === 'sector'
             ? "Draw your Sector Analysis sheet (plan-set 02) — the sun path (from the north), prevailing summer/winter winds, dry-season fire approach, downhill water flow with on-contour lines, and frost pockets, all read from your site's real slope and climate. Analysis comes before design: these energies are WHY your zones, water and planting belong where they do. Deterministic and exact — no AI."
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
@@ -4221,7 +4215,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
-              {exactSheet === 'sector'
+              {exactSheet === 'base'
+                ? ' · Existing site (sheet 01)'
+                : exactSheet === 'sector'
                 ? ' · Sector analysis (sheet 02)'
                 : exactSheet === 'implementation'
                 ? ' · Implementation & phasing (sheet 08)'
@@ -4457,7 +4453,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
         <button
           onClick={() =>
-            exactSheet === 'sector'
+            exactSheet === 'base'
+              ? renderBaseMap()
+              : exactSheet === 'sector'
               ? renderSectorMap()
               : exactSheet === 'implementation'
                 ? renderImplementationMap()
@@ -4493,6 +4491,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : loading === 'falgpt'
                 ? 'Rendering in the background — you can keep working'
                 : 'Generating your map… ~1 min'
+            : exactSheet === 'base'
+              ? `${resultImage ? 'Redraw' : 'Draw'} my existing-site sheet · instant`
             : exactSheet === 'sector'
               ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
             : exactSheet === 'implementation'
