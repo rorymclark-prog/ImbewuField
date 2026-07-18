@@ -55,6 +55,9 @@ must provision — not buildable from code alone).
   the existing showcase/AI-legend pipeline dormant and untouched.
 - Added a focused test for the new pixel-restore helper so the masked path can be flipped off again
   cleanly without changing the rest of the map pipeline.
+- Tightened the Geometry Lock prompt footer and the strict edit wrapper, and asked the worker for
+  the highest input fidelity the edit API supports to squeeze out better map detail without
+  changing the off-switch or the showcase path.
 
 ### 2026-07-12 (site audit + repair pass)
 - Ran a repo-wide audit with subagents across shell/login, map/design, API/auth, and content flows.

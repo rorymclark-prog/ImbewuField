@@ -590,6 +590,8 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   canvas.height = imgH;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
 
   // Fully transparent = editable everywhere, by default.
   ctx.clearRect(0, 0, imgW, imgH);
@@ -3944,13 +3946,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         const composite = await buildComposite(state, frame, refLayers, f);
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const protectMaskDataUrl = !modelChrome && geometryLock
+      const protectMaskDataUrl = !modelChrome && geometryLock
           ? await buildProtectMask(state, frame, refLayers, f)
           : undefined;
-        const prompt = modelChrome
-          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
-          : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
-        sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: modelChrome });
+      const prompt = modelChrome
+        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
+        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
+      sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: modelChrome });
       }
       // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
       // softens exactly those (no boundary clip / burned labels over the model's own chrome).
@@ -4011,7 +4013,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = useShowcase
         ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
-        : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
+        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
