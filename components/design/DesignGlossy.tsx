@@ -3263,9 +3263,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const [notice, setNotice] = useState<string | null>(null);
   // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
   const [queueJobId, setQueueJobId] = useState<string | null>(null);
-  // EXPERIMENTAL "AI legend" mode — let gpt-image-2 draw its OWN legend + selective labels (Rory's
-  // ask), instead of the strict no-text pipeline that burns our labels on. Applies to the Whole-
-  // design ('all') sheet only, in the background queue. See buildShowcasePrompt + finishStyledSheet.
+  // "AI legend" / showcase mode — let gpt-image-2 draw its OWN legend + selective labels and render
+  // the whole frame freely (the free-ChatGPT look), instead of the strict pipeline that clips the
+  // model art to the boundary and burns our labels on. Applies to the CURRENTLY-SELECTED single
+  // sheet (any layer, Zones included), via the background queue. See buildShowcasePrompt +
+  // finishStyledSheet (showcase branch skips the clip/burn). The ALL button still showcases 'all' only.
   const [modelChrome, setModelChrome] = useState(false);
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
@@ -3907,7 +3909,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const elementsText = producerElementsText(state, refLayers, filter);
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
-      const useShowcase = modelChrome && filter === 'all';
+      // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
+      // whole frame freely and draws its own legend + labels (the free-ChatGPT look), with NO boundary
+      // clip and NO burned chrome. This is the only path that matches a raw ChatGPT render; the
+      // composite-back path always seams the model art against the real satellite (visible edges,
+      // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
+      // model version, so we DON'T force the deterministic satellite-only sheet here.
+      const useShowcase = modelChrome;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = useShowcase
         ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
@@ -4447,7 +4455,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             }}
           >
             <span>{modelChrome ? '☑' : '☐'}</span>
-            🧪 Let the AI draw its own legend &amp; labels (experimental · Whole-design sheet)
+            🧪 AI draws the whole map — its own legend &amp; labels, no clipping (ChatGPT-style · this sheet)
           </button>
         )}
 
@@ -4460,7 +4468,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : exactSheet === 'implementation'
                 ? renderImplementationMap()
                 : producerStyle
-                  ? (engine === 'falgpt' && filter !== 'zones' ? generateOneViaQueue() : generateProducer())
+                  ? (engine === 'falgpt' && (filter !== 'zones' || modelChrome) ? generateOneViaQueue() : generateProducer())
                   : analysisStyle
                     ? generate('gemini')
                     : renderDesignMap()
