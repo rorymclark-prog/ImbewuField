@@ -6,7 +6,7 @@
 // may only repaint background texture — never move, add, or remove anything the farmer
 // placed.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } from 'lucide-react';
 
 import polygonClipping from 'polygon-clipping';
@@ -359,6 +359,8 @@ export interface DesignGlossyProps {
   // can read real slope + climate; still structurally assignable to buildPhasePlan's PhasingSite.
   site: SectorSite | null;
   placeName?: string;
+  geometryLock?: boolean;
+  onGeometryLockChange?: Dispatch<SetStateAction<boolean>>;
   // Seed the layer selector (e.g. a per-step "Preview this map" opener). Defaults to 'all'.
   initialFilter?: GlossyLayerFilter;
 }
@@ -3280,7 +3282,16 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
   exact: 'Exact map · no AI',
 };
 
-export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
+export default function DesignGlossy({
+  state,
+  frame,
+  refLayers,
+  site,
+  placeName,
+  geometryLock: geometryLockProp,
+  onGeometryLockChange,
+  initialFilter,
+}: DesignGlossyProps) {
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
@@ -3296,7 +3307,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const [modelChrome, setModelChrome] = useState(true); // ON by default (Rory) — the showcase look IS the product
   // Geometry Lock — when ON, the strict queue path sends a protect mask to gpt-image-2 and the
   // finisher restores the protected source pixels before compositing the deterministic sheet chrome.
-  const [geometryLock, setGeometryLock] = useState(false); // OFF by default to preserve the current path
+  const [geometryLockInternal, setGeometryLockInternal] = useState(false); // OFF by default to preserve the current path
+  const geometryLock = geometryLockProp ?? geometryLockInternal;
+  const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
   const showcaseKeysRef = useRef<Set<string>>(new Set());

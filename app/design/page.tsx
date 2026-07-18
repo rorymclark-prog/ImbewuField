@@ -5,11 +5,11 @@
 // AI "glossy" render of exactly what they built. NEW file only — does not modify any
 // existing route or component.
 
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -58,6 +58,7 @@ import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/desi
 import SpeakButton from '@/components/SpeakButton';
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
+const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
 
 function readStoredDesignMode(): DesignMode {
   if (typeof window === 'undefined') return 'guided';
@@ -66,6 +67,15 @@ function readStoredDesignMode(): DesignMode {
     return raw === 'pro' ? 'pro' : 'guided';
   } catch {
     return 'guided';
+  }
+}
+
+function readStoredGeometryLock(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem(GEOMETRY_LOCK_KEY) === '1';
+  } catch {
+    return false;
   }
 }
 
@@ -373,6 +383,23 @@ function DesignStudioInner() {
       const next: DesignMode = prev === 'pro' ? 'guided' : 'pro';
       try {
         window.localStorage.setItem(DESIGN_MODE_KEY, next);
+      } catch {
+        /* localStorage unavailable */
+      }
+      return next;
+    });
+  }, []);
+
+  // Geometry Lock — off by default, but persisted when the farmer turns it on for testing.
+  const [geometryLock, setGeometryLock] = useState(false);
+  useEffect(() => {
+    setGeometryLock(readStoredGeometryLock());
+  }, []);
+  const toggleGeometryLock = useCallback(() => {
+    setGeometryLock((prev) => {
+      const next = !prev;
+      try {
+        window.localStorage.setItem(GEOMETRY_LOCK_KEY, next ? '1' : '0');
       } catch {
         /* localStorage unavailable */
       }
@@ -1094,6 +1121,32 @@ function DesignStudioInner() {
             Pro
           </span>
         </button>
+        {canvasState?.step === 'glossy' && (
+          <button
+            type="button"
+            onClick={toggleGeometryLock}
+            aria-pressed={geometryLock}
+            title="Strict glossy render only. Keeps the traced geometry locked and restores protected pixels after the model returns."
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              minHeight: 32,
+              padding: '5px 10px',
+              borderRadius: 999,
+              border: geometryLock ? `1px solid ${GREEN}` : '1px dashed rgba(31,77,43,0.5)',
+              background: geometryLock ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
+              color: GREEN,
+              cursor: 'pointer',
+              fontSize: 11.5,
+              fontWeight: 800,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Lock size={14} />
+            Geometry Lock {geometryLock ? 'On' : 'Off'}
+          </button>
+        )}
         {canvasState && frame && (
           <button
             type="button"
@@ -1266,6 +1319,8 @@ function DesignStudioInner() {
             refLayers={refLayers}
             site={glossySite}
             placeName={siteName}
+            geometryLock={geometryLock}
+            onGeometryLockChange={setGeometryLock}
           />
         ) : canvasState && frame ? (
           <>
@@ -1531,6 +1586,8 @@ function DesignStudioInner() {
               refLayers={refLayers}
               site={glossySite}
               placeName={siteName}
+              geometryLock={geometryLock}
+              onGeometryLockChange={setGeometryLock}
               initialFilter={previewFilter}
             />
           </div>
@@ -1787,6 +1844,8 @@ function DesignGlossyLazy(props: {
   refLayers: RefLayers;
   site: SectorSite | null;
   placeName?: string;
+  geometryLock?: boolean;
+  onGeometryLockChange?: Dispatch<SetStateAction<boolean>>;
   initialFilter?: GlossyLayerFilter;
 }) {
   const [Comp, setComp] = useState<React.ComponentType<typeof props> | null>(null);
