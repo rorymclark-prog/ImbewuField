@@ -15,6 +15,7 @@ import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
+import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
@@ -289,8 +290,29 @@ function FacilitatorCropsPageInner() {
   // facilitator/Firestore design picker; &auto=1 opens the auto-suggest
   // questionnaire once beds are loaded. Absent → behaviour 100% unchanged.
   const searchParams = useSearchParams();
-  const canvasSite = searchParams.get('canvasSite');
+  const canvasSiteParam = searchParams.get('canvasSite');
   const autoParam = searchParams.get('auto');
+
+  // FALLBACK when no ?canvasSite (home progress card, task board, nav drawer, /cropplan, /plan
+  // all link here bare): use the MAIN saved place's Design-Studio canvas if it has beds. Without
+  // this, a farmer who designed beds in /design and tapped 'Plan your crops' from Home landed on
+  // 'No beds designed yet' with a back-link to the OLD canvas — the flow audit's worst blocker.
+  const [fallbackCanvasSite, setFallbackCanvasSite] = useState<string | null>(null);
+  useEffect(() => {
+    if (canvasSiteParam) return;
+    try {
+      const main = resolveMainSite(loadPlaces());
+      if (!main) return;
+      const sid = `site:${main.lat.toFixed(5)},${main.lon.toFixed(5)}`;
+      if (bedsFromDesignCanvas(loadCanvasState(sid)).length > 0) setFallbackCanvasSite(sid);
+    } catch { /* corrupt cache — legacy behaviour stands */ }
+  }, [canvasSiteParam]);
+  const canvasSite = canvasSiteParam ?? fallbackCanvasSite;
+  // "Back to design" always means the NEW Design Studio — the flow audit caught these links
+  // pointing at the legacy /facilitator canvas, which made farmers think their design vanished.
+  const designHref = canvasSite?.startsWith('site:')
+    ? `/design?lat=${canvasSite.slice(5).split(',')[0]}&lon=${canvasSite.slice(5).split(',')[1]}`
+    : '/design';
 
   const [design, setDesign] = useState<FacilitatorDesignState | null | undefined>(undefined);
   // Beds read from the Design Studio canvas when arriving via ?canvasSite.
@@ -737,7 +759,7 @@ function FacilitatorCropsPageInner() {
           <Home size={16} strokeWidth={1.7} />
         </Link>
         <Link
-          href="/facilitator"
+          href={designHref}
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
         >
@@ -828,14 +850,14 @@ function FacilitatorCropsPageInner() {
           </div>
         </div>
       ) : beds.length === 0 ? (
-        <EmptyState onVirtual={() => setUseVirtual(true)} />
+        <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: 1100 }}>
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
-                <Link href="/facilitator" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Place real beds on the Planting step</Link> to replace it.
+                <Link href={designHref} style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Place real beds on the Planting step</Link> to replace it.
               </div>
             )}
 
@@ -1222,7 +1244,7 @@ export default function FacilitatorCropsPage() {
 
 // ── Empty state ──────────────────────────────────────────────────────────
 
-function EmptyState({ onVirtual }: { onVirtual: () => void }) {
+function EmptyState({ onVirtual, designHref }: { onVirtual: () => void; designHref: string }) {
   return (
     <div className="flex-1 flex items-center justify-center px-6">
       <div className="text-center" style={{ maxWidth: 360 }}>
@@ -1232,7 +1254,7 @@ function EmptyState({ onVirtual }: { onVirtual: () => void }) {
           Place veg beds on the Planting step first — then come back here to plan what goes in them.
         </p>
         <Link
-          href="/facilitator"
+          href={designHref}
           className="inline-flex items-center justify-center mt-4 px-4 py-2 rounded-xl font-display font-semibold"
           style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}
         >
