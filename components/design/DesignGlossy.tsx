@@ -18,6 +18,8 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
+import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
+import { computeContourLines } from '@/lib/contours';
 import { buildProducerPrompt, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
@@ -324,7 +326,9 @@ export interface DesignGlossyProps {
     driveway: Array<[number, number]>;
     drivewayClosed?: boolean; // driveway traced as an AREA (polygon) → fill as tar, don't outline
   };
-  site: { biome?: string; rainfallMm?: number } | null;
+  // Widened to SectorSite (a superset of {biome?, rainfallMm?}) so the deterministic Sector sheet
+  // can read real slope + climate; still structurally assignable to buildPhasePlan's PhasingSite.
+  site: SectorSite | null;
   placeName?: string;
   // Seed the layer selector (e.g. a per-step "Preview this map" opener). Defaults to 'all'.
   initialFilter?: GlossyLayerFilter;
@@ -2341,6 +2345,275 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.restore();
 }
 
+// Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
+// are WHY the zones/water/planting sit where they do). Draws the site's REAL energies — sun (from
+// the north in the SH), summer/winter wind, dry-season fire approach, downslope water flow + on-
+// contour lines, and frost drainage — from lib/sector.deriveSectorModel. Nothing is invented; each
+// energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–08.
+export async function buildBlueprintSectorMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null,
+  placeName?: string,
+): Promise<string> {
+  void state; // signature parity with the other builders; content is refLayers + site only
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+  const rowH = Math.round(W * 0.026);
+
+  const model = deriveSectorModel(site, frame.centerLat);
+  const isSH = model.southernHemisphere;
+
+  // 1. Satellite + scrim.
+  await drawBlueprintBase(ctx, frame, W, H);
+  // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  // 3. Ring geometry — centre = boundary centroid (fallback frame centre); radius clamped so arrows
+  //    + labels stay inside the frame and clear the top-right legend and top-left title.
+  const bnd = refLayers.boundary;
+  let cx = W / 2, cy = H / 2, siteR = Math.min(W, H) * 0.22;
+  if (bnd.length >= 3) {
+    let minX = 1, minY = 1, maxX = 0, maxY = 0, sx = 0, sy = 0;
+    for (const [x, y] of bnd) { minX = Math.min(minX, x); minY = Math.min(minY, y); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); sx += x; sy += y; }
+    cx = (sx / bnd.length) * W;
+    cy = (sy / bnd.length) * H;
+    siteR = 0.5 * Math.hypot((maxX - minX) * W, (maxY - minY) * H);
+  }
+  const margin = Math.round(W * 0.035);
+  const arrowLen = Math.round(W * 0.055); // room for the tail + label outside the ring
+  const maxRx = Math.min(cx - margin, W - margin - cx);
+  const maxRy = Math.min(cy - margin, H - margin - cy);
+  const R = Math.max(siteR * 0.7 + 10, Math.min(siteR + W * 0.02, Math.min(maxRx, maxRy) - arrowLen));
+
+  // dashed compass ring + N/E/S/W ticks
+  ctx.save();
+  ctx.setLineDash([6, 6]);
+  ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#D8DEE3';
+  ctx.font = `700 ${Math.round(rowH * 0.6)}px system-ui, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('N', cx, cy - R - rowH * 0.5);
+  ctx.fillText('S', cx, cy + R + rowH * 0.5);
+  ctx.fillText('E', cx + R + rowH * 0.55, cy);
+  ctx.fillText('W', cx - R - rowH * 0.55, cy);
+  ctx.restore();
+
+  // Inward energy arrow: tail OUTSIDE the ring in `fromVec`, head INSIDE — energy entering the site.
+  const drawArrow = (fromVec: [number, number], color: string, width: number, dash: number[], lenIn = R * 0.4) => {
+    const sxp = cx + fromVec[0] * (R + arrowLen * 0.75), syp = cy + fromVec[1] * (R + arrowLen * 0.75);
+    const exp = cx + fromVec[0] * (R - lenIn), eyp = cy + fromVec[1] * (R - lenIn);
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineCap = 'round';
+    ctx.setLineDash(dash);
+    ctx.beginPath();
+    ctx.moveTo(sxp, syp);
+    ctx.lineTo(exp, eyp);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    const ang = Math.atan2(eyp - syp, exp - sxp);
+    const ah = Math.max(9, width * 2.6);
+    ctx.beginPath();
+    ctx.moveTo(exp, eyp);
+    ctx.lineTo(exp - ah * Math.cos(ang - 0.42), eyp - ah * Math.sin(ang - 0.42));
+    ctx.lineTo(exp - ah * Math.cos(ang + 0.42), eyp - ah * Math.sin(ang + 0.42));
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+    return { sxp, syp };
+  };
+  const labelAt = (x: number, y: number, text: string, color: string) => {
+    ctx.save();
+    ctx.font = `800 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3.5;
+    ctx.strokeStyle = 'rgba(8,14,22,0.9)';
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  };
+
+  // 4. FIRE wedge (under everything else) — a translucent sector from the dry-season wind direction.
+  if (model.fire) {
+    const v1 = bearingToUnitVector(model.fire.bearingDeg - 24);
+    const v2 = bearingToUnitVector(model.fire.bearingDeg + 24);
+    const rr = R * 1.16;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
+    ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(214,74,42,0.20)';
+    ctx.fill();
+    ctx.restore();
+    drawArrow(bearingToUnitVector(model.fire.bearingDeg), '#D64A2A', Math.max(3, W * 0.004), [10, 6]);
+    const lp = bearingToUnitVector(model.fire.bearingDeg);
+    labelAt(cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+  }
+
+  // 5. SUN — a bold gold arc across the sky on the equator-facing side (north for SH), + midday ray.
+  const sunR = R + arrowLen * 0.45;
+  ctx.save();
+  ctx.strokeStyle = '#F7C97E';
+  ctx.lineWidth = Math.max(3, W * 0.005);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(cx, cy, sunR, 0, Math.PI, isSH); // isSH=anticlockwise → arc over the TOP (north)
+  ctx.stroke();
+  const sunApexY = isSH ? cy - sunR : cy + sunR;
+  ctx.beginPath();
+  ctx.arc(cx, sunApexY, Math.max(7, W * 0.011), 0, Math.PI * 2);
+  ctx.fillStyle = '#F7C97E';
+  ctx.fill();
+  ctx.restore();
+  drawArrow(bearingToUnitVector(isSH ? 0 : 180), '#F7C97E', Math.max(3.5, W * 0.0045), []);
+  labelAt(cx, isSH ? cy - sunR - rowH * 0.7 : cy + sunR + rowH * 0.7, `MIDDAY SUN — ${model.sun.middayFrom}`, '#F7C97E');
+
+  // 6. WIND — summer + winter arrows entering from where the wind blows FROM.
+  const windWidth = (spd?: number) => Math.max(2.5, (2 + Math.min(spd ?? 3, 8) * 0.5) * (W / 700));
+  if (model.windSummer) {
+    const v = bearingToUnitVector(model.windSummer.bearingDeg);
+    drawArrow(v, '#E08A2C', windWidth(model.windSummer.speed), [9, 5]);
+    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `SUMMER WIND ${model.windSummer.fromLabel}`, '#F0B76A');
+  }
+  if (model.windWinter) {
+    const v = bearingToUnitVector(model.windWinter.bearingDeg);
+    drawArrow(v, '#C97B25', windWidth(model.windWinter.speed), [9, 5]);
+    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `WINTER WIND ${model.windWinter.fromLabel}`, '#E0A45A');
+  }
+
+  // 7. WATER — downslope arrow through the centre + on-contour lines (dashed = indicative / omitted when flat).
+  if (model.water) {
+    const dn = bearingToUnitVector(model.water.downhillBearingDeg);
+    ctx.save();
+    ctx.strokeStyle = '#3A8EC4';
+    ctx.fillStyle = '#3A8EC4';
+    ctx.lineWidth = Math.max(3, W * 0.004);
+    ctx.setLineDash(model.water.indicative ? [8, 6] : []);
+    ctx.lineCap = 'round';
+    const wsx = cx - dn[0] * siteR * 0.7, wsy = cy - dn[1] * siteR * 0.7;
+    const wex = cx + dn[0] * siteR * 0.9, wey = cy + dn[1] * siteR * 0.9;
+    ctx.beginPath();
+    ctx.moveTo(wsx, wsy);
+    ctx.lineTo(wex, wey);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    const wang = Math.atan2(wey - wsy, wex - wsx);
+    const wah = Math.max(10, W * 0.011);
+    ctx.beginPath();
+    ctx.moveTo(wex, wey);
+    ctx.lineTo(wex - wah * Math.cos(wang - 0.42), wey - wah * Math.sin(wang - 0.42));
+    ctx.lineTo(wex - wah * Math.cos(wang + 0.42), wey - wah * Math.sin(wang + 0.42));
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+    labelAt(wex, wey + rowH * 0.55, `WATER FLOWS DOWNHILL${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
+
+    // On-contour lines only when the slope is steep enough to be meaningful (>=1.5°).
+    if (!model.flat && bnd.length >= 3 && model.water.slopeDeg >= 1.5) {
+      const contour = computeContourLines(model.water.slopeDeg, model.water.downhillBearingDeg, bnd, frame.mPerPx, frame.imgW, frame.imgH);
+      if (!contour.tooFlat && contour.lines.length) {
+        ctx.save();
+        // clip to the boundary so the parallel lines don't spill past the plot
+        blueprintRing(ctx, bnd, px, py);
+        ctx.clip();
+        ctx.strokeStyle = 'rgba(126,212,107,0.9)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([7, 6]);
+        for (const ln of contour.lines) {
+          ctx.beginPath();
+          ctx.moveTo(px(ln.a[0]), py(ln.a[1]));
+          ctx.lineTo(px(ln.b[0]), py(ln.b[1]));
+          ctx.stroke();
+        }
+        ctx.restore();
+        const mid = contour.lines[Math.floor(contour.lines.length / 2)];
+        if (mid) labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2, 'ON CONTOUR — SWALES RUN THIS WAY', '#B7E8A6');
+      }
+    }
+  }
+
+  // 8. FROST — icy dashed downslope arrow + frost-pocket ellipse at the low end.
+  if (model.frost) {
+    const dn = bearingToUnitVector(model.frost.downhillBearingDeg);
+    const fx = cx + dn[0] * siteR * 0.85, fy = cy + dn[1] * siteR * 0.85;
+    ctx.save();
+    ctx.strokeStyle = '#9FD0E8';
+    ctx.lineWidth = 2.4;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(fx, fy);
+    ctx.stroke();
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    ctx.ellipse(fx, fy, Math.max(20, W * 0.026), Math.max(12, W * 0.016), 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(159,208,232,0.16)';
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    labelAt(fx, fy, 'FROST POCKET', '#CDE7FA');
+  }
+
+  // 9. DATA STRIP under the title — real figures only, missing ones omitted.
+  const parts: string[] = [];
+  if (site?.elevation) parts.push(`SLOPE ${site.elevation.slopeDeg.toFixed(1)}° (${site.elevation.slopePct.toFixed(0)}%) FACING ${site.elevation.aspectLabel}`);
+  if (site?.climate?.windSpeed != null) parts.push(`WIND ${site.climate.windSpeed.toFixed(1)} m/s`);
+  if (site?.climate?.minTemp != null) parts.push(`MIN ${site.climate.minTemp.toFixed(0)}°C`);
+  if (site?.rainfallMm != null) parts.push(`${Math.round(site.rainfallMm)} mm/yr`);
+  if (parts.length) {
+    ctx.save();
+    ctx.fillStyle = '#B9C2C8';
+    ctx.font = `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(parts.join('  ·  '), pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
+    ctx.restore();
+  }
+
+  // 10. Chrome — title, legend (only energies drawn), scale bar, north arrow.
+  drawBlueprintTitle(ctx, W, pad, 'SECTOR ANALYSIS', placeName ?? 'Site energies · sun · wind · water · fire');
+  const rows: BlueprintLegendRow[] = [{ color: '#F7C97E', label: `Midday sun (from ${model.sun.middayFrom})`, style: 'line' }];
+  if (model.windSummer) rows.push({ color: '#E08A2C', label: `Summer wind (${model.windSummer.fromLabel})`, style: 'dashline' });
+  if (model.windWinter) rows.push({ color: '#C97B25', label: `Winter wind (${model.windWinter.fromLabel})`, style: 'dashline' });
+  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel})`, style: 'dashline' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: 'line' });
+  if (model.water && !model.flat && model.water.slopeDeg >= 1.5) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
+  if (model.frost) rows.push({ color: '#9FD0E8', label: 'Frost pocket', style: 'dashline' });
+  rows.push({ color: '#8CEB6A', label: 'Site boundary', style: 'line' });
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.6)));
+  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, model.dataNotes[0] ?? 'Read the site before you design it.');
+  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
+
+  return canvas.toDataURL('image/png');
+}
+
 // Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 07 in docs/PLAN-SET-SPEC.md,
 // the product differentiator. This is the EXACT / reliable counterpart to the Gemini
 // 'Implementation' ANALYSIS style: that one is an illustrated free-hand render (great to look at,
@@ -2966,7 +3239,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
   // overrides filter/analysis/producer for the render dispatch.
-  const [implExact, setImplExact] = useState(false);
+  // Which deterministic EXACT sheet (if any) is selected — the two rules-engine sheets (Sector 02,
+  // Implementation 08) that carry their own chrome and override filter/analysis/producer. One union
+  // state (not two booleans) makes the selection mutually exclusive by construction.
+  const [exactSheet, setExactSheet] = useState<null | 'sector' | 'implementation'>(null);
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('gemini');
@@ -2979,11 +3255,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
-  const mapKey = implExact
-    ? 'implementation-exact'
-    : producerStyle
-      ? `producer:${producerStyle}:${filter}`
-      : (analysisStyle ?? filter);
+  const mapKey = exactSheet === 'sector'
+    ? 'sector-exact'
+    : exactSheet === 'implementation'
+      ? 'implementation-exact'
+      : producerStyle
+        ? `producer:${producerStyle}:${filter}`
+        : (analysisStyle ?? filter);
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
   const pushGallery = useCallback((label: string, image: string) => {
@@ -3272,6 +3550,26 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
 
+  // Deterministic SECTOR ANALYSIS sheet (plan-set 02) — the RULES-ENGINE render (lib/sector). Never
+  // refuses: the sun is always real content and the sheet degrades honestly when slope/climate data
+  // is missing, so it can't block the print set on a device-local cache.
+  const renderSectorMap = useCallback(async () => {
+    setLoading('exact');
+    setError(null);
+    try {
+      const composite = await buildBlueprintSectorMap(state, frame, refLayers, site, placeName);
+      setResultImage(composite);
+      const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
+      saveGlossy(state.siteId, mapKey, record);
+      setSaved(record);
+      pushGallery('Sector analysis', composite);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Render failed.');
+    } finally {
+      setLoading(null);
+    }
+  }, [state, frame, refLayers, site, mapKey, pushGallery, placeName]);
+
   // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
   // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
   // gpt-image-2 — they never 403) for every design layer that has content, plus the exact
@@ -3282,46 +3580,38 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     setLoading('exact');
     setError(null);
     setNotice(null);
-    const order: GlossyLayerFilter[] = ['all', 'water', 'zones', 'planting', 'structures'];
     let made = 0;
+    const step = (label: string, image: string, cacheKey: string) => {
+      try { saveGlossy(state.siteId, cacheKey, { image, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full — gallery still holds it */ }
+      pushGallery(label, image);
+      made += 1;
+      setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+    };
     try {
-      for (const f of order) {
+      // Canonical 8-map order (docs/PLAN-SET-SPEC.md). Analysis (02 Sector) before design.
+      // 02 — Sector analysis (always: the sun is real content even before slope/climate load).
+      step('02 · Sector analysis', await buildBlueprintSectorMap(state, frame, refLayers, site, placeName), 'sector-exact');
+      // 03–06 — the design layers that have content.
+      const layers: Array<{ f: GlossyLayerFilter; no: string; build: () => Promise<string> }> = [
+        { f: 'zones', no: '03', build: () => buildBlueprintZoneMap(state, frame, refLayers, placeName) },
+        { f: 'water', no: '04', build: () => buildBlueprintWaterMap(state, frame, refLayers, placeName) },
+        { f: 'planting', no: '05', build: () => buildBlueprintPlantingMap(state, frame, refLayers, placeName) },
+        { f: 'structures', no: '06', build: () => buildBlueprintStructuresMap(state, frame, refLayers, placeName) },
+      ];
+      for (const { f, no, build } of layers) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
-        const composite =
-          f === 'zones'
-            ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
-            : f === 'water'
-              ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
-              : f === 'planting'
-                ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
-                : f === 'structures'
-                  ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
-                  : await buildComposite(state, frame, refLayers, f, true);
-        const label = f === 'all' ? 'Whole design' : `${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`;
-        // Each sheet caches under the same key its single-map render uses (bare filter). saveGlossy
-        // can throw when the 2-slot cache is full — the in-memory gallery still holds every sheet,
-        // so swallow it rather than abort the batch.
-        try { saveGlossy(state.siteId, f, { image: composite, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
-        pushGallery(label, composite);
-        made += 1;
-        setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+        step(`${no} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`, await build(), f);
       }
-      // Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
+      // 07 — Final integrated masterplan (the whole design over the satellite).
+      step('07 · Whole design (masterplan)', await buildComposite(state, frame, refLayers, 'all', true), 'all');
+      // 08 — Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
       const plan = buildPhasePlan(state, refLayers, site);
       if (plan.phases.length > 0) {
-        const impl = await buildImplementationMap(state, frame, refLayers, site, placeName);
-        try { saveGlossy(state.siteId, 'implementation-exact', { image: impl, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
-        pushGallery('Implementation & phasing', impl);
-        made += 1;
+        step('08 · Implementation & phasing', await buildImplementationMap(state, frame, refLayers, site, placeName), 'implementation-exact');
       }
-      if (made === 0) {
-        setError('Nothing to generate yet — trace your boundary and place some elements (water, beds, trees…) first.');
-        setNotice(null);
-      } else {
-        setNotice(`Done — ${made} sheets in your gallery. Open it to view or Print the set.`);
-        setGalleryViewId(null);
-        setGalleryOpen(true);
-      }
+      setNotice(`Done — ${made} sheets in your gallery. Open it to view or Print the set.`);
+      setGalleryViewId(null);
+      setGalleryOpen(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
@@ -3638,15 +3928,45 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           Design maps
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {/* Sheet 02 — the deterministic SECTOR ANALYSIS sheet. Analysis precedes design, so it
+              leads the row. Exact (rules-engine, no AI), like the Implementation sheet. */}
+          <button
+            key="sector-exact"
+            type="button"
+            onClick={() => { setExactSheet('sector'); setAnalysisStyle(null); setProducerStyle(null); }}
+            disabled={loading !== null}
+            aria-pressed={exactSheet === 'sector'}
+            title="Sun path, wind, water flow, fire & frost — drawn from your site's real slope and climate data (no AI)"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              minHeight: 38,
+              padding: '5px 14px',
+              borderRadius: 19,
+              border: exactSheet === 'sector' ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
+              background: exactSheet === 'sector' ? GREEN : 'transparent',
+              color: exactSheet === 'sector' ? PAPER : DARK,
+              fontWeight: 700,
+              fontSize: 13,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null && exactSheet !== 'sector' ? 0.5 : 1,
+            }}
+          >
+            <span>Sector analysis</span>
+            <span style={{ fontSize: 10, fontWeight: 600, opacity: exactSheet === 'sector' ? 0.85 : 0.55 }}>
+              sheet 02 · exact, no AI
+            </span>
+          </button>
           {GLOSSY_FILTERS.map((f) => {
             // A design layer stays selected even with an illustrated style chosen — the two
             // combine (e.g. Zones + Homestead Storybook). Analysis maps override the layer.
-            const active = !implExact && analysisStyle === null && filter === f.key;
+            const active = exactSheet === null && analysisStyle === null && filter === f.key;
             return (
               <button
                 key={f.key}
                 type="button"
-                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setImplExact(false); }}
+                onClick={() => { setFilter(f.key); setAnalysisStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -3673,9 +3993,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           <button
             key="impl-exact"
             type="button"
-            onClick={() => { setImplExact(true); setAnalysisStyle(null); setProducerStyle(null); }}
+            onClick={() => { setExactSheet('implementation'); setAnalysisStyle(null); setProducerStyle(null); }}
             disabled={loading !== null}
-            aria-pressed={implExact}
+            aria-pressed={exactSheet === 'implementation'}
             title="Deterministic build sequence, hold points and site rules — derived from your design (no AI)"
             style={{
               display: 'flex',
@@ -3684,18 +4004,18 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               minHeight: 38,
               padding: '5px 14px',
               borderRadius: 19,
-              border: implExact ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
-              background: implExact ? GREEN : 'transparent',
-              color: implExact ? PAPER : DARK,
+              border: exactSheet === 'implementation' ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.4)',
+              background: exactSheet === 'implementation' ? GREEN : 'transparent',
+              color: exactSheet === 'implementation' ? PAPER : DARK,
               fontWeight: 700,
               fontSize: 13,
               cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null && !implExact ? 0.5 : 1,
+              opacity: loading !== null && exactSheet !== 'implementation' ? 0.5 : 1,
             }}
           >
             <span>Implementation &amp; phasing</span>
-            <span style={{ fontSize: 10, fontWeight: 600, opacity: implExact ? 0.85 : 0.55 }}>
-              sheet 07 · exact, no AI
+            <span style={{ fontSize: 10, fontWeight: 600, opacity: exactSheet === 'implementation' ? 0.85 : 0.55 }}>
+              sheet 08 · exact, no AI
             </span>
           </button>
         </div>
@@ -3710,7 +4030,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setImplExact(false); }}
+                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -3744,7 +4064,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); setImplExact(false); }}
+                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={s.blurb}
@@ -3774,8 +4094,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-          {implExact
-            ? 'Draw your Implementation & Phasing sheet (plan-set 07) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
+          {exactSheet === 'sector'
+            ? "Draw your Sector Analysis sheet (plan-set 02) — the sun path (from the north), prevailing summer/winter winds, dry-season fire approach, downhill water flow with on-contour lines, and frost pockets, all read from your site's real slope and climate. Analysis comes before design: these energies are WHY your zones, water and planting belong where they do. Deterministic and exact — no AI."
+            : exactSheet === 'implementation'
+            ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
             ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND boundary-accurate by construction. ${engine === 'falgpt' ? 'gpt-image-2 is slow — up to ~5 min. For a quick preview, switch the engine to Gemini (~1 min).' : 'Gemini takes about a minute.'}`
             : analysisStyle
@@ -3798,8 +4120,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
               {placeName ?? 'Your design'}
-              {implExact
-                ? ' · Implementation & phasing (sheet 07)'
+              {exactSheet === 'sector'
+                ? ' · Sector analysis (sheet 02)'
+                : exactSheet === 'implementation'
+                ? ' · Implementation & phasing (sheet 08)'
                 : producerStyle
                 ? ` · ${filter === 'all' ? 'Whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : analysisStyle
@@ -3811,12 +4135,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={resultImage}
-              alt={implExact ? 'Deterministic implementation & phasing plan of the design' : "AI artist's impression of the design"}
+              alt={exactSheet ? 'Deterministic plan sheet of the design' : "AI artist's impression of the design"}
               style={{ width: '100%', display: 'block' }}
             />
             <div style={{ padding: '10px 14px', background: DARK, color: PAPER, fontSize: 12, opacity: 0.75 }}>
-              {implExact
-                ? 'Deterministic implementation plan — built from your design by the rules engine, no AI.'
+              {exactSheet
+                ? 'Deterministic plan sheet — built from your design + site data by the rules engine, no AI.'
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
             </div>
           </div>
@@ -4002,13 +4326,15 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
         <button
           onClick={() =>
-            implExact
-              ? renderImplementationMap()
-              : producerStyle
-                ? generateProducer()
-                : analysisStyle
-                  ? generate('gemini')
-                  : renderDesignMap()
+            exactSheet === 'sector'
+              ? renderSectorMap()
+              : exactSheet === 'implementation'
+                ? renderImplementationMap()
+                : producerStyle
+                  ? generateProducer()
+                  : analysisStyle
+                    ? generate('gemini')
+                    : renderDesignMap()
           }
           disabled={loading !== null}
           style={{
@@ -4036,7 +4362,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : loading === 'falgpt'
                 ? 'Generating… gpt-image-2 is slow (up to ~5 min)'
                 : 'Generating your map… ~1 min'
-            : implExact
+            : exactSheet === 'sector'
+              ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
+            : exactSheet === 'implementation'
               ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
               : producerStyle
                 ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`

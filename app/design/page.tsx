@@ -13,6 +13,7 @@ import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, Chevro
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
+import type { SectorSite } from '@/lib/sector';
 import {
   designSiteIdFromLocation,
   loadDesignStudioState,
@@ -483,6 +484,34 @@ function DesignStudioInner() {
       aspectLabel: locationData.elevation?.aspectLabel,
       rainfallMm: locationData.rainfall?.annual,
       biome: locationData.biome?.name,
+    };
+  }, [locationData]);
+
+  // Full sector context (slope + climate) for the deterministic Sector sheet (plan-set 02). A
+  // superset of {biome, rainfallMm}, so it also feeds buildPhasePlan/buildDesignBrief unchanged.
+  const glossySite: SectorSite | null = useMemo(() => {
+    if (!locationData) return null;
+    return {
+      biome: locationData.biome?.name,
+      rainfallMm: locationData.rainfall?.annual,
+      rainfallPattern: locationData.rainfall?.pattern ?? locationData.biome?.rainfallPattern,
+      elevation: locationData.elevation
+        ? {
+            slopeDeg: locationData.elevation.slopeDeg,
+            slopePct: locationData.elevation.slopePct,
+            aspectDeg: locationData.elevation.aspectDeg,
+            aspectLabel: locationData.elevation.aspectLabel,
+          }
+        : undefined,
+      climate: locationData.climate
+        ? {
+            windFromSummer: locationData.climate.windFromSummer,
+            windFromWinter: locationData.climate.windFromWinter,
+            windSpeed: locationData.climate.windSpeed,
+            minTemp: locationData.climate.minTemp,
+            maxTemp: locationData.climate.maxTemp,
+          }
+        : undefined,
     };
   }, [locationData]);
 
@@ -1114,6 +1143,7 @@ function DesignStudioInner() {
           state={canvasState}
           frame={frame}
           refLayers={refLayers}
+          site={glossySite}
           placeName={placeName ?? siteName}
           onClose={() => setPrintOpen(false)}
         />
@@ -1222,7 +1252,7 @@ function DesignStudioInner() {
             state={canvasState}
             frame={frame}
             refLayers={refLayers}
-            site={site ? { biome: site.biome, rainfallMm: site.rainfallMm } : null}
+            site={glossySite}
             placeName={siteName}
           />
         ) : canvasState && frame ? (
@@ -1483,7 +1513,7 @@ function DesignStudioInner() {
               state={canvasState}
               frame={frame}
               refLayers={refLayers}
-              site={site ? { biome: site.biome, rainfallMm: site.rainfallMm } : null}
+              site={glossySite}
               placeName={siteName}
               initialFilter={previewFilter}
             />
@@ -1739,7 +1769,7 @@ function DesignGlossyLazy(props: {
   state: DesignCanvasState;
   frame: CanvasFrame;
   refLayers: RefLayers;
-  site: { biome?: string; rainfallMm?: number } | null;
+  site: SectorSite | null;
   placeName?: string;
   initialFilter?: GlossyLayerFilter;
 }) {
@@ -1769,6 +1799,7 @@ function DesignPrintLazy(props: {
   state: DesignCanvasState;
   frame: CanvasFrame;
   refLayers: RefLayers;
+  site: SectorSite | null;
   placeName?: string;
   onClose: () => void;
 }) {
