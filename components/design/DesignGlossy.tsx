@@ -7,7 +7,7 @@
 // placed.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical, Images, X } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2 } from 'lucide-react';
 
 import polygonClipping from 'polygon-clipping';
 
@@ -3296,6 +3296,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     ]);
   }, []);
 
+  // Remove one saved map (session-only, so this is just React state). If the deleted
+  // item is the one open in the detail view, drop back to the grid.
+  const removeGallery = useCallback((id: string) => {
+    setGallery((prev) => prev.filter((g) => g.id !== id));
+    setGalleryViewId((cur) => (cur === id ? null : cur));
+  }, []);
+
   // Load the cached render for this site + chosen map. Runs on mount and whenever the map
   // changes, so each map keeps its own last render.
   useEffect(() => {
@@ -4557,6 +4564,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                     >
                       ‹ Back
                     </button>
+                    <button
+                      onClick={() => removeGallery(galleryViewItem.id)}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginLeft: 'auto', padding: '8px 14px', borderRadius: 12, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
+                    >
+                      <Trash2 size={15} /> Delete
+                    </button>
                   </div>
                 </div>
               ) : gallery.length === 0 ? (
@@ -4565,18 +4578,38 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
                     {gallery.map((g) => (
-                      <button
+                      <div
                         key={g.id}
-                        onClick={() => setGalleryViewId(g.id)}
-                        style={{ position: 'relative', padding: 0, borderRadius: 10, overflow: 'hidden', border: '1px solid #E2D8C4', aspectRatio: '1 / 1', cursor: 'pointer', background: DARK }}
+                        style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', border: '1px solid #E2D8C4', aspectRatio: '1 / 1', background: DARK }}
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={g.image} alt={g.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                        <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
-                      </button>
+                        <button
+                          onClick={() => setGalleryViewId(g.id)}
+                          aria-label={`Open ${g.label}`}
+                          style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={g.image} alt={g.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
+                        </button>
+                        <button
+                          onClick={() => removeGallery(g.id)}
+                          aria-label={`Delete ${g.label}`}
+                          style={{ position: 'absolute', top: 4, right: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: 8, background: 'rgba(181,58,58,0.92)', border: '1px solid rgba(255,255,255,0.35)', color: '#fff', cursor: 'pointer', boxShadow: '0 1px 4px rgba(20,16,10,0.4)' }}
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
                     ))}
                   </div>
-                  <p style={{ fontSize: 10, color: '#9A8268', margin: 0 }}>Session-only — kept until you leave this screen.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                    <p style={{ fontSize: 10, color: '#9A8268', margin: 0 }}>Session-only — kept until you leave this screen.</p>
+                    <button
+                      onClick={() => { setGallery([]); setGalleryViewId(null); }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 9, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 11, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                    >
+                      <Trash2 size={12} /> Clear all
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
