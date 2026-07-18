@@ -18,6 +18,7 @@ import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import NavDrawer from '@/components/NavDrawer';
 import ProfileSheet from '@/components/ProfileSheet';
+import LessonLink from '@/components/design/LessonLink';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -391,6 +392,8 @@ function HomeInner() {
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
           <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#94876F' }}>{t('tagline')}</span>
           <div className="flex-1" />
+
+          <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
 
           {/* ONE design door — Design Studio (canonical /design surface; Zones + the AI suggest
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones

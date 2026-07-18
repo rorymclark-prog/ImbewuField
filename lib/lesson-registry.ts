@@ -18,6 +18,7 @@
 //   zone:<0..5>                   e.g. zone:1
 //   line:<swale|fence|path|pipe|drip|windbreak>
 //   crops:planner  ·  finances:overview  ·  community:overview
+//   map:overview  ·  surveys:overview  ·  print:planset
 
 import type { StepLesson } from '@/lib/design-lessons';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
@@ -181,6 +182,32 @@ const OVERRIDES: Record<string, MicroLesson> = {
     principle: 'Integrate rather than segregate — a network of gardens beats a lonely one.',
     tip: 'Trade a surplus for a skill — the cheapest fertiliser is a neighbour who owes you a hand.',
     courseModuleId: 'market-community',
+    draft: true,
+  },
+  'map:overview': {
+    id: 'map:overview',
+    title: 'Read the land first',
+    body: 'Tap anywhere on your land and the map reads it back to you: real rainfall, soil, slope and climate for that exact spot — not a guess. Look before you plan. The land already tells you what it wants; your job is to notice it. Save the place, then open the Design Studio to turn what you see into beds, water and trees.',
+    principle: 'Observe and interact — read the land before you plan it.',
+    tip: 'Tap your own plot, not the road — every reading is for the exact point you press.',
+    courseModuleId: 'reading-landscape',
+    draft: true,
+  },
+  'surveys:overview': {
+    id: 'surveys:overview',
+    title: 'Why these surveys matter',
+    body: 'The organisations you work with send these surveys to learn what is really happening on the ground. Your answers become the evidence they use to bring seed, tools, training and funding to farmers like you. Answer as it truly is — a hard season told plainly brings more help than a rosy one made up. A clear photo says more than a paragraph.',
+    principle: 'Apply self-regulation and accept feedback — honest answers are how help finds you.',
+    tip: 'Fill it in soon after the work, while the real numbers are still fresh in your head.',
+    courseModuleId: 'market-community',
+    draft: true,
+  },
+  'print:planset': {
+    id: 'print:planset',
+    title: 'Your plan set',
+    body: 'The plan set is your whole design as eight numbered sheets, from 01 Existing Site through to 08 Implementation & Phasing — the analysis first, then the design that answers it. Every sheet is drawn to exact scale by the app’s own rules, not by AI, so what you print is true to the metre. Save the PDF and put a real document in people’s hands. Give it to your extension officer, a funder or your mentor — a plan they can hold is a plan they can back.',
+    principle: 'Design from patterns to details — the plan set shows the whole site before the single bed.',
+    tip: 'Export the PDF and take it to your next meeting — a printed plan set is taken more seriously than a phone screen.',
     draft: true,
   },
 };

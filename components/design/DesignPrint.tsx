@@ -16,6 +16,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { X, FileDown, Images, Loader2 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
+import LessonLink from './LessonLink';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
@@ -405,7 +406,8 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
           <FileDown size={20} color={GREEN} />
           <div style={{ fontWeight: 800, fontSize: 16, color: DARK }}>Print / Export</div>
           <div style={{ fontSize: 12, color: '#6B6355' }}>8-map plan set · exact · print-ready</div>
-          <button onClick={onClose} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+          <span style={{ marginLeft: 'auto' }}><LessonLink id="print:planset" label="Learn" /></span>
+          <button onClick={onClose} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
             <X size={18} /> Close
           </button>
         </div>
