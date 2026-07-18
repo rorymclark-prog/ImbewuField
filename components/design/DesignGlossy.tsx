@@ -164,8 +164,10 @@ export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'struct
 // Gemini is listed first and is the DEFAULT: gpt-image-2 (via fal.ai) frequently returns 403
 // (fal/OpenAI verification), so it can't be the reliable default. When it IS picked and fails,
 // generateProducer falls back to Gemini automatically (see the try/catch there).
+// Gemini is switched OFF (Rory, 2026-07-18) — every AI render now goes to gpt-image-2. The
+// 'gemini' key is kept in the union only so the legacy branches still type-check; nothing offers
+// it. (The single-option picker below hides itself.)
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'gemini', label: 'Gemini Pro', sub: 'instant · ~1 min' },
   { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
 ];
 
@@ -3356,7 +3358,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
-  const [engine, setEngine] = useState<'falgpt' | 'gemini'>('gemini');
+  const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   // Session-only gallery of every successful render (producer OR the strict/analysis paths).
   // Never persisted — kept only until the component unmounts.
   const [gallery, setGallery] = useState<Array<{ id: string; label: string; image: string }>>([]);
@@ -4398,8 +4400,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           </button>
           {moreOpen && (
             <div style={{ padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {/* Engine — always shown here so the batch button below never runs on an invisible
-                  selection (audit find). */}
+              {/* Engine picker — only shown if there's more than one engine to choose. Gemini is
+                  switched off, so this hides; everything renders with gpt-image-2. */}
+              {ENGINES.length > 1 && (
               <div>
                 <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
                   AI engine
@@ -4435,6 +4438,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                   })}
                 </div>
               </div>
+              )}
 
               {/* AI-legend experiment — gpt-image-2 renders the whole frame with its OWN legend
                   + labels (the free-ChatGPT look): illustration inside the boundary, real
