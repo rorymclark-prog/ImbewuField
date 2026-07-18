@@ -30,7 +30,7 @@ import type { FacilitatorDesignState } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
 import type { SavedInvoice, Product } from './invoices';
 import type { SavedPlace } from './saved-places';
-import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoProfile, buildDemoStorageSeeds } from './demo-farm';
+import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
 
 const FLAG_KEY = 'imbewu_sample_mode';
 export const SAMPLE_MODE_EVENT = 'imbewu-sample-mode-changed';
@@ -71,7 +71,10 @@ function freshSandbox(): SampleSandbox {
     customers: finance.customers,
     products: finance.products,
     profile: buildDemoProfile(),
-    places: [], // demo starts with none saved — "Save this place" adds one for the session only
+    // The crèche arrives pre-saved so the saved-places list, the farmer map and the Design
+    // entry point all light up immediately (loadPlaces() serves THIS list in sample mode —
+    // the localStorage seed alone never reaches it).
+    places: [buildDemoSavedPlace()],
   };
 }
 

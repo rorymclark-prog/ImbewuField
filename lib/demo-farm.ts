@@ -15,10 +15,18 @@
 // Pure data + pure builder functions only — no I/O, no localStorage,
 // no Firestore. lib/sample-mode.ts is the only caller.
 
+import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import type { CropPlanState, Planting } from './crop-plan';
 import type { FacilitatorDesignState, FacItem, FacLine, FacSector, LayerId } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
 import type { SavedInvoice, Product } from './invoices';
+import type { SavedPlace } from './saved-places';
+import type { WaterPoint } from './water-points';
+import type { DesignCanvasState, PlacedItem, ZoneShape, LineShape } from './design-canvas';
+import { computeCanvasFrame } from './design-canvas';
+import type { DesignLayer } from './design-studio';
+import { designSiteIdFromLocation } from './design-studio';
+import type { LocationData } from './types';
 
 export const DEMO_SITE = { lat: -27.726231, lon: 31.963044, name: 'Ubhejane Creche' };
 
@@ -215,4 +223,231 @@ export function buildDemoFinance(): DemoFinance {
   ];
 
   return { sales, expenses, production: production_, invoices, customers, products };
+}
+
+/* ── Map-layer + Design-Studio seeds ─────────────────────────────────────
+   These build the localStorage-shaped state the Map and /design pages read
+   in sample mode (via lib/sample-mode.ts's storage shim). They are keyed to
+   the SAME real DEMO_SITE lat/lon as everything above, so the traced plot,
+   the saved place, the water points and the authored design all sit on the
+   genuine Ubhejane Crèche ground the satellite background resolves.
+
+   PLOT-LOCAL METRE FRAME (shared anchor for every geometry below)
+   ---------------------------------------------------------------
+   The facilitator garden layout (BED_DEFS / buildDemoFacilitatorState) is in
+   METRES measured from the top-left of its satellite image, x east / y south
+   (geomVersion 2). Its fence spans xM 2..38, yM 2..26 — so the fence CENTRE is
+   (20, 14). We pin that centre onto DEMO_SITE and convert plot-metres → [lng,lat]
+   with the flat-earth approximation (fine over a ~40 m plot):
+       lng = DEMO_SITE.lon + (xM - 20) / metresPerDegreeLon
+       lat = DEMO_SITE.lat - (yM - 14) / metresPerDegreeLat   (south = −lat)
+   1° lat ≈ 111 320 m; 1° lon ≈ 111 320·cos(lat). */
+
+const M_PER_DEG_LAT = 111_320;
+const M_PER_DEG_LON = M_PER_DEG_LAT * Math.cos((DEMO_SITE.lat * Math.PI) / 180);
+
+// Plot-local metres (facilitator convention: x east, y south, top-left origin;
+// fence centre (20,14) pinned to DEMO_SITE) → [lng, lat] degrees.
+function plotMetreToLngLat(xM: number, yM: number): [number, number] {
+  return [
+    DEMO_SITE.lon + (xM - 20) / M_PER_DEG_LON,
+    DEMO_SITE.lat - (yM - 14) / M_PER_DEG_LAT,
+  ];
+}
+
+// The canonical siteId string for DEMO_SITE — computed the EXACT way the /design
+// page does (app/design/page.tsx:474 → designSiteIdFromLocation({lat,lon})), so the
+// seeded `imbewu_design_canvas_<siteId>` blob is found by the page for this site.
+function demoSiteId(): string {
+  return designSiteIdFromLocation({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon } as LocationData);
+}
+
+/* (a) Farm-shapes FeatureCollection — the traced plot boundary, stored EXACTLY the
+   way components/Map.tsx persists a drawn parcel under 'imbewu_farm_shapes':
+   a GeoJSON FeatureCollection whose feature carries a top-level `id` plus
+   properties { featureType:'site', siteId, hatchIdx, name }. classifyFeature()
+   (lib/design-studio.ts) tags the largest non-water land polygon as the
+   property_boundary, and the /design page fits its satellite frame to it. The
+   quadrilateral is a slightly-irregular ~40 m × 28 m ring around the fence so it
+   reads as hand-traced, not machine-perfect. */
+export function buildDemoBoundaryFC(): FeatureCollection {
+  // Slightly-irregular plot corners in plot-metres (mean ≈ centre (20,14)); ~41 m × 27 m.
+  const cornersM: Array<[number, number]> = [
+    [-0.5, 0.4],   // NW
+    [39.6, 1.3],   // NE
+    [40.4, 27.2],  // SE
+    [0.8, 26.7],   // SW
+  ];
+  const ring = cornersM.map(([xM, yM]) => plotMetreToLngLat(xM, yM));
+  ring.push(ring[0]); // GeoJSON polygons are closed rings
+
+  const feature: Feature = {
+    type: 'Feature',
+    id: 'demo-boundary',
+    properties: {
+      featureType: 'site',
+      siteId: demoSiteId(),
+      hatchIdx: 0,
+      name: 'Ubhejane plot',
+    },
+    geometry: { type: 'Polygon', coordinates: [ring] },
+  };
+  return { type: 'FeatureCollection', features: [feature] };
+}
+
+/* (b) Saved place — the "Ubhejane Creche" pin. biome/rainfall/elevation are plausible
+   for the northern-KZN coastal hinterland (Savanna, summer rainfall). 'Savanna' is a
+   real biome name (lib/design-elements.ts biomeClimates → subtropical), which keeps the
+   design's mango/avocado/guava/moringa on-climate. */
+export function buildDemoSavedPlace(): SavedPlace {
+  return {
+    id: 'demo-place-ubhejane',
+    name: 'Ubhejane Creche',
+    lat: DEMO_SITE.lat,
+    lon: DEMO_SITE.lon,
+    biome: 'Savanna',
+    rainfall: 800,
+    elevation: 430,
+    savedAt: daysAgo(30),
+    label: 'field',
+  };
+}
+
+/* (c) Water points — a 2500 L JoJo at the building corner (matches the design's tank
+   item) and a municipal tap where the entry path meets the beds. */
+export function buildDemoWaterPoints(): WaterPoint[] {
+  const [tankLon, tankLat] = plotMetreToLngLat(2.6, 3.6);   // building corner (facilitator tank at 2,3)
+  const [tapLon, tapLat] = plotMetreToLngLat(20, 11);       // path/beds junction
+  return [
+    { id: 'demo-water-tank', name: 'JoJo tank (2500 L)', category: 'Tank', lat: tankLat, lon: tankLon, createdAt: daysAgo(30) },
+    { id: 'demo-water-tap', name: 'Municipal tap', category: 'Other', lat: tapLat, lon: tapLon, createdAt: daysAgo(28) },
+  ];
+}
+
+/* (d) Design-Studio canvas — a fully-authored "review"-step design for the plot.
+
+   COORDINATE CONVERSION (the crux). DesignCanvasState stores items/zones/lines in
+   NORMALISED [0..1] frame coordinates (lib/design-canvas.ts). We build a real frame
+   with the app's own computeCanvasFrame helper over a ~60 m × 45 m bbox centred on
+   DEMO_SITE, then convert every plot-metre position via:
+       plot-metre → [lng,lat] (plotMetreToLngLat) → project() → normalised [0..1]
+   project() is frame.projectorForFrame (returns px/imgW, px/imgH), so this is the
+   SAME pipeline the live page uses — and because we go through real [lng,lat], the
+   page's migrateStateToFrame (app/design/page.tsx:660) re-projects these into whatever
+   frame it recomputes from the boundary, landing every item on the correct ground.
+   (Equivalently, since the frame is centred on DEMO_SITE = plot-metre (20,14):
+       nx = 0.5 + (xM−20)/(imgW·mPerPx),  ny = 0.5 + (yM−14)/(imgH·mPerPx)
+   — the mPerPx form; we use project() so the maths can never drift from the app's.) */
+export function buildDemoDesignCanvasState(): DesignCanvasState {
+  // ~60 m × 45 m bbox centred on DEMO_SITE → fed to the REAL frame builder. Only
+  // `.geometry` is read (getBounds), so a minimal synthetic layer is enough.
+  const halfLonBox = 30 / M_PER_DEG_LON; // 60 m E–W → 30 m half-span
+  const halfLatBox = 22.5 / M_PER_DEG_LAT; // 45 m N–S → 22.5 m half-span
+  const bbox: Geometry = {
+    type: 'Polygon',
+    coordinates: [[
+      [DEMO_SITE.lon - halfLonBox, DEMO_SITE.lat - halfLatBox],
+      [DEMO_SITE.lon + halfLonBox, DEMO_SITE.lat - halfLatBox],
+      [DEMO_SITE.lon + halfLonBox, DEMO_SITE.lat + halfLatBox],
+      [DEMO_SITE.lon - halfLonBox, DEMO_SITE.lat + halfLatBox],
+      [DEMO_SITE.lon - halfLonBox, DEMO_SITE.lat - halfLatBox],
+    ]],
+  };
+  const { frame, project } = computeCanvasFrame(
+    [{ geometry: bbox } as unknown as DesignLayer],
+    DEMO_SITE.lat,
+    DEMO_SITE.lon,
+  );
+
+  const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+  // plot-metre → normalised [0..1] canvas coordinate.
+  const toNorm = (xM: number, yM: number): [number, number] => {
+    const [nx, ny] = project(plotMetreToLngLat(xM, yM));
+    return [clamp01(nx), clamp01(ny)];
+  };
+
+  // ── Items ──────────────────────────────────────────────────────────────
+  // 7 veg beds mirrored from BED_DEFS. FacItem xM/yM is the TOP-LEFT corner
+  // (FacilitatorCanvas.tsx), so the centre PlacedItem wants is (xM+wM/2, yM+hM/2).
+  const beds: PlacedItem[] = BED_DEFS.map((b, i) => {
+    const [x, y] = toNorm(b.xM + b.wM / 2, b.yM + b.hM / 2);
+    return { id: `demo-di-${b.id}`, defId: 'veg_bed', x, y, wM: b.wM, hM: b.hM, rot: 0, label: `Bed ${i + 1}` };
+  });
+
+  // Tank + compost, also mirrored from the facilitator layout (top-left → centre).
+  const [tankX, tankY] = toNorm(2 + 1.2 / 2, 3 + 1.2 / 2);
+  const [compX, compY] = toNorm(13 + 1.5 / 2, 3 + 1.5 / 2);
+  const structures: PlacedItem[] = [
+    { id: 'demo-di-tank', defId: 'jojo_2500', x: tankX, y: tankY, wM: 1.2, hM: 1.2, label: 'Rainwater tank (2500 L)' },
+    { id: 'demo-di-compost', defId: 'compost_bay', x: compX, y: compY, wM: 1.5, hM: 1.5, label: 'Compost bays' },
+  ];
+
+  // Fruit trees + moringa along the SOUTHERN boundary (high yM = south). Circles are
+  // placed by centre metre directly; footprints come from the element catalog defaults.
+  const treeSpecs: Array<{ id: string; defId: string; xM: number; yM: number }> = [
+    { id: 'demo-di-mango', defId: 'tree_mango', xM: 7, yM: 23 },
+    { id: 'demo-di-avocado', defId: 'tree_avocado', xM: 17, yM: 23 },
+    { id: 'demo-di-guava', defId: 'tree_guava', xM: 27, yM: 22.5 },
+    { id: 'demo-di-moringa-1', defId: 'tree_moringa', xM: 33, yM: 22 },
+    { id: 'demo-di-moringa-2', defId: 'tree_moringa', xM: 12, yM: 24 },
+  ];
+  const trees: PlacedItem[] = treeSpecs.map((t) => {
+    const [x, y] = toNorm(t.xM, t.yM);
+    return { id: t.id, defId: t.defId, x, y };
+  });
+
+  const items: PlacedItem[] = [...beds, ...structures, ...trees];
+
+  // ── Zones ──────────────────────────────────────────────────────────────
+  // Permaculture effort-zones (dashed rings; NO `feature` tag). `zone` is a NUMBER
+  // (never a string — the legacy string-zone bug read a painted step as "0/4").
+  const zoneSpecs: Array<{ zone: ZoneShape['zone']; ringM: Array<[number, number]> }> = [
+    { zone: 1, ringM: [[1, 1], [16, 1], [16, 10.5], [1, 10.5]] },        // Daily use — building, tank, compost
+    { zone: 2, ringM: [[2, 11], [15, 11], [15, 21.5], [2, 21.5]] },      // Intensive — the veg-bed block
+    { zone: 3, ringM: [[2, 21.5], [38, 21.5], [38, 26.5], [2, 26.5]] },  // Orchard strip — southern trees
+    { zone: 5, ringM: [[36, 2], [38.5, 2], [38.5, 26], [36, 26]] },      // Conservation sliver — far (east) fence
+  ];
+  const zones: ZoneShape[] = zoneSpecs.map((z, i) => ({
+    id: `demo-dz-${i + 1}`,
+    zone: z.zone,
+    points: z.ringM.map(([xM, yM]) => toNorm(xM, yM)),
+  }));
+
+  // ── Lines ──────────────────────────────────────────────────────────────
+  const pathM: Array<[number, number]> = [[20, 2], [20, 12], [12, 18]];      // gate → down → into beds
+  const swaleM: Array<[number, number]> = [[3, 20.5], [20, 20.8], [37, 20.5]]; // on-contour, just above the orchard
+  const lines: LineShape[] = [
+    { id: 'demo-dl-path', kind: 'path', points: pathM.map(([xM, yM]) => toNorm(xM, yM)) },
+    { id: 'demo-dl-swale', kind: 'swale', points: swaleM.map(([xM, yM]) => toNorm(xM, yM)) },
+  ];
+
+  return {
+    siteId: demoSiteId(),
+    frame,
+    items,
+    zones,
+    lines,
+    step: 'review',
+    updatedAt: new Date().toISOString(),
+    rev: 1,
+  };
+}
+
+/* (e) Storage seeds — the { localStorageKey: serializedValue } map lib/sample-mode.ts's
+   storage shim (shimStoreEnsured) loads into its in-memory store. Keys are hardcoded
+   string literals because the app itself hardcodes them (none are exported):
+     'imbewu_farm_shapes'         — components/Map.tsx FARM_KEY / lib/map-sync SHAPES_KEY
+     'permamap_saved_places'      — lib/saved-places.ts KEY (loader expects a raw array)
+     'imbewu_water_points'        — lib/water-points.ts KEY (raw array)
+     'imbewu_design_canvas_<id>'  — lib/design-canvas.ts keyFor(siteId)
+     'imbewu_map_tips_seen'       — components/Map.tsx (so the tips guide doesn't auto-open) */
+export function buildDemoStorageSeeds(): Record<string, string> {
+  const siteId = demoSiteId();
+  return {
+    imbewu_farm_shapes: JSON.stringify(buildDemoBoundaryFC()),
+    permamap_saved_places: JSON.stringify([buildDemoSavedPlace()]),
+    imbewu_water_points: JSON.stringify(buildDemoWaterPoints()),
+    [`imbewu_design_canvas_${siteId}`]: JSON.stringify(buildDemoDesignCanvasState()),
+    imbewu_map_tips_seen: '1',
+  };
 }
