@@ -15,6 +15,7 @@ import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
 import { STEP_LABELS, STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
+import SectorSummary from './SectorSummary';
 import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
@@ -27,6 +28,7 @@ const DARK = '#20190F';
 // the current layer "doesn't stand out". Each step wears its layer's colour as a bold badge.
 const STEP_ACCENT: Record<WizardStep, string> = {
   base: '#6B6355',
+  sector: '#C07A1E', // sun gold/ochre — the "read the land's energies" step
   water: '#3E8FBF',
   zones: '#C07A1E',
   planting: '#2F7A4A',
@@ -296,6 +298,10 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
         {/* Rain-tank sizing — WATER step only. Sits below the checklist; reads the site's real
             rainfall to size JoJo storage from the roof area and daily use the farmer types in. */}
         {step === 'water' && <TankCalculator />}
+
+        {/* Sector energies — SECTOR step only. The plain-words reveal of the sun/wind/fire/water
+            the app already drew on the canvas; "Looks right →" advances to Water. Nothing to draw. */}
+        {step === 'sector' && <SectorSummary onLooksRight={onNextStep} />}
 
         {/* Simple-Path handoff — beds are down, so offer "plan my crops" straight away. */}
         {showPlanCrops && (

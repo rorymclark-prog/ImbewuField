@@ -34,10 +34,11 @@ interface DesignWizardProps {
   mode?: DesignMode;
 }
 
-export const STEP_ORDER: WizardStep[] = ['base', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
+export const STEP_ORDER: WizardStep[] = ['base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
 
 export const STEP_LABELS: Record<WizardStep, string> = {
   base: 'Base',
+  sector: 'Sector',
   water: 'Water',
   zones: 'Zones',
   planting: 'Planting',
@@ -48,6 +49,7 @@ export const STEP_LABELS: Record<WizardStep, string> = {
 
 const STEP_GUIDANCE: Record<WizardStep, string> = {
   base: "Check your boundary and house are showing — trace them on the main map if not.",
+  sector: "The land's energies — sun, wind, fire, water. Nothing to draw: check it matches what you know of your land.",
   water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope.',
   zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow. Tap "Where do my zones go?" if you want Lima\'s advice.',
   planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
@@ -78,6 +80,9 @@ function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPre
         const cat = ELEMENTS_BY_ID[it.defId]?.category;
         return cat === 'structure' || cat === 'animal';
       });
+    case 'sector':
+      // Analysis-only reveal — nothing is drawn, so it is never "empty". The energies are
+      // computed deterministically (lib/sector) and shown the moment the farmer lands here.
     case 'review':
     case 'glossy':
       return true;

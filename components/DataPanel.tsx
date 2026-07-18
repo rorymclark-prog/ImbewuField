@@ -58,6 +58,10 @@ interface Props {
   initialChatQuery?: string | null;
   initialChatPhoto?: boolean;
   onChatDeepLinkConsumed?: () => void;
+  // Deep-link open of the real site survey (home "Your farm plan" → "Do the site survey").
+  // Parent raises this via ?openSurvey=1; we consume it once (onSurveyOpened).
+  openSurvey?: boolean;
+  onSurveyOpened?: () => void;
 }
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
@@ -277,7 +281,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
   const { t } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
@@ -314,6 +318,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   useEffect(() => { setSurvey(loadSurvey(surveySiteId)); }, [surveySiteId]);
   const [surveyPromptOpen, setSurveyPromptOpen] = useState(false);
   const [surveySheetOpen, setSurveySheetOpen] = useState(false);
+  // Deep-link open (?openSurvey=1 → parent prop): open the survey the same way the
+  // in-panel NextStepCoach button does. Consumed once. The sheet still gates on
+  // activePlaceId below, so it appears as soon as the parent's site load lands.
+  useEffect(() => {
+    if (openSurvey) { setSurveySheetOpen(true); onSurveyOpened?.(); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openSurvey]);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
   useEffect(() => { if (!surveySheetOpen) setSurvey(loadSurvey(surveySiteId)); }, [surveySheetOpen, surveySiteId]);
   // Refresh live when a survey syncs in from another browser/device.

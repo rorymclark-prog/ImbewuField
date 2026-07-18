@@ -63,7 +63,7 @@ export interface LineShape {
   points: Array<[number, number]>;
 }
 
-export type WizardStep = 'base' | 'water' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';
+export type WizardStep = 'base' | 'sector' | 'water' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';
 
 export interface DesignCanvasState {
   siteId: string;

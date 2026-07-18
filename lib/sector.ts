@@ -84,8 +84,11 @@ export function deriveSectorModel(site: SectorSite | null | undefined, latDeg: n
   // Fire = dry-season prevailing wind. Rainfall pattern comes from the biome; wind from climate.
   const pattern = site?.rainfallPattern;
   let fire: SectorModel['fire'] = null;
-  if (pattern === 'summer' && windWinter) fire = { fromLabel: windWinter.fromLabel, bearingDeg: windWinter.bearingDeg, seasonNote: 'dry season · winter' };
-  else if (pattern === 'winter' && windSummer) fire = { fromLabel: windSummer.fromLabel, bearingDeg: windSummer.bearingDeg, seasonNote: 'dry season · summer' };
+  // seasonNote is a plain-words, biome-aware sentence (no logic change — the fire direction and
+  // its null/degradation cases are exactly as before). Summer-rainfall land dries out in winter;
+  // winter-rainfall land (fynbos) dries out in summer.
+  if (pattern === 'summer' && windWinter) fire = { fromLabel: windWinter.fromLabel, bearingDeg: windWinter.bearingDeg, seasonNote: 'Fire season is winter, when the veld is dry — grassland/savanna burns are common; keep a firebreak on the fire side.' };
+  else if (pattern === 'winter' && windSummer) fire = { fromLabel: windSummer.fromLabel, bearingDeg: windSummer.bearingDeg, seasonNote: 'Fire season is summer — fynbos country burns hot; keep fuel low on the fire side.' };
   // Honest-degradation contract: if climate loaded but the wind labels were unparseable/sentinel,
   // the wind AND fire arrows are silently absent — say so (unshift so it stays note[0], "strongest first").
   if (site?.climate && !windSummer && !windWinter) notes.unshift('Wind direction unavailable — wind & fire sectors omitted.');

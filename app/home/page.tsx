@@ -203,9 +203,10 @@ interface StepAction { label: string; href: (coords: Coords | null) => string }
 const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
   located: { label: 'Tap your land on the map', href: () => '/farmer' },
   boundary: { label: 'Trace your boundary', href: () => '/farmer' },
-  // The real survey sheet that feeds this score only opens from inside DataPanel
-  // (no deep-link query param exists for it) — /survey is the sanctioned fallback.
-  survey: { label: 'Do the site survey', href: () => '/survey' },
+  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
+  // loads the main site and auto-opens it (the older /survey wizard used a different store
+  // and never moved this score).
+  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
   design: {
     label: 'Design your farm',
     href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),

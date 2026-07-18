@@ -107,6 +107,39 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
       done: (s) => hasFeature(s, ['lawn', 'veg_garden', 'orchard', 'cleared']),
     },
   ],
+  // SECTOR — the "analysis before design" reveal. There is NOTHING TO DRAW and nothing to
+  // research: the app has already worked the energies out (lib/sector.deriveSectorModel) and
+  // shows them on the canvas the moment the farmer lands here. These are LOOK/acknowledge
+  // tasks, so each `done` is unconditionally true — the step can never stall a newcomer, and
+  // the "Looks right →" affordance (SectorSummary, mounted by StepGuide) advances to Water.
+  // arm is null throughout: tapping never picks up a tool. The plain-words, real-direction
+  // reveal lives in the SectorSummary card; these three titles orient the eye on the map.
+  sector: [
+    {
+      id: 'sector-sun',
+      title: 'Find the sun arc — your beds want the northern sun',
+      instruction: 'The gold arc across the top of the map is the sun. In South Africa it swings across the NORTH, so that side gets the most light.',
+      where: 'Face your veg beds and tender crops toward the sun side — the north.',
+      arm: null,
+      done: () => true,
+    },
+    {
+      id: 'sector-fire',
+      title: 'Note the fire wedge — plan a firebreak/low fuel on that side',
+      instruction: 'The red wedge points to where a veld fire is most likely to come from — the dry-season wind. If it is missing, your site has no wind data yet.',
+      where: 'Keep a firebreak clear and the fuel low on the fire side of your land.',
+      arm: null,
+      done: () => true,
+    },
+    {
+      id: 'sector-water',
+      title: 'See the downhill water arrow — swales will go ACROSS it',
+      instruction: 'The blue arrow shows which way water runs downhill. Swales and beds work best laid ACROSS that flow, not along it, so rain sinks in.',
+      where: 'Later, on the Water step, draw your swale lines across this arrow.',
+      arm: null,
+      done: () => true,
+    },
+  ],
   water: [
     {
       id: 'water-tanks',

@@ -128,10 +128,21 @@ function persistCanvasState(state: DesignCanvasState): DesignCanvasState | null 
 // their functional layer (LINE_LAYER in DesignCanvas), so focusing 'water' also shows drip/pipe/
 // swale automatically. Base = trace-only (all element layers off); Review/Glossy = everything on.
 const ELEMENT_LAYER_KEYS = ['water', 'earthworks', 'zones', 'planting', 'structures', 'access', 'animals'] as const;
-function applyStepFocus(step: WizardStep): Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> {
+// Element layers are always set; the context layers `sector`/`baseMap` are only present in the
+// return when a step actively FORCES them (today just the Sector step). Steps that omit them
+// leave `a.sector`/`a.baseMap` untouched through the spread in setStep — the same "preserve what
+// the farmer toggled" rule contours already follow (see page.tsx guided-mode reset).
+type StepFocus = Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> & Partial<Record<'sector' | 'baseMap', boolean>>;
+function applyStepFocus(step: WizardStep): StepFocus {
   const on = (keys: readonly string[]) =>
     Object.fromEntries(ELEMENT_LAYER_KEYS.map((k) => [k, keys.includes(k)])) as Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean>;
   switch (step) {
+    case 'sector':
+      // Analysis-before-design reveal: nothing to draw, so all element layers OFF (like Base),
+      // but force the Sector energies overlay + satellite ON so the farmer immediately SEES the
+      // sun/wind/fire/water. Only the Sector step returns `sector`, so once past it the value is
+      // preserved across steps (design WITH the energies) until the farmer toggles it off.
+      return { ...on([]), sector: true, baseMap: true };
     case 'water':
       return on(['water', 'earthworks']);
     case 'zones':

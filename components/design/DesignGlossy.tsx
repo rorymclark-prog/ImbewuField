@@ -3289,7 +3289,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // model art to the boundary and burns our labels on. Applies to the CURRENTLY-SELECTED single
   // sheet (any layer, Zones included), via the background queue. See buildShowcasePrompt +
   // finishStyledSheet (showcase branch skips the clip/burn). The ALL button still showcases 'all' only.
-  const [modelChrome, setModelChrome] = useState(false);
+  const [modelChrome, setModelChrome] = useState(true); // ON by default (Rory) — the showcase look IS the product
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
   const showcaseKeysRef = useRef<Set<string>>(new Set());
@@ -4124,7 +4124,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         {!compact && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          Sheet
+          Your plan set · 8 sheets (01–08)
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {DESIGN_SHEETS.map((sheet) => {
@@ -4161,15 +4161,30 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             );
           })}
         </div>
-        {/* Quiet exact-all link (mockup) — the "option somewhere to generate non-AI sheets". */}
+        {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue
+            (never Gemini — Rory: "must only go to chat gpt"). With the AI-legend default ON this
+            is the showcase pipeline for all 5 model sheets. */}
         <button
           type="button"
-          onClick={generateAllSheets}
+          onClick={generateAllViaQueue}
           disabled={loading !== null}
-          style={{ display: 'block', marginLeft: 'auto', marginTop: 8, padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', minHeight: 50, marginTop: 10, padding: '12px 20px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: loading !== null ? 'default' : 'pointer', opacity: loading !== null ? 0.7 : 1 }}
         >
-          {loading === 'exact' ? 'Drawing your plan set…' : 'Generate all sheets — exact, no AI →'}
+          <Gem size={18} />
+          {loading === 'falgpt' ? 'Rendering your plan set in the background…' : '✨ Generate ALL sheets — AI'}
         </button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 6 }}>
+          <span style={{ fontSize: 11, opacity: 0.65 }}>gpt-image-2 · renders in the background, lands in your gallery (~mins)</span>
+          {/* Quiet exact-all link (mockup) — the non-AI option. */}
+          <button
+            type="button"
+            onClick={generateAllSheets}
+            disabled={loading !== null}
+            style={{ flexShrink: 0, padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+          >
+            {loading === 'exact' ? 'Drawing…' : 'All sheets — exact, no AI →'}
+          </button>
+        </div>
         </>
         )}
 
@@ -4230,7 +4245,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the polished pipeline. The model beautifies the scene, then your real satellite, boundary and labels are composited back on top, so it's beautiful AND boundary-accurate by construction. ${engine === 'falgpt' ? 'gpt-image-2 is slow — up to ~5 min. For a quick preview, switch the engine to Gemini (~1 min).' : 'Gemini takes about a minute.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (modelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels — real satellite kept outside your boundary. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 renders in the background (~mins) and lands in your gallery — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -4444,41 +4459,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                 </button>
               )}
 
-              {/* Bonus Gemini analysis maps — the old analysis row lives on here; Opportunities
-                  has no 01–08 sheet, so this is its only home. */}
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-                  Analysis maps · Gemini
-                </div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {GLOSSY_STYLES.map((s) => {
-                    const active = producerStyle === null && analysisStyle === s.key;
-                    return (
-                      <button
-                        key={s.key}
-                        type="button"
-                        onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setExactSheet(null); setSelectedNo(''); }}
-                        disabled={loading !== null}
-                        aria-pressed={active}
-                        style={{
-                          minHeight: 38,
-                          padding: '6px 14px',
-                          borderRadius: 19,
-                          border: active ? `2px solid ${OCHRE}` : '1px solid rgba(0,0,0,0.18)',
-                          background: active ? OCHRE : 'transparent',
-                          color: active ? PAPER : DARK,
-                          fontWeight: 700,
-                          fontSize: 13,
-                          cursor: loading !== null ? 'default' : 'pointer',
-                          opacity: loading !== null && !active ? 0.5 : 1,
-                        }}
-                      >
-                        {s.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* (The old "Analysis maps · Gemini" chip row is RETIRED — Rory. Sheets 01/02/08 in
+                  AI mode still use the Gemini analysis path via applySheet; only the extra picker
+                  row (incl. the sheet-less Opportunities map) is gone.) */}
 
               {/* Style ALL sheets — the AI batch (mockup naming). gpt-image-2 → background queue;
                   Gemini → synchronous. */}

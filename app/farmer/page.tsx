@@ -24,7 +24,7 @@ import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
-import { loadPlaces } from '@/lib/saved-places';
+import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -133,6 +133,8 @@ function HomeInner() {
   // by the map (true only when the current site actually has a saved design).
   const [showDesign, setShowDesign] = useState(false);
   const [designPresent, setDesignPresent] = useState(false);
+  // Deep-link flag for ?openSurvey=1 — threaded to DataPanel to open the real site survey.
+  const [openSurvey, setOpenSurvey] = useState(false);
 
   // Guided pin mode: on for "?guided=1" (from the home welcome / start-new-site) OR for a
   // farmer who has no saved places yet. Client-only (default false) so SSR paints no bar.
@@ -265,6 +267,29 @@ function HomeInner() {
     armParamHandled.current = true;
     const timer = setTimeout(() => window.dispatchEvent(new CustomEvent('imbewu-arm-draw', { detail: arm })), 800);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchKey]);
+
+  // Deep link: /farmer?openSurvey=1 (home "Your farm plan" → "Do the site survey"). The
+  // REAL SiteSurveySheet only opens from inside DataPanel, so we raise a prop flag it
+  // consumes. That sheet is gated on an active place, so if nothing is pinned yet we first
+  // load the farmer's main site (same machinery as ?site=), then flag the open. One-shot.
+  const openSurveyHandled = useRef(false);
+  useEffect(() => {
+    if (openSurveyHandled.current) return;
+    if (searchParams.get('openSurvey') !== '1') return;
+    openSurveyHandled.current = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (!selected) {
+      const main = resolveMainSite(loadPlaces());
+      if (main) {
+        handlePlaceSelect({ name: main.name, id: main.id });
+        handleLocationSelect(main.lat, main.lon);
+        timer = setTimeout(() => setJumpTo({ lat: main.lat, lon: main.lon }), 800);
+      }
+    }
+    setOpenSurvey(true);
+    return () => { if (timer) clearTimeout(timer); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey]);
 
@@ -555,6 +580,8 @@ function HomeInner() {
               initialChatQuery={initialChatQuery}
               initialChatPhoto={initialChatPhoto}
               onChatDeepLinkConsumed={() => { setInitialChatQuery(null); setInitialChatPhoto(false); }}
+              openSurvey={openSurvey}
+              onSurveyOpened={() => setOpenSurvey(false)}
             />
           </div>
 
@@ -672,6 +699,8 @@ function HomeInner() {
                 initialChatQuery={initialChatQuery}
                 initialChatPhoto={initialChatPhoto}
                 onChatDeepLinkConsumed={() => { setInitialChatQuery(null); setInitialChatPhoto(false); }}
+                openSurvey={openSurvey}
+                onSurveyOpened={() => setOpenSurvey(false)}
               />
             </div>
           </div>

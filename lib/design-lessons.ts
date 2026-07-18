@@ -23,6 +23,13 @@ export const DESIGN_STEP_LESSONS: Record<Exclude<WizardStep, 'glossy'>, StepLess
     tip: 'Trace your boundary on the main map first — the Studio fits your satellite photo to it, so every bed you place is true to scale.',
     courseModuleId: 'reading-landscape',
   },
+  sector: {
+    title: "Read the land's energies",
+    body: "Before you place a single thing, see how sun, wind, fire and water move across your land — the app has worked them out from your site's real slope and climate, so there is nothing to research and nothing to draw. Design WITH these energies, not against them: put windbreaks against the hot wind, a firebreak on the fire side, swales across the way water runs, and keep tender crops out of the frost pockets. In South Africa the strongest sun comes from the north, so that is where your beds want to face. Just check what the map shows matches what you already know of your land, then move on.",
+    principle: 'Design from patterns to details — read the big forces first, then place the small things.',
+    tip: 'Fire comes from the dry-season wind — keep the fuel low and a firebreak clear on that side of your land.',
+    courseModuleId: 'reading-landscape',
+  },
   water: {
     title: 'Water first, everything else second',
     body: "Water is the heaviest thing to move and the first thing to run out. Catch it where it falls: tanks next to roofs, and swale lines along the slope so rain sinks into your soil instead of washing away. A garden planned around water survives a dry month; one without doesn't.",
