@@ -17,6 +17,12 @@ export const STYLE_LINES: Record<StylePreset, string> = {
     'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, saturated colours (barn red, cobalt, sunflower yellow, pine green), decorative South African folk pattern textures, oversized clearly-iconic feature shapes, charming handmade brushwork.',
 };
 
+// What each coloured placeholder marker on the input composite should become. Module-scoped so both
+// the strict buildProducerPrompt and the illustrated buildShowcasePrompt share the one legend.
+const FEATURE_LEGEND =
+  `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
+  `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size. `;
+
 // The producer illustrates the marked elements beautifully and recognisably, in place, inventing
 // nothing new. The composite the model receives has the farmer's placed elements drawn as coloured
 // markers; elementsText names what each is so the model draws it as the real thing.
@@ -32,9 +38,6 @@ export function buildProducerPrompt(
     `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
   const noInvent =
     `DO NOT INVENT: draw only what is already visible or marked — no extra gardens, beds, paths, ponds, trees, buildings, fences, vehicles, animals, people or decorations. `;
-  const featureLegend =
-    `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
-    `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size. `;
   const orient =
     `Keep the crop, scale and orientation identical (top of image is north); make the property boundary the crispest line.`;
   const fillIt =
@@ -62,7 +65,7 @@ export function buildProducerPrompt(
     layerFocus +
     (isLayerMap ? fillItCalm : fillIt) + roofs +
     `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
-    featureLegend +
+    FEATURE_LEGEND +
     (elementsText ? `The marked features are: ${elementsText}. ` : '') +
     `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ` +
     `the driveway is a simple access track of the exact traced shape — do NOT turn it into a loop, roundabout, circular drive or turning circle, and do not add extra branches to it; ${orient}`;
@@ -75,5 +78,42 @@ export function buildProducerPrompt(
       `=== END MASTER DESIGN BRIEF ===`
     : '';
 
-  return `${rules}${briefBlock}\n\n${STYLE_LINES[stylePreset]}`;
+  // STYLE leads, so if a downstream length clamp ever bites, the one line the model most needs
+  // (the art style) is never the part that gets cut. (This was the truncation bug: a 2 000-char
+  // worker clamp on a ~4 500-char prompt dropped the trailing STYLE line entirely.)
+  return `${STYLE_LINES[stylePreset]}\n\n${rules}${briefBlock}`;
+}
+
+// Illustrated "showcase" prompt — the EXPERIMENTAL counterpart the owner asked for: let gpt-image-2
+// produce a frame-worthy illustrated site plan that draws its OWN tidy legend + a few selective
+// labels (its typography is strong when handed exact spellings), instead of the strict no-text
+// pipeline that burns our labels on afterwards. Style leads; every pixel is repainted; the real
+// layout (boundary/house/driveway/marked features, north-up) is kept; only the given words appear.
+export function buildShowcasePrompt(
+  layerLabel: string | undefined,
+  stylePreset: StylePreset,
+  elementsText: string,
+  placeName = '',
+  designBrief = '',
+): string {
+  return `${STYLE_LINES[stylePreset]}
+
+TASK: transform this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a finished, frame-worthy ILLUSTRATED SITE PLAN — the kind of beautiful hand-crafted map that opens a professional permaculture design report.
+
+REPAINT EVERY PIXEL: the entire output is illustration in the style above — ground, buildings, trees, roads, everything. No photographic texture from the input may survive anywhere. The photo tells you WHAT is WHERE; it never dictates how anything looks.
+
+KEEP THE REAL LAYOUT: the property boundary (draw it as the crispest line on the map), the main house (as its roof from above, true outline and colour), the driveway (a simple access track of the exact traced shape — never a loop or roundabout), the road, and every marked feature stay in their TRUE position, shape, size and count. Top of the image is north. Do not invent features: no extra buildings, ponds, beds, paths or decorations beyond the photo and the marked list.
+
+THE COLOURED MARKERS ARE PLACEHOLDERS, NOT ART — replace each with the real thing, beautifully drawn: ${FEATURE_LEGEND}The marked features are: ${elementsText}.
+
+CARTOGRAPHY — THIS MAP MUST INCLUDE, drawn in the same illustration style:
+• A tidy rectangular LEGEND panel in the corner with the least map content: a small colour swatch or miniature icon beside each feature type's name, neatly aligned in a single column on a lightly-tinted panel with a fine border.
+• SELECTIVE LABELS: label only the most important features — at most 6 to 8 — in small, elegant, perfectly legible lettering placed beside (never on top of) the feature. Everything else is identified by the legend alone.
+• Use EXACTLY these spellings for the legend and labels: ${elementsText}${placeName ? '; ' + placeName : ''}. No other words anywhere on the image.
+• A small NORTH ARROW near the legend${placeName ? `, and the title "${placeName}" in one top corner` : ''}.
+All lettering must be horizontal, correctly spelled, high-contrast and print-legible.${designBrief ? `
+
+=== MASTER DESIGN BRIEF — every sheet of this plan set shares this ONE design; placements are FINAL, reference only ===
+${designBrief}
+=== END BRIEF ===` : ''}`;
 }

@@ -35,8 +35,11 @@ export async function fetchElevation(lat: number, lon: number): Promise<Elevatio
   const slopeDeg = parseFloat((slopeRad * 180 / Math.PI).toFixed(1));
   const slopePct = parseFloat((Math.tan(slopeRad) * 100).toFixed(1));
 
-  // Aspect: degrees clockwise from North
-  let aspectDeg = Math.atan2(dzDx, dzDy) * 180 / Math.PI;
+  // Aspect = the DOWNHILL bearing (the way the slope faces / water flows), degrees clockwise from
+  // North. The gradient (dzDx, dzDy) points UPHILL, so negate it. Every consumer (sector water/frost
+  // arrows, contour direction, zone auto-suggest, "slope faces X" text) assumes downhill — this was
+  // returning uphill, i.e. 180° wrong on every real site (the demo site hardcodes aspect so it hid it).
+  let aspectDeg = Math.atan2(-dzDx, -dzDy) * 180 / Math.PI;
   if (aspectDeg < 0) aspectDeg += 360;
   aspectDeg = parseFloat(aspectDeg.toFixed(0));
 

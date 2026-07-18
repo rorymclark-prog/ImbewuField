@@ -40,7 +40,10 @@ const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has r
 const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures']);
 const MAX_SHEETS_PER_DAY = 30; // per-user spend governor — tune before wide rollout
 const MAX_JOBS_PER_DAY = 6;
-const PROMPT_MAX = 2000; // clamp attacker-controlled free text billed to our OpenAI org
+// The real producer/showcase prompts are ~3.2–4.6k chars (STYLE line lives near the end); a 2 000
+// clamp silently dropped the STYLE + brief, so the model just cleaned the photo. 8 000 covers every
+// legitimate prompt while still fencing abuse (OpenAI allows up to 32 000; text is ~$5/1M tokens).
+const PROMPT_MAX = 8000;
 const ATTEMPT_TIMEOUT_MS = 150_000; // per OpenAI attempt — 3 fit inside the job budget below
 const JOB_DEADLINE_MS = 500_000; // < the 540s function budget, so the finally always runs
 const STALE_JOB_MS = 20 * 60 * 1000;
@@ -71,6 +74,35 @@ interface RenderJob {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const dayKey = () => new Date().toISOString().slice(0, 10); // yyyy-mm-dd
 
+// Read a JPEG's pixel dimensions from its SOFn marker (no deps — the composite is always a JPEG we
+// uploaded ourselves), so we can request an aspect-matched output size instead of 'auto' (which
+// guarantees no particular detail).
+function jpegDims(buf: Buffer): { w: number; h: number } | null {
+  if (buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const m = buf[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+      return { h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) };
+    }
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  return null;
+}
+// Aspect-matched gpt-image-2 output size at ~3.3 MP — the most stable detail (outputs above
+// 2560×1440 are documented "experimental"). Both edges must be multiples of 16, aspect ≤ 3:1,
+// 0.66–8.3 MP. Falls back to 'auto' if the input is unreadable or the target is out of range.
+function pickSize(dims: { w: number; h: number } | null): string {
+  if (!dims || !dims.w || !dims.h) return 'auto';
+  const s = Math.sqrt(3_300_000 / (dims.w * dims.h));
+  const W = Math.round((dims.w * s) / 16) * 16;
+  const H = Math.round((dims.h * s) / 16) * 16;
+  const px = W * H;
+  const ar = Math.max(W, H) / Math.min(W, H);
+  return px < 655_360 || px > 8_294_400 || ar > 3 || Math.max(W, H) > 3840 ? 'auto' : `${W}x${H}`;
+}
+
 // One OpenAI image edit — the only slow, network-bound step. AbortController caps a hung socket;
 // 429s honour Retry-After; 5xx/network get a couple of quick retries.
 async function openaiEdit(key: string, imageB64: string, prompt: string, attempt = 0): Promise<string> {
@@ -78,13 +110,17 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, attempt
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
   let res: Response;
   try {
+    const buf = Buffer.from(imageB64, 'base64');
     const form = new FormData();
     form.append('model', MODEL);
     form.append('prompt', prompt);
     form.append('n', '1');
-    form.append('size', 'auto'); // maps are landscape — let the model match the composite's aspect
-    form.append('quality', 'high');
-    form.append('image[]', new Blob([Buffer.from(imageB64, 'base64')], { type: 'image/jpeg' }), 'composite.jpg');
+    form.append('size', pickSize(jpegDims(buf))); // explicit ~3.3 MP aspect-matched — 'auto' guarantees no detail
+    form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
+    form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
+    form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
+    // NOTE: no input_fidelity — gpt-image-2 always processes inputs at high fidelity; the API ignores/rejects it.
+    form.append('image[]', new Blob([buf], { type: 'image/jpeg' }), 'composite.jpg');
     res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}` },
@@ -224,12 +260,12 @@ export const runRenderJob = onDocumentCreated(
             const prompt = String(sheet.prompt ?? '').slice(0, PROMPT_MAX);
             if (!prompt) throw new Error('empty prompt');
             const outB64 = await openaiEdit(key, buf.toString('base64'), prompt);
-            const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.jpg`;
+            const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
             // firebaseStorageDownloadTokens: without it, a client getDownloadURL() on an Admin-SDK
             // upload fails and the browser can never pull the finished sheet back (job says "done"
             // but the gallery stays empty). The token makes getDownloadURL return a usable URL.
             await bucket.file(outputPath).save(Buffer.from(outB64, 'base64'), {
-              contentType: 'image/jpeg',
+              contentType: 'image/png',
               metadata: { metadata: { firebaseStorageDownloadTokens: randomUUID() } },
             });
             await safePatch(ref, sheet.key, { status: 'done', outputPath });

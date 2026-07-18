@@ -86,6 +86,9 @@ export function deriveSectorModel(site: SectorSite | null | undefined, latDeg: n
   let fire: SectorModel['fire'] = null;
   if (pattern === 'summer' && windWinter) fire = { fromLabel: windWinter.fromLabel, bearingDeg: windWinter.bearingDeg, seasonNote: 'dry season · winter' };
   else if (pattern === 'winter' && windSummer) fire = { fromLabel: windSummer.fromLabel, bearingDeg: windSummer.bearingDeg, seasonNote: 'dry season · summer' };
+  // Honest-degradation contract: if climate loaded but the wind labels were unparseable/sentinel,
+  // the wind AND fire arrows are silently absent — say so (unshift so it stays note[0], "strongest first").
+  if (site?.climate && !windSummer && !windWinter) notes.unshift('Wind direction unavailable — wind & fire sectors omitted.');
 
   const water = slopeUsable ? { downhillBearingDeg: aspectDeg!, slopeDeg, slopePct: elev!.slopePct, indicative } : null;
 

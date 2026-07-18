@@ -20,7 +20,7 @@ import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildProducerPrompt, type StylePreset } from '@/lib/producer-prompt';
+import { buildProducerPrompt, buildShowcasePrompt, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
 const PAPER = '#FFFEFA';
@@ -2400,7 +2400,11 @@ export async function buildBlueprintSectorMap(
   const arrowLen = Math.round(W * 0.055); // room for the tail + label outside the ring
   const maxRx = Math.min(cx - margin, W - margin - cx);
   const maxRy = Math.min(cy - margin, H - margin - cy);
-  const R = Math.max(siteR * 0.7 + 10, Math.min(siteR + W * 0.02, Math.min(maxRx, maxRy) - arrowLen));
+  // `cap` is the largest radius whose ring + arrow tails + labels still fit on the canvas. It is a
+  // HARD ceiling (the trailing Math.min), so a big or edge-hugging boundary shrinks the ring rather
+  // than spilling the sun arc / compass ticks / labels off the sheet. Floored at 24 so R stays > 0.
+  const cap = Math.max(24, Math.min(maxRx, maxRy) - arrowLen);
+  const R = Math.min(Math.max(siteR * 0.7 + 10, Math.min(siteR + W * 0.02, cap)), cap);
 
   // dashed compass ring + N/E/S/W ticks
   ctx.save();
@@ -2474,9 +2478,18 @@ export async function buildBlueprintSectorMap(
     ctx.fillStyle = 'rgba(214,74,42,0.20)';
     ctx.fill();
     ctx.restore();
-    drawArrow(bearingToUnitVector(model.fire.bearingDeg), '#D64A2A', Math.max(3, W * 0.004), [10, 6]);
+    // Fire's bearing EQUALS the dry-season wind's bearing by construction, so a fire arrow + label
+    // on that ray would overprint the wind arrow + label. When they coincide, let the wedge carry
+    // the message and put the label INSIDE the wedge (the ring interior is empty on this sheet); only
+    // draw a separate fire arrow/edge-label when fire somehow sits on its own bearing.
+    const fireOnWind = model.fire.bearingDeg === model.windWinter?.bearingDeg || model.fire.bearingDeg === model.windSummer?.bearingDeg;
     const lp = bearingToUnitVector(model.fire.bearingDeg);
-    labelAt(cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+    if (fireOnWind) {
+      labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+    } else {
+      drawArrow(lp, '#D64A2A', Math.max(3, W * 0.004), [10, 6]);
+      labelAt(cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+    }
   }
 
   // 5. SUN — a bold gold arc across the sky on the equator-facing side (north for SH), + midday ray.
@@ -2585,7 +2598,8 @@ export async function buildBlueprintSectorMap(
 
   // 9. DATA STRIP under the title — real figures only, missing ones omitted.
   const parts: string[] = [];
-  if (site?.elevation) parts.push(`SLOPE ${site.elevation.slopeDeg.toFixed(1)}° (${site.elevation.slopePct.toFixed(0)}%) FACING ${site.elevation.aspectLabel}`);
+  // FACING is only meaningful when there's real fall — below 0.5° the aspect is noise, so don't assert it.
+  if (site?.elevation) parts.push(`SLOPE ${site.elevation.slopeDeg.toFixed(1)}° (${site.elevation.slopePct.toFixed(0)}%)${site.elevation.slopeDeg > 0.5 ? ` FACING ${site.elevation.aspectLabel}` : ' · ~flat'}`);
   if (site?.climate?.windSpeed != null) parts.push(`WIND ${site.climate.windSpeed.toFixed(1)} m/s`);
   if (site?.climate?.minTemp != null) parts.push(`MIN ${site.climate.minTemp.toFixed(0)}°C`);
   if (site?.rainfallMm != null) parts.push(`${Math.round(site.rainfallMm)} mm/yr`);
@@ -2605,8 +2619,8 @@ export async function buildBlueprintSectorMap(
   if (model.windSummer) rows.push({ color: '#E08A2C', label: `Summer wind (${model.windSummer.fromLabel})`, style: 'dashline' });
   if (model.windWinter) rows.push({ color: '#C97B25', label: `Winter wind (${model.windWinter.fromLabel})`, style: 'dashline' });
   if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel})`, style: 'dashline' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: 'line' });
-  if (model.water && !model.flat && model.water.slopeDeg >= 1.5) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: model.water.indicative ? 'dashline' : 'line' });
+  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
   if (model.frost) rows.push({ color: '#9FD0E8', label: 'Frost pocket', style: 'dashline' });
   rows.push({ color: '#8CEB6A', label: 'Site boundary', style: 'line' });
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.6)));
@@ -3230,6 +3244,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const [notice, setNotice] = useState<string | null>(null);
   // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
   const [queueJobId, setQueueJobId] = useState<string | null>(null);
+  // EXPERIMENTAL "AI legend" mode — let gpt-image-2 draw its OWN legend + selective labels (Rory's
+  // ask), instead of the strict no-text pipeline that burns our labels on. Applies to the Whole-
+  // design ('all') sheet only, in the background queue. See buildShowcasePrompt + finishStyledSheet.
+  const [modelChrome, setModelChrome] = useState(false);
+  // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
+  // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
+  const showcaseKeysRef = useRef<Set<string>>(new Set());
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
@@ -3593,6 +3614,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     };
     try {
       // Canonical 8-map order (docs/PLAN-SET-SPEC.md). Analysis (02 Sector) before design.
+      // 01 — Existing site & base (satellite + boundary + existing features, no proposed design).
+      step('01 · Existing site & base', await buildComposite(state, frame, refLayers, 'all', false), 'base');
       // 02 — Sector analysis (always: the sun is real content even before slope/climate load).
       step('02 · Sector analysis', await buildBlueprintSectorMap(state, frame, refLayers, site, placeName), 'sector-exact');
       // 03–06 — the design layers that have content.
@@ -3635,6 +3658,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (!producerStyle) setProducerStyle(styleKey); // reflect the default in the Style chips
+    setExactSheet(null); // a styled all-set is not an exact sheet — keep the selection exclusive
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
     setLoading(engine);
     setError(null);
@@ -3716,12 +3740,27 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // exact-map logic stays here), hands them to the queue, then finishes each returned sheet with the
   // same deterministic composite-back the synchronous path uses.
 
-  // Deterministic composite-back for one sheet: boundary clip + burned labels + sheet chrome.
+  // Composite-back for one sheet. STRICT (default): clip the model output to the boundary, put the
+  // real satellite outside, burn our exact labels + the cream sheet chrome — accuracy by
+  // construction. SHOWCASE: the model drew its own legend + labels, so keep its whole output (no
+  // clip, no burned labels, no chrome), with only the transparency backstop.
   const finishStyledSheet = useCallback(
-    async (modelImage: string, f: GlossyLayerFilter, styleDef: { label: string; labelStyle: LabelStyle }): Promise<string> => {
+    async (modelImage: string, f: GlossyLayerFilter, styleDef: { label: string; labelStyle: LabelStyle }, showcase = false): Promise<string> => {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+      if (showcase) {
+        return compositeAccurateMap({
+          modelImage,
+          satelliteImage: frame.satDataUrl ?? modelImage,
+          boundaryPx: undefined, // no clip — a corner legend lives OUTSIDE the boundary polygon
+          overlayImage: undefined,
+          labels: [], // the model authored the labels
+          labelStyle: styleDef.labelStyle,
+          width: W,
+          height: H,
+        });
+      }
       const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
       const labels = producerLabels(state, refLayers, W, H, f);
       const overlayImage =
@@ -3751,6 +3790,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (!producerStyle) setProducerStyle(styleKey);
+    setExactSheet(null); // a styled all-set is not an exact sheet — keep the selection exclusive
     setError(null);
     setNotice(null);
     setLoading('falgpt');
@@ -3763,13 +3803,18 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       }
       const modelFilters: GlossyLayerFilter[] = ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
+      // Showcase (model-drawn legend/labels) applies to the Whole-design sheet only, and only when
+      // the experimental toggle is on. Record which keys used it so the finisher softens those.
+      showcaseKeysRef.current = new Set(modelChrome ? ['all'] : []);
       const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const composite = await buildComposite(state, frame, refLayers, f);
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const prompt = buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
+        const prompt = modelChrome && f === 'all'
+          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
+          : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
         sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite });
       }
       if (sheets.length === 0) {
@@ -3789,7 +3834,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome]);
 
   // Refs so the subscription effect below doesn't re-subscribe on every design edit.
   const finishRef = useRef(finishStyledSheet);
@@ -3813,7 +3858,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             finished.add(sheet.key); // BEFORE the await, so a re-fired snapshot can't double-finish
             try {
               const raw = await fetchRenderOutput(sheet.outputPath);
-              const finalSheet = styleDef ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef) : raw;
+              const showcase = showcaseKeysRef.current.has(sheet.key);
+              const finalSheet = styleDef ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase) : raw;
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() }); } catch { /* cache full */ }
               pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}`, finalSheet);
             } catch (e) {
@@ -4326,6 +4372,36 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             })}
           </div>
         </div>
+        )}
+
+        {/* EXPERIMENTAL — let gpt-image-2 draw its OWN legend + labels on the Whole-design sheet,
+            instead of the strict pipeline that burns ours on. Only meaningful for the gpt-image-2
+            background queue (the "AI · ALL sheets" button). */}
+        {producerStyle && engine === 'falgpt' && (
+          <button
+            type="button"
+            onClick={() => setModelChrome((v) => !v)}
+            disabled={loading !== null}
+            aria-pressed={modelChrome}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              alignSelf: 'flex-start',
+              minHeight: 40,
+              padding: '8px 14px',
+              borderRadius: 12,
+              border: modelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
+              background: modelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
+              color: DARK,
+              fontWeight: 700,
+              fontSize: 12.5,
+              cursor: loading !== null ? 'default' : 'pointer',
+            }}
+          >
+            <span>{modelChrome ? '☑' : '☐'}</span>
+            🧪 Let the AI draw its own legend &amp; labels (experimental · Whole-design sheet)
+          </button>
         )}
 
         <button

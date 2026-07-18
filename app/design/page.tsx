@@ -223,7 +223,7 @@ function readCachedLocationData(lat: number, lon: number): LocationData | null {
     // v2: bump the version when the location-data shape gains a field (e.g. BRU zones) so
     // already-analysed sites refetch instead of serving a stale pre-field cache. Keep the
     // key in sync with app/farmer/page.tsx.
-    const cacheKey = `imbewu_loc_v2_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    const cacheKey = `imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     const raw = localStorage.getItem(cacheKey);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
