@@ -1269,6 +1269,7 @@ function DesignStudioInner() {
               lineKind={lineKind}
               activeLayers={activeLayers}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
+              onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
               slopeDeg={locationData?.elevation?.slopeDeg}
               aspectDeg={locationData?.elevation?.aspectDeg}
               sectorSite={glossySite}

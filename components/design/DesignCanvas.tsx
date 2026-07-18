@@ -103,6 +103,9 @@ export interface DesignCanvasProps {
   // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
+  // Quick in-canvas toggle of the Sector energies overlay (the top-left ☀️ button) — the
+  // discoverable twin of the "Sector energies" entry in the Layers popover.
+  onToggleSector?: () => void;
   // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
   slopeDeg?: number;
   aspectDeg?: number;
@@ -394,6 +397,7 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   onToggleBaseMap,
+  onToggleSector,
   slopeDeg,
   aspectDeg,
   sectorSite,
@@ -2303,8 +2307,41 @@ export default function DesignCanvas({
         </button>
       )}
 
-      {/* Multi-select toggle (top-left, below base-map). On phones there's no Shift/Cmd, so
-          this makes a plain tap ADD to the selection; tap it off to go back to single-select.
+      {/* Sector energies toggle (top-left, below base-map) — the discoverable twin of the Layers
+          popover entry, so the sun/wind/fire/water overlay is one tap away, not buried. Shows
+          whenever the site has a usable latitude (sectorModel is then non-null; the sun always
+          draws). Highlights gold when on, like the multi-select control. */}
+      {onToggleSector && sectorModel && (
+        <button
+          type="button"
+          aria-pressed={!!activeLayers.sector}
+          aria-label={activeLayers.sector ? 'Sector energies on — tap to hide' : 'Show sector energies (sun, wind, fire, water)'}
+          title={activeLayers.sector ? 'Sector energies: shown — tap to hide' : 'Sector energies: sun path, wind, fire & water — tap to show'}
+          onClick={onToggleSector}
+          style={{
+            position: 'absolute',
+            top: 60,
+            left: 12,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            border: activeLayers.sector ? `2px solid ${GOLD}` : 'none',
+            background: activeLayers.sector ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
+            color: activeLayers.sector ? GOLD : '#FBF6EC',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 18,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+          }}
+        >
+          ☀️
+        </button>
+      )}
+
+      {/* Multi-select toggle (top-left, below the sector button). On phones there's no Shift/Cmd,
+          so this makes a plain tap ADD to the selection; tap it off to go back to single-select.
           A count pill appears when 2+ are selected — Delete (palette/keyboard) removes them all. */}
       {onToggleAdditive && tool === 'select' && (
         <button
@@ -2315,7 +2352,7 @@ export default function DesignCanvas({
           onClick={onToggleAdditive}
           style={{
             position: 'absolute',
-            top: 60,
+            top: 108,
             left: 12,
             minWidth: 40,
             height: 40,
