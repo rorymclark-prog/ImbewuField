@@ -3321,8 +3321,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   const applySheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
     setSelectedNo(sheet.no);
     if ('exact' in sheet) {
-      if (m === 'exact') { setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null); }
-      else { setAnalysisStyle(sheet.aiAnalysis); setExactSheet(null); setProducerStyle(null); }
+      // Site (01), Sector (02) and Phasing (08) are ANALYTICAL — sun/wind/fire, existing site,
+      // build schedule — all facts, not art (as the AI-all button copy says). They are now
+      // EXACT-ONLY: the deterministic rules-engine render is both more accurate AND removes the
+      // last Gemini dependency (Rory: "everything to ChatGPT, retire Gemini"; and the Gemini
+      // analysis path just hit Google's monthly spend cap). No AI/Gemini branch here anymore.
+      setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null);
     } else {
       setFilter(sheet.filter);
       setExactSheet(null);
