@@ -3926,7 +3926,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         const prompt = modelChrome
-          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
+          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
           : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
         sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, showcase: modelChrome });
       }
@@ -3985,7 +3985,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       const useShowcase = modelChrome;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = useShowcase
-        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
+        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
         : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
@@ -4171,10 +4171,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', minHeight: 50, marginTop: 10, padding: '12px 20px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: loading !== null ? 'default' : 'pointer', opacity: loading !== null ? 0.7 : 1 }}
         >
           <Gem size={18} />
-          {loading === 'falgpt' ? 'Rendering your plan set in the background…' : '✨ Generate ALL sheets — AI'}
+          {loading === 'falgpt' ? 'Rendering with gpt-image-2 in the background…' : '✨ Generate 5 design sheets — AI (gpt-image-2)'}
         </button>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 6 }}>
-          <span style={{ fontSize: 11, opacity: 0.65 }}>gpt-image-2 · renders in the background, lands in your gallery (~mins)</span>
+          {/* Honest about what this button does NOT cover — sheets 01/02/08 are analytical
+              (sun/wind/build-schedule) and stay exact-only by design; inventing those facts
+              via image-gen would be actively wrong, not just lower quality. Was silently
+              omitted before — Rory: "it produced 5 not 8 sheets?" */}
+          <span style={{ fontSize: 11, opacity: 0.65 }}>Whole · Zones · Water · Planting · Structures. Site, Sector &amp; Phasing stay exact (they're facts, not art) — lands in your gallery in a few minutes.</span>
           {/* Quiet exact-all link (mockup) — the non-AI option. */}
           <button
             type="button"

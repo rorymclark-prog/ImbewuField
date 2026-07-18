@@ -48,9 +48,12 @@ const OWNER_UIDS = new Set(['76wIa3J81KZmXhVyqFJ0l0PaztG2']);
 const OWNER_SHEETS_PER_DAY = 600;
 const OWNER_JOBS_PER_DAY = 300;
 // The real producer/showcase prompts are ~3.2–4.6k chars (STYLE line lives near the end); a 2 000
-// clamp silently dropped the STYLE + brief, so the model just cleaned the photo. 8 000 covers every
-// legitimate prompt while still fencing abuse (OpenAI allows up to 32 000; text is ~$5/1M tokens).
-const PROMPT_MAX = 8000;
+// clamp silently dropped the STYLE + brief, so the model just cleaned the photo. The 2026-07-18
+// showcase rewrite runs ~1.4k, but the strict path's elementsText is unbounded and the design brief
+// can push it close to 8000 on a rich design — raised to 12 000 so a silent tail-truncation (which
+// would drop the master design brief, the worst place to lose text) can't recur. Worker-only, no
+// firestore.rules coupling. OpenAI allows up to 32 000; text is ~$5/1M tokens.
+const PROMPT_MAX = 12000;
 const ATTEMPT_TIMEOUT_MS = 150_000; // per OpenAI attempt — 3 fit inside the job budget below
 const JOB_DEADLINE_MS = 500_000; // < the 540s function budget, so the finally always runs
 const STALE_JOB_MS = 20 * 60 * 1000;
@@ -81,9 +84,8 @@ interface RenderJob {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const dayKey = () => new Date().toISOString().slice(0, 10); // yyyy-mm-dd
 
-// Read a JPEG's pixel dimensions from its SOFn marker (no deps — the composite is always a JPEG we
-// uploaded ourselves), so we can request an aspect-matched output size instead of 'auto' (which
-// guarantees no particular detail).
+// Read a JPEG's pixel dimensions from its SOFn marker (no deps), so we can request an
+// aspect-matched output size instead of 'auto' (which guarantees no particular detail).
 function jpegDims(buf: Buffer): { w: number; h: number } | null {
   if (buf[0] !== 0xff || buf[1] !== 0xd8) return null;
   let i = 2;
@@ -96,6 +98,15 @@ function jpegDims(buf: Buffer): { w: number; h: number } | null {
     i += 2 + buf.readUInt16BE(i + 2);
   }
   return null;
+}
+// Read a PNG's pixel dimensions from its IHDR chunk (always the first chunk, fixed offsets) — the
+// composite the client actually sends (DesignGlossy.tsx buildComposite: canvas.toDataURL('image/png'))
+// has ALWAYS been PNG, never JPEG, so jpegDims alone silently returned null on every real render and
+// pickSize fell back to 'auto' on every single sheet — the explicit ~3.3 MP aspect-matched size this
+// worker was built to request has never actually fired (found in the 2026-07-18 prompt-quality audit).
+function pngDims(buf: Buffer): { w: number; h: number } | null {
+  if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47 || buf.readUInt32BE(4) !== 0x0d0a1a0a) return null;
+  return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
 }
 // Aspect-matched gpt-image-2 output size at ~3.3 MP — the most stable detail (outputs above
 // 2560×1440 are documented "experimental"). Both edges must be multiples of 16, aspect ≤ 3:1,
@@ -122,12 +133,14 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, attempt
     form.append('model', MODEL);
     form.append('prompt', prompt);
     form.append('n', '1');
-    form.append('size', pickSize(jpegDims(buf))); // explicit ~3.3 MP aspect-matched — 'auto' guarantees no detail
+    form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
     form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // NOTE: no input_fidelity — gpt-image-2 always processes inputs at high fidelity; the API ignores/rejects it.
-    form.append('image[]', new Blob([buf], { type: 'image/jpeg' }), 'composite.jpg');
+    // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
+    // extensions), but the actual bytes are PNG; label the Blob correctly for OpenAI.
+    form.append('image[]', new Blob([buf], { type: 'image/png' }), 'composite.png');
     res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}` },

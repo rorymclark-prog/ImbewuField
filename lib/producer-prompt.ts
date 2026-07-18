@@ -4,18 +4,8 @@
 
 export type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk';
 
-// Every style MUST render the ground as living land — a style that swaps the plot for "paper" or
-// blank white is exactly the satellite-disappears failure.
-export const STYLE_LINES: Record<StylePreset, string> = {
-  field_ledger:
-    'STYLE — Field Ledger: a hand-inked site-plan illustration — fine dark pen linework over rich watercolour. The ground inside the plot is painted as living land in greens, olive and warm earth tones with visible lawn/veld/soil texture; it must NEVER read as blank, cream or paper. Warm, credible surveyor character.',
-  homestead_storybook:
-    'STYLE — Homestead Storybook: a saturated gouache-painted illustrated garden map, warm picture-book quality, rounded stylised beds bursting with vegetables, canopy-textured fruit trees, an earthy palette of ochre, leaf green and terracotta, whimsical but legible.',
-  extension_blueprint:
-    'STYLE — Extension Blueprint: a clean technical site plan with slight isometric character on structures, muted professional palette (slate blue, sage, warm grey) — but the ground is still softly tinted living land (sage lawn, buff soil, olive veld), never blank white; thin consistent linework, high legibility at small print size.',
-  karoo_folk:
-    'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, saturated colours (barn red, cobalt, sunflower yellow, pine green), decorative South African folk pattern textures, oversized clearly-iconic feature shapes, charming handmade brushwork.',
-};
+// STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
+// buildProducerPrompt below and the showcase prompts share the one definition.
 
 // What each coloured placeholder marker on the input composite should become. Module-scoped so both
 // the strict buildProducerPrompt and the illustrated buildShowcasePrompt share the one legend.
@@ -87,18 +77,102 @@ export function buildProducerPrompt(
 }
 
 // Illustrated "showcase" prompt — let gpt-image-2 produce a frame-worthy illustrated site plan
-// that draws its OWN tidy legend + a few selective labels (its typography is strong when handed
-// exact spellings), instead of the strict no-text pipeline that burns our labels on afterwards.
-// Owner-tuned rules (2026-07-18 feedback round):
-//   • the illustration lives INSIDE the boundary; OUTSIDE stays the real photograph ("I want the
-//     satellite image around the boundary") — this also anchors geometry far better than a full
-//     repaint, because the model keeps registering against the untouched photo margins;
-//   • buildings must keep their EXACT photo footprint ("it's not keeping strict geometry — see
-//     the house");
-//   • a clear TITLE BLOCK naming the sheet ("there needs to be a clear label for what map it is");
-//   • the legend lists PHYSICAL features only — no permaculture-zone entries except on the Zones
-//     sheet itself ("why has it got zones on the legend?").
+// that draws its OWN tidy legend + a few selective labels, instead of the strict no-text pipeline
+// that burns our labels on afterwards.
+//
+// REWRITTEN 2026-07-18 (Fable audit, wf_98da8bd6-d7e) after Rory's own direct-ChatGPT results
+// ("a simple prompt") consistently beat this app's output. The audit's diagnosis: the assembled
+// prompt had grown to ~5,900 chars (style directive only 4.4% of it) — 15 NEVERs/11 DO-NOTs whose
+// forbidden nouns ("shed, carport, garage", "Zone 0/1/2…") plausibly PRIMED the exact bugs they
+// were trying to prevent (negation backfire), the full FEATURE_LEGEND + design brief were pasted
+// into every sheet describing features that sheet doesn't have (an image model can't honour
+// "reference only, do not draw"), and geometry was policed in three redundant paragraphs even
+// though the /v1/images/edits COMPOSITE INPUT is what actually anchors geometry (it's processed at
+// gpt-image-2's fixed high fidelity — see functions/src/index.ts). Positive-only, per-sheet-filtered
+// instructions replace all of that: absence beats negation, and each sheet's marker legend now only
+// ever names markers that CAN exist on that sheet (mirrors itemInFilter/lineInFilter below), so a
+// non-Zones sheet structurally cannot be told about zones — no counter-rule needed.
+export type ShowcaseSheetKind = 'all' | 'zones' | 'water' | 'planting' | 'structures';
+
+// Shared plan-set anchor, appended to every style. This is the cross-sheet CONSISTENCY fix: the 5
+// sheets of one batch are 5 independent, stateless OpenAI calls (no seed, no shared reference image
+// on this endpoint) sharing only this text — so it carries the one thing text CAN pin reliably,
+// colour temperature, plus an explicit anti-drift instruction. (The Zones sheet in particular used
+// to read warmer/more orange than its siblings — its composite is dominated by red/orange/gold zone
+// fills, which pulled the model's own white balance; the M.zones line below addresses that directly.)
+const PLAN_SET_ANCHOR =
+  ' This sheet is one page of a five-sheet plan set painted in one sitting with one fixed palette: identical colour temperature, paper tone, line weight and brushwork on every sheet. Flat even midday daylight, neutral white balance — no golden-hour warmth, no orange cast, no vignette.';
+
+// Every style MUST render the ground as living land — a style that swaps the plot for "paper" or
+// blank white is exactly the satellite-disappears failure. Named colours (not just mood words) give
+// the model something concrete to hold constant across the 5 independent calls of one batch.
+export const STYLE_LINES: Record<StylePreset, string> = {
+  field_ledger:
+    'STYLE — Field Ledger: a hand-inked site plan — fine dark sepia pen linework over rich watercolour, warm credible surveyor character. Fixed palette: sage-green lawn, olive veld, warm buff soil, slate-grey roofs, muted terracotta accents, off-white paper panels. The ground is always painted as living land with visible lawn/veld/soil texture.' + PLAN_SET_ANCHOR,
+  homestead_storybook:
+    'STYLE — Homestead Storybook: a saturated gouache picture-book garden map, rounded beds bursting with vegetables, canopy-textured fruit trees, whimsical but legible. Fixed palette: leaf green, warm ochre, terracotta, cream, denim-blue water, charcoal linework.' + PLAN_SET_ANCHOR,
+  extension_blueprint:
+    'STYLE — Extension Blueprint: a clean technical site plan with slight isometric character on structures, thin consistent linework, high legibility at small print size. Fixed palette: slate blue, sage green, buff soil, warm grey, off-white paper — the ground is always softly tinted living land (sage lawn, buff soil, olive veld), never blank white.' + PLAN_SET_ANCHOR,
+  karoo_folk:
+    'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, decorative South African folk-pattern textures, charming handmade brushwork. Fixed palette: barn red, cobalt blue, sunflower yellow, pine green, whitewash cream.' + PLAN_SET_ANCHOR,
+};
+
+// Per-sheet marker legends — POSITIVE ONLY. Each sheet's prompt names only the markers that can
+// exist on that sheet (mirrors itemInFilter/lineInFilter in DesignGlossy.tsx), so absent features
+// are never primed and zone entries can never leak onto a non-Zones sheet — by construction, not by
+// telling the model "never do X" (the thing the audit found backfires).
+const M = {
+  bed: 'green rectangles are vegetable beds full of cabbages and leafy greens',
+  tank: 'a small drum marker is a green cylindrical JoJo water tank',
+  hive: 'a hive marker is a striped beehive',
+  tree: 'a tree marker is a fruit tree with a full canopy',
+  building: 'a hut or shed marker is that building',
+  dam: 'a blue area is a dam or pond of open water, exactly that shape',
+  patio: 'a warm-tan area is a paved outdoor patio, exactly that shape',
+  driveway: 'the grey strip is the existing driveway — a plain tar access track of exactly its traced shape, empty of vehicles',
+  fence: 'a dusty-violet line is a farm fence of posts and wire along exactly that path',
+  path: 'a gold dashed line is a walking path along exactly that route',
+  swale: 'a light-blue dashed line is a swale — a planted water-harvesting ditch on contour',
+  pipe: 'a dark-blue line is a buried water-pipe route, shown as a subtle trench line',
+  drip: 'a green dashed line is a drip-irrigation line',
+  windbreak: 'a deep-green line is a windbreak hedge of dense shrubs and trees',
+  zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
+} as const;
+
+const LEGEND_BY_SHEET: Record<ShowcaseSheetKind, string> = {
+  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.zones].join('; '),
+  zones: [M.zones, M.driveway].join('; '),
+  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway].join('; '),
+  planting: [M.bed, M.tree, M.windbreak, M.driveway].join('; '),
+  structures: [M.building, M.hive, M.patio, M.fence, M.path, M.driveway].join('; '),
+};
+
 export function buildShowcasePrompt(
+  layerLabel: string | undefined,
+  stylePreset: StylePreset,
+  elementsText: string,
+  placeName = '',
+  sheetKind: ShowcaseSheetKind = 'all',
+): string {
+  const title = `${(layerLabel ?? 'Site plan').toUpperCase()}${placeName ? ' — ' + placeName : ''}`;
+  const singleLayer = sheetKind !== 'all'
+    ? `\n\nThis sheet shows one layer of the plan: the features listed above are the stars — render them rich and detailed. The rest of the plot stays a quiet, softly painted base of lawn, veld and the existing buildings in the same style.`
+    : '';
+  return `${STYLE_LINES[stylePreset]}
+
+Turn this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".
+
+Illustrate all the land inside the property boundary — every part of it painted as living ground, buildings and vegetation in the style above, with each building rendered as its roof seen from directly above. Everything outside the boundary stays the untouched original photograph. The boundary line, every roof outline and the driveway keep exactly the shape, size and position the photo shows; top of the image is north.
+
+Each coloured marker on the photo is a placeholder — paint the real thing in its place, same spot, same size, same count: ${LEGEND_BY_SHEET[sheetKind]}. This sheet's features are: ${elementsText}.${singleLayer}
+
+In the corner with the least map content, on clean paper panels in the same style: a title block reading "${title}" — the largest lettering on the sheet — a small legend listing each of this sheet's feature types with a colour swatch beside its name, and a small north arrow. Label up to six of the most important features in small elegant lettering placed beside them, using exactly these spellings: ${elementsText}${placeName ? '; ' + placeName : ''}. These are the only words anywhere on the sheet, all horizontal and print-legible.`;
+}
+
+// Kept for one release as an instant rollback (call-site flip, no worker redeploy — the prompt is
+// built client-side). Delete once the rewrite above is verified against real renders. See the audit
+// doc for the before/after comparison plan.
+export function buildShowcasePromptLegacy(
   layerLabel: string | undefined,
   stylePreset: StylePreset,
   elementsText: string,
