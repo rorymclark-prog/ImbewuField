@@ -179,22 +179,28 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
 
 // The canonical plan set (docs/PLAN-SET-SPEC.md), shown as ONE numbered 01–08 list in the
 // Design-maps picker so it reads exactly like the printed set — analysis (01–02) before design
-// (03–07) before implementation (08). Three sheets are exact-ONLY (rules-engine, never any AI):
-// 01 Existing site, 02 Sector, 08 Implementation. The four middle layers + the masterplan (03–07)
-// are design layers you can draw exactly OR restyle with a Style below. `'exact' in sheet` narrows.
+// (03–07) before implementation (08). EVERY sheet has BOTH an AI version (the default) and an
+// exact/no-AI version (the option), chosen with the mode switch:
+//   • 01/02/08 are analytical — their EXACT render is a rules-engine sheet (exactSheet), and their
+//     AI render is the matching Gemini analysis map (aiAnalysis: base/sector/implementation), i.e.
+//     the old "Analysis maps" row, now folded into these sheets.
+//   • 03–07 are design layers — EXACT is the deterministic blueprint (filter alone), AI is the
+//     image-producer / gpt-image-2 showcase pipeline (filter + a Style).
+// `'exact' in sheet` narrows to the analytical variant.
 type DesignSheet =
-  | { no: string; label: string; exact: 'base' | 'sector' | 'implementation' }
+  | { no: string; label: string; exact: 'base' | 'sector' | 'implementation'; aiAnalysis: AnalysisStyle }
   | { no: string; label: string; filter: GlossyLayerFilter };
 const DESIGN_SHEETS: DesignSheet[] = [
-  { no: '01', label: 'Existing site', exact: 'base' },
-  { no: '02', label: 'Sector analysis', exact: 'sector' },
+  { no: '01', label: 'Existing site', exact: 'base', aiAnalysis: 'base' },
+  { no: '02', label: 'Sector analysis', exact: 'sector', aiAnalysis: 'sector' },
   { no: '03', label: 'Zones', filter: 'zones' },
   { no: '04', label: 'Water', filter: 'water' },
   { no: '05', label: 'Planting', filter: 'planting' },
   { no: '06', label: 'Structures', filter: 'structures' },
   { no: '07', label: 'Whole design', filter: 'all' },
-  { no: '08', label: 'Implementation & phasing', exact: 'implementation' },
+  { no: '08', label: 'Implementation & phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
+const DEFAULT_PRODUCER_STYLE = 'extension_blueprint';
 
 // Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
 // / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
@@ -3279,8 +3285,40 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // renders via Gemini's generative path (see GLOSSY_STYLES). null = a design-layer map.
   const [analysisStyle, setAnalysisStyle] = useState<AnalysisStyle | null>(null);
   // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
-  // image-producer pipeline (compositeAccurateMap). null = a design/analysis map.
-  const [producerStyle, setProducerStyle] = useState<string | null>(null);
+  // image-producer pipeline (compositeAccurateMap). null = a design/analysis map. Defaults to a
+  // style because AI is now the DEFAULT output (see `mode`); exact is the opt-in option.
+  const [producerStyle, setProducerStyle] = useState<string | null>(DEFAULT_PRODUCER_STYLE);
+  // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
+  // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
+  // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
+  const [mode, setMode] = useState<'ai' | 'exact'>('ai');
+  const [selectedNo, setSelectedNo] = useState(() => {
+    const s = DESIGN_SHEETS.find((d) => 'filter' in d && d.filter === (initialFilter ?? 'all'));
+    return s?.no ?? '07';
+  });
+
+  // Select a sheet in a given mode by setting the four generator-selection states so the existing
+  // Generate dispatch renders the right thing. AI on 01/02/08 → the Gemini analysis map; AI on a
+  // layer → keep/seed a producer Style; exact → the deterministic sheet. Keeps the user's chosen
+  // Style when staying in AI mode across sheets.
+  const applySheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
+    setSelectedNo(sheet.no);
+    if ('exact' in sheet) {
+      if (m === 'exact') { setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null); }
+      else { setAnalysisStyle(sheet.aiAnalysis); setExactSheet(null); setProducerStyle(null); }
+    } else {
+      setFilter(sheet.filter);
+      setExactSheet(null);
+      setAnalysisStyle(null);
+      setProducerStyle(m === 'ai' ? (cur) => cur ?? DEFAULT_PRODUCER_STYLE : null);
+    }
+  }, []);
+
+  // The currently-selected sheet, and whether we're in AI mode on a design LAYER (03–07) — the only
+  // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
+  // Style), and exact mode uses no AI at all.
+  const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+  const aiLayerMode = mode === 'ai' && !!selectedSheet && !('exact' in selectedSheet);
   // The deterministic Implementation & Phasing sheet (plan-set 08). It is the EXACT counterpart to
   // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
@@ -4073,27 +4111,60 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
 
       {/* Which map? — a design-overlay layer (locks your geometry) OR a richer analysis style. */}
       <div>
+        {/* Output mode — AI illustration is the DEFAULT; Exact (no AI) is the option. Toggling
+            re-maps the currently-selected sheet to the other generator (see applySheet). */}
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          Design maps
+          Output
+        </div>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+          {([['ai', '✨ AI illustration'], ['exact', '📐 Exact · no AI']] as const).map(([m, lbl]) => {
+            const on = mode === m;
+            return (
+              <button
+                key={m}
+                type="button"
+                onClick={() => {
+                  setMode(m);
+                  const cur = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+                  if (cur) applySheet(cur, m);
+                }}
+                disabled={loading !== null}
+                aria-pressed={on}
+                style={{
+                  flex: 1,
+                  minHeight: 42,
+                  padding: '8px 14px',
+                  borderRadius: 12,
+                  border: on ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
+                  background: on ? GREEN : 'transparent',
+                  color: on ? PAPER : DARK,
+                  fontWeight: 800,
+                  fontSize: 13.5,
+                  cursor: loading !== null ? 'default' : 'pointer',
+                  opacity: loading !== null ? 0.6 : 1,
+                }}
+              >
+                {lbl}
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+          {mode === 'ai' ? 'Which sheet? · AI illustrated' : 'Which sheet? · exact, no AI'}
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {/* The whole plan set as ONE numbered 01–08 row, in canonical order (DESIGN_SHEETS).
-              Exact-only sheets (01 Existing site, 02 Sector, 08 Implementation) set exactSheet;
-              the middle design layers (03–07) set the filter and can be restyled with a Style
-              below. Every chip shows its sheet number so the picker reads like the printed set. */}
+              Every sheet is generated AI-first or exact via the Output switch above (applySheet);
+              the sheet number matches the printed set. Analysis sheets 01/02/08 use the Gemini
+              analysis path in AI mode (the old separate row, now folded in). */}
           {DESIGN_SHEETS.map((sheet) => {
-            const isExact = 'exact' in sheet;
-            const active = isExact
-              ? exactSheet === sheet.exact
-              : exactSheet === null && analysisStyle === null && filter === sheet.filter;
+            const active = selectedNo === sheet.no;
             return (
               <button
                 key={sheet.no}
                 type="button"
-                onClick={() => {
-                  if ('exact' in sheet) { setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null); }
-                  else { setFilter(sheet.filter); setAnalysisStyle(null); setExactSheet(null); }
-                }}
+                onClick={() => applySheet(sheet, mode)}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
@@ -4114,49 +4185,20 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               >
                 <span>{sheet.label}</span>
                 <span style={{ fontSize: 10, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>
-                  {isExact ? `sheet ${sheet.no} · exact, no AI` : `sheet ${sheet.no}`}
+                  sheet {sheet.no}
                 </span>
               </button>
             );
           })}
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Analysis maps · Gemini
-        </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {GLOSSY_STYLES.map((s) => {
-            const active = producerStyle === null && analysisStyle === s.key;
-            return (
-              <button
-                key={s.key}
-                type="button"
-                onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setExactSheet(null); }}
-                disabled={loading !== null}
-                aria-pressed={active}
-                style={{
-                  minHeight: 38,
-                  padding: '6px 14px',
-                  borderRadius: 19,
-                  border: active ? `2px solid ${OCHRE}` : '1px solid rgba(0,0,0,0.18)',
-                  background: active ? OCHRE : 'transparent',
-                  color: active ? PAPER : DARK,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: loading !== null ? 'default' : 'pointer',
-                  opacity: loading !== null && !active ? 0.5 : 1,
-                }}
-              >
-                {s.label}
-              </button>
-            );
-          })}
-        </div>
-
         {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
-            accurate). These COMBINE with the chosen Design map above (e.g. Zones + Storybook). */}
+            accurate). Shown only in AI mode on a design LAYER (03–07); analysis sheets 01/02/08
+            render via Gemini and exact mode uses no AI, so neither needs a Style. */}
+        {aiLayerMode && (
+        <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Style · illustrated {producerStyle && analysisStyle === null ? `(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)` : '· tap a Design map + a style'}
+          Style · illustrated {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {PRODUCER_STYLES.map((s) => {
@@ -4191,6 +4233,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             );
           })}
         </div>
+        </>
+        )}
       </div>
 
       {!resultImage && (
