@@ -21,7 +21,9 @@ export const STYLE_LINES: Record<StylePreset, string> = {
 // the strict buildProducerPrompt and the illustrated buildShowcasePrompt share the one legend.
 const FEATURE_LEGEND =
   `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
-  `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size. `;
+  `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
+  // Line features — drawn into every composite but previously never explained (audit find):
+  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a green dashed line → a drip-irrigation line along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
 
 // The producer illustrates the marked elements beautifully and recognisably, in place, inventing
 // nothing new. The composite the model receives has the farmer's placed elements drawn as coloured
@@ -84,11 +86,18 @@ export function buildProducerPrompt(
   return `${STYLE_LINES[stylePreset]}\n\n${rules}${briefBlock}`;
 }
 
-// Illustrated "showcase" prompt — the EXPERIMENTAL counterpart the owner asked for: let gpt-image-2
-// produce a frame-worthy illustrated site plan that draws its OWN tidy legend + a few selective
-// labels (its typography is strong when handed exact spellings), instead of the strict no-text
-// pipeline that burns our labels on afterwards. Style leads; every pixel is repainted; the real
-// layout (boundary/house/driveway/marked features, north-up) is kept; only the given words appear.
+// Illustrated "showcase" prompt — let gpt-image-2 produce a frame-worthy illustrated site plan
+// that draws its OWN tidy legend + a few selective labels (its typography is strong when handed
+// exact spellings), instead of the strict no-text pipeline that burns our labels on afterwards.
+// Owner-tuned rules (2026-07-18 feedback round):
+//   • the illustration lives INSIDE the boundary; OUTSIDE stays the real photograph ("I want the
+//     satellite image around the boundary") — this also anchors geometry far better than a full
+//     repaint, because the model keeps registering against the untouched photo margins;
+//   • buildings must keep their EXACT photo footprint ("it's not keeping strict geometry — see
+//     the house");
+//   • a clear TITLE BLOCK naming the sheet ("there needs to be a clear label for what map it is");
+//   • the legend lists PHYSICAL features only — no permaculture-zone entries except on the Zones
+//     sheet itself ("why has it got zones on the legend?").
 export function buildShowcasePrompt(
   layerLabel: string | undefined,
   stylePreset: StylePreset,
@@ -96,21 +105,26 @@ export function buildShowcasePrompt(
   placeName = '',
   designBrief = '',
 ): string {
+  const isZonesSheet = /zone/i.test(layerLabel ?? '');
+  const title = `${(layerLabel ?? 'Site plan').toUpperCase()}${placeName ? ' — ' + placeName : ''}`;
   return `${STYLE_LINES[stylePreset]}
 
-TASK: transform this satellite photo of a REAL South African smallholding${layerLabel ? ' (the ' + layerLabel + ')' : ''} into a finished, frame-worthy ILLUSTRATED SITE PLAN — the kind of beautiful hand-crafted map that opens a professional permaculture design report.
+TASK: transform this satellite photo of a REAL South African smallholding into a finished, frame-worthy ILLUSTRATED SITE PLAN sheet titled "${title}" — the kind of beautiful hand-crafted map that opens a professional permaculture design report.
 
-REPAINT EVERY PIXEL: the entire output is illustration in the style above — ground, buildings, trees, roads, everything. No photographic texture from the input may survive anywhere. The photo tells you WHAT is WHERE; it never dictates how anything looks.
+INSIDE THE BOUNDARY ONLY: repaint everything INSIDE the property boundary as illustration in the style above — ground, buildings, trees, beds, all of it. Everything OUTSIDE the boundary line stays the ORIGINAL PHOTOGRAPH, untouched — do not repaint, restyle, recolour or redraw ANY pixel beyond the boundary. The finished sheet reads as a painted plan set into the real aerial photo. (The legend panel and title block are the only things allowed to sit over the photographic margin, as clean paper panels.)
 
-KEEP THE REAL LAYOUT: the property boundary (draw it as the crispest line on the map), the main house (as its roof from above, true outline and colour), the driveway (a simple access track of the exact traced shape — never a loop or roundabout), the road, and every marked feature stay in their TRUE position, shape, size and count. Top of the image is north. Do not invent features: no extra buildings, ponds, beds, paths or decorations beyond the photo and the marked list.
+EXACT GEOMETRY, NON-NEGOTIABLE: the property boundary is the crispest line on the map. The main house and every building keep their EXACT roof footprint from the photo — same outline, same wings, same angles, same proportions, only re-rendered in the style; if unsure, trace the photo's roof edges. The driveway keeps its exact traced shape (never a loop or roundabout). Every marked feature stays in its TRUE position, shape, size and count. Top of the image is north. Do not invent features: no extra buildings, ponds, beds, paths or decorations beyond the photo and the marked list.
 
 THE COLOURED MARKERS ARE PLACEHOLDERS, NOT ART — replace each with the real thing, beautifully drawn: ${FEATURE_LEGEND}The marked features are: ${elementsText}.
-
-CARTOGRAPHY — THIS MAP MUST INCLUDE, drawn in the same illustration style:
-• A tidy rectangular LEGEND panel in the corner with the least map content: a small colour swatch or miniature icon beside each feature type's name, neatly aligned in a single column on a lightly-tinted panel with a fine border.
+${layerLabel && layerLabel !== 'Full design' ? `
+THIS IS A SINGLE-LAYER SHEET (${layerLabel}): its marked features are the STARS — render them rich and detailed. Everything else inside the boundary stays a quiet, muted base (plain lawn/veld, the buildings, nothing more) so this layer reads clearly. Do NOT decorate the rest of the plot into a full designed garden on this sheet.
+` : ''}
+CARTOGRAPHY — THIS SHEET MUST INCLUDE, drawn in the same illustration style:
+• A TITLE BLOCK in one top corner reading exactly "${title}" — the sheet's name, clearly the largest lettering on the page.
+• A tidy rectangular LEGEND panel in the corner with the least map content: a small colour swatch or miniature icon beside each feature type's name, neatly aligned in a single column on a lightly-tinted panel with a fine border. ${isZonesSheet ? 'This is the ZONES sheet, so the legend lists the zone bands (Zone 0–5) with their colours, plus the physical features.' : 'The legend lists ONLY physical features from the marked list — NEVER permaculture zone numbers, zone colour bands or "Zone 0/1/2…" entries; zones belong on the Zones sheet, not this one.'}
 • SELECTIVE LABELS: label only the most important features — at most 6 to 8 — in small, elegant, perfectly legible lettering placed beside (never on top of) the feature. Everything else is identified by the legend alone.
-• Use EXACTLY these spellings for the legend and labels: ${elementsText}${placeName ? '; ' + placeName : ''}. No other words anywhere on the image.
-• A small NORTH ARROW near the legend${placeName ? `, and the title "${placeName}" in one top corner` : ''}.
+• Use EXACTLY these spellings for the legend and labels: ${elementsText}${placeName ? '; ' + placeName : ''}. No other words anywhere on the image beyond these and the title block.
+• A small NORTH ARROW near the legend.
 All lettering must be horizontal, correctly spelled, high-contrast and print-legible.${designBrief ? `
 
 === MASTER DESIGN BRIEF — every sheet of this plan set shares this ONE design; placements are FINAL, reference only ===

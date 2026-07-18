@@ -30,6 +30,12 @@ export interface RenderSheetSpec {
   label: string;
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
   compositeDataUrl: string; // data:image/jpeg;base64,… — the model input
+  // Showcase ("AI legend") sheet: the model drew its own legend/labels, so the finisher must NOT
+  // clip/burn/chrome it. Persisted ON THE JOB DOC (not React state) because renders outlive the
+  // component — a remount that re-attaches by job id must finish each sheet the way it was
+  // ENQUEUED, not the way the freshly-reset UI happens to look. (Audit finding: reattach used to
+  // finish sheets with the default style + strict pipeline.)
+  showcase?: boolean;
 }
 
 /** A sheet's state as it lives in the job doc (input uploaded; worker fills output/status). */
@@ -41,6 +47,7 @@ export interface RenderSheetState {
   status: RenderSheetStatus;
   outputPath?: string;
   error?: string;
+  showcase?: boolean; // see RenderSheetSpec.showcase
 }
 
 export interface RenderJobDoc {
@@ -105,7 +112,8 @@ export async function enqueueRenderJob(opts: {
         const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
         await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
         uploaded.push(inputPath);
-        return { key: s.key, label: s.label, prompt: s.prompt, inputPath, status: 'queued' };
+        // Firestore rejects undefined field values — only carry showcase when it's actually set.
+        return { key: s.key, label: s.label, prompt: s.prompt, inputPath, status: 'queued', ...(s.showcase ? { showcase: true } : {}) };
       }),
     );
   } catch (err) {

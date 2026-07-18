@@ -190,15 +190,16 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
 type DesignSheet =
   | { no: string; label: string; exact: 'base' | 'sector' | 'implementation'; aiAnalysis: AnalysisStyle }
   | { no: string; label: string; filter: GlossyLayerFilter };
+// Short labels (Rory's mockup): the grid packs 4-up on a phone, so one word each.
 const DESIGN_SHEETS: DesignSheet[] = [
-  { no: '01', label: 'Existing site', exact: 'base', aiAnalysis: 'base' },
-  { no: '02', label: 'Sector analysis', exact: 'sector', aiAnalysis: 'sector' },
+  { no: '01', label: 'Site', exact: 'base', aiAnalysis: 'base' },
+  { no: '02', label: 'Sector', exact: 'sector', aiAnalysis: 'sector' },
   { no: '03', label: 'Zones', filter: 'zones' },
   { no: '04', label: 'Water', filter: 'water' },
   { no: '05', label: 'Planting', filter: 'planting' },
   { no: '06', label: 'Structures', filter: 'structures' },
-  { no: '07', label: 'Whole design', filter: 'all' },
-  { no: '08', label: 'Implementation & phasing', exact: 'implementation', aiAnalysis: 'implementation' },
+  { no: '07', label: 'Whole', filter: 'all' },
+  { no: '08', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
 const DEFAULT_PRODUCER_STYLE = 'extension_blueprint';
 
@@ -226,11 +227,12 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // the model beautifies the whole scene, then we deterministically composite (satellite
 // everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
 // so accuracy is guaranteed by construction. Four researched site-plan styles.
-const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelStyle: LabelStyle }> = [
-  { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink' },
-  { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook' },
-  { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint' },
-  { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk' },
+// swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
+const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelStyle: LabelStyle; swatch: string }> = [
+  { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
+  { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
+  { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
+  { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk',      swatch: '#B5502E' },
 ];
 
 // NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
@@ -964,6 +966,19 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
   }
+  // Line features (fences, paths, swales, pipes, drip, windbreaks) are drawn into the composite
+  // but were never NAMED here — a layer whose only content is a line handed the model a broken
+  // sentence and zero guidance (audit find). Group by kind, respect the layer filter.
+  const lineCounts = new Map<string, number>();
+  for (const l of state.lines) {
+    if (!lineInFilter(l.kind, filter)) continue;
+    lineCounts.set(l.kind, (lineCounts.get(l.kind) ?? 0) + 1);
+  }
+  const LINE_NAME: Record<string, string> = {
+    swale: 'swale (on-contour ditch)', fence: 'fence line', path: 'walking path',
+    pipe: 'water pipe route', drip: 'drip-irrigation line', windbreak: 'windbreak hedge',
+  };
+  for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
   if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a simple dark TAR / ASPHALT access track of the exact traced shape (NOT a loop, roundabout or circular drive), kept clear with no plantings on it');
@@ -3292,6 +3307,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
   // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
   const [mode, setMode] = useState<'ai' | 'exact'>('ai');
+  // "More options" collapse (mockup): engine, AI-legend toggle, Gemini analysis maps, style-all.
+  const [moreOpen, setMoreOpen] = useState(false);
   const [selectedNo, setSelectedNo] = useState(() => {
     const s = DESIGN_SHEETS.find((d) => 'filter' in d && d.filter === (initialFilter ?? 'all'));
     return s?.no ?? '07';
@@ -3319,6 +3336,10 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
   const aiLayerMode = mode === 'ai' && !!selectedSheet && !('exact' in selectedSheet);
+  // Preview-map mount (initialFilter set): a focused single-sheet view — hide the full studio
+  // (sheet grid, exact-all link, More options) so the overlay isn't a second copy of everything
+  // (audit find). The main Glossy step passes no initialFilter and shows it all.
+  const compact = initialFilter != null;
   // The deterministic Implementation & Phasing sheet (plan-set 08). It is the EXACT counterpart to
   // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
@@ -3327,6 +3348,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // Implementation 08) that carry their own chrome and override filter/analysis/producer. One union
   // state (not two booleans) makes the selection mutually exclusive by construction.
   const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
+  // Whether the CURRENT selection renders without any model — drives the honest caption/pill.
+  const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('gemini');
@@ -3506,16 +3529,15 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
-      //    EXCEPTION — the ZONES sheet does NOT run the model at all (Rory: "it musn't for the
-      //    zones invent things underneath — it must just be the clean satellite image"). A zones
-      //    map's whole job is "where are my zones on MY REAL LAND", so the AI can only add risk;
-      //    the photograph IS the truth. We hand the real satellite straight through as the base —
-      //    then buildZoneOverlay burns the exact zone regions + labels + sheet chrome on top,
-      //    exactly as before. Result: instant, free, no ~5-min gpt-image-2 wait, never invented.
+      //    ZONES runs the model too now. The old rule ("AI mustn't invent under my zones —
+      //    just the clean satellite") predates the Exact mode: today "clean satellite zones"
+      //    IS the Exact render, one link away, while an AI-mode zones tap used to silently
+      //    return a no-model sheet captioned "AI artist's impression" (audit must-fix; also
+      //    Rory: "gpt zones keeps coming up autogenerated"). Accuracy is still guaranteed by
+      //    construction: buildZoneOverlay burns the EXACT zone regions over whatever the model
+      //    paints, so the zones themselves can never drift.
       let modelImage: string;
-      if (filter === 'zones') {
-        modelImage = frame.satDataUrl ?? composite;
-      } else {
+      {
         try {
           modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
         } catch (err) {
@@ -3741,11 +3763,12 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // than aborting the batch. Slow by nature (one model call per sheet); the button warns about it.
   const generateAllStyledSheets = useCallback(async () => {
     // Default to Extension Blueprint when no Style is chosen, so this button always works.
+    // Deliberately does NOT touch producerStyle/exactSheet: the batch passes styleKey explicitly,
+    // and leaking it into the selection state flipped a user parked on an Exact sheet into AI
+    // without them choosing it (audit find — "exact mode silently turns into an AI render").
     const styleKey = producerStyle ?? 'extension_blueprint';
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
-    if (!producerStyle) setProducerStyle(styleKey); // reflect the default in the Style chips
-    setExactSheet(null); // a styled all-set is not an exact sheet — keep the selection exclusive
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
     setLoading(engine);
     setError(null);
@@ -3763,10 +3786,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         const elementsText = producerElementsText(state, refLayers, f);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
         let modelImage: string;
-        if (f === 'zones') {
-          // Same rule as the single Zones sheet: never let the model invent under the zones.
-          modelImage = frame.satDataUrl ?? composite;
-        } else {
+        {
+          // Zones runs the model too (same contract change as the single-sheet path — the exact
+          // zone overlay is burned back on top below, so the regions can never drift).
           try {
             modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, styleKey, producerEngine, designBrief);
           } catch (err) {
@@ -3876,34 +3898,41 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
-    if (!producerStyle) setProducerStyle(styleKey);
-    setExactSheet(null); // a styled all-set is not an exact sheet — keep the selection exclusive
+    // No selection side-effects here — the batch passes styleKey explicitly; leaking it into the
+    // chips used to flip a user parked on an Exact sheet into AI mode (audit find).
     setError(null);
     setNotice(null);
     setLoading('falgpt');
     try {
-      if (layerContentCount(state, refLayers, 'zones') > 0) {
+      // AI-legend (showcase) ON → the model renders EVERY sheet, Zones included, with its own
+      // legend/labels — owner's fix for "I selected the AI legend and it reverted to the old one:
+      // the sheets came out disjointed". Toggle OFF keeps the legacy split: Zones exact + the
+      // model sheets through the strict composite-back pipeline.
+      if (!modelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef);
         try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
         pushGallery(`Zones map · ${styleDef.label}`, zsheet);
       }
-      const modelFilters: GlossyLayerFilter[] = ['all', 'water', 'planting', 'structures'];
+      // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
+      const modelFilters: GlossyLayerFilter[] = modelChrome
+        ? ['all', 'zones', 'water', 'planting', 'structures']
+        : ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
-      // Showcase (model-drawn legend/labels) applies to the Whole-design sheet only, and only when
-      // the experimental toggle is on. Record which keys used it so the finisher softens those.
-      showcaseKeysRef.current = new Set(modelChrome ? ['all'] : []);
-      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string }>;
+      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; showcase?: boolean }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const composite = await buildComposite(state, frame, refLayers, f);
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const prompt = modelChrome && f === 'all'
+        const prompt = modelChrome
           ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
           : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
-        sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite });
+        sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, showcase: modelChrome });
       }
+      // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
+      // softens exactly those (no boundary clip / burned labels over the model's own chrome).
+      showcaseKeysRef.current = new Set(modelChrome ? sheets.map((s) => s.key) : []);
       if (sheets.length === 0) {
         setNotice(
           layerContentCount(state, refLayers, 'zones') > 0
@@ -3962,7 +3991,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         siteId: state.siteId,
         style: styleKey,
         engine: 'openai',
-        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite }],
+        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite, showcase: useShowcase }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
@@ -3988,14 +4017,18 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       queueJobId,
       async (job) => {
         if (!job) return;
-        const styleKey = (styleRef.current ?? 'extension_blueprint') as StylePreset;
+        // Style + showcase come off the JOB DOC, not React state: a remount (Preview-map hop,
+        // reload on a spotty connection) resets local state to defaults, and the old code then
+        // finished a Storybook/showcase job as strict Extension Blueprint (audit must-fix).
+        // showcaseKeysRef stays as fallback for jobs enqueued before the field existed.
+        const styleKey = ((job.style || styleRef.current) ?? 'extension_blueprint') as StylePreset;
         const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
         for (const sheet of job.sheets) {
           if (sheet.status === 'done' && sheet.outputPath && !finished.has(sheet.key)) {
             finished.add(sheet.key); // BEFORE the await, so a re-fired snapshot can't double-finish
             try {
               const raw = await fetchRenderOutput(sheet.outputPath);
-              const showcase = showcaseKeysRef.current.has(sheet.key);
+              const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
               const finalSheet = styleDef ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase) : raw;
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() }); } catch { /* cache full */ }
               pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}`, finalSheet);
@@ -4006,13 +4039,16 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         }
         if (job.status === 'complete' || job.status === 'failed' || job.status === 'error') {
           const done = job.sheets.filter((s) => s.status === 'done').length;
-          const failed = job.sheets.filter((s) => s.status === 'error').length;
+          const failedSheets = job.sheets.filter((s) => s.status === 'error');
+          // Surface the worker's actual reason (quota, moderation, …) — it was captured
+          // server-side but never shown, leaving farmers guessing (audit find).
+          const firstErr = failedSheets[0]?.error;
           if (done > 0) {
-            setNotice(`Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${failed ? ` · ${failed} failed, try again` : ''}.`);
+            setNotice(`Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
             setGalleryViewId(null);
             setGalleryOpen(true);
           } else {
-            setError(job.error || 'The render did not complete — please try again.');
+            setError(job.error || firstErr || 'The render did not complete — please try again.');
           }
           setLoading(null);
           clearPersistedJobId(siteId);
@@ -4020,8 +4056,13 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         }
       },
       () => {
-        setError('Lost connection to the background render — it may still finish; reopen the Glossy step to check.');
+        // Clear the job reference too — leaving it made the next Generate silently orphan a
+        // still-running, still-billed render (audit find). The old job may still finish
+        // server-side; its outputs land in the cache for this site if the user reopens.
+        setError('Lost connection to the background render — it may still finish in the background; reopen this step in a few minutes to check before paying for a re-run.');
         setLoading(null);
+        clearPersistedJobId(siteId);
+        setQueueJobId(null);
       },
     );
     return () => unsub();
@@ -4073,91 +4114,19 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     >
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
-      {/* Beta / experimental notice — the AI render is not reliable yet; set expectations up front. */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: 10,
-          padding: '10px 12px',
-          borderRadius: 12,
-          background: 'rgba(192,122,30,0.12)',
-          border: '1px solid rgba(192,122,30,0.4)',
-        }}
-      >
-        <FlaskConical size={18} color={OCHRE} style={{ flexShrink: 0, marginTop: 1 }} />
-        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>
-          <span
-            style={{
-              display: 'inline-block',
-              fontSize: 10,
-              fontWeight: 900,
-              letterSpacing: 0.5,
-              textTransform: 'uppercase',
-              color: PAPER,
-              background: OCHRE,
-              borderRadius: 6,
-              padding: '2px 7px',
-              marginRight: 6,
-            }}
-          >
-            Beta · Experimental
-          </span>
-          AI-illustrated maps are beautiful but each render varies — if one looks off,
-          <strong> generate again</strong> or switch the Output to <strong>📐 Exact</strong> for
-          the rules-drawn version of any sheet. Your canvas design is always the source of truth.
-        </div>
-      </div>
-
-      {/* Which map? — a design-overlay layer (locks your geometry) OR a richer analysis style. */}
+      {/* Which map? — Rory's mockup layout: SHEET grid → quiet exact-all link → STYLE cards →
+          one primary CTA → collapsed More options. The old top banner + big Output switch are
+          gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
       <div>
-        {/* Output mode — AI illustration is the DEFAULT; Exact (no AI) is the option. Toggling
-            re-maps the currently-selected sheet to the other generator (see applySheet). */}
+        {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–08 order.
+            Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
+            version" link under the preview flips the same sheet to its exact render and back. */}
+        {!compact && (
+        <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          Output
+          Sheet
         </div>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
-          {([['ai', '✨ AI illustration'], ['exact', '📐 Exact · no AI']] as const).map(([m, lbl]) => {
-            const on = mode === m;
-            return (
-              <button
-                key={m}
-                type="button"
-                onClick={() => {
-                  setMode(m);
-                  const cur = DESIGN_SHEETS.find((s) => s.no === selectedNo);
-                  if (cur) applySheet(cur, m);
-                }}
-                disabled={loading !== null}
-                aria-pressed={on}
-                style={{
-                  flex: 1,
-                  minHeight: 42,
-                  padding: '8px 14px',
-                  borderRadius: 12,
-                  border: on ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
-                  background: on ? GREEN : 'transparent',
-                  color: on ? PAPER : DARK,
-                  fontWeight: 800,
-                  fontSize: 13.5,
-                  cursor: loading !== null ? 'default' : 'pointer',
-                  opacity: loading !== null ? 0.6 : 1,
-                }}
-              >
-                {lbl}
-              </button>
-            );
-          })}
-        </div>
-
-        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          {mode === 'ai' ? 'Which sheet? · AI illustrated' : 'Which sheet? · exact, no AI'}
-        </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {/* The whole plan set as ONE numbered 01–08 row, in canonical order (DESIGN_SHEETS).
-              Every sheet is generated AI-first or exact via the Output switch above (applySheet);
-              the sheet number matches the printed set. Analysis sheets 01/02/08 use the Gemini
-              analysis path in AI mode (the old separate row, now folded in). */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {DESIGN_SHEETS.map((sheet) => {
             const active = selectedNo === sheet.no;
             return (
@@ -4170,10 +4139,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  minHeight: 38,
-                  padding: '5px 14px',
-                  borderRadius: 19,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: 46,
+                  padding: '6px 4px',
+                  borderRadius: 12,
                   border: active ? `2px solid ${GREEN}` : '1px solid rgba(31,77,43,0.35)',
                   background: active ? GREEN : 'transparent',
                   color: active ? PAPER : DARK,
@@ -4184,13 +4154,24 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                 }}
               >
                 <span>{sheet.label}</span>
-                <span style={{ fontSize: 10, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>
+                <span style={{ fontSize: 9.5, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>
                   sheet {sheet.no}
                 </span>
               </button>
             );
           })}
         </div>
+        {/* Quiet exact-all link (mockup) — the "option somewhere to generate non-AI sheets". */}
+        <button
+          type="button"
+          onClick={generateAllSheets}
+          disabled={loading !== null}
+          style={{ display: 'block', marginLeft: 'auto', marginTop: 8, padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+        >
+          {loading === 'exact' ? 'Drawing your plan set…' : 'Generate all sheets — exact, no AI →'}
+        </button>
+        </>
+        )}
 
         {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
             accurate). Shown only in AI mode on a design LAYER (03–07); analysis sheets 01/02/08
@@ -4198,37 +4179,40 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         {aiLayerMode && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Style · illustrated {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+          Style {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {PRODUCER_STYLES.map((s) => {
             const active = producerStyle === s.key;
             return (
               <button
                 key={s.key}
                 type="button"
-                onClick={() => { setProducerStyle(producerStyle === s.key ? null : s.key); setAnalysisStyle(null); setExactSheet(null); }}
+                // Selecting only — tapping the active card keeps it (deselecting used to leave
+                // "AI mode with no style", which silently fell back to the exact renderer).
+                onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={s.blurb}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  minHeight: 38,
-                  padding: '6px 14px',
-                  borderRadius: 19,
+                  alignItems: 'stretch',
+                  gap: 6,
+                  padding: 6,
+                  borderRadius: 12,
                   border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
-                  background: active ? GREEN : 'transparent',
-                  color: active ? PAPER : DARK,
+                  background: active ? 'rgba(31,77,43,0.08)' : 'transparent',
+                  color: DARK,
                   fontWeight: 700,
-                  fontSize: 13,
+                  fontSize: 11.5,
                   cursor: loading !== null ? 'default' : 'pointer',
                   opacity: loading !== null && !active ? 0.5 : 1,
                 }}
               >
-                <span>{s.label}</span>
-                <span style={{ fontSize: 10, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>{s.blurb}</span>
+                <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
+                <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
+                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{s.blurb}</span>
               </button>
             );
           })}
@@ -4250,8 +4234,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
-                ? 'Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn straight from your plan, so it’s always accurate. Instant, no AI. Want an artist’s impression? Pick a Style below.'
-                : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Instant and accurate, no AI guessing. For an illustrated version, add a Style below.`}
+                ? `Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn straight from your plan, so it’s always accurate. Instant, no AI.${aiLayerMode ? ' Want an artist’s impression? Pick a Style above.' : ''}`
+                : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Instant and accurate, no AI guessing.${aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}`}
         </p>
       )}
 
@@ -4281,15 +4265,23 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                     ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
                     : ''}
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={resultImage}
-              alt={exactSheet ? 'Deterministic plan sheet of the design' : "AI artist's impression of the design"}
-              style={{ width: '100%', display: 'block' }}
-            />
+            <div style={{ position: 'relative' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={resultImage}
+                alt={isExactRender ? 'Exact plan sheet of the design' : "AI artist's impression of the design"}
+                style={{ width: '100%', display: 'block' }}
+              />
+              {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
+              {!isExactRender && (
+                <span style={{ position: 'absolute', left: 10, bottom: 10, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 999, background: 'rgba(20,16,10,0.72)', color: '#F5E9CE', fontSize: 11.5, fontWeight: 700 }}>
+                  <FlaskConical size={12} /> Beta — may need a re-try
+                </span>
+              )}
+            </div>
             <div style={{ padding: '10px 14px', background: DARK, color: PAPER, fontSize: 12, opacity: 0.75 }}>
-              {exactSheet
-                ? 'Deterministic plan sheet — built from your design + site data by the rules engine, no AI.'
+              {isExactRender
+                ? 'Exact sheet — drawn straight from your design + site data, no AI.'
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
             </div>
           </div>
@@ -4297,6 +4289,24 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               Saved render · {relativeDate(saved.at)} · {PROVIDER_LABEL[saved.provider]}
             </div>
+          )}
+          {/* Flip the SAME sheet between its AI and exact renders (mockup link). Clears the
+              preview so the relabeled one-tap CTA draws the flipped version. */}
+          {selectedSheet && (
+            <button
+              type="button"
+              onClick={() => {
+                const m = mode === 'ai' ? 'exact' : 'ai';
+                setMode(m);
+                applySheet(selectedSheet, m);
+                setResultImage(null);
+                setNotice(null);
+              }}
+              disabled={loading !== null}
+              style={{ alignSelf: 'flex-end', padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+            >
+              {mode === 'ai' ? 'View non-AI exact version →' : '← Back to AI version'}
+            </button>
           )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button
@@ -4342,165 +4352,170 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Two "generate everything" paths, side by side, with the trade-off spelled out (Rory:
-            "should say non-ai for all sheets and then ai for all sheets, explaining the drawbacks
-            of both"). Both produce the WHOLE plan set in one tap; they differ exact-vs-beautified. */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            padding: 12,
-            borderRadius: 14,
-            border: '1px solid rgba(31,77,43,0.25)',
-            background: 'rgba(31,77,43,0.04)',
-          }}
-        >
-          <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.6 }}>
-            Generate every sheet at once
+        {/* Gemini note for the analytical sheets (01/02/08 in AI mode) — no Style, no engine. */}
+        {!producerStyle && analysisStyle && (
+          <div style={{ fontSize: 11.5, opacity: 0.7 }}>
+            Drawn by <strong>Gemini Pro</strong> — an illustrated analysis over your real site. About a minute.
           </div>
-
-          {/* NON-AI — exact deterministic set */}
-          <button
-            onClick={generateAllSheets}
-            disabled={loading !== null}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              width: '100%',
-              minHeight: 50,
-              padding: '12px 20px',
-              borderRadius: 12,
-              border: 'none',
-              background: GREEN,
-              color: PAPER,
-              fontWeight: 800,
-              fontSize: 15,
-              cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null ? 0.7 : 1,
-            }}
-          >
-            <Images size={18} />
-            {loading === 'exact' ? 'Drawing your plan set…' : 'Non-AI · ALL sheets (exact)'}
-          </button>
-          <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5 }}>
-            <strong>Reliable choice.</strong> Your real satellite + exact geometry for every layer
-            (Whole · Water · Zones · Planting · Structures · Implementation). Instant, never invented,
-            ready to <strong>Print</strong>. Drawback: plain — no artistic styling.
-          </div>
-
-          {/* AI — illustrated set in a Style (defaults to Extension Blueprint). gpt-image-2 runs in
-              the BACKGROUND queue (direct OpenAI, escapes the 60s wall); Gemini stays synchronous. */}
-          <button
-            onClick={engine === 'gemini' ? generateAllStyledSheets : generateAllViaQueue}
-            disabled={loading !== null}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              width: '100%',
-              minHeight: 48,
-              padding: '11px 18px',
-              borderRadius: 12,
-              border: `2px solid ${GREEN}`,
-              background: 'transparent',
-              color: GREEN,
-              fontWeight: 800,
-              fontSize: 14.5,
-              cursor: loading !== null ? 'default' : 'pointer',
-              opacity: loading !== null ? 0.6 : 1,
-            }}
-          >
-            <Gem size={17} />
-            {loading !== null && loading !== 'exact' ? 'Styling every sheet… hang on' : 'AI · ALL sheets (illustrated)'}
-          </button>
-          <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5 }}>
-            <strong>Beautiful, less exact.</strong> An artist's impression of every layer in a Style
-            {producerStyle ? ` (${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label})` : ' (defaults to Extension Blueprint — pick another below)'}.
-            {engine === 'gemini'
-              ? ' Runs now with Gemini (~a minute per sheet, varies shot to shot).'
-              : ' With gpt-image-2 it renders in the BACKGROUND — sharpest result, takes a few minutes; the sheets drop into your gallery when ready and you can keep working or come back.'}
-          </div>
-        </div>
-
-        {/* Engine picker — only for illustrated Styles (they render via the boundary-locked
-            image-producer pipeline, gpt-image-2 or Gemini). Analysis maps are Gemini-only.
-            Bare Design maps are drawn deterministically from your plan — no model, no engine. */}
-        {!producerStyle ? (
-          analysisStyle ? (
-            <div style={{ fontSize: 11.5, opacity: 0.7 }}>
-              Analysis maps are drawn by <strong>Gemini Pro</strong>.
-            </div>
-          ) : null
-        ) : (
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-            Engine for this style · both experimental
-          </div>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {ENGINES.map((e) => {
-              const active = engine === e.key;
-              return (
-                <button
-                  key={e.key}
-                  type="button"
-                  onClick={() => setEngine(e.key)}
-                  disabled={loading !== null}
-                  aria-pressed={active}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    minHeight: 44,
-                    padding: '6px 14px',
-                    borderRadius: 12,
-                    border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
-                    background: active ? GREEN : 'transparent',
-                    color: active ? PAPER : DARK,
-                    cursor: loading !== null ? 'default' : 'pointer',
-                    opacity: loading !== null && !active ? 0.5 : 1,
-                  }}
-                >
-                  <span style={{ fontWeight: 800, fontSize: 13 }}>{e.label}</span>
-                  <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{e.sub}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
         )}
 
-        {/* EXPERIMENTAL — let gpt-image-2 draw its OWN legend + labels on the Whole-design sheet,
-            instead of the strict pipeline that burns ours on. Only meaningful for the gpt-image-2
-            background queue (the "AI · ALL sheets" button). */}
-        {producerStyle && engine === 'falgpt' && (
+        {/* More options (mockup) — everything power-user lives in one collapse: engine, the
+            AI-legend experiment, the bonus Gemini analysis maps (incl. Opportunities, which has
+            no sheet of its own), and the style-ALL batch. Hidden on the compact Preview mount. */}
+        {!compact && (
+        <div style={{ borderRadius: 14, border: '1px solid rgba(0,0,0,0.14)' }}>
           <button
             type="button"
-            onClick={() => setModelChrome((v) => !v)}
-            disabled={loading !== null}
-            aria-pressed={modelChrome}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              alignSelf: 'flex-start',
-              minHeight: 40,
-              padding: '8px 14px',
-              borderRadius: 12,
-              border: modelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
-              background: modelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
-              color: DARK,
-              fontWeight: 700,
-              fontSize: 12.5,
-              cursor: loading !== null ? 'default' : 'pointer',
-            }}
+            onClick={() => setMoreOpen((v) => !v)}
+            aria-expanded={moreOpen}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '10px 14px', background: 'transparent', border: 'none', color: DARK, fontWeight: 800, fontSize: 13, cursor: 'pointer' }}
           >
-            <span>{modelChrome ? '☑' : '☐'}</span>
-            🧪 AI draws the whole map — its own legend &amp; labels, no clipping (ChatGPT-style · this sheet)
+            <span>More options</span>
+            <span style={{ opacity: 0.55 }}>{moreOpen ? '▴' : '▾'}</span>
           </button>
+          {moreOpen && (
+            <div style={{ padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {/* Engine — always shown here so the batch button below never runs on an invisible
+                  selection (audit find). */}
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+                  AI engine
+                </div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {ENGINES.map((e) => {
+                    const active = engine === e.key;
+                    return (
+                      <button
+                        key={e.key}
+                        type="button"
+                        onClick={() => setEngine(e.key)}
+                        disabled={loading !== null}
+                        aria-pressed={active}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          minHeight: 44,
+                          padding: '6px 14px',
+                          borderRadius: 12,
+                          border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                          background: active ? GREEN : 'transparent',
+                          color: active ? PAPER : DARK,
+                          cursor: loading !== null ? 'default' : 'pointer',
+                          opacity: loading !== null && !active ? 0.5 : 1,
+                        }}
+                      >
+                        <span style={{ fontWeight: 800, fontSize: 13 }}>{e.label}</span>
+                        <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{e.sub}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* AI-legend experiment — gpt-image-2 renders the whole frame with its OWN legend
+                  + labels (the free-ChatGPT look): illustration inside the boundary, real
+                  satellite kept outside, exact roof footprints, a title block. */}
+              {engine === 'falgpt' && (
+                <button
+                  type="button"
+                  onClick={() => setModelChrome((v) => !v)}
+                  disabled={loading !== null}
+                  aria-pressed={modelChrome}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    alignSelf: 'flex-start',
+                    minHeight: 40,
+                    padding: '8px 14px',
+                    borderRadius: 12,
+                    border: modelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
+                    background: modelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
+                    color: DARK,
+                    fontWeight: 700,
+                    fontSize: 12.5,
+                    cursor: loading !== null ? 'default' : 'pointer',
+                    textAlign: 'left',
+                  }}
+                >
+                  <span>{modelChrome ? '☑' : '☐'}</span>
+                  🧪 AI draws its own legend &amp; labels (satellite kept outside the boundary)
+                </button>
+              )}
+
+              {/* Bonus Gemini analysis maps — the old analysis row lives on here; Opportunities
+                  has no 01–08 sheet, so this is its only home. */}
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+                  Analysis maps · Gemini
+                </div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {GLOSSY_STYLES.map((s) => {
+                    const active = producerStyle === null && analysisStyle === s.key;
+                    return (
+                      <button
+                        key={s.key}
+                        type="button"
+                        onClick={() => { setAnalysisStyle(s.key); setProducerStyle(null); setExactSheet(null); setSelectedNo(''); }}
+                        disabled={loading !== null}
+                        aria-pressed={active}
+                        style={{
+                          minHeight: 38,
+                          padding: '6px 14px',
+                          borderRadius: 19,
+                          border: active ? `2px solid ${OCHRE}` : '1px solid rgba(0,0,0,0.18)',
+                          background: active ? OCHRE : 'transparent',
+                          color: active ? PAPER : DARK,
+                          fontWeight: 700,
+                          fontSize: 13,
+                          cursor: loading !== null ? 'default' : 'pointer',
+                          opacity: loading !== null && !active ? 0.5 : 1,
+                        }}
+                      >
+                        {s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Style ALL sheets — the AI batch (mockup naming). gpt-image-2 → background queue;
+                  Gemini → synchronous. */}
+              <div>
+                <button
+                  onClick={engine === 'gemini' ? generateAllStyledSheets : generateAllViaQueue}
+                  disabled={loading !== null}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    width: '100%',
+                    minHeight: 48,
+                    padding: '11px 18px',
+                    borderRadius: 12,
+                    border: `2px solid ${GREEN}`,
+                    background: 'transparent',
+                    color: GREEN,
+                    fontWeight: 800,
+                    fontSize: 14,
+                    cursor: loading !== null ? 'default' : 'pointer',
+                    opacity: loading !== null ? 0.6 : 1,
+                  }}
+                >
+                  <Gem size={17} />
+                  {loading !== null && loading !== 'exact' ? 'Styling every sheet… hang on' : `Style all sheets — ${PRODUCER_STYLES.find((s) => s.key === (producerStyle ?? DEFAULT_PRODUCER_STYLE))?.label}`}
+                </button>
+                <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5, marginTop: 6 }}>
+                  {engine === 'gemini'
+                    ? 'Runs now with Gemini — about a minute per sheet, varies shot to shot.'
+                    : 'gpt-image-2 renders in the background — sharpest result, a few minutes; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         )}
 
         <button
@@ -4512,7 +4527,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : exactSheet === 'implementation'
                 ? renderImplementationMap()
                 : producerStyle
-                  ? (engine === 'falgpt' && (filter !== 'zones' || modelChrome) ? generateOneViaQueue() : generateProducer())
+                  ? (engine === 'falgpt' ? generateOneViaQueue() : generateProducer())
                   : analysisStyle
                     ? generate('gemini')
                     : renderDesignMap()
@@ -4550,28 +4565,25 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             : exactSheet === 'implementation'
               ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
               : producerStyle
-                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' && filter !== 'zones' ? '(background · ~mins)' : '(~1 min)'}`
+                ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
                 : analysisStyle
-                  ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
-                  : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
+                  ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
+                  : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
         </button>
 
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
               Drawn straight from your design — <strong>exact, no AI</strong>. Your satellite,
-              boundary, zones, elements and labels, nothing invented. For an illustrated
-              version, pick a <strong>Style</strong> below.
+              boundary, zones, elements and labels, nothing invented.
+              {aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}
             </>
           ) : (
             <>
-              Using{' '}
-              <strong>
-                {analysisStyle
-                  ? 'Gemini Pro'
-                  : `${ENGINES.find((e) => e.key === engine)?.label} · polished pipeline`}
-              </strong>
-              . If the result looks off, try generating again{analysisStyle ? '' : ' or switch engine'} — results vary shot to shot.
+              {analysisStyle
+                ? <><strong>Gemini Pro</strong> · illustrated analysis — great to look at, less exact on geometry.</>
+                : <><strong>{ENGINES.find((e) => e.key === engine)?.label}</strong> · if the result looks off, generate again or switch engine (More options).</>}{' '}
+              Your canvas design is always the exact version.
             </>
           )}
         </div>
