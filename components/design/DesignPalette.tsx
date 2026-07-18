@@ -25,6 +25,7 @@ interface ActiveLayers {
   baseMap: boolean;
   labels: boolean;
   contours: boolean;
+  sector: boolean;
 }
 
 export type DesignMode = 'guided' | 'pro';
@@ -87,6 +88,7 @@ const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: strin
   { key: 'animals', label: 'Animals', icon: '🐔' },
   { key: 'labels', label: 'Labels', icon: '🏷️' },
   { key: 'contours', label: 'Contours', icon: '⛰️' },
+  { key: 'sector', label: 'Sector energies', icon: '☀️' },
 ];
 
 // Element category → the layer toggle that shows/hides it. A Record (not a ternary chain) so

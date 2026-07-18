@@ -432,13 +432,14 @@ function DesignStudioInner() {
     baseMap: true,
     labels: true,
     contours: false, // opt-in overlay (approximate, from slope + aspect)
+    sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, contours: a.contours }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, contours: a.contours, sector: a.sector }));
     }
   }, [designMode]);
 
@@ -1270,6 +1271,8 @@ function DesignStudioInner() {
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               slopeDeg={locationData?.elevation?.slopeDeg}
               aspectDeg={locationData?.elevation?.aspectDeg}
+              sectorSite={glossySite}
+              lat={lat}
               refLayers={refLayers}
               selectedId={selectedId}
               selectedIds={selectedIds}

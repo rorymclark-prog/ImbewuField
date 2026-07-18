@@ -16,6 +16,8 @@ import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
+import { deriveSectorModel, type SectorSite } from '@/lib/sector';
+import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -77,6 +79,7 @@ interface ActiveLayers {
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
   labels: boolean; // the text name pills on every feature — off = declutter the map
   contours: boolean; // approximate on-contour guide lines (from slope + aspect)
+  sector: boolean; // sun/wind/fire/water/frost energies overlay (from lib/sector, deterministic)
 }
 
 interface RefLayers {
@@ -103,6 +106,10 @@ export interface DesignCanvasProps {
   // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
   slopeDeg?: number;
   aspectDeg?: number;
+  // Full site context (slope + climate) + latitude → the deterministic Sector energies overlay
+  // (lib/sector.deriveSectorModel). Same object app/design/page.tsx feeds the glossy sheet.
+  sectorSite?: SectorSite | null;
+  lat?: number;
   refLayers: RefLayers;
   selectedId: string | null; // the SINGLE selection (edit/resize/rotate handles); null if 0 or >1
   selectedIds: string[]; // every selected id (highlight rings + group delete)
@@ -389,6 +396,8 @@ export default function DesignCanvas({
   onToggleBaseMap,
   slopeDeg,
   aspectDeg,
+  sectorSite,
+  lat,
   refLayers,
   selectedId,
   selectedIds,
@@ -1180,6 +1189,14 @@ export default function DesignCanvas({
     [slopeDeg, aspectDeg, refLayers.boundary, mPerPx, imgW, imgH],
   );
 
+  // Sector energies model — pure derivation from the site's real slope + climate (lib/sector).
+  // Null until we have a latitude (hemisphere is undecidable without it); the overlay + its note
+  // chip both gate on this. Cheap, but memoised so it doesn't re-derive on every pan/zoom render.
+  const sectorModel = useMemo(
+    () => (lat != null && Number.isFinite(lat) ? deriveSectorModel(sectorSite ?? null, lat) : null),
+    [sectorSite, lat],
+  );
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -1264,6 +1281,14 @@ export default function DesignCanvas({
               />
             ))}
           </g>
+        )}
+
+        {/* Sector energies — sun path (across the north in the SH), summer/winter wind, dry-season
+            fire wedge, downhill water-flow arrow, frost pocket. Deterministic (lib/sector), light
+            and non-interactive; drawn in the world group so it stays anchored to the site while
+            panning/zooming. Off by default; toggled via the Sector layer. */}
+        {activeLayers.sector && sectorModel && (
+          <SectorOverlay model={sectorModel} imgW={imgW} imgH={imgH} boundary={refLayers.boundary} />
         )}
 
         {/* Boundary reference — the property fence. House/driveway and every other traced
@@ -2219,6 +2244,31 @@ export default function DesignCanvas({
           {contours.tooFlat
             ? 'Ground reads flat here — no useful contours to show'
             : `Approx. contours ~${contours.intervalM} m apart — lay swales/vetiver along these lines`}
+        </div>
+      )}
+
+      {/* Sector honest-degradation note — one small muted chip carrying the strongest caveat
+          (e.g. "open this place on the map to fetch climate & slope"), so missing energies read as
+          "not analysed yet", not "no wind here". Nudged below the contours note when both are on. */}
+      {activeLayers.sector && sectorModel && sectorModel.dataNotes.length > 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            top: activeLayers.contours ? 46 : 12,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            maxWidth: '80%',
+            padding: '4px 11px',
+            borderRadius: 14,
+            background: 'rgba(11,18,11,0.7)',
+            color: '#D8CFB8',
+            fontSize: 11,
+            fontWeight: 600,
+            textAlign: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          {sectorModel.dataNotes[0]}
         </div>
       )}
 
