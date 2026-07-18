@@ -144,6 +144,25 @@ function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties 
   };
 }
 
+// Every chip row is a single horizontally-scrollable strip. It must never wrap and never widen the
+// page — chips that don't fit scroll INSIDE the bar instead of being cut off at the right edge
+// (Rory's screenshots). minWidth:0 lets the flex row shrink below its content so overflowX can
+// actually scroll; children keep flexShrink:0 so they hold their size. touch scrolling + scroll
+// padding make it feel native on a phone.
+function scrollStripStyle(gap: number): React.CSSProperties {
+  return {
+    display: 'flex',
+    gap,
+    overflowX: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    flexWrap: 'nowrap',
+    scrollPaddingLeft: 4,
+    scrollPaddingRight: 4,
+    minWidth: 0,
+    paddingBottom: 2,
+  };
+}
+
 export default function DesignPalette({
   step,
   mode,
@@ -289,11 +308,22 @@ export default function DesignPalette({
             : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, fontFamily: 'inherit' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: guided ? 10 : 6,
+        fontFamily: 'inherit',
+        // Docked bar: gutter so chips don't touch the screen edges, and safe-area padding so the
+        // bottom row clears the phone's home indicator instead of rendering below the viewport.
+        padding: '0 12px',
+        paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
+      }}
+    >
       {/* Tool row: Select · Undo · Delete (scrolls) + Layers pinned right (always visible, so
           it can never fall off the bottom of the page). */}
       <div style={{ display: 'flex', gap: guided ? 10 : 6, alignItems: 'center', paddingBottom: 2 }}>
-        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}>
         <button
           type="button"
           style={toolButtonStyle(tool === 'select', guided)}
@@ -449,7 +479,7 @@ export default function DesignPalette({
             🌡️ Trees that suit your climate{siteBiome ? ` (${siteBiome})` : ''} are shown first. Dimmed ones need a warmer or cooler spot.
           </div>
         )}
-        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+        <div style={scrollStripStyle(guided ? 10 : 6)}>
           {orderedCatalog.map((def) => {
             const active = placeDefId === def.id && tool === 'place';
             const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
@@ -494,7 +524,7 @@ export default function DesignPalette({
       {showAreaChips && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>Draw what&apos;s already here — tap a feature, then trace its corners.</div>
-          <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+          <div style={scrollStripStyle(guided ? 10 : 6)}>
             {GROUND_FEATURE_KINDS.map((kind) => {
               const gf = GROUND_FEATURES[kind];
               const active = areaFeature === kind && tool === 'zone';
@@ -540,7 +570,7 @@ export default function DesignPalette({
 
       {/* Zones step: always show the zone 0-5 colour chips row */}
       {showZoneChips && (
-        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+        <div style={scrollStripStyle(guided ? 10 : 6)}>
           {(Object.keys(ZONE_DEFS) as unknown as Array<0 | 1 | 2 | 3 | 4 | 5>).map((z) => {
             const def = ZONE_DEFS[z];
             const active = zoneDraw === z && tool === 'zone';
@@ -575,7 +605,7 @@ export default function DesignPalette({
 
       {/* Water/Structures step: compact line-kind chips row */}
       {showLineChips && (
-        <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', paddingBottom: 2 }}>
+        <div style={scrollStripStyle(guided ? 10 : 6)}>
           {lineChipsForStep.map((lk) => {
             const active = lineKind === lk.id && tool === 'line';
             return (

@@ -6,7 +6,7 @@
 // top advice as a small card. A badge expands the rest, plus an "Ask AI" button that
 // calls /api/design-advice for a few extra farmer-friendly suggestions.
 
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Sparkles, X, ChevronUp, ChevronDown, TriangleAlert, Lightbulb, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
@@ -28,19 +28,7 @@ interface DesignAdvisorProps {
   } | null;
   houseXY: [number, number] | null;
   lastChangeId: string | null;
-  // True while the Design Studio header's "Show steps" panel is expanded above the canvas.
-  // That panel is normal document flow (it pushes the canvas down), but this advisor is an
-  // absolutely-positioned overlay anchored to viewport-centre — so without this flag it stays
-  // put while the steps panel grows underneath it and ends up overlapped/hidden by that panel.
-  // Optional + defaulted so existing callers don't need to change. See DESIGN_STEPS_OFFSET_PX.
-  stepsOpen?: boolean;
 }
-
-// Extra downward shift applied to the advisor's vertical centring when the steps panel is open.
-// The panel's height varies (Guided vs Pro wizard, per-step lesson text), so this is a fixed
-// clearance value rather than a measured one — picked generously so the cluster clears the
-// panel in the common (Guided) case rather than sitting flush under it.
-const DESIGN_STEPS_OFFSET_PX = 190;
 
 interface AiSuggestion {
   msg: string;
@@ -106,7 +94,7 @@ function buildDesignSummary(state: DesignCanvasState) {
   };
 }
 
-export default function DesignAdvisor({ state, site, houseXY, lastChangeId, stepsOpen = false }: DesignAdvisorProps) {
+export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: DesignAdvisorProps) {
   const [advice, setAdvice] = useState<Advice[]>([]);
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
   // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
@@ -117,6 +105,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
   const [aiSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([]);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  // Wraps the whole cluster so an outside tap can dismiss it (below). Lives on the shell — the
+  // transparent shell has pointerEvents:'none', so only the visible chip/card counts as "inside".
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -142,6 +133,32 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
     setAiError(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.items.length, state.zones.length, state.lines.length, lastChangeId]);
+
+  // Dismiss on a tap/click ANYWHERE outside the cluster (Rory: "i cant close lima if i click
+  // anywhere — it should close auto"), plus Escape. Only armed while something is open, so the
+  // resting chip/"Ask Lima" button keep working. Capture phase so it fires before other handlers.
+  const isOpen = tipOpen || expanded || aiSuggestions.length > 0 || !!aiError;
+  useEffect(() => {
+    if (!isOpen) return;
+    function close() {
+      setTipOpen(false);
+      setExpanded(false);
+      setAiSuggestions([]);
+      setAiError(null);
+    }
+    function onPointerDown(e: PointerEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) close();
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') close();
+    }
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [isOpen]);
 
   // Lima only surfaces tips for the LAYER the farmer is working on — a zones-step advisor showing
   // tank/shade tips is noise (Rory). Advice carries a `layer` tag (lib/design-rules.ts). The Base/
@@ -200,24 +217,24 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
     }
   }
 
-  // Anchored CENTRE-LEFT and click-through. It used to sit bottom-left, which put it directly on
-  // top of the palette's Select/Undo/Delete row with pointer events on — so it physically blocked
-  // the tools until dismissed. Centre-left clears both the bottom tool row and the right-edge zoom
-  // controls; pointerEvents:'none' on the shell means only the visible chip/card ever takes a tap.
+  // Anchored BOTTOM-LEFT of the canvas area and click-through. The advisor now renders INSIDE the
+  // canvas container (page.tsx), whose bottom edge sits directly above the status bar + element
+  // palette — so bottom-anchoring here guarantees the cluster can never overlap those bottom bars
+  // (Rory: "lima bubble must move out of the way automatically"). It grows UPWARD into the free map
+  // area, and the tall panels (expanded / AI list) cap their own height + scroll. maxHeight keeps
+  // the whole cluster within the canvas. pointerEvents:'none' on the shell means only the visible
+  // chip/card ever takes a tap.
   const shell: CSSProperties = {
     position: 'absolute',
     left: 10,
-    // When the header's steps panel is expanded it pushes the canvas down but this overlay is
-    // positioned relative to the viewport, not the canvas — so shift the centring point down to
-    // clear the panel instead of drawing on top of it.
-    top: stepsOpen ? `calc(50% + ${DESIGN_STEPS_OFFSET_PX}px)` : '50%',
-    transform: 'translateY(-50%)',
+    bottom: 10,
     zIndex: 40,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     gap: 6,
     maxWidth: 300,
+    maxHeight: 'calc(100% - 20px)',
     pointerEvents: 'none',
   };
   const inner: CSSProperties = { pointerEvents: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 };
@@ -225,7 +242,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
   if (!top) {
     // No local advice — still offer the AI pill.
     return (
-      <div style={shell}>
+      <div ref={containerRef} style={shell}>
         <div style={inner}>
           <AskAiButton onClick={askAi} loading={aiLoading} />
           {aiError && <ErrorPill message={aiError} />}
@@ -238,7 +255,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
   if (!tipOpen) {
     // Collapsed — a small chip that says a tip is waiting. Tap to read; never in the way.
     return (
-      <div style={shell}>
+      <div ref={containerRef} style={shell}>
         <div style={inner}>
           <button
             onClick={() => setTipOpen(true)}
@@ -270,7 +287,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, step
   }
 
   return (
-    <div style={shell}>
+    <div ref={containerRef} style={shell}>
       <div style={inner}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: GOLD, fontSize: 11, fontWeight: 800, letterSpacing: 0.3, paddingLeft: 2 }}>
         <Sparkles size={12} /> LIMA{layerName ? ` · ${layerName.toUpperCase()}` : ''}
@@ -450,6 +467,10 @@ function AiList({ suggestions, inline }: { suggestions: AiSuggestion[]; inline?:
               padding: '8px 10px',
               color: '#FBF6EC',
               boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+              // Cap the standalone list so a long reply scrolls within the free canvas area rather
+              // than growing the cluster down over the bottom bars.
+              maxHeight: 200,
+              overflowY: 'auto',
             }),
       }}
     >

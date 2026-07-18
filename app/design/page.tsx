@@ -1296,6 +1296,18 @@ function DesignStudioInner() {
             Loading site…
           </div>
         )}
+
+        {/* Advisor (Lima) — rendered INSIDE the canvas container so it anchors to the canvas's
+            bottom-left, which sits directly above the status bar + element palette. It can never
+            overlap those bottom bars, and taps outside it dismiss it. */}
+        {canvasState && canvasState.step !== 'glossy' && (
+          <DesignAdvisor
+            state={canvasState}
+            site={site}
+            houseXY={houseXY}
+            lastChangeId={canvasState.updatedAt}
+          />
+        )}
       </div>
 
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
@@ -1479,17 +1491,6 @@ function DesignStudioInner() {
           canUndo={undoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
           siteBiome={site?.biome}
-        />
-      )}
-
-      {/* Advisor (floating) */}
-      {canvasState && canvasState.step !== 'glossy' && (
-        <DesignAdvisor
-          state={canvasState}
-          site={site}
-          houseXY={houseXY}
-          lastChangeId={canvasState.updatedAt}
-          stepsOpen={!chromeCollapsed}
         />
       )}
 
