@@ -11,13 +11,17 @@ import {
   type Unsubscribe,
 } from 'firebase/firestore';
 import { getFirebase } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { communityEnabled } from '@/lib/community/flag';
 import type {
   CommunityProfile, BoardPost, BoardCategory, BoardKind,
   MessageThread, ThreadMessage, CommunityReportTargetType,
 } from './types';
 
-const fb = () => getFirebase();
+// SAMPLE-MODE GATE (safety layer 2, lib/sample-mode.ts): null = "backend off" to every
+// function here, so a sample-farm visitor can't post/message/report as themselves from
+// inside the demo — community is real-identity space, the sample is not.
+const fb = () => (isSampleMode() ? null : getFirebase());
 const uid = () => fb()?.auth.currentUser?.uid ?? null;
 const rows = <T,>(snap: { docs: { id: string; data: () => unknown }[] }) =>
   snap.docs.map((d) => ({ id: d.id, ...(d.data() as object) })) as unknown as T[];

@@ -1,5 +1,6 @@
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
+import { isSampleMode } from './sample-mode';
 
 export type SiteElementType =
   | 'jojo_tank'
@@ -92,7 +93,10 @@ export function deleteSiteElement(siteId: string, id: string): void {
 
 type Tombstones = Record<string, number>; // id → deletedAt (ms)
 
-function db() { return getFirebase()?.db ?? null; }
+// SAMPLE-MODE GATE (safety layer 2, lib/sample-mode.ts): null here = "signed out" to every
+// caller in this module, so site-element cloud sync is structurally off while sampling —
+// local writes already land in the sandboxed localStorage shim.
+function db() { return isSampleMode() ? null : (getFirebase()?.db ?? null); }
 
 async function upsertSiteElement(uid: string, siteId: string, el: SiteElement): Promise<void> {
   const d = db(); if (!d) return;

@@ -15,6 +15,7 @@
 
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
+import { isSampleMode } from './sample-mode';
 import {
   applyRemoteCanvasState,
   contentCountOf,
@@ -93,8 +94,12 @@ function currentUid(): string | null {
   return getFirebase()?.auth?.currentUser?.uid ?? null;
 }
 
+// SAMPLE-MODE GATE (safety layer 2 — see lib/sample-mode.ts): same choke-point trick as
+// lib/user-sync.ts — every reconcile/push/subscribe here starts by asking db(); null means
+// "signed out", which every caller already handles by staying local-only. In sample mode
+// local-only IS the sandboxed localStorage shim, exactly what we want.
 function db() {
-  return getFirebase()?.db ?? null;
+  return isSampleMode() ? null : (getFirebase()?.db ?? null);
 }
 
 // One-shot reconcile for a single site, called on Design Studio mount/site-change. Merges

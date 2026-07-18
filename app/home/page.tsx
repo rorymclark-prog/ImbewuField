@@ -316,11 +316,12 @@ function HomeLandingInner() {
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>
-              See a sample farm — Ubhejane Creche
+              Explore the sample farm — Ubhejane Crèche
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>
-            A real site, a full crop plan and finances — see how it all fits together.
+            A real crèche food garden, fully set up: design maps, crop plan, sales &amp;
+            expenses, invoices. Look around, change anything — it never touches your own farm.
           </p>
         </button>
 

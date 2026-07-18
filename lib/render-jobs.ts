@@ -11,6 +11,7 @@
 // SAME numbers the security rules enforce (keep them in sync). See functions/README.md.
 
 import { getFirebase } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 
@@ -73,6 +74,12 @@ export async function enqueueRenderJob(opts: {
   engine: string;
   sheets: RenderSheetSpec[];
 }): Promise<string> {
+  // Sample farm is look-don't-spend: AI renders bill a real OpenAI account and write
+  // renders/{uid} storage, so they're off while sampling. The exact (no-AI) sheets all work
+  // in the sample — this only blocks the billed path. (Safety layer 2, lib/sample-mode.ts.)
+  if (isSampleMode()) {
+    throw new RenderJobError('AI sheets are switched off in the sample farm. Exit the sample and open your own farm to render AI sheets.');
+  }
   const fb = getFirebase();
   const uid = fb?.auth.currentUser?.uid;
   if (!fb || !uid) throw new RenderJobError('You need to be signed in to generate AI sheets.');

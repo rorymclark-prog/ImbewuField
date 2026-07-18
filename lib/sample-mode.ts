@@ -1,22 +1,36 @@
-// Session-scoped "sample mode" — lets an NGO evaluator see a fully-populated
-// demo farm (Ubhejane Creche, lib/demo-farm.ts) without ever touching a real
-// farmer's data. The ON/OFF flag lives in sessionStorage (survives a reload
-// or a shared deep-link in THIS tab, but is invisible to other tabs and
-// clears the instant the tab closes); the demo DATA itself lives only in
-// this module's in-memory sandbox and is never written to localStorage or
-// Firestore. Every real loader/saver in lib/crop-plan.ts,
-// lib/facilitator-design.ts and lib/invoices.ts checks isSampleMode() first
-// and, if true, reads/writes the sandbox instead — real storage keys are
-// structurally unreachable while sampling, not merely "usually skipped".
-// These narrow getters/setters are the ONLY way any other module touches
-// sandbox data — one auditable choke point instead of scattered conditionals.
+// Session-scoped "sample mode" — lets anyone see a fully-populated demo farm
+// (Ubhejane Creche, lib/demo-farm.ts) without ever touching a real farmer's
+// data. The ON/OFF flag lives in sessionStorage (survives a reload or a shared
+// deep-link in THIS tab, but is invisible to other tabs and clears the instant
+// the tab closes); the demo DATA lives only in memory and is never written to
+// real localStorage or Firestore.
+//
+// TWO safety layers, both required (this is the v2 rearchitecture of the parked
+// v1, which a data-safety review killed — see commit 0d1326a):
+//
+// 1. THE ROOT STORAGE SHIM (this file, installStorageShim below): while sample
+//    mode is on, EVERY window.localStorage read/write — no matter which of the
+//    app's ~38 writers makes it (Map.tsx farm shapes, water points, site
+//    elements, design canvas, surveys, caches…) — is redirected to an in-memory
+//    store seeded from the demo farm. Real localStorage is structurally
+//    unreachable because the PRIMITIVE is patched, not because each caller
+//    remembered to check.
+// 2. FIRESTORE GATES at the sync choke points (lib/user-sync.ts,
+//    lib/design-canvas-sync.ts, lib/db/queries.ts, lib/render-jobs.ts,
+//    lib/site-share.ts): every remote reconcile/push no-ops in sample mode, so
+//    mounting the map/design pages can never sync sandbox data into a signed-in
+//    user's cloud copy — or pull their real cloud data into the sample.
+//
+// On top of that, Firestore-backed VIEW data (crop plan, finances, invoices,
+// profile) reads/writes the typed sandbox below via the narrow getters/setters —
+// one auditable choke point instead of scattered conditionals.
 
 import type { CropPlanState, CashflowSettings } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
 import type { SavedInvoice, Product } from './invoices';
 import type { SavedPlace } from './saved-places';
-import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoProfile } from './demo-farm';
+import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoProfile, buildDemoStorageSeeds } from './demo-farm';
 
 const FLAG_KEY = 'imbewu_sample_mode';
 export const SAMPLE_MODE_EVENT = 'imbewu-sample-mode-changed';
@@ -78,6 +92,7 @@ export function isSampleMode(): boolean {
 export function enterSampleMode(): void {
   if (typeof window === 'undefined') return;
   sandbox = freshSandbox(); // always a clean slate — never a previous demo session's edits
+  resetShimStore(); // reseed the localStorage shim too
   try { window.sessionStorage.setItem(FLAG_KEY, '1'); } catch { /* ignore */ }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
 }
@@ -89,9 +104,89 @@ export function enterSampleMode(): void {
 export function exitSampleMode(): void {
   if (typeof window === 'undefined') return;
   sandbox = null;
+  resetShimStore();
   try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* ignore */ }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
 }
+
+/* ── Safety layer 1: the root localStorage shim ───────────────────────────
+   Patches Storage.prototype ONCE at module evaluation (this module is imported
+   by SampleModeBanner, which the root layout mounts on every page, so the patch
+   is in place before any user interaction). The patched methods delegate to the
+   originals unless BOTH hold: the receiver is window.localStorage (sessionStorage
+   — which carries the sample flag itself — is deliberately untouched), AND sample
+   mode is on. While sampling, reads see ONLY the seeded in-memory store (a real
+   user's local data can never leak into the sample UI) and writes land ONLY there
+   (the sample can never clobber real data).
+
+   Enumeration caveat, deliberate: Object.keys(localStorage)/.length/.key() still
+   list REAL key names (own props aren't shadowed by a prototype patch). That is
+   read-only NAME leakage: any getItem on those names answers from the sandbox and
+   any removeItem lands in the sandbox, so the app's cache-cleanup scans
+   (lib/design-canvas.ts, DesignGlossy) can neither read nor delete real values
+   while sampling.
+
+   The memory store LAZILY seeds from lib/demo-farm's buildDemoStorageSeeds() —
+   lazy, not eager at enterSampleMode only, because the flag survives a reload
+   (sessionStorage) while module state does not: the first localStorage touch of
+   the reloaded sample tab must find the crèche already there. */
+
+let shimStore: Map<string, string> | null = null;
+
+function resetShimStore(): void {
+  shimStore = null;
+}
+
+function shimStoreEnsured(): Map<string, string> {
+  if (!shimStore) {
+    // Lazy import cycle-breaker not needed: demo-farm is pure data/builders and
+    // never reads storage, so seeding from inside a patched method cannot recurse.
+    shimStore = new Map(Object.entries(buildDemoStorageSeeds()));
+  }
+  return shimStore;
+}
+
+function installStorageShim(): void {
+  if (typeof window === 'undefined' || typeof Storage === 'undefined') return;
+  const g = window as unknown as Record<string, unknown>;
+  if (g.__imbewuSampleStorageShim) return; // idempotent across HMR / duplicate loads
+  g.__imbewuSampleStorageShim = true;
+
+  const proto = Storage.prototype;
+  const orig = {
+    getItem: proto.getItem,
+    setItem: proto.setItem,
+    removeItem: proto.removeItem,
+    clear: proto.clear,
+  };
+
+  const shimmed = (self: Storage): boolean => {
+    try {
+      return self === window.localStorage && isSampleMode();
+    } catch {
+      return false; // privacy modes where touching localStorage throws → leave originals in charge
+    }
+  };
+
+  proto.getItem = function (key: string): string | null {
+    if (shimmed(this)) { const v = shimStoreEnsured().get(String(key)); return v === undefined ? null : v; }
+    return orig.getItem.call(this, key);
+  };
+  proto.setItem = function (key: string, value: string): void {
+    if (shimmed(this)) { shimStoreEnsured().set(String(key), String(value)); return; }
+    orig.setItem.call(this, key, value);
+  };
+  proto.removeItem = function (key: string): void {
+    if (shimmed(this)) { shimStoreEnsured().delete(String(key)); return; }
+    orig.removeItem.call(this, key);
+  };
+  proto.clear = function (): void {
+    if (shimmed(this)) { shimStoreEnsured().clear(); return; }
+    orig.clear.call(this);
+  };
+}
+
+installStorageShim();
 
 function genId(): string {
   return `demo-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;

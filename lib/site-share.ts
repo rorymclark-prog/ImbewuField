@@ -5,6 +5,7 @@ import type { SavedPlace as Place } from './saved-places'
 import type { WaterPoint } from './water-points'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { getFirebase } from '@/lib/firebase/init'
+import { isSampleMode } from './sample-mode'
 
 export interface SharedSiteData {
   geojson: FeatureCollection
@@ -20,6 +21,9 @@ function generateCode(): string {
 }
 
 export async function saveSharedSite(data: SharedSiteData): Promise<string> {
+  // Sample-mode gate (safety layer 2, lib/sample-mode.ts): sharing writes a public
+  // shared_sites doc — the demo must not publish anything.
+  if (isSampleMode()) throw new Error('Sharing is switched off in the sample farm.')
   const fb = getFirebase()
   if (!fb) throw new Error('Firestore unavailable')
   const firestore = fb.db

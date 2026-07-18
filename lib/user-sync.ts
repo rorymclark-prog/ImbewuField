@@ -2,6 +2,7 @@
 
 import { doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
+import { isSampleMode } from './sample-mode';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 
@@ -12,7 +13,13 @@ const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per site: i
 const COLL          = 'user_map_data';
 const TOMB_TTL_MS = 90 * 24 * 60 * 60 * 1000; // prune deletion tombstones after 90 days
 
-function db() { return getFirebase()?.db ?? null; }
+// SAMPLE-MODE GATE (safety layer 2 — see lib/sample-mode.ts): every function in this
+// module begins with `const d = db(); if (!d) …no-op`, so returning null here while the
+// sample farm is active makes the ENTIRE remote sync surface (reconcile, live listeners,
+// every upsert/remove/push) structurally unreachable in one auditable place — sandbox
+// data can never be pushed into a signed-in user's cloud copy, and their real cloud data
+// can never be pulled into the sample.
+function db() { return isSampleMode() ? null : (getFirebase()?.db ?? null); }
 
 type ShapeFC = { type: string; features: { id?: string | number }[] };
 type Tombstones = Record<string, number>; // id → deletedAt (ms)

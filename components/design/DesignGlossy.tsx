@@ -4103,9 +4103,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           >
             Beta · Experimental
           </span>
-          The glossy map is an experiment — the AI isn&apos;t reliable enough yet to depend on. It
-          may get things wrong, and you often need to <strong>generate a few times</strong> before
-          you get a decent result. Your actual design (the canvas) is always the exact version.
+          AI-illustrated maps are beautiful but each render varies — if one looks off,
+          <strong> generate again</strong> or switch the Output to <strong>📐 Exact</strong> for
+          the rules-drawn version of any sheet. Your canvas design is always the source of truth.
         </div>
       </div>
 
