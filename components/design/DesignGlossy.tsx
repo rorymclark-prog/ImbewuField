@@ -1937,6 +1937,7 @@ export async function buildBlueprintZoneMap(
 
   // 9. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
 }
@@ -2060,6 +2061,7 @@ export async function buildBlueprintWaterMap(
 
   // 8. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
 }
@@ -2206,6 +2208,7 @@ export async function buildBlueprintPlantingMap(
 
   // 7. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
 }
@@ -2298,6 +2301,7 @@ export async function buildBlueprintStructuresMap(
 
   // 8. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
 }
