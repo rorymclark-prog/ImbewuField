@@ -47,6 +47,15 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-18 (geometry lock toggle + reversible queue mask)
+- Added an opt-in **Geometry Lock** switch to the glossy gpt-image-2 queue path, so the strict
+  render can send a protect mask only when requested and restore the protected source pixels after
+  the model returns.
+- Threaded the optional mask through the background render job contract and worker, while keeping
+  the existing showcase/AI-legend pipeline dormant and untouched.
+- Added a focused test for the new pixel-restore helper so the masked path can be flipped off again
+  cleanly without changing the rest of the map pipeline.
+
 ### 2026-07-12 (site audit + repair pass)
 - Ran a repo-wide audit with subagents across shell/login, map/design, API/auth, and content flows.
 - Landed the safe fixes: removed the duplicate home language provider, improved login scrolling/labels/focus, hid the closed nav drawer from the accessibility tree, fixed role-switcher semantics, synced farmer query params, cleared stale report/photo analysis, centralized the zone palette, made the design studio use the local fallback plan, and made shared map imports persist/recompute.

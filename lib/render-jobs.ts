@@ -29,7 +29,8 @@ export interface RenderSheetSpec {
   key: string; // stable per-layer id: 'all' | 'water' | 'zones' | 'planting' | 'structures'
   label: string;
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
-  compositeDataUrl: string; // data:image/jpeg;base64,… — the model input
+  compositeDataUrl: string; // data:image/png;base64,… — the model input
+  protectMaskDataUrl?: string; // optional geometry-lock mask for the strict queue path
   // Showcase ("AI legend") sheet: the model drew its own legend/labels, so the finisher must NOT
   // clip/burn/chrome it. Persisted ON THE JOB DOC (not React state) because renders outlive the
   // component — a remount that re-attaches by job id must finish each sheet the way it was
@@ -44,6 +45,7 @@ export interface RenderSheetState {
   label: string;
   prompt: string;
   inputPath: string;
+  protectMaskPath?: string;
   status: RenderSheetStatus;
   outputPath?: string;
   error?: string;
@@ -112,8 +114,22 @@ export async function enqueueRenderJob(opts: {
         const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
         await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
         uploaded.push(inputPath);
+        let protectMaskPath: string | undefined;
+        if (s.protectMaskDataUrl) {
+          protectMaskPath = `renders/${uid}/${jobId}/mask-${s.key}.png`;
+          await uploadString(ref(fb.storage, protectMaskPath), s.protectMaskDataUrl, 'data_url');
+          uploaded.push(protectMaskPath);
+        }
         // Firestore rejects undefined field values — only carry showcase when it's actually set.
-        return { key: s.key, label: s.label, prompt: s.prompt, inputPath, status: 'queued', ...(s.showcase ? { showcase: true } : {}) };
+        return {
+          key: s.key,
+          label: s.label,
+          prompt: s.prompt,
+          inputPath,
+          ...(protectMaskPath ? { protectMaskPath } : {}),
+          status: 'queued',
+          ...(s.showcase ? { showcase: true } : {}),
+        };
       }),
     );
   } catch (err) {
