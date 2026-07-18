@@ -13,7 +13,7 @@
 //  • PAPER-FURNITURE sheets (01 Base, 07 Masterplan) are plain composites, so the page draws the
 //    title block + legend column + scale bar + north arrow around them, as before.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { X, FileDown, Images, Loader2 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
@@ -29,8 +29,10 @@ import {
   buildBlueprintStructuresMap,
   buildImplementationMap,
   itemInFilter,
+  layerContentCount,
   type GlossyLayerFilter,
 } from './DesignGlossy';
+import { buildPhasePlan } from '@/lib/phasing';
 
 type RefLayers = {
   boundary: Array<[number, number]>;
@@ -75,6 +77,17 @@ const PRINT_LAYERS: PrintLayer[] = [
   { key: 'all', no: '07', label: 'Integrated Masterplan', selfChromed: false, filter: 'all', drawDesign: true, render: (s, f, r) => buildComposite(s, f, r, 'all', true) },
   { key: 'implementation', no: '08', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
+
+// A sheet is exportable only when it has something true to say — mirrors the Glossy generate-all
+// skip so Print can't emit an empty Zones sheet or a phase-less Implementation sheet (a fundable
+// plan set must never show a confident page built on nothing).
+function isLayerAvailable(layer: PrintLayer, state: DesignCanvasState, refLayers: RefLayers, site: SectorSite | null): boolean {
+  if (layer.key === 'implementation') return buildPhasePlan(state, refLayers, site).phases.length > 0;
+  if (layer.key === 'zones' || layer.key === 'water' || layer.key === 'planting' || layer.key === 'structures') {
+    return layerContentCount(state, refLayers, layer.key) > 0;
+  }
+  return true; // 01 base · 02 sector · 07 masterplan are always meaningful (satellite + boundary + energies)
+}
 
 // Paper pixel sizes at ~150 DPI, portrait [w, h].
 const PAPER_PX: Record<'a4' | 'a3', [number, number]> = {
@@ -251,11 +264,11 @@ async function renderPage(
     if (opts.scaleBar) {
       const pxPerM = drawW / (frame.imgW * frame.mPerPx);
       const nice = [5, 10, 20, 25, 50, 100, 200, 500];
-      const target = mapAreaW * 0.22;
+      const target = drawW * 0.22;
       let metres = nice[0];
       for (const n of nice) if (n * pxPerM <= target) metres = n;
       const barW = metres * pxPerM;
-      const bx = mapX + 4;
+      const bx = dx + 4; // anchor to the drawn image, not the margin (they diverge in the letterbox gap)
       ctx.strokeStyle = DARK;
       ctx.fillStyle = DARK;
       ctx.lineWidth = 3;
@@ -271,7 +284,7 @@ async function renderPage(
       ctx.fillText(`${metres} m`, bx, fy - 12);
     }
     if (opts.northArrow) {
-      const nx = mapX + mapAreaW - 30;
+      const nx = dx + drawW - 30; // anchor to the drawn image, not the margin
       const ny = fy;
       ctx.fillStyle = DARK;
       ctx.strokeStyle = DARK;
@@ -294,11 +307,16 @@ async function renderPage(
 }
 
 export default function DesignPrint({ state, frame, refLayers, site, placeName, onClose }: DesignPrintProps) {
-  const [selected, setSelected] = useState<Set<string>>(new Set(PRINT_LAYERS.map((l) => l.key)));
+  const available = useMemo(
+    () => new Set(PRINT_LAYERS.filter((l) => isLayerAvailable(l, state, refLayers, site)).map((l) => l.key)),
+    [state, refLayers, site],
+  );
+  const [selected, setSelected] = useState<Set<string>>(() => new Set(available));
   const [paper, setPaper] = useState<'a4' | 'a3'>('a4');
   const [landscape, setLandscape] = useState(true);
   const [furniture, setFurniture] = useState({ titleBlock: true, legend: true, scaleBar: true, northArrow: true });
   const [busy, setBusy] = useState<null | 'pdf' | 'png' | 'preview'>('preview');
+  const [exportErr, setExportErr] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement | null>(null);
 
@@ -332,6 +350,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
   const exportPdf = useCallback(async () => {
     if (!chosen.length) return;
     setBusy('pdf');
+    setExportErr(null);
     try {
       const [pw, ph] = PAPER_PX[paper];
       const W = landscape ? ph : pw;
@@ -343,6 +362,8 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
         doc.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
       }
       doc.save(`${slug(placeName ?? 'site')}-plan-set.pdf`);
+    } catch (e) {
+      setExportErr(`Could not build the PDF: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setBusy(null);
     }
@@ -351,6 +372,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
   const exportPngs = useCallback(async () => {
     if (!chosen.length) return;
     setBusy('png');
+    setExportErr(null);
     try {
       for (const layer of chosen) {
         const cv = await renderPage(state, frame, refLayers, site, placeName ?? 'Your design', layer, optsFor());
@@ -362,6 +384,8 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
         a.remove();
         await new Promise((r) => setTimeout(r, 250)); // let each download start
       }
+    } catch (e) {
+      setExportErr(`Could not save the PNGs: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setBusy(null);
     }
@@ -392,11 +416,21 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
             <div>
               <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Sheets (one page each)</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {PRINT_LAYERS.map((l) => (
-                  <button key={l.key} onClick={() => toggle(l.key)} aria-pressed={selected.has(l.key)} style={chk(selected.has(l.key))}>
-                    <span>{selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {l.label}
-                  </button>
-                ))}
+                {PRINT_LAYERS.map((l) => {
+                  const canUse = available.has(l.key);
+                  return (
+                    <button
+                      key={l.key}
+                      onClick={() => canUse && toggle(l.key)}
+                      disabled={!canUse}
+                      aria-pressed={selected.has(l.key)}
+                      title={canUse ? undefined : 'Nothing drawn on this layer yet'}
+                      style={{ ...chk(selected.has(l.key) && canUse), opacity: canUse ? 1 : 0.4, cursor: canUse ? 'pointer' : 'default' }}
+                    >
+                      <span>{!canUse ? '·' : selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {l.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -419,7 +453,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
             </div>
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Include (on the Base &amp; Masterplan pages)</div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Include (legend / scale / north apply to the Base &amp; Masterplan pages only)</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {([['titleBlock', 'Title block'], ['legend', 'Legend'], ['scaleBar', 'Scale bar'], ['northArrow', 'North arrow']] as const).map(([k, label]) => (
                   <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
@@ -439,6 +473,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
                 {busy === 'png' ? 'Saving PNGs…' : 'Export PNGs'}
               </button>
             </div>
+            {exportErr && <div style={{ color: '#B3261E', fontSize: 13, fontWeight: 600 }}>{exportErr}</div>}
           </div>
 
           {/* Preview */}
