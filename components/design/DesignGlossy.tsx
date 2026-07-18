@@ -3843,6 +3843,50 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome]);
 
+  // Single-sheet gpt-image-2 via the SAME background queue as "AI · ALL" (direct OpenAI). This is
+  // what the per-sheet "Generate my … Blueprint" button routes to when gpt-image-2 is selected —
+  // the OLD synchronous /api/image-producer path went through fal.ai, which 403s on an empty balance
+  // and then silently fell back to a rate-limited Gemini ("Gemini error 429" even though gpt was
+  // chosen). Renders only the currently-chosen layer; the subscription effect above finishes it into
+  // the gallery. Zones is never routed here (it's satellite-only → produced deterministically in
+  // generateProducer), so `filter` is always a model layer.
+  const generateOneViaQueue = useCallback(async () => {
+    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
+    if (!styleDef) return;
+    if (layerContentCount(state, refLayers, filter) === 0) {
+      setError(emptyLayerMessage(filter));
+      return;
+    }
+    setExactSheet(null);
+    setError(null);
+    setNotice(null);
+    setLoading('falgpt');
+    try {
+      const composite = await buildComposite(state, frame, refLayers, filter);
+      const elementsText = producerElementsText(state, refLayers, filter);
+      const designBrief = buildDesignBrief(state, refLayers, placeName, site);
+      const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
+      const useShowcase = modelChrome && filter === 'all';
+      showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
+      const prompt = useShowcase
+        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', designBrief)
+        : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
+      const jobId = await enqueueRenderJob({
+        siteId: state.siteId,
+        style: styleKey,
+        engine: 'openai',
+        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite }],
+      });
+      persistJobId(state.siteId, jobId);
+      setQueueJobId(jobId);
+      setNotice(`Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setLoading(null);
+    }
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, modelChrome]);
+
   // Refs so the subscription effect below doesn't re-subscribe on every design edit.
   const finishRef = useRef(finishStyledSheet);
   finishRef.current = finishStyledSheet;
@@ -4418,7 +4462,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
               : exactSheet === 'implementation'
                 ? renderImplementationMap()
                 : producerStyle
-                  ? generateProducer()
+                  ? (engine === 'falgpt' && filter !== 'zones' ? generateOneViaQueue() : generateProducer())
                   : analysisStyle
                     ? generate('gemini')
                     : renderDesignMap()
@@ -4447,14 +4491,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             ? loading === 'exact'
               ? 'Drawing your exact map…'
               : loading === 'falgpt'
-                ? 'Generating… gpt-image-2 is slow (up to ~5 min)'
+                ? 'Rendering in the background — you can keep working'
                 : 'Generating your map… ~1 min'
             : exactSheet === 'sector'
               ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
             : exactSheet === 'implementation'
               ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
               : producerStyle
-                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (~1 min)`
+                ? `${resultImage ? 'Regenerate' : 'Generate'} my ${filter === 'all' ? '' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} `}${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' && filter !== 'zones' ? '(background · ~mins)' : '(~1 min)'}`
                 : analysisStyle
                   ? `${resultImage ? 'Regenerate' : 'Generate'} my ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} map (~1 min)`
                   : `${resultImage ? 'Redraw' : 'Draw'} my ${filter === 'all' ? 'design map' : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`} · instant`}
