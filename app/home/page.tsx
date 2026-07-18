@@ -38,6 +38,8 @@ import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { useSiteProgress, type Coords } from '@/lib/site-progress';
+import type { CompletionStepKey } from '@/lib/completion-score';
 import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
@@ -192,6 +194,76 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   );
 }
 
+// Gamified "Your farm plan" progress card — overall % across the 5-stage
+// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus
+// the single next action, deep-linked. Deliberately mirrors the same source
+// of truth as DataPanel/NextStepCoach/HomeHeroCard (lib/site-progress.ts) so
+// this can never drift into a second scoring path.
+interface StepAction { label: string; href: (coords: Coords | null) => string }
+const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
+  located: { label: 'Tap your land on the map', href: () => '/farmer' },
+  boundary: { label: 'Trace your boundary', href: () => '/farmer' },
+  // The real survey sheet that feeds this score only opens from inside DataPanel
+  // (no deep-link query param exists for it) — /survey is the sanctioned fallback.
+  survey: { label: 'Do the site survey', href: () => '/survey' },
+  design: {
+    label: 'Design your farm',
+    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
+  },
+  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
+};
+
+function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
+  const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
+  const progress = useSiteProgress(coords);
+
+  // Hide entirely for a brand-new user — no saved places means nothing to show yet,
+  // and the hero card's welcome variant already owns that moment. `progress` stays
+  // null until useSiteProgress's post-mount effect runs (hydration-safe), so this
+  // also renders nothing on the very first client tick, matching SSR.
+  if (!places || places.length === 0) return null;
+  if (!progress) return null;
+
+  const { pct, nextStep } = progress;
+  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
+
+  return (
+    <div style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 20, padding: '16px 18px' }}>
+      <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F', marginBottom: 10 }}>
+        Your farm plan
+      </div>
+
+      <div style={{ height: 8, borderRadius: 4, background: '#EDE7DB', overflow: 'hidden' }}>
+        <div
+          style={{ height: '100%', width: `${pct}%`, background: '#1F4D2B', borderRadius: 4, transition: 'width 0.4s ease' }}
+        />
+      </div>
+      <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62', marginTop: 6 }}>
+        {pct}% complete
+      </div>
+
+      {nextStep ? (
+        <Link
+          href={STEP_ACTIONS[nextStep].href(coords)}
+          className="flex items-center justify-between font-sans font-semibold"
+          style={{ marginTop: 12, fontSize: 14, color: '#1F4D2B', textDecoration: 'none' }}
+        >
+          {STEP_ACTIONS[nextStep].label}
+          <ChevronRight size={16} strokeWidth={1.8} />
+        </Link>
+      ) : (
+        <Link
+          href={designHref}
+          className="flex items-center font-sans font-semibold"
+          style={{ marginTop: 12, fontSize: 14, color: '#1F4D2B', textDecoration: 'none' }}
+        >
+          Plan complete — print your plan set →
+        </Link>
+      )}
+    </div>
+  );
+}
+
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
@@ -324,6 +396,10 @@ function HomeLandingInner() {
             expenses, invoices. Look around, change anything — it never touches your own farm.
           </p>
         </button>
+
+        {/* ── Your farm plan — gamified pull-through: overall % + the single next
+            action, deep-linked. Hidden for brand-new users (no saved places). ── */}
+        <FarmPlanCard places={places} mainSite={mainSite} />
 
         {/* ── Quick actions ── */}
         <div className="grid grid-cols-3 gap-3">

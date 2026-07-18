@@ -14,7 +14,7 @@
 //    title block + legend column + scale bar + north arrow around them, as before.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { X, FileDown, Images, Loader2 } from 'lucide-react';
+import { X, FileDown, Images, Loader2, Share2 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import LessonLink from './LessonLink';
 
@@ -316,7 +316,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
   const [paper, setPaper] = useState<'a4' | 'a3'>('a4');
   const [landscape, setLandscape] = useState(true);
   const [furniture, setFurniture] = useState({ titleBlock: true, legend: true, scaleBar: true, northArrow: true });
-  const [busy, setBusy] = useState<null | 'pdf' | 'png' | 'preview'>('preview');
+  const [busy, setBusy] = useState<null | 'pdf' | 'png' | 'share' | 'preview'>('preview');
   const [exportErr, setExportErr] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement | null>(null);
@@ -348,27 +348,76 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
       return next;
     });
 
+  // Shared pipeline: builds the exact same multi-page jsPDF doc used by both the Download and Share
+  // buttons, so the shared file is byte-for-byte what "Export PDF" would have produced.
+  const buildPdfDoc = useCallback(async () => {
+    const [pw, ph] = PAPER_PX[paper];
+    const W = landscape ? ph : pw;
+    const H = landscape ? pw : ph;
+    const doc = new jsPDF({ unit: 'px', format: [W, H], orientation: landscape ? 'landscape' : 'portrait', hotfixes: ['px_scaling'] });
+    for (let i = 0; i < chosen.length; i++) {
+      const cv = await renderPage(state, frame, refLayers, site, placeName ?? 'Your design', chosen[i], optsFor());
+      if (i > 0) doc.addPage([W, H], landscape ? 'landscape' : 'portrait');
+      doc.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
+    }
+    return doc;
+  }, [chosen, paper, landscape, state, frame, refLayers, site, placeName, optsFor]);
+
   const exportPdf = useCallback(async () => {
     if (!chosen.length) return;
     setBusy('pdf');
     setExportErr(null);
     try {
-      const [pw, ph] = PAPER_PX[paper];
-      const W = landscape ? ph : pw;
-      const H = landscape ? pw : ph;
-      const doc = new jsPDF({ unit: 'px', format: [W, H], orientation: landscape ? 'landscape' : 'portrait', hotfixes: ['px_scaling'] });
-      for (let i = 0; i < chosen.length; i++) {
-        const cv = await renderPage(state, frame, refLayers, site, placeName ?? 'Your design', chosen[i], optsFor());
-        if (i > 0) doc.addPage([W, H], landscape ? 'landscape' : 'portrait');
-        doc.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
-      }
+      const doc = await buildPdfDoc();
       doc.save(`${slug(placeName ?? 'site')}-plan-set.pdf`);
     } catch (e) {
       setExportErr(`Could not build the PDF: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setBusy(null);
     }
-  }, [chosen, paper, landscape, state, frame, refLayers, site, placeName, optsFor]);
+  }, [chosen, buildPdfDoc, placeName]);
+
+  // WhatsApp-first share: build the exact plan-set PDF via the same pipeline as Export PDF, wrap it
+  // in a File, and hand it to the OS share sheet. If the platform can't share files (canShare fails),
+  // fall back to triggering the normal download so the farmer still has the file, then share a link.
+  const sharePlanSet = useCallback(async () => {
+    if (!chosen.length) return;
+    setBusy('share');
+    setExportErr(null);
+    try {
+      const doc = await buildPdfDoc();
+      const filename = `${slug(placeName ?? 'site')}-plan-set.pdf`;
+      const shareTitle = placeName ? `${placeName} — plan set` : 'ImbewuField plan set';
+      const shareText = 'My farm plan set — made with ImbewuField';
+
+      const blob = doc.output('blob') as Blob;
+      const file = new File([blob], filename, { type: 'application/pdf' });
+
+      let canShareFiles = false;
+      try {
+        canShareFiles = typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] });
+      } catch {
+        canShareFiles = false;
+      }
+
+      if (canShareFiles) {
+        await navigator.share({ files: [file], title: shareTitle, text: shareText });
+      } else {
+        doc.save(filename); // farmer still gets the file even without file-share support
+        await navigator.share({ title: shareTitle, text: shareText, url: 'https://imbewufield.vercel.app' });
+      }
+    } catch (e) {
+      if (e instanceof Error && e.name === 'AbortError') {
+        // User cancelled the share sheet — not an error, swallow silently.
+      } else {
+        setExportErr(`Could not share the plan set: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    } finally {
+      setBusy(null);
+    }
+  }, [chosen, buildPdfDoc, placeName]);
+
+  const canNativeShare = typeof navigator !== 'undefined' && 'share' in navigator;
 
   const exportPngs = useCallback(async () => {
     if (!chosen.length) return;
@@ -474,6 +523,12 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
                 {busy === 'png' ? <Loader2 size={18} className="animate-spin" /> : <Images size={18} />}
                 {busy === 'png' ? 'Saving PNGs…' : 'Export PNGs'}
               </button>
+              {canNativeShare && (
+                <button onClick={sharePlanSet} disabled={!chosen.length || busy === 'pdf' || busy === 'png' || busy === 'share'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `2px solid ${GREEN}`, background: '#25D366', color: '#08210F', fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'share' ? 1 : 0.6 }}>
+                  {busy === 'share' ? <Loader2 size={18} className="animate-spin" /> : <Share2 size={18} />}
+                  {busy === 'share' ? 'Preparing…' : 'Share (WhatsApp, etc.)'}
+                </button>
+              )}
             </div>
             {exportErr && <div style={{ color: '#B3261E', fontSize: 13, fontWeight: 600 }}>{exportErr}</div>}
           </div>

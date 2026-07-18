@@ -14,6 +14,7 @@ import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
 import { STEP_LABELS, STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
+import TankCalculator from './TankCalculator';
 import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
@@ -291,6 +292,10 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
             );
           })}
         </div>
+
+        {/* Rain-tank sizing — WATER step only. Sits below the checklist; reads the site's real
+            rainfall to size JoJo storage from the roof area and daily use the farmer types in. */}
+        {step === 'water' && <TankCalculator />}
 
         {/* Simple-Path handoff — beds are down, so offer "plan my crops" straight away. */}
         {showPlanCrops && (

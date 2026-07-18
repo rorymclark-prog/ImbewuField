@@ -7,7 +7,7 @@
 // placed.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2 } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } from 'lucide-react';
 
 import polygonClipping from 'polygon-clipping';
 
@@ -4666,6 +4666,29 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                     >
                       <Download size={15} /> Download
                     </a>
+                    {/* Native share (WhatsApp-first — how SA farmers actually pass maps around).
+                        Rendered only where the Web Share API exists (i.e. phones); data-URL →
+                        blob → File. A cancelled share (AbortError) is not an error. */}
+                    {typeof navigator !== 'undefined' && 'share' in navigator && (
+                      <button
+                        onClick={async () => {
+                          try {
+                            const blob = await (await fetch(galleryViewItem.image)).blob();
+                            const file = new File([blob], `imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`, { type: blob.type || 'image/png' });
+                            if (navigator.canShare?.({ files: [file] })) {
+                              await navigator.share({ files: [file], title: galleryViewItem.label, text: `${galleryViewItem.label} — my farm plan, made with ImbewuField` });
+                            } else {
+                              await navigator.share({ title: galleryViewItem.label, text: `${galleryViewItem.label} — my farm plan, made with ImbewuField`, url: 'https://imbewufield.vercel.app' });
+                            }
+                          } catch (err) {
+                            if (!(err instanceof DOMException && err.name === 'AbortError')) setError('Could not share this map — use Download instead.');
+                          }
+                        }}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${GREEN}`, color: GREEN, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
+                      >
+                        <Share2 size={15} /> Share
+                      </button>
+                    )}
                     <button
                       onClick={() => setGalleryViewId(null)}
                       style={{ padding: '8px 14px', borderRadius: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
