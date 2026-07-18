@@ -371,7 +371,10 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   // (FacilitatorCanvas.tsx), so the centre PlacedItem wants is (xM+wM/2, yM+hM/2).
   const beds: PlacedItem[] = BED_DEFS.map((b, i) => {
     const [x, y] = toNorm(b.xM + b.wM / 2, b.yM + b.hM / 2);
-    return { id: `demo-di-${b.id}`, defId: 'veg_bed', x, y, wM: b.wM, hM: b.hM, rot: 0, label: `Bed ${i + 1}` };
+    // Bed id MUST equal the facilitator/crop-plan bed id (b.id = 'demo-bed-N'): bedsFromDesignCanvas
+    // uses item.id verbatim, and the demo crop plan's plantings key on 'demo-bed-N'. Prefixing it
+    // ('demo-di-…') made the Design-Studio→Plan-crops door land on 7 empty beds (safety-proof find).
+    return { id: b.id, defId: 'veg_bed', x, y, wM: b.wM, hM: b.hM, rot: 0, label: `Bed ${i + 1}` };
   });
 
   // Tank + compost, also mirrored from the facilitator layout (top-left → centre).
@@ -449,5 +452,9 @@ export function buildDemoStorageSeeds(): Record<string, string> {
     imbewu_water_points: JSON.stringify(buildDemoWaterPoints()),
     [`imbewu_design_canvas_${siteId}`]: JSON.stringify(buildDemoDesignCanvasState()),
     imbewu_map_tips_seen: '1',
+    // Treat the demo as already-onboarded so a reload while sampling doesn't drop the blocking
+    // language/onboarding modal over the crèche (the flag isn't in the seed set otherwise → the
+    // shim serves null → the modal reappears for a returning user). See safety-proof finding.
+    permamap_onboarded: '1',
   };
 }

@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
+import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
 import { loadSurvey } from '@/lib/site-survey';
@@ -371,7 +372,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
               : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
           >
-            {justSaved ? 'Saved' : 'Save report'}
+            {justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save report'}
           </button>
         )}
 

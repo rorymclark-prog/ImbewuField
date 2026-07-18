@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 
 export default function AccountButton() {
   const { user, signOutUser } = useAuth();
@@ -11,7 +12,9 @@ export default function AccountButton() {
   if (!isBackendConfigured()) return null;
 
   if (user) {
-    const label = user.displayName?.split(' ')[0] ?? user.email ?? 'Account';
+    // Sample farm shows a neutral label — never the real signed-in user's name/email (the one
+    // spot the demo would otherwise leak their identity; the rest reads "Sample Farmer").
+    const label = isSampleMode() ? 'Sample' : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
     return (
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"

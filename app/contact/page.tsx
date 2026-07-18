@@ -6,6 +6,7 @@ import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, Chevro
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured, getFirebase } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { getMyProfile } from '@/lib/db/queries';
 import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } from 'firebase/firestore';
 import TabBar from '@/components/TabBar';
@@ -52,11 +53,15 @@ export default function ContactPage() {
   const [expandedReply, setExpandedReply] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!loading && !user && isLive) router.replace('/login');
+    // Sample mode never redirects to /login — a signed-out evaluator can view the demo page.
+    if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
   useEffect(() => {
-    if (!loading && user && isLive) {
+    // Sample mode reads no real Firestore: the demo shows no real replies and no real profile
+    // (getMyProfile already sandboxes; the direct contact_replies query would NOT be intercepted
+    // by the sample gates, so guard it here).
+    if (!loading && user && isLive && !isSampleMode()) {
       getMyProfile().then(setProfile).catch(() => {});
       const fb = getFirebase();
       if (fb) {
@@ -78,7 +83,8 @@ export default function ContactPage() {
     setError('');
 
     try {
-      if (isLive && user) {
+      // Sample farm: "send" is a fake success — never write a real message as the signed-in user.
+      if (isLive && user && !isSampleMode()) {
         const fb = getFirebase();
         if (!fb) throw new Error('Firebase not initialised');
         await addDoc(collection(fb.db, 'contact_messages'), {
