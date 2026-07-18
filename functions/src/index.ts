@@ -40,6 +40,13 @@ const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has r
 const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures']);
 const MAX_SHEETS_PER_DAY = 30; // per-user spend governor — tune before wide rollout
 const MAX_JOBS_PER_DAY = 6;
+// Owner/tester accounts: much higher personal caps so heavy testing on the owner's OWN OpenAI
+// account isn't blocked, while every real user keeps the 30-sheet / 6-job daily cost guard. Still
+// bounded (not unlimited) so a runaway loop can't spend without end; the kill switch + OpenAI
+// funding remain the ultimate backstops.
+const OWNER_UIDS = new Set(['76wIa3J81KZmXhVyqFJ0l0PaztG2']);
+const OWNER_SHEETS_PER_DAY = 600;
+const OWNER_JOBS_PER_DAY = 300;
 // The real producer/showcase prompts are ~3.2–4.6k chars (STYLE line lives near the end); a 2 000
 // clamp silently dropped the STYLE + brief, so the model just cleaned the photo. 8 000 covers every
 // legitimate prompt while still fencing abuse (OpenAI allows up to 32 000; text is ~$5/1M tokens).
@@ -202,10 +209,13 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
     const usedSheets = (usageSnap.data()?.sheets as number) ?? 0;
     const usedJobs = (usageSnap.data()?.jobs as number) ?? 0;
     const n = Array.isArray(job.sheets) ? job.sheets.length : 0;
-    if (usedJobs >= MAX_JOBS_PER_DAY || usedSheets + n > MAX_SHEETS_PER_DAY) {
+    const isOwner = OWNER_UIDS.has(job.uid);
+    const sheetCap = isOwner ? OWNER_SHEETS_PER_DAY : MAX_SHEETS_PER_DAY;
+    const jobCap = isOwner ? OWNER_JOBS_PER_DAY : MAX_JOBS_PER_DAY;
+    if (usedJobs >= jobCap || usedSheets + n > sheetCap) {
       tx.update(ref, {
         status: 'error',
-        error: `Daily AI render limit reached (${MAX_SHEETS_PER_DAY} sheets/day). Try again tomorrow.`,
+        error: `Daily AI render limit reached (${sheetCap} sheets/day). Try again tomorrow.`,
         updatedAt: FieldValue.serverTimestamp(),
       });
       return { proceed: false, reason: 'quota' };
