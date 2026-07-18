@@ -171,8 +171,8 @@ const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> =
 
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
   { key: 'all', label: 'Whole design' },
-  { key: 'water', label: 'Water' },
   { key: 'zones', label: 'Zones' },
+  { key: 'water', label: 'Water' },
   { key: 'planting', label: 'Planting' },
   { key: 'structures', label: 'Structures' },
 ];
@@ -1601,7 +1601,7 @@ interface BlueprintLegendRow {
 
 /** Generic legend rows (swatch + optional icon + label). Returns the y after the last row.
  *  The icon and the label-ellipsis are both no-ops for the water sheet's short, icon-less rows,
- *  so it keeps rendering exactly as before; sheets 04/05 need them for long species names. */
+ *  so it keeps rendering exactly as before; sheets 05/06 need them for long species names. */
 function drawBlueprintLegendRows(
   ctx: CanvasRenderingContext2D,
   lg: BlueprintLegend,
@@ -1704,7 +1704,7 @@ function blueprintLegendCapacity(H: number, pad: number, rowH: number): number {
 // WHY a palette instead of def.color: def.color is a per-CATEGORY accent — every one of the 21
 // 'growing' elements is the same #4E8B3B, every 'structure' the same #7A5C3E. That's right for the
 // studio canvas (category at a glance) but useless on a planting sheet, where the entire job is
-// telling Macadamia from Citrus. So sheets 04/05 colour by SPECIES.
+// telling Macadamia from Citrus. So sheets 05/06 colour by SPECIES.
 //
 // The index is the element's position within ITS OWN SHEET's category set (planting = growing;
 // structures = structure+animal+access). That makes the colour:
@@ -1786,7 +1786,7 @@ function fitLegendRows(
 // exactly from our geometry (guaranteed accurate, instant, reproducible). Dark scrim + hatched
 // zone fills + dashed coloured outlines + fence-tick boundary + tar driveway + number badges +
 // title + legend panel + scale bar, all on the real satellite. NO AI.
-async function buildBlueprintZoneMap(
+export async function buildBlueprintZoneMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -1944,7 +1944,7 @@ async function buildBlueprintZoneMap(
 // Deterministic "Blueprint" WATER map — the same clean dark-satellite treatment as the zone
 // blueprint, but the content layer is water infrastructure (tanks as blue cylinders, swale/pipe/
 // drip routes, taps) drawn exactly from geometry. Reliable, instant, no AI.
-async function buildBlueprintWaterMap(
+export async function buildBlueprintWaterMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2066,7 +2066,7 @@ async function buildBlueprintWaterMap(
 
 /** Draw one element at its TRUE ground footprint, species-coloured.
  *
- *  This is the whole point of sheets 04/05 and the one thing the AI styles can never guarantee:
+ *  This is the whole point of sheets 05/06 and the one thing the AI styles can never guarantee:
  *  wM/hM are real METRES, so a 10 m mango canopy occupies 10 m of canvas. Nothing here is clamped
  *  to a "nice" marker size — spacing and canopy OVERLAP are exactly the design decisions these
  *  sheets exist to expose, and a legibility clamp would silently draw a lie.
@@ -2147,7 +2147,7 @@ function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): Placed
     });
 }
 
-// Deterministic "Blueprint" PLANTING map — sheet 04 in docs/PLAN-SET-SPEC.md ("Planting &
+// Deterministic "Blueprint" PLANTING map — sheet 05 in docs/PLAN-SET-SPEC.md ("Planting &
 // Agroforestry Plan"). Same chrome as the zone/water sheets; the content layer is every growing
 // element at its TRUE canopy/bed footprint, coloured per SPECIES (def.color is a per-category
 // accent — all 21 growing elements share one green — which is useless on the one sheet whose
@@ -2158,7 +2158,7 @@ function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): Placed
 // sheet, not this one, and layerContentCount agrees — so a windbreak is never counted as planting
 // content. Drawing it here would make this sheet disagree with the layer it claims to be, which is
 // precisely the guarantee the deterministic sheets exist to hold.
-async function buildBlueprintPlantingMap(
+export async function buildBlueprintPlantingMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2210,12 +2210,12 @@ async function buildBlueprintPlantingMap(
   return canvas.toDataURL('image/png');
 }
 
-// Deterministic "Blueprint" STRUCTURES map — sheet 05 in docs/PLAN-SET-SPEC.md ("Small Livestock
+// Deterministic "Blueprint" STRUCTURES map — sheet 06 in docs/PLAN-SET-SPEC.md ("Small Livestock
 // & Infrastructure Plan"). Structures + animals + access at true footprint, plus the access/
 // boundary LINES (fence/path/windbreak) that lineInFilter assigns to this layer — a farmer who has
 // drawn only paths and fences still has real structures-layer content (layerContentCount counts
 // those lines), so this sheet must draw them or it would render empty on a design that isn't. NO AI.
-async function buildBlueprintStructuresMap(
+export async function buildBlueprintStructuresMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2614,16 +2614,16 @@ export async function buildBlueprintSectorMap(
   return canvas.toDataURL('image/png');
 }
 
-// Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 07 in docs/PLAN-SET-SPEC.md,
+// Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 08 in docs/PLAN-SET-SPEC.md,
 // the product differentiator. This is the EXACT / reliable counterpart to the Gemini
 // 'Implementation' ANALYSIS style: that one is an illustrated free-hand render (great to look at,
 // not guaranteed); THIS one is a RULES-ENGINE render — lib/phasing.buildPhasePlan derives the
 // phases deterministically from the placed design + the permaculture Scale of Permanence + the
-// rainfall season, and we draw them precisely. Same chrome as sheets 02–05 (satellite + scrim, tar
+// rainfall season, and we draw them precisely. Same chrome as sheets 03–06 (satellite + scrim, tar
 // driveway, fence-tick boundary, title, scale) plus a north arrow. The content layer is numbered
 // phase PINS at each phase's element centroid + a right-hand panel listing every phase (colour
 // chip, number, title, week range, tasks, Hold Point), a CRITICAL ORDER list and a SITE RULES box.
-async function buildImplementationMap(
+export async function buildImplementationMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -3235,7 +3235,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
   // image-producer pipeline (compositeAccurateMap). null = a design/analysis map.
   const [producerStyle, setProducerStyle] = useState<string | null>(null);
-  // The deterministic Implementation & Phasing sheet (plan-set 07). It is the EXACT counterpart to
+  // The deterministic Implementation & Phasing sheet (plan-set 08). It is the EXACT counterpart to
   // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
   // overrides filter/analysis/producer for the render dispatch.
@@ -3496,7 +3496,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // Every single-layer map now gets the deterministic "Blueprint" treatment (legend, scale,
       // fence ticks, true footprints) — the flat cartographic look ChatGPT nailed, but drawn
       // exactly from geometry. Only 'all' still falls through to the plain composite: the whole-
-      // design sheet (06) has no Blueprint of its own yet — see docs/PLAN-SET-SPEC.md.
+      // design sheet (07) has no Blueprint of its own yet — see docs/PLAN-SET-SPEC.md.
       const composite = filter === 'zones'
         ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
         : filter === 'water'
@@ -3521,7 +3521,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
     }
   }, [state, frame, refLayers, filter, mapKey, pushGallery, placeName]);
 
-  // Deterministic Implementation & Phasing sheet (plan-set 07) — the RULES-ENGINE render. Unlike
+  // Deterministic Implementation & Phasing sheet (plan-set 08) — the RULES-ENGINE render. Unlike
   // the Gemini 'Implementation' analysis style, nothing here is drawn by a model: lib/phasing
   // derives the phases from the placed design + the Scale of Permanence + rainfall, and we draw
   // them exactly. Refuses (with the same "draw it first" honesty as the layer maps) when the design

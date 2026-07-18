@@ -1,18 +1,36 @@
 'use client';
 
 // Design Studio — Print / Export composer. Turns the EXACT (deterministic) design maps into a
-// publishable plan set: pick layers, paper size + orientation, and title-block / legend / scale
-// bar / north-arrow furniture, then export a multi-page PDF (one exact map per layer) or PNGs.
-// Everything here is built on buildComposite (the accurate-by-construction renderer) — no AI,
-// so the output is always correct and print-ready.
+// publishable plan set: the canonical 8-map package (docs/PLAN-SET-SPEC.md), each a print page with
+// a numbered title block, then a multi-page PDF or per-sheet PNGs. Everything is deterministic (no
+// AI) so the output is always correct and print-ready.
+//
+// TWO kinds of page:
+//  • SELF-CHROMED sheets (02 Sector, 03 Zones, 04 Water, 05 Planting, 06 Structures, 08
+//    Implementation) already carry their own legend / scale / north from the Blueprint chrome, so
+//    the page just adds a numbered title strip and letterboxes the sheet FULL WIDTH (no paper
+//    legend column — that would double-chrome).
+//  • PAPER-FURNITURE sheets (01 Base, 07 Masterplan) are plain composites, so the page draws the
+//    title block + legend column + scale bar + north arrow around them, as before.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { X, FileDown, Images, Loader2 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
+import type { SectorSite } from '@/lib/sector';
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
-import { buildComposite, itemInFilter, type GlossyLayerFilter } from './DesignGlossy';
+import {
+  buildComposite,
+  buildBlueprintSectorMap,
+  buildBlueprintZoneMap,
+  buildBlueprintWaterMap,
+  buildBlueprintPlantingMap,
+  buildBlueprintStructuresMap,
+  buildImplementationMap,
+  itemInFilter,
+  type GlossyLayerFilter,
+} from './DesignGlossy';
 
 type RefLayers = {
   boundary: Array<[number, number]>;
@@ -25,6 +43,7 @@ interface DesignPrintProps {
   state: DesignCanvasState;
   frame: CanvasFrame;
   refLayers: RefLayers;
+  site: SectorSite | null;
   placeName?: string;
   onClose: () => void;
 }
@@ -34,14 +53,27 @@ const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
 
-type PrintLayer = { key: string; label: string; filter: GlossyLayerFilter; drawDesign: boolean };
+type PrintLayer = {
+  key: string;
+  no: string; // '01'..'08'
+  label: string;
+  selfChromed: boolean; // sheet carries its own legend/scale/north (a Blueprint sheet)
+  render: (state: DesignCanvasState, frame: CanvasFrame, refLayers: RefLayers, site: SectorSite | null, placeName?: string) => Promise<string>;
+  // Only used to draw the PAPER legend on the two non-self-chromed pages.
+  filter?: GlossyLayerFilter;
+  drawDesign?: boolean;
+};
+
+// The canonical 8-map package, in order (docs/PLAN-SET-SPEC.md). Analysis (02) precedes design.
 const PRINT_LAYERS: PrintLayer[] = [
-  { key: 'base', label: 'Base map', filter: 'all', drawDesign: false },
-  { key: 'all', label: 'Whole design', filter: 'all', drawDesign: true },
-  { key: 'zones', label: 'Zones', filter: 'zones', drawDesign: true },
-  { key: 'water', label: 'Water', filter: 'water', drawDesign: true },
-  { key: 'planting', label: 'Planting', filter: 'planting', drawDesign: true },
-  { key: 'structures', label: 'Structures', filter: 'structures', drawDesign: true },
+  { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: false, filter: 'all', drawDesign: false, render: (s, f, r) => buildComposite(s, f, r, 'all', false) },
+  { key: 'sector', no: '02', label: 'Sector Analysis', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
+  { key: 'zones', no: '03', label: 'Permaculture Zones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
+  { key: 'water', no: '04', label: 'Water & Irrigation', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
+  { key: 'planting', no: '05', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
+  { key: 'structures', no: '06', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
+  { key: 'all', no: '07', label: 'Integrated Masterplan', selfChromed: false, filter: 'all', drawDesign: true, render: (s, f, r) => buildComposite(s, f, r, 'all', true) },
+  { key: 'implementation', no: '08', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
 
 // Paper pixel sizes at ~150 DPI, portrait [w, h].
@@ -61,8 +93,9 @@ function loadImg(src: string): Promise<HTMLImageElement> {
   });
 }
 
-// Legend rows for a layer — what the reader needs to decode the map.
+// Legend rows for a PAPER-furniture layer (base / masterplan) — what the reader needs to decode it.
 function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch: string; icon?: string; text: string }> {
+  const filter = layer.filter ?? 'all';
   if (!layer.drawDesign) {
     return [
       { swatch: '#8CEB6A', text: 'Property boundary' },
@@ -71,24 +104,20 @@ function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch
     ];
   }
   const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
-  if (layer.filter === 'zones' || layer.filter === 'all') {
-    for (const z of state.zones) {
-      if (z.feature || z.points.length < 3) continue;
-      rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
-    }
+  for (const z of state.zones) {
+    if (z.feature || z.points.length < 3) continue;
+    rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
   }
-  if (layer.filter !== 'zones') {
-    const groups = new Map<string, { icon: string; color: string; n: number }>();
-    for (const it of state.items) {
-      const def = ELEMENTS_BY_ID[it.defId];
-      if (!def || !itemInFilter(def.category, layer.filter)) continue;
-      const name = it.label ?? def.name;
-      const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
-      g.n += 1;
-      groups.set(name, g);
-    }
-    for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
+  const groups = new Map<string, { icon: string; color: string; n: number }>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def || !itemInFilter(def.category, filter)) continue;
+    const name = it.label ?? def.name;
+    const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
+    g.n += 1;
+    groups.set(name, g);
   }
+  for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
   return rows;
 }
 
@@ -97,6 +126,7 @@ async function renderPage(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: RefLayers,
+  site: SectorSite | null,
   placeName: string,
   layer: PrintLayer,
   opts: { paper: 'a4' | 'a3'; landscape: boolean; titleBlock: boolean; legend: boolean; scaleBar: boolean; northArrow: boolean; dateStr: string },
@@ -113,10 +143,13 @@ async function renderPage(
 
   const M = Math.round(W * 0.038);
   const titleH = opts.titleBlock ? Math.round(H * 0.062) : 0;
-  const legendW = opts.legend ? Math.min(440, Math.max(300, Math.round(W * 0.24))) : 0;
-  const footH = opts.scaleBar || opts.northArrow ? Math.round(H * 0.05) : 0;
+  // A self-chromed Blueprint sheet already has its own legend / scale / north — the page adds only
+  // the numbered title strip and gives the sheet the full width.
+  const showPaperFurniture = !layer.selfChromed;
+  const legendW = showPaperFurniture && opts.legend ? Math.min(440, Math.max(300, Math.round(W * 0.24))) : 0;
+  const footH = showPaperFurniture && (opts.scaleBar || opts.northArrow) ? Math.round(H * 0.05) : 0;
 
-  // ── Title block ──
+  // ── Title block (numbered) ──
   if (opts.titleBlock) {
     ctx.fillStyle = DARK;
     ctx.fillRect(M, M, W - 2 * M, titleH);
@@ -127,11 +160,11 @@ async function renderPage(
     ctx.fillText(placeName || 'Your design', M + 24, M + titleH * 0.38);
     ctx.fillStyle = '#EFE7D6';
     ctx.font = `600 ${Math.round(titleH * 0.24)}px system-ui, sans-serif`;
-    ctx.fillText(`${layer.label} plan`, M + 24, M + titleH * 0.74);
+    ctx.fillText(`${layer.no} — ${layer.label}`, M + 24, M + titleH * 0.74);
     ctx.textAlign = 'right';
     ctx.fillStyle = '#C9BFA0';
     ctx.font = `600 ${Math.round(titleH * 0.2)}px system-ui, sans-serif`;
-    ctx.fillText('ImbewuField', W - M - 24, M + titleH * 0.36);
+    ctx.fillText('ImbewuField · plan set', W - M - 24, M + titleH * 0.36);
     ctx.fillText(opts.dateStr, W - M - 24, M + titleH * 0.68);
     ctx.textAlign = 'left';
   }
@@ -142,8 +175,8 @@ async function renderPage(
   const mapAreaW = W - 2 * M - (legendW ? legendW + 24 : 0);
   const mapAreaH = H - mapY - M - footH;
 
-  // Fit the exact composite into the map area, preserving aspect (letterbox).
-  const composite = await buildComposite(state, frame, refLayers, layer.filter, layer.drawDesign);
+  // Render this layer's exact sheet, then letterbox it into the map area preserving aspect.
+  const composite = await layer.render(state, frame, refLayers, site, placeName);
   const img = await loadImg(composite);
   const scale = Math.min(mapAreaW / img.width, mapAreaH / img.height);
   const drawW = img.width * scale;
@@ -151,13 +184,12 @@ async function renderPage(
   const dx = mapX + (mapAreaW - drawW) / 2;
   const dy = mapY + (mapAreaH - drawH) / 2;
   ctx.drawImage(img, dx, dy, drawW, drawH);
-  // Thin frame around the drawn map.
   ctx.strokeStyle = 'rgba(11,18,11,0.55)';
   ctx.lineWidth = 2;
   ctx.strokeRect(dx, dy, drawW, drawH);
 
-  // ── Legend column ──
-  if (opts.legend) {
+  // ── Paper legend column (non-self-chromed pages only) ──
+  if (showPaperFurniture && opts.legend) {
     const lx = W - M - legendW;
     const ly = mapY;
     ctx.fillStyle = '#F3ECDD';
@@ -183,7 +215,6 @@ async function renderPage(
         ctx.fillText('…', lx + pad, ry);
         break;
       }
-      // swatch
       ctx.fillStyle = row.swatch;
       ctx.strokeStyle = 'rgba(11,18,11,0.35)';
       ctx.lineWidth = 1;
@@ -214,53 +245,55 @@ async function renderPage(
     }
   }
 
-  // ── Scale bar + north arrow (in the footer strip under the map) ──
-  const fy = H - M - footH * 0.4;
-  if (opts.scaleBar) {
-    const pxPerM = drawW / (frame.imgW * frame.mPerPx);
-    const nice = [5, 10, 20, 25, 50, 100, 200, 500];
-    const target = mapAreaW * 0.22;
-    let metres = nice[0];
-    for (const n of nice) if (n * pxPerM <= target) metres = n;
-    const barW = metres * pxPerM;
-    const bx = mapX + 4;
-    ctx.strokeStyle = DARK;
-    ctx.fillStyle = DARK;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(bx, fy);
-    ctx.lineTo(bx + barW, fy);
-    ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(bx, fy - 8); ctx.lineTo(bx, fy + 8); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(bx + barW, fy - 8); ctx.lineTo(bx + barW, fy + 8); ctx.stroke();
-    ctx.font = '600 24px system-ui, sans-serif';
-    ctx.textBaseline = 'bottom';
-    ctx.textAlign = 'left';
-    ctx.fillText(`${metres} m`, bx, fy - 12);
-  }
-  if (opts.northArrow) {
-    const nx = mapX + mapAreaW - 30;
-    const ny = fy;
-    ctx.fillStyle = DARK;
-    ctx.strokeStyle = DARK;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(nx, ny - 34);
-    ctx.lineTo(nx - 11, ny);
-    ctx.lineTo(nx, ny - 10);
-    ctx.lineTo(nx + 11, ny);
-    ctx.closePath();
-    ctx.fill();
-    ctx.font = '700 24px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText('N', nx, ny - 40);
+  // ── Scale bar + north arrow (non-self-chromed pages only) ──
+  if (showPaperFurniture) {
+    const fy = H - M - footH * 0.4;
+    if (opts.scaleBar) {
+      const pxPerM = drawW / (frame.imgW * frame.mPerPx);
+      const nice = [5, 10, 20, 25, 50, 100, 200, 500];
+      const target = mapAreaW * 0.22;
+      let metres = nice[0];
+      for (const n of nice) if (n * pxPerM <= target) metres = n;
+      const barW = metres * pxPerM;
+      const bx = mapX + 4;
+      ctx.strokeStyle = DARK;
+      ctx.fillStyle = DARK;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(bx, fy);
+      ctx.lineTo(bx + barW, fy);
+      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bx, fy - 8); ctx.lineTo(bx, fy + 8); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bx + barW, fy - 8); ctx.lineTo(bx + barW, fy + 8); ctx.stroke();
+      ctx.font = '600 24px system-ui, sans-serif';
+      ctx.textBaseline = 'bottom';
+      ctx.textAlign = 'left';
+      ctx.fillText(`${metres} m`, bx, fy - 12);
+    }
+    if (opts.northArrow) {
+      const nx = mapX + mapAreaW - 30;
+      const ny = fy;
+      ctx.fillStyle = DARK;
+      ctx.strokeStyle = DARK;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(nx, ny - 34);
+      ctx.lineTo(nx - 11, ny);
+      ctx.lineTo(nx, ny - 10);
+      ctx.lineTo(nx + 11, ny);
+      ctx.closePath();
+      ctx.fill();
+      ctx.font = '700 24px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('N', nx, ny - 40);
+    }
   }
 
   return canvas;
 }
 
-export default function DesignPrint({ state, frame, refLayers, placeName, onClose }: DesignPrintProps) {
+export default function DesignPrint({ state, frame, refLayers, site, placeName, onClose }: DesignPrintProps) {
   const [selected, setSelected] = useState<Set<string>>(new Set(PRINT_LAYERS.map((l) => l.key)));
   const [paper, setPaper] = useState<'a4' | 'a3'>('a4');
   const [landscape, setLandscape] = useState(true);
@@ -283,11 +316,11 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
     const first = PRINT_LAYERS.find((l) => selected.has(l.key));
     if (!first) { setPreviewUrl(null); return; }
     setBusy('preview');
-    renderPage(state, frame, refLayers, placeName ?? 'Your design', first, optsFor())
+    renderPage(state, frame, refLayers, site, placeName ?? 'Your design', first, optsFor())
       .then((cv) => { if (!cancelled) { setPreviewUrl(cv.toDataURL('image/jpeg', 0.85)); setBusy(null); } })
       .catch(() => { if (!cancelled) setBusy(null); });
     return () => { cancelled = true; };
-  }, [state, frame, refLayers, placeName, selected, paper, landscape, furniture, optsFor]);
+  }, [state, frame, refLayers, site, placeName, selected, paper, landscape, furniture, optsFor]);
 
   const toggle = (key: string) =>
     setSelected((prev) => {
@@ -305,7 +338,7 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
       const H = landscape ? pw : ph;
       const doc = new jsPDF({ unit: 'px', format: [W, H], orientation: landscape ? 'landscape' : 'portrait', hotfixes: ['px_scaling'] });
       for (let i = 0; i < chosen.length; i++) {
-        const cv = await renderPage(state, frame, refLayers, placeName ?? 'Your design', chosen[i], optsFor());
+        const cv = await renderPage(state, frame, refLayers, site, placeName ?? 'Your design', chosen[i], optsFor());
         if (i > 0) doc.addPage([W, H], landscape ? 'landscape' : 'portrait');
         doc.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H);
       }
@@ -313,17 +346,17 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
     } finally {
       setBusy(null);
     }
-  }, [chosen, paper, landscape, state, frame, refLayers, placeName, optsFor]);
+  }, [chosen, paper, landscape, state, frame, refLayers, site, placeName, optsFor]);
 
   const exportPngs = useCallback(async () => {
     if (!chosen.length) return;
     setBusy('png');
     try {
       for (const layer of chosen) {
-        const cv = await renderPage(state, frame, refLayers, placeName ?? 'Your design', layer, optsFor());
+        const cv = await renderPage(state, frame, refLayers, site, placeName ?? 'Your design', layer, optsFor());
         const a = document.createElement('a');
         a.href = cv.toDataURL('image/png');
-        a.download = `${slug(placeName ?? 'site')}-${layer.key}.png`;
+        a.download = `${slug(placeName ?? 'site')}-${layer.no}-${layer.key}.png`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -332,7 +365,7 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
     } finally {
       setBusy(null);
     }
-  }, [chosen, state, frame, refLayers, placeName, optsFor]);
+  }, [chosen, state, frame, refLayers, site, placeName, optsFor]);
 
   const chk = (on: boolean) => ({
     display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10,
@@ -347,7 +380,7 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
           <FileDown size={20} color={GREEN} />
           <div style={{ fontWeight: 800, fontSize: 16, color: DARK }}>Print / Export</div>
-          <div style={{ fontSize: 12, color: '#6B6355' }}>exact maps · print-ready</div>
+          <div style={{ fontSize: 12, color: '#6B6355' }}>8-map plan set · exact · print-ready</div>
           <button onClick={onClose} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
             <X size={18} /> Close
           </button>
@@ -357,11 +390,11 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
           {/* Controls */}
           <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Layers (one page each)</div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Sheets (one page each)</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {PRINT_LAYERS.map((l) => (
                   <button key={l.key} onClick={() => toggle(l.key)} aria-pressed={selected.has(l.key)} style={chk(selected.has(l.key))}>
-                    <span>{selected.has(l.key) ? '☑' : '☐'}</span> {l.label}
+                    <span>{selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {l.label}
                   </button>
                 ))}
               </div>
@@ -386,7 +419,7 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
             </div>
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Include</div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>Include (on the Base &amp; Masterplan pages)</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {([['titleBlock', 'Title block'], ['legend', 'Legend'], ['scaleBar', 'Scale bar'], ['northArrow', 'North arrow']] as const).map(([k, label]) => (
                   <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
@@ -421,7 +454,7 @@ export default function DesignPrint({ state, frame, refLayers, placeName, onClos
               // eslint-disable-next-line @next/next/no-img-element
               <img src={previewUrl} alt="Print preview" style={{ maxWidth: '100%', maxHeight: 620, boxShadow: '0 6px 24px rgba(0,0,0,0.25)', borderRadius: 4 }} />
             ) : (
-              <div style={{ padding: 40, color: '#6B6355' }}>Select at least one layer.</div>
+              <div style={{ padding: 40, color: '#6B6355' }}>Select at least one sheet.</div>
             )}
           </div>
         </div>
