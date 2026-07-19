@@ -128,6 +128,7 @@ function HomeInner() {
   const [showPeople, setShowPeople] = useState(false);
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
   // Design-on-map overlay: show the saved Design Studio design over the satellite as a
   // read-only layer, turning the map into the report dashboard. designPresent is reported
   // by the map (true only when the current site actually has a saved design).
@@ -142,6 +143,21 @@ function HomeInner() {
   useEffect(() => {
     setGuidedMode(searchParams.get('guided') === '1' || loadPlaces().length === 0);
   }, [searchKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/build-info', { cache: 'no-store' })
+      .then(async (res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled) setBuildInfo(data);
+      })
+      .catch(() => {
+        if (!cancelled) setBuildInfo(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const panel = searchParams.get('panel');
@@ -431,6 +447,24 @@ function HomeInner() {
           >
             <span aria-hidden>🎨</span> <span>Design Studio</span>
           </Link>
+          {buildInfo?.sha && (
+            <div
+              title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+              className="flex items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
+              style={{
+                minHeight: 30,
+                borderColor: 'rgba(31,77,43,0.2)',
+                background: 'rgba(31,77,43,0.04)',
+                color: '#1F4D2B',
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: 0.2,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Build {buildInfo.sha}
+            </div>
+          )}
           <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
           <LangSwitcher />
           <AccountButton />
