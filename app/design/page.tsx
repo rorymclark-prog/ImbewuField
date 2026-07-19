@@ -407,6 +407,22 @@ function DesignStudioInner() {
     });
   }, []);
 
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/build-info', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setBuildInfo(data);
+      })
+      .catch(() => {
+        if (!cancelled) setBuildInfo(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const [locationData, setLocationData] = useState<LocationData | null>(null);
   const [layers, setLayers] = useState<DesignLayer[]>([]);
   const [refLayers, setRefLayers] = useState<RefLayers>({ boundary: [], house: [], driveway: [] });
@@ -1170,6 +1186,27 @@ function DesignStudioInner() {
           >
             <Printer size={15} /> Print
           </button>
+        )}
+        {buildInfo?.sha && (
+          <div
+            title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              minHeight: 32,
+              padding: '0 10px',
+              borderRadius: 999,
+              border: '1px solid rgba(31,77,43,0.2)',
+              background: 'rgba(31,77,43,0.04)',
+              color: GREEN,
+              fontSize: 11,
+              fontWeight: 800,
+              letterSpacing: 0.2,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Build {buildInfo.sha}
+          </div>
         )}
         <div
           title={saveError ?? undefined}
