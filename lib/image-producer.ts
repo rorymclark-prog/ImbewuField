@@ -57,9 +57,39 @@ export interface CompositeInputs {
   boundaryColor?: string;
   /** Label pill/type styling, matched to the chosen art style. */
   labelStyle?: LabelStyle;
+  /** Optional deterministic treatment for factual satellite context outside the boundary. */
+  contextTreatment?: 'original' | 'precision_atlas';
   /** Output canvas size (the composite/bg rect × pixelRatio). */
   width: number;
   height: number;
+}
+
+/**
+ * Bring factual satellite context into the Precision Atlas palette without generating anything.
+ * Geometry remains byte-for-byte aligned; only colour and contrast are changed.
+ */
+export function precisionAtlasContextPixels(pixels: Uint8ClampedArray): Uint8ClampedArray {
+  if (pixels.length % 4 !== 0) throw new Error('context treatment: expected RGBA pixels');
+  const out = new Uint8ClampedArray(pixels.length);
+  const saturation = 0.54;
+  const contrast = 0.88;
+  const warmMix = 0.08;
+  const parchment = [238, 231, 211] as const;
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    const channels = [r, g, b];
+    for (let channel = 0; channel < 3; channel++) {
+      const desaturated = luma + (channels[channel] - luma) * saturation;
+      const lifted = (desaturated - 128) * contrast + 146;
+      out[i + channel] = Math.round(lifted * (1 - warmMix) + parchment[channel] * warmMix);
+    }
+    out[i + 3] = pixels[i + 3];
+  }
+  return out;
 }
 
 /** Geometry Lock owns framing and cartographic chrome; free-form model chrome is rollback-only. */
@@ -337,9 +367,24 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
 
   const hasBoundary = Array.isArray(boundaryPx) && boundaryPx.length >= 6;
 
-  if (hasBoundary) {
-    // 1. Original satellite fills everything (truth outside the plot).
+  const drawSatelliteContext = () => {
     ctx.drawImage(satellite, 0, 0, width, height);
+    if (inp.contextTreatment !== 'precision_atlas') return;
+    try {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      imageData.data.set(precisionAtlasContextPixels(imageData.data));
+      ctx.putImageData(imageData, 0, 0);
+    } catch {
+      // A remote image can taint a canvas. Keep the factual image rather than failing the render.
+      ctx.fillStyle = 'rgba(238,231,211,0.09)';
+      ctx.fillRect(0, 0, width, height);
+    }
+  };
+
+  if (hasBoundary) {
+    // 1. Factual satellite fills everything outside the plot. Precision Atlas applies only a
+    // deterministic palette wash, avoiding the dark photographic cut-out around painted land.
+    drawSatelliteContext();
     // 2. Beautified scene (elements illustrated by the model), clipped to the
     //    boundary interior — anything the model sprawled outside is erased.
     //    (Blanked/failed renders are caught BEFORE this via estimateBlankFraction.)
@@ -356,7 +401,7 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   } else {
     // No boundary traced — satellite as the base first (so a model that returns a
     // partial/transparent frame can never leave the map blank), then the model.
-    ctx.drawImage(satellite, 0, 0, width, height);
+    drawSatelliteContext();
     ctx.drawImage(model, 0, 0, width, height);
   }
 

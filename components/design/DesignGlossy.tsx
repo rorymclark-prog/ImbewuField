@@ -374,11 +374,17 @@ export interface CompositeMarkOptions {
   showDrivewayEdge?: boolean;
   showDesignLines?: boolean;
   showDesignItems?: boolean;
+  showHouseMark?: boolean;
+  showDrivewayMark?: boolean;
 }
 
 const LOCKED_COMPOSITE_MARKS: CompositeMarkOptions = {
   showToolGlyphs: false,
   showDrivewayEdge: false,
+  // Geometry Lock restores these from clean source pixels and redraws them exactly after the AI
+  // pass. Feeding the model opaque editor paint was the source of the flat roof/road cut-outs.
+  showHouseMark: false,
+  showDrivewayMark: false,
 };
 
 // Water infrastructure is rendered deterministically after the AI texture pass. Keeping its
@@ -398,12 +404,21 @@ interface ProtectMaskOptions {
   protectOutside?: boolean;
   protectLines?: boolean;
   protectItems?: boolean;
+  protectBoundary?: boolean;
+  protectDriveway?: boolean;
+  houseHaloRatio?: number;
+  houseFeatherRatio?: number;
 }
 
 function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
+  const structural = {
+    protectOutside: true,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
   return filter === 'water'
-    ? { protectOutside: true, protectLines: false, protectItems: false }
-    : { protectOutside: true };
+    ? { ...structural, protectLines: false, protectItems: false, protectBoundary: false }
+    : structural;
 }
 
 export function drawMarks(
@@ -423,6 +438,8 @@ export function drawMarks(
   const showDrivewayEdge = options.showDrivewayEdge !== false;
   const showDesignLines = options.showDesignLines !== false;
   const showDesignItems = options.showDesignItems !== false;
+  const showHouseMark = options.showHouseMark !== false;
+  const showDrivewayMark = options.showDrivewayMark !== false;
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
 
@@ -440,7 +457,7 @@ export function drawMarks(
   }
 
   // House ring
-  if (refLayers.house.length >= 3) {
+  if (showHouseMark && refLayers.house.length >= 3) {
     ctx.beginPath();
     refLayers.house.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -458,7 +475,7 @@ export function drawMarks(
   // surfaced vehicle track on EVERY map, exact or illustrated (Rory: "build in the driveway as
   // tar coloured for all designs"). Drawing it dark in the composite also nudges the AI Styles to
   // render it as tar rather than repainting it as a garden path.
-  if (refLayers.driveway.length >= 2) {
+  if (showDrivewayMark && refLayers.driveway.length >= 2) {
     ctx.save();
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -688,8 +705,14 @@ async function buildProtectMask(
     // spills just beyond the traced outline without restoring a conspicuous rectangular block
     // of raw satellite around the house. A soft outer fringe blends the restored ground back
     // into the painted ground; the footprint and inner halo stay fully opaque/pixel-exact.
-    const houseHaloRadius = Math.max(14 * SCALE, Math.round(0.018 * Math.max(imgW, imgH)));
-    const houseFeather = Math.max(5 * SCALE, Math.round(0.005 * Math.max(imgW, imgH)));
+    const houseHaloRadius = Math.max(
+      4 * SCALE,
+      Math.round((options.houseHaloRatio ?? 0.018) * Math.max(imgW, imgH)),
+    );
+    const houseFeather = Math.max(
+      2 * SCALE,
+      Math.round((options.houseFeatherRatio ?? 0.005) * Math.max(imgW, imgH)),
+    );
     ctx.save();
     ctx.filter = `blur(${houseFeather}px)`;
     ctx.globalAlpha = 0.78;
@@ -717,7 +740,7 @@ async function buildProtectMask(
   }
 
   // Boundary ring stroke band (pins it from the inside too).
-  if (refLayers.boundary.length >= 3) {
+  if (options.protectBoundary !== false && refLayers.boundary.length >= 3) {
     ctx.beginPath();
     refLayers.boundary.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -733,7 +756,7 @@ async function buildProtectMask(
   // Protect the driveway's actual surface, not a generic centre-line band. A closed driveway is
   // an area polygon, so its entire fill is locked; an open trace uses the same ~3 m width as the
   // source composite. This keeps the road exact without restoring a decorative kerb around it.
-  if (refLayers.driveway.length >= 2) {
+  if (options.protectDriveway !== false && refLayers.driveway.length >= 2) {
     ctx.beginPath();
     refLayers.driveway.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -1705,8 +1728,10 @@ function drawWaterLeaderLabels(
 
   const fontSize = Math.max(19, Math.round(W * 0.012));
   const rowGap = Math.max(42, Math.round(fontSize * 1.85));
-  const top = Math.round(H * 0.1);
-  const bottom = Math.round(H * 0.9);
+  // Keep callouts away from the browser/card edges and the deterministic scale bar. The old
+  // 1.8% inset made labels look cropped whenever a mobile page drifted horizontally by a few px.
+  const top = Math.round(H * 0.12);
+  const bottom = Math.round(H * 0.86);
   ctx.font = `700 ${fontSize}px "Avenir Next", "Trebuchet MS", sans-serif`;
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
@@ -1724,7 +1749,7 @@ function drawWaterLeaderLabels(
       const padX = Math.round(fontSize * 0.55);
       const boxH = Math.round(fontSize * 1.55);
       const boxW = Math.round(textW + padX * 2);
-      const x = side === 'left' ? Math.round(W * 0.018) : Math.round(W * 0.982) - boxW;
+      const x = side === 'left' ? Math.round(W * 0.035) : Math.round(W * 0.965) - boxW;
       const y = positions[index] - boxH / 2;
       const leaderEndX = side === 'left' ? x + boxW : x;
       const elbowX = side === 'left'
@@ -1804,11 +1829,30 @@ function buildWaterOverlay(
   return canvas.toDataURL('image/png');
 }
 
-// The house is structural truth, not style. When geometry lock is on, redraw it from the source
-// composite on top of the model result so the roof cannot drift even if the model tries. The
-// protect-mask restoration clears model spill around the footprint; this overlay makes the exact
-// polygon itself the final top-most roof geometry.
-async function buildHouseOverlay(sourceImage: string, refLayers: DesignGlossyProps['refLayers'], W: number, H: number): Promise<string | undefined> {
+type LockedStructureTreatment = 'source' | 'precision_atlas';
+
+function traceNormalisedPath(
+  ctx: CanvasRenderingContext2D,
+  points: Array<[number, number]>,
+  W: number,
+  H: number,
+  close = false,
+) {
+  ctx.beginPath();
+  points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+  if (close) ctx.closePath();
+}
+
+// The house is structural truth, not generative artwork. It is clipped to the user's exact traced
+// polygon and sourced from the clean satellite, then lightly colour-matched so it does not read as
+// a photographic sticker on a painted map.
+async function buildHouseOverlay(
+  sourceImage: string,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  treatment: LockedStructureTreatment = 'source',
+): Promise<string | undefined> {
   if (refLayers.house.length < 3) return undefined;
   const img = await loadImage(sourceImage);
   const canvas = document.createElement('canvas');
@@ -1817,22 +1861,102 @@ async function buildHouseOverlay(sourceImage: string, refLayers: DesignGlossyPro
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
   ctx.save();
-  ctx.beginPath();
-  refLayers.house.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
-  ctx.closePath();
+  traceNormalisedPath(ctx, refLayers.house, W, H, true);
   ctx.clip();
+  if (treatment === 'precision_atlas') {
+    ctx.filter = 'saturate(0.48) contrast(1.08) brightness(1.05)';
+  }
   ctx.drawImage(img, 0, 0, W, H);
+  ctx.filter = 'none';
+  if (treatment === 'precision_atlas') {
+    ctx.fillStyle = 'rgba(42,55,53,0.16)';
+    ctx.fillRect(0, 0, W, H);
+  }
   ctx.restore();
-  // A single fine line records the traced footprint without visually widening or double-roofing
-  // it. The old white casing extended several pixels beyond the polygon and read as deformation.
-  ctx.beginPath();
-  refLayers.house.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
-  ctx.closePath();
+  // One fine line records the traced footprint without widening or double-roofing it.
+  traceNormalisedPath(ctx, refLayers.house, W, H, true);
   ctx.lineJoin = 'round';
   ctx.strokeStyle = 'rgba(45,43,38,0.9)';
   ctx.lineWidth = Math.max(2, W * 0.0012);
   ctx.stroke();
   return canvas.toDataURL('image/png');
+}
+
+// Draw the traced driveway after generation. This preserves the exact path/area while avoiding
+// the bright editor casing and flat brown guide that Geometry Lock previously pasted back in.
+function buildDrivewayOverlay(
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  treatment: LockedStructureTreatment = 'source',
+): string | undefined {
+  if (refLayers.driveway.length < 2) return undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const precision = treatment === 'precision_atlas';
+  const asphalt = precision ? '#50534E' : '#3B3A3E';
+
+  if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+    ctx.save();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
+    ctx.clip();
+    const wash = ctx.createLinearGradient(0, 0, W, H);
+    wash.addColorStop(0, precision ? '#5B5E57' : asphalt);
+    wash.addColorStop(0.52, asphalt);
+    wash.addColorStop(1, precision ? '#454943' : asphalt);
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, W, H);
+    if (precision) {
+      const grainStep = Math.max(8, Math.round(W * 0.004));
+      ctx.strokeStyle = 'rgba(239,231,207,0.09)';
+      ctx.lineWidth = Math.max(1, W * 0.00045);
+      for (let x = -H; x < W + H; x += grainStep) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x - H, H);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
+    ctx.strokeStyle = 'rgba(39,42,38,0.72)';
+    ctx.lineWidth = Math.max(1.5, W * 0.0009);
+    ctx.stroke();
+  } else {
+    const pxPerM = W / (frame.imgW * frame.mPerPx);
+    const roadW = Math.min(46, Math.max(11, pxPerM * 3));
+    traceNormalisedPath(ctx, refLayers.driveway, W, H);
+    ctx.strokeStyle = 'rgba(35,38,35,0.76)';
+    ctx.lineWidth = roadW + Math.max(2, W * 0.0012);
+    ctx.stroke();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H);
+    ctx.strokeStyle = asphalt;
+    ctx.lineWidth = roadW;
+    ctx.stroke();
+  }
+  return canvas.toDataURL('image/png');
+}
+
+async function buildLockedStructureOverlay(
+  sourceImage: string | undefined,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  styleKey: StylePreset,
+): Promise<string | undefined> {
+  const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
+  const driveway = buildDrivewayOverlay(frame, refLayers, W, H, treatment);
+  const house = sourceImage
+    ? await buildHouseOverlay(sourceImage, refLayers, W, H, treatment)
+    : undefined;
+  return stackOverlayImages(driveway, house, W, H);
 }
 
 async function stackOverlayImages(bottom: string | undefined, top: string | undefined, W: number, H: number): Promise<string | undefined> {
@@ -4262,16 +4386,16 @@ export default function DesignGlossy({
         filter === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
         : filter === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
         : undefined;
-      const houseOverlay = geometryLock
-        ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
+      const structureOverlay = geometryLock
+        ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
         : undefined;
       const mergedOverlay = filter === 'water' && geometryLock
-        ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
-        : await stackOverlayImages(overlayImage, houseOverlay, W, H);
+        ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, structureOverlay, W, H);
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage: protectMaskDataUrl
-          ? await restoreProtectedPixels(composite, modelImage, protectMaskDataUrl)
+          ? await restoreProtectedPixels(frame.satDataUrl ?? composite, modelImage, protectMaskDataUrl)
           : modelImage,
         // Satellite is the ground truth OUTSIDE the boundary; fall back to the composite when
         // there's no satellite so the map is never left blank/transparent there.
@@ -4280,6 +4404,7 @@ export default function DesignGlossy({
         overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
+        contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
         width: W,
         height: H,
       });
@@ -4556,24 +4681,25 @@ export default function DesignGlossy({
           f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
           : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
           : undefined;
-        const houseOverlay = geometryLock
-          ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
+        const structureOverlay = geometryLock
+          ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
           : undefined;
         const mergedOverlay = f === 'water' && geometryLock
-          ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
-          : await stackOverlayImages(overlayImage, houseOverlay, W, H);
+          ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+          : await stackOverlayImages(overlayImage, structureOverlay, W, H);
         const protectMaskDataUrl = geometryLock
           ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
         const final = await compositeAccurateMap({
           modelImage: protectMaskDataUrl
-          ? await restoreProtectedPixels(composite, modelImage, protectMaskDataUrl)
+          ? await restoreProtectedPixels(frame.satDataUrl ?? composite, modelImage, protectMaskDataUrl)
           : modelImage,
           satelliteImage: frame.satDataUrl ?? composite,
           boundaryPx,
           overlayImage: mergedOverlay,
           labels,
           labelStyle: styleDef.labelStyle,
+          contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
           width: W,
           height: H,
         });
@@ -4628,7 +4754,7 @@ export default function DesignGlossy({
     async (
       modelImage: string,
       f: GlossyLayerFilter,
-      styleDef: { label: string; labelStyle: LabelStyle },
+      styleDef: { key: StylePreset; label: string; labelStyle: LabelStyle },
       showcase = false,
       sourceImage?: string,
       protectMask?: string,
@@ -4640,14 +4766,15 @@ export default function DesignGlossy({
       // OpenAI documents GPT Image masks as guidance rather than an exact clipping contract.
       // Geometry Lock therefore wins here, after generation: every opaque mask pixel is copied
       // back from the uploaded source before any labels or sheet chrome are drawn.
-      const restoredImage = locked && protectMask && sourceImage
-        ? await restoreProtectedPixels(sourceImage, modelImage, protectMask)
+      const cleanSource = frame.satDataUrl ?? sourceImage;
+      const restoredImage = locked && protectMask && cleanSource
+        ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
         : modelImage;
-      const houseOverlay = locked && sourceImage
-        ? await buildHouseOverlay(frame.satDataUrl ?? sourceImage, refLayers, W, H)
+      const structureOverlay = locked
+        ? await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleDef.key)
         : undefined;
       if (showcase) {
-        const showcaseOverlay = await stackOverlayImages(undefined, houseOverlay, W, H);
+        const showcaseOverlay = await stackOverlayImages(undefined, structureOverlay, W, H);
         return compositeAccurateMap({
           modelImage: restoredImage,
           satelliteImage: frame.satDataUrl ?? sourceImage ?? restoredImage,
@@ -4655,6 +4782,7 @@ export default function DesignGlossy({
           overlayImage: showcaseOverlay,
           labels: [], // the model authored the labels
           labelStyle: styleDef.labelStyle,
+          contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
           width: W,
           height: H,
         });
@@ -4668,8 +4796,8 @@ export default function DesignGlossy({
         : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !locked, locked)
         : undefined;
       const mergedOverlay = f === 'water' && locked
-        ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
-        : await stackOverlayImages(overlayImage, houseOverlay, W, H);
+        ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, structureOverlay, W, H);
       const final = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: frame.satDataUrl ?? sourceImage ?? modelImage,
@@ -4677,6 +4805,7 @@ export default function DesignGlossy({
         overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
+        contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
         width: W,
         height: H,
       });
@@ -5002,6 +5131,11 @@ export default function DesignGlossy({
         position: 'absolute',
         inset: 0,
         overflowY: 'auto',
+        overflowX: 'hidden',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
         background: PAPER,
         color: DARK,
         padding: 16,
@@ -5178,13 +5312,17 @@ export default function DesignGlossy({
       )}
 
       {resultImage && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: '100%', minWidth: 0 }}>
           <div
             style={{
               border: `4px solid ${GOLD}`,
               borderRadius: 16,
               overflow: 'hidden',
               background: DARK,
+              width: '100%',
+              maxWidth: '100%',
+              minWidth: 0,
+              boxSizing: 'border-box',
             }}
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
@@ -5208,7 +5346,7 @@ export default function DesignGlossy({
               <img
                 src={resultImage}
                 alt={isExactRender ? 'Exact plan sheet of the design' : "AI artist's impression of the design"}
-                style={{ width: '100%', display: 'block' }}
+                style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
               />
               {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
               {!isExactRender && (

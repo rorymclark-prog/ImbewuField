@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { blendProtectedPixels, countProtectedPixelMismatches, shouldUseModelChrome } from '../lib/image-producer.ts';
+import { blendProtectedPixels, countProtectedPixelMismatches, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 
@@ -70,6 +70,21 @@ test('geometry lock always overrides free-form model chrome', () => {
   assert.equal(shouldUseModelChrome(false, false), false);
 });
 
+test('Precision Atlas context treatment lightens and calms satellite pixels without moving data', () => {
+  const source = px(20, 80, 30, 255);
+  const treated = precisionAtlasContextPixels(source);
+  const sourceMean = (source[0] + source[1] + source[2]) / 3;
+  const treatedMean = (treated[0] + treated[1] + treated[2]) / 3;
+  const sourceChroma = Math.max(source[0], source[1], source[2]) - Math.min(source[0], source[1], source[2]);
+  const treatedChroma = Math.max(treated[0], treated[1], treated[2]) - Math.min(treated[0], treated[1], treated[2]);
+
+  assert.equal(treated.length, source.length);
+  assert.equal(treated[3], source[3]);
+  assert.ok(treatedMean > sourceMean);
+  assert.ok(treatedChroma < sourceChroma);
+  assert.deepEqual(Array.from(source), [20, 80, 30, 255]);
+});
+
 test('update notifier detects a newly deployed build without false first-load prompts', () => {
   assert.equal(isDifferentBuild('5b9982b', '7abc123'), true);
   assert.equal(isDifferentBuild('5b9982b', '5b9982b'), false);
@@ -106,8 +121,9 @@ test('locked Water prompt delegates features and map furniture to deterministic 
   assert.ok(prompt.includes('visibly repaint every editable lawn, veld and soil pixel'));
   assert.ok(prompt.includes('not a faint tint, filter or lightly softened satellite photo'));
   assert.ok(prompt.includes('Leave no raw, dark or photographic satellite texture'));
-  assert.ok(prompt.includes('design infrastructure is intentionally absent'));
-  assert.ok(prompt.includes('draws it deterministically after this artwork pass'));
+  assert.ok(prompt.includes('restores clean source geometry'));
+  assert.ok(prompt.includes('redraws the exact traced structures'));
+  assert.ok(prompt.includes('design infrastructure deterministically after this artwork pass'));
   assert.ok(prompt.includes('flat orthographic top-down'));
   assert.ok(prompt.includes('add no objects or infrastructure'));
   assert.ok(prompt.includes('map-tool symbols, emoji, pins'));
