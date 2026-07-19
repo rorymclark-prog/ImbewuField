@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { blendProtectedPixels, countProtectedPixelMismatches } from '../lib/image-producer.ts';
+import { blendProtectedPixels, countProtectedPixelMismatches, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 
@@ -63,6 +63,13 @@ test('geometry lock verifies every fully protected pixel byte-for-byte', () => {
   assert.equal(countProtectedPixelMismatches(source, restored, mask), 1);
 });
 
+test('geometry lock always overrides free-form model chrome', () => {
+  assert.equal(shouldUseModelChrome(true, true), false);
+  assert.equal(shouldUseModelChrome(false, true), false);
+  assert.equal(shouldUseModelChrome(true, false), true);
+  assert.equal(shouldUseModelChrome(false, false), false);
+});
+
 test('update notifier detects a newly deployed build without false first-load prompts', () => {
   assert.equal(isDifferentBuild('5b9982b', '7abc123'), true);
   assert.equal(isDifferentBuild('5b9982b', '5b9982b'), false);
@@ -85,7 +92,9 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   assert.ok(prompt.includes('HOUSE RULE: keep the house whole and fully visible'));
   assert.ok(prompt.includes('FINAL RULE: the source composite geometry is final.'));
   assert.ok(prompt.includes('flat orthographic top-down plan only'));
-  assert.ok(prompt.includes('clean right-hand title/legend panel'));
+  assert.ok(prompt.includes('produce edge-to-edge map artwork at exactly the source crop'));
+  assert.ok(prompt.includes('Do not add a title block, legend panel, paper border'));
+  assert.ok(!prompt.includes('clean right-hand title/legend panel'));
 });
 
 test('buildShowcasePrompt includes the title, labels and panel instructions', () => {

@@ -62,6 +62,11 @@ export interface CompositeInputs {
   height: number;
 }
 
+/** Geometry Lock owns framing and cartographic chrome; free-form model chrome is rollback-only. */
+export function shouldUseModelChrome(modelChrome: boolean, geometryLock: boolean): boolean {
+  return modelChrome && !geometryLock;
+}
+
 const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: string; font: string }> = {
   ink:       { pill: '#FBF6EC', stroke: '#3A2E1A', text: '#20190F', font: 'Georgia, serif' },
   storybook: { pill: '#FBF6EC', stroke: '#1F4D2B', text: '#20190F', font: 'system-ui, sans-serif' },

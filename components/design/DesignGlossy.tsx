@@ -16,7 +16,7 @@ import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
-import { compositeAccurateMap, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
@@ -3519,17 +3519,16 @@ export default function DesignGlossy({
   const [notice, setNotice] = useState<string | null>(null);
   // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
   const [queueJobId, setQueueJobId] = useState<string | null>(null);
-  // "AI legend" / showcase mode — let gpt-image-2 draw its OWN legend + selective labels and render
-  // the whole frame freely (the free-ChatGPT look), instead of the strict pipeline that clips the
-  // model art to the boundary and burns our labels on. Applies to the CURRENTLY-SELECTED single
-  // sheet (any layer, Zones included), via the background queue. See buildShowcasePrompt +
-  // finishStyledSheet (showcase branch skips the clip/burn). The ALL button still showcases 'all' only.
+  // "AI legend" / showcase mode — available only while Geometry Lock is off. Locked renders always
+  // use deterministic framing, labels and legend; otherwise the model can shrink/reframe the map
+  // while drawing its own page chrome, which defeats the geometry guarantee.
   const [modelChrome, setModelChrome] = useState(true); // ON by default (Rory) — the showcase look IS the product
   // Geometry Lock — when ON, the strict queue path sends a protect mask to gpt-image-2 and the
   // finisher restores the protected source pixels before compositing the deterministic sheet chrome.
   const [geometryLockInternal, setGeometryLockInternal] = useState(false); // OFF by default to preserve the current path
   const geometryLock = geometryLockProp ?? geometryLockInternal;
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
+  const effectiveModelChrome = shouldUseModelChrome(modelChrome, geometryLock);
   const refreshPendingRef = useRef(false);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
@@ -4232,14 +4231,14 @@ export default function DesignGlossy({
       // legend/labels — owner's fix for "I selected the AI legend and it reverted to the old one:
       // the sheets came out disjointed". Toggle OFF keeps the legacy split: Zones exact + the
       // model sheets through the strict composite-back pipeline.
-      if (!modelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
+      if (!effectiveModelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef);
         try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
         pushGallery(`Zones map · ${styleDef.label}`, zsheet);
       }
       // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
-      const modelFilters: GlossyLayerFilter[] = modelChrome
+      const modelFilters: GlossyLayerFilter[] = effectiveModelChrome
         ? ['all', 'zones', 'water', 'planting', 'structures']
         : ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -4250,9 +4249,9 @@ export default function DesignGlossy({
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f, { protectOutside: !modelChrome })
+          ? await buildProtectMask(state, frame, refLayers, f, { protectOutside: true })
           : undefined;
-        const prompt = modelChrome
+        const prompt = effectiveModelChrome
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
             : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
@@ -4265,13 +4264,13 @@ export default function DesignGlossy({
           prompt,
           compositeDataUrl: composite,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
-          showcase: modelChrome,
+          showcase: effectiveModelChrome,
           geometryLock,
         });
       }
       // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
       // softens exactly those (no boundary clip / burned labels over the model's own chrome).
-      showcaseKeysRef.current = new Set(modelChrome ? sheets.map((s) => s.key) : []);
+      showcaseKeysRef.current = new Set(effectiveModelChrome ? sheets.map((s) => s.key) : []);
       if (sheets.length === 0) {
         setNotice(
           layerContentCount(state, refLayers, 'zones') > 0
@@ -4290,7 +4289,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome, geometryLock, promptRewrite]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, geometryLock, promptRewrite]);
 
   // Single-sheet gpt-image-2 via the SAME background queue as "AI · ALL" (direct OpenAI). This is
   // what the per-sheet "Generate my … Blueprint" button routes to when gpt-image-2 is selected —
@@ -4322,9 +4321,9 @@ export default function DesignGlossy({
       // composite-back path always seams the model art against the real satellite (visible edges,
       // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
       // model version, so we DON'T force the deterministic satellite-only sheet here.
-      const useShowcase = modelChrome;
+      const useShowcase = effectiveModelChrome;
       const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter, { protectOutside: !useShowcase })
+        ? await buildProtectMask(state, frame, refLayers, filter, { protectOutside: true })
         : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = useShowcase
@@ -4356,7 +4355,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, filter, modelChrome, geometryLock, promptRewrite]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, geometryLock, promptRewrite]);
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
@@ -4649,7 +4648,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (modelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels — real satellite kept outside your boundary. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 renders in the background (~mins) and lands in your gallery — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -4901,8 +4900,8 @@ export default function DesignGlossy({
                 <button
                   type="button"
                   onClick={() => setModelChrome((v) => !v)}
-                  disabled={loading !== null}
-                  aria-pressed={modelChrome}
+                  disabled={loading !== null || geometryLock}
+                  aria-pressed={geometryLock || effectiveModelChrome}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -4911,17 +4910,23 @@ export default function DesignGlossy({
                     minHeight: 40,
                     padding: '8px 14px',
                     borderRadius: 12,
-                    border: modelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
-                    background: modelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
+                    border: geometryLock || effectiveModelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
+                    background: geometryLock || effectiveModelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
                     color: DARK,
                     fontWeight: 700,
                     fontSize: 12.5,
-                    cursor: loading !== null ? 'default' : 'pointer',
+                    cursor: loading !== null || geometryLock ? 'default' : 'pointer',
                     textAlign: 'left',
+                    opacity: geometryLock ? 0.72 : 1,
                   }}
+                  title={geometryLock
+                    ? 'Geometry Lock uses exact framing, labels and legend. Turn Geometry Lock off to restore the free-form AI-authored sheet.'
+                    : 'Let GPT Image 2 draw the full sheet, including its own legend and labels.'}
                 >
-                  <span>{modelChrome ? '☑' : '☐'}</span>
-                  🧪 AI draws its own legend &amp; labels (satellite kept outside the boundary)
+                  <span>{geometryLock || effectiveModelChrome ? '☑' : '☐'}</span>
+                  {geometryLock
+                    ? '📐 Exact framing, labels & legend (Geometry Lock)'
+                    : '🧪 AI draws its own legend & labels'}
                 </button>
               )}
 

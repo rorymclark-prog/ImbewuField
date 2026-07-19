@@ -46,9 +46,13 @@ export function buildProducerPrompt(
     `KEEP EXACT: preserve the source framing, scale, crop and north-up orientation. Keep the property boundary, driveway, road, roofs and all marked features in the same pixels and the same counts.`;
   const viewRule =
     `VIEW: flat orthographic top-down plan only. No oblique shot, no perspective tilt, no 3D camera, no horizon, no isometric view.`;
-  const layoutRule = isLayerMap
-    ? `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like a printed design board.`
-    : `LAYOUT: use a landscape plan sheet with a clean right-hand title/legend panel and the map filling the left side, like a printed design board.`;
+  // This is the artwork pass only. The app adds the title, legend, north arrow and scale after
+  // generation. Asking the model for those here made it shrink/reframe the source map, then the
+  // deterministic compositor added a second panel around an already-reframed image.
+  const layoutRule =
+    `CANVAS: produce edge-to-edge map artwork at exactly the source crop, scale and orientation. ` +
+    `Do not add a title block, legend panel, paper border, north arrow, scale bar or outer margin. ` +
+    `Do not rotate, zoom, shrink, crop, recenter or reframe the property. Use the selected style's palette and brushwork only; the app adds all sheet furniture afterwards.`;
   const noInvent =
     `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
   const drawBlock =
