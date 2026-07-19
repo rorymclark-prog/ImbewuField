@@ -94,6 +94,7 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   assert.ok(prompt.includes('flat orthographic top-down plan only'));
   assert.ok(prompt.includes('produce edge-to-edge map artwork at exactly the source crop'));
   assert.ok(prompt.includes('Do not add a title block, legend panel, paper border'));
+  assert.ok(prompt.includes('Do not copy any emoji, map pin, tool icon, badge'));
   assert.ok(!prompt.includes('clean right-hand title/legend panel'));
 });
 
@@ -108,6 +109,7 @@ test('buildShowcasePrompt includes the title, labels and panel instructions', ()
 
   assert.ok(prompt.includes('title block reading'));
   assert.ok(prompt.includes('LABELS AND PANELS:'));
+  assert.ok(prompt.includes('Do not copy any emoji, map pin, tool icon, badge'));
   assert.ok(prompt.includes('small north arrow'));
   assert.ok(prompt.includes('FINAL RULE: the source composite geometry is final.'));
 });

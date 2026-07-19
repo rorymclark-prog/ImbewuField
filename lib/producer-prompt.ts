@@ -58,6 +58,10 @@ export function buildProducerPrompt(
   const drawBlock =
     `DRAW: ${FEATURE_LEGEND}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}` +
     `Paint each marked feature as a clear, recognisable illustration, and only the features that are already marked.`;
+  const markerCleanup =
+    `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
+    `Replace them with the named real feature. Do not copy any emoji, map pin, tool icon, badge, ` +
+    `selection handle or other editor symbol into the output.`;
   const textRule =
     `NO TEXT in the painted artwork itself: no captions, banners, signage, numbers or compass rose inside the illustration. Labels are added separately after rendering.`;
   const buildingRule =
@@ -96,6 +100,7 @@ export function buildProducerPrompt(
     noInvent,
     waterRule,
     drawBlock,
+    markerCleanup,
     textRule,
     buildingRule,
     houseRule,
@@ -256,6 +261,10 @@ export function buildShowcasePrompt(
   const waterRule = sheetKind === 'water'
     ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
     : '';
+  const markerCleanup =
+    `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
+    `Replace them with the named real feature. Do not copy any emoji, map pin, tool icon, badge, ` +
+    `selection handle or other editor symbol into the output.`;
   return [
     STYLE_LINES[stylePreset],
     `TASK: edit this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".`,
@@ -265,6 +274,7 @@ export function buildShowcasePrompt(
     noInvent,
     waterRule,
     `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count: ${LEGEND_BY_SHEET[sheetKind]}. This sheet's features are: ${elementsText}. Ground with no marker stays open lawn or veld, unchanged.`,
+    markerCleanup,
     `LABELS AND PANELS: in the corner with the least map content, place a clean paper title block reading "${title}" as the largest lettering on the sheet, a tidy legend for the feature types, and a small north arrow. Label up to six important features in small elegant lettering beside them, using exactly these spellings: ${labels}. These are the only words anywhere on the sheet, all horizontal and print-legible.`,
     singleLayer,
     geometryLockTail(),

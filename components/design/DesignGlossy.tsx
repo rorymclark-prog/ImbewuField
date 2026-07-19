@@ -368,9 +368,31 @@ export interface DesignGlossyProps {
 
 export const SCALE = 2;
 
-export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
+export interface CompositeMarkOptions {
+  showToolGlyphs?: boolean;
+  showDrivewayEdge?: boolean;
+}
+
+const LOCKED_COMPOSITE_MARKS: CompositeMarkOptions = {
+  showToolGlyphs: false,
+  showDrivewayEdge: false,
+};
+
+export function drawMarks(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  imgW: number,
+  imgH: number,
+  filter: GlossyLayerFilter = 'all',
+  drawDesign = true,
+  options: CompositeMarkOptions = {},
+) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
+  const showToolGlyphs = options.showToolGlyphs !== false;
+  const showDrivewayEdge = options.showDrivewayEdge !== false;
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
 
@@ -424,16 +446,21 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
       ctx.closePath();
       ctx.fillStyle = '#3B3A3E';
       ctx.fill();
-      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
-      ctx.lineWidth = 5;
-      ctx.stroke();
+      if (showDrivewayEdge) {
+        ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
     } else {
-      // Traced as a track → a tar carriageway with a light kerb casing.
+      // The unlocked legacy input keeps its light kerb casing. Geometry Lock uses a clean,
+      // unbordered carriageway because the casing was being restored as a false driveway edge.
       const roadW = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
-      tracePath();
-      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
-      ctx.lineWidth = roadW + 5;
-      ctx.stroke();
+      if (showDrivewayEdge) {
+        tracePath();
+        ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+        ctx.lineWidth = roadW + 5;
+        ctx.stroke();
+      }
       tracePath();
       ctx.strokeStyle = '#3B3A3E';
       ctx.lineWidth = roadW;
@@ -553,15 +580,24 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
       ctx.stroke();
       ctx.restore();
     }
-    ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#0B120B';
-    ctx.fillText(def.icon, cx, cy);
+    if (showToolGlyphs) {
+      ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#0B120B';
+      ctx.fillText(def.icon, cx, cy);
+    }
   }
 }
 
-export async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all', drawDesign = true): Promise<string> {
+export async function buildComposite(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+  drawDesign = true,
+  options: CompositeMarkOptions = {},
+): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -578,7 +614,7 @@ export async function buildComposite(state: DesignCanvasState, frame: CanvasFram
     ctx.fillRect(0, 0, imgW, imgH);
   }
 
-  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign, options);
 
   // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
   // softens them. The route wraps this as image/png — keep the formats in lockstep.
@@ -622,8 +658,8 @@ async function buildProtectMask(
     // spills just beyond the traced outline without restoring a conspicuous rectangular block
     // of raw satellite around the house. A soft outer fringe blends the restored ground back
     // into the painted ground; the footprint and inner halo stay fully opaque/pixel-exact.
-    const houseHaloRadius = Math.max(24 * SCALE, Math.round(0.035 * Math.max(imgW, imgH)));
-    const houseFeather = Math.max(8 * SCALE, Math.round(0.008 * Math.max(imgW, imgH)));
+    const houseHaloRadius = Math.max(14 * SCALE, Math.round(0.018 * Math.max(imgW, imgH)));
+    const houseFeather = Math.max(5 * SCALE, Math.round(0.005 * Math.max(imgW, imgH)));
     ctx.save();
     ctx.filter = `blur(${houseFeather}px)`;
     ctx.globalAlpha = 0.78;
@@ -662,15 +698,26 @@ async function buildProtectMask(
     ctx.stroke();
   }
 
-  // Driveway stroke band.
+  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
+
+  // Protect the driveway's actual surface, not a generic centre-line band. A closed driveway is
+  // an area polygon, so its entire fill is locked; an open trace uses the same ~3 m width as the
+  // source composite. This keeps the road exact without restoring a decorative kerb around it.
   if (refLayers.driveway.length >= 2) {
     ctx.beginPath();
     refLayers.driveway.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
       fn.call(ctx, px(x), py(y));
     });
-    ctx.lineWidth = 10 * SCALE;
-    ctx.stroke();
+    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 3 * SCALE;
+      ctx.stroke();
+    } else {
+      ctx.lineWidth = Math.min(46, Math.max(11, maskPxPerM * 3)) + 2 * SCALE;
+      ctx.stroke();
+    }
   }
 
   // Zones — lock only the OUTLINE band, never the interior. Locking the whole fill made the
@@ -704,7 +751,6 @@ async function buildProtectMask(
   // Item footprints (+25% margin). Same canvas-scale-aware conversion as the composite:
   // metres → CANVAS px (the mask is SCALE× the logical frame, and it MUST protect the
   // full true-scale footprint, not half of it).
-  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
@@ -980,8 +1026,14 @@ async function requestProducer(
   return data.image as string; // bare base64 (compositeAccurateMap's asDataUrl normalises it)
 }
 
-// Short comma list of placed element names + counts, e.g. "🥬 Vegetable Bed ×6, 🛢 JoJo Tank".
-function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): string {
+// Short comma list of placed element names + counts, e.g. "Vegetable Bed x6, JoJo Tank".
+// Locked prompts omit editor glyphs so the image model cannot mistake them for final map art.
+function producerElementsText(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+  includeToolGlyphs = true,
+): string {
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -991,7 +1043,9 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
     g.n += 1;
     counts.set(name, g);
   }
-  const parts = [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`);
+  const parts = [...counts.entries()].map(([name, g]) =>
+    `${includeToolGlyphs ? `${g.icon} ` : ''}${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+  );
   // On the zones layer, describe the effort-zone areas instead of individual elements.
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
@@ -1111,6 +1165,7 @@ function producerLabels(
   W: number,
   H: number,
   filter: GlossyLayerFilter = 'all',
+  includeToolGlyphs = true,
 ): ProducerLabel[] {
   const fs = 26, padX = 14;
   // Pill-width ESTIMATE — only used to right-align the right-hand column (burnLabels measures the
@@ -1129,9 +1184,8 @@ function producerLabels(
 
   const itemRow = (icon: string, name: string, n: number): Row => {
     // CAPS on every on-map label, per the reference sheets ("On-map labels: CAPS, short").
-    // The emoji stays on members — it's the fastest recognition cue on a busy illustration —
-    // and is dropped from headers, which carry their meaning in the words.
-    const text = `${icon} ${name}${n > 1 ? ` ×${n}` : ''}`.toUpperCase();
+    // Geometry Lock drops editor emoji from labels; the plain text and swatch legend carry identity.
+    const text = `${includeToolGlyphs ? `${icon} ` : ''}${name}${n > 1 ? ` ×${n}` : ''}`.toUpperCase();
     return { text, kind: 'item', leader: true, pw: pillWidth(text, false) };
   };
   const moreRow = (n: number): Row => {
@@ -1216,14 +1270,14 @@ function producerLabels(
       if (z.feature || z.points.length < 3) continue;
       const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
-      const text = `${z.zone}️⃣ ${ZONE_DEFS[z.zone].label}`.toUpperCase();
+      const text = `${includeToolGlyphs ? `${z.zone}️⃣ ` : `ZONE ${z.zone} — `}${ZONE_DEFS[z.zone].label}`.toUpperCase();
       blocks.push({ cx, cy, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
     }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
   if (refLayers.driveway.length >= 2) {
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
-    const text = '🚗 DRIVEWAY';
+    const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
     blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
   }
 
@@ -1358,7 +1412,13 @@ function buildZoneOverlay(
 // also carries earthworks now, and the protect mask, legend and burned-on labels all use
 // itemInFilter. A literal here would burn a tree basin's LABEL onto the sheet while leaving its
 // marker to be painted over by the model — a pill pointing at nothing.
-function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: number, H: number): string | undefined {
+function buildWaterOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+  includeToolGlyphs = true,
+): string | undefined {
   const items = state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
     return !!def && itemInFilter(def.category, 'water');
@@ -1400,7 +1460,9 @@ function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: numb
     ctx.setLineDash([]);
   }
 
-  // Tanks / taps / ponds — blue markers sized to their footprint, with the element icon on top.
+  // Tanks / taps / ponds — exact, footprint-sized cartographic marks. Locked outputs deliberately
+  // omit the palette emoji: labels and the deterministic legend identify each mark without leaking
+  // editor UI into the finished plan.
   for (const it of items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
@@ -1426,10 +1488,12 @@ function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: numb
       ctx.fill();
       ctx.stroke();
     }
-    ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(def.icon, cx, cy);
+    if (includeToolGlyphs) {
+      ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(def.icon, cx, cy);
+    }
   }
   return canvas.toDataURL('image/png');
 }
@@ -1453,15 +1517,14 @@ async function buildHouseOverlay(sourceImage: string, refLayers: DesignGlossyPro
   ctx.clip();
   ctx.drawImage(img, 0, 0, W, H);
   ctx.restore();
+  // A single fine line records the traced footprint without visually widening or double-roofing
+  // it. The old white casing extended several pixels beyond the polygon and read as deformation.
   ctx.beginPath();
   refLayers.house.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
   ctx.closePath();
   ctx.lineJoin = 'round';
-  ctx.strokeStyle = 'rgba(255,255,255,0.92)';
-  ctx.lineWidth = Math.max(5, W * 0.0035);
-  ctx.stroke();
   ctx.strokeStyle = 'rgba(45,43,38,0.9)';
-  ctx.lineWidth = Math.max(2, W * 0.0016);
+  ctx.lineWidth = Math.max(2, W * 0.0012);
   ctx.stroke();
   return canvas.toDataURL('image/png');
 }
@@ -3217,6 +3280,7 @@ function sheetLegendRows(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
+  includeToolGlyphs = true,
 ): Array<{ swatch: string; icon?: string; text: string }> {
   const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
   if (zonesInFilter(filter)) {
@@ -3238,7 +3302,13 @@ function sheetLegendRows(
     g.n += 1;
     groups.set(name, g);
   }
-  for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
+  for (const [name, g] of groups) {
+    rows.push({
+      swatch: g.color,
+      ...(includeToolGlyphs ? { icon: g.icon } : {}),
+      text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+    });
+  }
   const kinds = new Set<string>();
   for (const l of state.lines) {
     if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
@@ -3262,6 +3332,7 @@ async function composeStyleSheet(
   placeName: string | undefined,
   styleLabel: string,
   layerLabel: string,
+  includeToolGlyphs = true,
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -3308,7 +3379,7 @@ async function composeStyleSheet(
   ctx.font = `800 ${Math.round(legendW * 0.05)}px system-ui, sans-serif`;
   ctx.fillText('LEGEND', lx, y);
 
-  const rows = sheetLegendRows(state, refLayers, filter);
+  const rows = sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const rowH = Math.round(legendW * 0.072);
   const fs = Math.round(legendW * 0.042);
   const sw = Math.round(rowH * 0.42);
@@ -3767,9 +3838,16 @@ export default function DesignGlossy({
       // so "Zones + Homestead Storybook" illustrates just the zones in that style.
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? 'Full design';
       // a. Model input — the composite for the chosen layer.
-      const composite = await buildComposite(state, frame, refLayers, filter);
+      const composite = await buildComposite(
+        state,
+        frame,
+        refLayers,
+        filter,
+        true,
+        geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+      );
       // b. Short comma list of placed elements + counts (this layer only).
-      const elementsText = producerElementsText(state, refLayers, filter);
+      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
       // b2. The WHOLE design as text — deliberately NOT filtered by `filter`, so every layer's
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -3821,17 +3899,19 @@ export default function DesignGlossy({
           ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined;
       // e. True labels (one pill per element-name group at its centroid) — this layer only.
-      const labels = producerLabels(state, refLayers, W, H, filter);
+      const labels = producerLabels(state, refLayers, W, H, filter, !geometryLock);
       // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
       //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
       const overlayImage =
         filter === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : filter === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : filter === 'water' ? buildWaterOverlay(state, frame, W, H, !geometryLock)
         : undefined;
       const houseOverlay = geometryLock
-        ? await buildHouseOverlay(composite, refLayers, W, H)
+        ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
         : undefined;
-      const mergedOverlay = await stackOverlayImages(overlayImage, houseOverlay, W, H);
+      const mergedOverlay = filter === 'water' && geometryLock
+        ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, houseOverlay, W, H);
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
         modelImage: protectMaskDataUrl
@@ -3849,7 +3929,17 @@ export default function DesignGlossy({
       });
       // g. Sheet chrome — titled legend panel + scale bar + north arrow, so the Style render comes
       //    out as a proper plan sheet (see docs/PLAN-SET-SPEC.md), not a bare picture.
-      const sheet = await composeStyleSheet(final, state, frame, refLayers, filter, placeName, styleDef.label, layerLabel);
+      const sheet = await composeStyleSheet(
+        final,
+        state,
+        frame,
+        refLayers,
+        filter,
+        placeName,
+        styleDef.label,
+        layerLabel,
+        !geometryLock,
+      );
       // h. Show, cache (mapKey = producer:<style>) and add to the session gallery.
       setResultImage(sheet);
       const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
@@ -4077,8 +4167,15 @@ export default function DesignGlossy({
       for (const f of order) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const composite = await buildComposite(state, frame, refLayers, f);
-        const elementsText = producerElementsText(state, refLayers, f);
+        const composite = await buildComposite(
+          state,
+          frame,
+          refLayers,
+          f,
+          true,
+          geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+        );
+        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
         let modelImage: string;
         {
@@ -4096,15 +4193,17 @@ export default function DesignGlossy({
           }
         }
         const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-        const labels = producerLabels(state, refLayers, W, H, f);
+        const labels = producerLabels(state, refLayers, W, H, f, !geometryLock);
         const overlayImage =
           f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-          : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+          : f === 'water' ? buildWaterOverlay(state, frame, W, H, !geometryLock)
           : undefined;
         const houseOverlay = geometryLock
-          ? await buildHouseOverlay(composite, refLayers, W, H)
+          ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
           : undefined;
-        const mergedOverlay = await stackOverlayImages(overlayImage, houseOverlay, W, H);
+        const mergedOverlay = f === 'water' && geometryLock
+          ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
+          : await stackOverlayImages(overlayImage, houseOverlay, W, H);
         const protectMaskDataUrl = geometryLock
           ? await buildProtectMask(state, frame, refLayers, f)
           : undefined;
@@ -4120,7 +4219,17 @@ export default function DesignGlossy({
           width: W,
           height: H,
         });
-        const sheet = await composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+        const sheet = await composeStyleSheet(
+          final,
+          state,
+          frame,
+          refLayers,
+          f,
+          placeName,
+          styleDef.label,
+          layerLabel,
+          !geometryLock,
+        );
         try {
           saveGlossy(state.siteId, `producer:${styleKey}:${f}`, {
             image: sheet,
@@ -4177,7 +4286,7 @@ export default function DesignGlossy({
         ? await restoreProtectedPixels(sourceImage, modelImage, protectMask)
         : modelImage;
       const houseOverlay = locked && sourceImage
-        ? await buildHouseOverlay(sourceImage, refLayers, W, H)
+        ? await buildHouseOverlay(frame.satDataUrl ?? sourceImage, refLayers, W, H)
         : undefined;
       if (showcase) {
         const showcaseOverlay = await stackOverlayImages(undefined, houseOverlay, W, H);
@@ -4193,12 +4302,14 @@ export default function DesignGlossy({
         });
       }
       const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-      const labels = producerLabels(state, refLayers, W, H, f);
+      const labels = producerLabels(state, refLayers, W, H, f, !locked);
       const overlayImage =
         f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : f === 'water' ? buildWaterOverlay(state, frame, W, H, !locked)
         : undefined;
-      const mergedOverlay = await stackOverlayImages(overlayImage, houseOverlay, W, H);
+      const mergedOverlay = f === 'water' && locked
+        ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, houseOverlay, W, H);
       const final = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: frame.satDataUrl ?? sourceImage ?? modelImage,
@@ -4209,7 +4320,17 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
-      return composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+      return composeStyleSheet(
+        final,
+        state,
+        frame,
+        refLayers,
+        f,
+        placeName,
+        styleDef.label,
+        layerLabel,
+        !locked,
+      );
     },
     [state, frame, refLayers, placeName],
   );
@@ -4245,8 +4366,15 @@ export default function DesignGlossy({
       const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; protectMaskDataUrl?: string; showcase?: boolean; geometryLock?: boolean }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
-        const composite = await buildComposite(state, frame, refLayers, f);
-        const elementsText = producerElementsText(state, refLayers, f);
+        const composite = await buildComposite(
+          state,
+          frame,
+          refLayers,
+          f,
+          true,
+          geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+        );
+        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         const protectMaskDataUrl = geometryLock
           ? await buildProtectMask(state, frame, refLayers, f, { protectOutside: true })
@@ -4311,8 +4439,15 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      const composite = await buildComposite(state, frame, refLayers, filter);
-      const elementsText = producerElementsText(state, refLayers, filter);
+      const composite = await buildComposite(
+        state,
+        frame,
+        refLayers,
+        filter,
+        true,
+        geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+      );
+      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
       // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
