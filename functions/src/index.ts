@@ -18,6 +18,8 @@
 //   `firebase functions:secrets:set OPENAI_API_KEY` · create app_config/renders = { enabled: true }.
 
 import { randomUUID } from 'crypto';
+import { readFile } from 'fs/promises';
+import { resolve } from 'path';
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { defineSecret } from 'firebase-functions/params';
@@ -57,6 +59,19 @@ const PROMPT_MAX = 12000;
 const ATTEMPT_TIMEOUT_MS = 150_000; // per OpenAI attempt — 3 fit inside the job budget below
 const JOB_DEADLINE_MS = 500_000; // < the 540s function budget, so the finally always runs
 const STALE_JOB_MS = 20 * 60 * 1000;
+const PRECISION_ATLAS_REFERENCE_PATH = resolve(__dirname, '../assets/precision-atlas-style-reference.jpg');
+
+let precisionAtlasReferencePromise: Promise<Buffer | null> | null = null;
+
+function loadPrecisionAtlasReference(): Promise<Buffer | null> {
+  if (!precisionAtlasReferencePromise) {
+    precisionAtlasReferencePromise = readFile(PRECISION_ATLAS_REFERENCE_PATH).catch((error) => {
+      logger.warn('Precision Atlas style reference unavailable; using the normal single-image path.', error);
+      return null;
+    });
+  }
+  return precisionAtlasReferencePromise;
+}
 
 // concurrency:1 — a long, memory-heavy job per instance; the Cloud Run default of 80 would let one
 // instance accept 80 nine-minute jobs (OOM) and make maxInstances meaningless. With 1, maxInstances
@@ -126,7 +141,14 @@ function pickSize(dims: { w: number; h: number } | null): string {
 
 // One OpenAI image edit — the only slow, network-bound step. AbortController caps a hung socket;
 // 429s honour Retry-After; 5xx/network get a couple of quick retries.
-async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64?: string, attempt = 0): Promise<string> {
+async function openaiEdit(
+  key: string,
+  imageB64: string,
+  prompt: string,
+  maskB64?: string,
+  styleReference?: Buffer | null,
+  attempt = 0,
+): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
   let res: Response;
@@ -134,7 +156,15 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64
     const buf = Buffer.from(imageB64, 'base64');
     const form = new FormData();
     form.append('model', MODEL);
-    form.append('prompt', prompt);
+    form.append('prompt', styleReference
+      ? [
+          'IMAGE ROLES:',
+          'Image 1 is the only source of site content, geometry, framing and feature placement.',
+          'Image 2 is an appearance-only style swatch. Apply Image 2\'s painterly palette, material rendering, ground texture and tonal separation to the editable pixels of Image 1.',
+          'Copy no geometry, roof outline, object, planting, route, marker, writing, label, arrow or layout from Image 2.',
+          prompt,
+        ].join('\n\n')
+      : prompt);
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
     form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
@@ -143,6 +173,9 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
     // extensions), but the actual bytes are PNG; label the Blob correctly for OpenAI.
     form.append('image[]', new Blob([buf], { type: 'image/png' }), 'composite.png');
+    if (styleReference) {
+      form.append('image[]', new Blob([styleReference], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
+    }
     if (maskB64) {
       const maskBuf = Buffer.from(maskB64, 'base64');
       form.append('mask', new Blob([maskBuf], { type: 'image/png' }), 'mask.png');
@@ -157,7 +190,7 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
+      return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
     }
     throw new Error(`network/abort: ${String(e)}`);
   }
@@ -167,11 +200,11 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64
     const ra = Number(res.headers.get('retry-after'));
     const wait = Number.isFinite(ra) && ra > 0 ? ra * 1000 : 30_000 + Math.floor(Math.random() * 15_000);
     await sleep(wait);
-    return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
@@ -293,7 +326,13 @@ export const runRenderJob = onDocumentCreated(
               const maskBuf = (await bucket.file(sheet.protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
               if (maskBuf.length) maskB64 = maskBuf.toString('base64');
             }
-            const outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64);
+            // Precision Atlas is the reversible, reference-guided path. It is active only when
+            // both the style and Geometry Lock were selected for this sheet; every other style,
+            // and Geometry Lock Off, keeps the existing single-input workflow byte-for-byte.
+            const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true
+              ? await loadPrecisionAtlasReference()
+              : null;
+            const outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference);
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
             // firebaseStorageDownloadTokens: without it, a client getDownloadURL() on an Admin-SDK
             // upload fails and the browser can never pull the finished sheet back (job says "done"

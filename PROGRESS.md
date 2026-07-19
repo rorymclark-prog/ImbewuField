@@ -47,6 +47,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-19 (production Geometry Lock quality audit + reversible style reference)
+- Verified Geometry Lock against the real saved **Carl and Sandys Place / Water** sheet on the
+  production domain. The exact house, driveway, boundary, labels and tool-glyph cleanup improved,
+  but the first production result was still too dark, photographic and visually flat compared with
+  Rory's direct ChatGPT map set. Do not use the earlier local comparison as a quality claim.
+- Added an appearance-only reference image cropped from Rory's direct ChatGPT planting map. The
+  worker sends it as Image 2 only for **Precision Atlas + Geometry Lock On**; Image 1 remains the
+  sole source of geometry and content. Other styles and Geometry Lock Off keep the existing
+  single-image workflow, so the experiment can be disconnected instantly.
+- Strengthened the deterministic Precision Atlas context palette without moving any pixels. The
+  house/driveway restore, water symbols, leaders, legend, boundary, north arrow and scale remain
+  browser-drawn from saved map data, not invented by the model.
+- Unit tests, TypeScript checks and both app/function builds pass locally. Final sign-off still
+  requires deploying `runRenderJob` after Firebase CLI reauthentication, deploying Vercel, using
+  the in-app **Refresh update** action, and inspecting a newly generated production Water sheet.
+
 ### 2026-07-18 (geometry lock toggle + reversible queue mask)
 - Added an opt-in **Geometry Lock** switch to the glossy gpt-image-2 queue path, so the strict
   render can send a protect mask only when requested and restore the protected source pixels after

@@ -71,10 +71,12 @@ export interface CompositeInputs {
 export function precisionAtlasContextPixels(pixels: Uint8ClampedArray): Uint8ClampedArray {
   if (pixels.length % 4 !== 0) throw new Error('context treatment: expected RGBA pixels');
   const out = new Uint8ClampedArray(pixels.length);
-  const saturation = 0.54;
-  const contrast = 0.88;
-  const warmMix = 0.08;
-  const parchment = [238, 231, 211] as const;
+  const saturation = 0.82;
+  const contrast = 0.96;
+  const forestMix = 0.1;
+  const warmMix = 0.025;
+  const forest = [54, 78, 57] as const;
+  const parchment = [226, 218, 194] as const;
 
   for (let i = 0; i < pixels.length; i += 4) {
     const r = pixels[i];
@@ -84,8 +86,12 @@ export function precisionAtlasContextPixels(pixels: Uint8ClampedArray): Uint8Cla
     const channels = [r, g, b];
     for (let channel = 0; channel < 3; channel++) {
       const desaturated = luma + (channels[channel] - luma) * saturation;
-      const lifted = (desaturated - 128) * contrast + 146;
-      out[i + channel] = Math.round(lifted * (1 - warmMix) + parchment[channel] * warmMix);
+      const lifted = (desaturated - 128) * contrast + 134;
+      out[i + channel] = Math.round(
+        lifted * (1 - forestMix - warmMix)
+        + forest[channel] * forestMix
+        + parchment[channel] * warmMix,
+      );
     }
     out[i + 3] = pixels[i + 3];
   }
