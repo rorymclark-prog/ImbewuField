@@ -474,7 +474,7 @@ function buildStrictMapTouchupPrompt(basePrompt: string, ctx: RenderContext): st
     'BASE INSTRUCTION',
     basePrompt.trim(),
     'FINAL RULE — GEOMETRY LOCK',
-    'If anything above could be read as permission to redraw, move, resize or restyle a drawn feature, it is not. The farmer-drawn geometry in the source image is final. Repaint the background only, and return the image at the same framing as the source.',
+    'If anything above could be read as permission to redraw, move, resize or restyle a drawn feature, it is not. The farmer-drawn geometry in the source image is final. Repaint the background only, keep the same framing and aspect as the source, and leave every locked pixel in place.',
   ]
     .filter(Boolean)
     .join('\n\n');

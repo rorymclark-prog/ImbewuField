@@ -68,6 +68,7 @@ interface RenderSheet {
   label: string;
   prompt: string;
   inputPath: string;
+  protectMaskPath?: string;
   status: 'queued' | 'running' | 'done' | 'error';
   outputPath?: string;
   error?: string;
@@ -123,7 +124,7 @@ function pickSize(dims: { w: number; h: number } | null): string {
 
 // One OpenAI image edit — the only slow, network-bound step. AbortController caps a hung socket;
 // 429s honour Retry-After; 5xx/network get a couple of quick retries.
-async function openaiEdit(key: string, imageB64: string, prompt: string, attempt = 0): Promise<string> {
+async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64?: string, attempt = 0): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
   let res: Response;
@@ -135,12 +136,16 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, attempt
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
     form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
+    form.append('input_fidelity', 'high'); // keep the source composite and mask as faithful as the API allows
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
-    // NOTE: no input_fidelity — gpt-image-2 always processes inputs at high fidelity; the API ignores/rejects it.
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
     // extensions), but the actual bytes are PNG; label the Blob correctly for OpenAI.
     form.append('image[]', new Blob([buf], { type: 'image/png' }), 'composite.png');
+    if (maskB64) {
+      const maskBuf = Buffer.from(maskB64, 'base64');
+      form.append('mask', new Blob([maskBuf], { type: 'image/png' }), 'mask.png');
+    }
     res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}` },
@@ -151,7 +156,7 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, attempt
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return openaiEdit(key, imageB64, prompt, attempt + 1);
+      return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
     }
     throw new Error(`network/abort: ${String(e)}`);
   }
@@ -161,11 +166,11 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, attempt
     const ra = Number(res.headers.get('retry-after'));
     const wait = Number.isFinite(ra) && ra > 0 ? ra * 1000 : 30_000 + Math.floor(Math.random() * 15_000);
     await sleep(wait);
-    return openaiEdit(key, imageB64, prompt, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return openaiEdit(key, imageB64, prompt, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, attempt + 1);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
@@ -282,7 +287,12 @@ export const runRenderJob = onDocumentCreated(
             const [buf] = await bucket.file(inputPath).download();
             const prompt = String(sheet.prompt ?? '').slice(0, PROMPT_MAX);
             if (!prompt) throw new Error('empty prompt');
-            const outB64 = await openaiEdit(key, buf.toString('base64'), prompt);
+            let maskB64: string | undefined;
+            if (sheet.protectMaskPath) {
+              const maskBuf = (await bucket.file(sheet.protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
+              if (maskBuf.length) maskB64 = maskBuf.toString('base64');
+            }
+            const outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64);
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
             // firebaseStorageDownloadTokens: without it, a client getDownloadURL() on an Admin-SDK
             // upload fails and the browser can never pull the finished sheet back (job says "done"

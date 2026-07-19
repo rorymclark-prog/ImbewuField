@@ -6,7 +6,7 @@
 // may only repaint background texture — never move, add, or remove anything the farmer
 // placed.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } from 'lucide-react';
 
 import polygonClipping from 'polygon-clipping';
@@ -16,7 +16,7 @@ import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
-import { compositeAccurateMap, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
@@ -359,6 +359,8 @@ export interface DesignGlossyProps {
   // can read real slope + climate; still structurally assignable to buildPhasePlan's PhasingSite.
   site: SectorSite | null;
   placeName?: string;
+  geometryLock?: boolean;
+  onGeometryLockChange?: Dispatch<SetStateAction<boolean>>;
   // Seed the layer selector (e.g. a per-step "Preview this map" opener). Defaults to 'all'.
   initialFilter?: GlossyLayerFilter;
 }
@@ -590,6 +592,8 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   canvas.height = imgH;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
 
   // Fully transparent = editable everywhere, by default.
   ctx.clearRect(0, 0, imgW, imgH);
@@ -3278,7 +3282,16 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
   exact: 'Exact map · no AI',
 };
 
-export default function DesignGlossy({ state, frame, refLayers, site, placeName, initialFilter }: DesignGlossyProps) {
+export default function DesignGlossy({
+  state,
+  frame,
+  refLayers,
+  site,
+  placeName,
+  geometryLock: geometryLockProp,
+  onGeometryLockChange,
+  initialFilter,
+}: DesignGlossyProps) {
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
@@ -3292,6 +3305,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // sheet (any layer, Zones included), via the background queue. See buildShowcasePrompt +
   // finishStyledSheet (showcase branch skips the clip/burn). The ALL button still showcases 'all' only.
   const [modelChrome, setModelChrome] = useState(true); // ON by default (Rory) — the showcase look IS the product
+  // Geometry Lock — when ON, the strict queue path sends a protect mask to gpt-image-2 and the
+  // finisher restores the protected source pixels before compositing the deterministic sheet chrome.
+  const [geometryLockInternal, setGeometryLockInternal] = useState(false); // OFF by default to preserve the current path
+  const geometryLock = geometryLockProp ?? geometryLockInternal;
+  const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
   const showcaseKeysRef = useRef<Set<string>>(new Set());
@@ -3860,7 +3878,14 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
   // construction. SHOWCASE: the model drew its own legend + labels, so keep its whole output (no
   // clip, no burned labels, no chrome), with only the transparency backstop.
   const finishStyledSheet = useCallback(
-    async (modelImage: string, f: GlossyLayerFilter, styleDef: { label: string; labelStyle: LabelStyle }, showcase = false): Promise<string> => {
+    async (
+      modelImage: string,
+      f: GlossyLayerFilter,
+      styleDef: { label: string; labelStyle: LabelStyle },
+      showcase = false,
+      sourceImage?: string,
+      protectMask?: string,
+    ): Promise<string> => {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
@@ -3876,6 +3901,9 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
           height: H,
         });
       }
+      const restoredImage = protectMask && sourceImage
+        ? await restoreProtectedPixels(sourceImage, modelImage, protectMask)
+        : modelImage;
       const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
       const labels = producerLabels(state, refLayers, W, H, f);
       const overlayImage =
@@ -3883,8 +3911,8 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         : f === 'water' ? buildWaterOverlay(state, frame, W, H)
         : undefined;
       const final = await compositeAccurateMap({
-        modelImage,
-        satelliteImage: frame.satDataUrl ?? modelImage,
+        modelImage: restoredImage,
+        satelliteImage: frame.satDataUrl ?? sourceImage ?? modelImage,
         boundaryPx,
         overlayImage,
         labels,
@@ -3925,16 +3953,19 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
         ? ['all', 'zones', 'water', 'planting', 'structures']
         : ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
-      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; showcase?: boolean }>;
+      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; protectMaskDataUrl?: string; showcase?: boolean }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const composite = await buildComposite(state, frame, refLayers, f);
         const elementsText = producerElementsText(state, refLayers, f);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const prompt = modelChrome
-          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
-          : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
-        sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, showcase: modelChrome });
+      const protectMaskDataUrl = !modelChrome && geometryLock
+          ? await buildProtectMask(state, frame, refLayers, f)
+          : undefined;
+      const prompt = modelChrome
+        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
+        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
+      sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: modelChrome });
       }
       // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
       // softens exactly those (no boundary clip / burned labels over the model's own chrome).
@@ -3956,7 +3987,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome, geometryLock]);
 
   // Single-sheet gpt-image-2 via the SAME background queue as "AI · ALL" (direct OpenAI). This is
   // what the per-sheet "Generate my … Blueprint" button routes to when gpt-image-2 is selected —
@@ -3989,15 +4020,18 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = modelChrome;
+      const protectMaskDataUrl = !useShowcase && geometryLock
+        ? await buildProtectMask(state, frame, refLayers, filter)
+        : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = useShowcase
         ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
-        : buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief);
+        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
         engine: 'openai',
-        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite, showcase: useShowcase }],
+        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: useShowcase }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
@@ -4006,7 +4040,7 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, filter, modelChrome]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, modelChrome, geometryLock]);
 
   // Refs so the subscription effect below doesn't re-subscribe on every design edit.
   const finishRef = useRef(finishStyledSheet);
@@ -4035,7 +4069,11 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
             try {
               const raw = await fetchRenderOutput(sheet.outputPath);
               const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
-              const finalSheet = styleDef ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase) : raw;
+              const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
+              const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              const finalSheet = styleDef
+                ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask)
+                : raw;
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() }); } catch { /* cache full */ }
               pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}`, finalSheet);
             } catch (e) {
@@ -4438,6 +4476,36 @@ export default function DesignGlossy({ state, frame, refLayers, site, placeName,
                   })}
                 </div>
               </div>
+              )}
+
+              {engine === 'falgpt' && (
+                <button
+                  type="button"
+                  onClick={() => setGeometryLock((v) => !v)}
+                  disabled={loading !== null}
+                  aria-pressed={geometryLock}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    alignSelf: 'flex-start',
+                    minHeight: 40,
+                    padding: '8px 14px',
+                    borderRadius: 12,
+                    border: geometryLock ? `2px solid ${GREEN}` : '2px dashed rgba(31,77,43,0.45)',
+                    background: geometryLock ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
+                    color: DARK,
+                    fontWeight: 700,
+                    fontSize: 12.5,
+                    cursor: loading !== null ? 'default' : 'pointer',
+                    textAlign: 'left',
+                    opacity: loading !== null ? 0.6 : 1,
+                  }}
+                  title="Strict queue path only. Keeps the traced geometry locked and restores the protected pixels after the model returns."
+                >
+                  <span>{geometryLock ? '☑' : '☐'}</span>
+                  🔒 Geometry Lock {geometryLock ? 'On' : 'Off'}
+                </button>
               )}
 
               {/* AI-legend experiment — gpt-image-2 renders the whole frame with its OWN legend

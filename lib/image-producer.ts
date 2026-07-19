@@ -124,6 +124,87 @@ function loadImage(input: ImageInput): Promise<HTMLImageElement> {
 }
 
 /**
+ * Merge a model output with its original source pixels using an RGBA mask.
+ *
+ * Mask alpha = 0 means "keep the model pixel"; alpha = 255 means "restore the
+ * original source pixel". Partial alpha blends proportionally so anti-aliased
+ * edges stay soft.
+ */
+export function blendProtectedPixels(
+  sourcePixels: Uint8ClampedArray,
+  modelPixels: Uint8ClampedArray,
+  maskPixels: Uint8ClampedArray,
+): Uint8ClampedArray {
+  if (sourcePixels.length !== modelPixels.length || modelPixels.length !== maskPixels.length) {
+    throw new Error('restore: image buffers must have the same size');
+  }
+
+  const out = new Uint8ClampedArray(modelPixels.length);
+  for (let i = 0; i < modelPixels.length; i += 4) {
+    const alpha = Math.max(0, Math.min(1, (maskPixels[i + 3] ?? 0) / 255));
+    if (alpha <= 0) {
+      out[i] = modelPixels[i];
+      out[i + 1] = modelPixels[i + 1];
+      out[i + 2] = modelPixels[i + 2];
+      out[i + 3] = modelPixels[i + 3];
+      continue;
+    }
+    if (alpha >= 1) {
+      out[i] = sourcePixels[i];
+      out[i + 1] = sourcePixels[i + 1];
+      out[i + 2] = sourcePixels[i + 2];
+      out[i + 3] = sourcePixels[i + 3];
+      continue;
+    }
+    out[i] = Math.round(sourcePixels[i] * alpha + modelPixels[i] * (1 - alpha));
+    out[i + 1] = Math.round(sourcePixels[i + 1] * alpha + modelPixels[i + 1] * (1 - alpha));
+    out[i + 2] = Math.round(sourcePixels[i + 2] * alpha + modelPixels[i + 2] * (1 - alpha));
+    out[i + 3] = Math.round(sourcePixels[i + 3] * alpha + modelPixels[i + 3] * (1 - alpha));
+  }
+  return out;
+}
+
+/** Restore source pixels wherever the mask is opaque, then return a PNG data URL. */
+export async function restoreProtectedPixels(
+  sourceImage: ImageInput,
+  modelImage: ImageInput,
+  maskImage: ImageInput,
+): Promise<string> {
+  const [source, model, mask] = await Promise.all([
+    loadImage(sourceImage),
+    loadImage(modelImage),
+    loadImage(maskImage),
+  ]);
+
+  const width = model.naturalWidth || model.width;
+  const height = model.naturalHeight || model.height;
+  const drawToCanvas = (img: HTMLImageElement) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('restore: 2D context unavailable');
+    ctx.drawImage(img, 0, 0, width, height);
+    return ctx.getImageData(0, 0, width, height).data;
+  };
+
+  const sourcePixels = drawToCanvas(source);
+  const modelPixels = drawToCanvas(model);
+  const maskPixels = drawToCanvas(mask);
+  const blended = blendProtectedPixels(sourcePixels, modelPixels, maskPixels);
+
+  const outCanvas = document.createElement('canvas');
+  outCanvas.width = width;
+  outCanvas.height = height;
+  const outCtx = outCanvas.getContext('2d');
+  if (!outCtx) throw new Error('restore: 2D context unavailable');
+  const imageData = outCtx.createImageData(width, height);
+  imageData.data.set(blended);
+  outCtx.putImageData(imageData, 0, 0);
+  return outCanvas.toDataURL('image/png');
+}
+
+/**
  * Detect a FAILED render: the model "blanking" the plot to white/cream/paper
  * instead of painting it. Returns the fraction of pixels inside the boundary
  * (or the whole frame if none) that are near-white. Callers treat > ~0.6 as a
