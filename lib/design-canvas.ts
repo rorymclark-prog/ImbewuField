@@ -84,6 +84,18 @@ export interface DesignCanvasState {
   rev?: number;
 }
 
+/**
+ * Cloud sync owns design content, but the open tab owns where its user is currently working.
+ * A remote winner may therefore replace every authored field while retaining local navigation.
+ */
+export function preserveCanvasNavigation(
+  incoming: DesignCanvasState,
+  current: DesignCanvasState | null | undefined,
+): DesignCanvasState {
+  if (!current || current.siteId !== incoming.siteId || current.step === incoming.step) return incoming;
+  return { ...incoming, step: current.step };
+}
+
 /** Reads a state's rev defensively: missing (pre-rev states) or corrupt (hand-edited/truncated
  *  localStorage blob) both read as 0 rather than throwing or poisoning comparisons with NaN.
  *  Single source of truth for the "missing rev = 0" rule — sync imports this too. */

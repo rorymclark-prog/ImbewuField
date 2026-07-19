@@ -20,6 +20,7 @@ import {
   applyRemoteCanvasState,
   contentCountOf,
   loadCanvasState,
+  preserveCanvasNavigation,
   revOf,
   type DesignCanvasState,
 } from './design-canvas';
@@ -131,8 +132,11 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
         tx.set(ref, { designCanvasJson: JSON.stringify(mergedStore), updatedAt: serverTimestamp() });
       }
     });
-    if (winner && winner !== local) applyRemoteCanvasState(winner);
-    return winner;
+    const displayedWinner = winner && winner !== local
+      ? preserveCanvasNavigation(winner, local)
+      : winner;
+    if (displayedWinner && displayedWinner !== local) applyRemoteCanvasState(displayedWinner);
+    return displayedWinner;
   } catch (e) {
     console.error('[design-canvas-sync] reconcile', e);
     return local;
@@ -191,7 +195,7 @@ export function subscribeDesignCanvasLive(siteId: string): () => void {
       // reach a starved device whose stale local was restamped NOW) and could destroy (an empty
       // but newer remote overwrote a populated local).
       if (local && pickWinner(local, remoteEntry) !== remoteEntry) return;
-      applyRemoteCanvasState(remoteEntry);
+      applyRemoteCanvasState(preserveCanvasNavigation(remoteEntry, local));
     },
     (e) => console.error('[design-canvas-sync] listener', e),
   );

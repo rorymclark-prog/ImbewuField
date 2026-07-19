@@ -30,6 +30,7 @@ import {
   loadCanvasState,
   projectorForFrame,
   saveCanvasNavigation,
+  preserveCanvasNavigation,
   saveCanvasState,
   CanvasSaveError,
   migrateStateToFrame,
@@ -798,7 +799,10 @@ function DesignStudioInner() {
           // The winner was fitted to whatever frame its own device computed. Re-normalise it into
           // the frame THIS page is rendering, or the geometry lands in the wrong place. No-ops
           // (returns `winner` unchanged) when the frames match, which is the common case.
-          return migrateStateToFrame(winner, prev.frame, projectorForFrame(prev.frame));
+          return preserveCanvasNavigation(
+            migrateStateToFrame(winner, prev.frame, projectorForFrame(prev.frame)),
+            prev,
+          );
         });
       })
       .catch(() => {})

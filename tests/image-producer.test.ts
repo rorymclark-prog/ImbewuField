@@ -4,9 +4,23 @@ import assert from 'node:assert/strict';
 import { blendProtectedPixels, countProtectedPixelMismatches, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
+import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
+}
+
+function canvasState(step: DesignCanvasState['step'], rev: number): DesignCanvasState {
+  return {
+    siteId: 'site-1',
+    frame: { centerLng: 30, centerLat: -29, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.4 },
+    step,
+    items: [],
+    zones: [],
+    lines: [],
+    rev,
+    updatedAt: '2026-07-19T00:00:00.000Z',
+  };
 }
 
 test('blendProtectedPixels keeps the model output where the mask is transparent', () => {
@@ -68,6 +82,18 @@ test('geometry lock always overrides free-form model chrome', () => {
   assert.equal(shouldUseModelChrome(false, true), false);
   assert.equal(shouldUseModelChrome(true, false), true);
   assert.equal(shouldUseModelChrome(false, false), false);
+});
+
+test('remote design content cannot force the open tab back to a stale wizard step', () => {
+  const local = canvasState('water', 2);
+  const remote = { ...canvasState('planting', 5), items: [{ id: 'tank', defId: 'jojo_5000l', x: 0.4, y: 0.3 }] };
+
+  const merged = preserveCanvasNavigation(remote, local);
+
+  assert.equal(merged.step, 'water');
+  assert.equal(merged.rev, 5);
+  assert.equal(merged.items.length, 1);
+  assert.equal(remote.step, 'planting');
 });
 
 test('Precision Atlas context treatment lightens and calms satellite pixels without moving data', () => {
