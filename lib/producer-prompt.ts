@@ -2,7 +2,13 @@
 // Gemini path) and the CLIENT (which builds the prompt to hand to the background render queue, see
 // lib/render-jobs.ts + functions/) use the identical prompt. Pure function, no server deps.
 
-export type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk' | 'chatgpt_atlas';
+export type StylePreset =
+  | 'precision_atlas'
+  | 'field_ledger'
+  | 'homestead_storybook'
+  | 'extension_blueprint'
+  | 'karoo_folk'
+  | 'chatgpt_atlas';
 
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
@@ -34,14 +40,13 @@ export function buildLockedBackgroundPrompt(
   const layer = layerLabel.toUpperCase();
   return [
     STYLE_LINES[stylePreset],
-    `TASK: create the polished background artwork for a ${layer} plan by editing only the open ground in this source image.`,
-    `INPUT CONTRACT: the source contains the exact property boundary, roof and driveway. The design infrastructure is intentionally absent because the app will draw it deterministically after this artwork pass.`,
-    `VIEW: flat orthographic top-down plan only. Preserve north-up orientation. No oblique shot, perspective tilt, 3D camera, horizon or isometric view.`,
-    `FRAMING: keep exactly the source crop, scale, aspect ratio and camera position. Do not rotate, zoom, shrink, crop, recenter or reframe the property.`,
-    `GROUND ART: give the editable lawn, veld and soil a refined hand-painted cartographic texture with restrained cool blue-green undertones, subtle tonal variation and crisp contrast around the existing roof and driveway. Keep open ground open.`,
-    `CLEAN ARTWORK: draw background terrain only. Add no objects, infrastructure, decorative icons, callouts, writing, title, legend, panel, border, compass, scale bar or symbols.`,
-    `STRUCTURAL TRUTH: preserve the visible roof and driveway as complete flat top-down shapes. Do not reinterpret, extend, split, duplicate or decorate them.`,
-    `FINAL RULE: repaint only editable background pixels. The source geometry and framing are final.`,
+    `GOAL: make a complete, premium ${layer} map-art background. Change only the editable open-ground region; keep every protected source feature unchanged.`,
+    `FULL RESTYLE: visibly repaint every editable lawn, veld and soil pixel into rich hand-painted cartography. This must be a decisive illustration pass, not a faint tint, filter or lightly softened satellite photo. Leave no raw, dark or photographic satellite texture in the editable region.`,
+    `GROUND TREATMENT: use layered watercolor-and-gouache washes, fine dry-brush grain, varied sage and olive greens, warm buff soil, cool blue-green undertones and crisp tonal separation around protected roofs and access surfaces. Keep open ground open: texture the land continuously without inventing individual trees, beds, ponds, paths or structures.`,
+    `CHANGE/PRESERVE CONTRACT: change only the open ground. Preserve the exact property boundary, every complete roof and the complete driveway in their original pixels, shapes, positions and proportions. The design infrastructure is intentionally absent because the app draws it deterministically after this artwork pass.`,
+    `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, crop, recentering or reframing.`,
+    `BACKGROUND ONLY: add no objects or infrastructure and no decorative icons, map-tool symbols, emoji, pins, callouts, writing, title, legend, panel, border, compass, scale bar or labels.`,
+    `FINAL CHECK: the editable land is richly and fully illustrated; protected geometry is unchanged; nothing new has been added; the source framing is unchanged.`,
   ].join('\n\n');
 }
 
@@ -224,6 +229,8 @@ const PLAN_SET_ANCHOR =
 // blank white is exactly the satellite-disappears failure. Named colours (not just mood words) give
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
+  precision_atlas:
+    'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and parchment cream. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric.' + PLAN_SET_ANCHOR,
   field_ledger:
     'STYLE — Field Ledger: a hand-inked site plan — fine dark sepia pen linework over rich watercolour, warm credible surveyor character. Fixed palette: sage-green lawn, olive veld, warm buff soil, slate-grey roofs, muted terracotta accents, off-white paper panels. The ground is always painted as living land with visible lawn/veld/soil texture.' + PLAN_SET_ANCHOR,
   homestead_storybook:

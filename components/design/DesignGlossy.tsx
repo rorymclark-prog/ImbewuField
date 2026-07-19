@@ -203,7 +203,7 @@ const DESIGN_SHEETS: DesignSheet[] = [
   { no: '07', label: 'Whole', filter: 'all' },
   { no: '08', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
-const DEFAULT_PRODUCER_STYLE = 'extension_blueprint';
+const DEFAULT_PRODUCER_STYLE: StylePreset = 'precision_atlas';
 
 // Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
 // / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
@@ -228,9 +228,10 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // These render via app/api/image-producer + lib/image-producer's compositeAccurateMap:
 // the model beautifies the whole scene, then we deterministically composite (satellite
 // everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
-// so accuracy is guaranteed by construction. Five researched site-plan styles.
+// so accuracy is guaranteed by construction. Six researched site-plan styles.
 // swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
-const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelStyle: LabelStyle; swatch: string }> = [
+const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
+  { key: 'precision_atlas',      label: 'Precision Atlas',      blurb: 'lush ChatGPT look · lock-ready', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
@@ -3967,7 +3968,7 @@ export default function DesignGlossy({
   // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
   // image-producer pipeline (compositeAccurateMap). null = a design/analysis map. Defaults to a
   // style because AI is now the DEFAULT output (see `mode`); exact is the opt-in option.
-  const [producerStyle, setProducerStyle] = useState<string | null>(DEFAULT_PRODUCER_STYLE);
+  const [producerStyle, setProducerStyle] = useState<StylePreset | null>(DEFAULT_PRODUCER_STYLE);
   // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
   // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
@@ -4506,7 +4507,7 @@ export default function DesignGlossy({
     // Deliberately does NOT touch producerStyle/exactSheet: the batch passes styleKey explicitly,
     // and leaking it into the selection state flipped a user parked on an Exact sheet into AI
     // without them choosing it (audit find — "exact mode silently turns into an AI render").
-    const styleKey = producerStyle ?? 'extension_blueprint';
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
@@ -4698,7 +4699,7 @@ export default function DesignGlossy({
   // (Zones is satellite-only → produced exactly, here and now), then the subscription effect below
   // collects each finished sheet into the gallery as it lands.
   const generateAllViaQueue = useCallback(async () => {
-    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     // No selection side-effects here — the batch passes styleKey explicitly; leaking it into the
@@ -4788,7 +4789,7 @@ export default function DesignGlossy({
   // the gallery. Zones is never routed here (it's satellite-only → produced deterministically in
   // generateProducer), so `filter` is always a model layer.
   const generateOneViaQueue = useCallback(async () => {
-    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (layerContentCount(state, refLayers, filter) === 0) {
@@ -5097,7 +5098,7 @@ export default function DesignGlossy({
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
           Style {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
           {PRODUCER_STYLES.map((s) => {
             const active = producerStyle === s.key;
             return (
@@ -5109,7 +5110,7 @@ export default function DesignGlossy({
                 onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={s.blurb}
+                title={`${s.blurb}${s.recommended ? ' (recommended with Geometry Lock)' : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -5124,8 +5125,29 @@ export default function DesignGlossy({
                   fontSize: 11.5,
                   cursor: loading !== null ? 'default' : 'pointer',
                   opacity: loading !== null && !active ? 0.5 : 1,
+                  position: 'relative',
                 }}
               >
+                {s.recommended && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      zIndex: 1,
+                      top: 9,
+                      left: 9,
+                      padding: '2px 6px',
+                      borderRadius: 999,
+                      background: '#F8E0A2',
+                      color: '#3B3528',
+                      fontSize: 8,
+                      fontWeight: 900,
+                      letterSpacing: 0.35,
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Best with Lock
+                  </span>
+                )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
                 <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{s.blurb}</span>

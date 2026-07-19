@@ -99,18 +99,24 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
 });
 
 test('locked Water prompt delegates features and map furniture to deterministic drawing', () => {
-  const prompt = buildLockedBackgroundPrompt('Water', 'extension_blueprint');
+  const prompt = buildLockedBackgroundPrompt('Water', 'precision_atlas');
 
-  assert.ok(prompt.startsWith(STYLE_LINES.extension_blueprint));
-  assert.ok(prompt.includes('background artwork'));
+  assert.ok(prompt.startsWith(STYLE_LINES.precision_atlas));
+  assert.ok(prompt.includes('premium WATER map-art background'));
+  assert.ok(prompt.includes('visibly repaint every editable lawn, veld and soil pixel'));
+  assert.ok(prompt.includes('not a faint tint, filter or lightly softened satellite photo'));
+  assert.ok(prompt.includes('Leave no raw, dark or photographic satellite texture'));
   assert.ok(prompt.includes('design infrastructure is intentionally absent'));
-  assert.ok(prompt.includes('draw it deterministically after this artwork pass'));
-  assert.ok(prompt.includes('flat orthographic top-down plan only'));
-  assert.ok(prompt.includes('draw background terrain only'));
-  assert.ok(prompt.includes('Add no objects'));
+  assert.ok(prompt.includes('draws it deterministically after this artwork pass'));
+  assert.ok(prompt.includes('flat orthographic top-down'));
+  assert.ok(prompt.includes('add no objects or infrastructure'));
+  assert.ok(prompt.includes('map-tool symbols, emoji, pins'));
+  assert.ok(prompt.includes('protected geometry is unchanged'));
   assert.ok(!prompt.includes('JoJo'));
   assert.ok(!prompt.includes('Tap Point'));
   assert.ok(!prompt.includes('Small Pond'));
+  assert.ok(STYLE_LINES.precision_atlas.includes('never a dark satellite filter'));
+  assert.ok(STYLE_LINES.precision_atlas.includes('never oblique or isometric'));
   assert.ok(!STYLE_LINES.extension_blueprint.includes('slight isometric'));
 });
 
