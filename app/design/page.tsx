@@ -1121,12 +1121,12 @@ function DesignStudioInner() {
             Pro
           </span>
         </button>
-        {canvasState?.step === 'glossy' && (
+        {canvasState && (
           <button
             type="button"
             onClick={toggleGeometryLock}
             aria-pressed={geometryLock}
-            title="Strict glossy render only. Keeps the traced geometry locked and restores protected pixels after the model returns."
+            title="Strict glossy render. Keeps the traced geometry locked and restores protected pixels after the model returns."
             style={{
               display: 'inline-flex',
               alignItems: 'center',
