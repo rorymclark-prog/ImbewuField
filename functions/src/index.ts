@@ -72,6 +72,8 @@ interface RenderSheet {
   status: 'queued' | 'running' | 'done' | 'error';
   outputPath?: string;
   error?: string;
+  showcase?: boolean;
+  geometryLock?: boolean;
 }
 interface RenderJob {
   uid: string;
@@ -136,7 +138,6 @@ async function openaiEdit(key: string, imageB64: string, prompt: string, maskB64
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
     form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
-    form.append('input_fidelity', 'high'); // keep the source composite and mask as faithful as the API allows
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about

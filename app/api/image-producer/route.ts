@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buildProducerPrompt, STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
+import { buildProducerPrompt, buildProducerPromptLegacy, STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 
 // Strict single-purpose "restyle, never redesign" endpoint. The caller has already
 // composited the exact scene (satellite + placed elements + boundary) — this route
@@ -130,7 +130,7 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
     quality: 'high', // no 60s cap to fit under via the async queue — go for the best tier
     image_size: 'auto', // composite isn't square — let the model match the input aspect
     num_images: 1,
-    output_format: 'jpeg',
+    output_format: 'png',
   };
   // BYOK (bring-your-own-key): fal's HOSTED gpt-image-2 bills fal credits, and a fal account with
   // no balance/billing returns 403 Forbidden on submit (that's the "fal.ai submit error 403" the
@@ -185,6 +185,7 @@ export async function POST(req: NextRequest) {
     mapKind?: 'base' | 'full';
     retry?: boolean;
     engine?: 'gemini' | 'openai';
+    promptVariant?: 'rewrite' | 'legacy';
   };
   try {
     body = await req.json();
@@ -206,7 +207,10 @@ export async function POST(req: NextRequest) {
   // brief would push the real drawing rules out of the model's attention.
   const designBrief = typeof body.designBrief === 'string' ? body.designBrief.slice(0, 1500) : '';
   const mapKind = body.mapKind === 'base' ? 'base' : 'full';
-  const prompt = buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true, designBrief);
+  const prompt =
+    body.promptVariant === 'legacy'
+      ? buildProducerPromptLegacy(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true, designBrief)
+      : buildProducerPrompt(body.layerLabel, stylePreset, elementsText, mapKind, body.retry === true, designBrief);
 
   if (body.engine === 'openai') {
     const falKey = process.env.FAL_KEY;

@@ -73,7 +73,9 @@ const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: str
 /** Burn the true labels onto the produced map: leader line + anchor dot + pill. */
 function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], style: LabelStyle): void {
   const s = LABEL_STYLES[style] ?? LABEL_STYLES.clean;
-  const fs = 26, padX = 14, h = fs + 14;
+  const fs = style === 'blueprint' ? 28 : 26;
+  const padX = style === 'blueprint' ? 16 : 14;
+  const h = fs + (style === 'blueprint' ? 16 : 14);
   ctx.textBaseline = 'middle';
   for (const l of labels) {
     // Headers are group titles standing over their members — heavier weight + a firmer pill edge
@@ -84,9 +86,9 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
       // Leader — dark under-stroke + light over-stroke reads on any background.
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
+      ctx.strokeStyle = 'rgba(20,16,10,0.55)'; ctx.lineWidth = style === 'blueprint' ? 7 : 5; ctx.setLineDash([]); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
+      ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = style === 'blueprint' ? 3 : 2; ctx.setLineDash([8, 6]); ctx.stroke();
       ctx.setLineDash([]);
       // Anchor dot at the true position.
       ctx.beginPath(); ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
@@ -101,6 +103,11 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
     ctx.fillStyle = s.pill; ctx.shadowColor = 'rgba(20,16,10,0.28)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2;
     ctx.fill(); ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
     ctx.strokeStyle = s.stroke; ctx.lineWidth = isHeader ? 2.5 : 1.5; ctx.stroke();
+    if (style === 'blueprint') {
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+      ctx.strokeText(l.text, x + padX, l.ay + 1);
+    }
     ctx.fillStyle = s.text; ctx.fillText(l.text, x + padX, l.ay + 1);
   }
 }
@@ -164,6 +171,37 @@ export function blendProtectedPixels(
   return out;
 }
 
+/**
+ * Count fully protected pixels that do not exactly match the source.
+ *
+ * Geometry Lock is a hard contract, so opaque mask pixels are compared byte-for-byte rather
+ * than with a visual tolerance. Partially transparent edge pixels are intentionally excluded:
+ * they are feathered blends, not locked source pixels.
+ */
+export function countProtectedPixelMismatches(
+  sourcePixels: Uint8ClampedArray,
+  outputPixels: Uint8ClampedArray,
+  maskPixels: Uint8ClampedArray,
+): number {
+  if (sourcePixels.length !== outputPixels.length || outputPixels.length !== maskPixels.length) {
+    throw new Error('restore verification: image buffers must have the same size');
+  }
+
+  let mismatches = 0;
+  for (let i = 0; i < outputPixels.length; i += 4) {
+    if ((maskPixels[i + 3] ?? 0) < 255) continue;
+    if (
+      sourcePixels[i] !== outputPixels[i]
+      || sourcePixels[i + 1] !== outputPixels[i + 1]
+      || sourcePixels[i + 2] !== outputPixels[i + 2]
+      || sourcePixels[i + 3] !== outputPixels[i + 3]
+    ) {
+      mismatches += 1;
+    }
+  }
+  return mismatches;
+}
+
 /** Restore source pixels wherever the mask is opaque, then return a PNG data URL. */
 export async function restoreProtectedPixels(
   sourceImage: ImageInput,
@@ -192,6 +230,10 @@ export async function restoreProtectedPixels(
   const modelPixels = drawToCanvas(model);
   const maskPixels = drawToCanvas(mask);
   const blended = blendProtectedPixels(sourcePixels, modelPixels, maskPixels);
+  const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
+  if (mismatches > 0) {
+    throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
+  }
 
   const outCanvas = document.createElement('canvas');
   outCanvas.width = width;

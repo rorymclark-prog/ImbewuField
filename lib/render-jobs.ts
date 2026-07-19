@@ -37,6 +37,8 @@ export interface RenderSheetSpec {
   // ENQUEUED, not the way the freshly-reset UI happens to look. (Audit finding: reattach used to
   // finish sheets with the default style + strict pipeline.)
   showcase?: boolean;
+  /** Persist the lock decision with the job. A render can outlive the component or browser tab. */
+  geometryLock?: boolean;
 }
 
 /** A sheet's state as it lives in the job doc (input uploaded; worker fills output/status). */
@@ -50,6 +52,7 @@ export interface RenderSheetState {
   outputPath?: string;
   error?: string;
   showcase?: boolean; // see RenderSheetSpec.showcase
+  geometryLock?: boolean; // see RenderSheetSpec.geometryLock
 }
 
 export interface RenderJobDoc {
@@ -129,6 +132,7 @@ export async function enqueueRenderJob(opts: {
           ...(protectMaskPath ? { protectMaskPath } : {}),
           status: 'queued',
           ...(s.showcase ? { showcase: true } : {}),
+          ...(typeof s.geometryLock === 'boolean' ? { geometryLock: s.geometryLock } : {}),
         };
       }),
     );

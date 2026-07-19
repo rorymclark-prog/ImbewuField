@@ -2,7 +2,7 @@
 // Gemini path) and the CLIENT (which builds the prompt to hand to the background render queue, see
 // lib/render-jobs.ts + functions/) use the identical prompt. Pure function, no server deps.
 
-export type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk';
+export type StylePreset = 'field_ledger' | 'homestead_storybook' | 'extension_blueprint' | 'karoo_folk' | 'chatgpt_atlas';
 
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
@@ -15,10 +15,96 @@ const FEATURE_LEGEND =
   // Line features — drawn into every composite but previously never explained (audit find):
   `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a green dashed line → a drip-irrigation line along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
 
+function geometryLockTail(): string {
+  return (
+    'FINAL RULE: the source composite geometry is final. ' +
+    'Preserve every boundary, roof, driveway, road, line, zone edge, label anchor and marker exactly where it already is. ' +
+    'Repaint only the unprotected background around those features.'
+  );
+}
+
 // The producer illustrates the marked elements beautifully and recognisably, in place, inventing
 // nothing new. The composite the model receives has the farmer's placed elements drawn as coloured
 // markers; elementsText names what each is so the model draws it as the real thing.
 export function buildProducerPrompt(
+  layerLabel: string | undefined,
+  stylePreset: StylePreset,
+  elementsText: string,
+  mapKind: 'base' | 'full' = 'full',
+  retry = false,
+  designBrief = '',
+): string {
+  const isLayerMap = !!layerLabel && layerLabel !== 'Full design';
+  const titleLabel = layerLabel ? ` (${layerLabel})` : '';
+  const task = mapKind === 'base'
+    ? `TASK: edit this satellite photo of a real South African smallholding into a faithful illustrated base map${titleLabel}. Draw the site exactly as it exists today, using the photo as the geometry source.`
+    : `TASK: edit this satellite photo of a real South African smallholding${titleLabel} into a faithful illustrated site map.`;
+  const layerFocus = isLayerMap
+    ? `LAYER FOCUS: this is the ${layerLabel!.toUpperCase()} sheet. Make that layer the clearest thing on the page. The rest of the site stays a calm supporting background in the same style.`
+    : `LAYER FOCUS: paint the whole property as one complete illustrated map, with the real site layout preserved from the source image.`;
+  const keepExact =
+    `KEEP EXACT: preserve the source framing, scale, crop and north-up orientation. Keep the property boundary, driveway, road, roofs and all marked features in the same pixels and the same counts.`;
+  const viewRule =
+    `VIEW: flat orthographic top-down plan only. No oblique shot, no perspective tilt, no 3D camera, no horizon, no isometric view.`;
+  const layoutRule = isLayerMap
+    ? `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like a printed design board.`
+    : `LAYOUT: use a landscape plan sheet with a clean right-hand title/legend panel and the map filling the left side, like a printed design board.`;
+  const noInvent =
+    `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
+  const drawBlock =
+    `DRAW: ${FEATURE_LEGEND}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}` +
+    `Paint each marked feature as a clear, recognisable illustration, and only the features that are already marked.`;
+  const textRule =
+    `NO TEXT in the painted artwork itself: no captions, banners, signage, numbers or compass rose inside the illustration. Labels are added separately after rendering.`;
+  const buildingRule =
+    `BUILDINGS: paint each building as its full roof seen from directly above, and only the buildings named in the marked-feature list.`;
+  const houseRule =
+    `HOUSE RULE: keep the house whole and fully visible. Do not crop, clip, cut off or push the roof off the sheet.`;
+  const styleRule = isLayerMap
+    ? `STYLE NOTE: keep the open ground quiet and natural so the ${layerLabel} layer reads clearly. Use muted grass, veld and soil textures around the marked features.`
+    : `STYLE NOTE: paint the whole plot as a finished illustrated landscape with living land, visible ground texture and crisp property edges.`;
+  const waterRule = /water/i.test(layerLabel ?? '')
+    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
+    : '';
+
+  const briefBlock = designBrief
+    ? `\n\n=== MASTER DESIGN BRIEF — EVERY SHEET SHARES THIS ONE DESIGN ===\n` +
+      `This site has ONE permaculture design. Every sheet in this plan set (base map, zones, water, planting, structures, whole design) depicts THIS SAME design from a different angle, so every sheet must agree about where things are and what they are. The placements below were measured from the real site and are final: do not re-imagine, re-arrange, re-position, resize, rename or re-invent any of them, and never move anything between sheets. Compass directions are relative to the plot and north is the top of the image.\n` +
+      `${designBrief}\n` +
+      `HOW TO USE THIS BRIEF: it is reference, not a drawing list. It exists so this sheet agrees with its sibling sheets — nothing more. Draw only this sheet's own layer, exactly as instructed above: anything named in this brief that is not in this sheet's marked-features list belongs to a different sheet and must not be drawn here.\n` +
+      `=== END MASTER DESIGN BRIEF ===`
+    : '';
+
+  // STYLE leads, so if a downstream length clamp ever bites, the one line the model most needs
+  // (the art style) is never the part that gets cut. (This was the truncation bug: a 2 000-char
+  // worker clamp on a ~4 500-char prompt dropped the trailing STYLE line entirely.)
+  const retryBlock = retry
+    ? `IMPORTANT: the previous attempt left the plot blank or overly plain. This attempt should paint every editable area as living land.`
+    : '';
+
+  return [
+    STYLE_LINES[stylePreset],
+    task,
+    layerFocus,
+    keepExact,
+    viewRule,
+    layoutRule,
+    noInvent,
+    waterRule,
+    drawBlock,
+    textRule,
+    buildingRule,
+    houseRule,
+    styleRule,
+    retryBlock,
+    briefBlock,
+    geometryLockTail(),
+  ].filter(Boolean).join('\n\n');
+}
+
+// Legacy prompt retained for a clean rollback / A-B comparison. Keep this callable so the UI can
+// flip the rewritten prompt off without changing the rest of the render path.
+export function buildProducerPromptLegacy(
   layerLabel: string | undefined,
   stylePreset: StylePreset,
   elementsText: string,
@@ -115,6 +201,8 @@ export const STYLE_LINES: Record<StylePreset, string> = {
     'STYLE — Extension Blueprint: a clean technical site plan with slight isometric character on structures, thin consistent linework, high legibility at small print size. Fixed palette: slate blue, sage green, buff soil, warm grey, off-white paper — the ground is always softly tinted living land (sage lawn, buff soil, olive veld), never blank white.' + PLAN_SET_ANCHOR,
   karoo_folk:
     'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, decorative South African folk-pattern textures, charming handmade brushwork. Fixed palette: barn red, cobalt blue, sunflower yellow, pine green, whitewash cream.' + PLAN_SET_ANCHOR,
+  chatgpt_atlas:
+    'STYLE — ChatGPT Atlas: polished editorial cartography with a hand-painted feel, crisp plan-sheet composition, soft watercolor terrain washes, disciplined ink linework, cream paper border, and highly legible labels. Fixed palette: olive greens, muted blue-greys, warm ochre, parchment cream, charcoal text. The map reads like a premium printed design sheet from the direct ChatGPT examples.' + PLAN_SET_ANCHOR,
 };
 
 // Per-sheet marker legends — POSITIVE ONLY. Each sheet's prompt names only the markers that can
@@ -156,17 +244,27 @@ export function buildShowcasePrompt(
 ): string {
   const title = `${(layerLabel ?? 'Site plan').toUpperCase()}${placeName ? ' — ' + placeName : ''}`;
   const singleLayer = sheetKind !== 'all'
-    ? `\n\nThis sheet shows one layer of the plan: the features listed above are the stars — render them rich and detailed. The rest of the plot stays a quiet, softly painted base of lawn, veld and the existing buildings in the same style.`
+    ? `SHEET FOCUS: this sheet shows one layer of the plan. The named features are the stars, while the rest of the plot stays a quiet softly painted base of lawn, veld and existing buildings in the same style.`
+    : `SHEET FOCUS: this is the full plan sheet, so all named features are shown together and the whole site reads as one coherent illustrated map.`;
+  const labels = `${elementsText}${placeName ? '; ' + placeName : ''}`;
+  const noInvent =
+    `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
+  const waterRule = sheetKind === 'water'
+    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
     : '';
-  return `${STYLE_LINES[stylePreset]}
-
-Turn this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".
-
-You are RENDERING an existing plan, not designing a new one — stay faithful to the photo. Illustrate the land inside the property boundary in the style above, keeping the ground exactly as the photo shows it: open lawn stays open lawn, grass stays grass, bare soil stays bare soil. Paint each building as its FULL roof seen from directly above, keeping the exact roof outline — never crop, shrink, cover or plant over any part of a roof. Everything outside the boundary stays the untouched original photograph; the boundary line, every roof and the driveway keep exactly the shape, size and position the photo shows; top of the image is north.
-
-Each coloured marker on the photo is a placeholder — paint the real thing in its place, same spot, same size, same count: ${LEGEND_BY_SHEET[sheetKind]}. This sheet's features are: ${elementsText}. Every tree, bed, tank and feature you paint sits on one of these markers — ground with no marker stays open lawn or veld, unchanged. Add nothing that is not marked: no extra trees, beds, ponds or paths of your own.${singleLayer}
-
-In the corner with the least map content, on clean paper panels in the same style: a title block reading "${title}" — the largest lettering on the sheet — a small legend listing each of this sheet's feature types with a colour swatch beside its name, and a small north arrow. Label up to six of the most important features in small elegant lettering placed beside them, using exactly these spellings: ${elementsText}${placeName ? '; ' + placeName : ''}. These are the only words anywhere on the sheet, all horizontal and print-legible.`;
+  return [
+    STYLE_LINES[stylePreset],
+    `TASK: edit this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".`,
+    `KEEP EXACT: stay faithful to the photo and preserve the original framing, boundary, driveway, roof outlines, scale and north-up orientation. Draw the illustration inside the site exactly where the source image places it.`,
+    `VIEW: flat orthographic top-down plan only. No oblique shot, no perspective tilt, no 3D camera, no horizon, no isometric view.`,
+    `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like the direct-ChatGPT plan sheets.`,
+    noInvent,
+    waterRule,
+    `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count: ${LEGEND_BY_SHEET[sheetKind]}. This sheet's features are: ${elementsText}. Ground with no marker stays open lawn or veld, unchanged.`,
+    `LABELS AND PANELS: in the corner with the least map content, place a clean paper title block reading "${title}" as the largest lettering on the sheet, a tidy legend for the feature types, and a small north arrow. Label up to six important features in small elegant lettering beside them, using exactly these spellings: ${labels}. These are the only words anywhere on the sheet, all horizontal and print-legible.`,
+    singleLayer,
+    geometryLockTail(),
+  ].filter(Boolean).join('\n\n');
 }
 
 // Kept for one release as an instant rollback (call-site flip, no worker redeploy — the prompt is

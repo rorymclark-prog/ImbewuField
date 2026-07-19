@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { isDifferentBuild } from '@/lib/pwa-update';
+
+interface BuildInfo {
+  sha?: string | null;
+}
+
+const UPDATE_CHECK_MS = 60_000;
 
 /**
  * Registers /sw.js and surfaces a small non-blocking toast once a NEW worker
@@ -11,49 +18,129 @@ import { useEffect, useState } from 'react';
  */
 export default function PWAUpdateNotifier() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
+  // This is the build the currently-running JS first observed. A later API response with a
+  // different SHA means Vercel has deployed new code even if Chrome missed the SW lifecycle event.
+  const loadedBuildShaRef = useRef<string | null>(null);
+
+  const markUpdateAvailable = useCallback((sha?: string | null) => {
+    if (sha) setNextBuildSha(sha);
+    setUpdateAvailable(true);
+  }, []);
+
+  const checkBuild = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/build-info?update-check=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      if (!res.ok) return;
+      const data = await res.json() as BuildInfo;
+      const latestSha = data.sha?.trim() || null;
+      if (!loadedBuildShaRef.current) {
+        loadedBuildShaRef.current = latestSha;
+      } else if (isDifferentBuild(loadedBuildShaRef.current, latestSha)) {
+        markUpdateAvailable(latestSha);
+      }
+    } catch {
+      // Update checks must never interrupt normal app use.
+    }
+  }, [markUpdateAvailable]);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
+    if (typeof window === 'undefined') return;
+
+    const supportsServiceWorker = 'serviceWorker' in navigator;
 
     // If a controller already exists when this mounts, this device has an
     // installed worker from a previous visit — any later controllerchange is
     // therefore a real update, not the device's very first-ever install.
-    let hadControllerBefore = Boolean(navigator.serviceWorker.controller);
+    let hadControllerBefore = supportsServiceWorker && Boolean(navigator.serviceWorker.controller);
 
-    let registration: ServiceWorkerRegistration | undefined;
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((reg) => {
-        registration = reg;
-      })
-      .catch(() => {
-        // Registration can fail (e.g. private browsing, unsupported browser) —
-        // the app must keep working without offline/update support either way.
-      });
+    let cancelled = false;
+    const cleanup: Array<() => void> = [];
+
+    const watchInstallingWorker = (worker: ServiceWorker | null) => {
+      if (!worker) return;
+      const onStateChange = () => {
+        if (worker.state === 'installed' && hadControllerBefore) markUpdateAvailable();
+      };
+      worker.addEventListener('statechange', onStateChange);
+      cleanup.push(() => worker.removeEventListener('statechange', onStateChange));
+      onStateChange();
+    };
+
+    if (supportsServiceWorker) {
+      navigator.serviceWorker
+        .register('/sw.js', { updateViaCache: 'none' })
+        .then((reg) => {
+          if (cancelled) return;
+          registrationRef.current = reg;
+          if (reg.waiting && hadControllerBefore) markUpdateAvailable();
+          watchInstallingWorker(reg.installing);
+          const onUpdateFound = () => watchInstallingWorker(reg.installing);
+          reg.addEventListener('updatefound', onUpdateFound);
+          cleanup.push(() => reg.removeEventListener('updatefound', onUpdateFound));
+          void reg.update().catch(() => {});
+        })
+        .catch(() => {
+          // Registration can fail (e.g. private browsing) — the build-SHA check
+          // below still provides the manual refresh prompt while the app keeps working.
+        });
+    }
 
     // Browsers only check for a changed sw.js on navigation, or roughly every
     // 24h — nudge that check whenever the tab regains focus so updates are
     // caught sooner without polling constantly in the background.
-    const onVisible = () => {
+    const checkForUpdates = () => {
       if (document.visibilityState === 'visible') {
-        registration?.update().catch(() => {});
+        if (supportsServiceWorker) void registrationRef.current?.update().catch(() => {});
+        void checkBuild();
       }
     };
-    document.addEventListener('visibilitychange', onVisible);
+    document.addEventListener('visibilitychange', checkForUpdates);
+    window.addEventListener('focus', checkForUpdates);
+    window.addEventListener('online', checkForUpdates);
+    const timer = window.setInterval(checkForUpdates, UPDATE_CHECK_MS);
+    void checkBuild();
 
     const onControllerChange = () => {
       if (hadControllerBefore) {
-        setUpdateAvailable(true);
+        markUpdateAvailable();
       }
       hadControllerBefore = true;
     };
-    navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
+    if (supportsServiceWorker) navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
 
     return () => {
-      document.removeEventListener('visibilitychange', onVisible);
-      navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
+      cancelled = true;
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', checkForUpdates);
+      window.removeEventListener('focus', checkForUpdates);
+      window.removeEventListener('online', checkForUpdates);
+      if (supportsServiceWorker) navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
+      cleanup.forEach((fn) => fn());
+      registrationRef.current = null;
     };
-  }, []);
+  }, [checkBuild, markUpdateAvailable]);
+
+  const refreshToUpdate = useCallback(async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    try {
+      if ('serviceWorker' in navigator) {
+        const registration = registrationRef.current ?? await navigator.serviceWorker.getRegistration('/');
+        // Normally /sw.js calls skipWaiting itself. This message also handles an older waiting
+        // worker from a previous build before that behavior existed.
+        registration?.waiting?.postMessage({ type: 'SKIP_WAITING' });
+        await registration?.update().catch(() => {});
+      }
+    } finally {
+      window.location.reload();
+    }
+  }, [refreshing]);
 
   if (!updateAvailable) return null;
 
@@ -77,20 +164,22 @@ export default function PWAUpdateNotifier() {
         fontSize: '0.875rem',
       }}
     >
-      <span>New version available.</span>
+      <span>New version{nextBuildSha ? ` ${nextBuildSha}` : ''} available.</span>
       <button
-        onClick={() => window.location.reload()}
+        onClick={refreshToUpdate}
+        disabled={refreshing}
         style={{
           background: '#fff',
           color: '#1f2937',
           border: 'none',
           borderRadius: '0.375rem',
           padding: '0.25rem 0.75rem',
-          cursor: 'pointer',
+          cursor: refreshing ? 'wait' : 'pointer',
           fontWeight: 600,
+          opacity: refreshing ? 0.7 : 1,
         }}
       >
-        Refresh
+        {refreshing ? 'Refreshing…' : 'Refresh update'}
       </button>
     </div>
   );
