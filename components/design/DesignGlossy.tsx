@@ -20,7 +20,7 @@ import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, typ
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
 const PAPER = '#FFFEFA';
@@ -371,12 +371,39 @@ export const SCALE = 2;
 export interface CompositeMarkOptions {
   showToolGlyphs?: boolean;
   showDrivewayEdge?: boolean;
+  showDesignLines?: boolean;
+  showDesignItems?: boolean;
 }
 
 const LOCKED_COMPOSITE_MARKS: CompositeMarkOptions = {
   showToolGlyphs: false,
   showDrivewayEdge: false,
 };
+
+// Water infrastructure is rendered deterministically after the AI texture pass. Keeping its
+// temporary editor footprints out of the model input prevents GPT from turning one marker into
+// several objects, adding pipes, or copying tool glyphs into the finished map.
+const LOCKED_WATER_COMPOSITE_MARKS: CompositeMarkOptions = {
+  ...LOCKED_COMPOSITE_MARKS,
+  showDesignLines: false,
+  showDesignItems: false,
+};
+
+function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
+  return filter === 'water' ? LOCKED_WATER_COMPOSITE_MARKS : LOCKED_COMPOSITE_MARKS;
+}
+
+interface ProtectMaskOptions {
+  protectOutside?: boolean;
+  protectLines?: boolean;
+  protectItems?: boolean;
+}
+
+function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
+  return filter === 'water'
+    ? { protectOutside: true, protectLines: false, protectItems: false }
+    : { protectOutside: true };
+}
 
 export function drawMarks(
   ctx: CanvasRenderingContext2D,
@@ -393,6 +420,8 @@ export function drawMarks(
   const py = (n: number) => n * imgH;
   const showToolGlyphs = options.showToolGlyphs !== false;
   const showDrivewayEdge = options.showDrivewayEdge !== false;
+  const showDesignLines = options.showDesignLines !== false;
+  const showDesignItems = options.showDesignItems !== false;
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
 
@@ -513,7 +542,7 @@ export function drawMarks(
   }
 
   // Lines
-  for (const line of drawDesign ? state.lines : []) {
+  for (const line of drawDesign && showDesignLines ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
@@ -550,7 +579,7 @@ export function drawMarks(
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
   // width (pxPerM, computed above) — sizing in logical px would draw every footprint at half scale.
-  for (const item of drawDesign ? state.items : []) {
+  for (const item of drawDesign && showDesignItems ? state.items : []) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = item.wM ?? def.wM;
@@ -626,7 +655,7 @@ async function buildProtectMask(
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
-  options: { protectOutside?: boolean } = {},
+  options: ProtectMaskOptions = {},
 ): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
@@ -737,7 +766,7 @@ async function buildProtectMask(
   }
 
   // Line strokes.
-  for (const line of state.lines) {
+  for (const line of options.protectLines === false ? [] : state.lines) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
@@ -751,7 +780,7 @@ async function buildProtectMask(
   // Item footprints (+25% margin). Same canvas-scale-aware conversion as the composite:
   // metres → CANVAS px (the mask is SCALE× the logical frame, and it MUST protect the
   // full true-scale footprint, not half of it).
-  for (const item of state.items) {
+  for (const item of options.protectItems === false ? [] : state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = (item.wM ?? def.wM) * 1.25;
@@ -1406,95 +1435,371 @@ function buildZoneOverlay(
   return canvas.toDataURL('image/png');
 }
 
-// Water infrastructure is also wiped by the image model (it paints land, not overlays). Burn the
-// exact tanks / taps / water lines back on top of a Water Style render — same trick as zones.
-// Membership MUST come from itemInFilter, not a `category === 'water'` literal: the water layer
-// also carries earthworks now, and the protect mask, legend and burned-on labels all use
-// itemInFilter. A literal here would burn a tree basin's LABEL onto the sheet while leaving its
-// marker to be painted over by the model — a pill pointing at nothing.
-function buildWaterOverlay(
-  state: DesignCanvasState,
-  frame: CanvasFrame,
-  W: number,
-  H: number,
-  includeToolGlyphs = true,
-): string | undefined {
-  const items = state.items.filter((it) => {
+const WATER_ROUTE_STYLE: Record<string, { color: string; dash: number[]; width: number }> = {
+  swale: { color: '#4EA6D8', dash: [], width: 4.5 },
+  pipe: { color: '#245E85', dash: [14, 6], width: 4 },
+  drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5 },
+};
+
+function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
+  return state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
     return !!def && itemInFilter(def.category, 'water');
   });
-  const lines = state.lines.filter((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
-  if (!items.length && !lines.length) return undefined;
+}
+
+function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, W: number, H: number) {
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const line of state.lines) {
+    const style = WATER_ROUTE_STYLE[line.kind];
+    if (!style || line.points.length < 2) continue;
+    const trace = () => {
+      ctx.beginPath();
+      line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,254,250,0.9)';
+    ctx.lineWidth = style.width + 4;
+    ctx.stroke();
+    trace();
+    ctx.setLineDash(style.dash);
+    ctx.strokeStyle = style.color;
+    ctx.lineWidth = style.width;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function drawWaterFeature(
+  ctx: CanvasRenderingContext2D,
+  item: PlacedItem,
+  def: DesignElementDef,
+  W: number,
+  H: number,
+  pxPerM: number,
+  includeToolGlyphs: boolean,
+) {
+  const cx = item.x * W;
+  const cy = item.y * H;
+  const w = Math.max(3, (item.wM ?? def.wM) * pxPerM);
+  const h = Math.max(3, (item.hM ?? def.hM) * pxPerM);
+  const radius = Math.min(w, h) / 2;
+  const id = def.id;
+  const outline = Math.max(1.8, W * 0.00115);
+  const isTank = id.startsWith('jojo_') || id === 'rain_barrel';
+  const isOpenWater = id === 'pond_small' || id === 'dam';
+  const isBasin = ['tree_basin', 'greywater_basin', 'infiltration_basin', 'half_moon', 'herb_spiral'].includes(id);
+  const isBank = ['mulch_bank', 'berm', 'terrace'].includes(id);
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  if (def.shape === 'rect' && item.rot) ctx.rotate((item.rot * Math.PI) / 180);
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  if (isTank) {
+    // Exact circular footprint, rendered as a directly-overhead ribbed tank rather than an emoji.
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#315F4B';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.72, 0, Math.PI * 2);
+    ctx.strokeStyle = '#87B39B';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, Math.max(1.5, radius * 0.16), 0, Math.PI * 2);
+    ctx.fillStyle = '#D7E3D8';
+    ctx.fill();
+  } else if (isOpenWater) {
+    ctx.beginPath();
+    ctx.ellipse(0, 0, w / 2, h / 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#3D8FAF';
+    ctx.fill();
+    ctx.strokeStyle = '#F8F1DC';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    for (const scale of [0.62, 0.34]) {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, (w / 2) * scale, (h / 2) * scale, 0, Math.PI * 0.1, Math.PI * 0.9);
+      ctx.strokeStyle = 'rgba(214,242,245,0.85)';
+      ctx.lineWidth = outline * 0.75;
+      ctx.stroke();
+    }
+  } else if (id === 'tap_point') {
+    const s = Math.max(5, radius);
+    ctx.beginPath();
+    ctx.arc(0, 0, Math.max(3.5, radius), 0, Math.PI * 2);
+    ctx.fillStyle = '#F8F1DC';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.55);
+    ctx.lineTo(0, -s * 0.55);
+    ctx.lineTo(s * 0.62, -s * 0.55);
+    ctx.quadraticCurveTo(s * 0.9, -s * 0.5, s * 0.9, -s * 0.15);
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = Math.max(2, outline);
+    ctx.stroke();
+  } else if (id === 'borehole') {
+    const r = Math.max(5, radius);
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#F8F1DC';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.48, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-r, 0); ctx.lineTo(r, 0);
+    ctx.moveTo(0, -r); ctx.lineTo(0, r);
+    ctx.stroke();
+  } else if (id === 'banana_circle') {
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#B58A4E';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.32, 0, Math.PI * 2);
+    ctx.fillStyle = '#6B5133';
+    ctx.fill();
+    for (let i = 0; i < 6; i++) {
+      ctx.save();
+      ctx.rotate((i * Math.PI) / 3);
+      ctx.beginPath();
+      ctx.ellipse(0, -radius * 0.58, radius * 0.18, radius * 0.44, 0, 0, Math.PI * 2);
+      ctx.fillStyle = i % 2 ? '#60874B' : '#789C55';
+      ctx.fill();
+      ctx.restore();
+    }
+  } else if (isBasin) {
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#9A754A';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.62, 0, Math.PI * 2);
+    ctx.fillStyle = id === 'greywater_basin' ? '#6F9E93' : '#6D5B3E';
+    ctx.fill();
+    ctx.strokeStyle = '#D8C296';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+  } else if (id === 'water_trough') {
+    roundRectPath(ctx, -w / 2, -h / 2, w, h, Math.min(5, w * 0.2));
+    ctx.fillStyle = '#D8D2C2';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    roundRectPath(ctx, -w * 0.32, -h * 0.38, w * 0.64, h * 0.76, Math.min(4, w * 0.16));
+    ctx.fillStyle = '#4C99B6';
+    ctx.fill();
+  } else if (isBank) {
+    ctx.beginPath();
+    ctx.rect(-w / 2, -h / 2, w, h);
+    ctx.fillStyle = id === 'mulch_bank' ? '#9A7042' : '#A98558';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(-w / 2, -h / 2, w, h);
+    ctx.clip();
+    ctx.strokeStyle = 'rgba(65,48,31,0.65)';
+    ctx.lineWidth = 1.3;
+    const extent = Math.max(w, h) * 1.5;
+    for (let d = -extent; d <= extent; d += 7) {
+      ctx.beginPath();
+      ctx.moveTo(-extent, d);
+      ctx.lineTo(extent, d - extent);
+      ctx.stroke();
+    }
+    ctx.restore();
+  } else if (id === 'first_flush' || id === 'pump_filter') {
+    const r = Math.max(5, radius);
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+    } else {
+      roundRectPath(ctx, -w / 2, -h / 2, w, h, 3);
+    }
+    ctx.fillStyle = '#D8D2C2';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.55, 0); ctx.lineTo(r * 0.55, 0);
+    ctx.moveTo(0, -r * 0.55); ctx.lineTo(0, r * 0.55);
+    ctx.stroke();
+  } else {
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    } else {
+      roundRectPath(ctx, -w / 2, -h / 2, w, h, Math.min(4, Math.min(w, h) * 0.2));
+    }
+    ctx.fillStyle = def.category === 'earthworks' ? '#9A754A' : '#397F9E';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+  }
+
+  if (includeToolGlyphs) {
+    ctx.font = `${Math.max(12, Math.min(24, Math.min(w, h) * 0.55))}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#101812';
+    ctx.fillText(def.icon, 0, 0);
+  }
+  ctx.restore();
+}
+
+function drawWaterLeaderLabels(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+) {
+  const grouped = new Map<string, { name: string; points: Array<[number, number]> }>();
+  for (const item of waterItemsFor(state)) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def) continue;
+    const name = item.label ?? def.name;
+    const group = grouped.get(name) ?? { name, points: [] };
+    group.points.push([item.x * W, item.y * H]);
+    grouped.set(name, group);
+  }
+  if (!grouped.size) return;
+
+  const box = plotBox(refLayers.boundary);
+  const centreX = ((box.x0 + box.x1) / 2) * W;
+  const groups = [...grouped.values()].map((group) => {
+    const avgX = group.points.reduce((sum, point) => sum + point[0], 0) / group.points.length;
+    const avgY = group.points.reduce((sum, point) => sum + point[1], 0) / group.points.length;
+    const side: 'left' | 'right' = avgX < centreX ? 'left' : 'right';
+    const target = [...group.points].sort((a, b) => side === 'left' ? a[0] - b[0] : b[0] - a[0])[0];
+    return { ...group, avgY, side, target };
+  });
+
+  const fontSize = Math.max(19, Math.round(W * 0.012));
+  const rowGap = Math.max(42, Math.round(fontSize * 1.85));
+  const top = Math.round(H * 0.1);
+  const bottom = Math.round(H * 0.9);
+  ctx.font = `700 ${fontSize}px "Avenir Next", "Trebuchet MS", sans-serif`;
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  const placeSide = (side: 'left' | 'right') => {
+    const sideGroups = groups.filter((group) => group.side === side).sort((a, b) => a.avgY - b.avgY);
+    if (!sideGroups.length) return;
+    const positions = sideGroups.map((group, index) => Math.max(top + index * rowGap, Math.min(bottom, group.avgY)));
+    for (let i = 1; i < positions.length; i++) positions[i] = Math.max(positions[i], positions[i - 1] + rowGap);
+    const overflow = positions[positions.length - 1] - bottom;
+    if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
+
+    sideGroups.forEach((group, index) => {
+      const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` x${group.points.length}` : ''}`;
+      const textW = Math.min(W * 0.24, ctx.measureText(text).width);
+      const padX = Math.round(fontSize * 0.55);
+      const boxH = Math.round(fontSize * 1.55);
+      const boxW = Math.round(textW + padX * 2);
+      const x = side === 'left' ? Math.round(W * 0.018) : Math.round(W * 0.982) - boxW;
+      const y = positions[index] - boxH / 2;
+      const leaderEndX = side === 'left' ? x + boxW : x;
+      const elbowX = side === 'left'
+        ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
+        : Math.max(group.target[0] + 16, leaderEndX - Math.round(W * 0.025));
+
+      ctx.beginPath();
+      ctx.moveTo(group.target[0], group.target[1]);
+      ctx.lineTo(elbowX, group.target[1]);
+      ctx.lineTo(leaderEndX, positions[index]);
+      ctx.strokeStyle = 'rgba(255,254,250,0.9)';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.strokeStyle = '#34463E';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(group.target[0], group.target[1], 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#34463E';
+      ctx.fill();
+
+      roundRectPath(ctx, x, y, boxW, boxH, Math.round(boxH * 0.18));
+      ctx.fillStyle = 'rgba(255,251,240,0.94)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(52,70,62,0.72)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.fillStyle = '#24362E';
+      ctx.textAlign = 'left';
+      ctx.fillText(text, x + padX, positions[index]);
+    });
+  };
+  placeSide('left');
+  placeSide('right');
+}
+
+function drawWaterInfrastructure(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  includeToolGlyphs: boolean,
+  includeLeaderLabels: boolean,
+) {
+  drawWaterRoutes(ctx, state, W, H);
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  for (const item of waterItemsFor(state)) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
+  }
+  if (includeLeaderLabels) drawWaterLeaderLabels(ctx, state, refLayers, W, H);
+}
+
+// Geometry Lock treats the AI as a texture painter only. Exact feature symbols and leaders are
+// burned in here after generation, so counts and positions come from saved design data, not model
+// interpretation. The optional legacy glyph path is retained for Geometry Lock Off.
+function buildWaterOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  includeToolGlyphs = true,
+  includeLeaderLabels = false,
+): string | undefined {
+  const items = waterItemsFor(state);
+  const hasLines = state.lines.some((line) => !!WATER_ROUTE_STYLE[line.kind] && line.points.length >= 2);
+  if (!items.length && !hasLines) return undefined;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-
-  // Water routes — white casing under a coloured line (swale/pipe/drip).
-  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
-    swale: { color: '#4EA6D8', dash: [] },
-    pipe: { color: '#2B6FA6', dash: [] },
-    drip: { color: '#4E8B3B', dash: [3, 7] },
-  };
-  for (const l of lines) {
-    if (l.points.length < 2) continue;
-    const trace = () => {
-      ctx.beginPath();
-      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
-    };
-    trace();
-    ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-    ctx.lineWidth = 6;
-    ctx.stroke();
-    const st = LINE_STYLE[l.kind];
-    trace();
-    ctx.setLineDash(st.dash);
-    ctx.strokeStyle = st.color;
-    ctx.lineWidth = 3.5;
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  // Tanks / taps / ponds — exact, footprint-sized cartographic marks. Locked outputs deliberately
-  // omit the palette emoji: labels and the deterministic legend identify each mark without leaking
-  // editor UI into the finished plan.
-  for (const it of items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def) continue;
-    const cx = it.x * W, cy = it.y * H;
-    const r = Math.max(9, ((it.wM ?? def.wM) * pxPerM) / 2);
-    if (def.shape === 'circle') {
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#2E7FC2';
-      ctx.fill();
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - r * 0.35, r * 0.72, r * 0.4, 0, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120,190,240,0.9)';
-      ctx.fill();
-    } else {
-      ctx.fillStyle = '#2E7FC2';
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 2.5;
-      roundRectPath(ctx, cx - r, cy - r * 0.7, r * 2, r * 1.4, 4);
-      ctx.fill();
-      ctx.stroke();
-    }
-    if (includeToolGlyphs) {
-      ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(def.icon, cx, cy);
-    }
-  }
+  drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, includeToolGlyphs, includeLeaderLabels);
   return canvas.toDataURL('image/png');
 }
 
@@ -2190,7 +2495,7 @@ export async function buildBlueprintZoneMap(
 // Deterministic "Blueprint" WATER map — the same clean dark-satellite treatment as the zone
 // blueprint, but the content layer is water infrastructure (tanks as blue cylinders, swale/pipe/
 // drip routes, taps) drawn exactly from geometry. Reliable, instant, no AI.
-export async function buildBlueprintWaterMap(
+export async function buildBlueprintWaterMapLegacy(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2393,6 +2698,46 @@ export async function buildBlueprintWaterMap(
   drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
+}
+
+// The current exact Water sheet uses the same deterministic symbols and leader labels that are
+// composited over Geometry Lock AI renders. The former dark-overlay implementation remains above
+// as buildBlueprintWaterMapLegacy for one-switch rollback and visual comparison.
+export async function buildBlueprintWaterMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+
+  await drawBlueprintBase(ctx, frame, W, H);
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(48,54,59,0.9)', 'rgba(255,253,244,0.9)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  return composeStyleSheet(
+    canvas.toDataURL('image/png'),
+    state,
+    frame,
+    refLayers,
+    'water',
+    placeName,
+    'Measured water plan',
+    'Water',
+    false,
+    true,
+  );
 }
 
 /** Draw one element at its TRUE ground footprint, species-coloured.
@@ -3333,6 +3678,7 @@ async function composeStyleSheet(
   styleLabel: string,
   layerLabel: string,
   includeToolGlyphs = true,
+  exactGeometry = false,
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -3419,13 +3765,20 @@ async function composeStyleSheet(
     ctx.font = `italic 500 ${fs}px system-ui, sans-serif`;
     ctx.fillText('Nothing placed on this layer.', lx, y);
   }
-  // Footer caveat — the Style render is illustrative; the exact map is the record.
+  // Footer contract. Exact sheets state their provenance plainly; AI texture sheets retain the
+  // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
   ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
-  ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
-  ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
-  ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+  if (exactGeometry) {
+    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
+    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
+    ctx.fillText('No AI features added.', lx, H - pad + Math.round(legendW * 0.04));
+  } else {
+    ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
+    ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
+    ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+  }
 
   // ── Scale bar (over the map, bottom-left) ──
   const pxPerM = W / (frame.imgW * frame.mPerPx);
@@ -3844,7 +4197,7 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+        geometryLock ? lockedCompositeMarks(filter) : undefined,
       );
       // b. Short comma list of placed elements + counts (this layer only).
       const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
@@ -3852,7 +4205,7 @@ export default function DesignGlossy({
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter)
+        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
         : undefined;
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       //    ZONES runs the model too now. The old rule ("AI mustn't invent under my zones —
@@ -3899,12 +4252,14 @@ export default function DesignGlossy({
           ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined;
       // e. True labels (one pill per element-name group at its centroid) — this layer only.
-      const labels = producerLabels(state, refLayers, W, H, filter, !geometryLock);
+      const labels = filter === 'water' && geometryLock
+        ? []
+        : producerLabels(state, refLayers, W, H, filter, !geometryLock);
       // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
       //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
       const overlayImage =
         filter === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : filter === 'water' ? buildWaterOverlay(state, frame, W, H, !geometryLock)
+        : filter === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
         : undefined;
       const houseOverlay = geometryLock
         ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
@@ -4173,7 +4528,7 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+          geometryLock ? lockedCompositeMarks(f) : undefined,
         );
         const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -4193,10 +4548,12 @@ export default function DesignGlossy({
           }
         }
         const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-        const labels = producerLabels(state, refLayers, W, H, f, !geometryLock);
+        const labels = f === 'water' && geometryLock
+          ? []
+          : producerLabels(state, refLayers, W, H, f, !geometryLock);
         const overlayImage =
           f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-          : f === 'water' ? buildWaterOverlay(state, frame, W, H, !geometryLock)
+          : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
           : undefined;
         const houseOverlay = geometryLock
           ? await buildHouseOverlay(frame.satDataUrl ?? composite, refLayers, W, H)
@@ -4205,7 +4562,7 @@ export default function DesignGlossy({
           ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
           : await stackOverlayImages(overlayImage, houseOverlay, W, H);
         const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f)
+          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
         const final = await compositeAccurateMap({
           modelImage: protectMaskDataUrl
@@ -4302,10 +4659,12 @@ export default function DesignGlossy({
         });
       }
       const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-      const labels = producerLabels(state, refLayers, W, H, f, !locked);
+      const labels = f === 'water' && locked
+        ? []
+        : producerLabels(state, refLayers, W, H, f, !locked);
       const overlayImage =
         f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : f === 'water' ? buildWaterOverlay(state, frame, W, H, !locked)
+        : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !locked, locked)
         : undefined;
       const mergedOverlay = f === 'water' && locked
         ? await stackOverlayImages(houseOverlay, overlayImage, W, H)
@@ -4372,20 +4731,22 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+          geometryLock ? lockedCompositeMarks(f) : undefined,
         );
         const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f, { protectOutside: true })
+          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
-        const prompt = effectiveModelChrome
-          ? (promptRewrite
-            ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
-            : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
-          : (promptRewrite
-            ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
-            : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
+        const prompt = geometryLock && f === 'water'
+          ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+          : effectiveModelChrome
+            ? (promptRewrite
+              ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
+              : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
+            : (promptRewrite
+              ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
+              : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
         sheets.push({
           key: f,
           label: layerLabel,
@@ -4445,7 +4806,7 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        geometryLock ? LOCKED_COMPOSITE_MARKS : undefined,
+        geometryLock ? lockedCompositeMarks(filter) : undefined,
       );
       const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -4458,16 +4819,18 @@ export default function DesignGlossy({
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = effectiveModelChrome;
       const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter, { protectOutside: true })
+        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
         : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
-      const prompt = useShowcase
-        ? (promptRewrite
-          ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
-          : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
-        : (promptRewrite
-          ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
-          : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
+      const prompt = geometryLock && filter === 'water'
+        ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+        : useShowcase
+          ? (promptRewrite
+            ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
+            : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
+          : (promptRewrite
+            ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
+            : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,

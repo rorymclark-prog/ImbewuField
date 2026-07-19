@@ -23,6 +23,28 @@ function geometryLockTail(): string {
   );
 }
 
+// Geometry Lock's Water pass deliberately withholds all water markers from the model. GPT paints
+// only a coherent background; the browser later adds every saved tank, tap, basin, route, label and
+// legend with deterministic canvas drawing. This separation is stronger than asking a generative
+// model to count or trace accurately, and keeps the unlocked producer path available for rollback.
+export function buildLockedBackgroundPrompt(
+  layerLabel: string,
+  stylePreset: StylePreset,
+): string {
+  const layer = layerLabel.toUpperCase();
+  return [
+    STYLE_LINES[stylePreset],
+    `TASK: create the polished background artwork for a ${layer} plan by editing only the open ground in this source image.`,
+    `INPUT CONTRACT: the source contains the exact property boundary, roof and driveway. The design infrastructure is intentionally absent because the app will draw it deterministically after this artwork pass.`,
+    `VIEW: flat orthographic top-down plan only. Preserve north-up orientation. No oblique shot, perspective tilt, 3D camera, horizon or isometric view.`,
+    `FRAMING: keep exactly the source crop, scale, aspect ratio and camera position. Do not rotate, zoom, shrink, crop, recenter or reframe the property.`,
+    `GROUND ART: give the editable lawn, veld and soil a refined hand-painted cartographic texture with restrained cool blue-green undertones, subtle tonal variation and crisp contrast around the existing roof and driveway. Keep open ground open.`,
+    `CLEAN ARTWORK: draw background terrain only. Add no objects, infrastructure, decorative icons, callouts, writing, title, legend, panel, border, compass, scale bar or symbols.`,
+    `STRUCTURAL TRUTH: preserve the visible roof and driveway as complete flat top-down shapes. Do not reinterpret, extend, split, duplicate or decorate them.`,
+    `FINAL RULE: repaint only editable background pixels. The source geometry and framing are final.`,
+  ].join('\n\n');
+}
+
 // The producer illustrates the marked elements beautifully and recognisably, in place, inventing
 // nothing new. The composite the model receives has the farmer's placed elements drawn as coloured
 // markers; elementsText names what each is so the model draws it as the real thing.
@@ -207,7 +229,7 @@ export const STYLE_LINES: Record<StylePreset, string> = {
   homestead_storybook:
     'STYLE — Homestead Storybook: a saturated gouache picture-book garden map, rounded beds bursting with vegetables, canopy-textured fruit trees, whimsical but legible. Fixed palette: leaf green, warm ochre, terracotta, cream, denim-blue water, charcoal linework.' + PLAN_SET_ANCHOR,
   extension_blueprint:
-    'STYLE — Extension Blueprint: a clean technical site plan with slight isometric character on structures, thin consistent linework, high legibility at small print size. Fixed palette: slate blue, sage green, buff soil, warm grey, off-white paper — the ground is always softly tinted living land (sage lawn, buff soil, olive veld), never blank white.' + PLAN_SET_ANCHOR,
+    'STYLE — Extension Blueprint: a polished flat orthographic technical site plan with disciplined ink linework, subtle hand-painted terrain texture, strong figure-ground contrast and high legibility at small print size. Fixed palette: deep slate roofs, layered olive and sage vegetation, cool blue-green water accents, warm buff soil, charcoal linework and off-white paper. The ground remains richly textured living land, never blank white, while every structure stays directly top-down with no perspective or isometric distortion.' + PLAN_SET_ANCHOR,
   karoo_folk:
     'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, decorative South African folk-pattern textures, charming handmade brushwork. Fixed palette: barn red, cobalt blue, sunflower yellow, pine green, whitewash cream.' + PLAN_SET_ANCHOR,
   chatgpt_atlas:

@@ -8,6 +8,7 @@ interface BuildInfo {
 }
 
 const UPDATE_CHECK_MS = 60_000;
+const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
 
 /**
  * Registers /sw.js and surfaces a small non-blocking toast once a NEW worker
@@ -135,7 +136,12 @@ export default function PWAUpdateNotifier() {
         // Normally /sw.js calls skipWaiting itself. This message also handles an older waiting
         // worker from a previous build before that behavior existed.
         registration?.waiting?.postMessage({ type: 'SKIP_WAITING' });
-        await registration?.update().catch(() => {});
+        // Chromium can leave update() pending while a dev server recompiles, and some installed
+        // PWAs do the same on a weak connection. Never let that block the user's explicit reload.
+        await Promise.race([
+          registration?.update().catch(() => {}) ?? Promise.resolve(),
+          new Promise<void>((resolve) => window.setTimeout(resolve, UPDATE_RELOAD_TIMEOUT_MS)),
+        ]);
       }
     } finally {
       window.location.reload();

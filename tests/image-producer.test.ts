@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
@@ -96,6 +96,22 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   assert.ok(prompt.includes('Do not add a title block, legend panel, paper border'));
   assert.ok(prompt.includes('Do not copy any emoji, map pin, tool icon, badge'));
   assert.ok(!prompt.includes('clean right-hand title/legend panel'));
+});
+
+test('locked Water prompt delegates features and map furniture to deterministic drawing', () => {
+  const prompt = buildLockedBackgroundPrompt('Water', 'extension_blueprint');
+
+  assert.ok(prompt.startsWith(STYLE_LINES.extension_blueprint));
+  assert.ok(prompt.includes('background artwork'));
+  assert.ok(prompt.includes('design infrastructure is intentionally absent'));
+  assert.ok(prompt.includes('draw it deterministically after this artwork pass'));
+  assert.ok(prompt.includes('flat orthographic top-down plan only'));
+  assert.ok(prompt.includes('draw background terrain only'));
+  assert.ok(prompt.includes('Add no objects'));
+  assert.ok(!prompt.includes('JoJo'));
+  assert.ok(!prompt.includes('Tap Point'));
+  assert.ok(!prompt.includes('Small Pond'));
+  assert.ok(!STYLE_LINES.extension_blueprint.includes('slight isometric'));
 });
 
 test('buildShowcasePrompt includes the title, labels and panel instructions', () => {
