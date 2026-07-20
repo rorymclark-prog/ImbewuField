@@ -12,6 +12,7 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } fro
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import { pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -1076,6 +1077,87 @@ async function requestProducer(
 
 // Short comma list of placed element names + counts, e.g. "Vegetable Bed x6, JoJo Tank".
 // Locked prompts omit editor glyphs so the image model cannot mistake them for final map art.
+/**
+ * Which named ground feature an item stands in — "Lawn", "Veg garden", "Patio / Paving".
+ *
+ * This is the honest way to get the reference sheet's "TAP POINT (COURTYARD)" disambiguation. The
+ * alternative — asking the image model to name the part of the site from the aerial photo — needs
+ * scene semantics it does not reliably have, and a plausible-but-WRONG place word is worse than
+ * none: it sends a farmer to the wrong tap. The farmer has already traced and named these areas,
+ * so the answer is data we hold, not a guess. Smallest containing ring wins, so a lawn wrapping a
+ * patio doesn't swallow everything inside it.
+ */
+function placeLabelFor(pt: [number, number], zones: DesignCanvasState['zones']): string | null {
+  let best: { label: string; area: number } | null = null;
+  for (const z of zones) {
+    if (!z.feature || z.points.length < 3 || !pointInRing(pt, z.points)) continue;
+    // Shoelace — relative area only, so the sign and scale don't matter.
+    let a = 0;
+    for (let i = 0, j = z.points.length - 1; i < z.points.length; j = i++) {
+      a += (z.points[j][0] + z.points[i][0]) * (z.points[j][1] - z.points[i][1]);
+    }
+    const area = Math.abs(a / 2);
+    const label = z.name ?? GROUND_FEATURES[z.feature]?.label ?? null;
+    if (!label) continue;
+    if (!best || area < best.area) best = { label, area };
+  }
+  return best?.label ?? null;
+}
+
+/**
+ * Element list for Satellite Overlay, where the MODEL letters every label and legend row.
+ *
+ * Differs from producerElementsText in one way that matters: when several of the same element sit
+ * in DIFFERENT named areas, each gets its own row carrying that area — "Tap Point (Lawn)",
+ * "Tap Point (Veg garden)" — which is what makes the reference sheet readable. Items that share an
+ * area (or sit outside every traced feature) collapse back to a single "Name ×N" row.
+ */
+function overlayElementsText(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+): string {
+  const byName = new Map<string, Array<string | null>>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def || !itemInFilter(def.category, filter)) continue;
+    const name = it.label ?? def.name;
+    const arr = byName.get(name) ?? [];
+    arr.push(placeLabelFor([it.x, it.y], state.zones));
+    byName.set(name, arr);
+  }
+
+  const parts: string[] = [];
+  for (const [name, places] of byName) {
+    const named = places.filter((p): p is string => !!p);
+    const distinct = new Set(named);
+    // Only worth splitting when the places actually tell them apart.
+    if (places.length > 1 && distinct.size > 1 && named.length === places.length) {
+      const seen = new Map<string, number>();
+      for (const p of places) seen.set(p!, (seen.get(p!) ?? 0) + 1);
+      for (const [place, n] of seen) parts.push(`${name} (${place})${n > 1 ? ` ×${n}` : ''}`);
+    } else {
+      parts.push(`${name}${places.length > 1 ? ` ×${places.length}` : ''}`);
+    }
+  }
+
+  if (zonesInFilter(filter)) {
+    for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
+  }
+  const lineCounts = new Map<string, number>();
+  for (const l of state.lines) {
+    if (!lineInFilter(l.kind, filter)) continue;
+    lineCounts.set(l.kind, (lineCounts.get(l.kind) ?? 0) + 1);
+  }
+  const LINE_NAME: Record<string, string> = {
+    swale: 'Swale', fence: 'Fence line', path: 'Walking path',
+    pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
+  };
+  for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
+  if (refLayers.driveway.length >= 2) parts.push('Tarred driveway');
+  return parts.join(', ');
+}
+
 function producerElementsText(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
@@ -1106,14 +1188,20 @@ function producerElementsText(
     if (!lineInFilter(l.kind, filter)) continue;
     lineCounts.set(l.kind, (lineCounts.get(l.kind) ?? 0) + 1);
   }
+  // NAMES ONLY — never drawing instructions. When the model letters the legend itself, every string
+  // in this list is printed on the sheet verbatim, so a parenthetical explanation here becomes a
+  // paragraph in the legend. (Seen in production: a legend row reading "the existing driveway — a
+  // simple dark TAR / ASPHALT access track of the exact traced shape (NOT a loop, roundabout or
+  // circular drive), kept clear with no plantings on it".) How to DRAW each feature belongs in the
+  // prompt body — FEATURE_LEGEND for the painted styles, the icon vocabulary for Satellite Overlay.
   const LINE_NAME: Record<string, string> = {
-    swale: 'swale (on-contour ditch)', fence: 'fence line', path: 'walking path',
-    pipe: 'water pipe route', drip: 'drip-irrigation line', windbreak: 'windbreak hedge',
+    swale: 'Swale', fence: 'Fence line', path: 'Walking path',
+    pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
   };
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
-  if (refLayers.driveway.length >= 2) parts.push('the existing driveway — a simple dark TAR / ASPHALT access track of the exact traced shape (NOT a loop, roundabout or circular drive), kept clear with no plantings on it');
+  if (refLayers.driveway.length >= 2) parts.push('Tarred driveway');
   return parts.join(', ');
 }
 
@@ -4603,7 +4691,9 @@ export default function DesignGlossy({
           true,
           lockActive ? lockedCompositeMarks(f) : undefined,
         );
-        const elementsText = producerElementsText(state, refLayers, f, !lockActive);
+        const elementsText = isModelChromeStyle(styleKey)
+          ? overlayElementsText(state, refLayers, f)
+          : producerElementsText(state, refLayers, f, !lockActive);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         // Satellite Overlay is handed a sheet-shaped canvas (map + blank cream panel) so the photo
         // never has to be moved to make room for the legend. See extendWithLegendPanel.
@@ -4687,7 +4777,9 @@ export default function DesignGlossy({
         true,
         lockActive ? lockedCompositeMarks(filter) : undefined,
       );
-      const elementsText = producerElementsText(state, refLayers, filter, !lockActive);
+      const elementsText = isModelChromeStyle(styleKey)
+        ? overlayElementsText(state, refLayers, filter)
+        : producerElementsText(state, refLayers, filter, !lockActive);
       const sheetInput = isModelChromeStyle(styleKey)
         ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
         : composite;
