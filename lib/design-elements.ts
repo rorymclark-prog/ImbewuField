@@ -780,6 +780,52 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     castsShade: true,
     tip: 'Mediterranean and Karoo star — drought- and frost-tolerant; needs a dry, sunny, well-drained spot.',
   },
+  // ── "Other" — the escape hatch ────────────────────────────────────────────────────────────────
+  // A fixed catalog can never cover a real farm. Rory: "if i took a picture we should be able to
+  // edit a label that is other". These are placed like any element and then RENAMED in the item
+  // editor (PlacedItem.label already overrides def.name everywhere — sheets, legends, labels and
+  // the AI element list), so a farmer can record a wash trough, a seedling tunnel or a grave
+  // without waiting for the catalog to catch up.
+  //
+  // One per placing step rather than a single generic one, because an element's CATEGORY is what
+  // decides which sheet it lands on (lib/glossy-filters.ts sheetForElement). A single "Other" would
+  // have to guess, and would put a farmer's water feature on the planting sheet half the time.
+  {
+    id: 'other_water',
+    category: 'water',
+    name: 'Other water thing',
+    icon: '🔵',
+    shape: 'rect',
+    wM: 1.5,
+    hM: 1.5,
+    color: '#2E7FC2',
+    zoneRec: [0, 1, 2],
+    tip: 'Anything the catalog does not cover yet — place it, then tap it to give it a name.',
+  },
+  {
+    id: 'other_planting',
+    category: 'growing',
+    name: 'Other planting',
+    icon: '🟢',
+    shape: 'rect',
+    wM: 2,
+    hM: 2,
+    color: '#4E8B3B',
+    zoneRec: [1, 2, 3],
+    tip: 'Anything the catalog does not cover yet — place it, then tap it to give it a name.',
+  },
+  {
+    id: 'other_structure',
+    category: 'structure',
+    name: 'Other structure',
+    icon: '🔺',
+    shape: 'rect',
+    wM: 2,
+    hM: 2,
+    color: '#8A7B63',
+    zoneRec: [0, 1, 2],
+    tip: 'Anything the catalog does not cover yet — place it, then tap it to give it a name.',
+  },
   {
     id: 'pollinator_strip',
     category: 'growing',

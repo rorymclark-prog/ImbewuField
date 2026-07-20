@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'New "Other" element on Water, Planting and Structures — place it, then name it yourself',
       'Driveways draw flat, not as a raised slab beside the house',
       'Only the things you designed get labels — the house and yard stay quiet',
       'Sector analysis now reads on a light paper base instead of a dark one',
