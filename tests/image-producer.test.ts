@@ -501,16 +501,47 @@ test('the access track is described as flat ground, never a slab or a roof', () 
   }
 });
 
-test('only DESIGNED elements get labels — never the existing site', () => {
-  // Rory: "instruct not to put labels for the base map only [the] after stuff". A plan is read by
-  // looking for what is new; captioning what the farmer walks past every day buries it.
+test('GROUND stays silent, but what the system SERVES is named', () => {
+  // Two channels on purpose. Ground the farmer walks past every day (lawn, patio, yard) carries no
+  // caption — captioning it buries the design. The beds and basins the irrigation feeds are the
+  // opposite: unnamed, they are unexplained shapes on his own plan ("why doesnt it include all the
+  // right elements"). Folding both into one string would force one rule on both.
   const p = buildSatelliteOverlayPrompt({
     layerLabel: 'Water', stylePreset: 'satellite_overlay',
-    elementsText: 'JoJo Tank 5000L ×2', fabric: 'Lawn, Patio / Paving', sheetKind: 'water',
+    elementsText: 'JoJo Tank 5000L ×2',
+    fabric: 'Lawn, Patio / Paving',
+    served: 'Vegetable Bed ×8, Banana Circle ×2',
+    sheetKind: 'water',
   });
+  // Ground: silent.
   assert.match(p, /LABEL THE DESIGN, NOT THE SITE/);
-  assert.match(p, /no caption on the house or any roof/);
   assert.match(p, /none on the driveway, paving, patio, yard, lawn or existing planting/);
-  // And the fabric clause must still say these carry no legend row on a layer sheet.
   assert.match(p, /no caption and no legend row of their own/);
+  // Served: named, captioned, and given its own EXISTING legend heading.
+  assert.match(p, /WHAT THIS SYSTEM SERVES/);
+  assert.match(p, /Vegetable Bed ×8, Banana Circle ×2/);
+  assert.match(p, /legend row each under a heading reading EXISTING/);
+  // ...and never counted as this layer's own system.
+  assert.match(p, /never take a RAINWATER, IRRIGATION or GREYWATER row/);
+});
+
+test('naming what the system serves always carries the add-none guard', () => {
+  // Naming these without it produced invented tree canopies and banana palms, because "Tree Basin"
+  // contains "tree". The name and the guard must never be separated.
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L ×2', served: 'Tree Basin ×5, Banana Circle ×2', sheetKind: 'water',
+  });
+  assert.match(p, /ALREADY THERE/);
+  assert.match(p, /redraw exactly what is marked, one for one/);
+  assert.match(p, /ADD NONE/);
+  assert.match(p, /no extra bed, basin, tree, canopy, palm or shrub appears anywhere/);
+});
+
+test('a sheet with nothing to serve says nothing about it', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting', stylePreset: 'satellite_overlay',
+    elementsText: 'Mango Tree', sheetKind: 'planting',
+  });
+  assert.doesNotMatch(p, /WHAT THIS SYSTEM SERVES/);
 });

@@ -22,7 +22,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     changes: [
       'New "Other" element on Water, Planting and Structures — place it, then name it yourself',
       'Driveways draw flat, not as a raised slab beside the house',
-      'Only the things you designed get labels — the house and yard stay quiet',
+      'Water plans name the beds and basins the irrigation feeds, under EXISTING',
+      'The house, driveway and lawn stay unlabelled so the design stands out',
       'Sector analysis now reads on a light paper base instead of a dark one',
       'The boundary is now a proper post-and-wire fence, not a ticked line',
       'No more invented trees scattered across your plan',

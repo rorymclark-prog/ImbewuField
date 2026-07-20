@@ -445,10 +445,11 @@ export function buildSatelliteOverlayPrompt(args: {
   stylePreset: StylePreset;
   elementsText: string;
   fabric?: string;
+  served?: string;
   placeName?: string;
   sheetKind: ShowcaseSheetKind;
 }): string {
-  const { layerLabel, stylePreset, elementsText, fabric = '', placeName, sheetKind } = args;
+  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', placeName, sheetKind } = args;
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
@@ -523,6 +524,16 @@ export function buildSatelliteOverlayPrompt(args: {
     ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';
 
+  // WHAT THIS LAYER SERVES. Separate from siteFabric because the two want opposite treatment: ground
+  // (lawn, patio, yard) is silent under rule 10, while the beds and basins an irrigation system
+  // feeds must be NAMED or the farmer is reading unexplained shapes on his own plan. The
+  // already-marked / one-for-one / add-none wording is load-bearing: an earlier version named these
+  // with no such guard and the render came back with invented tree canopies and banana palms,
+  // because "Tree Basin" contains "tree". Naming is only safe while this clause travels with it.
+  const servedClause = served.trim()
+    ? `\n\nWHAT THIS SYSTEM SERVES — NAMED, BUT NOT PART OF IT. Small faint outlines are already marked on the photograph for the beds and basins this layer waters: ${served}. Every one of them is ALREADY THERE — redraw exactly what is marked, one for one, at the marked size, and ADD NONE. The marker count is the count: no extra bed, basin, tree, canopy, palm or shrub appears anywhere on this sheet, and the open lawn between them stays open lawn. Give each a small white caption naming it exactly as written above, and one legend row each under a heading reading EXISTING. They are what this system waters, not part of the system itself, so they never take a RAINWATER, IRRIGATION or GREYWATER row.`
+    : '';
+
   // Generalises the zoneBands-only exemption below into a list naming whichever translucent-area
   // classes are actually present on THIS sheet. A single zoneBands-keyed ternary would silently miss
   // fabric on sheets (water, structures) where zoneBands is empty, and vice versa.
@@ -586,7 +597,7 @@ The boundary line itself is the crisp seam between the two.
 
 8. THE ROOF AND THE ACCESS TRACK ARE DIFFERENT THINGS. The pale grey shape with the white outline is the ROOF of the house: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. It is a building, and no part of it is ever paved, darkened or turned into road surface. The access track is separate, flat, at ground level, and lies where the photograph already shows it. They never merge and they never swap.
 
-9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}${zoneBands}${siteFabric}
+9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}${zoneBands}${siteFabric}${servedClause}
 
 10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.
 

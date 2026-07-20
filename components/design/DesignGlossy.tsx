@@ -1401,7 +1401,7 @@ function overlayElementsText(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
-): { elements: string; fabric: string } {
+): { elements: string; fabric: string; served: string } {
   const byName = new Map<string, Array<string | null>>();
   // Legend section per element name. A flat 30-row legend is unreadable on the whole-design sheet;
   // the reference masterplan groups its key into WATER / PLANTING / INFRASTRUCTURE and that is what
@@ -1515,15 +1515,16 @@ function overlayElementsText(
   // tree basins no veg bed drip irrigation!!!"). They have to be visible for the routes to mean
   // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
   // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
-  const fabric = [
-    ...groundRows(state, refLayers).map((row) => row.label),
-    ...contextElementNames(state, filter),
-  ]
-    .map((label) => label.replace(/[,|»]/g, '').trim())
-    .filter(Boolean)
-    .join(', ');
+  const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
+  const fabric = groundRows(state, refLayers).map((r) => clean(r.label)).filter(Boolean).join(', ');
+  // SERVED is a third channel, separate from fabric, because the two want opposite treatment.
+  // Ground — lawn, patio, yard — is SILENT: rule 10 forbids captioning what a farmer walks past
+  // every day. The beds and basins an irrigation system feeds are not that; leaving them unnamed
+  // left him looking at unexplained shapes on his own plan ("why doesnt it include all the right
+  // elements"). Folding both into one string would force one rule on both and caption the lawn.
+  const served = contextElementNames(state, filter).map(clean).filter(Boolean).join(', ');
 
-  return { elements, fabric };
+  return { elements, fabric, served };
 }
 
 /** Things a sheet must SHOW to be readable but must not COUNT as its own content.
@@ -1535,20 +1536,26 @@ function overlayElementsText(
  *  rule 7 would count them as water content and legend them here too. */
 function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
   if (filter !== 'water') return [];
-  const any = state.items.some((it) => {
+  const counts = new Map<string, number>();
+  for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && isContextElement(def, filter);
-  });
-  if (!any) return [];
-  // ONE GENERIC PHRASE, NEVER THE ELEMENT NAMES. The first version listed them individually —
-  // "Tree Basin ×5, Banana Circle ×2" — and the render came back with tree canopies and banana
-  // palms scattered across the site that the farmer had never placed. The comment four lines above
-  // this function's call site predicted it exactly: farmer-facing names go "straight into the icon
-  // matcher, firing ICON_MATCH.bed / .tree". "Tree Basin" contains "tree"; "Banana Circle" contains
-  // "banana". Naming a thing to a model that draws is asking it to draw that thing.
-  // The composite already carries the geometry — these are painted as faint marks in drawMarks —
-  // so the text only has to stop the model erasing them, not tell it what they are.
-  return ['low existing planting beds and shallow basins already marked as faint outlines'];
+    if (!def || !isContextElement(def, filter)) continue;
+    const name = it.label ?? def.name;
+    counts.set(name, (counts.get(name) ?? 0) + 1);
+  }
+  // NAMED, and that is a deliberate reversal. An earlier version listed them individually and the
+  // render came back with invented tree canopies and banana palms — "Tree Basin" contains "tree",
+  // "Banana Circle" contains "banana", and naming a thing to a model that draws is asking it to
+  // draw that thing. The next version replaced the names with one generic phrase, which stopped the
+  // invention but left a farmer looking at unexplained shapes on his own plan. He chose names:
+  // "why doesnt it include all the right elements".
+  // So the names are back, and the invention is held off by the PROMPT instead — the site-fabric
+  // clause states that every one of these is ALREADY MARKED on the photograph, that the count is
+  // the marker count, and that no new planting appears anywhere. Naming is safe only while that
+  // clause travels with it; the two must be changed together.
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([name, n]) => `${name}${n > 1 ? ` \u00d7${n}` : ''}`);
 }
 
 function producerElementsText(
@@ -3156,13 +3163,31 @@ export async function buildBlueprintWaterMapLegacy(
       note: 'Land-shaping and soakaway features are kept to the traced geometry.',
     });
   }
-  // This sheet now paints the traced ground under the plumbing, so it must key it too.
-  const ground = groundRows(state, refLayers);
-  if (ground.length) {
+  // EXISTING — the traced ground under the plumbing, plus the beds and basins this system waters.
+  // Both are shown so the routes read against something; both get a key row so nothing on the sheet
+  // is unexplained (Rory chose named-and-legended over silent). They are NOT water content: they
+  // stay out of the RAINWATER / IRRIGATION / GREYWATER sections, and the Planting sheet remains
+  // where they are counted.
+  const servedRows: BlueprintLegendRow[] = (() => {
+    const counts = new Map<string, { color: string; n: number }>();
+    for (const it of state.items) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def || !isContextElement(def, 'water')) continue;
+      const name = it.label ?? def.name;
+      const cur = counts.get(name) ?? { color: def.color, n: 0 };
+      cur.n += 1;
+      counts.set(name, cur);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]))
+      .map(([name, g]) => ({ color: g.color, label: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`, style: 'fill' as const }));
+  })();
+  const existing = [...groundRows(state, refLayers), ...servedRows];
+  if (existing.length) {
     sections.push({
-      title: 'EXISTING GROUND',
-      rows: ground,
-      note: 'What is already on the site, shown so the routes read against it.',
+      title: 'EXISTING',
+      rows: existing,
+      note: 'Already on the site — shown so the water routes read against what they serve.',
     });
   }
   const noteRows: BlueprintLegendRow[] = [
@@ -5429,7 +5454,7 @@ export default function DesignGlossy({
           true,
           isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(f) : undefined,
         );
-        const { elements: elementsText, fabric } = isModelChromeStyle(styleKey)
+        const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
           ? overlayElementsText(state, refLayers, f)
           : { elements: producerElementsText(state, refLayers, f, !lockActive), fabric: '' };
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
@@ -5444,7 +5469,7 @@ export default function DesignGlossy({
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
         const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
         const prompt = isModelChromeStyle(styleKey)
-          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, placeName, sheetKind: f })
+          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, placeName, sheetKind: f })
           : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey)
           : effectiveModelChrome
@@ -5515,7 +5540,7 @@ export default function DesignGlossy({
         true,
         isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(filter) : undefined,
       );
-      const { elements: elementsText, fabric } = isModelChromeStyle(styleKey)
+      const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(state, refLayers, filter)
         : { elements: producerElementsText(state, refLayers, filter, !lockActive), fabric: '' };
       const sheetInput = isModelChromeStyle(styleKey)
@@ -5534,7 +5559,7 @@ export default function DesignGlossy({
       const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, placeName, sheetKind: filter })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, placeName, sheetKind: filter })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey)
         : useShowcase
