@@ -456,7 +456,12 @@ export function drawMarks(
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
-    ctx.strokeStyle = 'rgba(140,235,106,0.9)';
+    // CHARTREUSE, not planting green. This was #8CEB6A — the same green family as the planting
+    // element fills (mulch_bank #7D9A4A, vetiver_row #4E8B3B) and the windbreak line #2F7A4A — while
+    // the prompt tells the model the boundary is "a bright chartreuse #B4E000 line". So the image
+    // and the brief disagreed, and the one long green ring on the sheet was easy to read as a
+    // planted row. Now the composite says exactly what the prompt says.
+    ctx.strokeStyle = 'rgba(180,224,0,0.95)'; // #B4E000
     ctx.lineWidth = 3;
     ctx.stroke();
   }
@@ -469,10 +474,17 @@ export function drawMarks(
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
-    ctx.fillStyle = 'rgba(58,53,44,0.55)';
+    // ROOF GREY WITH A WHITE OUTLINE — never a dark slab. This was rgba(58,53,44,·), which is the
+    // same near-black family as tar, so the composite handed the model two dark shapes and rule 8
+    // ("THE TWO DARK SHAPES ARE DIFFERENT THINGS … they never merge") asked it to separate things
+    // we had already merged for it. On the overlay style the driveway is not drawn into the
+    // composite at all, so the only dark region the model could find to paint tar onto was this
+    // house. Hence "the blooming driveway bleeds into the house again". A light roof with a bright
+    // outline cannot be mistaken for a carriageway.
+    ctx.fillStyle = `${GROUND_FEATURES.house.color}A6`; // #8A8D91
     ctx.fill();
-    ctx.strokeStyle = 'rgba(58,53,44,0.95)';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+    ctx.lineWidth = 2.5;
     ctx.stroke();
   }
 

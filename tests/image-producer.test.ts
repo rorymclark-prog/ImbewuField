@@ -354,7 +354,10 @@ test('the zones sheet tells the model that bands are areas, not element markers'
   assert.match(p, /ZONE BANDS/, 'the zones sheet must carry the zone-band rule');
   assert.match(p, /NEVER becomes a pictorial icon/, 'rule 5 must be explicitly overridden for bands');
   assert.match(p, /number badge/, 'the numerals must be permitted lettering');
-  assert.match(p, /\(8\) the translucent permaculture zone bands/, 'bands must be on the draw whitelist');
+  // Item (7), not (8): the whitelist lost "the tar driveway fill" once that clause was found to be
+  // ordering a near-black region the model could not locate — so it painted the house instead.
+  assert.match(p, /\(7\) the translucent permaculture zone bands/, 'bands must be on the draw whitelist');
+  assert.doesNotMatch(p, /the tar driveway fill/, 'nothing to add — the access track is already in the photograph');
   assert.match(p, /no other element, icon, tank, bed, tree or structure is added/, 'zones sheet must forbid invented elements');
   assert.match(p, /03 — ZONES PLAN/, 'canonical plan-set number');
 });
@@ -389,4 +392,50 @@ test('every AI sheet number matches the canonical plan set, none collide', () =>
   // was a DIFFERENT sheet in the printed set (02 is Sector Analysis, not Zones).
   assert.deepEqual(SHEET_NO, { zones: '03', water: '04', planting: '05', structures: '06', all: '07' });
   assert.equal(new Set(Object.values(SHEET_NO)).size, Object.keys(SHEET_NO).length, 'numbers must be unique');
+});
+
+// ── Icon specs must describe the MARKER SHAPE, never a line the marker is not ──
+// The ghost-hedge bug: OVERLAY_ICONS.mulch said "ONE dense continuous band … along exactly that
+// line" for Vetiver Bank, whose marker is a 2x2 m RECTANGLE with no line anywhere. Rule 5
+// simultaneously demands the icon stay the size of its marker. The only long line on a planting
+// composite is the property boundary — which the prompt itself describes as a green line with
+// regular perpendicular ticks, i.e. the drawing convention for a planted row. A vetiver hedge
+// appeared along the west fence on render after render. pollinator_strip (rect 1x5) had the
+// identical "following exactly that line" wording, which is why its labels drifted to the fence too.
+test('no icon spec sends a rectangular element off along a line', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'Vetiver Bank, Pollinator Strip ×3, Vetiver Row, Spekboom Hedge',
+    sheetKind: 'planting',
+  });
+  // The icon vocabulary section only — the boundary rule legitimately says "along its full length".
+  const icons = p.slice(p.indexOf('6. ICON LANGUAGE'), p.indexOf('7. THIS SHEET'));
+  assert.doesNotMatch(icons, /along exactly that line/, 'a rect marker has no line to run along');
+  assert.doesNotMatch(icons, /following exactly that line/, 'a rect marker has no line to follow');
+  assert.match(icons, /filling exactly that rectangle/, 'specs must name the marker shape');
+});
+
+test('the boundary is positively identified as a fence, not a planted row', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'Vetiver Bank',
+    sheetKind: 'planting',
+  });
+  assert.match(p, /never a hedge, windbreak, planted row or band of vegetation/);
+  // The composite now strokes the ring in this exact colour, so image and brief agree. Previously
+  // the composite drew #8CEB6A — the same green family as the planting fills.
+  assert.match(p, /#B4E000/);
+});
+
+test('the house is described as a pale roof, so tar can never be painted onto it', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L ×2',
+    sheetKind: 'water',
+  });
+  assert.match(p, /pale grey shape with the white outline is the ROOF/);
+  assert.match(p, /no part of it is ever paved, darkened or turned into road surface/);
 });
