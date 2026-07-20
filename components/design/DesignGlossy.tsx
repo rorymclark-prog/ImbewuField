@@ -384,18 +384,23 @@ function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions
 }
 
 /**
- * Satellite Overlay protects the ROOF and nothing else.
+ * NO_OVERLAY_MASK — Satellite Overlay deliberately sends NO protect mask. Measured, not assumed.
  *
- * "The north side of the roof turned into a driveway" is the most-reported corruption, and it is
- * structural: the house and the tar driveway are both dark grey ground shapes, so the model merges
- * them. On a PAINTED style a pixel-restore was the wrong cure — it pasted a photographic roof onto
- * painted land. Here the base IS the photograph, so restoring the roof from the source is invisible
- * and makes the corruption impossible rather than merely discouraged.
+ * The idea was to protect the roof so it could not be merged into the tar driveway. It backfired
+ * twice over on a real render:
  *
- * Deliberately NOT protected: the driveway (its caption is lettered on top of it), the boundary
- * (the model redraws it as a ticked chartreuse line) and every marker (they become icons).
+ *   1. buildProtectMask only draws the house when refLayers.house has >= 3 points. A farmer whose
+ *      house is a ground-FEATURE zone (the common case) has no house ref, so the mask came out
+ *      100% transparent / 0% protected.
+ *   2. A fully transparent mask is not a no-op at the edits endpoint. It is an explicit statement
+ *      that EVERY pixel is editable — so the model discarded the supplied aerial photograph and
+ *      generated a completely different farm, which is the one failure this style cannot have.
+ *
+ * The mask-free render keeps the photograph intact and the roof correct, so the prompt alone is
+ * carrying it. If the roof ever needs hard protection, the mask must first be built from the house
+ * feature zone as well as refLayers.house, and must never be sent when it protects nothing.
  */
-const OVERLAY_PROTECT_MASK_OPTIONS: ProtectMaskOptions = {
+const UNUSED_OVERLAY_PROTECT_MASK_OPTIONS: ProtectMaskOptions = {
   protectOutside: false,
   protectBoundary: false,
   protectDriveway: false,
@@ -4757,13 +4762,7 @@ export default function DesignGlossy({
         // restore it enabled pasted raw satellite pixels back over the painting (a photographic
         // roof on a painted map, or — with a degenerate mask — the whole render thrown away).
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
-        const protectMaskDataUrl: string | undefined = isModelChromeStyle(styleKey)
-          ? await extendMaskWithPanel(
-              await buildProtectMask(state, frame, refLayers, f, OVERLAY_PROTECT_MASK_OPTIONS),
-              frame.imgW * SCALE,
-              frame.imgH * SCALE,
-            )
-          : undefined;
+        const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
         const prompt = isModelChromeStyle(styleKey)
           ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: f })
           : lockActive
@@ -4852,14 +4851,7 @@ export default function DesignGlossy({
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = effectiveModelChrome;
       // See generateAllViaQueue: locked sheets send no mask; exactness is drawn on top instead.
-      // Satellite Overlay is the exception — it protects the roof, see OVERLAY_PROTECT_MASK_OPTIONS.
-      const protectMaskDataUrl: string | undefined = isModelChromeStyle(styleKey)
-        ? await extendMaskWithPanel(
-            await buildProtectMask(state, frame, refLayers, filter, OVERLAY_PROTECT_MASK_OPTIONS),
-            frame.imgW * SCALE,
-            frame.imgH * SCALE,
-          )
-        : undefined;
+      const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: filter })

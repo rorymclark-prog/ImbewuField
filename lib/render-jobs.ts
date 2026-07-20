@@ -80,6 +80,29 @@ function dataUrlBytes(dataUrl: string): number {
 /** Uploads each composite to Storage and writes the job doc; the Cloud Function takes it from there.
  *  Uploads run in parallel; on ANY failure every already-uploaded object is rolled back so no
  *  orphans are left, and the caller sees one clean error. Returns the jobId to subscribe to. */
+/** True when a protect mask has at least one fully opaque (protected) pixel. */
+async function maskProtectsSomething(maskDataUrl: string): Promise<boolean> {
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image();
+      el.onload = () => resolve(el);
+      el.onerror = () => reject(new Error('mask load failed'));
+      el.src = maskDataUrl;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth || img.width;
+    canvas.height = img.naturalHeight || img.height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+    ctx.drawImage(img, 0, 0);
+    const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 3; i < data.length; i += 4) if (data[i] === 255) return true;
+    return false;
+  } catch {
+    return false; // cannot verify it protects anything -> do not send it
+  }
+}
+
 export async function enqueueRenderJob(opts: {
   siteId: string;
   style: string;
@@ -118,7 +141,12 @@ export async function enqueueRenderJob(opts: {
         await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
         uploaded.push(inputPath);
         let protectMaskPath: string | undefined;
-        if (s.protectMaskDataUrl) {
+        // A mask that protects NOTHING must never be uploaded. At the edits endpoint a fully
+        // transparent mask is not a no-op — it states that every pixel is editable, and a real
+        // render answered that by discarding the supplied aerial photograph and generating a
+        // different farm. (The mirror case, a fully OPAQUE mask, silently reverted the render;
+        // see maskEditableFraction in lib/image-producer.) Neither extreme is ever intended.
+        if (s.protectMaskDataUrl && await maskProtectsSomething(s.protectMaskDataUrl)) {
           protectMaskPath = `renders/${uid}/${jobId}/mask-${s.key}.png`;
           await uploadString(ref(fb.storage, protectMaskPath), s.protectMaskDataUrl, 'data_url');
           uploaded.push(protectMaskPath);
