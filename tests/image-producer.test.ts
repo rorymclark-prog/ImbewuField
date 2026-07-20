@@ -486,3 +486,31 @@ test('the sector restyle still refuses to draw any analysis', () => {
   }
   assert.match(p, /no lettering of any kind/);
 });
+
+test('the access track is described as flat ground, never a slab or a roof', () => {
+  // It came back drawn as a raised, roof-like plane beside the house (Rory: "makes the driveway
+  // like a roof"). "At ground level" was not enough — the model needed the negatives.
+  for (const kind of ['all', 'water'] as const) {
+    const p = buildSatelliteOverlayPrompt({
+      layerLabel: 'Water', stylePreset: 'satellite_overlay',
+      elementsText: 'JoJo Tank 5000L ×2', sheetKind: kind,
+    });
+    assert.match(p, /FLAT GROUND and nothing else/);
+    assert.match(p, /no thickness, no raised edge, no side walls, no drop shadow/);
+    assert.match(p, /never a slab, platform, deck, plinth or roof/);
+  }
+});
+
+test('only DESIGNED elements get labels — never the existing site', () => {
+  // Rory: "instruct not to put labels for the base map only [the] after stuff". A plan is read by
+  // looking for what is new; captioning what the farmer walks past every day buries it.
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L ×2', fabric: 'Lawn, Patio / Paving', sheetKind: 'water',
+  });
+  assert.match(p, /LABEL THE DESIGN, NOT THE SITE/);
+  assert.match(p, /no caption on the house or any roof/);
+  assert.match(p, /none on the driveway, paving, patio, yard, lawn or existing planting/);
+  // And the fabric clause must still say these carry no legend row on a layer sheet.
+  assert.match(p, /no caption and no legend row of their own/);
+});
