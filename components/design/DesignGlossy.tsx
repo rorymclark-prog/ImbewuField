@@ -2221,6 +2221,42 @@ async function drawBlueprintBase(
   ctx.fillRect(0, 0, W, H);
 }
 
+/** Satellite under an ANALYSIS sheet: desaturated and lightened to a quiet paper tone.
+ *
+ *  drawBlueprintBase lays a dark scrim so bright design graphics pop on a moody ground, which is
+ *  right for the design sheets. The analysis sheets are the opposite problem: their content is
+ *  thin coloured arrows, arcs and dotted lines, and on dark subtropical bush a dark scrim leaves
+ *  them competing with near-black. Nothing here moves a pixel — the geometry is untouched, only
+ *  its saturation and lightness — so this stays a faithful photograph of the site. */
+async function drawAnalysisBase(
+  ctx: CanvasRenderingContext2D,
+  frame: CanvasFrame,
+  W: number,
+  H: number,
+): Promise<void> {
+  if (frame.satDataUrl) {
+    const img = await loadImage(frame.satDataUrl);
+    ctx.save();
+    // MULTIPLICATIVE, never a blend mode. The obvious approach — globalCompositeOperation
+    // 'saturation' with a low-saturation fill — SETS saturation to that value rather than reducing
+    // it, so it calms vivid foliage and simultaneously ADDS colour to grey roofs and tar. Measured:
+    // it raised mean chroma on an already-muted aerial. ctx.filter scales what is there and cannot
+    // invert like that. Guarded because Canvas filter support is not universal; without it the
+    // paper wash below still lightens, just with the greens left in.
+    if ('filter' in ctx) ctx.filter = 'saturate(0.5) brightness(1.12)';
+    ctx.drawImage(img, 0, 0, W, H);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#E9E3D4';
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.save();
+  // Then a warm paper wash, so the sheet reads as a printed plan rather than a faded photo.
+  ctx.fillStyle = 'rgba(246, 241, 228, 0.44)';
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+
 /** Trace a normalised ring as a closed path (leaves fill/stroke to the caller). */
 function blueprintRing(
   ctx: CanvasRenderingContext2D,
@@ -3813,8 +3849,12 @@ export async function buildBlueprintSectorMap(
   const pad = Math.round(W * 0.02);
   const rowH = Math.round(W * 0.026);
 
-  // 1. Satellite + scrim.
-  await drawBlueprintBase(ctx, frame, W, H);
+  // 1. Satellite + PAPER wash, not the design sheets' dark scrim. An analysis sheet is arrows and
+  //    arcs over ground, and over dense KZN bush the dark scrim leaves a near-black field that the
+  //    sun arc, wind arrows and frost ellipse have to fight. Desaturating and lightening instead
+  //    turns the photograph into a quiet base the analysis can sit on — the same reasoning behind
+  //    Precision Atlas's context treatment, done deterministically and for free.
+  await drawAnalysisBase(ctx, frame, W, H);
   // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);

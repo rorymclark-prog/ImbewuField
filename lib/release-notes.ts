@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector analysis now reads on a light paper base instead of a dark one',
       'The boundary is now a proper post-and-wire fence, not a ticked line',
       'No more invented trees scattered across your plan',
       'Your driveway stays on every sheet',
