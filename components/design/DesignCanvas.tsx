@@ -9,12 +9,12 @@
 // via `onChange`. Pointer-event driven (phone-first); the clientToViewBox conversion
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { newId, groundFillPolys } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
+import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
@@ -1209,6 +1209,43 @@ export default function DesignCanvas({
     [sectorSite, lat],
   );
 
+  // GROUND LABEL DE-COLLISION. Ground features nest, so their centroids sit almost on top of each
+  // other — "Property boundary", "Lawn" and "House" traced one inside the next all land within a
+  // few pixels, which is exactly the pile Rory reported. layoutCanvasLabels is the same engine that
+  // de-collides the plant pills; here it only produces a VERTICAL offset per ring, which the render
+  // adds to the centroid. A farmer who has dragged a label keeps full control: labelMovedByUser
+  // short-circuits the auto offset entirely rather than fighting it.
+  const labelMovedByUser = useCallback(
+    (z: ZoneShape) => Math.abs(z.labelDx ?? 0) > 0.003 || Math.abs(z.labelDy ?? 0) > 0.003,
+    [],
+  );
+  const groundLabelOffsets = useMemo(() => {
+    const out = new Map<string, number>();
+    if (!activeLayers.labels) return out;
+    const rings = state.zones.filter((z) => z.feature && z.points.length >= 3 && !labelMovedByUser(z));
+    if (rings.length < 2) return out;
+    const laid = layoutCanvasLabels(
+      rings.map((z) => {
+        const c = ringCentroid(z.points);
+        const text = z.name ?? GROUND_FEATURES[z.feature!].label;
+        return {
+          id: z.id,
+          cx: c[0] * imgW,
+          cy: c[1] * imgH,
+          gap: 0,
+          w: estimatePillWidth(text, 11, 6, 150),
+          h: 22,
+          iconR: 0, // a ground label has no icon disc of its own to avoid
+        };
+      }),
+    );
+    for (const pos of laid) {
+      const src = rings.find((r) => r.id === pos.id)!;
+      out.set(pos.id, pos.y / imgH - ringCentroid(src.points)[1]);
+    }
+    return out;
+  }, [state.zones, activeLayers.labels, imgW, imgH, labelMovedByUser]);
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -1463,6 +1500,12 @@ export default function DesignCanvas({
         {/* Zones + ground features. Effort-zone rings follow the Zones toggle; farmer-drawn
             ground areas (house/patio/lawn/…) follow the separate Ground toggle. */}
         {state.zones.map((z) => {
+            // AUTO-SEPARATED LABELS. Nested rings share a centroid almost exactly — a lawn drawn
+            // just inside the property boundary puts "Lawn" and "Property boundary" on top of each
+            // other, which is what Rory saw. layoutCanvasLabels (the engine already de-colliding
+            // the plant pills) pushes them apart; a farmer who drags a label still wins, because
+            // their labelDx/labelDy is applied on top of the auto position.
+            const auto = groundLabelOffsets.get(z.id) ?? 0;
             if (z.feature ? !activeLayers.ground : !activeLayers.zones) return null;
             const def = ZONE_DEFS[z.zone];
             // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
@@ -1486,8 +1529,8 @@ export default function DesignCanvas({
             const ldx = (z.labelDx ?? 0) + (isDraggingThisLabel ? labelDragDelta![0] : 0);
             const ldy = (z.labelDy ?? 0) + (isDraggingThisLabel ? labelDragDelta![1] : 0);
             const labelCx = centroid[0] + ldx;
-            const labelCy = centroid[1] + ldy;
-            const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003;
+            const labelCy = centroid[1] + ldy + (labelMovedByUser(z) ? 0 : auto);
+            const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003 || Math.abs(auto) > 0.003;
             // Ground-feature word-pills (House/Lawn/Paving…) are useful context on most steps but
             // buried the map in text on the Zones step ("words almost the whole screen"). Hide the
             // WORDS there — the coloured fills still orient you — while keeping zone number badges.
@@ -1506,15 +1549,33 @@ export default function DesignCanvas({
                   style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'stroke' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
-                <polygon
-                  points={ringToPx(effectivePoints, imgW, imgH)}
+                {/* NESTED, not stacked. A ground feature is filled as itself MINUS every smaller
+                    ground ring inside it, so tracing boundary -> lawn -> house -> patio gives four
+                    readable areas instead of four hatches piled on the roof. The OUTLINE still
+                    follows the ring the farmer actually drew — only the fill is cut — so the shape
+                    stays honest and editable. evenodd renders the difference result's holes. */}
+                <path
+                  d={feat && !isDraggingVertexOfThisShape && !isDraggingWholeShape
+                    ? groundFillPolys(state.zones, z)
+                        .flat()
+                        .map((ring: Array<[number, number]>) =>
+                          `M ${ring.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' L ')} Z`)
+                        .join(' ')
+                    : `M ${effectivePoints.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' L ')} Z`}
+                  fillRule="evenodd"
                   fill={hatchFill(color)}
                   fillOpacity={feat ? 0.32 : 0.2}
+                  stroke="none"
+                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
+                  onPointerDown={onZonePointerDown}
+                />
+                <polygon
+                  points={ringToPx(effectivePoints, imgW, imgH)}
+                  fill="none"
                   stroke={color}
                   strokeWidth={feat ? 2 : 1.5}
                   strokeDasharray={feat ? undefined : '6 4'}
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
-                  onPointerDown={onZonePointerDown}
+                  pointerEvents="none"
                 />
                 {isHighlighted && (
                   <polygon points={ringToPx(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" pointerEvents="none" />

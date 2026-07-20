@@ -38,6 +38,8 @@ export interface PlacedItem {
 // lawn, existing veg garden, orchard, cleared ground) — WHAT IS THERE, as opposed to the
 // permaculture effort-zones. Rides on ZoneShape via the optional `feature` tag so it reuses
 // the whole zone draw/edit/persist/adopt engine rather than a parallel shape system.
+import polygonClipping from 'polygon-clipping';
+
 export type GroundFeatureKind = 'house' | 'patio' | 'driveway' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared' | 'boundary';
 
 export interface ZoneShape {
@@ -406,6 +408,46 @@ const keyFor = (siteId: string) => `imbewu_design_canvas_${siteId}`;
 // both tolerate that, so painted zones still RENDER — but strict checks (new Set([1]).has(z.zone))
 // silently fail, which is what made a fully-painted Zones step still read "0/4" on the
 // step-by-step guide. Coerce to a clamped integer on load so every consumer sees a real number.
+/** Shoelace area magnitude of a normalised ring. Used only to order ground features by size. */
+export function ringAreaOf(pts: Array<[number, number]>): number {
+  let a = 0;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    a += pts[j][0] * pts[i][1] - pts[i][0] * pts[j][1];
+  }
+  return Math.abs(a / 2);
+}
+
+/** GROUND FEATURES NEST. A farmer traces the property boundary, then the lawn inside it, then the
+ *  house inside that, then the patio inside that — and drawn naively they simply stack, so the
+ *  lawn's hatch runs straight over the roof and the boundary's over everything (Rory: "polygons
+ *  must be nested in eachother"). A ring's TRUE extent is itself MINUS every smaller ground ring
+ *  inside it, which is the same donut rule zoneFillPolys already applies to effort-zones.
+ *
+ *  Strictly smaller only, by area: two rings of equal size cannot each cut the other, and a
+ *  same-size overlap is a tracing mistake the farmer should see rather than have silently hidden.
+ *  Returns MultiPolygon rings — [outer, ...holes] — which canvas' nonzero fill renders as holes
+ *  when each is its own subpath, and SVG renders the same way with fillRule="evenodd". */
+export function groundFillPolys(
+  zones: ZoneShape[],
+  z: ZoneShape,
+): Array<Array<Array<[number, number]>>> {
+  const subject: Array<Array<Array<[number, number]>>> = [[z.points]];
+  if (!z.feature || z.points.length < 3) return subject;
+  const mine = ringAreaOf(z.points);
+  const cutters: Array<Array<Array<[number, number]>>> = [];
+  for (const other of zones) {
+    if (other.id === z.id || !other.feature || other.points.length < 3) continue;
+    if (ringAreaOf(other.points) < mine) cutters.push([other.points]);
+  }
+  if (!cutters.length) return subject;
+  try {
+    const out = polygonClipping.difference(subject as never, ...(cutters as never[]));
+    return (out as unknown as Array<Array<Array<[number, number]>>>) ?? subject;
+  } catch {
+    return subject; // degenerate ring — better an overlapping fill than a crash
+  }
+}
+
 export function normalizeZoneNumbers(state: DesignCanvasState): DesignCanvasState {
   if (!Array.isArray(state.zones)) return state;
   let changed = false;
