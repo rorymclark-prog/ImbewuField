@@ -6,7 +6,7 @@
     "dev": "next dev -p 4242",
     "build": "next build",
     "start": "next start",
-    "test": "node --test tests/image-producer.test.ts",
+    "test": "node --import ./tests/register-alias.mjs --test tests/image-producer.test.ts tests/producer-labels.test.ts",
     "seed": "node scripts/seed.mjs",
     "seed:emulator": "node scripts/seed-emulator.mjs",
     "dev:emulator": "NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1 next dev -p 4243"
