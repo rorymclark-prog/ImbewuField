@@ -400,16 +400,20 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     tip: 'Cut-and-fill a level shelf across steep ground (steeper than ~1:5). Retain the face with rock, gabion or vetiver or it will slump.',
   },
   {
+    // Keeps the id so existing placements survive. It is a LIVING cut-and-come-again grass bank,
+    // not a static stockpile, so it sits in 'growing' and appears on the Planting sheet rather than
+    // Water. (Vetiver planted on contour does slow and spread water too — draw that with the swale
+    // or windbreak line tool, which is where the water layer picks it up.)
     id: 'mulch_bank',
-    category: 'earthworks',
-    name: 'Mulch Bank',
-    icon: '🍂',
+    category: 'growing',
+    name: 'Vetiver Bank',
+    icon: '🌾',
     shape: 'rect',
     wM: 2,
     hM: 2,
-    color: '#A9743F',
+    color: '#7D9A4A',
     zoneRec: [2, 3],
-    tip: 'Stockpile chip/straw near orchard rows to save wheelbarrow trips.',
+    tip: 'A living bank of vetiver you cut again and again for mulch and compost. Slash it a few times a season, drop the leaf straight onto beds and tree basins. Its deep roots also hold the soil where it stands.',
   },
   {
     id: 'shed',

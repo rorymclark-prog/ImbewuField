@@ -374,7 +374,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
   basin:     'a greywater/basin marker → a circular planted rosette of green leaves inside a brown earth ring',
   banana:    'a banana-circle marker → a circular pit ringed in brown earth with a rosette of broad green banana leaves radiating from the centre',
-  mulch:     'a mulch-bank marker → a crescent-shaped band of green-over-brown mulch following exactly that arc',
+  mulch:     'a vetiver-bank marker → a dense band of upright blue-green grass tussocks following exactly that line, cut low at one end to show it is harvested',
   borehole:  'a borehole marker → a small blue concentric-circle target with a grey collar ring',
   bed:       'a green rectangle marker → a vegetable bed: brown tilled soil in parallel strips with regular rows of small green plants',
   tree:      'a tree marker → a rounded green canopy disc with a soft shadow offset to the lower-right',
@@ -392,7 +392,7 @@ const OVERLAY_ICONS: Record<string, string> = {
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
   all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
-  water:      ['tank', 'tap', 'dam', 'basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip'],
+  water:      ['tank', 'tap', 'dam', 'basin', 'banana', 'borehole', 'swale', 'pipe', 'drip'],
   planting:   ['bed', 'tree', 'windbreak', 'mulch', 'banana'],
   structures: ['building', 'hive', 'patio', 'fence', 'path'],
 };
@@ -401,7 +401,7 @@ const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
 // for is how a prompt talks a model into drawing one.
 const ICON_MATCH: Record<string, RegExp> = {
   tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /dam|pond/i,
-  basin: /basin|greywater|grey water/i, banana: /banana/i, mulch: /mulch/i,
+  basin: /basin|greywater|grey water/i, banana: /banana/i, mulch: /mulch|vetiver/i,
   borehole: /borehole|well/i, bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
   hive: /hive|bee/i, building: /house|shed|hut|barn|building|structure/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
