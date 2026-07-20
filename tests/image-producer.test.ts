@@ -277,3 +277,46 @@ test('satellite overlay style keeps the photo, letters its own sheet, and drops 
   assert.doesNotMatch(p, /rounded green canopy disc/);
   assert.ok(p.length < 16000, `prompt ${p.length} must fit the worker's PROMPT_MAX`);
 });
+
+test('overlay icon vocabulary matches element NAMES, not headings or place suffixes', () => {
+  // The grouped legend format introduced substring collisions that reached real sheets:
+  // "MacaDAMia Tree" fired the pond icon, the literal heading "INFRASTRUCTURE" and the suffix
+  // "Tap Point (House)" both fired the building icon, and "Tree Basin" fired the greywater basin.
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Full design',
+    stylePreset: 'satellite_overlay',
+    elementsText:
+      'INFRASTRUCTURE » Chicken Tractor, Nursery Table, Compost Bay (3-bin) | '
+      + 'PLANTING » Macadamia Tree, Pollinator Strip ×3, Tree Basin (Cleared / other) ×5, Banana Circle ×2, Vetiver Bank | '
+      + 'WATER » Tap Point (House), Tap Point (Patio / Paving)',
+    placeName: 'Carl and Sandys Place',
+    sheetKind: 'all',
+  });
+  const icons = p.split('ICON LANGUAGE')[1].split('\n')[0];
+
+  // Collisions that must NOT fire — nothing here is a pond, a shed or a patio.
+  assert.doesNotMatch(icons, /lily pads/, 'Macadamia must not summon the pond icon');
+  assert.doesNotMatch(icons, /leave the real roof/, 'headings and place suffixes are not buildings');
+  assert.doesNotMatch(icons, /paved patio/, 'a tap placed on paving is not a patio element');
+
+  // The four elements that reached real sheets with no icon spec at all.
+  assert.match(icons, /A-frame ark/, 'chicken tractor');
+  assert.match(icons, /seedling trays/, 'nursery table');
+  assert.match(icons, /timber-slat bays/, 'compost bay');
+  assert.match(icons, /mixed wildflowers/, 'pollinator strip');
+
+  // Confusable pairs must differ by SILHOUETTE, not species.
+  assert.match(icons, /no leaf rosette of its own/, 'tree basin is distinct from a banana circle');
+  assert.match(icons, /raised earth bund/, 'banana circle keeps its own description');
+});
+
+test('drip runs are counted from the drawn lines, not from the beds', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'Vegetable Bed ×8, Drip irrigation line ×3',
+    placeName: 'X', sheetKind: 'water',
+  });
+  assert.match(p, /exactly as many runs as there are green dashed lines/);
+  // The old wording promised one run per BED, which turned 3 lines into 8 runs on a real sheet.
+  assert.doesNotMatch(p, /one run down each bed/);
+});

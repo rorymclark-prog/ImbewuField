@@ -372,12 +372,18 @@ const OVERLAY_ICONS: Record<string, string> = {
   tank:      'a small drum/cylinder marker → a blue cylindrical JoJo water tank seen from a high top-down angle, ribbed body, darker lid disc, soft shadow to the lower-right',
   tap:       'a small tap/valve marker → a plain garden tap on its own, drawn small and low-key: just the spout and handle, no post, no plinth and no concrete base pad',
   dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
-  basin:     'a greywater/basin marker → a circular planted rosette of green leaves inside a brown earth ring',
-  banana:    'a banana-circle marker → a circular pit ringed in brown earth with a rosette of broad green banana leaves radiating from the centre',
-  mulch:     'a vetiver-bank marker → a dense band of upright blue-green grass tussocks following exactly that line, cut low at one end to show it is harvested',
+  basin:     'a greywater or infiltration basin marker → a gravel-filled circular sump with a visible inlet pipe entering one side and low reeds around the rim only',
+  banana:    'a banana-circle marker → a sunken pit about 2 m across filled with dark mulch and ringed by a raised earth bund, with four or five broad paddle-shaped banana leaves fanning out over the rim',
+  mulch:     'a vetiver-bank marker → ONE dense continuous band of upright blue-green grass tussocks along exactly that line, cut low at one end to show it is harvested',
+  vetiver_row: 'a vetiver-row marker → single-file separate grass clumps with visible gaps between them, not a continuous band',
+  tree_basin: 'a tree-basin marker → a shallow saucer of bare brown earth ringed by a low soil berm and mulched, sitting under the canopy it serves — it has no leaf rosette of its own',
+  coop:      'a chicken-tractor marker → a small A-frame ark on skids about 2 m long, timber ends and chicken-wire sloping sides, two small wheels at one end. It is a movable hen house, NOT a tractor and not any kind of vehicle',
+  nursery:   'a nursery-table marker → a waist-high slatted timber bench carrying rows of small black seedling trays under light shade cloth',
+  compost:   'a compost-bay marker → three adjacent open-topped timber-slat bays in a row, the left one heaped with dark brown compost',
+  pollinator: 'a pollinator-strip marker → a narrow ribbon of low mixed wildflowers, yellow, white and mauve dots over grey-green foliage, following exactly that line',
   borehole:  'a borehole marker → a small blue concentric-circle target with a grey collar ring',
   bed:       'a green rectangle marker → a vegetable bed: brown tilled soil in parallel strips with regular rows of small green plants',
-  tree:      'a tree marker → a rounded green canopy disc with a soft shadow offset to the lower-right',
+  tree:      'a tree marker → a canopy seen from above with a soft shadow to the lower-right, drawn to its species where the label names one: moringa feathery and pale, avocado dark glossy and dense, macadamia dense mid-green, citrus small round bright green flecked with orange fruit, mango broad and dark, pawpaw a crown of big lobed leaves on a bare stem',
   hive:      'a hive marker → a small stacked striped beehive box',
   building:  'a hut or shed marker → leave the real roof from the photograph exactly as it is and outline it only',
   patio:     'a warm-tan area marker → a paved patio of exactly that shape, laid in a regular slab pattern',
@@ -390,20 +396,20 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path'],
+  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'nursery', 'compost', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
-  water:      ['tank', 'tap', 'dam', 'basin', 'banana', 'borehole', 'swale', 'pipe', 'drip'],
-  planting:   ['bed', 'tree', 'windbreak', 'mulch', 'banana'],
-  structures: ['building', 'hive', 'patio', 'fence', 'path'],
+  water:      ['tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'borehole', 'swale', 'pipe', 'drip'],
+  planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
+  structures: ['building', 'hive', 'coop', 'nursery', 'compost', 'patio', 'fence', 'path'],
 };
 
 // Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
 // for is how a prompt talks a model into drawing one.
 const ICON_MATCH: Record<string, RegExp> = {
-  tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /dam|pond/i,
-  basin: /basin|greywater|grey water/i, banana: /banana/i, mulch: /mulch|vetiver/i,
+  tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /\bdam\b|\bpond\b/i, // anchored: unanchored, this fired on "Maca-dam-ia Tree"
+  basin: /greywater|grey water|infiltration/i, tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
   borehole: /borehole|well/i, bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
-  hive: /hive|bee/i, building: /house|shed|hut|barn|building|structure/i,
+  hive: /hive/i, coop: /chicken tractor|chicken coop/i, nursery: /nursery/i, compost: /compost|worm farm/i, pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
 };
@@ -429,8 +435,15 @@ export function buildSatelliteOverlayPrompt(args: {
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
   const keys = ICON_KEYS_BY_SHEET[sheetKind] ?? ICON_KEYS_BY_SHEET.all;
-  const present = keys.filter((k) => ICON_MATCH[k]?.test(elementsText));
-  const iconSpec = (present.length ? present : keys).map((k) => OVERLAY_ICONS[k]).join('; ');
+  // Match against the bare element NAMES. The grouped headings and the place suffixes are not
+  // element names and matching them produced real damage: "INFRASTRUCTURE" fired the building
+  // icon, "Tap Point (House)" fired it again, "Tap Point (Patio / Paving)" fired the patio icon,
+  // and "MacaDAMia Tree" fired the pond icon.
+  const matchText = elementsText.replace(/[A-Z ]+\u00bb\s*/g, '').replace(/\s*\([^)]*\)/g, '');
+  const present = keys.filter((k) => ICON_MATCH[k]?.test(matchText));
+  // No fallback to the full list: describing an icon this sheet has no marker for is how a prompt
+  // talks a model into drawing one.
+  const iconSpec = present.map((k) => OVERLAY_ICONS[k]).join('; ');
 
   // Strip the editor glyphs before they reach the prompt. They still do their identifying work in
   // the input IMAGE, where they are drawn onto each marker — but this sheet's labels are lettered
@@ -502,11 +515,11 @@ The boundary line itself is the crisp seam between the two.
 
 6. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
 
-7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. That list is the COMPLETE contents of this ${(layerLabel || 'site').toUpperCase()} sheet — it is the whole design for this layer, and the other layers of the plan set carry everything else. Anything not named there belongs on a different sheet and is simply absent here. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
+7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. The WATER / PLANTING / INFRASTRUCTURE headings are a printing order for the legend panel only. They say nothing about where anything sits and they are not a drawing order: never move an element to stand near others from its own legend section — each icon goes on its own marker and nowhere else. That list is the COMPLETE contents of this ${(layerLabel || 'site').toUpperCase()} sheet — it is the whole design for this layer, and the other layers of the plan set carry everything else. Anything not named there belongs on a different sheet and is simply absent here. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
 
 8. THE TWO DARK SHAPES ARE DIFFERENT THINGS. The building is a roof: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. The driveway is flat ground: a smooth tar surface at ground level. They never merge, and no part of a roof becomes road surface.
 
-9. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs, redrawn as runs of small bright #2E9BFF dots that lie along the vegetable beds themselves — one run down each bed, on the growing rows, never along a walking path or between the beds; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}
+9. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}
 
 10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
 
