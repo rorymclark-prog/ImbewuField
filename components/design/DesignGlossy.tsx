@@ -11,7 +11,7 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } fro
 
 import polygonClipping from 'polygon-clipping';
 
-import type { CanvasFrame, DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
@@ -2061,6 +2061,72 @@ function drawBlueprintDriveway(
   ctx.restore();
 }
 
+/** Signed-area magnitude of a normalised ring (shoelace). Used only for draw ORDER. */
+function ringArea(pts: Array<[number, number]>): number {
+  let a = 0;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    a += pts[j][0] * pts[i][1] - pts[i][0] * pts[j][1];
+  }
+  return Math.abs(a / 2);
+}
+
+/** The GROUND the farmer actually traced — lawn, orchard, veg garden, patio, cleared. These were
+ *  already feeding the AI brief (the "GROUND:" line in the element list) but were drawn on NO
+ *  sheet, so a site whose whole south end is orchard rendered as bare satellite there and the
+ *  reader had to take the model's word for it. Painted here, underneath everything the design
+ *  adds on top.
+ *
+ *  `house` and `driveway` are deliberately excluded: both have dedicated draws with their own
+ *  stacking order (the house must sit ABOVE planting so canopies can't crop the roof), and
+ *  painting them twice just double-darkens the fill. */
+function drawBlueprintGround(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  W: number,
+): void {
+  const rings = state.zones.filter(
+    (z) => z.feature && z.feature !== 'house' && z.feature !== 'driveway' && z.points.length >= 3,
+  );
+  if (!rings.length) return;
+  // Biggest first — a lawn that wraps a veg patch must not bury the patch.
+  const sorted = [...rings].sort((a, b) => ringArea(b.points) - ringArea(a.points));
+  // Hard / bare surfaces read as SURFACE, not vegetation, so they take a hatch instead of a
+  // solid wash (Rory: "driveway patio all those types of polygons should get hatching").
+  const HARD = new Set<GroundFeatureKind>(['patio', 'cleared']);
+  const step = Math.max(9, W * 0.007);
+  for (const z of sorted) {
+    const meta = GROUND_FEATURES[z.feature!];
+    const hard = HARD.has(z.feature!);
+    ctx.save();
+    blueprintRing(ctx, z.points, px, py);
+    ctx.fillStyle = `${meta.color}${hard ? '55' : '99'}`;
+    ctx.fill();
+    if (hard) {
+      ctx.clip();
+      const xs = z.points.map((p) => px(p[0]));
+      const ys = z.points.map((p) => py(p[1]));
+      const x0 = Math.min(...xs), x1 = Math.max(...xs);
+      const y0 = Math.min(...ys), y1 = Math.max(...ys);
+      const h = y1 - y0;
+      ctx.strokeStyle = `${meta.color}CC`;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      for (let d = x0 - h; d < x1; d += step) {
+        ctx.moveTo(d, y0);
+        ctx.lineTo(d + h, y1);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+    blueprintRing(ctx, z.points, px, py);
+    ctx.strokeStyle = `${meta.color}F2`;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+  }
+}
+
 /** Site boundary — green line with perpendicular fence ticks. */
 function drawBlueprintBoundary(
   ctx: CanvasRenderingContext2D,
@@ -2377,6 +2443,22 @@ const SPECIES_INDEX: Record<string, number> = (() => {
 function speciesColor(defId: string): string {
   const i = SPECIES_INDEX[defId] ?? 0;
   return SPECIES_PALETTE[i % SPECIES_PALETTE.length];
+}
+
+/** Legend rows for the traced ground drawn by drawBlueprintGround — same exclusions, same order
+ *  (biggest first), so the panel reads down in the order the eye meets the washes. Renamed rings
+ *  keep their own name, matching how the farmer labelled them in the editor. */
+function groundRows(state: DesignCanvasState): BlueprintLegendRow[] {
+  return state.zones
+    .filter((z) => z.feature && z.feature !== 'house' && z.feature !== 'driveway' && z.points.length >= 3)
+    .sort((a, b) => ringArea(b.points) - ringArea(a.points))
+    .map((z) => ({
+      color: GROUND_FEATURES[z.feature!].color,
+      label: z.name ?? GROUND_FEATURES[z.feature!].label,
+      style: 'fill' as const,
+    }))
+    // Two lawns are one legend row.
+    .filter((row, i, all) => all.findIndex((r) => r.label === row.label) === i);
 }
 
 /** Group a sheet's items into legend rows: one row per distinct name, with a count, commonest
@@ -2942,32 +3024,43 @@ export async function buildBlueprintPlantingMap(
   // 1. Satellite + blueprint scrim.
   await drawBlueprintBase(ctx, frame, W, H);
 
-  // 2. The planting itself, at true footprint.
+  // 2. The traced ground — orchard, lawn, veg garden — UNDER the design's own planting.
+  drawBlueprintGround(ctx, state, px, py, W);
+
+  // 3. The planting itself, at true footprint.
   for (const it of bySizeDesc(state, 'planting')) {
     drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
   }
 
-  // 3. House + driveway ON TOP of the planting so nearby canopies cannot visually crop the roof.
+  // 4. House + driveway ON TOP of the planting so nearby canopies cannot visually crop the roof.
   //    They stay context, but they must remain readable on the final sheet.
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.9)', '#FFFFFF', 3);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
 
-  // 4. Boundary — green line with perpendicular fence ticks.
+  // 4b. Name every species ON THE MAP, grouped, with one leader per group — the same margin-pill
+  //     layout the water sheet has had all along. Until now this sheet drew canopies with no way
+  //     to tell a mango from a macadamia except by matching legend swatch colours by eye.
+  drawBlueprintLabelPills(ctx, producerLabels(state, refLayers, W, H, 'planting'));
+
+  // 5. Boundary — green line with perpendicular fence ticks.
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
-  // 5. Title (top-left).
+  // 6. Title (top-left).
   drawBlueprintTitle(ctx, W, pad, 'PLANTING & AGROFORESTRY PLAN', placeName ?? 'Planting plan');
 
-  // 6. Legend (top-right) — the species actually present, then the fixed context rows.
+  // 7. Legend (top-right) — the species actually present, then the traced ground, then the fixed
+  //    context rows. Ground rows are fixed rather than compressible: they name painted AREAS, and
+  //    an unexplained green wash across half the sheet is worse than one fewer species row.
   const rowH = Math.round(W * 0.026);
-  const fixed: BlueprintLegendRow[] = [{ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' }];
+  const fixed: BlueprintLegendRow[] = [...groundRows(state)];
+  fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
   drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Canopies drawn at mature spread.');
 
-  // 7. Scale bar (bottom-left).
+  // 8. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
   drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
