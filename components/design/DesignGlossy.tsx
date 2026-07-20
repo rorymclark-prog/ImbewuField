@@ -2095,30 +2095,45 @@ function ringArea(pts: Array<[number, number]>): number {
   return Math.abs(a / 2);
 }
 
-/** The GROUND the farmer actually traced — lawn, orchard, veg garden, patio, cleared. These were
- *  already feeding the AI brief (the "GROUND:" line in the element list) but were drawn on NO
- *  sheet, so a site whose whole south end is orchard rendered as bare satellite there and the
- *  reader had to take the model's word for it. Painted here, underneath everything the design
- *  adds on top.
+/** The GROUND the farmer actually traced — lawn, orchard, veg garden, patio, cleared, and (see
+ *  below) the house and driveway. It is the site's EXISTING FABRIC, and it belongs on every sheet
+ *  as context: a Water plan still needs to show the paving the pipe runs under, and a Zones plan is
+ *  unreadable without the lawn and the yard that define the zones. (Rory: "it should be contained
+ *  in all layers including patio lawn all these things! … we were supposed to have ironed this out
+ *  already.")
  *
- *  `house` and `driveway` are deliberately excluded: both have dedicated draws with their own
- *  stacking order (the house must sit ABOVE planting so canopies can't crop the roof), and
- *  painting them twice just double-darkens the fill. */
+ *  HOUSE AND DRIVEWAY ARE CONDITIONAL, and this is the bug he hit. They used to be excluded flat,
+ *  on the reasoning that both have dedicated draws with their own stacking order (the house must
+ *  sit ABOVE planting so canopies can't crop the roof) and painting them twice double-darkens the
+ *  fill. That is true only when refLayers actually HAS them — and refLayers is built solely from
+ *  MAIN-MAP traced layers (app/design/page.tsx), never from Studio-traced ZoneShape features. So a
+ *  farmer who traced his driveway and house inside the Design Studio, exactly where the Base step
+ *  invites him to, got them drawn on ZERO sheets in BOTH render paths. They are now skipped only
+ *  when the dedicated draw will really cover them. */
 function drawBlueprintGround(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
   px: (n: number) => number,
   py: (n: number) => number,
   W: number,
+  refLayers?: DesignGlossyProps['refLayers'],
 ): void {
-  const rings = state.zones.filter(
-    (z) => z.feature && z.feature !== 'house' && z.feature !== 'driveway' && z.points.length >= 3,
-  );
+  // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
+  // empty one means the farmer traced this in the Studio and nothing else will draw it.
+  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
+  const rings = state.zones.filter((z) => {
+    if (!z.feature || z.points.length < 3) return false;
+    if (z.feature === 'house') return !houseCovered;
+    if (z.feature === 'driveway') return !drivewayCovered;
+    return true;
+  });
   if (!rings.length) return;
   // Biggest first — a lawn that wraps a veg patch must not bury the patch.
   const sorted = [...rings].sort((a, b) => ringArea(b.points) - ringArea(a.points));
   // Hard / bare surfaces read as SURFACE, not vegetation, so they take a hatch instead of a
   // solid wash (Rory: "driveway patio all those types of polygons should get hatching").
+  // The driveway is tar: solid and dark, never hatched — hatching a carriageway reads as gravel.
   const HARD = new Set<GroundFeatureKind>(['patio', 'cleared']);
   const step = Math.max(9, W * 0.007);
   for (const z of sorted) {
@@ -2555,6 +2570,11 @@ export async function buildBlueprintZoneMap(
   // 1. Satellite base + blueprint scrim (so the graphics pop on a moody dark ground).
   await drawBlueprintBase(ctx, frame, W, H);
 
+  // 1b. Existing site fabric UNDER the zone washes. A zone map is about distance from the house, so
+  //     it is unreadable without the yard, lawn and paving that give those distances meaning — but
+  //     it stays beneath the zones, which are this sheet's subject.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+
   // 2. Zones 1..5 — translucent wash + diagonal hatch (clipped) + dashed coloured outline.
   const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3 && z.zone !== 0);
   const step = Math.max(12, W * 0.009);
@@ -2915,6 +2935,9 @@ export async function buildBlueprintWaterMap(
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
   await drawBlueprintBase(ctx, frame, W, H);
+  // Existing site fabric under the plumbing — a water plan has to show the paving a pipe runs
+  // beneath and the veg garden a drip line feeds, or the routes float on bare satellite.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers);
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(48,54,59,0.9)', 'rgba(255,253,244,0.9)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
@@ -3050,7 +3073,7 @@ export async function buildBlueprintPlantingMap(
   await drawBlueprintBase(ctx, frame, W, H);
 
   // 2. The traced ground — orchard, lawn, veg garden — UNDER the design's own planting.
-  drawBlueprintGround(ctx, state, px, py, W);
+  drawBlueprintGround(ctx, state, px, py, W, refLayers);
 
   // 3. The planting itself, at true footprint.
   for (const it of bySizeDesc(state, 'planting')) {
@@ -3117,6 +3140,10 @@ export async function buildBlueprintStructuresMap(
 
   // 1. Satellite + blueprint scrim.
   await drawBlueprintBase(ctx, frame, W, H);
+
+  // 1b. Existing site fabric — paving, yard, lawn, and a Studio-traced house/driveway. On the
+  //     INFRASTRUCTURE sheet the built surfaces are arguably the subject, so they matter most here.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers);
 
   // 2. House + driveway. On THIS sheet the built fabric is content, not background, so the
   //    driveway keeps the zone sheet's dashed kerb and the house gets a brighter outline.
