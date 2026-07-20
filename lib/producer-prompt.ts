@@ -445,8 +445,21 @@ export function buildSatelliteOverlayPrompt(args: {
   // The reference sheet reads as three named subsystems, and Rory's standing rule is that the
   // greywater half is never left off a water plan — it is the part farmers actually get wrong.
   const waterSystems = sheetKind === 'water'
-    ? `\n\nWATER SHEET — THREE SUBSYSTEMS, ALL THREE SHOWN. Group everything on this sheet, on the map and in the legend, under three headings: RAINWATER (roof gutters and downpipes, first-flush/leaf filter, the linked tanks, pump and filter, overflow infiltration basin), IRRIGATION (the buried main, drip headers and laterals lying along the beds, isolation and flush valves, pressure regulator, outdoor taps), and FILTERED GREYWATER (the diverter and filter off the house, the subsurface greywater line drawn as a violet dashed run, inspection and flush points along it, and every basin it feeds — banana-circle basins and orchard-tree mulch basins). The greywater half is never omitted: wherever the design places a greywater basin, a banana circle or a tree basin, show the violet greywater line that feeds it running from the house to those basins, and give FILTERED GREYWATER its own legend section. Greywater discharges below mulch, never onto edible leaves.`
+    ? `\n\nWATER SHEET — THREE SUBSYSTEMS, ALL THREE SHOWN. Group everything on this sheet, on the map and in the legend, under three headings: RAINWATER (roof gutters and downpipes, first-flush/leaf filter, the linked tanks, pump and filter, overflow infiltration basin), IRRIGATION (the buried main, drip headers and laterals lying along the beds, isolation and flush valves, pressure regulator, outdoor taps), and FILTERED GREYWATER (the diverter and filter off the house, the subsurface greywater line drawn as a violet dashed run, inspection and flush points along it, and every basin it feeds — run it to the banana circles first, which are the ideal greywater destination, then on to the tree basins and any greywater basin). The greywater half is never omitted: wherever the design places a greywater basin, a banana circle or a tree basin, show the violet greywater line that feeds it running from the house to those basins, and give FILTERED GREYWATER its own legend section. Greywater discharges below mulch, never onto edible leaves.`
     : '';
+
+  // Every element becomes a literal legend row. Enumerating the rows as CONTENT — rather than
+  // describing what a row should look like — is what stops elements silently vanishing from the
+  // sheet (a placed Small Pond was dropped from both map and legend on a real render).
+  const legendRows = elementNames
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .map((t) => {
+      const m = t.match(/^(.*?)\s*\u00d7\s*(\d+)$/);
+      return m ? `\u2014 ${m[1].trim()} (\u00d7${m[2]})` : `\u2014 ${t} (\u00d71)`;
+    })
+    .join('\n');
 
   const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a South African smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
 
@@ -468,7 +481,7 @@ export function buildSatelliteOverlayPrompt(args: {
 
 9. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
 
-10. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line, e.g. "JoJo Tank 5000L (×2)", "Tap Point (×4)", "Banana Circle (×2)", "Borehole (×1)", "Drip Irrigation Line (×3)". Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
+10. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
 
 11. SHEET FURNITURE: a small white north arrow with a white "N" above it in the top-right of the map area, and a plain white-and-black divided scale bar at the bottom-left reading "20 m".
 

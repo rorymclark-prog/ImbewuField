@@ -325,6 +325,33 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     tip: 'Feed from kitchen/laundry outlet into a mulch-filled banana or fruit tree basin.',
   },
   {
+    // The SOURCE of the greywater run. Without it the water sheet had no honest answer to "where
+    // does this water come from", so the renderer was inventing a diverter somewhere on the house.
+    // Mark the actual drain being tapped — bath, shower, basin or laundry.
+    id: 'greywater_outlet',
+    category: 'water',
+    name: 'Greywater Outlet',
+    icon: '🚿',
+    shape: 'circle',
+    wM: 0.8,
+    hM: 0.8,
+    color: '#8E6FBF',
+    zoneRec: [0, 1],
+    tip: 'Where greywater LEAVES the house — the bath, shower, basin or laundry drain you are tapping. Put it on that wall, then run the line to a banana circle or tree basin. Never tap the toilet (that is blackwater), and use plant-safe soap.',
+  },
+  {
+    id: 'greywater_diverter',
+    category: 'water',
+    name: 'Greywater Diverter & Filter',
+    icon: '🔀',
+    shape: 'circle',
+    wM: 0.6,
+    hM: 0.6,
+    color: '#8E6FBF',
+    zoneRec: [0, 1],
+    tip: 'Valve plus leaf filter on the outlet: sends greywater to the garden in the dry season, and back to the sewer or soakaway when you need it to.',
+  },
+  {
     id: 'infiltration_basin',
     category: 'earthworks',
     name: 'Infiltration Basin',
