@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -438,4 +438,22 @@ test('the house is described as a pale roof, so tar can never be painted onto it
   });
   assert.match(p, /pale grey shape with the white outline is the ROOF/);
   assert.match(p, /no part of it is ever paved, darkened or turned into road surface/);
+});
+
+// A model-drawn bearing is a coin-flip on both angle and sense (docs/RENDER-INVESTIGATION-2026-07-20.md
+// 'sector-ai' finding 4), so this prompt must never let the model draw the analysis — only restyle
+// the ground fabric the deterministic overlay is composited onto afterwards.
+test('the sector restyle prompt forbids the analysis and carries no marker/legend/element-list language', () => {
+  const p = buildSectorRestylePrompt('precision_atlas', 'Some Farm');
+  assert.match(p, /DO NOT DRAW THE ANALYSIS/);
+  assert.match(p, /no arrows, arcs, wedges, compass letters/);
+  assert.match(p, /no legend panel, no title block, no north arrow, no scale bar/);
+  assert.doesNotMatch(p, /element list/i);
+  assert.doesNotMatch(p, /marked feature/i);
+  assert.doesNotMatch(p, /legend row/i);
+  // Boundary/roof/driveway geometry must still be pinned exactly, same as every other style.
+  assert.match(p, /KEEP EXACT/);
+  assert.match(p, /boundary/i);
+  assert.match(p, /roof/i);
+  assert.match(p, /driveway/i);
 });

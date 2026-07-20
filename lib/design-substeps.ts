@@ -74,11 +74,11 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
   base: [
     {
       id: 'base-boundary',
-      title: 'Check your boundary is traced',
-      instruction: 'Your fence line should already show on the map. If it doesn’t, go back to the main map and trace it first — everything is measured against it.',
+      title: 'Trace your boundary',
+      instruction: 'Already traced your fence line on the main map? You’re done. Otherwise tap "Do this" and trace the outer edge of your land here, corner to corner.',
       where: 'The outer edge of your land, corner to corner.',
-      arm: null,
-      done: (_s, ctx) => ctx.hasBoundary,
+      arm: { kind: 'area', feature: 'boundary' },
+      done: (s, ctx) => ctx.hasBoundary || hasFeature(s, ['boundary']),
     },
     {
       id: 'base-house',

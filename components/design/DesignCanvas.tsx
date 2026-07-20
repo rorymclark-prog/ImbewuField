@@ -378,6 +378,13 @@ function adoptTracedLayer(
     case 'structure':
       return addZone(0, 'house');
     case 'access': {
+      // A traced access AREA (a paved driveway polygon — layer.render === 'polygon', see the
+      // isAccessArea fix in app/design/page.tsx) adopts as the driveway ground feature so it
+      // reaches every sheet that reads a ZoneShape 'driveway' ring. Without this the Studio could
+      // only ever produce a walking-path LINE for 'access', and could never originate a driveway
+      // (docs/RENDER-INVESTIGATION-2026-07-20.md, studio-only). Genuine polylines (gates, tracks)
+      // still adopt as a path exactly as before.
+      if (layer.render === 'polygon') return addZone(1, 'driveway');
       if (layer.points.length < 2) return null;
       const line: WithSource<LineShape> = { id: newId(), kind: 'path', points: layer.points, sourceFeatureId: src };
       return { ...state, lines: [...state.lines, line] };

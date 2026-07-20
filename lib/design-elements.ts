@@ -83,6 +83,7 @@ import type { GroundFeatureKind } from '@/lib/design-canvas';
 // rings. Colours: roof grey, light paving grey, soft lawn green, kitchen-green veg,
 // deeper orchard green, neutral cleared.
 export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: string; icon: string }> = {
+  boundary: { label: 'Property boundary', color: '#8CEB6A', icon: '🚩' },
   house: { label: 'House', color: '#8A8D91', icon: '🏠' },
   patio: { label: 'Patio / Paving', color: '#C7C3BB', icon: '▦' },
   driveway: { label: 'Driveway', color: '#3B3A3E', icon: '🛣️' }, // tar colour, canonical in DesignGlossy

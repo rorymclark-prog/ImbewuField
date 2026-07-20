@@ -661,7 +661,9 @@ function DesignStudioInner() {
 
       // Build the tappable/adoptable traced layers: every near-site classified layer EXCEPT
       // the one used as the boundary fence (which stays a non-adopted reference). Access
-      // shapes become polylines (adopt → path); everything else a polygon (adopt → zone/item).
+      // shapes become polylines UNLESS the traced source is itself an AREA (a paved driveway
+      // polygon), in which case they stay a polygon so adoption can produce a driveway ground
+      // feature instead of a path; everything else a polygon (adopt → zone/item).
       // Geometry is projected here with the same project() the satellite fit uses, so the
       // adopted normalised coords line up pixel-for-pixel — no redraw, no drift.
       const boundaryFeatureId = boundaryLayer?.featureId;
@@ -669,14 +671,19 @@ function DesignStudioInner() {
       for (const l of merged.layers) {
         if (boundaryFeatureId && l.featureId === boundaryFeatureId) continue;
         const isAccess = l.layerType === 'access';
+        // A traced access shape can be a genuine polyline (a gate, a track) OR an AREA (a paved
+        // driveway polygon) — the same test driveIsArea uses above for refLayers.driveway. Losing
+        // this distinction here (the old `render = isAccess ? 'line' : 'polygon'`, which forced
+        // EVERY access shape to 'line' regardless of its geometry) is why adopting a polygon
+        // driveway always produced a walking-path LineShape — DesignCanvas.adoptTracedLayer had no
+        // way left to tell the two apart (docs/RENDER-INVESTIGATION-2026-07-20.md, studio-only).
+        const isAccessArea = isAccess && (l.geometry?.type === 'Polygon' || l.geometry?.type === 'MultiPolygon');
         const rawCoords = isAccess
-          ? (l.geometry?.type === 'Polygon' || l.geometry?.type === 'MultiPolygon'
-              ? ringFromGeometry(l.geometry)
-              : lineFromGeometry(l.geometry))
+          ? (isAccessArea ? ringFromGeometry(l.geometry) : lineFromGeometry(l.geometry))
           : ringFromGeometry(l.geometry);
         if (rawCoords.length === 0) continue;
         const points = rawCoords.map((c) => project(c));
-        const render: TracedLayer['render'] = isAccess ? 'line' : 'polygon';
+        const render: TracedLayer['render'] = isAccess && !isAccessArea ? 'line' : 'polygon';
         if (render === 'polygon' && points.length < 3) continue;
         if (render === 'line' && points.length < 2) continue;
         traced.push({

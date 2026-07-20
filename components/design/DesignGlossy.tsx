@@ -21,7 +21,7 @@ import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, typ
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -275,6 +275,12 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   { key: 'chatgpt_atlas',       label: 'ChatGPT Atlas',       blurb: 'polished editorial cartography', labelStyle: 'blueprint', swatch: '#B7B09D' },
   { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk',      swatch: '#B5502E' },
 ];
+
+// Sector's Style picker excludes Satellite Overlay: that style's whole premise is the MODEL
+// lettering its own labels/legend (lib/producer-prompt.ts:434-441), which is exactly what
+// buildSectorRestylePrompt forbids on a sector render — offering it would either render no
+// differently from the exact sheet or invite the very legend/icon chrome the design bans.
+const SECTOR_STYLE_CHOICES = PRODUCER_STYLES.filter((s) => s.key !== 'satellite_overlay');
 
 // How many REAL things the farmer has drawn on this layer. A layer map with zero content is always
 // wrong — either that layer hasn't been drawn yet, or something upstream dropped it. Either way we
@@ -562,6 +568,42 @@ export function drawMarks(
       ctx.stroke();
     }
     ctx.restore();
+  }
+
+  // Traced ground — lawn/veg garden/orchard/patio/cleared, plus a Studio-traced house or driveway
+  // not already covered by refLayers above. NOT gated on drawDesign: DesignPrint's sheet 01
+  // "Existing Site & Base" calls buildComposite(...,'all',false), and that sheet's whole subject
+  // IS existing fabric, so a ground wash drawn only when drawDesign is true would never reach the
+  // one sheet where it matters most. Fill only, at low alpha, with no stroke and no glyph — the
+  // same discriminator the zone-band wash below relies on to read as an area, not a marker.
+  {
+    const houseCovered = refLayers.house.length >= 3;
+    const drivewayCovered = refLayers.driveway.length >= 2;
+    const groundRings = state.zones.filter((z) => {
+      if (!z.feature || z.points.length < 3) return false;
+      if (z.feature === 'house') return !houseCovered;
+      if (z.feature === 'driveway') return !drivewayCovered;
+      // A Studio-traced boundary is the whole-plot ring, drawn above as the chartreuse #B4E000
+      // survey line (drawBlueprintBoundary's composite counterpart) — never a fill wash. Missing
+      // this exclusion here painted a near-full-frame #8CEB6A tint under the design, which is the
+      // exact green-family confusion the boundary recolour above exists to prevent (ghost-vetiver
+      // finding 2). drawBlueprintGround (:2206) and groundRows (:2580) already exclude it.
+      if (z.feature === 'boundary') return false;
+      return true;
+    });
+    // Biggest first — a lawn that wraps a veg patch must not bury the patch's own wash.
+    const sortedGround = [...groundRings].sort((a, b) => ringArea(b.points) - ringArea(a.points));
+    for (const z of sortedGround) {
+      const meta = GROUND_FEATURES[z.feature!];
+      ctx.beginPath();
+      z.points.forEach(([x, y], i) => {
+        const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+        fn.call(ctx, px(x), py(y));
+      });
+      ctx.closePath();
+      ctx.fillStyle = `${meta.color}33`;
+      ctx.fill();
+    }
   }
 
   // Zones — translucent fill (only when this layer is in the chosen filter, and design marks
@@ -950,6 +992,30 @@ const OVERLAY_PANEL_RATIO = 0.28;
  * pseudo-aerial, no grain" failure this style exists to avoid. Building the empty panel into the
  * input means the photograph never moves: the model only letters the panel and overlays the map.
  */
+/** Burn a MAP-shaped transparent overlay onto the map half of a SHEET-shaped model render.
+ *
+ *  Satellite Overlay is handed a sheet (map on the left, cream legend panel on the right, see
+ *  extendWithLegendPanel) and returns one. Any deterministic overlay we want to guarantee — the
+ *  exact zone regions today, sector bearings next — is drawn in MAP coordinates, so it has to be
+ *  placed into the map region alone or it would smear across the legend.
+ *
+ *  Everything is done in PROPORTIONS rather than the pixel sizes we sent, because the model returns
+ *  whatever canvas size it likes: the map is the leftmost 1/(1 + OVERLAY_PANEL_RATIO) of whatever
+ *  width comes back. That is the same split extendWithLegendPanel used on the way in, so the two
+ *  cannot drift apart. */
+async function burnOverlayOnSheetMap(sheetDataUrl: string, overlayDataUrl: string): Promise<string> {
+  const [sheet, overlay] = await Promise.all([loadImage(sheetDataUrl), loadImage(overlayDataUrl)]);
+  const canvas = document.createElement('canvas');
+  canvas.width = sheet.naturalWidth || sheet.width;
+  canvas.height = sheet.naturalHeight || sheet.height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  ctx.drawImage(sheet, 0, 0);
+  const mapW = canvas.width / (1 + OVERLAY_PANEL_RATIO);
+  ctx.drawImage(overlay, 0, 0, mapW, canvas.height);
+  return canvas.toDataURL('image/png');
+}
+
 async function extendWithLegendPanel(
   mapDataUrl: string,
   W: number,
@@ -1231,6 +1297,12 @@ function placeLabelFor(pt: [number, number], zones: DesignCanvasState['zones']):
   let best: { label: string; area: number } | null = null;
   for (const z of zones) {
     if (!z.feature || z.points.length < 3 || !pointInRing(pt, z.points)) continue;
+    // A Studio-traced 'boundary' ring is the whole plot — every element on the site sits inside
+    // it, so "(Property boundary)" as a place suffix disambiguates nothing (it would fire on
+    // every item that isn't ALSO inside a smaller named ring) and reads as a non-answer, the same
+    // failure the 'cleared' guard below exists to prevent. Unlike 'cleared', a farmer-given name
+    // doesn't rescue it — the ring still means "everywhere", not a place.
+    if (z.feature === 'boundary') continue;
     // Shoelace — relative area only, so the sign and scale don't matter.
     let a = 0;
     for (let i = 0, j = z.points.length - 1; i < z.points.length; j = i++) {
@@ -1262,7 +1334,7 @@ function overlayElementsText(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
-): string {
+): { elements: string; fabric: string } {
   const byName = new Map<string, Array<string | null>>();
   // Legend section per element name. A flat 30-row legend is unreadable on the whole-design sheet;
   // the reference masterplan groups its key into WATER / PLANTING / INFRASTRUCTURE and that is what
@@ -1358,8 +1430,23 @@ function overlayElementsText(
     const sec = sectionOf.get(bare) ?? sectionOf.get(part.replace(/ ×\d+$/, '')) ?? 'PLANTING';
     groups.set(sec, [...(groups.get(sec) ?? []), part]);
   }
-  if (groups.size < 2) return parts.join(', ');
-  return [...groups.entries()].map(([sec, rows]) => `${sec} » ${rows.join(', ')}`).join(' | ');
+  const elements = groups.size < 2
+    ? parts.join(', ')
+    : [...groups.entries()].map(([sec, rows]) => `${sec} » ${rows.join(', ')}`).join(' | ');
+
+  // FABRIC — a SEPARATE channel from `elements`, never folded in. Rule 7 treats `elements` as "the
+  // COMPLETE contents of this sheet" and the empty-brief refusal above tests it for emptiness: a
+  // design that is only a traced orchard must still refuse (an orchard is not a design). Folding
+  // ground in here would also hand farmer-typed names like "Veg garden" or "Orchard / food forest"
+  // straight into the icon matcher, firing ICON_MATCH.bed / .tree the same way zone names once did.
+  // Built from the same rings drawMarks now paints, in the same biggest-first, dedupe-by-label
+  // order groundRows already uses for the deterministic legend, so the two can never drift on
+  // which ground exists or what it's called.
+  const fabric = groundRows(state, refLayers)
+    .map((row) => row.label.replace(/[,|»]/g, '').trim())
+    .join(', ');
+
+  return { elements, fabric };
 }
 
 function producerElementsText(
@@ -2152,6 +2239,7 @@ function drawBlueprintGround(
     if (!z.feature || z.points.length < 3) return false;
     if (z.feature === 'house') return !houseCovered;
     if (z.feature === 'driveway') return !drivewayCovered;
+    if (z.feature === 'boundary') return false; // a line (drawBlueprintBoundary), never a fill wash
     return true;
   });
   if (!rings.length) return;
@@ -2525,6 +2613,7 @@ function groundRows(state: DesignCanvasState, refLayers?: DesignGlossyProps['ref
       if (!z.feature || z.points.length < 3) return false;
       if (z.feature === 'house') return !houseCovered;
       if (z.feature === 'driveway') return !drivewayCovered;
+      if (z.feature === 'boundary') return false;
       return true;
     })
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
@@ -3310,41 +3399,31 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.restore();
 }
 
-// Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
-// are WHY the zones/water/planting sit where they do). Draws the site's REAL energies — sun (from
-// the north in the SH), summer/winter wind, dry-season fire approach, downslope water flow + on-
-// contour lines, and frost drainage — from lib/sector.deriveSectorModel. Nothing is invented; each
-// energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–08.
-export async function buildBlueprintSectorMap(
-  state: DesignCanvasState,
+// The deterministic sector geometry (compass ring, fire wedge, sun arc, wind arrows, water/contour
+// lines, frost pocket, data strip, title, legend, scale bar, north arrow) — extracted out of
+// buildBlueprintSectorMap so the AI-composited overlay (buildSectorOverlayImage below) draws the
+// EXACT SAME bearings from the EXACT SAME code path. Duplicating this ~250-line block into a second
+// function would recreate the "two separate traversals that can drift" root cause (layer-audit RC2)
+// for the one thing on this sheet that must never disagree between the exact and the AI version: the
+// bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4 — a model-drawn arrow
+// is a coin-flip on both angle and sense, so it must never be redrawn from scratch a second time.
+function drawSectorAnalysis(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  H: number,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   site: SectorSite | null,
-  placeName?: string,
-): Promise<string> {
-  void state; // signature parity with the other builders; content is refLayers + site only
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
-  const canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
+  placeName: string | undefined,
+  pad: number,
+  rowH: number,
+  pxPerM: number,
+): void {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
-  const pad = Math.round(W * 0.02);
-  const rowH = Math.round(W * 0.026);
 
   const model = deriveSectorModel(site, frame.centerLat);
   const isSH = model.southernHemisphere;
-
-  // 1. Satellite + scrim.
-  await drawBlueprintBase(ctx, frame, W, H);
-  // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
-  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
-  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
   // 3. Ring geometry — centre = boundary centroid (fallback frame centre); radius clamped so arrows
   //    + labels stay inside the frame and clear the top-right legend and top-left title.
@@ -3589,6 +3668,70 @@ export async function buildBlueprintSectorMap(
   drawBlueprintLegendNote(ctx, lg, rowH, ry, model.dataNotes[0] ?? 'Read the site before you design it.');
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
   drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
+}
+
+// Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
+// are WHY the zones/water/planting sit where they do). Draws the site's REAL energies — sun (from
+// the north in the SH), summer/winter wind, dry-season fire approach, downslope water flow + on-
+// contour lines, and frost drainage — from lib/sector.deriveSectorModel. Nothing is invented; each
+// energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–08.
+export async function buildBlueprintSectorMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null,
+  placeName?: string,
+): Promise<string> {
+  void state; // signature parity with the other builders; content is refLayers + site only
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+  const rowH = Math.round(W * 0.026);
+
+  // 1. Satellite + scrim.
+  await drawBlueprintBase(ctx, frame, W, H);
+  // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM);
+
+  return canvas.toDataURL('image/png');
+}
+
+// AI-composited sector overlay — the SAME bearings as buildBlueprintSectorMap's ring/wedges/arrows,
+// drawn on a transparent canvas with no base/house/driveway/boundary painted first (the model draws
+// those on the restyled satellite; compositeAccurateMap's overlayImage slot lays this on top
+// afterwards, unclipped, so arrows that deliberately reach past the boundary survive — see
+// lib/image-producer.ts's overlay-slot docblock). Background stays transparent because nothing
+// opaque is painted before drawSectorAnalysis runs.
+async function buildSectorOverlayImage(
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null,
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pad = Math.round(W * 0.02);
+  const rowH = Math.round(W * 0.026);
+
+  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM);
 
   return canvas.toDataURL('image/png');
 }
@@ -4282,7 +4425,18 @@ export default function DesignGlossy({
   const applySheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
     setSelectedNo(sheet.no);
     if ('exact' in sheet) {
-      // Site (01), Sector (02) and Phasing (08) are ANALYTICAL — sun/wind/fire, existing site,
+      // Sector (02) is the one analytical sheet with an AI option: a restyle-only render with the
+      // deterministic bearings composited on top afterwards (never model-drawn — see
+      // buildSectorRestylePrompt). Leave exactSheet null so runCurrentSheet doesn't route to the
+      // deterministic renderSectorMap, and seed/keep a non-satellite_overlay producer style —
+      // satellite_overlay's whole premise is the MODEL lettering its own labels/legend, which is
+      // exactly what a sector render must never do (see the Style-grid filter below).
+      if (sheet.exact === 'sector' && m === 'ai') {
+        setExactSheet(null); setAnalysisStyle(null);
+        setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
+        return;
+      }
+      // Site (01) and Phasing (08) are ANALYTICAL — sun/wind/fire, existing site,
       // build schedule — all facts, not art (as the AI-all button copy says). They are now
       // EXACT-ONLY: the deterministic rules-engine render is both more accurate AND removes the
       // last Gemini dependency (Rory: "everything to ChatGPT, retire Gemini"; and the Gemini
@@ -4300,7 +4454,10 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
-  const aiLayerMode = mode === 'ai' && !!selectedSheet && !('exact' in selectedSheet);
+  // Derived (not a separate useState) so it can never fall out of sync with what applySheet set:
+  // Sector is the one analytical sheet with an AI restyle option (see applySheet above).
+  const sectorAiMode = mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'sector';
+  const aiLayerMode = mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode);
   // Preview-map mount (initialFilter set): a focused single-sheet view — hide the full studio
   // (sheet grid, exact-all link, More options) so the overlay isn't a second copy of everything
   // (audit find). The main Glossy step passes no initialFilter and shows it all.
@@ -4337,6 +4494,11 @@ export default function DesignGlossy({
     ? 'sector-exact'
     : exactSheet === 'implementation'
       ? 'implementation-exact'
+      // Own cache namespace: without it an AI Sector render would key under
+      // `producer:${style}:${filter}` where `filter` is whatever GlossyLayerFilter was last
+      // selected (e.g. 'all'), silently colliding with the real Whole-design AI sheet's entry.
+      : sectorAiMode && producerStyle
+        ? `producer:${producerStyle}:sector`
       : producerStyle
         ? `producer:${producerStyle}:${filter}`
         : (analysisStyle ?? filter);
@@ -4968,14 +5130,31 @@ export default function DesignGlossy({
       if (isModelChromeStyle(styleDef.key)) {
         // Put the real roof back. sourceImage is this job's own sheet-shaped input, so it lines up
         // with the model output pixel-for-pixel; frame.satDataUrl is map-only and would not.
+        let sheetImage = modelImage;
         if (protectMask && sourceImage) {
           try {
-            return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
+            sheetImage = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
           } catch (err) {
             console.error('[glossy] roof restore failed, shipping the raw sheet', err);
           }
         }
-        return modelImage;
+        // ZONE GEOMETRY IS NOT THE MODEL'S TO DRAW. Every other style burns buildZoneOverlay — the
+        // farmer's EXACT traced regions — back over the render; this early return skipped it. So on
+        // Satellite Overlay the model drew the bands freehand from the composite, and did what
+        // models do: smoothed hand-traced polygons into tidy concentric rings around the house.
+        // Prettier than the design, and not the design. (Rory: "it didnt actually follow my zones i
+        // drew.") A zone map's entire job is WHERE the lines are, so the browser draws them and the
+        // model keeps the ground it is genuinely good at.
+        const exactZones = f === 'zones' ? buildZoneOverlay(state, refLayers, W, H) : undefined;
+        if (exactZones) {
+          try {
+            sheetImage = await burnOverlayOnSheetMap(sheetImage, exactZones);
+          } catch (err) {
+            // A failed burn must never lose a paid render — ship the model's sheet rather than nothing.
+            console.error('[glossy] exact zone burn failed, shipping the model sheet', err);
+          }
+        }
+        return sheetImage;
       }
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
       // OpenAI documents GPT Image masks as guidance rather than an exact clipping contract.
@@ -5085,9 +5264,9 @@ export default function DesignGlossy({
           true,
           isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(f) : undefined,
         );
-        const elementsText = isModelChromeStyle(styleKey)
+        const { elements: elementsText, fabric } = isModelChromeStyle(styleKey)
           ? overlayElementsText(state, refLayers, f)
-          : producerElementsText(state, refLayers, f, !lockActive);
+          : { elements: producerElementsText(state, refLayers, f, !lockActive), fabric: '' };
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         // Satellite Overlay is handed a sheet-shaped canvas (map + blank cream panel) so the photo
         // never has to be moved to make room for the legend. See extendWithLegendPanel.
@@ -5100,7 +5279,7 @@ export default function DesignGlossy({
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
         const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
         const prompt = isModelChromeStyle(styleKey)
-          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: f })
+          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, placeName, sheetKind: f })
           : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey)
           : effectiveModelChrome
@@ -5171,9 +5350,9 @@ export default function DesignGlossy({
         true,
         isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(filter) : undefined,
       );
-      const elementsText = isModelChromeStyle(styleKey)
+      const { elements: elementsText, fabric } = isModelChromeStyle(styleKey)
         ? overlayElementsText(state, refLayers, filter)
-        : producerElementsText(state, refLayers, filter, !lockActive);
+        : { elements: producerElementsText(state, refLayers, filter, !lockActive), fabric: '' };
       const sheetInput = isModelChromeStyle(styleKey)
         ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
         : composite;
@@ -5190,7 +5369,7 @@ export default function DesignGlossy({
       const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: filter })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, placeName, sheetKind: filter })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey)
         : useShowcase
@@ -5224,11 +5403,85 @@ export default function DesignGlossy({
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, geometryLock, promptRewrite]);
 
+  // Composite-back for the AI Sector sheet. Unlike finishStyledSheet there is no clip-to-strict/
+  // showcase split: sector is always the SAME treatment — the restyled ground stays edge to edge
+  // (no boundary clip, since the deterministic arrows/wedges deliberately reach past it) with the
+  // measured bearings from buildSectorOverlayImage composited unclipped on top, exactly the slot
+  // lib/image-producer.ts's overlayImage docblock describes ("the sector-wedge sticker").
+  const finishSectorSheet = useCallback(async (modelImage: string): Promise<string> => {
+    const W = frame.imgW * SCALE;
+    const H = frame.imgH * SCALE;
+    const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
+    const overlayImage = await buildSectorOverlayImage(frame, refLayers, site, placeName);
+    // No sourceImage/protectMask fallback here (unlike finishStyledSheet): sector never sends a
+    // Geometry Lock mask, so there is nothing to restore from. If frame.satDataUrl is somehow
+    // missing at finish time this falls back to compositing the model image over itself outside the
+    // boundary — a visual no-op, not a crash.
+    return compositeAccurateMap({
+      modelImage,
+      satelliteImage: frame.satDataUrl ?? modelImage,
+      boundaryPx,
+      overlayImage,
+      labels: [],
+      labelStyle: 'clean',
+      width: W,
+      height: H,
+    });
+  }, [frame, refLayers, site, placeName]);
+
+  // Sector's single-sheet AI path: restyle-only (buildSectorRestylePrompt forbids the model from
+  // drawing any arrow, arc or bearing), with the real measured analysis composited on top by
+  // finishSectorSheet. Never gated on layerContentCount — like renderSectorMap, sector never refuses;
+  // its content is measured site data (lib/sector.deriveSectorModel), not placed elements. Never
+  // folded into generateAllViaQueue/generateAllStyledSheets/generateAllSheets: MAX_SHEETS_PER_JOB is
+  // 5 and the batch's modelFilters already fills it, so sector stays reachable only via the Sector
+  // chip + AI mode + this single-sheet CTA (RENDER-INVESTIGATION.md 'sector-ai' finding 4).
+  const generateSectorViaQueue = useCallback(async () => {
+    const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
+    const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
+    if (!styleDef) return;
+    setError(null);
+    setNotice(null);
+    setLoading('falgpt');
+    try {
+      // Same call renderBaseMap/sheet-01 already uses: boundary+house+driveway marks, zero design
+      // content (drawDesign=false) — the model's restyle input is built by code already proven, not
+      // a new composite path.
+      const composite = await buildComposite(state, frame, refLayers, 'all', false);
+      const prompt = buildSectorRestylePrompt(styleKey, placeName);
+      const jobId = await enqueueRenderJob({
+        siteId: state.siteId,
+        style: styleKey,
+        engine: 'openai',
+        sheets: [{
+          key: 'sector',
+          label: 'Sector analysis',
+          prompt,
+          compositeDataUrl: composite,
+          showcase: false,
+          geometryLock: false,
+        }],
+      });
+      persistJobId(state.siteId, jobId);
+      setQueueJobId(jobId);
+      setNotice('Rendering your Sector Analysis sheet in the background — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).');
+    } catch (err) {
+      refreshPendingRef.current = false;
+      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setLoading(null);
+    }
+  }, [producerStyle, state, frame, refLayers, placeName]);
+
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
     if (exactSheet === 'base') return renderBaseMap();
     if (exactSheet === 'sector') return renderSectorMap();
     if (exactSheet === 'implementation') return renderImplementationMap();
+    // sectorAiMode implies producerStyle is truthy (applySheet seeds it), so this must come BEFORE
+    // the generic `if (producerStyle)` branch below — otherwise every AI-sector run would fall
+    // through into generateOneViaQueue/generateProducer with whichever GlossyLayerFilter `filter`
+    // last held, i.e. it would render the wrong sheet (e.g. re-render "Whole design").
+    if (sectorAiMode) return generateSectorViaQueue();
     if (producerStyle) {
       // Geometry Lock only EXISTS on the queue path: /api/image-producer accepts no protect mask
       // and generateProducer sends the unlocked prompt, so running a locked sheet there tells the
@@ -5243,7 +5496,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [exactSheet, sectorAiMode, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -5262,6 +5515,8 @@ export default function DesignGlossy({
   finishRef.current = finishStyledSheet;
   const styleRef = useRef(producerStyle);
   styleRef.current = producerStyle;
+  const finishSectorRef = useRef(finishSectorSheet);
+  finishSectorRef.current = finishSectorSheet;
 
   // Stream the active job; finish each sheet as it completes; clear on a terminal status.
   useEffect(() => {
@@ -5322,9 +5577,15 @@ export default function DesignGlossy({
               // gating on `locked` silently skipped the restore that keeps its roof intact.
               const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
-              const finalSheet = styleDef
-                ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
-                : raw;
+              // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
+              // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
+              // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
+              // 'sector-ai' finding 3), so route it to the dedicated finisher instead of casting.
+              const finalSheet = sheet.key === 'sector'
+                ? await finishSectorRef.current(raw)
+                : styleDef
+                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
+                  : raw;
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
               // A one-sheet refresh must update the actual preview, not only append a gallery
@@ -5510,15 +5771,16 @@ export default function DesignGlossy({
         )}
 
         {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
-            accurate). Shown only in AI mode on a design LAYER (03–07); analysis sheets 01/02/08
-            render via Gemini and exact mode uses no AI, so neither needs a Style. */}
+            accurate). Shown in AI mode on a design LAYER (03–07) and now also on Sector (02),
+            whose AI render is a restyle with the measured bearings composited on top; Site (01) and
+            Phasing (08) render exact-only, so neither needs a Style. */}
         {aiLayerMode && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Style {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+          Style {`(on your ${sectorAiMode ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
-          {PRODUCER_STYLES.map((s) => {
+          {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
             const active = producerStyle === s.key;
             return (
               <button
@@ -5584,6 +5846,8 @@ export default function DesignGlossy({
             ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
             : exactSheet === 'sector'
             ? "Draw your Sector Analysis sheet (plan-set 02) — the sun path (from the north), prevailing summer/winter winds, dry-season fire approach, downhill water flow with on-contour lines, and frost pockets, all read from your site's real slope and climate. Analysis comes before design: these energies are WHY your zones, water and planting belong where they do. Deterministic and exact — no AI."
+            : sectorAiMode
+            ? `Generate an AI-styled Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and drawn deterministically on top, never guessed by the model. Renders in the background (~mins).`
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
@@ -5616,6 +5880,8 @@ export default function DesignGlossy({
                 ? ' · Existing site (sheet 01)'
                 : exactSheet === 'sector'
                 ? ' · Sector analysis (sheet 02)'
+                : sectorAiMode
+                ? ` · Sector analysis (sheet 02) · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : exactSheet === 'implementation'
                 ? ' · Implementation & phasing (sheet 08)'
                 : producerStyle

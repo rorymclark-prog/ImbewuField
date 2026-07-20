@@ -68,8 +68,9 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
 ];
 
 // Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
-// draw tool to record a real built/ground feature. Order = kitchen-out (house first).
-const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared'];
+// draw tool to record a real built/ground feature. Order = the plot itself first (boundary),
+// then kitchen-out (house next).
+const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
