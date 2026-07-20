@@ -1939,10 +1939,25 @@ export default function DesignCanvas({
               <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
                 {def.icon}
               </text>
-              {/* Label pill below, app style — hidden when the Labels layer is off (declutter). */}
+              {/* Label pill below, app style — hidden when the Labels layer is off (declutter).
+                  ANCHORED TO THE ICON, NOT THE FOOTPRINT. It used to be translate(0, hPx/2 + 9),
+                  i.e. pushed down by half of THIS plant's own canopy: a 9 m macadamia's pill sat
+                  ~29 units below its icon while a 2.5 m pawpaw's sat ~9 below. Pills from icons at
+                  different heights therefore converged into one horizontal band while the icons
+                  they belong to stayed spread out — so the name a farmer read beside a plant was
+                  routinely its neighbour's. (Rory: "it keeps putting the wrong plant… is it because
+                  the labels arent close enough?" — it was.) The gap is now a near-constant
+                  iconDiscR + 9, so every pill hugs its own icon by the same amount.
+                  Counter-scaled by 1/view.k so the pill is a fixed SCREEN size: zooming in now
+                  spreads the icons apart while the pills stay put, which is what makes a dense
+                  orchard readable. At the default k = 1 this is identical to the old size. */}
               {activeLayers.labels && (
-              <g transform={`translate(0, ${hPx / 2 + 9})`}>
-                <foreignObject x={-45} y={-8} width={90} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
+              <g transform={`translate(0, ${(iconDiscR + 9).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
+                <foreignObject x={-60} y={-8} width={120} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
+                  {/* Flex-centred: the pill is an inline-block that shrinks to its text, so inside a
+                      fixed-width box it used to sit hard LEFT — pulling a short name up to ~30 units
+                      off its own icon, toward the neighbour on that side. */}
+                  <div style={{ display: 'flex', justifyContent: 'center', width: 120 }}>
                   <div
                     style={{
                       fontSize: 9,
@@ -1953,13 +1968,14 @@ export default function DesignCanvas({
                       borderRadius: 8,
                       padding: '1px 5px',
                       display: 'inline-block',
-                      maxWidth: 90,
+                      maxWidth: 120,
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
                   >
                     {labelFull}
+                  </div>
                   </div>
                 </foreignObject>
               </g>

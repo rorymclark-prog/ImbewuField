@@ -43,7 +43,7 @@ import {
   type WizardStep,
   type ZoneShape,
 } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
+import { ELEMENT_CATALOG, ELEMENTS_BY_ID, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
@@ -144,9 +144,35 @@ const ELEMENT_LAYER_KEYS = ['water', 'earthworks', 'zones', 'planting', 'structu
 // leave `a.sector`/`a.baseMap` untouched through the spread in setStep — the same "preserve what
 // the farmer toggled" rule contours already follow (see page.tsx guided-mode reset).
 type StepFocus = Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> & Partial<Record<'sector' | 'baseMap', boolean>>;
+// PLACE-THEN-VANISH GUARD. An element with `alsoSteps` is OFFERED on a step outside its own
+// category — Banana Circle is category 'earthworks' but alsoSteps: ['planting'], so it appears in
+// the Planting palette. If that step then focuses layers OFF for its category, tapping the chip
+// places a real item that disappears the instant it lands, which reads exactly like the app
+// placing the wrong thing.
+// Derived from the catalog rather than hand-listed so adding `alsoSteps` to a new element can
+// never silently reintroduce this. (The Water step's hardcoded 'earthworks' below predates this
+// and is now redundant, but is kept explicit for readability.)
+const CATEGORY_TO_LAYER: Record<ElementCategory, (typeof ELEMENT_LAYER_KEYS)[number]> = {
+  water: 'water',
+  earthworks: 'earthworks',
+  growing: 'planting',
+  structure: 'structures',
+  animal: 'animals',
+  access: 'access',
+};
+function layersOfferedVia(step: WizardStep): string[] {
+  return ELEMENT_CATALOG.filter((d) => d.alsoSteps?.includes(step as 'water' | 'planting' | 'structures')).map(
+    (d) => CATEGORY_TO_LAYER[d.category],
+  );
+}
 function applyStepFocus(step: WizardStep): StepFocus {
-  const on = (keys: readonly string[]) =>
-    Object.fromEntries(ELEMENT_LAYER_KEYS.map((k) => [k, keys.includes(k)])) as Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean>;
+  const on = (keys: readonly string[]) => {
+    const all = [...keys, ...layersOfferedVia(step)];
+    return Object.fromEntries(ELEMENT_LAYER_KEYS.map((k) => [k, all.includes(k)])) as Record<
+      (typeof ELEMENT_LAYER_KEYS)[number],
+      boolean
+    >;
+  };
   switch (step) {
     case 'sector':
       // Analysis-before-design reveal: nothing to draw, so all element layers OFF (like Base),
