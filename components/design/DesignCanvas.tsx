@@ -14,6 +14,7 @@ import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
@@ -1939,47 +1940,9 @@ export default function DesignCanvas({
               <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
                 {def.icon}
               </text>
-              {/* Label pill below, app style — hidden when the Labels layer is off (declutter).
-                  ANCHORED TO THE ICON, NOT THE FOOTPRINT. It used to be translate(0, hPx/2 + 9),
-                  i.e. pushed down by half of THIS plant's own canopy: a 9 m macadamia's pill sat
-                  ~29 units below its icon while a 2.5 m pawpaw's sat ~9 below. Pills from icons at
-                  different heights therefore converged into one horizontal band while the icons
-                  they belong to stayed spread out — so the name a farmer read beside a plant was
-                  routinely its neighbour's. (Rory: "it keeps putting the wrong plant… is it because
-                  the labels arent close enough?" — it was.) The gap is now a near-constant
-                  iconDiscR + 9, so every pill hugs its own icon by the same amount.
-                  Counter-scaled by 1/view.k so the pill is a fixed SCREEN size: zooming in now
-                  spreads the icons apart while the pills stay put, which is what makes a dense
-                  orchard readable. At the default k = 1 this is identical to the old size. */}
-              {activeLayers.labels && (
-              <g transform={`translate(0, ${(iconDiscR + 9).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
-                <foreignObject x={-60} y={-8} width={120} height={16} style={{ overflow: 'visible', pointerEvents: 'none' }}>
-                  {/* Flex-centred: the pill is an inline-block that shrinks to its text, so inside a
-                      fixed-width box it used to sit hard LEFT — pulling a short name up to ~30 units
-                      off its own icon, toward the neighbour on that side. */}
-                  <div style={{ display: 'flex', justifyContent: 'center', width: 120 }}>
-                  <div
-                    style={{
-                      fontSize: 9,
-                      lineHeight: '14px',
-                      textAlign: 'center',
-                      color: '#F4EDD8',
-                      background: 'rgba(32,25,15,0.74)',
-                      borderRadius: 8,
-                      padding: '1px 5px',
-                      display: 'inline-block',
-                      maxWidth: 120,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {labelFull}
-                  </div>
-                  </div>
-                </foreignObject>
-              </g>
-              )}
+              {/* Label pills are NOT drawn here. They are laid out together in a second pass below
+                  (see "Item label pills"), because de-collision needs to see every pill at once —
+                  which a per-item render, by construction, cannot. */}
               {isSelected && onEditItem && (
                 <g
                   transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 26})`}
@@ -2091,6 +2054,103 @@ export default function DesignCanvas({
             </g>
           );
         })}
+
+        {/* ── Item label pills, laid out as ONE set ──────────────────────────────────────────
+            Drawn after every footprint so a pill is never buried under a neighbour's canopy, and
+            laid out through layoutCanvasLabels so pills that would overlap get pushed apart and
+            given a leader line home. This used to be a fixed offset inside the per-item loop, with
+            overlaps resolved by paint order alone: measured on a 7-plant guild at real spacing,
+            FOUR of seven pills sat closer to a neighbour's icon than to their own, which is why
+            the map appeared to name the wrong plant. */}
+        {activeLayers.labels && (() => {
+          const PILL_FS = 9, PILL_PADX = 5, PILL_H = 16, PILL_MAX = 120;
+          const shown = state.items
+            .map((item) => {
+              const def = ELEMENTS_BY_ID[item.defId];
+              if (!def) return null;
+              if (!activeLayers[categoryLayerKey(def.category)]) return null;
+              const isDragging = item.id === dragItemId.current && dragPos;
+              const [nx, ny] = isDragging ? dragPos : [item.x, item.y];
+              const isResizingThis = item.id === dragResizeId.current && resizePreview;
+              const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
+              const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
+              const wPx = Math.max(wM / mPerPx, 6);
+              const hPx = Math.max(hM / mPerPx, 6);
+              const text = item.note
+                ? `${item.label ?? def.name} · ${item.note}`
+                : item.label ?? def.name;
+              // Gap is measured off the ICON DISC, not the footprint. It used to be hPx/2 + 9 —
+              // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
+              // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights
+              // converged into one band while their icons stayed spread out.
+              const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
+              return {
+                id: item.id,
+                cx: nx * imgW,
+                cy: ny * imgH,
+                gap: iconDiscR + 9,
+                iconR: iconDiscR,
+                // Counter-scaled by view.k so a pill is a fixed SCREEN size: zooming in spreads the
+                // icons while the pills stay put, which is what makes a dense orchard readable.
+                w: estimatePillWidth(text, PILL_FS, PILL_PADX, PILL_MAX) / view.k,
+                h: PILL_H / view.k,
+                text,
+              };
+            })
+            .filter((v): v is NonNullable<typeof v> => !!v);
+          if (!shown.length) return null;
+          const laid = layoutCanvasLabels(shown);
+          return (
+            <g pointerEvents="none">
+              {laid.map((pos, i) => {
+                const s = shown[i];
+                return (
+                  <g key={s.id}>
+                    {/* Leader only when de-collision actually moved the pill — an un-moved pill is
+                        already unambiguous, and a line to every pill is just more clutter. */}
+                    {pos.moved && (
+                      <line
+                        x1={s.cx}
+                        y1={s.cy + s.gap}
+                        x2={pos.x}
+                        y2={pos.y}
+                        stroke="rgba(244,237,216,0.55)"
+                        strokeWidth={1 / view.k}
+                      />
+                    )}
+                    <g transform={`translate(${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
+                      <foreignObject x={-PILL_MAX / 2} y={-PILL_H / 2} width={PILL_MAX} height={PILL_H} style={{ overflow: 'visible' }}>
+                        {/* Flex-centred: the pill is an inline-block that shrinks to its text, so in
+                            a fixed-width box it used to sit hard LEFT, pulling a short name toward
+                            whichever neighbour was on that side. */}
+                        <div style={{ display: 'flex', justifyContent: 'center', width: PILL_MAX }}>
+                          <div
+                            style={{
+                              fontSize: PILL_FS,
+                              lineHeight: '14px',
+                              textAlign: 'center',
+                              color: '#F4EDD8',
+                              background: 'rgba(32,25,15,0.74)',
+                              borderRadius: 8,
+                              padding: `1px ${PILL_PADX}px`,
+                              display: 'inline-block',
+                              maxWidth: PILL_MAX,
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {s.text}
+                          </div>
+                        </div>
+                      </foreignObject>
+                    </g>
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })()}
 
         {/* AI auto-detect ghosts — 'pending' suggestions rendered as dashed outlines.
             pointerEvents none throughout so they never block placing/drawing/selecting. */}
