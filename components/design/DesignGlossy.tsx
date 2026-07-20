@@ -358,6 +358,16 @@ const LOCKED_WATER_COMPOSITE_MARKS: CompositeMarkOptions = {
   showDesignItems: false,
 };
 
+// Satellite Overlay keeps the real photograph, so the driveway needs no painted stand-in: drawing
+// the dark slab into the INPUT is what made the model reproduce it as a bold black polygon
+// competing with the design. Left alone, the photo's own access track reads exactly as it should —
+// quiet grey. Tool glyphs go too; they are editor chrome, and this style letters its own sheet.
+const OVERLAY_COMPOSITE_MARKS: CompositeMarkOptions = {
+  showToolGlyphs: false,
+  showDrivewayMark: false,
+  showDrivewayEdge: false,
+};
+
 function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
   return filter === 'water' ? LOCKED_WATER_COMPOSITE_MARKS : LOCKED_COMPOSITE_MARKS;
 }
@@ -1201,7 +1211,9 @@ function overlayElementsText(
     pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
   };
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
-  if (refLayers.driveway.length >= 2) parts.push('Tarred driveway');
+  // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
+  // it there gave an access track a legend row and a label alongside the actual design work.
+  if (refLayers.driveway.length >= 2 && filter === 'all') parts.push('Tarred driveway');
   return parts.join(', ');
 }
 
@@ -1248,7 +1260,9 @@ function producerElementsText(
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
-  if (refLayers.driveway.length >= 2) parts.push('Tarred driveway');
+  // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
+  // it there gave an access track a legend row and a label alongside the actual design work.
+  if (refLayers.driveway.length >= 2 && filter === 'all') parts.push('Tarred driveway');
   return parts.join(', ');
 }
 
@@ -4747,7 +4761,7 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          lockActive ? lockedCompositeMarks(f) : undefined,
+          isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(f) : undefined,
         );
         const elementsText = isModelChromeStyle(styleKey)
           ? overlayElementsText(state, refLayers, f)
@@ -4833,7 +4847,7 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        lockActive ? lockedCompositeMarks(filter) : undefined,
+        isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(filter) : undefined,
       );
       const elementsText = isModelChromeStyle(styleKey)
         ? overlayElementsText(state, refLayers, filter)
