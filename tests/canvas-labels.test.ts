@@ -131,3 +131,21 @@ test('pill width estimate clears the WIDEST width actually measured in the brows
   }
   assert.equal(estimatePillWidth('a'.repeat(400), 9, 5, 120), 120, 'clamped to max');
 });
+
+// ── Release notes shown under the Refresh button ──────────────────────────────
+import { visibleNotes, RELEASE_NOTES, MAX_SHOWN } from '../lib/release-notes.ts';
+
+test('the update banner can never become a wall of text over the map', () => {
+  assert.ok(visibleNotes().length <= MAX_SHOWN);
+  const many = [{ when: 'x', changes: Array.from({ length: 40 }, (_, i) => `change ${i}`) }];
+  assert.equal(visibleNotes(many).length, MAX_SHOWN);
+  assert.deepEqual(visibleNotes([]), []);
+});
+
+test('release notes are written for the farmer, not the repo', () => {
+  for (const line of visibleNotes(RELEASE_NOTES, 100)) {
+    assert.ok(line.length <= 90, `too long to scan on a phone: "${line}"`);
+    assert.ok(!/[A-Za-z]+\.(ts|tsx)\b|\(\)|refLayers|buildBlueprint|drawMarks/.test(line),
+      `leaks implementation detail: "${line}"`);
+  }
+});

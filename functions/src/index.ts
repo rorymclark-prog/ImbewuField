@@ -39,7 +39,7 @@ const MODEL = 'gpt-image-2';
 const CONCURRENCY = 3; // parallel sheets within ONE job (instance concurrency is pinned to 1 below)
 const MAX_RETRIES = 2; // network / 5xx
 const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has room once sheets ≤ 5
-const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures', 'sector']);
+const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures', 'sector', 'base']);
 // ── SPEND GOVERNORS ──────────────────────────────────────────────────────────────────────────
 // Two independent ceilings, because a per-user cap alone bounds NOTHING: total spend was
 // (per-user cap) x (however many people sign up), with no automatic brake. Thirty sheets/user/day

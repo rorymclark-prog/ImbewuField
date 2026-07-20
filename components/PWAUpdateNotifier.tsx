@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isDifferentBuild } from '@/lib/pwa-update';
+import { visibleNotes } from '@/lib/release-notes';
 
 interface BuildInfo {
   sha?: string | null;
@@ -149,6 +150,7 @@ export default function PWAUpdateNotifier() {
   }, [refreshing]);
 
   if (!updateAvailable) return null;
+  const notes = visibleNotes();
 
   return (
     <div
@@ -163,8 +165,10 @@ export default function PWAUpdateNotifier() {
         padding: '0.75rem 1rem',
         borderRadius: '0.5rem',
         display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: '0.5rem',
+        maxWidth: 'min(92vw, 27rem)',
         zIndex: 9999,
         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
         fontSize: '0.875rem',
@@ -187,6 +191,32 @@ export default function PWAUpdateNotifier() {
       >
         {refreshing ? 'Refreshing…' : 'Refresh update'}
       </button>
+      {/* WHAT you are refreshing into. "New version available" alone tells the farmer a number
+          changed, not whether it is worth interrupting their work for, nor what to go and look at
+          afterwards. See lib/release-notes.ts for the house style: one short line per change, in
+          what-you-will-see terms. */}
+      {notes.length > 0 && (
+        <ul
+          style={{
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.2rem',
+            fontSize: '0.78rem',
+            lineHeight: 1.35,
+            opacity: 0.85,
+          }}
+        >
+          {notes.map((n) => (
+            <li key={n} style={{ display: 'flex', gap: '0.4rem' }}>
+              <span aria-hidden style={{ opacity: 0.6 }}>·</span>
+              <span>{n}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

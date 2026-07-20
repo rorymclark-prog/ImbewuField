@@ -4431,7 +4431,7 @@ export default function DesignGlossy({
       // deterministic renderSectorMap, and seed/keep a non-satellite_overlay producer style —
       // satellite_overlay's whole premise is the MODEL lettering its own labels/legend, which is
       // exactly what a sector render must never do (see the Style-grid filter below).
-      if (sheet.exact === 'sector' && m === 'ai') {
+      if ((sheet.exact === 'sector' || sheet.exact === 'base') && m === 'ai') {
         setExactSheet(null); setAnalysisStyle(null);
         setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
         return;
@@ -4454,9 +4454,17 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
-  // Derived (not a separate useState) so it can never fall out of sync with what applySheet set:
-  // Sector is the one analytical sheet with an AI restyle option (see applySheet above).
-  const sectorAiMode = mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'sector';
+  // Derived (not a separate useState) so it can never fall out of sync with what applySheet set.
+  // RESTYLE SHEETS: Sector (02) and Site (01) both take an AI option of the same shape — the model
+  // repaints the ground of a drawDesign=false composite and is forbidden from drawing any analysis,
+  // then the deterministic content goes back on top. They share one code path because they share
+  // one input. Phasing (08) is deliberately NOT here: its content is lettered schedule text, and a
+  // model that misspells "greywater" must never own a build calendar.
+  const restyleAiKind: 'sector' | 'base' | null =
+    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'sector' || selectedSheet.exact === 'base')
+      ? selectedSheet.exact
+      : null;
+  const sectorAiMode = restyleAiKind !== null;
   const aiLayerMode = mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode);
   // Preview-map mount (initialFilter set): a focused single-sheet view — hide the full studio
   // (sheet grid, exact-all link, More options) so the overlay isn't a second copy of everything
@@ -4497,8 +4505,8 @@ export default function DesignGlossy({
       // Own cache namespace: without it an AI Sector render would key under
       // `producer:${style}:${filter}` where `filter` is whatever GlossyLayerFilter was last
       // selected (e.g. 'all'), silently colliding with the real Whole-design AI sheet's entry.
-      : sectorAiMode && producerStyle
-        ? `producer:${producerStyle}:sector`
+      : restyleAiKind && producerStyle
+        ? `producer:${producerStyle}:${restyleAiKind}`
       : producerStyle
         ? `producer:${producerStyle}:${filter}`
         : (analysisStyle ?? filter);
@@ -5436,7 +5444,7 @@ export default function DesignGlossy({
   // folded into generateAllViaQueue/generateAllStyledSheets/generateAllSheets: MAX_SHEETS_PER_JOB is
   // 5 and the batch's modelFilters already fills it, so sector stays reachable only via the Sector
   // chip + AI mode + this single-sheet CTA (RENDER-INVESTIGATION.md 'sector-ai' finding 4).
-  const generateSectorViaQueue = useCallback(async () => {
+  const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
     const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
@@ -5454,8 +5462,8 @@ export default function DesignGlossy({
         style: styleKey,
         engine: 'openai',
         sheets: [{
-          key: 'sector',
-          label: 'Sector analysis',
+          key: kind,
+          label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
           prompt,
           compositeDataUrl: composite,
           showcase: false,
@@ -5464,7 +5472,9 @@ export default function DesignGlossy({
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
-      setNotice('Rendering your Sector Analysis sheet in the background — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).');
+      setNotice(kind === 'sector'
+        ? 'Rendering your Sector Analysis sheet in the background — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).'
+        : 'Rendering your Existing Site sheet in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
     } catch (err) {
       refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
@@ -5481,7 +5491,7 @@ export default function DesignGlossy({
     // the generic `if (producerStyle)` branch below — otherwise every AI-sector run would fall
     // through into generateOneViaQueue/generateProducer with whichever GlossyLayerFilter `filter`
     // last held, i.e. it would render the wrong sheet (e.g. re-render "Whole design").
-    if (sectorAiMode) return generateSectorViaQueue();
+    if (restyleAiKind) return generateSectorViaQueue(restyleAiKind);
     if (producerStyle) {
       // Geometry Lock only EXISTS on the queue path: /api/image-producer accepts no protect mask
       // and generateProducer sends the unlocked prompt, so running a locked sheet there tells the
@@ -5496,7 +5506,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, sectorAiMode, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [exactSheet, restyleAiKind, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -5581,8 +5591,14 @@ export default function DesignGlossy({
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
               // 'sector-ai' finding 3), so route it to the dedicated finisher instead of casting.
+              // 'base' (Site 01) is a pure restyle: there is no analysis geometry to guarantee, so
+              // the model's image IS the sheet. Like 'sector' it must NOT reach finishStyledSheet,
+              // whose zone/water overlay branches and producerLabels() call assume a real
+              // GlossyLayerFilter — `sheet.key as GlossyLayerFilter` would be a lie for both.
               const finalSheet = sheet.key === 'sector'
                 ? await finishSectorRef.current(raw)
+                : sheet.key === 'base'
+                ? raw
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                   : raw;
@@ -5777,7 +5793,7 @@ export default function DesignGlossy({
         {aiLayerMode && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Style {`(on your ${sectorAiMode ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+          Style {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
           {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
@@ -5840,12 +5856,50 @@ export default function DesignGlossy({
         )}
       </div>
 
+      {/* EXACT / AI CHOICE, VISIBLE BEFORE ANY RENDER. The only route to the AI version used to be a
+          text link buried INSIDE the rendered-result panel — so on a fresh Sector or Site sheet the
+          farmer saw one button reading "instant" and no hint an AI version existed at all (Rory:
+          "sector sheet is still instant you must fix this and make it for ai"). Shown only on the
+          two analytical sheets that HAVE both: the design layers already default to AI and carry
+          their own Style grid, and Phasing (08) has no AI version by design. */}
+      {selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'sector' || selectedSheet.exact === 'base') && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: 0.4, opacity: 0.6 }}>THIS SHEET</span>
+          {([['exact', 'Exact · instant · free'], ['ai', 'AI styled · ~mins']] as const).map(([m, label]) => {
+            const active = (m === 'ai') === (restyleAiKind !== null);
+            return (
+              <button
+                key={m}
+                type="button"
+                disabled={loading !== null}
+                onClick={() => { setMode(m); applySheet(selectedSheet, m); setResultImage(null); setNotice(null); }}
+                style={{
+                  minHeight: 36,
+                  padding: '6px 12px',
+                  borderRadius: 999,
+                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                  background: active ? GREEN : PAPER,
+                  color: active ? PAPER : DARK,
+                  fontWeight: 700,
+                  fontSize: 12.5,
+                  cursor: loading !== null ? 'default' : 'pointer',
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {!resultImage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {exactSheet === 'base'
             ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
             : exactSheet === 'sector'
             ? "Draw your Sector Analysis sheet (plan-set 02) — the sun path (from the north), prevailing summer/winter winds, dry-season fire approach, downhill water flow with on-contour lines, and frost pockets, all read from your site's real slope and climate. Analysis comes before design: these energies are WHY your zones, water and planting belong where they do. Deterministic and exact — no AI."
+            : restyleAiKind === 'base'
+            ? `Generate an AI-styled Existing Site sheet (plan-set 01) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the model repaints the ground only; your boundary, roof and access stay exactly where they are, and nothing is designed onto it. Renders in the background (~mins).`
             : sectorAiMode
             ? `Generate an AI-styled Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and drawn deterministically on top, never guessed by the model. Renders in the background (~mins).`
             : exactSheet === 'implementation'
@@ -5880,6 +5934,8 @@ export default function DesignGlossy({
                 ? ' · Existing site (sheet 01)'
                 : exactSheet === 'sector'
                 ? ' · Sector analysis (sheet 02)'
+                : restyleAiKind === 'base'
+                ? ` · Existing site (sheet 01) · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : sectorAiMode
                 ? ` · Sector analysis (sheet 02) · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : exactSheet === 'implementation'
