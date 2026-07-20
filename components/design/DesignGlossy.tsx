@@ -28,6 +28,7 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
 import { itemInFilter, lineInFilter, zonesInFilter, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
+import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -153,6 +154,36 @@ function mapCriteriaFor(filter: GlossyLayerFilter) {
     labelPolicy: STRICT_MAP_CRITERIA.labelPolicy,
     composition: STRICT_MAP_CRITERIA.composition,
   };
+}
+
+/** Round posts evenly along a fence run. ONE definition, called by both the AI composite and the
+ *  deterministic Structures sheet — they had drifted into two different-looking fences, which meant
+ *  a single plan set showed the same fence two ways. `scale` lets the deterministic sheets (which
+ *  draw at logical frame size) match the composite (which draws at SCALE×). */
+function drawFencePosts(
+  ctx: CanvasRenderingContext2D,
+  points: Array<[number, number]>,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  scale: number,
+): void {
+  if (points.length < 2) return;
+  const posts: Array<[number, number]> = [[px(points[0][0]), py(points[0][1])]];
+  for (let i = 0; i < points.length - 1; i++) {
+    const ax = px(points[i][0]), ay = py(points[i][1]);
+    const bx = px(points[i + 1][0]), by = py(points[i + 1][1]);
+    const n = Math.max(1, Math.round((Math.hypot(bx - ax, by - ay) || 1) / (14 * scale)));
+    for (let k = 1; k <= n; k++) posts.push([ax + (bx - ax) * (k / n), ay + (by - ay) * (k / n)]);
+  }
+  for (const [cx, cy] of posts) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3.2 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = LINE_COLORS.fence;
+    ctx.fill();
+    ctx.strokeStyle = '#FFFEFA';
+    ctx.lineWidth = 1.2 * scale;
+    ctx.stroke();
+  }
 }
 
 const LINE_COLORS: Record<string, string> = {
@@ -591,24 +622,7 @@ export function drawMarks(
     ctx.stroke();
     ctx.setLineDash([]);
     // Post-and-wire fence: round posts along the line (violet), never the boundary's ticks.
-    if (line.kind === 'fence') {
-      const pts = line.points;
-      const posts: Array<[number, number]> = [[px(pts[0][0]), py(pts[0][1])]];
-      for (let i = 0; i < pts.length - 1; i++) {
-        const ax = px(pts[i][0]), ay = py(pts[i][1]), bx = px(pts[i + 1][0]), by = py(pts[i + 1][1]);
-        const n = Math.max(1, Math.round((Math.hypot(bx - ax, by - ay) || 1) / (14 * SCALE)));
-        for (let k = 1; k <= n; k++) posts.push([ax + (bx - ax) * (k / n), ay + (by - ay) * (k / n)]);
-      }
-      for (const [cx, cy] of posts) {
-        ctx.beginPath();
-        ctx.arc(cx, cy, 3.2 * SCALE, 0, Math.PI * 2);
-        ctx.fillStyle = LINE_COLORS.fence;
-        ctx.fill();
-        ctx.strokeStyle = '#FFFEFA';
-        ctx.lineWidth = 1.2 * SCALE;
-        ctx.stroke();
-      }
-    }
+    if (line.kind === 'fence') drawFencePosts(ctx, line.points, px, py, SCALE);
   }
 
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
@@ -2500,9 +2514,19 @@ function speciesColor(defId: string): string {
 /** Legend rows for the traced ground drawn by drawBlueprintGround — same exclusions, same order
  *  (biggest first), so the panel reads down in the order the eye meets the washes. Renamed rings
  *  keep their own name, matching how the farmer labelled them in the editor. */
-function groundRows(state: DesignCanvasState): BlueprintLegendRow[] {
+function groundRows(state: DesignCanvasState, refLayers?: DesignGlossyProps['refLayers']): BlueprintLegendRow[] {
+  // MUST use the same predicate as drawBlueprintGround, or the legend and the map drift apart —
+  // which is exactly what happened when ground started drawing on Zones, Water and Structures while
+  // this function was still hard-coded to skip house and driveway: painted areas with no key.
+  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
   return state.zones
-    .filter((z) => z.feature && z.feature !== 'house' && z.feature !== 'driveway' && z.points.length >= 3)
+    .filter((z) => {
+      if (!z.feature || z.points.length < 3) return false;
+      if (z.feature === 'house') return !houseCovered;
+      if (z.feature === 'driveway') return !drivewayCovered;
+      return true;
+    })
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
     .map((z) => ({
       color: GROUND_FEATURES[z.feature!].color,
@@ -2890,6 +2914,15 @@ export async function buildBlueprintWaterMapLegacy(
       note: 'Land-shaping and soakaway features are kept to the traced geometry.',
     });
   }
+  // This sheet now paints the traced ground under the plumbing, so it must key it too.
+  const ground = groundRows(state, refLayers);
+  if (ground.length) {
+    sections.push({
+      title: 'EXISTING GROUND',
+      rows: ground,
+      note: 'What is already on the site, shown so the routes read against it.',
+    });
+  }
   const noteRows: BlueprintLegendRow[] = [
     { color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' },
     ...(refLayers.driveway.length >= 2 ? [{ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' as const }] : []),
@@ -3112,7 +3145,7 @@ export async function buildBlueprintPlantingMap(
   //    context rows. Ground rows are fixed rather than compressible: they name painted AREAS, and
   //    an unexplained green wash across half the sheet is worse than one fewer species row.
   const rowH = Math.round(W * 0.026);
-  const fixed: BlueprintLegendRow[] = [...groundRows(state)];
+  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
   fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
@@ -3163,10 +3196,15 @@ export async function buildBlueprintStructuresMap(
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, true);
 
   // 3. Access / boundary lines — white casing under a coloured line, as on the water sheet.
+  // FENCE STYLING WAS INVERTED between the two render paths: the AI composite drew it solid violet
+  // with round posts (drawMarks), this sheet drew it dashed grey with none — so the same fence in
+  // one plan set looked like two different things, and a dash reads as "underground or proposed"
+  // when a fence is neither. Both paths now use LINE_COLORS.fence and the post treatment
+  // (Rory: "we need to add fence here the one with circles").
   const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
-    path: { color: '#C9A227', dash: [] },
-    fence: { color: '#8C8577', dash: [6, 4] },
-    windbreak: { color: '#2F7A4A', dash: [] },
+    path: { color: LINE_COLORS.path, dash: [] },
+    fence: { color: LINE_COLORS.fence, dash: [] },
+    windbreak: { color: LINE_COLORS.windbreak, dash: [] },
   };
   ctx.save();
   ctx.lineCap = 'round';
@@ -3189,6 +3227,8 @@ export async function buildBlueprintStructuresMap(
     ctx.lineWidth = 3.5;
     ctx.stroke();
     ctx.setLineDash([]);
+    // Post-and-wire: round posts along the run, matching the composite exactly.
+    if (l.kind === 'fence') drawFencePosts(ctx, l.points, px, py, 1);
   }
   ctx.restore();
 
@@ -3206,10 +3246,13 @@ export async function buildBlueprintStructuresMap(
   // 7. Legend (top-right) — what's actually present, then the line kinds drawn, then context.
   const rowH = Math.round(W * 0.026);
   const kinds = new Set(state.lines.filter((l) => l.points.length >= 2).map((l) => l.kind));
-  const fixed: BlueprintLegendRow[] = [];
+  // Ground first: this sheet now paints the traced paving, yard and Studio-traced driveway, and a
+  // painted area with no key entry is the phantom-legend defect in reverse.
+  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
   if (kinds.has('path')) fixed.push({ color: '#C9A227', label: 'Path', style: 'line' });
   if (kinds.has('windbreak')) fixed.push({ color: '#2F7A4A', label: 'Windbreak', style: 'line' });
-  if (kinds.has('fence')) fixed.push({ color: '#8C8577', label: 'Internal fence', style: 'dashline' });
+  // Swatch must match the line now drawn: solid violet with posts, not a grey dash.
+  if (kinds.has('fence')) fixed.push({ color: LINE_COLORS.fence, label: 'Internal fence', style: 'line' });
   fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'structures'), fixed, blueprintLegendCapacity(H, pad, rowH));
@@ -4275,9 +4318,13 @@ export default function DesignGlossy({
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
-  // Session-only gallery of every successful render (producer OR the strict/analysis paths).
-  // Never persisted — kept only until the component unmounts.
+  // DURABLE gallery of every successful render (producer OR the strict/analysis paths), backed by
+  // IndexedDB (lib/sheet-store.ts). It used to be session-only: created empty on every mount and
+  // written nowhere, so closing the tab destroyed sheets that cost real money and minutes to
+  // render. `storageWarning` is set when a sheet could not be persisted, so we say so rather than
+  // let the word "Saved" imply a durability we do not have.
   const [gallery, setGallery] = useState<Array<{ id: string; label: string; image: string }>>([]);
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -4295,18 +4342,42 @@ export default function DesignGlossy({
         : (analysisStyle ?? filter);
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
-  const pushGallery = useCallback((label: string, image: string) => {
-    setGallery((prev) => [
-      ...prev,
-      { id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, image },
-    ]);
-  }, []);
+  // Restore this site's saved sheets on mount / site change. Failure is silent by design: an
+  // unavailable IndexedDB must still leave a working session-only gallery.
+  useEffect(() => {
+    let cancelled = false;
+    void loadSheets(state.siteId).then((rows) => {
+      if (cancelled) return;
+      setGallery(rows.map((r) => ({ id: r.id, label: r.label, image: r.image })));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [state.siteId]);
 
-  // Remove one saved map (session-only, so this is just React state). If the deleted
-  // item is the one open in the detail view, drop back to the grid.
+  const pushGallery = useCallback(
+    (label: string, image: string) => {
+      const item = { id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, image };
+      setGallery((prev) => [...prev, item]);
+      // Persist alongside the state update, never instead of it — a sheet that fails to save must
+      // still be on screen and downloadable.
+      void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString() }).then((ok) => {
+        setStorageWarning(
+          ok
+            ? null
+            : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`,
+        );
+      });
+    },
+    [state.siteId],
+  );
+
+  // Remove one saved map, from the screen AND from storage. If the deleted item is the one open in
+  // the detail view, drop back to the grid.
   const removeGallery = useCallback((id: string) => {
     setGallery((prev) => prev.filter((g) => g.id !== id));
     setGalleryViewId((cur) => (cur === id ? null : cur));
+    void deleteSheet(id);
   }, []);
 
   // Load the cached render for this site + chosen map. Runs on mount and whenever the map
@@ -5960,9 +6031,11 @@ export default function DesignGlossy({
                     ))}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <p style={{ fontSize: 10, color: '#9A8268', margin: 0 }}>Session-only — kept until you leave this screen.</p>
+                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
+                      {storageWarning ?? 'Saved on this device — these stay here after you close the app.'}
+                    </p>
                     <button
-                      onClick={() => { setGallery([]); setGalleryViewId(null); }}
+                      onClick={() => { setGallery([]); setGalleryViewId(null); void clearSheets(state.siteId); }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 9, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 11, cursor: 'pointer', whiteSpace: 'nowrap' }}
                     >
                       <Trash2 size={12} /> Clear all
