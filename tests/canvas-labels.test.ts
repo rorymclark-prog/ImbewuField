@@ -149,3 +149,39 @@ test('release notes are written for the farmer, not the repo', () => {
       `leaks implementation detail: "${line}"`);
   }
 });
+
+// ── Leader anchors ───────────────────────────────────────────────────────────
+import { nearestPointOnRing, groundFillPolys } from '../lib/design-canvas.ts';
+
+test('a leader lands on the ring edge, not its centroid', () => {
+  // Rory: "even if i move the property boundary the leader stays on the house". The centroid of a
+  // big enclosing ring is the middle of the plot — which is exactly where the house is.
+  const boundary: Array<[number, number]> = [[0.1, 0.1], [0.9, 0.1], [0.9, 0.9], [0.1, 0.9]];
+  const centroid: [number, number] = [0.5, 0.5];
+  const label: [number, number] = [0.5, 0.98]; // dragged below the plot
+  const a = nearestPointOnRing(boundary, label);
+  assert.equal(a[1].toFixed(3), '0.900', 'should land on the bottom edge');
+  const dLabelToAnchor = Math.hypot(a[0] - label[0], a[1] - label[1]);
+  const dLabelToCentroid = Math.hypot(centroid[0] - label[0], centroid[1] - label[1]);
+  assert.ok(dLabelToAnchor < dLabelToCentroid, 'the edge must be nearer the label than the centre');
+});
+
+test('the anchor stays ON the ring, never on a segment extension', () => {
+  const tri: Array<[number, number]> = [[0.2, 0.2], [0.8, 0.2], [0.5, 0.8]];
+  // A point far off one corner must clamp to the corner, not fly along the edge's extension.
+  const a = nearestPointOnRing(tri, [-5, 0.2]);
+  assert.deepEqual([+a[0].toFixed(3), +a[1].toFixed(3)], [0.2, 0.2]);
+});
+
+test('a boundary ring is never cut into by the areas inside it', () => {
+  // It is drawn as a line now, so its fill is never used — but if that ever changes, nesting must
+  // not silently turn the whole plot into a donut.
+  const box = (x0: number, y0: number, x1: number, y1: number): Array<[number, number]> =>
+    [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+  const zones = [
+    { id: 'b', zone: 0 as const, feature: 'boundary' as const, points: box(0.1, 0.1, 0.9, 0.9) },
+    { id: 'l', zone: 0 as const, feature: 'lawn' as const, points: box(0.2, 0.2, 0.8, 0.8) },
+  ];
+  // The lawn is cut by nothing smaller, so it stays one ring.
+  assert.equal(groundFillPolys(zones, zones[1]).flat().length, 1);
+});

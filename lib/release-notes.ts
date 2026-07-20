@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'The property boundary draws as a fence line, not a hatch over the whole plot',
+      'Label leaders point at the edge of the area they name, not its middle',
       'Traced areas now nest — lawn cuts out the house, house cuts out the patio',
       'Area labels no longer pile on top of each other (drag one to move it)',
       'New "Other" element on Water, Planting and Structures — place it, then name it yourself',

@@ -427,6 +427,34 @@ export function ringAreaOf(pts: Array<[number, number]>): number {
  *  same-size overlap is a tracing mistake the farmer should see rather than have silently hidden.
  *  Returns MultiPolygon rings — [outer, ...holes] — which canvas' nonzero fill renders as holes
  *  when each is its own subpath, and SVG renders the same way with fillRule="evenodd". */
+/** Closest point ON a ring's outline to a given point, in normalised coords.
+ *
+ *  A label's leader used to run to the ring CENTROID, which is meaningless for a large enclosing
+ *  area: the centroid of a property boundary is the middle of the plot, which is where the house
+ *  is — so dragging the boundary label away left its leader pointing confidently at the house
+ *  (Rory: "even if i move the property boundry the leader stay on the house"). The edge is what a
+ *  boundary actually IS, and for small shapes the nearest edge point is a few pixels from the
+ *  centroid anyway, so this is right for both. */
+export function nearestPointOnRing(
+  ring: Array<[number, number]>,
+  to: [number, number],
+): [number, number] {
+  let best: [number, number] = ring[0] ?? to;
+  let bestD = Infinity;
+  for (let i = 0; i < ring.length; i++) {
+    const [ax, ay] = ring[i];
+    const [bx, by] = ring[(i + 1) % ring.length];
+    const dx = bx - ax, dy = by - ay;
+    const len2 = dx * dx + dy * dy;
+    // t clamped to [0,1] keeps the foot of the perpendicular ON the segment, not on its extension.
+    const t = len2 === 0 ? 0 : Math.max(0, Math.min(1, ((to[0] - ax) * dx + (to[1] - ay) * dy) / len2));
+    const px = ax + dx * t, py = ay + dy * t;
+    const d = (px - to[0]) ** 2 + (py - to[1]) ** 2;
+    if (d < bestD) { bestD = d; best = [px, py]; }
+  }
+  return best;
+}
+
 export function groundFillPolys(
   zones: ZoneShape[],
   z: ZoneShape,

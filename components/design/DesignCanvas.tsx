@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
@@ -1531,6 +1531,10 @@ export default function DesignCanvas({
             const labelCx = centroid[0] + ldx;
             const labelCy = centroid[1] + ldy + (labelMovedByUser(z) ? 0 : auto);
             const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003 || Math.abs(auto) > 0.003;
+            // The leader lands on the ring's EDGE nearest the label, never its centroid — see
+            // nearestPointOnRing. A property boundary's centroid is the middle of the plot, i.e. the
+            // house, so a dragged boundary label pointed straight at the roof.
+            const leaderAnchor = nearestPointOnRing(effectivePoints, [labelCx, labelCy]);
             // Ground-feature word-pills (House/Lawn/Paving…) are useful context on most steps but
             // buried the map in text on the Zones step ("words almost the whole screen"). Hide the
             // WORDS there — the coloured fills still orient you — while keeping zone number badges.
@@ -1554,6 +1558,12 @@ export default function DesignCanvas({
                     readable areas instead of four hatches piled on the roof. The OUTLINE still
                     follows the ring the farmer actually drew — only the fill is cut — so the shape
                     stays honest and editable. evenodd renders the difference result's holes. */}
+                {/* A PROPERTY BOUNDARY IS A LINE, NOT A SURFACE. Hatching it filled the whole
+                    plot with a wash that every other area then had to be cut out of, and made the
+                    one thing that is purely an edge read as the biggest area on the map. The sheets
+                    have always drawn it as a fence line only (drawBlueprintBoundary); the canvas now
+                    agrees. This also means nesting applies only to real surfaces. */}
+                {z.feature !== 'boundary' && (
                 <path
                   d={feat && !isDraggingVertexOfThisShape && !isDraggingWholeShape
                     ? groundFillPolys(state.zones, z)
@@ -1569,6 +1579,7 @@ export default function DesignCanvas({
                   style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
+                )}
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
                   fill="none"
@@ -1582,8 +1593,8 @@ export default function DesignCanvas({
                 )}
                 {labelMoved && labelVisible && (
                   <line
-                    x1={(centroid[0] * imgW).toFixed(1)}
-                    y1={(centroid[1] * imgH).toFixed(1)}
+                    x1={(leaderAnchor[0] * imgW).toFixed(1)}
+                    y1={(leaderAnchor[1] * imgH).toFixed(1)}
                     x2={(labelCx * imgW).toFixed(1)}
                     y2={(labelCy * imgH).toFixed(1)}
                     stroke={color}
