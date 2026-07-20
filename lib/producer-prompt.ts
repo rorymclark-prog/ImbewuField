@@ -471,9 +471,15 @@ export function buildSatelliteOverlayPrompt(args: {
 
   const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a South African smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
 
-1. THE RULE ABOVE ALL OTHERS — KEEP THE PHOTOGRAPH. The supplied aerial imagery remains the map background across the entire map area, corner to corner, inside and outside the property boundary, at full sharpness: real roof sheeting, real tree crowns, real dirt tracks, real shadows, real colour, real grain. Work like someone drawing on tracing paper laid over a print — the print shows through everywhere. Every square metre with no overlay element on it is finished the moment you leave it alone: it ships as raw photograph, native grain, native colour. The contrast between untouched photo and crisp graphics is the whole look.
+1. THE RULE ABOVE ALL OTHERS — THE BOUNDARY DIVIDES THE SHEET IN TWO. The property boundary is the edge between a finished drawing and its context, and that contrast is the whole look.
 
-2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the tar driveway fill, (4) the irrigation lines, (5) white labels with leader lines, (6) the cream legend panel, (7) a north arrow and a scale bar. Everything else in the frame is untouched photograph.
+INSIDE the boundary the land is REDRAWN CLEAN, as a finished plan: mown lawn as an even, softly textured mid-green (#7E9C5C), bare and tilled ground as warm brown, paths and paving as clean flat surfaces, and every roof as crisp flat planes with its ridges and hips in slate grey (#3C4247). Keep every shape exactly where the photograph puts it — the same roof outline, the same tracks, the same tree positions and canopy sizes — but render them cleanly and evenly, with the photographic noise, blotching, harsh shadow and camera grain gone. It should read as a drawing of this exact place, not a photograph of it.
+
+OUTSIDE the boundary the supplied photograph stays exactly as it is — real, soft, slightly darker, untouched to the very edges of the sheet. Neighbouring roofs, trees and tracks keep their photographic texture and their haze. This is context, and it recedes.
+
+The boundary line itself is the crisp seam between the two.
+
+2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the tar driveway fill, (4) the irrigation lines, (5) white labels with leader lines, (6) the cream legend panel, (7) a north arrow and a scale bar. Beyond those, inside the boundary is the clean redrawn ground of rule 1, and outside it is untouched photograph.
 
 3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
 
@@ -499,7 +505,7 @@ export function buildSatelliteOverlayPrompt(args: {
 
 14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N" and "20 m". All spelled exactly as given, all horizontal, all print-legible.
 
-FINAL CHECK, in order of importance: (1) the map area is still unmistakably the supplied satellite photograph — raw, sharp, grainy, photographic under the graphics; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one shadowed icon in its original spot; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
+FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly redrawn — even green lawn, crisp roof planes, no photographic grain or blotching — while outside the boundary is untouched photograph, and the boundary is the visible seam between them; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one shadowed icon in its original spot; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
 
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }

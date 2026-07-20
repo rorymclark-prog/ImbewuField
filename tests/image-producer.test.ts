@@ -259,8 +259,11 @@ test('satellite overlay style keeps the photo, letters its own sheet, and drops 
   });
   assert.ok(p.startsWith(STYLE_LINES.satellite_overlay), 'style leads so a length clamp cannot cut it');
   assert.match(p, /03 — WATER PLAN/);
-  // The one rule this style exists for.
-  assert.match(p, /KEEP THE PHOTOGRAPH/);
+  // The one rule this style exists for: the boundary divides a clean redrawn plan from its
+  // photographic context. Keeping the photo EVERYWHERE was the earlier reading and looked flat.
+  assert.match(p, /THE BOUNDARY DIVIDES THE SHEET IN TWO/);
+  assert.match(p, /INSIDE the boundary the land is REDRAWN CLEAN/);
+  assert.match(p, /OUTSIDE the boundary the supplied photograph stays exactly as it is/);
   // Editor glyphs are stripped: they identify markers in the IMAGE, but a model told to "spell
   // exactly" would letter them onto the sheet.
   assert.doesNotMatch(p.split('6. THIS SHEET')[1].split('7. LINES')[0], /[\u{1F300}-\u{1FAFF}]/u);
