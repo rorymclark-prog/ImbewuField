@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Planting and Structures sheets stop inventing irrigation lines that were never drawn',
+      'Older saved maps are now marked, so you can tell them from freshly rendered ones',
       'The property boundary draws as a fence line, not a hatch over the whole plot',
       'Label leaders point at the edge of the area they name, not its middle',
       'Traced areas now nest — lawn cuts out the house, house cuts out the patio',

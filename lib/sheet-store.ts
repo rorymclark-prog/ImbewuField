@@ -28,6 +28,12 @@ export interface StoredSheet {
   image: string;
   /** ISO timestamp — newest last, so the gallery reads in render order. */
   at: string;
+  /** Which generation of the plan set produced this sheet. Bumping the render rules changes what a
+   *  sheet CONTAINS, and the gallery is durable — so without this a farmer ends up holding two
+   *  sheets both called "04 — Water Plan", from different eras, indistinguishable and both
+   *  downloadable. Absent on anything saved before versioning existed, which is itself the signal
+   *  that it is old. */
+  planVersion?: string;
 }
 
 function openDb(): Promise<IDBDatabase | null> {

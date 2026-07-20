@@ -522,7 +522,9 @@ test('GROUND stays silent, but what the system SERVES is named', () => {
   assert.match(p, /Vegetable Bed ×8, Banana Circle ×2/);
   assert.match(p, /legend row each under a heading reading EXISTING/);
   // ...and never counted as this layer's own system.
-  assert.match(p, /never take a RAINWATER, IRRIGATION or GREYWATER row/);
+  // Reworded: RAINWATER / IRRIGATION / GREYWATER are headings that exist only on the Water sheet,
+  // so naming them here was wrong the moment this clause could reach any other sheet.
+  assert.match(p, /never part of it, and they never take one of this sheet's own system headings/);
 });
 
 test('naming what the system serves always carries the add-none guard', () => {
@@ -544,4 +546,45 @@ test('a sheet with nothing to serve says nothing about it', () => {
     elementsText: 'Mango Tree', sheetKind: 'planting',
   });
   assert.doesNotMatch(p, /WHAT THIS SYSTEM SERVES/);
+});
+
+// ── Phase 1: the prompt must not name what the composite does not contain ─────
+test('irrigation routes are described only where they can exist', () => {
+  // lineInFilter puts swale/pipe/drip on the WATER layer only. Describing them on Planting or
+  // Structures named lines that are not in the composite — and rule 7's absent-assertion means the
+  // model resolves that by inventing them. Same shape as every invention bug this file has shipped.
+  const on = (k: 'water' | 'all' | 'planting' | 'structures') =>
+    buildSatelliteOverlayPrompt({ layerLabel: 'X', stylePreset: 'satellite_overlay', elementsText: 'JoJo Tank 5000L', sheetKind: k });
+  assert.match(on('water'), /drip-irrigation runs/);
+  assert.match(on('all'), /drip-irrigation runs/);
+  assert.doesNotMatch(on('planting'), /drip-irrigation runs/);
+  assert.doesNotMatch(on('structures'), /drip-irrigation runs/);
+  // The boundary rule lives in the same numbered item and must survive on every sheet.
+  for (const k of ['water', 'all', 'planting', 'structures'] as const) {
+    assert.match(on(k), /PROPERTY BOUNDARY/);
+  }
+});
+
+test('rule 7 no longer asserts that ground and served items are absent', () => {
+  // It said the element list was "the COMPLETE contents of this sheet" while siteFabric and the
+  // served clause, in the same prompt, named more drawable things. The model was told they were
+  // both present and absent.
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L', fabric: 'Lawn', served: 'Vegetable Bed ×8', sheetKind: 'water',
+  });
+  assert.doesNotMatch(p, /COMPLETE contents of this/);
+  assert.match(p, /COMPLETE set of DESIGNED ELEMENTS/);
+  assert.match(p, /It is not the whole of what the sheet SHOWS/);
+});
+
+test('the icon rule never renders as an empty numbered fragment', () => {
+  // On a Zones sheet nothing matches the icon vocabulary, and rule 6 came out as
+  // "6. ICON LANGUAGE ... : ." — a numbered instruction with no content, on every zones render.
+  const zones = buildSatelliteOverlayPrompt({
+    layerLabel: 'Zones', stylePreset: 'satellite_overlay',
+    elementsText: 'Zone 1 — Daily care', sheetKind: 'zones',
+  });
+  assert.doesNotMatch(zones, /shading: \./);
+  assert.match(zones, /6\. ICON LANGUAGE/);
 });

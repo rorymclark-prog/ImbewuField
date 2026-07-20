@@ -4460,8 +4460,19 @@ interface SavedGlossy {
 
 // 'all' keeps the original site-scoped key (so existing saved renders survive); each other
 // layer gets its own suffixed key so per-layer renders don't overwrite each other.
+// PLAN VERSION — bump whenever a change alters what a sheet CONTAINS, not merely how it looks.
+// The cache keys on siteId + style + layer with no content hash, so without this the fix you just
+// shipped is invisible: the same key hands back the pre-change picture and the farmer concludes
+// nothing happened. (It has already happened once this session — a Zones sheet that still had no
+// zones on it, because the broken render was cached.) One line, and it must move in the same commit
+// as the change that needs it.
+//   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
+//        asserting ground and served items absent, icon rule no longer renders empty.
+const PLAN_VERSION = 'v2';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
-  mapKey === 'all' ? `imbewu_design_glossy_${siteId}` : `imbewu_design_glossy_${siteId}_${mapKey}`;
+  mapKey === 'all'
+    ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
+    : `imbewu_design_glossy_${PLAN_VERSION}_${siteId}_${mapKey}`;
 
 function loadSavedGlossy(siteId: string, mapKey: string = 'all'): SavedGlossy | null {
   try {
@@ -4700,7 +4711,14 @@ export default function DesignGlossy({
     let cancelled = false;
     void loadSheets(state.siteId).then((rows) => {
       if (cancelled) return;
-      setGallery(rows.map((r) => ({ id: r.id, label: r.label, image: r.image })));
+      // Sheets from an earlier generation of the render rules stay in the gallery — they are the
+      // farmer's, and some are downloaded already — but they are labelled, so two sheets with the
+      // same title from different eras are never confusable.
+      setGallery(rows.map((r) => ({
+        id: r.id,
+        label: r.planVersion === PLAN_VERSION ? r.label : `${r.label} · older version`,
+        image: r.image,
+      })));
     });
     return () => {
       cancelled = true;
@@ -4713,7 +4731,7 @@ export default function DesignGlossy({
       setGallery((prev) => [...prev, item]);
       // Persist alongside the state update, never instead of it — a sheet that fails to save must
       // still be on screen and downloadable.
-      void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString() }).then((ok) => {
+      void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION }).then((ok) => {
         setStorageWarning(
           ok
             ? null
