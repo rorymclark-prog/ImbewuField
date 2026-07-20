@@ -5032,9 +5032,31 @@ export default function DesignGlossy({
     const assembled = new Set<string>();
     let lockedAssembled = 0;
     let lastAssembleError = '';
+    // Snapshots must be handled ONE AT A TIME. Assembling a sheet takes seconds (two downloads plus
+    // canvas work) while `finished` is marked synchronously, so an unserialised handler lets the
+    // terminal "complete" snapshot overtake an in-flight assembly: it skips the sheet as already
+    // handled, sees nothing assembled yet, and reports a failure for a render that was fine.
+    let queue: Promise<void> = Promise.resolve();
     const unsub = subscribeRenderJob(
       queueJobId,
-      async (job) => {
+      (job) => {
+        queue = queue.then(() => handleSnapshot(job)).catch((e) => {
+          console.error('[glossy] render-job snapshot handler failed', e);
+        });
+      },
+      () => {
+        // Clear the job reference too — leaving it made the next Generate silently orphan a
+        // still-running, still-billed render (audit find). The old job may still finish
+        // server-side; its outputs land in the cache for this site if the user reopens.
+        setError('Lost connection to the background render — it may still finish in the background; reopen this step in a few minutes to check before paying for a re-run.');
+        setLoading(null);
+        clearPersistedJobId(siteId);
+        setQueueJobId(null);
+      },
+    );
+
+    async function handleSnapshot(job: Parameters<Parameters<typeof subscribeRenderJob>[1]>[0]): Promise<void> {
+      {
         if (!job) return;
         // Style + showcase come off the JOB DOC, not React state: a remount (Preview-map hop,
         // reload on a spotty connection) resets local state to defaults, and the old code then
@@ -5106,17 +5128,9 @@ export default function DesignGlossy({
           clearPersistedJobId(siteId);
           setQueueJobId(null);
         }
-      },
-      () => {
-        // Clear the job reference too — leaving it made the next Generate silently orphan a
-        // still-running, still-billed render (audit find). The old job may still finish
-        // server-side; its outputs land in the cache for this site if the user reopens.
-        setError('Lost connection to the background render — it may still finish in the background; reopen this step in a few minutes to check before paying for a re-run.');
-        setLoading(null);
-        clearPersistedJobId(siteId);
-        setQueueJobId(null);
-      },
-    );
+      }
+    }
+
     return () => unsub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queueJobId, state.siteId, pushGallery]);
