@@ -6,7 +6,7 @@
 // component — all state (tool, placeDefId, zoneDraw, lineKind, activeLayers) lives in the
 // parent; this just renders controls and calls the setters.
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
 import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
 import LessonLink from './LessonLink';
@@ -187,6 +187,16 @@ export default function DesignPalette({
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Right-edge "more this way" fade on the element strip. Tracked rather than always-on: a fade
+  // still showing when you have scrolled to the last chip is a small lie, and the whole point of
+  // the affordance is to be trusted.
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const [stripAtEnd, setStripAtEnd] = useState(true);
+  const syncStripEnd = useCallback(() => {
+    const el = stripRef.current;
+    if (!el) return;
+    setStripAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+  }, []);
   const guided = mode === 'guided';
   const hiddenLayerCount = LAYER_TOGGLES.filter((lt) => !activeLayers[lt.key]).length;
 
@@ -215,11 +225,25 @@ export default function DesignPalette({
   // a farmer with a warm microclimate can still pick one.
   const siteClimates = biomeClimates(siteBiome);
   const climateFilterActive = step === 'planting' && !!siteClimates;
-  const orderedCatalog = climateFilterActive
-    ? [...catalog].sort(
-        (a, b) => Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates)),
-      )
-    : catalog;
+  // NON-TREES FIRST on the planting step. This strip is a single horizontal scroller, and the
+  // catalog's own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions
+  // 20–22 of 22 — behind seven fruit trees, off the right edge, effectively unreachable (Rory:
+  // "why is it not picking up the pollinator strips?"). They are not trees, so the climate sort
+  // never lifted them: elementSuitsClimate returns true for everything it has no data on, which
+  // means "don't demote", not "promote".
+  // Beds, strips, hedges and banks are also what you lay out FIRST, and there are only a handful
+  // of them, so putting them ahead of nineteen tree species is the right reading order anyway.
+  // `tree_` prefix is the same discriminator producer-labels.ts uses for its TREES label family.
+  const isTree = (def: DesignElementDef) => def.id.startsWith('tree_');
+  const plantingOrder = (a: DesignElementDef, b: DesignElementDef) =>
+    Number(isTree(a)) - Number(isTree(b)) ||
+    Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates));
+  const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
+
+  // Re-measure whenever the strip's CONTENTS change (step change, layer toggle) — not just on
+  // scroll. A layer toggle can take the row from overflowing to fitting, and a stale fade would
+  // then point at nothing.
+  useEffect(syncStripEnd, [syncStripEnd, orderedCatalog.length, showElementCatalog]);
 
   const hintDef = hintDefId ? catalog.find((d) => d.id === hintDefId) : null;
   const armedDef = placeDefId ? ELEMENT_CATALOG.find((d) => d.id === placeDefId) : null;
@@ -481,7 +505,11 @@ export default function DesignPalette({
             🌡️ Trees that suit your climate{siteBiome ? ` (${siteBiome})` : ''} are shown first. Dimmed ones need a warmer or cooler spot.
           </div>
         )}
-        <div style={scrollStripStyle(guided ? 10 : 6)}>
+        {/* Wrapped so the "there is more to the right" fade can sit over the strip's right edge.
+            Without it a 22-element catalog looks like a 16-element one: the scrollbar is a few
+            faint pixels and nothing else says the row continues. */}
+        <div style={{ position: 'relative', minWidth: 0 }}>
+        <div ref={stripRef} onScroll={syncStripEnd} style={scrollStripStyle(guided ? 10 : 6)}>
           {orderedCatalog.map((def) => {
             const active = placeDefId === def.id && tool === 'place';
             const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
@@ -517,6 +545,28 @@ export default function DesignPalette({
               </button>
             );
           })}
+        </div>
+        {!stripAtEnd && (
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: 34,
+              pointerEvents: 'none',
+              background: `linear-gradient(to right, rgba(255,255,255,0), ${PAPER})`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              color: '#6B6355',
+              fontSize: 15,
+            }}
+          >
+            ›
+          </div>
+        )}
         </div>
       </div>
       )}
