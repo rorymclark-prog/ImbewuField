@@ -4991,11 +4991,16 @@ export default function DesignGlossy({
     if (exactSheet === 'sector') return renderSectorMap();
     if (exactSheet === 'implementation') return renderImplementationMap();
     if (producerStyle) {
-      return engine === 'falgpt' ? generateOneViaQueue() : generateProducer();
+      // Geometry Lock only EXISTS on the queue path: /api/image-producer accepts no protect mask
+      // and generateProducer sends the unlocked prompt, so running a locked sheet there tells the
+      // model to paint every feature while the browser also draws the deterministic overlay —
+      // duplicated tanks and pipes, the exact thing the lock is meant to prevent. Keep the lock on
+      // the one path that implements it.
+      return engine === 'falgpt' || geometryLock ? generateOneViaQueue() : generateProducer();
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, producerStyle, engine, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [exactSheet, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -5020,6 +5025,13 @@ export default function DesignGlossy({
     if (!queueJobId) return;
     const siteId = state.siteId;
     const finished = new Set<string>();
+    // A sheet only counts as delivered once the BROWSER has assembled and stored it. The worker
+    // saying "done" is not enough: the locked path adds two more downloads plus canvas work, and
+    // a failure there used to be swallowed while the user still got the green success notice with
+    // an unchanged preview — the "Refresh does nothing" report.
+    const assembled = new Set<string>();
+    let lockedAssembled = 0;
+    let lastAssembleError = '';
     const unsub = subscribeRenderJob(
       queueJobId,
       async (job) => {
@@ -5054,25 +5066,38 @@ export default function DesignGlossy({
                 setSaved(record);
               }
               pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}${locked ? ' · Geometry locked' : ''}`, finalSheet);
+              assembled.add(sheet.key);
+              if (locked) lockedAssembled += 1;
             } catch (e) {
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
+              // Let a later snapshot retry this sheet — the worker's output is still in Storage.
+              finished.delete(sheet.key);
+              lastAssembleError = e instanceof Error ? e.message : String(e);
             }
           }
         }
         if (job.status === 'complete' || job.status === 'failed' || job.status === 'error') {
-          const done = job.sheets.filter((s) => s.status === 'done').length;
-          const lockedDone = job.sheets.filter((s) => s.status === 'done' && (s.geometryLock ?? Boolean(s.protectMaskPath))).length;
+          // Count what this device actually produced, not what the worker reported. A sheet the
+          // browser could not assemble is a failure the farmer must be told about — otherwise a
+          // paid render silently vanishes behind a success message.
+          const done = assembled.size;
+          const lockedDone = lockedAssembled;
+          const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
           // Surface the worker's actual reason (quota, moderation, …) — it was captured
           // server-side but never shown, leaving farmers guessing (audit find).
           const firstErr = failedSheets[0]?.error;
           if (done > 0) {
             setNotice(refreshPendingRef.current
-              ? `Refreshed current sheet${lockedDone ? ' — Geometry Lock verified' : ''}; updated preview in your gallery.`
-              : `Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${lockedDone ? ` · Geometry Lock verified on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
+              ? `Refreshed current sheet${lockedDone ? ' — Geometry Lock applied' : ''}; updated preview in your gallery.`
+              : `Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${lockedDone ? ` · Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
             refreshPendingRef.current = false;
             setGalleryViewId(null);
             setGalleryOpen(true);
+          } else if (serverDone > 0) {
+            // The render succeeded and was paid for, but this device could not assemble it.
+            setError(`The sheet rendered but could not be assembled on this device${lastAssembleError ? ` (${lastAssembleError})` : ''} — tap Refresh to try again.`);
+            refreshPendingRef.current = false;
           } else {
             setError(job.error || firstErr || 'The render did not complete — please try again.');
             refreshPendingRef.current = false;
