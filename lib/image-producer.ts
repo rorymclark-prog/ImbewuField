@@ -213,6 +213,24 @@ export function blendProtectedPixels(
 }
 
 /**
+ * Fraction of the mask the model is actually allowed to repaint (alpha < 255).
+ *
+ * Geometry Lock always leaves at least the plot interior editable, so a fully opaque mask is
+ * degenerate: it means "restore every pixel", which silently throws the whole render away and
+ * hands the farmer back the untouched satellite composite. Callers use this to tell a real
+ * mask apart from a broken one instead of failing invisibly.
+ */
+export function maskEditableFraction(maskPixels: Uint8ClampedArray): number {
+  let editable = 0;
+  let total = 0;
+  for (let i = 0; i < maskPixels.length; i += 4) {
+    total += 1;
+    if ((maskPixels[i + 3] ?? 0) < 255) editable += 1;
+  }
+  return total === 0 ? 0 : editable / total;
+}
+
+/**
  * Count fully protected pixels that do not exactly match the source.
  *
  * Geometry Lock is a hard contract, so opaque mask pixels are compared byte-for-byte rather
@@ -270,10 +288,20 @@ export async function restoreProtectedPixels(
   const sourcePixels = drawToCanvas(source);
   const modelPixels = drawToCanvas(model);
   const maskPixels = drawToCanvas(mask);
-  const blended = blendProtectedPixels(sourcePixels, modelPixels, maskPixels);
-  const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
-  if (mismatches > 0) {
-    throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
+
+  // A fully opaque mask restores every pixel, which silently discards the render and returns the
+  // raw satellite composite — the exact "the map didn't change" failure seen in production
+  // (job …_w0c6b5: 100% protected, 0 editable pixels). No legitimate mask looks like this, so
+  // treat it as "no usable mask" and keep the model artwork rather than shipping a dead render.
+  const usableMask = maskEditableFraction(maskPixels) > 0;
+  const blended = usableMask
+    ? blendProtectedPixels(sourcePixels, modelPixels, maskPixels)
+    : new Uint8ClampedArray(modelPixels);
+  if (usableMask) {
+    const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
+    if (mismatches > 0) {
+      throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
+    }
   }
 
   const outCanvas = document.createElement('canvas');

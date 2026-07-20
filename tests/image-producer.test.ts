@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { blendProtectedPixels, countProtectedPixelMismatches, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
+import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -22,6 +22,21 @@ function canvasState(step: DesignCanvasState['step'], rev: number): DesignCanvas
     updatedAt: '2026-07-19T00:00:00.000Z',
   };
 }
+
+test('maskEditableFraction reports how much of the sheet the model may repaint', () => {
+  // Two pixels: one editable (alpha 0), one protected (alpha 255).
+  const half = new Uint8ClampedArray([0, 0, 0, 0, 255, 255, 255, 255]);
+  assert.equal(maskEditableFraction(half), 0.5);
+
+  // The production failure: a fully opaque mask leaves nothing editable, so restoring against it
+  // would return the untouched satellite composite instead of the render.
+  const allProtected = new Uint8ClampedArray([255, 255, 255, 255, 255, 255, 255, 255]);
+  assert.equal(maskEditableFraction(allProtected), 0);
+
+  const allEditable = new Uint8ClampedArray([0, 0, 0, 0, 0, 0, 0, 0]);
+  assert.equal(maskEditableFraction(allEditable), 1);
+  assert.equal(maskEditableFraction(new Uint8ClampedArray([])), 0);
+});
 
 test('blendProtectedPixels keeps the model output where the mask is transparent', () => {
   const source = px(10, 20, 30, 255);
