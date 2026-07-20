@@ -55,7 +55,7 @@ const OWNER_JOBS_PER_DAY = 300;
 // can push it close to 8000 on a rich design — raised to 12 000 so a silent tail-truncation (which
 // would drop the master design brief, the worst place to lose text) can't recur. Worker-only, no
 // firestore.rules coupling. OpenAI allows up to 32 000; text is ~$5/1M tokens.
-const PROMPT_MAX = 12000;
+const PROMPT_MAX = 16000; // our own guard, not an API limit — raised as the overlay prompt grew
 // Per OpenAI attempt. Edge-to-edge illustrated sheets are the slow case and were aborting at 150s
 // (observed on a full-frame showcase render), so a correct render was being thrown away as a
 // timeout. 230s still lets two full attempts finish inside JOB_DEADLINE_MS below.

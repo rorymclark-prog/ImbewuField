@@ -459,15 +459,28 @@ export function buildSatelliteOverlayPrompt(args: {
   // Every element becomes a literal legend row. Enumerating the rows as CONTENT — rather than
   // describing what a row should look like — is what stops elements silently vanishing from the
   // sheet (a placed Small Pond was dropped from both map and legend on a real render).
-  const legendRows = elementNames
-    .split(',')
-    .map((t) => t.trim())
-    .filter(Boolean)
-    .map((t) => {
-      const m = t.match(/^(.*?)\s*\u00d7\s*(\d+)$/);
-      return m ? `\u2014 ${m[1].trim()} (\u00d7${m[2]})` : `\u2014 ${t} (\u00d71)`;
-    })
-    .join('\n');
+  // The element list may arrive grouped as "WATER » a, b | PLANTING » c" (see overlayElementsText).
+  // A flat 30-row key is unreadable on the whole-design sheet; the reference masterplan groups its
+  // legend and that is what makes it scannable.
+  const row = (t: string) => {
+    const m = t.match(/^(.*?)\s*\u00d7\s*(\d+)$/);
+    return m ? `\u2014 ${m[1].trim()} (\u00d7${m[2]})` : `\u2014 ${t} (\u00d71)`;
+  };
+  const legendRows = elementNames.includes('\u00bb')
+    ? elementNames
+        .split('|')
+        .map((g) => g.trim())
+        .filter(Boolean)
+        .map((g) => {
+          const [heading, list] = g.split('\u00bb');
+          const rows = (list ?? '').split(',').map((t) => t.trim()).filter(Boolean).map(row);
+          return `${heading.trim()}\n${rows.join('\n')}`;
+        })
+        .join('\n')
+    : elementNames.split(',').map((t) => t.trim()).filter(Boolean).map(row).join('\n');
+
+  // Labels on the MAP never carry the section machinery — only the element names.
+  const mapNames = elementNames.replace(/\s*\|\s*/g, ', ').replace(/[A-Z ]+\u00bb\s*/g, '').trim();
 
   const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a South African smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
 
@@ -483,29 +496,29 @@ The boundary line itself is the crisp seam between the two.
 
 3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
 
-4. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Keep each icon to the size of the marker it replaces: a tank, pond or banana circle is metres across and draws large, while a tap, valve, inspection point or borehole is a small fitting a hand's width across and draws small. Small fittings never grow into landmarks. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
+4. THE MARKERS ARE THE WHOLE DESIGN, AND THERE ARE EXACTLY AS MANY AS THERE ARE. Trees are the one thing that gets over-drawn: a plan of a real smallholding has FEWER trees than a picture of a garden, and the empty lawn between them is the point. Draw one canopy per tree marker and not one more — no filler trees along the boundary, no shrubs to balance a corner, no planting in the open grass. The same holds for every other element.
 
-5. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
+5. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Keep each icon to the size of the marker it replaces: a tank, pond or banana circle is metres across and draws large, while a tap, valve, inspection point or borehole is a small fitting a hand's width across and draws small. Small fittings never grow into landmarks. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
 
-6. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${elementNames}. That list is the COMPLETE contents of this ${(layerLabel || 'site').toUpperCase()} sheet — it is the whole design for this layer, and the other layers of the plan set carry everything else. Anything not named there belongs on a different sheet and is simply absent here. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
+6. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
 
-7. THE TWO DARK SHAPES ARE DIFFERENT THINGS. The building is a roof: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. The driveway is flat ground: a smooth tar surface at ground level. They never merge, and no part of a roof becomes road surface.
+7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. That list is the COMPLETE contents of this ${(layerLabel || 'site').toUpperCase()} sheet — it is the whole design for this layer, and the other layers of the plan set carry everything else. Anything not named there belongs on a different sheet and is simply absent here. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
 
-8. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs, redrawn as runs of small bright #2E9BFF dots that lie along the vegetable beds themselves — one run down each bed, on the growing rows, never along a walking path or between the beds; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}
+8. THE TWO DARK SHAPES ARE DIFFERENT THINGS. The building is a roof: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. The driveway is flat ground: a smooth tar surface at ground level. They never merge, and no part of a roof becomes road surface.
 
-9. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
+9. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs, redrawn as runs of small bright #2E9BFF dots that lie along the vegetable beds themselves — one run down each bed, on the growing rows, never along a walking path or between the beds; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}
 
-10. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
+10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
 
-11. SHEET FURNITURE: a small white north arrow with a white "N" above it in the top-right of the map area, and a plain white-and-black divided scale bar at the bottom-left reading "20 m".
+11. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon. A line in CAPITALS with no icon is a SECTION HEADING — set it in small bold capitals above the rows beneath it, with a little space before it, exactly as the reference plan sets WATER, PLANTING and INFRASTRUCTURE:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
 
-12. FIDELITY: every drawn element sits on a marker or a traced line from the input, and everything the photograph shows — roofs, tracks, trees, boundary — keeps its photographed position, shape and size. One marker, one icon.
+12. SHEET FURNITURE: a small white north arrow with a white "N" above it in the top-right of the map area, and a plain white-and-black divided scale bar at the bottom-left reading "20 m".
 
 13. VIEW: the output camera is the input camera — flat orthographic top-down, north-up, same crop, same scale, same aspect.
 
 14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N" and "20 m". All spelled exactly as given, all horizontal, all print-legible.
 
-FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly redrawn — even green lawn, crisp roof planes, no photographic grain or blotching — while outside the boundary is untouched photograph, and the boundary is the visible seam between them; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one shadowed icon in its original spot; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
+FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly redrawn — even green lawn, crisp roof planes, no photographic grain or blotching — while outside the boundary is untouched photograph, and the boundary is the visible seam between them; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one icon in its original spot, and there is not a single tree, shrub or bed on the sheet that has no marker under it; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
 
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }

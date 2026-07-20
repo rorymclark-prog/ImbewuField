@@ -1181,9 +1181,18 @@ function overlayElementsText(
   filter: GlossyLayerFilter = 'all',
 ): string {
   const byName = new Map<string, Array<string | null>>();
+  // Legend section per element name. A flat 30-row legend is unreadable on the whole-design sheet;
+  // the reference masterplan groups its key into WATER / PLANTING / INFRASTRUCTURE and that is what
+  // makes it scannable.
+  const sectionOf = new Map<string, string>();
+  const SECTION: Record<string, string> = {
+    water: 'WATER', earthworks: 'WATER', growing: 'PLANTING',
+    structure: 'INFRASTRUCTURE', animal: 'INFRASTRUCTURE', access: 'INFRASTRUCTURE',
+  };
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
+    sectionOf.set(it.label ?? def.name, SECTION[def.category] ?? 'INFRASTRUCTURE');
     const name = it.label ?? def.name;
     const arr = byName.get(name) ?? [];
     arr.push(placeLabelFor([it.x, it.y], state.zones));
@@ -1216,11 +1225,28 @@ function overlayElementsText(
     swale: 'Swale', fence: 'Fence line', path: 'Walking path',
     pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
   };
-  for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
+  for (const [kind, n] of lineCounts) {
+    const nm = `${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`;
+    sectionOf.set(nm.replace(/ ×\d+$/, ''), kind === 'windbreak' ? 'PLANTING' : 'WATER');
+    parts.push(nm);
+  }
   // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
   // it there gave an access track a legend row and a label alongside the actual design work.
-  if (refLayers.driveway.length >= 2 && filter === 'all') parts.push('Tarred driveway');
-  return parts.join(', ');
+  if (refLayers.driveway.length >= 2 && filter === 'all') {
+    sectionOf.set('Tarred driveway', 'INFRASTRUCTURE');
+    parts.push('Tarred driveway');
+  }
+
+  // Group for the legend. Sections only earn their headings when there is more than one, otherwise
+  // a single-layer sheet gets a lone heading over its whole list for nothing.
+  const groups = new Map<string, string[]>();
+  for (const part of parts) {
+    const bare = part.replace(/ ×\d+$/, '').replace(/ \([^)]*\)$/, '');
+    const sec = sectionOf.get(bare) ?? sectionOf.get(part.replace(/ ×\d+$/, '')) ?? 'PLANTING';
+    groups.set(sec, [...(groups.get(sec) ?? []), part]);
+  }
+  if (groups.size < 2) return parts.join(', ');
+  return [...groups.entries()].map(([sec, rows]) => `${sec} » ${rows.join(', ')}`).join(' | ');
 }
 
 function producerElementsText(

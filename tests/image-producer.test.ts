@@ -266,11 +266,14 @@ test('satellite overlay style keeps the photo, letters its own sheet, and drops 
   assert.match(p, /OUTSIDE the boundary the supplied photograph stays exactly as it is/);
   // Editor glyphs are stripped: they identify markers in the IMAGE, but a model told to "spell
   // exactly" would letter them onto the sheet.
-  assert.doesNotMatch(p.split('6. THIS SHEET')[1].split('7. LINES')[0], /[\u{1F300}-\u{1FAFF}]/u);
+  // Section-number agnostic on purpose: the numbering shifts whenever a rule is added, and a test
+  // that breaks on renumbering teaches nothing.
+  const elementsSection = p.split("ELEMENTS AND EXACT SPELLINGS:")[1].split('\n')[0];
+  assert.doesNotMatch(elementsSection, /[\u{1F300}-\u{1FAFF}]/u);
   // The layout is pre-composed into the input, so the prompt must not ask for a 78/22 split.
   assert.doesNotMatch(p, /left ~78%/);
   assert.match(p, /ALREADY IN PLACE/);
   // Water sheet must not be told how to draw beds or trees it cannot contain.
   assert.doesNotMatch(p, /rounded green canopy disc/);
-  assert.ok(p.length < 12000, `prompt ${p.length} must fit PROMPT_MAX`);
+  assert.ok(p.length < 16000, `prompt ${p.length} must fit the worker's PROMPT_MAX`);
 });
