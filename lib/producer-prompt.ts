@@ -481,7 +481,7 @@ export function buildSatelliteOverlayPrompt(args: {
 
 5. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
 
-6. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${elementNames}. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
+6. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${elementNames}. That list is the COMPLETE contents of this ${(layerLabel || 'site').toUpperCase()} sheet — it is the whole design for this layer, and the other layers of the plan set carry everything else. Anything not named there belongs on a different sheet and is simply absent here. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
 
 7. THE TWO DARK SHAPES ARE DIFFERENT THINGS. The building is a roof: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. The driveway is flat ground: a smooth tar surface at ground level. They never merge, and no part of a roof becomes road surface.
 

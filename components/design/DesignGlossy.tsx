@@ -363,7 +363,13 @@ const LOCKED_WATER_COMPOSITE_MARKS: CompositeMarkOptions = {
 // competing with the design. Left alone, the photo's own access track reads exactly as it should —
 // quiet grey. Tool glyphs go too; they are editor chrome, and this style letters its own sheet.
 const OVERLAY_COMPOSITE_MARKS: CompositeMarkOptions = {
-  showToolGlyphs: false,
+  // KEEP the tool glyphs. Every marker footprint is the same translucent green, so the little
+  // emoji is the ONLY thing in the image that says which circle is a mango and which is a moringa.
+  // Suppressing them (to stop emoji being lettered onto the sheet) left the model guessing, and it
+  // guessed — trees landed in each other's places and elements appeared that were never listed.
+  // The prompt already handles the lettering risk: it states that the glyph identifies the marker
+  // and that the finished icon replaces the whole marker, glyph included.
+  showToolGlyphs: true,
   showDrivewayMark: false,
   showDrivewayEdge: false,
 };
