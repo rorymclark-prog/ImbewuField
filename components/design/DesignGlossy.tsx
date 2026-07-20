@@ -16,11 +16,11 @@ import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
-import { compositeAccurateMap, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildProducerPrompt, buildShowcasePrompt, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
 const PAPER = '#FFFEFA';
@@ -89,11 +89,11 @@ const FILTER_THEME: Record<GlossyLayerFilter, { title: string; focus: string; em
   },
   water: {
     title: 'water plan',
-    focus: 'a WATER-PLAN background: cool blue-green ground wash and damp soil tones on the open ground, so the blue water marks already drawn on the image stand out',
+    focus: 'a WATER-PLAN background: cool blue-green ground wash and damp soil tones on the open ground, with clear breathing room for labels, legend sections and callouts',
     emphasise: [
       'tint the editable open ground with a soft blue-green wash so the map reads as a water plan',
       'every blue mark already drawn (tank circles, swale/pipe/drip lines, ponds) stays exactly as drawn — brighten the ground AROUND each one, never redraw, thicken, move or duplicate the mark itself',
-      'add one short label pill BESIDE (never covering) each drawn water mark, naming it',
+      'keep the layout editorial and legible, with a right-hand legend block and short label pills BESIDE the real water marks',
     ],
   },
   zones: {
@@ -203,7 +203,7 @@ const DESIGN_SHEETS: DesignSheet[] = [
   { no: '07', label: 'Whole', filter: 'all' },
   { no: '08', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
-const DEFAULT_PRODUCER_STYLE = 'extension_blueprint';
+const DEFAULT_PRODUCER_STYLE: StylePreset = 'precision_atlas';
 
 // Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
 // / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
@@ -228,12 +228,14 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // These render via app/api/image-producer + lib/image-producer's compositeAccurateMap:
 // the model beautifies the whole scene, then we deterministically composite (satellite
 // everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
-// so accuracy is guaranteed by construction. Four researched site-plan styles.
+// so accuracy is guaranteed by construction. Six researched site-plan styles.
 // swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
-const PRODUCER_STYLES: Array<{ key: string; label: string; blurb: string; labelStyle: LabelStyle; swatch: string }> = [
+const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
+  { key: 'precision_atlas',      label: 'Precision Atlas',      blurb: 'lush ChatGPT look · lock-ready', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
+  { key: 'chatgpt_atlas',       label: 'ChatGPT Atlas',       blurb: 'polished editorial cartography', labelStyle: 'blueprint', swatch: '#B7B09D' },
   { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk',      swatch: '#B5502E' },
 ];
 
@@ -367,9 +369,77 @@ export interface DesignGlossyProps {
 
 export const SCALE = 2;
 
-export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], imgW: number, imgH: number, filter: GlossyLayerFilter = 'all', drawDesign = true) {
+export interface CompositeMarkOptions {
+  showToolGlyphs?: boolean;
+  showDrivewayEdge?: boolean;
+  showDesignLines?: boolean;
+  showDesignItems?: boolean;
+  showHouseMark?: boolean;
+  showDrivewayMark?: boolean;
+}
+
+const LOCKED_COMPOSITE_MARKS: CompositeMarkOptions = {
+  showToolGlyphs: false,
+  showDrivewayEdge: false,
+  // Geometry Lock restores these from clean source pixels and redraws them exactly after the AI
+  // pass. Feeding the model opaque editor paint was the source of the flat roof/road cut-outs.
+  showHouseMark: false,
+  showDrivewayMark: false,
+};
+
+// Water infrastructure is rendered deterministically after the AI texture pass. Keeping its
+// temporary editor footprints out of the model input prevents GPT from turning one marker into
+// several objects, adding pipes, or copying tool glyphs into the finished map.
+const LOCKED_WATER_COMPOSITE_MARKS: CompositeMarkOptions = {
+  ...LOCKED_COMPOSITE_MARKS,
+  showDesignLines: false,
+  showDesignItems: false,
+};
+
+function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
+  return filter === 'water' ? LOCKED_WATER_COMPOSITE_MARKS : LOCKED_COMPOSITE_MARKS;
+}
+
+interface ProtectMaskOptions {
+  protectOutside?: boolean;
+  protectLines?: boolean;
+  protectItems?: boolean;
+  protectBoundary?: boolean;
+  protectDriveway?: boolean;
+  houseHaloRatio?: number;
+  houseFeatherRatio?: number;
+}
+
+function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
+  const structural = {
+    protectOutside: true,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+  return filter === 'water'
+    ? { ...structural, protectLines: false, protectItems: false, protectBoundary: false }
+    : structural;
+}
+
+export function drawMarks(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  imgW: number,
+  imgH: number,
+  filter: GlossyLayerFilter = 'all',
+  drawDesign = true,
+  options: CompositeMarkOptions = {},
+) {
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
+  const showToolGlyphs = options.showToolGlyphs !== false;
+  const showDrivewayEdge = options.showDrivewayEdge !== false;
+  const showDesignLines = options.showDesignLines !== false;
+  const showDesignItems = options.showDesignItems !== false;
+  const showHouseMark = options.showHouseMark !== false;
+  const showDrivewayMark = options.showDrivewayMark !== false;
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
 
@@ -387,7 +457,7 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
   }
 
   // House ring
-  if (refLayers.house.length >= 3) {
+  if (showHouseMark && refLayers.house.length >= 3) {
     ctx.beginPath();
     refLayers.house.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -405,7 +475,7 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
   // surfaced vehicle track on EVERY map, exact or illustrated (Rory: "build in the driveway as
   // tar coloured for all designs"). Drawing it dark in the composite also nudges the AI Styles to
   // render it as tar rather than repainting it as a garden path.
-  if (refLayers.driveway.length >= 2) {
+  if (showDrivewayMark && refLayers.driveway.length >= 2) {
     ctx.save();
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -423,16 +493,21 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
       ctx.closePath();
       ctx.fillStyle = '#3B3A3E';
       ctx.fill();
-      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
-      ctx.lineWidth = 5;
-      ctx.stroke();
+      if (showDrivewayEdge) {
+        ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
     } else {
-      // Traced as a track → a tar carriageway with a light kerb casing.
+      // The unlocked legacy input keeps its light kerb casing. Geometry Lock uses a clean,
+      // unbordered carriageway because the casing was being restored as a false driveway edge.
       const roadW = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
-      tracePath();
-      ctx.strokeStyle = 'rgba(233,229,221,0.92)';
-      ctx.lineWidth = roadW + 5;
-      ctx.stroke();
+      if (showDrivewayEdge) {
+        tracePath();
+        ctx.strokeStyle = 'rgba(233,229,221,0.92)';
+        ctx.lineWidth = roadW + 5;
+        ctx.stroke();
+      }
       tracePath();
       ctx.strokeStyle = '#3B3A3E';
       ctx.lineWidth = roadW;
@@ -485,7 +560,7 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
   }
 
   // Lines
-  for (const line of drawDesign ? state.lines : []) {
+  for (const line of drawDesign && showDesignLines ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
@@ -522,7 +597,7 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
   // width (pxPerM, computed above) — sizing in logical px would draw every footprint at half scale.
-  for (const item of drawDesign ? state.items : []) {
+  for (const item of drawDesign && showDesignItems ? state.items : []) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = item.wM ?? def.wM;
@@ -552,15 +627,24 @@ export function drawMarks(ctx: CanvasRenderingContext2D, state: DesignCanvasStat
       ctx.stroke();
       ctx.restore();
     }
-    ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#0B120B';
-    ctx.fillText(def.icon, cx, cy);
+    if (showToolGlyphs) {
+      ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#0B120B';
+      ctx.fillText(def.icon, cx, cy);
+    }
   }
 }
 
-export async function buildComposite(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all', drawDesign = true): Promise<string> {
+export async function buildComposite(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+  drawDesign = true,
+  options: CompositeMarkOptions = {},
+): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -577,14 +661,20 @@ export async function buildComposite(state: DesignCanvasState, frame: CanvasFram
     ctx.fillRect(0, 0, imgW, imgH);
   }
 
-  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign);
+  drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign, options);
 
   // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
   // softens them. The route wraps this as image/png — keep the formats in lockstep.
   return canvas.toDataURL('image/png');
 }
 
-async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): Promise<string> {
+async function buildProtectMask(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+  options: ProtectMaskOptions = {},
+): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -611,13 +701,34 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
       fn.call(ctx, px(x), py(y));
     });
     ctx.closePath();
+    // Protect a polygon-shaped halo as well as the footprint. This clears any AI roof that
+    // spills just beyond the traced outline without restoring a conspicuous rectangular block
+    // of raw satellite around the house. A soft outer fringe blends the restored ground back
+    // into the painted ground; the footprint and inner halo stay fully opaque/pixel-exact.
+    const houseHaloRadius = Math.max(
+      4 * SCALE,
+      Math.round((options.houseHaloRatio ?? 0.018) * Math.max(imgW, imgH)),
+    );
+    const houseFeather = Math.max(
+      2 * SCALE,
+      Math.round((options.houseFeatherRatio ?? 0.005) * Math.max(imgW, imgH)),
+    );
+    ctx.save();
+    ctx.filter = `blur(${houseFeather}px)`;
+    ctx.globalAlpha = 0.78;
+    ctx.lineWidth = (houseHaloRadius + houseFeather) * 2;
     ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    ctx.fill();
+    ctx.lineWidth = houseHaloRadius * 2;
+    ctx.stroke();
   }
 
-  // Protect ALL land OUTSIDE the property boundary (all filters). Even-odd fill = the whole
-  // canvas rect minus the boundary polygon → pins the boundary from the outside and stops the
-  // model repainting the neighbours' land or re-cutting the fence line. See GLOSSY-PROMPT-AUDIT §2.3.
-  if (refLayers.boundary.length >= 3) {
+  // Strict sheets protect ALL land OUTSIDE the property boundary. Showcase sheets leave the page
+  // margins editable so GPT can draw its own title/legend there; the boundary ring below remains
+  // locked in both modes. Even-odd fill = the whole canvas rect minus the boundary polygon.
+  if (options.protectOutside !== false && refLayers.boundary.length >= 3) {
     ctx.beginPath();
     ctx.rect(0, 0, imgW, imgH);
     refLayers.boundary.forEach(([x, y], i) => {
@@ -629,7 +740,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   }
 
   // Boundary ring stroke band (pins it from the inside too).
-  if (refLayers.boundary.length >= 3) {
+  if (options.protectBoundary !== false && refLayers.boundary.length >= 3) {
     ctx.beginPath();
     refLayers.boundary.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
@@ -640,15 +751,26 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
     ctx.stroke();
   }
 
-  // Driveway stroke band.
-  if (refLayers.driveway.length >= 2) {
+  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
+
+  // Protect the driveway's actual surface, not a generic centre-line band. A closed driveway is
+  // an area polygon, so its entire fill is locked; an open trace uses the same ~3 m width as the
+  // source composite. This keeps the road exact without restoring a decorative kerb around it.
+  if (options.protectDriveway !== false && refLayers.driveway.length >= 2) {
     ctx.beginPath();
     refLayers.driveway.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
       fn.call(ctx, px(x), py(y));
     });
-    ctx.lineWidth = 10 * SCALE;
-    ctx.stroke();
+    if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 3 * SCALE;
+      ctx.stroke();
+    } else {
+      ctx.lineWidth = Math.min(46, Math.max(11, maskPxPerM * 3)) + 2 * SCALE;
+      ctx.stroke();
+    }
   }
 
   // Zones — lock only the OUTLINE band, never the interior. Locking the whole fill made the
@@ -668,7 +790,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   }
 
   // Line strokes.
-  for (const line of state.lines) {
+  for (const line of options.protectLines === false ? [] : state.lines) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
     line.points.forEach(([x, y], i) => {
@@ -682,8 +804,7 @@ async function buildProtectMask(state: DesignCanvasState, frame: CanvasFrame, re
   // Item footprints (+25% margin). Same canvas-scale-aware conversion as the composite:
   // metres → CANVAS px (the mask is SCALE× the logical frame, and it MUST protect the
   // full true-scale footprint, not half of it).
-  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
-  for (const item of state.items) {
+  for (const item of options.protectItems === false ? [] : state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
     const wM = (item.wM ?? def.wM) * 1.25;
@@ -931,6 +1052,7 @@ async function requestProducer(
   // that's what keeps the sheets of a plan set agreeing with each other. Optional so an older
   // caller that omits it behaves exactly as before.
   designBrief = '',
+  promptVariant: 'rewrite' | 'legacy' = 'rewrite',
 ): Promise<string> {
   const res = await fetch('/api/image-producer', {
     method: 'POST',
@@ -944,6 +1066,7 @@ async function requestProducer(
       model: 'pro-preview',
       mapKind: 'full',
       engine, // 'openai' = gpt-image-2 via fal's async queue; 'gemini' = Gemini Pro image
+      promptVariant,
     }),
   });
   const data = await res.json().catch(() => ({}));
@@ -956,8 +1079,14 @@ async function requestProducer(
   return data.image as string; // bare base64 (compositeAccurateMap's asDataUrl normalises it)
 }
 
-// Short comma list of placed element names + counts, e.g. "🥬 Vegetable Bed ×6, 🛢 JoJo Tank".
-function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter = 'all'): string {
+// Short comma list of placed element names + counts, e.g. "Vegetable Bed x6, JoJo Tank".
+// Locked prompts omit editor glyphs so the image model cannot mistake them for final map art.
+function producerElementsText(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+  includeToolGlyphs = true,
+): string {
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -967,7 +1096,9 @@ function producerElementsText(state: DesignCanvasState, refLayers: DesignGlossyP
     g.n += 1;
     counts.set(name, g);
   }
-  const parts = [...counts.entries()].map(([name, g]) => `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`);
+  const parts = [...counts.entries()].map(([name, g]) =>
+    `${includeToolGlyphs ? `${g.icon} ` : ''}${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+  );
   // On the zones layer, describe the effort-zone areas instead of individual elements.
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
@@ -1087,6 +1218,7 @@ function producerLabels(
   W: number,
   H: number,
   filter: GlossyLayerFilter = 'all',
+  includeToolGlyphs = true,
 ): ProducerLabel[] {
   const fs = 26, padX = 14;
   // Pill-width ESTIMATE — only used to right-align the right-hand column (burnLabels measures the
@@ -1105,9 +1237,8 @@ function producerLabels(
 
   const itemRow = (icon: string, name: string, n: number): Row => {
     // CAPS on every on-map label, per the reference sheets ("On-map labels: CAPS, short").
-    // The emoji stays on members — it's the fastest recognition cue on a busy illustration —
-    // and is dropped from headers, which carry their meaning in the words.
-    const text = `${icon} ${name}${n > 1 ? ` ×${n}` : ''}`.toUpperCase();
+    // Geometry Lock drops editor emoji from labels; the plain text and swatch legend carry identity.
+    const text = `${includeToolGlyphs ? `${icon} ` : ''}${name}${n > 1 ? ` ×${n}` : ''}`.toUpperCase();
     return { text, kind: 'item', leader: true, pw: pillWidth(text, false) };
   };
   const moreRow = (n: number): Row => {
@@ -1192,14 +1323,14 @@ function producerLabels(
       if (z.feature || z.points.length < 3) continue;
       const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
-      const text = `${z.zone}️⃣ ${ZONE_DEFS[z.zone].label}`.toUpperCase();
+      const text = `${includeToolGlyphs ? `${z.zone}️⃣ ` : `ZONE ${z.zone} — `}${ZONE_DEFS[z.zone].label}`.toUpperCase();
       blocks.push({ cx, cy, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
     }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
   if (refLayers.driveway.length >= 2) {
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
-    const text = '🚗 DRIVEWAY';
+    const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
     blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
   }
 
@@ -1328,85 +1459,517 @@ function buildZoneOverlay(
   return canvas.toDataURL('image/png');
 }
 
-// Water infrastructure is also wiped by the image model (it paints land, not overlays). Burn the
-// exact tanks / taps / water lines back on top of a Water Style render — same trick as zones.
-// Membership MUST come from itemInFilter, not a `category === 'water'` literal: the water layer
-// also carries earthworks now, and the protect mask, legend and burned-on labels all use
-// itemInFilter. A literal here would burn a tree basin's LABEL onto the sheet while leaving its
-// marker to be painted over by the model — a pill pointing at nothing.
-function buildWaterOverlay(state: DesignCanvasState, frame: CanvasFrame, W: number, H: number): string | undefined {
-  const items = state.items.filter((it) => {
+const WATER_ROUTE_STYLE: Record<string, { color: string; dash: number[]; width: number }> = {
+  swale: { color: '#4EA6D8', dash: [], width: 4.5 },
+  pipe: { color: '#245E85', dash: [14, 6], width: 4 },
+  drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5 },
+};
+
+function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
+  return state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
     return !!def && itemInFilter(def.category, 'water');
   });
-  const lines = state.lines.filter((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
-  if (!items.length && !lines.length) return undefined;
+}
+
+function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, W: number, H: number) {
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const line of state.lines) {
+    const style = WATER_ROUTE_STYLE[line.kind];
+    if (!style || line.points.length < 2) continue;
+    const trace = () => {
+      ctx.beginPath();
+      line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,254,250,0.9)';
+    ctx.lineWidth = style.width + 4;
+    ctx.stroke();
+    trace();
+    ctx.setLineDash(style.dash);
+    ctx.strokeStyle = style.color;
+    ctx.lineWidth = style.width;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function drawWaterFeature(
+  ctx: CanvasRenderingContext2D,
+  item: PlacedItem,
+  def: DesignElementDef,
+  W: number,
+  H: number,
+  pxPerM: number,
+  includeToolGlyphs: boolean,
+) {
+  const cx = item.x * W;
+  const cy = item.y * H;
+  const w = Math.max(3, (item.wM ?? def.wM) * pxPerM);
+  const h = Math.max(3, (item.hM ?? def.hM) * pxPerM);
+  const radius = Math.min(w, h) / 2;
+  const id = def.id;
+  const outline = Math.max(1.8, W * 0.00115);
+  const isTank = id.startsWith('jojo_') || id === 'rain_barrel';
+  const isOpenWater = id === 'pond_small' || id === 'dam';
+  const isBasin = ['tree_basin', 'greywater_basin', 'infiltration_basin', 'half_moon', 'herb_spiral'].includes(id);
+  const isBank = ['mulch_bank', 'berm', 'terrace'].includes(id);
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  if (def.shape === 'rect' && item.rot) ctx.rotate((item.rot * Math.PI) / 180);
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  if (isTank) {
+    // Exact circular footprint, rendered as a directly-overhead ribbed tank rather than an emoji.
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#315F4B';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.72, 0, Math.PI * 2);
+    ctx.strokeStyle = '#87B39B';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, Math.max(1.5, radius * 0.16), 0, Math.PI * 2);
+    ctx.fillStyle = '#D7E3D8';
+    ctx.fill();
+  } else if (isOpenWater) {
+    ctx.beginPath();
+    ctx.ellipse(0, 0, w / 2, h / 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#3D8FAF';
+    ctx.fill();
+    ctx.strokeStyle = '#F8F1DC';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    for (const scale of [0.62, 0.34]) {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, (w / 2) * scale, (h / 2) * scale, 0, Math.PI * 0.1, Math.PI * 0.9);
+      ctx.strokeStyle = 'rgba(214,242,245,0.85)';
+      ctx.lineWidth = outline * 0.75;
+      ctx.stroke();
+    }
+  } else if (id === 'tap_point') {
+    const s = Math.max(5, radius);
+    ctx.beginPath();
+    ctx.arc(0, 0, Math.max(3.5, radius), 0, Math.PI * 2);
+    ctx.fillStyle = '#F8F1DC';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.55);
+    ctx.lineTo(0, -s * 0.55);
+    ctx.lineTo(s * 0.62, -s * 0.55);
+    ctx.quadraticCurveTo(s * 0.9, -s * 0.5, s * 0.9, -s * 0.15);
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = Math.max(2, outline);
+    ctx.stroke();
+  } else if (id === 'borehole') {
+    const r = Math.max(5, radius);
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#F8F1DC';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.48, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-r, 0); ctx.lineTo(r, 0);
+    ctx.moveTo(0, -r); ctx.lineTo(0, r);
+    ctx.stroke();
+  } else if (id === 'banana_circle') {
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#B58A4E';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.32, 0, Math.PI * 2);
+    ctx.fillStyle = '#6B5133';
+    ctx.fill();
+    for (let i = 0; i < 6; i++) {
+      ctx.save();
+      ctx.rotate((i * Math.PI) / 3);
+      ctx.beginPath();
+      ctx.ellipse(0, -radius * 0.58, radius * 0.18, radius * 0.44, 0, 0, Math.PI * 2);
+      ctx.fillStyle = i % 2 ? '#60874B' : '#789C55';
+      ctx.fill();
+      ctx.restore();
+    }
+  } else if (isBasin) {
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#9A754A';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.62, 0, Math.PI * 2);
+    ctx.fillStyle = id === 'greywater_basin' ? '#6F9E93' : '#6D5B3E';
+    ctx.fill();
+    ctx.strokeStyle = '#D8C296';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+  } else if (id === 'water_trough') {
+    roundRectPath(ctx, -w / 2, -h / 2, w, h, Math.min(5, w * 0.2));
+    ctx.fillStyle = '#D8D2C2';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    roundRectPath(ctx, -w * 0.32, -h * 0.38, w * 0.64, h * 0.76, Math.min(4, w * 0.16));
+    ctx.fillStyle = '#4C99B6';
+    ctx.fill();
+  } else if (isBank) {
+    ctx.beginPath();
+    ctx.rect(-w / 2, -h / 2, w, h);
+    ctx.fillStyle = id === 'mulch_bank' ? '#9A7042' : '#A98558';
+    ctx.fill();
+    ctx.strokeStyle = '#FFF8E8';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(-w / 2, -h / 2, w, h);
+    ctx.clip();
+    ctx.strokeStyle = 'rgba(65,48,31,0.65)';
+    ctx.lineWidth = 1.3;
+    const extent = Math.max(w, h) * 1.5;
+    for (let d = -extent; d <= extent; d += 7) {
+      ctx.beginPath();
+      ctx.moveTo(-extent, d);
+      ctx.lineTo(extent, d - extent);
+      ctx.stroke();
+    }
+    ctx.restore();
+  } else if (id === 'first_flush' || id === 'pump_filter') {
+    const r = Math.max(5, radius);
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+    } else {
+      roundRectPath(ctx, -w / 2, -h / 2, w, h, 3);
+    }
+    ctx.fillStyle = '#D8D2C2';
+    ctx.fill();
+    ctx.strokeStyle = '#245E85';
+    ctx.lineWidth = outline;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.55, 0); ctx.lineTo(r * 0.55, 0);
+    ctx.moveTo(0, -r * 0.55); ctx.lineTo(0, r * 0.55);
+    ctx.stroke();
+  } else {
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    } else {
+      roundRectPath(ctx, -w / 2, -h / 2, w, h, Math.min(4, Math.min(w, h) * 0.2));
+    }
+    ctx.fillStyle = def.category === 'earthworks' ? '#9A754A' : '#397F9E';
+    ctx.fill();
+    ctx.strokeStyle = '#FFFDF4';
+    ctx.lineWidth = outline + 1;
+    ctx.stroke();
+  }
+
+  if (includeToolGlyphs) {
+    ctx.font = `${Math.max(12, Math.min(24, Math.min(w, h) * 0.55))}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#101812';
+    ctx.fillText(def.icon, 0, 0);
+  }
+  ctx.restore();
+}
+
+function drawWaterLeaderLabels(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+) {
+  const grouped = new Map<string, { name: string; points: Array<[number, number]> }>();
+  for (const item of waterItemsFor(state)) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def) continue;
+    const name = item.label ?? def.name;
+    const group = grouped.get(name) ?? { name, points: [] };
+    group.points.push([item.x * W, item.y * H]);
+    grouped.set(name, group);
+  }
+  if (!grouped.size) return;
+
+  const box = plotBox(refLayers.boundary);
+  const centreX = ((box.x0 + box.x1) / 2) * W;
+  const groups = [...grouped.values()].map((group) => {
+    const avgX = group.points.reduce((sum, point) => sum + point[0], 0) / group.points.length;
+    const avgY = group.points.reduce((sum, point) => sum + point[1], 0) / group.points.length;
+    const side: 'left' | 'right' = avgX < centreX ? 'left' : 'right';
+    const target = [...group.points].sort((a, b) => side === 'left' ? a[0] - b[0] : b[0] - a[0])[0];
+    return { ...group, avgY, side, target };
+  });
+
+  const fontSize = Math.max(19, Math.round(W * 0.012));
+  const rowGap = Math.max(42, Math.round(fontSize * 1.85));
+  // Keep callouts away from the browser/card edges and the deterministic scale bar. The old
+  // 1.8% inset made labels look cropped whenever a mobile page drifted horizontally by a few px.
+  const top = Math.round(H * 0.12);
+  const bottom = Math.round(H * 0.86);
+  ctx.font = `700 ${fontSize}px "Avenir Next", "Trebuchet MS", sans-serif`;
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  const placeSide = (side: 'left' | 'right') => {
+    const sideGroups = groups.filter((group) => group.side === side).sort((a, b) => a.avgY - b.avgY);
+    if (!sideGroups.length) return;
+    const positions = sideGroups.map((group, index) => Math.max(top + index * rowGap, Math.min(bottom, group.avgY)));
+    for (let i = 1; i < positions.length; i++) positions[i] = Math.max(positions[i], positions[i - 1] + rowGap);
+    const overflow = positions[positions.length - 1] - bottom;
+    if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
+
+    sideGroups.forEach((group, index) => {
+      const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` x${group.points.length}` : ''}`;
+      const textW = Math.min(W * 0.24, ctx.measureText(text).width);
+      const padX = Math.round(fontSize * 0.55);
+      const boxH = Math.round(fontSize * 1.55);
+      const boxW = Math.round(textW + padX * 2);
+      const x = side === 'left' ? Math.round(W * 0.035) : Math.round(W * 0.965) - boxW;
+      const y = positions[index] - boxH / 2;
+      const leaderEndX = side === 'left' ? x + boxW : x;
+      const elbowX = side === 'left'
+        ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
+        : Math.max(group.target[0] + 16, leaderEndX - Math.round(W * 0.025));
+
+      ctx.beginPath();
+      ctx.moveTo(group.target[0], group.target[1]);
+      ctx.lineTo(elbowX, group.target[1]);
+      ctx.lineTo(leaderEndX, positions[index]);
+      ctx.strokeStyle = 'rgba(255,254,250,0.9)';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.strokeStyle = '#34463E';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(group.target[0], group.target[1], 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#34463E';
+      ctx.fill();
+
+      roundRectPath(ctx, x, y, boxW, boxH, Math.round(boxH * 0.18));
+      ctx.fillStyle = 'rgba(255,251,240,0.94)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(52,70,62,0.72)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.fillStyle = '#24362E';
+      ctx.textAlign = 'left';
+      ctx.fillText(text, x + padX, positions[index]);
+    });
+  };
+  placeSide('left');
+  placeSide('right');
+}
+
+function drawWaterInfrastructure(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  includeToolGlyphs: boolean,
+  includeLeaderLabels: boolean,
+) {
+  drawWaterRoutes(ctx, state, W, H);
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  for (const item of waterItemsFor(state)) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
+  }
+  if (includeLeaderLabels) drawWaterLeaderLabels(ctx, state, refLayers, W, H);
+}
+
+// Geometry Lock treats the AI as a texture painter only. Exact feature symbols and leaders are
+// burned in here after generation, so counts and positions come from saved design data, not model
+// interpretation. The optional legacy glyph path is retained for Geometry Lock Off.
+function buildWaterOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  includeToolGlyphs = true,
+  includeLeaderLabels = false,
+): string | undefined {
+  const items = waterItemsFor(state);
+  const hasLines = state.lines.some((line) => !!WATER_ROUTE_STYLE[line.kind] && line.points.length >= 2);
+  if (!items.length && !hasLines) return undefined;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, includeToolGlyphs, includeLeaderLabels);
+  return canvas.toDataURL('image/png');
+}
+
+type LockedStructureTreatment = 'source' | 'precision_atlas';
+
+function traceNormalisedPath(
+  ctx: CanvasRenderingContext2D,
+  points: Array<[number, number]>,
+  W: number,
+  H: number,
+  close = false,
+) {
+  ctx.beginPath();
+  points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+  if (close) ctx.closePath();
+}
+
+// The house is structural truth, not generative artwork. It is clipped to the user's exact traced
+// polygon and sourced from the clean satellite, then lightly colour-matched so it does not read as
+// a photographic sticker on a painted map.
+async function buildHouseOverlay(
+  sourceImage: string,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  treatment: LockedStructureTreatment = 'source',
+): Promise<string | undefined> {
+  if (refLayers.house.length < 3) return undefined;
+  const img = await loadImage(sourceImage);
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
+  ctx.save();
+  traceNormalisedPath(ctx, refLayers.house, W, H, true);
+  ctx.clip();
+  if (treatment === 'precision_atlas') {
+    ctx.filter = 'saturate(0.48) contrast(1.08) brightness(1.05)';
+  }
+  ctx.drawImage(img, 0, 0, W, H);
+  ctx.filter = 'none';
+  if (treatment === 'precision_atlas') {
+    ctx.fillStyle = 'rgba(42,55,53,0.16)';
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.restore();
+  // One fine line records the traced footprint without widening or double-roofing it.
+  traceNormalisedPath(ctx, refLayers.house, W, H, true);
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'rgba(45,43,38,0.9)';
+  ctx.lineWidth = Math.max(2, W * 0.0012);
+  ctx.stroke();
+  return canvas.toDataURL('image/png');
+}
+
+// Draw the traced driveway after generation. This preserves the exact path/area while avoiding
+// the bright editor casing and flat brown guide that Geometry Lock previously pasted back in.
+function buildDrivewayOverlay(
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  treatment: LockedStructureTreatment = 'source',
+): string | undefined {
+  if (refLayers.driveway.length < 2) return undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  const precision = treatment === 'precision_atlas';
+  const asphalt = precision ? '#50534E' : '#3B3A3E';
 
-  // Water routes — white casing under a coloured line (swale/pipe/drip).
-  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
-    swale: { color: '#4EA6D8', dash: [] },
-    pipe: { color: '#2B6FA6', dash: [] },
-    drip: { color: '#4E8B3B', dash: [3, 7] },
-  };
-  for (const l of lines) {
-    if (l.points.length < 2) continue;
-    const trace = () => {
-      ctx.beginPath();
-      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
-    };
-    trace();
-    ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-    ctx.lineWidth = 6;
-    ctx.stroke();
-    const st = LINE_STYLE[l.kind];
-    trace();
-    ctx.setLineDash(st.dash);
-    ctx.strokeStyle = st.color;
-    ctx.lineWidth = 3.5;
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  // Tanks / taps / ponds — blue markers sized to their footprint, with the element icon on top.
-  for (const it of items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def) continue;
-    const cx = it.x * W, cy = it.y * H;
-    const r = Math.max(9, ((it.wM ?? def.wM) * pxPerM) / 2);
-    if (def.shape === 'circle') {
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#2E7FC2';
-      ctx.fill();
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - r * 0.35, r * 0.72, r * 0.4, 0, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120,190,240,0.9)';
-      ctx.fill();
-    } else {
-      ctx.fillStyle = '#2E7FC2';
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 2.5;
-      roundRectPath(ctx, cx - r, cy - r * 0.7, r * 2, r * 1.4, 4);
-      ctx.fill();
-      ctx.stroke();
+  if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+    ctx.save();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
+    ctx.clip();
+    const wash = ctx.createLinearGradient(0, 0, W, H);
+    wash.addColorStop(0, precision ? '#5B5E57' : asphalt);
+    wash.addColorStop(0.52, asphalt);
+    wash.addColorStop(1, precision ? '#454943' : asphalt);
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, W, H);
+    if (precision) {
+      const grainStep = Math.max(8, Math.round(W * 0.004));
+      ctx.strokeStyle = 'rgba(239,231,207,0.09)';
+      ctx.lineWidth = Math.max(1, W * 0.00045);
+      for (let x = -H; x < W + H; x += grainStep) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x - H, H);
+        ctx.stroke();
+      }
     }
-    ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(def.icon, cx, cy);
+    ctx.restore();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
+    ctx.strokeStyle = 'rgba(39,42,38,0.72)';
+    ctx.lineWidth = Math.max(1.5, W * 0.0009);
+    ctx.stroke();
+  } else {
+    const pxPerM = W / (frame.imgW * frame.mPerPx);
+    const roadW = Math.min(46, Math.max(11, pxPerM * 3));
+    traceNormalisedPath(ctx, refLayers.driveway, W, H);
+    ctx.strokeStyle = 'rgba(35,38,35,0.76)';
+    ctx.lineWidth = roadW + Math.max(2, W * 0.0012);
+    ctx.stroke();
+    traceNormalisedPath(ctx, refLayers.driveway, W, H);
+    ctx.strokeStyle = asphalt;
+    ctx.lineWidth = roadW;
+    ctx.stroke();
   }
+  return canvas.toDataURL('image/png');
+}
+
+async function buildLockedStructureOverlay(
+  sourceImage: string | undefined,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  styleKey: StylePreset,
+): Promise<string | undefined> {
+  const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
+  const driveway = buildDrivewayOverlay(frame, refLayers, W, H, treatment);
+  const house = sourceImage
+    ? await buildHouseOverlay(sourceImage, refLayers, W, H, treatment)
+    : undefined;
+  return stackOverlayImages(driveway, house, W, H);
+}
+
+async function stackOverlayImages(bottom: string | undefined, top: string | undefined, W: number, H: number): Promise<string | undefined> {
+  if (!bottom && !top) return undefined;
+  if (!bottom) return top;
+  if (!top) return bottom;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return bottom;
+  ctx.drawImage(await loadImage(bottom), 0, 0, W, H);
+  ctx.drawImage(await loadImage(top), 0, 0, W, H);
   return canvas.toDataURL('image/png');
 }
 
@@ -1709,6 +2272,72 @@ function drawBlueprintLegendNote(
   ctx.fillText(text, lg.lgX + lg.ip, ry);
 }
 
+/** Burn short pill labels with leaders onto a Blueprint-style sheet. Used by the exact water map
+ *  so it can read more like the editorial GPT examples without inventing any extra geometry. */
+function drawBlueprintLabelPills(
+  ctx: CanvasRenderingContext2D,
+  labels: ProducerLabel[],
+): void {
+  const pill = '#EEF3F5';
+  const stroke = '#3E5A68';
+  const text = '#1A2A33';
+  const fs = 26;
+  const padX = 14;
+  const h = fs + 14;
+  ctx.textBaseline = 'middle';
+  for (const l of labels) {
+    const isHeader = l.kind === 'header';
+    ctx.font = `${isHeader ? 800 : 600} ${fs}px system-ui, sans-serif`;
+    if (l.leader !== false) {
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(l.cx, l.cy);
+      ctx.lineTo(l.lx, l.ay);
+      ctx.strokeStyle = 'rgba(20,16,10,0.35)';
+      ctx.lineWidth = 5;
+      ctx.setLineDash([]);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(l.cx, l.cy);
+      ctx.lineTo(l.lx, l.ay);
+      ctx.strokeStyle = '#FBF6EC';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 6]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#FBF6EC';
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    const w = padX * 2 + ctx.measureText(l.text).width;
+    const x = l.ax, y = l.ay - h / 2, r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+    ctx.fillStyle = pill;
+    ctx.shadowColor = 'rgba(20,16,10,0.28)';
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetY = 2;
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = isHeader ? 2.5 : 1.5;
+    ctx.stroke();
+    ctx.fillStyle = text;
+    ctx.fillText(l.text, x + padX, l.ay + 1);
+  }
+}
+
 /** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
 function drawBlueprintScaleBar(
   ctx: CanvasRenderingContext2D,
@@ -1991,7 +2620,7 @@ export async function buildBlueprintZoneMap(
 // Deterministic "Blueprint" WATER map — the same clean dark-satellite treatment as the zone
 // blueprint, but the content layer is water infrastructure (tanks as blue cylinders, swale/pipe/
 // drip routes, taps) drawn exactly from geometry. Reliable, instant, no AI.
-export async function buildBlueprintWaterMap(
+export async function buildBlueprintWaterMapLegacy(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2083,33 +2712,157 @@ export async function buildBlueprintWaterMap(
     ctx.fillText(def.icon, cx, cy);
   }
 
+  // 4b. Burn true labels in the margins so the sheet reads like the editorial GPT examples.
+  drawBlueprintLabelPills(ctx, producerLabels(state, refLayers, W, H, 'water'));
+
   // 5. Boundary — green line with perpendicular fence ticks.
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
   // 6. Title (top-left).
+  const rowH = Math.round(W * 0.026);
   drawBlueprintTitle(ctx, W, pad, 'WATER PLAN', placeName ?? 'Water plan');
 
-  // 7. Legend panel (top-right) — only the water elements actually present.
-  type Row = BlueprintLegendRow;
-  const rows: Row[] = [];
-  if (waterItems.length) rows.push({ color: '#2E7FC2', label: 'Tanks / storage', style: 'fill' });
-  const kinds = new Set(state.lines.map((l) => l.kind));
-  if (kinds.has('swale')) rows.push({ color: '#4EA6D8', label: 'Swale (contour)', style: 'line' });
-  if (kinds.has('pipe')) rows.push({ color: '#2B6FA6', label: 'Pipe', style: 'line' });
-  if (kinds.has('drip')) rows.push({ color: '#7FD46B', label: 'Drip line', style: 'dashline' });
-  rows.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
-  if (refLayers.driveway.length >= 2) rows.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+  const rowsForItems = (items: Array<{ defId: string }>, color: string): BlueprintLegendRow[] => {
+    const grouped = new Map<string, { icon: string; n: number }>();
+    for (const it of items) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def) continue;
+      const name = def.name;
+      const g = grouped.get(name) ?? { icon: def.icon, n: 0 };
+      g.n += 1;
+      grouped.set(name, g);
+    }
+    return [...grouped.entries()]
+      .sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]))
+      .map(([name, g]) => ({
+        color,
+        icon: g.icon,
+        label: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+        style: 'fill' as const,
+      }));
+  };
+  const linesByKind = new Map<string, number>();
+  for (const l of state.lines) {
+    if (l.points.length < 2 || !lineInFilter(l.kind, 'water')) continue;
+    linesByKind.set(l.kind, (linesByKind.get(l.kind) ?? 0) + 1);
+  }
+  const waterInfra = waterItems.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    const n = def?.name ?? '';
+    return /Tank|Rain Barrel|Borehole|First-Flush|Pump & Filter|Farm Dam|Small Pond/i.test(n);
+  });
+  const irrigation = waterItems.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    const n = def?.name ?? '';
+    return /Tap Point|Water Trough|Pump & Filter/i.test(n);
+  });
+  const greywater = waterItems.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    const n = def?.name ?? '';
+    return /Greywater Basin|Banana Circle|Tree Basin|Infiltration Basin|Berm \/ Contour Bank|Terrace \/ Retaining Bank|Mulch Bank/i.test(n);
+  });
+  const sections: Array<{ title: string; rows: BlueprintLegendRow[]; note?: string }> = [];
+  if (waterInfra.length) {
+    sections.push({
+      title: 'RAINWATER',
+      rows: rowsForItems(waterInfra, '#2E7FC2'),
+      note: 'Storage and capture already traced on the farm.',
+    });
+  }
+  const irrigationRows: BlueprintLegendRow[] = [
+    ...rowsForItems(irrigation, '#4EA6D8'),
+    ...(linesByKind.has('swale') ? [{ color: '#4EA6D8', label: `Swale / contour line${linesByKind.get('swale')! > 1 ? ` ×${linesByKind.get('swale')}` : ''}`, style: 'line' as const }] : []),
+    ...(linesByKind.has('pipe') ? [{ color: '#2B6FA6', label: `Pipe${linesByKind.get('pipe')! > 1 ? ` ×${linesByKind.get('pipe')}` : ''}`, style: 'line' as const }] : []),
+    ...(linesByKind.has('drip') ? [{ color: '#7FD46B', label: `Drip line${linesByKind.get('drip')! > 1 ? ` ×${linesByKind.get('drip')}` : ''}`, style: 'dashline' as const }] : []),
+  ];
+  if (irrigationRows.length) {
+    sections.push({
+      title: 'IRRIGATION',
+      rows: irrigationRows,
+      note: 'Distribution and delivery lines stay exactly where they were drawn.',
+    });
+  }
+  if (greywater.length) {
+    sections.push({
+      title: 'FILTERED GREYWATER',
+      rows: rowsForItems(greywater, '#A9743F'),
+      note: 'Land-shaping and soakaway features are kept to the traced geometry.',
+    });
+  }
+  const noteRows: BlueprintLegendRow[] = [
+    { color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' },
+    ...(refLayers.driveway.length >= 2 ? [{ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' as const }] : []),
+  ];
+  sections.push({
+    title: 'NOTES',
+    rows: noteRows,
+    note: 'No water system is invented; the map only names what the source already shows.',
+  });
 
-  const rowH = Math.round(W * 0.026);
-  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
-  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
-  drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Blue = water storage & flow.');
+  const legendRowEstimate = sections.reduce((n, s) => n + 1 + s.rows.length + (s.note ? 1 : 0), 0);
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (legendRowEstimate + 3.2)));
+  let ry = lg.ry;
+  for (const section of sections) {
+    ctx.fillStyle = '#D3DEE5';
+    ctx.font = `900 ${Math.round(rowH * 0.5)}px system-ui, sans-serif`;
+    ctx.fillText(section.title, lg.lgX + lg.ip, ry);
+    ry += rowH * 0.72;
+    if (section.rows.length) {
+      ry = drawBlueprintLegendRows(ctx, { ...lg, ry }, rowH, section.rows);
+    }
+    if (section.note) {
+      drawBlueprintLegendNote(ctx, lg, rowH, ry, section.note);
+      ry += rowH * 0.78;
+    } else {
+      ry += rowH * 0.28;
+    }
+  }
 
   // 8. Scale bar (bottom-left).
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
   drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 
   return canvas.toDataURL('image/png');
+}
+
+// The current exact Water sheet uses the same deterministic symbols and leader labels that are
+// composited over Geometry Lock AI renders. The former dark-overlay implementation remains above
+// as buildBlueprintWaterMapLegacy for one-switch rollback and visual comparison.
+export async function buildBlueprintWaterMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+
+  await drawBlueprintBase(ctx, frame, W, H);
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(48,54,59,0.9)', 'rgba(255,253,244,0.9)', 2.5);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  return composeStyleSheet(
+    canvas.toDataURL('image/png'),
+    state,
+    frame,
+    refLayers,
+    'water',
+    placeName,
+    'Measured water plan',
+    'Water',
+    false,
+    true,
+  );
 }
 
 /** Draw one element at its TRUE ground footprint, species-coloured.
@@ -2227,15 +2980,15 @@ export async function buildBlueprintPlantingMap(
   // 1. Satellite + blueprint scrim.
   await drawBlueprintBase(ctx, frame, W, H);
 
-  // 2. House + driveway as neutral context, UNDER the planting (this sheet's content is plants;
-  //    the built stuff is only here so the farmer can orient — hence no dashed kerb).
-  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
-  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
-
-  // 3. The planting itself, at true footprint.
+  // 2. The planting itself, at true footprint.
   for (const it of bySizeDesc(state, 'planting')) {
     drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
   }
+
+  // 3. House + driveway ON TOP of the planting so nearby canopies cannot visually crop the roof.
+  //    They stay context, but they must remain readable on the final sheet.
+  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.9)', '#FFFFFF', 3);
+  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
 
   // 4. Boundary — green line with perpendicular fence ticks.
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
@@ -2997,6 +3750,7 @@ function sheetLegendRows(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
+  includeToolGlyphs = true,
 ): Array<{ swatch: string; icon?: string; text: string }> {
   const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
   if (zonesInFilter(filter)) {
@@ -3018,7 +3772,13 @@ function sheetLegendRows(
     g.n += 1;
     groups.set(name, g);
   }
-  for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
+  for (const [name, g] of groups) {
+    rows.push({
+      swatch: g.color,
+      ...(includeToolGlyphs ? { icon: g.icon } : {}),
+      text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+    });
+  }
   const kinds = new Set<string>();
   for (const l of state.lines) {
     if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
@@ -3042,6 +3802,8 @@ async function composeStyleSheet(
   placeName: string | undefined,
   styleLabel: string,
   layerLabel: string,
+  includeToolGlyphs = true,
+  exactGeometry = false,
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -3088,7 +3850,7 @@ async function composeStyleSheet(
   ctx.font = `800 ${Math.round(legendW * 0.05)}px system-ui, sans-serif`;
   ctx.fillText('LEGEND', lx, y);
 
-  const rows = sheetLegendRows(state, refLayers, filter);
+  const rows = sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const rowH = Math.round(legendW * 0.072);
   const fs = Math.round(legendW * 0.042);
   const sw = Math.round(rowH * 0.42);
@@ -3128,13 +3890,20 @@ async function composeStyleSheet(
     ctx.font = `italic 500 ${fs}px system-ui, sans-serif`;
     ctx.fillText('Nothing placed on this layer.', lx, y);
   }
-  // Footer caveat — the Style render is illustrative; the exact map is the record.
+  // Footer contract. Exact sheets state their provenance plainly; AI texture sheets retain the
+  // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
   ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
-  ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
-  ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
-  ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+  if (exactGeometry) {
+    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
+    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
+    ctx.fillText('No AI features added.', lx, H - pad + Math.round(legendW * 0.04));
+  } else {
+    ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
+    ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
+    ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+  }
 
   // ── Scale bar (over the map, bottom-left) ──
   const pxPerM = W / (frame.imgW * frame.mPerPx);
@@ -3299,17 +4068,18 @@ export default function DesignGlossy({
   const [notice, setNotice] = useState<string | null>(null);
   // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
   const [queueJobId, setQueueJobId] = useState<string | null>(null);
-  // "AI legend" / showcase mode — let gpt-image-2 draw its OWN legend + selective labels and render
-  // the whole frame freely (the free-ChatGPT look), instead of the strict pipeline that clips the
-  // model art to the boundary and burns our labels on. Applies to the CURRENTLY-SELECTED single
-  // sheet (any layer, Zones included), via the background queue. See buildShowcasePrompt +
-  // finishStyledSheet (showcase branch skips the clip/burn). The ALL button still showcases 'all' only.
+  // "AI legend" / showcase mode — available only while Geometry Lock is off. Locked renders always
+  // use deterministic framing, labels and legend; otherwise the model can shrink/reframe the map
+  // while drawing its own page chrome, which defeats the geometry guarantee.
   const [modelChrome, setModelChrome] = useState(true); // ON by default (Rory) — the showcase look IS the product
   // Geometry Lock — when ON, the strict queue path sends a protect mask to gpt-image-2 and the
   // finisher restores the protected source pixels before compositing the deterministic sheet chrome.
   const [geometryLockInternal, setGeometryLockInternal] = useState(false); // OFF by default to preserve the current path
   const geometryLock = geometryLockProp ?? geometryLockInternal;
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
+  const effectiveModelChrome = shouldUseModelChrome(modelChrome, geometryLock);
+  const refreshPendingRef = useRef(false);
+  const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
   const showcaseKeysRef = useRef<Set<string>>(new Set());
@@ -3322,7 +4092,7 @@ export default function DesignGlossy({
   // When set, an illustrated "producer" style is chosen — renders via the boundary-locked
   // image-producer pipeline (compositeAccurateMap). null = a design/analysis map. Defaults to a
   // style because AI is now the DEFAULT output (see `mode`); exact is the opt-in option.
-  const [producerStyle, setProducerStyle] = useState<string | null>(DEFAULT_PRODUCER_STYLE);
+  const [producerStyle, setProducerStyle] = useState<StylePreset | null>(DEFAULT_PRODUCER_STYLE);
   // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
   // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
@@ -3546,12 +4316,22 @@ export default function DesignGlossy({
       // so "Zones + Homestead Storybook" illustrates just the zones in that style.
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? 'Full design';
       // a. Model input — the composite for the chosen layer.
-      const composite = await buildComposite(state, frame, refLayers, filter);
+      const composite = await buildComposite(
+        state,
+        frame,
+        refLayers,
+        filter,
+        true,
+        geometryLock ? lockedCompositeMarks(filter) : undefined,
+      );
       // b. Short comma list of placed elements + counts (this layer only).
-      const elementsText = producerElementsText(state, refLayers, filter);
+      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
       // b2. The WHOLE design as text — deliberately NOT filtered by `filter`, so every layer's
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
+      const protectMaskDataUrl = geometryLock
+        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
+        : undefined;
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       //    ZONES runs the model too now. The old rule ("AI mustn't invent under my zones —
       //    just the clean satellite") predates the Exact mode: today "clean satellite zones"
@@ -3563,13 +4343,29 @@ export default function DesignGlossy({
       let modelImage: string;
       {
         try {
-          modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, producerEngine, designBrief);
+          modelImage = await requestProducer(
+            stripDataUrl(composite),
+            layerLabel,
+            elementsText,
+            producerStyle,
+            producerEngine,
+            designBrief,
+            promptRewrite ? 'rewrite' : 'legacy',
+          );
         } catch (err) {
           // gpt-image-2 (via fal.ai) frequently returns 403 (fal/OpenAI verification). Don't fail
           // the whole render — fall back to the always-available Gemini engine and say so.
           if (producerEngine === 'openai') {
             setNotice('gpt-image-2 was unavailable — generated with Gemini Pro instead.');
-            modelImage = await requestProducer(stripDataUrl(composite), layerLabel, elementsText, producerStyle, 'gemini', designBrief);
+            modelImage = await requestProducer(
+              stripDataUrl(composite),
+              layerLabel,
+              elementsText,
+              producerStyle,
+              'gemini',
+              designBrief,
+              promptRewrite ? 'rewrite' : 'legacy',
+            );
           } else {
             throw err;
           }
@@ -3581,42 +4377,68 @@ export default function DesignGlossy({
           ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined;
       // e. True labels (one pill per element-name group at its centroid) — this layer only.
-      const labels = producerLabels(state, refLayers, W, H, filter);
+      const labels = filter === 'water' && geometryLock
+        ? []
+        : producerLabels(state, refLayers, W, H, filter, !geometryLock);
       // e2. On a Zones map, burn the exact zone REGIONS back on top — the model can't render an
       //     abstract coloured overlay, so we guarantee it (see buildZoneOverlay).
       const overlayImage =
         filter === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : filter === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : filter === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
         : undefined;
+      const structureOverlay = geometryLock
+        ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
+        : undefined;
+      const mergedOverlay = filter === 'water' && geometryLock
+        ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, structureOverlay, W, H);
       // f. Deterministic composite-back — accuracy guaranteed by construction.
       const final = await compositeAccurateMap({
-        modelImage,
+        modelImage: protectMaskDataUrl
+          ? await restoreProtectedPixels(frame.satDataUrl ?? composite, modelImage, protectMaskDataUrl)
+          : modelImage,
         // Satellite is the ground truth OUTSIDE the boundary; fall back to the composite when
         // there's no satellite so the map is never left blank/transparent there.
         satelliteImage: frame.satDataUrl ?? composite,
         boundaryPx,
-        overlayImage,
+        overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
+        contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
         width: W,
         height: H,
       });
       // g. Sheet chrome — titled legend panel + scale bar + north arrow, so the Style render comes
       //    out as a proper plan sheet (see docs/PLAN-SET-SPEC.md), not a bare picture.
-      const sheet = await composeStyleSheet(final, state, frame, refLayers, filter, placeName, styleDef.label, layerLabel);
+      const sheet = await composeStyleSheet(
+        final,
+        state,
+        frame,
+        refLayers,
+        filter,
+        placeName,
+        styleDef.label,
+        layerLabel,
+        !geometryLock,
+      );
       // h. Show, cache (mapKey = producer:<style>) and add to the session gallery.
       setResultImage(sheet);
       const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
       pushGallery(`${layerLabel} · ${styleDef.label}`, sheet);
+      if (refreshPendingRef.current) {
+        refreshPendingRef.current = false;
+        setNotice('Refreshed current sheet — preview updated in your gallery.');
+      }
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
     }
     // `site` joins the deps because buildDesignBrief reads it for the CONTEXT line.
-  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery, placeName, site]);
+  }, [producerStyle, filter, engine, state, frame, refLayers, mapKey, pushGallery, placeName, site, promptRewrite, geometryLock]);
 
   // Deterministic design-layer map — the ACCURATE-BY-CONSTRUCTION reference map.
   // Real satellite + your EXACT zones / elements / lines / labels drawn on top, and
@@ -3653,7 +4475,12 @@ export default function DesignGlossy({
         ? 'Whole design'
         : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
       pushGallery(mapLabel, composite);
+      if (refreshPendingRef.current) {
+        refreshPendingRef.current = false;
+        setNotice('Refreshed current sheet — preview updated in your gallery.');
+      }
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
@@ -3682,7 +4509,12 @@ export default function DesignGlossy({
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
       pushGallery('Implementation & phasing', composite);
+      if (refreshPendingRef.current) {
+        refreshPendingRef.current = false;
+        setNotice('Refreshed current sheet — preview updated in your gallery.');
+      }
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
@@ -3702,7 +4534,12 @@ export default function DesignGlossy({
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
       pushGallery('Sector analysis', composite);
+      if (refreshPendingRef.current) {
+        refreshPendingRef.current = false;
+        setNotice('Refreshed current sheet — preview updated in your gallery.');
+      }
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
@@ -3721,7 +4558,12 @@ export default function DesignGlossy({
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
       pushGallery('Existing site & base', composite);
+      if (refreshPendingRef.current) {
+        refreshPendingRef.current = false;
+        setNotice('Refreshed current sheet — preview updated in your gallery.');
+      }
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Render failed.');
     } finally {
       setLoading(null);
@@ -3790,7 +4632,7 @@ export default function DesignGlossy({
     // Deliberately does NOT touch producerStyle/exactSheet: the batch passes styleKey explicitly,
     // and leaking it into the selection state flipped a user parked on an Exact sheet into AI
     // without them choosing it (audit find — "exact mode silently turns into an AI render").
-    const styleKey = producerStyle ?? 'extension_blueprint';
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
@@ -3806,8 +4648,15 @@ export default function DesignGlossy({
       for (const f of order) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const composite = await buildComposite(state, frame, refLayers, f);
-        const elementsText = producerElementsText(state, refLayers, f);
+        const composite = await buildComposite(
+          state,
+          frame,
+          refLayers,
+          f,
+          true,
+          geometryLock ? lockedCompositeMarks(f) : undefined,
+        );
+        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
         let modelImage: string;
         {
@@ -3825,22 +4674,46 @@ export default function DesignGlossy({
           }
         }
         const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-        const labels = producerLabels(state, refLayers, W, H, f);
+        const labels = f === 'water' && geometryLock
+          ? []
+          : producerLabels(state, refLayers, W, H, f, !geometryLock);
         const overlayImage =
           f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-          : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+          : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
+          : undefined;
+        const structureOverlay = geometryLock
+          ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
+          : undefined;
+        const mergedOverlay = f === 'water' && geometryLock
+          ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+          : await stackOverlayImages(overlayImage, structureOverlay, W, H);
+        const protectMaskDataUrl = geometryLock
+          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
         const final = await compositeAccurateMap({
-          modelImage,
+          modelImage: protectMaskDataUrl
+          ? await restoreProtectedPixels(frame.satDataUrl ?? composite, modelImage, protectMaskDataUrl)
+          : modelImage,
           satelliteImage: frame.satDataUrl ?? composite,
           boundaryPx,
-          overlayImage,
+          overlayImage: mergedOverlay,
           labels,
           labelStyle: styleDef.labelStyle,
+          contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
           width: W,
           height: H,
         });
-        const sheet = await composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+        const sheet = await composeStyleSheet(
+          final,
+          state,
+          frame,
+          refLayers,
+          f,
+          placeName,
+          styleDef.label,
+          layerLabel,
+          !geometryLock,
+        );
         try {
           saveGlossy(state.siteId, `producer:${styleKey}:${f}`, {
             image: sheet,
@@ -3865,7 +4738,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [producerStyle, engine, state, frame, refLayers, site, placeName, pushGallery]);
+  }, [producerStyle, engine, state, frame, refLayers, site, placeName, pushGallery, geometryLock]);
 
   // ── Background render queue (Stage 2) — gpt-image-2 direct via the Cloud Function ──────────────
   // The slow model call runs in functions/runRenderJob, NOT in the browser, so it escapes Vercel's
@@ -3881,46 +4754,72 @@ export default function DesignGlossy({
     async (
       modelImage: string,
       f: GlossyLayerFilter,
-      styleDef: { label: string; labelStyle: LabelStyle },
+      styleDef: { key: StylePreset; label: string; labelStyle: LabelStyle },
       showcase = false,
       sourceImage?: string,
       protectMask?: string,
+      locked = false,
     ): Promise<string> => {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+      // OpenAI documents GPT Image masks as guidance rather than an exact clipping contract.
+      // Geometry Lock therefore wins here, after generation: every opaque mask pixel is copied
+      // back from the uploaded source before any labels or sheet chrome are drawn.
+      const cleanSource = frame.satDataUrl ?? sourceImage;
+      const restoredImage = locked && protectMask && cleanSource
+        ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
+        : modelImage;
+      const structureOverlay = locked
+        ? await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleDef.key)
+        : undefined;
       if (showcase) {
+        const showcaseOverlay = await stackOverlayImages(undefined, structureOverlay, W, H);
         return compositeAccurateMap({
-          modelImage,
-          satelliteImage: frame.satDataUrl ?? modelImage,
+          modelImage: restoredImage,
+          satelliteImage: frame.satDataUrl ?? sourceImage ?? restoredImage,
           boundaryPx: undefined, // no clip — a corner legend lives OUTSIDE the boundary polygon
-          overlayImage: undefined,
+          overlayImage: showcaseOverlay,
           labels: [], // the model authored the labels
           labelStyle: styleDef.labelStyle,
+          contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
           width: W,
           height: H,
         });
       }
-      const restoredImage = protectMask && sourceImage
-        ? await restoreProtectedPixels(sourceImage, modelImage, protectMask)
-        : modelImage;
       const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-      const labels = producerLabels(state, refLayers, W, H, f);
+      const labels = f === 'water' && locked
+        ? []
+        : producerLabels(state, refLayers, W, H, f, !locked);
       const overlayImage =
         f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
-        : f === 'water' ? buildWaterOverlay(state, frame, W, H)
+        : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !locked, locked)
         : undefined;
+      const mergedOverlay = f === 'water' && locked
+        ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
+        : await stackOverlayImages(overlayImage, structureOverlay, W, H);
       const final = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: frame.satDataUrl ?? sourceImage ?? modelImage,
         boundaryPx,
-        overlayImage,
+        overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
+        contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
         width: W,
         height: H,
       });
-      return composeStyleSheet(final, state, frame, refLayers, f, placeName, styleDef.label, layerLabel);
+      return composeStyleSheet(
+        final,
+        state,
+        frame,
+        refLayers,
+        f,
+        placeName,
+        styleDef.label,
+        layerLabel,
+        !locked,
+      );
     },
     [state, frame, refLayers, placeName],
   );
@@ -3929,7 +4828,7 @@ export default function DesignGlossy({
   // (Zones is satellite-only → produced exactly, here and now), then the subscription effect below
   // collects each finished sheet into the gallery as it lands.
   const generateAllViaQueue = useCallback(async () => {
-    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     // No selection side-effects here — the batch passes styleKey explicitly; leaking it into the
@@ -3942,34 +4841,55 @@ export default function DesignGlossy({
       // legend/labels — owner's fix for "I selected the AI legend and it reverted to the old one:
       // the sheets came out disjointed". Toggle OFF keeps the legacy split: Zones exact + the
       // model sheets through the strict composite-back pipeline.
-      if (!modelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
+      if (!effectiveModelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef);
         try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
         pushGallery(`Zones map · ${styleDef.label}`, zsheet);
       }
       // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
-      const modelFilters: GlossyLayerFilter[] = modelChrome
+      const modelFilters: GlossyLayerFilter[] = effectiveModelChrome
         ? ['all', 'zones', 'water', 'planting', 'structures']
         : ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
-      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; protectMaskDataUrl?: string; showcase?: boolean }>;
+      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; protectMaskDataUrl?: string; showcase?: boolean; geometryLock?: boolean }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
-        const composite = await buildComposite(state, frame, refLayers, f);
-        const elementsText = producerElementsText(state, refLayers, f);
+        const composite = await buildComposite(
+          state,
+          frame,
+          refLayers,
+          f,
+          true,
+          geometryLock ? lockedCompositeMarks(f) : undefined,
+        );
+        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-      const protectMaskDataUrl = !modelChrome && geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f)
+        const protectMaskDataUrl = geometryLock
+          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
-      const prompt = modelChrome
-        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
-        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
-      sheets.push({ key: f, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: modelChrome });
+        const prompt = geometryLock && f === 'water'
+          ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+          : effectiveModelChrome
+            ? (promptRewrite
+              ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
+              : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
+            : (promptRewrite
+              ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
+              : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
+        sheets.push({
+          key: f,
+          label: layerLabel,
+          prompt,
+          compositeDataUrl: composite,
+          ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
+          showcase: effectiveModelChrome,
+          geometryLock,
+        });
       }
       // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
       // softens exactly those (no boundary clip / burned labels over the model's own chrome).
-      showcaseKeysRef.current = new Set(modelChrome ? sheets.map((s) => s.key) : []);
+      showcaseKeysRef.current = new Set(effectiveModelChrome ? sheets.map((s) => s.key) : []);
       if (sheets.length === 0) {
         setNotice(
           layerContentCount(state, refLayers, 'zones') > 0
@@ -3984,10 +4904,11 @@ export default function DesignGlossy({
       setQueueJobId(jobId);
       setNotice(`Rendering ${sheets.length} sheet${sheets.length === 1 ? '' : 's'} in the background — they'll appear in your gallery when ready (a few minutes). You can keep working.`);
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, modelChrome, geometryLock]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, geometryLock, promptRewrite]);
 
   // Single-sheet gpt-image-2 via the SAME background queue as "AI · ALL" (direct OpenAI). This is
   // what the per-sheet "Generate my … Blueprint" button routes to when gpt-image-2 is selected —
@@ -3997,7 +4918,7 @@ export default function DesignGlossy({
   // the gallery. Zones is never routed here (it's satellite-only → produced deterministically in
   // generateProducer), so `filter` is always a model layer.
   const generateOneViaQueue = useCallback(async () => {
-    const styleKey = (producerStyle ?? 'extension_blueprint') as StylePreset;
+    const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (layerContentCount(state, refLayers, filter) === 0) {
@@ -4009,8 +4930,15 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      const composite = await buildComposite(state, frame, refLayers, filter);
-      const elementsText = producerElementsText(state, refLayers, filter);
+      const composite = await buildComposite(
+        state,
+        frame,
+        refLayers,
+        filter,
+        true,
+        geometryLock ? lockedCompositeMarks(filter) : undefined,
+      );
+      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
       // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
@@ -4019,28 +4947,72 @@ export default function DesignGlossy({
       // composite-back path always seams the model art against the real satellite (visible edges,
       // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
       // model version, so we DON'T force the deterministic satellite-only sheet here.
-      const useShowcase = modelChrome;
-      const protectMaskDataUrl = !useShowcase && geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter)
+      const useShowcase = effectiveModelChrome;
+      const protectMaskDataUrl = geometryLock
+        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
         : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
-      const prompt = useShowcase
-        ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
-        : `${buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)}\n\nGEOMETRY LOCK: the source composite geometry is final. Repaint only the unprotected background and keep every drawn boundary, roof, driveway, road, line, zone edge, label anchor and marker in the same pixels. Do not redesign any shape.`;
+      const prompt = geometryLock && filter === 'water'
+        ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+        : useShowcase
+          ? (promptRewrite
+            ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
+            : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
+          : (promptRewrite
+            ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
+            : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
         engine: 'openai',
-        sheets: [{ key: filter, label: layerLabel, prompt, compositeDataUrl: composite, ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}), showcase: useShowcase }],
+        sheets: [{
+          key: filter,
+          label: layerLabel,
+          prompt,
+          compositeDataUrl: composite,
+          ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
+          showcase: useShowcase,
+          geometryLock,
+        }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(`Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
     } catch (err) {
+      refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, filter, modelChrome, geometryLock]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, geometryLock, promptRewrite]);
+
+  // One explicit rerun path for the visible refresh button and the main CTA.
+  const runCurrentSheet = useCallback(() => {
+    if (exactSheet === 'base') return renderBaseMap();
+    if (exactSheet === 'sector') return renderSectorMap();
+    if (exactSheet === 'implementation') return renderImplementationMap();
+    if (producerStyle) {
+      // Geometry Lock only EXISTS on the queue path: /api/image-producer accepts no protect mask
+      // and generateProducer sends the unlocked prompt, so running a locked sheet there tells the
+      // model to paint every feature while the browser also draws the deterministic overlay —
+      // duplicated tanks and pipes, the exact thing the lock is meant to prevent. Keep the lock on
+      // the one path that implements it.
+      return engine === 'falgpt' || geometryLock ? generateOneViaQueue() : generateProducer();
+    }
+    if (analysisStyle) return generate('gemini');
+    return renderDesignMap();
+  }, [exactSheet, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+
+  // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
+  // tick so the UI has a chance to paint the "refreshing" state before the work starts.
+  const refreshCurrentSheet = useCallback(() => {
+    if (loading !== null) return;
+    setError(null);
+    refreshPendingRef.current = true;
+    setNotice('Refreshing the current sheet…');
+    setTimeout(() => {
+      void runCurrentSheet();
+    }, 0);
+  }, [loading, runCurrentSheet]);
 
   // Refs so the subscription effect below doesn't re-subscribe on every design edit.
   const finishRef = useRef(finishStyledSheet);
@@ -4053,6 +5025,13 @@ export default function DesignGlossy({
     if (!queueJobId) return;
     const siteId = state.siteId;
     const finished = new Set<string>();
+    // A sheet only counts as delivered once the BROWSER has assembled and stored it. The worker
+    // saying "done" is not enough: the locked path adds two more downloads plus canvas work, and
+    // a failure there used to be swallowed while the user still got the green success notice with
+    // an unchanged preview — the "Refresh does nothing" report.
+    const assembled = new Set<string>();
+    let lockedAssembled = 0;
+    let lastAssembleError = '';
     const unsub = subscribeRenderJob(
       queueJobId,
       async (job) => {
@@ -4069,30 +5048,59 @@ export default function DesignGlossy({
             try {
               const raw = await fetchRenderOutput(sheet.outputPath);
               const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
-              const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
-              const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              // Jobs can finish after a navigation or reload. Use the flag persisted with the
+              // sheet, never the current toggle value. Existing in-flight jobs created before the
+              // flag was added remain locked when they contain a protect mask.
+              const locked = sheet.geometryLock ?? Boolean(sheet.protectMaskPath);
+              const sourceImage = locked && sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
+              const protectMask = locked && sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const finalSheet = styleDef
-                ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask)
+                ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                 : raw;
-              try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() }); } catch { /* cache full */ }
-              pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}`, finalSheet);
+              const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
+              try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
+              // A one-sheet refresh must update the actual preview, not only append a gallery
+              // thumbnail. Batch jobs still collect every sheet without flickering the preview.
+              if (job.sheets.length === 1) {
+                setResultImage(finalSheet);
+                setSaved(record);
+              }
+              pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}${locked ? ' · Geometry locked' : ''}`, finalSheet);
+              assembled.add(sheet.key);
+              if (locked) lockedAssembled += 1;
             } catch (e) {
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
+              // Let a later snapshot retry this sheet — the worker's output is still in Storage.
+              finished.delete(sheet.key);
+              lastAssembleError = e instanceof Error ? e.message : String(e);
             }
           }
         }
         if (job.status === 'complete' || job.status === 'failed' || job.status === 'error') {
-          const done = job.sheets.filter((s) => s.status === 'done').length;
+          // Count what this device actually produced, not what the worker reported. A sheet the
+          // browser could not assemble is a failure the farmer must be told about — otherwise a
+          // paid render silently vanishes behind a success message.
+          const done = assembled.size;
+          const lockedDone = lockedAssembled;
+          const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
           // Surface the worker's actual reason (quota, moderation, …) — it was captured
           // server-side but never shown, leaving farmers guessing (audit find).
           const firstErr = failedSheets[0]?.error;
           if (done > 0) {
-            setNotice(`Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
+            setNotice(refreshPendingRef.current
+              ? `Refreshed current sheet${lockedDone ? ' — Geometry Lock applied' : ''}; updated preview in your gallery.`
+              : `Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${lockedDone ? ` · Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
+            refreshPendingRef.current = false;
             setGalleryViewId(null);
             setGalleryOpen(true);
+          } else if (serverDone > 0) {
+            // The render succeeded and was paid for, but this device could not assemble it.
+            setError(`The sheet rendered but could not be assembled on this device${lastAssembleError ? ` (${lastAssembleError})` : ''} — tap Refresh to try again.`);
+            refreshPendingRef.current = false;
           } else {
             setError(job.error || firstErr || 'The render did not complete — please try again.');
+            refreshPendingRef.current = false;
           }
           setLoading(null);
           clearPersistedJobId(siteId);
@@ -4148,6 +5156,11 @@ export default function DesignGlossy({
         position: 'absolute',
         inset: 0,
         overflowY: 'auto',
+        overflowX: 'hidden',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
         background: PAPER,
         color: DARK,
         padding: 16,
@@ -4244,7 +5257,7 @@ export default function DesignGlossy({
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
           Style {`(on your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
           {PRODUCER_STYLES.map((s) => {
             const active = producerStyle === s.key;
             return (
@@ -4256,7 +5269,7 @@ export default function DesignGlossy({
                 onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); setExactSheet(null); }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={s.blurb}
+                title={`${s.blurb}${s.recommended ? ' (recommended with Geometry Lock)' : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -4271,8 +5284,29 @@ export default function DesignGlossy({
                   fontSize: 11.5,
                   cursor: loading !== null ? 'default' : 'pointer',
                   opacity: loading !== null && !active ? 0.5 : 1,
+                  position: 'relative',
                 }}
               >
+                {s.recommended && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      zIndex: 1,
+                      top: 9,
+                      left: 9,
+                      padding: '2px 6px',
+                      borderRadius: 999,
+                      background: '#F8E0A2',
+                      color: '#3B3528',
+                      fontSize: 8,
+                      fontWeight: 900,
+                      letterSpacing: 0.35,
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Best with Lock
+                  </span>
+                )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
                 <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{s.blurb}</span>
@@ -4293,7 +5327,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (modelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels — real satellite kept outside your boundary. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 renders in the background (~mins) and lands in your gallery — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -4303,13 +5337,17 @@ export default function DesignGlossy({
       )}
 
       {resultImage && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: '100%', minWidth: 0 }}>
           <div
             style={{
               border: `4px solid ${GOLD}`,
               borderRadius: 16,
               overflow: 'hidden',
               background: DARK,
+              width: '100%',
+              maxWidth: '100%',
+              minWidth: 0,
+              boxSizing: 'border-box',
             }}
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
@@ -4333,7 +5371,7 @@ export default function DesignGlossy({
               <img
                 src={resultImage}
                 alt={isExactRender ? 'Exact plan sheet of the design' : "AI artist's impression of the design"}
-                style={{ width: '100%', display: 'block' }}
+                style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
               />
               {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
               {!isExactRender && (
@@ -4478,6 +5516,36 @@ export default function DesignGlossy({
               </div>
               )}
 
+              {producerStyle && (
+                <button
+                  type="button"
+                  onClick={() => setPromptRewrite((v) => !v)}
+                  disabled={loading !== null}
+                  aria-pressed={promptRewrite}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    alignSelf: 'flex-start',
+                    minHeight: 40,
+                    padding: '8px 14px',
+                    borderRadius: 12,
+                    border: promptRewrite ? `2px solid ${GREEN}` : '2px dashed rgba(31,77,43,0.45)',
+                    background: promptRewrite ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
+                    color: DARK,
+                    fontWeight: 700,
+                    fontSize: 12.5,
+                    cursor: loading !== null ? 'default' : 'pointer',
+                    textAlign: 'left',
+                    opacity: loading !== null ? 0.6 : 1,
+                  }}
+                  title="Use the rewritten high-quality prompt. Turn this off to fall back to the legacy prompt for A/B comparison or rollback."
+                >
+                  <span>{promptRewrite ? '☑' : '☐'}</span>
+                  ✨ Prompt rewrite {promptRewrite ? 'On' : 'Off'}
+                </button>
+              )}
+
               {engine === 'falgpt' && (
                 <button
                   type="button"
@@ -4515,8 +5583,8 @@ export default function DesignGlossy({
                 <button
                   type="button"
                   onClick={() => setModelChrome((v) => !v)}
-                  disabled={loading !== null}
-                  aria-pressed={modelChrome}
+                  disabled={loading !== null || geometryLock}
+                  aria-pressed={geometryLock || effectiveModelChrome}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -4525,17 +5593,23 @@ export default function DesignGlossy({
                     minHeight: 40,
                     padding: '8px 14px',
                     borderRadius: 12,
-                    border: modelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
-                    background: modelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
+                    border: geometryLock || effectiveModelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
+                    background: geometryLock || effectiveModelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
                     color: DARK,
                     fontWeight: 700,
                     fontSize: 12.5,
-                    cursor: loading !== null ? 'default' : 'pointer',
+                    cursor: loading !== null || geometryLock ? 'default' : 'pointer',
                     textAlign: 'left',
+                    opacity: geometryLock ? 0.72 : 1,
                   }}
+                  title={geometryLock
+                    ? 'Geometry Lock uses exact framing, labels and legend. Turn Geometry Lock off to restore the free-form AI-authored sheet.'
+                    : 'Let GPT Image 2 draw the full sheet, including its own legend and labels.'}
                 >
-                  <span>{modelChrome ? '☑' : '☐'}</span>
-                  🧪 AI draws its own legend &amp; labels (satellite kept outside the boundary)
+                  <span>{geometryLock || effectiveModelChrome ? '☑' : '☐'}</span>
+                  {geometryLock
+                    ? '📐 Exact framing, labels & legend (Geometry Lock)'
+                    : '🧪 AI draws its own legend & labels'}
                 </button>
               )}
 
@@ -4581,58 +5655,47 @@ export default function DesignGlossy({
         </div>
         )}
 
-        <button
-          onClick={() =>
-            exactSheet === 'base'
-              ? renderBaseMap()
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignSelf: 'flex-start' }}>
+          <button
+            onClick={resultImage ? refreshCurrentSheet : () => { void runCurrentSheet(); }}
+            disabled={loading !== null}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              minHeight: 48,
+              padding: '12px 22px',
+              borderRadius: 12,
+              border: 'none',
+              background: GOLD,
+              color: DARK,
+              fontWeight: 800,
+              fontSize: 15,
+              cursor: loading !== null ? 'default' : 'pointer',
+              opacity: loading !== null ? 0.7 : 1,
+            }}
+          >
+            {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
+            {loading !== null
+              ? loading === 'exact'
+                ? 'Drawing your exact map…'
+                : loading === 'falgpt'
+                  ? 'Rendering in the background — you can keep working'
+                  : 'Generating your map… ~1 min'
+              : exactSheet === 'base'
+                ? `${resultImage ? 'Redraw' : 'Draw'} my existing-site sheet · instant`
               : exactSheet === 'sector'
-              ? renderSectorMap()
+                ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
               : exactSheet === 'implementation'
-                ? renderImplementationMap()
+                ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                 : producerStyle
-                  ? (engine === 'falgpt' ? generateOneViaQueue() : generateProducer())
+                  ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
                   : analysisStyle
-                    ? generate('gemini')
-                    : renderDesignMap()
-          }
-          disabled={loading !== null}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 8,
-            minHeight: 48,
-            padding: '12px 22px',
-            borderRadius: 12,
-            border: 'none',
-            background: GOLD,
-            color: DARK,
-            fontWeight: 800,
-            fontSize: 15,
-            cursor: loading !== null ? 'default' : 'pointer',
-            opacity: loading !== null ? 0.7 : 1,
-            alignSelf: 'flex-start',
-          }}
-        >
-          {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
-          {loading !== null
-            ? loading === 'exact'
-              ? 'Drawing your exact map…'
-              : loading === 'falgpt'
-                ? 'Rendering in the background — you can keep working'
-                : 'Generating your map… ~1 min'
-            : exactSheet === 'base'
-              ? `${resultImage ? 'Redraw' : 'Draw'} my existing-site sheet · instant`
-            : exactSheet === 'sector'
-              ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
-            : exactSheet === 'implementation'
-              ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
-              : producerStyle
-                ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
-                : analysisStyle
-                  ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
-                  : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
-        </button>
+                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
+                    : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
+          </button>
+        </div>
 
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (

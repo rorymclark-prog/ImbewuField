@@ -57,9 +57,50 @@ export interface CompositeInputs {
   boundaryColor?: string;
   /** Label pill/type styling, matched to the chosen art style. */
   labelStyle?: LabelStyle;
+  /** Optional deterministic treatment for factual satellite context outside the boundary. */
+  contextTreatment?: 'original' | 'precision_atlas';
   /** Output canvas size (the composite/bg rect × pixelRatio). */
   width: number;
   height: number;
+}
+
+/**
+ * Bring factual satellite context into the Precision Atlas palette without generating anything.
+ * Geometry remains byte-for-byte aligned; only colour and contrast are changed.
+ */
+export function precisionAtlasContextPixels(pixels: Uint8ClampedArray): Uint8ClampedArray {
+  if (pixels.length % 4 !== 0) throw new Error('context treatment: expected RGBA pixels');
+  const out = new Uint8ClampedArray(pixels.length);
+  const saturation = 0.82;
+  const contrast = 0.96;
+  const forestMix = 0.1;
+  const warmMix = 0.025;
+  const forest = [54, 78, 57] as const;
+  const parchment = [226, 218, 194] as const;
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    const channels = [r, g, b];
+    for (let channel = 0; channel < 3; channel++) {
+      const desaturated = luma + (channels[channel] - luma) * saturation;
+      const lifted = (desaturated - 128) * contrast + 134;
+      out[i + channel] = Math.round(
+        lifted * (1 - forestMix - warmMix)
+        + forest[channel] * forestMix
+        + parchment[channel] * warmMix,
+      );
+    }
+    out[i + 3] = pixels[i + 3];
+  }
+  return out;
+}
+
+/** Geometry Lock owns framing and cartographic chrome; free-form model chrome is rollback-only. */
+export function shouldUseModelChrome(modelChrome: boolean, geometryLock: boolean): boolean {
+  return modelChrome && !geometryLock;
 }
 
 const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: string; font: string }> = {
@@ -73,7 +114,9 @@ const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: str
 /** Burn the true labels onto the produced map: leader line + anchor dot + pill. */
 function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], style: LabelStyle): void {
   const s = LABEL_STYLES[style] ?? LABEL_STYLES.clean;
-  const fs = 26, padX = 14, h = fs + 14;
+  const fs = style === 'blueprint' ? 28 : 26;
+  const padX = style === 'blueprint' ? 16 : 14;
+  const h = fs + (style === 'blueprint' ? 16 : 14);
   ctx.textBaseline = 'middle';
   for (const l of labels) {
     // Headers are group titles standing over their members — heavier weight + a firmer pill edge
@@ -84,9 +127,9 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
       // Leader — dark under-stroke + light over-stroke reads on any background.
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = 'rgba(20,16,10,0.35)'; ctx.lineWidth = 5; ctx.setLineDash([]); ctx.stroke();
+      ctx.strokeStyle = 'rgba(20,16,10,0.55)'; ctx.lineWidth = style === 'blueprint' ? 7 : 5; ctx.setLineDash([]); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = 2; ctx.setLineDash([8, 6]); ctx.stroke();
+      ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = style === 'blueprint' ? 3 : 2; ctx.setLineDash([8, 6]); ctx.stroke();
       ctx.setLineDash([]);
       // Anchor dot at the true position.
       ctx.beginPath(); ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
@@ -101,6 +144,11 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
     ctx.fillStyle = s.pill; ctx.shadowColor = 'rgba(20,16,10,0.28)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2;
     ctx.fill(); ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
     ctx.strokeStyle = s.stroke; ctx.lineWidth = isHeader ? 2.5 : 1.5; ctx.stroke();
+    if (style === 'blueprint') {
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+      ctx.strokeText(l.text, x + padX, l.ay + 1);
+    }
     ctx.fillStyle = s.text; ctx.fillText(l.text, x + padX, l.ay + 1);
   }
 }
@@ -164,6 +212,55 @@ export function blendProtectedPixels(
   return out;
 }
 
+/**
+ * Fraction of the mask the model is actually allowed to repaint (alpha < 255).
+ *
+ * Geometry Lock always leaves at least the plot interior editable, so a fully opaque mask is
+ * degenerate: it means "restore every pixel", which silently throws the whole render away and
+ * hands the farmer back the untouched satellite composite. Callers use this to tell a real
+ * mask apart from a broken one instead of failing invisibly.
+ */
+export function maskEditableFraction(maskPixels: Uint8ClampedArray): number {
+  let editable = 0;
+  let total = 0;
+  for (let i = 0; i < maskPixels.length; i += 4) {
+    total += 1;
+    if ((maskPixels[i + 3] ?? 0) < 255) editable += 1;
+  }
+  return total === 0 ? 0 : editable / total;
+}
+
+/**
+ * Count fully protected pixels that do not exactly match the source.
+ *
+ * Geometry Lock is a hard contract, so opaque mask pixels are compared byte-for-byte rather
+ * than with a visual tolerance. Partially transparent edge pixels are intentionally excluded:
+ * they are feathered blends, not locked source pixels.
+ */
+export function countProtectedPixelMismatches(
+  sourcePixels: Uint8ClampedArray,
+  outputPixels: Uint8ClampedArray,
+  maskPixels: Uint8ClampedArray,
+): number {
+  if (sourcePixels.length !== outputPixels.length || outputPixels.length !== maskPixels.length) {
+    throw new Error('restore verification: image buffers must have the same size');
+  }
+
+  let mismatches = 0;
+  for (let i = 0; i < outputPixels.length; i += 4) {
+    if ((maskPixels[i + 3] ?? 0) < 255) continue;
+    if (
+      sourcePixels[i] !== outputPixels[i]
+      || sourcePixels[i + 1] !== outputPixels[i + 1]
+      || sourcePixels[i + 2] !== outputPixels[i + 2]
+      || sourcePixels[i + 3] !== outputPixels[i + 3]
+    ) {
+      mismatches += 1;
+    }
+  }
+  return mismatches;
+}
+
 /** Restore source pixels wherever the mask is opaque, then return a PNG data URL. */
 export async function restoreProtectedPixels(
   sourceImage: ImageInput,
@@ -191,7 +288,21 @@ export async function restoreProtectedPixels(
   const sourcePixels = drawToCanvas(source);
   const modelPixels = drawToCanvas(model);
   const maskPixels = drawToCanvas(mask);
-  const blended = blendProtectedPixels(sourcePixels, modelPixels, maskPixels);
+
+  // A fully opaque mask restores every pixel, which silently discards the render and returns the
+  // raw satellite composite — the exact "the map didn't change" failure seen in production
+  // (job …_w0c6b5: 100% protected, 0 editable pixels). No legitimate mask looks like this, so
+  // treat it as "no usable mask" and keep the model artwork rather than shipping a dead render.
+  const usableMask = maskEditableFraction(maskPixels) > 0;
+  const blended = usableMask
+    ? blendProtectedPixels(sourcePixels, modelPixels, maskPixels)
+    : new Uint8ClampedArray(modelPixels);
+  if (usableMask) {
+    const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
+    if (mismatches > 0) {
+      throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
+    }
+  }
 
   const outCanvas = document.createElement('canvas');
   outCanvas.width = width;
@@ -290,9 +401,24 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
 
   const hasBoundary = Array.isArray(boundaryPx) && boundaryPx.length >= 6;
 
-  if (hasBoundary) {
-    // 1. Original satellite fills everything (truth outside the plot).
+  const drawSatelliteContext = () => {
     ctx.drawImage(satellite, 0, 0, width, height);
+    if (inp.contextTreatment !== 'precision_atlas') return;
+    try {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      imageData.data.set(precisionAtlasContextPixels(imageData.data));
+      ctx.putImageData(imageData, 0, 0);
+    } catch {
+      // A remote image can taint a canvas. Keep the factual image rather than failing the render.
+      ctx.fillStyle = 'rgba(238,231,211,0.09)';
+      ctx.fillRect(0, 0, width, height);
+    }
+  };
+
+  if (hasBoundary) {
+    // 1. Factual satellite fills everything outside the plot. Precision Atlas applies only a
+    // deterministic palette wash, avoiding the dark photographic cut-out around painted land.
+    drawSatelliteContext();
     // 2. Beautified scene (elements illustrated by the model), clipped to the
     //    boundary interior — anything the model sprawled outside is erased.
     //    (Blanked/failed renders are caught BEFORE this via estimateBlankFraction.)
@@ -309,7 +435,7 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   } else {
     // No boundary traced — satellite as the base first (so a model that returns a
     // partial/transparent frame can never leave the map blank), then the model.
-    ctx.drawImage(satellite, 0, 0, width, height);
+    drawSatelliteContext();
     ctx.drawImage(model, 0, 0, width, height);
   }
 

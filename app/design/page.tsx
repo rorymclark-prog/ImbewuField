@@ -30,6 +30,7 @@ import {
   loadCanvasState,
   projectorForFrame,
   saveCanvasNavigation,
+  preserveCanvasNavigation,
   saveCanvasState,
   CanvasSaveError,
   migrateStateToFrame,
@@ -798,7 +799,10 @@ function DesignStudioInner() {
           // The winner was fitted to whatever frame its own device computed. Re-normalise it into
           // the frame THIS page is rendering, or the geometry lands in the wrong place. No-ops
           // (returns `winner` unchanged) when the frames match, which is the common case.
-          return migrateStateToFrame(winner, prev.frame, projectorForFrame(prev.frame));
+          return preserveCanvasNavigation(
+            migrateStateToFrame(winner, prev.frame, projectorForFrame(prev.frame)),
+            prev,
+          );
         });
       })
       .catch(() => {})
@@ -1056,6 +1060,9 @@ function DesignStudioInner() {
     <div
       style={{
         minHeight: '100dvh',
+        width: '100%',
+        maxWidth: '100vw',
+        overflowX: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         background: PAPER,
@@ -1074,6 +1081,12 @@ function DesignStudioInner() {
           position: 'sticky',
           top: 0,
           zIndex: 20,
+          width: '100%',
+          maxWidth: '100%',
+          minWidth: 0,
+          boxSizing: 'border-box',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch',
         }}
       >
         <Link
@@ -1092,9 +1105,9 @@ function DesignStudioInner() {
         >
           <ArrowLeft size={20} />
         </Link>
-        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
           <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
-          <span style={{ fontSize: 12, opacity: 0.65 }}>{siteName}</span>
+          <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
         <button
           type="button"
