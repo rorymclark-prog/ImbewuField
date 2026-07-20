@@ -1150,32 +1150,9 @@ function DesignStudioInner() {
             Pro
           </span>
         </button>
-        {canvasState && (
-          <button
-            type="button"
-            onClick={toggleGeometryLock}
-            aria-pressed={geometryLock}
-            title="Strict glossy render. Keeps the traced geometry locked and restores protected pixels after the model returns."
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              minHeight: 32,
-              padding: '5px 10px',
-              borderRadius: 999,
-              border: geometryLock ? `1px solid ${GREEN}` : '1px dashed rgba(31,77,43,0.5)',
-              background: geometryLock ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
-              color: GREEN,
-              cursor: 'pointer',
-              fontSize: 11.5,
-              fontWeight: 800,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <Lock size={14} />
-            Geometry Lock {geometryLock ? 'On' : 'Off'}
-          </button>
-        )}
+        {/* RETIRED — the Geometry Lock chip. It is jargon, it confused its own author, and the
+            recommended Satellite Overlay style ignores it entirely (see isModelChromeStyle). Render
+            behaviour belongs to the chosen STYLE, not to a header switch. */}
         {canvasState && frame && (
           <button
             type="button"

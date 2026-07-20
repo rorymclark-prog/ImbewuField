@@ -5486,102 +5486,14 @@ export default function DesignGlossy({
               </div>
               )}
 
-              {producerStyle && (
-                <button
-                  type="button"
-                  onClick={() => setPromptRewrite((v) => !v)}
-                  disabled={loading !== null}
-                  aria-pressed={promptRewrite}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    alignSelf: 'flex-start',
-                    minHeight: 40,
-                    padding: '8px 14px',
-                    borderRadius: 12,
-                    border: promptRewrite ? `2px solid ${GREEN}` : '2px dashed rgba(31,77,43,0.45)',
-                    background: promptRewrite ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
-                    color: DARK,
-                    fontWeight: 700,
-                    fontSize: 12.5,
-                    cursor: loading !== null ? 'default' : 'pointer',
-                    textAlign: 'left',
-                    opacity: loading !== null ? 0.6 : 1,
-                  }}
-                  title="Use the rewritten high-quality prompt. Turn this off to fall back to the legacy prompt for A/B comparison or rollback."
-                >
-                  <span>{promptRewrite ? '☑' : '☐'}</span>
-                  ✨ Prompt rewrite {promptRewrite ? 'On' : 'Off'}
-                </button>
-              )}
-
-              {engine === 'falgpt' && (
-                <button
-                  type="button"
-                  onClick={() => setGeometryLock((v) => !v)}
-                  disabled={loading !== null}
-                  aria-pressed={geometryLock}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    alignSelf: 'flex-start',
-                    minHeight: 40,
-                    padding: '8px 14px',
-                    borderRadius: 12,
-                    border: geometryLock ? `2px solid ${GREEN}` : '2px dashed rgba(31,77,43,0.45)',
-                    background: geometryLock ? 'rgba(31,77,43,0.08)' : 'rgba(31,77,43,0.04)',
-                    color: DARK,
-                    fontWeight: 700,
-                    fontSize: 12.5,
-                    cursor: loading !== null ? 'default' : 'pointer',
-                    textAlign: 'left',
-                    opacity: loading !== null ? 0.6 : 1,
-                  }}
-                  title="Strict queue path only. Keeps the traced geometry locked and restores the protected pixels after the model returns."
-                >
-                  <span>{geometryLock ? '☑' : '☐'}</span>
-                  🔒 Geometry Lock {geometryLock ? 'On' : 'Off'}
-                </button>
-              )}
-
-              {/* AI-legend experiment — gpt-image-2 renders the whole frame with its OWN legend
-                  + labels (the free-ChatGPT look): illustration inside the boundary, real
-                  satellite kept outside, exact roof footprints, a title block. */}
-              {engine === 'falgpt' && (
-                <button
-                  type="button"
-                  onClick={() => setModelChrome((v) => !v)}
-                  disabled={loading !== null || geometryLock}
-                  aria-pressed={geometryLock || effectiveModelChrome}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    alignSelf: 'flex-start',
-                    minHeight: 40,
-                    padding: '8px 14px',
-                    borderRadius: 12,
-                    border: geometryLock || effectiveModelChrome ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.2)',
-                    background: geometryLock || effectiveModelChrome ? 'rgba(31,77,43,0.08)' : 'transparent',
-                    color: DARK,
-                    fontWeight: 700,
-                    fontSize: 12.5,
-                    cursor: loading !== null || geometryLock ? 'default' : 'pointer',
-                    textAlign: 'left',
-                    opacity: geometryLock ? 0.72 : 1,
-                  }}
-                  title={geometryLock
-                    ? 'Geometry Lock uses exact framing, labels and legend. Turn Geometry Lock off to restore the free-form AI-authored sheet.'
-                    : 'Let GPT Image 2 draw the full sheet, including its own legend and labels.'}
-                >
-                  <span>{geometryLock || effectiveModelChrome ? '☑' : '☐'}</span>
-                  {geometryLock
-                    ? '📐 Exact framing, labels & legend (Geometry Lock)'
-                    : '🧪 AI draws its own legend & labels'}
-                </button>
-              )}
+              {/* RETIRED — the Prompt-rewrite, Geometry Lock and AI-legend toggles used to live
+                  here. Rory: "I even get confused every time; it's a layer of complexity I don't
+                  want." They were also dishonest: Satellite Overlay overrides all three in code, so
+                  on the recommended style they switched nothing at all. Behaviour is now a property
+                  of the STYLE you choose — isModelChromeStyle() decides who letters the sheet, and
+                  the state below keeps the defaults these toggles used to set. The legacy prompt
+                  builders stay exported for a developer-level rollback, which is what they were
+                  always for. */}
 
               {/* (The old "Analysis maps · Gemini" chip row is RETIRED — Rory. Sheets 01/02/08 in
                   AI mode still use the Gemini analysis path via applySheet; only the extra picker
