@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 
@@ -319,4 +320,15 @@ test('drip runs are counted from the drawn lines, not from the beds', () => {
   assert.match(p, /exactly as many runs as there are green dashed lines/);
   // The old wording promised one run per BED, which turned 3 lines into 8 runs on a real sheet.
   assert.doesNotMatch(p, /one run down each bed/);
+});
+
+test('every catalog element has a unique glyph', () => {
+  // The composite marks each element with its emoji, and the prompt tells the model that glyph is
+  // what identifies the marker. Where two elements shared one, the model had literally no signal
+  // to tell them apart — a chicken tractor carried a farm-tractor emoji and was duly drawn as a
+  // vehicle on the driveway; banana circles and banana clumps were interchangeable.
+  const byIcon = new Map<string, string[]>();
+  for (const def of ELEMENT_CATALOG) byIcon.set(def.icon, [...(byIcon.get(def.icon) ?? []), def.id]);
+  const dupes = [...byIcon.entries()].filter(([, ids]) => ids.length > 1);
+  assert.deepEqual(dupes, [], `elements sharing a glyph: ${dupes.map(([i, ids]) => `${i} → ${ids.join('/')}`).join('; ')}`);
 });

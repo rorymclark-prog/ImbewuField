@@ -602,9 +602,28 @@ export function drawMarks(
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
   // (imgW = frame.imgW × SCALE), so convert metres → CANVAS px via the canvas's own
   // width (pxPerM, computed above) — sizing in logical px would draw every footprint at half scale.
-  for (const item of drawDesign && showDesignItems ? state.items : []) {
-    const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+  // TWO PASSES, BIGGEST FOOTPRINT FIRST.
+  //
+  // These used to draw in raw array order with opaque glyphs, so a later item simply erased an
+  // earlier one. Measured on the owner's real 46-item design: eleven collisions, including the
+  // chicken tractor being painted over by a vegetable bed — it was never in the image the model
+  // saw, which is why the sheet drew no chicken tractor where he had placed one. Sorting by
+  // footprint means a 6 m canopy can no longer bury a 1 m tank, and splitting footprints from
+  // glyphs means no glyph is hidden under a neighbour's fill.
+  const visible = (drawDesign && showDesignItems ? state.items : []).filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return def && itemInFilter(def.category, filter);
+  });
+  const footM2 = (it: PlacedItem) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return (it.wM ?? def.wM) * (it.hM ?? def.hM);
+  };
+  const ordered = [...visible].sort((a, b) => footM2(b) - footM2(a));
+
+  const glyphJobs: Array<{ cx: number; cy: number; size: number; icon: string; small: boolean }> = [];
+
+  for (const item of ordered) {
+    const def = ELEMENTS_BY_ID[item.defId]!;
     const wM = item.wM ?? def.wM;
     const hM = item.hM ?? def.hM;
     const wLogical = wM * pxPerM;
@@ -613,7 +632,7 @@ export function drawMarks(
     const cy = py(item.y);
     ctx.fillStyle = `${def.color}55`;
     ctx.strokeStyle = def.color;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 * SCALE;
     if (def.shape === 'circle') {
       ctx.beginPath();
       ctx.arc(cx, cy, wLogical / 2, 0, Math.PI * 2);
@@ -632,12 +651,44 @@ export function drawMarks(
       ctx.stroke();
       ctx.restore();
     }
-    if (showToolGlyphs) {
-      ctx.font = `${Math.max(14, Math.min(28, wLogical * 0.6))}px sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+    // A tap's footprint is ~6 px while its glyph is 14 px: the emoji is bigger than the element it
+    // marks and hides the footprint that encodes its true size. Small elements get their glyph
+    // OUTSIDE the footprint on a hairline leader, so both the position and the size stay readable.
+    const size = Math.max(14 * SCALE, Math.min(56 * SCALE, wLogical * 0.35));
+    glyphJobs.push({ cx, cy, size, icon: def.icon, small: wLogical < 12 * SCALE });
+  }
+
+  if (showToolGlyphs) {
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const placed: Array<{ x: number; y: number; r: number }> = [];
+    for (const g of glyphJobs) {
+      let gx = g.cx;
+      let gy = g.cy;
+      const r = g.size * 0.6;
+      if (g.small) gy = g.cy - (g.size * 0.5 + 6 * SCALE); // lift clear of a tiny footprint
+      // Push radially off any glyph already placed, so no two emoji overlap into mush.
+      for (let guard = 0; guard < 12; guard++) {
+        const hit = placed.find((q) => Math.hypot(q.x - gx, q.y - gy) < q.r + r);
+        if (!hit) break;
+        const dx = gx - hit.x || 0.001;
+        const dy = gy - hit.y || 0.001;
+        const d = Math.hypot(dx, dy);
+        gx = hit.x + (dx / d) * (hit.r + r + 1);
+        gy = hit.y + (dy / d) * (hit.r + r + 1);
+      }
+      if (gx !== g.cx || gy !== g.cy) {
+        ctx.strokeStyle = 'rgba(11,18,11,0.55)';
+        ctx.lineWidth = 1 * SCALE;
+        ctx.beginPath();
+        ctx.moveTo(g.cx, g.cy);
+        ctx.lineTo(gx, gy);
+        ctx.stroke();
+      }
+      ctx.font = `${g.size}px sans-serif`;
       ctx.fillStyle = '#0B120B';
-      ctx.fillText(def.icon, cx, cy);
+      ctx.fillText(g.icon, gx, gy);
+      placed.push({ x: gx, y: gy, r });
     }
   }
 }
