@@ -383,6 +383,28 @@ function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions
     : structural;
 }
 
+/**
+ * Satellite Overlay protects the ROOF and nothing else.
+ *
+ * "The north side of the roof turned into a driveway" is the most-reported corruption, and it is
+ * structural: the house and the tar driveway are both dark grey ground shapes, so the model merges
+ * them. On a PAINTED style a pixel-restore was the wrong cure — it pasted a photographic roof onto
+ * painted land. Here the base IS the photograph, so restoring the roof from the source is invisible
+ * and makes the corruption impossible rather than merely discouraged.
+ *
+ * Deliberately NOT protected: the driveway (its caption is lettered on top of it), the boundary
+ * (the model redraws it as a ticked chartreuse line) and every marker (they become icons).
+ */
+const OVERLAY_PROTECT_MASK_OPTIONS: ProtectMaskOptions = {
+  protectOutside: false,
+  protectBoundary: false,
+  protectDriveway: false,
+  protectLines: false,
+  protectItems: false,
+  houseHaloRatio: 0.002,
+  houseFeatherRatio: 0.001,
+};
+
 export function drawMarks(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -849,6 +871,26 @@ async function extendWithLegendPanel(
   ctx.fillStyle = '#F6F1E4'; // blank cream panel, for the model to letter
   ctx.fillRect(W, 0, panelW, H);
   return { dataUrl: canvas.toDataURL('image/png'), width: outW, height: H };
+}
+
+/**
+ * Widen a map-sized protect mask onto the sheet canvas, leaving the legend column editable.
+ *
+ * The mask must match the MODEL OUTPUT's dimensions or restoreProtectedPixels scales it and the
+ * protected region lands in the wrong place — so once the input is sheet-shaped, the mask must be
+ * too. The panel stays fully transparent because the model has to be free to letter it.
+ */
+async function extendMaskWithPanel(maskDataUrl: string, W: number, H: number): Promise<string> {
+  const outW = W + Math.round(W * OVERLAY_PANEL_RATIO);
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return maskDataUrl;
+  const img = await loadImage(maskDataUrl);
+  ctx.clearRect(0, 0, outW, H); // transparent = editable everywhere by default
+  ctx.drawImage(img, 0, 0, W, H);
+  return canvas.toDataURL('image/png');
 }
 
 // ── MASTER DESIGN BRIEF ───────────────────────────────────────────────────────
@@ -4582,7 +4624,18 @@ export default function DesignGlossy({
       // and scale bar — from a sheet-shaped input. Its output is wider than the map frame, so
       // running it through compositeAccurateMap (which draws into W×H, the MAP dimensions) would
       // squash the sheet and paint the satellite back over the model's own work. Ship it as-is.
-      if (isModelChromeStyle(styleDef.key)) return modelImage;
+      if (isModelChromeStyle(styleDef.key)) {
+        // Put the real roof back. sourceImage is this job's own sheet-shaped input, so it lines up
+        // with the model output pixel-for-pixel; frame.satDataUrl is map-only and would not.
+        if (protectMask && sourceImage) {
+          try {
+            return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
+          } catch (err) {
+            console.error('[glossy] roof restore failed, shipping the raw sheet', err);
+          }
+        }
+        return modelImage;
+      }
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
       // OpenAI documents GPT Image masks as guidance rather than an exact clipping contract.
       // Geometry Lock therefore wins here, after generation: every opaque mask pixel is copied
@@ -4704,7 +4757,13 @@ export default function DesignGlossy({
         // restore it enabled pasted raw satellite pixels back over the painting (a photographic
         // roof on a painted map, or — with a degenerate mask — the whole render thrown away).
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
-        const protectMaskDataUrl: string | undefined = undefined;
+        const protectMaskDataUrl: string | undefined = isModelChromeStyle(styleKey)
+          ? await extendMaskWithPanel(
+              await buildProtectMask(state, frame, refLayers, f, OVERLAY_PROTECT_MASK_OPTIONS),
+              frame.imgW * SCALE,
+              frame.imgH * SCALE,
+            )
+          : undefined;
         const prompt = isModelChromeStyle(styleKey)
           ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: f })
           : lockActive
@@ -4793,7 +4852,14 @@ export default function DesignGlossy({
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = effectiveModelChrome;
       // See generateAllViaQueue: locked sheets send no mask; exactness is drawn on top instead.
-      const protectMaskDataUrl: string | undefined = undefined;
+      // Satellite Overlay is the exception — it protects the roof, see OVERLAY_PROTECT_MASK_OPTIONS.
+      const protectMaskDataUrl: string | undefined = isModelChromeStyle(styleKey)
+        ? await extendMaskWithPanel(
+            await buildProtectMask(state, frame, refLayers, filter, OVERLAY_PROTECT_MASK_OPTIONS),
+            frame.imgW * SCALE,
+            frame.imgH * SCALE,
+          )
+        : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: filter })
@@ -4923,8 +4989,11 @@ export default function DesignGlossy({
               // sheet, never the current toggle value. Existing in-flight jobs created before the
               // flag was added remain locked when they contain a protect mask.
               const locked = sheet.geometryLock ?? Boolean(sheet.protectMaskPath);
-              const sourceImage = locked && sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
-              const protectMask = locked && sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              // Fetch on the MASK's existence, not on `locked`. Satellite Overlay persists
+              // geometryLock:false (it is not a locked style) but still ships a roof mask, and
+              // gating on `locked` silently skipped the restore that keeps its roof intact.
+              const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
+              const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const finalSheet = styleDef
                 ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                 : raw;
