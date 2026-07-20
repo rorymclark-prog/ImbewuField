@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 
@@ -241,4 +241,33 @@ test('chatgpt atlas style is wired through the prompt builder', () => {
   assert.ok(prompt.includes('STYLE — ChatGPT Atlas'));
   assert.ok(prompt.includes('premium printed design sheet'));
   assert.ok(prompt.includes('NO INVENT:'));
+});
+
+test('satellite overlay style keeps the photo, letters its own sheet, and drops editor emoji', () => {
+  assert.equal(isModelChromeStyle('satellite_overlay'), true);
+  assert.equal(isModelChromeStyle('precision_atlas'), false);
+  // This style has to beat BOTH toggles: Geometry Lock on, AI-legend off, still model chrome.
+  assert.equal(shouldUseModelChrome(false, true, true), true);
+  assert.equal(shouldUseModelChrome(true, true, false), false);
+
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: '⛽ JoJo Tank 5000L ×2, 🚰 Tap Point ×4, 🐸 Small Pond',
+    placeName: 'Carl and Sandys Place',
+    sheetKind: 'water',
+  });
+  assert.ok(p.startsWith(STYLE_LINES.satellite_overlay), 'style leads so a length clamp cannot cut it');
+  assert.match(p, /03 — WATER PLAN/);
+  // The one rule this style exists for.
+  assert.match(p, /KEEP THE PHOTOGRAPH/);
+  // Editor glyphs are stripped: they identify markers in the IMAGE, but a model told to "spell
+  // exactly" would letter them onto the sheet.
+  assert.doesNotMatch(p.split('6. THIS SHEET')[1].split('7. LINES')[0], /[\u{1F300}-\u{1FAFF}]/u);
+  // The layout is pre-composed into the input, so the prompt must not ask for a 78/22 split.
+  assert.doesNotMatch(p, /left ~78%/);
+  assert.match(p, /ALREADY IN PLACE/);
+  // Water sheet must not be told how to draw beds or trees it cannot contain.
+  assert.doesNotMatch(p, /rounded green canopy disc/);
+  assert.ok(p.length < 12000, `prompt ${p.length} must fit PROMPT_MAX`);
 });

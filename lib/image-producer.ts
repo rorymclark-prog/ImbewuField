@@ -98,9 +98,20 @@ export function precisionAtlasContextPixels(pixels: Uint8ClampedArray): Uint8Cla
   return out;
 }
 
-/** Geometry Lock owns framing and cartographic chrome; free-form model chrome is rollback-only. */
-export function shouldUseModelChrome(modelChrome: boolean, geometryLock: boolean): boolean {
-  return modelChrome && !geometryLock;
+/**
+ * Geometry Lock owns framing and cartographic chrome; free-form model chrome is rollback-only —
+ * EXCEPT for a style that can only exist as model chrome. Satellite Overlay's legend swatches are
+ * the same pictorial icons it draws on the map, which the deterministic legend (coloured dots)
+ * cannot render, so that style has to win over both toggles.
+ *
+ * `alwaysModelChrome` stays a plain boolean so this module never imports the style union.
+ */
+export function shouldUseModelChrome(
+  modelChrome: boolean,
+  geometryLock: boolean,
+  alwaysModelChrome = false,
+): boolean {
+  return alwaysModelChrome || (modelChrome && !geometryLock);
 }
 
 const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: string; font: string }> = {

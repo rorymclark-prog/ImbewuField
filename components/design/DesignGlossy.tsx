@@ -20,7 +20,7 @@ import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, typ
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildLockedIllustrationPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -233,7 +233,10 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // so accuracy is guaranteed by construction. Six researched site-plan styles.
 // swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
 const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
-  { key: 'precision_atlas',      label: 'Precision Atlas',      blurb: 'lush ChatGPT look · lock-ready', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
+  // labelStyle is required by the type but unused here: this style always takes the showcase path,
+  // which passes labels: [] because the MODEL letters the sheet itself.
+  { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'real satellite photo + printed overlay · AI writes the labels & legend', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)', recommended: true },
+  { key: 'precision_atlas',      label: 'Precision Atlas',      blurb: 'lush ChatGPT look · lock-ready', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)' },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
@@ -811,6 +814,40 @@ function loadImage(src: string): Promise<HTMLImageElement> {
     img.onerror = () => reject(new Error('Could not load image'));
     img.src = src;
   });
+}
+
+/** Width of the pre-composed legend column, as a fraction of the map width. */
+const OVERLAY_PANEL_RATIO = 0.28;
+
+/**
+ * Extend a map composite rightward with a BLANK cream legend panel and a dark sheet frame.
+ *
+ * Satellite Overlay needs a map on the left and a legend column on the right, but the edits
+ * endpoint returns an image aspect-matched to its INPUT. Asking for that layout in words alone
+ * forces the model to shrink and reposition the photograph to make room — and the moment the photo
+ * has to move, the model REGENERATES it rather than preserving it, which is exactly the "smoothed
+ * pseudo-aerial, no grain" failure this style exists to avoid. Building the empty panel into the
+ * input means the photograph never moves: the model only letters the panel and overlays the map.
+ */
+async function extendWithLegendPanel(
+  mapDataUrl: string,
+  W: number,
+  H: number,
+): Promise<{ dataUrl: string; width: number; height: number }> {
+  const panelW = Math.round(W * OVERLAY_PANEL_RATIO);
+  const outW = W + panelW;
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return { dataUrl: mapDataUrl, width: W, height: H };
+  const img = await loadImage(mapDataUrl);
+  ctx.fillStyle = '#12140F'; // sheet frame / bleed
+  ctx.fillRect(0, 0, outW, H);
+  ctx.drawImage(img, 0, 0, W, H);
+  ctx.fillStyle = '#F6F1E4'; // blank cream panel, for the model to letter
+  ctx.fillRect(W, 0, panelW, H);
+  return { dataUrl: canvas.toDataURL('image/png'), width: outW, height: H };
 }
 
 // ── MASTER DESIGN BRIEF ───────────────────────────────────────────────────────
@@ -3759,7 +3796,6 @@ export default function DesignGlossy({
   const [geometryLockInternal, setGeometryLockInternal] = useState(false); // OFF by default to preserve the current path
   const geometryLock = geometryLockProp ?? geometryLockInternal;
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
-  const effectiveModelChrome = shouldUseModelChrome(modelChrome, geometryLock);
   const refreshPendingRef = useRef(false);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
@@ -3775,6 +3811,16 @@ export default function DesignGlossy({
   // image-producer pipeline (compositeAccurateMap). null = a design/analysis map. Defaults to a
   // style because AI is now the DEFAULT output (see `mode`); exact is the opt-in option.
   const [producerStyle, setProducerStyle] = useState<StylePreset | null>(DEFAULT_PRODUCER_STYLE);
+  const effectiveModelChrome = shouldUseModelChrome(
+    modelChrome,
+    geometryLock,
+    isModelChromeStyle(producerStyle ?? DEFAULT_PRODUCER_STYLE),
+  );
+  // Geometry Lock is read directly in every generator below, so flipping effectiveModelChrome alone
+  // is not enough — a locked run would still send the locked prompt, hide the design markers from
+  // the model and paint deterministic structures over the model's own legend panel. `lockActive` is
+  // the single value those generators must branch on.
+  const lockActive = geometryLock && !isModelChromeStyle(producerStyle ?? DEFAULT_PRODUCER_STYLE);
   // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
   // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
@@ -4444,6 +4490,11 @@ export default function DesignGlossy({
     ): Promise<string> => {
       const W = frame.imgW * SCALE;
       const H = frame.imgH * SCALE;
+      // Satellite Overlay renders the ENTIRE sheet — map, labels, legend panel, title, north arrow
+      // and scale bar — from a sheet-shaped input. Its output is wider than the map frame, so
+      // running it through compositeAccurateMap (which draws into W×H, the MAP dimensions) would
+      // squash the sheet and paint the satellite back over the model's own work. Ship it as-is.
+      if (isModelChromeStyle(styleDef.key)) return modelImage;
       const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
       // OpenAI documents GPT Image masks as guidance rather than an exact clipping contract.
       // Geometry Lock therefore wins here, after generation: every opaque mask pixel is copied
@@ -4550,16 +4601,23 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          geometryLock ? lockedCompositeMarks(f) : undefined,
+          lockActive ? lockedCompositeMarks(f) : undefined,
         );
-        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
+        const elementsText = producerElementsText(state, refLayers, f, !lockActive);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
+        // Satellite Overlay is handed a sheet-shaped canvas (map + blank cream panel) so the photo
+        // never has to be moved to make room for the legend. See extendWithLegendPanel.
+        const sheetInput = isModelChromeStyle(styleKey)
+          ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
+          : composite;
         // Locked sheets send NO mask. OpenAI treats an edits mask as guidance, and the client-side
         // restore it enabled pasted raw satellite pixels back over the painting (a photographic
         // roof on a painted map, or — with a degenerate mask — the whole render thrown away).
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
         const protectMaskDataUrl: string | undefined = undefined;
-        const prompt = geometryLock
+        const prompt = isModelChromeStyle(styleKey)
+          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: f })
+          : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey)
           : effectiveModelChrome
             ? (promptRewrite
@@ -4572,10 +4630,10 @@ export default function DesignGlossy({
           key: f,
           label: layerLabel,
           prompt,
-          compositeDataUrl: composite,
+          compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
           showcase: effectiveModelChrome,
-          geometryLock,
+          geometryLock: lockActive,
         });
       }
       // Record which keys used the showcase prompt AFTER the list is final, so the async finisher
@@ -4627,9 +4685,12 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        geometryLock ? lockedCompositeMarks(filter) : undefined,
+        lockActive ? lockedCompositeMarks(filter) : undefined,
       );
-      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
+      const elementsText = producerElementsText(state, refLayers, filter, !lockActive);
+      const sheetInput = isModelChromeStyle(styleKey)
+        ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
+        : composite;
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
       // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
@@ -4642,7 +4703,9 @@ export default function DesignGlossy({
       // See generateAllViaQueue: locked sheets send no mask; exactness is drawn on top instead.
       const protectMaskDataUrl: string | undefined = undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
-      const prompt = geometryLock
+      const prompt = isModelChromeStyle(styleKey)
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, placeName, sheetKind: filter })
+        : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey)
         : useShowcase
           ? (promptRewrite
@@ -4659,10 +4722,10 @@ export default function DesignGlossy({
           key: filter,
           label: layerLabel,
           prompt,
-          compositeDataUrl: composite,
+          compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
           showcase: useShowcase,
-          geometryLock,
+          geometryLock: lockActive,
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -4686,7 +4749,11 @@ export default function DesignGlossy({
       // model to paint every feature while the browser also draws the deterministic overlay —
       // duplicated tanks and pipes, the exact thing the lock is meant to prevent. Keep the lock on
       // the one path that implements it.
-      return engine === 'falgpt' || geometryLock ? generateOneViaQueue() : generateProducer();
+      // Satellite Overlay is queue-only for the same reason: generateProducer always clips to the
+      // boundary and burns our own labels, which would crop the model's legend panel clean off.
+      return engine === 'falgpt' || geometryLock || isModelChromeStyle(producerStyle)
+        ? generateOneViaQueue()
+        : generateProducer();
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();

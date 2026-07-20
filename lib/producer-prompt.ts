@@ -4,11 +4,24 @@
 
 export type StylePreset =
   | 'precision_atlas'
+  | 'satellite_overlay'
   | 'field_ledger'
   | 'homestead_storybook'
   | 'extension_blueprint'
   | 'karoo_folk'
   | 'chatgpt_atlas';
+
+/**
+ * Styles where the MODEL draws the labels and the legend, not the browser.
+ *
+ * Satellite Overlay is the only one: its whole point is a photographic map under a printed graphic
+ * overlay, and the legend swatches have to be the same pictorial icons drawn on the map — which the
+ * deterministic legend (coloured dots) cannot produce. Selecting it therefore has to win over both
+ * the Geometry Lock and the AI-legend toggles, which otherwise route to the browser-drawn chrome.
+ */
+export function isModelChromeStyle(style: StylePreset): boolean {
+  return style === 'satellite_overlay';
+}
 
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
@@ -253,12 +266,22 @@ export type ShowcaseSheetKind = 'all' | 'zones' | 'water' | 'planting' | 'struct
 const PLAN_SET_ANCHOR =
   ' This sheet is one page of a five-sheet plan set painted in one sitting with one fixed palette: identical colour temperature, paper tone, line weight and brushwork on every sheet. Flat even midday daylight, neutral white balance — no golden-hour warmth, no orange cast, no vignette.';
 
+// The photographic sibling of PLAN_SET_ANCHOR. The painted anchor above mandates "painted in one
+// sitting … brushwork", and it sits in the strongest (final) position of the style line — appending
+// it to a keep-the-photograph style would argue directly against that style's one essential rule.
+const PLAN_SET_ANCHOR_PHOTO =
+  ' PLAN SET: this sheet belongs to one set printed in one sitting — identical line weight, identical icon design, identical panel tone and identical lettering on every sheet. Neutral daylight, no warm or orange cast, no vignette, no filter.';
+
 // Every style MUST render the ground as living land — a style that swaps the plot for "paper" or
 // blank white is exactly the satellite-disappears failure. Named colours (not just mood words) give
 // the model something concrete to hold constant across the 5 independent calls of one batch.
 export const STYLE_LINES: Record<StylePreset, string> = {
   precision_atlas:
     'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and parchment cream. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric.' + PLAN_SET_ANCHOR,
+  // The only style that KEEPS the aerial photograph. Everything else here repaints it away, so this
+  // entry gets the photographic plan-set anchor, never the painted one.
+  satellite_overlay:
+    'STYLE — Satellite Overlay: the real aerial photograph stays the map, and a crisp printed graphic overlay is drawn on top of it. This is a known genre — the annotated satellite overlay used for irrigation schemes, park interpretive maps and resort site plans. The dark green satellite imagery, real roofs, real tree canopies, real shadows and real ground textures all remain photographic and sharp; the only drawn artwork is the overlay layer — small semi-3D pictorial icons with soft drop shadows, a bright yellow-green surveyed boundary line with regular perpendicular tick marks, near-black tar surfaces, bright blue dotted irrigation runs, white ALL-CAPS labels on thin white leader lines with small arrowheads, and a cream legend panel with dark editorial type down the right side, all inside a dark rounded-corner sheet frame. Fixed palette over the photographic base: chartreuse #B4E000, tank blue #2F6FB5, water blue #2E9BFF, earth brown #7A5230, foliage green #4E8B3A, near-black tar #12140F, cream panel #F6F1E4, titling charcoal #1E2418, white lettering. Vector-clean linework and even drop shadows throughout: hard-edged flat vector graphics floating over raw lens imagery — every pixel that is not overlay is the satellite photograph exactly as supplied, native grain, native colour, straight from the sensor.' + PLAN_SET_ANCHOR_PHOTO,
   field_ledger:
     'STYLE — Field Ledger: a hand-inked site plan — fine dark sepia pen linework over rich watercolour, warm credible surveyor character. Fixed palette: sage-green lawn, olive veld, warm buff soil, slate-grey roofs, muted terracotta accents, off-white paper panels. The ground is always painted as living land with visible lawn/veld/soil texture.' + PLAN_SET_ANCHOR,
   homestead_storybook:
@@ -336,6 +359,120 @@ export function buildShowcasePrompt(
     singleLayer,
     geometryLockTail(),
   ].filter(Boolean).join('\n\n');
+}
+
+const SHEET_NO: Record<ShowcaseSheetKind, string> = {
+  all: '01', zones: '02', water: '03', planting: '04', structures: '05',
+};
+
+// One icon description per marker type. The composite hands the model flat coloured placeholder
+// shapes; each line says what finished graphic replaces that shape. Written as "marker → icon" so
+// the mapping is unambiguous.
+const OVERLAY_ICONS: Record<string, string> = {
+  tank:      'a small drum/cylinder marker → a blue cylindrical JoJo water tank seen from a high top-down angle, ribbed body, darker lid disc, soft shadow to the lower-right',
+  tap:       'a small tap/valve marker → a blue-grey faucet on a short post with a concrete base pad',
+  dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
+  basin:     'a greywater/basin marker → a circular planted rosette of green leaves inside a brown earth ring',
+  banana:    'a banana-circle marker → a circular pit ringed in brown earth with a rosette of broad green banana leaves radiating from the centre',
+  mulch:     'a mulch-bank marker → a crescent-shaped band of green-over-brown mulch following exactly that arc',
+  borehole:  'a borehole marker → a small blue concentric-circle target with a grey collar ring',
+  bed:       'a green rectangle marker → a vegetable bed: brown tilled soil in parallel strips with regular rows of small green plants',
+  tree:      'a tree marker → a rounded green canopy disc with a soft shadow offset to the lower-right',
+  hive:      'a hive marker → a small stacked striped beehive box',
+  building:  'a hut or shed marker → leave the real roof from the photograph exactly as it is and outline it only',
+  patio:     'a warm-tan area marker → a paved patio of exactly that shape, laid in a regular slab pattern',
+  fence:     'a dusty-violet line → a fence line: a thin dark line with small regular posts',
+  path:      'a gold dashed line → a walking path: a warm buff strip with soft edges',
+  swale:     'a light-blue dashed line → a swale: a slim on-contour channel with a green planted berm on its downhill side',
+  pipe:      'a dark-blue line → a buried pipe: a thin solid navy line',
+  drip:      'a green dashed line → a drip-irrigation run: a bright #2E9BFF line with small evenly spaced dots along it',
+  windbreak: 'a deep-green line → a windbreak: a dense row of small green canopy discs',
+};
+
+const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
+  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path'],
+  zones:      ['building', 'path', 'fence'],
+  water:      ['tank', 'tap', 'dam', 'basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip'],
+  planting:   ['bed', 'tree', 'windbreak', 'mulch', 'banana'],
+  structures: ['building', 'hive', 'patio', 'fence', 'path'],
+};
+
+// Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
+// for is how a prompt talks a model into drawing one.
+const ICON_MATCH: Record<string, RegExp> = {
+  tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /dam|pond/i,
+  basin: /basin|greywater|grey water/i, banana: /banana/i, mulch: /mulch/i,
+  borehole: /borehole|well/i, bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
+  hive: /hive|bee/i, building: /house|shed|hut|barn|building|structure/i,
+  patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
+  swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
+};
+
+/**
+ * Satellite Overlay — the only prompt that KEEPS the aerial photograph.
+ *
+ * Separate from buildShowcasePrompt because that one's body hard-codes "hand-illustrated" and
+ * "paint the real thing in its place", which is the exact opposite of this style's one essential
+ * rule. The model letters this sheet itself: labels, legend, title, north arrow and scale bar all
+ * come from the model, because the legend swatches must be the same pictorial icons it draws on
+ * the map — something the browser's coloured-dot legend cannot produce.
+ */
+export function buildSatelliteOverlayPrompt(args: {
+  layerLabel: string;
+  stylePreset: StylePreset;
+  elementsText: string;
+  placeName?: string;
+  sheetKind: ShowcaseSheetKind;
+}): string {
+  const { layerLabel, stylePreset, elementsText, placeName, sheetKind } = args;
+  const sheetNumber = SHEET_NO[sheetKind] ?? '01';
+  const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
+
+  const keys = ICON_KEYS_BY_SHEET[sheetKind] ?? ICON_KEYS_BY_SHEET.all;
+  const present = keys.filter((k) => ICON_MATCH[k]?.test(elementsText));
+  const iconSpec = (present.length ? present : keys).map((k) => OVERLAY_ICONS[k]).join('; ');
+
+  // Strip the editor glyphs before they reach the prompt. They still do their identifying work in
+  // the input IMAGE, where they are drawn onto each marker — but this sheet's labels are lettered
+  // by the model, and an emoji sitting in the text it is told to "spell exactly" is an invitation
+  // to letter it onto the sheet. Nothing here needs them.
+  const elementNames = elementsText
+    .replace(/[\p{Extended_Pictographic}️⃣]/gu, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\s+,/g, ',')
+    .trim();
+
+  const body = `TASK: this is sheet "${title}"${placeName ? ` for ${placeName}` : ''}. You are editing a real satellite photograph of a South African smallholding on which the farmer's design is already marked as flat coloured placeholder shapes. Deliver one landscape plan sheet whose map is that same photograph with a crisp graphic overlay drawn on top of it.
+
+1. THE RULE ABOVE ALL OTHERS — KEEP THE PHOTOGRAPH. The supplied aerial imagery remains the map background across the entire map area, corner to corner, inside and outside the property boundary, at full sharpness: real roof sheeting, real tree crowns, real dirt tracks, real shadows, real colour, real grain. Work like someone drawing on tracing paper laid over a print — the print shows through everywhere. Every square metre with no overlay element on it is finished the moment you leave it alone: it ships as raw photograph, native grain, native colour. The contrast between untouched photo and crisp graphics is the whole look.
+
+2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the tar driveway fill, (4) the irrigation lines, (5) white labels with leader lines, (6) the cream legend panel, (7) a north arrow and a scale bar. Everything else in the frame is untouched photograph.
+
+3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
+
+4. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Ground with no marker keeps its untouched photograph and gets nothing.
+
+5. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
+
+6. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${elementNames}. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
+
+7. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. Tarred driveway: a solid near-black #12140F polygon of exactly its real traced shape, captioned "TARRED DRIVEWAY" in small white caps beside it. Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs, redrawn as runs of small bright #2E9BFF dots; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.
+
+8. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
+
+9. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line, e.g. "JoJo Tank 5000L (×2)", "Tap Point (×4)", "Banana Circle (×2)", "Borehole (×1)", "Drip Irrigation Line (×3)". Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
+
+10. SHEET FURNITURE: a small white north arrow with a white "N" above it in the top-right of the map area, and a plain white-and-black divided scale bar at the bottom-left reading "20 m".
+
+11. FIDELITY: every drawn element sits on a marker or a traced line from the input, and everything the photograph shows — roofs, tracks, trees, boundary — keeps its photographed position, shape and size. One marker, one icon.
+
+12. VIEW: the output camera is the input camera — flat orthographic top-down, north-up, same crop, same scale, same aspect.
+
+13. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N" and "20 m". All spelled exactly as given, all horizontal, all print-legible.
+
+FINAL CHECK, in order of importance: (1) the map area is still unmistakably the supplied satellite photograph — raw, sharp, grainy, photographic under the graphics; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one shadowed icon in its original spot; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
+
+  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
 // Kept for one release as an instant rollback (call-site flip, no worker redeploy — the prompt is
