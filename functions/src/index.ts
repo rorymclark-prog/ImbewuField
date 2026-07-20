@@ -326,10 +326,15 @@ export const runRenderJob = onDocumentCreated(
               const maskBuf = (await bucket.file(sheet.protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
               if (maskBuf.length) maskB64 = maskBuf.toString('base64');
             }
-            // Precision Atlas is the reversible, reference-guided path. It is active only when
-            // both the style and Geometry Lock were selected for this sheet; every other style,
-            // and Geometry Lock Off, keeps the existing single-input workflow byte-for-byte.
-            const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true
+            // Precision Atlas is the reversible, reference-guided path.
+            //
+            // NEVER send the style reference alongside a mask. Verified against the live API
+            // (job …_verify_run1): with two entries in image[] AND a mask, gpt-image-2 filled the
+            // entire editable region with solid black — 20.6% of the sheet, matching the mask's
+            // 20.3% editable area exactly, while the protected surround painted normally. The
+            // second image evidently breaks the mask's meaning. Single-image jobs are unaffected
+            // (every earlier render has 0% black), so gate the reference on there being no mask.
+            const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
               ? await loadPrecisionAtlasReference()
               : null;
             const outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference);
