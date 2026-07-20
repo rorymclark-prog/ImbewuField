@@ -186,6 +186,11 @@ function drawFencePosts(
   }
 }
 
+/** Boundary fence bone. Deliberately NOT in the green family: every planting fill, the windbreak
+ *  line and the drip runs are greens, and a green ring around the plot was read as a planted row.
+ *  Bone reads as built infrastructure at any zoom, on pale ground and dark. */
+const BOUNDARY_BONE = '#EDE7D9';
+
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
@@ -2388,29 +2393,43 @@ function drawBlueprintBoundary(
 ): void {
   if (boundary.length < 3) return;
   const b = boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
+  // POST-AND-WIRE, NOT A TICKED LINE. The perpendicular ticks were a surveyor's convention that
+  // reads, on a map full of planting, as a row of somethings along the fence — which is half of why
+  // a phantom hedge kept appearing there. A real fence is a thin wire between round posts, and
+  // drawing it that way says "boundary" without saying "row of plants". Bone #EDE7D9 rather than
+  // green for the same reason: nothing on the boundary should share a colour family with the
+  // planting fills. (Rory: "do one with poles (circles not lines)".)
+  ctx.save();
   ctx.beginPath();
   b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
   ctx.closePath();
-  ctx.strokeStyle = '#8CEB6A';
-  ctx.lineWidth = 3;
+  // Dark casing first, so a bone wire stays readable over pale ground as well as dark.
+  ctx.strokeStyle = 'rgba(24,28,22,0.45)';
+  ctx.lineWidth = 3.5;
   ctx.stroke();
-  const tick = Math.max(7, W * 0.006);
-  const tstep = Math.max(26, W * 0.02);
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = BOUNDARY_BONE;
+  ctx.lineWidth = 1.6;
+  ctx.stroke();
+  const postR = Math.max(3, W * 0.0028);
+  const step = Math.max(26, W * 0.02);
   for (let i = 0; i < b.length; i++) {
     const [x1, y1] = b[i];
     const [x2, y2] = b[(i + 1) % b.length];
     const dx = x2 - x1, dy = y2 - y1;
     const len = Math.hypot(dx, dy) || 1;
-    const nx = -dy / len, ny = dx / len;
-    for (let t = tstep; t < len; t += tstep) {
+    // A post ON every corner, then evenly along the run — corners are where a farmer paces a fence.
+    for (let t = 0; t < len; t += step) {
       const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(cx + nx * tick, cy + ny * tick);
+      ctx.arc(cx, cy, postR, 0, Math.PI * 2);
+      ctx.fillStyle = BOUNDARY_BONE;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(24,28,22,0.55)';
+      ctx.lineWidth = 1;
       ctx.stroke();
     }
   }
+  ctx.restore();
 }
 
 /** Title block, top-left. */
@@ -2902,8 +2921,9 @@ export async function buildBlueprintZoneMap(
     ctx.fillText(name, nameX, ry);
     ry += rowH;
   }
-  // Fence + driveway + scale-note rows.
-  ctx.strokeStyle = '#8CEB6A';
+  // Fence + driveway + scale-note rows. Bone, matching the post-and-wire boundary now drawn on the
+  // map — a legend swatch in a different colour from its line is the phantom-row defect in miniature.
+  ctx.strokeStyle = BOUNDARY_BONE;
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(lgX + ip, ry);
@@ -3110,7 +3130,7 @@ export async function buildBlueprintWaterMapLegacy(
     });
   }
   const noteRows: BlueprintLegendRow[] = [
-    { color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' },
+    { color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' },
     ...(refLayers.driveway.length >= 2 ? [{ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' as const }] : []),
   ];
   sections.push({
@@ -3332,7 +3352,7 @@ export async function buildBlueprintPlantingMap(
   //    an unexplained green wash across half the sheet is worse than one fewer species row.
   const rowH = Math.round(W * 0.026);
   const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
-  fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
+  fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
@@ -3439,7 +3459,7 @@ export async function buildBlueprintStructuresMap(
   if (kinds.has('windbreak')) fixed.push({ color: '#2F7A4A', label: 'Windbreak', style: 'line' });
   // Swatch must match the line now drawn: solid violet with posts, not a grey dash.
   if (kinds.has('fence')) fixed.push({ color: LINE_COLORS.fence, label: 'Internal fence', style: 'line' });
-  fixed.push({ color: '#8CEB6A', label: 'Fence / site boundary', style: 'line' });
+  fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'structures'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
@@ -3759,7 +3779,7 @@ function drawSectorAnalysis(
   if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: model.water.indicative ? 'dashline' : 'line' });
   if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
   if (model.frost) rows.push({ color: '#9FD0E8', label: 'Frost pocket', style: 'dashline' });
-  rows.push({ color: '#8CEB6A', label: 'Site boundary', style: 'line' });
+  rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.6)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
   drawBlueprintLegendNote(ctx, lg, rowH, ry, model.dataNotes[0] ?? 'Read the site before you design it.');

@@ -112,7 +112,7 @@ function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch
   const filter = layer.filter ?? 'all';
   if (!layer.drawDesign) {
     return [
-      { swatch: '#8CEB6A', text: 'Property boundary' },
+      { swatch: '#EDE7D9', text: 'Property boundary' },
       { swatch: '#3A352C', text: 'House / roof' },
       { swatch: '#3B3A3E', text: 'Driveway (tar)' },
     ];

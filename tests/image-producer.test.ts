@@ -427,6 +427,11 @@ test('the boundary is positively identified as a fence, not a planted row', () =
   // The composite now strokes the ring in this exact colour, so image and brief agree. Previously
   // the composite drew #8CEB6A — the same green family as the planting fills.
   assert.match(p, /#B4E000/);
+  // Post-and-wire, not ticks: a ticked line on a map full of planting reads as a row of somethings
+  // along the fence, which is half of why a phantom hedge kept appearing there.
+  assert.match(p, /round bone posts/);
+  assert.match(p, /Posts are circles, never ticks/);
+  assert.doesNotMatch(p, /perpendicular tick marks/);
 });
 
 test('the house is described as a pale roof, so tar can never be painted onto it', () => {

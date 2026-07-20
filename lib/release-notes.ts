@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'The boundary is now a proper post-and-wire fence, not a ticked line',
       'No more invented trees scattered across your plan',
       'Your driveway stays on every sheet',
       'Water plans now show the beds and basins your irrigation runs to',
