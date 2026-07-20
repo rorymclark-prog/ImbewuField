@@ -1189,10 +1189,18 @@ function overlayElementsText(
     water: 'WATER', earthworks: 'WATER', growing: 'PLANTING',
     structure: 'INFRASTRUCTURE', animal: 'INFRASTRUCTURE', access: 'INFRASTRUCTURE',
   };
+  // 'earthworks' is a build category, not a reading category. A farmer reading the sheet files a
+  // banana circle and a tree basin under PLANTING (they are where things grow) and a greywater or
+  // infiltration basin under WATER, whatever the catalog calls them.
+  const SECTION_BY_ID: Record<string, string> = {
+    banana_circle: 'PLANTING', tree_basin: 'PLANTING', mulch_bank: 'PLANTING',
+    keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
+    greywater_basin: 'WATER', infiltration_basin: 'WATER',
+  };
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter)) continue;
-    sectionOf.set(it.label ?? def.name, SECTION[def.category] ?? 'INFRASTRUCTURE');
+    sectionOf.set(it.label ?? def.name, SECTION_BY_ID[def.id] ?? SECTION[def.category] ?? 'INFRASTRUCTURE');
     const name = it.label ?? def.name;
     const arr = byName.get(name) ?? [];
     arr.push(placeLabelFor([it.x, it.y], state.zones));
@@ -1213,9 +1221,9 @@ function overlayElementsText(
     }
   }
 
-  if (zonesInFilter(filter)) {
-    for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
-  }
+  // Zones are deliberately NOT listed. On the Zones sheet they are the subject and the sheet's own
+  // wash carries them; on every other sheet a column of "Zone 3 — Orchard / food forest (×1)" rows
+  // buried the actual design. (Rory: "I don't want zones in the legend.")
   const lineCounts = new Map<string, number>();
   for (const l of state.lines) {
     if (!lineInFilter(l.kind, filter)) continue;
@@ -1227,7 +1235,10 @@ function overlayElementsText(
   };
   for (const [kind, n] of lineCounts) {
     const nm = `${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`;
-    sectionOf.set(nm.replace(/ ×\d+$/, ''), kind === 'windbreak' ? 'PLANTING' : 'WATER');
+    const lineSection = kind === 'windbreak' ? 'PLANTING'
+      : (kind === 'swale' || kind === 'pipe' || kind === 'drip') ? 'WATER'
+      : 'INFRASTRUCTURE'; // paths and fences are access, not plumbing
+    sectionOf.set(nm.replace(/ ×\d+$/, ''), lineSection);
     parts.push(nm);
   }
   // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
