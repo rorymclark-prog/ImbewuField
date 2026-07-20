@@ -1,0 +1,31 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - link "Back to map" [ref=f1e4] [cursor=pointer]:
+        - /url: /farmer
+      - generic [ref=f1e7]:
+        - generic [ref=f1e8]: Design Studio
+        - generic [ref=f1e9]: Carl and Sandys Place
+      - button "Switch to Guided mode" [ref=f1e10] [cursor=pointer]:
+        - generic [ref=f1e11]: Guided
+        - generic [ref=f1e12]: Pro
+      - button "Geometry Lock On" [pressed] [ref=f1e13] [cursor=pointer]
+      - button "Print / Export plan set" [ref=f1e17] [cursor=pointer]: Print
+      - generic [ref=f1e22]: Saved
+    - generic [ref=f1e23]:
+      - generic [ref=f1e24]:
+        - generic [ref=f1e25]:
+          - button [ref=f1e26] [cursor=pointer]
+          - button [ref=f1e30] [cursor=pointer]
+          - button [ref=f1e34] [cursor=pointer]
+          - button [ref=f1e38] [cursor=pointer]
+          - button [ref=f1e42] [cursor=pointer]
+          - button [ref=f1e46] [cursor=pointer]
+          - button [ref=f1e50] [cursor=pointer]
+          - button [ref=f1e54] [cursor=pointer]
+        - button "Back" [ref=f1e58] [cursor=pointer]
+        - button "Next" [disabled] [ref=f1e61]
+      - generic [ref=f1e64]: Glossy map (beta · experimental) — the AI isn't reliable yet, and you may need a few tries.
+    - button "More space" [ref=f1e67] [cursor=pointer]
+    - generic [ref=f1e70]: Loading glossy render…
+  - alert [ref=f1e72]

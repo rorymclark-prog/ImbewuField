@@ -29,10 +29,38 @@ function geometryLockTail(): string {
   );
 }
 
-// Geometry Lock's Water pass deliberately withholds all water markers from the model. GPT paints
-// only a coherent background; the browser later adds every saved tank, tap, basin, route, label and
-// legend with deterministic canvas drawing. This separation is stronger than asking a generative
-// model to count or trace accurately, and keeps the unlocked producer path available for rollback.
+/**
+ * Geometry Lock's illustration pass — paint the WHOLE sheet, invent nothing.
+ *
+ * Replaces buildLockedBackgroundPrompt as the locked default. That prompt asked the model to
+ * "texture the land continuously without inventing individual trees, beds, ponds, paths or
+ * structures" and only inside the plot, which produced exactly what it asked for: a flat green
+ * patch clipped into an untouched satellite photo — visibly worse than the deterministic sheet.
+ *
+ * The fix is not to let the model design more, it is to let it PAINT more. Everything already
+ * visible in the photo (existing trees, hedges, lawns, roofs, tracks, neighbouring plots) becomes
+ * illustration; nothing that is not already there gets added. The browser still owns every label,
+ * legend, north arrow and design overlay, so accuracy is unaffected by the wider brief.
+ */
+export function buildLockedIllustrationPrompt(
+  layerLabel: string,
+  stylePreset: StylePreset,
+): string {
+  const layer = layerLabel.toUpperCase();
+  return [
+    STYLE_LINES[stylePreset],
+    `TASK: turn this whole aerial photograph into one finished hand-illustrated ${layer} map sheet. Paint edge to edge — every corner of the image becomes artwork, including the land beyond the property boundary.`,
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`,
+    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the photograph. Where the ground is open it stays open — illustrated, but empty. Do not decorate, do not fill space, do not tidy the site.`,
+    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
+    `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
+    `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
+    `FINAL CHECK: the entire frame is illustrated with no photographic patches left; every roof and boundary sits exactly where the photo put it; nothing has been added that was not already there; there is no text anywhere.`,
+  ].join('\n\n');
+}
+
+// Superseded by buildLockedIllustrationPrompt above; kept for an instant call-site rollback.
+// Withholds all markers and repaints only the editable open ground.
 export function buildLockedBackgroundPrompt(
   layerLabel: string,
   stylePreset: StylePreset,

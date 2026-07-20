@@ -1,0 +1,65 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - link "Back to map" [ref=e5] [cursor=pointer]:
+        - /url: /farmer
+      - generic [ref=e8]:
+        - generic [ref=e9]: Design Studio
+        - generic [ref=e10]: "-29.7840, 30.7445"
+      - button "Switch to Pro mode" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: Guided
+        - generic [ref=e13]: Pro
+      - button "Geometry Lock Off" [ref=e14] [cursor=pointer]
+      - button "Print / Export plan set" [ref=e18] [cursor=pointer]: Print
+      - generic [ref=e23]: Saved
+    - generic [ref=e24]:
+      - generic [ref=e34]:
+        - generic [ref=e35]: Step 1 of 8
+        - generic [ref=e36]: Base
+      - generic [ref=e37]: Check your boundary and house are showing — trace them on the main map if not.
+      - button "Why this step?" [ref=e39] [cursor=pointer]
+      - generic [ref=e45]:
+        - button "Back" [disabled] [ref=e46]
+        - 'button "Next: Sector" [ref=e49] [cursor=pointer]'
+    - generic [ref=e52]:
+      - button "Preview map" [ref=e53] [cursor=pointer]
+      - button "More space" [ref=e58] [cursor=pointer]
+    - generic [ref=e61]:
+      - generic [ref=e62]:
+        - img [ref=e63]:
+          - generic: "N"
+          - generic: 50 m
+        - button "Hide base map" [ref=e66] [cursor=pointer]
+        - button "Show sector energies (sun, wind, fire, water)" [ref=e70] [cursor=pointer]: ☀️
+        - button "Select multiple" [ref=e71] [cursor=pointer]
+        - generic [ref=e76]:
+          - button "+" [ref=e77] [cursor=pointer]
+          - button "−" [ref=e78] [cursor=pointer]
+          - button "⤢" [ref=e79] [cursor=pointer]
+      - button "Ask Lima" [ref=e81] [cursor=pointer]
+    - button "Just want beds & trees? Skip ahead — place them, then plan your crops." [ref=e86] [cursor=pointer]
+    - button "Base 0/4 Check your boundary is traced" [ref=e94] [cursor=pointer]:
+      - generic [ref=e95]: Base
+      - generic [ref=e99]: 0/4
+      - generic [ref=e100]: Check your boundary is traced
+    - generic [ref=e103]:
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - button "↖️ Select" [ref=e106] [cursor=pointer]
+          - button "↩️ Undo" [disabled] [ref=e107]
+          - button "🗑️ Delete" [disabled] [ref=e108]
+        - button "Layers 2 off" [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]: 🛰️
+          - generic [ref=e112]: Layers
+          - generic [ref=e113]: 2 off
+      - generic [ref=e114]:
+        - generic [ref=e115]: Draw what's already here — tap a feature, then trace its corners.
+        - generic [ref=e116]:
+          - button "House" [ref=e117] [cursor=pointer]
+          - button "Patio / Paving" [ref=e120] [cursor=pointer]
+          - button "Driveway" [ref=e123] [cursor=pointer]
+          - button "Lawn" [ref=e126] [cursor=pointer]
+          - button "Veg garden" [ref=e129] [cursor=pointer]
+          - button "Orchard / food forest" [ref=e132] [cursor=pointer]
+          - button "Cleared / other" [ref=e135] [cursor=pointer]

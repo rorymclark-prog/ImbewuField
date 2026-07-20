@@ -20,7 +20,7 @@ import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, typ
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import { computeContourLines } from '@/lib/contours';
-import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedIllustrationPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 
 const PAPER = '#FFFEFA';
@@ -4787,10 +4787,15 @@ export default function DesignGlossy({
           height: H,
         });
       }
-      const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
-      const labels = f === 'water' && locked
-        ? []
-        : producerLabels(state, refLayers, W, H, f, !locked);
+      // Locked sheets are painted edge to edge, so they must NOT be clipped to the plot: clipping
+      // is what produced a small illustrated patch dropped into an untouched satellite photo.
+      // Unlocked sheets keep the clip, which is what holds their art inside the boundary.
+      const boundaryPx = locked || refLayers.boundary.length < 3
+        ? undefined
+        : refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]);
+      // The locked Water sheet withheld its labels because the old prompt drew nothing to label.
+      // The illustration pass keeps the ground readable, so label it like every other sheet.
+      const labels = producerLabels(state, refLayers, W, H, f, !locked);
       const overlayImage =
         f === 'zones' ? buildZoneOverlay(state, refLayers, W, H)
         : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !locked, locked)
@@ -4865,11 +4870,13 @@ export default function DesignGlossy({
         );
         const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
-        const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
-          : undefined;
-        const prompt = geometryLock && f === 'water'
-          ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+        // Locked sheets send NO mask. OpenAI treats an edits mask as guidance, and the client-side
+        // restore it enabled pasted raw satellite pixels back over the painting (a photographic
+        // roof on a painted map, or — with a degenerate mask — the whole render thrown away).
+        // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
+        const protectMaskDataUrl: string | undefined = undefined;
+        const prompt = geometryLock
+          ? buildLockedIllustrationPrompt(layerLabel, styleKey)
           : effectiveModelChrome
             ? (promptRewrite
               ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
@@ -4948,12 +4955,11 @@ export default function DesignGlossy({
       // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = effectiveModelChrome;
-      const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
-        : undefined;
+      // See generateAllViaQueue: locked sheets send no mask; exactness is drawn on top instead.
+      const protectMaskDataUrl: string | undefined = undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
-      const prompt = geometryLock && filter === 'water'
-        ? buildLockedBackgroundPrompt(layerLabel, styleKey)
+      const prompt = geometryLock
+        ? buildLockedIllustrationPrompt(layerLabel, styleKey)
         : useShowcase
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)

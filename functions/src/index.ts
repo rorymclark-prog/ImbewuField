@@ -56,7 +56,10 @@ const OWNER_JOBS_PER_DAY = 300;
 // would drop the master design brief, the worst place to lose text) can't recur. Worker-only, no
 // firestore.rules coupling. OpenAI allows up to 32 000; text is ~$5/1M tokens.
 const PROMPT_MAX = 12000;
-const ATTEMPT_TIMEOUT_MS = 150_000; // per OpenAI attempt — 3 fit inside the job budget below
+// Per OpenAI attempt. Edge-to-edge illustrated sheets are the slow case and were aborting at 150s
+// (observed on a full-frame showcase render), so a correct render was being thrown away as a
+// timeout. 230s still lets two full attempts finish inside JOB_DEADLINE_MS below.
+const ATTEMPT_TIMEOUT_MS = 230_000;
 const JOB_DEADLINE_MS = 500_000; // < the 540s function budget, so the finally always runs
 const STALE_JOB_MS = 20 * 60 * 1000;
 const PRECISION_ATLAS_REFERENCE_PATH = resolve(__dirname, '../assets/precision-atlas-style-reference.jpg');

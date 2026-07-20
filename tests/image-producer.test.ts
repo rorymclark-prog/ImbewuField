@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 
@@ -152,6 +152,18 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
   assert.ok(prompt.includes('Do not add a title block, legend panel, paper border'));
   assert.ok(prompt.includes('Do not copy any emoji, map pin, tool icon, badge'));
   assert.ok(!prompt.includes('clean right-hand title/legend panel'));
+});
+
+test('locked illustration prompt paints the whole sheet without inventing features', () => {
+  const p = buildLockedIllustrationPrompt('Water', 'precision_atlas');
+  assert.ok(p.startsWith(STYLE_LINES.precision_atlas), 'style leads so a length clamp can never cut it');
+  // The flat-patch failure: the old locked prompt painted ground only, inside the plot only.
+  assert.match(p, /edge to edge/i);
+  assert.match(p, /beyond the property boundary/i);
+  assert.match(p, /INVENT NOTHING/);
+  // Labels, legend and north arrow are the browser's job — the model must not draw text.
+  assert.match(p, /no writing, numbers, title, legend/i);
+  assert.doesNotMatch(p, /texture the land continuously/);
 });
 
 test('locked Water prompt delegates features and map furniture to deterministic drawing', () => {

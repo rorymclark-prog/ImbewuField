@@ -1,0 +1,89 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - link "Back to map" [ref=f1e4] [cursor=pointer]:
+        - /url: /farmer
+      - generic [ref=f1e7]:
+        - generic [ref=f1e8]: Design Studio
+        - generic [ref=f1e9]: Carl and Sandys Place
+      - button "Switch to Guided mode" [ref=f1e10] [cursor=pointer]:
+        - generic [ref=f1e11]: Guided
+        - generic [ref=f1e12]: Pro
+      - button "Geometry Lock On" [pressed] [ref=f1e13] [cursor=pointer]
+      - button "Print / Export plan set" [ref=f1e17] [cursor=pointer]: Print
+      - 'generic "Build source: git · branch codex/geometry-lock-enforced · /Users/roryclark/Documents/ImbewuField App/repo" [ref=f1e73]': Build 3ee88bd
+      - generic [ref=f1e22]: Saved
+    - generic [ref=f1e23]:
+      - generic [ref=f1e24]:
+        - generic [ref=f1e25]:
+          - button [ref=f1e26] [cursor=pointer]
+          - button [ref=f1e30] [cursor=pointer]
+          - button [ref=f1e34] [cursor=pointer]
+          - button [ref=f1e38] [cursor=pointer]
+          - button [ref=f1e42] [cursor=pointer]
+          - button [ref=f1e46] [cursor=pointer]
+          - button [ref=f1e50] [cursor=pointer]
+          - button [ref=f1e54] [cursor=pointer]
+        - button "Back" [ref=f1e58] [cursor=pointer]
+        - button "Next" [disabled] [ref=f1e61]
+      - generic [ref=f1e64]: Glossy map (beta · experimental) — the AI isn't reliable yet, and you may need a few tries.
+    - button "More space" [ref=f1e67] [cursor=pointer]
+    - generic [ref=f1e74]:
+      - generic [ref=f1e75]:
+        - generic [ref=f1e76]: Your plan set · 8 sheets (01–08)
+        - generic [ref=f1e77]:
+          - button "Site sheet 01" [ref=f1e78] [cursor=pointer]:
+            - generic [ref=f1e79]: Site
+            - generic [ref=f1e80]: sheet 01
+          - button "Sector sheet 02" [ref=f1e81] [cursor=pointer]:
+            - generic [ref=f1e82]: Sector
+            - generic [ref=f1e83]: sheet 02
+          - button "Zones sheet 03" [ref=f1e84] [cursor=pointer]:
+            - generic [ref=f1e85]: Zones
+            - generic [ref=f1e86]: sheet 03
+          - button "Water sheet 04" [active] [pressed] [ref=f1e87] [cursor=pointer]:
+            - generic [ref=f1e88]: Water
+            - generic [ref=f1e89]: sheet 04
+          - button "Planting sheet 05" [ref=f1e90] [cursor=pointer]:
+            - generic [ref=f1e91]: Planting
+            - generic [ref=f1e92]: sheet 05
+          - button "Structures sheet 06" [ref=f1e93] [cursor=pointer]:
+            - generic [ref=f1e94]: Structures
+            - generic [ref=f1e95]: sheet 06
+          - button "Whole sheet 07" [ref=f1e96] [cursor=pointer]:
+            - generic [ref=f1e97]: Whole
+            - generic [ref=f1e98]: sheet 07
+          - button "Phasing sheet 08" [ref=f1e99] [cursor=pointer]:
+            - generic [ref=f1e100]: Phasing
+            - generic [ref=f1e101]: sheet 08
+        - button "✨ Generate 5 design sheets — AI (gpt-image-2)" [ref=f1e102] [cursor=pointer]
+        - generic [ref=f1e106]:
+          - generic [ref=f1e107]: Whole · Zones · Water · Planting · Structures. Site, Sector & Phasing stay exact (they're facts, not art) — lands in your gallery in a few minutes.
+          - button "All sheets — exact, no AI →" [ref=f1e108] [cursor=pointer]
+        - generic [ref=f1e109]: Style (on your Water map)
+        - generic [ref=f1e110]:
+          - button "Field Ledger hand-inked surveyor plan" [ref=f1e111] [cursor=pointer]:
+            - generic [ref=f1e113]: Field Ledger
+            - generic [ref=f1e114]: hand-inked surveyor plan
+          - button "Homestead Storybook warm illustrated garden map" [ref=f1e115] [cursor=pointer]:
+            - generic [ref=f1e117]: Homestead Storybook
+            - generic [ref=f1e118]: warm illustrated garden map
+          - button "Extension Blueprint clean plan for funders/mentors" [pressed] [ref=f1e119] [cursor=pointer]:
+            - generic [ref=f1e121]: Extension Blueprint
+            - generic [ref=f1e122]: clean plan for funders/mentors
+          - button "ChatGPT Atlas polished editorial cartography" [ref=f1e123] [cursor=pointer]:
+            - generic [ref=f1e125]: ChatGPT Atlas
+            - generic [ref=f1e126]: polished editorial cartography
+          - button "Karoo Folk Map bold folk-art farm map" [ref=f1e127] [cursor=pointer]:
+            - generic [ref=f1e129]: Karoo Folk Map
+            - generic [ref=f1e130]: bold folk-art farm map
+      - paragraph [ref=f1e131]: Generate your Water map in the Extension Blueprint style. gpt-image-2 paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards.
+      - generic [ref=f1e132]:
+        - button "More options ▾" [ref=f1e134] [cursor=pointer]:
+          - generic [ref=f1e135]: More options
+          - generic [ref=f1e136]: ▾
+        - button "✨ Generate this sheet — Extension Blueprint (background · ~mins)" [ref=f1e138] [cursor=pointer]
+        - generic [ref=f1e142]:
+          - strong [ref=f1e143]: gpt-image-2
+          - text: · if the result looks off, generate again or switch engine (More options). Your canvas design is always the exact version.
+  - alert [ref=f1e72]
