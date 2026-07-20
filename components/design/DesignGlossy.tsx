@@ -5489,16 +5489,19 @@ export default function DesignGlossy({
   const finishSectorSheet = useCallback(async (modelImage: string): Promise<string> => {
     const W = frame.imgW * SCALE;
     const H = frame.imgH * SCALE;
-    const boundaryPx = refLayers.boundary.length >= 3 ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H]) : undefined;
     const overlayImage = await buildSectorOverlayImage(frame, refLayers, site, placeName);
-    // No sourceImage/protectMask fallback here (unlike finishStyledSheet): sector never sends a
-    // Geometry Lock mask, so there is nothing to restore from. If frame.satDataUrl is somehow
-    // missing at finish time this falls back to compositing the model image over itself outside the
-    // boundary — a visual no-op, not a crash.
+    // NO BOUNDARY CLIP ON THIS SHEET. boundaryPx makes compositeAccurateMap keep the model's paint
+    // only INSIDE the boundary and paste the raw satellite back outside it. On the layer sheets that
+    // is right — the design lives inside the fence. On a SECTOR sheet it is backwards, and it is
+    // what made the first AI render look like a sticker: a hard-edged illustrated quad (the boundary
+    // polygon) floating on untouched dark photograph. It is wrong on the merits too — fire approach,
+    // prevailing wind and downhill water all come FROM BEYOND the fence, so the surrounding land is
+    // part of the analysis, not a frame around it. Here the whole image is the restyle.
+    // No sourceImage/protectMask fallback either (unlike finishStyledSheet): sector never sends a
+    // Geometry Lock mask, so there is nothing to restore from.
     return compositeAccurateMap({
       modelImage,
       satelliteImage: frame.satDataUrl ?? modelImage,
-      boundaryPx,
       overlayImage,
       labels: [],
       labelStyle: 'clean',

@@ -620,17 +620,32 @@ FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly
  * labels/legend — exactly what a sector sheet must never do.
  */
 export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: string): string {
+  // EDGE TO EDGE, borrowed verbatim in spirit from buildLockedIllustrationPrompt, which is the one
+  // restyle prompt with a track record. Without it the first AI sector sheet came back as a
+  // part-painted region on raw photograph. On this sheet the surrounding land especially must be
+  // painted: the fire approach, the prevailing wind and the downhill water all arrive from beyond
+  // the fence, so a boundary-shaped patch of artwork is both ugly and analytically wrong.
+  const edgeToEdge =
+    `PAINT EDGE TO EDGE: every corner of the image becomes artwork, including the land beyond the property boundary. Neighbouring plots, roofs, trees and tracks are painted in the same hand as the rest of the sheet — never left as raw photograph, never faded out, never framed. No part of the output is a photographic patch.`;
+  const paintWhatIsThere =
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and every building as its full roof seen from directly above. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
   const keepExact =
     `KEEP EXACT: this is a restyle pass only. Preserve the property boundary, every roof and the driveway in exactly their photographed shape, position and scale — same outline, same wings, same crop, same north-up orientation. Nothing is resized, rotated, shifted or re-cropped.`;
+  const framing =
+    `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`;
   const noInvent =
     `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
   const noAnalysis =
     `DO NOT DRAW THE ANALYSIS: draw no arrows, arcs, wedges, compass letters (N/E/S/W), bearing text, distance rings, or any sun, wind, fire, water or frost annotation. Draw no callouts, no legend panel, no title block, no north arrow, no scale bar and no lettering of any kind, anywhere on the sheet. This sheet is a restyle of the ground only — the app draws all of the sun/wind/fire/water/frost analysis afterwards from the site's real measured data, never from anything guessed off this image.`;
   const body = [
-    `TASK: restyle this satellite photo of a real South African smallholding${placeName ? ` (${placeName})` : ''} into the illustrated style below. This is background art for a sector-analysis sheet; the analysis itself is added by the app afterwards, exactly measured, on top of this restyle.`,
+    `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
+    edgeToEdge,
+    paintWhatIsThere,
     keepExact,
+    framing,
     noInvent,
     noAnalysis,
+    `FINAL CHECK: the entire frame is illustrated with no photographic patches left and no hard edge anywhere; every roof, track and boundary sits exactly where the photo put it; nothing has been added that was not already there; there is no text, arrow or arc anywhere.`,
     geometryLockTail(),
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;

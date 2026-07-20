@@ -457,3 +457,27 @@ test('the sector restyle prompt forbids the analysis and carries no marker/legen
   assert.match(p, /roof/i);
   assert.match(p, /driveway/i);
 });
+
+// ── Sector restyle ────────────────────────────────────────────────────────────
+// The first AI sector sheet came back as a hard-edged illustrated quad — the boundary polygon —
+// floating on untouched dark photograph. Two causes: finishSectorSheet clipped the model's paint to
+// the boundary, and this prompt never asked for edge-to-edge coverage. On a sector sheet the land
+// BEYOND the fence is part of the analysis: fire, wind and downhill water all arrive from outside.
+test('the sector restyle paints the whole frame, not just inside the fence', () => {
+  const p = buildSectorRestylePrompt('precision_atlas', 'Carl and Sandys Home');
+  assert.match(p, /PAINT EDGE TO EDGE/);
+  assert.match(p, /beyond the property boundary/);
+  assert.match(p, /never left as raw photograph/);
+  assert.match(p, /no photographic patches left and no hard edge anywhere/);
+});
+
+test('the sector restyle still refuses to draw any analysis', () => {
+  const p = buildSectorRestylePrompt('precision_atlas');
+  // The whole safety argument for an AI sector sheet: a bearing drawn 30 degrees off puts a
+  // windbreak on the wrong side of a field, so the model must never draw one.
+  assert.match(p, /DO NOT DRAW THE ANALYSIS/);
+  for (const banned of ['arrows', 'arcs', 'wedges', 'north arrow', 'scale bar']) {
+    assert.ok(p.includes(banned), `must forbid ${banned}`);
+  }
+  assert.match(p, /no lettering of any kind/);
+});
