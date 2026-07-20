@@ -370,7 +370,7 @@ const SHEET_NO: Record<ShowcaseSheetKind, string> = {
 // the mapping is unambiguous.
 const OVERLAY_ICONS: Record<string, string> = {
   tank:      'a small drum/cylinder marker → a blue cylindrical JoJo water tank seen from a high top-down angle, ribbed body, darker lid disc, soft shadow to the lower-right',
-  tap:       'a small tap/valve marker → a blue-grey faucet on a short post with a concrete base pad',
+  tap:       'a small tap/valve marker → a plain garden tap on its own, drawn small and low-key: just the spout and handle, no post, no plinth and no concrete base pad',
   dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
   basin:     'a greywater/basin marker → a circular planted rosette of green leaves inside a brown earth ring',
   banana:    'a banana-circle marker → a circular pit ringed in brown earth with a rosette of broad green banana leaves radiating from the centre',
@@ -483,7 +483,7 @@ The boundary line itself is the crisp seam between the two.
 
 3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
 
-4. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
+4. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Keep each icon to the size of the marker it replaces: a tank, pond or banana circle is metres across and draws large, while a tap, valve, inspection point or borehole is a small fitting a hand's width across and draws small. Small fittings never grow into landmarks. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
 
 5. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
 
