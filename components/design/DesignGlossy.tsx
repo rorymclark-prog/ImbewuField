@@ -1211,6 +1211,12 @@ function placeLabelFor(pt: [number, number], zones: DesignCanvasState['zones']):
       a += (z.points[j][0] + z.points[i][0]) * (z.points[j][1] - z.points[i][1]);
     }
     const area = Math.abs(a / 2);
+    // 'cleared' is the "none of the above" bucket, so its default label is the non-answer
+    // "Cleared / other" — on a sheet that renders as "TREE BASINS (CLEARED / OTHER) ×5", which
+    // reads like a leaked database field and disambiguates nothing. A ring the farmer has NAMED
+    // is different: "Cleared" they typed themselves is a real place word, so only the default
+    // is suppressed.
+    if (z.feature === 'cleared' && !z.name) continue;
     const label = z.name ?? GROUND_FEATURES[z.feature]?.label ?? null;
     if (!label) continue;
     if (!best || area < best.area) best = { label, area };
