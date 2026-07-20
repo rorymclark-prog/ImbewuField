@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -259,7 +259,10 @@ test('satellite overlay style keeps the photo, letters its own sheet, and drops 
     sheetKind: 'water',
   });
   assert.ok(p.startsWith(STYLE_LINES.satellite_overlay), 'style leads so a length clamp cannot cut it');
-  assert.match(p, /03 — WATER PLAN/);
+  // 04, not 03: sheet numbers now come from the canonical plan set (docs/PLAN-SET-SPEC.md), where
+  // Water is 04 and 03 is Zones. The old private 01..05 run collided with a different print sheet
+  // at every single number.
+  assert.match(p, /04 — WATER PLAN/);
   // The one rule this style exists for: the boundary divides a clean redrawn plan from its
   // photographic context. Keeping the photo EVERYWHERE was the earlier reading and looked flat.
   assert.match(p, /THE BOUNDARY DIVIDES THE SHEET IN TWO/);
@@ -331,4 +334,59 @@ test('every catalog element has a unique glyph', () => {
   for (const def of ELEMENT_CATALOG) byIcon.set(def.icon, [...(byIcon.get(def.icon) ?? []), def.id]);
   const dupes = [...byIcon.entries()].filter(([, ids]) => ids.length > 1);
   assert.deepEqual(dupes, [], `elements sharing a glyph: ${dupes.map(([i, ids]) => `${i} → ${ids.join('/')}`).join('; ')}`);
+});
+
+// ── The Zones sheet ───────────────────────────────────────────────────────────
+// A rendered "02 — ZONES PLAN" reached a farmer with NO zones on it and a legend of invented jojo
+// tanks, swales, banana circles and veg beds. The overlay prompt had no concept of a zone band:
+// rule 1 orders the interior repainted clean, rule 2's whitelist omitted bands, rule 5 declared
+// every coloured shape a placement guide for one element, and rule 14 banned the number badges. The
+// model was obeying instructions.
+
+test('the zones sheet tells the model that bands are areas, not element markers', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Zones',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'Zone 1 — Daily care, Zone 2 — Regular tending, Zone 4 — Woodlot',
+    placeName: 'Carl and Sandys Place',
+    sheetKind: 'zones',
+  });
+  assert.match(p, /ZONE BANDS/, 'the zones sheet must carry the zone-band rule');
+  assert.match(p, /NEVER becomes a pictorial icon/, 'rule 5 must be explicitly overridden for bands');
+  assert.match(p, /number badge/, 'the numerals must be permitted lettering');
+  assert.match(p, /\(8\) the translucent permaculture zone bands/, 'bands must be on the draw whitelist');
+  assert.match(p, /no other element, icon, tank, bed, tree or structure is added/, 'zones sheet must forbid invented elements');
+  assert.match(p, /03 — ZONES PLAN/, 'canonical plan-set number');
+});
+
+test('element sheets are NOT given the zone-band rule', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L ×2',
+    sheetKind: 'water',
+  });
+  assert.doesNotMatch(p, /ZONE BANDS/, 'a water sheet has no bands drawn on it and must not describe any');
+});
+
+test('an empty element list is refused, never sent', () => {
+  // Rule 7 asserts the list is "the COMPLETE contents of this sheet". An empty list is therefore a
+  // positive claim that the sheet is empty, made to a model that can see marks on the photograph —
+  // it resolves the contradiction by inventing content. Refusing costs a render; shipping a
+  // fabricated plan costs trust, and the farmer may build from it.
+  assert.throws(
+    () => buildSatelliteOverlayPrompt({ layerLabel: 'Zones', stylePreset: 'satellite_overlay', elementsText: '', sheetKind: 'zones' }),
+    /no elements to describe/,
+  );
+  assert.throws(
+    () => buildSatelliteOverlayPrompt({ layerLabel: 'Water', stylePreset: 'satellite_overlay', elementsText: '   ', sheetKind: 'water' }),
+    /no elements to describe/,
+  );
+});
+
+test('every AI sheet number matches the canonical plan set, none collide', () => {
+  // Previously all=01 zones=02 water=03 planting=04 structures=05 — and every one of those numbers
+  // was a DIFFERENT sheet in the printed set (02 is Sector Analysis, not Zones).
+  assert.deepEqual(SHEET_NO, { zones: '03', water: '04', planting: '05', structures: '06', all: '07' });
+  assert.equal(new Set(Object.values(SHEET_NO)).size, Object.keys(SHEET_NO).length, 'numbers must be unique');
 });

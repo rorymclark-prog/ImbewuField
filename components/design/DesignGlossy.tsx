@@ -258,7 +258,7 @@ export function layerContentCount(
   if (zonesInFilter(filter)) n += state.zones.filter((z) => !z.feature && z.points.length >= 3).length;
   n += state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && itemInFilter(def.category, filter);
+    return !!def && itemInFilter(def.category, filter, def.id);
   }).length;
   n += state.lines.filter((l) => lineInFilter(l.kind, filter) && l.points.length >= 2).length;
   // The whole-design map also stands up on the traced base alone.
@@ -612,7 +612,7 @@ export function drawMarks(
   // glyphs means no glyph is hidden under a neighbour's fill.
   const visible = (drawDesign && showDesignItems ? state.items : []).filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return def && itemInFilter(def.category, filter);
+    return def && itemInFilter(def.category, filter, def.id);
   });
   const footM2 = (it: PlacedItem) => {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -862,7 +862,7 @@ async function buildProtectMask(
   // full true-scale footprint, not half of it).
   for (const item of options.protectItems === false ? [] : state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const wM = (item.wM ?? def.wM) * 1.25;
     const hM = (item.hM ?? def.hM) * 1.25;
     const wLogical = wM * maskPxPerM;
@@ -1256,7 +1256,7 @@ function overlayElementsText(
   };
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     sectionOf.set(it.label ?? def.name, SECTION_BY_ID[def.id] ?? SECTION[def.category] ?? 'INFRASTRUCTURE');
     const name = it.label ?? def.name;
     const arr = byName.get(name) ?? [];
@@ -1278,9 +1278,28 @@ function overlayElementsText(
     }
   }
 
-  // Zones are deliberately NOT listed. On the Zones sheet they are the subject and the sheet's own
-  // wash carries them; on every other sheet a column of "Zone 3 — Orchard / food forest (×1)" rows
-  // buried the actual design. (Rory: "I don't want zones in the legend.")
+  // ZONES. Rory's "I don't want zones in the legend" was about the ELEMENT sheets, where a column
+  // of "Zone 3 — Orchard / food forest (×1)" rows buried the actual design. It got applied to every
+  // sheet — including the Zones sheet, where the zones ARE the design. The old note here claimed
+  // "the sheet's own wash carries them": true of the deterministic Blueprint sheet, which paints
+  // its own washes, and FALSE of Satellite Overlay, where the model draws everything and this list
+  // is the only thing telling it what exists. So the Zones sheet handed the model an EMPTY brief
+  // while prompt rule 7 asserts that list is "the COMPLETE contents of this sheet" — and the model,
+  // obeying rule 5, read the visible bands as element markers and invented a farm to fill them.
+  // Listed on the Zones sheet only; the element sheets stay clean.
+  if (filter === 'zones') {
+    const byZone = new Map<number, number>();
+    for (const z of state.zones) {
+      if (z.feature || z.points.length < 3) continue;
+      byZone.set(z.zone, (byZone.get(z.zone) ?? 0) + 1);
+    }
+    for (const [zone, n] of [...byZone.entries()].sort((a, b) => a[0] - b[0])) {
+      const name = `Zone ${zone} — ${ZONE_DEFS[zone as 0 | 1 | 2 | 3 | 4 | 5].label}`;
+      sectionOf.set(name, 'ZONES');
+      parts.push(`${name}${n > 1 ? ` ×${n}` : ''}`);
+    }
+  }
+
   const lineCounts = new Map<string, number>();
   for (const l of state.lines) {
     if (!lineInFilter(l.kind, filter)) continue;
@@ -1326,7 +1345,7 @@ function producerElementsText(
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue; // only this layer's elements
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue; // only this layer's elements
     const name = it.label ?? def.name;
     const g = counts.get(name) ?? { icon: def.icon, n: 0 };
     g.n += 1;
@@ -1436,7 +1455,7 @@ const WATER_ROUTE_STYLE: Record<string, { color: string; dash: number[]; width: 
 function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
   return state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && itemInFilter(def.category, 'water');
+    return !!def && itemInFilter(def.category, 'water', def.id);
   });
 }
 
@@ -2439,7 +2458,7 @@ const SPECIES_INDEX: Record<string, number> = (() => {
   for (const filter of ['planting', 'structures'] as const) {
     let i = 0;
     for (const def of ELEMENT_CATALOG) {
-      if (!itemInFilter(def.category, filter)) continue;
+      if (!itemInFilter(def.category, filter, def.id)) continue;
       out[def.id] = i++;
     }
   }
@@ -2477,7 +2496,7 @@ function speciesRowsFor(
   const groups = new Map<string, { icon: string; color: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const name = it.label ?? def.name;
     const g = groups.get(name) ?? { icon: def.icon, color: speciesColor(def.id), n: 0 };
     g.n += 1;
@@ -2729,7 +2748,7 @@ export async function buildBlueprintWaterMapLegacy(
   // and must keep doing so). Each marker carries its own def.icon, so they stay readable.
   const waterItems = state.items.filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && itemInFilter(def.category, 'water');
+    return !!def && itemInFilter(def.category, 'water', def.id);
   });
   for (const it of waterItems) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -2988,7 +3007,7 @@ function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): Placed
   return state.items
     .filter((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
-      return !!def && itemInFilter(def.category, filter);
+      return !!def && itemInFilter(def.category, filter, def.id);
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
@@ -3827,7 +3846,7 @@ function sheetLegendRows(
   const groups = new Map<string, { icon: string; color: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const name = it.label ?? def.name;
     const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
     g.n += 1;
@@ -4296,7 +4315,7 @@ export default function DesignGlossy({
           const placedElements = state.items
             .filter((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
-              return def && itemInFilter(def.category, compositeFilter);
+              return def && itemInFilter(def.category, compositeFilter, def.id);
             })
             .map((item) => {
               const def = ELEMENTS_BY_ID[item.defId];

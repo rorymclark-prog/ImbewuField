@@ -361,8 +361,15 @@ export function buildShowcasePrompt(
   ].filter(Boolean).join('\n\n');
 }
 
-const SHEET_NO: Record<ShowcaseSheetKind, string> = {
-  all: '01', zones: '02', water: '03', planting: '04', structures: '05',
+// Sheet numbers MUST match the canonical 8-map package in docs/PLAN-SET-SPEC.md, which is what
+// DesignPrint.tsx PRINT_LAYERS renders. They used to be a private 01..05 run starting at the
+// whole-design sheet, and EVERY ONE collided with a different print sheet: AI "02 — ZONES PLAN"
+// against printed 02 Sector Analysis, AI "03 — WATER PLAN" against printed 03 Zones, and so on. A
+// farmer who rendered the AI sheets and also exported the print set got two different pages
+// claiming the same number, which makes referring to a sheet by number useless.
+// (Analysis precedes design in the canonical order: 01 Base, 02 Sector, then the design sheets.)
+export const SHEET_NO: Record<ShowcaseSheetKind, string> = {
+  zones: '03', water: '04', planting: '05', structures: '06', all: '07',
 };
 
 // One icon description per marker type. The composite hands the model flat coloured placeholder
@@ -434,6 +441,19 @@ export function buildSatelliteOverlayPrompt(args: {
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
+  // NEVER BRIEF THE MODEL ON NOTHING. Rule 7 below tells the model the element list is "the
+  // COMPLETE contents of this sheet", so an empty list is not a harmless no-op — it is a positive
+  // assertion that the sheet is empty, made to a model that can plainly see marks on the supplied
+  // photograph. Faced with that contradiction it resolves it by inventing content and lettering a
+  // confident legend for it, which is exactly how a farmer got a "ZONES PLAN" carrying fabricated
+  // jojo tanks, swales and veg beds. Refusing costs a render; shipping a fabricated plan costs
+  // trust, and the farmer may build from it.
+  if (!elementsText.trim()) {
+    throw new Error(
+      `Refusing to render the ${sheetKind} sheet: it has no elements to describe, and a sheet built from an empty brief is invented, not drawn.`,
+    );
+  }
+
   const keys = ICON_KEYS_BY_SHEET[sheetKind] ?? ICON_KEYS_BY_SHEET.all;
   // Match against the bare element NAMES. The grouped headings and the place suffixes are not
   // element names and matching them produced real damage: "INFRASTRUCTURE" fired the building
@@ -468,6 +488,18 @@ export function buildSatelliteOverlayPrompt(args: {
   const drivewayRule = sheetKind === 'all'
     ? 'The driveway is existing site fabric, not a designed feature: leave it as the photograph already shows it, a quiet grey access track at ground level, kept clear of plantings, with no bold outline and no dark fill laid over it. On this sheet only, give it one small white caption reading "TARRED DRIVEWAY".'
     : 'The driveway is existing site fabric, not a designed feature: leave it as the photograph already shows it, a quiet grey access track at ground level, kept clear of plantings, with no bold outline, no dark fill and no label of its own — it is background here.';
+
+  // ZONE BANDS. The composite paints the permaculture effort-zones as large translucent washes with
+  // a numbered badge each — and this prompt had NO concept of them. Rule 1 orders the interior
+  // "REDRAWN CLEAN … mown lawn as an even mid-green", rule 2's whitelist has no band in it, rule 5
+  // declares every coloured shape a placement guide for one element, and rule 14 forbids any
+  // lettering other than labels and legend rows. So on the Zones sheet the model erased the washes,
+  // deleted the badges, and — obeying rule 5 to the letter — turned each band into an invented
+  // pictorial element, then lettered a confident legend for infrastructure the farmer never placed.
+  // That is the "why is zones so bad" bug: the model was following instructions.
+  const zoneBands = sheetKind === 'zones' || sheetKind === 'all'
+    ? `\n\nZONE BANDS — LARGE TRANSLUCENT AREAS, NOT MARKERS. The big soft-edged coloured areas already on the photograph are the permaculture effort-zones (Zone 0 nearest the house out to Zone 5 wildest). They are AREAS OF LAND, not placement guides: each one is redrawn as a soft translucent tinted wash lying over the clean redrawn ground, keeping its exact outline and its exact colour, so the ground, roofs and planting stay fully readable through it. A zone band NEVER becomes a pictorial icon, a tank, a bed, a pond or any other object, and nothing is invented inside one. Each band keeps its round number badge — the numeral drawn in white on a filled disc in the band's own colour, at the same spot — and that numeral is permitted lettering.${sheetKind === 'zones' ? ' THIS SHEET IS ABOUT THE ZONES THEMSELVES: the bands and their badges are the entire subject, the legend lists one row per zone with its number, name and colour swatch, and no other element, icon, tank, bed, tree or structure is added anywhere on the map.' : ''}`
+    : '';
 
   // Every element becomes a literal legend row. Enumerating the rows as CONTENT — rather than
   // describing what a row should look like — is what stops elements silently vanishing from the
@@ -505,13 +537,13 @@ OUTSIDE the boundary the supplied photograph stays exactly as it is — real, so
 
 The boundary line itself is the crisp seam between the two.
 
-2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the tar driveway fill, (4) the irrigation lines, (5) white labels with leader lines, (6) the cream legend panel, (7) a north arrow and a scale bar. Beyond those, inside the boundary is the clean redrawn ground of rule 1, and outside it is untouched photograph.
+2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the tar driveway fill, (4) the irrigation lines, (5) white labels with leader lines, (6) the cream legend panel, (7) a north arrow and a scale bar${zoneBands ? ', (8) the translucent permaculture zone bands and their number badges (see the ZONE BANDS rule below)' : ''}. Beyond those, inside the boundary is the clean redrawn ground of rule 1, and outside it is untouched photograph.
 
 3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
 
 4. THE MARKERS ARE THE WHOLE DESIGN, AND THERE ARE EXACTLY AS MANY AS THERE ARE. Trees are the one thing that gets over-drawn: a plan of a real smallholding has FEWER trees than a picture of a garden, and the empty lawn between them is the point. Draw one canopy per tree marker and not one more — no filler trees along the boundary, no shrubs to balance a corner, no planting in the open grass. The same holds for every other element.
 
-5. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each coloured shape already on the photograph marks where one designed element goes. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Keep each icon to the size of the marker it replaces: a tank, pond or banana circle is metres across and draws large, while a tap, valve, inspection point or borehole is a small fitting a hand's width across and draws small. Small fittings never grow into landmarks. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
+5. THE COLOURED MARKERS ARE PLACEMENT GUIDES. Each small, hard-edged coloured shape already on the photograph marks where one designed element goes${zoneBands ? ' — this rule covers those element markers ONLY, and never the large soft translucent zone bands, which are areas of land and are covered by the ZONE BANDS rule below' : ''}. Replace each marker with one finished pictorial icon in exactly the same spot, at the same size, in the same quantity, at a gentle three-quarter overhead angle in map-icon style, with a soft grey drop shadow so it lifts off the photo. Every icon reads instantly at postcard size and casts the same soft shadow in the same direction. Keep each icon to the size of the marker it replaces: a tank, pond or banana circle is metres across and draws large, while a tap, valve, inspection point or borehole is a small fitting a hand's width across and draws small. Small fittings never grow into landmarks. Ground with no marker keeps its untouched photograph and gets nothing. The open lawn is mown grass and stays mown grass; bare ground stays bare. A finished sheet has exactly as many plants, beds and structures as the photograph and the markers already show — the empty parts of this farm are empty on purpose, and showing them empty is what makes the plan truthful.
 
 6. ICON LANGUAGE — small, crisp, semi-3D, clean saturated graphics with simple shading: ${iconSpec}.
 
@@ -519,7 +551,7 @@ The boundary line itself is the crisp seam between the two.
 
 8. THE TWO DARK SHAPES ARE DIFFERENT THINGS. The building is a roof: it has ridges, hips and pitched planes, it casts a shadow, and it keeps every edge and every wing exactly as photographed. The driveway is flat ground: a smooth tar surface at ground level. They never merge, and no part of a roof becomes road surface.
 
-9. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}
+9. LINES DRAWN OVER THE PHOTO. Property boundary: a bright chartreuse #B4E000 line with short perpendicular tick marks at regular intervals along its full length, both sides, like a surveyed fence line — the boldest, crispest line on the sheet. ${drivewayRule} Irrigation and routes are already traced on the photograph, each in its own colour — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side.${waterSystems}${zoneBands}
 
 10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps.
 
@@ -529,7 +561,7 @@ The boundary line itself is the crisp seam between the two.
 
 13. VIEW: the output camera is the input camera — flat orthographic top-down, north-up, same crop, same scale, same aspect.
 
-14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N" and "20 m". All spelled exactly as given, all horizontal, all print-legible.
+14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N"${zoneBands ? ', the zone number badges' : ''} and "20 m". All spelled exactly as given, all horizontal, all print-legible.
 
 FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly redrawn — even green lawn, crisp roof planes, no photographic grain or blotching — while outside the boundary is untouched photograph, and the boundary is the visible seam between them; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one icon in its original spot, and there is not a single tree, shrub or bed on the sheet that has no marker under it; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
 

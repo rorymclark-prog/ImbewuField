@@ -161,7 +161,7 @@ export function producerLabels(
   const families = new Map<LabelFamily, LabelPt[]>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const key = labelFamily(def);
     const arr = families.get(key) ?? [];
     arr.push({ x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });

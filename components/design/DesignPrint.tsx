@@ -125,7 +125,7 @@ function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch
   const groups = new Map<string, { icon: string; color: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter)) continue;
+    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const name = it.label ?? def.name;
     const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
     g.n += 1;
