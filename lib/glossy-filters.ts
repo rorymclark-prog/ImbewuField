@@ -59,6 +59,19 @@ export function sheetForElement(category: string, defId?: string): Exclude<Gloss
   }
 }
 
+/** Does this element belong on `filter` as CONTEXT — shown so the sheet reads, never counted as its
+ *  content? Only Water needs it: irrigation lines mean nothing without the beds and basins they
+ *  water, and those live on the Planting sheet. Kept here beside sheetForElement so the membership
+ *  rules stay in one file. */
+export function isContextElement(
+  def: { category: string; id: string; name: string },
+  filter: GlossyLayerFilter,
+): boolean {
+  if (filter !== 'water') return false;
+  if (sheetForElement(def.category, def.id) !== 'planting') return false;
+  return /bed|basin|circle|spiral/i.test(def.name);
+}
+
 export function itemInFilter(category: string, filter: GlossyLayerFilter, defId?: string): boolean {
   if (filter === 'all') return true;
   // Zones carries no elements — the effort-zone bands are its entire content.

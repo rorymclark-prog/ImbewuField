@@ -74,3 +74,29 @@ test('sheetForElement is total over the catalog — no element falls through to 
   const unmapped = ELEMENT_CATALOG.filter((d) => sheetForElement(d.category, d.id) === null);
   assert.deepEqual(unmapped.map((d) => `${d.id} (${d.category})`), []);
 });
+
+// ── Context elements: shown so a sheet reads, never counted as its content ────
+// Rory on the Water sheet: "no driveway no beds no tree basins no veg bed drip irrigation!!!".
+// The beds and basins moved to Planting (correctly — that is where a farmer counts them), but a
+// water plan whose drip lines run to nothing is unreadable.
+import { isContextElement } from '../lib/glossy-filters.ts';
+
+test('the Water sheet SHOWS the beds and basins its irrigation feeds', () => {
+  for (const id of ['banana_circle', 'tree_basin', 'raised_bed', 'keyhole_bed', 'herb_spiral']) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    assert.ok(isContextElement(def, 'water'), `${id} must be visible on the Water sheet`);
+    // ...but is still not water CONTENT: it gets no water legend row, and Planting counts it.
+    assert.equal(itemInFilter(def.category, 'water', def.id), false, `${id} must not be water content`);
+    assert.equal(itemInFilter(def.category, 'planting', def.id), true, `${id} is Planting content`);
+  }
+});
+
+test('context is a Water-sheet concept only, and never applies to a sheet own content', () => {
+  const bed = ELEMENT_CATALOG.find((d) => d.id === 'raised_bed')!;
+  for (const f of ['all', 'zones', 'planting', 'structures'] as const) {
+    assert.equal(isContextElement(bed, f), false, `${f} must not borrow context elements`);
+  }
+  // A tank is water CONTENT — it must never be demoted to context on its own sheet.
+  const tank = ELEMENT_CATALOG.find((d) => d.category === 'water')!;
+  assert.equal(isContextElement(tank, 'water'), false);
+});

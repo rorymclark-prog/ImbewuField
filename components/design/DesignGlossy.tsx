@@ -26,7 +26,7 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
-import { itemInFilter, lineInFilter, zonesInFilter, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter } from '@/lib/glossy-filters';
@@ -682,6 +682,43 @@ export function drawMarks(
     const def = ELEMENTS_BY_ID[it.defId];
     return def && itemInFilter(def.category, filter, def.id);
   });
+  // CONTEXT ELEMENTS — drawn, but not this sheet's content. See contextElementNames: the Water
+  // sheet has to show the beds and basins its drip and greywater lines run TO, or the routes cross
+  // empty lawn and the plan is unreadable. Naming them in the prompt is not enough; the model
+  // places from the picture, so if a bed is not in the composite it is not on the sheet. Drawn
+  // FIRST and faintly, so this sheet's own water elements always sit on top of them.
+  const contextItems = (drawDesign && showDesignItems ? state.items : []).filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return def && !itemInFilter(def.category, filter, def.id) && isContextElement(def, filter);
+  });
+  if (contextItems.length) {
+    ctx.save();
+    ctx.globalAlpha = 0.45;
+    for (const item of contextItems) {
+      const def = ELEMENTS_BY_ID[item.defId]!;
+      const wLogical = (item.wM ?? def.wM) * pxPerM;
+      const hLogical = (item.hM ?? def.hM) * pxPerM;
+      const cx = px(item.x);
+      const cy = py(item.y);
+      ctx.fillStyle = def.color;
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 1.5;
+      if (def.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(cx, cy, wLogical / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        ctx.save();
+        ctx.translate(cx, cy);
+        if (item.rot) ctx.rotate((item.rot * Math.PI) / 180);
+        ctx.fillRect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
+        ctx.strokeRect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
   const footM2 = (it: PlacedItem) => {
     const def = ELEMENTS_BY_ID[it.defId];
     return (it.wM ?? def.wM) * (it.hM ?? def.hM);
@@ -1442,11 +1479,44 @@ function overlayElementsText(
   // Built from the same rings drawMarks now paints, in the same biggest-first, dedupe-by-label
   // order groundRows already uses for the deterministic legend, so the two can never drift on
   // which ground exists or what it's called.
-  const fabric = groundRows(state, refLayers)
-    .map((row) => row.label.replace(/[,|»]/g, '').trim())
+  // CONTEXT ELEMENTS ride the same channel. A layer sheet is not only its own content: a Water plan
+  // whose drip lines run to nothing is unreadable, because the beds, banana circles and tree basins
+  // the irrigation SERVES now live on the Planting sheet (Rory: "water layer no driveway no beds no
+  // tree basins no veg bed drip irrigation!!!"). They have to be visible for the routes to mean
+  // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
+  // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
+  const fabric = [
+    ...groundRows(state, refLayers).map((row) => row.label),
+    ...contextElementNames(state, filter),
+  ]
+    .map((label) => label.replace(/[,|»]/g, '').trim())
+    .filter(Boolean)
     .join(', ');
 
   return { elements, fabric };
+}
+
+/** Things a sheet must SHOW to be readable but must not COUNT as its own content.
+ *
+ *  Only the Water sheet needs this today, and for a specific reason: irrigation is a set of lines
+ *  that mean nothing except in relation to what they water. Drawing the drip runs while hiding the
+ *  beds gives a farmer blue dots crossing empty lawn. The Planting sheet OWNS these elements — this
+ *  is a borrowed view, which is why they go on the fabric channel and never into `elements`, where
+ *  rule 7 would count them as water content and legend them here too. */
+function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
+  if (filter !== 'water') return [];
+  const counts = new Map<string, number>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    // The planting-sheet elements that irrigation and greywater actually feed.
+    if (!def || sheetForElement(def.category, def.id) !== 'planting') continue;
+    if (!/bed|basin|circle|spiral/i.test(def.name)) continue;
+    const name = it.label ?? def.name;
+    counts.set(name, (counts.get(name) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([name, n]) => `${name}${n > 1 ? ` ×${n}` : ''}`);
 }
 
 function producerElementsText(

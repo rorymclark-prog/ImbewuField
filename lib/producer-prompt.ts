@@ -566,6 +566,8 @@ export function buildSatelliteOverlayPrompt(args: {
 
 INSIDE the boundary the land is REDRAWN CLEAN, as a finished plan: mown lawn as an even, softly textured mid-green (#7E9C5C), bare and tilled ground as warm brown, paths and paving as clean flat surfaces, and every roof as crisp flat planes with its ridges and hips in slate grey (#3C4247). Keep every shape exactly where the photograph puts it — the same roof outline, the same tracks, the same tree positions and canopy sizes — but render them cleanly and evenly, with the photographic noise, blotching, harsh shadow and camera grain gone. It should read as a drawing of this exact place, not a photograph of it.
 
+REDRAWN CLEAN MEANS TIDIED, NEVER ERASED. Every hard surface already in the photograph — the access track, the parking area, paving, paths, concrete, gravel — stays a hard surface of the same shape, in the same place, at the same width, redrawn crisply. A driveway is never repainted as lawn, never planted over and never narrowed. Draw grass ONLY where the photograph already shows grass. (This rule exists because "redrawn clean" was read as licence to green over the driveway inside the fence, so a farmer's access track vanished from his own plan.)
+
 OUTSIDE the boundary the supplied photograph stays exactly as it is — real, soft, slightly darker, untouched to the very edges of the sheet. Neighbouring roofs, trees and tracks keep their photographic texture and their haze. This is context, and it recedes.
 
 The boundary line itself is the crisp seam between the two.

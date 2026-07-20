@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Water plans now show the beds and basins your irrigation runs to',
+      'Driveways stay driveways instead of being repainted as lawn',
       'Site and Sector sheets can now be AI-styled, not just exact',
       'Zone maps follow the zones you actually drew',
       'Your rendered maps are saved on this device and survive closing the app',
