@@ -202,7 +202,7 @@ export default function DesignPalette({
   const stepCatalog =
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
-      : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category));
+      : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category) || def.alsoSteps?.includes(step as 'water' | 'planting' | 'structures'));
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should

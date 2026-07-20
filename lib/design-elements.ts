@@ -28,6 +28,10 @@ export interface DesignElementDef {
   needsSun?: boolean; // veg/beds → shade victim
   nearRoofM?: number; // should be within N metres of house/structure (tanks)
   nearHouseMaxM?: number; // daily-use max distance from house (herbs/veg)
+  // Extra wizard steps this element is offered on, beyond the ones its category implies. Some
+  // elements are honestly two things at once — a banana circle is a planted crop AND a greywater
+  // sink — and forcing them into one category hid them from the step where the farmer looks.
+  alsoSteps?: Array<'water' | 'planting' | 'structures'>;
 }
 
 export const ZONE_COLORS: Record<0 | 1 | 2 | 3 | 4 | 5, string> = {
@@ -290,6 +294,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'banana_circle',
     category: 'earthworks',
+    alsoSteps: ['planting'], // it is a crop as much as a pit
     name: 'Banana Circle',
     icon: '🍌',
     shape: 'circle',
@@ -315,6 +320,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'greywater_basin',
     category: 'earthworks',
+    alsoSteps: ['water'], // the destination half of the greywater run
     name: 'Greywater Basin',
     icon: '♻️',
     shape: 'circle',
