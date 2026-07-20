@@ -40,8 +40,23 @@ const CONCURRENCY = 3; // parallel sheets within ONE job (instance concurrency i
 const MAX_RETRIES = 2; // network / 5xx
 const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has room once sheets ≤ 5
 const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures']);
-const MAX_SHEETS_PER_DAY = 30; // per-user spend governor — tune before wide rollout
-const MAX_JOBS_PER_DAY = 6;
+// ── SPEND GOVERNORS ──────────────────────────────────────────────────────────────────────────
+// Two independent ceilings, because a per-user cap alone bounds NOTHING: total spend was
+// (per-user cap) x (however many people sign up), with no automatic brake. Thirty sheets/user/day
+// at ~$0.50/sheet is ~$15/user/day; twenty curious users is ~$300 in a day, and the kill switch
+// only helps if someone is watching. This app is self-funded, so the failure mode has to be
+// "renders stop" and never "the bill grows".
+//
+// Per-user: one full plan set (5 sheets) plus a retry, rather than six sets.
+const MAX_SHEETS_PER_DAY = 8;
+const MAX_JOBS_PER_DAY = 3;
+// Whole-app, all users combined. Deliberately LOW by default: if nobody ever tunes it, the worst
+// case is a small bill and some farmers seeing the (free, instant, deterministic) exact maps
+// instead of the AI ones — not an unbounded charge. Override live, without a deploy, by setting
+// `dailySheetBudget` on app_config/renders.
+const GLOBAL_SHEETS_PER_DAY_DEFAULT = 40; // ~$20/day worst case at current gpt-image pricing
+// Owner renders are counted in the global total (they cost real money too) but are exempt from
+// the global CAP — otherwise a busy day of user traffic would lock Rory out of his own testing.
 // Owner/tester accounts: much higher personal caps so heavy testing on the owner's OWN OpenAI
 // account isn't blocked, while every real user keeps the 30-sheet / 6-job daily cost guard. Still
 // bounded (not unlimited) so a runaway loop can't spend without end; the kill switch + OpenAI
@@ -259,8 +274,11 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
     }
 
     // Per-user daily quota — the enforceable spend cap (rules can't do cross-doc counters).
+    // ALL READS FIRST: Firestore rejects a transaction that reads after it writes, and the global
+    // counter below has to be read here rather than inside the branches.
     const usageRef = db.doc(`render_usage/${job.uid}_${dayKey()}`);
-    const usageSnap = await tx.get(usageRef);
+    const globalRef = db.doc(`render_usage/GLOBAL_${dayKey()}`);
+    const [usageSnap, globalSnap] = await Promise.all([tx.get(usageRef), tx.get(globalRef)]);
     const usedSheets = (usageSnap.data()?.sheets as number) ?? 0;
     const usedJobs = (usageSnap.data()?.jobs as number) ?? 0;
     const n = Array.isArray(job.sheets) ? job.sheets.length : 0;
@@ -270,12 +288,28 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
     if (usedJobs >= jobCap || usedSheets + n > sheetCap) {
       tx.update(ref, {
         status: 'error',
-        error: `Daily AI render limit reached (${sheetCap} sheets/day). Try again tomorrow.`,
+        error: `You've used today's AI maps (${sheetCap} sheets a day). The exact maps are free and unlimited — or try again tomorrow.`,
         updatedAt: FieldValue.serverTimestamp(),
       });
       return { proceed: false, reason: 'quota' };
     }
+
+    // WHOLE-APP daily ceiling. Without this the per-user cap bounds nothing: total spend scales
+    // with signups. Owners are counted but not blocked, so a busy day can't lock out testing.
+    const globalUsed = (globalSnap.data()?.sheets as number) ?? 0;
+    const globalCap = (cfgSnap.data()?.dailySheetBudget as number) ?? GLOBAL_SHEETS_PER_DAY_DEFAULT;
+    if (!isOwner && globalUsed + n > globalCap) {
+      logger.warn(JSON.stringify({ evt: 'global_budget_hit', jobId, uid: job.uid, globalUsed, globalCap, want: n }));
+      tx.update(ref, {
+        status: 'error',
+        error: "AI maps have reached today's budget for everyone. The exact maps are free, instant and unlimited — or try the AI again tomorrow.",
+        updatedAt: FieldValue.serverTimestamp(),
+      });
+      return { proceed: false, reason: 'global-budget' };
+    }
+
     tx.set(usageRef, { sheets: usedSheets + n, jobs: usedJobs + 1, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+    tx.set(globalRef, { sheets: globalUsed + n, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
     tx.update(ref, { status: 'running', updatedAt: FieldValue.serverTimestamp() });
     return { proceed: true, sheetCount: n };
   });
