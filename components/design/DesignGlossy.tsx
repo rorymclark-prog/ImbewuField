@@ -579,6 +579,31 @@ export function drawMarks(
   {
     const houseCovered = refLayers.house.length >= 3;
     const drivewayCovered = refLayers.driveway.length >= 2;
+    // THE ACCESS TRACK AS FABRIC. OVERLAY_COMPOSITE_MARKS sets showDrivewayMark:false so the tar
+    // stops competing with the design — but the consequence was that the driveway was in the
+    // composite NOWHERE, and the model cannot preserve a surface it was never shown. Rule 1 telling
+    // it "hard surfaces stay hard surfaces" is unenforceable against a blank patch of lawn, which
+    // is why Rory's driveway kept disappearing on every AI sheet. Drawn here as quiet ground —
+    // tar-toned, low alpha, no kerb, no outline, no label — it is present for the model to keep and
+    // still recedes behind the design.
+    if (drivewayCovered && !showDrivewayMark) {
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = '#3B3A3E';
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+      if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
+        ctx.closePath();
+        ctx.fillStyle = '#3B3A3E';
+        ctx.fill();
+      } else {
+        ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
     const groundRings = state.zones.filter((z) => {
       if (!z.feature || z.points.length < 3) return false;
       if (z.feature === 'house') return !houseCovered;
@@ -1505,18 +1530,20 @@ function overlayElementsText(
  *  rule 7 would count them as water content and legend them here too. */
 function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
   if (filter !== 'water') return [];
-  const counts = new Map<string, number>();
-  for (const it of state.items) {
+  const any = state.items.some((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    // The planting-sheet elements that irrigation and greywater actually feed.
-    if (!def || sheetForElement(def.category, def.id) !== 'planting') continue;
-    if (!/bed|basin|circle|spiral/i.test(def.name)) continue;
-    const name = it.label ?? def.name;
-    counts.set(name, (counts.get(name) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .map(([name, n]) => `${name}${n > 1 ? ` ×${n}` : ''}`);
+    return !!def && isContextElement(def, filter);
+  });
+  if (!any) return [];
+  // ONE GENERIC PHRASE, NEVER THE ELEMENT NAMES. The first version listed them individually —
+  // "Tree Basin ×5, Banana Circle ×2" — and the render came back with tree canopies and banana
+  // palms scattered across the site that the farmer had never placed. The comment four lines above
+  // this function's call site predicted it exactly: farmer-facing names go "straight into the icon
+  // matcher, firing ICON_MATCH.bed / .tree". "Tree Basin" contains "tree"; "Banana Circle" contains
+  // "banana". Naming a thing to a model that draws is asking it to draw that thing.
+  // The composite already carries the geometry — these are painted as faint marks in drawMarks —
+  // so the text only has to stop the model erasing them, not tell it what they are.
+  return ['low existing planting beds and shallow basins already marked as faint outlines'];
 }
 
 function producerElementsText(

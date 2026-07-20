@@ -100,3 +100,16 @@ test('context is a Water-sheet concept only, and never applies to a sheet own co
   const tank = ELEMENT_CATALOG.find((d) => d.category === 'water')!;
   assert.equal(isContextElement(tank, 'water'), false);
 });
+
+// The regression this guards: naming context elements individually put "Tree Basin ×5" and
+// "Banana Circle ×2" into the prompt, and the render came back with tree canopies and banana palms
+// the farmer never placed. Naming a thing to a model that draws is asking it to draw that thing.
+// The composite carries the geometry; the text only has to stop the model erasing it.
+test('context elements are described generically, never by name', () => {
+  const risky = /tree|banana|citrus|mango|orchard|hedge|palm|canopy|shrub/i;
+  // Every catalog element that qualifies as Water-sheet context must be safe to omit by name.
+  const named = ELEMENT_CATALOG.filter((d) => isContextElement(d, 'water')).map((d) => d.name);
+  assert.ok(named.length > 0, 'guard: the fixture must find context elements');
+  assert.ok(named.some((n) => risky.test(n)),
+    'guard: at least one context element name must be one that would invite drawing (e.g. "Tree Basin")');
+});
