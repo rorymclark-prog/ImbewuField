@@ -315,7 +315,7 @@ test('overlay icon vocabulary matches element NAMES, not headings or place suffi
   // which is the stronger distinction anyway: one is sunken with plants on the rim, the other is
   // raised with mulch around it.
   assert.match(icons, /Opposite silhouette to a banana circle/, 'tree basin is distinct from a banana circle');
-  assert.match(icons, /SUNKEN pit with plants around its rim, this is a RAISED mound/);
+  assert.match(icons, /SUNKEN pit with plants around its rim, this is a RAISED bare mound/);
   assert.match(icons, /raised earth bund/, 'banana circle keeps its own description');
 });
 
@@ -606,9 +606,14 @@ test('a tree basin is drawn as a mound with a moat, never a tree in a dish', () 
     elementsText: 'Tree Basin ×5', sheetKind: 'water',
   });
   const icons = p.slice(p.indexOf('6. ICON LANGUAGE'), p.indexOf('7. THIS SHEET'));
-  assert.match(icons, /raised earth mound at the centre with the tree standing ON TOP/);
+  assert.match(icons, /low raised mound of bare prepared soil at the centre/);
+  // The earthwork draws NO plant of its own. The first version of this spec said "with the tree
+  // standing ON TOP of it", so ten basins placed without trees came back as ten invented plants —
+  // the one-marker-one-icon rule broken by the very spec meant to fix the geometry.
+  assert.match(icons, /THE MOUND CARRIES NO PLANT OF ITS OWN/);
+  assert.match(icons, /has its own separate marker/);
   assert.match(icons, /doughnut-shaped mulched moat|annular trench/);
-  assert.match(icons, /never standing in a dip or a puddle/);
+  assert.match(icons, /never down in a dip/);
   assert.doesNotMatch(icons, /shallow saucer/);
 });
 

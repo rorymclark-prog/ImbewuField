@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Tree basins draw as the earthwork alone — no invented plant on the mound',
       'Your driveway now stays on every sheet',
       'Water plans stop drawing taps, valves and greywater pipes you never placed',
       'Tree basins draw correctly: tree up on a mound, mulched moat around it',
