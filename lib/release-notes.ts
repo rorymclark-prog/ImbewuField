@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector analysis now shows and names your lawn, veg garden and cleared ground',
+      'Picking a style on Site or Sector actually switches that sheet to AI',
       'One legend row per element — four taps no longer take three lines',
       'You can now draw a greywater line — Water step, next to Drip',
       'The driveway draws as tar on the ground, not as another roof',

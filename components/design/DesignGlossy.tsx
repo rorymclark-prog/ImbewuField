@@ -2815,6 +2815,50 @@ function speciesColor(defId: string): string {
 /** Legend rows for the traced ground drawn by drawBlueprintGround — same exclusions, same order
  *  (biggest first), so the panel reads down in the order the eye meets the washes. Renamed rings
  *  keep their own name, matching how the farmer labelled them in the editor. */
+/** Margin label pills for the TRACED GROUND — house, driveway, lawn, veg garden, cleared ground.
+ *
+ *  The reference sector sheet labels every area it shows (HOUSE, TARRED DRIVEWAY, EXISTING
+ *  VEGETABLE GARDEN, UPPER LAWN TERRACE, LOWER CLEARED GROUND) and that naming is most of why it
+ *  reads as a survey rather than a diagram — an arrow crossing "the lawn terrace" says something an
+ *  arrow crossing bare green does not. Reuses ProducerLabel so drawBlueprintLabelPills lays these
+ *  out in the same margin columns, with the same no-crossing-leaders guarantee, as every other
+ *  sheet's labels. */
+function groundLabelsForSheet(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): ProducerLabel[] {
+  const fs = 26, padX = 14, pillH = fs + 14;
+  const rings = state.zones.filter((z) => z.feature && z.feature !== 'boundary' && z.points.length >= 3);
+  if (!rings.length) return [];
+  const rows = rings
+    .sort((a, b) => ringArea(b.points) - ringArea(a.points))
+    .map((z) => {
+      const text = (z.name ?? GROUND_FEATURES[z.feature!].label).toUpperCase();
+      const cx = (z.points.reduce((s2, p) => s2 + p[0], 0) / z.points.length) * W;
+      const cy = (z.points.reduce((s2, p) => s2 + p[1], 0) / z.points.length) * H;
+      return { text, cx, cy, pw: Math.min(W - 28, padX * 2 + text.length * fs * 0.62) };
+    })
+    // One row per NAME: two lawns are one label, or the margin fills with repeats.
+    .filter((r, i, all) => all.findIndex((o) => o.text === r.text) === i);
+
+  // Same margin-column layout the producer labels use: pinned to the nearer side, pushed down only
+  // as far as needed to clear the row above, so leaders cannot tangle.
+  const out: ProducerLabel[] = [];
+  (['left', 'right'] as const).forEach((side) => {
+    const col = rows.filter((r) => (r.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+    let lastY = -Infinity;
+    for (const r of col) {
+      const y = Math.max(r.cy, lastY + pillH + 10);
+      lastY = y;
+      const ax = side === 'left' ? 16 : Math.max(16, W - r.pw - 16);
+      out.push({ cx: r.cx, cy: r.cy, ax, ay: Math.min(y, H - 36), lx: side === 'left' ? ax + r.pw : ax, text: r.text, kind: 'item', leader: true });
+    }
+  });
+  return out;
+}
+
 function groundRows(state: DesignCanvasState, refLayers?: DesignGlossyProps['refLayers']): BlueprintLegendRow[] {
   // MUST use the same predicate as drawBlueprintGround, or the legend and the map drift apart —
   // which is exactly what happened when ground started drawing on Zones, Water and Structures while
@@ -3918,7 +3962,6 @@ export async function buildBlueprintSectorMap(
   site: SectorSite | null,
   placeName?: string,
 ): Promise<string> {
-  void state; // signature parity with the other builders; content is refLayers + site only
   const W = frame.imgW * SCALE;
   const H = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -3939,9 +3982,21 @@ export async function buildBlueprintSectorMap(
   //    Precision Atlas's context treatment, done deterministically and for free.
   await drawAnalysisBase(ctx, frame, W, H);
   // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
+  // THE GROUND THE ANALYSIS IS ABOUT. This sheet drew the house, the driveway and the boundary and
+  // nothing else — so the traced lawn, veg garden, paving and cleared ground, which the farmer had
+  // already recorded, reached it nowhere. A sector map is arrows over a SITE: "hot dry berg wind
+  // from the W/NW" means something once you can see the lawn terrace and the veg garden it crosses,
+  // and very little over bare grass. (Rory, holding up the reference sheet: "you must send all the
+  // relevant data to get a really nice map.") Drawn before the house and boundary so the built
+  // fabric still reads on top of it.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers);
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  // …and NAME them. The reference sheet labels HOUSE, TARRED DRIVEWAY, EXISTING VEGETABLE GARDEN,
+  // UPPER LAWN TERRACE, LOWER CLEARED GROUND — that naming is most of why it reads as a survey
+  // rather than a diagram. producerLabels already lays these out without collisions.
+  drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H));
 
   drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM);
 
@@ -4526,7 +4581,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v7';
+const PLAN_VERSION = 'v8';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -6065,7 +6120,24 @@ export default function DesignGlossy({
                 type="button"
                 // Selecting only — tapping the active card keeps it (deselecting used to leave
                 // "AI mode with no style", which silently fell back to the exact renderer).
-                onClick={() => { setProducerStyle(s.key); setAnalysisStyle(null); setExactSheet(null); }}
+                onClick={() => {
+                  setProducerStyle(s.key);
+                  setAnalysisStyle(null);
+                  setExactSheet(null);
+                  // PICKING A STYLE MEANS "RENDER IT THIS WAY". On Sector and Site the sheet could
+                  // be sitting in EXACT mode, and clearing exactSheet without switching mode left
+                  // restyleAiKind null — so runCurrentSheet fell through to the generic producer
+                  // branch and rendered whatever `filter` happened to be, not the sheet on screen.
+                  // From the farmer's side: tap a style, press the button, nothing changes.
+                  // (Rory: "the style selector is not working i select the satelite overlay and
+                  // nothing".)
+                  if (selectedSheet && 'exact' in selectedSheet) {
+                    setMode('ai');
+                    applySheet(selectedSheet, 'ai');
+                    setProducerStyle(s.key); // applySheet seeds a default; the farmer's pick wins
+                  }
+                  setResultImage(null);
+                }}
                 disabled={loading !== null}
                 aria-pressed={active}
                 title={`${s.blurb}${s.recommended ? ' (recommended with Geometry Lock)' : ''}`}
