@@ -72,6 +72,21 @@ export interface LineShape {
 
 export type WizardStep = 'base' | 'sector' | 'water' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';
 
+// A farmer's own uploaded (drone/aerial) photo of their site, used as the Studio's base image
+// INSTEAD of the fetched satellite tile. Deliberately just a small Storage download URL + the
+// calibrated scale — never the image bytes themselves — so it persists exactly like every other
+// small field on DesignCanvasState (the whole object round-trips through localStorage AND
+// Firestore as one JSON blob; see lib/design-canvas-sync.ts). The rotation the farmer dialled in
+// is NOT stored here: it is baked into the image pixels once, before upload (see
+// components/design/BasePhotoImport.tsx), because none of this app's renderers (satellite base,
+// every Blueprint sheet, every AI composite) have any concept of a live rotation transform —
+// teaching all of them would be a far bigger and riskier change than doing it once at upload time.
+export interface CustomBaseImage {
+  url: string; // Firebase Storage download URL (uploadPhoto in lib/db/queries.ts)
+  mPerPx: number; // calibrated metres-per-pixel, from the farmer's two-point tap + entered distance
+  uploadedAt: string; // ISO timestamp, for display only
+}
+
 export interface DesignCanvasState {
   siteId: string;
   frame: Omit<CanvasFrame, 'satDataUrl'>;
@@ -80,6 +95,15 @@ export interface DesignCanvasState {
   lines: LineShape[];
   step: WizardStep;
   updatedAt: string;
+  // Optional back-compat pair: when useCustomBase is true and customBase is set, the Studio shows
+  // the farmer's own uploaded photo (customBase.url, fetched into the ephemeral CanvasFrame at
+  // render time exactly like the satellite tile is) and frame.mPerPx is overridden by
+  // customBase.mPerPx instead of the GPS-derived value. Farmers who never upload a photo see
+  // exactly today's behaviour — both fields stay undefined. Keeping the ORIGINAL satellite frame
+  // computation running unchanged (rather than replacing it) is what lets a farmer switch back to
+  // the real satellite view at any time without losing anything.
+  useCustomBase?: boolean;
+  customBase?: CustomBaseImage | null;
   // Monotonic edit counter for this site's design lineage. Bumped by saveCanvasState on every
   // real local save, and NEVER by applyRemoteCanvasState (receiving someone else's edit is not
   // editing). Cloud sync (lib/design-canvas-sync.ts) ranks by rev FIRST and only falls back to
@@ -321,8 +345,11 @@ export async function fetchImageAsDataUrl(url: string): Promise<string> {
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? '';
 
-const DEFAULT_IMG_W = 960;
-const DEFAULT_IMG_H = 640;
+// Exported so a custom-photo base (components/design/BasePhotoImport.tsx) can bake/calibrate at
+// the exact same logical canvas size every satellite-fitted frame already uses — the two base
+// image sources must never disagree about the CanvasFrame's imgW/imgH.
+export const DEFAULT_IMG_W = 960;
+export const DEFAULT_IMG_H = 640;
 const METRES_PER_DEGREE_LAT = 111.32;
 
 // Builds the CanvasFrame (minus the inlined image) + the satellite URL to fetch + a

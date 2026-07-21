@@ -56,6 +56,7 @@ import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
 import StepGuide from '@/components/design/StepGuide';
 import type { SubStepArm } from '@/lib/design-substeps';
 import DesignAdvisor from '@/components/design/DesignAdvisor';
+import BasePhotoImport, { type BasePhotoApplyResult } from '@/components/design/BasePhotoImport';
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
 
@@ -461,6 +462,11 @@ function DesignStudioInner() {
   const [houseXY, setHouseXY] = useState<[number, number] | null>(null);
   const [frame, setFrame] = useState<CanvasFrame | null>(null);
   const [canvasState, setCanvasState] = useState<DesignCanvasState | null>(null);
+  // "Import your own photo" (Base step) — which Storage URL's bytes are currently loaded into
+  // frame.satDataUrl, so the effects below never refetch a custom photo they've already fetched,
+  // and never confuse it with the satellite tile's own data URL (which has no URL to compare).
+  const loadedCustomBaseUrlRef = useRef<string | null>(null);
+  const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [saved, setSaved] = useState(true);
 
   // Multi-select: Shift/Cmd+tap adds to the selection; a plain tap replaces it. Edit/resize/
@@ -709,6 +715,25 @@ function DesignStudioInner() {
       }
       setTracedLayers(traced);
 
+      // A previously-saved "import your own photo" base (lib/design-canvas.ts CustomBaseImage)
+      // overrides both the satellite tile AND its GPS-derived mPerPx. Read directly here — rather
+      // than waiting for the setCanvasState resolution below — so a fresh page load (or another
+      // tab/device's refresh) shows the farmer's own photo immediately instead of flashing the
+      // satellite tile in first. A farmer who never uploads a photo gets undefined/null here and
+      // every branch below behaves exactly as it did before this feature existed.
+      const savedForBase = loadCanvasState(siteId);
+      const customBase = savedForBase?.useCustomBase ? (savedForBase.customBase ?? null) : null;
+      const loadCustomBase = (targetFrame: typeof frameNoImg) => {
+        if (!customBase) return;
+        if (loadedCustomBaseUrlRef.current === customBase.url) return;
+        fetchImageAsDataUrl(customBase.url)
+          .then((dataUrl) => {
+            loadedCustomBaseUrlRef.current = customBase.url;
+            setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBase.mPerPx } : prev));
+          })
+          .catch(() => setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev)));
+      };
+
       // Only touch the satellite (clear + refetch) when the frame centre/zoom actually
       // changed — otherwise keep whatever is already loaded and just update the non-image
       // frame fields, so an unrelated refresh (e.g. an external canvas-state change) can't
@@ -721,14 +746,24 @@ function DesignStudioInner() {
 
       if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
-        setFrame({ ...frameNoImg, satDataUrl: null });
-        if (url) {
-          fetchImageAsDataUrl(url)
-            .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
-            .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
+        if (customBase) {
+          setFrame((prev) => ({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
+          loadCustomBase(frameNoImg);
+        } else {
+          setFrame({ ...frameNoImg, satDataUrl: null });
+          if (url) {
+            fetchImageAsDataUrl(url)
+              .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
+              .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
+          }
         }
       } else {
-        setFrame((prev) => ({ ...frameNoImg, satDataUrl: prev?.satDataUrl ?? null }));
+        setFrame((prev) => ({
+          ...frameNoImg,
+          mPerPx: customBase ? customBase.mPerPx : frameNoImg.mPerPx,
+          satDataUrl: prev?.satDataUrl ?? null,
+        }));
+        loadCustomBase(frameNoImg);
       }
 
       // A frame migration is DERIVED, not authored: it fires on its own whenever the satellite
@@ -898,6 +933,39 @@ function DesignStudioInner() {
     },
     [],
   );
+
+  // "Import your own photo" (Base step) — apply the farmer's calibrated photo as the base image
+  // right away (no need to wait for the refresh effect's round trip), and persist it so it
+  // survives a reload / follows to another device. Every existing tool (tracing, placed
+  // elements, every plan sheet) only ever reads frame.satDataUrl + frame.mPerPx, so nothing else
+  // needs to change for this to "just work" as the new base.
+  const applyCustomBase = useCallback(
+    (result: BasePhotoApplyResult) => {
+      loadedCustomBaseUrlRef.current = result.url;
+      handleChange((prev) => ({
+        ...prev,
+        useCustomBase: true,
+        customBase: { url: result.url, mPerPx: result.mPerPx, uploadedAt: new Date().toISOString() },
+      }));
+      setFrame((prev) => (prev ? { ...prev, mPerPx: result.mPerPx, satDataUrl: result.previewDataUrl } : prev));
+      setShowPhotoImport(false);
+    },
+    [handleChange],
+  );
+
+  // Switch back to the real satellite view — the farmer's uploaded photo stays saved
+  // (customBase is left untouched; only the useCustomBase flag flips), so switching back to
+  // "your photo" later needs no re-upload or re-calibration.
+  const revertToSatellite = useCallback(() => {
+    handleChange((prev) => ({ ...prev, useCustomBase: false }));
+    const { frame: freshFrame, url: satUrl } = computeCanvasFrame(layers, lat, lon);
+    setFrame((prev) => (prev ? { ...prev, mPerPx: freshFrame.mPerPx, satDataUrl: null } : prev));
+    if (satUrl) {
+      fetchImageAsDataUrl(satUrl)
+        .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
+        .catch(() => {});
+    }
+  }, [handleChange, layers, lat, lon]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -1468,6 +1536,56 @@ function DesignStudioInner() {
           />
         )}
       </div>
+
+      {/* Import your own photo — Base step only. Lets a farmer use a drone/aerial photo of their
+          own land as the base to draw on, instead of the fetched satellite tile. See
+          components/design/BasePhotoImport.tsx and CustomBaseImage (lib/design-canvas.ts). */}
+      {canvasState && canvasState.step === 'base' && (
+        <div style={{ padding: '6px 12px 0' }}>
+          {canvasState.useCustomBase && canvasState.customBase ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                minHeight: 40,
+                padding: '6px 12px',
+                borderRadius: 12,
+                border: '1px solid rgba(192,122,30,0.35)',
+                background: 'rgba(192,122,30,0.08)',
+                fontSize: 12.5,
+                color: DARK,
+              }}
+            >
+              <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
+              <span style={{ flex: 1 }}>Using your own photo as the base.</span>
+              <button
+                type="button"
+                onClick={revertToSatellite}
+                style={{ border: 'none', background: 'transparent', color: GREEN, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+              >
+                Switch to satellite view
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowPhotoImport(true)}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(192,122,30,0.4)', background: 'transparent', color: OCHRE, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
+            >
+              <ImageIcon size={15} style={{ flexShrink: 0 }} />
+              <span style={{ flex: 1 }}>
+                <span style={{ fontWeight: 800 }}>Have a drone photo of your land?</span> Import it and draw on top instead of the satellite view.
+              </span>
+              <ChevronRight size={16} style={{ flexShrink: 0 }} />
+            </button>
+          )}
+        </div>
+      )}
+
+      {showPhotoImport && (
+        <BasePhotoImport onApply={applyCustomBase} onClose={() => setShowPhotoImport(false)} />
+      )}
 
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
           plan. Offered on the first (Base) step; jumps straight to Planting. */}
