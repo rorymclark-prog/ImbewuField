@@ -47,6 +47,8 @@ export interface DesignPaletteProps {
   setActiveLayers: (layers: ActiveLayers) => void;
   onUndo: () => void;
   canUndo: boolean;
+  onRedo: () => void;
+  canRedo: boolean;
   onDeleteSelected: (() => void) | null;
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
@@ -184,6 +186,8 @@ export default function DesignPalette({
   setActiveLayers,
   onUndo,
   canUndo,
+  onRedo,
+  canRedo,
   onDeleteSelected,
   siteBiome,
 }: DesignPaletteProps) {
@@ -369,6 +373,14 @@ export default function DesignPalette({
           disabled={!canUndo}
         >
           ↩️ Undo
+        </button>
+        <button
+          type="button"
+          style={{ ...toolButtonStyle(false, guided), opacity: canRedo ? 1 : 0.4, cursor: canRedo ? 'pointer' : 'default' }}
+          onClick={onRedo}
+          disabled={!canRedo}
+        >
+          ↪️ Redo
         </button>
         <button
           type="button"

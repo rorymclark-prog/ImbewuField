@@ -137,6 +137,10 @@ export interface DesignCanvasProps {
 const GOLD = '#F7C97E';
 const CYAN = '#22D3EE';
 const SCALE_STEPS_M = [5, 10, 20, 50, 100, 200] as const;
+// Same bone-white as DesignGlossy.tsx's BOUNDARY_BONE — the property boundary is a real
+// post-and-wire farm fence, never green, so it never reads as a row of plants (that
+// confusion was half the reason the old ticked-line convention had to go).
+const BOUNDARY_BONE = '#EDE7D9';
 
 function ringToPx(ring: Array<[number, number]>, imgW: number, imgH: number): string {
   return ring.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' ');
@@ -259,24 +263,23 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
 }
 
-// Crisp fence-line helper (ported from HybridRender.tsx's fencePicketPath) — short
-// perpendicular "pickets" along a closed ring, in viewBox px.
-function fencePicketPath(pts: Array<[number, number]>, spacing: number, half: number): string {
-  let d = '';
+// Post-and-wire boundary posts — ported from DesignGlossy.tsx's drawBlueprintBoundary so the
+// live editing canvas draws the SAME fence convention that ships on the output sheets: a post
+// ON every corner (each ring vertex is exactly one edge's start point here, so a shared corner
+// between two edges can never get double-posted), then more evenly spaced along each run.
+// `pts` are already in px, a closed ring (no repeated first point).
+function boundaryFencePosts(pts: Array<[number, number]>, step: number): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
   for (let i = 0; i < pts.length; i++) {
-    const [ax, ay] = pts[i];
-    const [bx, by] = pts[(i + 1) % pts.length];
-    const dx = bx - ax, dy = by - ay;
+    const [x1, y1] = pts[i];
+    const [x2, y2] = pts[(i + 1) % pts.length];
+    const dx = x2 - x1, dy = y2 - y1;
     const len = Math.hypot(dx, dy) || 1;
-    const px = -dy / len, py = dx / len;
-    const n = Math.max(1, Math.round(len / spacing));
-    for (let k = 1; k < n; k++) {
-      const t = k / n;
-      const cx = ax + dx * t, cy = ay + dy * t;
-      d += `M${(cx - px * half).toFixed(1)},${(cy - py * half).toFixed(1)} L${(cx + px * half).toFixed(1)},${(cy + py * half).toFixed(1)} `;
+    for (let t = 0; t < len; t += step) {
+      out.push([x1 + dx * (t / len), y1 + dy * (t / len)]);
     }
   }
-  return d.trim();
+  return out;
 }
 
 // Signature of the boundary ring identity — used to key the auto-fit effect so it only
@@ -1384,14 +1387,29 @@ export default function DesignCanvas({
         {refShown && refLayers.boundary.length >= 3 && (() => {
           const boundaryPx = refLayers.boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
           const boundaryPts = ringToPx(refLayers.boundary, imgW, imgH);
-          const picketPath = fencePicketPath(boundaryPx, 26, 6);
+          const posts = boundaryFencePosts(boundaryPx, 26);
           return (
             <g pointerEvents="none" opacity={refOpacityFactor}>
-              {/* Crisp fence style ported from HybridRender.tsx: dark casing + green line + pickets. */}
-              <polygon points={boundaryPts} fill="none" stroke="#0B120B" strokeWidth={5} strokeLinejoin="round" opacity={0.5} />
-              <polygon points={boundaryPts} fill="none" stroke="#9BE86B" strokeWidth={3} strokeLinejoin="round" />
-              <path d={picketPath} stroke="#0B120B" strokeWidth={3} strokeLinecap="round" opacity={0.5} fill="none" />
-              <path d={picketPath} stroke="#9BE86B" strokeWidth={1.6} strokeLinecap="round" fill="none" />
+              {/* Post-and-wire farm fence — ported from DesignGlossy.tsx's drawBlueprintBoundary so
+                  what the farmer sees while drawing matches what ships on the output sheets: a thin
+                  taut bone-white wire with round posts at regular intervals, never the old ticked/
+                  perpendicular-dash convention (which read, on a map full of planting, as a row of
+                  something along the fence — Rory: "boundary is still showing with that ugly fence
+                  one do it with poles and wire!"). Dark casing underneath keeps the pale wire legible
+                  over any satellite photo or AI-rendered background. */}
+              <polygon points={boundaryPts} fill="none" stroke="rgba(24,28,22,0.45)" strokeWidth={3.5} strokeLinejoin="round" />
+              <polygon points={boundaryPts} fill="none" stroke={BOUNDARY_BONE} strokeWidth={1.6} strokeLinejoin="round" />
+              {posts.map(([cx, cy], i) => (
+                <circle
+                  key={`bpost-${i}`}
+                  cx={cx}
+                  cy={cy}
+                  r={3.5}
+                  fill={BOUNDARY_BONE}
+                  stroke="rgba(24,28,22,0.55)"
+                  strokeWidth={1}
+                />
+              ))}
             </g>
           );
         })()}
@@ -2648,22 +2666,30 @@ export default function DesignCanvas({
         ))}
       </div>
 
-      {/* Draw-action cluster — grouped bottom-LEFT so it never hides behind the Layers popover
-          (which opens bottom-right) or the right-edge zoom controls (Rory: "Finish is hidden
-          behind the Layers window"). Cancel · Point · Finish read left→right; Finish is the
+      {/* Draw-action cluster — grouped bottom-CENTER, deliberately not bottom-left or
+          bottom-right: the Lima advisor (DesignAdvisor.tsx) explicitly claims bottom-left
+          ("Anchored BOTTOM-LEFT of the canvas area") and the zoom controls below claim
+          bottom-right, so this used to sit at bottom:12/left:12 — almost the exact same
+          rectangle as Lima's shell (bottom:10/left:10) — and Lima's higher z-index (40 vs
+          this cluster's old 6) meant its chip/card rendered ON TOP of Cancel/Point/Finish
+          whenever a tip was showing mid-draw (Rory: "buttons are covered by the lima
+          button"). Centering gives it its own lane with real clearance from both corners,
+          not just a z-index nudge. Cancel · Point · Finish read left→right; Finish is the
           prominent, pulsing primary. */}
       {(tool === 'zone' || tool === 'line') && draftPoints.length > 0 && (
         <div
           style={{
             position: 'absolute',
             bottom: 12,
-            left: 12,
+            left: '50%',
+            transform: 'translateX(-50%)',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
             gap: 8,
             flexWrap: 'wrap',
             maxWidth: 'calc(100% - 24px)',
-            zIndex: 6,
+            zIndex: 20,
           }}
         >
           <style>{`@keyframes imbewuFinishPulse{0%,100%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 3px rgba(31,77,43,0.30)}50%{box-shadow:0 3px 14px rgba(0,0,0,0.4),0 0 0 8px rgba(31,77,43,0.12)}}`}</style>

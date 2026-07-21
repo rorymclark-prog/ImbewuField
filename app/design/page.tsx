@@ -552,6 +552,7 @@ function DesignStudioInner() {
   const [zoneAdvice, setZoneAdvice] = useState<ZoneAdvicePin[]>([]);
 
   const undoStack = useRef<DesignCanvasState[]>([]);
+  const redoStack = useRef<DesignCanvasState[]>([]);
   // False until we know what (if anything) the cloud holds for this site — i.e. until the
   // reconcile below has settled, or we've established there is no cloud to reconcile with
   // (signed out). Gates AUTOMATIC persists only; a farmer's own edits are never gated. See
@@ -892,6 +893,10 @@ function DesignStudioInner() {
       setCanvasState((prev) => {
         if (!prev) return prev;
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
+        // A genuinely new edit invalidates whatever future we might have redone back to —
+        // standard undo/redo semantics. Without this, undo → edit → redo would silently
+        // resurrect a stale future state the farmer never asked for.
+        redoStack.current = [];
         const next = updater(prev);
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
@@ -911,12 +916,36 @@ function DesignStudioInner() {
         setSaved(true);
         return prev;
       }
+      // Stash what we're undoing FROM so redo can bring it back — this is the only place
+      // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
+      redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
       // An undo restores OLD CONTENT but is itself a NEW edit, so it must count rev forward from
       // where we are now (`prev`) — not from the stale rev the popped snapshot was saved with.
       // Bumping the popped rev instead makes consecutive undos emit DESCENDING revs (…13, 12,
       // 11…): the cloud copy would then out-rank each undo, reject the push, and the live
       // listener would apply the cloud copy straight back over it — an undo that visibly undoes
       // itself. Restoring content is never a reason to move the counter backwards.
+      const stamped = persistCanvasState({ ...popped, rev: prev.rev });
+      setSaved(true);
+      return stamped ?? popped;
+    });
+  }, []);
+
+  const handleRedo = useCallback(() => {
+    setSaved(false);
+    setCanvasState((prev) => {
+      const popped = redoStack.current.pop();
+      if (!popped || !prev) {
+        setSaved(true);
+        return prev;
+      }
+      // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
+      // reverse this redo, same as any other edit.
+      undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
+      // Same rev reasoning as handleUndo: a redo is itself a NEW edit and must count rev
+      // forward from `prev`, not from the stale rev the popped (redone) snapshot was saved
+      // with — otherwise consecutive redos emit descending revs, the cloud copy out-ranks
+      // them, and the live listener silently reverts the redo the farmer just asked for.
       const stamped = persistCanvasState({ ...popped, rev: prev.rev });
       setSaved(true);
       return stamped ?? popped;
@@ -949,6 +978,16 @@ function DesignStudioInner() {
         if (undoStack.current.length > 0) { e.preventDefault(); handleUndo(); }
         return;
       }
+      // Redo: Cmd/Ctrl+Shift+Z (standard on both Mac and Windows), plus Ctrl+Y for the
+      // non-Mac convention — mirrors the modifier-key detection undo already uses above.
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'z' || e.key === 'Z') && e.shiftKey) {
+        if (redoStack.current.length > 0) { e.preventDefault(); handleRedo(); }
+        return;
+      }
+      if (e.ctrlKey && (e.key === 'y' || e.key === 'Y')) {
+        if (redoStack.current.length > 0) { e.preventDefault(); handleRedo(); }
+        return;
+      }
       // Cmd/Ctrl+C — copy the selected placed items to the clipboard.
       if ((e.metaKey || e.ctrlKey) && (e.key === 'c' || e.key === 'C')) {
         const sel = new Set(selectedIds);
@@ -979,7 +1018,7 @@ function DesignStudioInner() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleUndo, onDeleteSelected, selectedIds, canvasState, handleChange]);
+  }, [handleUndo, handleRedo, onDeleteSelected, selectedIds, canvasState, handleChange]);
 
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line
@@ -1652,6 +1691,8 @@ function DesignStudioInner() {
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}
+          onRedo={handleRedo}
+          canRedo={redoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
           siteBiome={site?.biome}
         />
