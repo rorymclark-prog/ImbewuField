@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { middayFromLat } from '@/lib/sector';
 
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
@@ -41,6 +42,11 @@ interface RenderContext {
   layer?: RenderLayer;
   strictMap?: boolean;
   mapCriteria?: MapCriteria;
+  // Signed latitude (negative south) — lets the prompt say which side the noon sun is actually on
+  // instead of hardcoding "north" (false inside the tropics; SECTOR-MODEL-SPEC §0.2). Optional:
+  // when absent, the prompt falls back to the old "north" assumption, correct for the vast
+  // majority of South African sites.
+  lat?: number;
   biome?: string;
   rainfallMm?: number;
   rainfallPattern?: string;
@@ -61,7 +67,17 @@ interface RenderContext {
   placedElements?: Array<{ type: string; label: string; note?: string; locationHint: string }>;
 }
 
-function layerTheme(layer: RenderLayer): string {
+// §0.2 shared helper use: `sunSide` is 'N' unless a real latitude places the site inside the
+// tropics (|lat| < 23.4359°, e.g. northernmost SA ≈ -22.13°), where it can honestly be 'S' or
+// 'mixed'. Defaults to the old "north" assumption when no latitude is supplied — correct for the
+// large majority of South African sites this app serves.
+function sunSideFromLat(latDeg?: number): 'N' | 'S' | 'mixed' {
+  return latDeg != null && Number.isFinite(latDeg) ? middayFromLat(latDeg) : 'N';
+}
+
+function layerTheme(layer: RenderLayer, latDeg?: number): string {
+  const sunSide = sunSideFromLat(latDeg);
+  const sunSideWord = sunSide === 'N' ? 'NORTH' : sunSide === 'S' ? 'SOUTH' : 'NORTH in winter / SOUTH in summer';
   switch (layer) {
     case 'base':
       return `MAP TYPE: EXISTING SITE MAP — "What is here now?"
@@ -98,7 +114,7 @@ Show what enters the property from OUTSIDE the boundary. Use bold arrows origina
 
 INCLUDE:
 • Property boundary + house + driveway as base (no fill)
-• SUN: This site is in South Africa — the NORTH side receives the strongest useful sun. Show large sun arc from NE (winter sunrise) to NW (winter sunset) passing through the NORTH. Summer sun = high arc, strong; winter sun = lower arc, weaker. Draw as a clean inset diagram in a corner — NOT distorted across the property.
+• SUN: This site is in South Africa — the strongest useful sun passes through the ${sunSideWord}. Show a large sun arc passing through the ${sunSideWord}. Summer sun = high arc, strong; winter sun = lower arc, weaker. Draw as a clean inset diagram in a corner — NOT distorted across the property.
 • PREVAILING WIND: large arrow with label (use biome/climate data provided). Summer wind vs winter wind if different.
 • STORM WIND: if applicable, separate arrow
 • WATER IN / OUT: where runoff enters and exits the boundary (follow slope direction)
@@ -279,7 +295,7 @@ INCLUDE:
 • Existing vegetable garden
 • Zone 1 daily-use area around house
 • Zone 2 regular-use production
-• Zone 3 orchard / food forest (NORTH-facing ground)
+• Zone 3 orchard / food forest (${sunSideWord}-facing ground)
 • Zone 4 low-care managed production
 • Zone 5 wild / biodiversity buffer (existing tree belt)
 • Water catchment: JoJo tanks, swales, overflow route
@@ -292,7 +308,7 @@ INCLUDE:
 • North arrow
 • Scale bar
 • Zone numbers labelled with on-map pills (NO side legend or key)
-• Sun-sector inset in a corner: north = strongest useful sun, east = sunrise, west = sunset, summer = high arc, winter = lower arc
+• Sun-sector inset in a corner: ${sunSideWord.toLowerCase()} = strongest useful sun, east = sunrise, west = sunset, summer = high arc, winter = lower arc
 
 DO NOT:
 • List every individual crop or crop name on the map
@@ -374,12 +390,16 @@ Whatever this specific map emphasises, keep all of the above in the SAME positio
 
   // Sun/azimuth diagram belongs ONLY on the sector (Sun & Wind) map. On every other map it
   // was leaking a sun compass into the corner (e.g. on the zones map). Forbid it elsewhere.
+  // §0.2: the peak side is computed from the site's real latitude (middayFromLat), not hardcoded
+  // "north" — false inside the tropics, where the two solstices can disagree (`sunSide==='mixed'`).
+  const sunSideForRule = sunSideFromLat(ctx.lat);
+  const sunSideRuleWord = sunSideForRule === 'N' ? 'NORTH' : sunSideForRule === 'S' ? 'SOUTH' : 'NORTH in winter / SOUTH in summer';
   const sunRule = layer === 'sector'
     ? `SOUTHERN HEMISPHERE SUN RULE:
-This property is in South Africa. The NORTH side receives the strongest useful solar energy.
+This property is in South Africa. The ${sunSideRuleWord} side receives the strongest useful solar energy.
 • Do NOT draw a sun arc randomly across the property map.
 • Place a clean sun-sector inset diagram in a corner only.
-  - North face = strongest useful sun exposure
+  - ${sunSideRuleWord} face = strongest useful sun exposure
   - East = sunrise, West = sunset
   - Summer sun = high arc, strong and hot
   - Winter sun = lower arc, weaker`
@@ -432,7 +452,7 @@ ${sunRule}
 
 ${briefBlock}
 ${placedElementsBlock}
-${layerTheme(layer)}
+${layerTheme(layer, ctx.lat)}
 ${showZones && zoneLines ? `\nPERMACULTURE ZONES (use these as placement guides):\n${zoneLines}` : ''}
 ${polyLines ? `\nSURVEYED POLYGONS (geometry reference):\n${polyLines}` : ''}
 ${surveyLines ? `\nSITE CONTEXT (farmer survey):\n  ${surveyLines}` : ''}

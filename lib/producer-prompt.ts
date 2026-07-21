@@ -15,7 +15,8 @@ export type StylePreset =
   | 'homestead_storybook'
   | 'extension_blueprint'
   | 'karoo_folk'
-  | 'chatgpt_atlas';
+  | 'chatgpt_atlas'
+  | 'master_atlas';
 
 /**
  * Styles where the MODEL draws the labels and the legend, not the browser.
@@ -298,6 +299,12 @@ export const STYLE_LINES: Record<StylePreset, string> = {
     'STYLE — Karoo Folk Map: a bold naive folk-art farm map, flattened bird’s-eye view, decorative South African folk-pattern textures, charming handmade brushwork. Fixed palette: barn red, cobalt blue, sunflower yellow, pine green, whitewash cream.' + PLAN_SET_ANCHOR,
   chatgpt_atlas:
     'STYLE — ChatGPT Atlas: polished editorial cartography with a hand-painted feel, crisp plan-sheet composition, soft watercolor terrain washes, disciplined ink linework, cream paper border, and highly legible labels. Fixed palette: olive greens, muted blue-greys, warm ochre, parchment cream, charcoal text. The map reads like a premium printed design sheet from the direct ChatGPT examples.' + PLAN_SET_ANCHOR,
+  // Deliberately a different texture AND palette axis from precision_atlas (watercolor wash, greens)
+  // and extension_blueprint (flat technical ink, olive/sage): engraved crosshatch shading instead of
+  // painted washes, and a graphite/indigo ground with a single brass accent instead of any green-led
+  // palette — the "capital campaign / board memo" register, not "garden portrait" or "site plan".
+  master_atlas:
+    'STYLE — Master Atlas: a formal engraved masterplan in the register of a capital-campaign document or a historic land-grant survey, rendered clean and modern. Ground and vegetation are built from fine engraved crosshatch and stipple shading — never a painted wash — with precise contour hachures describing every slope, and a restrained single-weight ink border enclosing the sheet like a cartouche. Fixed palette, deliberately not green-led: graphite charcoal linework, deep indigo-grey ground tones, cool slate roofs, warm bone-white paper, and one disciplined brass-gold accent reserved for water infrastructure and the north arrow/scale device only. Labels sit in a restrained small-caps engraver\'s serif. The result reads as the most formal and authoritative sheet in the set — built to be bound into a funder\'s or board\'s masterplan document — never lush, never watercolor, never casual, never a satellite filter.' + PLAN_SET_ANCHOR,
 };
 
 // Per-sheet marker legends — POSITIVE ONLY. Each sheet's prompt names only the markers that can
@@ -586,7 +593,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // groundRegister's 'absent' case), so every kind that reaches this string shares one register.
   const fabricIsContent = groundRegister('lawn', sheetKind) === 'content';
   const siteFabric = fabric.trim()
-    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
+    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';
 
   // WHAT THIS LAYER SERVES. Separate from siteFabric because the two want opposite treatment: ground

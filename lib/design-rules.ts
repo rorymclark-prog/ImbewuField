@@ -12,6 +12,8 @@
 import type { DesignCanvasState, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { distM, pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
+import type { SectorSite } from '@/lib/sector';
+import { effectiveSlopeForRing, recommendTerraceMethod } from '@/lib/terracing';
 
 // Which design LAYER a piece of advice belongs to, so the advisor can show the farmer only the
 // tips for the layer they're working on (a zones-step advisor showing tank/shade tips is noise).
@@ -29,6 +31,11 @@ export interface SiteContext {
   slopeDeg?: number;
   aspectLabel?: string;
   rainfallMm?: number;
+  // Whole-site average slope (%) — the same value lib/sector.ts's SectorSite.elevation.slopePct
+  // carries, threaded through here ONLY so the terrace-method tip below (§6) has an
+  // effectiveSlopeForRing fallback when a ring has no farmer-measured slope of its own. See
+  // docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §3/§6.
+  slopePct?: number;
 }
 
 export interface SiteExtras {
@@ -261,6 +268,87 @@ export function evaluateDesign(
         layer: 'water',
       });
     }
+  }
+
+  // ── TERRACE METHOD — a tip, never a blocking gate ──
+  // Extends the existing advisory-tip mechanism (the banana_circle pattern above is the precedent
+  // named by EARTHWORKS-CONTEXT-PLAN Phase 4, "extend the existing advisor, not the canvas") with
+  // a new rule: when a terrace/berm catalog element is placed, OR a terrace_bank ground ring is
+  // completed, surface the §1 method recommendation as a tip. NEVER a blocking gate — this whole
+  // app's pattern is disclosure over restriction, and this feature is no exception
+  // (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §6 item 6).
+  const siteAsSector: SectorSite | undefined =
+    site?.slopePct != null ? { elevation: { slopeDeg: site.slopeDeg ?? 0, slopePct: site.slopePct, aspectDeg: 0, aspectLabel: '' } } : undefined;
+  // Adversarially reviewed, and the review found the review's own fixes had not actually reached
+  // here: this function used to build its message from `row.why` — a one-line grounded REASON —
+  // when the spec's TerraceMethodRow.copy field is "the exact sentence shown on screen", already
+  // written to carry every safety-review fix (the vetiver-plant-timing hazard, the 2 m cumulative
+  // cap, row 5's escalation clause). `.copy` had ZERO consumers anywhere in the app — a farmer was
+  // never shown any of it. `.why` was shown instead, and row 5's `.why` even quotes its own review
+  // history ("...corrected up to `ask_local_expert` during adversarial review") as if it were
+  // farmer-facing text. Fixed at the source (lib/terracing.ts) and here: use `.copy`.
+  const REGIONAL_FOOTER =
+    "Regional note: tuned conservative for KwaZulu-Natal's clay-over-rock hillslopes and storms — " +
+    'no South African code covers small-farm terrace safety (SANS 10160-5 excludes it). ' +
+    'Always confirm locally before cutting.';
+  const terraceTip = (label: string, ring: Pick<ZoneShape, 'measuredSlopePct'>, itemId?: string) => {
+    const eff = effectiveSlopeForRing(ring, siteAsSector);
+    if (!eff) {
+      tips.push({
+        severity: 'tip',
+        msg: `${label}: no slope known yet — walk the site and pace the slope, or open this place on the map to fetch one, before choosing a terrace method.`,
+        itemId,
+        layer: 'zones',
+      });
+      return;
+    }
+    const row = recommendTerraceMethod(eff.pct);
+    const highRisk = row.engineerFlag !== 'no';
+    // The spec calls this "the single most important disclosure in the whole feature": a whole-
+    // site average can hide a locally steeper pocket, and that risk COMPOUNDS specifically when
+    // the average itself already reads as the riskiest bands — the exact combination most likely
+    // to put a farmer's local terrain outside what this recommendation actually checked.
+    const whichSlope = eff.source === 'whole-site-average'
+      ? highRisk
+        ? ' This is your WHOLE-SITE AVERAGE, not the exact slope here, and it is already in the ' +
+          'highest-risk band this app recommends against DIY. On an uneven hillside, parts of it ' +
+          'are very likely steeper than this number — get this specific spot checked before you ' +
+          'cut anything.'
+        : " This uses your whole-site average slope, not the exact slope at this spot. Walk to the " +
+          "spot and check it isn't steeper before you build — a locally steeper pocket needs the " +
+          'next row\'s method, not this one.'
+      : '';
+    // The doc's own §1 boundary note: the 33%/row-6 line is a sourced extrapolation, not an
+    // engineered cutoff, so on-screen copy must treat it as a zone, not a hard line.
+    const nearFalsePrecisionBoundary = eff.pct >= 25 && eff.pct <= 35;
+    const boundaryNote = nearFalsePrecisionBoundary
+      ? ' Treat anything from roughly 25-35% slope as the steeper band — this line isn\'t precise ' +
+        "enough to trust to the percentage point. If you're unsure which side of it you're on, " +
+        'that uncertainty itself is the answer: get it checked.'
+      : '';
+    tips.push({
+      // 'no' rows (0-5%, no earthworks needed) stay a plain tip. Every row above that carries a
+      // real engineer-consultation flag, so it gets 'warn' — the strongest severity this app's
+      // advisor has (deliberately never a blocking gate, per the spec's own §6 item 6; a true
+      // 3-tier no/persistent-amber/blocking-red system per the spec's EngineerFlag UI table would
+      // need a new severity value threaded through DesignAdvisor.tsx, which this fix does not add
+      // — row 6's copy is written to read as unmistakably urgent within the 'warn' tier instead).
+      severity: highRisk ? 'warn' : 'tip',
+      msg: `${label} at ~${Math.round(eff.pct)}% slope: ${row.copy}${whichSlope}${boundaryNote} ${REGIONAL_FOOTER}`,
+      itemId,
+      layer: 'zones',
+    });
+  };
+  for (const item of state.items) {
+    const def = defFor(defs, item);
+    if (def?.id !== 'terrace' && def?.id !== 'berm') continue;
+    // Point-placed catalog elements carry no per-item measured slope — only the whole-site
+    // fallback applies here.
+    terraceTip(def.name, { measuredSlopePct: undefined }, item.id);
+  }
+  for (const z of state.zones) {
+    if (z.feature !== 'terrace_bank' || z.points.length < 3) continue;
+    terraceTip(z.name ?? 'Terrace bank', { measuredSlopePct: z.measuredSlopePct });
   }
 
   // ── WINDBREAK ──

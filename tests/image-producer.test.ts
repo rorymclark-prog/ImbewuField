@@ -265,6 +265,27 @@ test('chatgpt atlas style is wired through the prompt builder', () => {
   assert.ok(prompt.includes('NO INVENT:'));
 });
 
+test('master atlas style is wired through the prompt builder', () => {
+  const prompt = buildProducerPrompt(
+    'Water',
+    'master_atlas',
+    'blue area is a pond',
+    'full',
+    false,
+    'Site brief text',
+  );
+
+  assert.ok(prompt.includes('STYLE — Master Atlas'));
+  assert.ok(prompt.includes('engraved crosshatch'));
+  assert.ok(prompt.includes('NO INVENT:'));
+});
+
+test('master atlas is distinct in texture and palette from precision atlas and extension blueprint', () => {
+  assert.ok(STYLE_LINES.master_atlas.includes('never a painted wash'));
+  assert.ok(STYLE_LINES.master_atlas.includes('never watercolor'));
+  assert.ok(!/watercolor (wash|terrain)/i.test(STYLE_LINES.master_atlas));
+});
+
 test('satellite overlay style keeps the photo, letters its own sheet, and drops editor emoji', () => {
   assert.equal(isModelChromeStyle('satellite_overlay'), true);
   assert.equal(isModelChromeStyle('precision_atlas'), false);

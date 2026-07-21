@@ -476,6 +476,12 @@ export default function DesignCanvas({
   // Inline rename: tap a feature label (no drag) to edit its text.
   const [editingLabelId, setEditingLabelId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState('');
+  // Level (m) — shown for ANY feature ring — and measured slope (%) — shown only for
+  // terrace_bank rings — ride the SAME inline editor as the name, per
+  // docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §3/§6 ("extends the existing inline-rename
+  // editor … no new modal, no new interaction paradigm").
+  const [editingLevelText, setEditingLevelText] = useState('');
+  const [editingSlopeText, setEditingSlopeText] = useState('');
   const skipLabelCommit = useRef(false); // set on Escape so the blur that follows cancels instead of saving
   // Drop a stuck editor if its shape disappears (deleted, or replaced by a remote sync).
   useEffect(() => {
@@ -967,6 +973,8 @@ export default function DesignCanvas({
         const shape = state.zones.find((z) => z.id === dl.id);
         if (shape?.feature) {
           setEditingText(shape.name ?? GROUND_FEATURES[shape.feature].label);
+          setEditingLevelText(shape.levelM != null ? String(shape.levelM) : '');
+          setEditingSlopeText(shape.measuredSlopePct != null ? String(shape.measuredSlopePct) : '');
           setEditingLabelId(dl.id);
         }
       }
@@ -983,9 +991,37 @@ export default function DesignCanvas({
     const defaultLabel = shape.feature ? GROUND_FEATURES[shape.feature].label : '';
     // Empty, or unchanged from the default, → store no custom name (falls back to the default).
     const nextName = typed && typed !== defaultLabel ? typed : undefined;
+
+    // Level (m) — any feature. Blank clears it; a non-finite typed value (a stray "-" or letters
+    // mid-edit) is IGNORED rather than written, so a half-typed number never clobbers a real one.
+    const levelTyped = editingLevelText.trim();
+    const nextLevelM = levelTyped === '' ? undefined : Number(levelTyped);
+    const levelValid = nextLevelM === undefined || Number.isFinite(nextLevelM);
+
+    // Slope here (%) — terrace_bank rings only (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §3).
+    const slopeTyped = editingSlopeText.trim();
+    const nextSlopePct = slopeTyped === '' ? undefined : Number(slopeTyped);
+    const slopeValid = nextSlopePct === undefined || Number.isFinite(nextSlopePct);
+    const slopeApplies = shape.feature === 'terrace_bank';
+
+    const nameChanged = (nextName ?? '') !== (shape.name ?? '');
+    const levelChanged = levelValid && nextLevelM !== shape.levelM;
+    const slopeChanged = slopeApplies && slopeValid && nextSlopePct !== shape.measuredSlopePct;
+
     // No actual change → don't write (avoids a spurious undo entry + sync-timestamp bump on a no-op tap).
-    if ((nextName ?? '') === (shape.name ?? '')) return;
-    onChange({ ...state, zones: state.zones.map((z) => (z.id === id ? { ...z, name: nextName } : z)) });
+    if (!nameChanged && !levelChanged && !slopeChanged) return;
+    onChange({
+      ...state,
+      zones: state.zones.map((z) => {
+        if (z.id !== id) return z;
+        return {
+          ...z,
+          name: nextName,
+          levelM: levelValid ? nextLevelM : z.levelM,
+          measuredSlopePct: slopeApplies ? (slopeValid ? nextSlopePct : z.measuredSlopePct) : z.measuredSlopePct,
+        };
+      }),
+    });
   }
 
   // Vertex drag for the IN-PROGRESS draft shape (mid-draw) — the owner's explicit ask:
@@ -1612,42 +1648,84 @@ export default function DesignCanvas({
                 >
                   {feat ? (
                     editingLabelId === z.id ? (
-                      <foreignObject x={-75} y={-14} width={150} height={28} style={{ overflow: 'visible' }}>
-                        <input
-                          autoFocus
-                          value={editingText}
-                          onChange={(e) => setEditingText(e.target.value)}
-                          onPointerDown={(e) => e.stopPropagation()}
-                          onKeyDown={(e) => {
+                      (() => {
+                        const isTerraceBank = z.feature === 'terrace_bank';
+                        const rows = isTerraceBank ? 3 : 2;
+                        const rowH = 24;
+                        const gap = 3;
+                        const boxH = rows * rowH + (rows - 1) * gap + 8;
+                        const wholeSiteAvg = sectorSite?.elevation?.slopePct;
+                        const fieldStyle = {
+                          width: 150,
+                          fontSize: 11,
+                          fontWeight: 700 as const,
+                          textAlign: 'center' as const,
+                          color: '#FBF6EC',
+                          background: '#20190F',
+                          border: `1px solid ${color}`,
+                          borderRadius: 9,
+                          padding: '2px 6px',
+                          outline: 'none',
+                          boxSizing: 'border-box' as const,
+                        };
+                        const keyHandlers = {
+                          onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
                             if (e.key === 'Enter') e.currentTarget.blur();
                             else if (e.key === 'Escape') {
                               skipLabelCommit.current = true;
                               e.currentTarget.blur();
                             }
-                          }}
-                          onBlur={() => {
-                            if (skipLabelCommit.current) {
-                              skipLabelCommit.current = false;
-                              setEditingLabelId(null);
-                              return;
-                            }
-                            commitLabelEdit(z.id);
-                          }}
-                          style={{
-                            width: 150,
-                            fontSize: 11,
-                            fontWeight: 700,
-                            textAlign: 'center',
-                            color: '#FBF6EC',
-                            background: '#20190F',
-                            border: `1px solid ${color}`,
-                            borderRadius: 9,
-                            padding: '2px 6px',
-                            outline: 'none',
-                            boxSizing: 'border-box',
-                          }}
-                        />
-                      </foreignObject>
+                          },
+                        };
+                        return (
+                          <foreignObject x={-75} y={-boxH / 2} width={150} height={boxH} style={{ overflow: 'visible' }}>
+                            <div
+                              // Commit (or cancel) only when focus leaves the WHOLE editor group —
+                              // moving focus between the name/level/slope fields must not close it.
+                              onBlur={(e) => {
+                                const group = e.currentTarget;
+                                if (group.contains(e.relatedTarget as Node)) return;
+                                if (skipLabelCommit.current) {
+                                  skipLabelCommit.current = false;
+                                  setEditingLabelId(null);
+                                  return;
+                                }
+                                commitLabelEdit(z.id);
+                              }}
+                              style={{ display: 'flex', flexDirection: 'column', gap }}
+                            >
+                              <input
+                                autoFocus
+                                value={editingText}
+                                onChange={(e) => setEditingText(e.target.value)}
+                                onPointerDown={(e) => e.stopPropagation()}
+                                {...keyHandlers}
+                                style={fieldStyle}
+                              />
+                              <input
+                                value={editingLevelText}
+                                onChange={(e) => setEditingLevelText(e.target.value)}
+                                onPointerDown={(e) => e.stopPropagation()}
+                                {...keyHandlers}
+                                placeholder="Level here (m), e.g. 0.0 or -3.0"
+                                inputMode="decimal"
+                                style={fieldStyle}
+                              />
+                              {isTerraceBank && (
+                                <input
+                                  value={editingSlopeText}
+                                  onChange={(e) => setEditingSlopeText(e.target.value)}
+                                  onPointerDown={(e) => e.stopPropagation()}
+                                  {...keyHandlers}
+                                  placeholder={`Slope here (%) — avg ${wholeSiteAvg != null ? wholeSiteAvg.toFixed(0) : '—'}%`}
+                                  inputMode="decimal"
+                                  style={fieldStyle}
+                                />
+                              )}
+                            </div>
+                          </foreignObject>
+                        );
+                      })()
                     ) : featureLabelsOn ? (
                     <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
                       <div

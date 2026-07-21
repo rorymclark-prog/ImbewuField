@@ -3057,6 +3057,10 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
       const context = {
         placeName: title,
         layer,
+        // Real signed latitude, so the server can say which side the noon sun is actually on
+        // (middayFromLat) instead of hardcoding "north" — false inside the tropics (SECTOR-MODEL-
+        // SPEC §0.2).
+        lat: locationData?.lat,
         biome: locationData?.biome?.name,
         rainfallMm: locationData?.rainfall?.annual ?? undefined,
         rainfallPattern: locationData?.rainfall?.pattern,

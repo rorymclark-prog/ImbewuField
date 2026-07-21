@@ -46,8 +46,9 @@ function labelWord(label: string): string {
   return b == null ? label : compassWord(b);
 }
 
-/** Self-resolve latitude + SectorSite from the ?lat/?lon URL params and the design page's cache. */
-function resolveSectorContext(): { lat: number; site: SectorSite | null } | null {
+/** Self-resolve latitude/longitude + SectorSite from the ?lat/?lon URL params and the design
+ *  page's cache. */
+function resolveSectorContext(): { lat: number; lon: number; site: SectorSite | null } | null {
   if (typeof window === 'undefined') return null;
   try {
     const params = new URLSearchParams(window.location.search);
@@ -82,7 +83,7 @@ function resolveSectorContext(): { lat: number; site: SectorSite | null } | null
             : undefined,
         }
       : null;
-    return { lat, site };
+    return { lat, lon, site };
   } catch {
     return null;
   }
@@ -91,6 +92,7 @@ function resolveSectorContext(): { lat: number; site: SectorSite | null } | null
 export interface SectorSummaryProps {
   /** Optional overrides — win over the self-resolved values when a caller has them in scope. */
   lat?: number;
+  lon?: number;
   site?: SectorSite | null;
   /** Advance to the next step (Water). Wired to StepGuide's onNextStep. */
   onLooksRight?: () => void;
@@ -105,8 +107,10 @@ interface Row {
 function buildRows(model: SectorModel): Row[] {
   const rows: Row[] = [];
 
-  // ☀️ SUN — never missing. SH → strongest from the north; NH → the south.
-  const sunWord = model.sun.middayFrom === 'N' ? 'north' : 'south';
+  // ☀️ SUN — never missing. SH (below the tropics) → north; NH → south; 'mixed' inside the
+  // tropics, where the two solstices disagree on which side the noon sun sits (lib/solar.ts).
+  const sunWord =
+    model.sun.middayFrom === 'N' ? 'north' : model.sun.middayFrom === 'S' ? 'south' : 'north in winter, south in summer';
   rows.push({ key: 'sun', dot: DOT_SUN, text: `☀️ Sun: strongest from the ${sunWord.toUpperCase()} — put your beds on that side.` });
 
   // 💨 WIND — summer + winter prevailing directions (omitted entirely when wind data is absent).
@@ -137,19 +141,20 @@ function buildRows(model: SectorModel): Row[] {
   return rows;
 }
 
-export default function SectorSummary({ lat, site, onLooksRight }: SectorSummaryProps) {
+export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSummaryProps) {
   // Prefer props; otherwise self-resolve on mount (client-only, like TankCalculator).
-  const [resolved, setResolved] = useState<{ lat: number; site: SectorSite | null } | null>(null);
+  const [resolved, setResolved] = useState<{ lat: number; lon: number; site: SectorSite | null } | null>(null);
   useEffect(() => {
     if (lat == null) setResolved(resolveSectorContext());
   }, [lat]);
 
   const effLat = lat ?? resolved?.lat;
+  const effLon = lon ?? resolved?.lon;
   const effSite = site ?? resolved?.site ?? null;
 
   const model = useMemo(
-    () => (effLat != null && Number.isFinite(effLat) ? deriveSectorModel(effSite, effLat) : null),
-    [effSite, effLat],
+    () => (effLat != null && Number.isFinite(effLat) ? deriveSectorModel(effSite, effLat, effLon) : null),
+    [effSite, effLat, effLon],
   );
 
   const rows = useMemo(() => (model ? buildRows(model) : []), [model]);

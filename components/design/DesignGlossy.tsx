@@ -20,6 +20,7 @@ import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-clie
 import { compositeAccurateMap, restoreProtectedPixels, shouldUseModelChrome, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
+import type { SolarModel } from '@/lib/solar';
 import { computeContourLines } from '@/lib/contours';
 import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
@@ -284,7 +285,7 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 // These render via app/api/image-producer + lib/image-producer's compositeAccurateMap:
 // the model beautifies the whole scene, then we deterministically composite (satellite
 // everywhere → clip the model to the boundary → stroke the boundary → burn true labels),
-// so accuracy is guaranteed by construction. Six researched site-plan styles.
+// so accuracy is guaranteed by construction. Seven researched site-plan styles.
 // swatch = the card's colour chip (Rory's mockup shows each style as a card with a colour block).
 const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
   // labelStyle is required by the type but unused here: this style always takes the showcase path,
@@ -296,6 +297,7 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
   { key: 'chatgpt_atlas',       label: 'ChatGPT Atlas',       blurb: 'polished editorial cartography', labelStyle: 'blueprint', swatch: '#B7B09D' },
   { key: 'karoo_folk',          label: 'Karoo Folk Map',      blurb: 'bold folk-art farm map',         labelStyle: 'folk',      swatch: '#B5502E' },
+  { key: 'master_atlas',        label: 'Master Atlas',        blurb: 'engraved masterplan for boards & funders', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #2B2E33 0%, #3E4A5C 55%, #B08D3E 100%)' },
 ];
 
 // Sector's Style picker excludes Satellite Overlay: that style's whole premise is the MODEL
@@ -629,6 +631,14 @@ export function drawMarks(
       ctx.closePath();
       ctx.fillStyle = `${meta.color}33`;
       ctx.fill();
+    }
+    // Sheet 01 ("Existing site & base") had zero ground name labels — groundLabelsForSheet was
+    // called from exactly one place (buildBlueprintSectorMap, sheet 02 only). Wired in here, gated
+    // on the EXACT parameters sheet 01's own call site passes (buildComposite(...,'all',false)),
+    // so this never fires on the AI-composite paths that reuse buildComposite with drawDesign:true
+    // or a narrower filter (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4a).
+    if (!drawDesign && filter === 'all') {
+      drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, imgW, imgH));
     }
   }
 
@@ -2446,7 +2456,11 @@ function drawBlueprintGround(
   // Hard / bare surfaces read as SURFACE, not vegetation, so they take a hatch instead of a
   // solid wash (Rory: "driveway patio all those types of polygons should get hatching").
   // The driveway is tar: solid and dark, never hatched — hatching a carriageway reads as gravel.
-  const HARD = new Set<GroundFeatureKind>(['patio', 'cleared']);
+  // 'terrace_bank' joins this set for the same reason: a terrace riser is structurally a
+  // cut/retained face — even when its surface finish is grass, it is not open cultivable ground
+  // the way an adjoining lawn platform is, so it must read visually distinct from the flat
+  // platforms either side of it (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2).
+  const HARD = new Set<GroundFeatureKind>(['patio', 'cleared', 'terrace_bank']);
   const step = Math.max(9, W * 0.007);
   for (const z of sorted) {
     const meta = GROUND_FEATURES[z.feature!];
@@ -2591,6 +2605,7 @@ function drawBlueprintLegendFrame(
   pad: number,
   rowH: number,
   lgH: number,
+  heading: string = 'LEGEND',
 ): BlueprintLegend {
   const lgW = Math.round(W * 0.27);
   const lgX = W - pad - lgW, lgY = pad;
@@ -2608,7 +2623,7 @@ function drawBlueprintLegendFrame(
   let ry = lgY + ip + rowH * 0.4;
   ctx.fillStyle = '#F3EEE2';
   ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
-  ctx.fillText('LEGEND', lgX + ip, ry);
+  ctx.fillText(heading, lgX + ip, ry);
   ry += rowH * 0.9;
   ctx.strokeStyle = 'rgba(255,255,255,0.2)';
   ctx.beginPath();
@@ -2890,12 +2905,19 @@ function groundLabelsForSheet(
         veg_garden: 'Veg garden',
         orchard: 'Orchard',
       };
-      const text = (z.name ?? MAP_NAME[z.feature!] ?? GROUND_FEATURES[z.feature!].label).toUpperCase();
+      // Level suffix — appended BEFORE the dedup filter below, so two platforms of the same kind
+      // at DIFFERENT levels (e.g. an upper and a lower lawn) produce two distinct labels, while
+      // two at the SAME level (a real duplicate) still correctly collapse to one
+      // (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4a).
+      const levelSuffix = z.levelM != null ? ` ${z.levelM >= 0 ? '+' : ''}${z.levelM.toFixed(1)}M` : '';
+      const text = (z.name ?? MAP_NAME[z.feature!] ?? GROUND_FEATURES[z.feature!].label).toUpperCase() + levelSuffix;
       const cx = (z.points.reduce((s2, p) => s2 + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s2, p) => s2 + p[1], 0) / z.points.length) * H;
       return { text, cx, cy, pw: Math.min(W - 28, padX * 2 + text.length * fs * 0.62) };
     })
-    // One row per NAME: two lawns are one label, or the margin fills with repeats.
+    // One row per NAME: two lawns AT THE SAME LEVEL are one label, or the margin fills with
+    // repeats — but the level suffix above means two lawns at different levels no longer share
+    // a name, so this correctly keeps both.
     .filter((r, i, all) => all.findIndex((o) => o.text === r.text) === i);
 
   // Same margin-column layout the producer labels use: pinned to the nearer side, pushed down only
@@ -3819,11 +3841,16 @@ function drawSectorAnalysis(
   // enough to wash the fixed-colour title out to unreadable (a real render did exactly this).
   // False on the exact sheet, which never needs it and shouldn't gain an unasked-for dark corner.
   isAiBase = false,
+  // Farmer-traced zones — needed only for the per-terrace fall annotation (§4b), which reads
+  // levelM off whatever the farmer entered and is entirely independent of the whole-site water
+  // model above. Optional so this function still degrades gracefully if a caller has no state
+  // handy (there is currently only one caller, and it always has state).
+  state?: DesignCanvasState,
 ): void {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
-  const model = deriveSectorModel(site, frame.centerLat);
+  const model = deriveSectorModel(site, frame.centerLat, frame.centerLng);
   const isSH = model.southernHemisphere;
 
   // 3. Ring geometry — centre = boundary centroid (fallback frame centre); radius clamped so arrows
@@ -3923,10 +3950,20 @@ function drawSectorAnalysis(
     ctx.restore();
   };
 
-  // 4. FIRE wedge (under everything else) — a translucent sector from the dry-season wind direction.
-  if (model.fire) {
-    const v1 = bearingToUnitVector(model.fire.bearingDeg - 24);
-    const v2 = bearingToUnitVector(model.fire.bearingDeg + 24);
+  // Regional-assumption palette (§4 mechanism 1: these energies are ALWAYS dashed — solid is
+  // reserved for computed geometry). Colours match design/benchmark/README.md's transcribed icons
+  // (teal / blue / orange wavy wind lines) so the legend and the reference read as the same sheet.
+  const SUMMER_COOLING_COLOR = '#2FA6A0', SUMMER_COOLING_LBL = '#8FE0D8';
+  const COLD_FRONT_COLOR = '#3A6FC9', COLD_FRONT_LBL = '#9FB8EC';
+  const BERG_COLOR = '#C97B25', BERG_LBL = '#E0A45A';
+
+  // A dashed-edge translucent wedge — the shared shape for every regional-assumption wind/fire
+  // sector (namedWind + fire). Dashed boundary lines are mechanism 1 of the regional-assumption
+  // labelling contract (SECTOR-MODEL-SPEC §4): computed geometry (sun arcs, water/contour lines)
+  // is always solid; regional assumptions are always dashed.
+  const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, color: string, fillAlpha: number) => {
+    const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
+    const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
     const rr = R * 1.16;
     ctx.save();
     ctx.beginPath();
@@ -3934,55 +3971,112 @@ function drawSectorAnalysis(
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(214,74,42,0.20)';
+    ctx.fillStyle = `${color}${Math.round(fillAlpha * 255).toString(16).padStart(2, '0')}`;
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  // 4. FIRE wedge (under everything else) — regional-assumption, derived from the berg wind
+  // (never from the demoted NASA winter mean — §0.1). A translucent dashed sector from the
+  // berg-wind bearing.
+  if (model.fire) {
+    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, '#D64A2A', 0.20);
+    // Fire's bearing EQUALS the berg wind's bearing by construction, so a fire arrow + label on
+    // that ray would overprint the berg arrow + label. Let the wedge carry the message and put the
+    // label INSIDE the wedge (the ring interior is empty on this sheet).
+    const lp = bearingToUnitVector(model.fire.bearingDeg);
+    labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+  }
+
+  // 5. SUN — TWO real arcs (summer + winter), each swept through the actual computed rise/set
+  // azimuths from lib/solar.ts, not a fixed 180° semicircle (SECTOR-MODEL-SPEC §1: "never the
+  // octant"). Each arc sweeps through whichever side (N/S) that season's noon sun actually sits on
+  // — usually the same side both times, but genuinely different ('mixed') inside the tropics.
+  const bearingToCanvasAngle = (bearingDeg: number) => ((bearingDeg - 90) * Math.PI) / 180;
+  const drawSunArc = (path: SolarModel['summer'], r: number, color: string) => {
+    if (path.sunriseAzDeg == null || path.sunsetAzDeg == null) return null;
+    const sweepNorth = path.noonSide !== 'S';
+    const startAngle = bearingToCanvasAngle(path.sunriseAzDeg);
+    const endAngle = bearingToCanvasAngle(path.sunsetAzDeg);
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Math.max(3, W * 0.005);
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
+    ctx.stroke();
+    const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
+    ctx.beginPath();
+    ctx.arc(cx + apexVec[0] * r, cy + apexVec[1] * r, Math.max(6, W * 0.009), 0, Math.PI * 2);
+    ctx.fillStyle = color;
     ctx.fill();
     ctx.restore();
-    // Fire's bearing EQUALS the dry-season wind's bearing by construction, so a fire arrow + label
-    // on that ray would overprint the wind arrow + label. When they coincide, let the wedge carry
-    // the message and put the label INSIDE the wedge (the ring interior is empty on this sheet); only
-    // draw a separate fire arrow/edge-label when fire somehow sits on its own bearing.
-    const fireOnWind = model.fire.bearingDeg === model.windWinter?.bearingDeg || model.fire.bearingDeg === model.windSummer?.bearingDeg;
-    const lp = bearingToUnitVector(model.fire.bearingDeg);
-    if (fireOnWind) {
-      labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
-    } else {
-      drawArrow(lp, '#D64A2A', Math.max(3, W * 0.004), [10, 6]);
-      labelAt(cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
-    }
+    return apexVec;
+  };
+  const summerR = R + arrowLen * 0.30;
+  const winterR = R + arrowLen * 0.62;
+  const summerApex = drawSunArc(model.solar.summer, summerR, '#F7C97E');
+  const winterApex = drawSunArc(model.solar.winter, winterR, '#F5DFA6');
+  if (summerApex) {
+    labelAt(
+      cx + summerApex[0] * (summerR + rowH * 0.7),
+      cy + summerApex[1] * (summerR + rowH * 0.7),
+      `SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · noon ${Math.round(model.solar.summer.noonAltitudeDeg)}°`,
+      '#F7C97E',
+    );
+  }
+  if (winterApex) {
+    labelAt(
+      cx + winterApex[0] * (winterR + rowH * 0.7),
+      cy + winterApex[1] * (winterR + rowH * 0.7),
+      `WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · noon ${Math.round(model.solar.winter.noonAltitudeDeg)}°`,
+      '#F5DFA6',
+    );
+  }
+  // MIDDAY SUN ray — a simple orienting spike toward whichever side(s) the noon sun sits on.
+  // 'mixed' (inside the tropics) draws both sides, since the two solstices genuinely disagree.
+  const middaySides: Array<'N' | 'S'> = model.sun.middayFrom === 'mixed' ? ['N', 'S'] : [model.sun.middayFrom];
+  for (const side of middaySides) drawArrow(bearingToUnitVector(side === 'N' ? 0 : 180), '#F7C97E', Math.max(3.5, W * 0.0045), []);
+  const middayLabel =
+    model.sun.middayFrom === 'mixed'
+      ? `${model.solar.winter.noonSide} (winter) / ${model.solar.summer.noonSide} (summer)`
+      : model.sun.middayFrom;
+  labelAt(cx, isSH ? cy - R - rowH * 0.2 : cy + R + rowH * 0.2, `MIDDAY SUN — ${middayLabel}`, '#F7C97E');
+
+  // 6. REGIONAL NAMED WIND — summer-cooling / cold-front / berg, dashed wedges (§4 mechanism 1).
+  // Replaces the old summer/winter arrows drawn straight off the NASA POWER vector mean, which
+  // never places an arrow on this sheet any more (§0.3 — a circular mean of a bimodal wind rose
+  // points into the gap between its two real lobes). [] (no regional table for this site) prints
+  // a note instead of guessing.
+  const windWidth = () => Math.max(2.5, 3 * (W / 700));
+  for (const w of model.namedWind) {
+    if (w.id === 'berg') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, BERG_COLOR, 0.10);
+    if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, SUMMER_COOLING_COLOR, 0.10);
+    if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, COLD_FRONT_COLOR, 0.10);
+    const color = w.id === 'berg' ? BERG_COLOR : w.id === 'cold_front' ? COLD_FRONT_COLOR : SUMMER_COOLING_COLOR;
+    const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
+    const v = bearingToUnitVector(w.bearingDeg);
+    drawArrow(v, color, windWidth(), [9, 5]);
+    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
   }
 
-  // 5. SUN — a bold gold arc across the sky on the equator-facing side (north for SH), + midday ray.
-  const sunR = R + arrowLen * 0.45;
-  ctx.save();
-  ctx.strokeStyle = '#F7C97E';
-  ctx.lineWidth = Math.max(3, W * 0.005);
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.arc(cx, cy, sunR, 0, Math.PI, isSH); // isSH=anticlockwise → arc over the TOP (north)
-  ctx.stroke();
-  const sunApexY = isSH ? cy - sunR : cy + sunR;
-  ctx.beginPath();
-  ctx.arc(cx, sunApexY, Math.max(7, W * 0.011), 0, Math.PI * 2);
-  ctx.fillStyle = '#F7C97E';
-  ctx.fill();
-  ctx.restore();
-  drawArrow(bearingToUnitVector(isSH ? 0 : 180), '#F7C97E', Math.max(3.5, W * 0.0045), []);
-  labelAt(cx, isSH ? cy - sunR - rowH * 0.7 : cy + sunR + rowH * 0.7, `MIDDAY SUN — ${model.sun.middayFrom}`, '#F7C97E');
-
-  // 6. WIND — summer + winter arrows entering from where the wind blows FROM.
-  const windWidth = (spd?: number) => Math.max(2.5, (2 + Math.min(spd ?? 3, 8) * 0.5) * (W / 700));
-  if (model.windSummer) {
-    const v = bearingToUnitVector(model.windSummer.bearingDeg);
-    drawArrow(v, '#E08A2C', windWidth(model.windSummer.speed), [9, 5]);
-    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `SUMMER WIND ${model.windSummer.fromLabel}`, '#F0B76A');
-  }
-  if (model.windWinter) {
-    const v = bearingToUnitVector(model.windWinter.bearingDeg);
-    drawArrow(v, '#C97B25', windWidth(model.windWinter.speed), [9, 5]);
-    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `WINTER WIND ${model.windWinter.fromLabel}`, '#E0A45A');
-  }
-
-  // 7. WATER — downslope arrow through the centre + on-contour lines (dashed = indicative / omitted when flat).
+  // 7. TERRACE FALL (water) — downslope arrow through the centre + on-contour lines (dashed =
+  // indicative / omitted when flat). This is a single-plane-fit MODEL, not a survey (fallModel:
+  // 'uniform-plane') — SECTOR-MODEL-SPEC §5 explicitly forbids fanning multiple runoff arrows from
+  // one aspect value, so this stays one arrow; the parallel contour lines beside it are the exact
+  // perpendicular of the same claim, not a new one.
+  let contourIntervalM: number | null = null;
   if (model.water) {
     const dn = bearingToUnitVector(model.water.downhillBearingDeg);
     ctx.save();
@@ -4007,12 +4101,13 @@ function drawSectorAnalysis(
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-    labelAt(wex, wey + rowH * 0.55, `WATER FLOWS DOWNHILL${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
+    labelAt(wex, wey + rowH * 0.55, `FALL ~${model.water.slopePct.toFixed(0)}% — UNIFORM FALL ASSUMED${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
 
     // On-contour lines only when the slope is steep enough to be meaningful (>=1.5°).
     if (!model.flat && bnd.length >= 3 && model.water.slopeDeg >= 1.5) {
       const contour = computeContourLines(model.water.slopeDeg, model.water.downhillBearingDeg, bnd, frame.mPerPx, frame.imgW, frame.imgH);
       if (!contour.tooFlat && contour.lines.length) {
+        contourIntervalM = contour.intervalM;
         ctx.save();
         // clip to the boundary so the parallel lines don't spill past the plot
         blueprintRing(ctx, bnd, px, py);
@@ -4026,14 +4121,96 @@ function drawSectorAnalysis(
           ctx.lineTo(px(ln.b[0]), py(ln.b[1]));
           ctx.stroke();
         }
+        // Free wins already computed and previously discarded (SECTOR-MODEL-SPEC §5): each line's
+        // own elevM, labelled on alternate lines only so it stays legible.
+        ctx.font = `700 ${Math.round(rowH * 0.32)}px system-ui, sans-serif`;
+        ctx.fillStyle = 'rgba(183,232,166,0.85)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        contour.lines.forEach((ln, i) => {
+          if (i % 2 !== 0) return;
+          const mx = (px(ln.a[0]) + px(ln.b[0])) / 2, my = (py(ln.a[1]) + py(ln.b[1])) / 2;
+          ctx.fillText(`${ln.elevM > 0 ? '+' : ''}${ln.elevM}m`, mx, my);
+        });
         ctx.restore();
         const mid = contour.lines[Math.floor(contour.lines.length / 2)];
-        if (mid) labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2, 'ON CONTOUR — SWALES RUN THIS WAY', '#B7E8A6');
+        if (mid) {
+          labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2, 'ON CONTOUR — SWALES RUN THIS WAY', '#B7E8A6');
+          labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2 + rowH * 0.6, `CONTOUR INTERVAL ~${contour.intervalM} m`, '#B7E8A6');
+        }
       }
     }
   }
 
-  // 8. FROST — icy dashed downslope arrow + frost-pocket ellipse at the low end.
+  // 7b. PER-TERRACE FALL — a per-terrace fall/grade annotation computed from what the farmer
+  // actually drew and entered (levelM on each ring), NOT from the whole-site plane above. This is
+  // a different, narrower thing than the whole-site "TERRACE FALL (uniform-fall model)" legend row
+  // already produced by the `model.water` block above: that one is a whole-site decorative claim,
+  // this one is a per-terrace measurement, and it stays compatible with either sector
+  // implementation because it anchors to the terrace geometry itself, not the sheet-wide bearing.
+  // Reuses THIS function's own labelAt/claimed[] collision-avoidance — never a second copy of it
+  // (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4b).
+  let terraceFallDrawn = false;
+  if (state) {
+    const terraces = state.zones.filter((z) => z.feature && z.levelM != null && z.points.length >= 3);
+    // Pair every ring with every OTHER ring at a strictly lower level, biggest-drop pairs first,
+    // and only draw the strongest pair per ring so two platforms never grow a web of redundant
+    // arrows (a farmer with 3 stacked benches gets 1 arrow per adjacent pair, not a fan of them).
+    const pairs: Array<{ upper: ZoneShape; lower: ZoneShape; dropM: number }> = [];
+    for (const upper of terraces) {
+      for (const lower of terraces) {
+        if (upper.id === lower.id || upper.levelM! <= lower.levelM!) continue;
+        pairs.push({ upper, lower, dropM: upper.levelM! - lower.levelM! });
+      }
+    }
+    pairs.sort((a, b) => b.dropM - a.dropM);
+    const claimedRingId = new Set<string>();
+    for (const { upper, lower, dropM } of pairs) {
+      if (claimedRingId.has(upper.id) || claimedRingId.has(lower.id)) continue;
+      const [ux, uy] = centroidOf(upper.points);
+      const [lx, ly] = centroidOf(lower.points);
+      const uxp = px(ux), uyp = py(uy), lxp = px(lx), lyp = py(ly);
+      const runM = Math.hypot(lxp - uxp, lyp - uyp) / pxPerM;
+      if (runM < 0.5) continue; // degenerate/overlapping rings — don't divide by ~0
+      const gradePct = Math.round((dropM / runM) * 100);
+      const fallWidth = Math.max(3, W * 0.004);
+      ctx.save();
+      ctx.strokeStyle = '#3A8EC4';
+      ctx.fillStyle = '#3A8EC4';
+      ctx.lineWidth = fallWidth;
+      ctx.lineCap = 'round';
+      ctx.setLineDash([10, 6]);
+      ctx.beginPath();
+      ctx.moveTo(uxp, uyp);
+      ctx.lineTo(lxp, lyp);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      const ang = Math.atan2(lyp - uyp, lxp - uxp);
+      const ah = Math.max(9, fallWidth * 2.6);
+      ctx.beginPath();
+      ctx.moveTo(lxp, lyp);
+      ctx.lineTo(lxp - ah * Math.cos(ang - 0.42), lyp - ah * Math.sin(ang - 0.42));
+      ctx.lineTo(lxp - ah * Math.cos(ang + 0.42), lyp - ah * Math.sin(ang + 0.42));
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+      // Provenance stated on the label itself — this is computed from the farmer's own entered
+      // levels and traced positions, not a survey or SRTM-derived figure, so it must never be
+      // mistaken for one (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4b).
+      labelAt(
+        (uxp + lxp) / 2, (uyp + lyp) / 2,
+        `TERRACE FALL (FROM YOUR ENTERED LEVELS) — ${dropM.toFixed(1)} m OVER ${runM.toFixed(0)} m (${gradePct}%)`,
+        '#8FC4E8',
+      );
+      claimedRingId.add(upper.id);
+      claimedRingId.add(lower.id);
+      terraceFallDrawn = true;
+    }
+  }
+
+  // 8. COLD-AIR DRAINAGE (frost) — downgraded from a fixed-spot pocket ellipse to an open dashed
+  // chevron (SECTOR-MODEL-SPEC §5): cold-air pooling is set by micro-topography (a dip, a hedge, a
+  // wall) this app holds no data for, so it must never claim a definite pocket at a definite spot.
   if (model.frost) {
     const dn = bearingToUnitVector(model.frost.downhillBearingDeg);
     const fx = cx + dn[0] * siteR * 0.85, fy = cy + dn[1] * siteR * 0.85;
@@ -4041,18 +4218,22 @@ function drawSectorAnalysis(
     ctx.strokeStyle = '#9FD0E8';
     ctx.lineWidth = 2.4;
     ctx.setLineDash([3, 4]);
+    ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(fx, fy);
     ctx.stroke();
-    ctx.setLineDash([4, 3]);
+    // Open chevron (no fill, no fixed pocket) pointing further downhill from the arrow's end.
+    const cang = Math.atan2(dn[1], dn[0]);
+    const chevLen = Math.max(14, W * 0.018);
+    const cx2 = fx + dn[0] * chevLen * 1.4, cy2 = fy + dn[1] * chevLen * 1.4;
     ctx.beginPath();
-    ctx.ellipse(fx, fy, Math.max(20, W * 0.026), Math.max(12, W * 0.016), 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(159,208,232,0.16)';
-    ctx.fill();
+    ctx.moveTo(cx2 - chevLen * Math.cos(cang - 0.5), cy2 - chevLen * Math.sin(cang - 0.5));
+    ctx.lineTo(cx2, cy2);
+    ctx.lineTo(cx2 - chevLen * Math.cos(cang + 0.5), cy2 - chevLen * Math.sin(cang + 0.5));
     ctx.stroke();
     ctx.restore();
-    labelAt(fx, fy, 'FROST POCKET', '#CDE7FA');
+    labelAt(fx, fy + rowH * 0.6, 'COLD AIR DRAINS THIS WAY — POCKETS FORM IN LOW SPOTS (CHECK ON SITE)', '#CDE7FA');
   }
 
   // 9. DATA STRIP under the title — real figures only, missing ones omitted.
@@ -4062,6 +4243,7 @@ function drawSectorAnalysis(
   if (site?.climate?.windSpeed != null) parts.push(`WIND ${site.climate.windSpeed.toFixed(1)} m/s`);
   if (site?.climate?.minTemp != null) parts.push(`MIN ${site.climate.minTemp.toFixed(0)}°C`);
   if (site?.rainfallMm != null) parts.push(`${Math.round(site.rainfallMm)} mm/yr`);
+  if (contourIntervalM != null) parts.push(`CONTOUR INTERVAL ~${contourIntervalM} m`);
   if (parts.length) {
     ctx.save();
     ctx.fillStyle = '#B9C2C8';
@@ -4071,26 +4253,81 @@ function drawSectorAnalysis(
     ctx.fillText(parts.join('  ·  '), pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
     ctx.restore();
   }
+  // Self-citing SOURCES line (SECTOR-MODEL-SPEC §4) — only the sources actually used on this sheet.
+  const SOURCE_LABEL: Record<string, string> = {
+    'kruger2014': 'Kruger 2014', 'ams-bergwind': 'AMS Glossary', 'tshabalala2023': 'Tshabalala 2023',
+  };
+  const sourceKeys = new Set<string>(['Meeus ch.13']); // sun geometry is always computed from latitude
+  for (const w of model.namedWind) sourceKeys.add(SOURCE_LABEL[w.sourceKey] ?? w.sourceKey);
+  if (model.fire) sourceKeys.add(SOURCE_LABEL[model.fire.sourceKey] ?? model.fire.sourceKey);
+  ctx.save();
+  ctx.fillStyle = 'rgba(185,194,200,0.75)';
+  ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(`SOURCES: ${Array.from(sourceKeys).join(' · ')}`, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
+  ctx.restore();
 
-  // 10. Chrome — title, legend (only energies drawn), scale bar, north arrow.
+  // 10. Chrome — title, SECTOR LEGEND (numbered 1..9, icon per row, regional rows superscripted
+  // ᴬ), scale bar, north arrow. HARD INVARIANT: every row here is gated on the EXACT SAME boolean
+  // the corresponding draw call above used — never a legend row with nothing drawn, never a drawn
+  // energy with no legend row.
   drawBlueprintTitle(ctx, W, pad, 'SECTOR ANALYSIS', placeName ?? 'Site energies · sun · wind · water · fire', isAiBase);
-  const rows: BlueprintLegendRow[] = [{ color: '#F7C97E', label: `Midday sun (from ${model.sun.middayFrom})`, style: 'line' }];
-  if (model.windSummer) rows.push({ color: '#E08A2C', label: `Summer wind (${model.windSummer.fromLabel})`, style: 'dashline' });
-  if (model.windWinter) rows.push({ color: '#C97B25', label: `Winter wind (${model.windWinter.fromLabel})`, style: 'dashline' });
-  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel})`, style: 'dashline' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: model.water.indicative ? 'dashline' : 'line' });
-  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
-  if (model.frost) rows.push({ color: '#9FD0E8', label: 'Frost pocket', style: 'dashline' });
+  // Adversarial review finding: capped at 9 with Math.min(...,  CIRCLED.length-1) let a 10th row
+  // (this sheet now has up to 10 possible rows once Terracing's per-terrace-fall row is added
+  // alongside Sector's own 9) silently REUSE ⑨ instead of running out cleanly — two energies both
+  // numbered 9 on one real KZN-coastal summer-rainfall site. Extended past what's reachable today
+  // and given a real fallback beyond that, so a future 13th row degrades to plain "13." instead of
+  // colliding with ⑫.
+  const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫'];
+  let energyN = 0;
+  const nextIcon = (emoji: string) => {
+    const n = energyN++;
+    const numeral = n < CIRCLED.length ? CIRCLED[n] : `${n + 1}.`;
+    return `${numeral} ${emoji}`;
+  };
+  const rows: BlueprintLegendRow[] = [];
+  // Gated on the SAME `summerApex`/`winterApex` the arcs above returned — null only inside the
+  // polar circles (never reachable at a South African latitude, but honoured anyway per the
+  // HARD INVARIANT: no legend row for geometry that wasn't drawn).
+  if (summerApex) rows.push({ color: '#F7C97E', label: 'Summer sun', style: 'line', icon: nextIcon('☀️') });
+  if (winterApex) rows.push({ color: '#F5DFA6', label: 'Winter sun', style: 'line', icon: nextIcon('🌤️') });
+  rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: nextIcon('🕛') });
+  // Read each direction off the matched w.fromLabel, never hardcode it — this only ever read
+  // right for the one region (kzn-coastal) that exists today; a second region would have silently
+  // kept printing "NE/SW/NW" while the map arrows correctly pointed wherever that region's own
+  // table said (adversarial review finding: "the legend silently lies the day a second region
+  // lands").
+  const summerCoolingWind = model.namedWind.find((w) => w.id === 'summer_cooling');
+  const coldFrontWind = model.namedWind.find((w) => w.id === 'cold_front');
+  const bergWind = model.namedWind.find((w) => w.id === 'berg');
+  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: nextIcon('🍃') });
+  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: nextIcon('🌧️') });
+  if (bergWind) rows.push({ color: BERG_COLOR, label: `Berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: nextIcon('💨') });
+  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: nextIcon('🔥') });
+  if (model.water) rows.push({ color: '#3A8EC4', label: `Terrace fall ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: nextIcon('⬇️') });
+  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline' });
+  // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
+  // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
+  // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
+  // that one is the whole-site plane; this one is per-terrace, from the farmer's own entered levels.
+  if (terraceFallDrawn) rows.push({ color: '#3A8EC4', label: 'Terrace fall (from your entered levels)', style: 'dashline', icon: nextIcon('🪜') });
+  if (model.frost) rows.push({ color: '#9FD0E8', label: 'Cold-air drainage (inferred)', style: 'dashline', icon: nextIcon('❄️') });
   // Gated on the SAME test the boundary draw uses (bnd.length >= 3, computed above). Unconditional,
   // this printed a key for a fence line that is not on the page whenever the boundary is untraced —
   // the phantom-row defect from the layer audit, fixed on Zones, Planting, Structures and print
-  // sheet 01 in that pass, with sheet 02 out of scope and missed.
+  // sheet 01 in that pass, with sheet 02 out of scope and missed. Site boundary is NOT one of the
+  // 9 numbered energies (SECTOR-MODEL-SPEC §6) — it stays a plain, unnumbered fixed row.
   if (bnd.length >= 3) rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
-  // Allowance sized for a WRAPPING note. The fire note is deliberately long — it has to say why
-  // there is no fire sector AND what to do instead — so a fixed 2.6-row footer clipped it.
-  const noteText = model.dataNotes[0] ?? 'Read the site before you design it.';
+  // Footer: the REGIONAL SECTOR ASSUMPTIONS disclosure is MANDATORY, verbatim, whenever any
+  // regional-assumption sector is on the sheet (SECTOR-AI-LEGEND-PLAN §4) — it always wins over a
+  // generic data-quality caveat, because a farmer must never read a regional wind/fire bearing
+  // without also reading that it is not a measurement of their own land.
+  const REGIONAL_FOOTER =
+    'ᴬ REGIONAL SECTOR ASSUMPTIONS — wind, berg and fire directions are the documented regional pattern for coastal KwaZulu-Natal, not measurements at this site. Confirm local wind, fire and runoff directions by on-site observation before siting windbreaks or firebreaks. Sun path is computed from latitude. Bearings are TRUE north.';
+  const noteText = model.namedWind.length > 0 ? REGIONAL_FOOTER : model.dataNotes[0] ?? 'Read the site before you design it.';
   const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
-  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)));
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
   drawBlueprintLegendNote(ctx, lg, rowH, ry, noteText);
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
@@ -4191,7 +4428,7 @@ async function composeSectorSheet(
   };
   drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H, legendReserve));
 
-  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM, baseImage !== null);
+  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM, baseImage !== null, state);
 
   return canvas.toDataURL('image/png');
 }
@@ -4776,7 +5013,11 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v13';
+//   v14 — 2026-07-21: Sector Analysis (sheet 02) Part B — real two-arc sun geometry, regional named
+//        wind sectors (summer-cooling/cold-front/berg), fire re-derived from berg not winter wind,
+//        numbered "SECTOR LEGEND" with icons + regional-assumption footer. A cached sheet 02 from
+//        before this change is the old 6-row legend with the old wrong content — must not be served.
+const PLAN_VERSION = 'v14';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

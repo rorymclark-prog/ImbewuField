@@ -95,6 +95,8 @@ export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: 
   veg_garden: { label: 'Veg garden', color: '#4E8B3B', icon: '🥬' },
   orchard: { label: 'Orchard / food forest', color: '#2F7A4A', icon: '🌳' },
   cleared: { label: 'Cleared / other', color: '#B8AF9E', icon: '⬚' },
+  // The retained/graded riser face between two levels — see docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2.
+  terrace_bank: { label: 'Terrace bank / level change', color: '#8A6D3B', icon: '🪜' },
 };
 
 export const ELEMENT_CATALOG: DesignElementDef[] = [

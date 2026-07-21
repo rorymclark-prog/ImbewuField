@@ -40,7 +40,9 @@ export interface PlacedItem {
 // the whole zone draw/edit/persist/adopt engine rather than a parallel shape system.
 import polygonClipping from 'polygon-clipping';
 
-export type GroundFeatureKind = 'house' | 'patio' | 'driveway' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared' | 'boundary';
+export type GroundFeatureKind =
+  | 'house' | 'patio' | 'driveway' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared' | 'boundary'
+  | 'terrace_bank'; // the retained/graded riser face between two levels — see docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2
 
 export interface ZoneShape {
   id: string;
@@ -57,6 +59,19 @@ export interface ZoneShape {
   // label off a feature it overlaps (e.g. a lawn wrapping the house). Undefined = at centroid.
   labelDx?: number;
   labelDy?: number;
+  // Farmer-entered signed level in metres, relative to a site datum the farmer picks
+  // (house-floor-level = 0.0 is the obvious default, but it's whatever the farmer typed against).
+  // Only meaningful when `feature` is set; independent of WHICH kind — a lawn, a veg garden, an
+  // orchard platform, or a terrace_bank riser can each carry one. Optional so it stays JSON-safe
+  // and survives migrateStateToFrame's spread untouched, same reasoning as `feature` itself.
+  levelM?: number;
+  // An optional farmer-PACED slope measurement (%) for this specific ring, used ONLY when
+  // feature === 'terrace_bank'. When present, effectiveSlopeForRing (lib/terracing.ts) prefers
+  // this over the whole-site SRTM average, because it is the farmer's own on-site measurement of
+  // the exact spot, not a ~1 km-baseline approximation. Absent by default — most farmers won't
+  // pace a slope, and the whole-site fallback must degrade honestly, not silently assume a
+  // farmer input exists. See docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2/§3.
+  measuredSlopePct?: number;
 }
 
 export interface LineShape {

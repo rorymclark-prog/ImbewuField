@@ -5,6 +5,7 @@ export const maxDuration = 300;
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt } from '@/lib/site-survey';
+import { deriveSolar } from '@/lib/solar';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -164,17 +165,27 @@ export async function POST(req: NextRequest) {
     ? 'south-facing (cooler/moister in southern hemisphere)'
     : 'lateral slope';
 
-  // Sun geometry from latitude (pure astronomy) — noon sun elevation + day length at solstices
+  // Sun geometry from latitude (pure astronomy) — noon sun elevation + day length at solstices.
+  // Uses lib/solar.deriveSolar (SECTOR-MODEL-SPEC §0.2/§1) rather than a hardcoded "sun is always
+  // in the north" claim — false for any site inside the tropics (northernmost SA ≈ -22.13°, north
+  // of the Tropic of Capricorn at -23.4359°), where the two solstices can disagree on which side
+  // the noon sun sits (`middayFrom === 'mixed'`).
   const DECL = 23.44;
-  const noonSun = (decl: number) => Math.round(90 - Math.abs(d.lat - decl));
   const dayLen = (decl: number) => {
     const cosH = -Math.tan((d.lat * Math.PI) / 180) * Math.tan((decl * Math.PI) / 180);
     const H = Math.acos(Math.max(-1, Math.min(1, cosH)));
     return ((2 * H * 180) / Math.PI / 15).toFixed(1);
   };
-  const sunSummerNoon = noonSun(-DECL); // Dec solstice = SH high summer sun
-  const sunWinterNoon = noonSun(DECL);  // Jun solstice = SH low winter sun
-  const sunData = `Sun is in the NORTHERN sky at midday (southern hemisphere) → north-facing aspects get the most sun, south-facing are shaded/cooler. Noon sun elevation: ~${sunSummerNoon}° in summer (high), ~${sunWinterNoon}° in winter (low — long shadows to the south). Day length: ~${dayLen(-DECL)}h summer / ~${dayLen(DECL)}h winter.`;
+  const solar = deriveSolar(d.lat);
+  const sunSummerNoon = Math.round(solar.summer.noonAltitudeDeg);
+  const sunWinterNoon = Math.round(solar.winter.noonAltitudeDeg);
+  const sunSkyText =
+    solar.middayFrom === 'N'
+      ? 'Sun is in the NORTHERN sky at midday → north-facing aspects get the most sun, south-facing are shaded/cooler.'
+      : solar.middayFrom === 'S'
+      ? 'Sun is in the SOUTHERN sky at midday → south-facing aspects get the most sun, north-facing are shaded/cooler.'
+      : `This site sits inside the tropics — the midday sun swings sides through the year (from the ${solar.winter.noonSide} in winter to the ${solar.summer.noonSide} in summer), so both north- and south-facing aspects get strong sun at different times of year.`;
+  const sunData = `${sunSkyText} Noon sun elevation: ~${sunSummerNoon}° in summer (high), ~${sunWinterNoon}° in winter (low${solar.middayFrom === 'S' ? ' — long shadows to the north' : ' — long shadows to the south'}). Day length: ~${dayLen(-DECL)}h summer / ~${dayLen(DECL)}h winter.`;
 
   const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory.${languageInstruction}${toneInstruction}${lengthInstruction}
 

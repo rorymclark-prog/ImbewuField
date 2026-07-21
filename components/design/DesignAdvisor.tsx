@@ -35,6 +35,7 @@ interface DesignAdvisorProps {
     aspectLabel?: string;
     rainfallMm?: number;
     biome?: string;
+    slopePct?: number;
   } | null;
   houseXY: [number, number] | null;
   lastChangeId: string | null;
@@ -130,6 +131,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
             slopeDeg: site.slopeDeg,
             aspectLabel: site.aspectLabel,
             rainfallMm: site.rainfallMm,
+            slopePct: site.slopePct,
           }
         : undefined,
       houseXY ? { houseXY } : undefined,

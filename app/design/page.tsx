@@ -252,6 +252,9 @@ interface SiteCtx {
   aspectLabel?: string;
   rainfallMm?: number;
   biome?: string;
+  // Whole-site average slope (%) — feeds the terrace-method advisory tip (lib/design-rules.ts),
+  // same value glossySite.elevation.slopePct below carries for the Sector sheet.
+  slopePct?: number;
 }
 
 function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): DesignCanvasState {
@@ -567,6 +570,7 @@ function DesignStudioInner() {
       aspectLabel: locationData.elevation?.aspectLabel,
       rainfallMm: locationData.rainfall?.annual,
       biome: locationData.biome?.name,
+      slopePct: locationData.elevation?.slopePct,
     };
   }, [locationData]);
 
