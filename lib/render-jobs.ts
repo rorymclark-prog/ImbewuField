@@ -14,6 +14,7 @@ import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { hasConflictingRenderAuthority } from '@/lib/render-policy';
 
 export type RenderSheetStatus = 'queued' | 'running' | 'done' | 'error';
 export type RenderJobStatus = 'queued' | 'running' | 'complete' | 'failed' | 'error';
@@ -124,6 +125,9 @@ export async function enqueueRenderJob(opts: {
     throw new RenderJobError(`Too many sheets in one job (max ${MAX_SHEETS_PER_JOB}).`);
   }
   for (const s of opts.sheets) {
+    if (hasConflictingRenderAuthority(s)) {
+      throw new RenderJobError(`Sheet “${s.label}” requested two incompatible render modes.`);
+    }
     if (dataUrlBytes(s.compositeDataUrl) > MAX_COMPOSITE_BYTES) {
       throw new RenderJobError(`Sheet “${s.label}” is too large to upload (max 12 MB).`);
     }
@@ -151,7 +155,8 @@ export async function enqueueRenderJob(opts: {
           await uploadString(ref(fb.storage, protectMaskPath), s.protectMaskDataUrl, 'data_url');
           uploaded.push(protectMaskPath);
         }
-        // Firestore rejects undefined field values — only carry showcase when it's actually set.
+        // Persist false as well as true. Reattachment must never infer a finished sheet's authority
+        // from whichever style happens to be selected in the freshly-mounted UI.
         return {
           key: s.key,
           label: s.label,
@@ -159,7 +164,7 @@ export async function enqueueRenderJob(opts: {
           inputPath,
           ...(protectMaskPath ? { protectMaskPath } : {}),
           status: 'queued',
-          ...(s.showcase ? { showcase: true } : {}),
+          showcase: s.showcase === true,
           ...(typeof s.geometryLock === 'boolean' ? { geometryLock: s.geometryLock } : {}),
         };
       }),

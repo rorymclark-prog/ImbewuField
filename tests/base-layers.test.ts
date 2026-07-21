@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { resolveBaseLayers, type MapRefLayers } from '../lib/base-layers.ts';
 import type { DesignCanvasState, ZoneShape } from '../lib/design-canvas.ts';
+import { buildDemoGeometryLockFixture } from '../lib/demo-geometry-fixture.ts';
 
 function stateWith(zones: ZoneShape[]): DesignCanvasState {
   return {
@@ -120,4 +121,28 @@ test('all three slots present on both sides at once — Studio wins each, indepe
   assert.deepEqual(out.driveway, SMALL_SQUARE);
   assert.equal(out.drivewayClosed, true); // Studio rings are always closed polygons — see source.
   assert.deepEqual(out.source, { boundary: 'studio', house: 'studio', driveway: 'studio' });
+});
+
+test('sample QA fixture stores a concave roof and closed driveway in the real map-shape contract', () => {
+  const siteId = 'site:-27.72623,31.96304';
+  const fixture = buildDemoGeometryLockFixture(siteId, (xM, yM) => [xM, yM]);
+  const byFeatureId = new Map(fixture.features.map((feature) => [String(feature.id), feature]));
+  const boundary = byFeatureId.get('demo-boundary');
+  const house = byFeatureId.get('demo-house');
+  const driveway = byFeatureId.get('demo-driveway');
+
+  assert.equal(boundary?.properties?.name, 'Ubhejane plot');
+  assert.equal(house?.properties?.name, 'Main house roof');
+  assert.equal(driveway?.properties?.name, 'Tarred driveway');
+  assert.equal(house?.properties?.featureType, 'site');
+  assert.equal(driveway?.properties?.featureType, 'site');
+  assert.equal(house?.properties?.siteId, siteId);
+  assert.equal(driveway?.properties?.siteId, siteId);
+  assert.equal(house?.geometry.type, 'Polygon');
+  assert.equal(driveway?.geometry.type, 'Polygon');
+  if (house?.geometry.type !== 'Polygon' || driveway?.geometry.type !== 'Polygon') return;
+  assert.equal(house.geometry.coordinates[0].length, 9, 'eight distinctive roof corners plus closure');
+  assert.equal(driveway.geometry.coordinates[0].length, 11, 'ten driveway corners plus closure');
+  assert.deepEqual(house.geometry.coordinates[0][0], house.geometry.coordinates[0].at(-1));
+  assert.deepEqual(driveway.geometry.coordinates[0][0], driveway.geometry.coordinates[0].at(-1));
 });

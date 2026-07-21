@@ -6,6 +6,7 @@ import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatell
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
+import { exactModelInputMarks, hasConflictingRenderAuthority, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -98,6 +99,50 @@ test('geometry lock always overrides free-form model chrome', () => {
   assert.equal(shouldUseModelChrome(false, true), false);
   assert.equal(shouldUseModelChrome(true, false), true);
   assert.equal(shouldUseModelChrome(false, false), false);
+});
+
+test('Reference Blueprint and painted styles keep geometry and sheet chrome app-owned', () => {
+  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) {
+    assert.deepEqual(renderPolicyForStyle(style), {
+      authority: 'app',
+      modelChrome: false,
+      exactGeometry: true,
+      useStyleReference: style === 'precision_atlas',
+    });
+  }
+});
+
+test('Satellite Overlay remains the explicit reversible model-authored style', () => {
+  assert.deepEqual(renderPolicyForStyle('satellite_overlay'), {
+    authority: 'model',
+    modelChrome: true,
+    exactGeometry: false,
+    useStyleReference: false,
+  });
+});
+
+test('style-derived queue flags have exactly one render authority', () => {
+  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas', 'satellite_overlay'] as const) {
+    const flags = renderAuthorityFlagsForStyle(style);
+    assert.equal(hasConflictingRenderAuthority(flags), false, style);
+    assert.notEqual(flags.showcase, flags.geometryLock, style);
+  }
+  assert.deepEqual(renderAuthorityFlagsForStyle('precision_atlas'), { showcase: false, geometryLock: true });
+  assert.deepEqual(renderAuthorityFlagsForStyle('satellite_overlay'), { showcase: true, geometryLock: false });
+  assert.equal(hasConflictingRenderAuthority({ showcase: true, geometryLock: true }), true);
+});
+
+test('exact style inputs contain no editor glyphs or model-interpreted design marks', () => {
+  for (const filter of ['all', 'zones', 'water', 'planting', 'structures'] as const) {
+    assert.deepEqual(exactModelInputMarks(filter), {
+      showToolGlyphs: false,
+      showDrivewayEdge: false,
+      showDesignLines: false,
+      showDesignItems: false,
+      showHouseMark: false,
+      showDrivewayMark: false,
+    });
+  }
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {

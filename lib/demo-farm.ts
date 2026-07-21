@@ -15,7 +15,7 @@
 // Pure data + pure builder functions only — no I/O, no localStorage,
 // no Firestore. lib/sample-mode.ts is the only caller.
 
-import type { Feature, FeatureCollection, Geometry } from 'geojson';
+import type { FeatureCollection, Geometry } from 'geojson';
 import type { CropPlanState, Planting } from './crop-plan';
 import type { FacilitatorDesignState, FacItem, FacLine, FacSector, LayerId } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
@@ -27,6 +27,7 @@ import { computeCanvasFrame } from './design-canvas';
 import type { DesignLayer } from './design-studio';
 import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
+import { buildDemoGeometryLockFixture } from './demo-geometry-fixture';
 
 export const DEMO_SITE = { lat: -27.726231, lon: 31.963044, name: 'Ubhejane Creche' };
 
@@ -262,37 +263,17 @@ function demoSiteId(): string {
   return designSiteIdFromLocation({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon } as LocationData);
 }
 
-/* (a) Farm-shapes FeatureCollection — the traced plot boundary, stored EXACTLY the
-   way components/Map.tsx persists a drawn parcel under 'imbewu_farm_shapes':
+/* (a) Farm-shapes FeatureCollection — the traced plot boundary, house and driveway,
+   stored EXACTLY the way components/Map.tsx persists a drawn parcel under 'imbewu_farm_shapes':
    a GeoJSON FeatureCollection whose feature carries a top-level `id` plus
    properties { featureType:'site', siteId, hatchIdx, name }. classifyFeature()
    (lib/design-studio.ts) tags the largest non-water land polygon as the
-   property_boundary, and the /design page fits its satellite frame to it. The
-   quadrilateral is a slightly-irregular ~40 m × 28 m ring around the fence so it
-   reads as hand-traced, not machine-perfect. */
+   property_boundary, while the explicit names classify the smaller polygons as
+   roof and access. The deliberately concave house and closed driveway area are a
+   non-billed Geometry Lock regression fixture: any smoothing, cropping or roof-like
+   driveway treatment is immediately visible in the generated sample sheets. */
 export function buildDemoBoundaryFC(): FeatureCollection {
-  // Slightly-irregular plot corners in plot-metres (mean ≈ centre (20,14)); ~41 m × 27 m.
-  const cornersM: Array<[number, number]> = [
-    [-0.5, 0.4],   // NW
-    [39.6, 1.3],   // NE
-    [40.4, 27.2],  // SE
-    [0.8, 26.7],   // SW
-  ];
-  const ring = cornersM.map(([xM, yM]) => plotMetreToLngLat(xM, yM));
-  ring.push(ring[0]); // GeoJSON polygons are closed rings
-
-  const feature: Feature = {
-    type: 'Feature',
-    id: 'demo-boundary',
-    properties: {
-      featureType: 'site',
-      siteId: demoSiteId(),
-      hatchIdx: 0,
-      name: 'Ubhejane plot',
-    },
-    geometry: { type: 'Polygon', coordinates: [ring] },
-  };
-  return { type: 'FeatureCollection', features: [feature] };
+  return buildDemoGeometryLockFixture(demoSiteId(), plotMetreToLngLat);
 }
 
 /* (b) Saved place — the "Ubhejane Creche" pin. biome/rainfall/elevation are plausible
@@ -419,9 +400,11 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   // ── Lines ──────────────────────────────────────────────────────────────
   const pathM: Array<[number, number]> = [[20, 2], [20, 12], [12, 18]];      // gate → down → into beds
   const swaleM: Array<[number, number]> = [[3, 20.5], [20, 20.8], [37, 20.5]]; // on-contour, just above the orchard
+  const greywaterM: Array<[number, number]> = [[24, 12], [20, 18], [17, 22.5]]; // house diverter → orchard basin
   const lines: LineShape[] = [
     { id: 'demo-dl-path', kind: 'path', points: pathM.map(([xM, yM]) => toNorm(xM, yM)) },
     { id: 'demo-dl-swale', kind: 'swale', points: swaleM.map(([xM, yM]) => toNorm(xM, yM)) },
+    { id: 'demo-dl-greywater', kind: 'greywater', points: greywaterM.map(([xM, yM]) => toNorm(xM, yM)) },
   ];
 
   return {

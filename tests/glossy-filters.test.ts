@@ -5,6 +5,7 @@ import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, groundRegis
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
+import { waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 // glossy-filters.ts has said since it was extracted that it exists "so the pure layer-membership
 // logic is unit-testable" — and there was no test. In that gap, itemInFilter(_, 'zones') returning
@@ -12,7 +13,7 @@ import type { MapRefLayers } from '../lib/base-layers.ts';
 // legend of invented tanks and veg beds. This file is that missing guard.
 
 const LAYER_SHEETS: GlossyLayerFilter[] = ['water', 'planting', 'structures'];
-const LINE_KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak'] as const;
+const LINE_KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
 
 test('every catalog element appears on exactly one layer sheet', () => {
   const orphans: string[] = [];
@@ -126,6 +127,12 @@ test('a greywater run is a real line kind, and it belongs to the water sheet', (
     assert.equal(lineInFilter('greywater', f), false, `greywater must not appear on ${f}`);
   }
   assert.equal(lineInFilter('greywater', 'all'), true, 'the masterplan carries everything');
+});
+
+test('every Water-sheet line has deterministic cartography and no non-Water line does', () => {
+  for (const kind of LINE_KINDS) {
+    assert.equal(Boolean(waterRouteStyleFor(kind)), lineInFilter(kind, 'water'), kind);
+  }
 });
 
 test('every line kind still lands on exactly one layer sheet', () => {
