@@ -310,7 +310,12 @@ test('overlay icon vocabulary matches element NAMES, not headings or place suffi
   assert.match(icons, /mixed wildflowers/, 'pollinator strip');
 
   // Confusable pairs must differ by SILHOUETTE, not species.
-  assert.match(icons, /no leaf rosette of its own/, 'tree basin is distinct from a banana circle');
+  // Tree basin vs banana circle used to be told apart by "no leaf rosette of its own". The tree
+  // basin is now correctly a MOUND with the tree on top, so the discriminator is the silhouette —
+  // which is the stronger distinction anyway: one is sunken with plants on the rim, the other is
+  // raised with mulch around it.
+  assert.match(icons, /Opposite silhouette to a banana circle/, 'tree basin is distinct from a banana circle');
+  assert.match(icons, /SUNKEN pit with plants around its rim, this is a RAISED mound/);
   assert.match(icons, /raised earth bund/, 'banana circle keeps its own description');
 });
 
@@ -587,4 +592,34 @@ test('the icon rule never renders as an empty numbered fragment', () => {
   });
   assert.doesNotMatch(zones, /shading: \./);
   assert.match(zones, /6\. ICON LANGUAGE/);
+});
+
+// ── Tree basin geometry ──────────────────────────────────────────────────────
+// The app used to DESCRIBE the safe arrangement to the farmer and DRAW the unsafe one: the tip said
+// "a mulch-filled ring around a fruit tree", the icon spec said "a shallow saucer … sitting under
+// the canopy it serves" — i.e. the tree standing in the dip. That is how a collar rots, and
+// avocado, pawpaw and macadamia are the local Phytophthora-susceptible cases. The water prompt
+// already routes greywater to tree basins, which is only safe with the mound-and-moat geometry.
+test('a tree basin is drawn as a mound with a moat, never a tree in a dish', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'Tree Basin ×5', sheetKind: 'water',
+  });
+  const icons = p.slice(p.indexOf('6. ICON LANGUAGE'), p.indexOf('7. THIS SHEET'));
+  assert.match(icons, /raised earth mound at the centre with the tree standing ON TOP/);
+  assert.match(icons, /doughnut-shaped mulched moat|annular trench/);
+  assert.match(icons, /never standing in a dip or a puddle/);
+  assert.doesNotMatch(icons, /shallow saucer/);
+});
+
+test('the farmer-facing tip and the drawing instruction agree on the geometry', () => {
+  const def = ELEMENT_CATALOG.find((d) => d.id === 'tree_basin')!;
+  // Both must carry the mound. They disagreed for a long time and nothing caught it, because a tip
+  // and a prompt string live in different files and are never compared.
+  assert.match(def.tip ?? '', /mound/i, 'the tip must tell the farmer to plant on a mound');
+  assert.match(def.tip ?? '', /moat|ring/i);
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay', elementsText: 'Tree Basin', sheetKind: 'water',
+  });
+  assert.match(p, /mound/i);
 });

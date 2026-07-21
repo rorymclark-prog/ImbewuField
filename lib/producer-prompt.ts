@@ -390,7 +390,15 @@ const OVERLAY_ICONS: Record<string, string> = {
   // Every icon spec must now describe the MARKER SHAPE it replaces, never a line the marker is not.
   mulch:     'a hatched rectangular grass-bank marker → a compact block of upright blue-green vetiver tussocks filling exactly that rectangle and no larger, cut low at one end to show it is harvested. It is a block on its own marker, never a band running along the fence or any other line',
   vetiver_row: 'a vetiver-row marker → single-file separate grass clumps with visible gaps between them, not a continuous band',
-  tree_basin: 'a tree-basin marker → a shallow saucer of bare brown earth ringed by a low soil berm and mulched, sitting under the canopy it serves — it has no leaf rosette of its own',
+  // MOUND AND MOAT, not a dish with a tree in it. This said "a shallow saucer … sitting under the
+  // canopy it serves", i.e. the tree standing IN the depression — which is the arrangement that
+  // rots a collar. Avocado in particular is the South African Phytophthora case and is planted on
+  // a MOUND; pawpaw collapses to collar rot in a wet basin. The element's own farmer-facing tip
+  // (design-elements.ts) has always said "a mulch-filled RING around a fruit tree" — the drawing
+  // instruction was the half that was wrong, so the app described the safe thing and drew the
+  // unsafe one. The water prompt already routes greywater here, which only works with this
+  // geometry: water enters the moat, away from the trunk.
+  tree_basin: 'a tree-basin marker → a raised earth mound at the centre with the tree standing ON TOP of it, ringed by a doughnut-shaped mulched moat: a shallow annular trench of dark mulch held by a low outer soil berm, with clear dry ground between the mulch and the trunk. The tree is never standing in a dip or a puddle — the crown sits above the surrounding ground and the water sits in the ring around it. Opposite silhouette to a banana circle: that is a SUNKEN pit with plants around its rim, this is a RAISED mound with the mulch around it',
   coop:      'a chicken-tractor marker → a small A-frame ark on skids about 2 m long, timber ends and chicken-wire sloping sides, two small wheels at one end. It is a movable hen house, NOT a tractor and not any kind of vehicle',
   nursery:   'a nursery-table marker → a waist-high slatted timber bench carrying rows of small black seedling trays under light shade cloth',
   compost:   'a compost-bay marker → three adjacent open-topped timber-slat bays in a row, the left one heaped with dark brown compost',

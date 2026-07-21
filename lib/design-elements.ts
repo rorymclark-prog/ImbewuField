@@ -316,7 +316,12 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     hM: 2,
     color: '#A9743F',
     zoneRec: [1, 2],
-    tip: 'A mulch-filled ring/half-moon around a fruit tree — catches roof or greywater runoff so it soaks in at the roots instead of running off.',
+    // The geometry matters more than the name: the tree sits on a raised centre mound and the water
+    // sits in the ring AROUND it, never against the trunk. A fruit tree standing in a wet
+    // depression is how you get collar rot — and avocado, pawpaw and macadamia are the local
+    // Phytophthora-susceptible cases, so this is the difference between the earthwork helping and
+    // killing the tree it serves.
+    tip: 'Plant the tree on a low raised mound, then ring it with a mulch-filled moat — roof or greywater runoff soaks in through the ring, at the feeder roots, while the trunk and crown stay high and dry. Never plant a fruit tree standing in the dip.',
   },
   {
     id: 'greywater_basin',
