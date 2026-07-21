@@ -15,25 +15,29 @@ type ClipFrame = {
   elements?: Array<{ type: string; icon: string; label: string; x: number; y: number }>; // farmer-placed point elements (normalised [0..1])
 };
 
-// Short perpendicular "pickets" along the boundary ring → reads as a strict fence line.
-// pts are already in viewBox pixels; returns an SVG path of tick segments.
-function fencePicketPath(pts: Array<[number, number]>, spacing: number, half: number): string {
-  let d = '';
+// Post-and-wire boundary posts — same convention as DesignGlossy.tsx's drawBlueprintBoundary
+// and DesignCanvas.tsx's live boundary: a post ON every corner (each ring vertex is exactly
+// one edge's start point, so a shared corner between two edges can't get double-posted), then
+// more evenly spaced along each run. NOT perpendicular ticks — those read, on a map full of
+// planting, as a row of something along the fence line rather than a fence. pts are already in
+// viewBox pixels.
+function boundaryFencePosts(pts: Array<[number, number]>, step: number): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
   for (let i = 0; i < pts.length; i++) {
-    const [ax, ay] = pts[i];
-    const [bx, by] = pts[(i + 1) % pts.length];
-    const dx = bx - ax, dy = by - ay;
+    const [x1, y1] = pts[i];
+    const [x2, y2] = pts[(i + 1) % pts.length];
+    const dx = x2 - x1, dy = y2 - y1;
     const len = Math.hypot(dx, dy) || 1;
-    const px = -dy / len, py = dx / len; // unit perpendicular
-    const n = Math.max(1, Math.round(len / spacing));
-    for (let k = 1; k < n; k++) {
-      const t = k / n;
-      const cx = ax + dx * t, cy = ay + dy * t;
-      d += `M${(cx - px * half).toFixed(1)},${(cy - py * half).toFixed(1)} L${(cx + px * half).toFixed(1)},${(cy + py * half).toFixed(1)} `;
+    for (let t = 0; t < len; t += step) {
+      out.push([x1 + dx * (t / len), y1 + dy * (t / len)]);
     }
   }
-  return d.trim();
+  return out;
 }
+
+// Same bone-white as DesignGlossy.tsx's BOUNDARY_BONE / DesignCanvas.tsx's BOUNDARY_BONE — the
+// boundary is a real post-and-wire farm fence, never green, so it can't be mistaken for planting.
+const BOUNDARY_BONE = '#EDE7D9';
 
 export default function HybridRender({
   imageDataUrl,
@@ -178,9 +182,9 @@ export default function HybridRender({
     pts.map(([nx, ny]) => `${(nx * W).toFixed(1)},${(ny * H).toFixed(1)}`).join(' ');
   const ringPts = useClip ? toPts(clip!.ring) : '';
   const drivePts = useClip && clip!.driveway.length >= 2 ? toPts(clip!.driveway) : '';
-  // Pixel ring + fence pickets (strict boundary-fence look).
+  // Pixel ring + fence posts (post-and-wire boundary look).
   const ringPx = useClip ? clip!.ring.map(([nx, ny]) => [nx * W, ny * H] as [number, number]) : [];
-  const fencePts = useClip ? fencePicketPath(ringPx, 26, 6) : '';
+  const fencePosts = useClip ? boundaryFencePosts(ringPx, 26) : [];
 
   const hasNotes = !!notes;
   const headerH = hasNotes ? 92 : 70;
@@ -235,15 +239,22 @@ export default function HybridRender({
             <rect x={0} y={0} width={W} height={H} fill="rgba(10,15,8,0.34)" />
             {/* AI design — HARD-CLIPPED to the traced boundary; can never spill outside */}
             <image href={imageDataUrl} x={0} y={0} width={W} height={H} preserveAspectRatio="none" clipPath="url(#imbewu-bnd)" />
-            {/* Crisp boundary FENCE (our vector, always exact): casing + bold line + pickets */}
-            <polygon points={ringPts} fill="none" stroke="#0B120B" strokeWidth={6} strokeLinejoin="round" opacity={0.55} />
-            <polygon points={ringPts} fill="none" stroke="#9BE86B" strokeWidth={3.5} strokeLinejoin="round" />
-            {fencePts && (
-              <>
-                <path d={fencePts} stroke="#0B120B" strokeWidth={3} strokeLinecap="round" opacity={0.5} fill="none" />
-                <path d={fencePts} stroke="#9BE86B" strokeWidth={1.6} strokeLinecap="round" fill="none" />
-              </>
-            )}
+            {/* Crisp boundary FENCE (our vector, always exact): post-and-wire, matching
+                DesignGlossy.tsx's drawBlueprintBoundary and DesignCanvas.tsx's live boundary —
+                casing + bone-white wire + round posts, never green ticks. */}
+            <polygon points={ringPts} fill="none" stroke="rgba(24,28,22,0.55)" strokeWidth={6} strokeLinejoin="round" />
+            <polygon points={ringPts} fill="none" stroke={BOUNDARY_BONE} strokeWidth={3.5} strokeLinejoin="round" />
+            {fencePosts.map(([cx, cy], i) => (
+              <circle
+                key={`hpost-${i}`}
+                cx={cx}
+                cy={cy}
+                r={5}
+                fill={BOUNDARY_BONE}
+                stroke="rgba(24,28,22,0.6)"
+                strokeWidth={1.4}
+              />
+            ))}
             {/* Driveway — drawn by us so it's always obeyed. An AREA (polygon) renders as a
                 soft paved lane; a LINE renders as a dashed track. */}
             {drivePts && (clip!.drivewayClosed ? (
