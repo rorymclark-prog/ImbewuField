@@ -2659,10 +2659,25 @@ function drawBlueprintLegendNote(
   rowH: number,
   ry: number,
   text: string,
-): void {
+): number {
+  // WRAPS. This was one fillText, so any note longer than the panel simply ran off the edge and was
+  // clipped mid-word — which is how the sector sheet shipped "Fire sector not shown: the dry-season
+  // fire wind is regional" with the rest of the sentence, including what the farmer should DO about
+  // it, cut off the page. A note that gets truncated is worse than no note: it looks like a bug and
+  // it loses the actionable half. Returns the line count so a caller can size the panel for it.
   ctx.fillStyle = '#9AA6AC';
   ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
-  ctx.fillText(text, lg.lgX + lg.ip, ry);
+  const maxW = lg.lgW - lg.ip * 2;
+  const lines: string[] = [];
+  let line = '';
+  for (const word of text.split(/\s+/)) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(next).width > maxW) { lines.push(line); line = word; } else { line = next; }
+  }
+  if (line) lines.push(line);
+  const lh = Math.round(rowH * 0.52);
+  lines.forEach((l, i) => ctx.fillText(l, lg.lgX + lg.ip, ry + i * lh));
+  return lines.length;
 }
 
 /** Burn short pill labels with leaders onto a Blueprint-style sheet. Used by the exact water map
@@ -2833,7 +2848,16 @@ function groundLabelsForSheet(
   const rows = rings
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
     .map((z) => {
-      const text = (z.name ?? GROUND_FEATURES[z.feature!].label).toUpperCase();
+      // "Cleared / other" is a good CHIP label — it is the none-of-the-above bucket the farmer
+      // picks from — and a terrible MAP label: a plan sheet that says "CLEARED / OTHER" is showing
+      // the reader a database field. Map-facing names only.
+      const MAP_NAME: Partial<Record<GroundFeatureKind, string>> = {
+        cleared: 'Cleared ground',
+        patio: 'Paving',
+        veg_garden: 'Veg garden',
+        orchard: 'Orchard',
+      };
+      const text = (z.name ?? MAP_NAME[z.feature!] ?? GROUND_FEATURES[z.feature!].label).toUpperCase();
       const cx = (z.points.reduce((s2, p) => s2 + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s2, p) => s2 + p[1], 0) / z.points.length) * H;
       return { text, cx, cy, pw: Math.min(W - 28, padX * 2 + text.length * fs * 0.62) };
@@ -3824,16 +3848,34 @@ function drawSectorAnalysis(
     ctx.restore();
     return { sxp, syp };
   };
+  // Every energy label goes through here, and they used to be drawn wherever their own geometry
+  // landed — so at the top of the sheet "WATER FLOWS DOWNHILL (INDICATIVE)", "FROST POCKET" and
+  // "MIDDAY SUN — N" printed on top of each other, three deep and unreadable. Frost sits at the
+  // downhill end, water's label sits just past the same arrow, and the sun arc peaks between them:
+  // they collide by construction, not by accident, so a nudge in one place would not have held.
+  // Each label now claims a box and later ones step DOWN until they clear it.
+  const claimed: Array<{ x0: number; x1: number; y0: number; y1: number }> = [];
   const labelAt = (x: number, y: number, text: string, color: string) => {
     ctx.save();
     ctx.font = `800 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    const halfW = ctx.measureText(text).width / 2 + 6;
+    const halfH = rowH * 0.42;
+    let ly = y;
+    for (let guard = 0; guard < claimed.length + 2; guard++) {
+      const hit = claimed.find(
+        (b) => x - halfW < b.x1 && b.x0 < x + halfW && ly - halfH < b.y1 && b.y0 < ly + halfH,
+      );
+      if (!hit) break;
+      ly = hit.y1 + halfH + 4;
+    }
+    claimed.push({ x0: x - halfW, x1: x + halfW, y0: ly - halfH, y1: ly + halfH });
     ctx.lineWidth = 3.5;
     ctx.strokeStyle = 'rgba(8,14,22,0.9)';
-    ctx.strokeText(text, x, y);
+    ctx.strokeText(text, x, ly);
     ctx.fillStyle = color;
-    ctx.fillText(text, x, y);
+    ctx.fillText(text, x, ly);
     ctx.restore();
   };
 
@@ -4000,9 +4042,13 @@ function drawSectorAnalysis(
   // the phantom-row defect from the layer audit, fixed on Zones, Planting, Structures and print
   // sheet 01 in that pass, with sheet 02 out of scope and missed.
   if (bnd.length >= 3) rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
-  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.6)));
+  // Allowance sized for a WRAPPING note. The fire note is deliberately long — it has to say why
+  // there is no fire sector AND what to do instead — so a fixed 2.6-row footer clipped it.
+  const noteText = model.dataNotes[0] ?? 'Read the site before you design it.';
+  const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
-  drawBlueprintLegendNote(ctx, lg, rowH, ry, model.dataNotes[0] ?? 'Read the site before you design it.');
+  drawBlueprintLegendNote(ctx, lg, rowH, ry, noteText);
   drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
   drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
 }
@@ -4046,10 +4092,26 @@ export async function buildBlueprintSectorMap(
   // and very little over bare grass. (Rory, holding up the reference sheet: "you must send all the
   // relevant data to get a really nice map.") Drawn before the house and boundary so the built
   // fabric still reads on top of it. This analysis sheet captions every ring unconditionally
-  // (groundLabelsForSheet below), i.e. treats ground as CONTENT — 'all' matches that.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'all');
+  // CONTEXT, not content. Passing 'all' made this paint at content alpha and the sheet came back
+  // with a solid green lawn slab, a darker veg-garden slab and a solid BLACK driveway, all shouting
+  // over the arrows. On an ANALYSIS sheet the energies are the subject and the ground is what they
+  // cross — it has to be legible and quiet, not the loudest thing on the page. 'zones' is the
+  // register groundRegister already treats as context, which is exactly the same relationship a
+  // zones sheet has to its ground.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'zones');
+  // The house and driveway do NOT come through drawBlueprintGround — resolveBaseLayers hands them
+  // over as refLayers, so drawBlueprintGround's houseCovered/drivewayCovered skip fires and they
+  // take their own dedicated draws instead, which paint at CONTENT strength: an 85%-opaque slate
+  // slab and a fully opaque near-black tar fill. That is why passing 'zones' above quietened the
+  // lawn and the veg garden but left the house and the driveway shouting over the sector arrows —
+  // the register was applied to one of the two draw paths. globalAlpha here puts the dedicated
+  // draws in the same context register, at the 0x55/0x99 ratio drawBlueprintGround uses for its own
+  // soft washes, without either function needing to learn about sheets.
+  ctx.save();
+  ctx.globalAlpha = 0.55;
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  ctx.restore();
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
   // …and NAME them. The reference sheet labels HOUSE, TARRED DRIVEWAY, EXISTING VEGETABLE GARDEN,
   // UPPER LAWN TERRACE, LOWER CLEARED GROUND — that naming is most of why it reads as a survey
