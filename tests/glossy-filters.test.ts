@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, groundRegister, layerContentCount, type GlossyLayerFilter } from '../lib/glossy-filters.ts';
+import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, sheetsForElement, groundRegister, layerContentCount, type GlossyLayerFilter } from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
@@ -15,16 +15,29 @@ import { waterRouteStyleFor } from '../lib/water-cartography.ts';
 const LAYER_SHEETS: GlossyLayerFilter[] = ['water', 'planting', 'structures'];
 const LINE_KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
 
-test('every catalog element appears on exactly one layer sheet', () => {
+test('every catalog element has exactly one primary layer sheet', () => {
   const orphans: string[] = [];
-  const duplicated: string[] = [];
   for (const def of ELEMENT_CATALOG) {
-    const on = LAYER_SHEETS.filter((f) => itemInFilter(def.category, f, def.id));
-    if (on.length === 0) orphans.push(`${def.id} (${def.category})`);
-    if (on.length > 1) duplicated.push(`${def.id} → ${on.join('+')}`);
+    if (!sheetForElement(def.category, def.id)) orphans.push(`${def.id} (${def.category})`);
   }
   assert.deepEqual(orphans, [], 'elements on NO sheet — a farmer places these and never sees them');
-  assert.deepEqual(duplicated, [], 'elements on MORE THAN ONE sheet — the plan set contradicts itself');
+});
+
+test('only explicit integrated systems are factual content on two layer sheets', () => {
+  const shared = ELEMENT_CATALOG
+    .map((def) => ({ id: def.id, sheets: LAYER_SHEETS.filter((f) => itemInFilter(def.category, f, def.id)) }))
+    .filter(({ sheets }) => sheets.length > 1)
+    .map(({ id, sheets }) => `${id}:${sheets.join('+')}`)
+    .sort();
+  assert.deepEqual(shared, [
+    'banana_circle:water+planting',
+    'mulch_bank:water+planting',
+    'tree_basin:water+planting',
+  ]);
+  for (const def of ELEMENT_CATALOG) {
+    const sheets = sheetsForElement(def.category, def.id);
+    assert.equal(sheets[0], sheetForElement(def.category, def.id), `${def.id} primary sheet must remain first`);
+  }
 });
 
 test('every line kind appears on exactly one layer sheet', () => {
@@ -44,12 +57,18 @@ test('the whole-design sheet carries everything', () => {
 
 // The regression Rory reported directly: "the farmer places a Banana Circle from the Planting step,
 // then finds it on sheet 04 Water & Irrigation, not on 05 Planting & Agroforestry."
-test('earth-shaped BEDS are planting, earth-shaped WATER works are water', () => {
-  for (const id of ['banana_circle', 'tree_basin', 'raised_bed', 'keyhole_bed', 'herb_spiral']) {
+test('earth-shaped beds are planting, while integrated basins also belong on Water', () => {
+  for (const id of ['banana_circle', 'tree_basin']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id);
     assert.ok(def, `${id} vanished from the catalog`);
     assert.equal(sheetForElement(def!.category, id), 'planting', `${id} should be on the Planting sheet`);
-    assert.equal(itemInFilter(def!.category, 'water', id), false, `${id} must not appear on the Water sheet`);
+    assert.equal(itemInFilter(def!.category, 'water', id), true, `${id} is also factual Water content`);
+    assert.equal(itemInFilter(def!.category, 'planting', id), true, `${id} must remain Planting content`);
+  }
+  for (const id of ['raised_bed', 'keyhole_bed', 'herb_spiral']) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    assert.equal(sheetForElement(def.category, id), 'planting', `${id} should be on the Planting sheet`);
+    assert.equal(itemInFilter(def.category, 'water', id), false, `${id} stays Water context, not content`);
   }
   for (const id of ['greywater_basin', 'infiltration_basin', 'half_moon', 'berm', 'terrace']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id);
@@ -85,12 +104,21 @@ test('sheetForElement is total over the catalog — no element falls through to 
 import { isContextElement } from '../lib/glossy-filters.ts';
 
 test('the Water sheet SHOWS the beds and basins its irrigation feeds', () => {
-  for (const id of ['banana_circle', 'tree_basin', 'raised_bed', 'keyhole_bed', 'herb_spiral']) {
+  for (const id of ['raised_bed', 'keyhole_bed', 'herb_spiral']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
     assert.ok(isContextElement(def, 'water'), `${id} must be visible on the Water sheet`);
     // ...but is still not water CONTENT: it gets no water legend row, and Planting counts it.
     assert.equal(itemInFilter(def.category, 'water', def.id), false, `${id} must not be water content`);
     assert.equal(itemInFilter(def.category, 'planting', def.id), true, `${id} is Planting content`);
+  }
+});
+
+test('integrated Water and Planting content is never demoted to Water context', () => {
+  for (const id of ['banana_circle', 'tree_basin', 'mulch_bank']) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    assert.equal(itemInFilter(def.category, 'water', def.id), true, `${id} should be Water content`);
+    assert.equal(itemInFilter(def.category, 'planting', def.id), true, `${id} should be Planting content`);
+    assert.equal(isContextElement(def, 'water'), false, `${id} must not be drawn twice as context and content`);
   }
 });
 
@@ -104,17 +132,19 @@ test('context is a Water-sheet concept only, and never applies to a sheet own co
   assert.equal(isContextElement(tank, 'water'), false);
 });
 
-// The regression this guards: naming context elements individually put "Tree Basin ×5" and
-// "Banana Circle ×2" into the prompt, and the render came back with tree canopies and banana palms
-// the farmer never placed. Naming a thing to a model that draws is asking it to draw that thing.
-// The composite carries the geometry; the text only has to stop the model erasing it.
-test('context elements are described generically, never by name', () => {
-  const risky = /tree|banana|citrus|mango|orchard|hedge|palm|canopy|shrub/i;
-  // Every catalog element that qualifies as Water-sheet context must be safe to omit by name.
-  const named = ELEMENT_CATALOG.filter((d) => isContextElement(d, 'water')).map((d) => d.name);
-  assert.ok(named.length > 0, 'guard: the fixture must find context elements');
-  assert.ok(named.some((n) => risky.test(n)),
-    'guard: at least one context element name must be one that would invite drawing (e.g. "Tree Basin")');
+// Only planting beds that help a route read stay as quiet Water context. Integrated sinks and
+// banks are exact, named Water content and must never pass through the context path as well.
+test('Water context contains only non-Water planting fixtures', () => {
+  const contextIds = ELEMENT_CATALOG.filter((d) => isContextElement(d, 'water')).map((d) => d.id);
+  assert.ok(contextIds.includes('raised_bed'), 'guard: Water still needs a served-bed context fixture');
+  for (const id of contextIds) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    assert.equal(itemInFilter(def.category, 'water', def.id), false, `${id} cannot be content and context`);
+    assert.equal(sheetForElement(def.category, def.id), 'planting', `${id} context must come from Planting`);
+  }
+  for (const id of ['banana_circle', 'tree_basin', 'mulch_bank']) {
+    assert.equal(contextIds.includes(id), false, `${id} is named Water content, not quiet context`);
+  }
 });
 
 // ── Greywater ────────────────────────────────────────────────────────────────

@@ -44,10 +44,23 @@ const SHEET_OVERRIDE: Record<string, GlossyLayerFilter> = {
   herb_spiral: 'planting',
 };
 
-/** Which single layer sheet an element belongs on. Exported so a test can assert the whole catalog
- *  lands on exactly one sheet — the guard this module's own header claimed to exist and did not. */
-export function sheetForElement(category: string, defId?: string): Exclude<GlossyLayerFilter, 'all' | 'zones'> | null {
-  if (defId && SHEET_OVERRIDE[defId]) return SHEET_OVERRIDE[defId] as Exclude<GlossyLayerFilter, 'all' | 'zones'>;
+type ElementLayerSheet = Exclude<GlossyLayerFilter, 'all' | 'zones'>;
+
+// Some real systems belong on more than one output sheet. Keep one PRIMARY sheet above so editing,
+// palette ownership and plan-set ordering remain unambiguous, then opt only the integrated feature
+// into the additional sheet where it is also factual content. This is intentionally an allow-list:
+// broad category overlap would put every planting bed on Water and recreate the clutter this module
+// was extracted to prevent.
+const ADDITIONAL_SHEETS: Readonly<Record<string, readonly ElementLayerSheet[]>> = {
+  banana_circle: ['water'], // planted guild and greywater sink
+  tree_basin: ['water'], // planting earthwork and runoff/greywater sink
+  mulch_bank: ['water'], // biomass planting and contour water-slowing bank
+};
+
+/** Which PRIMARY layer sheet an element belongs on. Additional factual appearances are returned by
+ *  sheetsForElement below; keeping the primary answer singular preserves existing editing rules. */
+export function sheetForElement(category: string, defId?: string): ElementLayerSheet | null {
+  if (defId && SHEET_OVERRIDE[defId]) return SHEET_OVERRIDE[defId] as ElementLayerSheet;
   switch (category) {
     case 'water':
     case 'earthworks':
@@ -63,6 +76,14 @@ export function sheetForElement(category: string, defId?: string): Exclude<Gloss
   }
 }
 
+/** Every layer sheet where this element is factual CONTENT, primary first. */
+export function sheetsForElement(category: string, defId?: string): readonly ElementLayerSheet[] {
+  const primary = sheetForElement(category, defId);
+  if (!primary) return [];
+  const additional = defId ? ADDITIONAL_SHEETS[defId] ?? [] : [];
+  return [primary, ...additional.filter((sheet) => sheet !== primary)];
+}
+
 /** Does this element belong on `filter` as CONTEXT — shown so the sheet reads, never counted as its
  *  content? Only Water needs it: irrigation lines mean nothing without the beds and basins they
  *  water, and those live on the Planting sheet. Kept here beside sheetForElement so the membership
@@ -72,6 +93,7 @@ export function isContextElement(
   filter: GlossyLayerFilter,
 ): boolean {
   if (filter !== 'water') return false;
+  if (itemInFilter(def.category, filter, def.id)) return false;
   if (sheetForElement(def.category, def.id) !== 'planting') return false;
   return /bed|basin|circle|spiral/i.test(def.name);
 }
@@ -80,7 +102,7 @@ export function itemInFilter(category: string, filter: GlossyLayerFilter, defId?
   if (filter === 'all') return true;
   // Zones carries no elements — the effort-zone bands are its entire content.
   if (filter === 'zones') return false;
-  return sheetForElement(category, defId) === filter;
+  return sheetsForElement(category, defId).includes(filter);
 }
 
 export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {

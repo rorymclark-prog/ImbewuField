@@ -258,18 +258,30 @@ test('buildShowcasePrompt includes the title, labels and panel instructions', ()
 // generic potted plant and greywater entirely absent, because this function's own vocabulary had
 // never had entries added for them at all, ever, on any style. Locking that in here so a future
 // element-vocabulary fix to OVERLAY_ICONS can't again land in only one of the two functions.
-test('the water sheet marker glossary names tree basins, banana circles and greywater — not just OVERLAY_ICONS', () => {
-  const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3)', 'Carl and Sandys Home', 'water');
+test('the water sheet marker glossary names integrated basins, banks and greywater — not just OVERLAY_ICONS', () => {
+  const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3), Vetiver Bank', 'Carl and Sandys Home', 'water');
   assert.match(prompt, /tree basin/i);
   assert.match(prompt, /banana circle/i);
   assert.match(prompt, /greywater/i);
   // The earthwork-not-plant invariant, ported from OVERLAY_ICONS' own fixed language.
   assert.match(prompt, /carries NO plant of its own/);
   assert.match(prompt, /SUNKEN pit/);
+  assert.match(prompt, /compact block of upright blue-green vetiver tussocks/);
+  assert.match(prompt, /never a band running along the boundary/);
   // The driveway colour must match what drawMarks actually paints (TAR, near-black) — not the
   // stale "grey strip" wording that described the pre-fix composite.
   assert.doesNotMatch(prompt, /grey strip/i);
   assert.match(prompt, /near-black tarred strip/i);
+});
+
+test('Satellite Overlay gives a Water-sheet Vetiver Bank its exact marker vocabulary', () => {
+  const prompt = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'Vetiver Bank', placeName: 'Carl and Sandys Place', sheetKind: 'water',
+  });
+  const icons = prompt.split('ICON LANGUAGE')[1].split('\n')[0];
+  assert.match(icons, /compact block of upright blue-green vetiver tussocks/);
+  assert.match(icons, /never a band running along the fence/);
 });
 
 test('legacy prompt remains available for rollback and A/B comparison', () => {

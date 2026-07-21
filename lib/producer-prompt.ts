@@ -349,16 +349,17 @@ const M = {
   // this is propagating an existing fix to the path that was missing it, not new invention.
   tree_basin: 'a small brown circular marker about 2 m across is a tree basin — draw ONLY the earthwork: a low raised mound of bare soil at the centre, ringed by a doughnut-shaped mulched moat, clear dry ground between mound and mulch. It carries NO plant of its own — never a tree or shrub standing in it',
   banana_circle: 'a larger brown circular marker about 3.5 m across is a banana circle — a sunken mulch-filled pit about 2 m across, ringed by a raised earth bund, four or five broad paddle-shaped banana leaves fanning out over the rim. Opposite silhouette to a tree basin: this is a SUNKEN pit, a tree basin is a RAISED mound',
+  mulch_bank: 'a hatched rectangular Vetiver Bank marker is a compact block of upright blue-green vetiver tussocks filling exactly that rectangle and no larger, never a band running along the boundary or another line',
   greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
   greywater_line: 'a violet dashed line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
 } as const;
 
 const LEGEND_BY_SHEET: Record<ShowcaseSheetKind, string> = {
-  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.tree_basin, M.banana_circle, M.greywater_basin, M.greywater_line, M.zones].join('; '),
+  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank, M.greywater_basin, M.greywater_line, M.zones].join('; '),
   zones: [M.zones, M.driveway].join('; '),
-  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway, M.tree_basin, M.banana_circle, M.greywater_basin, M.greywater_line].join('; '),
-  planting: [M.bed, M.tree, M.windbreak, M.driveway, M.tree_basin, M.banana_circle].join('; '),
+  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank, M.greywater_basin, M.greywater_line].join('; '),
+  planting: [M.bed, M.tree, M.windbreak, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank].join('; '),
   structures: [M.building, M.hive, M.patio, M.fence, M.path, M.driveway].join('; '),
 };
 
@@ -377,7 +378,7 @@ export function buildShowcasePrompt(
   const noInvent =
     `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
   const waterRule = sheetKind === 'water'
-    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes, drip lines, tree basins, banana circles and greywater lines that are already marked or visible; do not invent extra water systems or extra water-related landforms. A tree basin and a banana circle are both real content on this sheet — draw them exactly as the marker glossary below describes, never as a generic potted plant.`
+    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes, drip lines, tree basins, banana circles, vetiver banks and greywater lines that are already marked or visible; do not invent extra water systems or extra water-related landforms. A tree basin, banana circle or vetiver bank is real content on this sheet — draw each exactly as the marker glossary below describes, never as a generic potted plant or a boundary hedge.`
     : '';
   const markerCleanup =
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
@@ -461,7 +462,7 @@ const OVERLAY_ICONS: Record<string, string> = {
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
   all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'nursery', 'compost', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
-  water:      ['tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'borehole', 'swale', 'pipe', 'drip'],
+  water:      ['tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip'],
   planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
   structures: ['building', 'hive', 'coop', 'nursery', 'compost', 'patio', 'fence', 'path'],
 };

@@ -3824,7 +3824,10 @@ function drawFilteredItems(
 ): void {
   for (const it of bySizeDesc(state, filter)) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || (excludeWater && sheetForElement(def.category, def.id) === 'water')) continue;
+    // The masterplan draws Water first, then all remaining items. Integrated features such as a
+    // banana circle are Water AND Planting content, so test Water membership rather than only the
+    // single primary sheet or they are painted twice in the same output.
+    if (!def || (excludeWater && itemInFilter(def.category, 'water', def.id))) continue;
     drawTrueFootprint(ctx, it, def, px, py, pxPerM);
   }
 }
@@ -5617,7 +5620,9 @@ interface SavedGlossy {
 //        before this change is the old 6-row legend with the old wrong content — must not be served.
 //   v19 — 2026-07-21: Reference Blueprint makes the app authoritative for geometry/chrome on all
 //        five design sheets, restores every exact layer, groups canonical labels, and removes emoji.
-const PLAN_VERSION = 'v19';
+//   v20 — 2026-07-22: integrated banana circles, tree basins and vetiver banks are factual content
+//        on both Water and Planting, while retaining one primary editor owner and no duplicate marks.
+const PLAN_VERSION = 'v20';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
