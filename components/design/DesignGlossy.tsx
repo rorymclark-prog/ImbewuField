@@ -5017,7 +5017,7 @@ interface SavedGlossy {
 //        wind sectors (summer-cooling/cold-front/berg), fire re-derived from berg not winter wind,
 //        numbered "SECTOR LEGEND" with icons + regional-assumption footer. A cached sheet 02 from
 //        before this change is the old 6-row legend with the old wrong content — must not be served.
-const PLAN_VERSION = 'v14';
+const PLAN_VERSION = 'v15';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

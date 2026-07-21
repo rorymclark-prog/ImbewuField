@@ -20,6 +20,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Placing a terrace now tells you the right method for your slope, and when to ask an expert',
+      'Sector analysis shows real sun arcs, named winds and a fuller numbered legend',
+      'A new Master Atlas style joins the style picker',
       'Sector title stays readable on AI, and labels can no longer hide behind the legend',
       'AI renders finally know what a tree basin, banana circle and greywater line look like',
       'Sector analysis can now be AI-styled too — the bearings are still measured, never guessed',
