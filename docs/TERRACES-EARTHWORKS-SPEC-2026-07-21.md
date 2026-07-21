@@ -9,6 +9,18 @@ Where those four disagree or one is thin, that is said below, not smoothed over.
 `EARTHWORKS-CONTEXT-PLAN-2026-07-21.md` first — its "no 9th sheet" decision is re-examined in §5,
 not repeated blind, and its Phase 4 pattern (advisory tip, not auto-placement) is reused directly.
 
+**§1's decision table went through one adversarial safety pass before this doc was committed**,
+because it is going to be shown to a farmer with no engineer double-checking it, and the first
+draft had a real, specific defect: row 5 (20–33% slope, the DIY-attemptable row closest to the
+row-6 "don't dig at all" cliff) carried a *softer* `maybe` flag than the lower-risk rows 3–4's
+`ask_local_expert` — an inverted risk gradient on exactly the row where literal misreading is most
+consequential. That review found five further concrete problems (an unstated cumulative-height cap
+that left room to stack past 2 m, a vetiver-sequencing hazard, false precision at the row 5/6
+boundary, no escalation when an already-coarse whole-site-average slope itself lands in the highest
+band, and no defined UI treatment for the flags at all). All six are fixed in place below, not
+appended as a caveat — search this doc for "adversarially reviewed" to find each fix and its
+reasoning.
+
 ## 0. What's actually being decided
 
 The product owner's ask, unpacked into three requirements:
@@ -72,7 +84,7 @@ breakpoints), that is carried into the `sources` column below, not hidden.
 | 2 | 2–5% | 1.1–2.9° | No earthworks — contour cultivation, cover crop/mulch | n/a | `no` | FAO's "gently sloping" threshold: sheet erosion becomes measurable under bare soil but is fully controlled by cover; contour orientation starts actively mattering (DECISION-THRESHOLDS row 2). |
 | 3 | 5–10% | 2.9–5.7° | Vetiver hedge or grass strip on contour. A shallow swale (<~20 cm cut) is acceptable only with an armoured spillway. | swale cut ≤0.2 m | `ask_local_expert` | Conventional threshold (FAO/SA-extension convention, mirrored by SASRI) where unaided sheet flow starts concentrating into rills. KZN's convective-storm rainfall (KZN-REGIONAL-PRACTICE §4) means even a shallow swale needs a protected overflow — peak flows arrive fast on clay-over-rock. SASRI's own threshold for strip-cropping on cane is ≥2% slope (KZN-REGIONAL-PRACTICE §2), i.e. even more conservative than this row. |
 | 4 | 10–20% | 5.7–11.3° | Contour bank / graded terrace, vetiver- or grass-stabilized riser. Keep the cut shallow and balance cut/fill on contour — do not bench yet. | cut ≤0.3–0.5 m | `ask_local_expert` | This is the USDA-NRCS terrace-standard range and where FAO shifts from vegetative-only to structural (PERMACULTURE-TECHNIQUE §2); it's also FAO's own stated floor for bench terracing (7°≈12%) — below that FAO explicitly says bench terracing is **not recommended**, use broadbase/graded terraces instead. On residual clay-over-rock, a deeper cut here starts probing the clay/saprolite–rock interface — the documented KZN hillslope failure plane once wet (DECISION-THRESHOLDS row 4, citing the April 2022 floods). |
-| 5 | 20–33% | 11.3–18.3° | Bench terrace **with a mandatory retaining riser** — stone pitching, a mature (2–3 season) live vetiver hedge, or gabion for tougher/wetter sections. Riser height capped low; stack benches rather than one tall cut. | ≤0.6–1 m per lift, hard FAO ceiling 2 m | `maybe` | This band sits at or above the conservative safe-unsupported-cut rule of thumb used for saturated residual/cohesive tropical soils (~1V:3H / 18°, DECISION-THRESHOLDS' own extrapolation, explicitly flagged as a rule of thumb not a KZN-engineered figure). FAO's bench-terrace band tops out at 25° (47% at the hand-built extreme, but this app caps its DIY recommendation at 33% — see the row-6 rationale). Above ~4 m wall height, or in poor/wet/expansive soil, or visible seepage/bedrock, IS 14458 pushes toward gabion over dry stone (GEOTECH-SAFETY §1/§3, PERMACULTURE-TECHNIQUE §3). |
+| 5 | 20–33% | 11.3–18.3° | Bench terrace **with a mandatory retaining riser** — stone pitching, gabion for tougher/wetter sections, or a **mature, already-established (2–3 season) live vetiver hedge only — never cut the full bench and plant vetiver in the same season**, since a fresh hedge has ~zero retaining strength; terrace in stages behind an existing, established hedge instead, or use stone/gabion for the interim. Stack benches rather than one tall cut. | ≤0.6–1 m per lift; **2 m TOTAL stacked height across every lift on this riser is a hard ceiling, not per-lift** — beyond it, treat as row 6 (engineer required), regardless of how many lifts you split it into | `ask_local_expert` — and treat as row 6 if the total stacked height will exceed ~1 m, if there's any seepage or exposed rock, or if you're building in the wet season | This band sits at or above the conservative safe-unsupported-cut rule of thumb used for saturated residual/cohesive tropical soils (~1V:3H / 18°, DECISION-THRESHOLDS' own extrapolation, explicitly flagged as a rule of thumb not a KZN-engineered figure) — sitting this close to the row-6 failure threshold is why this row's flag was corrected from an earlier, weaker `maybe` up to `ask_local_expert`: a softer flag on the row closest to the failure boundary inverts the risk gradient against rows 3–4. FAO's bench-terrace band tops out at 25° (47% at the hand-built extreme, but this app caps its DIY recommendation at 33% — see the row-6 rationale). **The 2 m figure is this app's own cap and is what governs its advice** — IS 14458's ~4 m reference (GEOTECH-SAFETY §1/§3) is a broader civil-engineering data point about when gabion is generally preferred over dry stone, not a looser ceiling this app permits; do not read the two figures as alternatives. |
 | 6 | >33% | >18.3° | **Do not cut or terrace without an engineer.** Leave under permanent vegetation / agroforestry, uncultivated, or use an engineer-designed retaining structure only. | n/a | `always` | Exceeds the conservative safe-unsupported-batter-angle rule of thumb for saturated residual soils. This is the gradient band where the April 2022 KZN floods produced widespread translational failures on exactly this soil profile — shallow residual soil over rock/saprolite acting as a slip plane once pore pressure builds (DECISION-THRESHOLDS row 6). Cultivation-driven earthworks here raises landslide risk to people/property downslope, not just crop loss. |
 
 **On the FAO 25° vs this table's 33% cutoff:** FAO's own bench-terrace band for hand-built work runs
@@ -82,6 +94,19 @@ conservative push is specific to this app's likely KZN residual-clay-over-rock c
 sourced failure history — not because FAO's number is wrong in general. **Do not "correct" row 6
 back to 25° without re-deriving it for whatever region a given design actually sits in** — see the
 regional-gate note below.
+
+**False precision at the row 5/row 6 boundary — adversarially reviewed, fix required.** The internal
+lookup table keeps the 11.3°/18.3° (20%/33%) boundaries at one decimal place so
+`recommendTerraceMethod` stays a deterministic, testable pure function — that precision is fine in
+code. It is NOT fine on screen: the doc itself states this cutoff is "DECISION-THRESHOLDS' own
+extrapolation," a rule of thumb, not a KZN-engineered figure — yet a naive UI would show a farmer at
+32% slope calm DIY-permissive row-5 copy and a farmer at 34% a hard row-6 stop, a distinction the
+source data cannot actually support to the percentage point. **On-screen copy must round to whole
+degrees/5%-bands and treat the boundary as a zone, not a line**: *"Treat anything from roughly 25–35%
+slope as the steeper band — this line isn't precise enough to trust to the percentage point. If
+you're unsure which side of it you're on, that uncertainty itself is the answer: get it checked."*
+This applies only to displayed copy; `TERRACE_METHOD_TABLE`'s stored boundaries stay exact so the
+function and its tests remain deterministic.
 
 **Region gating — do not ship this table nationally without a caveat.** Exactly the same problem
 `SECTOR-MODEL-SPEC-2026-07-21.md` §3 solved for wind sectors applies here: SASRI's own erodibility
@@ -100,8 +125,23 @@ region, disclaim the rest, don't extrapolate silently.
 > hillslopes and high-intensity summer storms. No South African engineering code covers small-farm
 > terrace safety — SANS 10160-5 explicitly excludes slope and retaining-wall design from its scope.
 > These numbers come from FAO/USDA agricultural-engineering practice and general geotechnical rules
-> of thumb, not a certified local standard. **Always confirm locally before cutting**, and treat
-> "ask a local expert" and "maybe" rows as a hard prompt to do so, not a formality.
+> of thumb, not a certified local standard. **Always confirm locally before cutting**, and treat an
+> "ask a local expert" row as a hard prompt to do so, not a formality.
+
+### `EngineerFlag` → required UI treatment (adversarially reviewed, added — was unspecified)
+
+Reviewed and found wanting: the spec named the flag values but never said how they must look, and
+on a table where the row closest to the failure boundary (row 5) had the softer of two escalating
+flags, that omission is not cosmetic — an implementer who renders every flag the same weight ships
+the highest-risk DIY-attemptable row looking exactly as calm as the safest one. Three flags remain
+after row 5's correction below (`maybe` is retired — every row now escalates cleanly no → ask →
+always, and nothing used `maybe` once row 5 was fixed):
+
+| `EngineerFlag` | Rows | Required UI treatment |
+|---|---|---|
+| `no` | 1, 2 | No banner. Method + why shown plainly. |
+| `ask_local_expert` | 3, 4, 5 | **Persistent amber banner**, not a dismissible tooltip — stays visible while this row's copy is shown, every time, not just first-view. Row 5's banner additionally renders its escalation clause (height/seepage/wet-season → treat as row 6) in the same banner, not a separate collapsed note. |
+| `always` | 6 | **Blocking red banner** the farmer must actively dismiss (not auto-hide, not click-through-the-map) before the rest of the terrace-tools UI on that ring is usable. |
 
 ### Data model
 
@@ -115,7 +155,12 @@ export type TerraceMethod =
   | 'bench_terrace_retained'
   | 'no_dig_engineer_required';
 
-export type EngineerFlag = 'no' | 'ask_local_expert' | 'maybe' | 'always';
+// 'maybe' was retired during adversarial review of this spec: row 5 originally carried it, which
+// was a SOFTER flag than rows 3-4's 'ask_local_expert' despite row 5 sitting closer to the row-6
+// failure threshold — an inverted risk gradient on the row a farmer is most likely to act on
+// literally (row 6 says don't dig at all; row 5 doesn't). Never reintroduce a flag weaker than
+// 'ask_local_expert' for any row above row 2 without re-running that review.
+export type EngineerFlag = 'no' | 'ask_local_expert' | 'always';
 
 export interface TerraceMethodRow {
   minPct: number;
@@ -142,7 +187,7 @@ recommendTerraceMethod(1.5)  → row 1: 'contour_planting',        engineerFlag 
 recommendTerraceMethod(4.0)  → row 2: 'contour_cover',            engineerFlag 'no'
 recommendTerraceMethod(7.5)  → row 3: 'vetiver_hedge',            engineerFlag 'ask_local_expert'
 recommendTerraceMethod(15.0) → row 4: 'contour_bank',             engineerFlag 'ask_local_expert'
-recommendTerraceMethod(25.0) → row 5: 'bench_terrace_retained',   engineerFlag 'maybe'
+recommendTerraceMethod(25.0) → row 5: 'bench_terrace_retained',   engineerFlag 'ask_local_expert'
 recommendTerraceMethod(40.0) → row 6: 'no_dig_engineer_required', engineerFlag 'always'
 recommendTerraceMethod(10.0) → boundary case, inclusive-low: row 4 (10–20% band), not row 3
 recommendTerraceMethod(-2.0) → clamps to row 1 (defensive; a farmer typo or bad sign shouldn't 500)
@@ -292,8 +337,20 @@ prevent):
 > Walk to the spot and check it isn't steeper before you build — a bank on a locally steeper pocket
 > needs the NEXT row's method, not this one.
 
-When `source === 'measured'`, drop that caveat (it's the farmer's own on-site number) but keep the
-§1 regional footer.
+**Escalate, don't just caveat, when the average itself already lands in row 5 or 6 — adversarially
+reviewed, added.** The generic caveat above is passive and identical regardless of which row it's
+attached to. But `source === 'whole-site-average'` **and** the resulting row being 5 or 6 is the
+single highest-uncertainty, highest-consequence combination in this whole feature: a farmer on an
+uneven hillside whose average already reads steep is likely to have local pockets steeper still.
+When that combination occurs, render the row-5/6 banner (per the `EngineerFlag` UI table above)
+with this additional line, not the generic caveat alone:
+
+> Your whole-site average is already in the steepest band this app recommends against DIY-cutting.
+> On an uneven hillside, parts of this slope are very likely steeper than the average. Get this
+> specific spot checked by a local expert before you cut anything here.
+
+When `source === 'measured'`, drop the whole-site caveat (it's the farmer's own on-site number) but
+keep the §1 regional footer and the row's own `EngineerFlag` banner unchanged.
 
 **How the farmer enters a measured slope:** extend the existing inline-rename control
 (`components/design/DesignCanvas.tsx:476-478` `editingLabelId`/`editingText` state,
@@ -516,8 +573,9 @@ default.
 
 - **This is not an engineering sign-off, and never claims to be one.** No South African code
   covers this exact scenario (GEOTECH-SAFETY §2, confirmed by SANS 10160-5's own stated scope
-  exclusion). Rows 5 and 6 of §1's table say "maybe"/"always" engineer for exactly this reason —
-  the app can point a farmer at the right conservatism band, it cannot certify a specific cut safe.
+  exclusion). Rows 3-5 of §1's table say "ask a local expert" and row 6 says "always" engineer, for
+  exactly this reason — the app can point a farmer at the right conservatism band, it cannot certify
+  a specific cut safe.
 - **No real per-point slope.** §3's whole-site-average fallback is an honest approximation, not a
   fix — the farmer-paced override is the only way to get a genuinely local number, and even that is
   a single stick-and-string measurement, not a survey. A true per-point terrain model needs
