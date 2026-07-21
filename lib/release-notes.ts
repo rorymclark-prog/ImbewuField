@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'AI Sector: the data-strip and sources line stay readable, not just the title',
       'Placing a terrace now tells you the right method for your slope, and when to ask an expert',
       'Sector analysis shows real sun arcs, named winds and a fuller numbered legend',
       'A new Master Atlas style joins the style picker',

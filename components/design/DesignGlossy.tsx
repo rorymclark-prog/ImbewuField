@@ -2548,33 +2548,19 @@ function drawBlueprintBoundary(
   ctx.restore();
 }
 
-/** Title block, top-left. */
+/** Title block, top-left. Scrim (see drawTitleBlockScrim) is the caller's job, not this
+ *  function's: this function only knows about the title/subtitle it was handed, but on the
+ *  Sector sheet it is one of FOUR stacked lines (title, subtitle, data strip, sources) that all
+ *  need the SAME backing — sizing a scrim from just these two args under-covered the other two
+ *  and left them unreadable on a real AI render (see drawTitleBlockScrim's own doc for the
+ *  incident). */
 function drawBlueprintTitle(
   ctx: CanvasRenderingContext2D,
   W: number,
   pad: number,
   title: string,
   subtitle: string,
-  // Every OTHER caller sits on drawBlueprintBase's dark scrim — a fixed, reliably dark ground, so
-  // pale text always has contrast. Sector is the one caller whose base varies: the exact path's
-  // desaturated-but-still-photographic satellite, or now the AI path's own illustrated artwork,
-  // which can paint anything (a light lawn, a pale road) directly under this corner. A real render
-  // showed the title washed out to near-invisible against a light patch (Rory: "still absolutely
-  // no changes what is wrong with you" — the chrome WAS there, just unreadable). scrim draws a
-  // soft dark backing first so the fixed pale ink stays legible regardless of what is beneath it.
-  scrim = false,
 ): void {
-  if (scrim) {
-    const bw = Math.max(ctx.measureText(title).width, ctx.measureText(subtitle).width) + pad * 1.4;
-    const bh = Math.round(W * 0.028) + Math.round(W * 0.024) + pad * 0.6;
-    ctx.save();
-    const grad = ctx.createLinearGradient(0, 0, bw + pad, bh + pad * 0.6);
-    grad.addColorStop(0, 'rgba(8,10,7,0.55)');
-    grad.addColorStop(1, 'rgba(8,10,7,0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, bw + pad, bh + pad * 0.6);
-    ctx.restore();
-  }
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#F3EEE2';
@@ -2583,6 +2569,47 @@ function drawBlueprintTitle(
   ctx.fillStyle = '#B9C2C8';
   ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
   ctx.fillText(subtitle, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
+}
+
+/** Backing scrim for the Sector sheet's top-left text block — drawn ONCE, before any of the up-
+ *  to-four stacked lines (title, subtitle, data strip, sources), sized from all of them.
+ *
+ *  A real AI render showed the title readable but the SOURCES line (and the tail of a long
+ *  subtitle) sitting on raw, unprotected artwork and nearly invisible (Rory: "Not great at all",
+ *  with the sources line and part of the subtitle washed out against a light patch). The cause:
+ *  an earlier fix added a scrim, but it lived INSIDE drawBlueprintTitle and was sized from only
+ *  the title+subtitle it receives — it has no idea drawSectorAnalysis draws two MORE lines below
+ *  it (the data strip added by SECTOR-MODEL-SPEC, then the SOURCES citation line), each of which
+ *  can be wider than the title/subtitle and which drew on totally unprotected background. Fixed
+ *  by moving the scrim here, where every line that will land in this corner is known up front,
+ *  and drawing it FIRST so every line — including ones added by a future line 5 — sits on top of
+ *  one shared backing rather than each needing to remember to protect itself. */
+function drawTitleBlockScrim(ctx: CanvasRenderingContext2D, pad: number, lines: string[], fonts: string[]): void {
+  ctx.save();
+  let maxW = 0;
+  let totalH = 0;
+  for (let i = 0; i < lines.length; i++) {
+    if (!lines[i]) continue;
+    ctx.font = fonts[i];
+    maxW = Math.max(maxW, ctx.measureText(lines[i]).width);
+    // Each line's own font SIZE (the number before "px") is a fair stand-in for its line height.
+    // NOT parseInt(fonts[i]) — these strings are "<weight> <size>px <family>" (e.g. "800 34px
+    // Georgia, serif"), and parseInt reads the FIRST number in the string, which is the WEIGHT
+    // (800), not the size. That bug would have inflated this scrim to roughly (800/34) times too
+    // tall — caught here before it ever rendered, by working through the arithmetic by hand
+    // rather than trusting the line looked plausible.
+    const sizeMatch = fonts[i].match(/(\d+(?:\.\d+)?)px/);
+    const fontSizePx = sizeMatch ? parseFloat(sizeMatch[1]) : 16;
+    totalH += fontSizePx * 1.25;
+  }
+  const bw = maxW + pad * 1.4;
+  const bh = totalH + pad * 0.8;
+  const grad = ctx.createLinearGradient(0, 0, bw + pad, bh + pad * 0.5);
+  grad.addColorStop(0, 'rgba(8,10,7,0.6)');
+  grad.addColorStop(1, 'rgba(8,10,7,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, bw + pad, bh + pad * 0.5);
+  ctx.restore();
 }
 
 interface BlueprintLegend {
@@ -4244,15 +4271,7 @@ function drawSectorAnalysis(
   if (site?.climate?.minTemp != null) parts.push(`MIN ${site.climate.minTemp.toFixed(0)}°C`);
   if (site?.rainfallMm != null) parts.push(`${Math.round(site.rainfallMm)} mm/yr`);
   if (contourIntervalM != null) parts.push(`CONTOUR INTERVAL ~${contourIntervalM} m`);
-  if (parts.length) {
-    ctx.save();
-    ctx.fillStyle = '#B9C2C8';
-    ctx.font = `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`;
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'alphabetic';
-    ctx.fillText(parts.join('  ·  '), pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
-    ctx.restore();
-  }
+  const dataStripStr = parts.length ? parts.join('  ·  ') : '';
   // Self-citing SOURCES line (SECTOR-MODEL-SPEC §4) — only the sources actually used on this sheet.
   const SOURCE_LABEL: Record<string, string> = {
     'kruger2014': 'Kruger 2014', 'ams-bergwind': 'AMS Glossary', 'tshabalala2023': 'Tshabalala 2023',
@@ -4260,19 +4279,40 @@ function drawSectorAnalysis(
   const sourceKeys = new Set<string>(['Meeus ch.13']); // sun geometry is always computed from latitude
   for (const w of model.namedWind) sourceKeys.add(SOURCE_LABEL[w.sourceKey] ?? w.sourceKey);
   if (model.fire) sourceKeys.add(SOURCE_LABEL[model.fire.sourceKey] ?? model.fire.sourceKey);
-  ctx.save();
-  ctx.fillStyle = 'rgba(185,194,200,0.75)';
-  ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillText(`SOURCES: ${Array.from(sourceKeys).join(' · ')}`, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
-  ctx.restore();
+  const sourcesStr = `SOURCES: ${Array.from(sourceKeys).join(' · ')}`;
 
   // 10. Chrome — title, SECTOR LEGEND (numbered 1..9, icon per row, regional rows superscripted
   // ᴬ), scale bar, north arrow. HARD INVARIANT: every row here is gated on the EXACT SAME boolean
   // the corresponding draw call above used — never a legend row with nothing drawn, never a drawn
   // energy with no legend row.
-  drawBlueprintTitle(ctx, W, pad, 'SECTOR ANALYSIS', placeName ?? 'Site energies · sun · wind · water · fire', isAiBase);
+  const titleStr = 'SECTOR ANALYSIS';
+  const subtitleStr = placeName ?? 'Site energies · sun · wind · water · fire';
+  // Scrim FIRST — before any of the up-to-four lines that land in this corner, so it sits
+  // underneath every one of them rather than needing each line to protect itself.
+  if (isAiBase) {
+    drawTitleBlockScrim(
+      ctx, pad,
+      [titleStr, subtitleStr, dataStripStr, sourcesStr],
+      [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`],
+    );
+  }
+  if (dataStripStr) {
+    ctx.save();
+    ctx.fillStyle = '#B9C2C8';
+    ctx.font = `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(dataStripStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
+    ctx.restore();
+  }
+  ctx.save();
+  ctx.fillStyle = 'rgba(185,194,200,0.75)';
+  ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(sourcesStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
+  ctx.restore();
+  drawBlueprintTitle(ctx, W, pad, titleStr, subtitleStr);
   // Adversarial review finding: capped at 9 with Math.min(...,  CIRCLED.length-1) let a 10th row
   // (this sheet now has up to 10 possible rows once Terracing's per-terrace-fall row is added
   // alongside Sector's own 9) silently REUSE ⑨ instead of running out cleanly — two energies both
@@ -5017,7 +5057,7 @@ interface SavedGlossy {
 //        wind sectors (summer-cooling/cold-front/berg), fire re-derived from berg not winter wind,
 //        numbered "SECTOR LEGEND" with icons + regional-assumption footer. A cached sheet 02 from
 //        before this change is the old 6-row legend with the old wrong content — must not be served.
-const PLAN_VERSION = 'v15';
+const PLAN_VERSION = 'v16';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
