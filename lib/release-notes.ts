@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Your driveway now stays on every sheet',
+      'Water plans stop drawing taps, valves and greywater pipes you never placed',
       'Tree basins draw correctly: tree up on a mound, mulched moat around it',
       'Planting and Structures sheets stop inventing irrigation lines that were never drawn',
       'Older saved maps are now marked, so you can tell them from freshly rendered ones',

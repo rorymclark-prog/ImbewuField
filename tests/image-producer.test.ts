@@ -623,3 +623,36 @@ test('the farmer-facing tip and the drawing instruction agree on the geometry', 
   });
   assert.match(p, /mound/i);
 });
+
+// ── The two ways a water sheet used to invent things ─────────────────────────
+test('the driveway is NAMED on every sheet, not just the masterplan', () => {
+  // The bug that erased it over and over: the composite DRAWS the access track on layer sheets,
+  // but it was named only when filter === 'all'. Rule 7 says nothing outside the list and the
+  // rules is drawn — so drawn-and-unnamed is the one state guaranteed to be erased. Every fix
+  // before this one went into the drawing instead of the naming.
+  const layer = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L ×2', fabric: 'Lawn, Tarred driveway', sheetKind: 'water',
+  });
+  assert.match(layer, /Tarred driveway/);
+  // …but as FABRIC, so it takes no caption and no legend row beside the actual design work.
+  assert.match(layer, /no caption and no legend row of their own/);
+});
+
+test('only the water subsystems that exist are described', () => {
+  const base = { layerLabel: 'Water', stylePreset: 'satellite_overlay' as const, elementsText: 'JoJo Tank 5000L ×2', sheetKind: 'water' as const };
+  // Tanks only: no irrigation heading, and above all no greywater main to invent.
+  const tanksOnly = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: false, greywater: false } });
+  assert.match(tanksOnly, /RAINWATER/);
+  assert.doesNotMatch(tanksOnly, /IRRIGATION/);
+  assert.doesNotMatch(tanksOnly, /FILTERED GREYWATER/);
+  assert.doesNotMatch(tanksOnly, /pressure regulator/);
+  assert.match(tanksOnly, /Add no fitting, valve, regulator, filter, tap, pipe or line that is not already marked/);
+  // All three present: all three described.
+  const all = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true } });
+  assert.match(all, /FILTERED GREYWATER/);
+  assert.match(all, /never onto edible leaves/);
+  // None at all: the whole clause disappears rather than shipping empty headings.
+  const none = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: false, irrigation: false, greywater: false } });
+  assert.doesNotMatch(none, /WATER SHEET — GROUP WHAT IS THERE/);
+});

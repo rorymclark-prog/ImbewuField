@@ -454,10 +454,12 @@ export function buildSatelliteOverlayPrompt(args: {
   elementsText: string;
   fabric?: string;
   served?: string;
+  /** Which water subsystems the design actually contains. Absent means none are described. */
+  systems?: { rainwater: boolean; irrigation: boolean; greywater: boolean };
   placeName?: string;
   sheetKind: ShowcaseSheetKind;
 }): string {
-  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', placeName, sheetKind } = args;
+  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind } = args;
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
@@ -497,8 +499,26 @@ export function buildSatelliteOverlayPrompt(args: {
 
   // The reference sheet reads as three named subsystems, and Rory's standing rule is that the
   // greywater half is never left off a water plan — it is the part farmers actually get wrong.
-  const waterSystems = sheetKind === 'water'
-    ? `\n\nWATER SHEET — THREE SUBSYSTEMS, ALL THREE SHOWN. Group everything on this sheet, on the map and in the legend, under three headings: RAINWATER (roof gutters and downpipes, first-flush/leaf filter, the linked tanks, pump and filter, overflow infiltration basin), IRRIGATION (the buried main, drip headers and laterals lying along the beds, isolation and flush valves, pressure regulator, outdoor taps), and FILTERED GREYWATER (the diverter and filter off the house, the subsurface greywater line drawn as a violet dashed run, inspection and flush points along it, and every basin it feeds — run it to the banana circles first, which are the ideal greywater destination, then on to the tree basins and any greywater basin). The greywater half is never omitted: wherever the design places a greywater basin, a banana circle or a tree basin, show the violet greywater line that feeds it running from the house to those basins, and give FILTERED GREYWATER its own legend section. Greywater discharges below mulch, never onto edible leaves.`
+  // ONLY THE SUBSYSTEMS THE FARMER ACTUALLY DREW. This used to fire on every water sheet and order
+  // the model to draw the full schematic — gutters, first-flush filter, pump, buried main, drip
+  // headers, isolation and flush valves, a pressure regulator, outdoor taps, a greywater diverter,
+  // a violet subsurface greywater line and its inspection points — whether or not any of it was in
+  // the design. That is a standing instruction to INVENT plumbing, and it is where the extra taps
+  // came from (Rory: "i think it invented a tap").
+  //
+  // Rory's rule that "the greywater half is never omitted from a water plan" is still right — but
+  // the place to honour it is the ADVISOR, telling him he has no greywater yet, not the renderer
+  // drawing him a greywater system he does not have. A plan that shows pipes nobody laid is worse
+  // than a plan that shows the gap.
+  const systemNote = (heading: string, present: boolean, body: string) =>
+    present ? `${heading} (${body})` : '';
+  const groups = [
+    systemNote('RAINWATER', !!systems?.rainwater, 'the tanks and their linked plumbing exactly as marked'),
+    systemNote('IRRIGATION', !!systems?.irrigation, 'the buried main, the drip runs lying along the beds, and the taps — every one of them already drawn on the photograph'),
+    systemNote('FILTERED GREYWATER', !!systems?.greywater, 'the diverter off the house, the subsurface greywater line drawn as a violet dashed run, and every basin it feeds — run it to the banana circles and tree basins as already marked. Greywater discharges below mulch, never onto edible leaves'),
+  ].filter(Boolean);
+  const waterSystems = sheetKind === 'water' && groups.length
+    ? `\n\nWATER SHEET — GROUP WHAT IS THERE. Group this sheet, on the map and in the legend, under these headings and no others: ${groups.join('; ')}. Add no fitting, valve, regulator, filter, tap, pipe or line that is not already marked on the photograph — a heading not listed here does not exist on this farm yet, and an empty one is never filled in.`
     : '';
 
   // The driveway is CONTEXT, not a designed feature. It was being drawn as a solid near-black

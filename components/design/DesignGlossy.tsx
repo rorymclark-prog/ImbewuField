@@ -1482,8 +1482,16 @@ function overlayElementsText(
     sectionOf.set(nm.replace(/ ×\d+$/, ''), lineSection);
     parts.push(nm);
   }
-  // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
-  // it there gave an access track a legend row and a label alongside the actual design work.
+  // THE DRIVEWAY IS CONTENT ON THE MASTERPLAN AND FABRIC EVERYWHERE ELSE — but it must be named on
+  // BOTH, and that is the bug that kept erasing it. On a layer sheet it was named nowhere: the
+  // ground branch skips it once refLayers covers it, groundRows skips it for the same reason, and
+  // this block only fired for 'all'. Meanwhile the composite DOES draw it (the quiet tar fabric in
+  // drawMarks). Drawn and unnamed is the worst state there is — rule 7 says nothing outside the
+  // list and the rules is drawn, so the model erased a farmer's access track off his own plan,
+  // render after render, while every fix went into the drawing instead of the naming.
+  // Listing it as ELEMENT content on a layer sheet would give an access track a legend row beside
+  // the actual design work, which is why it was excluded in the first place. The fabric channel is
+  // exactly the register for this: named so it survives, no caption, no legend row.
   if (refLayers.driveway.length >= 2 && filter === 'all') {
     sectionOf.set('Tarred driveway', 'INFRASTRUCTURE');
     parts.push('Tarred driveway');
@@ -1516,7 +1524,12 @@ function overlayElementsText(
   // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
   // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
   const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
-  const fabric = groundRows(state, refLayers).map((r) => clean(r.label)).filter(Boolean).join(', ');
+  const fabricParts = groundRows(state, refLayers).map((r) => clean(r.label));
+  // …and the driveway joins it on every sheet that is not the masterplan (where it is already
+  // content, above). refLayers.driveway is the main-map access layer; a Studio-traced one is
+  // already in groundRows, so this covers the case groundRows deliberately skips.
+  if (refLayers.driveway.length >= 2 && filter !== 'all') fabricParts.push('Tarred driveway');
+  const fabric = fabricParts.filter(Boolean).join(', ');
   // SERVED is a third channel, separate from fabric, because the two want opposite treatment.
   // Ground — lawn, patio, yard — is SILENT: rule 10 forbids captioning what a farmer walks past
   // every day. The beds and basins an irrigation system feeds are not that; leaving them unnamed
@@ -1534,6 +1547,26 @@ function overlayElementsText(
  *  beds gives a farmer blue dots crossing empty lawn. The Planting sheet OWNS these elements — this
  *  is a borrowed view, which is why they go on the fabric channel and never into `elements`, where
  *  rule 7 would count them as water content and legend them here too. */
+/** Which water subsystems the design actually contains. The prompt describes only these; a heading
+ *  with nothing behind it is an instruction to invent, and it is where the phantom taps and the
+ *  phantom greywater main came from. Derived from placed elements and drawn lines only — never
+ *  assumed, never defaulted true. */
+export function waterSystemsPresent(state: DesignCanvasState): { rainwater: boolean; irrigation: boolean; greywater: boolean } {
+  let rainwater = false, irrigation = false, greywater = false;
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) continue;
+    if (/tank|rain barrel|first-flush|pump/i.test(def.name)) rainwater = true;
+    if (/tap|valve|regulator|trough|borehole/i.test(def.name)) irrigation = true;
+    if (/greywater/i.test(def.name)) greywater = true;
+  }
+  for (const l of state.lines) {
+    if (l.points.length < 2) continue;
+    if (l.kind === 'drip' || l.kind === 'pipe') irrigation = true;
+  }
+  return { rainwater, irrigation, greywater };
+}
+
 function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
   if (filter !== 'water') return [];
   const counts = new Map<string, number>();
@@ -4468,7 +4501,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v2';
+const PLAN_VERSION = 'v3';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -5487,7 +5520,7 @@ export default function DesignGlossy({
         // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
         const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
         const prompt = isModelChromeStyle(styleKey)
-          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, placeName, sheetKind: f })
+          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: f })
           : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey)
           : effectiveModelChrome
@@ -5577,7 +5610,7 @@ export default function DesignGlossy({
       const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, placeName, sheetKind: filter })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: filter })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey)
         : useShowcase
