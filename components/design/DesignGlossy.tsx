@@ -212,6 +212,9 @@ const LINE_COLORS: Record<string, string> = {
   pipe: '#2B6FA6',
   drip: '#4E8B3B',
   windbreak: '#2F7A4A',
+  // Violet — the reclaimed-water pipe convention — and more saturated than the fence lilac so a
+  // greywater run and an internal fence can never read as the same line.
+  greywater: '#8E44AD',
 };
 
 // Gemini is listed first and is the DEFAULT: gpt-image-2 (via fal.ai) frequently returns 403
@@ -1487,6 +1490,7 @@ function overlayElementsText(
   const LINE_NAME: Record<string, string> = {
     swale: 'Swale', fence: 'Fence line', path: 'Walking path',
     pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
+    greywater: 'Greywater line',
   };
   for (const [kind, n] of lineCounts) {
     const nm = `${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`;
@@ -1577,6 +1581,7 @@ export function waterSystemsPresent(state: DesignCanvasState): { rainwater: bool
   for (const l of state.lines) {
     if (l.points.length < 2) continue;
     if (l.kind === 'drip' || l.kind === 'pipe') irrigation = true;
+    if (l.kind === 'greywater') greywater = true;
   }
   return { rainwater, irrigation, greywater };
 }
@@ -3071,6 +3076,7 @@ export async function buildBlueprintWaterMapLegacy(
     swale: { color: '#4EA6D8', dash: [] },
     pipe: { color: '#2B6FA6', dash: [] },
     drip: { color: '#7FD46B', dash: [4, 8] },
+    greywater: { color: '#8E44AD', dash: [7, 4] },
   };
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -3203,10 +3209,13 @@ export async function buildBlueprintWaterMapLegacy(
       note: 'Distribution and delivery lines stay exactly where they were drawn.',
     });
   }
-  if (greywater.length) {
+  const greywaterLineRow: BlueprintLegendRow[] = linesByKind.has('greywater')
+    ? [{ color: '#8E44AD', label: `Greywater line${linesByKind.get('greywater')! > 1 ? ` ×${linesByKind.get('greywater')}` : ''}`, style: 'dashline' as const }]
+    : [];
+  if (greywater.length || greywaterLineRow.length) {
     sections.push({
       title: 'FILTERED GREYWATER',
-      rows: rowsForItems(greywater, '#A9743F'),
+      rows: [...rowsForItems(greywater, '#A9743F'), ...greywaterLineRow],
       note: 'Land-shaping and soakaway features are kept to the traced geometry.',
     });
   }
@@ -4515,7 +4524,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v5';
+const PLAN_VERSION = 'v6';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

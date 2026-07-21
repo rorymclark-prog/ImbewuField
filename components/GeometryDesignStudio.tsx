@@ -1712,6 +1712,9 @@ function GeometryPreview({
                 pipe: { color: '#3A8EC4', width: 2 },
                 drip: { color: '#3A8EC4', dash: '2,3', width: 1.6 },
                 windbreak: { color: '#2F7A4A', dash: '8,3', width: 2.5 },
+                // Violet dashed — the reclaimed-water pipe convention, and deliberately more
+                // saturated than the fence so the two never read as the same line.
+                greywater: { color: '#8E44AD', dash: '7,4', width: 2.2 },
               };
 
               return (

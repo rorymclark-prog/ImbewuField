@@ -64,6 +64,7 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> 
   { id: 'path', label: 'Path', icon: '🥾' },
   { id: 'pipe', label: 'Pipe', icon: '🧵' },
   { id: 'drip', label: 'Drip', icon: '💧' },
+  { id: 'greywater', label: 'Greywater', icon: '🚿' },
   { id: 'windbreak', label: 'Windbreak', icon: '🌬️' },
 ];
 
@@ -253,7 +254,7 @@ export default function DesignPalette({
   const showZoneChips = step === 'zones';
   const showAreaChips = step === 'base';
   const showLineChips = step === 'water' || step === 'structures' || step === 'planting';
-  const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip'];
+  const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip', 'greywater'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
   const PLANTING_LINE_IDS: Array<LineShape['kind']> = ['windbreak']; // was unreachable before
   const lineChipsForStep = LINE_KINDS.filter((lk) =>

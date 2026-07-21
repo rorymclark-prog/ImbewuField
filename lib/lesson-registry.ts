@@ -106,6 +106,13 @@ function zoneLesson(z: 0 | 1 | 2 | 3 | 4 | 5): MicroLesson {
 
 // Short lore for each kind of line the farmer can draw.
 const LINE_LORE: Record<LineShape['kind'], Omit<MicroLesson, 'id' | 'draft'>> = {
+  greywater: {
+    title: 'Greywater line — bath and laundry water, put to work',
+    body: 'The run from the diverter at the house to the basins it feeds. Bath, shower and laundry water is most of a household\u2019s daily water and it leaves the house whether you use it or not. Buried just below the surface and discharged UNDER mulch, it waters fruit trees and bananas through the dry months for nothing.',
+    principle: 'Every output is an input somewhere else — greywater is the easiest one to catch.',
+    tip: 'Run it to the banana circles first, then on to the tree basins. Discharge below mulch, never onto edible leaves, and keep it out of the veg beds. No kitchen or toilet water on this line.',
+    courseModuleId: 'water-harvesting',
+  },
   swale: {
     title: 'Swale — a ditch on contour',
     body: 'A swale is a shallow level ditch dug ACROSS the slope. Rain runs into it, stops, and soaks down into the soil right where your trees and beds can reach it — instead of racing downhill and taking your topsoil with it.',

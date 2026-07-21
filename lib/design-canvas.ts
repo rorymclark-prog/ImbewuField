@@ -61,7 +61,12 @@ export interface ZoneShape {
 
 export interface LineShape {
   id: string;
-  kind: 'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak';
+  // 'greywater' is the subsurface run from the house diverter to the basins it feeds. It was
+  // missing for a long time while the water PROMPT described it in detail — so the sheet asked
+  // for a violet greywater line that a farmer had no tool to draw, and the only way the model
+  // could satisfy that was to invent one. Purple/violet follows the reclaimed-water pipe
+  // convention, and is deliberately more saturated than the fence lilac.
+  kind: 'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' | 'greywater';
   points: Array<[number, number]>;
 }
 

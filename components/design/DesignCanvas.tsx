@@ -175,6 +175,7 @@ const LINE_LAYER: Record<LineShape['kind'], keyof ActiveLayers> = {
   swale: 'water',
   pipe: 'water',
   drip: 'water',
+  greywater: 'water',
   fence: 'structures',
   path: 'access',
   windbreak: 'planting',

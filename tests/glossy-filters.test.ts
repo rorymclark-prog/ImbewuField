@@ -113,3 +113,24 @@ test('context elements are described generically, never by name', () => {
   assert.ok(named.some((n) => risky.test(n)),
     'guard: at least one context element name must be one that would invite drawing (e.g. "Tree Basin")');
 });
+
+// ── Greywater ────────────────────────────────────────────────────────────────
+// Rory: "also no greywater?" It was not a render bug — LineShape.kind had no 'greywater' member, so
+// a farmer had no tool to draw the run at all, while the water prompt described a violet greywater
+// line in detail. The only way the model could satisfy that was to invent one.
+test('a greywater run is a real line kind, and it belongs to the water sheet', () => {
+  assert.equal(lineInFilter('greywater', 'water'), true);
+  for (const f of ['planting', 'structures', 'zones'] as const) {
+    assert.equal(lineInFilter('greywater', f), false, `greywater must not appear on ${f}`);
+  }
+  assert.equal(lineInFilter('greywater', 'all'), true, 'the masterplan carries everything');
+});
+
+test('every line kind still lands on exactly one layer sheet', () => {
+  // Re-stated for the widened union: adding a kind must not silently orphan or double-file it.
+  const KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
+  for (const kind of KINDS) {
+    const on = (['water', 'planting', 'structures'] as const).filter((f) => lineInFilter(kind, f));
+    assert.equal(on.length, 1, `${kind} is on ${on.length} sheets (${on.join('+') || 'none'})`);
+  }
+});

@@ -154,6 +154,9 @@ function phaseForItem(item: PlacedItem): PhaseKey | null {
 const PHASE_BY_LINE_KIND: Record<LineShape['kind'], PhaseKey> = {
   path: 'access_water',
   pipe: 'access_water',
+  // Greywater is plumbing off the house, laid with the rest of the water reticulation — and it
+  // must be in the ground before the basins it feeds are worth digging.
+  greywater: 'access_water',
   swale: 'earthworks',
   drip: 'beds',
   fence: 'beds',

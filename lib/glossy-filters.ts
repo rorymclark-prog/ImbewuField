@@ -84,7 +84,7 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
     case 'all':
       return true;
     case 'water':
-      return kind === 'swale' || kind === 'pipe' || kind === 'drip';
+      return kind === 'swale' || kind === 'pipe' || kind === 'drip' || kind === 'greywater';
     case 'planting':
       return kind === 'windbreak'; // a windbreak is a planted row → Planting sheet, not Structures
     case 'structures':
