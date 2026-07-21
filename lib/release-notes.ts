@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector title stays readable on AI, and labels can no longer hide behind the legend',
       'AI renders finally know what a tree basin, banana circle and greywater line look like',
       'Sector analysis can now be AI-styled too — the bearings are still measured, never guessed',
       'Sector analysis: your ground is drawn quietly so the sun, wind and water arrows read first',

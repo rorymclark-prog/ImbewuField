@@ -2541,7 +2541,26 @@ function drawBlueprintTitle(
   pad: number,
   title: string,
   subtitle: string,
+  // Every OTHER caller sits on drawBlueprintBase's dark scrim — a fixed, reliably dark ground, so
+  // pale text always has contrast. Sector is the one caller whose base varies: the exact path's
+  // desaturated-but-still-photographic satellite, or now the AI path's own illustrated artwork,
+  // which can paint anything (a light lawn, a pale road) directly under this corner. A real render
+  // showed the title washed out to near-invisible against a light patch (Rory: "still absolutely
+  // no changes what is wrong with you" — the chrome WAS there, just unreadable). scrim draws a
+  // soft dark backing first so the fixed pale ink stays legible regardless of what is beneath it.
+  scrim = false,
 ): void {
+  if (scrim) {
+    const bw = Math.max(ctx.measureText(title).width, ctx.measureText(subtitle).width) + pad * 1.4;
+    const bh = Math.round(W * 0.028) + Math.round(W * 0.024) + pad * 0.6;
+    ctx.save();
+    const grad = ctx.createLinearGradient(0, 0, bw + pad, bh + pad * 0.6);
+    grad.addColorStop(0, 'rgba(8,10,7,0.55)');
+    grad.addColorStop(1, 'rgba(8,10,7,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, bw + pad, bh + pad * 0.6);
+    ctx.restore();
+  }
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#F3EEE2';
@@ -2848,6 +2867,13 @@ function groundLabelsForSheet(
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
   H: number,
+  // Reserved rectangle no right-column label may start inside — the Sector sheet's legend panel
+  // sits top-right and is drawn AFTER these labels, so a "PAVING" pill that landed under it got
+  // silently clipped (Rory: a render showed a label reading "...VING", the rest hidden behind the
+  // legend box). This function has no idea the legend panel exists — it always pins right-column
+  // labels to the right margin regardless of what else occupies that corner. Optional so every
+  // OTHER caller (sheet 01, the AI-composite path) is unaffected.
+  avoidTopRight?: { x0: number; y0: number; x1: number; y1: number },
 ): ProducerLabel[] {
   const fs = 26, padX = 14, pillH = fs + 14;
   const rings = state.zones.filter((z) => z.feature && z.feature !== 'boundary' && z.points.length >= 3);
@@ -2877,7 +2903,12 @@ function groundLabelsForSheet(
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
     const col = rows.filter((r) => (r.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
-    let lastY = -Infinity;
+    // A right-column pill overlaps the reserved rectangle horizontally as soon as its OWN right
+    // margin (16px from W) sits left of avoidTopRight.x1 — every right-pinned pill's left edge is
+    // `W - pw - 16`, so unless pw is wider than the whole reserved box it always intersects the
+    // reservation's x-range whenever one exists. Simpler and safe: if this side has a reservation
+    // at all, its own margin column IS inside it, so start below the box rather than at the top.
+    let lastY = side === 'right' && avoidTopRight ? avoidTopRight.y1 - pillH - 10 : -Infinity;
     for (const r of col) {
       const y = Math.max(r.cy, lastY + pillH + 10);
       lastY = y;
@@ -3764,13 +3795,14 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
 }
 
 // The deterministic sector geometry (compass ring, fire wedge, sun arc, wind arrows, water/contour
-// lines, frost pocket, data strip, title, legend, scale bar, north arrow) — extracted out of
-// buildBlueprintSectorMap so the AI-composited overlay (buildSectorOverlayImage below) draws the
-// EXACT SAME bearings from the EXACT SAME code path. Duplicating this ~250-line block into a second
-// function would recreate the "two separate traversals that can drift" root cause (layer-audit RC2)
-// for the one thing on this sheet that must never disagree between the exact and the AI version: the
-// bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4 — a model-drawn arrow
-// is a coin-flip on both angle and sense, so it must never be redrawn from scratch a second time.
+// lines, frost pocket, data strip, title, legend, scale bar, north arrow) — called once from
+// composeSectorSheet so the exact and AI sheets draw the EXACT SAME bearings from the EXACT SAME
+// code path regardless of which base image sits underneath. Duplicating this ~250-line block into
+// a second function would recreate the "two separate traversals that can drift" root cause
+// (layer-audit RC2) for the one thing on this sheet that must never disagree between the exact and
+// the AI version: the bearings. See docs/RENDER-INVESTIGATION-2026-07-20.md 'sector-ai' finding 4
+// — a model-drawn arrow is a coin-flip on both angle and sense, so it must never be redrawn from
+// scratch a second time.
 function drawSectorAnalysis(
   ctx: CanvasRenderingContext2D,
   W: number,
@@ -3782,6 +3814,11 @@ function drawSectorAnalysis(
   pad: number,
   rowH: number,
   pxPerM: number,
+  // True over an AI-illustrated base, whose local tone at the title's corner is whatever the model
+  // painted there — unlike drawAnalysisBase's always-pale wash, that can be dark enough or light
+  // enough to wash the fixed-colour title out to unreadable (a real render did exactly this).
+  // False on the exact sheet, which never needs it and shouldn't gain an unasked-for dark corner.
+  isAiBase = false,
 ): void {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
@@ -4036,7 +4073,7 @@ function drawSectorAnalysis(
   }
 
   // 10. Chrome — title, legend (only energies drawn), scale bar, north arrow.
-  drawBlueprintTitle(ctx, W, pad, 'SECTOR ANALYSIS', placeName ?? 'Site energies · sun · wind · water · fire');
+  drawBlueprintTitle(ctx, W, pad, 'SECTOR ANALYSIS', placeName ?? 'Site energies · sun · wind · water · fire', isAiBase);
   const rows: BlueprintLegendRow[] = [{ color: '#F7C97E', label: `Midday sun (from ${model.sun.middayFrom})`, style: 'line' }];
   if (model.windSummer) rows.push({ color: '#E08A2C', label: `Summer wind (${model.windSummer.fromLabel})`, style: 'dashline' });
   if (model.windWinter) rows.push({ color: '#C97B25', label: `Winter wind (${model.windWinter.fromLabel})`, style: 'dashline' });
@@ -4142,9 +4179,19 @@ async function composeSectorSheet(
   // …and NAME them. The reference sheet labels HOUSE, TARRED DRIVEWAY, EXISTING VEGETABLE GARDEN,
   // UPPER LAWN TERRACE, LOWER CLEARED GROUND — that naming is most of why it reads as a survey
   // rather than a diagram. producerLabels already lays these out without collisions.
-  drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H));
+  // Reserve the legend panel's rectangle so a right-column label can never land under it and get
+  // clipped when the legend draws on top a moment later (drawBlueprintLegendFrame: lgW = W*0.27,
+  // lgX = W - pad - lgW, lgY = pad — fixed regardless of row count; only the HEIGHT is row-count
+  // dependent, and that isn't known until drawSectorAnalysis runs below). Sized for the legend's
+  // worst case — 9 rows once Part B lands, plus a 4-line note — rather than today's actual count,
+  // so this reservation doesn't need revisiting every time a row is added.
+  const legendReserve = {
+    x0: W - pad - Math.round(W * 0.27), y0: 0,
+    x1: W, y1: pad + Math.round(rowH * 13),
+  };
+  drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H, legendReserve));
 
-  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM);
+  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM, baseImage !== null);
 
   return canvas.toDataURL('image/png');
 }
@@ -4729,7 +4776,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v12';
+const PLAN_VERSION = 'v13';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
