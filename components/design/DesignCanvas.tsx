@@ -1853,14 +1853,20 @@ export default function DesignCanvas({
                       </div>
                     </foreignObject>
                     ) : null
-                  ) : (
+                  ) : activeLayers.labels ? (
+                    // Rory: "theres a bug when i toggle labels on and off it doesnt work" — this
+                    // branch (a plain effort-zone ring's number badge) used to render
+                    // UNCONDITIONALLY, never reading activeLayers.labels at all. On the Zones
+                    // step every visible ring is exactly this case (ground features' word-pills
+                    // are separately forced off there — see featureLabelsOn above), so 100% of
+                    // what the toggle could affect on that step ignored it. Now it does.
                     <>
                       <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
                       <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
                         {z.zone}
                       </text>
                     </>
-                  )}
+                  ) : null}
                 </g>
                 {/* Editing handles show only in Select mode — while a draw tool is armed
                     they'd sit on top of the drawing surface and a stray tap on the ✕ (or a

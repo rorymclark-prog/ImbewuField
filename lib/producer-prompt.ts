@@ -70,7 +70,12 @@ export function buildLockedIllustrationPrompt(
   return [
     STYLE_LINES[stylePreset],
     `TASK: turn this whole aerial photograph into one finished hand-illustrated ${layer} map sheet. Paint edge to edge — every corner of the image becomes artwork, including the land beyond the property boundary.`,
-    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`,
+    // Same gap, same fix as buildSectorRestylePrompt's paintWhatIsThere (see its comment): no
+    // vocabulary for paved ground meant a concrete slab beside a building had nowhere to go except
+    // "more roof". This is the Geometry Lock path — the most-used of the three AI-illustration
+    // prompts in this file that each independently describe ground texture — so the gap here is
+    // the highest-impact of the three to have missed.
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`,
     `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the photograph. Where the ground is open it stays open — illustrated, but empty. Do not decorate, do not fill space, do not tidy the site.`,
     `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
@@ -746,8 +751,17 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   // house that then ghosts under our own vector house once composeSectorSheet draws the TRUE
   // house/driveway/boundary from refLayers on top of whatever this returns. So: paint any building
   // as quiet, low-key roof colour sitting IN the ground fabric, never the sharpest thing in frame.
+  // PAVED GROUND NEEDS ITS OWN WORDS, SEPARATE FROM "BUILDING". Rory, looking at a render where a
+  // concrete slab beside a building came back looking like part of the building: "if the labeling
+  // was given to image generator it would have picked up concrete slab and not building! it got
+  // things confused." He was right about the mechanism — this clause used to give the model
+  // texture vocabulary for buildings, driveways, lawn, veld and soil, but NOTHING for paving,
+  // patios or a bare concrete slab. A grey, flat, hard-edged area next to a building has nowhere
+  // else to go in that vocabulary except "more building" — the model isn't confused, it is
+  // literally uninstructed. Adding "paved ground" as its own named texture, explicitly NOT roofed
+  // and NOT the driveway's tar, gives it somewhere correct to put that area.
   const paintWhatIsThere =
-    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways. Render any building as a quiet, low-key roof colour sitting in the ground fabric — not a sharp, high-contrast structure, not the star of the composition; its exact outline is drawn separately afterwards. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never given a ridge or pitch, and never the tar-black of the driveway; it reads as ground you can walk on, not a structure. Render any building as a quiet, low-key roof colour sitting in the ground fabric — not a sharp, high-contrast structure, not the star of the composition; its exact outline is drawn separately afterwards. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
   // RESTYLE ONLY, not KEEP EXACT. The old wording asked the model to hold the boundary/roof/
   // driveway "in exactly their photographed shape, position and scale" — a registration promise
   // gpt-image-2 cannot keep (it reframes the whole scene) and one the app no longer asks it to
