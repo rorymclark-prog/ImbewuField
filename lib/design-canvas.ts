@@ -83,6 +83,16 @@ export interface LineShape {
   // convention, and is deliberately more saturated than the fence lilac.
   kind: 'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' | 'greywater';
   points: Array<[number, number]>;
+  // Optional custom name shown on the on-canvas label pill (tap the label to rename); falls back
+  // to the kind's default name (LINE_KIND_LABEL, components/design/DesignCanvas.tsx) when unset.
+  // Mirrors ZoneShape.name above — same pattern, same reason (no on-canvas label existed for any
+  // line kind at all, including swales, until this field).
+  name?: string;
+  // Optional normalised offset of the name label from its anchor point (the line's midpoint) —
+  // mirrors ZoneShape.labelDx/labelDy so a farmer can drag a line's label clear of the line itself.
+  // Undefined = pinned at the midpoint.
+  labelDx?: number;
+  labelDy?: number;
 }
 
 export type WizardStep = 'base' | 'sector' | 'water' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';

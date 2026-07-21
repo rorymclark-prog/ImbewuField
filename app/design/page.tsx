@@ -1035,6 +1035,47 @@ function DesignStudioInner() {
       }
     : null;
 
+  // Duplicate whatever is selected (one or many items/zones/lines) — palette Duplicate button +
+  // Cmd/Ctrl+D. Rory (on his phone, resizing a veg bed): "no easy way to duplicate a sized
+  // element ... perhaps a copy and paste button?" This is the one-step version of the existing
+  // Cmd/Ctrl+C -> Cmd/Ctrl+V clipboard flow below (same nudge-and-select pattern) but doesn't
+  // touch `clipboard.current` — a farmer mid-workflow shouldn't have Duplicate silently clobber
+  // whatever they last explicitly copied. Every override the original carries (wM/hM/rot on an
+  // item, a zone's points/name/levelM, a line's points/name) survives verbatim via the spread —
+  // that IS the point: duplicating a SIZED element, not the catalog default.
+  // Selection can only ever contain shapes owned by the current step (setStep clears selectedIds
+  // on every step change, and the canvas' own pointer-level guards refuse to select a foreign-step
+  // shape in the first place — see ownedByCurrentStep), so no separate ownership re-check is
+  // needed here; the Duplicate button is enabled/disabled purely off selectedIds, same as Delete.
+  const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses below
+  const onDuplicateSelected = selectedIds.length && canvasState
+    ? () => {
+        const ids = new Set(selectedIds);
+        const offsetPt = (p: [number, number]): [number, number] => [
+          Math.min(0.98, p[0] + DUPLICATE_OFFSET),
+          Math.min(0.98, p[1] + DUPLICATE_OFFSET),
+        ];
+        const newItems: PlacedItem[] = canvasState.items
+          .filter((it) => ids.has(it.id))
+          .map((it) => ({ ...it, id: newId(), x: Math.min(0.98, it.x + DUPLICATE_OFFSET), y: Math.min(0.98, it.y + DUPLICATE_OFFSET) }));
+        const newZones: ZoneShape[] = canvasState.zones
+          .filter((z) => ids.has(z.id))
+          .map((z) => ({ ...z, id: newId(), points: z.points.map(offsetPt) }));
+        const newLines: LineShape[] = canvasState.lines
+          .filter((l) => ids.has(l.id))
+          .map((l) => ({ ...l, id: newId(), points: l.points.map(offsetPt) }));
+        if (!newItems.length && !newZones.length && !newLines.length) return;
+        handleChange((prev) => ({
+          ...prev,
+          items: [...prev.items, ...newItems],
+          zones: [...prev.zones, ...newZones],
+          lines: [...prev.lines, ...newLines],
+          updatedAt: new Date().toISOString(),
+        }));
+        setSelectedIds([...newItems.map((i) => i.id), ...newZones.map((z) => z.id), ...newLines.map((l) => l.id)]);
+      }
+    : null;
+
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
   // element · Escape = deselect. Ignored while typing in a field.
@@ -1077,6 +1118,15 @@ function DesignStudioInner() {
         setSelectedIds(pasted.map((p) => p.id));
         return;
       }
+      // Cmd/Ctrl+D — duplicate the current selection in place (nudged), mirroring the palette's
+      // Duplicate button. Reuses onDuplicateSelected so both paths run the exact same logic.
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'd' || e.key === 'D')) {
+        if (onDuplicateSelected) {
+          e.preventDefault();
+          onDuplicateSelected();
+        }
+        return;
+      }
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIds.length && onDeleteSelected) {
         e.preventDefault();
         onDeleteSelected();
@@ -1086,7 +1136,7 @@ function DesignStudioInner() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleUndo, handleRedo, onDeleteSelected, selectedIds, canvasState, handleChange]);
+  }, [handleUndo, handleRedo, onDeleteSelected, onDuplicateSelected, selectedIds, canvasState, handleChange]);
 
   // Step navigation must NOT push an undo entry — otherwise Undo bounces the farmer
   // between wizard steps instead of reverting their last content edit (item/zone/line
@@ -1818,6 +1868,7 @@ function DesignStudioInner() {
           onRedo={handleRedo}
           canRedo={redoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
+          onDuplicateSelected={onDuplicateSelected}
           siteBiome={site?.biome}
         />
       )}

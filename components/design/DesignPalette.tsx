@@ -50,6 +50,9 @@ export interface DesignPaletteProps {
   onRedo: () => void;
   canRedo: boolean;
   onDeleteSelected: (() => void) | null;
+  // Duplicate the current selection (same offset-and-select pattern as Delete's group handling).
+  // null = nothing selected, same disabled convention as onDeleteSelected.
+  onDuplicateSelected: (() => void) | null;
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
@@ -191,6 +194,7 @@ export default function DesignPalette({
   onRedo,
   canRedo,
   onDeleteSelected,
+  onDuplicateSelected,
   siteBiome,
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -383,6 +387,19 @@ export default function DesignPalette({
           disabled={!canRedo}
         >
           ↪️ Redo
+        </button>
+        <button
+          type="button"
+          style={{
+            ...toolButtonStyle(false, guided),
+            opacity: onDuplicateSelected ? 1 : 0.4,
+            cursor: onDuplicateSelected ? 'pointer' : 'default',
+          }}
+          onClick={() => onDuplicateSelected?.()}
+          disabled={!onDuplicateSelected}
+          title="Duplicate the selected item(s) — Cmd/Ctrl+D"
+        >
+          📋 Duplicate
         </button>
         <button
           type="button"

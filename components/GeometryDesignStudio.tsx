@@ -38,6 +38,7 @@ import {
 import { MAP_STATE_EVENT, readLocalFarmShapes } from '@/lib/map-sync';
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
+import { middayFromLat } from '@/lib/sector';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { loadSiteElements, getElementMeta, type SiteElement } from '@/lib/site-elements';
 import {
@@ -2277,9 +2278,16 @@ function GeometryPreview({
                 opacity="0.82"
               />
               <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 96} textAnchor="middle" fontFamily="sans-serif" fontSize="7.5" fill="#74B9F2">Low winter</text>
-              {/* Caption */}
+              {/* Caption. lat < 0 → north is false inside the tropics (SECTOR-MODEL-SPEC §0.2 —
+                  same bug already fixed in lib/sector.ts and its two API route call sites;
+                  this interactive-map component was a third, separate hardcode of it, flagged
+                  but explicitly left untouched by that earlier pass). middayFromLat is the one
+                  shared, tested answer every caller of this question now goes through. */}
               <text x={sectorInsetX + sectorInsetW / 2} y={sectorInsetY + 160} textAnchor="middle" fontFamily="sans-serif" fontSize="8" fill="#9A8268">
-                {(locationData?.lat ?? 0) < 0 ? 'Midday sun from the north (SH).' : 'Midday sun from the south (NH).'}
+                {(() => {
+                  const m = middayFromLat(locationData?.lat ?? -29);
+                  return m === 'N' ? 'Midday sun from the north (SH).' : m === 'S' ? 'Midday sun from the south (NH).' : 'Midday sun: north in winter, south in summer (tropics).';
+                })()}
               </text>
               {/* Wind sector notes if available */}
               {locationData?.climate?.windFromSummer && (
@@ -2304,7 +2312,15 @@ function GeometryPreview({
             const cx = boundsCenter[0];
             const cy = boundsCenter[1];
             const siteR = 0.5 * Math.hypot(bboxPx.maxX - bboxPx.minX, bboxPx.maxY - bboxPx.minY);
-            const isSH = (locationData?.lat ?? -29) < 0;
+            // lat < 0 → north is false inside the tropics (SECTOR-MODEL-SPEC §0.2) — this is the
+            // same bug, a third separate hardcode of it in this file. The single ray this panel
+            // draws has nowhere honest to point in the 'mixed' (tropical) case — a real fix would
+            // need two rays like lib/solar.ts's two-arc model, out of scope for this decorative
+            // rail — so isSH keeps its old single-side approximation for the ARROW GEOMETRY only.
+            // middayWord is the honest answer for the TEXT label below, which has no such excuse.
+            const middayFrom = middayFromLat(locationData?.lat ?? -29);
+            const isSH = middayFrom !== 'S';
+            const middayWord = middayFrom === 'N' ? 'N' : middayFrom === 'S' ? 'S' : 'N in winter, S in summer';
             const climate = locationData?.climate;
             const railX = mapAreaW + 8;
             // Cap the ring so arrows (+ their tails) always stay inside the map frame,
@@ -2323,7 +2339,7 @@ function GeometryPreview({
             const windW = 2 + Math.min(climate?.windSpeed ?? 3, 8) * 0.5;
             const showFrost = (climate?.minTemp ?? 99) < 5 && slope.usable;
             const rows: Array<{ glyph: string; color: string; label: string }> = [
-              { glyph: '☀', color: '#F7C97E', label: `Midday sun from ${isSH ? 'N' : 'S'} — face beds to it` },
+              { glyph: '☀', color: '#F7C97E', label: `Midday sun from ${middayWord} — face beds to it` },
             ];
             if (climate?.windFromSummer) rows.push({ glyph: '⤙', color: '#E08A2C', label: `Summer wind from ${climate.windFromSummer}` });
             if (climate?.windFromWinter) rows.push({ glyph: '⤙', color: '#C97B25', label: `Winter wind from ${climate.windFromWinter}` });

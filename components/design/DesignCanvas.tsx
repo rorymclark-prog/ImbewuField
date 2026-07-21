@@ -191,6 +191,21 @@ const LINE_LAYER: Record<LineShape['kind'], keyof ActiveLayers> = {
   windbreak: 'planting',
 };
 
+// Default on-canvas label per line kind (LineShape.name overrides). No LineShape kind had ANY
+// on-canvas name label before — ground-feature rings got a draggable pill (see the zones render
+// loop below) but lines had no equivalent, which is what "there's no label for swales" (and every
+// other line kind) actually was. Strings match DesignGlossy.tsx's LINE_NAME map exactly — that is
+// what the OUTPUT SHEETS already call each kind, and the canvas must agree with the sheets.
+const LINE_KIND_LABEL: Record<LineShape['kind'], string> = {
+  swale: 'Swale',
+  fence: 'Fence line',
+  path: 'Walking path',
+  pipe: 'Buried water pipe',
+  drip: 'Drip irrigation line',
+  windbreak: 'Windbreak hedge',
+  greywater: 'Greywater line',
+};
+
 function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; dash?: string; opacity?: number } {
   switch (kind) {
     case 'swale':
@@ -501,24 +516,38 @@ export default function DesignCanvas({
   const dragShape = useRef<{ id: string; kind: 'zone' | 'line'; originPoints: Array<[number, number]>; startWorldX: number; startWorldY: number } | null>(null);
   const [shapeDragDelta, setShapeDragDelta] = useState<[number, number] | null>(null);
 
-  // Drag state for a zone/feature NAME LABEL — moves just the label (a normalised offset from the
-  // ring centroid), not the shape, so a farmer can pull a label off a feature it overlaps.
-  const dragLabel = useRef<{ id: string; startWorldX: number; startWorldY: number; originDx: number; originDy: number; startClientX: number; startClientY: number; moved: boolean } | null>(null);
+  // Drag state for a zone/feature/line NAME LABEL — moves just the label (a normalised offset from
+  // the shape's anchor point — ring centroid for zones, midpoint for lines), not the shape itself,
+  // so a farmer can pull a label off a feature/line it overlaps. `kind` dispatches which of
+  // state.zones/state.lines owns `id`, same pattern as dragShape/dragVertex above.
+  const dragLabel = useRef<{ id: string; kind: 'zone' | 'line'; startWorldX: number; startWorldY: number; originDx: number; originDy: number; startClientX: number; startClientY: number; moved: boolean } | null>(null);
   const [labelDragDelta, setLabelDragDelta] = useState<[number, number] | null>(null);
-  // Inline rename: tap a feature label (no drag) to edit its text.
+  // Inline rename: tap a feature/line label (no drag) to edit its text. `editingLabelKind` says
+  // which collection `editingLabelId` belongs to — lines only ever populate `editingText` (they
+  // have no level/slope of their own).
   const [editingLabelId, setEditingLabelId] = useState<string | null>(null);
+  const [editingLabelKind, setEditingLabelKind] = useState<'zone' | 'line' | null>(null);
   const [editingText, setEditingText] = useState('');
   // Level (m) — shown for ANY feature ring — and measured slope (%) — shown only for
   // terrace_bank rings — ride the SAME inline editor as the name, per
   // docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §3/§6 ("extends the existing inline-rename
-  // editor … no new modal, no new interaction paradigm").
+  // editor … no new modal, no new interaction paradigm"). Zones only — lines use a lighter,
+  // name-only editor (see the lines render loop below), so these two never apply to a line.
   const [editingLevelText, setEditingLevelText] = useState('');
   const [editingSlopeText, setEditingSlopeText] = useState('');
   const skipLabelCommit = useRef(false); // set on Escape so the blur that follows cancels instead of saving
   // Drop a stuck editor if its shape disappears (deleted, or replaced by a remote sync).
   useEffect(() => {
-    if (editingLabelId && !state.zones.some((z) => z.id === editingLabelId)) setEditingLabelId(null);
-  }, [editingLabelId, state.zones]);
+    if (!editingLabelId) return;
+    const stillExists =
+      editingLabelKind === 'line'
+        ? state.lines.some((l) => l.id === editingLabelId)
+        : state.zones.some((z) => z.id === editingLabelId);
+    if (!stillExists) {
+      setEditingLabelId(null);
+      setEditingLabelKind(null);
+    }
+  }, [editingLabelId, editingLabelKind, state.zones, state.lines]);
 
   // Drag state for a vertex of the IN-PROGRESS (not yet committed) draft shape. Unlike
   // dragVertex below, draftPoints is local-only uncommitted state, so this mutates it
@@ -987,20 +1016,25 @@ export default function DesignCanvas({
     setShapeDragDelta(null);
   }
 
-  // Drag a zone/feature's NAME LABEL independently of its shape. Press the label and drag: the
-  // label moves by a normalised offset (stored on the shape as labelDx/labelDy), the polygon
+  // Drag a zone/feature/line's NAME LABEL independently of its shape. Press the label and drag:
+  // the label moves by a normalised offset (stored on the shape as labelDx/labelDy), the shape
   // stays put. A tap (no move) still selects the shape. Mirrors the shape-drag preview→commit.
-  function startDragLabel(e: React.PointerEvent, id: string) {
+  // `kind` dispatches between state.zones and state.lines — same pattern as startDragShape.
+  function startDragLabel(e: React.PointerEvent, id: string, kind: 'zone' | 'line' = 'zone') {
     if (tool !== 'select') return;
-    const shape = state.zones.find((z) => z.id === id);
+    const shape = kind === 'zone' ? state.zones.find((z) => z.id === id) : state.lines.find((l) => l.id === id);
     if (!shape) return;
-    if (!ownedByCurrentStep(state.step, { kind: 'zone', feature: shape.feature })) return;
+    const owned =
+      kind === 'zone'
+        ? ownedByCurrentStep(state.step, { kind: 'zone', feature: (shape as ZoneShape).feature })
+        : ownedByCurrentStep(state.step, { kind: 'line', lineKind: (shape as LineShape).kind });
+    if (!owned) return;
     e.stopPropagation();
     onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
     (e.target as Element).setPointerCapture?.(e.pointerId);
-    dragLabel.current = { id, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0, startClientX: e.clientX, startClientY: e.clientY, moved: false };
+    dragLabel.current = { id, kind, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0, startClientX: e.clientX, startClientY: e.clientY, moved: false };
   }
 
   function moveDragLabel(e: React.PointerEvent) {
@@ -1021,8 +1055,12 @@ export default function DesignCanvas({
         // Real drag → commit the new label offset.
         const ndx = dl.originDx + labelDragDelta[0];
         const ndy = dl.originDy + labelDragDelta[1];
-        onChange({ ...state, zones: state.zones.map((z) => (z.id === dl.id ? { ...z, labelDx: ndx, labelDy: ndy } : z)) });
-      } else {
+        if (dl.kind === 'zone') {
+          onChange({ ...state, zones: state.zones.map((z) => (z.id === dl.id ? { ...z, labelDx: ndx, labelDy: ndy } : z)) });
+        } else {
+          onChange({ ...state, lines: state.lines.map((l) => (l.id === dl.id ? { ...l, labelDx: ndx, labelDy: ndy } : l)) });
+        }
+      } else if (dl.kind === 'zone') {
         // Tapped (no real move) → open the inline rename (features only — they carry text labels).
         const shape = state.zones.find((z) => z.id === dl.id);
         if (shape?.feature) {
@@ -1030,6 +1068,15 @@ export default function DesignCanvas({
           setEditingLevelText(shape.levelM != null ? String(shape.levelM) : '');
           setEditingSlopeText(shape.measuredSlopePct != null ? String(shape.measuredSlopePct) : '');
           setEditingLabelId(dl.id);
+          setEditingLabelKind('zone');
+        }
+      } else {
+        // Tapped a line's label → open the (lighter, name-only) inline rename.
+        const shape = state.lines.find((l) => l.id === dl.id);
+        if (shape) {
+          setEditingText(shape.name ?? LINE_KIND_LABEL[shape.kind]);
+          setEditingLabelId(dl.id);
+          setEditingLabelKind('line');
         }
       }
     }
@@ -1037,8 +1084,20 @@ export default function DesignCanvas({
     setLabelDragDelta(null);
   }
 
-  function commitLabelEdit(id: string) {
+  function commitLabelEdit(id: string, kind: 'zone' | 'line' = 'zone') {
     setEditingLabelId(null);
+    setEditingLabelKind(null);
+    if (kind === 'line') {
+      const shape = state.lines.find((l) => l.id === id);
+      if (!shape) return;
+      const typed = editingText.trim();
+      const defaultLabel = LINE_KIND_LABEL[shape.kind];
+      // Empty, or unchanged from the default, → store no custom name (falls back to the default).
+      const nextName = typed && typed !== defaultLabel ? typed : undefined;
+      if ((nextName ?? '') === (shape.name ?? '')) return; // no-op — skip a spurious undo entry
+      onChange({ ...state, lines: state.lines.map((l) => (l.id === id ? { ...l, name: nextName } : l)) });
+      return;
+    }
     const shape = state.zones.find((z) => z.id === id);
     if (!shape) return;
     const typed = editingText.trim();
@@ -2017,6 +2076,112 @@ export default function DesignCanvas({
                 {isHighlighted && (
                   <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={3} strokeDasharray="4 3" strokeLinecap="round" pointerEvents="none" />
                 )}
+                {/* Name-pill label at the line's midpoint (or wherever it's been dragged to) —
+                    the SAME pattern as the ground-feature label pill above, generalised to lines.
+                    No LineShape kind had an on-canvas label before this: "there's no label for
+                    swales" turned out to be true of every kind, not just swales. */}
+                {activeLayers.labels && mid && (() => {
+                  const isDraggingThisLabel =
+                    dragLabel.current?.id === line.id && dragLabel.current?.kind === 'line' && dragLabel.current?.moved && labelDragDelta;
+                  const ldx = (line.labelDx ?? 0) + (isDraggingThisLabel ? labelDragDelta![0] : 0);
+                  const ldy = (line.labelDy ?? 0) + (isDraggingThisLabel ? labelDragDelta![1] : 0);
+                  const labelCx = mid[0] + ldx;
+                  const labelCy = mid[1] + ldy;
+                  const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003;
+                  const isEditingThis = editingLabelId === line.id && editingLabelKind === 'line';
+                  return (
+                    <>
+                      {labelMoved && (
+                        <line
+                          x1={(mid[0] * imgW).toFixed(1)}
+                          y1={(mid[1] * imgH).toFixed(1)}
+                          x2={(labelCx * imgW).toFixed(1)}
+                          y2={(labelCy * imgH).toFixed(1)}
+                          stroke={style.stroke}
+                          strokeWidth={1}
+                          strokeDasharray="2 2"
+                          opacity={0.75}
+                          pointerEvents="none"
+                        />
+                      )}
+                      <g
+                        transform={`translate(${(labelCx * imgW).toFixed(1)},${(labelCy * imgH).toFixed(1)})`}
+                        onPointerDown={(e) => startDragLabel(e, line.id, 'line')}
+                        style={{ cursor: interactive ? 'move' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
+                      >
+                        {isEditingThis ? (
+                          // Lighter than the zone/feature editor: a line only ever needs its name —
+                          // no level/slope fields apply to fences, paths, pipes, swales, etc.
+                          <foreignObject x={-75} y={-15} width={150} height={30} style={{ overflow: 'visible' }}>
+                            <div
+                              onBlur={(e) => {
+                                const group = e.currentTarget;
+                                if (group.contains(e.relatedTarget as Node)) return;
+                                if (skipLabelCommit.current) {
+                                  skipLabelCommit.current = false;
+                                  setEditingLabelId(null);
+                                  setEditingLabelKind(null);
+                                  return;
+                                }
+                                commitLabelEdit(line.id, 'line');
+                              }}
+                            >
+                              <input
+                                autoFocus
+                                value={editingText}
+                                onChange={(e) => setEditingText(e.target.value)}
+                                onPointerDown={(e) => e.stopPropagation()}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') e.currentTarget.blur();
+                                  else if (e.key === 'Escape') {
+                                    skipLabelCommit.current = true;
+                                    e.currentTarget.blur();
+                                  }
+                                }}
+                                style={{
+                                  width: 150,
+                                  fontSize: 11,
+                                  fontWeight: 700,
+                                  textAlign: 'center' as const,
+                                  color: '#FBF6EC',
+                                  background: '#20190F',
+                                  border: `1px solid ${style.stroke}`,
+                                  borderRadius: 9,
+                                  padding: '2px 6px',
+                                  outline: 'none',
+                                  boxSizing: 'border-box' as const,
+                                }}
+                              />
+                            </div>
+                          </foreignObject>
+                        ) : (
+                          <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
+                            <div
+                              style={{
+                                fontSize: 9.5,
+                                fontWeight: 700,
+                                lineHeight: '18px',
+                                textAlign: 'center',
+                                color: '#FBF6EC',
+                                background: 'rgba(32,25,15,0.78)',
+                                border: `1px solid ${style.stroke}`,
+                                borderRadius: 9,
+                                padding: '1px 7px',
+                                display: 'inline-block',
+                                maxWidth: 112,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {line.name ?? LINE_KIND_LABEL[line.kind]}
+                            </div>
+                          </foreignObject>
+                        )}
+                      </g>
+                    </>
+                  );
+                })()}
                 {isSelected && interactive && (
                   <>
                     {/* Edge-midpoint "+" handles — tap to insert a new corner on that segment. */}
