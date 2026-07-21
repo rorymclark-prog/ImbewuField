@@ -661,3 +661,29 @@ test('only the water subsystems that exist are described', () => {
   const none = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: false, irrigation: false, greywater: false } });
   assert.doesNotMatch(none, /WATER SHEET — GROUP WHAT IS THERE/);
 });
+
+test('tar and roof are named as different colours, so one cannot be drawn as the other', () => {
+  // The driveway kept coming back as a ROOF. The mechanism was in the picture, not the wording:
+  // the composite drew tar at #3B3A3E while rule 1 names #3C4247 as the colour of every roof —
+  // the same colour to within a rounding error. Three commits of "flat, no thickness, never a
+  // slab" could not beat a slate-grey polygon sitting next to a house.
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L', sheetKind: 'water',
+  });
+  assert.match(p, /Slate grey #3C4247 is ROOF; near-black #12140F is TAR ON THE GROUND/);
+  assert.match(p, /never give the near-black shape a ridge, a hip, a pitched plane or a shadow/);
+  // The access track is identified by the colour the composite actually paints it.
+  assert.match(p, /near-black #12140F shape on the ground is the ACCESS TRACK, not a building/);
+});
+
+test('one tar colour ships everywhere', async () => {
+  // Three shipped simultaneously: #3B3A3E drawn, #2A2A2E in legend swatches, #12140F stated in the
+  // prompt palette. A farmer cannot match a legend swatch to a shape that is not that colour.
+  const { GROUND_FEATURES } = await import('../lib/design-elements.ts');
+  assert.equal(GROUND_FEATURES.driveway.color, '#12140F');
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay', elementsText: 'JoJo Tank 5000L', sheetKind: 'water',
+  });
+  assert.match(p, /near-black tar #12140F/); // the style line's palette
+});

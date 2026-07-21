@@ -114,7 +114,7 @@ function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch
     return [
       { swatch: '#EDE7D9', text: 'Property boundary' },
       { swatch: '#3A352C', text: 'House / roof' },
-      { swatch: '#3B3A3E', text: 'Driveway (tar)' },
+      { swatch: '#12140F', text: 'Driveway (tar)' },
     ];
   }
   const rows: Array<{ swatch: string; icon?: string; text: string }> = [];

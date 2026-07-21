@@ -86,7 +86,7 @@ export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: 
   boundary: { label: 'Property boundary', color: '#8CEB6A', icon: '🚩' },
   house: { label: 'House', color: '#8A8D91', icon: '🏠' },
   patio: { label: 'Patio / Paving', color: '#C7C3BB', icon: '▦' },
-  driveway: { label: 'Driveway', color: '#3B3A3E', icon: '🛣️' }, // tar colour, canonical in DesignGlossy
+  driveway: { label: 'Driveway', color: '#12140F', icon: '🛣️' }, // near-black tar — see TAR in DesignGlossy; must NOT be slate, or the model reads it as a roof
   lawn: { label: 'Lawn', color: '#8FBF6B', icon: '🟩' },
   veg_garden: { label: 'Veg garden', color: '#4E8B3B', icon: '🥬' },
   orchard: { label: 'Orchard / food forest', color: '#2F7A4A', icon: '🌳' },

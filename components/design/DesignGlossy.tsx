@@ -191,6 +191,20 @@ function drawFencePosts(
  *  Bone reads as built infrastructure at any zoom, on pale ground and dark. */
 const BOUNDARY_BONE = '#EDE7D9';
 
+/** TAR. One constant, and deliberately near-black rather than slate.
+ *
+ *  It used to be #3B3A3E in the composite — which is, to within a rounding error, the #3C4247 slate
+ *  that prompt rule 1 names as the colour of every ROOF. So we handed the model a slate-grey polygon
+ *  beside a house and told it slate-grey polygons are roofs, and it drew the driveway as a roof,
+ *  render after render (Rory: "the driveway is a big issue it makes it a roof!!!"). Three commits
+ *  attacked that with prompt wording — flat, no thickness, no walls, never a slab or a roof — while
+ *  the picture kept saying roof.
+ *  #12140F is the near-black tar the prompt's own palette has always named, so image and brief now
+ *  agree, and it cannot be confused with a slate roof at any exposure.
+ *  Also collapses three colours that shipped simultaneously (#3B3A3E drawn, #2A2A2E legend swatch,
+ *  #12140F stated) — an audit finding from docs/LAYER-AUDIT-2026-07-20.md. */
+export const TAR = '#12140F';
+
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
@@ -550,7 +564,7 @@ export function drawMarks(
       // jagged maze — Rory: "look at the driveway?").
       tracePath();
       ctx.closePath();
-      ctx.fillStyle = '#3B3A3E';
+      ctx.fillStyle = TAR;
       ctx.fill();
       if (showDrivewayEdge) {
         ctx.strokeStyle = 'rgba(233,229,221,0.92)';
@@ -568,7 +582,7 @@ export function drawMarks(
         ctx.stroke();
       }
       tracePath();
-      ctx.strokeStyle = '#3B3A3E';
+      ctx.strokeStyle = TAR;
       ctx.lineWidth = roadW;
       ctx.stroke();
     }
@@ -594,14 +608,14 @@ export function drawMarks(
     if (drivewayCovered && !showDrivewayMark) {
       ctx.save();
       ctx.globalAlpha = 0.5;
-      ctx.strokeStyle = '#3B3A3E';
+      ctx.strokeStyle = TAR;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.beginPath();
       refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
       if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
         ctx.closePath();
-        ctx.fillStyle = '#3B3A3E';
+        ctx.fillStyle = TAR;
         ctx.fill();
       } else {
         ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
@@ -2142,7 +2156,7 @@ function buildDrivewayOverlay(
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const precision = treatment === 'precision_atlas';
-  const asphalt = precision ? '#50534E' : '#3B3A3E';
+  const asphalt = precision ? '#50534E' : TAR; // Precision Atlas keeps its lighter paper-plan asphalt
 
   if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
     ctx.save();
@@ -2351,7 +2365,7 @@ function drawBlueprintDriveway(
   if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
     trace();
     ctx.closePath();
-    ctx.fillStyle = '#2A2A2E';
+    ctx.fillStyle = TAR;
     ctx.fill();
     if (dashedEdge) {
       ctx.setLineDash([10, 7]);
@@ -2362,7 +2376,7 @@ function drawBlueprintDriveway(
     }
   } else {
     trace();
-    ctx.strokeStyle = '#2A2A2E';
+    ctx.strokeStyle = TAR;
     ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
     ctx.stroke();
     if (dashedEdge) {
@@ -3009,7 +3023,7 @@ export async function buildBlueprintZoneMap(
   ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
   ctx.fillText('Fence / site boundary', textX, ry);
   ry += rowH;
-  ctx.fillStyle = '#2A2A2E';
+  ctx.fillStyle = TAR;
   roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
   ctx.fill();
   ctx.fillStyle = '#EDE7DA';
@@ -3225,7 +3239,7 @@ export async function buildBlueprintWaterMapLegacy(
   }
   const noteRows: BlueprintLegendRow[] = [
     { color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' },
-    ...(refLayers.driveway.length >= 2 ? [{ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' as const }] : []),
+    ...(refLayers.driveway.length >= 2 ? [{ color: TAR, label: 'Tarred driveway', style: 'fill' as const }] : []),
   ];
   sections.push({
     title: 'NOTES',
@@ -3447,7 +3461,7 @@ export async function buildBlueprintPlantingMap(
   const rowH = Math.round(W * 0.026);
   const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
   fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
-  if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+  if (refLayers.driveway.length >= 2) fixed.push({ color: TAR, label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
@@ -3554,7 +3568,7 @@ export async function buildBlueprintStructuresMap(
   // Swatch must match the line now drawn: solid violet with posts, not a grey dash.
   if (kinds.has('fence')) fixed.push({ color: LINE_COLORS.fence, label: 'Internal fence', style: 'line' });
   fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
-  if (refLayers.driveway.length >= 2) fixed.push({ color: '#2A2A2E', label: 'Tarred driveway', style: 'fill' });
+  if (refLayers.driveway.length >= 2) fixed.push({ color: TAR, label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'structures'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
@@ -4305,7 +4319,7 @@ function sheetLegendRows(
     kinds.add(l.kind);
     rows.push({ swatch: LINE_COLORS[l.kind] ?? '#8C8577', text: l.kind.charAt(0).toUpperCase() + l.kind.slice(1) });
   }
-  if (refLayers.driveway.length >= 2) rows.push({ swatch: '#3B3A3E', text: 'Tarred driveway' });
+  if (refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway' });
   return rows;
 }
 
@@ -4501,7 +4515,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v4';
+const PLAN_VERSION = 'v5';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
