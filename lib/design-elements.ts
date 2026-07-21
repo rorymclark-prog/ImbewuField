@@ -52,6 +52,26 @@ export const ZONE_KEY: Array<{ z: 0 | 1 | 2 | 3 | 4 | 5; label: string; desc: st
   { z: 5, label: 'Conservation / buffer', desc: 'Wild, tree belts, boundary' },
 ];
 
+// Which WIZARD STEP an element category is placed/edited from. Deliberately NOT the same
+// question as sheetForElement (lib/glossy-filters.ts) — that answers which OUTPUT SHEET an
+// element prints on, which the category-vs-override split makes genuinely different: a raised
+// bed is category 'earthworks' (placed from the Water step's palette — see
+// components/design/DesignPalette.tsx's categoriesForStep) but SHEET_OVERRIDE'd onto the
+// Planting sheet, because a farmer expects to find his beds where he plants, not where he
+// dug. Reusing sheetForElement to answer "which step can I edit this from" made a raised bed,
+// keyhole bed, herb spiral or tree basin render LOCKED the instant it was placed — in the very
+// Water step it was just placed from (adversarial review of the step-locking feature, 2026-07-21).
+// categoriesForStep derives its per-step category lists from this map so the two can never drift
+// apart again the way sheetForElement's SHEET_OVERRIDE and this once implicitly disagreed.
+export const CATEGORY_STEP: Record<ElementCategory, 'water' | 'planting' | 'structures'> = {
+  water: 'water',
+  earthworks: 'water',
+  growing: 'planting',
+  structure: 'structures',
+  animal: 'structures',
+  access: 'structures',
+};
+
 export const CATEGORY_META: Record<ElementCategory, { label: string; icon: string }> = {
   water: { label: 'Water', icon: '💧' },
   earthworks: { label: 'Earthworks', icon: '⛏️' },

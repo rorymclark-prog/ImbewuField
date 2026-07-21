@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Newsreader, Public_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
@@ -50,6 +50,20 @@ export const metadata: Metadata = {
     title: 'ImbewuField',
     description: 'Permaculture planning for South African farmers, in your language.',
   },
+};
+
+// viewportFit: 'cover' is the actual root cause behind "content cut off at the bottom of the
+// screen" reports on notched/home-indicator phones — WITHOUT this, every env(safe-area-inset-*)
+// call anywhere in the app (there are dozens already, e.g. DesignPalette.tsx's tool row,
+// TabBar.tsx, Map.tsx's sheets) always evaluates to 0px, because Safari only exposes the
+// safe-area env() variables once the viewport meta declares viewport-fit=cover. Those call
+// sites were written correctly; this was the one missing piece that silently made all of them
+// no-ops. Fixes it app-wide in one place rather than padding every affected component by a
+// guessed pixel amount.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

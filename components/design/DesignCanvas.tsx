@@ -14,6 +14,7 @@ import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, nearestPointOnRing } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
+import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
@@ -43,6 +44,11 @@ const HATCH_COLORS: string[] = Array.from(
     ...Object.values(GROUND_FEATURES).map((f) => f.color),
   ])
 );
+
+// A shape NOT owned by the current wizard step (see ownedByCurrentStep) still renders — the
+// farmer needs the boundary visible while placing zones — but reads as quiet background
+// context rather than a live, editable thing. Not near-invisible: it must still orient you.
+const LOCKED_OPACITY = 0.42;
 
 // A shape the farmer already traced on the live map, classified + projected to this
 // frame's normalised [0..1] coords by the parent (app/design/page.tsx, via the shared
@@ -439,6 +445,29 @@ export default function DesignCanvas({
   const viewRef = useRef(view);
   viewRef.current = view;
 
+  // Rendered CSS size of the svg (NOT the same as window size — chrome above/below the
+  // canvas, see app/design/page.tsx's palette, can leave it narrower/shorter than the viewport).
+  // Tracked via ResizeObserver so it updates on rotation/resize, not just mount. BOTH dimensions,
+  // not just width: the svg fills its container with preserveAspectRatio="meet" (letterboxed
+  // whenever the container aspect ratio isn't imgW/imgH), and vbFromClient/onWheel/panning above
+  // already account for that with Math.min(rect.width/imgW, rect.height/imgH) — width alone
+  // under-scales (making hit targets and dots smaller than intended, never larger) whenever the
+  // container is height-bound rather than width-bound, e.g. many desktop layouts or a portrait
+  // site photo (adversarial review of the step-locking feature, 2026-07-21).
+  const [containerPx, setContainerPx] = useState(0);
+  const [containerHeightPx, setContainerHeightPx] = useState(0);
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver((entries) => {
+      const rect = entries[0]?.contentRect;
+      if (rect?.width) setContainerPx(rect.width);
+      if (rect?.height) setContainerHeightPx(rect.height);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   // In-progress draw state for zone/line tools.
   const [draftPoints, setDraftPoints] = useState<Array<[number, number]>>([]);
   // Drag state for moving an existing item.
@@ -826,6 +855,12 @@ export default function DesignCanvas({
 
   function startDragItem(e: React.PointerEvent, id: string) {
     if (tool !== 'select') return;
+    const item = state.items.find((it) => it.id === id);
+    const def = item && ELEMENTS_BY_ID[item.defId];
+    // Not owned by the step we're currently on (e.g. a Water-step tank while drawing Zones) —
+    // inert. Bail BEFORE stopPropagation/onSelect so the tap falls through to whatever the
+    // current step's own background/draw handler would have done with it.
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
     onSelect(id, additive);
@@ -856,6 +891,15 @@ export default function DesignCanvas({
 
   function startDragVertex(e: React.PointerEvent, shapeId: string, kind: 'zone' | 'line', index: number) {
     if (tool !== 'select') return;
+    // See startDragItem — a vertex belonging to a shape from another step (the boundary,
+    // traced on Base, while the farmer is on Zones) must not grab; the exact bug this guards.
+    if (kind === 'zone') {
+      const z = state.zones.find((zz) => zz.id === shapeId);
+      if (!z || !ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) return;
+    } else {
+      const l = state.lines.find((ll) => ll.id === shapeId);
+      if (!l || !ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) return;
+    }
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragVertex.current = { shapeId, kind, index };
@@ -900,13 +944,19 @@ export default function DesignCanvas({
   // which zones/lines previously lacked entirely (only single-vertex drag existed).
   function startDragShape(e: React.PointerEvent, id: string, kind: 'zone' | 'line') {
     if (tool !== 'select') return;
+    const shape = kind === 'zone' ? state.zones.find((z) => z.id === id) : state.lines.find((l) => l.id === id);
+    if (!shape) return;
+    // Foreign-step shape (see startDragItem) — no select, no drag; let the tap fall through.
+    const owned =
+      kind === 'zone'
+        ? ownedByCurrentStep(state.step, { kind: 'zone', feature: (shape as ZoneShape).feature })
+        : ownedByCurrentStep(state.step, { kind: 'line', lineKind: (shape as LineShape).kind });
+    if (!owned) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
     onSelect(id, additive);
     if (additive) return; // toggle membership — no drag.
     (e.target as Element).setPointerCapture?.(e.pointerId);
-    const shape = kind === 'zone' ? state.zones.find((z) => z.id === id) : state.lines.find((l) => l.id === id);
-    if (!shape) return;
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
     dragShape.current = { id, kind, originPoints: shape.points, startWorldX: w[0], startWorldY: w[1] };
@@ -942,10 +992,11 @@ export default function DesignCanvas({
   // stays put. A tap (no move) still selects the shape. Mirrors the shape-drag preview→commit.
   function startDragLabel(e: React.PointerEvent, id: string) {
     if (tool !== 'select') return;
-    e.stopPropagation();
-    onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
     const shape = state.zones.find((z) => z.id === id);
     if (!shape) return;
+    if (!ownedByCurrentStep(state.step, { kind: 'zone', feature: shape.feature })) return;
+    e.stopPropagation();
+    onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
     (e.target as Element).setPointerCapture?.(e.pointerId);
@@ -1053,6 +1104,9 @@ export default function DesignCanvas({
 
   function startDragResize(e: React.PointerEvent, id: string, mode: 'both' | 'w' | 'h' = 'both') {
     if (tool !== 'select') return;
+    const item = state.items.find((it) => it.id === id);
+    const def = item && ELEMENTS_BY_ID[item.defId];
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragResizeId.current = id;
@@ -1114,6 +1168,9 @@ export default function DesignCanvas({
 
   function startDragRotate(e: React.PointerEvent, id: string) {
     if (tool !== 'select') return;
+    const item = state.items.find((it) => it.id === id);
+    const def = item && ELEMENTS_BY_ID[item.defId];
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragRotateId.current = id;
@@ -1285,6 +1342,28 @@ export default function DesignCanvas({
     }
     return out;
   }, [state.zones, activeLayers.labels, imgW, imgH, labelMovedByUser]);
+
+  // Handle sizing — phone-first. A radius written in WORLD (viewBox) units, like the old
+  // fixed r={14}, balloons on screen exactly when a farmer pinch-zooms in for precision —
+  // the very thing a small phone forces them to do — AND scales again with how wide the
+  // canvas actually renders (a phone's canvas box is far narrower than a desktop's). worldPx
+  // converts a target ON-SCREEN pixel size through BOTH factors (view.k zoom, and
+  // containerPx/imgW render scale) into the world-space radius that draws at that constant
+  // screen size, whatever the zoom level or device. The VISIBLE dot shrinks toward the narrow
+  // end (less of the photo obscured on a phone); the invisible HIT target never drops below a
+  // real mobile touch target (~40px on-screen diameter) — shrinking the dot for visibility must
+  // never make it harder to actually grab.
+  const renderScale = containerPx > 0 && containerHeightPx > 0 ? Math.min(containerPx / imgW, containerHeightPx / imgH) : 1;
+  const effectiveScale = view.k * renderScale || 1;
+  const worldPx = (screenPx: number) => screenPx / effectiveScale;
+  const visibleScreenR = clamp(Math.min(containerPx, containerHeightPx) * 0.018, 5, 8); // narrower canvas → smaller dot
+  const vertexHitR = worldPx(20); // ~40px tappable diameter, always
+  const vertexVisibleR = worldPx(visibleScreenR);
+  const vertexStrokeW = worldPx(2);
+  const insertHitR = worldPx(20);
+  const insertVisibleR = worldPx(Math.max(visibleScreenR - 1, 4));
+  const deleteHitR = worldPx(20);
+  const deleteVisibleR = worldPx(Math.max(visibleScreenR + 1, 6));
 
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
@@ -1562,6 +1641,12 @@ export default function DesignCanvas({
             // their labelDx/labelDy is applied on top of the auto position.
             const auto = groundLabelOffsets.get(z.id) ?? 0;
             if (z.feature ? !activeLayers.ground : !activeLayers.zones) return null;
+            // Not owned by the current wizard step (e.g. the boundary while on Zones) — still
+            // rendered for context, but locked: dimmed, and its own hit-targets inert (see
+            // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally
+            // requires the select tool, matching every existing tool==='select' gate here.
+            const owned = ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature });
+            const interactive = tool === 'select' && owned;
             const def = ZONE_DEFS[z.zone];
             // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
             // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
@@ -1596,7 +1681,7 @@ export default function DesignCanvas({
             const featureLabelsOn = activeLayers.labels && state.step !== 'zones';
             const labelVisible = feat ? featureLabelsOn : true;
             return (
-              <g key={z.id}>
+              <g key={z.id} opacity={owned ? 1 : LOCKED_OPACITY}>
                 {/* Invisible fat hit-stroke along the edge — thin/narrow beds have little
                     fill area to tap, so a wide transparent perimeter catches the pointer
                     even when the interior fill is only a sliver. */}
@@ -1605,7 +1690,7 @@ export default function DesignCanvas({
                   fill="none"
                   stroke="transparent"
                   strokeWidth={16}
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'stroke' : 'none' }}
+                  style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'stroke' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
                 {/* NESTED, not stacked. A ground feature is filled as itself MINUS every smaller
@@ -1631,7 +1716,7 @@ export default function DesignCanvas({
                   fill={hatchFill(color)}
                   fillOpacity={feat ? 0.32 : 0.2}
                   stroke="none"
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
+                  style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
                 />
                 )}
@@ -1662,7 +1747,7 @@ export default function DesignCanvas({
                 <g
                   transform={`translate(${(labelCx * imgW).toFixed(1)},${(labelCy * imgH).toFixed(1)})`}
                   onPointerDown={(e) => startDragLabel(e, z.id)}
-                  style={{ cursor: tool === 'select' ? 'move' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
+                  style={{ cursor: interactive ? 'move' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                 >
                   {feat ? (
                     editingLabelId === z.id ? (
@@ -1781,7 +1866,7 @@ export default function DesignCanvas({
                     they'd sit on top of the drawing surface and a stray tap on the ✕ (or a
                     vertex) would delete/grab the old zone instead of dropping the next corner
                     of the NEW one. Arming a tool also clears the selection upstream. */}
-                {isSelected && tool === 'select' && (
+                {isSelected && interactive && (
                   <>
                     <polygon
                       points={ringToPx(effectivePoints, imgW, imgH)}
@@ -1800,7 +1885,7 @@ export default function DesignCanvas({
                           <circle
                             cx={mx}
                             cy={my}
-                            r={13}
+                            r={insertHitR}
                             fill="transparent"
                             style={{ cursor: 'copy', touchAction: 'none', pointerEvents: 'fill' }}
                             onPointerDown={(e) => {
@@ -1808,8 +1893,8 @@ export default function DesignCanvas({
                               insertZoneVertex(z.id, i);
                             }}
                           />
-                          <circle cx={mx} cy={my} r={6} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={1.5} pointerEvents="none" />
-                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={10} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
+                          <circle cx={mx} cy={my} r={insertVisibleR} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={vertexStrokeW} pointerEvents="none" />
+                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={worldPx(10)} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
                             +
                           </text>
                         </g>
@@ -1822,7 +1907,7 @@ export default function DesignCanvas({
                         <circle
                           cx={x * imgW}
                           cy={y * imgH}
-                          r={14}
+                          r={vertexHitR}
                           fill="transparent"
                           style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
                           onPointerDown={(e) => startDragVertex(e, z.id, 'zone', i)}
@@ -1830,10 +1915,10 @@ export default function DesignCanvas({
                         <circle
                           cx={x * imgW}
                           cy={y * imgH}
-                          r={7}
+                          r={vertexVisibleR}
                           fill="#FFFEFA"
                           stroke={GOLD}
-                          strokeWidth={2}
+                          strokeWidth={vertexStrokeW}
                           pointerEvents="none"
                         />
                       </g>
@@ -1842,17 +1927,21 @@ export default function DesignCanvas({
                         than the 3 points a polygon needs, so it can never be made degenerate. */}
                     {effectivePoints.length > 3 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g
-                          key={`del-${i}`}
-                          transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}
-                          onPointerDown={(e) => {
-                            e.stopPropagation();
-                            removeZoneVertex(z.id, i);
-                          }}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <circle r={7} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
-                          <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}>
+                          {/* Invisible enlarged hit circle — the visible badge alone (used to be
+                              its only tap target) is well under the ~40px mobile touch-target
+                              floor once it's allowed to shrink for visibility (see worldPx). */}
+                          <circle
+                            r={deleteHitR}
+                            fill="transparent"
+                            style={{ cursor: 'pointer', touchAction: 'none', pointerEvents: 'fill' }}
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              removeZoneVertex(z.id, i);
+                            }}
+                          />
+                          <circle r={deleteVisibleR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} pointerEvents="none" />
+                          <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
                             −
                           </text>
                         </g>
@@ -1880,6 +1969,9 @@ export default function DesignCanvas({
         {state.lines.map((line) => {
             if (!activeLayers[LINE_LAYER[line.kind]]) return null;
             const style = lineStroke(line.kind);
+            // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
+            const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
+            const interactive = tool === 'select' && owned;
             const isSelected = selectedId === line.id;
             const isHighlighted = selectedIds.includes(line.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
@@ -1891,7 +1983,7 @@ export default function DesignCanvas({
               : line.points;
             const mid = effectivePoints[Math.floor(effectivePoints.length / 2)] ?? effectivePoints[0];
             return (
-              <g key={line.id}>
+              <g key={line.id} opacity={owned ? 1 : LOCKED_OPACITY}>
                 {/* Invisible fat hit-stroke — thin visible lines are hard to tap precisely,
                     so a wide transparent duplicate underneath catches the pointer instead. */}
                 <polyline
@@ -1900,7 +1992,7 @@ export default function DesignCanvas({
                   stroke="transparent"
                   strokeWidth={18}
                   strokeLinecap="round"
-                  style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'stroke' : 'none' }}
+                  style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'stroke' : 'none' }}
                   onPointerDown={(e) => startDragShape(e, line.id, 'line')}
                 />
                 <polyline
@@ -1919,7 +2011,7 @@ export default function DesignCanvas({
                 {isHighlighted && (
                   <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={3} strokeDasharray="4 3" strokeLinecap="round" pointerEvents="none" />
                 )}
-                {isSelected && tool === 'select' && (
+                {isSelected && interactive && (
                   <>
                     {/* Edge-midpoint "+" handles — tap to insert a new corner on that segment. */}
                     {effectivePoints.slice(0, -1).map(([x, y], i) => {
@@ -1931,7 +2023,7 @@ export default function DesignCanvas({
                           <circle
                             cx={mx}
                             cy={my}
-                            r={13}
+                            r={insertHitR}
                             fill="transparent"
                             style={{ cursor: 'copy', touchAction: 'none', pointerEvents: 'fill' }}
                             onPointerDown={(e) => {
@@ -1939,8 +2031,8 @@ export default function DesignCanvas({
                               insertLineVertex(line.id, i);
                             }}
                           />
-                          <circle cx={mx} cy={my} r={6} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={1.5} pointerEvents="none" />
-                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={10} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
+                          <circle cx={mx} cy={my} r={insertVisibleR} fill="#1F4D2B" stroke="#FFFEFA" strokeWidth={vertexStrokeW} pointerEvents="none" />
+                          <text x={mx} y={my} textAnchor="middle" dominantBaseline="central" fontSize={worldPx(10)} fontWeight={700} fill="#FFFEFA" pointerEvents="none">
                             +
                           </text>
                         </g>
@@ -1951,7 +2043,7 @@ export default function DesignCanvas({
                         <circle
                           cx={x * imgW}
                           cy={y * imgH}
-                          r={14}
+                          r={vertexHitR}
                           fill="transparent"
                           style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
                           onPointerDown={(e) => startDragVertex(e, line.id, 'line', i)}
@@ -1959,10 +2051,10 @@ export default function DesignCanvas({
                         <circle
                           cx={x * imgW}
                           cy={y * imgH}
-                          r={7}
+                          r={vertexVisibleR}
                           fill="#FFFEFA"
                           stroke={GOLD}
-                          strokeWidth={2}
+                          strokeWidth={vertexStrokeW}
                           pointerEvents="none"
                         />
                       </g>
@@ -1971,17 +2063,18 @@ export default function DesignCanvas({
                         minimum a line needs to stay a line. */}
                     {effectivePoints.length > 2 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g
-                          key={`del-${i}`}
-                          transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}
-                          onPointerDown={(e) => {
-                            e.stopPropagation();
-                            removeLineVertex(line.id, i);
-                          }}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <circle r={7} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
-                          <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}>
+                          <circle
+                            r={deleteHitR}
+                            fill="transparent"
+                            style={{ cursor: 'pointer', touchAction: 'none', pointerEvents: 'fill' }}
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              removeLineVertex(line.id, i);
+                            }}
+                          />
+                          <circle r={deleteVisibleR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} pointerEvents="none" />
+                          <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
                             −
                           </text>
                         </g>
@@ -2039,12 +2132,12 @@ export default function DesignCanvas({
               <circle
                 cx={x * imgW}
                 cy={y * imgH}
-                r={14}
+                r={vertexHitR}
                 fill="transparent"
                 style={{ cursor: 'grab', touchAction: 'none', pointerEvents: 'fill' }}
                 onPointerDown={(e) => startDragDraftVertex(e, i)}
               />
-              <circle cx={x * imgW} cy={y * imgH} r={7} fill="#FFFEFA" stroke={GOLD} strokeWidth={2} pointerEvents="none" />
+              <circle cx={x * imgW} cy={y * imgH} r={vertexVisibleR} fill="#FFFEFA" stroke={GOLD} strokeWidth={vertexStrokeW} pointerEvents="none" />
             </g>
           ))}
 
@@ -2065,6 +2158,9 @@ export default function DesignCanvas({
           const cy = py * imgH;
           const isSelected = selectedId === item.id;
           const isHighlighted = selectedIds.includes(item.id);
+          // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
+          const owned = ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId });
+          const interactive = tool === 'select' && owned;
           const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
@@ -2080,7 +2176,8 @@ export default function DesignCanvas({
               key={item.id}
               transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}
               onPointerDown={(e) => startDragItem(e, item.id)}
-              style={{ cursor: tool === 'select' ? 'grab' : 'default', pointerEvents: tool === 'select' ? 'auto' : 'none' }}
+              opacity={owned ? 1 : LOCKED_OPACITY}
+              style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
             >
               {/* Footprint + selection outline rotate together (rect only); the icon disc,
                   label and action handles below stay upright/screen-aligned. */}
@@ -2119,7 +2216,7 @@ export default function DesignCanvas({
               {/* Label pills are NOT drawn here. They are laid out together in a second pass below
                   (see "Item label pills"), because de-collision needs to see every pill at once —
                   which a per-item render, by construction, cannot. */}
-              {isSelected && onEditItem && (
+              {isSelected && owned && onEditItem && (
                 <g
                   transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 26})`}
                   onPointerDown={(e) => {
@@ -2134,7 +2231,7 @@ export default function DesignCanvas({
                   </text>
                 </g>
               )}
-              {isSelected && (
+              {isSelected && owned && (
                 <g
                   transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 6})`}
                   onPointerDown={(e) => {
@@ -2151,7 +2248,7 @@ export default function DesignCanvas({
               )}
               {/* Resize handle (bottom-right corner) + rotate knob (top edge) — both attach to
                   the rotated footprint so they read against the strip's real orientation. */}
-              {isSelected && tool === 'select' && (
+              {isSelected && interactive && (
                 <g transform={rotXf}>
                   {/* Fat invisible hit area so the handle is easy to grab on a phone. */}
                   <rect
@@ -2628,11 +2725,14 @@ export default function DesignCanvas({
         </button>
       )}
 
-      {/* Zoom controls — floating column bottom-right, above the scale bar. */}
+      {/* Zoom controls — floating column bottom-right, above the scale bar. Bottom offset adds
+          the iOS home-indicator safe area (see app/layout.tsx's viewport-fit=cover — without
+          it env() here is always 0) so this doesn't sit under/behind the gesture bar when the
+          canvas is the last thing on screen (e.g. chrome collapsed). */}
       <div
         style={{
           position: 'absolute',
-          bottom: 56,
+          bottom: 'calc(56px + env(safe-area-inset-bottom))',
           right: 12,
           display: 'flex',
           flexDirection: 'column',
@@ -2680,7 +2780,7 @@ export default function DesignCanvas({
         <div
           style={{
             position: 'absolute',
-            bottom: 12,
+            bottom: 'calc(12px + env(safe-area-inset-bottom))',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',

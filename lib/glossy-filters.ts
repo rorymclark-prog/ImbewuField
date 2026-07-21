@@ -2,8 +2,8 @@
 // components/design/DesignGlossy.tsx so the pure layer-membership logic is unit-testable
 // without pulling in the whole (5,000+ line) React component. Comments preserved as-is.
 
-import type { DesignCanvasState, GroundFeatureKind } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { CATEGORY_STEP, ELEMENTS_BY_ID, type ElementCategory } from '@/lib/design-elements';
 import type { MapRefLayers } from '@/lib/base-layers';
 
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
@@ -154,4 +154,59 @@ export function layerContentCount(
   // The whole-design map also stands up on the traced base alone.
   if (filter === 'all' && refLayers.boundary.length >= 3) n += 1;
   return n;
+}
+
+/** Which WIZARD STEP a canvas shape is interactively "owned" by — the answer DesignCanvas.tsx
+ *  needs to "should pointer-down on this shape start editing it right now, or should it render
+ *  as inert, read-only context for whatever the CURRENT step is actually drawing?" (Rory: "its
+ *  very annoying when i am trying to draw the zones and i touch the boundary etc and its starts
+ *  editing" — tapping near a boundary vertex while adjusting a zone on the Zones step grabbed
+ *  the boundary instead, because nothing gated shapes by step at all, only by `tool`.)
+ *
+ *  Reuses this file's existing membership answers where the QUESTION actually matches —
+ *  lineInFilter and the ground-feature-vs-plain-zone split both already answer "which step" —
+ *  but items need CATEGORY_STEP (lib/design-elements.ts), NOT sheetForElement: sheetForElement
+ *  answers "which OUTPUT SHEET does this print on", and SHEET_OVERRIDE deliberately makes that
+ *  differ from "which step placed it" for a raised bed/keyhole bed/herb spiral/tree basin (all
+ *  category 'earthworks', placed from the Water step, but printed on the Planting sheet). An
+ *  earlier version of this function used sheetForElement for items and that conflation locked
+ *  those four elements the instant they were placed, in the very step that placed them
+ *  (adversarial review, 2026-07-21) — exactly the kind of drifted-second-copy bug this whole
+ *  function exists to avoid, just one layer deeper than expected.
+ *
+ *  - A ground feature (a ZoneShape with `.feature` set — boundary/house/patio/…) belongs to
+ *    'base', where the farmer traces it.
+ *  - A zone ring with NO `.feature` (a plain permaculture effort-zone 0-5) belongs to 'zones'.
+ *  - Lines follow lineInFilter against whichever of 'water'/'planting'/'structures' the current
+ *    step is. Items follow CATEGORY_STEP the same way — the one place both this function and
+ *    DesignPalette.tsx's categoriesForStep (which categories a step's palette even offers) read
+ *    the category→step answer from, so the two can't silently disagree again.
+ *  - 'sector' has no shapes of its own (it's a derived overlay, nothing is ever drawn there)
+ *    and 'review'/'glossy' are read-only summary steps — every shape falls through every
+ *    branch below and is foreign, so EVERYTHING renders locked. That's the deliberately safer
+ *    (more locked) reading for an ambiguous case, not a special-cased default. */
+export function ownedByCurrentStep(
+  step: WizardStep,
+  subject:
+    | { kind: 'zone'; feature?: GroundFeatureKind }
+    | { kind: 'line'; lineKind: LineShape['kind'] }
+    | { kind: 'item'; category: string; defId?: string },
+): boolean {
+  switch (subject.kind) {
+    case 'zone':
+      return subject.feature ? step === 'base' : step === 'zones';
+    case 'line':
+      if (step !== 'water' && step !== 'planting' && step !== 'structures') return false;
+      return lineInFilter(subject.lineKind, step);
+    case 'item':
+      if (step !== 'water' && step !== 'planting' && step !== 'structures') return false;
+      // NOT sheetForElement — that answers "which OUTPUT SHEET does this print on", a different
+      // question. A raised bed/keyhole bed/herb spiral/tree basin is category 'earthworks'
+      // (placed from the Water step's palette) but SHEET_OVERRIDE'd onto the Planting sheet; an
+      // earlier version of this function used sheetForElement here and it rendered those four
+      // elements locked the instant they were placed, in the very step that placed them
+      // (adversarial review, 2026-07-21). CATEGORY_STEP is the "which step placed/edits this"
+      // answer, shared with DesignPalette.tsx's categoriesForStep so the two can't drift apart.
+      return CATEGORY_STEP[subject.category as ElementCategory] === step;
+  }
 }

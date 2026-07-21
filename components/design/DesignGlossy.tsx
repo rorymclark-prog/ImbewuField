@@ -11,7 +11,7 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } fro
 
 import polygonClipping from 'polygon-clipping';
 
-import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
@@ -1968,6 +1968,24 @@ function drawWaterLeaderLabels(
     const name = item.label ?? def.name;
     const group = grouped.get(name) ?? { name, points: [] };
     group.points.push([item.x * W, item.y * H]);
+    grouped.set(name, group);
+  }
+  // Every water ITEM (tank, tap) got a named callout here; every water LINE (swale, pipe, drip,
+  // greywater) got only an unlabelled coloured stroke — you'd have to cross-reference the legend
+  // swatch to know a dashed blue line was a swale and not a drip run (Rory: "theres no label for
+  // swales"). One callout per KIND (not per individual line — three swales read as one "Swale x3"
+  // the same way three taps already do), anchored to that kind's first drawn line's own midpoint,
+  // through the exact same grouped map so every downstream layout/leader/collision rule (already
+  // proven on items) applies unchanged.
+  const WATER_LINE_NAME: Partial<Record<LineShape['kind'], string>> = {
+    swale: 'Swale', pipe: 'Buried pipe', drip: 'Drip line', greywater: 'Greywater line',
+  };
+  for (const line of state.lines) {
+    const name = WATER_LINE_NAME[line.kind];
+    if (!name || line.points.length < 2) continue;
+    const mid = line.points[Math.floor(line.points.length / 2)];
+    const group = grouped.get(name) ?? { name, points: [] };
+    group.points.push([mid[0] * W, mid[1] * H]);
     grouped.set(name, group);
   }
   if (!grouped.size) return;

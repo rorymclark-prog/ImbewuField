@@ -1097,6 +1097,12 @@ function DesignStudioInner() {
     setAreaFeature(null);
     // Zone advice pins are only meaningful on the zones step — clear them on any step change.
     setZoneAdvice([]);
+    // A shape selected before switching steps must not stay selected once its step locks it —
+    // otherwise Delete/Backspace (app/design/page.tsx's keyboard handler acts on selectedIds
+    // unconditionally) can still remove a shape the canvas is visibly rendering as inert/locked
+    // context, the one gap step-locking's own pointer-level guards don't cover (adversarial
+    // review of the step-locking feature, 2026-07-21).
+    setSelectedIds([]);
     // AUTO-FOCUS the step's own layer (Rory: "when we move to a layer, switch that layer on and
     // the others off"). Only the ELEMENT layers are focused; context layers (baseMap, ground/
     // Existing, labels, contours) are left exactly as the farmer set them — you always need the

@@ -8,7 +8,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { CATEGORY_META, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
 import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -110,14 +110,16 @@ const CATEGORY_LAYER: Record<DesignElementDef['category'], keyof ActiveLayers> =
 // Step → which element categories are placeable in the palette. Earthworks rides on the Water
 // step (it IS the land-shaping that makes water behave — Scale of Permanence puts it directly
 // after Water) and access rides with structures, so the step count stays phone-friendly.
+// Derived from CATEGORY_STEP (lib/design-elements.ts) rather than a second literal list — that
+// map is also what the canvas step-locking feature uses to decide which placed elements are
+// editable from which step, and an adversarial review found the previous two-copies-of-the-
+// same-idea setup had already let them silently disagree once (raised beds etc.).
 function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | 'all' {
   switch (step) {
     case 'water':
-      return ['water', 'earthworks'];
     case 'planting':
-      return ['growing'];
     case 'structures':
-      return ['structure', 'animal', 'access'];
+      return (Object.keys(CATEGORY_STEP) as DesignElementDef['category'][]).filter((c) => CATEGORY_STEP[c] === step);
     case 'base':
     case 'zones':
     case 'review':
