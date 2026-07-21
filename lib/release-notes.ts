@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'One legend row per element — four taps no longer take three lines',
       'You can now draw a greywater line — Water step, next to Drip',
       'The driveway draws as tar on the ground, not as another roof',
       'Tree basins draw as the earthwork alone — no invented plant on the mound',

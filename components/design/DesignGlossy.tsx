@@ -1569,8 +1569,8 @@ function overlayElementsText(
  *  with nothing behind it is an instruction to invent, and it is where the phantom taps and the
  *  phantom greywater main came from. Derived from placed elements and drawn lines only — never
  *  assumed, never defaulted true. */
-export function waterSystemsPresent(state: DesignCanvasState): { rainwater: boolean; irrigation: boolean; greywater: boolean } {
-  let rainwater = false, irrigation = false, greywater = false;
+export function waterSystemsPresent(state: DesignCanvasState): { rainwater: boolean; irrigation: boolean; greywater: boolean; greywaterLine: boolean } {
+  let rainwater = false, irrigation = false, greywater = false, greywaterLine = false;
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
@@ -1581,9 +1581,11 @@ export function waterSystemsPresent(state: DesignCanvasState): { rainwater: bool
   for (const l of state.lines) {
     if (l.points.length < 2) continue;
     if (l.kind === 'drip' || l.kind === 'pipe') irrigation = true;
-    if (l.kind === 'greywater') greywater = true;
+    // A greywater BASIN and a greywater RUN are different claims. The prompt may only describe
+    // the run when one is actually drawn, or it invents the route.
+    if (l.kind === 'greywater') { greywater = true; greywaterLine = true; }
   }
-  return { rainwater, irrigation, greywater };
+  return { rainwater, irrigation, greywater, greywaterLine };
 }
 
 function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
@@ -4524,7 +4526,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v6';
+const PLAN_VERSION = 'v7';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

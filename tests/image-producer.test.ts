@@ -653,10 +653,20 @@ test('only the water subsystems that exist are described', () => {
   assert.doesNotMatch(tanksOnly, /FILTERED GREYWATER/);
   assert.doesNotMatch(tanksOnly, /pressure regulator/);
   assert.match(tanksOnly, /Add no fitting, valve, regulator, filter, tap, pipe or line that is not already marked/);
-  // All three present: all three described.
-  const all = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true } });
-  assert.match(all, /FILTERED GREYWATER/);
-  assert.match(all, /never onto edible leaves/);
+  // A greywater BASIN with no run drawn: the heading appears, but the prompt says outright that no
+  // line exists. Describing "the violet dashed run" whenever a basin exists told the model a run was
+  // there when the farmer had drawn none — so it invented one and routed it wherever it liked.
+  const basinOnly = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true } });
+  assert.match(basinOnly, /FILTERED GREYWATER/);
+  assert.match(basinOnly, /NO greywater pipe, line or run is drawn anywhere on this sheet/);
+  assert.doesNotMatch(basinOnly, /violet dashed run already traced/);
+  // The mulch-discharge rule is about the basins, not the line, so it survives either way.
+  assert.match(basinOnly, /never onto edible leaves/);
+  // With a run actually drawn, it is described — and only then.
+  const withRun = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true, greywaterLine: true } });
+  assert.match(withRun, /violet dashed run already traced/);
+  assert.match(withRun, /add no branch that is not drawn/);
+  assert.match(withRun, /never onto edible leaves/);
   // None at all: the whole clause disappears rather than shipping empty headings.
   const none = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: false, irrigation: false, greywater: false } });
   assert.doesNotMatch(none, /WATER SHEET — GROUP WHAT IS THERE/);
@@ -686,4 +696,21 @@ test('one tar colour ships everywhere', async () => {
     layerLabel: 'Water', stylePreset: 'satellite_overlay', elementsText: 'JoJo Tank 5000L', sheetKind: 'water',
   });
   assert.match(p, /near-black tar #12140F/); // the style line's palette
+});
+
+test('the legend collapses place-suffixed variants into one row', () => {
+  // The suffix ("Tap Point (Lawn)", "Tap Point (House)") exists so a farmer can tell four identical
+  // taps apart ON THE MAP, where a leader points at one of them. In the legend it is dead weight —
+  // three icon rows for one kind of fitting, in the scarcest space on the sheet, pushing out real
+  // species. (Rory: "i dont want 3 separate tap lines on the legend".)
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water', stylePreset: 'satellite_overlay',
+    elementsText: 'Tap Point (Lawn) ×2, Tap Point (Patio / Paving), Tap Point (House), JoJo Tank 5000L ×2',
+    sheetKind: 'water',
+  });
+  // One row, carrying the total of all four.
+  assert.match(p, /— Tap Point \(×4\)/);
+  assert.doesNotMatch(p, /— Tap Point \(Lawn\)/);
+  // …but the MAP labels keep the suffix, which is the whole reason it exists.
+  assert.match(p, /Tap Point \(Lawn\)/);
 });

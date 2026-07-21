@@ -455,7 +455,7 @@ export function buildSatelliteOverlayPrompt(args: {
   fabric?: string;
   served?: string;
   /** Which water subsystems the design actually contains. Absent means none are described. */
-  systems?: { rainwater: boolean; irrigation: boolean; greywater: boolean };
+  systems?: { rainwater: boolean; irrigation: boolean; greywater: boolean; greywaterLine?: boolean };
   placeName?: string;
   sheetKind: ShowcaseSheetKind;
 }): string {
@@ -515,7 +515,13 @@ export function buildSatelliteOverlayPrompt(args: {
   const groups = [
     systemNote('RAINWATER', !!systems?.rainwater, 'the tanks and their linked plumbing exactly as marked'),
     systemNote('IRRIGATION', !!systems?.irrigation, 'the buried main, the drip runs lying along the beds, and the taps — every one of them already drawn on the photograph'),
-    systemNote('FILTERED GREYWATER', !!systems?.greywater, 'the diverter off the house, the subsurface greywater line drawn as a violet dashed run, and every basin it feeds — run it to the banana circles and tree basins as already marked. Greywater discharges below mulch, never onto edible leaves'),
+    systemNote('FILTERED GREYWATER', !!systems?.greywater,
+      // The LINE half is conditional on a line actually being drawn. Describing "the subsurface greywater line drawn as a violet dashed run" whenever a greywater BASIN exists
+      // told the model a run was there when the farmer had drawn none — so it invented one, and
+      // ran it wherever it liked. The basin is real; the route is his to draw.
+      systems?.greywaterLine
+        ? 'the violet dashed run already traced on the photograph and every basin it feeds — redraw it along exactly the line it is on, and add no branch that is not drawn. Greywater discharges below mulch, never onto edible leaves'
+        : 'the basins already marked, drawn as the sunken gravel sumps they are. NO greywater pipe, line or run is drawn anywhere on this sheet — none has been laid yet. Greywater discharges below mulch, never onto edible leaves'),
   ].filter(Boolean);
   const waterSystems = sheetKind === 'water' && groups.length
     ? `\n\nWATER SHEET — GROUP WHAT IS THERE. Group this sheet, on the map and in the legend, under these headings and no others: ${groups.join('; ')}. Add no fitting, valve, regulator, filter, tap, pipe or line that is not already marked on the photograph — a heading not listed here does not exist on this farm yet, and an empty one is never filled in.`
@@ -590,9 +596,24 @@ export function buildSatelliteOverlayPrompt(args: {
   // The element list may arrive grouped as "WATER » a, b | PLANTING » c" (see overlayElementsText).
   // A flat 30-row key is unreadable on the whole-design sheet; the reference masterplan groups its
   // legend and that is what makes it scannable.
-  const row = (t: string) => {
-    const m = t.match(/^(.*?)\s*\u00d7\s*(\d+)$/);
-    return m ? `\u2014 ${m[1].trim()} (\u00d7${m[2]})` : `\u2014 ${t} (\u00d71)`;
+  /** Collapse place-suffixed variants into ONE legend row carrying the total.
+   *
+   *  The place suffix ("Tap Point (Lawn)", "Tap Point (House)") exists so a farmer can tell four
+   *  identical taps apart ON THE MAP, where the leader line points at one of them — that is what it
+   *  is for and it stays there. In the LEGEND it is dead weight: three rows saying Tap Point, each
+   *  with an icon, for one kind of fitting. (Rory: "i dont want 3 separate tap lines on the legend
+   *  thats just not inteligent and wast of space.") The panel is the scarcest space on the sheet and
+   *  the rows it drops are real species and features. */
+  const collapseRows = (list: string[]): string[] => {
+    const total = new Map<string, number>();
+    for (const raw of list) {
+      const t = raw.trim();
+      if (!t) continue;
+      const m = t.match(/^(.*?)\s*\u00d7\s*(\d+)$/);
+      const bare = (m ? m[1] : t).replace(/\s*\([^)]*\)\s*$/, '').trim();
+      total.set(bare, (total.get(bare) ?? 0) + (m ? Number(m[2]) : 1));
+    }
+    return [...total.entries()].map(([name, n]) => `\u2014 ${name} (\u00d7${n})`);
   };
   const legendRows = elementNames.includes('\u00bb')
     ? elementNames
@@ -601,11 +622,11 @@ export function buildSatelliteOverlayPrompt(args: {
         .filter(Boolean)
         .map((g) => {
           const [heading, list] = g.split('\u00bb');
-          const rows = (list ?? '').split(',').map((t) => t.trim()).filter(Boolean).map(row);
+          const rows = collapseRows((list ?? '').split(','));
           return `${heading.trim()}\n${rows.join('\n')}`;
         })
         .join('\n')
-    : elementNames.split(',').map((t) => t.trim()).filter(Boolean).map(row).join('\n');
+    : collapseRows(elementNames.split(',')).join('\n');
 
   // Labels on the MAP never carry the section machinery — only the element names.
   const mapNames = elementNames.replace(/\s*\|\s*/g, ', ').replace(/[A-Z ]+\u00bb\s*/g, '').trim();
