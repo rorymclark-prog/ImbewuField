@@ -4656,7 +4656,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v9';
+const PLAN_VERSION = 'v10';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -4812,7 +4812,7 @@ export default function DesignGlossy({
       // deterministic renderSectorMap, and seed/keep a non-satellite_overlay producer style —
       // satellite_overlay's whole premise is the MODEL lettering its own labels/legend, which is
       // exactly what a sector render must never do (see the Style-grid filter below).
-      if ((sheet.exact === 'sector' || sheet.exact === 'base') && m === 'ai') {
+      if (sheet.exact === 'base' && m === 'ai') {
         setExactSheet(null); setAnalysisStyle(null);
         setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
         return;
@@ -4841,8 +4841,26 @@ export default function DesignGlossy({
   // then the deterministic content goes back on top. They share one code path because they share
   // one input. Phasing (08) is deliberately NOT here: its content is lettered schedule text, and a
   // model that misspells "greywater" must never own a build calendar.
+  // WHY SITE HAS AN AI OPTION AND SECTOR DOES NOT — the line is registration, not taste.
+  //
+  // gpt-image-2 recomposes the scene: it returns a picture at a slightly different scale and offset
+  // from the one we sent, and there is no way to recover that transform. That is harmless when we
+  // ship the model's image AS IS, which is what Site (01) does — it is a restyle of the ground with
+  // nothing composited on top, so a few metres of drift is invisible and costs nothing.
+  //
+  // Sector (02) is the opposite case. Its content — sun arc, wind arrows, bearings, the boundary —
+  // is drawn by us at TRUE coordinates and laid over the model's output. When the model shifts the
+  // ground beneath, every arrow points at the wrong part of the farm: four renders in a row came
+  // back with the boundary cutting through the house. A sector sheet exists to say WHERE, and one
+  // that is confidently 15 m out is worse than none. Prompt wording cannot fix it — the model is
+  // not disobeying, it is reframing, and we cannot measure by how much.
+  //
+  // So Sector is exact-only. That is not a downgrade: the exact sheet is free, instant, correctly
+  // registered by construction, and is where the traced ground, the ground labels and the paper
+  // base all landed. If a future model returns a guaranteed 1:1 crop, revisit this — the restyle
+  // prompt and the queue path still exist and still work.
   const restyleAiKind: 'sector' | 'base' | null =
-    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'sector' || selectedSheet.exact === 'base')
+    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'base'
       ? selectedSheet.exact
       : null;
   const sectorAiMode = restyleAiKind !== null;
@@ -6270,7 +6288,7 @@ export default function DesignGlossy({
           "sector sheet is still instant you must fix this and make it for ai"). Shown only on the
           two analytical sheets that HAVE both: the design layers already default to AI and carry
           their own Style grid, and Phasing (08) has no AI version by design. */}
-      {selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'sector' || selectedSheet.exact === 'base') && (
+      {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'base' && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: 0.4, opacity: 0.6 }}>THIS SHEET</span>
           {([['exact', 'Exact · instant · free'], ['ai', 'AI styled · ~mins']] as const).map(([m, label]) => {
