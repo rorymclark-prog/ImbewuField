@@ -11,10 +11,10 @@
 // 'biggest Studio ring wins, else the map ring, else none'. It deliberately does NOT dedupe a
 // Studio ring that was ADOPTED from the very map layer refLayers also carries (see
 // adoptTracedLayer's sourceFeatureId in components/design/DesignCanvas.tsx) — that merge is
-// later work. This module is also not wired into any render call site yet (DesignGlossy,
-// DesignPrint, buildPhasePlan, deriveWaterSystem, producerLabels, layerContentCount all still
-// read refLayers directly) — landing the resolver standalone first means it has zero blast
-// radius on any existing sheet until a follow-up change wires it in.
+// later work. Wired in at app/design/page.tsx: called from every branch of the setCanvasState
+// resolution (existing/migrated, in-memory prev, and fresh) so the refLayers state handed to
+// every render call site (DesignGlossy, DesignPrint, buildPhasePlan, deriveWaterSystem,
+// producerLabels, layerContentCount) is always this function's output, never a raw map ring.
 
 import type { DesignCanvasState, GroundFeatureKind } from '@/lib/design-canvas';
 

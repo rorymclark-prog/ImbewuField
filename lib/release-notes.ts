@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Fire sector removed until we can point it the right way — see below',
       'Sector analysis now shows and names your lawn, veg garden and cleared ground',
       'Picking a style on Site or Sector actually switches that sheet to AI',
       'One legend row per element — four taps no longer take three lines',

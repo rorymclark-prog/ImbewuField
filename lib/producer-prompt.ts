@@ -2,6 +2,12 @@
 // Gemini path) and the CLIENT (which builds the prompt to hand to the background render queue, see
 // lib/render-jobs.ts + functions/) use the identical prompt. Pure function, no server deps.
 
+// groundRegister is the ONE authority for the ground content/context/absent split, shared with
+// drawBlueprintGround and groundRows in components/design/DesignGlossy.tsx — see that function's
+// doc in lib/glossy-filters.ts. Importing the pure lib here (not the React component) keeps this
+// file server-safe.
+import { groundRegister } from '@/lib/glossy-filters';
+
 export type StylePreset =
   | 'precision_atlas'
   | 'satellite_overlay'
@@ -552,10 +558,13 @@ export function buildSatelliteOverlayPrompt(args: {
   // mode zoneBands exists to prevent: undescribed, rule 1 orders it "REDRAWN CLEAN" and rule 5 reads
   // it as a placement marker for one invented element. `fabricIsContent` decides whether this sheet's
   // subject includes existing ground (all/planting/structures) or only needs it as orientation
-  // context (water/zones). NOTE: this ternary IS the rule — there is no shared helper yet, so any
-  // change here must be mirrored by hand in drawBlueprintGround and groundRows. Consolidating the
-  // three copies into one groundRegister(filter) in glossy-filters.ts is the next piece of work.
-  const fabricIsContent = sheetKind === 'all' || sheetKind === 'planting' || sheetKind === 'structures';
+  // context (water/zones). Deferring to groundRegister — the single authority shared with
+  // drawBlueprintGround's alpha and groundRows' legend gate (EARTHWORKS-CONTEXT-PLAN Phase 2) — is
+  // what makes it structurally impossible for this prompt wording to drift from what the composite
+  // actually draws. Any non-boundary kind answers for the whole `fabric` string here: `fabric` is
+  // built from groundRows, which never includes the boundary (a drawn LINE, not a ground wash — see
+  // groundRegister's 'absent' case), so every kind that reaches this string shares one register.
+  const fabricIsContent = groundRegister('lawn', sheetKind) === 'content';
   const siteFabric = fabric.trim()
     ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';

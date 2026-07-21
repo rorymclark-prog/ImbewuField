@@ -26,10 +26,10 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
-export { itemInFilter, lineInFilter, zonesInFilter } from '@/lib/glossy-filters';
+export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
 const PAPER = '#FFFEFA';
@@ -303,27 +303,6 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
 // buildSectorRestylePrompt forbids on a sector render — offering it would either render no
 // differently from the exact sheet or invite the very legend/icon chrome the design bans.
 const SECTOR_STYLE_CHOICES = PRODUCER_STYLES.filter((s) => s.key !== 'satellite_overlay');
-
-// How many REAL things the farmer has drawn on this layer. A layer map with zero content is always
-// wrong — either that layer hasn't been drawn yet, or something upstream dropped it. Either way we
-// must never render it silently and let the AI invent the layer (Rory: "it should be retrieving my
-// zones layer which is detailed — no guessing"). Callers refuse + explain instead.
-export function layerContentCount(
-  state: DesignCanvasState,
-  refLayers: DesignGlossyProps['refLayers'],
-  filter: GlossyLayerFilter,
-): number {
-  let n = 0;
-  if (zonesInFilter(filter)) n += state.zones.filter((z) => !z.feature && z.points.length >= 3).length;
-  n += state.items.filter((it) => {
-    const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && itemInFilter(def.category, filter, def.id);
-  }).length;
-  n += state.lines.filter((l) => lineInFilter(l.kind, filter) && l.points.length >= 2).length;
-  // The whole-design map also stands up on the traced base alone.
-  if (filter === 'all' && refLayers.boundary.length >= 3) n += 1;
-  return n;
-}
 
 /** Zones NEST: Zone 1 is typically drawn as a ring right around the house, which is Zone 0. Drawn
  *  naively they simply overlap and whatever paints last wins — so Zone 1's fill covers the house
@@ -1542,7 +1521,11 @@ function overlayElementsText(
   // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
   // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
   const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
-  const fabricParts = groundRows(state, refLayers).map((r) => clean(r.label));
+  // 'all' deliberately, NOT this function's own `filter` — this text feeds every sheet's `fabric`
+  // string, content or context alike, and the prompt's own fabricIsContent (groundRegister) is
+  // what decides caption/legend wording downstream. Narrowing to `filter` here would silently
+  // empty the fabric text on Water/Zones, exactly the "drawn but unnamed gets erased" bug.
+  const fabricParts = groundRows(state, refLayers, 'all').map((r) => clean(r.label));
   // …and the driveway joins it on every sheet that is not the masterplan (where it is already
   // content, above). refLayers.driveway is the main-map access layer; a Studio-traced one is
   // already in groundRows, so this covers the case groundRows deliberately skips.
@@ -2421,7 +2404,14 @@ function ringArea(pts: Array<[number, number]>): number {
  *  MAIN-MAP traced layers (app/design/page.tsx), never from Studio-traced ZoneShape features. So a
  *  farmer who traced his driveway and house inside the Design Studio, exactly where the Base step
  *  invites him to, got them drawn on ZERO sheets in BOTH render paths. They are now skipped only
- *  when the dedicated draw will really cover them. */
+ *  when the dedicated draw will really cover them.
+ *
+ *  ALPHA NOW COMES FROM `filter` VIA groundRegister — this used to paint every ring at the same
+ *  strength regardless of which sheet it was on, so an orchard wash on the Water sheet (ground
+ *  there only for orientation) looked IDENTICAL to the same wash on Planting (ground's own
+ *  subject there) — a content/context register with no visual difference at all. groundRegister
+ *  is also the authority groundRows and producer-prompt.ts's fabricIsContent defer to, so the
+ *  three can no longer drift on which sheets treat ground as content. */
 function drawBlueprintGround(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -2429,17 +2419,19 @@ function drawBlueprintGround(
   py: (n: number) => number,
   W: number,
   refLayers?: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
 ): void {
   // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
-  // empty one means the farmer traced this in the Studio and nothing else will draw it.
+  // empty one means the farmer traced this in the Studio and nothing else will draw it. The
+  // boundary is excluded via groundRegister returning 'absent' for it (a drawn LINE, never a fill
+  // wash) rather than a hard-coded check here, so this predicate can't disagree with groundRows'.
   const houseCovered = (refLayers?.house.length ?? 0) >= 3;
   const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
   const rings = state.zones.filter((z) => {
     if (!z.feature || z.points.length < 3) return false;
-    if (z.feature === 'house') return !houseCovered;
-    if (z.feature === 'driveway') return !drivewayCovered;
-    if (z.feature === 'boundary') return false; // a line (drawBlueprintBoundary), never a fill wash
-    return true;
+    if (z.feature === 'house' && houseCovered) return false;
+    if (z.feature === 'driveway' && drivewayCovered) return false;
+    return groundRegister(z.feature, filter) !== 'absent';
   });
   if (!rings.length) return;
   // Biggest first — a lawn that wraps a veg patch must not bury the patch.
@@ -2452,9 +2444,15 @@ function drawBlueprintGround(
   for (const z of sorted) {
     const meta = GROUND_FEATURES[z.feature!];
     const hard = HARD.has(z.feature!);
+    // CONTENT sheets get the fuller wash this always used to paint; CONTEXT sheets paint the same
+    // ground noticeably quieter, so the register the prompt describes in words is also true of the
+    // pixels — the visual difference the earthworks-context plan calls the whole point of this fix.
+    const isContent = groundRegister(z.feature!, filter) === 'content';
+    const fillAlpha = hard ? (isContent ? '55' : '33') : (isContent ? '99' : '55');
+    const strokeAlpha = isContent ? 'F2' : 'B0';
     ctx.save();
     blueprintRing(ctx, z.points, px, py);
-    ctx.fillStyle = `${meta.color}${hard ? '55' : '99'}`;
+    ctx.fillStyle = `${meta.color}${fillAlpha}`;
     ctx.fill();
     if (hard) {
       ctx.clip();
@@ -2463,7 +2461,7 @@ function drawBlueprintGround(
       const x0 = Math.min(...xs), x1 = Math.max(...xs);
       const y0 = Math.min(...ys), y1 = Math.max(...ys);
       const h = y1 - y0;
-      ctx.strokeStyle = `${meta.color}CC`;
+      ctx.strokeStyle = `${meta.color}${isContent ? 'CC' : '80'}`;
       ctx.lineWidth = 1.6;
       ctx.beginPath();
       for (let d = x0 - h; d < x1; d += step) {
@@ -2474,7 +2472,7 @@ function drawBlueprintGround(
     }
     ctx.restore();
     blueprintRing(ctx, z.points, px, py);
-    ctx.strokeStyle = `${meta.color}F2`;
+    ctx.strokeStyle = `${meta.color}${strokeAlpha}`;
     ctx.lineWidth = 2.5;
     ctx.stroke();
   }
@@ -2859,7 +2857,17 @@ function groundLabelsForSheet(
   return out;
 }
 
-function groundRows(state: DesignCanvasState, refLayers?: DesignGlossyProps['refLayers']): BlueprintLegendRow[] {
+/** Legend rows for the ground drawn by drawBlueprintGround, gated the same way: only rings where
+ *  groundRegister(kind, filter) === 'content' earn a row. `filter` defaults to 'all' so the two
+ *  existing raw-listing callers (the AI prompt's `fabric` string and the legacy water legend, both
+ *  of which want every traced name regardless of which sheet they're feeding) keep exactly their
+ *  old unfiltered output without having to know why — 'all' is the one filter every non-boundary
+ *  kind resolves to 'content' under. */
+export function groundRows(
+  state: DesignCanvasState,
+  refLayers?: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter = 'all',
+): BlueprintLegendRow[] {
   // MUST use the same predicate as drawBlueprintGround, or the legend and the map drift apart —
   // which is exactly what happened when ground started drawing on Zones, Water and Structures while
   // this function was still hard-coded to skip house and driveway: painted areas with no key.
@@ -2868,10 +2876,9 @@ function groundRows(state: DesignCanvasState, refLayers?: DesignGlossyProps['ref
   return state.zones
     .filter((z) => {
       if (!z.feature || z.points.length < 3) return false;
-      if (z.feature === 'house') return !houseCovered;
-      if (z.feature === 'driveway') return !drivewayCovered;
-      if (z.feature === 'boundary') return false;
-      return true;
+      if (z.feature === 'house' && houseCovered) return false;
+      if (z.feature === 'driveway' && drivewayCovered) return false;
+      return groundRegister(z.feature, filter) === 'content';
     })
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
     .map((z) => ({
@@ -2954,8 +2961,8 @@ export async function buildBlueprintZoneMap(
 
   // 1b. Existing site fabric UNDER the zone washes. A zone map is about distance from the house, so
   //     it is unreadable without the yard, lawn and paving that give those distances meaning — but
-  //     it stays beneath the zones, which are this sheet's subject.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+  //     it stays beneath the zones, which are this sheet's subject, so ground here is CONTEXT only.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'zones');
 
   // 2. Zones 1..5 — translucent wash + diagonal hatch (clipped) + dashed coloured outline.
   const zones = state.zones.filter((z) => !z.feature && z.points.length >= 3 && z.zone !== 0);
@@ -3037,7 +3044,12 @@ export async function buildBlueprintZoneMap(
   //    in a second colour and weight), which the generic swatch+label row can't express.
   const zoneNums = [...(hasHouse ? [0] : []), ...zones.map((z) => z.zone)].filter((v, i, a) => a.indexOf(v) === i).sort((a, b) => a - b) as Array<0 | 1 | 2 | 3 | 4 | 5>;
   const rowH = Math.round(W * 0.026);
-  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (zoneNums.length + 3 + 2.2)));
+  // Same gates as the draws below (boundary line 3005, driveway line 2998) — a legend row for a
+  // fence or driveway that isn't on the page is the phantom-row defect (layer-audit RC5).
+  const hasBoundary = refLayers.boundary.length >= 3;
+  const hasDriveway = refLayers.driveway.length >= 2;
+  const extraRows = (hasBoundary ? 1 : 0) + (hasDriveway ? 1 : 0) + 1; // +1 for the scale-note line
+  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (zoneNums.length + extraRows + 2.2)));
   const { lgX, lgW, ip, sw, textX } = lg;
   let ry = lg.ry;
   for (const n of zoneNums) {
@@ -3062,24 +3074,31 @@ export async function buildBlueprintZoneMap(
     ctx.fillText(name, nameX, ry);
     ry += rowH;
   }
-  // Fence + driveway + scale-note rows. Bone, matching the post-and-wire boundary now drawn on the
-  // map — a legend swatch in a different colour from its line is the phantom-row defect in miniature.
-  ctx.strokeStyle = BOUNDARY_BONE;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(lgX + ip, ry);
-  ctx.lineTo(lgX + ip + sw * 1.5, ry);
-  ctx.stroke();
-  ctx.fillStyle = '#EDE7DA';
-  ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
-  ctx.fillText('Fence / site boundary', textX, ry);
-  ry += rowH;
-  ctx.fillStyle = TAR;
-  roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
-  ctx.fill();
-  ctx.fillStyle = '#EDE7DA';
-  ctx.fillText('Tarred driveway', textX, ry);
-  ry += rowH;
+  // Fence + driveway rows, each gated on the same condition its draw above used (hasBoundary/
+  // hasDriveway) so a legend key can never promise a line this page didn't draw.
+  if (hasBoundary) {
+    ctx.strokeStyle = BOUNDARY_BONE;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(lgX + ip, ry);
+    ctx.lineTo(lgX + ip + sw * 1.5, ry);
+    ctx.stroke();
+    ctx.fillStyle = '#EDE7DA';
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    // "Property boundary", not "Fence" — this map draws only the boundary ring, and the old
+    // wording read as a second, planted-row kind of fence (layer-audit RC5).
+    ctx.fillText('Property boundary', textX, ry);
+    ry += rowH;
+  }
+  if (hasDriveway) {
+    ctx.fillStyle = TAR;
+    roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
+    ctx.fill();
+    ctx.fillStyle = '#EDE7DA';
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    ctx.fillText('Tarred driveway', textX, ry);
+    ry += rowH;
+  }
   drawBlueprintLegendNote(ctx, lg, rowH, ry, 'Zones show frequency of access.');
 
   // 9. Scale bar (bottom-left).
@@ -3284,7 +3303,7 @@ export async function buildBlueprintWaterMapLegacy(
       .sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]))
       .map(([name, g]) => ({ color: g.color, label: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`, style: 'fill' as const }));
   })();
-  const existing = [...groundRows(state, refLayers), ...servedRows];
+  const existing = [...groundRows(state, refLayers, 'all'), ...servedRows]; // legacy path — 'all' preserves its original unfiltered EXISTING listing
   if (existing.length) {
     sections.push({
       title: 'EXISTING',
@@ -3350,8 +3369,9 @@ export async function buildBlueprintWaterMap(
 
   await drawBlueprintBase(ctx, frame, W, H);
   // Existing site fabric under the plumbing — a water plan has to show the paving a pipe runs
-  // beneath and the veg garden a drip line feeds, or the routes float on bare satellite.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+  // beneath and the veg garden a drip line feeds, or the routes float on bare satellite. CONTEXT
+  // only: the plumbing is this sheet's content, not the ground it crosses.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'water');
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(48,54,59,0.9)', 'rgba(255,253,244,0.9)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
@@ -3437,6 +3457,46 @@ function drawTrueFootprint(
   }
 }
 
+/** Draws every drawn line whose kind `lineInFilter` assigns to `filter` — white-cased then coloured
+ *  per LINE_COLORS, with fence posts for fence runs. Shared by buildBlueprintPlantingMap (windbreak)
+ *  and buildBlueprintStructuresMap (fence/path) so which lines a sheet DRAWS can never diverge from
+ *  which lines `lineInFilter` says it OWNS — the exact split that broke before: windbreak was drawn
+ *  and legended on Structures off a hard-coded LINE_STYLE map, while lineInFilter files it under
+ *  Planting, so the two disagreed on every plan set (docs/LAYER-AUDIT-2026-07-20.md item on
+ *  windbreak). Driving the loop off lineInFilter instead of a per-sheet style-key list makes that
+ *  drift structurally impossible. */
+function drawFilteredLines(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  filter: GlossyLayerFilter,
+  px: (n: number) => number,
+  py: (n: number) => number,
+): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const l of state.lines) {
+    const color = LINE_COLORS[l.kind];
+    if (!color || l.points.length < 2 || !lineInFilter(l.kind, filter)) continue;
+    const trace = () => {
+      ctx.beginPath();
+      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    };
+    trace();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    trace();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+    // Post-and-wire: round posts along the run, matching the composite exactly.
+    if (l.kind === 'fence') drawFencePosts(ctx, l.points, px, py, 1);
+  }
+  ctx.restore();
+}
+
 /** Biggest footprint first, so a pawpaw under a mango canopy is drawn last and stays visible.
  *  Ties break on id: two same-size trees must never swap order between renders (determinism is
  *  the product promise — same design in, same sheet out). */
@@ -3461,10 +3521,10 @@ function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): Placed
 // entire job is telling Macadamia from Citrus). Legend lists only the species actually placed,
 // with counts. NO AI.
 //
-// NB: no lines are drawn here, deliberately. lineInFilter puts 'windbreak' on the STRUCTURES
-// sheet, not this one, and layerContentCount agrees — so a windbreak is never counted as planting
-// content. Drawing it here would make this sheet disagree with the layer it claims to be, which is
-// precisely the guarantee the deterministic sheets exist to hold.
+// Also draws the windbreak line: lineInFilter puts 'windbreak' on THIS sheet (a windbreak is a
+// planted row) and layerContentCount agrees, so a farmer who has drawn one must find it here — it
+// used to be drawn and legended on Structures instead, off a hard-coded style map that ignored
+// lineInFilter entirely (docs/LAYER-AUDIT-2026-07-20.md).
 export async function buildBlueprintPlantingMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -3486,10 +3546,15 @@ export async function buildBlueprintPlantingMap(
   // 1. Satellite + blueprint scrim.
   await drawBlueprintBase(ctx, frame, W, H);
 
-  // 2. The traced ground — orchard, lawn, veg garden — UNDER the design's own planting.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+  // 2. The traced ground — orchard, lawn, veg garden — UNDER the design's own planting. CONTENT
+  //    here: an orchard the farmer traced is exactly what this sheet is about.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'planting');
 
-  // 3. The planting itself, at true footprint.
+  // 3. Windbreak lines — drawn BEFORE the planting itself so a canopy overlapping the hedgerow
+  //    still reads on top of it, same stacking as the structures sheet's fence/path lines.
+  drawFilteredLines(ctx, state, 'planting', px, py);
+
+  // 3b. The planting itself, at true footprint.
   for (const it of bySizeDesc(state, 'planting')) {
     drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
   }
@@ -3514,8 +3579,15 @@ export async function buildBlueprintPlantingMap(
   //    context rows. Ground rows are fixed rather than compressible: they name painted AREAS, and
   //    an unexplained green wash across half the sheet is worse than one fewer species row.
   const rowH = Math.round(W * 0.026);
-  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
-  fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
+  const windbreakCount = state.lines.filter((l) => l.kind === 'windbreak' && l.points.length >= 2).length;
+  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers, 'planting')];
+  if (windbreakCount > 0) {
+    fixed.push({ color: LINE_COLORS.windbreak, label: `Windbreak${windbreakCount > 1 ? ` ×${windbreakCount}` : ''}`, style: 'line' });
+  }
+  // Gated on the same test drawBlueprintBoundary uses (line 3562) — same phantom-row bug as the
+  // Zones and Structures sheets had (layer-audit RC5): an untraced site must not get a key for a
+  // boundary line this sheet never drew.
+  if (refLayers.boundary.length >= 3) fixed.push({ color: BOUNDARY_BONE, label: 'Property boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: TAR, label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'planting'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
@@ -3531,9 +3603,10 @@ export async function buildBlueprintPlantingMap(
 
 // Deterministic "Blueprint" STRUCTURES map — sheet 06 in docs/PLAN-SET-SPEC.md ("Small Livestock
 // & Infrastructure Plan"). Structures + animals + access at true footprint, plus the access/
-// boundary LINES (fence/path/windbreak) that lineInFilter assigns to this layer — a farmer who has
-// drawn only paths and fences still has real structures-layer content (layerContentCount counts
-// those lines), so this sheet must draw them or it would render empty on a design that isn't. NO AI.
+// boundary LINES (fence/path — NOT windbreak, which lineInFilter files under Planting) that
+// lineInFilter assigns to this layer — a farmer who has drawn only paths and fences still has real
+// structures-layer content (layerContentCount counts those lines), so this sheet must draw them or
+// it would render empty on a design that isn't. NO AI.
 export async function buildBlueprintStructuresMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -3556,8 +3629,9 @@ export async function buildBlueprintStructuresMap(
   await drawBlueprintBase(ctx, frame, W, H);
 
   // 1b. Existing site fabric — paving, yard, lawn, and a Studio-traced house/driveway. On the
-  //     INFRASTRUCTURE sheet the built surfaces are arguably the subject, so they matter most here.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+  //     INFRASTRUCTURE sheet the built surfaces are arguably the subject, so they matter most here
+  //     — CONTENT, drawn at full strength.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'structures');
 
   // 2. House + driveway. On THIS sheet the built fabric is content, not background, so the
   //    driveway keeps the zone sheet's dashed kerb and the house gets a brighter outline.
@@ -3570,36 +3644,12 @@ export async function buildBlueprintStructuresMap(
   // one plan set looked like two different things, and a dash reads as "underground or proposed"
   // when a fence is neither. Both paths now use LINE_COLORS.fence and the post treatment
   // (Rory: "we need to add fence here the one with circles").
-  const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
-    path: { color: LINE_COLORS.path, dash: [] },
-    fence: { color: LINE_COLORS.fence, dash: [] },
-    windbreak: { color: LINE_COLORS.windbreak, dash: [] },
-  };
-  ctx.save();
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  for (const l of state.lines) {
-    const st = LINE_STYLE[l.kind];
-    if (!st || l.points.length < 2) continue;
-    const trace = () => {
-      ctx.beginPath();
-      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
-    };
-    trace();
-    ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-    ctx.lineWidth = 6;
-    ctx.stroke();
-    trace();
-    ctx.setLineDash(st.dash);
-    ctx.strokeStyle = st.color;
-    ctx.lineWidth = 3.5;
-    ctx.stroke();
-    ctx.setLineDash([]);
-    // Post-and-wire: round posts along the run, matching the composite exactly.
-    if (l.kind === 'fence') drawFencePosts(ctx, l.points, px, py, 1);
-  }
-  ctx.restore();
+  // Driven by lineInFilter('structures') via drawFilteredLines rather than a local style-key map —
+  // windbreak used to have its own entry here, drawing and legending it on Structures while
+  // lineInFilter files it under Planting (docs/LAYER-AUDIT-2026-07-20.md); a shared helper keyed off
+  // the same predicate that legends and counts it makes that pair of sheets structurally unable to
+  // disagree again.
+  drawFilteredLines(ctx, state, 'structures', px, py);
 
   // 4. Structures / animals / access, at true footprint.
   for (const it of bySizeDesc(state, 'structures')) {
@@ -3617,12 +3667,15 @@ export async function buildBlueprintStructuresMap(
   const kinds = new Set(state.lines.filter((l) => l.points.length >= 2).map((l) => l.kind));
   // Ground first: this sheet now paints the traced paving, yard and Studio-traced driveway, and a
   // painted area with no key entry is the phantom-legend defect in reverse.
-  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers)];
+  const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers, 'structures')];
   if (kinds.has('path')) fixed.push({ color: '#C9A227', label: 'Path', style: 'line' });
-  if (kinds.has('windbreak')) fixed.push({ color: '#2F7A4A', label: 'Windbreak', style: 'line' });
+  // Windbreak is NOT legended here — lineInFilter files it under Planting (sheet 05), which is
+  // now where it is drawn; a row here would advertise a line this sheet's own filter excludes.
   // Swatch must match the line now drawn: solid violet with posts, not a grey dash.
   if (kinds.has('fence')) fixed.push({ color: LINE_COLORS.fence, label: 'Internal fence', style: 'line' });
-  fixed.push({ color: BOUNDARY_BONE, label: 'Fence / site boundary', style: 'line' });
+  // Gated on the same test drawBlueprintBoundary uses (line 3610) — an untraced-boundary design
+  // must not print a legend key for a green line that isn't on the page (layer-audit RC5).
+  if (refLayers.boundary.length >= 3) fixed.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
   if (refLayers.driveway.length >= 2) fixed.push({ color: TAR, label: 'Tarred driveway', style: 'fill' });
   const rows = fitLegendRows(speciesRowsFor(state, 'structures'), fixed, blueprintLegendCapacity(H, pad, rowH));
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.4)));
@@ -3942,7 +3995,11 @@ function drawSectorAnalysis(
   if (model.water) rows.push({ color: '#3A8EC4', label: 'Water flows downhill', style: model.water.indicative ? 'dashline' : 'line' });
   if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: 'On-contour (swale line)', style: 'dashline' });
   if (model.frost) rows.push({ color: '#9FD0E8', label: 'Frost pocket', style: 'dashline' });
-  rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
+  // Gated on the SAME test the boundary draw uses (bnd.length >= 3, computed above). Unconditional,
+  // this printed a key for a fence line that is not on the page whenever the boundary is untraced —
+  // the phantom-row defect from the layer audit, fixed on Zones, Planting, Structures and print
+  // sheet 01 in that pass, with sheet 02 out of scope and missed.
+  if (bnd.length >= 3) rows.push({ color: BOUNDARY_BONE, label: 'Site boundary', style: 'line' });
   const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 2.6)));
   const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
   drawBlueprintLegendNote(ctx, lg, rowH, ry, model.dataNotes[0] ?? 'Read the site before you design it.');
@@ -3988,8 +4045,9 @@ export async function buildBlueprintSectorMap(
   // from the W/NW" means something once you can see the lawn terrace and the veg garden it crosses,
   // and very little over bare grass. (Rory, holding up the reference sheet: "you must send all the
   // relevant data to get a really nice map.") Drawn before the house and boundary so the built
-  // fabric still reads on top of it.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers);
+  // fabric still reads on top of it. This analysis sheet captions every ring unconditionally
+  // (groundLabelsForSheet below), i.e. treats ground as CONTENT — 'all' matches that.
+  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'all');
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
@@ -4346,7 +4404,7 @@ export async function buildImplementationMap(
 
 // Legend rows for a Style sheet — the real design content on this layer (zones, grouped
 // elements, line kinds, driveway). Deterministic: read straight from state.
-function sheetLegendRows(
+export function sheetLegendRows(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
@@ -4362,6 +4420,23 @@ function sheetLegendRows(
       seen.add(z.zone);
       rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
     }
+  }
+  // Ground fabric, register-aware. drawBlueprintGround paints traced house/patio/driveway/lawn/
+  // veg_garden/orchard/cleared on every sheet now (RC2/RC6), but a legend must not claim OWNERSHIP
+  // of ground a sheet only shows for orientation. groundRows(state, refLayers, filter) already
+  // returns only the rings groundRegister calls this filter's CONTENT (all/planting/structures) —
+  // list those by name, same as the Blueprint builders do. On a CONTEXT sheet (water/zones) that
+  // call always returns [] by construction, so we fall back to a single compressed row — present
+  // only when ground is actually drawn (checked via filter 'all', under which every non-boundary
+  // kind resolves to content) — so the reader gets a key for what they see without this sheet
+  // pretending the orchard is its subject. This was the audit's "water Blueprint paints ground its
+  // own legend can't explain" gap (RENDER-INVESTIGATION finding 9) — every composeStyleSheet-based
+  // sheet (buildBlueprintWaterMap plus every AI-styled render) shared it.
+  const contentGround = groundRows(state, refLayers, filter);
+  if (contentGround.length) {
+    for (const g of contentGround) rows.push({ swatch: g.color, text: g.label });
+  } else if (groundRows(state, refLayers, 'all').length) {
+    rows.push({ swatch: '#8A8172', text: 'Existing site fabric (traced)' });
   }
   const groups = new Map<string, { icon: string; color: string; n: number }>();
   for (const it of state.items) {
@@ -4581,7 +4656,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v8';
+const PLAN_VERSION = 'v9';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

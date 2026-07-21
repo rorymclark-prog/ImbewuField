@@ -2,6 +2,10 @@
 // components/design/DesignGlossy.tsx so the pure layer-membership logic is unit-testable
 // without pulling in the whole (5,000+ line) React component. Comments preserved as-is.
 
+import type { DesignCanvasState, GroundFeatureKind } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import type { MapRefLayers } from '@/lib/base-layers';
+
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
 // base map + ground context always kept so the picture is legible). Only the drawn marks in
 // the chosen layer are locked; everything else is repainted as background.
@@ -96,4 +100,58 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
 
 export function zonesInFilter(filter: GlossyLayerFilter): boolean {
   return filter === 'all' || filter === 'zones';
+}
+
+export type GroundRegister = 'content' | 'context' | 'absent';
+
+/** THE single authority for where a traced GROUND feature — house, patio, driveway, lawn,
+ *  veg_garden, orchard, cleared, or boundary — sits on a given sheet. Before this there were
+ *  THREE hand-rolled copies of the same idea, none of them in charge and none agreeing with the
+ *  others: producer-prompt.ts's `fabricIsContent` ternary (caption+legend wording for the AI
+ *  path), drawBlueprintGround's fill (which took no `filter` at all, so an orchard wash painted
+ *  at the IDENTICAL alpha on the Water sheet as on Planting — a "context register" with no
+ *  visual difference), and groundRows' legend-row gate (decided ad hoc by which sheets bothered
+ *  to call it). All three, plus layerContentCount below, now defer to this.
+ *
+ *  - 'content': this sheet's own subject — captioned (AI path), legended and counted
+ *    (layerContentCount), drawn at full strength. Whole-design, Planting and Structures read as
+ *    "what's really there", so a farmer's traced orchard or veg garden belongs beside his placed
+ *    trees and beds — and a design that is ONLY that traced ground, no trees placed yet, still has
+ *    real content and must not be refused.
+ *  - 'context': drawn quieter so the sheet still orients (a Water plan needs the paving a pipe
+ *    runs under; a Zones plan needs the yard the effort-zones are measured from) but never
+ *    captioned, never legended, and never counted — an orchard traced for context must not
+ *    entitle a farmer to a Water or Zones sheet he has not actually drawn.
+ *  - 'absent': the boundary only. It is drawn as a dedicated LINE (drawBlueprintBoundary on the
+ *    exact path, rule 9's fence description on the AI path), never as a ground-fill wash, on
+ *    every sheet — so it has no content/context register of its own to pick. */
+export function groundRegister(kind: GroundFeatureKind, filter: GlossyLayerFilter): GroundRegister {
+  if (kind === 'boundary') return 'absent';
+  return filter === 'all' || filter === 'planting' || filter === 'structures' ? 'content' : 'context';
+}
+
+// How many REAL things the farmer has drawn on this layer. A layer map with zero content is always
+// wrong — either that layer hasn't been drawn yet, or something upstream dropped it. Either way we
+// must never render it silently and let the AI invent the layer (Rory: "it should be retrieving my
+// zones layer which is detailed — no guessing"). Callers refuse + explain instead.
+export function layerContentCount(
+  state: DesignCanvasState,
+  refLayers: MapRefLayers,
+  filter: GlossyLayerFilter,
+): number {
+  let n = 0;
+  if (zonesInFilter(filter)) n += state.zones.filter((z) => !z.feature && z.points.length >= 3).length;
+  n += state.items.filter((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    return !!def && itemInFilter(def.category, filter, def.id);
+  }).length;
+  n += state.lines.filter((l) => lineInFilter(l.kind, filter) && l.points.length >= 2).length;
+  // Traced GROUND only counts here where groundRegister says it is this sheet's CONTENT — see
+  // that function's doc for why the content/context/absent split matters in both directions.
+  // groundRegister('boundary', filter) is always 'absent', so the boundary ring never double-
+  // counts against the dedicated refLayers.boundary check below.
+  n += state.zones.filter((z) => z.feature && z.points.length >= 3 && groundRegister(z.feature, filter) === 'content').length;
+  // The whole-design map also stands up on the traced base alone.
+  if (filter === 'all' && refLayers.boundary.length >= 3) n += 1;
+  return n;
 }

@@ -47,6 +47,7 @@ import { ELEMENT_CATALOG, ELEMENTS_BY_ID, ZONE_DEFS, type ElementCategory } from
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
+import { resolveBaseLayers, type MapRefLayers } from '@/lib/base-layers';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
@@ -656,8 +657,19 @@ function DesignStudioInner() {
         ? (driveIsArea ? ringFromGeometry(driveLayer.geometry) : lineFromGeometry(driveLayer.geometry)).map((c) => project(c))
         : [];
 
-      setRefLayers({ boundary: boundaryRing, house: houseRing, driveway: driveLine, drivewayClosed: driveIsArea });
-      setHouseXY(centroidOf(houseRing));
+      // Map-only base layers, projected into this frame — unchanged from before resolveBaseLayers
+      // existed. Do NOT setRefLayers from this alone: a farmer who traced house/driveway/boundary
+      // as a Studio ZoneShape (GroundFeatureKind) instead of on the main map needs those rings to
+      // win, and the only place that state (canvasState.zones, post-migration) is known is inside
+      // the setCanvasState resolution below — so resolveBaseLayers is called from each of its
+      // branches instead of here. A farmer with no Studio base rings gets this object back
+      // untouched (resolveBaseLayers's map fallback), so nothing changes for them.
+      const mapRefLayers: MapRefLayers = {
+        boundary: boundaryRing,
+        house: houseRing,
+        driveway: driveLine,
+        drivewayClosed: driveIsArea,
+      };
 
       // Build the tappable/adoptable traced layers: every near-site classified layer EXCEPT
       // the one used as the boundary fence (which stays a non-adopted reference). Access
@@ -747,6 +759,13 @@ function DesignStudioInner() {
         const existing = loadCanvasState(siteId);
         if (existing) {
           const migrated = migrateStateToFrame(existing, frameNoImg, project);
+          // resolveBaseLayers reads migrated.zones — the Studio's own ZoneShape rings, already
+          // re-normalised into this frame — so a Studio boundary/house/driveway wins here exactly
+          // as it will later when DesignGlossy/DesignPrint/phasing/water-system/producer-labels
+          // read this same refLayers state.
+          const resolved = resolveBaseLayers(migrated, mapRefLayers);
+          setRefLayers(resolved);
+          setHouseXY(centroidOf(resolved.house));
           // Keep the stamped copy (bumped rev) when a migration was actually persisted; fall back
           // to the unstamped one if the save failed or was declined above, so the page still
           // shows the design either way.
@@ -755,6 +774,9 @@ function DesignStudioInner() {
         }
         if (prev && prev.siteId === siteId) {
           const migratedPrev = migrateStateToFrame(prev, frameNoImg, project);
+          const resolved = resolveBaseLayers(migratedPrev, mapRefLayers);
+          setRefLayers(resolved);
+          setHouseXY(centroidOf(resolved.house));
           if (migratedPrev !== prev) return persistMigration(migratedPrev);
           return migratedPrev;
         }
@@ -768,7 +790,14 @@ function DesignStudioInner() {
           const [x, y] = project([el.lon, el.lat]);
           items.push({ id: newId(), defId, x, y, label: el.label, note: el.note });
         }
-        return { ...fresh, items };
+        const freshWithItems = { ...fresh, items };
+        // fresh.zones is always [] (freshState seeds no zones — see freshState above), so this
+        // resolves to mapRefLayers verbatim (source 'map'/'none' only). Still routed through
+        // resolveBaseLayers rather than set directly, so first-visit and every later visit agree
+        // on how a slot is decided.
+        setRefLayers(resolveBaseLayers(freshWithItems, mapRefLayers));
+        setHouseXY(centroidOf(houseRing));
+        return freshWithItems;
       });
     };
 

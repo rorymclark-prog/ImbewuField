@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, type GlossyLayerFilter } from '../lib/glossy-filters.ts';
+import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, groundRegister, layerContentCount, type GlossyLayerFilter } from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
+import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
+import type { MapRefLayers } from '../lib/base-layers.ts';
 
 // glossy-filters.ts has said since it was extracted that it exists "so the pure layer-membership
 // logic is unit-testable" — and there was no test. In that gap, itemInFilter(_, 'zones') returning
@@ -132,5 +134,88 @@ test('every line kind still lands on exactly one layer sheet', () => {
   for (const kind of KINDS) {
     const on = (['water', 'planting', 'structures'] as const).filter((f) => lineInFilter(kind, f));
     assert.equal(on.length, 1, `${kind} is on ${on.length} sheets (${on.join('+') || 'none'})`);
+  }
+});
+
+// ── groundRegister: the single authority for content/context/absent, EARTHWORKS-CONTEXT-PLAN
+// Phase 2. Before this there were three hand-rolled copies (producer-prompt.ts's fabricIsContent,
+// drawBlueprintGround's alpha choice, groundRows' legend gate) and none of them was in charge —
+// table-driven over the full GroundFeatureKind × GlossyLayerFilter matrix so a kind or a sheet
+// added later cannot silently fall through un-tested, the exact gap that let
+// itemInFilter(_, 'zones') ship broken (see this file's header comment).
+const GROUND_KINDS: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared', 'boundary'];
+const ALL_SHEETS: GlossyLayerFilter[] = ['all', 'water', 'zones', 'planting', 'structures'];
+
+test('groundRegister: the boundary is ABSENT everywhere — it is a drawn line, never a ground wash', () => {
+  for (const filter of ALL_SHEETS) {
+    assert.equal(groundRegister('boundary', filter), 'absent', `boundary must be absent on ${filter}`);
+  }
+});
+
+test('groundRegister: every other ground kind is CONTENT on the whole-design, Planting and Structures sheets', () => {
+  for (const kind of GROUND_KINDS) {
+    if (kind === 'boundary') continue;
+    for (const filter of ['all', 'planting', 'structures'] as const) {
+      assert.equal(groundRegister(kind, filter), 'content', `${kind} should be content on ${filter}`);
+    }
+  }
+});
+
+test('groundRegister: every other ground kind is CONTEXT (orientation only) on Water and Zones', () => {
+  for (const kind of GROUND_KINDS) {
+    if (kind === 'boundary') continue;
+    for (const filter of ['water', 'zones'] as const) {
+      assert.equal(groundRegister(kind, filter), 'context', `${kind} should be context on ${filter}`);
+    }
+  }
+});
+
+test('groundRegister: full table has no gaps — every kind × sheet combination resolves', () => {
+  for (const kind of GROUND_KINDS) {
+    for (const filter of ALL_SHEETS) {
+      const register = groundRegister(kind, filter);
+      assert.ok(
+        register === 'content' || register === 'context' || register === 'absent',
+        `${kind} on ${filter} produced an unrecognised register: ${register}`,
+      );
+    }
+  }
+});
+
+// ── layerContentCount: the CRITICAL visible consequence of the register — a design that is only
+// traced ground (no trees, no beds placed yet) must count as real content on a sheet where ground
+// is CONTENT (Planting), and must NOT manufacture a Water or Zones sheet out of context-only
+// ground the farmer never actually designed for water or zones.
+function fixtureState(feature: GroundFeatureKind): DesignCanvasState {
+  const ring: ZoneShape = { id: 'g1', zone: 0, points: [[0.1, 0.1], [0.4, 0.1], [0.4, 0.4]], feature };
+  return {
+    siteId: 'test-site',
+    frame: { centerLng: 0, centerLat: 0, zoom: 18, imgW: 640, imgH: 640, mPerPx: 0.1 },
+    items: [],
+    zones: [ring],
+    lines: [],
+    step: 'review',
+    updatedAt: new Date().toISOString(),
+  };
+}
+const EMPTY_REF: MapRefLayers = { boundary: [], house: [], driveway: [] };
+
+test('layerContentCount: a traced orchard with nothing else placed IS content on Planting', () => {
+  const state = fixtureState('orchard');
+  assert.equal(layerContentCount(state, EMPTY_REF, 'planting'), 1);
+});
+
+test('layerContentCount: the same traced orchard is NOT content on Water or Zones — context never inflates the gate', () => {
+  const state = fixtureState('orchard');
+  assert.equal(layerContentCount(state, EMPTY_REF, 'water'), 0);
+  assert.equal(layerContentCount(state, EMPTY_REF, 'zones'), 0);
+});
+
+test('layerContentCount: a traced boundary ring never counts as ground content on any sheet', () => {
+  // EMPTY_REF.boundary is deliberately empty too, so the separate main-map boundary bonus on
+  // 'all' (layerContentCount's own `+1`) cannot mask a leak from the ZoneShape boundary ring.
+  const state = fixtureState('boundary');
+  for (const filter of ALL_SHEETS) {
+    assert.equal(layerContentCount(state, EMPTY_REF, filter), 0, `boundary ring leaked into ${filter}'s count`);
   }
 });

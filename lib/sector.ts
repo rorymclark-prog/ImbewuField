@@ -87,8 +87,32 @@ export function deriveSectorModel(site: SectorSite | null | undefined, latDeg: n
   // seasonNote is a plain-words, biome-aware sentence (no logic change — the fire direction and
   // its null/degradation cases are exactly as before). Summer-rainfall land dries out in winter;
   // winter-rainfall land (fynbos) dries out in summer.
-  if (pattern === 'summer' && windWinter) fire = { fromLabel: windWinter.fromLabel, bearingDeg: windWinter.bearingDeg, seasonNote: 'Fire season is winter, when the veld is dry — grassland/savanna burns are common; keep a firebreak on the fire side.' };
-  else if (pattern === 'winter' && windSummer) fire = { fromLabel: windSummer.fromLabel, bearingDeg: windSummer.bearingDeg, seasonNote: 'Fire season is summer — fynbos country burns hot; keep fuel low on the fire side.' };
+  // FIRE DIRECTION IS NO LONGER DERIVED FROM THE PREVAILING WIND. It used to be
+  // `fire = windWinter` on summer-rainfall land, and that was wrong in a way that matters more than
+  // a missing feature:
+  //
+  //   1. On the KZN coast the winter mean from NASA POWER comes out around WSW — and SW/WSW there
+  //      is the POST-COLD-FRONT ONSHORE flow, the rain-bearing, cooling wind. The dangerous wind is
+  //      the berg: hot, dry, off the interior, from roughly W/NW. So the sheet printed
+  //      "FIRE — WSW" and pointed a farmer's firebreak at the WET side, leaving the real fire
+  //      approach unguarded.
+  //   2. The number it averaged is not trustworthy for this either. The KZN wind rose is bimodal
+  //      (an NE lobe and a SW lobe); a circular mean of two lobes lands in the GAP between them —
+  //      a direction the wind does not blow from. Averaging three already-averaged monthly means
+  //      makes the result look coherent when it is not.
+  //
+  // A firebreak on the wrong side is not a cosmetic error, and this sheet is printed and built
+  // from. Until the regional sector table exists (berg / cold-front / onshore / storm, keyed on
+  // region and rainfall seasonality, sourced and labelled ON the sheet as a regional assumption),
+  // the honest output is NO fire sector plus a note saying so. An absent arrow costs a farmer a
+  // conversation; a confidently wrong one costs him the firebreak.
+  if (pattern === 'summer' || pattern === 'winter') {
+    notes.unshift(
+      pattern === 'summer'
+        ? 'Fire sector not shown: the dry-season fire wind is regional (a hot, dry berg-type wind off the interior) and is not the prevailing wind this site\u2019s climate data reports. Walk the boundary and ask neighbours which side fires come from.'
+        : 'Fire sector not shown: fynbos fire weather is driven by hot, dry berg-type winds that this site\u2019s climate data does not identify. Confirm the fire approach locally before siting a firebreak.',
+    );
+  }
   // Honest-degradation contract: if climate loaded but the wind labels were unparseable/sentinel,
   // the wind AND fire arrows are silently absent — say so (unshift so it stays note[0], "strongest first").
   if (site?.climate && !windSummer && !windWinter) notes.unshift('Wind direction unavailable — wind & fire sectors omitted.');

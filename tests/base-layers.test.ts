@@ -96,3 +96,28 @@ test('a boundary can now be Studio-only (no main-map boundary at all)', () => {
   assert.deepEqual(out.boundary, BIG_SQUARE);
   assert.equal(out.source.boundary, 'studio');
 });
+
+// The backwards-compat case app/design/page.tsx must get right when wiring this in: a farmer
+// with an OLDER design already has a main-map boundary/house/driveway (traced before the Studio
+// Base step existed), then goes on to also trace all three again inside the Studio. Nothing here
+// changes the resolution rule (Studio ring wins per slot, independently) — this just proves it
+// holds with every slot doubly-populated at once, not just the single-slot case above.
+test('all three slots present on both sides at once — Studio wins each, independently, none fall back to map', () => {
+  const state = stateWith([
+    zone('boundary', BIG_SQUARE),
+    zone('house', SMALL_SQUARE),
+    zone('driveway', SMALL_SQUARE),
+  ]);
+  const bothPresent: MapRefLayers = {
+    boundary: [[0, 0], [1, 0], [1, 1], [0, 1]],
+    house: [[0.5, 0.5], [0.6, 0.5], [0.6, 0.6], [0.5, 0.6]],
+    driveway: [[0.2, 0.9], [0.2, 0.95]],
+    drivewayClosed: false,
+  };
+  const out = resolveBaseLayers(state, bothPresent);
+  assert.deepEqual(out.boundary, BIG_SQUARE);
+  assert.deepEqual(out.house, SMALL_SQUARE);
+  assert.deepEqual(out.driveway, SMALL_SQUARE);
+  assert.equal(out.drivewayClosed, true); // Studio rings are always closed polygons — see source.
+  assert.deepEqual(out.source, { boundary: 'studio', house: 'studio', driveway: 'studio' });
+});

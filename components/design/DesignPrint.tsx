@@ -20,7 +20,6 @@ import LessonLink from './LessonLink';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
-import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import {
   buildComposite,
   buildBlueprintSectorMap,
@@ -29,8 +28,10 @@ import {
   buildBlueprintPlantingMap,
   buildBlueprintStructuresMap,
   buildImplementationMap,
-  itemInFilter,
   layerContentCount,
+  groundRows,
+  sheetLegendRows,
+  TAR,
   type GlossyLayerFilter,
 } from './DesignGlossy';
 import { buildPhasePlan } from '@/lib/phasing';
@@ -108,31 +109,33 @@ function loadImg(src: string): Promise<HTMLImageElement> {
 }
 
 // Legend rows for a PAPER-furniture layer (base / masterplan) — what the reader needs to decode it.
-function legendRows(state: DesignCanvasState, layer: PrintLayer): Array<{ swatch: string; icon?: string; text: string }> {
+// Sheet 01 "Existing Site & Base" is a drawDesign:false composite, but drawMarks (DesignGlossy.tsx)
+// paints the boundary/house/driveway rings AND every traced ground feature (lawn, orchard, veg
+// garden, patio, cleared) onto it regardless — that block is explicitly NOT gated on drawDesign
+// because this is the one sheet whose whole subject is existing fabric. The three rows below used
+// to be unconditional, so an untraced site printed a key for a boundary/house/driveway that was
+// nowhere on the page (the phantom-row defect), while any traced ground wash it DID paint had no
+// row at all (the mirror defect) — see docs/LAYER-AUDIT-2026-07-20.md item 3. Every row is now
+// gated on the identical test drawMarks uses, and groundRows(...) is the same helper the Zones/
+// Water/Structures Blueprints use, so this legend and that paint job cannot drift apart again.
+function legendRows(state: DesignCanvasState, layer: PrintLayer, refLayers: RefLayers): Array<{ swatch: string; icon?: string; text: string }> {
   const filter = layer.filter ?? 'all';
   if (!layer.drawDesign) {
-    return [
-      { swatch: '#EDE7D9', text: 'Property boundary' },
-      { swatch: '#3A352C', text: 'House / roof' },
-      { swatch: '#12140F', text: 'Driveway (tar)' },
-    ];
+    const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
+    if (refLayers.boundary.length >= 3) rows.push({ swatch: '#B4E000', text: 'Property boundary' }); // drawMarks:523 chartreuse
+    if (refLayers.house.length >= 3) rows.push({ swatch: '#8A8D91', text: 'House / roof' }); // drawMarks:543 = GROUND_FEATURES.house.color
+    if (refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Driveway (tar)' }); // drawMarks:554-593
+    for (const g of groundRows(state, refLayers)) rows.push({ swatch: g.color, text: g.label });
+    return rows;
   }
-  const rows: Array<{ swatch: string; icon?: string; text: string }> = [];
-  for (const z of state.zones) {
-    if (z.feature || z.points.length < 3) continue;
-    rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}` });
-  }
-  const groups = new Map<string, { icon: string; color: string; n: number }>();
-  for (const it of state.items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
-    const name = it.label ?? def.name;
-    const g = groups.get(name) ?? { icon: def.icon, color: def.color, n: 0 };
-    g.n += 1;
-    groups.set(name, g);
-  }
-  for (const [name, g] of groups) rows.push({ swatch: g.color, icon: g.icon, text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}` });
-  return rows;
+  // Sheet 07 "Integrated Masterplan" — drawDesign:true, filter:'all'. This used to be a private
+  // re-implementation that (a) pushed one row per zone POLYGON instead of per zone NUMBER, so three
+  // Zone-3 patches printed "Zone 3 — Orchard / food forest" three times, and (b) had no branch at
+  // all for lines (swale/pipe/drip/fence/path/windbreak), the driveway, or traced ground — all of
+  // which buildComposite(...,'all',true) draws on this exact page (docs/LAYER-AUDIT-2026-07-20.md,
+  // 'all/A/wrong'). sheetLegendRows is the same deduped, register-aware legend builder the AI-styled
+  // sheets use, so this page's key can never again promise less than the map beside it shows.
+  return sheetLegendRows(state, refLayers, filter);
 }
 
 // Render ONE print page (map + furniture) to a canvas at the chosen paper size.
@@ -219,7 +222,7 @@ async function renderPage(
     ctx.textBaseline = 'alphabetic';
     ctx.font = '800 30px Georgia, serif';
     ctx.fillText('Legend', lx + pad, ly + pad + 26);
-    const rows = legendRows(state, layer);
+    const rows = legendRows(state, layer, refLayers);
     const rowH = 44;
     let ry = ly + pad + 62;
     ctx.font = '500 25px system-ui, sans-serif';
