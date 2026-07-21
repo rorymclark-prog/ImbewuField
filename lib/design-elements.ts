@@ -84,7 +84,11 @@ import type { GroundFeatureKind } from '@/lib/design-canvas';
 // deeper orchard green, neutral cleared.
 export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: string; icon: string }> = {
   boundary: { label: 'Property boundary', color: '#8CEB6A', icon: '🚩' },
-  house: { label: 'House', color: '#8A8D91', icon: '🏠' },
+  // "House / Building" — not every site is a home. Rory, tracing the Ubhejane Crèche sample: a
+  // classroom, storeroom and concrete slab all need this same footprint tool, and "House" reads
+  // wrong on a school or any other non-residential structure. Same GroundFeatureKind, same
+  // rendering everywhere — this is a label change only.
+  house: { label: 'House / Building', color: '#8A8D91', icon: '🏠' },
   patio: { label: 'Patio / Paving', color: '#C7C3BB', icon: '▦' },
   driveway: { label: 'Driveway', color: '#12140F', icon: '🛣️' }, // near-black tar — see TAR in DesignGlossy; must NOT be slate, or the model reads it as a roof
   lawn: { label: 'Lawn', color: '#8FBF6B', icon: '🟩' },
