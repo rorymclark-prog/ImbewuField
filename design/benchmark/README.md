@@ -11,8 +11,12 @@ target quality and content bar.
 
 **This is the bar for content and legend completeness — not necessarily for sheet numbering.**
 The reference numbers Sector Analysis as sheet **08** (last); this app's canonical order numbers
-it sheet **02** (`lib/producer-prompt.ts` SHEET_NO). Nobody has asked to renumber the app's plan
-set to match — flagging so it isn't done by accident while chasing "match the reference."
+it sheet **02** (`lib/producer-prompt.ts` SHEET_NO).
+
+**Both flagged deviations are now DECIDED (Rory, 2026-07-21) — do not "fix" either of these:**
+- **Sheet numbering stays 02.** Do not renumber the plan set to match the reference's 08.
+- **Boundary stays the bone post-and-wire fence.** Do not switch back to the reference's plain
+  green tick-line.
 
 ## 08 — Sector Analysis Map — legend, transcribed exactly
 
@@ -56,3 +60,15 @@ This is the same shape of enrichment `docs/SECTOR-MODEL-SPEC-2026-07-21.md` scop
 transcription of this same reference — that doc's `NamedWindSector` union
 (`summer_cooling | cold_front | berg | storm_onshore`) maps directly to legend rows 3–6 above.
 Terrace fall (row 9) and driveway access (row 8) are not yet in that spec and need adding.
+
+## Second benchmark set — `extension-blueprint-set/`
+
+A second reference set Rory supplied 2026-07-21 (7 sheets, "Extension Blueprint" style — a
+different colour/style preset from Carl & Sandy's set above, oblique 3D house render, green
+tick-line boundary, cream legend panels). His words: "there are for the most really good examples
+for you to store in the repo as benchmarks." See `extension-blueprint-set/README.md` for what's
+specifically useful in it — most notably, sheet 01's terrace-level labelling ("UPPER TERRACE
++0.0 m", "SOUTHERN LOWER TERRACE −3.0 m", "3 m VETIVER BANK / LEVEL CHANGE") is close to a direct
+transcription target for `docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md`'s `levelM` field, and sheet
+07's phased hold-point structure (numbered stages, week ranges, a Hold Point per stage, a Critical
+Order list, a Site Rules box) is considerably richer than what `buildImplementationMap` ships today.

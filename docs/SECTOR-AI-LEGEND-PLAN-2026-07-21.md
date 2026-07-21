@@ -52,7 +52,7 @@ boundary/every roof/driveway in exactly their photographed shape, position and s
 the model can't keep and correctness no longer depends on). Buildings are now asked for as low-key
 ground texture only, since the app stamps the true house/driveway/boundary on top.
 
-## Two deliberate deviations from the reference — do not "fix" these later
+## Two deliberate deviations from the reference — DECIDED (Rory, 2026-07-21), not open any more
 
 Flagged in `design/benchmark/README.md`, repeated here so they don't get silently overridden:
 - Boundary stays the app's bone post-and-wire fence, not the reference's green tick-line (copying
