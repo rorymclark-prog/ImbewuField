@@ -4729,7 +4729,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v11';
+const PLAN_VERSION = 'v12';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

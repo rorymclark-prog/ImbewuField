@@ -206,6 +206,27 @@ test('buildShowcasePrompt includes the title, labels and panel instructions', ()
   assert.ok(prompt.includes('FINAL RULE: the source composite geometry is final.'));
 });
 
+// buildShowcasePrompt is the function every default (non-Satellite-Overlay) style actually calls
+// (DesignGlossy.tsx:5773/5863). Its own marker vocabulary (M/LEGEND_BY_SHEET) is a SEPARATE object
+// from OVERLAY_ICONS, which is Satellite-Overlay-only — a real Water sheet render (Rory: "no
+// driveway no tree basins no greywater why!?") showed tree basins and banana circles drawn as a
+// generic potted plant and greywater entirely absent, because this function's own vocabulary had
+// never had entries added for them at all, ever, on any style. Locking that in here so a future
+// element-vocabulary fix to OVERLAY_ICONS can't again land in only one of the two functions.
+test('the water sheet marker glossary names tree basins, banana circles and greywater — not just OVERLAY_ICONS', () => {
+  const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3)', 'Carl and Sandys Home', 'water');
+  assert.match(prompt, /tree basin/i);
+  assert.match(prompt, /banana circle/i);
+  assert.match(prompt, /greywater/i);
+  // The earthwork-not-plant invariant, ported from OVERLAY_ICONS' own fixed language.
+  assert.match(prompt, /carries NO plant of its own/);
+  assert.match(prompt, /SUNKEN pit/);
+  // The driveway colour must match what drawMarks actually paints (TAR, near-black) — not the
+  // stale "grey strip" wording that described the pre-fix composite.
+  assert.doesNotMatch(prompt, /grey strip/i);
+  assert.match(prompt, /near-black tarred strip/i);
+});
+
 test('legacy prompt remains available for rollback and A/B comparison', () => {
   const legacyProducer = buildProducerPromptLegacy(
     'Zones',

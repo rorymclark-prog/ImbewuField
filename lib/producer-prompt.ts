@@ -312,21 +312,41 @@ const M = {
   building: 'a hut or shed marker is that building',
   dam: 'a blue area is a dam or pond of open water, exactly that shape',
   patio: 'a warm-tan area is a paved outdoor patio, exactly that shape',
-  driveway: 'the grey strip is the existing driveway — a plain tar access track of exactly its traced shape, empty of vehicles',
+  // NEAR-BLACK TAR, not "grey strip". This whole function was still describing the driveway as
+  // grey, the exact colour rule 8-era code called the ROOF (#3C4247/#3B3A3E) before that got fixed
+  // on the composite (DesignGlossy.tsx TAR = '#12140F') — so this function kept telling the model
+  // to look for a grey shape while the actual pixels handed to it were near-black, and a model
+  // hunting for "grey" over a photograph full of shadow and shade has nothing reliable to lock
+  // onto. Say the real colour.
+  driveway: 'the near-black tarred strip is the existing driveway — a plain tar access track of exactly its traced shape, empty of vehicles, kept flat and dark; never lawn, never a raised slab, never the same colour as a roof',
   fence: 'a dusty-violet line is a farm fence of posts and wire along exactly that path',
   path: 'a gold dashed line is a walking path along exactly that route',
   swale: 'a light-blue dashed line is a swale — a planted water-harvesting ditch on contour',
   pipe: 'a dark-blue line is a buried water-pipe route, shown as a subtle trench line',
   drip: 'a green dashed line is a drip-irrigation line',
   windbreak: 'a deep-green line is a windbreak hedge of dense shrubs and trees',
+  // ADDED — these four had NO entry anywhere in this function, ever. buildShowcasePrompt is the
+  // function every default style actually calls (DesignGlossy.tsx:5773/5863); the earthwork-not-
+  // plant tree-basin fix and the greywater-line work this session (commits 79b1e78, 4f153f5,
+  // 16d5ac8) only ever touched OVERLAY_ICONS below, which belongs to the SEPARATE Satellite
+  // Overlay-only buildSatelliteOverlayPrompt. A farmer on any other style got a tree-basin or
+  // banana-circle marker with zero drawing instruction attached, and the model fell back to the
+  // generic "a plant in a pot" it would guess for an unexplained brown circle. Same story for
+  // greywater: no basin description, no line colour explained, so a real greywater system a
+  // farmer drew came out as nothing at all. Text mirrors OVERLAY_ICONS' already-fixed language —
+  // this is propagating an existing fix to the path that was missing it, not new invention.
+  tree_basin: 'a small brown circular marker about 2 m across is a tree basin — draw ONLY the earthwork: a low raised mound of bare soil at the centre, ringed by a doughnut-shaped mulched moat, clear dry ground between mound and mulch. It carries NO plant of its own — never a tree or shrub standing in it',
+  banana_circle: 'a larger brown circular marker about 3.5 m across is a banana circle — a sunken mulch-filled pit about 2 m across, ringed by a raised earth bund, four or five broad paddle-shaped banana leaves fanning out over the rim. Opposite silhouette to a tree basin: this is a SUNKEN pit, a tree basin is a RAISED mound',
+  greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
+  greywater_line: 'a violet dashed line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
 } as const;
 
 const LEGEND_BY_SHEET: Record<ShowcaseSheetKind, string> = {
-  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.zones].join('; '),
+  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.tree_basin, M.banana_circle, M.greywater_basin, M.greywater_line, M.zones].join('; '),
   zones: [M.zones, M.driveway].join('; '),
-  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway].join('; '),
-  planting: [M.bed, M.tree, M.windbreak, M.driveway].join('; '),
+  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway, M.tree_basin, M.banana_circle, M.greywater_basin, M.greywater_line].join('; '),
+  planting: [M.bed, M.tree, M.windbreak, M.driveway, M.tree_basin, M.banana_circle].join('; '),
   structures: [M.building, M.hive, M.patio, M.fence, M.path, M.driveway].join('; '),
 };
 
@@ -345,7 +365,7 @@ export function buildShowcasePrompt(
   const noInvent =
     `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
   const waterRule = sheetKind === 'water'
-    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
+    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes, drip lines, tree basins, banana circles and greywater lines that are already marked or visible; do not invent extra water systems or extra water-related landforms. A tree basin and a banana circle are both real content on this sheet — draw them exactly as the marker glossary below describes, never as a generic potted plant.`
     : '';
   const markerCleanup =
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +

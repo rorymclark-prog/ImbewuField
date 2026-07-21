@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'AI renders finally know what a tree basin, banana circle and greywater line look like',
       'Sector analysis can now be AI-styled too — the bearings are still measured, never guessed',
       'Sector analysis: your ground is drawn quietly so the sun, wind and water arrows read first',
       'Sector labels no longer print on top of each other, and the fire note is no longer cut off',
