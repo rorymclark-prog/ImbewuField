@@ -461,11 +461,23 @@ test('the sector restyle prompt forbids the analysis and carries no marker/legen
   assert.doesNotMatch(p, /element list/i);
   assert.doesNotMatch(p, /marked feature/i);
   assert.doesNotMatch(p, /legend row/i);
-  // Boundary/roof/driveway geometry must still be pinned exactly, same as every other style.
-  assert.match(p, /KEEP EXACT/);
-  assert.match(p, /boundary/i);
-  assert.match(p, /roof/i);
-  assert.match(p, /driveway/i);
+  // composeSectorSheet draws the true boundary/roof/driveway from refLayers over this image, so
+  // this prompt must NOT promise the model will hold them at exact position/scale — that promise
+  // is what 967c345 found the model breaking. It should say the opposite: their exact geometry is
+  // drawn separately and does not matter here.
+  assert.match(p, /RESTYLE ONLY/);
+  assert.match(p, /drawn separately afterwards, at measured positions/);
+  assert.match(p, /do not matter and are not graded/);
+  assert.doesNotMatch(p, /KEEP EXACT/);
+  assert.doesNotMatch(p, /in exactly their photographed shape, position and scale/);
+});
+
+// The registration bug this whole rewrite exists to prevent: geometryLockTail() promises the
+// model will hold the boundary/roof/driveway position exactly, which is the one thing this prompt
+// must NOT ask for (there is no protect mask on this path to enforce or restore it from).
+test('the sector restyle never appends the geometry-lock tail', () => {
+  const p = buildSectorRestylePrompt('precision_atlas', 'Some Farm');
+  assert.doesNotMatch(p, /the source composite geometry is final/i);
 });
 
 // ── Sector restyle ────────────────────────────────────────────────────────────

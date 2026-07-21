@@ -2294,8 +2294,15 @@ async function drawAnalysisBase(
     ctx.fillStyle = '#E9E3D4';
     ctx.fillRect(0, 0, W, H);
   }
+  drawPaperWash(ctx, W, H);
+}
+
+/** The warm paper tint shared by both sector bases — the real satellite (drawAnalysisBase) and the
+ *  AI-illustrated ground (composeSectorSheet's baseImage path). Split out so an already-illustrated
+ *  AI image gets the same paper tone as the photo without also getting the photo's desaturate/
+ *  brighten filter, which belongs only to a raw aerial, not to artwork the model already stylised. */
+function drawPaperWash(ctx: CanvasRenderingContext2D, W: number, H: number): void {
   ctx.save();
-  // Then a warm paper wash, so the sheet reads as a printed plan rather than a faded photo.
   ctx.fillStyle = 'rgba(246, 241, 228, 0.44)';
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
@@ -4058,7 +4065,19 @@ function drawSectorAnalysis(
 // the north in the SH), summer/winter wind, dry-season fire approach, downslope water flow + on-
 // contour lines, and frost drainage — from lib/sector.deriveSectorModel. Nothing is invented; each
 // energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–08.
-export async function buildBlueprintSectorMap(
+//
+// ONE COMPOSER, TWO BASES. This used to be the whole exact-sheet builder, with a second, PARALLEL
+// function (buildSectorOverlayImage, now deleted) drawing only the chrome for the AI path onto a
+// transparent canvas, trusting the model to have painted the house/driveway/boundary underneath at
+// the RIGHT place. That trust is exactly what commit 967c345 found broken: gpt-image-2 reframes the
+// scene, our arrows stayed at true frame coordinates, and four renders running had the boundary cut
+// through the house. `composeSectorSheet` is the fix — one draw list, parameterised only on WHERE
+// the base pixels come from. Every ring, house, driveway, boundary, label and legend row below is
+// drawn at `frame`/`refLayers`/`site`-derived coordinates regardless of what the base shows, so the
+// AI base can shift, rescale or reframe under this chrome and nothing downstream can ever
+// misregister against it — the base carries no geometry anything here reads back or aligns to.
+async function composeSectorSheet(
+  baseImage: string | null,
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
@@ -4078,12 +4097,19 @@ export async function buildBlueprintSectorMap(
   const pad = Math.round(W * 0.02);
   const rowH = Math.round(W * 0.026);
 
-  // 1. Satellite + PAPER wash, not the design sheets' dark scrim. An analysis sheet is arrows and
-  //    arcs over ground, and over dense KZN bush the dark scrim leaves a near-black field that the
-  //    sun arc, wind arrows and frost ellipse have to fight. Desaturating and lightening instead
-  //    turns the photograph into a quiet base the analysis can sit on — the same reasoning behind
-  //    Precision Atlas's context treatment, done deterministically and for free.
-  await drawAnalysisBase(ctx, frame, W, H);
+  // 1. The base. Exact (baseImage null): real satellite, desaturated/lightened + paper wash — an
+  //    analysis sheet is arrows and arcs over ground, and over dense KZN bush a dark scrim leaves a
+  //    near-black field the sun arc, wind arrows and frost ellipse have to fight. AI (baseImage
+  //    set): the model's own illustrated ground, already stylised — no desaturate/brighten filter
+  //    (that belongs to a raw photo, not art the model already toned), just the same paper wash so
+  //    both bases share one tone. Either way, nothing about this base is trusted for geometry.
+  if (baseImage) {
+    const img = await loadImage(baseImage);
+    ctx.drawImage(img, 0, 0, W, H);
+    drawPaperWash(ctx, W, H);
+  } else {
+    await drawAnalysisBase(ctx, frame, W, H);
+  }
   // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
   // THE GROUND THE ANALYSIS IS ABOUT. This sheet drew the house, the driveway and the boundary and
   // nothing else — so the traced lawn, veg garden, paving and cleared ground, which the farmer had
@@ -4123,32 +4149,17 @@ export async function buildBlueprintSectorMap(
   return canvas.toDataURL('image/png');
 }
 
-// AI-composited sector overlay — the SAME bearings as buildBlueprintSectorMap's ring/wedges/arrows,
-// drawn on a transparent canvas with no base/house/driveway/boundary painted first (the model draws
-// those on the restyled satellite; compositeAccurateMap's overlayImage slot lays this on top
-// afterwards, unclipped, so arrows that deliberately reach past the boundary survive — see
-// lib/image-producer.ts's overlay-slot docblock). Background stays transparent because nothing
-// opaque is painted before drawSectorAnalysis runs.
-async function buildSectorOverlayImage(
+// The exact sheet is composeSectorSheet with no AI base — everything else is identical, which is
+// what guarantees the exact and AI sheets are pixel-identical outside their ground texture,
+// including the legend: there is only one place drawSectorAnalysis's rows are ever assembled.
+export async function buildBlueprintSectorMap(
+  state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   site: SectorSite | null,
   placeName?: string,
 ): Promise<string> {
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
-  const canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
-  const pad = Math.round(W * 0.02);
-  const rowH = Math.round(W * 0.026);
-
-  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM);
-
-  return canvas.toDataURL('image/png');
+  return composeSectorSheet(null, state, frame, refLayers, site, placeName);
 }
 
 // Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 08 in docs/PLAN-SET-SPEC.md,
@@ -4718,7 +4729,7 @@ interface SavedGlossy {
 // as the change that needs it.
 //   v2 — 2026-07-21: prompt stopped naming irrigation routes on Planting/Structures, rule 7 stopped
 //        asserting ground and served items absent, icon rule no longer renders empty.
-const PLAN_VERSION = 'v10';
+const PLAN_VERSION = 'v11';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -4868,22 +4879,24 @@ export default function DesignGlossy({
   const applySheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
     setSelectedNo(sheet.no);
     if ('exact' in sheet) {
-      // Sector (02) is the one analytical sheet with an AI option: a restyle-only render with the
-      // deterministic bearings composited on top afterwards (never model-drawn — see
-      // buildSectorRestylePrompt). Leave exactSheet null so runCurrentSheet doesn't route to the
-      // deterministic renderSectorMap, and seed/keep a non-satellite_overlay producer style —
-      // satellite_overlay's whole premise is the MODEL lettering its own labels/legend, which is
-      // exactly what a sector render must never do (see the Style-grid filter below).
-      if (sheet.exact === 'base' && m === 'ai') {
+      // Site (01) AND Sector (02) are the two analytical sheets with an AI option: a restyle-only
+      // render with the deterministic bearings/house/driveway/boundary/legend composited on top
+      // afterwards (never model-drawn — see buildSectorRestylePrompt and composeSectorSheet). Leave
+      // exactSheet null so runCurrentSheet doesn't route to the deterministic renderBaseMap/
+      // renderSectorMap, and seed/keep a non-satellite_overlay producer style — satellite_overlay's
+      // whole premise is the MODEL lettering its own labels/legend, which is exactly what a sector
+      // render must never do (see the Style-grid filter below).
+      if ((sheet.exact === 'base' || sheet.exact === 'sector') && m === 'ai') {
         setExactSheet(null); setAnalysisStyle(null);
         setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
         return;
       }
-      // Site (01) and Phasing (08) are ANALYTICAL — sun/wind/fire, existing site,
-      // build schedule — all facts, not art (as the AI-all button copy says). They are now
-      // EXACT-ONLY: the deterministic rules-engine render is both more accurate AND removes the
-      // last Gemini dependency (Rory: "everything to ChatGPT, retire Gemini"; and the Gemini
-      // analysis path just hit Google's monthly spend cap). No AI/Gemini branch here anymore.
+      // Reached by Site/Sector in exact mode (their AI mode returned above), and ALWAYS by Phasing
+      // (08) — build schedule is lettered rules-engine text, and a model that misspells "greywater"
+      // must never own a build calendar, so Phasing has no AI branch at all, still. The deterministic
+      // rules-engine render also removes the last Gemini dependency for these three (Rory:
+      // "everything to ChatGPT, retire Gemini"; the old Gemini analysis path had also just hit
+      // Google's monthly spend cap). No AI/Gemini branch here anymore for any of the three.
       setExactSheet(sheet.exact); setAnalysisStyle(null); setProducerStyle(null);
     } else {
       setFilter(sheet.filter);
@@ -4903,26 +4916,23 @@ export default function DesignGlossy({
   // then the deterministic content goes back on top. They share one code path because they share
   // one input. Phasing (08) is deliberately NOT here: its content is lettered schedule text, and a
   // model that misspells "greywater" must never own a build calendar.
-  // WHY SITE HAS AN AI OPTION AND SECTOR DOES NOT — the line is registration, not taste.
+  // WHY SECTOR NOW HAS AN AI OPTION TOO — the line was registration, not taste, and it moved.
   //
   // gpt-image-2 recomposes the scene: it returns a picture at a slightly different scale and offset
-  // from the one we sent, and there is no way to recover that transform. That is harmless when we
-  // ship the model's image AS IS, which is what Site (01) does — it is a restyle of the ground with
-  // nothing composited on top, so a few metres of drift is invisible and costs nothing.
+  // from the one we sent, and there is no way to recover that transform. Sector's content — sun
+  // arc, wind arrows, bearings, the house, the driveway, the boundary — used to be drawn by us at
+  // TRUE coordinates and laid over the MODEL's OWN depiction of the ground. When the model shifted
+  // the ground beneath, every arrow pointed at the wrong part of the farm: four renders running
+  // came back with the boundary cutting through the house.
   //
-  // Sector (02) is the opposite case. Its content — sun arc, wind arrows, bearings, the boundary —
-  // is drawn by us at TRUE coordinates and laid over the model's output. When the model shifts the
-  // ground beneath, every arrow points at the wrong part of the farm: four renders in a row came
-  // back with the boundary cutting through the house. A sector sheet exists to say WHERE, and one
-  // that is confidently 15 m out is worse than none. Prompt wording cannot fix it — the model is
-  // not disobeying, it is reframing, and we cannot measure by how much.
-  //
-  // So Sector is exact-only. That is not a downgrade: the exact sheet is free, instant, correctly
-  // registered by construction, and is where the traced ground, the ground labels and the paper
-  // base all landed. If a future model returns a guaranteed 1:1 crop, revisit this — the restyle
-  // prompt and the queue path still exist and still work.
+  // The fix was not a better prompt — the model is not disobeying, it is reframing, and no prompt
+  // measures by how much. The fix was to stop asking the model to depict the house/driveway/
+  // boundary AT ALL, and stop compositing over its depiction of them. `composeSectorSheet` now
+  // draws the house, driveway, boundary and every arrow itself, at true coordinates, over WHATEVER
+  // ground texture the model returns — so the model's reframing can only ever shift decorative
+  // texture, never a feature anything aligns to. See docs/SECTOR-AI-LEGEND-PLAN-2026-07-21.md.
   const restyleAiKind: 'sector' | 'base' | null =
-    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'base'
+    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector')
       ? selectedSheet.exact
       : null;
   const sectorAiMode = restyleAiKind !== null;
@@ -5884,29 +5894,20 @@ export default function DesignGlossy({
   // (no boundary clip, since the deterministic arrows/wedges deliberately reach past it) with the
   // measured bearings from buildSectorOverlayImage composited unclipped on top, exactly the slot
   // lib/image-producer.ts's overlayImage docblock describes ("the sector-wedge sticker").
-  const finishSectorSheet = useCallback(async (modelImage: string): Promise<string> => {
-    const W = frame.imgW * SCALE;
-    const H = frame.imgH * SCALE;
-    const overlayImage = await buildSectorOverlayImage(frame, refLayers, site, placeName);
-    // NO BOUNDARY CLIP ON THIS SHEET. boundaryPx makes compositeAccurateMap keep the model's paint
-    // only INSIDE the boundary and paste the raw satellite back outside it. On the layer sheets that
-    // is right — the design lives inside the fence. On a SECTOR sheet it is backwards, and it is
-    // what made the first AI render look like a sticker: a hard-edged illustrated quad (the boundary
-    // polygon) floating on untouched dark photograph. It is wrong on the merits too — fire approach,
-    // prevailing wind and downhill water all come FROM BEYOND the fence, so the surrounding land is
-    // part of the analysis, not a frame around it. Here the whole image is the restyle.
-    // No sourceImage/protectMask fallback either (unlike finishStyledSheet): sector never sends a
-    // Geometry Lock mask, so there is nothing to restore from.
-    return compositeAccurateMap({
-      modelImage,
-      satelliteImage: frame.satDataUrl ?? modelImage,
-      overlayImage,
-      labels: [],
-      labelStyle: 'clean',
-      width: W,
-      height: H,
-    });
-  }, [frame, refLayers, site, placeName]);
+  // Composite-back for the AI Sector sheet: hand the model's restyled ground to composeSectorSheet
+  // as its base and let it draw the FULL deterministic sheet on top — house, driveway, boundary,
+  // ground labels and the whole sector legend, at true measured coordinates, exactly as the exact
+  // sheet does. This used to composite only a chrome overlay (buildSectorOverlayImage) and trust
+  // the model to have painted the house/boundary/driveway in the right place underneath it —
+  // gpt-image-2 reframes the scene, so that trust is what put the boundary through the house four
+  // renders running (967c345). Routing through composeSectorSheet instead of compositeAccurateMap
+  // means there is no boundary clip to fight either: the old sticker-look defect (a hard-edged
+  // illustrated quad on raw photograph) came from compositeAccurateMap's boundary-clip path, which
+  // this no longer touches at all — composeSectorSheet always paints edge to edge.
+  const finishSectorSheet = useCallback(
+    (modelImage: string): Promise<string> => composeSectorSheet(modelImage, state, frame, refLayers, site, placeName),
+    [state, frame, refLayers, site, placeName],
+  );
 
   // Sector's single-sheet AI path: restyle-only (buildSectorRestylePrompt forbids the model from
   // drawing any arrow, arc or bearing), with the real measured analysis composited on top by
@@ -6239,11 +6240,14 @@ export default function DesignGlossy({
           {loading === 'falgpt' ? 'Rendering with gpt-image-2 in the background…' : '✨ Generate 5 design sheets — AI (gpt-image-2)'}
         </button>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 6 }}>
-          {/* Honest about what this button does NOT cover — sheets 01/02/08 are analytical
-              (sun/wind/build-schedule) and stay exact-only by design; inventing those facts
-              via image-gen would be actively wrong, not just lower quality. Was silently
-              omitted before — Rory: "it produced 5 not 8 sheets?" */}
-          <span style={{ fontSize: 11, opacity: 0.65 }}>Whole · Zones · Water · Planting · Structures. Site, Sector &amp; Phasing stay exact (they're facts, not art) — lands in your gallery in a few minutes.</span>
+          {/* Honest about what this button does NOT cover. Site (build-schedule facts) and Phasing
+              stay exact-only by design; inventing those via image-gen would be actively wrong, not
+              just lower quality. Sector DOES have an AI option now (composeSectorSheet composites
+              our own bearings/legend over the model's ground either way) — it's just not in this
+              5-sheet batch (MAX_SHEETS_PER_JOB caps it at 5 and the batch is already full); reach it
+              from the Sector chip's own AI toggle. Was silently omitted before — Rory: "it produced
+              5 not 8 sheets?" */}
+          <span style={{ fontSize: 11, opacity: 0.65 }}>Whole · Zones · Water · Planting · Structures. Site &amp; Phasing stay exact; Sector has an AI option on its own sheet — lands in your gallery in a few minutes.</span>
           {/* Quiet exact-all link (mockup) — the non-AI option. */}
           <button
             type="button"
@@ -6350,7 +6354,7 @@ export default function DesignGlossy({
           "sector sheet is still instant you must fix this and make it for ai"). Shown only on the
           two analytical sheets that HAVE both: the design layers already default to AI and carry
           their own Style grid, and Phasing (08) has no AI version by design. */}
-      {selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'base' && (
+      {selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: 0.4, opacity: 0.6 }}>THIS SHEET</span>
           {([['exact', 'Exact · instant · free'], ['ai', 'AI styled · ~mins']] as const).map(([m, label]) => {

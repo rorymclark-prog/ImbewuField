@@ -714,12 +714,22 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   // the fence, so a boundary-shaped patch of artwork is both ugly and analytically wrong.
   const edgeToEdge =
     `PAINT EDGE TO EDGE: every corner of the image becomes artwork, including the land beyond the property boundary. Neighbouring plots, roofs, trees and tracks are painted in the same hand as the rest of the sheet — never left as raw photograph, never faded out, never framed. No part of the output is a photographic patch.`;
+  // BUILDINGS ARE TEXTURE, NOT GEOMETRY THE APP RELIES ON. This clause used to ask for every
+  // building's "full roof seen from directly above" with no qualifier — a crisp, hard-edged model
+  // house that then ghosts under our own vector house once composeSectorSheet draws the TRUE
+  // house/driveway/boundary from refLayers on top of whatever this returns. So: paint any building
+  // as quiet, low-key roof colour sitting IN the ground fabric, never the sharpest thing in frame.
   const paintWhatIsThere =
-    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and every building as its full roof seen from directly above. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
-  const keepExact =
-    `KEEP EXACT: this is a restyle pass only. Preserve the property boundary, every roof and the driveway in exactly their photographed shape, position and scale — same outline, same wings, same crop, same north-up orientation. Nothing is resized, rotated, shifted or re-cropped.`;
-  const framing =
-    `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`;
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways. Render any building as a quiet, low-key roof colour sitting in the ground fabric — not a sharp, high-contrast structure, not the star of the composition; its exact outline is drawn separately afterwards. Keep the land legible: this is the background a farmer reads their sun, wind and fire lines against, so it must stay crisp and varied, never a flat wash.`;
+  // RESTYLE ONLY, not KEEP EXACT. The old wording asked the model to hold the boundary/roof/
+  // driveway "in exactly their photographed shape, position and scale" — a registration promise
+  // gpt-image-2 cannot keep (it reframes the whole scene) and one the app no longer asks it to
+  // keep, because it no longer trusts it: composeSectorSheet draws the true house, driveway and
+  // boundary from refLayers on top of this image, at measured coordinates, regardless of what the
+  // model returns. The only thing that still matters is that the overall crop stays roughly the
+  // same scene, since a wildly different crop still looks wrong sitting under our overlay.
+  const restyleOnly =
+    `RESTYLE ONLY: this is a ground-texture pass, not a survey. Keep the same north-up, flat orthographic top-down view and roughly the same crop and scale as the source photograph — no oblique view, no perspective tilt, no 3D camera, no zoom or recentering. The property boundary, every roof and the driveway will be drawn separately afterwards, at measured positions, directly over this artwork — so their exact outline, position and scale here do not matter and are not graded; only the overall scene and crop do.`;
   const noInvent =
     `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
   const noAnalysis =
@@ -728,12 +738,14 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
     `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
     paintWhatIsThere,
-    keepExact,
-    framing,
+    restyleOnly,
     noInvent,
     noAnalysis,
-    `FINAL CHECK: the entire frame is illustrated with no photographic patches left and no hard edge anywhere; every roof, track and boundary sits exactly where the photo put it; nothing has been added that was not already there; there is no text, arrow or arc anywhere.`,
-    geometryLockTail(),
+    `FINAL CHECK: the entire frame is illustrated with no photographic patches left and no hard edge anywhere; no building is drawn sharper or bolder than the ground around it; nothing has been added that was not already there; there is no text, arrow or arc anywhere.`,
+    // Deliberately NOT geometryLockTail(): that tail asks the model to preserve boundary/roof/
+    // driveway position exactly — the registration promise this prompt just dropped, and this path
+    // sends no protect mask to enforce or restore it from (see finishSectorSheet's docblock). Re-
+    // adding it would silently reinstate the promise the rest of this function just removed.
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
