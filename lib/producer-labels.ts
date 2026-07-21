@@ -295,10 +295,15 @@ export function producerLabels(
   const rowGap = pillH + 4; // rows inside a block hug each other → they read as one group…
   const blockGap = 14; // …and blocks stay clearly apart
   const top = 36, bot = H - 36;
+  // The final sheet always burns its scale and distance label into the bottom-left of the map.
+  // Treat that as occupied furniture during label layout, rather than drawing a valid pill there
+  // and covering it later (the real Planting sheet put TREE BASIN ×6 across the 20 m scale).
+  const scaleSafeTop = H - Math.max(110, Math.round(H * 0.11));
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
     const col = blocks.filter((b) => (b.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
     if (!col.length) return;
+    const sideBot = side === 'left' ? scaleSafeTop - pillH / 2 : bot;
     // FIT THE COLUMN FIRST. A column only holds ~28 rows; past that the overflow shift below
     // clamps at `top` and starts stacking pills on top of each other. (That degradation is not
     // new — the old one-pill-per-name layout hit it on a big design too — but headers add rows,
@@ -310,7 +315,7 @@ export function producerLabels(
       col.reduce((s, b) => s + (rowCount(b) - 1) * rowGap, 0) + (col.length - 1) * (pillH + blockGap);
     // Each block can waste one no-op pass (popping its first member adds the "+N MORE" row back),
     // then every pass shrinks the column — so this always terminates; the cap is belt-and-braces.
-    for (let guard = 0; columnSpan() > bot - top && guard < col.length * GROUP_MAX_ROWS + 8; guard++) {
+    for (let guard = 0; columnSpan() > sideBot - top && guard < col.length * GROUP_MAX_ROWS + 8; guard++) {
       const victim = col.filter((b) => b.members.length > 1).sort((a, b) => b.members.length - a.members.length)[0];
       if (!victim) break; // nothing compressible left — accept the pre-existing degradation
       victim.members.pop();
@@ -320,7 +325,7 @@ export function producerLabels(
     // Header centre → last row centre, i.e. how far below its anchor a block reaches.
     const span = rows.map((r) => (r.length - 1) * rowGap);
     // Ideal header y = the elements' own y, clamped so the whole block fits in the frame.
-    const ys = col.map((b, i) => Math.max(top, Math.min(b.cy, bot - span[i])));
+    const ys = col.map((b, i) => Math.max(top, Math.min(b.cy, sideBot - span[i])));
     // Push each block down just enough to clear the one above it (preserves vertical order).
     const pushDown = () => {
       for (let i = 1; i < ys.length; i++) {
@@ -330,7 +335,7 @@ export function producerLabels(
     };
     pushDown();
     // If the stack overran the bottom, slide the whole column up so it fits (clamped at top).
-    const overflow = ys[ys.length - 1] + span[span.length - 1] - bot;
+    const overflow = ys[ys.length - 1] + span[span.length - 1] - sideBot;
     if (overflow > 0) {
       for (let i = 0; i < ys.length; i++) ys[i] = Math.max(top, ys[i] - overflow);
       // …then push down AGAIN. That per-block clamp at `top` is applied blindly, so it silently

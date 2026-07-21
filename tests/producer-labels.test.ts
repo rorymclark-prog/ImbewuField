@@ -142,6 +142,16 @@ test('producerLabels keeps every pill inside the output frame', () => {
   );
 });
 
+test('left-column labels stay clear of the deterministic scale bar', () => {
+  const out = labels();
+  const scaleSafeTop = H - Math.max(110, Math.round(H * 0.11));
+  const intruding = out
+    .filter((label) => label.ax < W / 2)
+    .filter((label) => pillRect(label).bottom > scaleSafeTop)
+    .map((label) => label.text);
+  assert.deepEqual(intruding, [], `labels inside the scale-bar reserve: ${intruding.join(', ')}`);
+});
+
 test('producerLabels never renders the same text twice on the same side', () => {
   const out = labels();
   const bySide = new Map<string, number>();
