@@ -20,6 +20,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector analysis now shows driveway access as its own energy, when a driveway is traced',
+      'Stacked terraces each get their own fall arrow, not just one for the whole hillside',
+      'You can now duplicate a placed, sized element instead of re-placing it from scratch',
+      'Drawn lines (swales and the rest) can finally be named and labelled on the canvas',
+      'A placed element no longer gets stuck locked the moment you place it, on some steps',
       'AI Sector: the data-strip and sources line stay readable, not just the title',
       'Placing a terrace now tells you the right method for your slope, and when to ask an expert',
       'Sector analysis shows real sun arcs, named winds and a fuller numbered legend',

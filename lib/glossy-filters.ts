@@ -207,6 +207,18 @@ export function ownedByCurrentStep(
       // elements locked the instant they were placed, in the very step that placed them
       // (adversarial review, 2026-07-21). CATEGORY_STEP is the "which step placed/edits this"
       // answer, shared with DesignPalette.tsx's categoriesForStep so the two can't drift apart.
-      return CATEGORY_STEP[subject.category as ElementCategory] === step;
+      if (CATEGORY_STEP[subject.category as ElementCategory] === step) return true;
+      // The SAME bug, one layer deeper: a def can ALSO be offered from a second step via
+      // alsoSteps (DesignPalette.tsx's stepCatalog honours it when building the palette — a
+      // Banana Circle is category 'earthworks' [owner: water] but alsoSteps: ['planting'], "it
+      // is a crop as much as a pit"). Without this check, placing one from the Planting step
+      // locked it the instant it was placed, in the very step that placed it — a farmer had a
+      // few-second window to hit Delete before it became a dimmed, untouchable ghost until they
+      // switched to Water (adversarial review of commit c590ac1 caught this live in production).
+      if (subject.defId) {
+        const def = ELEMENTS_BY_ID[subject.defId];
+        if (def?.alsoSteps?.includes(step as 'water' | 'planting' | 'structures')) return true;
+      }
+      return false;
   }
 }

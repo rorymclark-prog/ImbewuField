@@ -23,6 +23,7 @@
 
 import { deriveSolar, type SolarModel } from '@/lib/solar';
 import { resolveRegion, type NamedWindSector, type Provenance } from '@/lib/regional-wind';
+import { aspectLabel } from '@/lib/biome';
 
 export type { Provenance } from '@/lib/regional-wind';
 export type { NamedWindSector, NamedWindId, RegionalFireSector } from '@/lib/regional-wind';
@@ -85,9 +86,50 @@ export interface SectorModel {
     sampleBaselineM: 1000; // literal — elevation.ts's ~1km sample offset (d = 0.01°)
   } | null;
   frost: { downhillBearingDeg: number; indicative: boolean; confidence: 'inferred-from-1km-aspect' } | null; // only when minTemp < 5 && slope usable
+
+  // Driveway-access energy (SECTOR-MODEL-SPEC deferred item, finished 2026-07-21): dust & noise
+  // arriving from vehicle access, bearing FROM the house/site centroid TOWARD the driveway's own
+  // centroid — same "the label is where it comes FROM" convention as wind (bearingToUnitVector's
+  // docblock), not a to-direction. UNLIKE namedWind/fire this has a REAL geometric data source —
+  // the farmer's own traced driveway (refLayers.driveway) — so it is PROVENANCE: computed, never
+  // gated on region, and it is not populated by this function (a pure site-only function with no
+  // canvas/frame geometry — same reason contourIntervalM isn't computed here either, see `water`
+  // above). Callers with real geometry pass it via `deriveDrivewayAccess` and merge it in; null
+  // here is the correct default for every call site that has no geometry (SectorSummary,
+  // DesignCanvas's live model), not a bug.
+  driveway: { bearingDeg: number; fromLabel: string; halfWidthDeg: number; provenance: Provenance } | null;
   flat: boolean; // slopeDeg < 1.5 (matches lib/contours tooFlat) → no contour lines
   dataNotes: string[]; // honest caveats, strongest first
   assumptionNotes: string[]; // regional-assumption disclosures, printed verbatim in the sheet's footer band
+}
+
+/** Driveway-access bearing — pure geometry, no site/climate data, so it lives outside
+ *  deriveSectorModel (which has no canvas/frame geometry to work with; see the `driveway` field
+ *  comment above). Normalised [0,1] coordinates, x east+, y south+ — the same convention every
+ *  ZoneShape/line point uses (lib/design-canvas.ts) and the same one DesignGlossy.tsx's own
+ *  compass8/compassEighth helpers already compute bearings in, so this isn't a new coordinate
+ *  convention for the codebase, just the first time sector.ts itself needs one.
+ *  Returns null when there's no driveway to point at, or when its centroid degenerately
+ *  coincides with the site centroid (can't derive a direction from a zero-length vector) — never
+ *  a fabricated bearing. */
+export function deriveDrivewayAccess(
+  siteCentroid: [number, number],
+  drivewayPoints: Array<[number, number]>,
+): SectorModel['driveway'] {
+  if (drivewayPoints.length < 2) return null; // matches the sheet's own "no row for untraced geometry" gate
+  const n = drivewayPoints.length;
+  const dcx = drivewayPoints.reduce((s, p) => s + p[0], 0) / n;
+  const dcy = drivewayPoints.reduce((s, p) => s + p[1], 0) / n;
+  const dx = dcx - siteCentroid[0];
+  const dy = dcy - siteCentroid[1];
+  if (Math.hypot(dx, dy) < 1e-6) return null; // degenerate — driveway centroid coincides with the site centroid
+  // Inverse of bearingToUnitVector: that maps bearingDeg -> [sin(b), -cos(b)]; this recovers b
+  // from a [dx, dy] vector the same way DesignGlossy.tsx's compass8/compassEighth already do.
+  const bearingDeg = ((Math.atan2(dx, -dy) * 180) / Math.PI + 360) % 360;
+  // halfWidthDeg is drafting-only (this sector is drawn as a single solid arrow, not a wedge — see
+  // DesignGlossy.tsx's driveway-access draw call) but kept on the type for shape-parity with
+  // namedWind/fire in case a future caller wants to shade an uncertainty cone around it.
+  return { bearingDeg, fromLabel: aspectLabel(bearingDeg), halfWidthDeg: 16, provenance: 'computed' };
 }
 
 // 16-point compass label → bearing (deg clockwise from North). NASA POWER can return 16-point labels.
@@ -130,6 +172,12 @@ export function deriveSectorModel(
   site: SectorSite | null | undefined,
   latDeg: number,
   lonDeg?: number | null,
+  // Real on-canvas geometry for the driveway-access energy (see the `driveway` field comment
+  // above for why this can't be derived from `site` alone). Optional and separate from
+  // `SectorSite` because most call sites (SectorSummary's plain-words card, DesignCanvas's live
+  // model) have no canvas frame at all — omitting it just means `driveway` comes back null,
+  // exactly like any other model field with no source data.
+  drivewayGeometry?: { siteCentroid: [number, number]; drivewayPoints: Array<[number, number]> } | null,
 ): SectorModel {
   const sh = latDeg < 0;
   const notes: string[] = [];
@@ -222,6 +270,10 @@ export function deriveSectorModel(
   if (indicative) notes.push('Slope estimated from SRTM elevation sampled about 1 km apart — one average fall for the whole hillside, not your plot.');
   else if (flat && elev) notes.push('Site reads ~flat at this ~1 km sampling resolution — confirm fall on site.');
 
+  const driveway = drivewayGeometry
+    ? deriveDrivewayAccess(drivewayGeometry.siteCentroid, drivewayGeometry.drivewayPoints)
+    : null;
+
   return {
     southernHemisphere: sh,
     solar,
@@ -234,6 +286,7 @@ export function deriveSectorModel(
     fire,
     water,
     frost,
+    driveway,
     flat,
     dataNotes: notes,
     assumptionNotes,

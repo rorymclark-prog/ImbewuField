@@ -3895,12 +3895,28 @@ function drawSectorAnalysis(
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
-  const model = deriveSectorModel(site, frame.centerLat, frame.centerLng);
+  // Driveway-access geometry (SECTOR-MODEL-SPEC deferred item). Deliberately the SAME centroid
+  // priority as cx/cy below (boundary first, frame-centre fallback) — NOT the house centroid.
+  // An earlier draft preferred the house centroid ("the house/site centroid" per the spec's own
+  // wording), which is defensible in isolation but disagreed with where the arrow is actually
+  // drawn FROM: every other energy on this ring (sun, wind, fire) radiates from cx/cy, the
+  // boundary centroid, so a house sitting off-centre in the plot produced a computed bearing
+  // that didn't match the arrow's own visual origin (adversarial review — real, if minor, since
+  // this is a symbolic compass ring, not a to-scale site plan; fixed for internal consistency
+  // rather than left as a known skew).
+  const bnd = refLayers.boundary;
+  const siteCentroidNorm: [number, number] =
+    bnd.length >= 3 ? centroidOf(bnd)
+    : refLayers.house.length >= 3 ? centroidOf(refLayers.house)
+    : [0.5, 0.5];
+  const model = deriveSectorModel(
+    site, frame.centerLat, frame.centerLng,
+    refLayers.driveway.length >= 2 ? { siteCentroid: siteCentroidNorm, drivewayPoints: refLayers.driveway } : null,
+  );
   const isSH = model.southernHemisphere;
 
   // 3. Ring geometry — centre = boundary centroid (fallback frame centre); radius clamped so arrows
   //    + labels stay inside the frame and clear the top-right legend and top-left title.
-  const bnd = refLayers.boundary;
   let cx = W / 2, cy = H / 2, siteR = Math.min(W, H) * 0.22;
   if (bnd.length >= 3) {
     let minX = 1, minY = 1, maxX = 0, maxY = 0, sx = 0, sy = 0;
@@ -4116,6 +4132,21 @@ function drawSectorAnalysis(
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
   }
 
+  // 6b. DRIVEWAY ACCESS — dust & noise arriving from vehicle access (SECTOR-MODEL-SPEC deferred
+  // item, finished 2026-07-21). UNLIKE the regional wedges above, this has a REAL geometric data
+  // source — the farmer's own traced driveway — so it is PROVENANCE: computed, not
+  // regional-assumption: no region gate, no ᴬ, and drawn SOLID rather than dashed, per §4
+  // mechanism 1 ("computed geometry is solid, regional assumptions are dashed") — dashing this
+  // would falsely read as a regional guess. The reference benchmark's own row 8 ("Driveway
+  // access, dust & noise — NW") carries a solid grey arrow icon, which agrees with that reading.
+  // Grey/neutral so it never gets mistaken for one of the wind-palette energies above.
+  const DRIVEWAY_COLOR = '#9AA3AC', DRIVEWAY_LBL = '#C7CDD3';
+  if (model.driveway) {
+    const v = bearingToUnitVector(model.driveway.bearingDeg);
+    drawArrow(v, DRIVEWAY_COLOR, windWidth(), []);
+    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
+  }
+
   // 7. TERRACE FALL (water) — downslope arrow through the centre + on-contour lines (dashed =
   // indicative / omitted when flat). This is a single-plane-fit MODEL, not a survey (fallModel:
   // 'uniform-plane') — SECTOR-MODEL-SPEC §5 explicitly forbids fanning multiple runoff arrows from
@@ -4197,21 +4228,34 @@ function drawSectorAnalysis(
   // (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4b).
   let terraceFallDrawn = false;
   if (state) {
-    const terraces = state.zones.filter((z) => z.feature && z.levelM != null && z.points.length >= 3);
-    // Pair every ring with every OTHER ring at a strictly lower level, biggest-drop pairs first,
-    // and only draw the strongest pair per ring so two platforms never grow a web of redundant
-    // arrows (a farmer with 3 stacked benches gets 1 arrow per adjacent pair, not a fan of them).
+    // MUST be 'terrace_bank' only, not "any leveled ground feature". The spec's own documented
+    // workflow (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §3) has a farmer trace the HOUSE and
+    // set levelM: 0.0 as the site's reference datum, then trace terrace_bank rings below it —
+    // exactly the kind of leveled-but-not-a-terrace ring this filter used to also match. With the
+    // sequential-pairing fix just above, that stopped being harmless: sorting every leveled
+    // feature by level and pairing strict neighbours spliced the house straight into the terrace
+    // chain as its own "bench", drawing a false TERRACE FALL arrow running from the house to the
+    // first real terrace (adversarial review — caught before this shipped, not after).
+    const terraces = state.zones.filter((z) => z.feature === 'terrace_bank' && z.levelM != null && z.points.length >= 3);
+    // SECTOR-MODEL-SPEC §5: parallel downhill arrows across stacked terrace benches, ONE PER
+    // ADJACENT PAIR — never the overall top-to-bottom drop. The previous "biggest-drop-first,
+    // claim both rings" greedy pass got this wrong for exactly 3 stacked benches: with levels
+    // top/middle/bottom, the top→bottom pair has the single biggest drop, so it was claimed
+    // first and both its rings marked used — leaving the middle bench with no arrow on either
+    // side and its own grade silently averaged away into the top→bottom figure (a real defect;
+    // see this function's header comment). Sorting by LEVEL and pairing each bench with only its
+    // immediate next-lower neighbour fixes this by construction: a middle bench is adjacent to
+    // both the bench above and the one below, so it gets an arrow to each — N stacked benches
+    // produce N-1 arrows, every one of them a real adjacent-pair drop, never an average.
+    const sorted = [...terraces].sort((a, b) => b.levelM! - a.levelM!);
     const pairs: Array<{ upper: ZoneShape; lower: ZoneShape; dropM: number }> = [];
-    for (const upper of terraces) {
-      for (const lower of terraces) {
-        if (upper.id === lower.id || upper.levelM! <= lower.levelM!) continue;
-        pairs.push({ upper, lower, dropM: upper.levelM! - lower.levelM! });
-      }
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const upper = sorted[i], lower = sorted[i + 1];
+      const dropM = upper.levelM! - lower.levelM!;
+      if (dropM <= 0) continue; // tied levels — no fall between this pair, nothing to annotate
+      pairs.push({ upper, lower, dropM });
     }
-    pairs.sort((a, b) => b.dropM - a.dropM);
-    const claimedRingId = new Set<string>();
     for (const { upper, lower, dropM } of pairs) {
-      if (claimedRingId.has(upper.id) || claimedRingId.has(lower.id)) continue;
       const [ux, uy] = centroidOf(upper.points);
       const [lx, ly] = centroidOf(lower.points);
       const uxp = px(ux), uyp = py(uy), lxp = px(lx), lyp = py(ly);
@@ -4247,8 +4291,6 @@ function drawSectorAnalysis(
         `TERRACE FALL (FROM YOUR ENTERED LEVELS) — ${dropM.toFixed(1)} m OVER ${runM.toFixed(0)} m (${gradePct}%)`,
         '#8FC4E8',
       );
-      claimedRingId.add(upper.id);
-      claimedRingId.add(lower.id);
       terraceFallDrawn = true;
     }
   }
@@ -4363,6 +4405,10 @@ function drawSectorAnalysis(
   if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: nextIcon('🌧️') });
   if (bergWind) rows.push({ color: BERG_COLOR, label: `Berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: nextIcon('💨') });
   if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: nextIcon('🔥') });
+  // No ᴬ — computed from the traced driveway, not a regional assumption (see the draw-call
+  // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
+  // computed geometry.
+  if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: nextIcon('🚗') });
   if (model.water) rows.push({ color: '#3A8EC4', label: `Terrace fall ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: nextIcon('⬇️') });
   if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
@@ -4478,11 +4524,12 @@ async function composeSectorSheet(
   // clipped when the legend draws on top a moment later (drawBlueprintLegendFrame: lgW = W*0.27,
   // lgX = W - pad - lgW, lgY = pad — fixed regardless of row count; only the HEIGHT is row-count
   // dependent, and that isn't known until drawSectorAnalysis runs below). Sized for the legend's
-  // worst case — 9 rows once Part B lands, plus a 4-line note — rather than today's actual count,
-  // so this reservation doesn't need revisiting every time a row is added.
+  // worst case — up to 12 numbered rows (sun x3, named wind x3, fire, driveway, terrace fall
+  // x2, frost) plus the unnumbered boundary row and a multi-line footer note — rather than
+  // today's actual count, so this reservation doesn't need revisiting every time a row is added.
   const legendReserve = {
     x0: W - pad - Math.round(W * 0.27), y0: 0,
-    x1: W, y1: pad + Math.round(rowH * 13),
+    x1: W, y1: pad + Math.round(rowH * 14),
   };
   drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H, legendReserve));
 
@@ -5075,7 +5122,7 @@ interface SavedGlossy {
 //        wind sectors (summer-cooling/cold-front/berg), fire re-derived from berg not winter wind,
 //        numbered "SECTOR LEGEND" with icons + regional-assumption footer. A cached sheet 02 from
 //        before this change is the old 6-row legend with the old wrong content — must not be served.
-const PLAN_VERSION = 'v16';
+const PLAN_VERSION = 'v17';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
