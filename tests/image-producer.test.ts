@@ -258,20 +258,39 @@ test('buildShowcasePrompt includes the title, labels and panel instructions', ()
 // generic potted plant and greywater entirely absent, because this function's own vocabulary had
 // never had entries added for them at all, ever, on any style. Locking that in here so a future
 // element-vocabulary fix to OVERLAY_ICONS can't again land in only one of the two functions.
-test('the water sheet marker glossary names integrated basins and greywater — not just OVERLAY_ICONS', () => {
+test('the water sheet marker glossary describes only saved integrated features', () => {
   const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3)', 'Carl and Sandys Home', 'water');
   assert.match(prompt, /tree basin/i);
   assert.match(prompt, /banana circle/i);
-  assert.match(prompt, /greywater/i);
   // The earthwork-not-plant invariant, ported from OVERLAY_ICONS' own fixed language.
   assert.match(prompt, /carries NO plant of its own/);
   assert.match(prompt, /SUNKEN pit/);
-  assert.match(prompt, /compact block of upright blue-green vetiver tussocks/);
-  assert.match(prompt, /never a band running along the boundary/);
+  assert.doesNotMatch(prompt, /compact block of upright blue-green vetiver tussocks/);
+  assert.doesNotMatch(prompt, /violet dashed line is a greywater line/);
+  assert.doesNotMatch(prompt, /dark-blue line is a buried water-pipe route/);
   // The driveway colour must match what drawMarks actually paints (TAR, near-black) — not the
-  // stale "grey strip" wording that described the pre-fix composite.
-  assert.doesNotMatch(prompt, /grey strip/i);
-  assert.match(prompt, /near-black tarred strip/i);
+  // stale "grey strip" wording that described the pre-fix composite. It is included only when
+  // the saved feature list includes the driveway.
+  const withDriveway = buildShowcasePrompt('Water', 'precision_atlas', 'Tarred driveway', 'Carl and Sandys Home', 'water');
+  assert.doesNotMatch(withDriveway, /grey strip/i);
+  assert.match(withDriveway, /near-black tarred strip/i);
+});
+
+test('Reference Blueprint never briefs an absent Water route or empty subsystem', () => {
+  const tanksOnly = buildShowcasePrompt('Water', 'precision_atlas', 'JoJo Tank 5000L ×2', 'Carl and Sandys Home', 'water');
+  assert.match(tanksOnly, /RAINWATER/);
+  assert.doesNotMatch(tanksOnly, /IRRIGATION/);
+  assert.doesNotMatch(tanksOnly, /FILTERED GREYWATER/);
+  assert.doesNotMatch(tanksOnly, /dark-blue line is a buried water-pipe route/);
+  assert.doesNotMatch(tanksOnly, /violet dashed line is a greywater line/);
+
+  const routed = buildShowcasePrompt('Water', 'precision_atlas', 'Buried pipe, Greywater line, Drip irrigation line ×3', 'Carl and Sandys Home', 'water');
+  assert.match(routed, /IRRIGATION/);
+  assert.match(routed, /FILTERED GREYWATER/);
+  assert.match(routed, /dark-blue line is a buried water-pipe route/);
+  assert.match(routed, /violet dashed line is a greywater line/);
+  assert.match(routed, /green dashed line is a drip-irrigation line/);
+  assert.match(routed, /If a feature is absent from the list, it must be absent/);
 });
 
 test('Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary', () => {

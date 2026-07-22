@@ -6216,7 +6216,8 @@ interface SavedGlossy {
 //   v27 — 2026-07-22: realistic vetiver and tree texture plus dedicated catalogue symbols.
 //   v28 — 2026-07-22: Vetiver Bank is curated to Planting and Whole, not Water.
 //   v29 — 2026-07-22: Water routes use real pipe, emitter and greywater visual grammar.
-const PLAN_VERSION = 'v29';
+//   v30 — 2026-07-22: AI marker vocabulary is derived only from saved sheet content.
+const PLAN_VERSION = 'v30';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

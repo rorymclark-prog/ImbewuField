@@ -355,13 +355,45 @@ const M = {
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
 } as const;
 
-const LEGEND_BY_SHEET: Record<ShowcaseSheetKind, string> = {
-  all: [M.bed, M.tree, M.windbreak, M.tank, M.dam, M.swale, M.pipe, M.drip, M.building, M.hive, M.patio, M.fence, M.path, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank, M.greywater_basin, M.greywater_line, M.zones].join('; '),
-  zones: [M.zones, M.driveway].join('; '),
-  water: [M.tank, M.dam, M.swale, M.pipe, M.drip, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank, M.greywater_basin, M.greywater_line].join('; '),
-  planting: [M.bed, M.tree, M.windbreak, M.driveway, M.tree_basin, M.banana_circle, M.mulch_bank].join('; '),
-  structures: [M.building, M.hive, M.patio, M.fence, M.path, M.driveway].join('; '),
+type ShowcaseMarkerKey = keyof typeof M;
+
+const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
+  all: ['bed', 'tree', 'windbreak', 'tank', 'dam', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'zones'],
+  zones: ['zones', 'driveway'],
+  water: ['tank', 'dam', 'swale', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line'],
+  planting: ['bed', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
+  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway'],
 };
+
+const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
+  bed: /bed|vegetable garden|veg garden/i,
+  tree: /\btree\b|orchard|fruit/i,
+  windbreak: /windbreak|hedge/i,
+  tank: /tank|jojo|rain barrel/i,
+  dam: /\bdam\b|\bpond\b/i,
+  swale: /swale/i,
+  pipe: /\bpipe\b/i,
+  drip: /drip|irrigation line/i,
+  building: /\bbuilding\b|\bhouse\b|\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  hive: /hive/i,
+  patio: /patio|paving|courtyard/i,
+  fence: /fence/i,
+  path: /path|walkway/i,
+  driveway: /driveway|access track/i,
+  tree_basin: /tree basin/i,
+  banana_circle: /banana circle/i,
+  mulch_bank: /mulch bank|vetiver bank/i,
+  greywater_basin: /greywater basin|infiltration basin/i,
+  greywater_line: /greywater line/i,
+  zones: /\bzone\s*[0-5]\b|permaculture zone/i,
+};
+
+function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
+  return SHOWCASE_MARKERS_BY_SHEET[sheetKind]
+    .filter((key) => SHOWCASE_MARKER_MATCH[key].test(elementsText))
+    .map((key) => M[key])
+    .join('; ');
+}
 
 export function buildShowcasePrompt(
   layerLabel: string | undefined,
@@ -375,10 +407,16 @@ export function buildShowcasePrompt(
     ? `SHEET FOCUS: this sheet shows one layer of the plan. The named features are the stars, while the rest of the plot stays a quiet softly painted base of lawn, veld and existing buildings in the same style.`
     : `SHEET FOCUS: this is the full plan sheet, so all named features are shown together and the whole site reads as one coherent illustrated map.`;
   const labels = `${elementsText}${placeName ? '; ' + placeName : ''}`;
+  const markerGlossary = showcaseMarkerGlossary(sheetKind, elementsText);
   const noInvent =
-    `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
+    `NO INVENT: the feature list below is complete. Do not add any road, roof, tree, bed, pond, path, pipe, irrigation run, greywater run, label, shadow or other feature that is not already marked or visible in the source image. If a feature is absent from the list, it must be absent from the artwork and legend.`;
+  const waterSections = [
+    /tank|jojo|rain barrel/i.test(elementsText) ? 'RAINWATER' : '',
+    /\bpipe\b|drip|irrigation|tap|borehole|\bpond\b|\bdam\b|swale/i.test(elementsText) ? 'IRRIGATION' : '',
+    /greywater/i.test(elementsText) ? 'FILTERED GREYWATER' : '',
+  ].filter(Boolean);
   const waterRule = sheetKind === 'water'
-    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes, drip lines, tree basins, banana circles, vetiver banks and greywater lines that are already marked or visible; do not invent extra water systems or extra water-related landforms. A tree basin, banana circle or vetiver bank is real content on this sheet — draw each exactly as the marker glossary below describes, never as a generic potted plant or a boundary hedge.`
+    ? `WATER SHEET: make only the saved water features the hero. The complete allowed contents are exactly: ${elementsText}. ${waterSections.length ? `Use grouped legend sections only for ${waterSections.join(', ')} and NOTES; omit every empty section.` : 'Do not create any water-system legend section.'} Never add a connection, branch, fitting, valve, pump, filter, outlet, basin, pipe or route that is not explicitly marked.`
     : '';
   const markerCleanup =
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
@@ -392,7 +430,7 @@ export function buildShowcasePrompt(
     `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like the direct-ChatGPT plan sheets.`,
     noInvent,
     waterRule,
-    `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count: ${LEGEND_BY_SHEET[sheetKind]}. This sheet's features are: ${elementsText}. Ground with no marker stays open lawn or veld, unchanged.`,
+    `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count. Marker glossary for this sheet only: ${markerGlossary || 'no additional marker types'}. This sheet's complete feature list is: ${elementsText}. Ground with no marker stays open lawn or veld, unchanged.`,
     markerCleanup,
     `LABELS AND PANELS: in the corner with the least map content, place a clean paper title block reading "${title}" as the largest lettering on the sheet, a tidy legend for the feature types, and a small north arrow. Label up to six important features in small elegant lettering beside them, using exactly these spellings: ${labels}. These are the only words anywhere on the sheet, all horizontal and print-legible.`,
     singleLayer,

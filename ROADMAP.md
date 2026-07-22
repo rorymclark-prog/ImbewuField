@@ -2,7 +2,7 @@
 
 _Single source of truth for what's done, what's not, and what's decided. Updated by Claude as things move. Live app: **imbewufield.vercel.app** (deploys on push to `main`). Restore point: **`git checkout baseline-pre-merge-20260715`**._
 
-_Last updated: 2026-07-15_
+_Last updated: 2026-07-22_
 
 ---
 
@@ -52,6 +52,7 @@ _Last updated: 2026-07-15_
 - Send data-request emails to ARC-ISCW / KZN DARD (only needed before public/commercial launch)
 
 ## 💡 CAPTURED IDEAS (not started)
+- **Deep Design Studio element + map-flow audit (later session):** review every catalogue element's editor step, layer toggle, exact-sheet membership, AI-sheet vocabulary, label and legend; check the full Base → Sector → Water → Zones → Planting → Structures → Review → Glossy flow; make placement locations obvious (for example Gate under Structures); and add an element × step × map test matrix so ownership cannot drift. Include a pre-render Water completeness check that asks about source, storage, treatment, main route, delivery and destination without inventing any missing part.
 - **📋 Dataset opportunities menu → [docs/DATA-SOURCES.md](docs/DATA-SOURCES.md)** (researched 2026-07-15). Top of the list: **Open-Meteo forecast+ET0** (closes the backward-looking gap, global), **KZN Farm Portions** (auto-load legal boundary, companion to BRU), **ESA WorldCover / FAO Crop Calendar / NASA FIRMS** (clean quick wins). License traps to avoid: WorldClim-NC, FAO GAEZ-NC, iNaturalist (bars commercial AI). **Awaiting your pick at review.**
 - **Hybrid AI auto-suggest** (AI reasons over slope/aspect/sun/vision the app already has → code makes clean zone geometry). The real fix for the "concentric circles" problem.
 - Weather + 7-day forecast + frost/hail/heat warnings (new: Open-Meteo)
