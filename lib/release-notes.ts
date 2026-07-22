@@ -20,6 +20,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Water and infrastructure now use clear illustrated plan symbols',
+      'Water maps now name and draw the old Mulch Bank correctly as Vetiver Bank',
+      'Planting and Whole use fewer callouts; their legends still list everything',
+      'Sector energies are decluttered and fully explained in the numbered legend',
+      'The driveway is quieter and the full Phasing schedule now fits its cream panel',
       'Sector analysis now shows driveway access as its own energy, when a driveway is traced',
       'Stacked terraces each get their own fall arrow, not just one for the whole hillside',
       'You can now duplicate a placed, sized element instead of re-placing it from scratch',

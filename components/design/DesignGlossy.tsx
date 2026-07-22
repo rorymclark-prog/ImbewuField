@@ -206,7 +206,10 @@ const BOUNDARY_BONE = '#EDE7D9';
  *  agree, and it cannot be confused with a slate roof at any exposure.
  *  Also collapses three colours that shipped simultaneously (#3B3A3E drawn, #2A2A2E legend swatch,
  *  #12140F stated) — an audit finding from docs/LAYER-AUDIT-2026-07-20.md. */
-export const TAR = '#12140F';
+// Existing access is context on every design sheet, not the visual subject. A near-black fill made
+// the driveway compete with water, planting and infrastructure, especially on the dark satellite
+// base. Keep it recognisably asphalt while letting the designed systems read first.
+export const TAR = '#454842';
 
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
@@ -1672,7 +1675,7 @@ function buildZoneOverlay(
     }
     ctx.fillStyle = `${def.color}3D`;
     ctx.fill('evenodd'); // outer + hole rings in one path → real holes
-    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.strokeStyle = 'rgba(32,25,15,0.42)';
     ctx.lineWidth = 7;
     ctx.stroke();
     ctx.strokeStyle = def.color;
@@ -1741,8 +1744,21 @@ function drawWaterFeature(
 ) {
   const cx = item.x * W;
   const cy = item.y * H;
-  const w = Math.max(3, (item.wM ?? def.wM) * pxPerM);
-  const h = Math.max(3, (item.hM ?? def.hM) * pxPerM);
+  const naturalW = Math.max(3, (item.wM ?? def.wM) * pxPerM);
+  const naturalH = Math.max(3, (item.hM ?? def.hM) * pxPerM);
+  // Taps, valves and boreholes are point symbols at this print scale. Drawing a literal 0.3 m
+  // footprint can leave a two-pixel speck that is technically exact but operationally invisible.
+  // Cartographic point symbols may be exaggerated while their measured centre remains exact.
+  const pointSymbol = def.shape === 'circle' || [
+    'tap_point', 'borehole', 'first_flush', 'pump_filter', 'greywater_diverter',
+    'greywater_outlet', 'water_trough', 'water_trough2',
+  ].includes(def.id);
+  const minPoint = Math.max(10, W * 0.0065);
+  const pointScale = pointSymbol && Math.min(naturalW, naturalH) < minPoint
+    ? minPoint / Math.min(naturalW, naturalH)
+    : 1;
+  const w = naturalW * pointScale;
+  const h = naturalH * pointScale;
   const radius = Math.min(w, h) / 2;
   const id = def.id;
   const outline = Math.max(1.8, W * 0.00115);
@@ -2172,11 +2188,11 @@ async function buildDrivewayOverlay(
     if (sourceImage) {
       const img = await loadImage(sourceImage);
       ctx.filter = precision
-        ? 'saturate(0.28) contrast(0.82) brightness(0.84)'
-        : 'saturate(0.42) contrast(0.88) brightness(0.9)';
+        ? 'saturate(0.2) contrast(0.72) brightness(1.02)'
+        : 'saturate(0.32) contrast(0.82) brightness(0.98)';
       ctx.drawImage(img, 0, 0, W, H);
       ctx.filter = 'none';
-      ctx.fillStyle = precision ? 'rgba(52,56,51,0.2)' : 'rgba(45,49,44,0.16)';
+      ctx.fillStyle = precision ? 'rgba(154,150,136,0.16)' : 'rgba(122,122,112,0.12)';
       ctx.fillRect(0, 0, W, H);
     } else {
       const wash = ctx.createLinearGradient(0, 0, W, H);
@@ -2199,7 +2215,7 @@ async function buildDrivewayOverlay(
     }
     ctx.restore();
     traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
-    ctx.strokeStyle = 'rgba(45,48,43,0.52)';
+    ctx.strokeStyle = 'rgba(225,216,192,0.34)';
     ctx.lineWidth = Math.max(1.2, W * 0.00072);
     ctx.stroke();
   } else {
@@ -2858,7 +2874,50 @@ function referenceBlueprintLabels(
     zones: filter === 'all' ? state.zones.filter((zone) => Boolean(zone.feature)) : state.zones,
   };
   const labels = producerLabels(canonicalState, refLayers, W, H, filter, false);
-  if (filter !== 'all') return labels;
+
+  // The legend is the exhaustive inventory. Map callouts are the editorial reading layer: one
+  // leader per meaningful system, never the old margin directory where silent member rows formed
+  // a long list disconnected from the artwork. This is also how the supplied benchmark sheets
+  // stay readable while still naming every species and component in their legends.
+  const rebalance = (input: ProducerLabel[], limit: number): ProducerLabel[] => {
+    const leaders = input.filter((label) => label.leader !== false).slice(0, limit);
+    const gap = Math.max(48, Math.round(W * 0.031));
+    const top = Math.round(H * 0.11);
+    const bottom = Math.round(H * 0.84);
+    const out: ProducerLabel[] = [];
+    for (const side of ['left', 'right'] as const) {
+      const column = leaders
+        .filter((label) => (label.cx < W / 2 ? 'left' : 'right') === side)
+        .sort((a, b) => a.cy - b.cy);
+      if (!column.length) continue;
+      const positions = column.map((label) => Math.max(top, Math.min(bottom, label.cy)));
+      for (let i = 1; i < positions.length; i++) positions[i] = Math.max(positions[i], positions[i - 1] + gap);
+      const overflow = positions[positions.length - 1] - bottom;
+      if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
+      if (positions[0] < top) {
+        positions[0] = top;
+        for (let i = 1; i < positions.length; i++) positions[i] = positions[i - 1] + gap;
+      }
+      column.forEach((label, index) => out.push({ ...label, ay: positions[index] }));
+    }
+    return out;
+  };
+
+  if (filter === 'planting') {
+    // Group headers carry the representative leader. Their member species remain exhaustive in the
+    // illustrated legend, avoiding the 12-row left/right label ladders seen in the first v23 QA.
+    const ranked = labels
+      .filter((label) => label.leader !== false)
+      .sort((a, b) => {
+        const rank = (label: ProducerLabel) => label.kind === 'header' ? 0
+          : /BEDS|CROPS|TREE|ORCHARD|BANANA|VETIVER|POLLINATOR/.test(label.text) ? 1
+            : /DRIVEWAY/.test(label.text) ? 3 : 2;
+        return rank(a) - rank(b) || a.cy - b.cy;
+      });
+    return rebalance(ranked, 10);
+  }
+  if (filter === 'structures') return rebalance(labels, 10);
+  if (filter !== 'all') return rebalance(labels, 10);
 
   // Whole-farm sheets use a curated callout layer. The detailed layer sheets and deterministic
   // legend retain every name/count, while the masterplan calls out only the principal systems.
@@ -2866,7 +2925,7 @@ function referenceBlueprintLabels(
     /TANK|RAIN BARREL/, /GREYWATER|POND|BOREHOLE/, /BED|CROP/, /TREE|ORCHARD/,
     /VETIVER|POLLINATOR|WINDBREAK/, /COMPOST|NURSERY/, /CHICKEN|BEEHIVE|LIVESTOCK/,
   ];
-  return labels
+  const curated = labels
     .filter((label) => label.leader !== false && !/DRIVEWAY|ZONE\s+[0-5]/.test(label.text))
     .map((label, index) => ({
       label,
@@ -2878,9 +2937,10 @@ function referenceBlueprintLabels(
       const br = b.rank < 0 ? priority.length : b.rank;
       return ar - br || a.index - b.index;
     })
-    .slice(0, 10)
-    .sort((a, b) => a.label.ay - b.label.ay)
+    .slice(0, 9)
+    .sort((a, b) => a.label.cy - b.label.cy)
     .map(({ label }) => label);
+  return rebalance(curated, 9);
 }
 
 /** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
@@ -3612,8 +3672,18 @@ function drawTrueFootprint(
   }
 
   const color = speciesColor(def.id);
-  const wPx = Math.max(1, (it.wM ?? def.wM) * pxPerM);
-  const hPx = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+  const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
+  const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+  // Small infrastructure is represented as a conventional point symbol. Preserve its exact
+  // centre and rotation, but enforce a printable short side so a hive, tap table or chicken
+  // tractor does not collapse into an unreadable pixel beside a perfectly legible leader.
+  const isPointInfrastructure = def.category === 'structure' || def.category === 'animal' || def.category === 'access';
+  const minShort = Math.max(10, ctx.canvas.width * 0.0065);
+  const symbolScale = isPointInfrastructure && Math.min(naturalW, naturalH) < minShort
+    ? minShort / Math.min(naturalW, naturalH)
+    : 1;
+  const wPx = naturalW * symbolScale;
+  const hPx = naturalH * symbolScale;
   const cx = px(it.x), cy = py(it.y);
   const shortPx = Math.min(wPx, hPx);
   const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
@@ -4554,6 +4624,11 @@ function drawSectorAnalysis(
   // Each label now claims a box and later ones step DOWN until they clear it.
   const claimed: Array<{ x0: number; x1: number; y0: number; y1: number }> = [];
   const labelAt = (x: number, y: number, text: string, color: string) => {
+    // On the composed plan sheet the full wording already lives in a numbered, colour-matched
+    // external legend. Repeating every sentence around a small real-world plot caused the sun,
+    // wind, driveway, fall and frost labels to collide by construction. The exact legacy canvas
+    // retains its direct labels; the benchmark sheet uses the clean analysis marks plus legend.
+    if (externalLegend) return;
     ctx.save();
     ctx.font = `800 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
     ctx.textAlign = 'center';
@@ -5126,12 +5201,14 @@ async function composeSectorSheet(
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   ctx.restore();
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
-  drawSectorContextLabels(ctx, state, refLayers, W, H);
 
   const analysis = drawSectorAnalysis(
     ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM,
     baseImage !== null, state, true,
   );
+  // Site names sit above the analysis marks so a wind or fall arrow cannot erase HOUSE, DRIVEWAY
+  // or the terrace it crosses. Their wording is short and factual; energy details stay in legend.
+  drawSectorContextLabels(ctx, state, refLayers, W, H);
   const legendRows: StyleLegendRow[] = analysis.rows.map((row) => ({
     swatch: row.color,
     text: `${row.icon ? `${row.icon} ` : ''}${row.label}`,
@@ -5297,8 +5374,8 @@ export async function buildImplementationMap(
     ctx.fillText(String(phase.n), cx, cy);
   }
 
-  // 5. Title (top-left).
-  drawBlueprintTitle(ctx, W, pad, 'IMPLEMENTATION & PHASING', placeName ?? 'Build sequence & hold points');
+  // 5. The title moves into the shared right-hand sheet panel below. Keeping a second giant title
+  // over the map made sheet 08 the odd one out and consumed the clear northwest map space.
 
   // 6. Scale bar + north arrow. Scale bottom-left as on every sheet; north on a disc just left of
   //    the panel's foot (this sheet adds a north arrow the other Blueprints still lack).
@@ -5319,22 +5396,22 @@ export async function buildImplementationMap(
   const innerW = lgW - ip * 2;
   const panelBottom = lgBottom - ip;
 
-  ctx.fillStyle = 'rgba(10,16,22,0.86)';
+  ctx.fillStyle = 'rgba(251,246,236,0.97)';
   roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
   ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
   roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
   ctx.stroke();
 
-  const fsHeader = Math.round(W * 0.019);
-  const fsSection = Math.round(W * 0.0135);
-  const fsBody = Math.round(W * 0.0118);
-  const lineH = Math.round(fsBody * 1.42);
+  const fsHeader = Math.round(W * 0.0165);
+  const fsSection = Math.round(W * 0.0112);
+  const fsBody = Math.round(W * 0.0092);
+  const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
-  const headerFont = `800 ${fsHeader}px system-ui, sans-serif`;
+  const headerFont = `800 ${fsHeader}px Georgia, serif`;
   const sectionFont = `800 ${fsSection}px system-ui, sans-serif`;
-  const titleFont = `800 ${Math.round(W * 0.0135)}px system-ui, sans-serif`;
+  const titleFont = `800 ${Math.round(W * 0.0108)}px system-ui, sans-serif`;
   const bodyFont = `500 ${fsBody}px system-ui, sans-serif`;
   const weekFont = `600 ${fsBody}px system-ui, sans-serif`;
   const holdFont = `italic 600 ${fsBody}px system-ui, sans-serif`;
@@ -5360,6 +5437,7 @@ export async function buildImplementationMap(
   const bulletDotX = innerX + Math.round(fsBody * 0.2);
   const bulletTextX = innerX + Math.round(fsBody * 1.0);
   const bulletTextW = lgX + lgW - ip - bulletTextX;
+  const panelTitleLines = wrap('08 — IMPLEMENTATION MAP & PHASING', innerW, headerFont);
 
   // ── Measurement (so we can size the phase area and pick the bullet cap) ──────────────────────
   const phaseBlockH = (phase: (typeof plan.phases)[number], bulletCap: number): number => {
@@ -5370,7 +5448,7 @@ export async function buildImplementationMap(
     h += wrap(phase.holdPoint, bulletTextW, holdFont).length * lineH; // hold point
     return h + blockGap;
   };
-  const headerH = Math.round(fsHeader * 1.25) + lineH + Math.round(lineH * 0.6); // title + sub + divider
+  const headerH = panelTitleLines.length * Math.round(fsHeader * 1.08) + lineH * 2 + Math.round(lineH * 0.8);
   const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
   const criticalH = plan.criticalOrder.length
     ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
@@ -5401,18 +5479,24 @@ export async function buildImplementationMap(
   while (!fits() && maxRules > 1) maxRules--;
 
   // ── Render top-down (with a hard clip at the panel foot as a belt-and-braces guard) ──────────
-  let y = lgY + ip + Math.round(fsHeader * 0.9);
+  let y = lgY + ip + fsHeader;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#F3EEE2';
+  ctx.fillStyle = '#20190F';
   ctx.font = headerFont;
-  ctx.fillText('PHASING PLAN', innerX, y);
-  y += lineH;
-  ctx.fillStyle = '#9AA6AC';
+  for (const line of panelTitleLines) {
+    ctx.fillText(line, innerX, y);
+    y += Math.round(fsHeader * 1.08);
+  }
+  ctx.fillStyle = '#6B6355';
   ctx.font = `italic 500 ${fsBody}px system-ui, sans-serif`;
-  ctx.fillText('Built exactly from your design — no AI.', innerX, y);
-  y += Math.round(lineH * 0.5);
-  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.fillText('Reference Blueprint', innerX, y);
+  y += lineH;
+  ctx.fillStyle = '#8A8172';
+  ctx.font = `500 ${fsBody}px system-ui, sans-serif`;
+  ctx.fillText(placeName ?? 'Your design', innerX, y);
+  y += Math.round(lineH * 0.45);
+  ctx.strokeStyle = 'rgba(32,25,15,0.24)';
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(innerX, y);
@@ -5451,51 +5535,51 @@ export async function buildImplementationMap(
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.font = titleFont;
-    ctx.fillStyle = '#F3EEE2';
+    ctx.fillStyle = '#241E12';
     let ty = y;
     for (const ln of titleLines) { if (ty <= panelBottom) ctx.fillText(ln, titleX, ty); ty += lineH; }
     // Advance below BOTH the chip and the (possibly multi-line) title.
     const lastTitleBaseline = y + (titleLines.length - 1) * lineH;
     y = Math.max(lastTitleBaseline, chipTop + chipS) + Math.round(lineH * 0.35);
     // Week range.
-    drawLines([phase.weekRange], innerX, weekFont, '#C9D3D9');
+    drawLines([phase.weekRange], innerX, weekFont, '#6B6355');
     // Task bullets (capped).
     for (const t of phase.tasks.slice(0, bulletCap)) {
       if (y > panelBottom) break;
       const tl = wrap(t, bulletTextW, bodyFont);
-      ctx.fillStyle = '#8CEB6A';
+      ctx.fillStyle = '#3E7C42';
       ctx.font = bodyFont;
       ctx.fillText('•', bulletDotX, y);
-      drawLines(tl, bulletTextX, bodyFont, '#E4E9EC');
+      drawLines(tl, bulletTextX, bodyFont, '#3E3A31');
     }
     // Hold point — the gate — in warm gold so it reads as a stop, not a bullet.
     const hl = wrap(phase.holdPoint, bulletTextW, holdFont);
-    drawLines(hl, bulletTextX, holdFont, GOLD);
+    drawLines(hl, bulletTextX, holdFont, '#A56818');
     y += blockGap;
   }
 
   // CRITICAL ORDER — the Scale-of-Permanence sequence made concrete for this design.
   if (plan.criticalOrder.length && y < panelBottom) {
     ctx.font = sectionFont;
-    ctx.fillStyle = '#F7C97E';
+    ctx.fillStyle = '#7A4A12';
     ctx.fillText('CRITICAL ORDER', innerX, y);
     y += Math.round(fsSection * 1.3);
-    drawLines(coLines, innerX, bodyFont, '#E4E9EC');
+    drawLines(coLines, innerX, bodyFont, '#3E3A31');
     y += blockGap;
   }
 
   // SITE RULES — hard constraints derived from what is actually on the plan.
   if (plan.siteRules.length && y < panelBottom) {
     ctx.font = sectionFont;
-    ctx.fillStyle = '#F19E9E';
+    ctx.fillStyle = '#8A3434';
     ctx.fillText('SITE RULES', innerX, y);
     y += Math.round(fsSection * 1.3);
     for (const r of plan.siteRules.slice(0, maxRules)) {
       if (y > panelBottom) break;
-      ctx.fillStyle = '#F19E9E';
+      ctx.fillStyle = '#8A3434';
       ctx.font = bodyFont;
       ctx.fillText('!', bulletDotX, y);
-      drawLines(wrap(r, bulletTextW, bodyFont), bulletTextX, bodyFont, '#E4E9EC');
+      drawLines(wrap(r, bulletTextW, bodyFont), bulletTextX, bodyFont, '#3E3A31');
     }
   }
 
@@ -5974,7 +6058,9 @@ interface SavedGlossy {
 //   v22 — 2026-07-22: queued Reference Blueprint renders use the same direct label treatment.
 //   v23 — 2026-07-22: illustrated water/structure symbols are shared by map and legend; Site and
 //        Sector gain the benchmark panel; Whole is curated; Phasing carries the complete design.
-const PLAN_VERSION = 'v23';
+//   v24 — 2026-07-22: benchmark QA pass quiets access, enlarges small point symbols, removes label
+//        ladders, declutters Sector and fits Phasing into the shared cream editorial panel.
+const PLAN_VERSION = 'v24';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
