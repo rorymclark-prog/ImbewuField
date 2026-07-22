@@ -1712,6 +1712,33 @@ function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
 function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, W: number, H: number) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  const routeDots = (
+    points: Array<[number, number]>,
+    spacing: number,
+    radius: number,
+    fill: string,
+    stroke: string,
+  ) => {
+    for (let i = 1; i < points.length; i += 1) {
+      const [x0, y0] = points[i - 1];
+      const [x1, y1] = points[i];
+      const dx = (x1 - x0) * W;
+      const dy = (y1 - y0) * H;
+      const length = Math.hypot(dx, dy);
+      if (length < 1) continue;
+      const count = Math.max(1, Math.floor(length / spacing));
+      for (let n = 0; n <= count; n += 1) {
+        const t = (n + 0.5) / (count + 1);
+        ctx.beginPath();
+        ctx.arc(x0 * W + dx * t, y0 * H + dy * t, radius, 0, Math.PI * 2);
+        ctx.fillStyle = fill;
+        ctx.fill();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = Math.max(0.55, radius * 0.42);
+        ctx.stroke();
+      }
+    }
+  };
   for (const line of state.lines) {
     const style = waterRouteStyleFor(line.kind);
     if (!style || line.points.length < 2) continue;
@@ -1719,16 +1746,45 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       ctx.beginPath();
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
     };
+    if (line.kind === 'drip') {
+      // Drip laterals are narrow tubing with regularly spaced emitters, not broad white paths.
+      trace();
+      ctx.setLineDash([]);
+      ctx.strokeStyle = '#315B43';
+      ctx.lineWidth = Math.max(2.2, W * 0.00125);
+      ctx.stroke();
+      routeDots(line.points, Math.max(12, W * 0.006), Math.max(1.3, W * 0.00075), '#B7CF74', '#294F3A');
+      continue;
+    }
+    if (line.kind === 'greywater') {
+      // A filtered-greywater run stays visually distinct from clean-water pipework.
+      trace();
+      ctx.setLineDash([]);
+      ctx.strokeStyle = 'rgba(59,38,68,0.78)';
+      ctx.lineWidth = Math.max(5, W * 0.0024);
+      ctx.stroke();
+      trace();
+      ctx.setLineDash([Math.max(7, W * 0.004), Math.max(4, W * 0.0025)]);
+      ctx.strokeStyle = '#B28AC6';
+      ctx.lineWidth = Math.max(2.4, W * 0.00125);
+      ctx.stroke();
+      routeDots(line.points, Math.max(22, W * 0.011), Math.max(1.45, W * 0.0008), '#D7C5DF', '#6E4D7E');
+      ctx.setLineDash([]);
+      continue;
+    }
     trace();
     ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255,254,250,0.9)';
-    ctx.lineWidth = style.width + 4;
+    ctx.strokeStyle = line.kind === 'swale' ? 'rgba(88,72,47,0.72)' : 'rgba(242,237,216,0.72)';
+    ctx.lineWidth = style.width + (line.kind === 'swale' ? 4.5 : 2.5);
     ctx.stroke();
     trace();
     ctx.setLineDash(style.dash);
     ctx.strokeStyle = style.color;
     ctx.lineWidth = style.width;
     ctx.stroke();
+    if (line.kind === 'pipe') {
+      routeDots(line.points, Math.max(28, W * 0.014), Math.max(1.4, W * 0.0008), '#8DC0D1', '#214D68');
+    }
     ctx.setLineDash([]);
   }
 }
@@ -6158,7 +6214,9 @@ interface SavedGlossy {
 //   v25 — 2026-07-22: numbered Sector map markers now match the numbered external legend exactly.
 //   v26 — 2026-07-22: Sector numbers de-conflict and keep short leaders to shared bearings.
 //   v27 — 2026-07-22: realistic vetiver and tree texture plus dedicated catalogue symbols.
-const PLAN_VERSION = 'v27';
+//   v28 — 2026-07-22: Vetiver Bank is curated to Planting and Whole, not Water.
+//   v29 — 2026-07-22: Water routes use real pipe, emitter and greywater visual grammar.
+const PLAN_VERSION = 'v29';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

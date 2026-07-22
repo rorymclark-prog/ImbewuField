@@ -96,64 +96,114 @@ function tank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: numbe
   finish(ctx, '#234F5E', '#D9EAEB', Math.max(0.65, stroke * 0.55));
 }
 
-function basin(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number, water: boolean): void {
+type BasinKind = 'greywater-basin' | 'tree-basin' | 'infiltration-basin';
+
+function basin(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number, kind: BasinKind): void {
   const radius = Math.min(w, h) * 0.42;
   ellipse(ctx, 0, 0, radius, radius * 0.82);
   const earth = ctx.createRadialGradient(-radius * 0.18, -radius * 0.2, radius * 0.08, 0, 0, radius);
-  earth.addColorStop(0, water ? '#A7CFD1' : '#A9A56A');
-  earth.addColorStop(0.58, water ? '#6E9DA5' : '#697F45');
-  earth.addColorStop(1, water ? '#466D72' : '#4B5434');
+  earth.addColorStop(0, '#B4A16F');
+  earth.addColorStop(0.58, '#816D47');
+  earth.addColorStop(1, '#4C4631');
   ctx.fillStyle = earth;
   ctx.fill();
-  ctx.strokeStyle = '#405037';
+  ctx.strokeStyle = '#D0BD8E';
   ctx.lineWidth = stroke;
   ctx.stroke();
-  if (water) {
-    ellipse(ctx, 0, 0, radius * 0.68, radius * 0.48);
-    const pool = ctx.createLinearGradient(-radius, -radius, radius, radius);
-    pool.addColorStop(0, '#B9DEDF');
-    pool.addColorStop(0.55, '#6BA4AE');
-    pool.addColorStop(1, '#3E7F91');
-    ctx.fillStyle = pool;
-    ctx.fill();
-    ctx.strokeStyle = '#356978';
-    ctx.lineWidth = stroke * 0.7;
-    ctx.stroke();
-    for (const scale of [0.42, 0.7]) {
+
+  if (kind === 'tree-basin') {
+    // A tree basin is a mulch moat around a raised centre mound, never a tree in a wet dish.
+    ellipse(ctx, 0, 0, radius * 0.72, radius * 0.52);
+    finish(ctx, '#5B4A32', '#3D3528', Math.max(0.65, stroke * 0.58));
+    ellipse(ctx, 0, 0, radius * 0.39, radius * 0.31);
+    const mound = ctx.createRadialGradient(-radius * 0.1, -radius * 0.1, 1, 0, 0, radius * 0.4);
+    mound.addColorStop(0, '#A7A06A');
+    mound.addColorStop(1, '#657047');
+    finish(ctx, mound, '#C4B17F', Math.max(0.6, stroke * 0.52));
+    for (let i = 0; i < 14; i += 1) {
+      const angle = hash(seed, i) * TAU;
+      const distance = radius * (0.46 + hash(seed, 30 + i) * 0.16);
       ctx.beginPath();
-      ctx.ellipse(-radius * 0.08, radius * 0.02, radius * scale, radius * scale * 0.48, 0, Math.PI * 0.15, Math.PI * 0.82);
-      ctx.strokeStyle = 'rgba(224,244,238,0.62)';
-      ctx.lineWidth = Math.max(0.65, stroke * 0.42);
-      ctx.stroke();
+      ctx.arc(Math.cos(angle) * distance, Math.sin(angle) * distance * 0.72, Math.max(0.55, stroke * 0.34), 0, TAU);
+      ctx.fillStyle = i % 2 ? '#B39866' : '#78613E';
+      ctx.fill();
     }
     return;
   }
-  ctx.fillStyle = '#B7C37B';
-  for (let i = 0; i < 22; i += 1) {
+
+  ellipse(ctx, 0, 0, radius * 0.7, radius * 0.5);
+  if (kind === 'greywater-basin') {
+    const mulch = ctx.createRadialGradient(-radius * 0.12, -radius * 0.12, 1, 0, 0, radius * 0.72);
+    mulch.addColorStop(0, '#77855A');
+    mulch.addColorStop(0.55, '#5E6642');
+    mulch.addColorStop(1, '#4B4430');
+    finish(ctx, mulch, '#B79B68', Math.max(0.65, stroke * 0.58));
+  } else {
+    const dish = ctx.createLinearGradient(-radius, -radius, radius, radius);
+    dish.addColorStop(0, '#A9B783');
+    dish.addColorStop(0.55, '#718B6E');
+    dish.addColorStop(1, '#55706A');
+    finish(ctx, dish, '#506552', Math.max(0.65, stroke * 0.58));
+    ctx.save();
+    ctx.setLineDash([Math.max(1.2, stroke), Math.max(1, stroke * 0.8)]);
+    ellipse(ctx, 0, 0, radius * 0.48, radius * 0.31);
+    ctx.strokeStyle = 'rgba(218,226,185,0.7)';
+    ctx.lineWidth = Math.max(0.55, stroke * 0.4);
+    ctx.stroke();
+    ctx.restore();
+  }
+  for (let i = 0; i < 24; i += 1) {
     const angle = hash(seed, i) * TAU;
-    const distance = radius * (0.18 + hash(seed, i + 21) * 0.58);
+    const distance = radius * (0.12 + hash(seed, i + 21) * 0.5);
     ctx.beginPath();
-    ctx.arc(Math.cos(angle) * distance, Math.sin(angle) * distance * 0.78, Math.max(stroke * 0.6, radius * 0.06), 0, TAU);
+    ctx.arc(Math.cos(angle) * distance, Math.sin(angle) * distance * 0.72, Math.max(stroke * 0.34, radius * 0.028), 0, TAU);
+    ctx.fillStyle = kind === 'greywater-basin'
+      ? (i % 3 ? '#8E7A4F' : '#B3A16D')
+      : (i % 2 ? '#7E8C60' : '#A7B27B');
     ctx.fill();
+  }
+  if (kind === 'greywater-basin') {
+    // Short reed-like tufts signal a planted mulch basin without inventing a separate crop.
+    ctx.strokeStyle = '#7FA064';
+    ctx.lineWidth = Math.max(0.55, stroke * 0.36);
+    for (let i = 0; i < 8; i += 1) {
+      const angle = (i / 8) * TAU + hash(seed, 90 + i) * 0.2;
+      const bx = Math.cos(angle) * radius * 0.42;
+      const by = Math.sin(angle) * radius * 0.34;
+      line(ctx, [[bx, by], [bx + Math.cos(angle) * radius * 0.18, by + Math.sin(angle) * radius * 0.18]]);
+    }
   }
 }
 
 function bananaCircle(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number): void {
   const radius = Math.min(w, h) * 0.42;
   ellipse(ctx, 0, 0, radius, radius * 0.82);
-  finish(ctx, '#80734b', '#4a432d', stroke);
-  ctx.strokeStyle = '#4f783b';
-  ctx.lineWidth = Math.max(stroke, radius * 0.05);
-  for (let i = 0; i < 10; i += 1) {
-    const angle = (i / 10) * TAU + hash(seed, i) * 0.18;
-    const inner = radius * 0.15;
-    const outer = radius * (0.58 + hash(seed, i + 30) * 0.12);
-    line(ctx, [[Math.cos(angle) * inner, Math.sin(angle) * inner * 0.82], [Math.cos(angle) * outer, Math.sin(angle) * outer * 0.82]]);
+  finish(ctx, '#796243', '#433B2A', stroke);
+  for (let i = 0; i < 9; i += 1) {
+    const angle = (i / 9) * TAU + hash(seed, i) * 0.16;
+    ctx.save();
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.ellipse(0, -radius * 0.45, radius * (0.11 + hash(seed, 30 + i) * 0.035), radius * 0.42, 0, 0, TAU);
+    const leaf = ctx.createLinearGradient(0, -radius * 0.85, 0, -radius * 0.08);
+    leaf.addColorStop(0, i % 2 ? '#A1B96A' : '#8AA858');
+    leaf.addColorStop(1, '#3E6B3A');
+    finish(ctx, leaf, '#315631', Math.max(0.55, stroke * 0.42));
+    line(ctx, [[0, -radius * 0.77], [0, -radius * 0.14]]);
+    ctx.restore();
   }
-  ctx.fillStyle = '#354c2d';
-  ctx.beginPath();
-  ctx.arc(0, 0, Math.max(stroke, radius * 0.08), 0, TAU);
+  ellipse(ctx, 0, 0, radius * 0.2, radius * 0.15);
+  ctx.fillStyle = '#3B3327';
   ctx.fill();
+  ctx.strokeStyle = '#B49A66';
+  ctx.lineWidth = Math.max(0.6, stroke * 0.45);
+  ctx.stroke();
+  ctx.fillStyle = '#C8A970';
+  for (let i = 0; i < 7; i += 1) {
+    ctx.beginPath();
+    ctx.arc((hash(seed, 70 + i) - 0.5) * radius * 0.25, (hash(seed, 80 + i) - 0.5) * radius * 0.18, Math.max(0.45, stroke * 0.3), 0, TAU);
+    ctx.fill();
+  }
 }
 
 function pond(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number): void {
@@ -340,8 +390,65 @@ function unknownWater(ctx: CanvasRenderingContext2D, w: number, h: number, strok
 
 function smallHardware(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: string): void {
   const size = Math.min(w, h) * 0.28;
+  const dark = '#263941';
+  const pale = '#D8E6DF';
+  ctx.strokeStyle = dark;
+  ctx.lineWidth = stroke;
+  if (kind === 'borehole') {
+    ellipse(ctx, 0, 0, size * 1.12, size * 1.12);
+    finish(ctx, '#D6D1BE', dark, stroke);
+    ellipse(ctx, 0, 0, size * 0.52, size * 0.52);
+    finish(ctx, '#355D68', pale, Math.max(0.55, stroke * 0.48));
+    line(ctx, [[-size * 0.78, 0], [size * 0.78, 0]]);
+    line(ctx, [[0, -size * 0.78], [0, size * 0.78]]);
+    return;
+  }
+  if (kind === 'first-flush') {
+    ctx.beginPath();
+    ctx.roundRect(-size * 0.54, -size * 1.28, size * 1.08, size * 2.3, size * 0.35);
+    finish(ctx, '#78949A', dark, stroke);
+    ellipse(ctx, 0, -size * 1.03, size * 0.42, size * 0.18);
+    finish(ctx, '#B9CFCD', pale, Math.max(0.5, stroke * 0.42));
+    ellipse(ctx, 0, size * 0.78, size * 0.34, size * 0.22);
+    finish(ctx, '#6D543A', '#443629', Math.max(0.5, stroke * 0.4));
+    line(ctx, [[0, -size * 1.28], [0, -size * 1.65], [size * 0.82, -size * 1.65]]);
+    return;
+  }
+  if (kind === 'pump' || kind === 'filter') {
+    ctx.beginPath();
+    ctx.roundRect(-size * 1.38, -size * 0.92, size * 2.76, size * 1.84, size * 0.28);
+    finish(ctx, '#A59E86', dark, stroke);
+    ellipse(ctx, -size * 0.52, 0, size * 0.58, size * 0.58);
+    finish(ctx, '#4E7073', pale, Math.max(0.55, stroke * 0.5));
+    ellipse(ctx, size * 0.62, 0, size * 0.42, size * 0.68);
+    finish(ctx, '#7E9086', pale, Math.max(0.55, stroke * 0.48));
+    line(ctx, [[-size * 1.38, 0], [-size * 1.78, 0]]);
+    line(ctx, [[size * 1.38, 0], [size * 1.78, 0]]);
+    return;
+  }
+  if (kind === 'greywater-outlet') {
+    ctx.fillStyle = '#9A9587';
+    ctx.fillRect(-size * 1.2, -size * 0.9, size * 0.65, size * 1.8);
+    ctx.strokeRect(-size * 1.2, -size * 0.9, size * 0.65, size * 1.8);
+    ctx.strokeStyle = '#8E6FBF';
+    ctx.lineWidth = Math.max(stroke, size * 0.25);
+    line(ctx, [[-size * 0.55, 0], [size * 0.55, 0], [size * 0.82, size * 0.38]]);
+    ellipse(ctx, size * 0.84, size * 0.4, size * 0.2, size * 0.2);
+    finish(ctx, '#C8B7D7', '#5D486D', Math.max(0.5, stroke * 0.45));
+    return;
+  }
+  if (kind === 'diverter') {
+    ctx.strokeStyle = '#8E6FBF';
+    ctx.lineWidth = Math.max(stroke, size * 0.24);
+    line(ctx, [[0, 0], [0, -size * 1.45]]);
+    line(ctx, [[0, 0], [-size * 1.2, size * 0.85]]);
+    line(ctx, [[0, 0], [size * 1.2, size * 0.85]]);
+    ellipse(ctx, 0, 0, size * 0.62, size * 0.62);
+    finish(ctx, '#B39AC1', '#4C3D56', stroke);
+    line(ctx, [[-size * 0.36, 0], [size * 0.36, 0]]);
+    return;
+  }
   ctx.fillStyle = kind === 'tap' ? '#8eb4be' : '#84909a';
-  ctx.strokeStyle = '#263941';
   ctx.lineWidth = stroke;
   ctx.fillRect(-size, -size * 0.7, size * 2, size * 1.4);
   ctx.strokeRect(-size, -size * 0.7, size * 2, size * 1.4);
@@ -395,14 +502,15 @@ export function drawCartographicWaterSymbol(options: CartographicWaterSymbolOpti
 
   if (key === 'jojo-tank' || key === 'rain-barrel') tank(ctx, width, height, outlineWidth);
   else if (key === 'small-pond' || key === 'dam') pond(ctx, width, height, outlineWidth, seed);
-  else if (key === 'greywater-basin' || key === 'tree-basin' || key === 'infiltration-basin') basin(ctx, width, height, outlineWidth, seed, false);
+  else if (key === 'greywater-basin' || key === 'tree-basin' || key === 'infiltration-basin') basin(ctx, width, height, outlineWidth, seed, key);
   else if (key === 'banana-circle') bananaCircle(ctx, width, height, outlineWidth, seed);
   else if (key === 'trough') trough(ctx, width, height, outlineWidth);
   else if (key === 'vetiver-bank') vetiverBank(ctx, width, height, outlineWidth, seed);
   else if (key === 'half-moon' || key === 'berm' || key === 'terrace') earthwork(ctx, width, height, outlineWidth, key);
   else if (key === 'unknown-water') unknownWater(ctx, width, height, outlineWidth);
-  else if (key === 'tap' || key === 'borehole') smallHardware(ctx, width, height, outlineWidth, key);
-  else smallHardware(ctx, width, height, outlineWidth, 'hardware');
+  else if (key === 'tap' || key === 'borehole' || key === 'first-flush' || key === 'pump' || key === 'filter' || key === 'greywater-outlet' || key === 'diverter') {
+    smallHardware(ctx, width, height, outlineWidth, key);
+  } else smallHardware(ctx, width, height, outlineWidth, 'hardware');
 
   ctx.restore();
   return true;

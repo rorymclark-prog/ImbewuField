@@ -54,7 +54,6 @@ type ElementLayerSheet = Exclude<GlossyLayerFilter, 'all' | 'zones'>;
 const ADDITIONAL_SHEETS: Readonly<Record<string, readonly ElementLayerSheet[]>> = {
   banana_circle: ['water'], // planted guild and greywater sink
   tree_basin: ['water'], // planting earthwork and runoff/greywater sink
-  mulch_bank: ['water'], // biomass planting and contour water-slowing bank
 };
 
 /** Which PRIMARY layer sheet an element belongs on. Additional factual appearances are returned by

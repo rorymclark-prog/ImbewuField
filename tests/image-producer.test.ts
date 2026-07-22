@@ -258,8 +258,8 @@ test('buildShowcasePrompt includes the title, labels and panel instructions', ()
 // generic potted plant and greywater entirely absent, because this function's own vocabulary had
 // never had entries added for them at all, ever, on any style. Locking that in here so a future
 // element-vocabulary fix to OVERLAY_ICONS can't again land in only one of the two functions.
-test('the water sheet marker glossary names integrated basins, banks and greywater — not just OVERLAY_ICONS', () => {
-  const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3), Vetiver Bank', 'Carl and Sandys Home', 'water');
+test('the water sheet marker glossary names integrated basins and greywater — not just OVERLAY_ICONS', () => {
+  const prompt = buildShowcasePrompt('Water', 'precision_atlas', 'Tree Basin (×10), Banana Circle (×3)', 'Carl and Sandys Home', 'water');
   assert.match(prompt, /tree basin/i);
   assert.match(prompt, /banana circle/i);
   assert.match(prompt, /greywater/i);
@@ -274,10 +274,10 @@ test('the water sheet marker glossary names integrated basins, banks and greywat
   assert.match(prompt, /near-black tarred strip/i);
 });
 
-test('Satellite Overlay gives a Water-sheet Vetiver Bank its exact marker vocabulary', () => {
+test('Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker vocabulary', () => {
   const prompt = buildSatelliteOverlayPrompt({
-    layerLabel: 'Water', stylePreset: 'satellite_overlay',
-    elementsText: 'Vetiver Bank', placeName: 'Carl and Sandys Place', sheetKind: 'water',
+    layerLabel: 'Planting', stylePreset: 'satellite_overlay',
+    elementsText: 'Vetiver Bank', placeName: 'Carl and Sandys Place', sheetKind: 'planting',
   });
   const icons = prompt.split('ICON LANGUAGE')[1].split('\n')[0];
   assert.match(icons, /compact block of upright blue-green vetiver tussocks/);

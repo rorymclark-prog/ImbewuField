@@ -31,7 +31,6 @@ test('only explicit integrated systems are factual content on two layer sheets',
     .sort();
   assert.deepEqual(shared, [
     'banana_circle:water+planting',
-    'mulch_bank:water+planting',
     'tree_basin:water+planting',
   ]);
   for (const def of ELEMENT_CATALOG) {
@@ -114,12 +113,20 @@ test('the Water sheet SHOWS the beds and basins its irrigation feeds', () => {
 });
 
 test('integrated Water and Planting content is never demoted to Water context', () => {
-  for (const id of ['banana_circle', 'tree_basin', 'mulch_bank']) {
+  for (const id of ['banana_circle', 'tree_basin']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
     assert.equal(itemInFilter(def.category, 'water', def.id), true, `${id} should be Water content`);
     assert.equal(itemInFilter(def.category, 'planting', def.id), true, `${id} should be Planting content`);
     assert.equal(isContextElement(def, 'water'), false, `${id} must not be drawn twice as context and content`);
   }
+});
+
+test('Vetiver Bank belongs to Planting and Whole, not the Water sheet', () => {
+  const def = ELEMENT_CATALOG.find((d) => d.id === 'mulch_bank')!;
+  assert.equal(itemInFilter(def.category, 'water', def.id), false);
+  assert.equal(isContextElement(def, 'water'), false);
+  assert.equal(itemInFilter(def.category, 'planting', def.id), true);
+  assert.equal(itemInFilter(def.category, 'all', def.id), true);
 });
 
 test('context is a Water-sheet concept only, and never applies to a sheet own content', () => {
@@ -142,9 +149,10 @@ test('Water context contains only non-Water planting fixtures', () => {
     assert.equal(itemInFilter(def.category, 'water', def.id), false, `${id} cannot be content and context`);
     assert.equal(sheetForElement(def.category, def.id), 'planting', `${id} context must come from Planting`);
   }
-  for (const id of ['banana_circle', 'tree_basin', 'mulch_bank']) {
+  for (const id of ['banana_circle', 'tree_basin']) {
     assert.equal(contextIds.includes(id), false, `${id} is named Water content, not quiet context`);
   }
+  assert.equal(contextIds.includes('mulch_bank'), false, 'Vetiver Bank is absent from Water, not borrowed context');
 });
 
 // ── Greywater ────────────────────────────────────────────────────────────────

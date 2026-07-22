@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Drip and greywater routes now read as real tubing, emitters and inspection points',
+      'Water sheets now stay focused: Vetiver Bank appears on Planting and Whole',
       'Vetiver banks now read as dense green hedges instead of brown strips',
       'Trees use finer top-down canopy texture instead of large circular blobs',
       'Duck ponds, animal pens and site fixtures now use their own plan symbols',
