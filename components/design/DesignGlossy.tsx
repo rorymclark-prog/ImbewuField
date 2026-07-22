@@ -1979,13 +1979,13 @@ function drawWaterLeaderLabels(
     return { ...group, avgY, side, target };
   });
 
-  const fontSize = Math.max(19, Math.round(W * 0.012));
-  const rowGap = Math.max(42, Math.round(fontSize * 1.85));
+  const fontSize = Math.max(17, Math.round(W * 0.0095));
+  const rowGap = Math.max(34, Math.round(fontSize * 1.7));
   // Keep callouts away from the browser/card edges and the deterministic scale bar. The old
   // 1.8% inset made labels look cropped whenever a mobile page drifted horizontally by a few px.
   const top = Math.round(H * 0.12);
   const bottom = Math.round(H * 0.86);
-  ctx.font = `700 ${fontSize}px "Avenir Next", "Trebuchet MS", sans-serif`;
+  ctx.font = `700 ${fontSize}px ${REFERENCE_LABEL_FONT}`;
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
   const placeSide = (side: 'left' | 'right') => {
@@ -1997,14 +1997,10 @@ function drawWaterLeaderLabels(
     if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
 
     sideGroups.forEach((group, index) => {
-      const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` x${group.points.length}` : ''}`;
+      const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` ×${group.points.length}` : ''}`;
       const textW = Math.min(W * 0.24, ctx.measureText(text).width);
-      const padX = Math.round(fontSize * 0.55);
-      const boxH = Math.round(fontSize * 1.55);
-      const boxW = Math.round(textW + padX * 2);
-      const x = side === 'left' ? Math.round(W * 0.035) : Math.round(W * 0.965) - boxW;
-      const y = positions[index] - boxH / 2;
-      const leaderEndX = side === 'left' ? x + boxW : x;
+      const x = side === 'left' ? Math.round(W * 0.035) : Math.round(W * 0.965) - textW;
+      const leaderEndX = side === 'left' ? x + textW + fontSize * 0.35 : x - fontSize * 0.35;
       const elbowX = side === 'left'
         ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
         : Math.max(group.target[0] + 16, leaderEndX - Math.round(W * 0.025));
@@ -2013,26 +2009,21 @@ function drawWaterLeaderLabels(
       ctx.moveTo(group.target[0], group.target[1]);
       ctx.lineTo(elbowX, group.target[1]);
       ctx.lineTo(leaderEndX, positions[index]);
-      ctx.strokeStyle = 'rgba(255,254,250,0.9)';
-      ctx.lineWidth = 5;
+      ctx.strokeStyle = 'rgba(18,24,19,0.72)';
+      ctx.lineWidth = 4.5;
       ctx.stroke();
-      ctx.strokeStyle = '#34463E';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1.6;
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(group.target[0], group.target[1], 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#34463E';
-      ctx.fill();
-
-      roundRectPath(ctx, x, y, boxW, boxH, Math.round(boxH * 0.18));
-      ctx.fillStyle = 'rgba(255,251,240,0.94)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(52,70,62,0.72)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+      ctx.arc(group.target[0], group.target[1], 3.2, 0, Math.PI * 2);
       ctx.fillStyle = '#24362E';
-      ctx.textAlign = 'left';
-      ctx.fillText(text, x + padX, positions[index]);
+      ctx.fill();
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      drawReferenceMapText(ctx, text, x, positions[index], fontSize, 700, 'left');
     });
   };
   placeSide('left');
@@ -2496,7 +2487,7 @@ function drawBlueprintGround(
   }
 }
 
-/** Site boundary — green line with perpendicular fence ticks. */
+/** Site boundary styled as the benchmark's lime post-and-wire fence. */
 function drawBlueprintBoundary(
   ctx: CanvasRenderingContext2D,
   boundary: Array<[number, number]>,
@@ -2506,39 +2497,40 @@ function drawBlueprintBoundary(
 ): void {
   if (boundary.length < 3) return;
   const b = boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
-  // POST-AND-WIRE, NOT A TICKED LINE. The perpendicular ticks were a surveyor's convention that
-  // reads, on a map full of planting, as a row of somethings along the fence — which is half of why
-  // a phantom hedge kept appearing there. A real fence is a thin wire between round posts, and
-  // drawing it that way says "boundary" without saying "row of plants". Bone #EDE7D9 rather than
-  // green for the same reason: nothing on the boundary should share a colour family with the
-  // planting fills. (Rory: "do one with poles (circles not lines)".)
+  // This is composited after generation, so it can match the reference set without teaching the
+  // image model to invent a hedge. A dark casing keeps the lime wire readable on both forest and
+  // pale ground; sparse perpendicular crossbars read as fence posts, not editor control points.
   ctx.save();
   ctx.beginPath();
   b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
   ctx.closePath();
-  // Dark casing first, so a bone wire stays readable over pale ground as well as dark.
-  ctx.strokeStyle = 'rgba(24,28,22,0.45)';
-  ctx.lineWidth = 3.5;
+  ctx.strokeStyle = 'rgba(20,30,20,0.78)';
+  ctx.lineWidth = 5;
   ctx.stroke();
-  ctx.strokeStyle = BOUNDARY_BONE;
-  ctx.lineWidth = 1.6;
+  ctx.strokeStyle = '#A8D35F';
+  ctx.lineWidth = 2.3;
   ctx.stroke();
-  const postR = Math.max(3, W * 0.0028);
-  const step = Math.max(26, W * 0.02);
+  const postHalf = Math.max(6, W * 0.0046);
+  const step = Math.max(42, W * 0.03);
   for (let i = 0; i < b.length; i++) {
     const [x1, y1] = b[i];
     const [x2, y2] = b[(i + 1) % b.length];
     const dx = x2 - x1, dy = y2 - y1;
     const len = Math.hypot(dx, dy) || 1;
-    // A post ON every corner, then evenly along the run — corners are where a farmer paces a fence.
+    const nx = -dy / len, ny = dx / len;
     for (let t = 0; t < len; t += step) {
       const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
       ctx.beginPath();
-      ctx.arc(cx, cy, postR, 0, Math.PI * 2);
-      ctx.fillStyle = BOUNDARY_BONE;
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(24,28,22,0.55)';
-      ctx.lineWidth = 1;
+      ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
+      ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
+      ctx.strokeStyle = 'rgba(20,30,20,0.82)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
+      ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
+      ctx.strokeStyle = '#B7DE6F';
+      ctx.lineWidth = 2;
       ctx.stroke();
     }
   }
@@ -2745,69 +2737,78 @@ function drawBlueprintLegendNote(
   return lines.length;
 }
 
-/** Burn short pill labels with leaders onto a Blueprint-style sheet. Used by the exact water map
- *  so it can read more like the editorial GPT examples without inventing any extra geometry. */
+const REFERENCE_LABEL_FONT = '"Arial Narrow", "Avenir Next Condensed", "Roboto Condensed", sans-serif';
+
+/** Draw benchmark-style map lettering directly over the artwork. A dark outline replaces the
+ * dashboard pill while keeping the label readable over both pale lawn and dark forest. */
+function drawReferenceMapText(
+  ctx: CanvasRenderingContext2D,
+  value: string,
+  x: number,
+  y: number,
+  fontSize: number,
+  weight: number,
+  align: CanvasTextAlign,
+): void {
+  ctx.save();
+  ctx.font = `${weight} ${fontSize}px ${REFERENCE_LABEL_FONT}`;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  ctx.miterLimit = 2;
+  ctx.strokeStyle = 'rgba(14,20,16,0.82)';
+  ctx.lineWidth = Math.max(3.5, fontSize * 0.22);
+  ctx.strokeText(value, x, y);
+  ctx.fillStyle = '#F5F0DF';
+  ctx.fillText(value, x, y);
+  ctx.restore();
+}
+
+/** Burn short editorial labels with leaders onto a Blueprint-style sheet. */
 function drawBlueprintLabelPills(
   ctx: CanvasRenderingContext2D,
   labels: ProducerLabel[],
 ): void {
-  const pill = '#EEF3F5';
-  const stroke = '#3E5A68';
-  const text = '#1A2A33';
-  const fs = 26;
-  const padX = 14;
-  const h = fs + 14;
-  ctx.textBaseline = 'middle';
+  const W = ctx.canvas.width;
+  const fs = Math.max(17, Math.round(W * 0.0105));
   for (const l of labels) {
     const isHeader = l.kind === 'header';
-    ctx.font = `${isHeader ? 800 : 600} ${fs}px system-ui, sans-serif`;
+    const weight = isHeader ? 800 : 650;
+    ctx.font = `${weight} ${fs}px ${REFERENCE_LABEL_FONT}`;
+    const textW = ctx.measureText(l.text).width;
+    const onLeft = l.ax < W / 2;
+    const textX = onLeft ? Math.max(20, W * 0.012) : Math.min(W - 20, W * 0.988);
+    const align: CanvasTextAlign = onLeft ? 'left' : 'right';
+    const leaderEndX = onLeft ? textX + textW + fs * 0.35 : textX - textW - fs * 0.35;
     if (l.leader !== false) {
       ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.moveTo(l.cx, l.cy);
-      ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = 'rgba(20,16,10,0.35)';
-      ctx.lineWidth = 5;
+      const elbowX = onLeft
+        ? Math.min(l.cx - fs * 0.6, leaderEndX + W * 0.018)
+        : Math.max(l.cx + fs * 0.6, leaderEndX - W * 0.018);
+      ctx.lineTo(elbowX, l.cy);
+      ctx.lineTo(leaderEndX, l.ay);
+      ctx.strokeStyle = 'rgba(14,20,16,0.78)';
+      ctx.lineWidth = 4.5;
       ctx.setLineDash([]);
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(l.cx, l.cy);
-      ctx.lineTo(l.lx, l.ay);
-      ctx.strokeStyle = '#FBF6EC';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([8, 6]);
+      ctx.lineTo(elbowX, l.cy);
+      ctx.lineTo(leaderEndX, l.ay);
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1.6;
       ctx.stroke();
-      ctx.setLineDash([]);
       ctx.beginPath();
-      ctx.arc(l.cx, l.cy, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#FBF6EC';
+      ctx.arc(l.cx, l.cy, 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = '#24362E';
       ctx.fill();
-      ctx.strokeStyle = stroke;
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1;
       ctx.stroke();
     }
-    const w = padX * 2 + ctx.measureText(l.text).width;
-    const x = l.ax, y = l.ay - h / 2, r = h / 2;
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + w, y, x + w, y + h, r);
-    ctx.arcTo(x + w, y + h, x, y + h, r);
-    ctx.arcTo(x, y + h, x, y, r);
-    ctx.arcTo(x, y, x + w, y, r);
-    ctx.closePath();
-    ctx.fillStyle = pill;
-    ctx.shadowColor = 'rgba(20,16,10,0.28)';
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetY = 2;
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.strokeStyle = stroke;
-    ctx.lineWidth = isHeader ? 2.5 : 1.5;
-    ctx.stroke();
-    ctx.fillStyle = text;
-    ctx.fillText(l.text, x + padX, l.ay + 1);
+    drawReferenceMapText(ctx, l.text, textX, l.ay + 1, fs, weight, align);
   }
 }
 
@@ -3513,6 +3514,24 @@ export async function buildBlueprintWaterMapLegacyExact(
   );
 }
 
+const CANOPY_PALETTES = [
+  ['#263C2E', '#426044', '#71805A'],
+  ['#2D402E', '#4F6740', '#87905A'],
+  ['#243D35', '#3D6551', '#6F8A61'],
+  ['#34432A', '#5D6C3B', '#8A8B52'],
+  ['#2A4038', '#486758', '#778B6A'],
+] as const;
+
+function stableCartographicUnit(seed: string, index: number): number {
+  let hash = 2166136261;
+  const value = `${seed}:${index}`;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) / 4294967295;
+}
+
 /** Draw one element at its TRUE ground footprint with deterministic cartographic artwork.
  *
  * Emoji are editor controls, not plan symbols. They used to be burned into exact sheets and copied
@@ -3554,36 +3573,60 @@ function drawTrueFootprint(
 
   if (def.category === 'growing' && def.shape === 'circle') {
     const r = wPx / 2;
-    const canopy = ctx.createRadialGradient(-r * 0.18, -r * 0.22, Math.max(1, r * 0.08), 0, 0, r);
-    canopy.addColorStop(0, '#B9CD83');
-    canopy.addColorStop(0.55, `${color}E8`);
-    canopy.addColorStop(1, '#294E35');
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
-    ctx.fillStyle = canopy;
+    const palette = CANOPY_PALETTES[(SPECIES_INDEX[def.id] ?? 0) % CANOPY_PALETTES.length];
+    const seed = `${def.id}:${it.id}`;
+    const traceCanopy = () => {
+      const points = 30;
+      ctx.beginPath();
+      for (let i = 0; i < points; i++) {
+        const a = (i / points) * Math.PI * 2;
+        const rr = r * (0.88 + stableCartographicUnit(seed, i) * 0.1);
+        const x = Math.cos(a) * rr;
+        const y = Math.sin(a) * rr;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+    };
+
+    traceCanopy();
+    ctx.shadowColor = 'rgba(20,28,18,0.26)';
+    ctx.shadowBlur = Math.max(2, r * 0.13);
+    ctx.shadowOffsetX = Math.max(1, r * 0.05);
+    ctx.shadowOffsetY = Math.max(1, r * 0.07);
+    ctx.fillStyle = palette[0];
     ctx.fill();
-    ctx.strokeStyle = '#F6F0DE';
-    ctx.lineWidth = outline + 0.8;
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+
+    ctx.save();
+    traceCanopy();
+    ctx.clip();
+    const blobCount = r < 7 ? 5 : 15;
+    for (let i = 0; i < blobCount; i++) {
+      const a = stableCartographicUnit(seed, 100 + i) * Math.PI * 2;
+      const d = r * (0.1 + stableCartographicUnit(seed, 200 + i) * 0.58);
+      const br = r * (0.15 + stableCartographicUnit(seed, 300 + i) * 0.14);
+      ctx.beginPath();
+      ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1.2, br), 0, Math.PI * 2);
+      ctx.fillStyle = palette[1 + (i % 2)];
+      ctx.globalAlpha = 0.72 + stableCartographicUnit(seed, 400 + i) * 0.2;
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    traceCanopy();
+    ctx.strokeStyle = 'rgba(244,238,218,0.62)';
+    ctx.lineWidth = outline + 0.25;
     ctx.stroke();
     if (r >= 5) {
-      ctx.strokeStyle = 'rgba(242,239,214,0.48)';
-      ctx.lineWidth = Math.max(0.8, outline * 0.65);
-      for (let i = 0; i < 10; i++) {
-        const a = (i / 10) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.moveTo(Math.cos(a) * r * 0.18, Math.sin(a) * r * 0.18);
-        ctx.quadraticCurveTo(
-          Math.cos(a + 0.18) * r * 0.48,
-          Math.sin(a + 0.18) * r * 0.48,
-          Math.cos(a) * r * 0.78,
-          Math.sin(a) * r * 0.78,
-        );
-        ctx.stroke();
-      }
       for (let i = 0; i < 4; i++) {
-        const a = (i * 2.399) + 0.4;
+        const a = stableCartographicUnit(seed, 500 + i) * Math.PI * 2;
+        const d = r * (0.26 + stableCartographicUnit(seed, 600 + i) * 0.28);
         ctx.beginPath();
-        ctx.arc(Math.cos(a) * r * 0.42, Math.sin(a) * r * 0.42, Math.max(1, r * 0.055), 0, Math.PI * 2);
+        ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1, r * 0.045), 0, Math.PI * 2);
         ctx.fillStyle = fruitColor;
         ctx.fill();
       }
@@ -5606,7 +5649,7 @@ interface SavedGlossy {
 
 // 'all' keeps the original site-scoped key (so existing saved renders survive); each other
 // layer gets its own suffixed key so per-layer renders don't overwrite each other.
-// PLAN VERSION — bump whenever a change alters what a sheet CONTAINS, not merely how it looks.
+// PLAN VERSION — bump whenever a change alters sheet content or its deterministic finishing layer.
 // The cache keys on siteId + style + layer with no content hash, so without this the fix you just
 // shipped is invisible: the same key hands back the pre-change picture and the farmer concludes
 // nothing happened. (It has already happened once this session — a Zones sheet that still had no
@@ -5622,7 +5665,9 @@ interface SavedGlossy {
 //        five design sheets, restores every exact layer, groups canonical labels, and removes emoji.
 //   v20 — 2026-07-22: integrated banana circles, tree basins and vetiver banks are factual content
 //        on both Water and Planting, while retaining one primary editor owner and no duplicate marks.
-const PLAN_VERSION = 'v20';
+//   v21 — 2026-07-22: benchmark-style direct labels, lime fence crossbars and naturalistic canopy
+//        symbols replace dashboard pills, dotted boundaries and glossy discs.
+const PLAN_VERSION = 'v21';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
