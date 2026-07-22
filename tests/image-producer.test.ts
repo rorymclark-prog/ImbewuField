@@ -7,7 +7,7 @@ import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
-import { waterRoutesWithVisualBridges } from '../lib/water-cartography.ts';
+import { waterFeaturePresentationScale, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -172,6 +172,16 @@ test('render-only Water cleanup leaves large and side-by-side gaps untouched', (
     { id: 'pipe-far-b', kind: 'pipe', points: [[0.21, 0.4], [0.3, 0.4]] },
   ], frame);
   assert.equal(routes.filter((route) => route.visualBridge).length, 0);
+});
+
+test('Water routes and small fittings stay legible over illustrated ground', () => {
+  assert.ok((waterRouteStyleFor('pipe')?.width ?? 0) >= 5);
+  assert.ok((waterRouteStyleFor('greywater')?.width ?? 0) >= 4);
+  assert.ok((waterRouteStyleFor('drip')?.width ?? 0) >= 3.5);
+  assert.equal(new Set(['pipe', 'greywater', 'drip'].map((kind) => waterRouteStyleFor(kind as 'pipe' | 'greywater' | 'drip')?.color)).size, 3);
+  assert.ok(waterFeaturePresentationScale('jojo_5000l') > 1.2);
+  assert.ok(waterFeaturePresentationScale('tap_point') > 1);
+  assert.equal(waterFeaturePresentationScale('greywater_basin'), 1);
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {

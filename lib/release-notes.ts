@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Water tanks, fittings and routes now stand out clearly over illustrated ground',
       'Rendered driveways are quieter, without a heavy decorative border',
       'Tiny aligned gaps in matching Water routes now close neatly on rendered maps',
       'AI receives only the Water features you saved; missing systems stay absent',

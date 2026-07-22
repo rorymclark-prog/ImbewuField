@@ -16,13 +16,29 @@ export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
 /** One drawing registry for every line kind assigned to the Water sheet. */
 export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
   swale: { color: '#4EA6D8', dash: [], width: 4.5 },
-  pipe: { color: '#245E85', dash: [14, 6], width: 4 },
+  pipe: { color: '#2379A8', dash: [14, 6], width: 5 },
   drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5 },
-  greywater: { color: '#8E44AD', dash: [10, 6], width: 4 },
+  greywater: { color: '#9B56B5', dash: [10, 6], width: 4.2 },
 };
 
 export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | undefined {
   return WATER_ROUTE_STYLE[kind as WaterRouteKind];
+}
+
+const EMPHASIZED_WATER_HARDWARE = new Set([
+  'tap_point', 'borehole', 'first_flush', 'pump_filter', 'greywater_diverter',
+  'greywater_outlet', 'water_trough', 'water_trough2',
+]);
+
+/**
+ * Small operational fittings are cartographic point symbols rather than literal footprints.
+ * Their saved centre remains exact, but a modest print-scale enlargement keeps them legible on a
+ * phone without letting them compete with ponds, basins or other measured landscape areas.
+ */
+export function waterFeaturePresentationScale(id: string): number {
+  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.28;
+  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.2;
+  return 1;
 }
 
 type RouteEndpoint = {
