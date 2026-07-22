@@ -29,6 +29,8 @@ import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextEl
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { waterRouteStyleFor } from '@/lib/water-cartography';
+import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
+import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -1755,6 +1757,22 @@ function drawWaterFeature(
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
 
+  // The illustrated library is shared by map marks and legend keys. It accepts the catalog's
+  // real IDs, clips to this exact footprint and returns false for anything it does not own, so the
+  // legacy symbol branches below remain an immediate visual rollback instead of being deleted.
+  const illustrated = drawCartographicWaterSymbol({
+    ctx,
+    id,
+    width: w,
+    height: h,
+    outlineWidth: outline,
+    seed: Math.floor(stableCartographicUnit(`${def.id}:${item.id}`, 0) * 0x7fffffff),
+  });
+  if (illustrated) {
+    ctx.restore();
+    return;
+  }
+
   if (isTank) {
     // Exact circular footprint, rendered as a directly-overhead ribbed tank rather than an emoji.
     ctx.beginPath();
@@ -2128,13 +2146,14 @@ async function buildHouseOverlay(
 
 // Draw the traced driveway after generation. This preserves the exact path/area while avoiding
 // the bright editor casing and flat brown guide that Geometry Lock previously pasted back in.
-function buildDrivewayOverlay(
+async function buildDrivewayOverlay(
+  sourceImage: string | undefined,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
   H: number,
   treatment: LockedStructureTreatment = 'source',
-): string | undefined {
+): Promise<string | undefined> {
   if (refLayers.driveway.length < 2) return undefined;
   const canvas = document.createElement('canvas');
   canvas.width = W;
@@ -2150,12 +2169,23 @@ function buildDrivewayOverlay(
     ctx.save();
     traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
     ctx.clip();
-    const wash = ctx.createLinearGradient(0, 0, W, H);
-    wash.addColorStop(0, precision ? '#5B5E57' : asphalt);
-    wash.addColorStop(0.52, asphalt);
-    wash.addColorStop(1, precision ? '#454943' : asphalt);
-    ctx.fillStyle = wash;
-    ctx.fillRect(0, 0, W, H);
+    if (sourceImage) {
+      const img = await loadImage(sourceImage);
+      ctx.filter = precision
+        ? 'saturate(0.28) contrast(0.82) brightness(0.84)'
+        : 'saturate(0.42) contrast(0.88) brightness(0.9)';
+      ctx.drawImage(img, 0, 0, W, H);
+      ctx.filter = 'none';
+      ctx.fillStyle = precision ? 'rgba(52,56,51,0.2)' : 'rgba(45,49,44,0.16)';
+      ctx.fillRect(0, 0, W, H);
+    } else {
+      const wash = ctx.createLinearGradient(0, 0, W, H);
+      wash.addColorStop(0, precision ? '#666962' : '#4D514B');
+      wash.addColorStop(0.52, precision ? '#5A5D57' : asphalt);
+      wash.addColorStop(1, precision ? '#50534E' : '#383C38');
+      ctx.fillStyle = wash;
+      ctx.fillRect(0, 0, W, H);
+    }
     if (precision) {
       const grainStep = Math.max(8, Math.round(W * 0.004));
       ctx.strokeStyle = 'rgba(239,231,207,0.09)';
@@ -2169,18 +2199,18 @@ function buildDrivewayOverlay(
     }
     ctx.restore();
     traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
-    ctx.strokeStyle = 'rgba(39,42,38,0.72)';
-    ctx.lineWidth = Math.max(1.5, W * 0.0009);
+    ctx.strokeStyle = 'rgba(45,48,43,0.52)';
+    ctx.lineWidth = Math.max(1.2, W * 0.00072);
     ctx.stroke();
   } else {
     const pxPerM = W / (frame.imgW * frame.mPerPx);
     const roadW = Math.min(46, Math.max(11, pxPerM * 3));
     traceNormalisedPath(ctx, refLayers.driveway, W, H);
-    ctx.strokeStyle = 'rgba(35,38,35,0.76)';
-    ctx.lineWidth = roadW + Math.max(2, W * 0.0012);
+    ctx.strokeStyle = 'rgba(48,51,47,0.56)';
+    ctx.lineWidth = roadW + Math.max(1.5, W * 0.0009);
     ctx.stroke();
     traceNormalisedPath(ctx, refLayers.driveway, W, H);
-    ctx.strokeStyle = asphalt;
+    ctx.strokeStyle = precision ? '#5A5D57' : '#414640';
     ctx.lineWidth = roadW;
     ctx.stroke();
   }
@@ -2196,7 +2226,7 @@ async function buildLockedStructureOverlay(
   styleKey: StylePreset,
 ): Promise<string | undefined> {
   const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
-  const driveway = buildDrivewayOverlay(frame, refLayers, W, H, treatment);
+  const driveway = await buildDrivewayOverlay(sourceImage, frame, refLayers, W, H, treatment);
   const house = sourceImage
     ? await buildHouseOverlay(sourceImage, refLayers, W, H, treatment)
     : undefined;
@@ -2822,8 +2852,35 @@ function referenceBlueprintLabels(
   const canonicalState: DesignCanvasState = {
     ...state,
     items: state.items.map(({ label: _label, ...item }) => item),
+    // The integrated masterplan carries the physical design, not the abstract effort-zone bands.
+    // Zones retain their own complete sheet and legend; repeating every zone label here was the
+    // largest source of crossed leaders and is not present in the supplied masterplan benchmark.
+    zones: filter === 'all' ? state.zones.filter((zone) => Boolean(zone.feature)) : state.zones,
   };
-  return producerLabels(canonicalState, refLayers, W, H, filter, false);
+  const labels = producerLabels(canonicalState, refLayers, W, H, filter, false);
+  if (filter !== 'all') return labels;
+
+  // Whole-farm sheets use a curated callout layer. The detailed layer sheets and deterministic
+  // legend retain every name/count, while the masterplan calls out only the principal systems.
+  const priority = [
+    /TANK|RAIN BARREL/, /GREYWATER|POND|BOREHOLE/, /BED|CROP/, /TREE|ORCHARD/,
+    /VETIVER|POLLINATOR|WINDBREAK/, /COMPOST|NURSERY/, /CHICKEN|BEEHIVE|LIVESTOCK/,
+  ];
+  return labels
+    .filter((label) => label.leader !== false && !/DRIVEWAY|ZONE\s+[0-5]/.test(label.text))
+    .map((label, index) => ({
+      label,
+      index,
+      rank: priority.findIndex((pattern) => pattern.test(label.text)),
+    }))
+    .sort((a, b) => {
+      const ar = a.rank < 0 ? priority.length : a.rank;
+      const br = b.rank < 0 ? priority.length : b.rank;
+      return ar - br || a.index - b.index;
+    })
+    .slice(0, 10)
+    .sort((a, b) => a.label.ay - b.label.ay)
+    .map(({ label }) => label);
 }
 
 /** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
@@ -3571,6 +3628,16 @@ function drawTrueFootprint(
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
 
+  if (
+    (def.category === 'structure' || def.category === 'animal' || def.category === 'access') &&
+    drawCartographicStructureSymbol(ctx, def, wPx, hPx, outline, {
+      seed: Math.floor(stableCartographicUnit(`${def.id}:${it.id}`, 0) * 0x7fffffff),
+    })
+  ) {
+    ctx.restore();
+    return;
+  }
+
   if (def.category === 'growing' && def.shape === 'circle') {
     const r = wPx / 2;
     const palette = CANOPY_PALETTES[(SPECIES_INDEX[def.id] ?? 0) % CANOPY_PALETTES.length];
@@ -3940,13 +4007,8 @@ async function buildExactLayerOverlay(
     drawContextItems(ctx, state, filter, px, py, pxPerM);
     drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
   } else if (filter === 'all') {
-    const zones = buildZoneOverlay(state, refLayers, W, H);
-    if (zones) {
-      ctx.save();
-      ctx.globalAlpha = 0.42;
-      ctx.drawImage(await loadImage(zones), 0, 0, W, H);
-      ctx.restore();
-    }
+    // Zone bands have a dedicated analytical sheet. The integrated benchmark is a physical
+    // masterplan, so repeating translucent effort zones here only muddies planting and water.
     drawFilteredLines(ctx, state, 'planting', px, py);
     drawFilteredLines(ctx, state, 'structures', px, py);
     drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, false);
@@ -4153,6 +4215,58 @@ const REFERENCE_SHEET_LABEL: Record<GlossyLayerFilter, string> = {
   all: 'Final integrated masterplan',
 };
 
+/** Sheet 01 uses the same measured editorial composition as the design layers but contains only
+ * existing traced fabric. It is the authoritative before-state every later sheet builds upon. */
+export async function buildBlueprintBaseMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  const W = frame.imgW * SCALE;
+  const H = frame.imgH * SCALE;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable');
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+
+  await drawBlueprintBase(ctx, frame, W, H);
+  const ground = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
+  if (ground) ctx.drawImage(await loadImage(ground), 0, 0, W, H);
+  const sourceStructures = frame.satDataUrl
+    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
+    : undefined;
+  if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H));
+
+  const legendRows: StyleLegendRow[] = groundRows(state, refLayers, 'all').map((row) => ({
+    swatch: row.color,
+    text: row.label,
+    kind: 'ground',
+  }));
+  if (refLayers.house.length >= 3) legendRows.unshift({ swatch: '#3E4648', text: 'House / building', kind: 'surface' });
+  if (refLayers.driveway.length >= 2) legendRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
+  if (refLayers.boundary.length >= 3) legendRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+
+  return composeStyleSheet(
+    canvas.toDataURL('image/png'),
+    state,
+    frame,
+    refLayers,
+    'all',
+    placeName,
+    'Reference Blueprint',
+    'Site base map & terrace levels',
+    false,
+    true,
+    { sheetNumber: '01', legendRows },
+  );
+}
+
 /**
  * One deterministic sheet pipeline for every design layer.
  *
@@ -4307,6 +4421,11 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.restore();
 }
 
+interface SectorAnalysisComposition {
+  rows: BlueprintLegendRow[];
+  noteText: string;
+}
+
 // The deterministic sector geometry (compass ring, fire wedge, sun arc, wind arrows, water/contour
 // lines, frost pocket, data strip, title, legend, scale bar, north arrow) — called once from
 // composeSectorSheet so the exact and AI sheets draw the EXACT SAME bearings from the EXACT SAME
@@ -4337,7 +4456,8 @@ function drawSectorAnalysis(
   // model above. Optional so this function still degrades gracefully if a caller has no state
   // handy (there is currently only one caller, and it always has state).
   state?: DesignCanvasState,
-): void {
+  externalLegend = false,
+): SectorAnalysisComposition {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
 
@@ -4827,10 +4947,9 @@ function drawSectorAnalysis(
   // colliding with ⑫.
   const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫'];
   let energyN = 0;
-  const nextIcon = (emoji: string) => {
+  const nextIcon = (_emoji: string) => {
     const n = energyN++;
-    const numeral = n < CIRCLED.length ? CIRCLED[n] : `${n + 1}.`;
-    return `${numeral} ${emoji}`;
+    return n < CIRCLED.length ? CIRCLED[n] : `${n + 1}.`;
   };
   const rows: BlueprintLegendRow[] = [];
   // Gated on the SAME `summerApex`/`winterApex` the arcs above returned — null only inside the
@@ -4876,12 +4995,15 @@ function drawSectorAnalysis(
   const REGIONAL_FOOTER =
     'ᴬ REGIONAL SECTOR ASSUMPTIONS — wind, berg and fire directions are the documented regional pattern for coastal KwaZulu-Natal, not measurements at this site. Confirm local wind, fire and runoff directions by on-site observation before siting windbreaks or firebreaks. Sun path is computed from latitude. Bearings are TRUE north.';
   const noteText = model.namedWind.length > 0 ? REGIONAL_FOOTER : model.dataNotes[0] ?? 'Read the site before you design it.';
-  const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
-  const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
-  const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
-  drawBlueprintLegendNote(ctx, lg, rowH, ry, noteText);
-  drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
-  drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
+  if (!externalLegend) {
+    const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
+    const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
+    const ry = drawBlueprintLegendRows(ctx, lg, rowH, rows);
+    drawBlueprintLegendNote(ctx, lg, rowH, ry, noteText);
+    drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
+    drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
+  }
+  return { rows, noteText };
 }
 
 // Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
@@ -4900,6 +5022,47 @@ function drawSectorAnalysis(
 // drawn at `frame`/`refLayers`/`site`-derived coordinates regardless of what the base shows, so the
 // AI base can shift, rescale or reframe under this chrome and nothing downstream can ever
 // misregister against it — the base carries no geometry anything here reads back or aligns to.
+function drawSectorContextLabels(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): void {
+  const labels: Array<{ text: string; x: number; y: number; area: number }> = [];
+  if (refLayers.house.length >= 3) {
+    const [x, y] = centroidOf(refLayers.house);
+    labels.push({ text: 'HOUSE', x: x * W, y: y * H, area: 10 });
+  }
+  if (refLayers.driveway.length >= 2) {
+    const [x, y] = centroidOf(refLayers.driveway);
+    labels.push({ text: 'TARRED DRIVEWAY', x: x * W, y: y * H, area: 9 });
+  }
+  const groundName: Partial<Record<GroundFeatureKind, string>> = {
+    lawn: 'LAWN TERRACE',
+    veg_garden: 'EXISTING VEGETABLE GARDEN',
+    orchard: 'EXISTING ORCHARD',
+    cleared: 'LOWER CLEARED GROUND',
+    patio: 'PATIO / COURTYARD',
+    terrace_bank: 'TERRACE BANK / LEVEL CHANGE',
+  };
+  const bestByKind = new Map<GroundFeatureKind, ZoneShape>();
+  for (const zone of state.zones) {
+    if (!zone.feature || !groundName[zone.feature] || zone.points.length < 3) continue;
+    const current = bestByKind.get(zone.feature);
+    if (!current || ringArea(zone.points) > ringArea(current.points)) bestByKind.set(zone.feature, zone);
+  }
+  for (const [kind, zone] of bestByKind) {
+    const [x, y] = centroidOf(zone.points);
+    const level = zone.levelM != null ? ` ${zone.levelM >= 0 ? '+' : ''}${zone.levelM.toFixed(1)} m` : '';
+    labels.push({ text: `${groundName[kind]}${level}`, x: x * W, y: y * H, area: ringArea(zone.points) });
+  }
+  const fs = Math.max(15, Math.round(W * 0.011));
+  for (const label of labels.sort((a, b) => b.area - a.area).slice(0, 6)) {
+    drawReferenceMapText(ctx, label.text, label.x, label.y, fs, 750, 'center');
+  }
+}
+
 async function composeSectorSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -4963,25 +5126,32 @@ async function composeSectorSheet(
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   ctx.restore();
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
-  // …and NAME them. The reference sheet labels HOUSE, TARRED DRIVEWAY, EXISTING VEGETABLE GARDEN,
-  // UPPER LAWN TERRACE, LOWER CLEARED GROUND — that naming is most of why it reads as a survey
-  // rather than a diagram. producerLabels already lays these out without collisions.
-  // Reserve the legend panel's rectangle so a right-column label can never land under it and get
-  // clipped when the legend draws on top a moment later (drawBlueprintLegendFrame: lgW = W*0.27,
-  // lgX = W - pad - lgW, lgY = pad — fixed regardless of row count; only the HEIGHT is row-count
-  // dependent, and that isn't known until drawSectorAnalysis runs below). Sized for the legend's
-  // worst case — up to 12 numbered rows (sun x3, named wind x3, fire, driveway, terrace fall
-  // x2, frost) plus the unnumbered boundary row and a multi-line footer note — rather than
-  // today's actual count, so this reservation doesn't need revisiting every time a row is added.
-  const legendReserve = {
-    x0: W - pad - Math.round(W * 0.27), y0: 0,
-    x1: W, y1: pad + Math.round(rowH * 14),
-  };
-  drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H, legendReserve));
+  drawSectorContextLabels(ctx, state, refLayers, W, H);
 
-  drawSectorAnalysis(ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM, baseImage !== null, state);
+  const analysis = drawSectorAnalysis(
+    ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM,
+    baseImage !== null, state, true,
+  );
+  const legendRows: StyleLegendRow[] = analysis.rows.map((row) => ({
+    swatch: row.color,
+    text: `${row.icon ? `${row.icon} ` : ''}${row.label}`,
+    lineKind: row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
+    kind: row.style === 'fill' ? 'surface' : undefined,
+  }));
 
-  return canvas.toDataURL('image/png');
+  return composeStyleSheet(
+    canvas.toDataURL('image/png'),
+    state,
+    frame,
+    refLayers,
+    'all',
+    placeName,
+    'Computed & sourced site energies',
+    'Sector analysis',
+    false,
+    true,
+    { sheetNumber: '02', legendRows, footerText: analysis.noteText },
+  );
 }
 
 // The exact sheet is composeSectorSheet with no AI base — everything else is identical, which is
@@ -5029,10 +5199,36 @@ export async function buildImplementationMap(
   // 1. Satellite + scrim.
   await drawBlueprintBase(ctx, frame, W, H);
 
-  // 2. Built context UNDER the pins — house, driveway, fence-tick boundary. On this sheet the built
-  //    fabric is only orientation context, so the driveway keeps its plain (un-kerbed) treatment.
-  drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
-  drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  // 2. The complete saved design UNDER the phase pins. A phasing map describes the order in which
+  //    the design is built, so showing only the roof and six floating numbers removes the very
+  //    systems those numbers refer to. Reuse the same exact ground/features/structure overlays as
+  //    the masterplan, without labels, and quieten them slightly so the phase colours stay primary.
+  const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
+  if (groundOverlay) {
+    ctx.save();
+    ctx.globalAlpha = 0.82;
+    ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
+    ctx.restore();
+  }
+  const sourceStructures = frame.satDataUrl
+    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
+    : undefined;
+  if (sourceStructures) {
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+    ctx.restore();
+  } else {
+    drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+    drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  }
+  const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
+  if (featureOverlay) {
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
+    ctx.restore();
+  }
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
 
   // 3. Resolve each phase's pin position (normalised 0..1) as the centroid of the objects it builds.
@@ -5327,7 +5523,7 @@ export function sheetLegendRows(
   _includeToolGlyphs = false,
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
-  if (zonesInFilter(filter)) {
+  if (filter === 'zones') {
     // One row per zone NUMBER, not per polygon — a site with three Zone-3 patches listed
     // "Zone 3 — Orchard / food forest" three times.
     const seen = new Set<number>();
@@ -5354,6 +5550,59 @@ export function sheetLegendRows(
   } else if (groundRows(state, refLayers, 'all').length) {
     rows.push({ swatch: '#8A8172', text: 'Existing site fabric (traced)', kind: 'ground' });
   }
+
+  if (filter === 'all') {
+    const summaries: Array<{
+      text: string;
+      swatch: string;
+      matches: (def: DesignElementDef) => boolean;
+    }> = [
+      {
+        text: 'Water storage & fittings', swatch: '#3F879C',
+        matches: (def) => def.category === 'water' && !/pond|basin/i.test(def.name),
+      },
+      {
+        text: 'Ponds, basins & water earthworks', swatch: '#6E9DA5',
+        matches: (def) => /pond|basin|banana circle|berm|terrace/i.test(def.name),
+      },
+      {
+        text: 'Production beds & crops', swatch: '#6E7F45',
+        matches: (def) => (def.category === 'growing' || def.category === 'earthworks') && def.shape === 'rect',
+      },
+      {
+        text: 'Orchard & support trees', swatch: '#426044',
+        matches: (def) => def.category === 'growing' && def.shape === 'circle',
+      },
+      {
+        text: 'Structures & work areas', swatch: '#806645',
+        matches: (def) => def.category === 'structure' || def.category === 'access',
+      },
+      {
+        text: 'Livestock & apiary', swatch: '#C98A2C',
+        matches: (def) => def.category === 'animal',
+      },
+    ];
+    for (const summary of summaries) {
+      const matches = state.items.filter((item) => {
+        const def = ELEMENTS_BY_ID[item.defId];
+        return Boolean(def && summary.matches(def));
+      });
+      if (!matches.length) continue;
+      rows.push({
+        swatch: summary.swatch,
+        defId: matches[0].defId,
+        text: `${summary.text} ×${matches.length}`,
+      });
+    }
+    const waterRoutes = state.lines.filter((line) => ['swale', 'pipe', 'drip', 'greywater'].includes(line.kind));
+    if (waterRoutes.length) rows.push({ swatch: '#2E7FC2', text: `Water routes ×${waterRoutes.length}`, lineKind: 'pipe' });
+    const accessLines = state.lines.filter((line) => ['path', 'fence', 'windbreak'].includes(line.kind));
+    if (accessLines.length) rows.push({ swatch: '#8A6D3B', text: `Paths, fences & windbreaks ×${accessLines.length}`, lineKind: 'path' });
+    if (refLayers.boundary.length >= 3) rows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+    if (refLayers.driveway.length >= 2) rows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
+    return rows;
+  }
+
   const groups = new Map<string, { defId: string; color: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -5473,6 +5722,7 @@ async function composeStyleSheet(
   layerLabel: string,
   includeToolGlyphs = true,
   exactGeometry = false,
+  options: { sheetNumber?: string; legendRows?: StyleLegendRow[]; footerText?: string } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -5498,7 +5748,7 @@ async function composeStyleSheet(
   ctx.fillStyle = '#20190F';
   const titleSize = Math.round(legendW * 0.067);
   ctx.font = `800 ${titleSize}px Georgia, serif`;
-  const titleWords = `${SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
+  const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
@@ -5536,10 +5786,8 @@ async function composeStyleSheet(
   ctx.font = `800 ${Math.round(legendW * 0.05)}px system-ui, sans-serif`;
   ctx.fillText('LEGEND', lx, y);
 
-  const rows = sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
-  const footerTop = H - pad - Math.round(legendW * 0.16);
+  const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const legendTop = y + Math.round(legendW * 0.03);
-  const availableRowsH = Math.max(1, footerTop - legendTop);
   const sw = Math.round(legendW * 0.052);
   const tx = lx + sw + Math.round(legendW * 0.03);
   const textW = maxX - tx;
@@ -5559,6 +5807,31 @@ async function composeStyleSheet(
     if (current) lines.push(current);
     return lines.length ? lines : [value];
   };
+  const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
+  const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
+  const footerTextW = maxX - lx;
+  const wrapFooterText = (value: string): string[] => {
+    ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
+    const lines: string[] = [];
+    let current = '';
+    for (const word of value.split(/\s+/)) {
+      const next = current ? `${current} ${word}` : word;
+      if (current && ctx.measureText(next).width > footerTextW) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = next;
+      }
+    }
+    if (current) lines.push(current);
+    return lines;
+  };
+  const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
+  const footerBlockH = customFooterLines.length
+    ? customFooterLines.length * footerLineH + Math.round(legendW * 0.035)
+    : Math.round(legendW * 0.16);
+  const footerTop = H - pad - footerBlockH;
+  const availableRowsH = Math.max(1, footerTop - legendTop);
   const layoutRows = (fontSize: number) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
     return rows.map((row) => {
@@ -5593,12 +5866,20 @@ async function composeStyleSheet(
   // illustrative caveat while confirming that geometry and placed elements are deterministic.
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
-  ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
-  if (exactGeometry) {
+  if (customFooterLines.length) {
+    ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
+    let footerY = footerTop + Math.round(legendW * 0.035);
+    for (const line of customFooterLines) {
+      ctx.fillText(line, lx, footerY);
+      footerY += footerLineH;
+    }
+  } else if (exactGeometry) {
+    ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
     ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('No AI features added.', lx, H - pad + Math.round(legendW * 0.04));
   } else {
+    ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
     ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
@@ -5690,7 +5971,10 @@ interface SavedGlossy {
 //        on both Water and Planting, while retaining one primary editor owner and no duplicate marks.
 //   v21 — 2026-07-22: benchmark-style direct labels, lime fence crossbars and naturalistic canopy
 //        symbols replace dashboard pills, dotted boundaries and glossy discs.
-const PLAN_VERSION = 'v22';
+//   v22 — 2026-07-22: queued Reference Blueprint renders use the same direct label treatment.
+//   v23 — 2026-07-22: illustrated water/structure symbols are shared by map and legend; Site and
+//        Sector gain the benchmark panel; Whole is curated; Phasing carries the complete design.
+const PLAN_VERSION = 'v23';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -6349,7 +6633,7 @@ export default function DesignGlossy({
     setLoading('exact');
     setError(null);
     try {
-      const composite = await buildComposite(state, frame, refLayers, 'all', false);
+      const composite = await buildBlueprintBaseMap(state, frame, refLayers, placeName);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -6365,7 +6649,7 @@ export default function DesignGlossy({
     } finally {
       setLoading(null);
     }
-  }, [state, frame, refLayers, mapKey, pushGallery]);
+  }, [state, frame, refLayers, mapKey, pushGallery, placeName]);
 
   // "Generate all sheets" — Rory's ask: one tap for the WHOLE plan set, not one map at a time.
   // Uses the DETERMINISTIC exact renders (accurate by construction, instant, and — unlike
@@ -6387,7 +6671,7 @@ export default function DesignGlossy({
     try {
       // Canonical 8-map order (docs/PLAN-SET-SPEC.md). Analysis (02 Sector) before design.
       // 01 — Existing site & base (satellite + boundary + existing features, no proposed design).
-      step('01 · Existing site & base', await buildComposite(state, frame, refLayers, 'all', false), 'base');
+      step('01 · Existing site & base', await buildBlueprintBaseMap(state, frame, refLayers, placeName), 'base');
       // 02 — Sector analysis (always: the sun is real content even before slope/climate load).
       step('02 · Sector analysis', await buildBlueprintSectorMap(state, frame, refLayers, site, placeName), 'sector-exact');
       // 03–06 — the design layers that have content.
