@@ -20,7 +20,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
-      'AI now receives only the Water features you actually saved — absent pipes, routes and banks are never suggested',
+      'Rendered driveways are quieter, without a heavy decorative border',
+      'Tiny aligned gaps in matching Water routes now close neatly on rendered maps',
+      'AI receives only the Water features you saved; missing systems stay absent',
       'Drip and greywater routes now read as real tubing, emitters and inspection points',
       'Water sheets now stay focused: Vetiver Bank appears on Planting and Whole',
       'Vetiver banks now read as dense green hedges instead of brown strips',

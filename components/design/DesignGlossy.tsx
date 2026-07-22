@@ -27,8 +27,8 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
 import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
-import { exactModelInputMarks, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { waterRouteStyleFor } from '@/lib/water-cartography';
+import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { waterRoutesWithVisualBridges, waterRouteStyleFor } from '@/lib/water-cartography';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
@@ -467,7 +467,7 @@ export function drawMarks(
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
   const showToolGlyphs = options.showToolGlyphs !== false;
-  const showDrivewayEdge = options.showDrivewayEdge !== false;
+  const showDrivewayEdge = RENDERED_DRIVEWAY_EDGE && options.showDrivewayEdge !== false;
   const showDesignLines = options.showDesignLines !== false;
   const showDesignItems = options.showDesignItems !== false;
   const showHouseMark = options.showHouseMark !== false;
@@ -1709,7 +1709,7 @@ function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
   });
 }
 
-function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, W: number, H: number) {
+function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const routeDots = (
@@ -1739,7 +1739,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       }
     }
   };
-  for (const line of state.lines) {
+  for (const line of waterRoutesWithVisualBridges(state.lines, frame)) {
     const style = waterRouteStyleFor(line.kind);
     if (!style || line.points.length < 2) continue;
     const trace = () => {
@@ -1753,7 +1753,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       ctx.strokeStyle = '#315B43';
       ctx.lineWidth = Math.max(2.2, W * 0.00125);
       ctx.stroke();
-      routeDots(line.points, Math.max(12, W * 0.006), Math.max(1.3, W * 0.00075), '#B7CF74', '#294F3A');
+      if (!line.visualBridge) routeDots(line.points, Math.max(12, W * 0.006), Math.max(1.3, W * 0.00075), '#B7CF74', '#294F3A');
       continue;
     }
     if (line.kind === 'greywater') {
@@ -1768,7 +1768,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       ctx.strokeStyle = '#B28AC6';
       ctx.lineWidth = Math.max(2.4, W * 0.00125);
       ctx.stroke();
-      routeDots(line.points, Math.max(22, W * 0.011), Math.max(1.45, W * 0.0008), '#D7C5DF', '#6E4D7E');
+      if (!line.visualBridge) routeDots(line.points, Math.max(22, W * 0.011), Math.max(1.45, W * 0.0008), '#D7C5DF', '#6E4D7E');
       ctx.setLineDash([]);
       continue;
     }
@@ -1782,7 +1782,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     ctx.strokeStyle = style.color;
     ctx.lineWidth = style.width;
     ctx.stroke();
-    if (line.kind === 'pipe') {
+    if (line.kind === 'pipe' && !line.visualBridge) {
       routeDots(line.points, Math.max(28, W * 0.014), Math.max(1.4, W * 0.0008), '#8DC0D1', '#214D68');
     }
     ctx.setLineDash([]);
@@ -2130,7 +2130,7 @@ function drawWaterInfrastructure(
   includeToolGlyphs: boolean,
   includeLeaderLabels: boolean,
 ) {
-  drawWaterRoutes(ctx, state, W, H);
+  drawWaterRoutes(ctx, state, frame, W, H);
   const pxPerM = W / (frame.imgW * frame.mPerPx);
   for (const item of waterItemsFor(state)) {
     const def = ELEMENTS_BY_ID[item.defId];
@@ -2270,17 +2270,21 @@ async function buildDrivewayOverlay(
       }
     }
     ctx.restore();
-    traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
-    ctx.strokeStyle = 'rgba(225,216,192,0.34)';
-    ctx.lineWidth = Math.max(1.2, W * 0.00072);
-    ctx.stroke();
+    if (RENDERED_DRIVEWAY_EDGE) {
+      traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
+      ctx.strokeStyle = 'rgba(225,216,192,0.34)';
+      ctx.lineWidth = Math.max(1.2, W * 0.00072);
+      ctx.stroke();
+    }
   } else {
     const pxPerM = W / (frame.imgW * frame.mPerPx);
     const roadW = Math.min(46, Math.max(11, pxPerM * 3));
-    traceNormalisedPath(ctx, refLayers.driveway, W, H);
-    ctx.strokeStyle = 'rgba(48,51,47,0.56)';
-    ctx.lineWidth = roadW + Math.max(1.5, W * 0.0009);
-    ctx.stroke();
+    if (RENDERED_DRIVEWAY_EDGE) {
+      traceNormalisedPath(ctx, refLayers.driveway, W, H);
+      ctx.strokeStyle = 'rgba(48,51,47,0.56)';
+      ctx.lineWidth = roadW + Math.max(1.5, W * 0.0009);
+      ctx.stroke();
+    }
     traceNormalisedPath(ctx, refLayers.driveway, W, H);
     ctx.strokeStyle = precision ? '#5A5D57' : '#414640';
     ctx.lineWidth = roadW;
@@ -2441,8 +2445,7 @@ function drawBlueprintHouse(
 }
 
 /** Tar driveway — filled when traced as an AREA, else a ~3 m carriageway stroke (clamped).
- *  `dashedEdge` reproduces the zone sheet's light dashed kerb; the water sheet omits it (there the
- *  driveway is background context, not content), so it stays a caller's choice rather than a rule. */
+ *  Decorative kerbs are globally disabled: existing access must stay quiet site context. */
 function drawBlueprintDriveway(
   ctx: CanvasRenderingContext2D,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2464,7 +2467,7 @@ function drawBlueprintDriveway(
     ctx.closePath();
     ctx.fillStyle = TAR;
     ctx.fill();
-    if (dashedEdge) {
+    if (dashedEdge && RENDERED_DRIVEWAY_EDGE) {
       ctx.setLineDash([10, 7]);
       ctx.strokeStyle = 'rgba(255,255,255,0.8)';
       ctx.lineWidth = 2.5;
@@ -2476,7 +2479,7 @@ function drawBlueprintDriveway(
     ctx.strokeStyle = TAR;
     ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
     ctx.stroke();
-    if (dashedEdge) {
+    if (dashedEdge && RENDERED_DRIVEWAY_EDGE) {
       trace();
       ctx.setLineDash([10, 7]);
       ctx.strokeStyle = 'rgba(255,255,255,0.7)';
@@ -3441,7 +3444,7 @@ export async function buildBlueprintWaterMapLegacy(
   };
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
-  for (const l of state.lines) {
+  for (const l of waterRoutesWithVisualBridges(state.lines, frame)) {
     const st = LINE_STYLE[l.kind];
     if (!st || l.points.length < 2) continue;
     const trace = () => {
@@ -6217,7 +6220,8 @@ interface SavedGlossy {
 //   v28 — 2026-07-22: Vetiver Bank is curated to Planting and Whole, not Water.
 //   v29 — 2026-07-22: Water routes use real pipe, emitter and greywater visual grammar.
 //   v30 — 2026-07-22: AI marker vocabulary is derived only from saved sheet content.
-const PLAN_VERSION = 'v30';
+// v31: quiet driveway treatment and render-only cleanup of tiny matching Water-route gaps.
+const PLAN_VERSION = 'v31';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

@@ -54,6 +54,9 @@ export interface ModelInputMarks {
   showDrivewayMark: boolean;
 }
 
+/** Existing access is quiet site context; rendered sheets never add a decorative kerb/casing. */
+export const RENDERED_DRIVEWAY_EDGE = false;
+
 /**
  * Exact styles never ask the model to interpret editor markers. The app draws the real layer from
  * saved data after generation, which removes duplicated objects, copied emoji and guessed counts.

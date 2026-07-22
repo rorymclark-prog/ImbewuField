@@ -6,7 +6,8 @@ import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatell
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, hasConflictingRenderAuthority, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { waterRoutesWithVisualBridges } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -143,6 +144,34 @@ test('exact style inputs contain no editor glyphs or model-interpreted design ma
       showDrivewayMark: false,
     });
   }
+});
+
+test('rendered driveways have no decorative border on any sheet', () => {
+  assert.equal(RENDERED_DRIVEWAY_EDGE, false);
+});
+
+test('render-only Water cleanup bridges only tiny aligned gaps of the same route type', () => {
+  const frame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 };
+  const routes = waterRoutesWithVisualBridges([
+    { id: 'pipe-a', kind: 'pipe', points: [[0.1, 0.2], [0.2, 0.2]] },
+    { id: 'pipe-b', kind: 'pipe', points: [[0.204, 0.2], [0.3, 0.2]] },
+    { id: 'greywater-near', kind: 'greywater', points: [[0.204, 0.201], [0.3, 0.201]] },
+  ], frame);
+  const bridges = routes.filter((route) => route.visualBridge);
+  assert.equal(bridges.length, 1);
+  assert.equal(bridges[0].kind, 'pipe');
+  assert.deepEqual(bridges[0].points, [[0.2, 0.2], [0.204, 0.2]]);
+});
+
+test('render-only Water cleanup leaves large and side-by-side gaps untouched', () => {
+  const frame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 };
+  const routes = waterRoutesWithVisualBridges([
+    { id: 'drip-a', kind: 'drip', points: [[0.1, 0.2], [0.2, 0.2]] },
+    { id: 'drip-parallel', kind: 'drip', points: [[0.1, 0.202], [0.2, 0.202]] },
+    { id: 'pipe-far-a', kind: 'pipe', points: [[0.1, 0.4], [0.2, 0.4]] },
+    { id: 'pipe-far-b', kind: 'pipe', points: [[0.21, 0.4], [0.3, 0.4]] },
+  ], frame);
+  assert.equal(routes.filter((route) => route.visualBridge).length, 0);
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {
