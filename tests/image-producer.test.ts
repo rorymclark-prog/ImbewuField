@@ -7,7 +7,8 @@ import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
-import { waterFeaturePresentationScale, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
+import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
+import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -182,6 +183,25 @@ test('Water routes and small fittings stay legible over illustrated ground', () 
   assert.ok(waterFeaturePresentationScale('jojo_5000l') > 1.2);
   assert.ok(waterFeaturePresentationScale('tap_point') > 1);
   assert.equal(waterFeaturePresentationScale('greywater_basin'), 1);
+});
+
+test('Water sheet chrome uses one formal title and factual subsystem order', () => {
+  assert.equal(REFERENCE_SHEET_LABEL.water, 'Water, greywater & irrigation');
+  assert.deepEqual(WATER_LEGEND_SECTION_ORDER, [
+    'RAINWATER',
+    'IRRIGATION',
+    'FILTERED GREYWATER',
+    'WATER EARTHWORKS',
+  ]);
+  assert.equal(waterLegendSectionForFeature('jojo_5000'), 'RAINWATER');
+  assert.equal(waterLegendSectionForFeature('tap_point'), 'IRRIGATION');
+  assert.equal(waterLegendSectionForFeature('banana_circle'), 'FILTERED GREYWATER');
+  assert.equal(waterLegendSectionForFeature('pond_small'), 'WATER EARTHWORKS');
+  assert.equal(waterLegendSectionForRoute('pipe'), 'IRRIGATION');
+  assert.equal(waterLegendSectionForRoute('greywater'), 'FILTERED GREYWATER');
+  assert.equal(waterLegendSectionForRoute('swale'), 'WATER EARTHWORKS');
+  assert.equal(waterRouteStyleFor('pipe')?.label, 'Buried water pipe');
+  assert.equal(waterRouteStyleFor('drip')?.label, 'Drip irrigation');
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {

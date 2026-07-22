@@ -38,15 +38,20 @@ This order prevents AI house deformation without hiding real water or infrastruc
 ## Verification completed
 
 - TypeScript check passes.
-- Full automated suite passes: 132 tests.
+- Full automated suite passes: 148 tests.
 - Production build passes.
 - Browser verification passes for Structures, Water and Whole sheets using the sample geometry fixture.
+- A paid OpenAI Water render was generated from the deployed preview on 2026-07-22 and visually
+  checked against the saved Carl and Sandy design. The protected house, boundary, driveway,
+  routes, placed features and counts remained exact; editor emoji were absent.
 - Browser console is clean after a production-build restart.
 - Production and `main` have not been changed by this branch.
 
 ## Remaining acceptance test
 
-No paid OpenAI render was run locally. Before promotion, deploy this branch to a preview and generate at least Water and Planting for Carl and Sandy with Reference Blueprint selected. Accept only if:
+Water has passed the paid preview check. Before promotion, generate Planting for Carl and Sandy
+with Reference Blueprint selected and re-check Water after any later Water-cartography change.
+Accept only if:
 
 - house and driveway match the traced polygons;
 - every displayed feature exists in the saved sheet layer;

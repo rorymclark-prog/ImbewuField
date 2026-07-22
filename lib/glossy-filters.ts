@@ -11,6 +11,17 @@ import type { MapRefLayers } from '@/lib/base-layers';
 // the chosen layer are locked; everything else is repainted as background.
 export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
 
+/** Formal titles shared by every deterministic-chrome render path. Keep these separate from the
+ * short tab labels: the Water tab should stay compact, while its printed sheet needs to say what
+ * the plan actually contains. */
+export const REFERENCE_SHEET_LABEL: Record<GlossyLayerFilter, string> = {
+  zones: 'Permaculture zone map',
+  water: 'Water, greywater & irrigation',
+  planting: 'Planting & agroforestry',
+  structures: 'Small livestock & infrastructure',
+  all: 'Final integrated masterplan',
+};
+
 // NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
 // A GlossyLayerFilter is not just a UI filter: FILTER_TO_LAYER below maps it to the API's
 // RenderLayer union ('overall'|'base'|'sector'|'zone'|'water'|'opportunity'|'planting'|

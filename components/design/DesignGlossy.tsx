@@ -25,10 +25,10 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, REFERENCE_SHEET_LABEL, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { waterFeaturePresentationScale, waterRoutesWithVisualBridges, waterRouteStyleFor } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
@@ -4365,14 +4365,6 @@ export async function buildBlueprintStructuresMapLegacy(
   return canvas.toDataURL('image/png');
 }
 
-const REFERENCE_SHEET_LABEL: Record<GlossyLayerFilter, string> = {
-  zones: 'Permaculture zone map',
-  water: 'Water, greywater & irrigation',
-  planting: 'Planting & agroforestry',
-  structures: 'Small livestock & infrastructure',
-  all: 'Final integrated masterplan',
-};
-
 /** Sheet 01 uses the same measured editorial composition as the design layers but contains only
  * existing traced fabric. It is the authoritative before-state every later sheet builds upon. */
 export async function buildBlueprintBaseMap(
@@ -5781,6 +5773,7 @@ interface StyleLegendRow {
   defId?: string;
   lineKind?: string;
   kind?: 'zone' | 'ground' | 'surface';
+  section?: WaterLegendSection;
 }
 
 export function sheetLegendRows(
@@ -5870,29 +5863,57 @@ export function sheetLegendRows(
     return rows;
   }
 
-  const groups = new Map<string, { defId: string; color: string; n: number }>();
+  const groups = new Map<string, { defId: string; color: string; n: number; section?: WaterLegendSection }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter, def.id)) continue;
     const name = def.name;
-    const g = groups.get(name) ?? { defId: def.id, color: speciesColor(def.id), n: 0 };
+    const g = groups.get(name) ?? {
+      defId: def.id,
+      color: speciesColor(def.id),
+      n: 0,
+      section: filter === 'water' ? waterLegendSectionForFeature(def.id) : undefined,
+    };
     g.n += 1;
     groups.set(name, g);
   }
-  for (const [name, g] of groups) {
+  const orderedGroups = [...groups.entries()].sort((left, right) => {
+    if (filter !== 'water') return 0;
+    const leftOrder = left[1].section ? WATER_LEGEND_SECTION_ORDER.indexOf(left[1].section) : Number.MAX_SAFE_INTEGER;
+    const rightOrder = right[1].section ? WATER_LEGEND_SECTION_ORDER.indexOf(right[1].section) : Number.MAX_SAFE_INTEGER;
+    return leftOrder - rightOrder || left[0].localeCompare(right[0]);
+  });
+  for (const [name, g] of orderedGroups) {
     rows.push({
       swatch: g.color,
       defId: g.defId,
       text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+      section: g.section,
     });
   }
   const kinds = new Set<string>();
   for (const l of state.lines) {
     if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
     kinds.add(l.kind);
-    rows.push({ swatch: LINE_COLORS[l.kind] ?? '#8C8577', text: l.kind.charAt(0).toUpperCase() + l.kind.slice(1), lineKind: l.kind });
+    const waterStyle = filter === 'water' ? waterRouteStyleFor(l.kind) : undefined;
+    rows.push({
+      swatch: waterStyle?.color ?? LINE_COLORS[l.kind] ?? '#8C8577',
+      text: waterStyle?.label ?? l.kind.charAt(0).toUpperCase() + l.kind.slice(1),
+      lineKind: l.kind,
+      section: waterStyle ? waterLegendSectionForRoute(l.kind as Parameters<typeof waterLegendSectionForRoute>[0]) : undefined,
+    });
   }
-  if (refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
+  if (filter === 'water') {
+    const contextRows = rows.filter((row) => !row.section);
+    const systemRows = rows.filter((row) => row.section).sort((left, right) =>
+      WATER_LEGEND_SECTION_ORDER.indexOf(left.section!) - WATER_LEGEND_SECTION_ORDER.indexOf(right.section!),
+    );
+    rows.splice(0, rows.length, ...contextRows, ...systemRows);
+  }
+  // Water treats the driveway as quiet site context; the compressed "Existing site fabric" row
+  // already explains it, so repeating it after the water systems makes the infrastructure look
+  // like a Water-plan feature. Other sheets retain the explicit row where built fabric is content.
+  if (filter !== 'water' && refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
   return rows;
 }
 
@@ -6101,9 +6122,15 @@ async function composeStyleSheet(
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const layoutRows = (fontSize: number) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
+    const sectionFs = Math.max(9, Math.round(fontSize * 0.82));
+    let previousSection: string | undefined;
     return rows.map((row) => {
       const lines = wrapLegendText(row.text, fontSize);
-      return { row, lines, height: Math.max(sw, lines.length * lineH) + Math.max(2, Math.round(fontSize * 0.22)) };
+      const contentHeight = Math.max(sw, lines.length * lineH) + Math.max(2, Math.round(fontSize * 0.22));
+      const startsSection = Boolean(row.section && row.section !== previousSection);
+      const headingHeight = startsSection ? Math.round(sectionFs * 1.7) : 0;
+      previousSection = row.section;
+      return { row, lines, contentHeight, headingHeight, height: contentHeight + headingHeight };
     });
   };
   let fs = Math.max(14, Math.round(legendW * 0.036));
@@ -6113,16 +6140,24 @@ async function composeStyleSheet(
     rowLayout = layoutRows(fs);
   }
   const lineH = Math.max(11, Math.round(fs * 1.22));
+  const sectionFs = Math.max(9, Math.round(fs * 0.82));
   y = legendTop;
-  ctx.textBaseline = 'middle';
-  for (const { row, lines, height } of rowLayout) {
-    const symbolY = y + height / 2;
-    drawStyleLegendSymbol(ctx, row, lx, symbolY, sw, Math.min(sw, height * 0.82));
+  for (const { row, lines, contentHeight, headingHeight } of rowLayout) {
+    if (headingHeight && row.section) {
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#1F4D2B';
+      ctx.font = `800 ${sectionFs}px system-ui, sans-serif`;
+      ctx.fillText(row.section, lx, y + sectionFs);
+      y += headingHeight;
+    }
+    const symbolY = y + contentHeight / 2;
+    drawStyleLegendSymbol(ctx, row, lx, symbolY, sw, Math.min(sw, contentHeight * 0.82));
     ctx.fillStyle = '#241E12';
     ctx.font = `500 ${fs}px system-ui, sans-serif`;
+    ctx.textBaseline = 'middle';
     const textTop = symbolY - ((lines.length - 1) * lineH) / 2;
     lines.forEach((line, index) => ctx.fillText(line, tx, textTop + index * lineH));
-    y += height;
+    y += contentHeight;
   }
   if (!rows.length) {
     ctx.fillStyle = '#6B6355';
@@ -6250,7 +6285,7 @@ interface SavedGlossy {
 //   v29 — 2026-07-22: Water routes use real pipe, emitter and greywater visual grammar.
 //   v30 — 2026-07-22: AI marker vocabulary is derived only from saved sheet content.
 // v32: Water symbols and routes gain print-scale emphasis over detailed illustrated ground.
-const PLAN_VERSION = 'v32';
+const PLAN_VERSION = 'v33';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -6776,7 +6811,7 @@ export default function DesignGlossy({
         filter,
         placeName,
         styleDef.label,
-        layerLabel,
+        geometryLock ? REFERENCE_SHEET_LABEL[filter] : layerLabel,
         !geometryLock,
         geometryLock,
       );

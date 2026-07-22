@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Water legends are now grouped into rainwater, irrigation, greywater and earthworks',
+      'Geometry Lock Water sheets now use the full Water, Greywater & Irrigation title',
       'Water tanks, fittings and routes now stand out clearly over illustrated ground',
       'Rendered driveways are quieter, without a heavy decorative border',
       'Tiny aligned gaps in matching Water routes now close neatly on rendered maps',

@@ -4,9 +4,52 @@ export interface WaterRouteStyle {
   color: string;
   dash: number[];
   width: number;
+  label: string;
 }
 
 export type WaterRouteKind = Extract<LineShape['kind'], 'swale' | 'pipe' | 'drip' | 'greywater'>;
+
+export type WaterLegendSection =
+  | 'RAINWATER'
+  | 'IRRIGATION'
+  | 'FILTERED GREYWATER'
+  | 'WATER EARTHWORKS';
+
+export const WATER_LEGEND_SECTION_ORDER: readonly WaterLegendSection[] = [
+  'RAINWATER',
+  'IRRIGATION',
+  'FILTERED GREYWATER',
+  'WATER EARTHWORKS',
+];
+
+const RAINWATER_FEATURES = new Set([
+  'jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000', 'rain_barrel',
+  'first_flush', 'pump_filter',
+]);
+
+const FILTERED_GREYWATER_FEATURES = new Set([
+  'greywater_outlet', 'greywater_diverter', 'greywater_basin', 'banana_circle', 'tree_basin',
+]);
+
+const WATER_EARTHWORK_FEATURES = new Set([
+  'pond_small', 'dam', 'infiltration_basin', 'half_moon', 'berm', 'terrace',
+]);
+
+/** Reading-order group for the deterministic Water legend. This is deliberately based on stable
+ * element IDs rather than display names, so a farmer can rename an item without moving it into a
+ * different water system. */
+export function waterLegendSectionForFeature(id: string): WaterLegendSection {
+  if (RAINWATER_FEATURES.has(id) || id.startsWith('jojo_')) return 'RAINWATER';
+  if (FILTERED_GREYWATER_FEATURES.has(id)) return 'FILTERED GREYWATER';
+  if (WATER_EARTHWORK_FEATURES.has(id)) return 'WATER EARTHWORKS';
+  return 'IRRIGATION';
+}
+
+export function waterLegendSectionForRoute(kind: WaterRouteKind): WaterLegendSection {
+  if (kind === 'greywater') return 'FILTERED GREYWATER';
+  if (kind === 'swale') return 'WATER EARTHWORKS';
+  return 'IRRIGATION';
+}
 
 export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
   kind: WaterRouteKind;
@@ -15,10 +58,10 @@ export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
 
 /** One drawing registry for every line kind assigned to the Water sheet. */
 export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
-  swale: { color: '#4EA6D8', dash: [], width: 4.5 },
-  pipe: { color: '#2379A8', dash: [14, 6], width: 5 },
-  drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5 },
-  greywater: { color: '#9B56B5', dash: [10, 6], width: 4.2 },
+  swale: { color: '#4EA6D8', dash: [], width: 4.5, label: 'Swale / contour water line' },
+  pipe: { color: '#2379A8', dash: [14, 6], width: 5, label: 'Buried water pipe' },
+  drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5, label: 'Drip irrigation' },
+  greywater: { color: '#9B56B5', dash: [10, 6], width: 4.2, label: 'Filtered greywater line' },
 };
 
 export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | undefined {
