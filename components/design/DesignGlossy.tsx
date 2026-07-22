@@ -2109,7 +2109,7 @@ function drawWaterLeaderLabels(
     return { ...group, avgY, side, target };
   });
 
-  const fontSize = Math.max(17, Math.round(W * 0.0095));
+  const fontSize = Math.max(19, Math.round(W * 0.011));
   const rowGap = Math.max(34, Math.round(fontSize * 1.7));
   // Keep callouts away from the browser/card edges and the deterministic scale bar. The old
   // 1.8% inset made labels look cropped whenever a mobile page drifted horizontally by a few px.
@@ -2129,7 +2129,13 @@ function drawWaterLeaderLabels(
     sideGroups.forEach((group, index) => {
       const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` ×${group.points.length}` : ''}`;
       const textW = Math.min(W * 0.24, ctx.measureText(text).width);
-      const x = side === 'left' ? Math.round(W * 0.035) : Math.round(W * 0.965) - textW;
+      // Benchmark sheets keep callouts close to the property instead of throwing them to the
+      // canvas edge. The saved feature remains the anchor; only the render-time label moves.
+      const safe = Math.round(W * 0.022);
+      const labelGap = Math.round(W * 0.025);
+      const x = side === 'left'
+        ? Math.max(safe, Math.round(box.x0 * W) - labelGap - textW)
+        : Math.min(W - safe - textW, Math.round(box.x1 * W) + labelGap);
       const leaderEndX = side === 'left' ? x + textW + fontSize * 0.35 : x - fontSize * 0.35;
       const elbowX = side === 'left'
         ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
@@ -2284,11 +2290,13 @@ async function buildDrivewayOverlay(
     if (sourceImage) {
       const img = await loadImage(sourceImage);
       ctx.filter = precision
-        ? 'saturate(0.2) contrast(0.72) brightness(1.02)'
+        ? 'saturate(0.16) contrast(0.78) brightness(0.76)'
         : 'saturate(0.32) contrast(0.82) brightness(0.98)';
+      ctx.globalAlpha = precision ? 0.76 : 1;
       ctx.drawImage(img, 0, 0, W, H);
+      ctx.globalAlpha = 1;
       ctx.filter = 'none';
-      ctx.fillStyle = precision ? 'rgba(154,150,136,0.16)' : 'rgba(122,122,112,0.12)';
+      ctx.fillStyle = precision ? 'rgba(31,38,33,0.28)' : 'rgba(122,122,112,0.12)';
       ctx.fillRect(0, 0, W, H);
     } else {
       const wash = ctx.createLinearGradient(0, 0, W, H);
@@ -2317,7 +2325,7 @@ async function buildDrivewayOverlay(
       ctx.stroke();
     }
     traceNormalisedPath(ctx, refLayers.driveway, W, H);
-    ctx.strokeStyle = precision ? '#5A5D57' : '#414640';
+    ctx.strokeStyle = precision ? 'rgba(66,72,66,0.82)' : '#414640';
     ctx.lineWidth = roadW;
     ctx.stroke();
   }
@@ -6020,7 +6028,7 @@ async function composeStyleSheet(
   layerLabel: string,
   includeToolGlyphs = true,
   exactGeometry = false,
-  options: { sheetNumber?: string; legendRows?: StyleLegendRow[]; footerText?: string } = {},
+  options: { sheetNumber?: string; legendRows?: StyleLegendRow[]; footerHeading?: string; footerText?: string } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -6035,17 +6043,42 @@ async function composeStyleSheet(
   ctx.drawImage(map, 0, 0);
 
   // ── Legend panel ──
-  ctx.fillStyle = '#FBF6EC';
+  const benchmarkPanel = styleLabel === 'Reference Blueprint' && filter === 'water';
+  const panelInset = benchmarkPanel ? Math.max(12, Math.round(legendW * 0.035)) : 0;
+  ctx.fillStyle = benchmarkPanel ? '#0B2116' : '#FBF6EC';
   ctx.fillRect(W, 0, legendW, H);
+  if (benchmarkPanel) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.3)';
+    ctx.shadowBlur = Math.round(legendW * 0.035);
+    ctx.shadowOffsetY = Math.round(legendW * 0.012);
+    roundRectPath(
+      ctx,
+      W + panelInset,
+      panelInset,
+      legendW - panelInset * 2,
+      H - panelInset * 2,
+      Math.round(legendW * 0.055),
+    );
+    ctx.fillStyle = '#F7F2E7';
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.strokeStyle = 'rgba(67,61,48,0.36)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.restore();
+  }
   const pad = Math.round(legendW * 0.075);
-  const lx = W + pad;
-  const maxX = outW - pad;
+  const lx = W + panelInset + pad;
+  const maxX = outW - panelInset - pad;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  let y = pad + Math.round(legendW * 0.09);
+  let y = panelInset + pad + Math.round(legendW * 0.07);
   ctx.fillStyle = '#20190F';
   const titleSize = Math.round(legendW * 0.067);
-  ctx.font = `800 ${titleSize}px Georgia, serif`;
+  ctx.font = benchmarkPanel
+    ? `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`
+    : `800 ${titleSize}px Georgia, serif`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
@@ -6109,7 +6142,9 @@ async function composeStyleSheet(
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerTextW = maxX - lx;
   const wrapFooterText = (value: string): string[] => {
-    ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
+    ctx.font = options.footerHeading
+      ? `500 ${footerFs}px system-ui, sans-serif`
+      : `italic 500 ${footerFs}px system-ui, sans-serif`;
     const lines: string[] = [];
     let current = '';
     for (const word of value.split(/\s+/)) {
@@ -6125,10 +6160,12 @@ async function composeStyleSheet(
     return lines;
   };
   const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
+  const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   const footerBlockH = customFooterLines.length
-    ? customFooterLines.length * footerLineH + Math.round(legendW * 0.035)
+    ? customFooterLines.length * footerLineH + footerHeadingH + Math.round(legendW * 0.035)
     : Math.round(legendW * 0.16);
-  const footerTop = H - pad - footerBlockH;
+  const panelBottom = H - panelInset;
+  const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const layoutRows = (fontSize: number) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
@@ -6179,8 +6216,23 @@ async function composeStyleSheet(
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
   if (customFooterLines.length) {
-    ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
     let footerY = footerTop + Math.round(legendW * 0.035);
+    if (options.footerHeading) {
+      ctx.strokeStyle = 'rgba(11,18,11,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(lx, footerTop);
+      ctx.lineTo(maxX, footerTop);
+      ctx.stroke();
+      ctx.fillStyle = '#1F4D2B';
+      ctx.font = `800 ${Math.round(legendW * 0.034)}px ${REFERENCE_LABEL_FONT}`;
+      ctx.fillText(options.footerHeading, lx, footerY);
+      footerY += footerHeadingH;
+      ctx.fillStyle = '#6C6457';
+      ctx.font = `500 ${footerFs}px system-ui, sans-serif`;
+    } else {
+      ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
+    }
     for (const line of customFooterLines) {
       ctx.fillText(line, lx, footerY);
       footerY += footerLineH;
@@ -6297,7 +6349,9 @@ interface SavedGlossy {
 // v32: Water symbols and routes gain print-scale emphasis over detailed illustrated ground.
 // v34: Water technical ink is strengthened for phone-size reading; geometry is unchanged.
 // v35: Water AI terrain gains the benchmark tonal brief; exact ground washes and access recede.
-const PLAN_VERSION = 'v35';
+// v36: Water gains benchmark focus grading, close callouts and an inset editorial legend panel.
+const PLAN_VERSION = 'v36';
+const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -6810,6 +6864,9 @@ export default function DesignGlossy({
         labels,
         labelStyle: styleDef.labelStyle,
         contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
+        focusBoundaryPx: geometryLock && styleDef.key === 'precision_atlas' && filter === 'water'
+          ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
+          : undefined,
         width: W,
         height: H,
       });
@@ -6826,6 +6883,12 @@ export default function DesignGlossy({
         geometryLock ? REFERENCE_SHEET_LABEL[filter] : layerLabel,
         !geometryLock,
         geometryLock,
+        geometryLock && filter === 'water'
+          ? {
+              footerHeading: 'NOTES',
+              footerText: WATER_REFERENCE_NOTES,
+            }
+          : {},
       );
       // h. Show, cache (mapKey = producer:<style>) and add to the session gallery.
       setResultImage(sheet);
@@ -7104,6 +7167,9 @@ export default function DesignGlossy({
           labels,
           labelStyle: styleDef.labelStyle,
           contextTreatment: geometryLock && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
+          focusBoundaryPx: geometryLock && styleDef.key === 'precision_atlas' && f === 'water'
+            ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
+            : undefined,
           width: W,
           height: H,
         });
@@ -7115,9 +7181,15 @@ export default function DesignGlossy({
           f,
           placeName,
           styleDef.label,
-          layerLabel,
+          geometryLock ? REFERENCE_SHEET_LABEL[f] : layerLabel,
           !geometryLock,
           geometryLock,
+          geometryLock && f === 'water'
+            ? {
+                footerHeading: 'NOTES',
+                footerText: WATER_REFERENCE_NOTES,
+              }
+            : {},
         );
         try {
           saveGlossy(state.siteId, `producer:${styleKey}:${f}`, {
@@ -7265,6 +7337,9 @@ export default function DesignGlossy({
         labels,
         labelStyle: styleDef.labelStyle,
         contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
+        focusBoundaryPx: locked && styleDef.key === 'precision_atlas' && f === 'water'
+          ? refLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
+          : undefined,
         width: W,
         height: H,
       });
@@ -7276,9 +7351,15 @@ export default function DesignGlossy({
         f,
         placeName,
         styleDef.label,
-        layerLabel,
+        locked ? REFERENCE_SHEET_LABEL[f] : layerLabel,
         !locked,
         locked,
+        locked && f === 'water'
+          ? {
+              footerHeading: 'NOTES',
+              footerText: WATER_REFERENCE_NOTES,
+            }
+          : {},
       );
     },
     [state, frame, refLayers, placeName],

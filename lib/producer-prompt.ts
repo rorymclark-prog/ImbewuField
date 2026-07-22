@@ -70,9 +70,9 @@ export function buildLockedIllustrationPrompt(
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
         `WATER BACKGROUND ROLE: this pass creates only the polished landscape artwork beneath a professional Water, Greywater & Irrigation plan. The app adds every saved tank, tap, basin, pond, pipe, greywater route, drip route, leader, label and legend afterwards at measured positions. Do not paint, anticipate, duplicate or reinterpret that technical layer.`,
-        `TONAL HIERARCHY: make the property interior clear and luminous, with light-to-mid-value sage lawn and warm buff soil roughly 15-20% brighter than the source photograph. Keep the illustrated land beyond the boundary slightly darker and less saturated so the property reads first without becoming a hard cut-out. Reserve the darkest values for existing roofs and mature tree masses, not open ground.`,
-        `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds, paving and asphalt through believable directly-overhead watercolor-and-gouache texture. Use fine dry-brush grain and restrained natural variation, never a flat green wash, generic blur, dark satellite filter or decorative planting.`,
-        `QUIET ACCESS: keep the existing driveway as one subdued flat ground surface with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
+        `TONAL HIERARCHY: use a deep dark-green illustrated forest context beyond the property, with a moderate olive/moss property interior. Keep the whole sheet high-contrast, moody and editorial from directly overhead; do not brighten or pale the land relative to the source.`,
+        `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds and paving through layered watercolor-and-gouache texture with fine dry-brush grain. Keep the driveway quiet, flat and charcoal, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
+        `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible. Add no technical overlays, symbols, text or sheet furniture; the app adds them afterwards.`,
       ].join('\n\n')
     : '';
   return [

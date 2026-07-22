@@ -75,14 +75,22 @@ const EMPHASIZED_WATER_HARDWARE = new Set([
   'greywater_outlet', 'water_trough', 'water_trough2',
 ]);
 
+const WATER_BASIN_FEATURES = new Set([
+  'greywater_basin', 'tree_basin', 'banana_circle', 'infiltration_basin', 'half_moon',
+]);
+
+const WATER_POND_FEATURES = new Set(['pond_small', 'dam']);
+
 /**
  * Small operational fittings are cartographic point symbols rather than literal footprints.
  * Their saved centre remains exact, but a modest print-scale enlargement keeps them legible on a
- * phone without letting them compete with ponds, basins or other measured landscape areas.
+ * phone without changing their saved footprint or centre.
  */
 export function waterFeaturePresentationScale(id: string): number {
-  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.5;
-  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.32;
+  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.65;
+  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.45;
+  if (WATER_BASIN_FEATURES.has(id)) return 1.2;
+  if (WATER_POND_FEATURES.has(id)) return 1.15;
   return 1;
 }
 

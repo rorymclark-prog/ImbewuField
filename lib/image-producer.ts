@@ -59,6 +59,9 @@ export interface CompositeInputs {
   labelStyle?: LabelStyle;
   /** Optional deterministic treatment for factual satellite context outside the boundary. */
   contextTreatment?: 'original' | 'precision_atlas';
+  /** Optional factual boundary used only to focus the finished artwork. Unlike boundaryPx this
+   *  never clips the model; it applies a benchmark-style tonal hierarchy around the saved site. */
+  focusBoundaryPx?: number[];
   /** Output canvas size (the composite/bg rect × pixelRatio). */
   width: number;
   height: number;
@@ -513,6 +516,46 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
     // partial/transparent frame can never leave the map blank), then the model.
     drawSatelliteContext();
     ctx.drawImage(model, 0, 0, width, height);
+  }
+
+  const focusBoundary = inp.focusBoundaryPx;
+  if (inp.contextTreatment === 'precision_atlas' && Array.isArray(focusBoundary) && focusBoundary.length >= 6) {
+    // The reference sheets make the designed property legible against deep surrounding forest.
+    // This is a deterministic colour grade only: it cannot move, add or erase a single feature.
+    ctx.fillStyle = 'rgba(17,30,19,0.12)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, width, height);
+    ctx.moveTo(focusBoundary[0], focusBoundary[1]);
+    for (let i = 2; i + 1 < focusBoundary.length; i += 2) {
+      ctx.lineTo(focusBoundary[i], focusBoundary[i + 1]);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(4,18,11,0.36)';
+    ctx.fill('evenodd');
+    ctx.restore();
+
+    ctx.save();
+    traceBoundary(ctx, focusBoundary);
+    ctx.clip();
+    ctx.fillStyle = 'rgba(122,118,69,0.09)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
+
+    const vignette = ctx.createRadialGradient(
+      width * 0.5,
+      height * 0.46,
+      Math.min(width, height) * 0.18,
+      width * 0.5,
+      height * 0.46,
+      Math.max(width, height) * 0.72,
+    );
+    vignette.addColorStop(0, 'rgba(3,12,8,0)');
+    vignette.addColorStop(1, 'rgba(3,12,8,0.2)');
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, width, height);
   }
 
   // Exact overlay (sector wedges etc.) — drawn UNCLIPPED so arrows that
