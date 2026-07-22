@@ -3664,7 +3664,7 @@ function drawTrueFootprint(
 ): void {
   const waterArtwork = def.category === 'water' || [
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
-    'half_moon', 'berm', 'terrace', 'mulch_bank',
+    'half_moon', 'berm', 'terrace', 'mulch_bank', 'duck_pond',
   ].includes(def.id);
   if (waterArtwork) {
     drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false);
@@ -3744,20 +3744,20 @@ function drawTrueFootprint(
     ctx.save();
     traceCanopy();
     ctx.clip();
-    const blobCount = r < 7 ? 9 : Math.max(36, Math.min(64, Math.round(r * 0.85)));
+    const blobCount = r < 7 ? 12 : Math.max(58, Math.min(132, Math.round(r * 1.7)));
     for (let i = 0; i < blobCount; i++) {
       const a = stableCartographicUnit(seed, 100 + i) * Math.PI * 2;
       // sqrt distributes crowns across the canopy area instead of bunching every leaf at centre.
       const d = r * Math.sqrt(stableCartographicUnit(seed, 200 + i)) * 0.86;
-      const br = r * (0.075 + stableCartographicUnit(seed, 300 + i) * 0.105);
+      const br = r * (0.028 + stableCartographicUnit(seed, 300 + i) * 0.058);
       ctx.beginPath();
       ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1.2, br), 0, Math.PI * 2);
       ctx.fillStyle = palette[i % palette.length];
-      ctx.globalAlpha = 0.58 + stableCartographicUnit(seed, 400 + i) * 0.34;
+      ctx.globalAlpha = 0.42 + stableCartographicUnit(seed, 400 + i) * 0.3;
       ctx.fill();
     }
     if (r >= 7) {
-      const fleckCount = Math.max(24, Math.min(52, Math.round(r * 0.7)));
+      const fleckCount = Math.max(34, Math.min(96, Math.round(r * 1.2)));
       for (let i = 0; i < fleckCount; i++) {
         const a = stableCartographicUnit(seed, 700 + i) * Math.PI * 2;
         const d = r * Math.sqrt(stableCartographicUnit(seed, 800 + i)) * 0.84;
@@ -6157,7 +6157,8 @@ interface SavedGlossy {
 //        ladders, declutters Sector and fits Phasing into the shared cream editorial panel.
 //   v25 — 2026-07-22: numbered Sector map markers now match the numbered external legend exactly.
 //   v26 — 2026-07-22: Sector numbers de-conflict and keep short leaders to shared bearings.
-const PLAN_VERSION = 'v26';
+//   v27 — 2026-07-22: realistic vetiver and tree texture plus dedicated catalogue symbols.
+const PLAN_VERSION = 'v27';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

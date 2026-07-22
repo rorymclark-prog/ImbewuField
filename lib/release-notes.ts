@@ -20,6 +20,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Vetiver banks now read as dense green hedges instead of brown strips',
+      'Trees use finer top-down canopy texture instead of large circular blobs',
+      'Duck ponds, animal pens and site fixtures now use their own plan symbols',
       'Sector numbers now separate cleanly when sun, wind and access share a bearing',
       'Refresh update now detects the new build even when it arrives before the first check',
       'Sector numbers now match the exact sun, wind, fire, access and fall marks on the map',

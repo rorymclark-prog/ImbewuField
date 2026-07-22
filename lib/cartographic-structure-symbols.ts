@@ -16,6 +16,18 @@ type SymbolKind =
   | 'shed'
   | 'kraal'
   | 'trough'
+  | 'worm-farm'
+  | 'market-stall'
+  | 'goat-pen'
+  | 'pig-pen'
+  | 'biodigester'
+  | 'shade-sail'
+  | 'gate'
+  | 'bench'
+  | 'sign'
+  | 'solar-panel'
+  | 'washline'
+  | 'other-structure'
   | 'generic-structure'
   | 'generic-animal';
 
@@ -32,6 +44,18 @@ const ID_KIND: Record<string, SymbolKind> = {
   kraal: 'kraal',
   water_trough: 'trough',
   water_trough2: 'trough',
+  worm_farm: 'worm-farm',
+  market_stall: 'market-stall',
+  goat_pen: 'goat-pen',
+  pig_pen: 'pig-pen',
+  biodigester: 'biodigester',
+  shade_sail: 'shade-sail',
+  gate: 'gate',
+  bench: 'bench',
+  sign: 'sign',
+  solar_panel_ground: 'solar-panel',
+  washline: 'washline',
+  other_structure: 'other-structure',
 };
 
 const CATEGORY_KIND: Partial<Record<ElementCategory, SymbolKind>> = {
@@ -46,6 +70,10 @@ function kindFor(element: CartographicSymbolElement): SymbolKind | undefined {
 
 export function supportsCartographicStructureSymbol(element: CartographicSymbolElement): boolean {
   return kindFor(element) != null;
+}
+
+export function cartographicStructureKind(element: CartographicSymbolElement): string | undefined {
+  return kindFor(element);
 }
 
 function hash(seed: number, n: number): number {
@@ -72,7 +100,7 @@ function line(ctx: CanvasRenderingContext2D, points: Array<[number, number]>, co
   ctx.setLineDash([]);
 }
 
-function ellipse(ctx: CanvasRenderingContext2D, x: number, y: number, rx: number, ry: number, fill: string, stroke: string, width: number) {
+function ellipse(ctx: CanvasRenderingContext2D, x: number, y: number, rx: number, ry: number, fill: string | CanvasGradient | CanvasPattern, stroke: string, width: number) {
   ctx.beginPath();
   ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
   ctx.fillStyle = fill;
@@ -162,6 +190,120 @@ function drawSymbol(ctx: CanvasRenderingContext2D, kind: SymbolKind, w: number, 
       rect(ctx, -w / 2, -h / 2, w, h, '#777A73', dark, s);
       rect(ctx, -w * 0.34, -h * 0.34, w * 0.68, h * 0.68, '#9FB4A3', '#D7D5BD', s * 0.65);
       line(ctx, [[-w * 0.3, -h * 0.1], [w * 0.3, -h * 0.1]], '#D9E6D5', s * 0.55);
+      break;
+    case 'worm-farm':
+      drawWoodenFrame(ctx, w * 0.92, h * 0.86, s, seed);
+      for (let i = -1; i <= 1; i++) {
+        const y = i * h * 0.24;
+        rect(ctx, -w * 0.38, y - h * 0.09, w * 0.76, h * 0.18, '#4F4934', '#B99A68', s * 0.45);
+        for (let j = 0; j < 4; j++) {
+          ellipse(ctx, -w * 0.24 + j * w * 0.16, y, Math.max(0.7, s * 0.5), Math.max(0.5, s * 0.32), '#B86B4B', '#6C3F31', s * 0.3);
+        }
+      }
+      break;
+    case 'market-stall': {
+      rect(ctx, -w * 0.46, -h * 0.42, w * 0.92, h * 0.84, '#D5C49D', dark, s);
+      const stripeW = w * 0.92 / 6;
+      for (let i = 0; i < 6; i++) {
+        ctx.fillStyle = i % 2 ? '#E5D7B9' : '#6E8052';
+        ctx.fillRect(-w * 0.46 + stripeW * i, -h * 0.42, stripeW, h * 0.48);
+      }
+      line(ctx, [[-w * 0.38, h * 0.2], [w * 0.38, h * 0.2]], wood, s * 1.15);
+      ellipse(ctx, -w * 0.22, h * 0.08, s * 1.2, s * 1.2, '#B86A3C', '#5B4932', s * 0.35);
+      ellipse(ctx, 0, h * 0.08, s * 1.2, s * 1.2, '#7C9A4D', '#5B4932', s * 0.35);
+      ellipse(ctx, w * 0.22, h * 0.08, s * 1.2, s * 1.2, '#D3A84E', '#5B4932', s * 0.35);
+      break;
+    }
+    case 'goat-pen':
+      rect(ctx, -w / 2, -h / 2, w, h, 'rgba(137,116,76,0.26)', '#765D3D', s);
+      for (let x = -w * 0.4; x <= w * 0.4; x += Math.max(5, w * 0.2)) {
+        line(ctx, [[x, -h / 2], [x, h / 2]], '#B89962', s * 0.5);
+      }
+      rect(ctx, -w * 0.42, -h * 0.4, w * 0.34, h * 0.32, '#725C41', dark, s * 0.7);
+      line(ctx, [[-w * 0.42, -h * 0.08], [-w * 0.08, -h * 0.4]], '#C2A87A', s * 0.65);
+      break;
+    case 'pig-pen':
+      rect(ctx, -w / 2, -h / 2, w, h, 'rgba(143,105,72,0.32)', '#76523B', s);
+      ellipse(ctx, w * 0.12, h * 0.08, w * 0.25, h * 0.22, '#74533B', '#4A392D', s * 0.65);
+      for (let i = 0; i < 5; i++) {
+        ellipse(ctx, w * (hash(seed, i) - 0.5) * 0.38, h * (hash(seed, i + 10) - 0.5) * 0.32, s * 0.75, s * 0.55, '#A97762', '#69483B', s * 0.3);
+      }
+      rect(ctx, -w * 0.42, -h * 0.4, w * 0.3, h * 0.28, '#725C41', dark, s * 0.65);
+      break;
+    case 'biodigester': {
+      const radius = Math.min(w, h) * 0.38;
+      const shell = ctx.createRadialGradient(-radius * 0.25, -radius * 0.25, 1, 0, 0, radius);
+      shell.addColorStop(0, '#A7B89A');
+      shell.addColorStop(0.62, '#61755B');
+      shell.addColorStop(1, '#34473B');
+      ellipse(ctx, 0, 0, radius, radius, shell, dark, s);
+      ellipse(ctx, 0, 0, radius * 0.18, radius * 0.18, '#405449', '#D1D7C5', s * 0.5);
+      line(ctx, [[radius * 0.68, 0], [w * 0.44, 0], [w * 0.44, -h * 0.28]], '#769B8A', s * 0.9);
+      break;
+    }
+    case 'shade-sail':
+      ctx.beginPath();
+      ctx.moveTo(-w * 0.44, h * 0.38);
+      ctx.lineTo(0, -h * 0.44);
+      ctx.lineTo(w * 0.44, h * 0.38);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(203,190,146,0.5)';
+      ctx.fill();
+      ctx.strokeStyle = '#59685A';
+      ctx.lineWidth = s;
+      ctx.stroke();
+      for (const [x, y] of [[-w * 0.44, h * 0.38], [0, -h * 0.44], [w * 0.44, h * 0.38]] as Array<[number, number]>) {
+        ellipse(ctx, x, y, s * 1.25, s * 1.25, '#4B4C43', pale, s * 0.45);
+      }
+      break;
+    case 'gate':
+      ellipse(ctx, -w * 0.43, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
+      ellipse(ctx, w * 0.43, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
+      line(ctx, [[-w * 0.4, 0], [-w * 0.05, -h * 0.38]], '#D5C49D', s * 1.05);
+      line(ctx, [[w * 0.4, 0], [w * 0.05, -h * 0.38]], '#D5C49D', s * 1.05);
+      ctx.beginPath();
+      ctx.arc(-w * 0.4, 0, Math.min(w * 0.36, h * 0.4), -Math.PI * 0.8, 0);
+      ctx.strokeStyle = 'rgba(213,196,157,0.55)';
+      ctx.lineWidth = s * 0.5;
+      ctx.setLineDash([s * 1.5, s * 1.5]);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(w * 0.4, 0, Math.min(w * 0.36, h * 0.4), Math.PI, Math.PI * 1.8);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      break;
+    case 'bench':
+      for (const y of [-h * 0.18, h * 0.18]) rect(ctx, -w * 0.44, y - h * 0.09, w * 0.88, h * 0.18, wood, dark, s * 0.55);
+      rect(ctx, -w * 0.34, -h * 0.42, w * 0.08, h * 0.84, '#4A4539', dark, s * 0.4);
+      rect(ctx, w * 0.26, -h * 0.42, w * 0.08, h * 0.84, '#4A4539', dark, s * 0.4);
+      break;
+    case 'sign':
+      rect(ctx, -w * 0.38, -h * 0.42, w * 0.76, h * 0.46, '#D9C99E', dark, s);
+      line(ctx, [[0, h * 0.02], [0, h * 0.44]], wood, s * 1.25);
+      line(ctx, [[-w * 0.22, -h * 0.27], [w * 0.22, -h * 0.27]], '#6A694F', s * 0.55);
+      break;
+    case 'solar-panel':
+      rect(ctx, -w * 0.46, -h * 0.42, w * 0.92, h * 0.84, '#294C5F', '#D4D2BD', s);
+      for (const x of [-w * 0.23, 0, w * 0.23]) line(ctx, [[x, -h * 0.4], [x, h * 0.4]], '#7FA5B3', s * 0.48);
+      for (const y of [-h * 0.2, 0, h * 0.2]) line(ctx, [[-w * 0.44, y], [w * 0.44, y]], '#7FA5B3', s * 0.48);
+      line(ctx, [[-w * 0.32, h * 0.45], [w * 0.32, h * 0.45]], '#3C3F3C', s * 1.05);
+      break;
+    case 'washline':
+      line(ctx, [[-w * 0.42, -h * 0.4], [-w * 0.42, h * 0.4]], wood, s * 1.1);
+      line(ctx, [[w * 0.42, -h * 0.4], [w * 0.42, h * 0.4]], wood, s * 1.1);
+      for (const y of [-h * 0.22, 0, h * 0.22]) line(ctx, [[-w * 0.4, y], [w * 0.4, y]], '#D9D4C3', s * 0.52);
+      for (let i = 0; i < 4; i++) {
+        const x = -w * 0.27 + i * w * 0.18;
+        rect(ctx, x, -h * 0.18, w * 0.1, h * 0.18, i % 2 ? '#9FB8A1' : '#D4A67A', '#5D6259', s * 0.3);
+      }
+      break;
+    case 'other-structure':
+      ctx.strokeStyle = '#C9BFA7';
+      ctx.lineWidth = s;
+      ctx.setLineDash([s * 2, s * 1.6]);
+      ctx.strokeRect(-w / 2, -h / 2, w, h);
+      ctx.setLineDash([]);
+      ellipse(ctx, 0, 0, Math.max(s * 1.4, Math.min(w, h) * 0.09), Math.max(s * 1.4, Math.min(w, h) * 0.09), '#EEE5D1', '#5F6258', s * 0.65);
       break;
     case 'generic-animal':
       rect(ctx, -w / 2, -h / 2, w, h, 'rgba(154,119,70,0.45)', dark, s);

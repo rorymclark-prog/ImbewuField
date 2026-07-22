@@ -19,7 +19,12 @@ export type CartographicWaterSymbolId =
   | 'pump'
   | 'filter'
   | 'greywater-outlet'
-  | 'diverter';
+  | 'diverter'
+  | 'vetiver-bank'
+  | 'half-moon'
+  | 'berm'
+  | 'terrace'
+  | 'unknown-water';
 
 export interface CartographicWaterSymbolOptions {
   ctx: CanvasRenderingContext2D;
@@ -214,29 +219,123 @@ function trough(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: num
 }
 
 function vetiverBank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number): void {
-  ctx.fillStyle = '#6E5A37';
+  const alongX = w >= h;
+  const cross = Math.max(1, Math.min(w, h));
+  const length = Math.max(w, h);
+  const bankWash = alongX
+    ? ctx.createLinearGradient(0, -h / 2, 0, h / 2)
+    : ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
+  bankWash.addColorStop(0, '#31482E');
+  bankWash.addColorStop(0.5, '#657944');
+  bankWash.addColorStop(1, '#354E31');
+  ctx.fillStyle = bankWash;
   ctx.fillRect(-w / 2, -h / 2, w, h);
-  ctx.strokeStyle = '#D9C899';
+  ctx.strokeStyle = '#9EB56A';
+  ctx.lineWidth = stroke;
+  ctx.strokeRect(-w / 2, -h / 2, w, h);
+  const count = Math.max(5, Math.min(52, Math.round(length / Math.max(3.5, cross * 0.56))));
+  for (let i = 0; i < count; i += 1) {
+    const t = (i + 0.5) / count - 0.5;
+    const bx = alongX ? t * w : (hash(seed, i) - 0.5) * cross * 0.12;
+    const by = alongX ? (hash(seed, 40 + i) - 0.5) * cross * 0.12 : t * h;
+    ctx.lineWidth = Math.max(0.6, stroke * 0.42);
+    for (let blade = -3; blade <= 3; blade += 1) {
+      const spread = (blade / 3) * cross * (0.34 + hash(seed, 80 + i + blade) * 0.1);
+      const alongJitter = (hash(seed, 130 + i * 7 + blade) - 0.5) * cross * 0.22;
+      const tipX = alongX ? bx + alongJitter : bx + spread;
+      const tipY = alongX ? by + spread : by + alongJitter;
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.quadraticCurveTo(
+        (bx + tipX) / 2 + (alongX ? 0 : spread * 0.08),
+        (by + tipY) / 2 + (alongX ? spread * 0.08 : 0),
+        tipX,
+        tipY,
+      );
+      ctx.strokeStyle = blade % 2 ? '#B0C67A' : '#789A50';
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(bx, by, Math.max(0.55, stroke * 0.38), 0, TAU);
+    ctx.fillStyle = '#263D29';
+    ctx.fill();
+  }
+}
+
+function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: 'half-moon' | 'berm' | 'terrace'): void {
+  const dark = '#4E4937';
+  const pale = '#D7C79B';
+  if (kind === 'half-moon') {
+    const r = Math.min(w, h) * 0.44;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, Math.PI * 0.08, Math.PI * 0.92);
+    ctx.arc(0, r * 0.18, r * 0.62, Math.PI * 0.92, Math.PI * 0.08, true);
+    ctx.closePath();
+    finish(ctx, '#90714A', pale, stroke);
+    ctx.beginPath();
+    ctx.arc(0, r * 0.08, r * 0.38, Math.PI * 0.12, Math.PI * 0.88);
+    ctx.strokeStyle = '#6E8A4B';
+    ctx.lineWidth = Math.max(0.7, stroke * 0.55);
+    ctx.stroke();
+    return;
+  }
+
+  const wash = w >= h
+    ? ctx.createLinearGradient(0, -h / 2, 0, h / 2)
+    : ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
+  wash.addColorStop(0, kind === 'berm' ? '#9A8057' : '#796D52');
+  wash.addColorStop(0.5, kind === 'berm' ? '#C1A46D' : '#A69772');
+  wash.addColorStop(1, kind === 'berm' ? '#715B3D' : '#655B46');
+  ctx.fillStyle = wash;
+  ctx.fillRect(-w / 2, -h / 2, w, h);
+  ctx.strokeStyle = pale;
   ctx.lineWidth = stroke;
   ctx.strokeRect(-w / 2, -h / 2, w, h);
   const alongX = w >= h;
-  const length = alongX ? w : h;
-  const count = Math.max(4, Math.min(34, Math.round(length / Math.max(3, stroke * 2.2))));
-  for (let i = 0; i < count; i += 1) {
-    const t = (i + 0.5) / count - 0.5;
-    const bx = alongX ? t * w : (hash(seed, i) - 0.5) * w * 0.26;
-    const by = alongX ? (hash(seed, 40 + i) - 0.5) * h * 0.28 : t * h;
-    const tuft = Math.min(w, h) * (0.34 + hash(seed, 80 + i) * 0.12);
-    ctx.strokeStyle = i % 2 ? '#A9BD67' : '#789A4A';
-    ctx.lineWidth = Math.max(0.65, stroke * 0.48);
-    for (let blade = -2; blade <= 2; blade += 1) {
-      ctx.beginPath();
-      ctx.moveTo(bx, by);
-      if (alongX) ctx.lineTo(bx + blade * tuft * 0.1, by - tuft + Math.abs(blade) * tuft * 0.08);
-      else ctx.lineTo(bx - tuft + Math.abs(blade) * tuft * 0.08, by + blade * tuft * 0.1);
-      ctx.stroke();
+  const cross = Math.min(w, h);
+  const count = Math.max(2, Math.min(9, Math.floor(cross / Math.max(3, stroke * 1.8))));
+  for (let i = 1; i <= count; i += 1) {
+    const offset = -cross / 2 + (i / (count + 1)) * cross;
+    ctx.beginPath();
+    if (alongX) {
+      ctx.moveTo(-w / 2 + 2, offset);
+      ctx.lineTo(w / 2 - 2, offset);
+    } else {
+      ctx.moveTo(offset, -h / 2 + 2);
+      ctx.lineTo(offset, h / 2 - 2);
     }
+    ctx.strokeStyle = kind === 'berm' ? 'rgba(77,73,55,0.55)' : 'rgba(225,215,184,0.52)';
+    ctx.lineWidth = Math.max(0.55, stroke * 0.38);
+    ctx.stroke();
   }
+  if (kind === 'terrace') {
+    ctx.beginPath();
+    if (alongX) {
+      ctx.moveTo(-w / 2, 0);
+      ctx.lineTo(w / 2, 0);
+    } else {
+      ctx.moveTo(0, -h / 2);
+      ctx.lineTo(0, h / 2);
+    }
+    ctx.strokeStyle = dark;
+    ctx.lineWidth = Math.max(1, stroke * 0.75);
+    ctx.stroke();
+  }
+}
+
+function unknownWater(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number): void {
+  const r = Math.max(2, Math.min(w, h) * 0.16);
+  ctx.beginPath();
+  ctx.roundRect(-w * 0.46, -h * 0.46, w * 0.92, h * 0.92, r);
+  ctx.fillStyle = 'rgba(94,145,158,0.22)';
+  ctx.fill();
+  ctx.strokeStyle = '#6F9DA6';
+  ctx.lineWidth = stroke;
+  ctx.setLineDash([stroke * 2, stroke * 1.6]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ellipse(ctx, 0, 0, Math.max(stroke * 1.4, r * 0.42), Math.max(stroke * 1.4, r * 0.42));
+  finish(ctx, '#D9E7E4', '#315A64', Math.max(0.65, stroke * 0.55));
 }
 
 function smallHardware(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: string): void {
@@ -264,6 +363,8 @@ export function canonicalCartographicWaterId(raw: string): string {
   if (key === 'pump-filter') return 'pump';
   if (key === 'greywater-diverter') return 'diverter';
   if (key === 'mulch-bank') return 'vetiver-bank';
+  if (key === 'duck-pond') return 'small-pond';
+  if (key === 'other-water') return 'unknown-water';
   return key;
 }
 
@@ -271,7 +372,8 @@ export function supportsCartographicWaterSymbol(id: string): boolean {
   return new Set([
     'jojo-tank', 'rain-barrel', 'small-pond', 'dam', 'greywater-basin', 'tree-basin',
     'infiltration-basin', 'banana-circle', 'tap', 'borehole', 'trough', 'first-flush',
-    'pump', 'filter', 'greywater-outlet', 'diverter', 'vetiver-bank',
+    'pump', 'filter', 'greywater-outlet', 'diverter', 'vetiver-bank', 'half-moon',
+    'berm', 'terrace', 'unknown-water',
   ]).has(canonicalCartographicWaterId(id));
 }
 
@@ -297,6 +399,8 @@ export function drawCartographicWaterSymbol(options: CartographicWaterSymbolOpti
   else if (key === 'banana-circle') bananaCircle(ctx, width, height, outlineWidth, seed);
   else if (key === 'trough') trough(ctx, width, height, outlineWidth);
   else if (key === 'vetiver-bank') vetiverBank(ctx, width, height, outlineWidth, seed);
+  else if (key === 'half-moon' || key === 'berm' || key === 'terrace') earthwork(ctx, width, height, outlineWidth, key);
+  else if (key === 'unknown-water') unknownWater(ctx, width, height, outlineWidth);
   else if (key === 'tap' || key === 'borehole') smallHardware(ctx, width, height, outlineWidth, key);
   else smallHardware(ctx, width, height, outlineWidth, 'hardware');
 
