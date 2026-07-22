@@ -8,6 +8,11 @@ interface BuildInfo {
   sha?: string | null;
 }
 
+interface PWAUpdateNotifierProps {
+  /** SHA baked into the HTML/JS currently running, not the first network response after mount. */
+  initialBuildSha?: string | null;
+}
+
 const UPDATE_CHECK_MS = 60_000;
 const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
 
@@ -18,14 +23,14 @@ const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
  * any reload-loop risk entirely (there is nothing here that can retrigger
  * itself — only a user click calls location.reload()).
  */
-export default function PWAUpdateNotifier() {
+export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateNotifierProps) {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
-  // This is the build the currently-running JS first observed. A later API response with a
-  // different SHA means Vercel has deployed new code even if Chrome missed the SW lifecycle event.
-  const loadedBuildShaRef = useRef<string | null>(null);
+  // Seeded by the server-rendered layout, so a deployment that lands before the first network
+  // check cannot be mistaken for the build whose JavaScript is already running in this tab.
+  const loadedBuildShaRef = useRef<string | null>(initialBuildSha?.trim() || null);
 
   const markUpdateAvailable = useCallback((sha?: string | null) => {
     if (sha) setNextBuildSha(sha);

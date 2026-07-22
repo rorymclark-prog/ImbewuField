@@ -66,6 +66,12 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+const loadedBuildSha = (
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.GITHUB_SHA ||
+  ''
+).slice(0, 7) || null;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={newsreader.variable + ' ' + publicSans.variable}>
@@ -75,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <LanguageProvider>
               {children}
               <ChatWidget />
-              <PWAUpdateNotifier />
+              <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
               <SampleModeBanner />
             </LanguageProvider>
           </AuthProvider>
