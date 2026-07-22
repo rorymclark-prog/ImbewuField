@@ -21,9 +21,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     when: 'Latest',
     changes: [
       'Water uses a dark illustrated forest around a clear olive and moss property',
-      'Water sheets now use a moodier, high-contrast top-down finish',
+      'Blue, purple and drip routes now use slimmer technical ink',
+      'Route labels name each network once; tank and basin counts stay factual',
       'Driveways stay quiet, flat and charcoal; traced geometry stays exact',
-      'Water artwork invents nothing; the app draws only the plan you saved',
     ],
   },
   {

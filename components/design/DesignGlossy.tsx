@@ -1751,15 +1751,15 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       trace();
       ctx.setLineDash([]);
       ctx.strokeStyle = 'rgba(251,247,229,0.96)';
-      ctx.lineWidth = Math.max(style.width + 5, W * 0.0048);
+      ctx.lineWidth = Math.max(style.width + 3.2, W * 0.0038);
       ctx.stroke();
       trace();
       ctx.strokeStyle = '#173F2C';
-      ctx.lineWidth = Math.max(style.width + 2.3, W * 0.0034);
+      ctx.lineWidth = Math.max(style.width + 1.8, W * 0.0028);
       ctx.stroke();
       trace();
       ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.0024);
+      ctx.lineWidth = Math.max(style.width, W * 0.0019);
       ctx.stroke();
       if (!line.visualBridge) routeDots(line.points, Math.max(10, W * 0.0055), Math.max(2.2, W * 0.00125), '#E2F0A7', '#173F2C');
       continue;
@@ -1769,16 +1769,16 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       trace();
       ctx.setLineDash([]);
       ctx.strokeStyle = 'rgba(251,247,229,0.97)';
-      ctx.lineWidth = Math.max(style.width + 5.2, W * 0.0055);
+      ctx.lineWidth = Math.max(style.width + 3.6, W * 0.0045);
       ctx.stroke();
       trace();
       ctx.strokeStyle = 'rgba(55,30,68,0.94)';
-      ctx.lineWidth = Math.max(style.width + 2.6, W * 0.004);
+      ctx.lineWidth = Math.max(style.width + 1.9, W * 0.0032);
       ctx.stroke();
       trace();
       ctx.setLineDash([Math.max(7, W * 0.004), Math.max(4, W * 0.0025)]);
       ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.0029);
+      ctx.lineWidth = Math.max(style.width, W * 0.0023);
       ctx.stroke();
       if (!line.visualBridge) routeDots(line.points, Math.max(19, W * 0.0095), Math.max(2.4, W * 0.00135), '#EAD8F0', '#5E3570');
       ctx.setLineDash([]);
@@ -1787,16 +1787,16 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     trace();
     ctx.setLineDash([]);
     ctx.strokeStyle = line.kind === 'swale' ? 'rgba(43,52,43,0.78)' : 'rgba(14,42,54,0.72)';
-    ctx.lineWidth = Math.max(style.width + 7, W * 0.0064);
+    ctx.lineWidth = Math.max(style.width + 4.8, W * 0.005);
     ctx.stroke();
     trace();
     ctx.strokeStyle = 'rgba(251,247,229,0.96)';
-    ctx.lineWidth = Math.max(style.width + 4.4, W * 0.0052);
+    ctx.lineWidth = Math.max(style.width + 3.2, W * 0.0042);
     ctx.stroke();
     trace();
     ctx.setLineDash(style.dash);
     ctx.strokeStyle = style.color;
-    ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.0032 : W * 0.0028);
+    ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.0025 : W * 0.0023);
     ctx.stroke();
     if (line.kind === 'pipe' && !line.visualBridge) {
       routeDots(line.points, Math.max(24, W * 0.012), Math.max(2.8, W * 0.0015), '#C7EDF2', '#153F58');
@@ -1852,19 +1852,19 @@ function drawWaterFeature(
   if (presentationScale > 1) {
     ctx.save();
     ctx.shadowColor = 'rgba(18,30,24,0.5)';
-    ctx.shadowBlur = Math.max(4, W * 0.0026);
+    ctx.shadowBlur = Math.max(3, W * 0.0018);
     ctx.beginPath();
     if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
     else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
     ctx.strokeStyle = 'rgba(18,38,34,0.78)';
-    ctx.lineWidth = Math.max(6, W * 0.0033);
+    ctx.lineWidth = Math.max(4, W * 0.0022);
     ctx.stroke();
     ctx.shadowColor = 'transparent';
     ctx.beginPath();
     if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
     else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
     ctx.strokeStyle = 'rgba(255,250,232,0.96)';
-    ctx.lineWidth = Math.max(3.8, W * 0.0021);
+    ctx.lineWidth = Math.max(2, W * 0.0011);
     ctx.stroke();
     ctx.restore();
   }
@@ -2089,6 +2089,7 @@ function drawWaterLeaderLabels(
   const WATER_LINE_NAME: Partial<Record<LineShape['kind'], string>> = {
     swale: 'Swale', pipe: 'Buried pipe', drip: 'Drip line', greywater: 'Greywater line',
   };
+  const routeNames = new Set(Object.values(WATER_LINE_NAME).filter((name): name is string => Boolean(name)));
   for (const line of state.lines) {
     const name = WATER_LINE_NAME[line.kind];
     if (!name || line.points.length < 2) continue;
@@ -2127,7 +2128,10 @@ function drawWaterLeaderLabels(
     if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
 
     sideGroups.forEach((group, index) => {
-      const text = `${group.name.toUpperCase()}${group.points.length > 1 ? ` ×${group.points.length}` : ''}`;
+      // Several touching strokes form one saved network, not seven physical "greywater lines".
+      // Counts remain useful for tanks/basins, but route labels name the system once.
+      const showCount = group.points.length > 1 && !routeNames.has(group.name);
+      const text = `${group.name.toUpperCase()}${showCount ? ` ×${group.points.length}` : ''}`;
       const textW = Math.min(W * 0.24, ctx.measureText(text).width);
       // Benchmark sheets keep callouts close to the property instead of throwing them to the
       // canvas edge. The saved feature remains the anchor; only the render-time label moves.
@@ -6350,7 +6354,8 @@ interface SavedGlossy {
 // v34: Water technical ink is strengthened for phone-size reading; geometry is unchanged.
 // v35: Water AI terrain gains the benchmark tonal brief; exact ground washes and access recede.
 // v36: Water gains benchmark focus grading, close callouts and an inset editorial legend panel.
-const PLAN_VERSION = 'v36';
+// v37: Water symbols and route ink gain the restrained finish used by the benchmark sheet.
+const PLAN_VERSION = 'v37';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
