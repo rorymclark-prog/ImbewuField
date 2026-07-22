@@ -3576,11 +3576,11 @@ function drawTrueFootprint(
     const palette = CANOPY_PALETTES[(SPECIES_INDEX[def.id] ?? 0) % CANOPY_PALETTES.length];
     const seed = `${def.id}:${it.id}`;
     const traceCanopy = () => {
-      const points = 30;
+      const points = 24;
       ctx.beginPath();
       for (let i = 0; i < points; i++) {
         const a = (i / points) * Math.PI * 2;
-        const rr = r * (0.88 + stableCartographicUnit(seed, i) * 0.1);
+        const rr = r * (0.83 + stableCartographicUnit(seed, i) * 0.16);
         const x = Math.cos(a) * rr;
         const y = Math.sin(a) * rr;
         if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
@@ -3593,7 +3593,7 @@ function drawTrueFootprint(
     ctx.shadowBlur = Math.max(2, r * 0.13);
     ctx.shadowOffsetX = Math.max(1, r * 0.05);
     ctx.shadowOffsetY = Math.max(1, r * 0.07);
-    ctx.fillStyle = palette[0];
+    ctx.fillStyle = palette[1];
     ctx.fill();
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
@@ -3603,16 +3603,33 @@ function drawTrueFootprint(
     ctx.save();
     traceCanopy();
     ctx.clip();
-    const blobCount = r < 7 ? 5 : 15;
+    const blobCount = r < 7 ? 7 : 30;
     for (let i = 0; i < blobCount; i++) {
       const a = stableCartographicUnit(seed, 100 + i) * Math.PI * 2;
-      const d = r * (0.1 + stableCartographicUnit(seed, 200 + i) * 0.58);
-      const br = r * (0.15 + stableCartographicUnit(seed, 300 + i) * 0.14);
+      const d = r * (0.08 + stableCartographicUnit(seed, 200 + i) * 0.68);
+      const br = r * (0.08 + stableCartographicUnit(seed, 300 + i) * 0.11);
       ctx.beginPath();
       ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1.2, br), 0, Math.PI * 2);
-      ctx.fillStyle = palette[1 + (i % 2)];
-      ctx.globalAlpha = 0.72 + stableCartographicUnit(seed, 400 + i) * 0.2;
+      ctx.fillStyle = palette[i % palette.length];
+      ctx.globalAlpha = 0.64 + stableCartographicUnit(seed, 400 + i) * 0.28;
       ctx.fill();
+    }
+    if (r >= 7) {
+      for (let i = 0; i < 22; i++) {
+        const a = stableCartographicUnit(seed, 700 + i) * Math.PI * 2;
+        const d = r * stableCartographicUnit(seed, 800 + i) * 0.76;
+        ctx.beginPath();
+        ctx.arc(
+          Math.cos(a) * d,
+          Math.sin(a) * d,
+          Math.max(0.8, r * (0.018 + stableCartographicUnit(seed, 900 + i) * 0.026)),
+          0,
+          Math.PI * 2,
+        );
+        ctx.fillStyle = i % 3 === 0 ? '#D7D89A' : '#A9B774';
+        ctx.globalAlpha = 0.48;
+        ctx.fill();
+      }
     }
     ctx.globalAlpha = 1;
     ctx.restore();
