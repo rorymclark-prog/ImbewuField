@@ -176,12 +176,13 @@ test('render-only Water cleanup leaves large and side-by-side gaps untouched', (
 });
 
 test('Water routes and small fittings stay legible over illustrated ground', () => {
-  assert.ok((waterRouteStyleFor('pipe')?.width ?? 0) >= 5);
-  assert.ok((waterRouteStyleFor('greywater')?.width ?? 0) >= 4);
-  assert.ok((waterRouteStyleFor('drip')?.width ?? 0) >= 3.5);
+  assert.ok((waterRouteStyleFor('pipe')?.width ?? 0) >= 6);
+  assert.ok((waterRouteStyleFor('greywater')?.width ?? 0) >= 5);
+  assert.ok((waterRouteStyleFor('drip')?.width ?? 0) >= 4);
+  assert.deepEqual(waterRouteStyleFor('pipe')?.dash, [], 'the buried main stays continuous at phone scale');
   assert.equal(new Set(['pipe', 'greywater', 'drip'].map((kind) => waterRouteStyleFor(kind as 'pipe' | 'greywater' | 'drip')?.color)).size, 3);
-  assert.ok(waterFeaturePresentationScale('jojo_5000l') > 1.2);
-  assert.ok(waterFeaturePresentationScale('tap_point') > 1);
+  assert.ok(waterFeaturePresentationScale('jojo_5000l') >= 1.5);
+  assert.ok(waterFeaturePresentationScale('tap_point') >= 1.3);
   assert.equal(waterFeaturePresentationScale('greywater_basin'), 1);
 });
 

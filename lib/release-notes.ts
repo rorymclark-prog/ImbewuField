@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'JoJo tanks and colour-coded water lines are now much easier to read on phones',
       'Water legends are now grouped into rainwater, irrigation, greywater and earthworks',
       'Geometry Lock Water sheets now use the full Water, Greywater & Irrigation title',
       'Water tanks, fittings and routes now stand out clearly over illustrated ground',

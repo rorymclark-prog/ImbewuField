@@ -1750,52 +1750,56 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       // Drip laterals are narrow tubing with regularly spaced emitters, not broad white paths.
       trace();
       ctx.setLineDash([]);
-      ctx.strokeStyle = 'rgba(250,246,225,0.88)';
-      ctx.lineWidth = Math.max(style.width + 3.8, W * 0.0028);
+      ctx.strokeStyle = 'rgba(251,247,229,0.96)';
+      ctx.lineWidth = Math.max(style.width + 5, W * 0.0048);
       ctx.stroke();
       trace();
-      ctx.strokeStyle = '#294F3A';
-      ctx.lineWidth = Math.max(style.width + 1.4, W * 0.0021);
+      ctx.strokeStyle = '#173F2C';
+      ctx.lineWidth = Math.max(style.width + 2.3, W * 0.0034);
       ctx.stroke();
       trace();
-      ctx.strokeStyle = '#315B43';
-      ctx.lineWidth = Math.max(style.width, W * 0.0017);
+      ctx.strokeStyle = style.color;
+      ctx.lineWidth = Math.max(style.width, W * 0.0024);
       ctx.stroke();
-      if (!line.visualBridge) routeDots(line.points, Math.max(12, W * 0.006), Math.max(1.8, W * 0.00105), '#D8E69A', '#294F3A');
+      if (!line.visualBridge) routeDots(line.points, Math.max(10, W * 0.0055), Math.max(2.2, W * 0.00125), '#E2F0A7', '#173F2C');
       continue;
     }
     if (line.kind === 'greywater') {
       // A filtered-greywater run stays visually distinct from clean-water pipework.
       trace();
       ctx.setLineDash([]);
-      ctx.strokeStyle = 'rgba(250,246,225,0.9)';
-      ctx.lineWidth = Math.max(style.width + 4.2, W * 0.0036);
+      ctx.strokeStyle = 'rgba(251,247,229,0.97)';
+      ctx.lineWidth = Math.max(style.width + 5.2, W * 0.0055);
       ctx.stroke();
       trace();
-      ctx.strokeStyle = 'rgba(59,38,68,0.78)';
-      ctx.lineWidth = Math.max(style.width + 1.7, W * 0.0027);
+      ctx.strokeStyle = 'rgba(55,30,68,0.94)';
+      ctx.lineWidth = Math.max(style.width + 2.6, W * 0.004);
       ctx.stroke();
       trace();
       ctx.setLineDash([Math.max(7, W * 0.004), Math.max(4, W * 0.0025)]);
       ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.0019);
+      ctx.lineWidth = Math.max(style.width, W * 0.0029);
       ctx.stroke();
-      if (!line.visualBridge) routeDots(line.points, Math.max(22, W * 0.011), Math.max(1.9, W * 0.00105), '#E3D1EA', '#6E4D7E');
+      if (!line.visualBridge) routeDots(line.points, Math.max(19, W * 0.0095), Math.max(2.4, W * 0.00135), '#EAD8F0', '#5E3570');
       ctx.setLineDash([]);
       continue;
     }
     trace();
     ctx.setLineDash([]);
-    ctx.strokeStyle = line.kind === 'swale' ? 'rgba(88,72,47,0.72)' : 'rgba(250,246,225,0.92)';
-    ctx.lineWidth = style.width + (line.kind === 'swale' ? 4.5 : 4);
+    ctx.strokeStyle = line.kind === 'swale' ? 'rgba(43,52,43,0.78)' : 'rgba(14,42,54,0.72)';
+    ctx.lineWidth = Math.max(style.width + 7, W * 0.0064);
+    ctx.stroke();
+    trace();
+    ctx.strokeStyle = 'rgba(251,247,229,0.96)';
+    ctx.lineWidth = Math.max(style.width + 4.4, W * 0.0052);
     ctx.stroke();
     trace();
     ctx.setLineDash(style.dash);
     ctx.strokeStyle = style.color;
-    ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.002 : 0);
+    ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.0032 : W * 0.0028);
     ctx.stroke();
     if (line.kind === 'pipe' && !line.visualBridge) {
-      routeDots(line.points, Math.max(28, W * 0.014), Math.max(2, W * 0.0011), '#B9E1EA', '#214D68');
+      routeDots(line.points, Math.max(24, W * 0.012), Math.max(2.8, W * 0.0015), '#C7EDF2', '#153F58');
     }
     ctx.setLineDash([]);
   }
@@ -1847,13 +1851,20 @@ function drawWaterFeature(
   // exactly where the farmer placed it.
   if (presentationScale > 1) {
     ctx.save();
-    ctx.shadowColor = 'rgba(18,30,24,0.42)';
-    ctx.shadowBlur = Math.max(3, W * 0.0022);
+    ctx.shadowColor = 'rgba(18,30,24,0.5)';
+    ctx.shadowBlur = Math.max(4, W * 0.0026);
+    ctx.beginPath();
+    if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
+    else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
+    ctx.strokeStyle = 'rgba(18,38,34,0.78)';
+    ctx.lineWidth = Math.max(6, W * 0.0033);
+    ctx.stroke();
+    ctx.shadowColor = 'transparent';
     ctx.beginPath();
     if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
     else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
     ctx.strokeStyle = 'rgba(255,250,232,0.96)';
-    ctx.lineWidth = Math.max(3.4, W * 0.0019);
+    ctx.lineWidth = Math.max(3.8, W * 0.0021);
     ctx.stroke();
     ctx.restore();
   }
@@ -6285,7 +6296,8 @@ interface SavedGlossy {
 //   v29 — 2026-07-22: Water routes use real pipe, emitter and greywater visual grammar.
 //   v30 — 2026-07-22: AI marker vocabulary is derived only from saved sheet content.
 // v32: Water symbols and routes gain print-scale emphasis over detailed illustrated ground.
-const PLAN_VERSION = 'v33';
+// v34: Water technical ink is strengthened for phone-size reading; geometry is unchanged.
+const PLAN_VERSION = 'v34';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

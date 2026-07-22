@@ -58,10 +58,12 @@ export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
 
 /** One drawing registry for every line kind assigned to the Water sheet. */
 export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
-  swale: { color: '#4EA6D8', dash: [], width: 4.5, label: 'Swale / contour water line' },
-  pipe: { color: '#2379A8', dash: [14, 6], width: 5, label: 'Buried water pipe' },
-  drip: { color: '#4E8B3B', dash: [3, 8], width: 3.5, label: 'Drip irrigation' },
-  greywater: { color: '#9B56B5', dash: [10, 6], width: 4.2, label: 'Filtered greywater line' },
+  swale: { color: '#258DBA', dash: [], width: 5.6, label: 'Swale / contour water line' },
+  // A buried main reads as one continuous pipe. Connector dots provide the technical grammar;
+  // dashing the core made it disappear when the finished sheet was reduced to phone size.
+  pipe: { color: '#087CB8', dash: [], width: 6.2, label: 'Buried water pipe' },
+  drip: { color: '#2E8A4E', dash: [2, 7], width: 4.4, label: 'Drip irrigation' },
+  greywater: { color: '#8A43B3', dash: [10, 5], width: 5.3, label: 'Filtered greywater line' },
 };
 
 export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | undefined {
@@ -79,8 +81,8 @@ const EMPHASIZED_WATER_HARDWARE = new Set([
  * phone without letting them compete with ponds, basins or other measured landscape areas.
  */
 export function waterFeaturePresentationScale(id: string): number {
-  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.28;
-  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.2;
+  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.5;
+  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.32;
   return 1;
 }
 

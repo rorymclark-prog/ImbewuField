@@ -71,15 +71,15 @@ function tank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: numbe
   ctx.shadowOffsetY = Math.max(0.8, r * 0.08);
   ellipse(ctx, 0, 0, r, r);
   const shell = ctx.createRadialGradient(-r * 0.28, -r * 0.3, r * 0.05, 0, 0, r);
-  shell.addColorStop(0, '#B7D8DF');
-  shell.addColorStop(0.34, '#5FA0B6');
-  shell.addColorStop(0.76, '#37788F');
-  shell.addColorStop(1, '#1D4B5B');
-  finish(ctx, shell, '#173F4A', stroke);
+  shell.addColorStop(0, '#D5F0F3');
+  shell.addColorStop(0.32, '#66B9D0');
+  shell.addColorStop(0.72, '#197FA3');
+  shell.addColorStop(1, '#0B425B');
+  finish(ctx, shell, '#082F43', stroke * 1.15);
   ctx.restore();
   for (const scale of [0.78, 0.56]) {
     ellipse(ctx, 0, 0, r * scale, r * scale);
-    ctx.strokeStyle = scale > 0.7 ? 'rgba(219,239,239,0.72)' : 'rgba(25,71,82,0.62)';
+    ctx.strokeStyle = scale > 0.7 ? 'rgba(235,250,249,0.9)' : 'rgba(8,62,80,0.74)';
     ctx.lineWidth = Math.max(0.7, stroke * 0.58);
     ctx.stroke();
   }
@@ -90,10 +90,10 @@ function tank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: numbe
       [Math.cos(angle) * r * 0.88, Math.sin(angle) * r * 0.88],
     ]);
   }
-  ctx.strokeStyle = 'rgba(219,239,239,0.38)';
+  ctx.strokeStyle = 'rgba(235,250,249,0.56)';
   ctx.lineWidth = Math.max(0.55, stroke * 0.4);
   ellipse(ctx, 0, 0, Math.max(stroke, r * 0.13), Math.max(stroke, r * 0.13));
-  finish(ctx, '#234F5E', '#D9EAEB', Math.max(0.65, stroke * 0.55));
+  finish(ctx, '#0D5873', '#EDF9F7', Math.max(0.7, stroke * 0.62));
 }
 
 type BasinKind = 'greywater-basin' | 'tree-basin' | 'infiltration-basin';
