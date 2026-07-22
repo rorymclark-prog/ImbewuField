@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector numbers now separate cleanly when sun, wind and access share a bearing',
       'Refresh update now detects the new build even when it arrives before the first check',
       'Sector numbers now match the exact sun, wind, fire, access and fall marks on the map',
       'Water and infrastructure now use clear illustrated plan symbols',

@@ -4560,25 +4560,81 @@ function drawSectorAnalysis(
   if (model.driveway) sectorMarkerKeys.push('driveway');
   if (model.water) sectorMarkerKeys.push('water');
   const sectorMarkerIndex = new Map(sectorMarkerKeys.map((key, index) => [key, index + 1]));
+  const sectorMarkerRequests: Array<{ key: string; x: number; y: number; color: string }> = [];
   const drawSectorMarker = (key: string, x: number, y: number, color: string): void => {
     if (!externalLegend) return;
-    const n = sectorMarkerIndex.get(key);
-    if (!n) return;
+    if (!sectorMarkerIndex.has(key)) return;
+    sectorMarkerRequests.push({ key, x, y, color });
+  };
+  const flushSectorMarkers = (): void => {
+    if (!externalLegend || sectorMarkerRequests.length === 0) return;
     const r = Math.max(12, W * 0.0105);
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(251,246,236,0.96)';
-    ctx.fill();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.2, W * 0.0018);
-    ctx.stroke();
-    ctx.fillStyle = '#20190F';
-    ctx.font = `800 ${Math.round(r * 1.05)}px system-ui, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(n), x, y + 0.5);
-    ctx.restore();
+    const step = r * 2.35;
+    const placed: Array<{ x: number; y: number }> = [];
+    const candidates: Array<[number, number]> = [
+      [0, 0], [1, 0], [-1, 0], [2, 0], [-2, 0], [1, 1], [-1, 1],
+      [2, 1], [-2, 1], [0, 1], [1, -1], [-1, -1], [3, 0], [-3, 0],
+    ];
+    const minDistance = r * 2 + Math.max(4, W * 0.003);
+    const edgePad = r + Math.max(3, W * 0.003);
+
+    for (const request of [...sectorMarkerRequests].sort((a, b) =>
+      (sectorMarkerIndex.get(a.key) ?? 0) - (sectorMarkerIndex.get(b.key) ?? 0))) {
+      const n = sectorMarkerIndex.get(request.key);
+      if (!n) continue;
+      const dx = request.x - cx;
+      const dy = request.y - cy;
+      const length = Math.hypot(dx, dy) || 1;
+      const radialX = dx / length;
+      const radialY = dy / length;
+      const tangentX = -radialY;
+      const tangentY = radialX;
+      let chosen = { x: request.x, y: request.y };
+      let bestClearance = -Infinity;
+
+      for (const [tangentSteps, radialSteps] of candidates) {
+        const x = Math.max(edgePad, Math.min(W - edgePad,
+          request.x + tangentX * step * tangentSteps + radialX * r * 1.15 * radialSteps));
+        const y = Math.max(edgePad, Math.min(H - edgePad,
+          request.y + tangentY * step * tangentSteps + radialY * r * 1.15 * radialSteps));
+        const clearance = placed.length === 0
+          ? Infinity
+          : Math.min(...placed.map((p) => Math.hypot(x - p.x, y - p.y)));
+        if (clearance > bestClearance) {
+          chosen = { x, y };
+          bestClearance = clearance;
+        }
+        if (clearance >= minDistance) break;
+      }
+
+      const shift = Math.hypot(chosen.x - request.x, chosen.y - request.y);
+      ctx.save();
+      if (shift > 2) {
+        ctx.strokeStyle = request.color;
+        ctx.globalAlpha = 0.78;
+        ctx.lineWidth = Math.max(1.4, W * 0.0011);
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(request.x, request.y);
+        ctx.lineTo(chosen.x, chosen.y);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      ctx.beginPath();
+      ctx.arc(chosen.x, chosen.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(251,246,236,0.96)';
+      ctx.fill();
+      ctx.strokeStyle = request.color;
+      ctx.lineWidth = Math.max(2.2, W * 0.0018);
+      ctx.stroke();
+      ctx.fillStyle = '#20190F';
+      ctx.font = `800 ${Math.round(r * 1.05)}px system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(n), chosen.x, chosen.y + 0.5);
+      ctx.restore();
+      placed.push(chosen);
+    }
   };
 
   // 3. Ring geometry — centre = boundary centroid (fallback frame centre); radius clamped so arrows
@@ -5004,6 +5060,10 @@ function drawSectorAnalysis(
     ctx.restore();
     labelAt(fx, fy + rowH * 0.6, 'COLD AIR DRAINS THIS WAY — POCKETS FORM IN LOW SPOTS (CHECK ON SITE)', '#CDE7FA');
   }
+
+  // Markers are painted in one final pass so nearby sun paths and winds can share a bearing
+  // without stacking their numbered references. Moved markers retain a short coloured leader.
+  flushSectorMarkers();
 
   // 9. DATA STRIP under the title — real figures only, missing ones omitted.
   const parts: string[] = [];
@@ -6096,7 +6156,8 @@ interface SavedGlossy {
 //   v24 — 2026-07-22: benchmark QA pass quiets access, enlarges small point symbols, removes label
 //        ladders, declutters Sector and fits Phasing into the shared cream editorial panel.
 //   v25 — 2026-07-22: numbered Sector map markers now match the numbered external legend exactly.
-const PLAN_VERSION = 'v25';
+//   v26 — 2026-07-22: Sector numbers de-conflict and keep short leaders to shared bearings.
+const PLAN_VERSION = 'v26';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
