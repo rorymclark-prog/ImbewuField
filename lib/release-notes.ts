@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector numbers now match the exact sun, wind, fire, access and fall marks on the map',
       'Water and infrastructure now use clear illustrated plan symbols',
       'Water maps now name and draw the old Mulch Bank correctly as Vetiver Bank',
       'Planting and Whole use fewer callouts; their legends still list everything',
