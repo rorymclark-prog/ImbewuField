@@ -291,7 +291,7 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   // labelStyle is required by the type but unused here: this style always takes the showcase path,
   // which passes labels: [] because the MODEL letters the sheet itself.
   { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
-  { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'benchmark look · exact geometry, labels and layout', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
+  { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'benchmark look · exact geometry, labels and layout', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
   { key: 'homestead_storybook', label: 'Homestead Storybook', blurb: 'warm illustrated garden map',   labelStyle: 'storybook', swatch: '#8FAE62' },
   { key: 'extension_blueprint', label: 'Extension Blueprint', blurb: 'clean plan for funders/mentors', labelStyle: 'blueprint', swatch: '#69819B' },
@@ -3593,7 +3593,11 @@ function drawTrueFootprint(
     ctx.shadowBlur = Math.max(2, r * 0.13);
     ctx.shadowOffsetX = Math.max(1, r * 0.05);
     ctx.shadowOffsetY = Math.max(1, r * 0.07);
-    ctx.fillStyle = palette[1];
+    const canopyWash = ctx.createRadialGradient(-r * 0.22, -r * 0.25, r * 0.05, 0, 0, r);
+    canopyWash.addColorStop(0, palette[2]);
+    canopyWash.addColorStop(0.56, palette[1]);
+    canopyWash.addColorStop(1, palette[0]);
+    ctx.fillStyle = canopyWash;
     ctx.fill();
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
@@ -3603,26 +3607,28 @@ function drawTrueFootprint(
     ctx.save();
     traceCanopy();
     ctx.clip();
-    const blobCount = r < 7 ? 7 : 30;
+    const blobCount = r < 7 ? 9 : Math.max(36, Math.min(64, Math.round(r * 0.85)));
     for (let i = 0; i < blobCount; i++) {
       const a = stableCartographicUnit(seed, 100 + i) * Math.PI * 2;
-      const d = r * (0.08 + stableCartographicUnit(seed, 200 + i) * 0.68);
-      const br = r * (0.08 + stableCartographicUnit(seed, 300 + i) * 0.11);
+      // sqrt distributes crowns across the canopy area instead of bunching every leaf at centre.
+      const d = r * Math.sqrt(stableCartographicUnit(seed, 200 + i)) * 0.86;
+      const br = r * (0.075 + stableCartographicUnit(seed, 300 + i) * 0.105);
       ctx.beginPath();
       ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1.2, br), 0, Math.PI * 2);
       ctx.fillStyle = palette[i % palette.length];
-      ctx.globalAlpha = 0.64 + stableCartographicUnit(seed, 400 + i) * 0.28;
+      ctx.globalAlpha = 0.58 + stableCartographicUnit(seed, 400 + i) * 0.34;
       ctx.fill();
     }
     if (r >= 7) {
-      for (let i = 0; i < 22; i++) {
+      const fleckCount = Math.max(24, Math.min(52, Math.round(r * 0.7)));
+      for (let i = 0; i < fleckCount; i++) {
         const a = stableCartographicUnit(seed, 700 + i) * Math.PI * 2;
-        const d = r * stableCartographicUnit(seed, 800 + i) * 0.76;
+        const d = r * Math.sqrt(stableCartographicUnit(seed, 800 + i)) * 0.84;
         ctx.beginPath();
         ctx.arc(
           Math.cos(a) * d,
           Math.sin(a) * d,
-          Math.max(0.8, r * (0.018 + stableCartographicUnit(seed, 900 + i) * 0.026)),
+          Math.max(0.8, r * (0.014 + stableCartographicUnit(seed, 900 + i) * 0.024)),
           0,
           Math.PI * 2,
         );
@@ -5684,7 +5690,7 @@ interface SavedGlossy {
 //        on both Water and Planting, while retaining one primary editor owner and no duplicate marks.
 //   v21 — 2026-07-22: benchmark-style direct labels, lime fence crossbars and naturalistic canopy
 //        symbols replace dashboard pills, dotted boundaries and glossy discs.
-const PLAN_VERSION = 'v21';
+const PLAN_VERSION = 'v22';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`

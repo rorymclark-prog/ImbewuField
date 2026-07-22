@@ -37,7 +37,7 @@ export interface ProducerLabel {
   leader?: boolean;
 }
 
-export type LabelStyle = 'ink' | 'storybook' | 'blueprint' | 'folk' | 'clean';
+export type LabelStyle = 'ink' | 'storybook' | 'blueprint' | 'reference' | 'folk' | 'clean';
 
 export interface CompositeInputs {
   /** Model output — the whole scene beautified, elements illustrated in place. */
@@ -118,12 +118,77 @@ const LABEL_STYLES: Record<LabelStyle, { pill: string; stroke: string; text: str
   ink:       { pill: '#FBF6EC', stroke: '#3A2E1A', text: '#20190F', font: 'Georgia, serif' },
   storybook: { pill: '#FBF6EC', stroke: '#1F4D2B', text: '#20190F', font: 'system-ui, sans-serif' },
   blueprint: { pill: '#EEF3F5', stroke: '#3E5A68', text: '#1A2A33', font: 'system-ui, sans-serif' },
+  reference: { pill: '#F5F0DF', stroke: '#24362E', text: '#F5F0DF', font: '"Arial Narrow", "Avenir Next Condensed", "Roboto Condensed", sans-serif' },
   folk:      { pill: '#FFF3D6', stroke: '#8A2A14', text: '#20190F', font: 'system-ui, sans-serif' },
   clean:     { pill: '#FBF6EC', stroke: '#1F4D2B', text: '#20190F', font: 'system-ui, sans-serif' },
 };
 
+/** Match the benchmark's compact map lettering without covering the artwork with UI capsules. */
+function burnReferenceLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[]): void {
+  const width = ctx.canvas.width;
+  const fs = Math.max(17, Math.round(width * 0.0105));
+  ctx.textBaseline = 'middle';
+  ctx.lineCap = 'round';
+  ctx.setLineDash([]);
+
+  for (const label of labels) {
+    const isHeader = label.kind === 'header';
+    const weight = isHeader ? 800 : 650;
+    ctx.font = `${weight} ${fs}px ${LABEL_STYLES.reference.font}`;
+    const textWidth = ctx.measureText(label.text).width;
+    const onLeft = label.ax < width / 2;
+    const textX = onLeft ? Math.max(20, width * 0.012) : Math.min(width - 20, width * 0.988);
+    const align: CanvasTextAlign = onLeft ? 'left' : 'right';
+    const leaderEndX = onLeft
+      ? textX + textWidth + fs * 0.35
+      : textX - textWidth - fs * 0.35;
+
+    if (label.leader !== false) {
+      const elbowX = onLeft
+        ? Math.min(label.cx - fs * 0.6, leaderEndX + width * 0.018)
+        : Math.max(label.cx + fs * 0.6, leaderEndX - width * 0.018);
+      ctx.beginPath();
+      ctx.moveTo(label.cx, label.cy);
+      ctx.lineTo(elbowX, label.cy);
+      ctx.lineTo(leaderEndX, label.ay);
+      ctx.strokeStyle = 'rgba(14,20,16,0.78)';
+      ctx.lineWidth = 4.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(label.cx, label.cy);
+      ctx.lineTo(elbowX, label.cy);
+      ctx.lineTo(leaderEndX, label.ay);
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(label.cx, label.cy, 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = '#24362E';
+      ctx.fill();
+      ctx.strokeStyle = '#F3EEDB';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    ctx.save();
+    ctx.textAlign = align;
+    ctx.lineJoin = 'round';
+    ctx.miterLimit = 2;
+    ctx.strokeStyle = 'rgba(14,20,16,0.9)';
+    ctx.lineWidth = Math.max(3.5, fs * 0.22);
+    ctx.strokeText(label.text, textX, label.ay + 1);
+    ctx.fillStyle = '#F5F0DF';
+    ctx.fillText(label.text, textX, label.ay + 1);
+    ctx.restore();
+  }
+}
+
 /** Burn the true labels onto the produced map: leader line + anchor dot + pill. */
 function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], style: LabelStyle): void {
+  if (style === 'reference') {
+    burnReferenceLabels(ctx, labels);
+    return;
+  }
   const s = LABEL_STYLES[style] ?? LABEL_STYLES.clean;
   const fs = style === 'blueprint' ? 28 : 26;
   const padX = style === 'blueprint' ? 16 : 14;
