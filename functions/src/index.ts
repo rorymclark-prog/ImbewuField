@@ -61,7 +61,10 @@ const GLOBAL_SHEETS_PER_DAY_DEFAULT = 40; // ~$20/day worst case at current gpt-
 // account isn't blocked, while every real user keeps the 30-sheet / 6-job daily cost guard. Still
 // bounded (not unlimited) so a runaway loop can't spend without end; the kill switch + OpenAI
 // funding remain the ultimate backstops.
-const OWNER_UIDS = new Set(['76wIa3J81KZmXhVyqFJ0l0PaztG2']);
+const OWNER_UIDS = new Set([
+  '76wIa3J81KZmXhVyqFJ0l0PaztG2',
+  'fyw5OeCBAsTFmCVQon2CcXPWQhA3',
+]);
 const OWNER_SHEETS_PER_DAY = 600;
 const OWNER_JOBS_PER_DAY = 300;
 // The real producer/showcase prompts are ~3.2–4.6k chars (STYLE line lives near the end); a 2 000
