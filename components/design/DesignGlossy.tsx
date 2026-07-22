@@ -1630,7 +1630,7 @@ function producerElementsText(
   // prompt body — FEATURE_LEGEND for the painted styles, the icon vocabulary for Satellite Overlay.
   const LINE_NAME: Record<string, string> = {
     swale: 'Swale', fence: 'Fence line', path: 'Walking path',
-    pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
+    pipe: 'Buried water pipe', drip: 'Drip irrigation line', greywater: 'Greywater line', windbreak: 'Windbreak hedge',
   };
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
@@ -2298,17 +2298,8 @@ async function buildDrivewayOverlay(
       ctx.fillStyle = wash;
       ctx.fillRect(0, 0, W, H);
     }
-    if (precision) {
-      const grainStep = Math.max(8, Math.round(W * 0.004));
-      ctx.strokeStyle = 'rgba(239,231,207,0.09)';
-      ctx.lineWidth = Math.max(1, W * 0.00045);
-      for (let x = -H; x < W + H; x += grainStep) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x - H, H);
-        ctx.stroke();
-      }
-    }
+    // Keep the source-derived asphalt texture. A diagonal hatch made existing access look like a
+    // highlighted design polygon and competed with the Water network in every illustrated sheet.
     ctx.restore();
     if (RENDERED_DRIVEWAY_EDGE) {
       traceNormalisedPath(ctx, refLayers.driveway, W, H, true);
@@ -2570,6 +2561,7 @@ function drawBlueprintGround(
   W: number,
   refLayers?: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
+  presentation: 'standard' | 'illustrated' = 'standard',
 ): void {
   // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
   // empty one means the farmer traced this in the Studio and nothing else will draw it. The
@@ -2595,6 +2587,7 @@ function drawBlueprintGround(
   // platforms either side of it (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2).
   const HARD = new Set<GroundFeatureKind>(['patio', 'cleared', 'terrace_bank']);
   const step = Math.max(9, W * 0.007);
+  const illustrated = presentation === 'illustrated';
   for (const z of sorted) {
     const meta = GROUND_FEATURES[z.feature!];
     const hard = HARD.has(z.feature!);
@@ -2602,8 +2595,13 @@ function drawBlueprintGround(
     // ground noticeably quieter, so the register the prompt describes in words is also true of the
     // pixels — the visual difference the earthworks-context plan calls the whole point of this fix.
     const isContent = groundRegister(z.feature!, filter) === 'content';
-    const fillAlpha = hard ? (isContent ? '55' : '33') : (isContent ? '99' : '55');
-    const strokeAlpha = isContent ? 'F2' : 'B0';
+    // An AI-painted Water base already carries real terrain texture. Its factual ground overlay is
+    // therefore a quiet registration wash, not a second opaque diagram pasted over the artwork.
+    // Exact-only sheets keep the stronger standard treatment.
+    const fillAlpha = illustrated
+      ? hard ? (isContent ? '28' : '16') : (isContent ? '38' : '20')
+      : hard ? (isContent ? '55' : '33') : (isContent ? '99' : '55');
+    const strokeAlpha = illustrated ? (isContent ? '80' : '5A') : (isContent ? 'F2' : 'B0');
     ctx.save();
     blueprintRing(ctx, z.points, px, py);
     ctx.fillStyle = `${meta.color}${fillAlpha}`;
@@ -2615,8 +2613,8 @@ function drawBlueprintGround(
       const x0 = Math.min(...xs), x1 = Math.max(...xs);
       const y0 = Math.min(...ys), y1 = Math.max(...ys);
       const h = y1 - y0;
-      ctx.strokeStyle = `${meta.color}${isContent ? 'CC' : '80'}`;
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = `${meta.color}${illustrated ? (isContent ? '55' : '30') : (isContent ? 'CC' : '80')}`;
+      ctx.lineWidth = illustrated ? 1.1 : 1.6;
       ctx.beginPath();
       for (let d = x0 - h; d < x1; d += step) {
         ctx.moveTo(d, y0);
@@ -2627,7 +2625,7 @@ function drawBlueprintGround(
     ctx.restore();
     blueprintRing(ctx, z.points, px, py);
     ctx.strokeStyle = `${meta.color}${strokeAlpha}`;
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = illustrated ? 1.4 : 2.5;
     ctx.stroke();
   }
 }
@@ -4148,6 +4146,7 @@ async function buildExactLayerOverlay(
   W: number,
   H: number,
   phase: 'ground' | 'features' = 'features',
+  groundPresentation: 'standard' | 'illustrated' = 'standard',
 ): Promise<string | undefined> {
   const canvas = document.createElement('canvas');
   canvas.width = W;
@@ -4159,7 +4158,7 @@ async function buildExactLayerOverlay(
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
   if (phase === 'ground') {
-    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter);
+    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation);
     return canvas.toDataURL('image/png');
   }
 
@@ -6297,7 +6296,8 @@ interface SavedGlossy {
 //   v30 — 2026-07-22: AI marker vocabulary is derived only from saved sheet content.
 // v32: Water symbols and routes gain print-scale emphasis over detailed illustrated ground.
 // v34: Water technical ink is strengthened for phone-size reading; geometry is unchanged.
-const PLAN_VERSION = 'v34';
+// v35: Water AI terrain gains the benchmark tonal brief; exact ground washes and access recede.
+const PLAN_VERSION = 'v35';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -7212,7 +7212,7 @@ export default function DesignGlossy({
         ? await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleDef.key)
         : undefined;
       const exactGroundOverlay = locked
-        ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'ground')
+        ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
       const exactFeatureOverlay = locked
         ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'features')

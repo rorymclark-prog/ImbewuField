@@ -107,7 +107,7 @@ function unit([x, y]: [number, number]): [number, number] | null {
 export function waterRoutesWithVisualBridges(
   lines: LineShape[],
   frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
-  maxGapM = 0.45,
+  maxGapM = 0.25,
 ): RenderWaterRoute[] {
   const routes: RenderWaterRoute[] = lines
     .filter((line): line is LineShape & { kind: WaterRouteKind } => !!waterRouteStyleFor(line.kind) && line.points.length >= 2)
@@ -143,7 +143,10 @@ export function waterRoutesWithVisualBridges(
   }
 
   const candidates: Array<{ a: RouteEndpoint; b: RouteEndpoint; distanceM: number }> = [];
-  const minimumAlignment = Math.cos((55 * Math.PI) / 180);
+  // A bridge is presentation cleanup, never inferred plumbing. Keep both tolerances deliberately
+  // tight: a quarter-metre seam and near-collinear tangents look like one imperfect phone trace;
+  // anything larger or more angled is an ambiguous design decision and stays exactly as drawn.
+  const minimumAlignment = Math.cos((20 * Math.PI) / 180);
   for (let i = 0; i < endpoints.length; i += 1) {
     for (let j = i + 1; j < endpoints.length; j += 1) {
       const a = endpoints[i];

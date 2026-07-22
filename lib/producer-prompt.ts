@@ -67,9 +67,18 @@ export function buildLockedIllustrationPrompt(
   stylePreset: StylePreset,
 ): string {
   const layer = layerLabel.toUpperCase();
+  const waterArtDirection = /water/i.test(layerLabel)
+    ? [
+        `WATER BACKGROUND ROLE: this pass creates only the polished landscape artwork beneath a professional Water, Greywater & Irrigation plan. The app adds every saved tank, tap, basin, pond, pipe, greywater route, drip route, leader, label and legend afterwards at measured positions. Do not paint, anticipate, duplicate or reinterpret that technical layer.`,
+        `TONAL HIERARCHY: make the property interior clear and luminous, with light-to-mid-value sage lawn and warm buff soil roughly 15-20% brighter than the source photograph. Keep the illustrated land beyond the boundary slightly darker and less saturated so the property reads first without becoming a hard cut-out. Reserve the darkest values for existing roofs and mature tree masses, not open ground.`,
+        `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds, paving and asphalt through believable directly-overhead watercolor-and-gouache texture. Use fine dry-brush grain and restrained natural variation, never a flat green wash, generic blur, dark satellite filter or decorative planting.`,
+        `QUIET ACCESS: keep the existing driveway as one subdued flat ground surface with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
+      ].join('\n\n')
+    : '';
   return [
     STYLE_LINES[stylePreset],
     `TASK: turn this whole aerial photograph into one finished hand-illustrated ${layer} map sheet. Paint edge to edge — every corner of the image becomes artwork, including the land beyond the property boundary.`,
+    waterArtDirection,
     // Same gap, same fix as buildSectorRestylePrompt's paintWhatIsThere (see its comment): no
     // vocabulary for paved ground meant a concrete slab beside a building had nowhere to go except
     // "more roof". This is the Geometry Lock path — the most-used of the three AI-illustration
