@@ -206,7 +206,8 @@ test('Water sheet chrome uses one formal title and factual subsystem order', () 
   assert.equal(waterLegendSectionForRoute('greywater'), 'FILTERED GREYWATER');
   assert.equal(waterLegendSectionForRoute('swale'), 'WATER EARTHWORKS');
   assert.equal(waterRouteStyleFor('pipe')?.label, 'Buried water pipe');
-  assert.equal(waterRouteStyleFor('drip')?.label, 'Drip irrigation');
+  assert.equal(waterRouteStyleFor('drip')?.label, 'Drip header and laterals');
+  assert.equal(waterRouteStyleFor('drip')?.color, '#238ACB');
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {

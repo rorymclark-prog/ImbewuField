@@ -62,7 +62,7 @@ export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
   // A buried main reads as one continuous pipe. Connector dots provide the technical grammar;
   // dashing the core made it disappear when the finished sheet was reduced to phone size.
   pipe: { color: '#087CB8', dash: [], width: 6.2, label: 'Buried water pipe' },
-  drip: { color: '#2E8A4E', dash: [2, 7], width: 4.4, label: 'Drip irrigation' },
+  drip: { color: '#238ACB', dash: [], width: 4.2, label: 'Drip header and laterals' },
   greywater: { color: '#8A43B3', dash: [10, 5], width: 5.3, label: 'Filtered greywater line' },
 };
 

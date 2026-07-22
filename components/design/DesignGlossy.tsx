@@ -29,6 +29,9 @@ import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextEl
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { PLANTING_LEGEND_SECTION_ORDER, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { STRUCTURES_LEGEND_SECTION_ORDER, structuresLegendSectionForFeature, type StructuresLegendSection } from '@/lib/structures-cartography';
+import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
@@ -1039,6 +1042,31 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+// AI-painted feature art is generated once, shipped with the app, and reused without another paid
+// model call. The exact renderer waits for only the assets present on this sheet; failures fall back
+// to drawTrueFootprint's deterministic vector treatment rather than failing a paid render.
+const referenceFeatureArtworkCache = new Map<string, HTMLImageElement>();
+
+async function preloadReferenceFeatureArtwork(
+  state: DesignCanvasState,
+  filter: GlossyLayerFilter,
+): Promise<void> {
+  const urls = new Set<string>();
+  for (const item of state.items) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
+    const url = referenceFeatureArtworkUrl(def.id);
+    if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
+  }
+  await Promise.all([...urls].map(async (url) => {
+    try {
+      referenceFeatureArtworkCache.set(url, await loadImage(url));
+    } catch (error) {
+      console.warn('[glossy] painted feature asset unavailable; using exact fallback', url, error);
+    }
+  }));
+}
+
 /** Width of the pre-composed legend column, as a fraction of the map width. */
 const OVERLAY_PANEL_RATIO = 0.28;
 
@@ -1747,21 +1775,30 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
     };
     if (line.kind === 'drip') {
-      // Drip laterals are narrow tubing with regularly spaced emitters, not broad white paths.
+      // Benchmark grammar: clean blue tubing with repeated blue emitters. The previous dark-green
+      // core disappeared against planted beds and was easily mistaken for another hedge row.
       trace();
       ctx.setLineDash([]);
       ctx.strokeStyle = 'rgba(251,247,229,0.96)';
-      ctx.lineWidth = Math.max(style.width + 3.2, W * 0.0038);
+      ctx.lineWidth = Math.max(style.width + 3.1, W * 0.0035);
       ctx.stroke();
       trace();
-      ctx.strokeStyle = '#173F2C';
-      ctx.lineWidth = Math.max(style.width + 1.8, W * 0.0028);
+      ctx.strokeStyle = '#174E70';
+      ctx.lineWidth = Math.max(style.width + 1.5, W * 0.0025);
       ctx.stroke();
       trace();
       ctx.strokeStyle = style.color;
-      ctx.lineWidth = Math.max(style.width, W * 0.0019);
+      ctx.lineWidth = Math.max(style.width, W * 0.00175);
       ctx.stroke();
-      if (!line.visualBridge) routeDots(line.points, Math.max(10, W * 0.0055), Math.max(2.2, W * 0.00125), '#E2F0A7', '#173F2C');
+      if (!line.visualBridge) {
+        routeDots(
+          line.points,
+          Math.max(11, W * 0.006),
+          Math.max(2.1, W * 0.0012),
+          '#BCE8FF',
+          '#15577D',
+        );
+      }
       continue;
     }
     if (line.kind === 'greywater') {
@@ -3748,6 +3785,66 @@ const CANOPY_PALETTES = [
   ['#2A4038', '#486758', '#778B6A'],
 ] as const;
 
+function drawPaintedReferenceFeature(
+  ctx: CanvasRenderingContext2D,
+  it: PlacedItem,
+  def: DesignElementDef,
+  cx: number,
+  cy: number,
+  wPx: number,
+  hPx: number,
+  outline: number,
+): boolean {
+  const url = referenceFeatureArtworkUrl(def.id);
+  const image = url ? referenceFeatureArtworkCache.get(url) : undefined;
+  if (!image) return false;
+
+  const radius = Math.min(wPx, hPx) * 0.08;
+  const traceFootprint = () => {
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, wPx / 2, hPx / 2, 0, 0, Math.PI * 2);
+    } else {
+      roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+    }
+  };
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  if (def.shape === 'rect' && it.rot) ctx.rotate((it.rot * Math.PI) / 180);
+  ctx.lineJoin = 'round';
+
+  // A restrained contact shadow gives the same readable relief as the benchmark while the clip
+  // below guarantees that the painted object itself cannot spill outside the saved footprint.
+  traceFootprint();
+  ctx.fillStyle = 'rgba(25,31,20,0.16)';
+  ctx.shadowColor = 'rgba(15,22,16,0.34)';
+  ctx.shadowBlur = Math.max(2, Math.min(wPx, hPx) * 0.1);
+  ctx.shadowOffsetX = Math.max(0.8, Math.min(wPx, hPx) * 0.025);
+  ctx.shadowOffsetY = Math.max(1, Math.min(wPx, hPx) * 0.04);
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+
+  ctx.save();
+  traceFootprint();
+  ctx.clip();
+  ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
+  ctx.restore();
+
+  traceFootprint();
+  ctx.strokeStyle = 'rgba(244,238,218,0.74)';
+  ctx.lineWidth = outline + 0.35;
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(38,45,31,0.62)';
+  ctx.lineWidth = Math.max(0.65, outline * 0.45);
+  ctx.stroke();
+  ctx.restore();
+  return true;
+}
+
 function stableCartographicUnit(seed: string, index: number): number {
   let hash = 2166136261;
   const value = `${seed}:${index}`;
@@ -3775,6 +3872,17 @@ function drawTrueFootprint(
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
     'half_moon', 'berm', 'terrace', 'mulch_bank', 'duck_pond',
   ].includes(def.id);
+  const artUrl = referenceFeatureArtworkUrl(def.id);
+  if (artUrl && referenceFeatureArtworkCache.has(artUrl)) {
+    // Reusable art may improve material and detail, but its clip remains the literal saved
+    // footprint. Small objects gain legibility from outlines and leaders, never from moved edges.
+    const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
+    const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+    const cx = px(it.x);
+    const cy = py(it.y);
+    const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
+    if (drawPaintedReferenceFeature(ctx, it, def, cx, cy, naturalW, naturalH, outline)) return;
+  }
   if (waterArtwork) {
     drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false);
     return;
@@ -4160,6 +4268,7 @@ async function buildExactLayerOverlay(
   phase: 'ground' | 'features' = 'features',
   groundPresentation: 'standard' | 'illustrated' = 'standard',
 ): Promise<string | undefined> {
+  await preloadReferenceFeatureArtwork(state, filter);
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -5795,7 +5904,7 @@ interface StyleLegendRow {
   defId?: string;
   lineKind?: string;
   kind?: 'zone' | 'ground' | 'surface';
-  section?: WaterLegendSection;
+  section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection;
 }
 
 export function sheetLegendRows(
@@ -5885,7 +5994,7 @@ export function sheetLegendRows(
     return rows;
   }
 
-  const groups = new Map<string, { defId: string; color: string; n: number; section?: WaterLegendSection }>();
+  const groups = new Map<string, { defId: string; color: string; n: number; section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter, def.id)) continue;
@@ -5894,15 +6003,23 @@ export function sheetLegendRows(
       defId: def.id,
       color: speciesColor(def.id),
       n: 0,
-      section: filter === 'water' ? waterLegendSectionForFeature(def.id) : undefined,
+      section: filter === 'water'
+        ? waterLegendSectionForFeature(def.id)
+        : filter === 'planting'
+          ? plantingLegendSectionForFeature(def.id) ?? undefined
+          : filter === 'structures'
+            ? structuresLegendSectionForFeature(def.id) ?? undefined
+          : undefined,
     };
     g.n += 1;
     groups.set(name, g);
   }
   const orderedGroups = [...groups.entries()].sort((left, right) => {
-    if (filter !== 'water') return 0;
-    const leftOrder = left[1].section ? WATER_LEGEND_SECTION_ORDER.indexOf(left[1].section) : Number.MAX_SAFE_INTEGER;
-    const rightOrder = right[1].section ? WATER_LEGEND_SECTION_ORDER.indexOf(right[1].section) : Number.MAX_SAFE_INTEGER;
+    const sectionOrder: readonly string[] = filter === 'water' ? WATER_LEGEND_SECTION_ORDER
+      : filter === 'planting' ? PLANTING_LEGEND_SECTION_ORDER
+        : filter === 'structures' ? STRUCTURES_LEGEND_SECTION_ORDER : [];
+    const leftOrder = left[1].section ? sectionOrder.indexOf(left[1].section) : Number.MAX_SAFE_INTEGER;
+    const rightOrder = right[1].section ? sectionOrder.indexOf(right[1].section) : Number.MAX_SAFE_INTEGER;
     return leftOrder - rightOrder || left[0].localeCompare(right[0]);
   });
   for (const [name, g] of orderedGroups) {
@@ -5918,24 +6035,32 @@ export function sheetLegendRows(
     if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
     kinds.add(l.kind);
     const waterStyle = filter === 'water' ? waterRouteStyleFor(l.kind) : undefined;
+    const plantingStyle = filter === 'planting' ? plantingRouteStyleFor(l.kind) : undefined;
     rows.push({
-      swatch: waterStyle?.color ?? LINE_COLORS[l.kind] ?? '#8C8577',
-      text: waterStyle?.label ?? l.kind.charAt(0).toUpperCase() + l.kind.slice(1),
+      swatch: waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[l.kind] ?? '#8C8577',
+      text: waterStyle?.label ?? plantingStyle?.label ?? l.kind.charAt(0).toUpperCase() + l.kind.slice(1),
       lineKind: l.kind,
-      section: waterStyle ? waterLegendSectionForRoute(l.kind as Parameters<typeof waterLegendSectionForRoute>[0]) : undefined,
+      section: waterStyle
+        ? waterLegendSectionForRoute(l.kind as Parameters<typeof waterLegendSectionForRoute>[0])
+        : plantingStyle ? 'PRODUCTION PLANTING' : undefined,
     });
   }
-  if (filter === 'water') {
+  if (filter === 'water' || filter === 'planting' || filter === 'structures') {
     const contextRows = rows.filter((row) => !row.section);
-    const systemRows = rows.filter((row) => row.section).sort((left, right) =>
-      WATER_LEGEND_SECTION_ORDER.indexOf(left.section!) - WATER_LEGEND_SECTION_ORDER.indexOf(right.section!),
-    );
+    const sectionOrder: readonly string[] = filter === 'water' ? WATER_LEGEND_SECTION_ORDER
+      : filter === 'planting' ? PLANTING_LEGEND_SECTION_ORDER
+        : STRUCTURES_LEGEND_SECTION_ORDER;
+    const systemRows = rows.filter((row) => row.section).sort((left, right) => {
+      const leftOrder = sectionOrder.indexOf(left.section!);
+      const rightOrder = sectionOrder.indexOf(right.section!);
+      return leftOrder - rightOrder;
+    });
     rows.splice(0, rows.length, ...contextRows, ...systemRows);
   }
   // Water treats the driveway as quiet site context; the compressed "Existing site fabric" row
   // already explains it, so repeating it after the water systems makes the infrastructure look
   // like a Water-plan feature. Other sheets retain the explicit row where built fabric is content.
-  if (filter !== 'water' && refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
+  if (filter !== 'water' && filter !== 'planting' && filter !== 'structures' && refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
   return rows;
 }
 
@@ -5982,9 +6107,20 @@ function drawStyleLegendSymbol(
     ctx.beginPath(); ctx.moveTo(x, cy); ctx.lineTo(x + w, cy); ctx.stroke();
     ctx.strokeStyle = row.swatch;
     ctx.lineWidth = Math.max(2, h * 0.09);
-    ctx.setLineDash(row.lineKind === 'drip' || row.lineKind === 'greywater' ? [3, 4] : row.lineKind === 'path' ? [7, 5] : []);
+    ctx.setLineDash(row.lineKind === 'greywater' ? [5, 4] : row.lineKind === 'path' ? [7, 5] : []);
     ctx.beginPath(); ctx.moveTo(x, cy); ctx.lineTo(x + w, cy); ctx.stroke();
     ctx.setLineDash([]);
+    if (row.lineKind === 'drip') {
+      for (let px = x + w * 0.08; px < x + w; px += Math.max(7, w / 5)) {
+        ctx.beginPath();
+        ctx.arc(px, cy, Math.max(1.3, h * 0.075), 0, Math.PI * 2);
+        ctx.fillStyle = '#BCE8FF';
+        ctx.fill();
+        ctx.strokeStyle = '#15577D';
+        ctx.lineWidth = Math.max(0.7, h * 0.035);
+        ctx.stroke();
+      }
+    }
     if (row.lineKind === 'fence') {
       for (let px = x; px <= x + w; px += Math.max(8, w / 4)) {
         ctx.beginPath(); ctx.arc(px, cy, Math.max(1.5, h * 0.09), 0, Math.PI * 2);
@@ -6047,7 +6183,7 @@ async function composeStyleSheet(
   ctx.drawImage(map, 0, 0);
 
   // ── Legend panel ──
-  const benchmarkPanel = styleLabel === 'Reference Blueprint' && filter === 'water';
+  const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
   const panelInset = benchmarkPanel ? Math.max(12, Math.round(legendW * 0.035)) : 0;
   ctx.fillStyle = benchmarkPanel ? '#0B2116' : '#FBF6EC';
   ctx.fillRect(W, 0, legendW, H);
@@ -6245,7 +6381,7 @@ async function composeStyleSheet(
     ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
     ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('No AI features added.', lx, H - pad + Math.round(legendW * 0.04));
+    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04));
   } else {
     ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
     ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
@@ -6355,7 +6491,9 @@ interface SavedGlossy {
 // v35: Water AI terrain gains the benchmark tonal brief; exact ground washes and access recede.
 // v36: Water gains benchmark focus grading, close callouts and an inset editorial legend panel.
 // v37: Water symbols and route ink gain the restrained finish used by the benchmark sheet.
-const PLAN_VERSION = 'v37';
+// v38: Water, Planting and Structures gain reusable AI-painted feature art clipped to exact saved
+//      footprints; blue drip emitters and grouped editorial legends remain deterministic.
+const PLAN_VERSION = 'v38';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
