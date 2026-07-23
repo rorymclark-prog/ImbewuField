@@ -6540,8 +6540,24 @@ async function composeStyleSheet(
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
   ctx.font = `600 ${Math.round(legendW * 0.045)}px system-ui, sans-serif`;
-  ctx.fillText(styleLabel, lx, y);
-  y += Math.round(legendW * 0.05);
+  const styleWords = styleLabel.split(/\s+/);
+  const styleLines: string[] = [];
+  let styleLine = '';
+  for (const word of styleWords) {
+    const next = styleLine ? `${styleLine} ${word}` : word;
+    if (styleLine && ctx.measureText(next).width > maxX - lx && styleLines.length < 2) {
+      styleLines.push(styleLine);
+      styleLine = word;
+    } else {
+      styleLine = next;
+    }
+  }
+  if (styleLine) styleLines.push(styleLine);
+  const styleLineH = Math.round(legendW * 0.05);
+  for (const line of styleLines.slice(0, 3)) {
+    ctx.fillText(line, lx, y);
+    y += styleLineH;
+  }
   ctx.fillStyle = '#8A8172';
   ctx.font = `500 ${Math.round(legendW * 0.04)}px system-ui, sans-serif`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
