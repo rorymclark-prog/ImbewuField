@@ -31,6 +31,7 @@ import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForSt
 import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
+import { presentSectorCartography, SECTOR_STYLES, type SectorLegendIcon } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
@@ -2471,11 +2472,11 @@ async function drawAnalysisBase(
     // it raised mean chroma on an already-muted aerial. ctx.filter scales what is there and cannot
     // invert like that. Guarded because Canvas filter support is not universal; without it the
     // paper wash below still lightens, just with the greens left in.
-    if ('filter' in ctx) ctx.filter = 'saturate(0.5) brightness(1.12)';
+    if ('filter' in ctx) ctx.filter = 'saturate(0.72) brightness(0.76) contrast(1.12)';
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
   } else {
-    ctx.fillStyle = '#E9E3D4';
+    ctx.fillStyle = '#24382B';
     ctx.fillRect(0, 0, W, H);
   }
   drawPaperWash(ctx, W, H);
@@ -2487,7 +2488,7 @@ async function drawAnalysisBase(
  *  brighten filter, which belongs only to a raw aerial, not to artwork the model already stylised. */
 function drawPaperWash(ctx: CanvasRenderingContext2D, W: number, H: number): void {
   ctx.save();
-  ctx.fillStyle = 'rgba(246, 241, 228, 0.44)';
+  ctx.fillStyle = 'rgba(5, 24, 15, 0.24)';
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
 }
@@ -2848,6 +2849,7 @@ interface BlueprintLegendRow {
   label: string;
   style: 'fill' | 'line' | 'dashline';
   icon?: string;
+  sectorIcon?: SectorLegendIcon;
 }
 
 /** Generic legend rows (swatch + optional icon + label). Returns the y after the last row.
@@ -4769,6 +4771,8 @@ function drawSectorAnalysis(
     site, frame.centerLat, frame.centerLng,
     refLayers.driveway.length >= 2 ? { siteCentroid: siteCentroidNorm, drivewayPoints: refLayers.driveway } : null,
   );
+  const sectorPresentation = presentSectorCartography(model);
+  const sectorPresentationByKey = new Map(sectorPresentation.map((entry) => [entry.key, entry]));
   const isSH = model.southernHemisphere;
   const sectorMarkerKeys: string[] = [];
   const hasSolarPath = (path: SolarModel['summer']) => path.sunriseAzDeg != null && path.sunsetAzDeg != null;
@@ -4787,7 +4791,10 @@ function drawSectorAnalysis(
     sectorMarkerRequests.push({ key, x, y, color });
   };
   const flushSectorMarkers = (): void => {
-    if (!externalLegend || sectorMarkerRequests.length === 0) return;
+    // The benchmark numbers legend rows, not the map itself. Earlier composed sheets repeated
+    // those numbers as large circles at every arrow tail; the three solar records then piled up
+    // at north and obscured the very sun paths they were meant to explain.
+    if (externalLegend || sectorMarkerRequests.length === 0) return;
     const r = Math.max(12, W * 0.0105);
     const step = r * 2.35;
     const placed: Array<{ x: number; y: number }> = [];
@@ -4880,13 +4887,13 @@ function drawSectorAnalysis(
   // dashed compass ring + N/E/S/W ticks
   ctx.save();
   ctx.setLineDash([6, 6]);
-  ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.24)';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(cx, cy, R, 0, Math.PI * 2);
   ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle = '#D8DEE3';
+  ctx.fillStyle = 'rgba(232,238,228,0.62)';
   ctx.font = `700 ${Math.round(rowH * 0.6)}px system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -4958,12 +4965,34 @@ function drawSectorAnalysis(
     ctx.restore();
   };
 
+  const directLabelAt = (x: number, y: number, lines: string[], color: string): void => {
+    if (!externalLegend) return;
+    const fs = Math.max(16, Math.round(W * 0.0115));
+    const lineH = Math.round(fs * 1.06);
+    const lx = Math.max(W * 0.07, Math.min(W * 0.93, x));
+    const ly = Math.max(H * 0.08, Math.min(H * 0.91 - lineH * lines.length, y));
+    ctx.save();
+    ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(4, W * 0.0024);
+    ctx.strokeStyle = 'rgba(8,18,12,0.88)';
+    lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
+    ctx.fillStyle = color;
+    lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
+    ctx.restore();
+  };
+
   // Regional-assumption palette (§4 mechanism 1: these energies are ALWAYS dashed — solid is
   // reserved for computed geometry). Colours match design/benchmark/README.md's transcribed icons
   // (teal / blue / orange wavy wind lines) so the legend and the reference read as the same sheet.
-  const SUMMER_COOLING_COLOR = '#2FA6A0', SUMMER_COOLING_LBL = '#8FE0D8';
-  const COLD_FRONT_COLOR = '#3A6FC9', COLD_FRONT_LBL = '#9FB8EC';
-  const BERG_COLOR = '#C97B25', BERG_LBL = '#E0A45A';
+  const SUMMER_COOLING_COLOR = SECTOR_STYLES['summer-cooling-wind'].color;
+  const SUMMER_COOLING_LBL = SECTOR_STYLES['summer-cooling-wind'].labelColor;
+  const COLD_FRONT_COLOR = SECTOR_STYLES['cold-front-wind'].color;
+  const COLD_FRONT_LBL = SECTOR_STYLES['cold-front-wind'].labelColor;
+  const BERG_COLOR = SECTOR_STYLES['berg-wind'].color;
+  const BERG_LBL = SECTOR_STYLES['berg-wind'].labelColor;
 
   // A dashed-edge translucent wedge — the shared shape for every regional-assumption wind/fire
   // sector (namedWind + fire). Dashed boundary lines are mechanism 1 of the regional-assumption
@@ -4972,7 +5001,7 @@ function drawSectorAnalysis(
   const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, color: string, fillAlpha: number) => {
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
-    const rr = R * 1.16;
+    const rr = R * 1.34;
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(cx, cy);
@@ -4982,8 +5011,8 @@ function drawSectorAnalysis(
     ctx.fillStyle = `${color}${Math.round(fillAlpha * 255).toString(16).padStart(2, '0')}`;
     ctx.fill();
     ctx.strokeStyle = color;
-    ctx.lineWidth = 1.5;
-    ctx.setLineDash([6, 5]);
+    ctx.lineWidth = Math.max(2.2, W * 0.0015);
+    ctx.setLineDash([10, 7]);
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
@@ -4999,13 +5028,19 @@ function drawSectorAnalysis(
   // (never from the demoted NASA winter mean — §0.1). A translucent dashed sector from the
   // berg-wind bearing.
   if (model.fire) {
-    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, '#D64A2A', 0.20);
+    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, SECTOR_STYLES.fire.color, SECTOR_STYLES.fire.fillAlpha);
     // Fire's bearing EQUALS the berg wind's bearing by construction, so a fire arrow + label on
     // that ray would overprint the berg arrow + label. Let the wedge carry the message and put the
     // label INSIDE the wedge (the ring interior is empty on this sheet).
     const lp = bearingToUnitVector(model.fire.bearingDeg);
     labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
-    drawSectorMarker('fire', cx + lp[0] * R * 0.68, cy + lp[1] * R * 0.68, '#D64A2A');
+    drawSectorMarker('fire', cx + lp[0] * R * 0.68, cy + lp[1] * R * 0.68, SECTOR_STYLES.fire.color);
+    directLabelAt(
+      cx + lp[0] * (R + arrowLen * 0.62),
+      cy + lp[1] * (R + arrowLen * 0.62),
+      ['WINTER GRASSFIRE /', `EMBER RISK · ${model.fire.fromLabel}`],
+      SECTOR_STYLES.fire.labelColor,
+    );
   }
 
   // 5. SUN — TWO real arcs (summer + winter), each swept through the actual computed rise/set
@@ -5013,6 +5048,26 @@ function drawSectorAnalysis(
   // octant"). Each arc sweeps through whichever side (N/S) that season's noon sun actually sits on
   // — usually the same side both times, but genuinely different ('mixed') inside the tropics.
   const bearingToCanvasAngle = (bearingDeg: number) => ((bearingDeg - 90) * Math.PI) / 180;
+  const drawSunIcon = (x: number, y: number, r: number, color: string): void => {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(14,20,13,0.82)';
+    ctx.fillStyle = color;
+    ctx.lineWidth = Math.max(2, W * 0.0012);
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    for (let i = 0; i < 8; i++) {
+      const a = (i * Math.PI) / 4;
+      ctx.beginPath();
+      ctx.moveTo(x + Math.cos(a) * r * 1.35, y + Math.sin(a) * r * 1.35);
+      ctx.lineTo(x + Math.cos(a) * r * 2.05, y + Math.sin(a) * r * 2.05);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(1.8, W * 0.0011);
+      ctx.stroke();
+    }
+    ctx.restore();
+  };
   const drawSunArc = (path: SolarModel['summer'], r: number, color: string) => {
     if (path.sunriseAzDeg == null || path.sunsetAzDeg == null) return null;
     const sweepNorth = path.noonSide !== 'S';
@@ -5020,16 +5075,16 @@ function drawSectorAnalysis(
     const endAngle = bearingToCanvasAngle(path.sunsetAzDeg);
     ctx.save();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(3, W * 0.005);
+    ctx.lineWidth = Math.max(4, W * 0.0038);
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
     ctx.stroke();
     const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
-    ctx.beginPath();
-    ctx.arc(cx + apexVec[0] * r, cy + apexVec[1] * r, Math.max(6, W * 0.009), 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.fill();
+    const sunR = Math.max(7, W * 0.0062);
+    drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR * 0.75, color);
+    drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR, color);
+    drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR * 0.75, color);
     ctx.restore();
     return apexVec;
   };
@@ -5045,6 +5100,12 @@ function drawSectorAnalysis(
       '#F7C97E',
     );
     drawSectorMarker('summer-sun', cx + summerApex[0] * summerR, cy + summerApex[1] * summerR, '#D89A35');
+    directLabelAt(
+      cx + summerApex[0] * (summerR + rowH * 0.95),
+      cy + summerApex[1] * (summerR + rowH * 0.95),
+      [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16}`],
+      SECTOR_STYLES['summer-sun'].labelColor,
+    );
   }
   if (winterApex) {
     labelAt(
@@ -5054,6 +5115,12 @@ function drawSectorAnalysis(
       '#F5DFA6',
     );
     drawSectorMarker('winter-sun', cx + winterApex[0] * winterR, cy + winterApex[1] * winterR, '#C9AA5B');
+    directLabelAt(
+      cx + winterApex[0] * (winterR + rowH * 1.3),
+      cy + winterApex[1] * (winterR + rowH * 1.3),
+      [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16}`],
+      SECTOR_STYLES['winter-sun'].labelColor,
+    );
   }
   // MIDDAY SUN ray — a simple orienting spike toward whichever side(s) the noon sun sits on.
   // 'mixed' (inside the tropics) draws both sides, since the two solstices genuinely disagree.
@@ -5075,17 +5142,23 @@ function drawSectorAnalysis(
   // never places an arrow on this sheet any more (§0.3 — a circular mean of a bimodal wind rose
   // points into the gap between its two real lobes). [] (no regional table for this site) prints
   // a note instead of guessing.
-  const windWidth = () => Math.max(2.5, 3 * (W / 700));
+  const windWidth = () => Math.max(10, W * 0.0075);
   for (const w of model.namedWind) {
-    if (w.id === 'berg') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, BERG_COLOR, 0.10);
-    if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, SUMMER_COOLING_COLOR, 0.10);
-    if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, COLD_FRONT_COLOR, 0.10);
+    if (w.id === 'berg') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, BERG_COLOR, 0.18);
+    if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, SUMMER_COOLING_COLOR, 0.18);
+    if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, COLD_FRONT_COLOR, 0.18);
     const color = w.id === 'berg' ? BERG_COLOR : w.id === 'cold_front' ? COLD_FRONT_COLOR : SUMMER_COOLING_COLOR;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
     const marker = drawArrow(v, color, windWidth(), [9, 5]);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
+    const directLines = w.id === 'berg'
+      ? ['HOT DRY BERG WIND', w.fromLabel]
+      : w.id === 'cold_front'
+        ? ['COLD-FRONT WIND', w.fromLabel]
+        : ['SUMMER COOLING WIND', w.fromLabel];
+    directLabelAt(cx + v[0] * (R + arrowLen * 1.18), cy + v[1] * (R + arrowLen * 1.18), directLines, lblColor);
   }
 
   // 6b. DRIVEWAY ACCESS — dust & noise arriving from vehicle access (SECTOR-MODEL-SPEC deferred
@@ -5102,6 +5175,12 @@ function drawSectorAnalysis(
     const marker = drawArrow(v, DRIVEWAY_COLOR, windWidth(), []);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
+    directLabelAt(
+      cx + v[0] * (R + arrowLen * 1.1),
+      cy + v[1] * (R + arrowLen * 1.1),
+      ['ACCESS · DUST · NOISE', model.driveway.fromLabel],
+      DRIVEWAY_LBL,
+    );
   }
 
   // 7. TERRACE FALL (water) — downslope arrow through the centre + on-contour lines (dashed =
@@ -5136,6 +5215,12 @@ function drawSectorAnalysis(
     ctx.restore();
     labelAt(wex, wey + rowH * 0.55, `FALL ~${model.water.slopePct.toFixed(0)}% — UNIFORM FALL ASSUMED${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
     drawSectorMarker('water', wex, wey, '#3A8EC4');
+    directLabelAt(
+      wex,
+      wey + rowH * 1.1,
+      ['TERRACE FALL', `${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' · INDICATIVE' : ''}`],
+      '#8FD0F0',
+    );
 
     // On-contour lines only when the slope is steep enough to be meaningful (>=1.5°).
     if (!model.flat && bnd.length >= 3 && model.water.slopeDeg >= 1.5) {
@@ -5345,9 +5430,9 @@ function drawSectorAnalysis(
   // Gated on the SAME `summerApex`/`winterApex` the arcs above returned — null only inside the
   // polar circles (never reachable at a South African latitude, but honoured anyway per the
   // HARD INVARIANT: no legend row for geometry that wasn't drawn).
-  if (summerApex) rows.push({ color: '#F7C97E', label: 'Summer sun', style: 'line', icon: markerIcon('summer-sun') });
-  if (winterApex) rows.push({ color: '#F5DFA6', label: 'Winter sun', style: 'line', icon: markerIcon('winter-sun') });
-  rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun') });
+  if (summerApex) rows.push({ color: '#F7C97E', label: sectorPresentationByKey.get('summer-sun')?.label ?? 'Summer sun', style: 'line', icon: markerIcon('summer-sun'), sectorIcon: 'sun' });
+  if (winterApex) rows.push({ color: '#F5DFA6', label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
+  rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun'), sectorIcon: 'sun' });
   // Read each direction off the matched w.fromLabel, never hardcode it — this only ever read
   // right for the one region (kzn-coastal) that exists today; a second region would have silently
   // kept printing "NE/SW/NW" while the map arrows correctly pointed wherever that region's own
@@ -5356,22 +5441,22 @@ function drawSectorAnalysis(
   const summerCoolingWind = model.namedWind.find((w) => w.id === 'summer_cooling');
   const coldFrontWind = model.namedWind.find((w) => w.id === 'cold_front');
   const bergWind = model.namedWind.find((w) => w.id === 'berg');
-  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`) });
-  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`) });
-  if (bergWind) rows.push({ color: BERG_COLOR, label: `Berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`) });
-  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire') });
+  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`), sectorIcon: 'wind' });
+  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`), sectorIcon: 'wind' });
+  if (bergWind) rows.push({ color: BERG_COLOR, label: `Berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`), sectorIcon: 'wind' });
+  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire'), sectorIcon: 'fire' });
   // No ᴬ — computed from the traced driveway, not a regional assumption (see the draw-call
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
-  if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway') });
-  if (model.water) rows.push({ color: '#3A8EC4', label: `Terrace fall ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water') });
-  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline' });
+  if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: `Terrace fall ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
+  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
   // that one is the whole-site plane; this one is per-terrace, from the farmer's own entered levels.
   if (terraceFallDrawn) rows.push({ color: '#3A8EC4', label: 'Terrace fall (from your entered levels)', style: 'dashline' });
-  if (model.frost) rows.push({ color: '#9FD0E8', label: 'Cold-air drainage (inferred)', style: 'dashline' });
+  if (model.frost) rows.push({ color: '#9FD0E8', label: 'Cold-air drainage (inferred)', style: 'dashline', sectorIcon: 'frost' });
   // Gated on the SAME test the boundary draw uses (bnd.length >= 3, computed above). Unconditional,
   // this printed a key for a fence line that is not on the page whenever the boundary is untraced —
   // the phantom-row defect from the layer audit, fixed on Zones, Planting, Structures and print
@@ -5524,11 +5609,12 @@ async function composeSectorSheet(
   // Site names sit above the analysis marks so a wind or fall arrow cannot erase HOUSE, DRIVEWAY
   // or the terrace it crosses. Their wording is short and factual; energy details stay in legend.
   drawSectorContextLabels(ctx, state, refLayers, W, H);
-  const legendRows: StyleLegendRow[] = analysis.rows.map((row) => ({
+  const legendRows: StyleLegendRow[] = analysis.rows.map((row, index) => ({
     swatch: row.color,
-    text: `${row.icon ? `${row.icon} ` : ''}${row.label}`,
+    text: `${index + 1}. ${row.label}`,
     lineKind: row.style === 'dashline' ? 'drip' : row.style === 'line' ? 'pipe' : undefined,
     kind: row.style === 'fill' ? 'surface' : undefined,
+    sectorIcon: row.sectorIcon,
   }));
 
   return composeStyleSheet(
@@ -5914,6 +6000,7 @@ interface StyleLegendRow {
   lineKind?: string;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection;
+  sectorIcon?: SectorLegendIcon;
 }
 
 export function sheetLegendRows(
@@ -6081,6 +6168,75 @@ function drawStyleLegendSymbol(
   w: number,
   h: number,
 ): void {
+  if (row.sectorIcon) {
+    const cx = x + w / 2;
+    const r = Math.max(5, Math.min(w, h) * 0.24);
+    ctx.save();
+    ctx.strokeStyle = row.swatch;
+    ctx.fillStyle = row.swatch;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(2, h * 0.075);
+    if (row.sectorIcon === 'sun') {
+      ctx.beginPath();
+      ctx.arc(cx, y, r, 0, Math.PI * 2);
+      ctx.fill();
+      for (let i = 0; i < 8; i++) {
+        const a = (i * Math.PI) / 4;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(a) * r * 1.35, y + Math.sin(a) * r * 1.35);
+        ctx.lineTo(cx + Math.cos(a) * r * 2.05, y + Math.sin(a) * r * 2.05);
+        ctx.stroke();
+      }
+    } else if (row.sectorIcon === 'wind') {
+      for (const off of [-r * 0.75, 0, r * 0.75]) {
+        ctx.beginPath();
+        ctx.moveTo(x, y + off);
+        ctx.bezierCurveTo(x + w * 0.25, y + off - r * 0.8, x + w * 0.45, y + off + r * 0.8, x + w * 0.68, y + off);
+        ctx.bezierCurveTo(x + w * 0.82, y + off - r * 0.55, x + w * 0.92, y + off - r * 0.2, x + w, y + off);
+        ctx.stroke();
+      }
+    } else if (row.sectorIcon === 'fire') {
+      ctx.beginPath();
+      ctx.moveTo(cx, y - r * 2.1);
+      ctx.bezierCurveTo(cx + r * 1.8, y - r * 0.7, cx + r * 1.35, y + r * 1.7, cx, y + r * 2);
+      ctx.bezierCurveTo(cx - r * 1.5, y + r * 1.5, cx - r * 1.65, y - r * 0.25, cx - r * 0.4, y - r * 1.1);
+      ctx.bezierCurveTo(cx - r * 0.3, y - r * 0.4, cx + r * 0.2, y - r * 0.35, cx, y - r * 2.1);
+      ctx.fill();
+    } else if (row.sectorIcon === 'driveway') {
+      ctx.beginPath();
+      ctx.moveTo(x, y - r * 0.42);
+      ctx.lineTo(x + w * 0.62, y - r * 0.42);
+      ctx.lineTo(x + w * 0.62, y - r * 1.15);
+      ctx.lineTo(x + w, y);
+      ctx.lineTo(x + w * 0.62, y + r * 1.15);
+      ctx.lineTo(x + w * 0.62, y + r * 0.42);
+      ctx.lineTo(x, y + r * 0.42);
+      ctx.closePath();
+      ctx.fill();
+    } else if (row.sectorIcon === 'water') {
+      for (const off of [-r * 0.6, r * 0.35]) {
+        ctx.beginPath();
+        ctx.moveTo(x, y + off);
+        ctx.bezierCurveTo(x + w * 0.25, y + off - r, x + w * 0.55, y + off + r, x + w * 0.82, y + off);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.78, y - r * 0.5);
+      ctx.lineTo(x + w, y);
+      ctx.lineTo(x + w * 0.78, y + r * 0.5);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(cx, y - r * 1.8); ctx.lineTo(cx, y + r * 1.8);
+      ctx.moveTo(cx - r * 1.55, y - r * 0.9); ctx.lineTo(cx + r * 1.55, y + r * 0.9);
+      ctx.moveTo(cx + r * 1.55, y - r * 0.9); ctx.lineTo(cx - r * 1.55, y + r * 0.9);
+      ctx.stroke();
+    }
+    ctx.restore();
+    return;
+  }
+
   if (row.defId) {
     const def = ELEMENTS_BY_ID[row.defId];
     if (def) {
@@ -6505,8 +6661,8 @@ interface SavedGlossy {
 //      footprints; blue drip emitters and grouped editorial legends remain deterministic.
 // v39: ponds, tree/greywater basins, taps, pumps and greywater diverters join the painted Water set.
 // v40: banana, pawpaw, moringa, keyhole, herb-spiral and spekboom receive literal Planting art.
-// v41: small Structures art gains bounded point-symbol emphasis; walking paths return to dashes.
-const PLAN_VERSION = 'v41';
+// v42: Sector gains benchmark-strength aerial grading, marks, labels and legend symbols.
+const PLAN_VERSION = 'v42';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
