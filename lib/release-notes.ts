@@ -26,7 +26,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Ponds, tree basins, greywater basins, taps, pumps and diverters now use painted artwork',
       'Hand-painted tanks, beds, trees and planting strips stay inside their saved footprints',
       'Structures now show painted compost, hives, chicken tractors, nursery tables and gates',
-      'Drip is clear blue with emitters; filtered greywater remains purple and dashed',
+      'Drip is clear blue with fewer emitters; filtered greywater is now a solid purple line',
       'Water, Planting and Structures now share grouped editorial legends',
       'Unknown elements keep their safe exact symbol instead of becoming a guessed object',
       'Water uses a dark illustrated forest around a clear olive and moss property',

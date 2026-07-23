@@ -1787,14 +1787,10 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
     };
     if (line.kind === 'drip') {
-      // Benchmark grammar: clean blue tubing with repeated blue emitters. The previous dark-green
-      // core disappeared against planted beds and was easily mistaken for another hedge row.
+      // Benchmark grammar: clean blue tubing with sparse emitters. Too many dots read as noise
+      // once the finished sheet is reduced to phone/gallery size.
       trace();
       ctx.setLineDash([]);
-      ctx.strokeStyle = 'rgba(251,247,229,0.96)';
-      ctx.lineWidth = Math.max(style.width + 3.1, W * 0.0035);
-      ctx.stroke();
-      trace();
       ctx.strokeStyle = '#174E70';
       ctx.lineWidth = Math.max(style.width + 1.5, W * 0.0025);
       ctx.stroke();
@@ -1805,8 +1801,8 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       if (!line.visualBridge) {
         routeDots(
           line.points,
-          Math.max(11, W * 0.006),
-          Math.max(2.1, W * 0.0012),
+          Math.max(34, W * 0.017),
+          Math.max(2.0, W * 0.00105),
           '#BCE8FF',
           '#15577D',
         );
@@ -1817,19 +1813,15 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       // A filtered-greywater run stays visually distinct from clean-water pipework.
       trace();
       ctx.setLineDash([]);
-      ctx.strokeStyle = 'rgba(251,247,229,0.97)';
-      ctx.lineWidth = Math.max(style.width + 3.6, W * 0.0045);
-      ctx.stroke();
-      trace();
       ctx.strokeStyle = 'rgba(55,30,68,0.94)';
       ctx.lineWidth = Math.max(style.width + 1.9, W * 0.0032);
       ctx.stroke();
       trace();
-      ctx.setLineDash([Math.max(7, W * 0.004), Math.max(4, W * 0.0025)]);
+      ctx.setLineDash([]);
       ctx.strokeStyle = style.color;
       ctx.lineWidth = Math.max(style.width, W * 0.0023);
       ctx.stroke();
-      if (!line.visualBridge) routeDots(line.points, Math.max(19, W * 0.0095), Math.max(2.4, W * 0.00135), '#EAD8F0', '#5E3570');
+      if (!line.visualBridge) routeDots(line.points, Math.max(46, W * 0.022), Math.max(2.2, W * 0.00115), '#D9B6E6', '#5E3570');
       ctx.setLineDash([]);
       continue;
     }
@@ -1839,17 +1831,10 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     ctx.lineWidth = Math.max(style.width + 4.8, W * 0.005);
     ctx.stroke();
     trace();
-    ctx.strokeStyle = 'rgba(251,247,229,0.96)';
-    ctx.lineWidth = Math.max(style.width + 3.2, W * 0.0042);
-    ctx.stroke();
-    trace();
     ctx.setLineDash(style.dash);
     ctx.strokeStyle = style.color;
     ctx.lineWidth = Math.max(style.width, line.kind === 'pipe' ? W * 0.0025 : W * 0.0023);
     ctx.stroke();
-    if (line.kind === 'pipe' && !line.visualBridge) {
-      routeDots(line.points, Math.max(24, W * 0.012), Math.max(2.8, W * 0.0015), '#C7EDF2', '#153F58');
-    }
     ctx.setLineDash([]);
   }
 }
@@ -1901,25 +1886,17 @@ function drawWaterFeature(
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
 
-  // A warm separation halo is standard cartographic emphasis, not another physical footprint.
-  // It keeps small blue-grey fittings readable over detailed AI foliage while their centre stays
-  // exactly where the farmer placed it.
+  // A subtle shadow keeps small fittings readable without the bright white halos that made tanks
+  // and valves look pasted on top of the map.
   if (presentationScale > 1) {
     ctx.save();
-    ctx.shadowColor = 'rgba(18,30,24,0.5)';
-    ctx.shadowBlur = Math.max(3, W * 0.0018);
+    ctx.shadowColor = 'rgba(18,30,24,0.42)';
+    ctx.shadowBlur = Math.max(2, W * 0.0013);
     ctx.beginPath();
     if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
     else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
     ctx.strokeStyle = 'rgba(18,38,34,0.78)';
-    ctx.lineWidth = Math.max(4, W * 0.0022);
-    ctx.stroke();
-    ctx.shadowColor = 'transparent';
-    ctx.beginPath();
-    if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
-    else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
-    ctx.strokeStyle = 'rgba(255,250,232,0.96)';
-    ctx.lineWidth = Math.max(2, W * 0.0011);
+    ctx.lineWidth = Math.max(2.4, W * 0.00135);
     ctx.stroke();
     ctx.restore();
   }
@@ -3541,12 +3518,12 @@ export async function buildBlueprintWaterMapLegacy(
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
 
-  // 3. Water routes — white casing under a coloured line (swale/pipe/drip).
+  // 3. Water routes — clean technical ink.
   const LINE_STYLE: Record<string, { color: string; dash: number[] }> = {
     swale: { color: '#4EA6D8', dash: [] },
     pipe: { color: '#2B6FA6', dash: [] },
-    drip: { color: '#7FD46B', dash: [4, 8] },
-    greywater: { color: '#8E44AD', dash: [7, 4] },
+    drip: { color: '#238ACB', dash: [] },
+    greywater: { color: '#8E44AD', dash: [] },
   };
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -3557,11 +3534,6 @@ export async function buildBlueprintWaterMapLegacy(
       ctx.beginPath();
       l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
     };
-    trace();
-    ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-    ctx.lineWidth = 6;
-    ctx.stroke();
     trace();
     ctx.setLineDash(st.dash);
     ctx.strokeStyle = st.color;
@@ -3670,7 +3642,7 @@ export async function buildBlueprintWaterMapLegacy(
     ...rowsForItems(irrigation, '#4EA6D8'),
     ...(linesByKind.has('swale') ? [{ color: '#4EA6D8', label: `Swale / contour line${linesByKind.get('swale')! > 1 ? ` ×${linesByKind.get('swale')}` : ''}`, style: 'line' as const }] : []),
     ...(linesByKind.has('pipe') ? [{ color: '#2B6FA6', label: `Pipe${linesByKind.get('pipe')! > 1 ? ` ×${linesByKind.get('pipe')}` : ''}`, style: 'line' as const }] : []),
-    ...(linesByKind.has('drip') ? [{ color: '#7FD46B', label: `Drip line${linesByKind.get('drip')! > 1 ? ` ×${linesByKind.get('drip')}` : ''}`, style: 'dashline' as const }] : []),
+    ...(linesByKind.has('drip') ? [{ color: '#238ACB', label: `Drip line${linesByKind.get('drip')! > 1 ? ` ×${linesByKind.get('drip')}` : ''}`, style: 'line' as const }] : []),
   ];
   if (irrigationRows.length) {
     sections.push({
@@ -3680,7 +3652,7 @@ export async function buildBlueprintWaterMapLegacy(
     });
   }
   const greywaterLineRow: BlueprintLegendRow[] = linesByKind.has('greywater')
-    ? [{ color: '#8E44AD', label: `Greywater line${linesByKind.get('greywater')! > 1 ? ` ×${linesByKind.get('greywater')}` : ''}`, style: 'dashline' as const }]
+    ? [{ color: '#8E44AD', label: `Greywater line${linesByKind.get('greywater')! > 1 ? ` ×${linesByKind.get('greywater')}` : ''}`, style: 'line' as const }]
     : [];
   if (greywater.length || greywaterLineRow.length) {
     sections.push({
@@ -6765,7 +6737,8 @@ interface SavedGlossy {
 // v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
 // v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
 // v48: Sector sheet drops base-fabric context labels so the analysis reads like the benchmark.
-const PLAN_VERSION = 'v48';
+// v49: Water routes use solid blue/purple technical ink with sparse emitters and no pale symbol halos.
+const PLAN_VERSION = 'v49';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

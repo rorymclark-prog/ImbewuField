@@ -39,7 +39,7 @@ const FEATURE_LEGEND =
   `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
   `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
   // Line features — drawn into every composite but previously never explained (audit find):
-  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a bright-blue dashed line → a drip-irrigation line with small evenly spaced emitters along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
+  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a bright-blue solid line → a drip-irrigation line with sparse emitters along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
 
 function geometryLockTail(): string {
   return (
@@ -344,7 +344,7 @@ const M = {
   path: 'a gold dashed line is a walking path along exactly that route',
   swale: 'a light-blue dashed line is a swale — a planted water-harvesting ditch on contour',
   pipe: 'a dark-blue line is a buried water-pipe route, shown as a subtle trench line',
-  drip: 'a bright-blue dashed line with evenly spaced dots is a drip-irrigation line',
+  drip: 'a bright-blue solid line with sparse emitter dots is a drip-irrigation line',
   windbreak: 'a deep-green line is a windbreak hedge of dense shrubs and trees',
   // ADDED — these four had NO entry anywhere in this function, ever. buildShowcasePrompt is the
   // function every default style actually calls (DesignGlossy.tsx:5773/5863); the earthwork-not-
@@ -360,7 +360,7 @@ const M = {
   banana_circle: 'a larger brown circular marker about 3.5 m across is a banana circle — a sunken mulch-filled pit about 2 m across, ringed by a raised earth bund, four or five broad paddle-shaped banana leaves fanning out over the rim. Opposite silhouette to a tree basin: this is a SUNKEN pit, a tree basin is a RAISED mound',
   mulch_bank: 'a hatched rectangular Vetiver Bank marker is a compact block of upright blue-green vetiver tussocks filling exactly that rectangle and no larger, never a band running along the boundary or another line',
   greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
-  greywater_line: 'a violet dashed line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
+  greywater_line: 'a solid violet line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
 } as const;
 
@@ -502,7 +502,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   path:      'a gold dashed line → a walking path: a warm buff strip with soft edges',
   swale:     'a light-blue dashed line → a swale: a slim on-contour channel with a green planted berm on its downhill side',
   pipe:      'a dark-blue line → a buried pipe: a thin solid navy line',
-  drip:      'a bright-blue dashed line with dots → a drip-irrigation run: a crisp #238ACB tube with small evenly spaced pale-blue emitters along it',
+  drip:      'a bright-blue solid line with sparse dots → a drip-irrigation run: a crisp #238ACB tube with small pale-blue emitters along it',
   windbreak: 'a deep-green line → a windbreak: a dense row of small green canopy discs',
 };
 
@@ -602,11 +602,11 @@ export function buildSatelliteOverlayPrompt(args: {
     systemNote('RAINWATER', !!systems?.rainwater, 'the tanks and their linked plumbing exactly as marked'),
     systemNote('IRRIGATION', !!systems?.irrigation, 'the buried main, the drip runs lying along the beds, and the taps — every one of them already drawn on the photograph'),
     systemNote('FILTERED GREYWATER', !!systems?.greywater,
-      // The LINE half is conditional on a line actually being drawn. Describing "the subsurface greywater line drawn as a violet dashed run" whenever a greywater BASIN exists
+      // The LINE half is conditional on a line actually being drawn. Describing "the subsurface greywater line drawn as a violet run" whenever a greywater BASIN exists
       // told the model a run was there when the farmer had drawn none — so it invented one, and
       // ran it wherever it liked. The basin is real; the route is his to draw.
       systems?.greywaterLine
-        ? 'the violet dashed run already traced on the photograph and every basin it feeds — redraw it along exactly the line it is on, and add no branch that is not drawn. Greywater discharges below mulch, never onto edible leaves'
+        ? 'the solid violet run already traced on the photograph and every basin it feeds — redraw it along exactly the line it is on, and add no branch that is not drawn. Greywater discharges below mulch, never onto edible leaves'
         : 'the basins already marked, drawn as the sunken gravel sumps they are. NO greywater pipe, line or run is drawn anywhere on this sheet — none has been laid yet. Greywater discharges below mulch, never onto edible leaves'),
   ].filter(Boolean);
   const waterSystems = sheetKind === 'water' && groups.length
@@ -676,7 +676,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // resolves that by inventing them. That is the same shape as every invention bug this file has
   // already shipped: naming what is not drawn.
   const routeRule = sheetKind === 'water' || sheetKind === 'all'
-    ? ` — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the bright-blue dashed lines with dots are the drip-irrigation runs — there are exactly as many runs as there are bright-blue dotted lines and not one more; redraw each along exactly the line it is already on, as a slim #238ACB tube with small evenly spaced pale-blue emitters, quieter and thinner than the boundary; a bed with no blue dotted line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side; the violet #8E44AD dashed line is the subsurface GREYWATER run, redrawn as a slim violet dashed line — it is buried, so it is never a channel, never open water and never planted along.`
+    ? ` — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the bright-blue solid lines with sparse dots are the drip-irrigation runs — there are exactly as many runs as there are bright-blue drawn lines and not one more; redraw each along exactly the line it is already on, as a slim #238ACB tube with small pale-blue emitters, quieter and thinner than the boundary; a bed with no blue line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side; the violet #8E44AD solid line is the subsurface GREYWATER run, redrawn as a slim solid violet line — it is buried, so it is never a channel, never open water and never planted along.`
     : '';
 
   // Every element becomes a literal legend row. Enumerating the rows as CONTENT — rather than

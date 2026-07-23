@@ -364,7 +364,7 @@ test('the water sheet marker glossary describes only saved integrated features',
   assert.match(prompt, /carries NO plant of its own/);
   assert.match(prompt, /SUNKEN pit/);
   assert.doesNotMatch(prompt, /compact block of upright blue-green vetiver tussocks/);
-  assert.doesNotMatch(prompt, /violet dashed line is a greywater line/);
+  assert.doesNotMatch(prompt, /solid violet line is a greywater line/);
   assert.doesNotMatch(prompt, /dark-blue line is a buried water-pipe route/);
   // The driveway colour must match what drawMarks actually paints (TAR, near-black) — not the
   // stale "grey strip" wording that described the pre-fix composite. It is included only when
@@ -380,14 +380,14 @@ test('Reference Blueprint never briefs an absent Water route or empty subsystem'
   assert.doesNotMatch(tanksOnly, /IRRIGATION/);
   assert.doesNotMatch(tanksOnly, /FILTERED GREYWATER/);
   assert.doesNotMatch(tanksOnly, /dark-blue line is a buried water-pipe route/);
-  assert.doesNotMatch(tanksOnly, /violet dashed line is a greywater line/);
+  assert.doesNotMatch(tanksOnly, /solid violet line is a greywater line/);
 
   const routed = buildShowcasePrompt('Water', 'precision_atlas', 'Buried pipe, Greywater line, Drip irrigation line ×3', 'Carl and Sandys Home', 'water');
   assert.match(routed, /IRRIGATION/);
   assert.match(routed, /FILTERED GREYWATER/);
   assert.match(routed, /dark-blue line is a buried water-pipe route/);
-  assert.match(routed, /violet dashed line is a greywater line/);
-  assert.match(routed, /bright-blue dashed line with evenly spaced dots is a drip-irrigation line/);
+  assert.match(routed, /solid violet line is a greywater line/);
+  assert.match(routed, /bright-blue solid line with sparse emitter dots is a drip-irrigation line/);
   assert.match(routed, /If a feature is absent from the list, it must be absent/);
 });
 
@@ -541,7 +541,7 @@ test('drip runs are counted from the drawn lines, not from the beds', () => {
     elementsText: 'Vegetable Bed ×8, Drip irrigation line ×3',
     placeName: 'X', sheetKind: 'water',
   });
-  assert.match(p, /exactly as many runs as there are bright-blue dotted lines/);
+  assert.match(p, /exactly as many runs as there are bright-blue drawn lines/);
   // The old wording promised one run per BED, which turned 3 lines into 8 runs on a real sheet.
   assert.doesNotMatch(p, /one run down each bed/);
 });
@@ -882,17 +882,17 @@ test('only the water subsystems that exist are described', () => {
   assert.doesNotMatch(tanksOnly, /pressure regulator/);
   assert.match(tanksOnly, /Add no fitting, valve, regulator, filter, tap, pipe or line that is not already marked/);
   // A greywater BASIN with no run drawn: the heading appears, but the prompt says outright that no
-  // line exists. Describing "the violet dashed run" whenever a basin exists told the model a run was
+  // line exists. Describing "the violet run" whenever a basin exists told the model a run was
   // there when the farmer had drawn none — so it invented one and routed it wherever it liked.
   const basinOnly = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true } });
   assert.match(basinOnly, /FILTERED GREYWATER/);
   assert.match(basinOnly, /NO greywater pipe, line or run is drawn anywhere on this sheet/);
-  assert.doesNotMatch(basinOnly, /violet dashed run already traced/);
+  assert.doesNotMatch(basinOnly, /solid violet run already traced/);
   // The mulch-discharge rule is about the basins, not the line, so it survives either way.
   assert.match(basinOnly, /never onto edible leaves/);
   // With a run actually drawn, it is described — and only then.
   const withRun = buildSatelliteOverlayPrompt({ ...base, systems: { rainwater: true, irrigation: true, greywater: true, greywaterLine: true } });
-  assert.match(withRun, /violet dashed run already traced/);
+  assert.match(withRun, /solid violet run already traced/);
   assert.match(withRun, /add no branch that is not drawn/);
   assert.match(withRun, /never onto edible leaves/);
   // None at all: the whole clause disappears rather than shipping empty headings.

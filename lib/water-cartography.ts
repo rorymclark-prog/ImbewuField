@@ -59,11 +59,10 @@ export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
 /** One drawing registry for every line kind assigned to the Water sheet. */
 export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
   swale: { color: '#258DBA', dash: [], width: 5.6, label: 'Swale / contour water line' },
-  // A buried main reads as one continuous pipe. Connector dots provide the technical grammar;
-  // dashing the core made it disappear when the finished sheet was reduced to phone size.
+  // A buried main reads as one continuous pipe; repeated connector dots made the final sheet busy.
   pipe: { color: '#087CB8', dash: [], width: 6.2, label: 'Buried water pipe' },
   drip: { color: '#238ACB', dash: [], width: 4.2, label: 'Drip header and laterals' },
-  greywater: { color: '#8A43B3', dash: [10, 5], width: 5.3, label: 'Filtered greywater line' },
+  greywater: { color: '#8A43B3', dash: [], width: 5.3, label: 'Filtered greywater line' },
 };
 
 export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | undefined {
