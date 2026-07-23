@@ -68,6 +68,43 @@ export function plantingFeaturePresentationScale(id: string): number {
   return 1;
 }
 
+
+export interface PlantingPresentationDimensions {
+  width: number;
+  height: number;
+  scale: number;
+}
+
+/**
+ * Bounded print emphasis for planting symbols. This preserves the saved centre, rotation and
+ * aspect ratio while preventing small beds, tree basins and young-tree canopies from disappearing
+ * in the exported sheet or a phone-sized reduction. Large mapped beds are capped so emphasis never
+ * turns a true footprint into a different geometry.
+ */
+export function plantingFeaturePresentationDimensions(
+  id: string,
+  naturalWidth: number,
+  naturalHeight: number,
+  canvasWidth: number,
+): PlantingPresentationDimensions {
+  const baseScale = plantingFeaturePresentationScale(id);
+  if (baseScale === 1) {
+    return { width: naturalWidth, height: naturalHeight, scale: 1 };
+  }
+  const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
+  const longSide = Math.max(naturalWidth, naturalHeight);
+  const minimumShortSide = Math.max(18, canvasWidth * 0.0105);
+  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.08);
+  const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
+  const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
+  const scale = Math.max(1, cappedScale);
+  return {
+    width: naturalWidth * scale,
+    height: naturalHeight * scale,
+    scale,
+  };
+}
+
 export interface PlantingRouteStyle {
   color: string;
   dash: number[];

@@ -29,7 +29,7 @@ import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextEl
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
-import { PLANTING_LEGEND_SECTION_ORDER, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, SECTOR_STYLES, type SectorLegendIcon } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
@@ -3885,7 +3885,9 @@ function drawTrueFootprint(
       def.category === 'structure' || def.category === 'animal' || def.category === 'access'
     )
       ? structuresFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
-      : { width: naturalW, height: naturalH };
+      : emphasizeSmallFeatures && (def.category === 'growing' || def.category === 'earthworks')
+        ? plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+        : { width: naturalW, height: naturalH };
     const cx = px(it.x);
     const cy = py(it.y);
     const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
@@ -3907,8 +3909,11 @@ function drawTrueFootprint(
   const symbolScale = isPointInfrastructure && Math.min(naturalW, naturalH) < minShort
     ? minShort / Math.min(naturalW, naturalH)
     : 1;
-  const wPx = naturalW * symbolScale;
-  const hPx = naturalH * symbolScale;
+  const plantingPrinted = emphasizeSmallFeatures && (def.category === 'growing' || def.category === 'earthworks')
+    ? plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+    : null;
+  const wPx = plantingPrinted?.width ?? naturalW * symbolScale;
+  const hPx = plantingPrinted?.height ?? naturalH * symbolScale;
   const cx = px(it.x), cy = py(it.y);
   const shortPx = Math.min(wPx, hPx);
   const outline = Math.max(1.2, ctx.canvas.width * 0.0009);

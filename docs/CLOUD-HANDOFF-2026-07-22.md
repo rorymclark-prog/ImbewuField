@@ -69,3 +69,19 @@ editorial panel, deterministic labels and data-gated legend rows.
 - Keep `main` and production untouched.
 - Do not delete Gemini or legacy paths; all quality changes must remain switchable.
 
+
+## 2026-07-23 Codex checkpoint
+
+- Implemented bounded Planting print emphasis in the same deterministic pattern as Water and
+  Structures: saved centres, rotations and aspect ratios are unchanged, while small planting
+  symbols get a minimum printable short side and long mapped beds are capped to avoid changing
+  their apparent footprint class.
+- Wired the emphasis into both reusable artwork and fallback deterministic planting marks used by
+  the Reference Blueprint renderer. Legacy/Gemini paths remain present and no production/main
+  deployment was attempted.
+- Sector v42 was inspected in code and remains the active plan cache version. The Codex cloud
+  container could not complete preview deploy/browser verification because its agent internet
+  access is disabled and it has no Vercel deployment access.
+- Remaining gaps: deploy/promote the preview alias from an environment with Vercel access, use the
+  app Refresh control, then generate and visually compare Sector, Water, Planting, Structures,
+  Zones, Base, Whole and Phasing sheets at desktop and phone sizes against `design/benchmark/`.

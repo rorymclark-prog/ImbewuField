@@ -5,6 +5,7 @@ import {
   PLANTING_LEGEND_SECTION_ORDER,
   PLANTING_ROUTE_STYLE,
   plantingFeaturePresentationScale,
+  plantingFeaturePresentationDimensions,
   plantingLegendSectionForFeature,
   plantingRouteStyleFor,
 } from '@/lib/planting-cartography';
@@ -35,6 +36,22 @@ test('presentation scale is deterministic and leaves centres and saved geometry 
   assert.equal(plantingFeaturePresentationScale('banana_circle'), 1.2);
   assert.equal(plantingFeaturePresentationScale('jojo_5000'), 1);
   assert.equal(plantingFeaturePresentationScale('tree_mango'), plantingFeaturePresentationScale('tree_mango'));
+});
+
+test('presentation dimensions preserve aspect ratio with bounded print emphasis', () => {
+  const basin = plantingFeaturePresentationDimensions('tree_basin', 7, 5, 1595);
+  assert.equal(Math.round((basin.width / basin.height) * 1000), 1400);
+  assert.ok(basin.height >= 18);
+  assert.ok(basin.scale > 1);
+
+  const longBed = plantingFeaturePresentationDimensions('veg_bed', 150, 20, 1595);
+  assert.equal(Math.round((longBed.width / longBed.height) * 1000), 7500);
+  assert.deepEqual(longBed, { width: 150, height: 20, scale: 1 });
+
+  assert.deepEqual(
+    plantingFeaturePresentationDimensions('jojo_5000', 9, 9, 1595),
+    { width: 9, height: 9, scale: 1 },
+  );
 });
 
 test('windbreak styling is explicit and does not create styles for unrelated routes', () => {
