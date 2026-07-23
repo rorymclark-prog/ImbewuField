@@ -30,7 +30,7 @@ import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
-import { STRUCTURES_LEGEND_SECTION_ORDER, structuresLegendSectionForFeature, type StructuresLegendSection } from '@/lib/structures-cartography';
+import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
@@ -3855,11 +3855,11 @@ function stableCartographicUnit(seed: string, index: number): number {
   return (hash >>> 0) / 4294967295;
 }
 
-/** Draw one element at its TRUE ground footprint with deterministic cartographic artwork.
+/** Draw one element at its exact saved centre with deterministic cartographic artwork.
  *
  * Emoji are editor controls, not plan symbols. They used to be burned into exact sheets and copied
- * by the image model. These compact vector treatments keep the real footprint, rotation and centre
- * while remaining readable in print and reusable over an AI-painted base. */
+ * by the image model. Area features keep their footprint; tiny infrastructure uses a bounded point
+ * symbol at the same centre and rotation so it remains readable over an AI-painted base. */
 function drawTrueFootprint(
   ctx: CanvasRenderingContext2D,
   it: PlacedItem,
@@ -3867,6 +3867,7 @@ function drawTrueFootprint(
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
+  emphasizeSmallFeatures = true,
 ): void {
   const waterArtwork = def.category === 'water' || [
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
@@ -3874,14 +3875,19 @@ function drawTrueFootprint(
   ].includes(def.id);
   const artUrl = referenceFeatureArtworkUrl(def.id);
   if (artUrl && referenceFeatureArtworkCache.has(artUrl)) {
-    // Reusable art may improve material and detail, but its clip remains the literal saved
-    // footprint. Small objects gain legibility from outlines and leaders, never from moved edges.
+    // Reusable art improves material and detail. Area features keep their literal footprint; tiny
+    // infrastructure may use a bounded print symbol, but its centre and rotation never move.
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+    const printed = emphasizeSmallFeatures && (
+      def.category === 'structure' || def.category === 'animal' || def.category === 'access'
+    )
+      ? structuresFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+      : { width: naturalW, height: naturalH };
     const cx = px(it.x);
     const cy = py(it.y);
     const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
-    if (drawPaintedReferenceFeature(ctx, it, def, cx, cy, naturalW, naturalH, outline)) return;
+    if (drawPaintedReferenceFeature(ctx, it, def, cx, cy, printed.width, printed.height, outline)) return;
   }
   if (waterArtwork) {
     drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false);
@@ -4183,14 +4189,17 @@ function drawFilteredLines(
       ctx.beginPath();
       l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
     };
+    const routeVisual = filter === 'structures' ? structuresRouteVisualFor(l.kind) : null;
+    const routeDash = routeVisual?.dash ?? [];
     trace();
-    ctx.setLineDash([]);
+    ctx.setLineDash([...routeDash]);
     ctx.strokeStyle = 'rgba(255,255,255,0.6)';
     ctx.lineWidth = 6;
     ctx.stroke();
     trace();
+    ctx.setLineDash([...routeDash]);
     ctx.strokeStyle = color;
-    ctx.lineWidth = 3.5;
+    ctx.lineWidth = routeVisual?.width ?? 3.5;
     ctx.stroke();
     // Post-and-wire: round posts along the run, matching the composite exactly.
     if (l.kind === 'fence') drawFencePosts(ctx, l.points, px, py, 1);
@@ -6093,6 +6102,7 @@ function drawStyleLegendSymbol(
         (n) => n * ctx.canvas.width,
         (n) => n * ctx.canvas.height,
         1,
+        false,
       );
       return;
     }
@@ -6495,7 +6505,8 @@ interface SavedGlossy {
 //      footprints; blue drip emitters and grouped editorial legends remain deterministic.
 // v39: ponds, tree/greywater basins, taps, pumps and greywater diverters join the painted Water set.
 // v40: banana, pawpaw, moringa, keyhole, herb-spiral and spekboom receive literal Planting art.
-const PLAN_VERSION = 'v40';
+// v41: small Structures art gains bounded point-symbol emphasis; walking paths return to dashes.
+const PLAN_VERSION = 'v41';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
