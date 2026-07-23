@@ -22,9 +22,9 @@ test('presents the benchmark palette, line register, and priority order', () => 
   assert.deepEqual(entries.map((item) => item.priority), [10, 11, 12, 30, 31, 32, 40, 50, 60, 70]);
   assert.equal(SECTOR_STYLES['summer-cooling-wind'].color, '#25BFC0');
   assert.deepEqual(SECTOR_STYLES['summer-cooling-wind'].dash, [14, 7]);
-  assert.equal(SECTOR_STYLES['summer-cooling-wind'].fillAlpha, 0.26);
+  assert.equal(SECTOR_STYLES['summer-cooling-wind'].fillAlpha, 0.14);
   assert.equal(SECTOR_STYLES.driveway.lineStyle, 'solid');
-  assert.equal(SECTOR_STYLES.fire.fillAlpha, 0.24);
+  assert.equal(SECTOR_STYLES.fire.fillAlpha, 0.12);
 });
 
 test('copies exact bearings and provenance into presentation records', () => {
@@ -55,9 +55,9 @@ test('preserves mixed midday truth as two exact cardinal bearings', () => {
 });
 
 test('converts sector presentation tokens into phone-readable drawing values', () => {
-  assert.equal(sectorStrokeWidth('summer-cooling-wind', 1595), 14.674);
-  assert.equal(sectorStrokeWidth('summer-cooling-wind', 800), 13);
-  assert.equal(Number(sectorStrokeWidth('driveway', 1595).toFixed(3)), 8.613);
-  assert.equal(sectorFillColor('summer-cooling-wind'), '#25BFC042');
-  assert.equal(sectorFillColor('fire'), '#E7562D3d');
+  assert.equal(Number(sectorStrokeWidth('summer-cooling-wind', 1595).toFixed(3)), 8.932);
+  assert.equal(sectorStrokeWidth('summer-cooling-wind', 800), 7);
+  assert.equal(Number(sectorStrokeWidth('driveway', 1595).toFixed(3)), 5.742);
+  assert.equal(sectorFillColor('summer-cooling-wind'), '#25BFC024');
+  assert.equal(sectorFillColor('fire'), '#E7562D1f');
 });

@@ -4794,7 +4794,9 @@ function drawSectorAnalysis(
   const hasSolarPath = (path: SolarModel['summer']) => path.sunriseAzDeg != null && path.sunsetAzDeg != null;
   if (hasSolarPath(model.solar.summer)) sectorMarkerKeys.push('summer-sun');
   if (hasSolarPath(model.solar.winter)) sectorMarkerKeys.push('winter-sun');
-  sectorMarkerKeys.push('midday-sun');
+  // The polished plan follows the benchmark: the two seasonal arcs carry solar orientation.
+  // The legacy in-canvas view retains its separate midday reference.
+  if (!externalLegend) sectorMarkerKeys.push('midday-sun');
   for (const wind of model.namedWind) sectorMarkerKeys.push(`wind:${wind.id}`);
   if (model.fire) sectorMarkerKeys.push('fire');
   if (model.driveway) sectorMarkerKeys.push('driveway');
@@ -4900,24 +4902,28 @@ function drawSectorAnalysis(
   const cap = Math.max(24, Math.min(maxRx, maxRy) - arrowLen);
   const R = Math.min(Math.max(siteR * 0.7 + 10, Math.min(siteR + W * 0.02, cap)), cap);
 
-  // dashed compass ring + N/E/S/W ticks
-  ctx.save();
-  ctx.setLineDash([6, 6]);
-  ctx.strokeStyle = 'rgba(255,255,255,0.24)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = 'rgba(232,238,228,0.62)';
-  ctx.font = `700 ${Math.round(rowH * 0.6)}px system-ui, sans-serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('N', cx, cy - R - rowH * 0.5);
-  ctx.fillText('S', cx, cy + R + rowH * 0.5);
-  ctx.fillText('E', cx + R + rowH * 0.55, cy);
-  ctx.fillText('W', cx - R - rowH * 0.55, cy);
-  ctx.restore();
+  // The full compass ring is useful while editing, but it competes with the actual analysis on a
+  // finished sheet. The composed plan already has a north arrow, so keep the ring in legacy view
+  // only and let the benchmark-style sheet breathe.
+  if (!externalLegend) {
+    ctx.save();
+    ctx.setLineDash([6, 6]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.24)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(232,238,228,0.62)';
+    ctx.font = `700 ${Math.round(rowH * 0.6)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('N', cx, cy - R - rowH * 0.5);
+    ctx.fillText('S', cx, cy + R + rowH * 0.5);
+    ctx.fillText('E', cx + R + rowH * 0.55, cy);
+    ctx.fillText('W', cx - R - rowH * 0.55, cy);
+    ctx.restore();
+  }
 
   // Inward energy arrow: tail OUTSIDE the ring in `fromVec`, head INSIDE — energy entering the site.
   const drawArrow = (fromVec: [number, number], color: string, width: number, dash: number[], lenIn = R * 0.4) => {
@@ -4981,18 +4987,38 @@ function drawSectorAnalysis(
     ctx.restore();
   };
 
+  const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = externalLegend
+    ? [{ x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 }]
+    : [];
   const directLabelAt = (x: number, y: number, lines: string[], color: string): void => {
     if (!externalLegend) return;
-    const fs = Math.max(16, Math.round(W * 0.0115));
+    const fs = Math.max(14, Math.round(W * 0.0094));
     const lineH = Math.round(fs * 1.06);
-    const lx = Math.max(W * 0.07, Math.min(W * 0.93, x));
-    const ly = Math.max(H * 0.08, Math.min(H * 0.91 - lineH * lines.length, y));
     ctx.save();
     ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+    const halfW = Math.max(...lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.35;
+    const halfH = (lineH * lines.length) / 2 + fs * 0.3;
+    const candidates: Array<[number, number]> = [
+      [0, 0], [0, lineH * 2.4], [0, -lineH * 2.4],
+      [lineH * 4, 0], [-lineH * 4, 0], [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
+    ];
+    let lx = x;
+    let ly = y;
+    for (const [dx, dy] of candidates) {
+      const tx = Math.max(halfW + W * 0.015, Math.min(W - halfW - W * 0.015, x + dx));
+      const ty = Math.max(halfH + H * 0.025, Math.min(H - halfH - H * 0.025, y + dy));
+      const overlaps = directClaims.some(
+        (box) => tx - halfW < box.x1 && box.x0 < tx + halfW && ty - halfH < box.y1 && box.y0 < ty + halfH,
+      );
+      lx = tx;
+      ly = ty;
+      if (!overlaps) break;
+    }
+    directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round';
-    ctx.lineWidth = Math.max(4, W * 0.0024);
+    ctx.lineWidth = Math.max(3, W * 0.0019);
     ctx.strokeStyle = 'rgba(8,18,12,0.88)';
     lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
     ctx.fillStyle = color;
@@ -5016,26 +5042,29 @@ function drawSectorAnalysis(
   // is always solid; regional assumptions are always dashed.
   const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, kind: SectorVisualKind) => {
     const color = SECTOR_STYLES[kind].color;
+    const centerVec = bearingToUnitVector(bearingDeg);
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
-    const rr = R * 1.34;
+    const rr = R * 1.18;
+    const tipX = cx + centerVec[0] * R * 0.48;
+    const tipY = cy + centerVec[1] * R * 0.48;
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(cx, cy);
+    ctx.moveTo(tipX, tipY);
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.closePath();
     ctx.fillStyle = sectorFillColor(kind);
     ctx.fill();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.8, sectorStrokeWidth(kind, W) * 0.34);
+    ctx.lineWidth = Math.max(1.8, sectorStrokeWidth(kind, W) * 0.28);
     ctx.setLineDash([10, 7]);
     ctx.beginPath();
-    ctx.moveTo(cx, cy);
+    ctx.moveTo(tipX, tipY);
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(cx, cy);
+    ctx.moveTo(tipX, tipY);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.stroke();
     ctx.restore();
@@ -5092,13 +5121,13 @@ function drawSectorAnalysis(
     const endAngle = bearingToCanvasAngle(path.sunsetAzDeg);
     ctx.save();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(4, W * 0.0038);
+    ctx.lineWidth = Math.max(2.5, W * 0.0022);
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
     ctx.stroke();
     const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
-    const sunR = Math.max(7, W * 0.0062);
+    const sunR = Math.max(6, W * 0.0048);
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR * 0.75, color);
     drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR, color);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR * 0.75, color);
@@ -5143,15 +5172,19 @@ function drawSectorAnalysis(
   // 'mixed' (inside the tropics) draws both sides, since the two solstices genuinely disagree.
   const middaySides: Array<'N' | 'S'> = model.sun.middayFrom === 'mixed' ? ['N', 'S'] : [model.sun.middayFrom];
   let middayMarker: { sxp: number; syp: number } | null = null;
-  for (const side of middaySides) {
-    const arrow = drawArrow(bearingToUnitVector(side === 'N' ? 0 : 180), '#F7C97E', Math.max(3.5, W * 0.0045), []);
-    middayMarker ??= arrow;
+  if (!externalLegend) {
+    for (const side of middaySides) {
+      const arrow = drawArrow(bearingToUnitVector(side === 'N' ? 0 : 180), '#F7C97E', Math.max(3.5, W * 0.0045), []);
+      middayMarker ??= arrow;
+    }
   }
   const middayLabel =
     model.sun.middayFrom === 'mixed'
       ? `${model.solar.winter.noonSide} (winter) / ${model.solar.summer.noonSide} (summer)`
       : model.sun.middayFrom;
-  labelAt(cx, isSH ? cy - R - rowH * 0.2 : cy + R + rowH * 0.2, `MIDDAY SUN — ${middayLabel}`, '#F7C97E');
+  if (!externalLegend) {
+    labelAt(cx, isSH ? cy - R - rowH * 0.2 : cy + R + rowH * 0.2, `MIDDAY SUN — ${middayLabel}`, '#F7C97E');
+  }
   if (middayMarker) drawSectorMarker('midday-sun', middayMarker.sxp, middayMarker.syp, '#D89A35');
 
   // 6. REGIONAL NAMED WIND — summer-cooling / cold-front / berg, dashed wedges (§4 mechanism 1).
@@ -5168,7 +5201,7 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash]);
+    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.22 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
@@ -5190,7 +5223,7 @@ function drawSectorAnalysis(
   const DRIVEWAY_COLOR = SECTOR_STYLES.driveway.color, DRIVEWAY_LBL = SECTOR_STYLES.driveway.labelColor;
   if (model.driveway) {
     const v = bearingToUnitVector(model.driveway.bearingDeg);
-    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), []);
+    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), [], externalLegend ? R * 0.2 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
     directLabelAt(
@@ -5212,11 +5245,13 @@ function drawSectorAnalysis(
     ctx.save();
     ctx.strokeStyle = '#3A8EC4';
     ctx.fillStyle = '#3A8EC4';
-    ctx.lineWidth = Math.max(3, W * 0.004);
+    ctx.lineWidth = externalLegend ? Math.max(2.2, W * 0.0025) : Math.max(3, W * 0.004);
     ctx.setLineDash(model.water.indicative ? [8, 6] : []);
     ctx.lineCap = 'round';
-    const wsx = cx - dn[0] * siteR * 0.7, wsy = cy - dn[1] * siteR * 0.7;
-    const wex = cx + dn[0] * siteR * 0.9, wey = cy + dn[1] * siteR * 0.9;
+    const waterStart = externalLegend ? 0.45 : 0.7;
+    const waterEnd = externalLegend ? 0.58 : 0.9;
+    const wsx = cx - dn[0] * siteR * waterStart, wsy = cy - dn[1] * siteR * waterStart;
+    const wex = cx + dn[0] * siteR * waterEnd, wey = cy + dn[1] * siteR * waterEnd;
     ctx.beginPath();
     ctx.moveTo(wsx, wsy);
     ctx.lineTo(wex, wey);
@@ -5417,11 +5452,13 @@ function drawSectorAnalysis(
   if (isAiBase) {
     drawTitleBlockScrim(
       ctx, pad,
-      [titleStr, subtitleStr, dataStripStr, sourcesStr],
-      [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`],
+      externalLegend ? [titleStr, subtitleStr] : [titleStr, subtitleStr, dataStripStr, sourcesStr],
+      externalLegend
+        ? [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`]
+        : [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`],
     );
   }
-  if (dataStripStr) {
+  if (dataStripStr && !externalLegend) {
     ctx.save();
     ctx.fillStyle = '#B9C2C8';
     ctx.font = `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`;
@@ -5430,13 +5467,15 @@ function drawSectorAnalysis(
     ctx.fillText(dataStripStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
     ctx.restore();
   }
-  ctx.save();
-  ctx.fillStyle = 'rgba(185,194,200,0.75)';
-  ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillText(sourcesStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
-  ctx.restore();
+  if (!externalLegend) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(185,194,200,0.75)';
+    ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(sourcesStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
+    ctx.restore();
+  }
   drawBlueprintTitle(ctx, W, pad, titleStr, subtitleStr);
   const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫'];
   const markerIcon = (key: string): string | undefined => {
@@ -5450,7 +5489,9 @@ function drawSectorAnalysis(
   // HARD INVARIANT: no legend row for geometry that wasn't drawn).
   if (summerApex) rows.push({ color: '#F7C97E', label: sectorPresentationByKey.get('summer-sun')?.label ?? 'Summer sun', style: 'line', icon: markerIcon('summer-sun'), sectorIcon: 'sun' });
   if (winterApex) rows.push({ color: '#F5DFA6', label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
-  rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun'), sectorIcon: 'sun' });
+  if (!externalLegend) {
+    rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun'), sectorIcon: 'sun' });
+  }
   // Read each direction off the matched w.fromLabel, never hardcode it — this only ever read
   // right for the one region (kzn-coastal) that exists today; a second region would have silently
   // kept printing "NE/SW/NW" while the map arrows correctly pointed wherever that region's own
@@ -6710,7 +6751,7 @@ interface SavedGlossy {
 // v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
 // v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
 // v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
-const PLAN_VERSION = 'v45';
+const PLAN_VERSION = 'v46';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
