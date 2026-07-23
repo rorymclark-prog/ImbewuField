@@ -8,7 +8,7 @@ import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
-import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
+import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -218,6 +218,20 @@ test('Water sheet chrome uses one formal title and factual subsystem order', () 
   assert.equal(waterRouteStyleFor('pipe')?.label, 'Buried water pipe');
   assert.equal(waterRouteStyleFor('drip')?.label, 'Drip header and laterals');
   assert.equal(waterRouteStyleFor('drip')?.color, '#238ACB');
+});
+
+test('masterplan legend keeps blue pipe, blue drip and purple greywater distinct', () => {
+  const entries = waterRouteLegendEntries([
+    { id: 'pipe-1', kind: 'pipe', points: [[0.1, 0.1], [0.2, 0.2]] },
+    { id: 'drip-1', kind: 'drip', points: [[0.3, 0.1], [0.3, 0.2]] },
+    { id: 'drip-2', kind: 'drip', points: [[0.4, 0.1], [0.4, 0.2]] },
+    { id: 'greywater-1', kind: 'greywater', points: [[0.5, 0.1], [0.5, 0.2]] },
+  ]);
+  assert.deepEqual(entries.map(({ kind, color, label, count }) => ({ kind, color, label, count })), [
+    { kind: 'pipe', color: '#087CB8', label: 'Buried water pipe', count: 1 },
+    { kind: 'drip', color: '#238ACB', label: 'Drip header and laterals', count: 2 },
+    { kind: 'greywater', color: '#8A43B3', label: 'Filtered greywater line', count: 1 },
+  ]);
 });
 
 test('remote design content cannot force the open tab back to a stale wizard step', () => {

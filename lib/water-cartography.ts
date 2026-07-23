@@ -70,6 +70,32 @@ export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | u
   return WATER_ROUTE_STYLE[kind as WaterRouteKind];
 }
 
+export interface WaterRouteLegendEntry extends WaterRouteStyle {
+  kind: WaterRouteKind;
+  count: number;
+  section: WaterLegendSection;
+}
+
+/** One truthful legend row per saved Water route kind. Visual bridge segments are render-only and
+ * are deliberately not counted, so the legend always reports the farmer's saved design. */
+export function waterRouteLegendEntries(lines: LineShape[]): WaterRouteLegendEntry[] {
+  const counts = new Map<WaterRouteKind, number>();
+  for (const line of lines) {
+    const style = waterRouteStyleFor(line.kind);
+    if (!style || line.points.length < 2) continue;
+    const kind = line.kind as WaterRouteKind;
+    counts.set(kind, (counts.get(kind) ?? 0) + 1);
+  }
+  return (Object.keys(WATER_ROUTE_STYLE) as WaterRouteKind[])
+    .filter((kind) => counts.has(kind))
+    .map((kind) => ({
+      kind,
+      count: counts.get(kind)!,
+      section: waterLegendSectionForRoute(kind),
+      ...WATER_ROUTE_STYLE[kind],
+    }));
+}
+
 const EMPHASIZED_WATER_HARDWARE = new Set([
   'tap_point', 'borehole', 'first_flush', 'pump_filter', 'greywater_diverter',
   'greywater_outlet', 'water_trough', 'water_trough2',

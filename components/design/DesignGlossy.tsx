@@ -28,7 +28,7 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, REFERENCE_SHEET_LABEL, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -4324,8 +4324,11 @@ async function buildExactLayerOverlay(
     // masterplan, so repeating translucent effort zones here only muddies planting and water.
     drawFilteredLines(ctx, state, 'planting', px, py);
     drawFilteredLines(ctx, state, 'structures', px, py);
-    drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, false);
-    drawFilteredItems(ctx, state, filter, px, py, pxPerM, true);
+    // Routes sit over the ground but below every placed feature. Water and non-Water items then
+    // share one biggest-first stack, so a small canopy/fitting is never hidden merely because its
+    // category happened to be painted in an earlier subsystem pass.
+    drawWaterRoutes(ctx, state, frame, W, H);
+    drawFilteredItems(ctx, state, filter, px, py, pxPerM);
   } else if (filter === 'structures') {
     // Prior planting remains visible as quiet context, matching the benchmark infrastructure
     // sheet. It is not counted or legended as Structures content.
@@ -6014,7 +6017,8 @@ interface StyleLegendRow {
   defId?: string;
   lineKind?: string;
   kind?: 'zone' | 'ground' | 'surface';
-  section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection;
+  section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
+    | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
   sectorIcon?: SectorLegendIcon;
 }
 
@@ -6054,55 +6058,81 @@ export function sheetLegendRows(
   }
 
   if (filter === 'all') {
+    const siteRows: StyleLegendRow[] = rows.splice(0).map((row) => ({ ...row, section: 'SITE EDGE' }));
+    if (refLayers.boundary.length >= 3) {
+      siteRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence', section: 'SITE EDGE' });
+    }
+    if (refLayers.driveway.length >= 2) {
+      siteRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface', section: 'SITE EDGE' });
+    }
+    const accessLines = state.lines.filter((line) => ['path', 'fence', 'windbreak'].includes(line.kind));
+    if (accessLines.length) {
+      siteRows.push({
+        swatch: '#8A6D3B',
+        text: `Paths, fences & windbreaks ×${accessLines.length}`,
+        lineKind: 'path',
+        section: 'SITE EDGE',
+      });
+    }
+
     const summaries: Array<{
       text: string;
       swatch: string;
+      section: 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
       matches: (def: DesignElementDef) => boolean;
     }> = [
       {
-        text: 'Water storage & fittings', swatch: '#3F879C',
+        text: 'Water storage & fittings', swatch: '#3F879C', section: 'WATER',
         matches: (def) => def.category === 'water' && !/pond|basin/i.test(def.name),
       },
       {
-        text: 'Ponds, basins & water earthworks', swatch: '#6E9DA5',
+        text: 'Ponds, basins & water earthworks', swatch: '#6E9DA5', section: 'WATER',
         matches: (def) => /pond|basin|banana circle|berm|terrace/i.test(def.name),
       },
       {
-        text: 'Production beds & crops', swatch: '#6E7F45',
+        text: 'Production beds & crops', swatch: '#6E7F45', section: 'PLANTING',
         matches: (def) => (def.category === 'growing' || def.category === 'earthworks') && def.shape === 'rect',
       },
       {
-        text: 'Orchard & support trees', swatch: '#426044',
+        text: 'Orchard & support trees', swatch: '#426044', section: 'PLANTING',
         matches: (def) => def.category === 'growing' && def.shape === 'circle',
       },
       {
-        text: 'Structures & work areas', swatch: '#806645',
+        text: 'Structures & work areas', swatch: '#806645', section: 'INFRASTRUCTURE',
         matches: (def) => def.category === 'structure' || def.category === 'access',
       },
       {
-        text: 'Livestock & apiary', swatch: '#C98A2C',
+        text: 'Livestock & apiary', swatch: '#C98A2C', section: 'INFRASTRUCTURE',
         matches: (def) => def.category === 'animal',
       },
     ];
+    const contentRows: StyleLegendRow[] = [];
     for (const summary of summaries) {
       const matches = state.items.filter((item) => {
         const def = ELEMENTS_BY_ID[item.defId];
         return Boolean(def && summary.matches(def));
       });
       if (!matches.length) continue;
-      rows.push({
+      contentRows.push({
         swatch: summary.swatch,
         defId: matches[0].defId,
         text: `${summary.text} ×${matches.length}`,
+        section: summary.section,
       });
     }
-    const waterRoutes = state.lines.filter((line) => ['swale', 'pipe', 'drip', 'greywater'].includes(line.kind));
-    if (waterRoutes.length) rows.push({ swatch: '#2E7FC2', text: `Water routes ×${waterRoutes.length}`, lineKind: 'pipe' });
-    const accessLines = state.lines.filter((line) => ['path', 'fence', 'windbreak'].includes(line.kind));
-    if (accessLines.length) rows.push({ swatch: '#8A6D3B', text: `Paths, fences & windbreaks ×${accessLines.length}`, lineKind: 'path' });
-    if (refLayers.boundary.length >= 3) rows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
-    if (refLayers.driveway.length >= 2) rows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
-    return rows;
+    const waterRows: StyleLegendRow[] = waterRouteLegendEntries(state.lines).map((route) => ({
+      swatch: route.color,
+      text: `${route.label}${route.count > 1 ? ` ×${route.count}` : ''}`,
+      lineKind: route.kind,
+      section: 'WATER',
+    }));
+    const orderedContent = [
+      ...contentRows.filter((row) => row.section === 'WATER'),
+      ...waterRows,
+      ...contentRows.filter((row) => row.section === 'PLANTING'),
+      ...contentRows.filter((row) => row.section === 'INFRASTRUCTURE'),
+    ];
+    return [...siteRows, ...orderedContent];
   }
 
   const groups = new Map<string, { defId: string; color: string; n: number; section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection }>();
@@ -6679,7 +6709,8 @@ interface SavedGlossy {
 // v42: Sector gains benchmark-strength aerial grading, marks, labels and legend symbols.
 // v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
 // v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
-const PLAN_VERSION = 'v44';
+// v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
+const PLAN_VERSION = 'v45';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
