@@ -5679,9 +5679,8 @@ async function composeSectorSheet(
     ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM,
     baseImage !== null, state, true,
   );
-  // Site names sit above the analysis marks so a wind or fall arrow cannot erase HOUSE, DRIVEWAY
-  // or the terrace it crosses. Their wording is short and factual; energy details stay in legend.
-  drawSectorContextLabels(ctx, state, refLayers, W, H);
+  // Keep sheet 02 focused on sector energies. The base fabric stays as quiet orientation, while
+  // labels are reserved for sun, wind, fire, access, fall and the legend.
   const legendRows: StyleLegendRow[] = analysis.rows.map((row, index) => ({
     swatch: row.color,
     text: `${index + 1}. ${row.label}`,
@@ -6765,7 +6764,8 @@ interface SavedGlossy {
 // v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
 // v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
 // v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
-const PLAN_VERSION = 'v47';
+// v48: Sector sheet drops base-fabric context labels so the analysis reads like the benchmark.
+const PLAN_VERSION = 'v48';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
