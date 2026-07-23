@@ -218,9 +218,11 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dash: '4 5' };
     case 'pipe':
-      return { stroke: '#8C8577', width: 2 };
+      return { stroke: '#087CB8', width: 2.4 };
     case 'drip':
-      return { stroke: '#4EA6D8', width: 1.2, dash: '2 3' };
+      return { stroke: '#238ACB', width: 1.5, dash: '2 3' };
+    case 'greywater':
+      return { stroke: '#8A43B3', width: 2.1, dash: '5 3' };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, opacity: 0.5 };
     default:

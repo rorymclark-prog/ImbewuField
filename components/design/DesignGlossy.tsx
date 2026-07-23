@@ -28,7 +28,7 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, REFERENCE_SHEET_LABEL, type GlossyLayerFilter } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -219,12 +219,12 @@ const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
   path: '#C9A227',
-  pipe: '#2B6FA6',
-  drip: '#4E8B3B',
+  pipe: WATER_ROUTE_STYLE.pipe.color,
+  drip: WATER_ROUTE_STYLE.drip.color,
   windbreak: '#2F7A4A',
   // Violet — the reclaimed-water pipe convention — and more saturated than the fence lilac so a
   // greywater run and an internal fence can never read as the same line.
-  greywater: '#8E44AD',
+  greywater: WATER_ROUTE_STYLE.greywater.color,
 };
 
 // Gemini is listed first and is the DEFAULT: gpt-image-2 (via fal.ai) frequently returns 403
@@ -686,7 +686,7 @@ export function drawMarks(
     });
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
     ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
-    if (line.kind === 'swale' || line.kind === 'drip' || line.kind === 'path') ctx.setLineDash([6, 4]);
+    if (line.kind === 'swale' || line.kind === 'drip' || line.kind === 'greywater' || line.kind === 'path') ctx.setLineDash([6, 4]);
     else ctx.setLineDash([]); // fence is SOLID (dashed reads as underground/proposed) — posts mark it
     ctx.stroke();
     ctx.setLineDash([]);
@@ -1867,9 +1867,15 @@ function drawWaterFeature(
   const pointScale = pointSymbol && Math.min(naturalW, naturalH) < minPoint
     ? minPoint / Math.min(naturalW, naturalH)
     : 1;
-  const presentationScale = waterFeaturePresentationScale(def.id);
-  const w = naturalW * pointScale * presentationScale;
-  const h = naturalH * pointScale * presentationScale;
+  const printed = waterFeaturePresentationDimensions(
+    def.id,
+    naturalW * pointScale,
+    naturalH * pointScale,
+    W,
+  );
+  const presentationScale = printed.scale;
+  const w = printed.width;
+  const h = printed.height;
   const radius = Math.min(w, h) / 2;
   const id = def.id;
   const outline = Math.max(1.8, W * 0.00115);
@@ -3881,13 +3887,15 @@ function drawTrueFootprint(
     // infrastructure may use a bounded print symbol, but its centre and rotation never move.
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
-    const printed = emphasizeSmallFeatures && (
-      def.category === 'structure' || def.category === 'animal' || def.category === 'access'
-    )
-      ? structuresFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
-      : emphasizeSmallFeatures && (def.category === 'growing' || def.category === 'earthworks')
-        ? plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
-        : { width: naturalW, height: naturalH };
+    const printed = emphasizeSmallFeatures && waterArtwork
+      ? waterFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+      : emphasizeSmallFeatures && (
+        def.category === 'structure' || def.category === 'animal' || def.category === 'access'
+      )
+        ? structuresFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+        : emphasizeSmallFeatures && (def.category === 'growing' || def.category === 'earthworks')
+          ? plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+          : { width: naturalW, height: naturalH };
     const cx = px(it.x);
     const cy = py(it.y);
     const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
@@ -6670,7 +6678,8 @@ interface SavedGlossy {
 // v40: banana, pawpaw, moringa, keyhole, herb-spiral and spekboom receive literal Planting art.
 // v42: Sector gains benchmark-strength aerial grading, marks, labels and legend symbols.
 // v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
-const PLAN_VERSION = 'v43';
+// v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
+const PLAN_VERSION = 'v44';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

@@ -94,6 +94,40 @@ export function waterFeaturePresentationScale(id: string): number {
   return 1;
 }
 
+export interface WaterPresentationDimensions {
+  width: number;
+  height: number;
+  scale: number;
+}
+
+/**
+ * Print-only emphasis for Water hardware and basins. The saved centre, rotation and aspect ratio
+ * stay exact; only the displayed symbol size is enlarged enough to survive phone/export reduction.
+ */
+export function waterFeaturePresentationDimensions(
+  id: string,
+  naturalWidth: number,
+  naturalHeight: number,
+  canvasWidth: number,
+): WaterPresentationDimensions {
+  const baseScale = waterFeaturePresentationScale(id);
+  if (baseScale === 1) {
+    return { width: naturalWidth, height: naturalHeight, scale: 1 };
+  }
+  const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
+  const longSide = Math.max(naturalWidth, naturalHeight);
+  const minimumShortSide = Math.max(22, canvasWidth * 0.0155);
+  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.07);
+  const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
+  const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
+  const scale = Math.max(1, cappedScale);
+  return {
+    width: naturalWidth * scale,
+    height: naturalHeight * scale,
+    scale,
+  };
+}
+
 type RouteEndpoint = {
   key: string;
   lineId: string;

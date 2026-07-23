@@ -8,7 +8,7 @@ import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
-import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
+import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -188,6 +188,16 @@ test('Water routes and small fittings stay legible over illustrated ground', () 
   assert.equal(waterFeaturePresentationScale('greywater_basin'), 1.2);
   assert.equal(waterFeaturePresentationScale('pond_small'), 1.15);
   assert.equal(waterFeaturePresentationScale('veg_bed'), 1);
+  const tank = waterFeaturePresentationDimensions('jojo_5000', 9, 9, 1595);
+  assert.ok(tank.width >= 1595 * 0.0155);
+  assert.equal(tank.width, tank.height);
+  const basin = waterFeaturePresentationDimensions('tree_basin', 10, 8, 1595);
+  assert.equal(Math.round((basin.width / basin.height) * 1000), 1250);
+  assert.ok(basin.height >= 1595 * 0.0155);
+  assert.deepEqual(
+    waterFeaturePresentationDimensions('veg_bed', 60, 12, 1595),
+    { width: 60, height: 12, scale: 1 },
+  );
 });
 
 test('Water sheet chrome uses one formal title and factual subsystem order', () => {
@@ -363,7 +373,7 @@ test('Reference Blueprint never briefs an absent Water route or empty subsystem'
   assert.match(routed, /FILTERED GREYWATER/);
   assert.match(routed, /dark-blue line is a buried water-pipe route/);
   assert.match(routed, /violet dashed line is a greywater line/);
-  assert.match(routed, /green dashed line is a drip-irrigation line/);
+  assert.match(routed, /bright-blue dashed line with evenly spaced dots is a drip-irrigation line/);
   assert.match(routed, /If a feature is absent from the list, it must be absent/);
 });
 
@@ -517,7 +527,7 @@ test('drip runs are counted from the drawn lines, not from the beds', () => {
     elementsText: 'Vegetable Bed ×8, Drip irrigation line ×3',
     placeName: 'X', sheetKind: 'water',
   });
-  assert.match(p, /exactly as many runs as there are green dashed lines/);
+  assert.match(p, /exactly as many runs as there are bright-blue dotted lines/);
   // The old wording promised one run per BED, which turned 3 lines into 8 runs on a real sheet.
   assert.doesNotMatch(p, /one run down each bed/);
 });

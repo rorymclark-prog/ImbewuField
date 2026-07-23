@@ -39,7 +39,7 @@ const FEATURE_LEGEND =
   `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
   `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
   // Line features — drawn into every composite but previously never explained (audit find):
-  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a green dashed line → a drip-irrigation line along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
+  `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue line → a buried water pipe route (show as a subtle trench-line); a bright-blue dashed line → a drip-irrigation line with small evenly spaced emitters along the beds it crosses; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
 
 function geometryLockTail(): string {
   return (
@@ -344,7 +344,7 @@ const M = {
   path: 'a gold dashed line is a walking path along exactly that route',
   swale: 'a light-blue dashed line is a swale — a planted water-harvesting ditch on contour',
   pipe: 'a dark-blue line is a buried water-pipe route, shown as a subtle trench line',
-  drip: 'a green dashed line is a drip-irrigation line',
+  drip: 'a bright-blue dashed line with evenly spaced dots is a drip-irrigation line',
   windbreak: 'a deep-green line is a windbreak hedge of dense shrubs and trees',
   // ADDED — these four had NO entry anywhere in this function, ever. buildShowcasePrompt is the
   // function every default style actually calls (DesignGlossy.tsx:5773/5863); the earthwork-not-
@@ -502,7 +502,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   path:      'a gold dashed line → a walking path: a warm buff strip with soft edges',
   swale:     'a light-blue dashed line → a swale: a slim on-contour channel with a green planted berm on its downhill side',
   pipe:      'a dark-blue line → a buried pipe: a thin solid navy line',
-  drip:      'a green dashed line → a drip-irrigation run: a bright #2E9BFF line with small evenly spaced dots along it',
+  drip:      'a bright-blue dashed line with dots → a drip-irrigation run: a crisp #238ACB tube with small evenly spaced pale-blue emitters along it',
   windbreak: 'a deep-green line → a windbreak: a dense row of small green canopy discs',
 };
 
@@ -671,12 +671,12 @@ export function buildSatelliteOverlayPrompt(args: {
     : '';
 
   // ROUTES ARE A WATER-SHEET THING. lineInFilter puts swale, pipe and drip on the water layer
-  // ONLY, so on Planting and Structures this sentence described green dashed runs, a navy pipe and
+  // ONLY, so on Planting and Structures this sentence described blue emitter runs, a navy pipe and
   // a swale that are not in the composite at all — and rule 7's absent-assertion means the model
   // resolves that by inventing them. That is the same shape as every invention bug this file has
   // already shipped: naming what is not drawn.
   const routeRule = sheetKind === 'water' || sheetKind === 'all'
-    ? ` — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the green dashed lines are the drip-irrigation runs — there are exactly as many runs as there are green dashed lines and not one more; redraw each along exactly the line it is already on, as a slim run of small evenly spaced #2E9BFF dots, quieter and thinner than the boundary; a bed with no green line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side; the violet #8E44AD dashed line is the subsurface GREYWATER run, redrawn as a slim violet dashed line — it is buried, so it is never a channel, never open water and never planted along.`
+    ? ` — redraw each one along exactly the line it is already on, and add no connection that is not already drawn: the bright-blue dashed lines with dots are the drip-irrigation runs — there are exactly as many runs as there are bright-blue dotted lines and not one more; redraw each along exactly the line it is already on, as a slim #238ACB tube with small evenly spaced pale-blue emitters, quieter and thinner than the boundary; a bed with no blue dotted line on it gets no run; the dark-blue line is the buried pipe, redrawn as a thinner solid navy line; the light-blue dashed line is a swale, redrawn as a slim channel with a green planted berm on its downhill side; the violet #8E44AD dashed line is the subsurface GREYWATER run, redrawn as a slim violet dashed line — it is buried, so it is never a channel, never open water and never planted along.`
     : '';
 
   // Every element becomes a literal legend row. Enumerating the rows as CONTENT — rather than
