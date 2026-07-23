@@ -55,6 +55,40 @@ export interface SectorPresentation {
   sourceKey?: string;
 }
 
+export interface SectorEvidenceSummary {
+  propertyEvidence: readonly string[];
+  missingEvidence: readonly string[];
+  headline: string;
+  footer: string;
+}
+
+/**
+ * Makes the distinction between property evidence and regional context impossible to miss.
+ * A regional wind profile may legitimately look similar across nearby properties; this status
+ * prevents that shared context from masquerading as a complete property-specific analysis.
+ */
+export function sectorEvidenceSummary(model: SectorModel): SectorEvidenceSummary {
+  const propertyEvidence = ['latitude sun path'];
+  const missingEvidence: string[] = [];
+
+  if (model.water) propertyEvidence.push('terrain fall');
+  else missingEvidence.push('terrain / slope');
+
+  if (model.driveway) propertyEvidence.push('traced driveway access');
+
+  if (model.siteWindEvidence) propertyEvidence.push('coordinate climate grid');
+  else missingEvidence.push('coordinate climate grid');
+
+  const headline = missingEvidence.length > 0
+    ? `Property analysis incomplete · missing ${missingEvidence.join(' + ')}`
+    : `Property evidence: ${propertyEvidence.join(', ')}`;
+  const footer = missingEvidence.length > 0
+    ? `PROPERTY DATA INCOMPLETE — missing ${missingEvidence.join(' and ')}. Open this property on the map to fetch its site analysis before making design decisions.`
+    : `PROPERTY-SPECIFIC EVIDENCE — ${propertyEvidence.join(', ')}.`;
+
+  return { propertyEvidence, missingEvidence, headline, footer };
+}
+
 const WIND_KIND: Record<string, SectorVisualKind> = {
   summer_cooling: 'summer-cooling-wind',
   cold_front: 'cold-front-wind',

@@ -42,7 +42,7 @@ import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForSt
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
-import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
+import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
@@ -4794,6 +4794,7 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
 interface SectorAnalysisComposition {
   rows: BlueprintLegendRow[];
   noteText: string;
+  contextLabel: string;
 }
 
 // The deterministic sector geometry (compass ring, fire wedge, sun arc, wind arrows, water/contour
@@ -4850,6 +4851,7 @@ function drawSectorAnalysis(
     refLayers.driveway.length >= 2 ? { siteCentroid: siteCentroidNorm, drivewayPoints: refLayers.driveway } : null,
   );
   const sectorPresentation = presentSectorCartography(model);
+  const evidence = sectorEvidenceSummary(model);
   const sectorPresentationByKey = new Map(sectorPresentation.map((entry) => [entry.key, entry]));
   const isSH = model.southernHemisphere;
   const sectorMarkerKeys: string[] = [];
@@ -5594,8 +5596,8 @@ function drawSectorAnalysis(
     ? ` COORDINATE CLIMATE GRID — summer mean FROM ${model.siteWindEvidence.summerFromLabel ?? 'unavailable'}; winter mean FROM ${model.siteWindEvidence.winterFromLabel ?? 'unavailable'}${model.siteWindEvidence.annualMeanSpeedMps != null ? `; annual mean ${model.siteWindEvidence.annualMeanSpeedMps.toFixed(1)} m/s` : ''}. This is coarse climatology for these coordinates, not an on-site wind observation.`
     : '';
   const noteText = model.namedWind.length > 0
-    ? `${REGIONAL_FOOTER}${siteWindEvidence}`
-    : `${model.dataNotes[0] ?? 'Read the site before you design it.'}${siteWindEvidence}`;
+    ? `${evidence.footer} ${REGIONAL_FOOTER}${siteWindEvidence}`
+    : `${evidence.footer} ${model.dataNotes[0] ?? 'Read the site before you design it.'}${siteWindEvidence}`;
   if (!externalLegend) {
     const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
     const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
@@ -5604,7 +5606,7 @@ function drawSectorAnalysis(
     drawBlueprintScaleBar(ctx, W, H, pad, rowH, pxPerM);
     drawImplNorthArrow(ctx, W - pad - Math.round(W * 0.04), H - pad - Math.round(W * 0.04), Math.round(W * 0.05));
   }
-  return { rows, noteText };
+  return { rows, noteText, contextLabel: evidence.headline };
 }
 
 // Deterministic SECTOR ANALYSIS sheet — plan-set 02 (analysis precedes design: the sector energies
@@ -5730,7 +5732,7 @@ async function composeSectorSheet(
     refLayers,
     'all',
     placeName,
-    'Site geometry + regional climate context',
+    analysis.contextLabel,
     'Sector analysis',
     false,
     true,

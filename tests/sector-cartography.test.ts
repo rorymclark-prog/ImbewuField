@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { deriveSectorModel } from '../lib/sector.ts';
-import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
+import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
 
 const DURBAN = {
   biome: 'Indian Ocean Coastal Belt',
@@ -61,6 +61,26 @@ test('keeps the shared regional profile separate from coordinate-specific wind e
   assert.notDeepEqual(coastalA.siteWindEvidence, coastalB.siteWindEvidence);
   assert.equal(coastalA.namedWind[0]?.provenance, 'regional-assumption');
   assert.equal(coastalB.siteWindEvidence?.provenance, 'coordinate-climate-grid');
+});
+
+test('makes incomplete property evidence explicit even when regional sectors are available', () => {
+  const complete = deriveSectorModel(DURBAN, -29.783, 30.98, {
+    siteCentroid: [0.5, 0.5], drivewayPoints: [[0.1, 0.5], [0.2, 0.5]],
+  });
+  const incomplete = deriveSectorModel({
+    biome: 'Indian Ocean Coastal Belt',
+    rainfallPattern: 'summer',
+  }, -29.7, 30.8);
+
+  assert.equal(sectorEvidenceSummary(complete).missingEvidence.length, 0);
+  assert.match(sectorEvidenceSummary(complete).headline, /Property evidence:/);
+  assert.deepEqual(
+    sectorEvidenceSummary(incomplete).missingEvidence,
+    ['terrain / slope', 'coordinate climate grid'],
+  );
+  assert.match(sectorEvidenceSummary(incomplete).headline, /Property analysis incomplete/);
+  assert.match(sectorEvidenceSummary(incomplete).footer, /Open this property on the map/);
+  assert.ok(incomplete.namedWind.length > 0, 'regional context may remain available');
 });
 
 test('does not invent coordinate wind evidence when the location cache has none', () => {
