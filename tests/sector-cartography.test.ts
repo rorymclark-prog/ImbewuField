@@ -8,7 +8,7 @@ const DURBAN = {
   biome: 'Indian Ocean Coastal Belt',
   rainfallPattern: 'summer' as const,
   elevation: { slopeDeg: 4, slopePct: 7, aspectDeg: 225, aspectLabel: 'SW' },
-  climate: { minTemp: 3 },
+  climate: { minTemp: 3, windFromSummer: 'ESE', windFromWinter: 'WSW', windSpeed: 2.5 },
 };
 
 test('presents the benchmark palette, line register, and priority order', () => {
@@ -39,6 +39,36 @@ test('copies exact bearings and provenance into presentation records', () => {
   assert.equal(byKey.get('driveway')?.provenance, 'computed');
   assert.equal(byKey.get('water')?.bearings[0], model.water!.downhillBearingDeg);
   assert.equal(byKey.get('frost')?.bearings[0], model.frost!.downhillBearingDeg);
+  assert.deepEqual(model.siteWindEvidence, {
+    summerFromLabel: 'ESE',
+    winterFromLabel: 'WSW',
+    annualMeanSpeedMps: 2.5,
+    provenance: 'coordinate-climate-grid',
+  });
+});
+
+test('keeps the shared regional profile separate from coordinate-specific wind evidence', () => {
+  const coastalA = deriveSectorModel(DURBAN, -29.783, 30.98);
+  const coastalB = deriveSectorModel({
+    ...DURBAN,
+    climate: { ...DURBAN.climate, windFromSummer: 'NNE', windFromWinter: 'S', windSpeed: 4.1 },
+  }, -28.7, 31.4);
+
+  assert.deepEqual(
+    coastalA.namedWind.map(({ id, bearingDeg }) => ({ id, bearingDeg })),
+    coastalB.namedWind.map(({ id, bearingDeg }) => ({ id, bearingDeg })),
+  );
+  assert.notDeepEqual(coastalA.siteWindEvidence, coastalB.siteWindEvidence);
+  assert.equal(coastalA.namedWind[0]?.provenance, 'regional-assumption');
+  assert.equal(coastalB.siteWindEvidence?.provenance, 'coordinate-climate-grid');
+});
+
+test('does not invent coordinate wind evidence when the location cache has none', () => {
+  const model = deriveSectorModel({
+    biome: 'Indian Ocean Coastal Belt',
+    rainfallPattern: 'summer',
+  }, -29.7, 30.8);
+  assert.equal(model.siteWindEvidence, null);
 });
 
 test('does not invent regional, fire, driveway, water, or frost presentation', () => {

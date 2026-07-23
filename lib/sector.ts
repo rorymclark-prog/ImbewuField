@@ -52,6 +52,16 @@ export interface SectorModel {
   // Diagnostic only — NEVER drawn as an arrow (§0.3). Lets a data note fire when the sourced
   // regional bearing and the site's own NASA POWER mean disagree by more than 45°.
   windNasaCrossCheck: { summerDeg: number | null; winterDeg: number | null; disagreesDeg: number | null } | null;
+  // Coordinate-specific NASA POWER climatology. This is deliberately descriptive evidence,
+  // never an arrow source: the seasonal values are circular means of monthly grid data, not a
+  // measured wind rose at the property. Keeping it on the model lets the sheet distinguish the
+  // site's own coarse climate-grid result from the shared regional named-wind profile.
+  siteWindEvidence: {
+    summerFromLabel: string | null;
+    winterFromLabel: string | null;
+    annualMeanSpeedMps: number | null;
+    provenance: 'coordinate-climate-grid';
+  } | null;
 
   // DEMOTED (§0.3): still populated from NASA POWER's circular mean (via lib/nasa-power's
   // aspectLabel), but the sheet no longer draws these as arrows — they only feed
@@ -205,6 +215,18 @@ export function deriveSectorModel(
   const wwB = labelToBearing(site?.climate?.windFromWinter);
   const windSummer = wsB != null ? { fromLabel: site!.climate!.windFromSummer!, bearingDeg: wsB, speed: site?.climate?.windSpeed } : null;
   const windWinter = wwB != null ? { fromLabel: site!.climate!.windFromWinter!, bearingDeg: wwB, speed: site?.climate?.windSpeed } : null;
+  const siteWindEvidence: SectorModel['siteWindEvidence'] =
+    windSummer || windWinter || (site?.climate?.windSpeed != null && Number.isFinite(site.climate.windSpeed))
+      ? {
+          summerFromLabel: windSummer?.fromLabel ?? null,
+          winterFromLabel: windWinter?.fromLabel ?? null,
+          annualMeanSpeedMps:
+            site?.climate?.windSpeed != null && Number.isFinite(site.climate.windSpeed)
+              ? site.climate.windSpeed
+              : null,
+          provenance: 'coordinate-climate-grid',
+        }
+      : null;
 
   // Regional named-wind table (§2/§3) — the ONLY source for namedWind/fire. Never derived from
   // the NASA mean above.
@@ -281,6 +303,7 @@ export function deriveSectorModel(
     namedWind,
     regionKey,
     windNasaCrossCheck,
+    siteWindEvidence,
     windSummer,
     windWinter,
     fire,

@@ -86,6 +86,9 @@ or looking correct in source code is not enough.
 - [ ] Match the benchmark's visual emphasis: large readable direct labels, broad translucent wind,
   rain and fire sectors, strong but uncluttered arrows, and visible slope/terrace-fall direction.
 - [ ] Keep the nine rows data-gated and preserve measured/computed bearings and provenance.
+- [ ] Add a local-observation workflow so a farmer can confirm or override the regional wind and
+  fire approach for each property. Until then, named winds must remain visibly marked as regional
+  assumptions and coordinate climate-grid means must remain diagnostic context only.
 - [ ] Keep base fabric quiet; do not restore unrelated Base-map labels.
 - [ ] Verify the numbered icon legend, footer note, title, north arrow and scale at phone size.
 
@@ -208,4 +211,3 @@ For every visual acceptance pass, record:
 | 06 Structures | | Not checked | Not checked | Not checked | Not checked | |
 | 07 Whole | | Not checked | Not checked | Not checked | Not checked | |
 | 08 Phasing | | Not checked | Not checked | Not checked | Not checked | |
-

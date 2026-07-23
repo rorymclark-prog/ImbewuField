@@ -5508,10 +5508,10 @@ function drawSectorAnalysis(
   const summerCoolingWind = model.namedWind.find((w) => w.id === 'summer_cooling');
   const coldFrontWind = model.namedWind.find((w) => w.id === 'cold_front');
   const bergWind = model.namedWind.find((w) => w.id === 'berg');
-  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`), sectorIcon: 'wind' });
-  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`), sectorIcon: 'wind' });
-  if (bergWind) rows.push({ color: BERG_COLOR, label: `Berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`), sectorIcon: 'wind' });
-  if (model.fire) rows.push({ color: '#D64A2A', label: `Fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire'), sectorIcon: 'fire' });
+  if (summerCoolingWind) rows.push({ color: SUMMER_COOLING_COLOR, label: `Regional summer cooling wind — ${summerCoolingWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${summerCoolingWind.id}`), sectorIcon: 'wind' });
+  if (coldFrontWind) rows.push({ color: COLD_FRONT_COLOR, label: `Regional cold front — driving rain — ${coldFrontWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${coldFrontWind.id}`), sectorIcon: 'wind' });
+  if (bergWind) rows.push({ color: BERG_COLOR, label: `Regional berg wind — ${bergWind.fromLabel} ᴬ`, style: 'dashline', icon: markerIcon(`wind:${bergWind.id}`), sectorIcon: 'wind' });
+  if (model.fire) rows.push({ color: '#D64A2A', label: `Regional fire approach (${model.fire.fromLabel}) ᴬ`, style: 'dashline', icon: markerIcon('fire'), sectorIcon: 'fire' });
   // No ᴬ — computed from the traced driveway, not a regional assumption (see the draw-call
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
@@ -5536,7 +5536,12 @@ function drawSectorAnalysis(
   // without also reading that it is not a measurement of their own land.
   const REGIONAL_FOOTER =
     'ᴬ REGIONAL SECTOR ASSUMPTIONS — wind, berg and fire directions are the documented regional pattern for coastal KwaZulu-Natal, not measurements at this site. Confirm local wind, fire and runoff directions by on-site observation before siting windbreaks or firebreaks. Sun path is computed from latitude. Bearings are TRUE north.';
-  const noteText = model.namedWind.length > 0 ? REGIONAL_FOOTER : model.dataNotes[0] ?? 'Read the site before you design it.';
+  const siteWindEvidence = model.siteWindEvidence
+    ? ` COORDINATE CLIMATE GRID — summer mean FROM ${model.siteWindEvidence.summerFromLabel ?? 'unavailable'}; winter mean FROM ${model.siteWindEvidence.winterFromLabel ?? 'unavailable'}${model.siteWindEvidence.annualMeanSpeedMps != null ? `; annual mean ${model.siteWindEvidence.annualMeanSpeedMps.toFixed(1)} m/s` : ''}. This is coarse climatology for these coordinates, not an on-site wind observation.`
+    : '';
+  const noteText = model.namedWind.length > 0
+    ? `${REGIONAL_FOOTER}${siteWindEvidence}`
+    : `${model.dataNotes[0] ?? 'Read the site before you design it.'}${siteWindEvidence}`;
   if (!externalLegend) {
     const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
     const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
@@ -5671,7 +5676,7 @@ async function composeSectorSheet(
     refLayers,
     'all',
     placeName,
-    'Computed & sourced site energies',
+    'Site geometry + regional climate context',
     'Sector analysis',
     false,
     true,
