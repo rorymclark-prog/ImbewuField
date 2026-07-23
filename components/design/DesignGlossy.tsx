@@ -4949,7 +4949,7 @@ function drawSectorAnalysis(
     ctx.stroke();
     ctx.setLineDash([]);
     const ang = Math.atan2(eyp - syp, exp - sxp);
-    const ah = Math.max(9, width * 2.6);
+    const ah = Math.max(12, width * (externalLegend ? 3.4 : 2.6));
     ctx.beginPath();
     ctx.moveTo(exp, eyp);
     ctx.lineTo(exp - ah * Math.cos(ang - 0.42), eyp - ah * Math.sin(ang - 0.42));
@@ -5000,7 +5000,7 @@ function drawSectorAnalysis(
     : [];
   const directLabelAt = (x: number, y: number, lines: string[], color: string): void => {
     if (!externalLegend) return;
-    const fs = Math.max(14, Math.round(W * 0.0094));
+    const fs = Math.max(18, Math.round(W * 0.0114));
     const lineH = Math.round(fs * 1.06);
     ctx.save();
     ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
@@ -5053,7 +5053,7 @@ function drawSectorAnalysis(
     const centerVec = bearingToUnitVector(bearingDeg);
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
-    const rr = R * 1.18;
+    const rr = R * (externalLegend ? 1.38 : 1.18);
     const tipX = cx + centerVec[0] * R * 0.48;
     const tipY = cy + centerVec[1] * R * 0.48;
     ctx.save();
@@ -5065,7 +5065,7 @@ function drawSectorAnalysis(
     ctx.fillStyle = sectorFillColor(kind);
     ctx.fill();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(1.8, sectorStrokeWidth(kind, W) * 0.28);
+    ctx.lineWidth = Math.max(1.8, sectorStrokeWidth(kind, W) * (externalLegend ? 0.42 : 0.28));
     ctx.setLineDash([10, 7]);
     ctx.beginPath();
     ctx.moveTo(tipX, tipY);
@@ -5209,7 +5209,7 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.38 : R * 0.4);
+    const marker = drawArrow(v, color, windWidth(kind) * (externalLegend ? 1.15 : 1), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.56 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
@@ -5231,7 +5231,7 @@ function drawSectorAnalysis(
   const DRIVEWAY_COLOR = SECTOR_STYLES.driveway.color, DRIVEWAY_LBL = SECTOR_STYLES.driveway.labelColor;
   if (model.driveway) {
     const v = bearingToUnitVector(model.driveway.bearingDeg);
-    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), [], externalLegend ? R * 0.34 : R * 0.4);
+    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W) * (externalLegend ? 1.1 : 1), [], externalLegend ? R * 0.48 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
     directLabelAt(

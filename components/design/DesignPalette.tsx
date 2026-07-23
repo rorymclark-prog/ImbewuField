@@ -8,7 +8,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -24,6 +24,7 @@ interface ActiveLayers {
   ground: boolean;
   baseMap: boolean;
   labels: boolean;
+  symbols: boolean;
   contours: boolean;
   sector: boolean;
 }
@@ -94,6 +95,7 @@ const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: strin
   { key: 'access', label: 'Access', icon: '🚪' },
   { key: 'animals', label: 'Animals', icon: '🐔' },
   { key: 'labels', label: 'Labels', icon: '🏷️' },
+  { key: 'symbols', label: 'Icons', icon: '🔘' },
   { key: 'contours', label: 'Contours', icon: '⛰️' },
   { key: 'sector', label: 'Sector energies', icon: '☀️' },
 ];
@@ -221,21 +223,21 @@ export default function DesignPalette({
   // catalog there is pure clutter that buried the map. Pro keeps everything.
   const showElementCatalog = mode === 'pro' || allowedCategories !== 'all';
   const showFullCatalogNote = mode === 'pro';
+  const siteClimates = biomeClimates(siteBiome);
   const stepCatalog =
     allowedCategories === 'all'
       ? ELEMENT_CATALOG
       : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category) || def.alsoSteps?.includes(step as 'water' | 'planting' | 'structures'));
+  const visibleStepCatalog = stepCatalog.filter((def) => (step === 'planting' ? elementVisibleInPalette(def, siteClimates) : !def.deprecated));
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
   // show"). Category → layer mapping lives in CATEGORY_LAYER above.
   const catalog =
-    mode === 'pro' ? stepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]) : stepCatalog;
+    mode === 'pro' ? visibleStepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]) : visibleStepCatalog;
 
-  // Climate-appropriate trees: on the planting step, float the trees that crop in this site's
-  // climate to the front and dim the ones that won't (frost/chill mismatch). Never hides them —
-  // a farmer with a warm microclimate can still pick one.
-  const siteClimates = biomeClimates(siteBiome);
+  // Climate-appropriate trees: on the planting step, hide trees that do not crop in this site's
+  // climate. Unknown site climate still shows all non-deprecated trees.
   const climateFilterActive = step === 'planting' && !!siteClimates;
   // NON-TREES FIRST on the planting step. This strip is a single horizontal scroller, and the
   // catalog's own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions
@@ -535,7 +537,7 @@ export default function DesignPalette({
         )}
         {climateFilterActive && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-            🌡️ Trees that suit your climate{siteBiome ? ` (${siteBiome})` : ''} are shown first. Dimmed ones need a warmer or cooler spot.
+            🌡️ Showing climate-suited planting options{siteBiome ? ` for ${siteBiome}` : ''}. Deprecated/invasive or wrong-climate trees are hidden.
           </div>
         )}
         {/* Wrapped so the "there is more to the right" fade can sit over the strip's right edge.

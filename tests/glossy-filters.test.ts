@@ -12,7 +12,7 @@ import {
   layerContentCount,
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
-import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
+import { ELEMENT_CATALOG, ELEMENTS_BY_ID, biomeClimates, elementVisibleInPalette } from '../lib/design-elements.ts';
 import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
 import { waterRouteStyleFor } from '../lib/water-cartography.ts';
@@ -86,6 +86,17 @@ test('cartographic stacking keeps all ground earthworks below planting', () => {
         `${ground.name} must paint below ${plant.name}`,
       );
     }
+  }
+});
+
+test('subtropical planting palette hides deprecated and wrong-climate fruit trees', () => {
+  const climates = biomeClimates('Indian Ocean Coastal Belt');
+  assert.deepEqual(climates, ['subtropical']);
+  for (const id of ['tree_guava', 'tree_apple', 'tree_pear', 'tree_plum', 'tree_pomegranate', 'tree_olive']) {
+    assert.equal(elementVisibleInPalette(ELEMENTS_BY_ID[id], climates), false, `${id} should not be offered on this subtropical site`);
+  }
+  for (const id of ['tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi', 'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_other']) {
+    assert.equal(elementVisibleInPalette(ELEMENTS_BY_ID[id], climates), true, `${id} should be available on this subtropical site`);
   }
 });
 

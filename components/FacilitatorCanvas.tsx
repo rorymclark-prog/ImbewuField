@@ -118,7 +118,7 @@ const effectiveLabel = (it: { type: ElType; label?: string }): string => it.labe
 // priced per_m2) — this picks the species for a single 🌳 Fruit tree marker,
 // not the guild circle.
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
-const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
+const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
 interface LineEl { id: string; kind: LineKind; points: number[]; closed?: boolean; layer?: LayerId }
 

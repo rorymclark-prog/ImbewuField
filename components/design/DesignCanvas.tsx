@@ -85,6 +85,7 @@ interface ActiveLayers {
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
   baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
   labels: boolean; // the text name pills on every feature — off = declutter the map
+  symbols: boolean; // centred item icon discs — off = cleaner dense drafting view
   contours: boolean; // approximate on-contour guide lines (from slope + aspect)
   sector: boolean; // sun/wind/fire/water/frost energies overlay (from lib/sector, deterministic)
 }
@@ -1425,6 +1426,15 @@ export default function DesignCanvas({
   const insertVisibleR = worldPx(Math.max(visibleScreenR - 1, 4));
   const deleteHitR = worldPx(20);
   const deleteVisibleR = worldPx(Math.max(visibleScreenR + 1, 6));
+  const itemActionHitR = worldPx(20);
+  const itemActionR = worldPx(12);
+  const itemActionStrokeW = worldPx(1.5);
+  const itemActionFont = worldPx(12);
+  const itemActionGap = worldPx(4);
+  const itemGripHit = worldPx(18);
+  const itemGrip = worldPx(10);
+  const itemGripSmall = worldPx(7);
+  const itemRotateStem = worldPx(18);
 
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
@@ -2334,7 +2344,7 @@ export default function DesignCanvas({
           // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
           const owned = ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId });
           const interactive = tool === 'select' && owned;
-          const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
+          const iconDiscR = clamp(6, Math.min(wPx, hPx) * 0.28, 11);
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
@@ -2343,6 +2353,7 @@ export default function DesignCanvas({
           const rot = def.shape === 'rect' ? (isRotatingThis ? rotPreview! : item.rot ?? 0) : 0;
           const rotXf = rot ? `rotate(${rot})` : undefined;
           const canRotate = def.shape === 'rect';
+          const actionX = wPx / 2 + itemActionR + itemActionGap;
 
           return (
             <g
@@ -2350,7 +2361,7 @@ export default function DesignCanvas({
               transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}
               onPointerDown={(e) => startDragItem(e, item.id)}
               opacity={owned ? 1 : LOCKED_OPACITY}
-              style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
+              style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: owned ? 'auto' : 'none' }}
             >
               {/* Footprint + selection outline rotate together (rect only); the icon disc,
                   label and action handles below stay upright/screen-aligned. */}
@@ -2381,40 +2392,49 @@ export default function DesignCanvas({
                   <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
                 )}
               </g>
-              {/* Centred icon disc: colour-filled, white-stroked, emoji centred */}
-              <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
-              <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
-                {def.icon}
-              </text>
+              {/* Centred icon disc: optional, because dense water/planting edits become unreadable
+                  when every small placed item carries a full emoji badge. */}
+              {activeLayers.symbols && (
+                <>
+                  <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={Math.max(1, iconDiscR * 0.16)} />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
+                    {def.icon}
+                  </text>
+                </>
+              )}
               {/* Label pills are NOT drawn here. They are laid out together in a second pass below
                   (see "Item label pills"), because de-collision needs to see every pill at once —
                   which a per-item render, by construction, cannot. */}
               {isSelected && owned && onEditItem && (
                 <g
-                  transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 26})`}
+                  transform={`translate(${actionX}, ${-hPx / 2 - itemActionR * 2.15})`}
                   onPointerDown={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     onEditItem(item.id);
                   }}
                   style={{ cursor: 'pointer' }}
                 >
-                  <circle r={9} fill="#4EA6D8" stroke="#FBF6EC" strokeWidth={1.2} />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={10} fill="#FBF6EC">
+                  <circle r={itemActionHitR} fill="transparent" pointerEvents="fill" />
+                  <circle r={itemActionR} fill="#4EA6D8" stroke="#FBF6EC" strokeWidth={itemActionStrokeW} pointerEvents="none" />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={itemActionFont} fill="#FBF6EC" pointerEvents="none">
                     ✎
                   </text>
                 </g>
               )}
               {isSelected && owned && (
                 <g
-                  transform={`translate(${wPx / 2 + 6}, ${-hPx / 2 - 6})`}
+                  transform={`translate(${actionX}, ${-hPx / 2 + itemActionR * 0.55})`}
                   onPointerDown={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     deleteItem(item.id);
                   }}
                   style={{ cursor: 'pointer' }}
                 >
-                  <circle r={9} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={11} fill="#FBF6EC">
+                  <circle r={itemActionHitR} fill="transparent" pointerEvents="fill" />
+                  <circle r={itemActionR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={itemActionStrokeW} pointerEvents="none" />
+                  <text textAnchor="middle" dominantBaseline="central" fontSize={itemActionFont} fill="#FBF6EC" pointerEvents="none">
                     ✕
                   </text>
                 </g>
@@ -2425,31 +2445,31 @@ export default function DesignCanvas({
                 <g transform={rotXf}>
                   {/* Fat invisible hit area so the handle is easy to grab on a phone. */}
                   <rect
-                    x={wPx / 2 - 16}
-                    y={hPx / 2 - 16}
-                    width={32}
-                    height={32}
+                    x={wPx / 2 - itemGripHit}
+                    y={hPx / 2 - itemGripHit}
+                    width={itemGripHit * 2}
+                    height={itemGripHit * 2}
                     fill="transparent"
                     style={{ cursor: 'nwse-resize', touchAction: 'none' }}
                     onPointerDown={(e) => startDragResize(e, item.id)}
                   />
                   {/* Visible handle — a corner grip with diagonal arrows, larger than before. */}
                   <rect
-                    x={wPx / 2 - 7}
-                    y={hPx / 2 - 7}
-                    width={14}
-                    height={14}
-                    rx={3}
+                    x={wPx / 2 - itemGrip / 2}
+                    y={hPx / 2 - itemGrip / 2}
+                    width={itemGrip}
+                    height={itemGrip}
+                    rx={itemGrip * 0.22}
                     fill={GOLD}
                     stroke="#0B120B"
-                    strokeWidth={1.5}
+                    strokeWidth={itemActionStrokeW}
                     style={{ cursor: 'nwse-resize', touchAction: 'none' }}
                     onPointerDown={(e) => startDragResize(e, item.id)}
                   />
                   <path
-                    d={`M ${wPx / 2 - 3.5} ${hPx / 2 + 3.5} L ${wPx / 2 + 3.5} ${hPx / 2 - 3.5}`}
+                    d={`M ${wPx / 2 - itemGripSmall / 2} ${hPx / 2 + itemGripSmall / 2} L ${wPx / 2 + itemGripSmall / 2} ${hPx / 2 - itemGripSmall / 2}`}
                     stroke="#0B120B"
-                    strokeWidth={1.5}
+                    strokeWidth={itemActionStrokeW}
                     strokeLinecap="round"
                     pointerEvents="none"
                   />
@@ -2459,27 +2479,27 @@ export default function DesignCanvas({
                   {def.shape === 'rect' && (
                     <>
                       {/* Breadth — mid-right edge */}
-                      <rect x={wPx / 2 - 14} y={-14} width={28} height={28} fill="transparent" style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
-                      <rect x={wPx / 2 - 4} y={-9} width={8} height={18} rx={4} fill={GOLD} stroke="#0B120B" strokeWidth={1.5} style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
+                      <rect x={wPx / 2 - itemGripHit} y={-itemGripHit} width={itemGripHit * 2} height={itemGripHit * 2} fill="transparent" style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
+                      <rect x={wPx / 2 - itemGripSmall / 2} y={-itemGrip} width={itemGripSmall} height={itemGrip * 2} rx={itemGripSmall / 2} fill={GOLD} stroke="#0B120B" strokeWidth={itemActionStrokeW} style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
                       {/* Length — mid-bottom edge */}
-                      <rect x={-14} y={hPx / 2 - 14} width={28} height={28} fill="transparent" style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
-                      <rect x={-9} y={hPx / 2 - 4} width={18} height={8} rx={4} fill={GOLD} stroke="#0B120B" strokeWidth={1.5} style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
+                      <rect x={-itemGripHit} y={hPx / 2 - itemGripHit} width={itemGripHit * 2} height={itemGripHit * 2} fill="transparent" style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
+                      <rect x={-itemGrip} y={hPx / 2 - itemGripSmall / 2} width={itemGrip * 2} height={itemGripSmall} rx={itemGripSmall / 2} fill={GOLD} stroke="#0B120B" strokeWidth={itemActionStrokeW} style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
                     </>
                   )}
                   {canRotate && (
                     <g>
-                      <line x1={0} y1={-hPx / 2 - 4} x2={0} y2={-hPx / 2 - 22} stroke={GOLD} strokeWidth={1.5} />
+                      <line x1={0} y1={-hPx / 2 - itemGripSmall} x2={0} y2={-hPx / 2 - itemRotateStem} stroke={GOLD} strokeWidth={itemActionStrokeW} />
                       <circle
                         cx={0}
-                        cy={-hPx / 2 - 26}
-                        r={9}
+                        cy={-hPx / 2 - itemRotateStem - itemActionR * 0.35}
+                        r={itemActionR}
                         fill={GOLD}
                         stroke="#FFFFFF"
-                        strokeWidth={2}
+                        strokeWidth={itemActionStrokeW}
                         style={{ cursor: 'grab', touchAction: 'none' }}
                         onPointerDown={(e) => startDragRotate(e, item.id)}
                       />
-                      <circle cx={0} cy={-hPx / 2 - 26} r={2.5} fill="#0B120B" pointerEvents="none" />
+                      <circle cx={0} cy={-hPx / 2 - itemRotateStem - itemActionR * 0.35} r={worldPx(2.5)} fill="#0B120B" pointerEvents="none" />
                     </g>
                   )}
                 </g>
@@ -2529,7 +2549,7 @@ export default function DesignCanvas({
               // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
               // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights
               // converged into one band while their icons stayed spread out.
-              const iconDiscR = clamp(9, Math.min(wPx, hPx) * 0.35, 16);
+              const iconDiscR = activeLayers.symbols ? clamp(6, Math.min(wPx, hPx) * 0.28, 11) : 0;
               return {
                 id: item.id,
                 cx: nx * imgW,

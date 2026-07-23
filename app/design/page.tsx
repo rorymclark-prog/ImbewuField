@@ -522,6 +522,7 @@ function DesignStudioInner() {
     ground: true,
     baseMap: true,
     labels: true,
+    symbols: true,
     contours: false, // opt-in overlay (approximate, from slope + aspect)
     sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
@@ -530,7 +531,7 @@ function DesignStudioInner() {
   // still the safe default on mode switch.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, contours: a.contours, sector: a.sector }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
     }
   }, [designMode]);
 
@@ -539,9 +540,9 @@ function DesignStudioInner() {
 
   const [detectError, setDetectError] = useState<string | null>(null);
 
-  // Copy/paste clipboard for placed items (Cmd/Ctrl+C / +V). Ref, not state — it never needs
+  // Copy/paste clipboard for selected shapes (Cmd/Ctrl+C / +V). Ref, not state — it never needs
   // to trigger a render, and paste reads it synchronously.
-  const clipboard = useRef<PlacedItem[]>([]);
+  const clipboard = useRef<{ items: PlacedItem[]; zones: ZoneShape[]; lines: LineShape[] }>({ items: [], zones: [], lines: [] });
 
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
@@ -1097,25 +1098,45 @@ function DesignStudioInner() {
         if (redoStack.current.length > 0) { e.preventDefault(); handleRedo(); }
         return;
       }
-      // Cmd/Ctrl+C — copy the selected placed items to the clipboard.
+      // Cmd/Ctrl+C — copy selected placed items, polygons AND lines to the clipboard.
       if ((e.metaKey || e.ctrlKey) && (e.key === 'c' || e.key === 'C')) {
         const sel = new Set(selectedIds);
-        const copied = (canvasState?.items ?? []).filter((it) => sel.has(it.id));
-        if (copied.length) { e.preventDefault(); clipboard.current = copied; }
+        const copied = {
+          items: (canvasState?.items ?? []).filter((it) => sel.has(it.id)),
+          zones: (canvasState?.zones ?? []).filter((z) => sel.has(z.id)),
+          lines: (canvasState?.lines ?? []).filter((l) => sel.has(l.id)),
+        };
+        if (copied.items.length || copied.zones.length || copied.lines.length) {
+          e.preventDefault();
+          clipboard.current = copied;
+        }
         return;
       }
       // Cmd/Ctrl+V — paste copies, nudged down-right, and select the new ones.
       if ((e.metaKey || e.ctrlKey) && (e.key === 'v' || e.key === 'V')) {
-        if (!clipboard.current.length) return;
+        const clip = clipboard.current;
+        if (!clip.items.length && !clip.zones.length && !clip.lines.length) return;
         e.preventDefault();
-        const pasted: PlacedItem[] = clipboard.current.map((it) => ({
+        const offsetPt = (p: [number, number]): [number, number] => [
+          Math.min(0.98, p[0] + 0.03),
+          Math.min(0.98, p[1] + 0.03),
+        ];
+        const pastedItems: PlacedItem[] = clip.items.map((it) => ({
           ...it,
           id: newId(),
           x: Math.min(0.98, it.x + 0.03),
           y: Math.min(0.98, it.y + 0.03),
         }));
-        handleChange((prev) => ({ ...prev, items: [...prev.items, ...pasted], updatedAt: new Date().toISOString() }));
-        setSelectedIds(pasted.map((p) => p.id));
+        const pastedZones: ZoneShape[] = clip.zones.map((z) => ({ ...z, id: newId(), points: z.points.map(offsetPt) }));
+        const pastedLines: LineShape[] = clip.lines.map((l) => ({ ...l, id: newId(), points: l.points.map(offsetPt) }));
+        handleChange((prev) => ({
+          ...prev,
+          items: [...prev.items, ...pastedItems],
+          zones: [...prev.zones, ...pastedZones],
+          lines: [...prev.lines, ...pastedLines],
+          updatedAt: new Date().toISOString(),
+        }));
+        setSelectedIds([...pastedItems.map((p) => p.id), ...pastedZones.map((z) => z.id), ...pastedLines.map((l) => l.id)]);
         return;
       }
       // Cmd/Ctrl+D — duplicate the current selection in place (nudged), mirroring the palette's
@@ -1938,6 +1959,7 @@ interface ItemEditPatch {
   note?: string;
   wM?: number;
   hM?: number;
+  rot?: number;
 }
 
 function ItemEditSheet({
@@ -1957,6 +1979,7 @@ function ItemEditSheet({
   const [note, setNote] = useState(item.note ?? '');
   const [wM, setWM] = useState(String(item.wM ?? def?.wM ?? 1));
   const [hM, setHM] = useState(String(item.hM ?? def?.hM ?? 1));
+  const [rot, setRot] = useState(String(Math.round(item.rot ?? 0)));
 
   function handleSave() {
     const parsedW = parseFloat(wM);
@@ -1968,6 +1991,10 @@ function ItemEditSheet({
     if (Number.isFinite(parsedW) && parsedW > 0) {
       patch.wM = parsedW;
       patch.hM = isRect ? (Number.isFinite(parsedH) && parsedH > 0 ? parsedH : parsedW) : parsedW;
+    }
+    if (isRect) {
+      const parsedRot = parseFloat(rot);
+      if (Number.isFinite(parsedRot)) patch.rot = ((parsedRot % 360) + 360) % 360;
     }
     onSave(patch);
   }
@@ -2086,6 +2113,28 @@ function ItemEditSheet({
             </label>
           )}
         </div>
+
+        {isRect && (
+          <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+            Angle (degrees)
+            <input
+              type="number"
+              inputMode="decimal"
+              step={1}
+              value={rot}
+              onChange={(e) => setRot(e.target.value)}
+              style={{
+                minHeight: 44,
+                borderRadius: 10,
+                border: '1px solid rgba(11,18,11,0.2)',
+                padding: '0 12px',
+                fontSize: 14,
+                background: '#FFFFFF',
+                color: DARK,
+              }}
+            />
+          </label>
+        )}
 
         <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
           <button

@@ -152,7 +152,7 @@ const ZONE_PLANTINGS: Record<number, string> = {
   0: 'the home — roof catchment, rainwater tanks, gutters',
   1: 'herbs (basil, coriander, chives), kitchen greens, compost bay, seedling nursery',
   2: 'intensive vegetable beds (tomatoes, beans, brassicas, leafy greens), pollinator strip',
-  3: 'orchard / food forest — citrus, mango, avocado, guava, macadamia, with understorey + groundcover',
+  3: 'orchard / food forest — citrus, mango, avocado, macadamia, indigenous fruit, with understorey + groundcover',
   4: 'support species (pigeon pea, comfrey, vetiver), hardy perennials, mulch-bank plants',
   5: 'windbreak + indigenous biodiversity buffer (native trees & shrubs)',
 };

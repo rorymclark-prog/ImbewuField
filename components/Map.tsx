@@ -249,7 +249,7 @@ interface Props {
 // concept (that's a FacilitatorCanvas-only element) — this just names the
 // species at a single 🌳 tree marker.
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
-const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Guava', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Peach'];
+const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();

@@ -217,7 +217,7 @@ Show PLANT GROUPS in the right locations — not individual crop names crowded o
 INCLUDE (in the correct spatial locations):
 • Kitchen herbs near the house (label: "Herbs: basil, coriander, chives...")
 • Vegetables in existing/intensive beds (label "Veg beds")
-• Fruit trees in orchard zone to the NORTH (label: "Orchard: citrus, guava, mango, avocado by biome")
+• Fruit trees in orchard zone to the NORTH (label: "Orchard: citrus, mango, avocado, indigenous fruit by biome")
 • Food forest edge — layered system at sunny boundary (label: "Food forest: canopy + understorey + groundcover")
 • Bananas or wet-loving plants near greywater outlet / moist low point
 • Drought-tolerant plants on dry western or south-facing edges

@@ -28,6 +28,8 @@ export interface DesignElementDef {
   needsSun?: boolean; // veg/beds → shade victim
   nearRoofM?: number; // should be within N metres of house/structure (tanks)
   nearHouseMaxM?: number; // daily-use max distance from house (herbs/veg)
+  deprecated?: boolean; // kept for old saved maps, hidden from new-placement palettes
+  deprecatedReason?: string;
   // Extra wizard steps this element is offered on, beyond the ones its category implies. Some
   // elements are honestly two things at once — a banana circle is a planted crop AND a greywater
   // sink — and forcing them into one category hid them from the step where the farmer looks.
@@ -650,7 +652,9 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#4E8B3B',
     zoneRec: [2, 3],
     castsShade: true,
-    tip: 'Tolerant and fast-fruiting — good filler tree near the homestead zone.',
+    deprecated: true,
+    deprecatedReason: 'Hidden from new designs: invasive risk in warm coastal/subtropical South African sites.',
+    tip: 'Hidden from new designs because guava can be invasive in warm coastal areas. Kept so old saved designs still render.',
   },
   {
     id: 'tree_litchi',
@@ -690,6 +694,58 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     zoneRec: [2, 3],
     castsShade: true,
     tip: 'Prune hard annually for leaf harvest to control size near beds.',
+  },
+  {
+    id: 'tree_natal_plum',
+    category: 'growing',
+    name: 'Natal Plum',
+    icon: '🫐',
+    shape: 'circle',
+    wM: 3,
+    hM: 3,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    tip: 'Indigenous fruiting coastal shrub/tree; useful as an edible hedge or small orchard edge.',
+  },
+  {
+    id: 'tree_wild_plum',
+    category: 'growing',
+    name: 'Wild Plum',
+    icon: '🍇',
+    shape: 'circle',
+    wM: 7,
+    hM: 7,
+    color: '#4E8B3B',
+    zoneRec: [3, 4],
+    castsShade: true,
+    tip: 'Indigenous subtropical fruit/shade tree; give it room away from beds and buildings.',
+  },
+  {
+    id: 'tree_waterberry',
+    category: 'growing',
+    name: 'Waterberry',
+    icon: '💠',
+    shape: 'circle',
+    wM: 8,
+    hM: 8,
+    color: '#4E8B3B',
+    zoneRec: [3, 4],
+    castsShade: true,
+    tip: 'Indigenous fruiting shade tree for moister edges and wildlife-friendly food forest zones.',
+  },
+  {
+    id: 'tree_other',
+    category: 'growing',
+    name: 'Other Tree',
+    icon: '✳️',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3, 4],
+    castsShade: true,
+    tip: 'Place the canopy, then tap it and rename it to the exact species.',
   },
   {
     id: 'banana_clump',
@@ -1075,10 +1131,12 @@ export const TREE_CLIMATES: Record<string, ClimateZone[]> = {
   tree_mango: ['subtropical'],
   tree_avocado: ['subtropical'],
   tree_macadamia: ['subtropical'],
-  tree_guava: ['subtropical'],
   tree_litchi: ['subtropical'],
   tree_pawpaw: ['subtropical'],
   tree_moringa: ['subtropical', 'arid'],
+  tree_natal_plum: ['subtropical'],
+  tree_wild_plum: ['subtropical'],
+  tree_waterberry: ['subtropical'],
   banana_clump: ['subtropical'],
   banana_circle: ['subtropical'],
   tree_apple: ['temperate'],
@@ -1120,4 +1178,9 @@ export function elementSuitsClimate(defId: string, siteClimates: ClimateZone[] |
   const treeClimates = TREE_CLIMATES[defId];
   if (!treeClimates) return true; // climate-agnostic (indigenous, support planting, etc.)
   return treeClimates.some((c) => siteClimates.includes(c));
+}
+
+export function elementVisibleInPalette(def: DesignElementDef, siteClimates: ClimateZone[] | null): boolean {
+  if (def.deprecated) return false;
+  return elementSuitsClimate(def.id, siteClimates);
 }

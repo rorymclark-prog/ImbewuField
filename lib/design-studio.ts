@@ -927,7 +927,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         title: 'Food forest and orchard',
         body: [
           boundary
-            ? `The boundary margin of ${boundary.name}${boundaryAreaLabel} is ideal for a layered food forest — tall canopy fruit trees (mango, pecan, avocado by biome), mid-layer guava, pomegranate, lemon, and groundcover of comfrey, sweet potato, and herbs.`
+            ? `The boundary margin of ${boundary.name}${boundaryAreaLabel} is ideal for a layered food forest — tall canopy fruit trees (mango, avocado, macadamia by biome), mid-layer natal plum, lemon, and groundcover of comfrey, sweet potato, and herbs.`
             : 'Use the outer edges of the property for long-term food tree planting — they take years to mature but need very little attention once established.',
           'A 10 m × 10 m food forest patch — once established — can supply fruit, firewood, mulch material, and habitat for beneficial insects with almost no ongoing labour.',
           surveyCrops.includes('fruit-trees')

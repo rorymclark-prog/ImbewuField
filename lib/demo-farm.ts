@@ -279,7 +279,7 @@ export function buildDemoBoundaryFC(): FeatureCollection {
 /* (b) Saved place — the "Ubhejane Creche" pin. biome/rainfall/elevation are plausible
    for the northern-KZN coastal hinterland (Savanna, summer rainfall). 'Savanna' is a
    real biome name (lib/design-elements.ts biomeClimates → subtropical), which keeps the
-   design's mango/avocado/guava/moringa on-climate. */
+   design's mango/avocado/indigenous fruit/moringa on-climate. */
 export function buildDemoSavedPlace(): SavedPlace {
   return {
     id: 'demo-place-ubhejane',
@@ -371,7 +371,7 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   const treeSpecs: Array<{ id: string; defId: string; xM: number; yM: number }> = [
     { id: 'demo-di-mango', defId: 'tree_mango', xM: 7, yM: 23 },
     { id: 'demo-di-avocado', defId: 'tree_avocado', xM: 17, yM: 23 },
-    { id: 'demo-di-guava', defId: 'tree_guava', xM: 27, yM: 22.5 },
+    { id: 'demo-di-natal-plum', defId: 'tree_natal_plum', xM: 27, yM: 22.5 },
     { id: 'demo-di-moringa-1', defId: 'tree_moringa', xM: 33, yM: 22 },
     { id: 'demo-di-moringa-2', defId: 'tree_moringa', xM: 12, yM: 24 },
   ];
