@@ -697,7 +697,7 @@ export function drawMarks(
     });
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
     ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
-    if (line.kind === 'swale' || line.kind === 'drip' || line.kind === 'greywater' || line.kind === 'path') ctx.setLineDash([6, 4]);
+    if (line.kind === 'swale' || line.kind === 'path') ctx.setLineDash([6, 4]);
     else ctx.setLineDash([]); // fence is SOLID (dashed reads as underground/proposed) — posts mark it
     ctx.stroke();
     ctx.setLineDash([]);
@@ -1743,10 +1743,19 @@ function buildZoneOverlay(
 }
 
 function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
-  return state.items.filter((it) => {
-    const def = ELEMENTS_BY_ID[it.defId];
-    return !!def && itemInFilter(def.category, 'water', def.id);
-  });
+  return state.items
+    .filter((it) => {
+      const def = ELEMENTS_BY_ID[it.defId];
+      return !!def && itemInFilter(def.category, 'water', def.id);
+    })
+    .sort((a, b) => {
+      const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
+      const layerA = cartographicItemPaintRank(da);
+      const layerB = cartographicItemPaintRank(db);
+      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
+      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
+      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
+    });
 }
 
 function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number) {
@@ -4235,9 +4244,22 @@ function drawContextItems(
 ): void {
   ctx.save();
   ctx.globalAlpha = 0.38;
-  for (const it of state.items) {
+  const contextItems = state.items
+    .filter((it) => {
+      const def = ELEMENTS_BY_ID[it.defId];
+      return !!def && isContextElement(def, filter);
+    })
+    .sort((a, b) => {
+      const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
+      const layerA = cartographicItemPaintRank(da);
+      const layerB = cartographicItemPaintRank(db);
+      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
+      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
+      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
+    });
+  for (const it of contextItems) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !isContextElement(def, filter)) continue;
+    if (!def) continue;
     drawTrueFootprint(ctx, it, def, px, py, pxPerM);
   }
   ctx.restore();
@@ -5187,7 +5209,7 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.22 : R * 0.4);
+    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.38 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
@@ -5209,7 +5231,7 @@ function drawSectorAnalysis(
   const DRIVEWAY_COLOR = SECTOR_STYLES.driveway.color, DRIVEWAY_LBL = SECTOR_STYLES.driveway.labelColor;
   if (model.driveway) {
     const v = bearingToUnitVector(model.driveway.bearingDeg);
-    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), [], externalLegend ? R * 0.2 : R * 0.4);
+    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), [], externalLegend ? R * 0.34 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
     directLabelAt(
@@ -5618,28 +5640,9 @@ async function composeSectorSheet(
     await drawAnalysisBase(ctx, frame, W, H);
   }
   // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
-  // THE GROUND THE ANALYSIS IS ABOUT. This sheet drew the house, the driveway and the boundary and
-  // nothing else — so the traced lawn, veg garden, paving and cleared ground, which the farmer had
-  // already recorded, reached it nowhere. A sector map is arrows over a SITE: "hot dry berg wind
-  // from the W/NW" means something once you can see the lawn terrace and the veg garden it crosses,
-  // and very little over bare grass. (Rory, holding up the reference sheet: "you must send all the
-  // relevant data to get a really nice map.") Drawn before the house and boundary so the built
-  // fabric still reads on top of it. This analysis sheet captions every ring unconditionally
-  // CONTEXT, not content. Passing 'all' made this paint at content alpha and the sheet came back
-  // with a solid green lawn slab, a darker veg-garden slab and a solid BLACK driveway, all shouting
-  // over the arrows. On an ANALYSIS sheet the energies are the subject and the ground is what they
-  // cross — it has to be legible and quiet, not the loudest thing on the page. 'zones' is the
-  // register groundRegister already treats as context, which is exactly the same relationship a
-  // zones sheet has to its ground.
-  drawBlueprintGround(ctx, state, px, py, W, refLayers, 'zones');
-  // The house and driveway do NOT come through drawBlueprintGround — resolveBaseLayers hands them
-  // over as refLayers, so drawBlueprintGround's houseCovered/drivewayCovered skip fires and they
-  // take their own dedicated draws instead, which paint at CONTENT strength: an 85%-opaque slate
-  // slab and a fully opaque near-black tar fill. That is why passing 'zones' above quietened the
-  // lawn and the veg garden but left the house and the driveway shouting over the sector arrows —
-  // the register was applied to one of the two draw paths. globalAlpha here puts the dedicated
-  // draws in the same context register, at the 0x55/0x99 ratio drawBlueprintGround uses for its own
-  // soft washes, without either function needing to learn about sheets.
+  // The benchmark leaves lawn, garden, paving and cleared-ground overlays out of this sheet:
+  // they are base-map information, not sector energies. Keep the satellite quiet beneath the
+  // authoritative house, driveway, boundary, arrows and arcs below.
   ctx.save();
   ctx.globalAlpha = 0.55;
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
@@ -6344,7 +6347,7 @@ function drawStyleLegendSymbol(
     ctx.beginPath(); ctx.moveTo(x, cy); ctx.lineTo(x + w, cy); ctx.stroke();
     ctx.strokeStyle = row.swatch;
     ctx.lineWidth = Math.max(2, h * 0.09);
-    ctx.setLineDash(row.lineKind === 'greywater' ? [5, 4] : row.lineKind === 'path' ? [7, 5] : []);
+    ctx.setLineDash(row.lineKind === 'path' ? [7, 5] : []);
     ctx.beginPath(); ctx.moveTo(x, cy); ctx.lineTo(x + w, cy); ctx.stroke();
     ctx.setLineDash([]);
     if (row.lineKind === 'drip') {

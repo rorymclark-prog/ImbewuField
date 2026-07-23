@@ -93,7 +93,8 @@ function tank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: numbe
   ctx.strokeStyle = 'rgba(235,250,249,0.56)';
   ctx.lineWidth = Math.max(0.55, stroke * 0.4);
   ellipse(ctx, 0, 0, Math.max(stroke, r * 0.13), Math.max(stroke, r * 0.13));
-  finish(ctx, '#0D5873', '#EDF9F7', Math.max(0.7, stroke * 0.62));
+  // Keep the tank edge dark and integrated with the map; bright white rings read as halos.
+  finish(ctx, '#0D5873', '#082F43', Math.max(0.7, stroke * 0.62));
 }
 
 type BasinKind = 'greywater-basin' | 'tree-basin' | 'infiltration-basin';
