@@ -8,7 +8,7 @@ import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
-import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
+import { WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -183,20 +183,38 @@ test('Water routes and small fittings stay legible over illustrated ground', () 
   assert.ok((waterRouteStyleFor('drip')?.width ?? 0) >= 4);
   assert.deepEqual(waterRouteStyleFor('pipe')?.dash, [], 'the buried main stays continuous at phone scale');
   assert.equal(new Set(['pipe', 'greywater', 'drip'].map((kind) => waterRouteStyleFor(kind as 'pipe' | 'greywater' | 'drip')?.color)).size, 3);
-  assert.equal(waterFeaturePresentationScale('jojo_5000l'), 1.65);
-  assert.equal(waterFeaturePresentationScale('tap_point'), 1.45);
-  assert.equal(waterFeaturePresentationScale('greywater_basin'), 1.2);
-  assert.equal(waterFeaturePresentationScale('pond_small'), 1.15);
+  assert.equal(waterFeaturePresentationScale('jojo_5000l'), 2.1);
+  assert.equal(waterFeaturePresentationScale('tap_point'), 1.7);
+  assert.equal(waterFeaturePresentationScale('greywater_basin'), 1.45);
+  assert.equal(waterFeaturePresentationScale('pond_small'), 1.35);
   assert.equal(waterFeaturePresentationScale('veg_bed'), 1);
   const tank = waterFeaturePresentationDimensions('jojo_5000', 9, 9, 1595);
-  assert.ok(tank.width >= 1595 * 0.0155);
+  assert.ok(tank.width >= 1595 * 0.0195);
   assert.equal(tank.width, tank.height);
   const basin = waterFeaturePresentationDimensions('tree_basin', 10, 8, 1595);
   assert.equal(Math.round((basin.width / basin.height) * 1000), 1250);
-  assert.ok(basin.height >= 1595 * 0.0155);
+  assert.ok(basin.height >= 1595 * 0.0195);
   assert.deepEqual(
     waterFeaturePresentationDimensions('veg_bed', 60, 12, 1595),
     { width: 60, height: 12, scale: 1 },
+  );
+});
+
+test('Water context only borrows saved tree canopies paired with saved tree basins', () => {
+  const frame = { imgW: 1000, imgH: 600, mPerPx: 0.1 };
+  const state = {
+    items: [
+      { id: 'basin-a', defId: 'tree_basin', x: 0.2, y: 0.5 },
+      { id: 'tree-a', defId: 'tree_mango', x: 0.205, y: 0.5 },
+      { id: 'basin-b', defId: 'tree_basin', x: 0.5, y: 0.5 },
+      { id: 'tree-b', defId: 'tree_avocado', x: 0.51, y: 0.5 },
+      { id: 'tree-distant', defId: 'tree_citrus', x: 0.8, y: 0.5 },
+      { id: 'bed-near-basin', defId: 'raised_bed', x: 0.5, y: 0.5 },
+    ],
+  };
+  assert.deepEqual(
+    [...pairedWaterDestinationCanopyIds(state, frame)].sort(),
+    ['tree-a', 'tree-b'],
   );
 });
 

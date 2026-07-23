@@ -1,4 +1,5 @@
-import type { CanvasFrame, LineShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignCanvasState, LineShape, PlacedItem } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export interface WaterRouteStyle {
   color: string;
@@ -112,10 +113,10 @@ const WATER_POND_FEATURES = new Set(['pond_small', 'dam']);
  * phone without changing their saved footprint or centre.
  */
 export function waterFeaturePresentationScale(id: string): number {
-  if (id.startsWith('jojo_') || id === 'rain_barrel') return 1.65;
-  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.45;
-  if (WATER_BASIN_FEATURES.has(id)) return 1.2;
-  if (WATER_POND_FEATURES.has(id)) return 1.15;
+  if (id.startsWith('jojo_') || id === 'rain_barrel') return 2.1;
+  if (EMPHASIZED_WATER_HARDWARE.has(id)) return 1.7;
+  if (WATER_BASIN_FEATURES.has(id)) return 1.45;
+  if (WATER_POND_FEATURES.has(id)) return 1.35;
   return 1;
 }
 
@@ -141,8 +142,8 @@ export function waterFeaturePresentationDimensions(
   }
   const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
   const longSide = Math.max(naturalWidth, naturalHeight);
-  const minimumShortSide = Math.max(22, canvasWidth * 0.0155);
-  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.07);
+  const minimumShortSide = Math.max(28, canvasWidth * 0.0195);
+  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.08);
   const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
   const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
   const scale = Math.max(1, cappedScale);
@@ -151,6 +152,50 @@ export function waterFeaturePresentationDimensions(
     height: naturalHeight * scale,
     scale,
   };
+}
+
+/**
+ * Returns only saved tree canopies that are co-located with saved tree basins.
+ *
+ * This is a render-context relationship, not inferred planting: every returned canopy already
+ * exists in the farmer's design, each basin can pair with at most one tree, and distant trees are
+ * excluded. The Water sheet can therefore show what a greywater destination serves without
+ * inventing an orchard or promoting Planting content into the Water legend.
+ */
+export function pairedWaterDestinationCanopyIds(
+  state: Pick<DesignCanvasState, 'items'>,
+  frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
+): Set<string> {
+  const basins = state.items
+    .filter((item) => item.defId === 'tree_basin')
+    .sort((a, b) => a.id.localeCompare(b.id));
+  const trees = state.items
+    .filter((item) => {
+      const def = ELEMENTS_BY_ID[item.defId];
+      return !!def && def.category === 'growing' && def.shape === 'circle' && item.defId.startsWith('tree_');
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
+  const unusedTrees = new Set(trees.map((tree) => tree.id));
+  const paired = new Set<string>();
+  const distanceM = (a: PlacedItem, b: PlacedItem) => Math.hypot(
+    (a.x - b.x) * frame.imgW * frame.mPerPx,
+    (a.y - b.y) * frame.imgH * frame.mPerPx,
+  );
+
+  for (const basin of basins) {
+    const def = ELEMENTS_BY_ID[basin.defId];
+    const basinDiameterM = Math.max(basin.wM ?? def?.wM ?? 2, basin.hM ?? def?.hM ?? 2);
+    const toleranceM = Math.max(1.5, basinDiameterM * 0.85);
+    const nearest = trees
+      .filter((tree) => unusedTrees.has(tree.id))
+      .map((tree) => ({ tree, distance: distanceM(basin, tree) }))
+      .filter(({ distance }) => distance <= toleranceM)
+      .sort((a, b) => a.distance - b.distance || a.tree.id.localeCompare(b.tree.id))[0];
+    if (!nearest) continue;
+    paired.add(nearest.tree.id);
+    unusedTrees.delete(nearest.tree.id);
+  }
+  return paired;
 }
 
 type RouteEndpoint = {

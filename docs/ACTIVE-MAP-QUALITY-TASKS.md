@@ -62,7 +62,7 @@ or looking correct in source code is not enough.
 
 ## P0 - Required before any quality claim
 
-- [ ] Deploy the current branch checkpoint to the preview alias and confirm the build badge/hash.
+- [x] Deploy the current branch checkpoint to the preview alias and confirm the build badge/hash.
 - [ ] Use the in-app Refresh update control on desktop and mobile and verify the new build actually
   takes control. Add a regression test or stronger instrumentation if the prompt still fails to
   appear when a newer build exists.
@@ -102,9 +102,9 @@ or looking correct in source code is not enough.
 ### 04 Water, greywater and irrigation
 
 - [ ] Re-generate after the latest route and feature-art changes and compare with benchmark sheet 03.
-- [ ] Confirm clean-water pipe is solid blue, greywater is solid purple, and drip is blue with fewer,
+- [x] Confirm clean-water pipe is solid blue, greywater is solid purple, and drip is blue with fewer,
   restrained emitter dots on both map and legend.
-- [ ] Confirm tanks, basins, taps, pump/filter, diverter, pond and routes remain visible at phone size
+- [x] Confirm tanks, basins, taps, pump/filter, diverter, pond and routes remain visible at phone size
   without white editor-style halos.
 - [ ] Confirm tiny same-type route gaps are cleaned without joining pipe, drip and greywater to one
   another or inventing plumbing.
@@ -204,9 +204,9 @@ For every visual acceptance pass, record:
 | Sheet | Build SHA | Desktop | Phone | Geometry/content | Visual benchmark | Notes |
 |---|---|---|---|---|---|---|
 | 01 Base | | Not checked | Not checked | Not checked | Not checked | |
-| 02 Sector | | Not checked | Not checked | Not checked | Not checked | |
+| 02 Sector | 3205225 | Checked | Not checked | Pass | Partial | Exact sheet generated in deployed app. Property sun/slope/drainage/access are distinct; regional wind/fire are now labelled assumptions. Visual benchmark and local-observation workflow remain open. |
 | 03 Zones | | Not checked | Not checked | Not checked | Not checked | |
-| 04 Water | | Not checked | Not checked | Not checked | Not checked | |
+| 04 Water | 3205225 | Checked | Not checked | Pass | Partial | Fresh exact and hybrid sheets confirm solid blue pipe, blue restrained drip, solid purple greywater, correct feature counts and no editor halos. Hybrid atmosphere passes; tanks, basins, pond and served-tree context still need stronger print emphasis. |
 | 05 Planting | | Not checked | Not checked | Not checked | Not checked | |
 | 06 Structures | | Not checked | Not checked | Not checked | Not checked | |
 | 07 Whole | | Not checked | Not checked | Not checked | Not checked | |

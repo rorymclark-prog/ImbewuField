@@ -39,7 +39,7 @@ import {
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -1062,11 +1062,19 @@ const referenceFeatureArtworkCache = new Map<string, HTMLImageElement>();
 async function preloadReferenceFeatureArtwork(
   state: DesignCanvasState,
   filter: GlossyLayerFilter,
+  frame?: CanvasFrame,
 ): Promise<void> {
   const urls = new Set<string>();
+  const pairedWaterCanopies = filter === 'water' && frame
+    ? pairedWaterDestinationCanopyIds(state, frame)
+    : new Set<string>();
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
+    if (!def || (
+      !itemInFilter(def.category, filter, def.id)
+      && !isContextElement(def, filter)
+      && !pairedWaterCanopies.has(item.id)
+    )) continue;
     const url = referenceFeatureArtworkUrl(def.id);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
   }
@@ -2228,6 +2236,26 @@ function drawWaterInfrastructure(
     if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
   }
   if (includeLeaderLabels) drawWaterLeaderLabels(ctx, state, refLayers, W, H);
+}
+
+const WATER_DESTINATION_GROUND_IDS = new Set([
+  'tree_basin', 'greywater_basin', 'infiltration_basin', 'half_moon',
+]);
+
+function drawWaterFeatures(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  W: number,
+  H: number,
+  pxPerM: number,
+  includeToolGlyphs: boolean,
+  select: (item: PlacedItem) => boolean,
+) {
+  for (const item of waterItemsFor(state)) {
+    if (!select(item)) continue;
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
+  }
 }
 
 // Geometry Lock treats the AI as a texture painter only. Exact feature symbols and leaders are
@@ -4241,13 +4269,16 @@ function drawContextItems(
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
+  frame: CanvasFrame,
 ): void {
+  const pairedWaterCanopies = filter === 'water'
+    ? pairedWaterDestinationCanopyIds(state, frame)
+    : new Set<string>();
   ctx.save();
-  ctx.globalAlpha = 0.38;
   const contextItems = state.items
     .filter((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
-      return !!def && isContextElement(def, filter);
+      return !!def && (isContextElement(def, filter) || pairedWaterCanopies.has(it.id));
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
@@ -4260,6 +4291,7 @@ function drawContextItems(
   for (const it of contextItems) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
+    ctx.globalAlpha = pairedWaterCanopies.has(it.id) ? 0.72 : 0.38;
     drawTrueFootprint(ctx, it, def, px, py, pxPerM);
   }
   ctx.restore();
@@ -4300,7 +4332,7 @@ async function buildExactLayerOverlay(
   phase: 'ground' | 'features' = 'features',
   groundPresentation: 'standard' | 'illustrated' = 'standard',
 ): Promise<string | undefined> {
-  await preloadReferenceFeatureArtwork(state, filter);
+  await preloadReferenceFeatureArtwork(state, filter, frame);
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -4325,8 +4357,30 @@ async function buildExactLayerOverlay(
     const zones = buildZoneOverlay(state, refLayers, W, H);
     if (zones) ctx.drawImage(await loadImage(zones), 0, 0, W, H);
   } else if (filter === 'water') {
-    drawContextItems(ctx, state, filter, px, py, pxPerM);
-    drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, false, true);
+    // Water destination earthworks sit on the ground, their already-saved planting sits above,
+    // and pipework/hardware stays readable over both. This is a semantic print stack only: no
+    // item is moved, resized in storage, added or removed.
+    drawWaterFeatures(
+      ctx,
+      state,
+      W,
+      H,
+      pxPerM,
+      false,
+      (item) => WATER_DESTINATION_GROUND_IDS.has(item.defId),
+    );
+    drawContextItems(ctx, state, filter, px, py, pxPerM, frame);
+    drawWaterRoutes(ctx, state, frame, W, H);
+    drawWaterFeatures(
+      ctx,
+      state,
+      W,
+      H,
+      pxPerM,
+      false,
+      (item) => !WATER_DESTINATION_GROUND_IDS.has(item.defId),
+    );
+    drawWaterLeaderLabels(ctx, state, refLayers, W, H);
   } else if (filter === 'all') {
     // Zone bands have a dedicated analytical sheet. The integrated benchmark is a physical
     // masterplan, so repeating translucent effort zones here only muddies planting and water.
