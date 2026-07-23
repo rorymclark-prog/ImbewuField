@@ -19,11 +19,16 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('nursery_table'), 'nursery-table-v1.png');
   assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v1.png');
   assert.equal(referenceFeatureArtworkFor('gate'), 'driveway-gate-v1.png');
+  assert.equal(referenceFeatureArtworkFor('pond_small'), 'pond-small-v1.png');
+  assert.equal(referenceFeatureArtworkFor('greywater_basin'), 'greywater-basin-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree_basin'), 'tree-basin-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tap_point'), 'tap-point-v1.png');
+  assert.equal(referenceFeatureArtworkFor('pump_filter'), 'pump-filter-v1.png');
+  assert.equal(referenceFeatureArtworkFor('greywater_diverter'), 'greywater-diverter-v1.png');
 });
 
 test('artwork mapping never invents a visual identity for generic or unrelated features', () => {
-  assert.equal(referenceFeatureArtworkFor('tree_basin'), null);
-  assert.equal(referenceFeatureArtworkFor('greywater_basin'), null);
+  assert.equal(referenceFeatureArtworkFor('infiltration_basin'), null);
   assert.equal(referenceFeatureArtworkFor('banana_clump'), null);
   assert.equal(referenceFeatureArtworkFor('chicken_coop'), null);
   assert.equal(referenceFeatureArtworkFor('greenhouse_tunnel'), null);

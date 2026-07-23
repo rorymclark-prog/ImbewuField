@@ -19,9 +19,15 @@ does not borrow a painted object from another family.
 | Existing painted archetype | `nursery_table` | `nursery-table-v1.png` |
 | Existing painted archetype | `shade_house` | `shade-house-v1.png` |
 | Existing painted archetype | `gate` | `driveway-gate-v1.png` |
-| Safe deterministic fallback | `tree_basin`, `greywater_basin`, `infiltration_basin`, `half_moon`, `berm`, `terrace`, `banana_clump`, `other_water`, `other_planting`, `other_structure`, `spekboom_hedge` | Keep the measured footprint and catalog-specific geometry/label. No tree, pond, basin, or unrelated bank artwork is substituted. |
+| Existing painted archetype | `pond_small` | `pond-small-v1.png` |
+| Existing painted archetype | `greywater_basin` | `greywater-basin-v1.png` |
+| Existing painted archetype | `tree_basin` | `tree-basin-v1.png` (empty basin; no invented tree) |
+| Existing painted archetype | `tap_point` | `tap-point-v1.png` |
+| Existing painted archetype | `pump_filter` | `pump-filter-v1.png` |
+| Existing painted archetype | `greywater_diverter` | `greywater-diverter-v1.png` |
+| Safe deterministic fallback | `infiltration_basin`, `half_moon`, `berm`, `terrace`, `banana_clump`, `other_water`, `other_planting`, `other_structure`, `spekboom_hedge` | Keep the measured footprint and catalog-specific geometry/label. No tree, pond, basin, or unrelated bank artwork is substituted. |
 | Safe deterministic fallback | `bench`, `sign`, `washline`, `shade_sail`, `solar_panel_ground` | Use the existing exact symbol/footprint treatment; a generic structure image would misstate the object. |
-| Genuinely new asset needed | `rain_barrel`, `pond_small`, `dam`, `borehole`, `tap_point`, `water_trough`, `first_flush`, `pump_filter`, `greywater_outlet`, `greywater_diverter`, `water_trough2`, `biodigester` | Distinct water or sanitation hardware; no current painted archetype is physically equivalent. |
+| Genuinely new asset needed | `rain_barrel`, `dam`, `borehole`, `water_trough`, `first_flush`, `greywater_outlet`, `water_trough2`, `biodigester` | Distinct water or sanitation hardware; no current painted archetype is physically equivalent. |
 | Genuinely new asset needed | `keyhole_bed`, `herb_spiral` | Distinct bed constructions; `production-bed-v1.png` would erase the keyhole or spiral identity. |
 | Genuinely new asset needed | `tree_pawpaw` | A distinct orchard tree entry not covered by the current painted tree set; add it deliberately rather than silently changing the artwork mapping. |
 | Genuinely new asset needed | `shed`, `greenhouse_tunnel`, `chicken_coop`, `kraal`, `worm_farm`, `market_stall` | Distinct built or working structures; do not map them to another structure merely because its footprint is similar. |

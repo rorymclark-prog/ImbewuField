@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Ponds, tree basins, greywater basins, taps, pumps and diverters now use painted artwork',
       'Hand-painted tanks, beds, trees and planting strips stay inside their saved footprints',
       'Structures now show painted compost, hives, chicken tractors, nursery tables and gates',
       'Drip is clear blue with emitters; filtered greywater remains purple and dashed',

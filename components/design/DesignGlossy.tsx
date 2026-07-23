@@ -6493,7 +6493,8 @@ interface SavedGlossy {
 // v37: Water symbols and route ink gain the restrained finish used by the benchmark sheet.
 // v38: Water, Planting and Structures gain reusable AI-painted feature art clipped to exact saved
 //      footprints; blue drip emitters and grouped editorial legends remain deterministic.
-const PLAN_VERSION = 'v38';
+// v39: ponds, tree/greywater basins, taps, pumps and greywater diverters join the painted Water set.
+const PLAN_VERSION = 'v39';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

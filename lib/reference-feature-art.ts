@@ -12,7 +12,13 @@ export type ReferenceFeatureArtwork =
   | 'chicken-tractor-v1.png'
   | 'nursery-table-v1.png'
   | 'shade-house-v1.png'
-  | 'driveway-gate-v1.png';
+  | 'driveway-gate-v1.png'
+  | 'pond-small-v1.png'
+  | 'greywater-basin-v1.png'
+  | 'tree-basin-v1.png'
+  | 'tap-point-v1.png'
+  | 'pump-filter-v1.png'
+  | 'greywater-diverter-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
 const ORCHARD_TREES = new Set([
@@ -44,6 +50,15 @@ const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   gate: 'driveway-gate-v1.png',
 };
 
+const WATER_HARDWARE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
+  pond_small: 'pond-small-v1.png',
+  greywater_basin: 'greywater-basin-v1.png',
+  tree_basin: 'tree-basin-v1.png',
+  tap_point: 'tap-point-v1.png',
+  pump_filter: 'pump-filter-v1.png',
+  greywater_diverter: 'greywater-diverter-v1.png',
+};
+
 /**
  * Stable, reusable AI-painted artwork for exact app-owned feature footprints.
  *
@@ -58,6 +73,7 @@ export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwo
   if (defId === 'pollinator_strip') return 'pollinator-strip-v1.png';
   if (VETIVER_BANKS.has(defId)) return 'vetiver-bank-v1.png';
   if (STRUCTURE_ART[defId]) return STRUCTURE_ART[defId];
+  if (WATER_HARDWARE_ART[defId]) return WATER_HARDWARE_ART[defId];
   return null;
 }
 
