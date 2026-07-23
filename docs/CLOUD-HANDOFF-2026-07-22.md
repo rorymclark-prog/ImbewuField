@@ -85,3 +85,22 @@ editorial panel, deterministic labels and data-gated legend rows.
 - Remaining gaps: deploy/promote the preview alias from an environment with Vercel access, use the
   app Refresh control, then generate and visually compare Sector, Water, Planting, Structures,
   Zones, Base, Whole and Phasing sheets at desktop and phone sizes against `design/benchmark/`.
+
+
+## 2026-07-23 Codex checkpoint 2
+
+- Continued the reversible Sector quality pass from commit `6d6c854` without touching main or
+  production. The change keeps the existing deterministic Reference Blueprint path, Geometry Lock
+  cache controls and dormant Gemini/legacy routes intact.
+- Strengthened the Sector presentation token register for benchmark-style wind, fire and driveway
+  marks: broader strokes, stronger translucent sector fills and shared helpers that convert tokens
+  into renderer drawing values. Bearings, provenance, labels and row gating still come only from
+  `deriveSectorModel` / `presentSectorCartography`; no new sectors, labels, zones or infrastructure
+  were invented.
+- Bumped `PLAN_VERSION` to `v43` so saved sheet caches refresh for the Sector artwork pass.
+- Added focused Sector cartography assertions for the new print/phone readability token helpers.
+- Verification in this cloud container: `npx tsc --noEmit` passed. `npm test` is blocked by the
+  container's Node `v20.20.2` rejecting `.ts` test entrypoints; re-run under the repo's expected
+  Node/test runtime. Browser preview/deployment QA was not attempted here per the no-deploy cloud
+  instruction; remaining QA is to deploy/promote preview from an authorised environment, use the app
+  Refresh control, then compare Sector and the remaining sheets at desktop and phone/export sizes.

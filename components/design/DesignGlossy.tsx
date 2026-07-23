@@ -31,7 +31,7 @@ import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForSt
 import { WATER_LEGEND_SECTION_ORDER, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
-import { presentSectorCartography, SECTOR_STYLES, type SectorLegendIcon } from '@/lib/sector-cartography';
+import { presentSectorCartography, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
@@ -5003,7 +5003,8 @@ function drawSectorAnalysis(
   // sector (namedWind + fire). Dashed boundary lines are mechanism 1 of the regional-assumption
   // labelling contract (SECTOR-MODEL-SPEC §4): computed geometry (sun arcs, water/contour lines)
   // is always solid; regional assumptions are always dashed.
-  const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, color: string, fillAlpha: number) => {
+  const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, kind: SectorVisualKind) => {
+    const color = SECTOR_STYLES[kind].color;
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
     const rr = R * 1.34;
@@ -5013,10 +5014,10 @@ function drawSectorAnalysis(
     ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.closePath();
-    ctx.fillStyle = `${color}${Math.round(fillAlpha * 255).toString(16).padStart(2, '0')}`;
+    ctx.fillStyle = sectorFillColor(kind);
     ctx.fill();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(2.2, W * 0.0015);
+    ctx.lineWidth = Math.max(2.8, sectorStrokeWidth(kind, W) * 0.34);
     ctx.setLineDash([10, 7]);
     ctx.beginPath();
     ctx.moveTo(cx, cy);
@@ -5033,7 +5034,7 @@ function drawSectorAnalysis(
   // (never from the demoted NASA winter mean — §0.1). A translucent dashed sector from the
   // berg-wind bearing.
   if (model.fire) {
-    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, SECTOR_STYLES.fire.color, SECTOR_STYLES.fire.fillAlpha);
+    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, 'fire');
     // Fire's bearing EQUALS the berg wind's bearing by construction, so a fire arrow + label on
     // that ray would overprint the berg arrow + label. Let the wedge carry the message and put the
     // label INSIDE the wedge (the ring interior is empty on this sheet).
@@ -5147,15 +5148,16 @@ function drawSectorAnalysis(
   // never places an arrow on this sheet any more (§0.3 — a circular mean of a bimodal wind rose
   // points into the gap between its two real lobes). [] (no regional table for this site) prints
   // a note instead of guessing.
-  const windWidth = () => Math.max(10, W * 0.0075);
+  const windWidth = (kind: SectorVisualKind) => sectorStrokeWidth(kind, W);
   for (const w of model.namedWind) {
-    if (w.id === 'berg') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, BERG_COLOR, 0.18);
-    if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, SUMMER_COOLING_COLOR, 0.18);
-    if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, COLD_FRONT_COLOR, 0.18);
-    const color = w.id === 'berg' ? BERG_COLOR : w.id === 'cold_front' ? COLD_FRONT_COLOR : SUMMER_COOLING_COLOR;
+    if (w.id === 'berg') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, 'berg-wind');
+    if (w.id === 'summer_cooling') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, 'summer-cooling-wind');
+    if (w.id === 'cold_front') drawRegionalWedge(w.bearingDeg, w.halfWidthDeg, 'cold-front-wind');
+    const kind: SectorVisualKind = w.id === 'berg' ? 'berg-wind' : w.id === 'cold_front' ? 'cold-front-wind' : 'summer-cooling-wind';
+    const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    const marker = drawArrow(v, color, windWidth(), [9, 5]);
+    const marker = drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash]);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
@@ -5174,10 +5176,10 @@ function drawSectorAnalysis(
   // would falsely read as a regional guess. The reference benchmark's own row 8 ("Driveway
   // access, dust & noise — NW") carries a solid grey arrow icon, which agrees with that reading.
   // Grey/neutral so it never gets mistaken for one of the wind-palette energies above.
-  const DRIVEWAY_COLOR = '#9AA3AC', DRIVEWAY_LBL = '#C7CDD3';
+  const DRIVEWAY_COLOR = SECTOR_STYLES.driveway.color, DRIVEWAY_LBL = SECTOR_STYLES.driveway.labelColor;
   if (model.driveway) {
     const v = bearingToUnitVector(model.driveway.bearingDeg);
-    const marker = drawArrow(v, DRIVEWAY_COLOR, windWidth(), []);
+    const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W), []);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
     directLabelAt(
@@ -6667,7 +6669,8 @@ interface SavedGlossy {
 // v39: ponds, tree/greywater basins, taps, pumps and greywater diverters join the painted Water set.
 // v40: banana, pawpaw, moringa, keyhole, herb-spiral and spekboom receive literal Planting art.
 // v42: Sector gains benchmark-strength aerial grading, marks, labels and legend symbols.
-const PLAN_VERSION = 'v42';
+// v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
+const PLAN_VERSION = 'v43';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

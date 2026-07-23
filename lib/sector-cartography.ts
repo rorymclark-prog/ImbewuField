@@ -33,11 +33,11 @@ export const SECTOR_STYLES: Readonly<Record<SectorVisualKind, SectorStrokeToken>
   'summer-sun': { color: '#F7C97E', labelColor: '#F7C97E', width: { minPx: 3, frameRatio: 0.005 }, dash: [], fillAlpha: 0, lineStyle: 'solid' },
   'winter-sun': { color: '#F5DFA6', labelColor: '#F5DFA6', width: { minPx: 3, frameRatio: 0.005 }, dash: [], fillAlpha: 0, lineStyle: 'solid' },
   'midday-sun': { color: '#F7C97E', labelColor: '#F7C97E', width: { minPx: 3.5, frameRatio: 0.0045 }, dash: [], fillAlpha: 0, lineStyle: 'solid' },
-  'summer-cooling-wind': { color: '#2FA6A0', labelColor: '#8FE0D8', width: { minPx: 10, frameRatio: 0.0075 }, dash: [12, 7], fillAlpha: 0.18, lineStyle: 'dashed' },
-  'cold-front-wind': { color: '#3A6FC9', labelColor: '#9FB8EC', width: { minPx: 10, frameRatio: 0.0075 }, dash: [12, 7], fillAlpha: 0.18, lineStyle: 'dashed' },
-  'berg-wind': { color: '#C97B25', labelColor: '#E0A45A', width: { minPx: 10, frameRatio: 0.0075 }, dash: [12, 7], fillAlpha: 0.18, lineStyle: 'dashed' },
-  fire: { color: '#D64A2A', labelColor: '#F0A58C', width: { minPx: 2.5, frameRatio: 0.0043 }, dash: [9, 5], fillAlpha: 0.20, lineStyle: 'dashed' },
-  driveway: { color: '#9AA3AC', labelColor: '#C7CDD3', width: { minPx: 2.5, frameRatio: 0.0043 }, dash: [], fillAlpha: 0, lineStyle: 'solid' },
+  'summer-cooling-wind': { color: '#25BFC0', labelColor: '#9EF3EA', width: { minPx: 13, frameRatio: 0.0092 }, dash: [14, 7], fillAlpha: 0.26, lineStyle: 'dashed' },
+  'cold-front-wind': { color: '#4D8FE0', labelColor: '#B9D7FF', width: { minPx: 13, frameRatio: 0.0092 }, dash: [14, 7], fillAlpha: 0.25, lineStyle: 'dashed' },
+  'berg-wind': { color: '#E08B24', labelColor: '#FFC071', width: { minPx: 13, frameRatio: 0.0092 }, dash: [14, 7], fillAlpha: 0.27, lineStyle: 'dashed' },
+  fire: { color: '#E7562D', labelColor: '#FFAA8E', width: { minPx: 4, frameRatio: 0.0056 }, dash: [10, 5], fillAlpha: 0.24, lineStyle: 'dashed' },
+  driveway: { color: '#B1B7BD', labelColor: '#E2E6EA', width: { minPx: 4, frameRatio: 0.0054 }, dash: [], fillAlpha: 0, lineStyle: 'solid' },
   water: { color: '#3A8EC4', labelColor: '#8FD0F0', width: { minPx: 3, frameRatio: 0.004 }, dash: [8, 6], fillAlpha: 0, lineStyle: 'dashed' },
   frost: { color: '#9FD0E8', labelColor: '#CDE7FA', width: { minPx: 2.4, frameRatio: 0.0034 }, dash: [3, 4], fillAlpha: 0, lineStyle: 'dashed' },
 };
@@ -111,4 +111,14 @@ export function presentSectorCartography(model: SectorModel): SectorPresentation
   if (model.water) result.push(entry('water', 'water', `Terrace fall ~${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' (indicative)' : ''}`, 'water', 60, 'computed', [model.water.downhillBearingDeg]));
   if (model.frost) result.push(entry('frost', 'frost', 'Cold-air drainage (inferred)', 'frost', 70, 'computed', [model.frost.downhillBearingDeg]));
   return result;
+}
+
+export function sectorStrokeWidth(kind: SectorVisualKind, frameWidthPx: number): number {
+  const token = SECTOR_STYLES[kind].width;
+  return Math.max(token.minPx, frameWidthPx * token.frameRatio);
+}
+
+export function sectorFillColor(kind: SectorVisualKind): string {
+  const token = SECTOR_STYLES[kind];
+  return `${token.color}${Math.round(token.fillAlpha * 255).toString(16).padStart(2, '0')}`;
 }
