@@ -101,7 +101,7 @@ or looking correct in source code is not enough.
 
 ### 04 Water, greywater and irrigation
 
-- [ ] Re-generate after the latest route and feature-art changes and compare with benchmark sheet 03.
+- [x] Re-generate after the latest route and feature-art changes and compare with benchmark sheet 03.
 - [x] Confirm clean-water pipe is solid blue, greywater is solid purple, and drip is blue with fewer,
   restrained emitter dots on both map and legend.
 - [x] Confirm tanks, basins, taps, pump/filter, diverter, pond and routes remain visible at phone size
@@ -206,7 +206,7 @@ For every visual acceptance pass, record:
 | 01 Base | | Not checked | Not checked | Not checked | Not checked | |
 | 02 Sector | 3205225 | Checked | Not checked | Pass | Partial | Exact sheet generated in deployed app. Property sun/slope/drainage/access are distinct; regional wind/fire are now labelled assumptions. Visual benchmark and local-observation workflow remain open. |
 | 03 Zones | | Not checked | Not checked | Not checked | Not checked | |
-| 04 Water | 3205225 | Checked | Not checked | Pass | Partial | Fresh exact and hybrid sheets confirm solid blue pipe, blue restrained drip, solid purple greywater, correct feature counts and no editor halos. Hybrid atmosphere passes; tanks, basins, pond and served-tree context still need stronger print emphasis. |
+| 04 Water | 43d8147 | Checked | Not checked | Pass | Partial | Fresh exact and hybrid sheets confirm solid blue pipe, restrained blue drip, solid purple greywater, correct feature counts, protected house geometry and no editor halos. Tanks and pond now read clearly, and paired saved tree canopies render above their basins. The hybrid atmosphere and deterministic legend are close to the benchmark; phone-size review and specialist hardware artwork remain open. |
 | 05 Planting | | Not checked | Not checked | Not checked | Not checked | |
 | 06 Structures | | Not checked | Not checked | Not checked | Not checked | |
 | 07 Whole | | Not checked | Not checked | Not checked | Not checked | |
