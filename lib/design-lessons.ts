@@ -25,7 +25,7 @@ export const DESIGN_STEP_LESSONS: Record<Exclude<WizardStep, 'glossy'>, StepLess
   },
   sector: {
     title: "Read the land's energies",
-    body: "Before you place a single thing, see how sun, wind, fire and water move across your land — the app has worked them out from your site's real slope and climate, so there is nothing to research and nothing to draw. Design WITH these energies, not against them: put windbreaks against the hot wind, a firebreak on the fire side, swales across the way water runs, and keep tender crops out of the frost pockets. In South Africa the strongest sun comes from the north, so that is where your beds want to face. Just check what the map shows matches what you already know of your land, then move on.",
+    body: "Before you place a single thing, see how sun, wind, fire and water may move across your land. The app computes sun, slope, drainage and traced access for this property, and adds clearly marked regional wind and fire context. Design WITH these energies, not against them: put windbreaks against the hot wind, a firebreak on the fire side, swales across the way water runs, and keep tender crops out of frost pockets. In South Africa the strongest sun usually comes from the north. Confirm the regional wind and fire assumptions with your own observations or a local expert before you build.",
     principle: 'Design from patterns to details — read the big forces first, then place the small things.',
     tip: 'Fire comes from the dry-season wind — keep the fuel low and a firebreak clear on that side of your land.',
     courseModuleId: 'reading-landscape',

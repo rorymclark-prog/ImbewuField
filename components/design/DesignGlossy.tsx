@@ -7960,7 +7960,7 @@ export default function DesignGlossy({
   );
 
   // Sector's single-sheet AI path: restyle-only (buildSectorRestylePrompt forbids the model from
-  // drawing any arrow, arc or bearing), with the real measured analysis composited on top by
+  // drawing any arrow, arc or bearing), with the deterministic analysis composited on top by
   // finishSectorSheet. Never gated on layerContentCount — like renderSectorMap, sector never refuses;
   // its content is measured site data (lib/sector.deriveSectorModel), not placed elements. Never
   // folded into generateAllViaQueue/generateAllStyledSheets/generateAllSheets: MAX_SHEETS_PER_JOB is
@@ -7995,7 +7995,7 @@ export default function DesignGlossy({
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(kind === 'sector'
-        ? 'Rendering your Sector Analysis sheet in the background — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).'
+        ? 'Rendering your Sector Analysis sheet in the background — AI restyles the ground only. Site sun, slope, drainage and access are computed; named winds and fire remain clearly marked regional context. All analysis is composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).'
         : 'Rendering your Existing Site sheet in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
     } catch (err) {
       refreshPendingRef.current = false;
@@ -8439,11 +8439,11 @@ export default function DesignGlossy({
           {exactSheet === 'base'
             ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
             : exactSheet === 'sector'
-            ? "Draw your Sector Analysis sheet (plan-set 02) — the sun path (from the north), prevailing summer/winter winds, dry-season fire approach, downhill water flow with on-contour lines, and frost pockets, all read from your site's real slope and climate. Analysis comes before design: these energies are WHY your zones, water and planting belong where they do. Deterministic and exact — no AI."
+            ? "Draw your Sector Analysis sheet (plan-set 02) — sun geometry, slope, drainage, contours and traced access are computed for this property. Named winds and fire are sourced regional context, clearly identified as assumptions and checked against coarse climate-grid data for these coordinates. Confirm wind and fire on site before building. Deterministic and exact — no AI."
             : restyleAiKind === 'base'
             ? `Generate an AI-styled Existing Site sheet (plan-set 01) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the model repaints the ground only; your boundary, roof and access stay exactly where they are, and nothing is designed onto it. Renders in the background (~mins).`
             : sectorAiMode
-            ? `Generate an AI-styled Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the artwork is AI, but the sun/wind/fire/water bearings are measured from your real site and drawn deterministically on top, never guessed by the model. Renders in the background (~mins).`
+            ? `Generate an AI-styled Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — AI restyles the ground only. Site sun, slope, drainage and access are computed; named winds and fire are clearly marked regional context. The complete analysis is drawn deterministically on top, never guessed by the model. Renders in the background (~mins).`
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle

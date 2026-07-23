@@ -1,11 +1,11 @@
 'use client';
 
 // Design Studio — SECTOR step. The plain-words twin of the SectorOverlay energies drawn on the
-// canvas. There is NOTHING TO DRAW and nothing to research on this step: the app has already
-// computed the site's sun/wind/fire/water/frost deterministically (lib/sector.deriveSectorModel)
-// from the site's REAL latitude, NASA POWER climate and SRTM slope. This card just says, in plain
-// English and compass words (never degrees), what those energies are — so a first-time farmer can
-// glance at it, check it matches what they know of their land, and tap "Looks right →".
+// canvas. The app computes property-specific sun, slope, drainage and coordinate climate-grid
+// evidence, then adds clearly disclosed regional named-wind/fire context
+// (lib/sector.deriveSectorModel). This card says, in plain English and compass words (never
+// degrees), what came from which source so a farmer can compare it with local observation before
+// tapping "Looks right →".
 //
 // Location source: mirrors TankCalculator — prefers `lat`/`site` props when a caller has them in
 // scope, and otherwise self-resolves from the SAME localStorage cache the /design page fills
@@ -113,21 +113,20 @@ function buildRows(model: SectorModel): Row[] {
     model.sun.middayFrom === 'N' ? 'north' : model.sun.middayFrom === 'S' ? 'south' : 'north in winter, south in summer';
   rows.push({ key: 'sun', dot: DOT_SUN, text: `☀️ Sun: strongest from the ${sunWord.toUpperCase()} — put your beds on that side.` });
 
-  // 💨 WIND — summer + winter prevailing directions (omitted entirely when wind data is absent).
+  // 💨 WIND — coordinate climate-grid means, not a measured property wind rose.
   if (model.windSummer || model.windWinter) {
     const parts: string[] = [];
     if (model.windSummer) parts.push(`${labelWord(model.windSummer.fromLabel)} in summer`);
     if (model.windWinter) parts.push(`${labelWord(model.windWinter.fromLabel)} in winter`);
-    rows.push({ key: 'wind', dot: DOT_WIND, text: `💨 Strong wind comes from the ${parts.join(', ')}.` });
+    rows.push({ key: 'wind', dot: DOT_WIND, text: `💨 Coordinate climate-grid mean: wind FROM the ${parts.join(', ')}. Confirm on site.` });
   }
 
-  // 🔥 FIRE — the dry-season prevailing wind. seasonNote is the biome-aware plain-words sentence
-  // from lib/sector; we add the compass direction (which the note deliberately leaves out).
+  // 🔥 FIRE — sourced regional context, never presented as a property measurement.
   if (model.fire) {
     rows.push({
       key: 'fire',
       dot: DOT_FIRE,
-      text: `🔥 ${model.fire.seasonNote} It most likely approaches from the ${labelWord(model.fire.fromLabel)}.`,
+      text: `🔥 Regional fire context: ${model.fire.seasonNote} Possible approach from the ${labelWord(model.fire.fromLabel)} — confirm locally.`,
     });
   }
 
@@ -158,15 +157,19 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
   );
 
   const rows = useMemo(() => (model ? buildRows(model) : []), [model]);
-  // Honest degradation: the strongest caveat, shown plainly (e.g. "not analysed yet — open on map").
-  const note = model?.dataNotes[0] ?? (model ? null : 'Open this place on the map first to read its energies.');
+  // Honest degradation/provenance: show missing-data caveats first, otherwise disclose the
+  // regional profile rather than implying it was measured at this property.
+  const note =
+    model?.dataNotes[0] ??
+    model?.assumptionNotes[0] ??
+    (model ? null : 'Open this place on the map first to read its energies.');
 
   return (
     <div style={{ padding: '2px 8px 4px' }}>
       <div style={{ borderRadius: 12, border: `1.5px solid ${OCHRE}`, background: PAPER, overflow: 'hidden' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minHeight: 38, padding: '7px 10px', background: 'rgba(192,122,30,0.10)' }}>
           <span style={{ fontSize: 12.5, fontWeight: 800, color: DARK, flex: 1 }}>The land&apos;s energies</span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>read only</span>
+          <span style={{ fontSize: 10.5, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>site + regional</span>
         </div>
 
         <div style={{ padding: '8px 10px 4px', display: 'flex', flexDirection: 'column', gap: 7 }}>
