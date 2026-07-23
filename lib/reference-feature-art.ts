@@ -18,7 +18,13 @@ export type ReferenceFeatureArtwork =
   | 'tree-basin-v1.png'
   | 'tap-point-v1.png'
   | 'pump-filter-v1.png'
-  | 'greywater-diverter-v1.png';
+  | 'greywater-diverter-v1.png'
+  | 'banana-clump-v1.png'
+  | 'pawpaw-tree-v1.png'
+  | 'moringa-tree-v1.png'
+  | 'keyhole-bed-v1.png'
+  | 'herb-spiral-v1.png'
+  | 'spekboom-hedge-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
 const ORCHARD_TREES = new Set([
@@ -28,7 +34,6 @@ const ORCHARD_TREES = new Set([
   'tree_macadamia',
   'tree_guava',
   'tree_litchi',
-  'tree_moringa',
   'tree_indigenous',
   'tree_apple',
   'tree_pear',
@@ -59,6 +64,15 @@ const WATER_HARDWARE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   greywater_diverter: 'greywater-diverter-v1.png',
 };
 
+const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
+  banana_clump: 'banana-clump-v1.png',
+  tree_pawpaw: 'pawpaw-tree-v1.png',
+  tree_moringa: 'moringa-tree-v1.png',
+  keyhole_bed: 'keyhole-bed-v1.png',
+  herb_spiral: 'herb-spiral-v1.png',
+  spekboom_hedge: 'spekboom-hedge-v1.png',
+};
+
 /**
  * Stable, reusable AI-painted artwork for exact app-owned feature footprints.
  *
@@ -74,6 +88,7 @@ export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwo
   if (VETIVER_BANKS.has(defId)) return 'vetiver-bank-v1.png';
   if (STRUCTURE_ART[defId]) return STRUCTURE_ART[defId];
   if (WATER_HARDWARE_ART[defId]) return WATER_HARDWARE_ART[defId];
+  if (PLANTING_DETAIL_ART[defId]) return PLANTING_DETAIL_ART[defId];
   return null;
 }
 

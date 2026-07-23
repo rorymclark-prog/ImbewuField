@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Planting now distinguishes banana, pawpaw, moringa, keyhole beds, herb spirals and hedges',
       'Ponds, tree basins, greywater basins, taps, pumps and diverters now use painted artwork',
       'Hand-painted tanks, beds, trees and planting strips stay inside their saved footprints',
       'Structures now show painted compost, hives, chicken tractors, nursery tables and gates',
