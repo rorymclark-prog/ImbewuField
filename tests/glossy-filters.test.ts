@@ -1,7 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, sheetsForElement, groundRegister, layerContentCount, type GlossyLayerFilter } from '../lib/glossy-filters.ts';
+import {
+  cartographicItemPaintRank,
+  itemInFilter,
+  lineInFilter,
+  zonesInFilter,
+  sheetForElement,
+  sheetsForElement,
+  groundRegister,
+  layerContentCount,
+  type GlossyLayerFilter,
+} from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
@@ -52,6 +62,31 @@ test('the whole-design sheet carries everything', () => {
   }
   for (const kind of LINE_KINDS) assert.ok(lineInFilter(kind, 'all'), `${kind} missing from the masterplan`);
   assert.ok(zonesInFilter('all'));
+});
+
+test('cartographic stacking paints tree basins below every circular tree canopy', () => {
+  const basin = ELEMENT_CATALOG.find((def) => def.id === 'tree_basin')!;
+  const trees = ELEMENT_CATALOG.filter((def) => def.category === 'growing' && def.shape === 'circle');
+  assert.ok(trees.length > 0, 'guard: the catalog should contain tree canopies');
+  for (const tree of trees) {
+    assert.ok(
+      cartographicItemPaintRank(basin) < cartographicItemPaintRank(tree),
+      `${basin.name} must paint below ${tree.name}`,
+    );
+  }
+});
+
+test('cartographic stacking keeps all ground earthworks below planting', () => {
+  const earthworks = ELEMENT_CATALOG.filter((def) => def.category === 'earthworks');
+  const planting = ELEMENT_CATALOG.filter((def) => def.category === 'growing');
+  for (const ground of earthworks) {
+    for (const plant of planting) {
+      assert.ok(
+        cartographicItemPaintRank(ground) < cartographicItemPaintRank(plant),
+        `${ground.name} must paint below ${plant.name}`,
+      );
+    }
+  }
 });
 
 // The regression Rory reported directly: "the farmer places a Banana Circle from the Planting step,

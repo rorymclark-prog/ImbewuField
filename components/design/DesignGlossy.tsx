@@ -25,7 +25,18 @@ import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/r
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
-import { itemInFilter, lineInFilter, zonesInFilter, sheetForElement, isContextElement, layerContentCount, groundRegister, REFERENCE_SHEET_LABEL, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import {
+  cartographicItemPaintRank,
+  itemInFilter,
+  lineInFilter,
+  zonesInFilter,
+  sheetForElement,
+  isContextElement,
+  layerContentCount,
+  groundRegister,
+  REFERENCE_SHEET_LABEL,
+  type GlossyLayerFilter,
+} from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
@@ -4222,10 +4233,11 @@ function drawFilteredLines(
   ctx.restore();
 }
 
-/** Biggest footprint first, so a pawpaw under a mango canopy is drawn last and stays visible.
- *  Ties break on id: two same-size trees must never swap order between renders (determinism is
- *  the product promise — same design in, same sheet out). */
-function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): PlacedItem[] {
+/** Semantic ground-to-canopy stack, then biggest footprint first within each register.
+ *  A tree basin must sit UNDER its tree even though it has the smaller footprint; size-only
+ *  ordering painted those brown basin symbols over the foliage on the integrated masterplan.
+ *  Ties break on id so the same saved design always produces the same sheet. */
+function byCartographicStack(state: DesignCanvasState, filter: GlossyLayerFilter): PlacedItem[] {
   return state.items
     .filter((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
@@ -4233,9 +4245,11 @@ function bySizeDesc(state: DesignCanvasState, filter: GlossyLayerFilter): Placed
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
+      const layerA = cartographicItemPaintRank(da);
+      const layerB = cartographicItemPaintRank(db);
       const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
       const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
-      return areaB - areaA || a.id.localeCompare(b.id);
+      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
     });
 }
 
@@ -4266,7 +4280,7 @@ function drawFilteredItems(
   pxPerM: number,
   excludeWater = false,
 ): void {
-  for (const it of bySizeDesc(state, filter)) {
+  for (const it of byCartographicStack(state, filter)) {
     const def = ELEMENTS_BY_ID[it.defId];
     // The masterplan draws Water first, then all remaining items. Integrated features such as a
     // banana circle are Water AND Planting content, so test Water membership rather than only the
@@ -4389,7 +4403,7 @@ export async function buildBlueprintPlantingMapLegacy(
   drawFilteredLines(ctx, state, 'planting', px, py);
 
   // 3b. The planting itself, at true footprint.
-  for (const it of bySizeDesc(state, 'planting')) {
+  for (const it of byCartographicStack(state, 'planting')) {
     drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
   }
 
@@ -4486,7 +4500,7 @@ export async function buildBlueprintStructuresMapLegacy(
   drawFilteredLines(ctx, state, 'structures', px, py);
 
   // 4. Structures / animals / access, at true footprint.
-  for (const it of bySizeDesc(state, 'structures')) {
+  for (const it of byCartographicStack(state, 'structures')) {
     drawTrueFootprint(ctx, it, ELEMENTS_BY_ID[it.defId], px, py, pxPerM);
   }
 
@@ -6751,7 +6765,7 @@ interface SavedGlossy {
 // v43: Sector wind/fire/access sectors gain phone-readable benchmark stroke/fill emphasis.
 // v44: Painted Water assets use bounded print emphasis and all active routes share blue/purple ink.
 // v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
-const PLAN_VERSION = 'v46';
+const PLAN_VERSION = 'v47';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

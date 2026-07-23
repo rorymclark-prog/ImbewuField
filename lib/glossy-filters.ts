@@ -3,7 +3,12 @@
 // without pulling in the whole (5,000+ line) React component. Comments preserved as-is.
 
 import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { CATEGORY_STEP, ELEMENTS_BY_ID, type ElementCategory } from '@/lib/design-elements';
+import {
+  CATEGORY_STEP,
+  ELEMENTS_BY_ID,
+  type DesignElementDef,
+  type ElementCategory,
+} from '@/lib/design-elements';
 import type { MapRefLayers } from '@/lib/base-layers';
 
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
@@ -113,6 +118,26 @@ export function itemInFilter(category: string, filter: GlossyLayerFilter, defId?
   // Zones carries no elements — the effort-zone bands are its entire content.
   if (filter === 'zones') return false;
   return sheetsForElement(category, defId).includes(filter);
+}
+
+/**
+ * Semantic bottom-to-top order for placed map features.
+ *
+ * Footprint size alone cannot decide map depth: a 2 m tree basin is smaller than its mature
+ * canopy, but the basin is on the ground and must be painted FIRST so the canopy sits above it.
+ * The returned number is deliberately independent of sheet membership and item coordinates, so
+ * Water, Planting and the integrated masterplan cannot silently disagree about the same overlap.
+ *
+ * Within each rank callers still sort largest-first for deterministic visibility of nested
+ * features. Routes are painted separately beneath this item stack.
+ */
+export function cartographicItemPaintRank(def: DesignElementDef): number {
+  if (def.category === 'earthworks') return 0; // basins, beds and other ground treatments
+  if (def.category === 'access') return 1;
+  if (def.category === 'water' || def.category === 'structure' || def.category === 'animal') return 2;
+  if (def.category === 'growing' && def.shape === 'rect') return 3; // beds, strips and living banks
+  if (def.category === 'growing' && def.shape === 'circle') return 4; // tree canopy is physically highest
+  return 2;
 }
 
 export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
