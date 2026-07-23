@@ -5298,44 +5298,57 @@ function drawSectorAnalysis(
     );
   }
 
-  // 7. TERRACE FALL (water) — downslope arrow through the centre + on-contour lines (dashed =
-  // indicative / omitted when flat). This is a single-plane-fit MODEL, not a survey (fallModel:
-  // 'uniform-plane') — SECTOR-MODEL-SPEC §5 explicitly forbids fanning multiple runoff arrows from
-  // one aspect value, so this stays one arrow; the parallel contour lines beside it are the exact
-  // perpendicular of the same claim, not a new one.
+  // 7. SITE SLOPE / TERRACE FALL — a parallel field of downhill arrows + on-contour lines
+  // (dashed = indicative / omitted when flat). This is one single-plane-fit MODEL, not a survey:
+  // every arrow has the same computed bearing. Repeating that one bearing across the property
+  // matches the benchmark's readable "terrace fall" field without inventing multiple runoff paths.
   let contourIntervalM: number | null = null;
   if (model.water) {
     const dn = bearingToUnitVector(model.water.downhillBearingDeg);
+    const cross: [number, number] = [-dn[1], dn[0]];
+    const slopeOffsets = externalLegend ? [-0.4, -0.2, 0, 0.2, 0.4] : [0];
+    const startAlong = externalLegend ? -0.2 : -0.45;
+    const endAlong = externalLegend ? 0.42 : 0.58;
+    const centerEndX = cx + dn[0] * siteR * endAlong;
+    const centerEndY = cy + dn[1] * siteR * endAlong;
     ctx.save();
+    if (bnd.length >= 3) {
+      blueprintRing(ctx, bnd, px, py);
+      ctx.clip();
+    }
     ctx.strokeStyle = '#3A8EC4';
     ctx.fillStyle = '#3A8EC4';
-    ctx.lineWidth = externalLegend ? Math.max(2.2, W * 0.0025) : Math.max(3, W * 0.004);
+    ctx.globalAlpha = externalLegend ? 0.82 : 1;
+    ctx.lineWidth = externalLegend ? Math.max(2.8, W * 0.0032) : Math.max(3, W * 0.004);
     ctx.setLineDash(model.water.indicative ? [8, 6] : []);
     ctx.lineCap = 'round';
-    const waterStart = externalLegend ? 0.45 : 0.7;
-    const waterEnd = externalLegend ? 0.58 : 0.9;
-    const wsx = cx - dn[0] * siteR * waterStart, wsy = cy - dn[1] * siteR * waterStart;
-    const wex = cx + dn[0] * siteR * waterEnd, wey = cy + dn[1] * siteR * waterEnd;
-    ctx.beginPath();
-    ctx.moveTo(wsx, wsy);
-    ctx.lineTo(wex, wey);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    const wang = Math.atan2(wey - wsy, wex - wsx);
-    const wah = Math.max(10, W * 0.011);
-    ctx.beginPath();
-    ctx.moveTo(wex, wey);
-    ctx.lineTo(wex - wah * Math.cos(wang - 0.42), wey - wah * Math.sin(wang - 0.42));
-    ctx.lineTo(wex - wah * Math.cos(wang + 0.42), wey - wah * Math.sin(wang + 0.42));
-    ctx.closePath();
-    ctx.fill();
+    for (const offset of slopeOffsets) {
+      const wsx = cx + dn[0] * siteR * startAlong + cross[0] * siteR * offset;
+      const wsy = cy + dn[1] * siteR * startAlong + cross[1] * siteR * offset;
+      const wex = cx + dn[0] * siteR * endAlong + cross[0] * siteR * offset;
+      const wey = cy + dn[1] * siteR * endAlong + cross[1] * siteR * offset;
+      ctx.beginPath();
+      ctx.moveTo(wsx, wsy);
+      ctx.lineTo(wex, wey);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      const wang = Math.atan2(wey - wsy, wex - wsx);
+      const wah = Math.max(11, W * (externalLegend ? 0.012 : 0.011));
+      ctx.beginPath();
+      ctx.moveTo(wex, wey);
+      ctx.lineTo(wex - wah * Math.cos(wang - 0.42), wey - wah * Math.sin(wang - 0.42));
+      ctx.lineTo(wex - wah * Math.cos(wang + 0.42), wey - wah * Math.sin(wang + 0.42));
+      ctx.closePath();
+      ctx.fill();
+      ctx.setLineDash(model.water.indicative ? [8, 6] : []);
+    }
     ctx.restore();
-    labelAt(wex, wey + rowH * 0.55, `FALL ~${model.water.slopePct.toFixed(0)}% — UNIFORM FALL ASSUMED${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
-    drawSectorMarker('water', wex, wey, '#3A8EC4');
+    labelAt(centerEndX, centerEndY + rowH * 0.55, `SLOPE FALL TO ${site?.elevation?.aspectLabel ?? 'DOWNHILL'} · ~${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' (INDICATIVE)' : ''}`, '#8FD0F0');
+    drawSectorMarker('water', centerEndX, centerEndY, '#3A8EC4');
     directLabelAt(
-      wex,
-      wey + rowH * 1.1,
-      ['TERRACE FALL', `${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' · INDICATIVE' : ''}`],
+      centerEndX,
+      centerEndY + rowH * 1.1,
+      ['SLOPE / TERRACE FALL', `${site?.elevation?.aspectLabel ?? 'DOWNHILL'} · ${model.water.slopePct.toFixed(0)}%${model.water.indicative ? ' · INDICATIVE' : ''}`],
       '#8FD0F0',
     );
 
@@ -5572,7 +5585,7 @@ function drawSectorAnalysis(
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: `Terrace fall ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
   if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
@@ -6924,6 +6937,7 @@ export default function DesignGlossy({
   const geometryLock = geometryLockProp ?? geometryLockInternal;
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
   const refreshPendingRef = useRef(false);
+  const polishAfterFlipRef = useRef(false);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
@@ -8102,6 +8116,20 @@ export default function DesignGlossy({
     return renderDesignMap();
   }, [exactSheet, restyleAiKind, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
+  // One-tap exact → AI polish. The exact result remains in the gallery; after React has switched
+  // this same sheet into its locked AI mode, start the existing queue path automatically. That
+  // path uses the deterministic composite as the factual input and restores protected geometry
+  // after generation, so this is a child illustration rather than a replacement of the master.
+  useEffect(() => {
+    if (!polishAfterFlipRef.current || mode !== 'ai' || isExactRender || loading !== null) return;
+    polishAfterFlipRef.current = false;
+    setNotice('Preparing a geometry-locked AI polish from this exact sheet…');
+    const timer = window.setTimeout(() => {
+      void runCurrentSheet();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [mode, isExactRender, loading, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
+
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
   const refreshCurrentSheet = useCallback(() => {
@@ -8587,22 +8615,36 @@ export default function DesignGlossy({
               Saved render · {relativeDate(saved.at)} · {PROVIDER_LABEL[saved.provider]}
             </div>
           )}
-          {/* Flip the SAME sheet between its AI and exact renders (mockup link). Clears the
-              preview so the relabeled one-tap CTA draws the flipped version. */}
+          {/* Flip the SAME sheet between its AI and exact renders. From an exact result this is a
+              true one-tap polish: switch modes and immediately start the geometry-locked queue. */}
           {selectedSheet && (
             <button
               type="button"
               onClick={() => {
                 const m = mode === 'ai' ? 'exact' : 'ai';
+                if (m === 'ai') polishAfterFlipRef.current = true;
                 setMode(m);
                 applySheet(selectedSheet, m);
                 setResultImage(null);
                 setNotice(null);
               }}
               disabled={loading !== null}
-              style={{ alignSelf: 'flex-end', padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+              style={{
+                alignSelf: 'flex-end',
+                minHeight: mode === 'exact' ? 44 : undefined,
+                padding: mode === 'exact' ? '10px 16px' : '4px 2px',
+                borderRadius: mode === 'exact' ? 12 : undefined,
+                background: mode === 'exact' ? GREEN : 'transparent',
+                border: mode === 'exact' ? `2px solid ${GREEN}` : 'none',
+                color: mode === 'exact' ? PAPER : GREEN,
+                fontWeight: 800,
+                fontSize: 12.5,
+                cursor: loading !== null ? 'default' : 'pointer',
+                textDecoration: mode === 'exact' ? 'none' : 'underline',
+                textUnderlineOffset: 3,
+              }}
             >
-              {mode === 'ai' ? 'View non-AI exact version →' : '← Back to AI version'}
+              {mode === 'ai' ? 'View non-AI exact version →' : '✨ Polish this exact map with AI →'}
             </button>
           )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>

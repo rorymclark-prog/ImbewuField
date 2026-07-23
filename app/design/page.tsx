@@ -270,19 +270,30 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
   };
 }
 
+function locationDataCacheKey(lat: number, lon: number): string {
+  return `imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+}
+
 function readCachedLocationData(lat: number, lon: number): LocationData | null {
   if (typeof window === 'undefined') return null;
   try {
     // v2: bump the version when the location-data shape gains a field (e.g. BRU zones) so
     // already-analysed sites refetch instead of serving a stale pre-field cache. Keep the
     // key in sync with app/farmer/page.tsx.
-    const cacheKey = `imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`;
-    const raw = localStorage.getItem(cacheKey);
+    const raw = localStorage.getItem(locationDataCacheKey(lat, lon));
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === 'object' ? (parsed as LocationData) : null;
   } catch {
     return null;
+  }
+}
+
+function cacheLocationData(lat: number, lon: number, data: LocationData): void {
+  try {
+    localStorage.setItem(locationDataCacheKey(lat, lon), JSON.stringify(data));
+  } catch {
+    // The live result still feeds this page when device storage is unavailable.
   }
 }
 
@@ -610,10 +621,43 @@ function DesignStudioInner() {
     };
   }, [locationData]);
 
-  // Load location data cache + traced layers + build the canvas frame.
+  // Direct Design Studio links must analyse their own coordinates. Previously this page only
+  // consumed a cache populated by the main map, so a newly-opened property silently rendered a
+  // generic regional Sector sheet with no slope/aspect. Show cached data immediately, then always
+  // refresh it in the background so every property's sun, terrain and climate evidence is its own.
   useEffect(() => {
     if (!hasSite) return;
+    let cancelled = false;
+    const controller = new AbortController();
     setLocationData(readCachedLocationData(lat, lon));
+
+    fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Location analysis failed (${res.status})`);
+        return res.json() as Promise<LocationData>;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        cacheLocationData(lat, lon, data);
+        setLocationData(data);
+      })
+      .catch(() => {
+        // Keep the cached result, if any. The Sector sheet's evidence status explicitly lists
+        // anything missing instead of inventing a slope or climate direction.
+      });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [hasSite, lat, lon]);
+
+  // Load traced layers + build the canvas frame.
+  useEffect(() => {
+    if (!hasSite) return;
 
     // Tracks the frame centre/zoom the satellite was last fetched for, so a refresh only
     // clears/refetches the (large, flicker-prone) satellite image when the frame actually
