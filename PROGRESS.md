@@ -1,5 +1,10 @@
 # ImbewuField — Build Progress
 
+> **Current map-render goal and ongoing task list:** see
+> **`docs/ACTIVE-MAP-QUALITY-TASKS.md`**. The older "What's left" section below describes the
+> original 33-frame product handoff only; it is not the completion list for the current
+> Reference Blueprint / Geometry Lock quality work.
+
 **Picking this up (incl. cloud / phone Claude Code)?** Read **this** file for *what's
 done and what's left*, and **`design/DESIGN.md`** for the *design system + per-frame
 status*. The visual source of truth is `design/handoff/*.png` (33 frames) and the
