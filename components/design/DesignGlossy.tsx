@@ -2506,7 +2506,7 @@ async function drawAnalysisBase(
     // it raised mean chroma on an already-muted aerial. ctx.filter scales what is there and cannot
     // invert like that. Guarded because Canvas filter support is not universal; without it the
     // paper wash below still lightens, just with the greens left in.
-    if ('filter' in ctx) ctx.filter = 'saturate(0.72) brightness(0.76) contrast(1.12)';
+    if ('filter' in ctx) ctx.filter = 'saturate(0.62) brightness(0.68) contrast(1.08)';
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
   } else {
@@ -2522,7 +2522,7 @@ async function drawAnalysisBase(
  *  brighten filter, which belongs only to a raw aerial, not to artwork the model already stylised. */
 function drawPaperWash(ctx: CanvasRenderingContext2D, W: number, H: number): void {
   ctx.save();
-  ctx.fillStyle = 'rgba(5, 24, 15, 0.24)';
+  ctx.fillStyle = 'rgba(5, 24, 15, 0.3)';
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
 }
@@ -5240,10 +5240,10 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
     ctx.closePath();
-    ctx.globalAlpha = 0.32;
+    ctx.globalAlpha = 0.4;
     ctx.fillStyle = color;
     ctx.fill();
-    ctx.globalAlpha = 0.78;
+    ctx.globalAlpha = 0.86;
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(2, W * 0.0015);
     ctx.stroke();
@@ -5265,8 +5265,8 @@ function drawSectorAnalysis(
   // that sourced effect readable like the benchmark without inventing a separate storm bearing.
   const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
     if (!externalLegend) return;
-    const radii = [0.66, 0.8, 0.94, 1.08, 1.22];
-    const angular = [-0.72, -0.36, 0, 0.36, 0.72];
+    const radii = [0.66, 0.8, 0.94, 1.08, 1.22, 1.34];
+    const angular = [-0.78, -0.52, -0.26, 0, 0.26, 0.52, 0.78];
     ctx.save();
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
@@ -5277,7 +5277,7 @@ function drawSectorAnalysis(
         const v = bearingToUnitVector(bearingDeg + halfWidthDeg * offset);
         const x = cx + v[0] * R * radial;
         const y = cy + v[1] * R * radial;
-        const dropR = Math.max(6, W * 0.0052);
+        const dropR = Math.max(6, W * 0.0056);
         ctx.beginPath();
         ctx.moveTo(x, y - dropR * 1.35);
         ctx.bezierCurveTo(
@@ -5483,9 +5483,9 @@ function drawSectorAnalysis(
   if (model.water) {
     const dn = bearingToUnitVector(model.water.downhillBearingDeg);
     const cross: [number, number] = [-dn[1], dn[0]];
-    const slopeOffsets = externalLegend ? [-0.4, -0.2, 0, 0.2, 0.4] : [0];
-    const startAlong = externalLegend ? -0.2 : -0.45;
-    const endAlong = externalLegend ? 0.42 : 0.58;
+    const slopeOffsets = externalLegend ? [-0.32, 0, 0.32] : [0];
+    const startAlong = externalLegend ? -0.24 : -0.45;
+    const endAlong = externalLegend ? 0.48 : 0.58;
     const centerEndX = cx + dn[0] * siteR * endAlong;
     const centerEndY = cy + dn[1] * siteR * endAlong;
     ctx.save();
@@ -5495,8 +5495,8 @@ function drawSectorAnalysis(
     }
     ctx.strokeStyle = '#3A8EC4';
     ctx.fillStyle = '#3A8EC4';
-    ctx.globalAlpha = externalLegend ? 0.82 : 1;
-    ctx.lineWidth = externalLegend ? Math.max(2.8, W * 0.0032) : Math.max(3, W * 0.004);
+    ctx.globalAlpha = externalLegend ? 0.76 : 1;
+    ctx.lineWidth = externalLegend ? Math.max(4, W * 0.0048) : Math.max(3, W * 0.004);
     ctx.setLineDash(model.water.indicative ? [8, 6] : []);
     ctx.lineCap = 'round';
     for (const offset of slopeOffsets) {
@@ -5510,7 +5510,7 @@ function drawSectorAnalysis(
       ctx.stroke();
       ctx.setLineDash([]);
       const wang = Math.atan2(wey - wsy, wex - wsx);
-      const wah = Math.max(11, W * (externalLegend ? 0.012 : 0.011));
+      const wah = Math.max(13, W * (externalLegend ? 0.016 : 0.011));
       ctx.beginPath();
       ctx.moveTo(wex, wey);
       ctx.lineTo(wex - wah * Math.cos(wang - 0.42), wey - wah * Math.sin(wang - 0.42));
@@ -7011,7 +7011,9 @@ interface SavedGlossy {
 // v45: Whole uses one factual feature stack and a grouped legend with distinct Water route keys.
 // v48: Sector sheet drops base-fabric context labels so the analysis reads like the benchmark.
 // v49: Water routes use solid blue/purple technical ink with sparse emitters and no pale symbol halos.
-const PLAN_VERSION = 'v49';
+// v50: Sector uses a quieter aerial base, broad sourced energies, visible driving rain and three
+//      larger terrain-fall arrows; bearings and evidence gates remain unchanged.
+const PLAN_VERSION = 'v50';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

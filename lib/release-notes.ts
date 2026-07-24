@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Sector maps now use three large slope arrows instead of five thin ones',
+      'Sector wind and driving rain now stand out over a quieter aerial photo',
       'AI polish now keeps your selected style',
       'AI polish now paints your saved trees, beds, tanks and structures',
       'Protected roofs, driveways and boundaries are restored exactly',
