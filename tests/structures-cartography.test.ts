@@ -25,6 +25,8 @@ test('Structures legend is grouped in a stable editorial order', () => {
   assert.equal(structuresLegendSectionForFeature('beehive'), 'LIVESTOCK & APIARY');
   assert.equal(structuresLegendSectionForFeature('chicken_tractor'), 'LIVESTOCK & APIARY');
   assert.equal(structuresLegendSectionForFeature('shade_house'), 'PROTECTED GROWING');
+  assert.equal(structuresLegendSectionForFeature('chicken_coop'), null);
+  assert.equal(structuresLegendSectionForFeature('greenhouse_tunnel'), null);
 });
 
 test('visual treatments use the real catalog IDs and preserve literal feature identity', () => {
@@ -40,6 +42,10 @@ test('visual treatments use the real catalog IDs and preserve literal feature id
     symbol: 'chicken-tractor',
     presentationScale: 1.25,
   });
+  assert.equal(structuresFeatureSymbolFor('chicken_coop'), null);
+  assert.equal(structuresFeatureSymbolFor('greenhouse_tunnel'), null);
+  assert.equal(structuresFeatureVisualFor('chicken_coop'), null);
+  assert.equal(structuresFeatureVisualFor('greenhouse_tunnel'), null);
 });
 
 test('presentation emphasis is deterministic and does not rewrite geometry', () => {

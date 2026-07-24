@@ -51,22 +51,12 @@ const FEATURE_VISUALS: Readonly<Record<string, StructuresFeatureVisual>> = {
     symbol: 'beehive',
     presentationScale: 1.45,
   },
-  chicken_coop: {
-    section: 'LIVESTOCK & APIARY',
-    symbol: 'chicken-tractor',
-    presentationScale: 1.15,
-  },
   chicken_tractor: {
     section: 'LIVESTOCK & APIARY',
     symbol: 'chicken-tractor',
     presentationScale: 1.25,
   },
   shade_house: {
-    section: 'PROTECTED GROWING',
-    symbol: 'shade',
-    presentationScale: 1.08,
-  },
-  greenhouse_tunnel: {
     section: 'PROTECTED GROWING',
     symbol: 'shade',
     presentationScale: 1.08,
