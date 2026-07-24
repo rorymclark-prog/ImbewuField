@@ -2998,7 +2998,7 @@ function drawBlueprintLabelPills(
   labels: ProducerLabel[],
 ): void {
   const W = ctx.canvas.width;
-  const fs = Math.max(17, Math.round(W * 0.0105));
+  const fs = Math.max(20, Math.round(W * 0.012));
   for (const l of labels) {
     const isHeader = l.kind === 'header';
     const weight = isHeader ? 800 : 650;
@@ -3865,12 +3865,12 @@ function drawPaintedReferenceFeature(
   ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
   ctx.restore();
 
+  // Keep the asset integrated with the aerial rather than turning it into a white-ringed editor
+  // sticker. The contact shadow above supplies separation; this restrained dark keyline only
+  // clarifies the saved footprint at print size.
   traceFootprint();
-  ctx.strokeStyle = 'rgba(244,238,218,0.74)';
-  ctx.lineWidth = outline + 0.35;
-  ctx.stroke();
-  ctx.strokeStyle = 'rgba(38,45,31,0.62)';
-  ctx.lineWidth = Math.max(0.65, outline * 0.45);
+  ctx.strokeStyle = 'rgba(31,42,29,0.58)';
+  ctx.lineWidth = Math.max(0.7, outline * 0.5);
   ctx.stroke();
   ctx.restore();
   return true;
@@ -7013,7 +7013,8 @@ interface SavedGlossy {
 // v49: Water routes use solid blue/purple technical ink with sparse emitters and no pale symbol halos.
 // v50: Sector uses a quieter aerial base, broad sourced energies, visible driving rain and three
 //      larger terrain-fall arrows; bearings and evidence gates remain unchanged.
-const PLAN_VERSION = 'v50';
+// v51: reusable feature art loses its pale sticker halo and map callouts remain readable on phones.
+const PLAN_VERSION = 'v51';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -7261,6 +7262,8 @@ export default function DesignGlossy({
       : producerStyle
         ? `producer:${producerStyle}:${filter}`
         : (analysisStyle ?? filter);
+  const mapKeyRef = useRef(mapKey);
+  mapKeyRef.current = mapKey;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
   // Restore this site's saved sheets on mount / site change. Failure is silent by design: an
@@ -7312,8 +7315,14 @@ export default function DesignGlossy({
   // changes, so each map keeps its own last render.
   useEffect(() => {
     const cached = loadSavedGlossy(state.siteId, mapKey);
-    setSaved(cached);
-    setResultImage(cached ? cached.image : null);
+    // Exact and AI outputs must never share a visible slot. Older builds saved the deterministic
+    // Zones sheet under its producer key, which made the free master look like a completed paid
+    // polish. Reject that legacy collision; exact sheets have their own cache namespace below.
+    const visibleCached = mapKey.startsWith('producer:') && cached?.provider === 'exact'
+      ? null
+      : cached;
+    setSaved(visibleCached);
+    setResultImage(visibleCached ? visibleCached.image : null);
     setError(null);
     setNotice(null);
     // Only re-check when the site or chosen map changes, not on every state edit.
@@ -8061,7 +8070,7 @@ export default function DesignGlossy({
       if (!effectiveModelChrome && layerContentCount(state, refLayers, 'zones') > 0) {
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef, false, frame.satDataUrl ?? undefined, undefined, lockActive);
-        try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
+        try { saveGlossy(state.siteId, `producer:${styleKey}:zones:exact`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
         pushGallery(`Zones map · ${styleDef.label} · Exact styled`, zsheet);
       }
       // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
@@ -8544,11 +8553,15 @@ export default function DesignGlossy({
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
               // A one-sheet refresh must update the actual preview, not only append a gallery
-              // thumbnail. Batch jobs still collect every sheet without flickering the preview.
+              // thumbnail, but only while its original target remains open. Batch jobs still
+              // collect every sheet without flickering the preview.
+              const targetMapKey = `producer:${styleKey}:${sheet.key}`;
               if (job.sheets.length === 1) {
-                setResultImage(finalSheet);
-                setSaved(record);
                 setLockedPolishStage(null);
+                if (job.siteId === state.siteId && mapKeyRef.current === targetMapKey) {
+                  setResultImage(finalSheet);
+                  setSaved(record);
+                }
               }
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
               pushGallery(

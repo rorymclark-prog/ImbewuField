@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Finished-map labels are larger and feature art no longer has white sticker outlines',
       'Sector maps now use three large slope arrows instead of five thin ones',
       'Sector wind and driving rain now stand out over a quieter aerial photo',
       'AI polish now keeps your selected style',
