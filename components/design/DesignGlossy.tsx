@@ -8586,9 +8586,9 @@ export default function DesignGlossy({
 
       {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
         <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>One-button finished map:</strong> the app first saves an exact geometry-locked
-          master at no AI cost, then automatically starts <strong>one paid AI image polish</strong>.
-          Nothing in the polished copy may move outside the saved geometry.
+          <strong>Choose your finish below.</strong> AI-polished first saves the exact
+          geometry-locked master, then automatically starts <strong>one paid AI image render</strong>.
+          Exact only stops after the free locked map. Neither choice changes your canvas design.
         </div>
       )}
 
@@ -8865,7 +8865,13 @@ export default function DesignGlossy({
         </div>
         )}
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignSelf: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+          {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
+            <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+              Choose your finish
+            </div>
+          )}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 10 }}>
           <button
             onClick={
               selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
@@ -8879,10 +8885,11 @@ export default function DesignGlossy({
             disabled={loading !== null}
             style={{
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 8,
-              minHeight: 48,
+              gap: 3,
+              minHeight: 64,
               padding: '12px 22px',
               borderRadius: 12,
               border: 'none',
@@ -8894,24 +8901,31 @@ export default function DesignGlossy({
               opacity: loading !== null ? 0.7 : 1,
             }}
           >
-            {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
-            {loading !== null
-              ? loading === 'exact'
-                ? polishAfterExactRef.current
-                  ? 'Step 1 of 2 · saving exact geometry…'
-                  : 'Drawing your exact map…'
-                : loading === 'falgpt'
-                  ? 'Step 2 of 2 · AI polishing in the background'
-                  : 'Generating your map… ~1 min'
-              : selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
-                ? `${resultImage ? 'Create fresh' : 'Create'} exact + AI-polished map · 1 AI render`
-              : exactSheet === 'implementation'
-                ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
-                : producerStyle
-                  ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
-                  : analysisStyle
-                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
-                    : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
+            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
+              {loading !== null
+                ? loading === 'exact'
+                  ? polishAfterExactRef.current
+                    ? 'Step 1 of 2 · saving exact geometry…'
+                    : 'Drawing your exact map…'
+                  : loading === 'falgpt'
+                    ? 'Step 2 of 2 · AI polishing in the background'
+                    : 'Generating your map… ~1 min'
+                : selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
+                  ? `${resultImage ? 'Create fresh' : 'Create'} AI-polished finished map`
+                : exactSheet === 'implementation'
+                  ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
+                  : producerStyle
+                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
+                    : analysisStyle
+                      ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
+                      : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
+            </span>
+            {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && loading === null && (
+              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.78 }}>
+                Exact lock first · then 1 paid AI render
+              </span>
+            )}
           </button>
           {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
             <button
@@ -8919,23 +8933,30 @@ export default function DesignGlossy({
               onClick={runExactStep}
               disabled={loading !== null}
               style={{
-                alignSelf: 'center',
-                minHeight: 36,
-                padding: '6px 10px',
-                border: 'none',
-                background: 'transparent',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                minHeight: 64,
+                padding: '11px 18px',
+                border: `2px solid ${GREEN}`,
+                borderRadius: 12,
+                background: '#fffdf8',
                 color: GREEN,
-                fontWeight: 750,
-                fontSize: 12.5,
-                textDecoration: 'underline',
-                textUnderlineOffset: 3,
+                fontWeight: 800,
+                fontSize: 14,
                 cursor: loading !== null ? 'default' : 'pointer',
                 opacity: loading !== null ? 0.55 : 1,
               }}
             >
-              Exact map only · no AI cost
+              <span>Exact geometry map only</span>
+              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72 }}>
+                Instant · no AI cost
+              </span>
             </button>
           )}
+          </div>
         </div>
 
         <div style={{ fontSize: 11, opacity: 0.6 }}>
