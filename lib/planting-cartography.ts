@@ -63,12 +63,12 @@ export function plantingLegendSectionForFeature(id: string): PlantingLegendSecti
  * than their tiny true-footprint symbols at sheet size; centres and stored dimensions stay exact.
  */
 export function plantingFeaturePresentationScale(id: string): number {
-  if (id === 'veg_bed' || id === 'raised_bed') return 1.28;
-  if (id === 'keyhole_bed' || id === 'herb_spiral') return 1.18;
-  if (id === 'pollinator_strip' || id === 'spekboom_hedge' || id === 'vetiver_row') return 1.16;
-  if (GREYWATER_READY_BASINS.has(id)) return 1.2;
-  if (id === 'banana_clump') return 1.24;
-  if (id.startsWith('tree_')) return 1.3;
+  if (id === 'veg_bed' || id === 'raised_bed') return 1.38;
+  if (id === 'keyhole_bed' || id === 'herb_spiral') return 1.26;
+  if (id === 'pollinator_strip' || id === 'spekboom_hedge' || id === 'vetiver_row') return 1.28;
+  if (GREYWATER_READY_BASINS.has(id)) return 1.28;
+  if (id === 'banana_clump') return 1.3;
+  if (id.startsWith('tree_')) return 1.36;
   return 1;
 }
 
@@ -97,8 +97,10 @@ export function plantingFeaturePresentationDimensions(
   }
   const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
   const longSide = Math.max(naturalWidth, naturalHeight);
-  const minimumShortSide = Math.max(18, canvasWidth * 0.0105);
-  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.08);
+  const minimumShortSide = Math.max(22, canvasWidth * 0.013);
+  // Long beds and hedges need room to read at phone size. This is a presentation cap, not a
+  // geometry edit: the saved centre, rotation and aspect ratio remain untouched by the caller.
+  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.16);
   const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
   const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
   const scale = Math.max(1, cappedScale);
