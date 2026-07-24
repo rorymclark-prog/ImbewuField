@@ -5051,43 +5051,50 @@ function drawSectorAnalysis(
     ctx.restore();
   };
 
-  const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = externalLegend
-    ? [{ x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 }]
-    : [];
+  const directLabelRequests: Array<{ x: number; y: number; lines: string[]; color: string }> = [];
   const directLabelAt = (x: number, y: number, lines: string[], color: string): void => {
     if (!externalLegend) return;
-    const fs = Math.max(18, Math.round(W * 0.0114));
-    const lineH = Math.round(fs * 1.06);
-    ctx.save();
-    ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
-    const halfW = Math.max(...lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.35;
-    const halfH = (lineH * lines.length) / 2 + fs * 0.3;
-    const candidates: Array<[number, number]> = [
-      [0, 0], [0, lineH * 2.4], [0, -lineH * 2.4],
-      [lineH * 4, 0], [-lineH * 4, 0], [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
+    directLabelRequests.push({ x, y, lines, color });
+  };
+  const flushDirectLabels = (): void => {
+    if (!externalLegend || directLabelRequests.length === 0) return;
+    const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
+      { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
     ];
-    let lx = x;
-    let ly = y;
-    for (const [dx, dy] of candidates) {
-      const tx = Math.max(halfW + W * 0.015, Math.min(W - halfW - W * 0.015, x + dx));
-      const ty = Math.max(halfH + H * 0.025, Math.min(H - halfH - H * 0.025, y + dy));
-      const overlaps = directClaims.some(
-        (box) => tx - halfW < box.x1 && box.x0 < tx + halfW && ty - halfH < box.y1 && box.y0 < ty + halfH,
-      );
-      lx = tx;
-      ly = ty;
-      if (!overlaps) break;
+    const fs = Math.max(20, Math.round(W * 0.0126));
+    const lineH = Math.round(fs * 1.08);
+    for (const request of directLabelRequests) {
+      ctx.save();
+      ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+      const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.4;
+      const halfH = (lineH * request.lines.length) / 2 + fs * 0.32;
+      const candidates: Array<[number, number]> = [
+        [0, 0], [0, lineH * 2.4], [0, -lineH * 2.4],
+        [lineH * 4, 0], [-lineH * 4, 0], [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
+      ];
+      let lx = request.x;
+      let ly = request.y;
+      for (const [dx, dy] of candidates) {
+        const tx = Math.max(halfW + W * 0.015, Math.min(W - halfW - W * 0.015, request.x + dx));
+        const ty = Math.max(halfH + H * 0.025, Math.min(H - halfH - H * 0.025, request.y + dy));
+        const overlaps = directClaims.some(
+          (box) => tx - halfW < box.x1 && box.x0 < tx + halfW && ty - halfH < box.y1 && box.y0 < ty + halfH,
+        );
+        lx = tx;
+        ly = ty;
+        if (!overlaps) break;
+      }
+      directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = Math.max(3.5, W * 0.0021);
+      ctx.strokeStyle = 'rgba(8,18,12,0.9)';
+      request.lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
+      ctx.fillStyle = request.color;
+      request.lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
+      ctx.restore();
     }
-    directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = Math.max(3, W * 0.0019);
-    ctx.strokeStyle = 'rgba(8,18,12,0.88)';
-    lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
-    ctx.fillStyle = color;
-    lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
-    ctx.restore();
   };
 
   // Regional-assumption palette (§4 mechanism 1: these energies are ALWAYS dashed — solid is
@@ -5499,6 +5506,9 @@ function drawSectorAnalysis(
   // Markers are painted in one final pass so nearby sun paths and winds can share a bearing
   // without stacking their numbered references. Moved markers retain a short coloured leader.
   flushSectorMarkers();
+  // Direct labels must be the final cartographic layer. Painting them at the time each sector was
+  // created let later sun arcs, wedges and arrows cross straight over earlier words.
+  flushDirectLabels();
 
   // 9. DATA STRIP under the title — real figures only, missing ones omitted.
   const parts: string[] = [];
@@ -5585,7 +5595,7 @@ function drawSectorAnalysis(
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (uniform-fall model)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (local DEM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
   if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
@@ -6937,6 +6947,8 @@ export default function DesignGlossy({
   const geometryLock = geometryLockProp ?? geometryLockInternal;
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
   const refreshPendingRef = useRef(false);
+  const exactAfterFlipRef = useRef(false);
+  const polishAfterExactRef = useRef(false);
   const polishAfterFlipRef = useRef(false);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
@@ -8116,10 +8128,44 @@ export default function DesignGlossy({
     return renderDesignMap();
   }, [exactSheet, restyleAiKind, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
-  // One-tap exact → AI polish. The exact result remains in the gallery; after React has switched
-  // this same sheet into its locked AI mode, start the existing queue path automatically. That
-  // path uses the deterministic composite as the factual input and restores protected geometry
-  // after generation, so this is a child illustration rather than a replacement of the master.
+  // Direct Step 1 button. If this sheet is already in exact mode, redraw immediately. Otherwise,
+  // wait for React to switch the generator selection and then run the deterministic renderer.
+  // This removes the old "pick a mode, then find the Generate button" two-click workflow.
+  useEffect(() => {
+    if (!exactAfterFlipRef.current || mode !== 'exact' || !isExactRender || loading !== null) return;
+    exactAfterFlipRef.current = false;
+    setNotice(polishAfterExactRef.current
+      ? 'Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…'
+      : 'Building the exact geometry-locked map — no AI render cost…');
+    const timer = window.setTimeout(() => {
+      void runCurrentSheet();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [mode, isExactRender, loading, selectedNo, runCurrentSheet]);
+
+  // The primary one-press workflow always saves an exact master before spending an AI render.
+  // Once the deterministic render has completed successfully, move to the selected AI style and
+  // let the existing polish effect enqueue exactly one gpt-image-2 job.
+  useEffect(() => {
+    if (
+      !polishAfterExactRef.current
+      || mode !== 'exact'
+      || !isExactRender
+      || loading !== null
+      || !resultImage
+    ) return;
+    polishAfterExactRef.current = false;
+    polishAfterFlipRef.current = true;
+    setNotice('Step 2 of 2 — starting one paid gpt-image-2 polish from the saved exact map…');
+    setMode('ai');
+    if (selectedSheet) applySheet(selectedSheet, 'ai');
+    setResultImage(null);
+  }, [mode, isExactRender, loading, resultImage, selectedSheet, applySheet]);
+
+  // Direct Step 2 button. The exact result remains in the gallery; after React has switched this
+  // same sheet into its locked AI mode, start the existing queue path automatically. That path
+  // uses the deterministic composite as the factual input and restores protected geometry after
+  // generation, so this is a child illustration rather than a replacement of the master.
   useEffect(() => {
     if (!polishAfterFlipRef.current || mode !== 'ai' || isExactRender || loading !== null) return;
     polishAfterFlipRef.current = false;
@@ -8129,6 +8175,46 @@ export default function DesignGlossy({
     }, 0);
     return () => window.clearTimeout(timer);
   }, [mode, isExactRender, loading, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
+
+  useEffect(() => {
+    if (!error || loading !== null) return;
+    exactAfterFlipRef.current = false;
+    polishAfterExactRef.current = false;
+    polishAfterFlipRef.current = false;
+  }, [error, loading]);
+
+  const runExactStep = useCallback(() => {
+    if (!selectedSheet || loading !== null) return;
+    setError(null);
+    setNotice(null);
+    if (mode === 'exact' && isExactRender) {
+      void runCurrentSheet();
+      return;
+    }
+    exactAfterFlipRef.current = true;
+    setMode('exact');
+    applySheet(selectedSheet, 'exact');
+    setResultImage(null);
+  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
+
+  const runLockedPolishFlow = useCallback(() => {
+    if (!selectedSheet || loading !== null) return;
+    if ('exact' in selectedSheet && selectedSheet.exact === 'implementation') {
+      setNotice('The Phasing sheet stays exact because AI must not rewrite dates, tasks or hold points.');
+      return;
+    }
+    setError(null);
+    setNotice('Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…');
+    polishAfterExactRef.current = true;
+    setResultImage(null);
+    if (mode === 'exact' && isExactRender) {
+      void runCurrentSheet();
+      return;
+    }
+    exactAfterFlipRef.current = true;
+    setMode('exact');
+    applySheet(selectedSheet, 'exact');
+  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -8498,39 +8584,11 @@ export default function DesignGlossy({
         )}
       </div>
 
-      {/* EXACT / AI CHOICE, VISIBLE BEFORE ANY RENDER. The only route to the AI version used to be a
-          text link buried INSIDE the rendered-result panel — so on a fresh Sector or Site sheet the
-          farmer saw one button reading "instant" and no hint an AI version existed at all (Rory:
-          "sector sheet is still instant you must fix this and make it for ai"). Shown only on the
-          two analytical sheets that HAVE both: the design layers already default to AI and carry
-          their own Style grid, and Phasing (08) has no AI version by design. */}
-      {selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: 0.4, opacity: 0.6 }}>THIS SHEET</span>
-          {([['exact', 'Exact · instant · free'], ['ai', 'AI styled · ~mins']] as const).map(([m, label]) => {
-            const active = (m === 'ai') === (restyleAiKind !== null);
-            return (
-              <button
-                key={m}
-                type="button"
-                disabled={loading !== null}
-                onClick={() => { setMode(m); applySheet(selectedSheet, m); setResultImage(null); setNotice(null); }}
-                style={{
-                  minHeight: 36,
-                  padding: '6px 12px',
-                  borderRadius: 999,
-                  border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
-                  background: active ? GREEN : PAPER,
-                  color: active ? PAPER : DARK,
-                  fontWeight: 700,
-                  fontSize: 12.5,
-                  cursor: loading !== null ? 'default' : 'pointer',
-                }}
-              >
-                {label}
-              </button>
-            );
-          })}
+      {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
+        <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
+          <strong>One-button finished map:</strong> the app first saves an exact geometry-locked
+          master at no AI cost, then automatically starts <strong>one paid AI image polish</strong>.
+          Nothing in the polished copy may move outside the saved geometry.
         </div>
       )}
 
@@ -8621,10 +8679,12 @@ export default function DesignGlossy({
             <button
               type="button"
               onClick={() => {
-                const m = mode === 'ai' ? 'exact' : 'ai';
-                if (m === 'ai') polishAfterFlipRef.current = true;
-                setMode(m);
-                applySheet(selectedSheet, m);
+                if (mode === 'exact') {
+                  runLockedPolishFlow();
+                  return;
+                }
+                setMode('exact');
+                applySheet(selectedSheet, 'exact');
                 setResultImage(null);
                 setNotice(null);
               }}
@@ -8644,7 +8704,7 @@ export default function DesignGlossy({
                 textUnderlineOffset: 3,
               }}
             >
-              {mode === 'ai' ? 'View non-AI exact version →' : '✨ Polish this exact map with AI →'}
+              {mode === 'ai' ? 'View the saved exact master →' : '✨ AI-polish this exact map · 1 AI render →'}
             </button>
           )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -8807,7 +8867,15 @@ export default function DesignGlossy({
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignSelf: 'flex-start' }}>
           <button
-            onClick={resultImage ? refreshCurrentSheet : () => { void runCurrentSheet(); }}
+            onClick={
+              selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
+                ? runLockedPolishFlow
+                : selectedSheet
+                  ? runExactStep
+                  : resultImage
+                    ? refreshCurrentSheet
+                    : () => { void runCurrentSheet(); }
+            }
             disabled={loading !== null}
             style={{
               display: 'flex',
@@ -8829,14 +8897,14 @@ export default function DesignGlossy({
             {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
             {loading !== null
               ? loading === 'exact'
-                ? 'Drawing your exact map…'
+                ? polishAfterExactRef.current
+                  ? 'Step 1 of 2 · saving exact geometry…'
+                  : 'Drawing your exact map…'
                 : loading === 'falgpt'
-                  ? 'Rendering in the background — you can keep working'
+                  ? 'Step 2 of 2 · AI polishing in the background'
                   : 'Generating your map… ~1 min'
-              : exactSheet === 'base'
-                ? `${resultImage ? 'Redraw' : 'Draw'} my existing-site sheet · instant`
-              : exactSheet === 'sector'
-                ? `${resultImage ? 'Redraw' : 'Draw'} my sector analysis sheet · instant`
+              : selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
+                ? `${resultImage ? 'Create fresh' : 'Create'} exact + AI-polished map · 1 AI render`
               : exactSheet === 'implementation'
                 ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                 : producerStyle
@@ -8845,6 +8913,29 @@ export default function DesignGlossy({
                     ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
                     : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
           </button>
+          {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
+            <button
+              type="button"
+              onClick={runExactStep}
+              disabled={loading !== null}
+              style={{
+                alignSelf: 'center',
+                minHeight: 36,
+                padding: '6px 10px',
+                border: 'none',
+                background: 'transparent',
+                color: GREEN,
+                fontWeight: 750,
+                fontSize: 12.5,
+                textDecoration: 'underline',
+                textUnderlineOffset: 3,
+                cursor: loading !== null ? 'default' : 'pointer',
+                opacity: loading !== null ? 0.55 : 1,
+              }}
+            >
+              Exact map only · no AI cost
+            </button>
+          )}
         </div>
 
         <div style={{ fontSize: 11, opacity: 0.6 }}>

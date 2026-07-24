@@ -1,13 +1,61 @@
 import type { ElevationData } from './types';
-import { aspectLabel } from './biome';
+import { aspectLabel } from '@/lib/biome';
+
+const SAMPLE_RADIUS_M = 60;
+
+export function deriveElevationData(
+  elevations: { center: number; north: number; south: number; east: number; west: number },
+): ElevationData {
+  const dzDx = (elevations.east - elevations.west) / (SAMPLE_RADIUS_M * 2);
+  const dzDy = (elevations.north - elevations.south) / (SAMPLE_RADIUS_M * 2);
+  const gradient = Math.sqrt(dzDx ** 2 + dzDy ** 2);
+  const slopeRad = Math.atan(gradient);
+  const slopeDeg = parseFloat((slopeRad * 180 / Math.PI).toFixed(1));
+  const slopePct = parseFloat((Math.tan(slopeRad) * 100).toFixed(1));
+
+  let aspectDeg = Math.atan2(-dzDx, -dzDy) * 180 / Math.PI;
+  if (aspectDeg < 0) aspectDeg += 360;
+  aspectDeg = parseFloat(aspectDeg.toFixed(0));
+
+  // SRTM is useful local evidence, but it is not a site survey. A sub-metre total change across
+  // the sample is too close to DEM noise to support a directional arrow at all.
+  const totalRelief = Math.max(
+    elevations.north,
+    elevations.south,
+    elevations.east,
+    elevations.west,
+  ) - Math.min(
+    elevations.north,
+    elevations.south,
+    elevations.east,
+    elevations.west,
+  );
+  const directionConfidence = totalRelief >= 1
+    ? 'site-local-indicative'
+    : 'unconfirmed';
+
+  return {
+    elevation: Math.round(elevations.center),
+    slopeDeg,
+    slopePct,
+    aspectDeg,
+    aspectLabel: aspectLabel(aspectDeg),
+    sampleBaselineM: SAMPLE_RADIUS_M * 2,
+    directionConfidence,
+  };
+}
 
 export async function fetchElevation(lat: number, lon: number): Promise<ElevationData> {
-  // Sample center + N + E for slope/aspect calculation
-  const d = 0.01; // ~1km offset
+  // A local five-point central difference follows the property-scale terrain much more closely
+  // than the former centre/N/E sample taken roughly one kilometre apart.
+  const dLat = SAMPLE_RADIUS_M / 111320;
+  const dLon = SAMPLE_RADIUS_M / (111320 * Math.max(0.1, Math.cos(lat * Math.PI / 180)));
   const locations = [
-    `${lat.toFixed(4)},${lon.toFixed(4)}`,
-    `${(lat + d).toFixed(4)},${lon.toFixed(4)}`,
-    `${lat.toFixed(4)},${(lon + d).toFixed(4)}`,
+    `${lat.toFixed(6)},${lon.toFixed(6)}`,
+    `${(lat + dLat).toFixed(6)},${lon.toFixed(6)}`,
+    `${(lat - dLat).toFixed(6)},${lon.toFixed(6)}`,
+    `${lat.toFixed(6)},${(lon + dLon).toFixed(6)}`,
+    `${lat.toFixed(6)},${(lon - dLon).toFixed(6)}`,
   ].join('|');
 
   const res = await fetch(
@@ -19,35 +67,11 @@ export async function fetchElevation(lat: number, lon: number): Promise<Elevatio
   const data = await res.json();
 
   const elev = (i: number): number => data.results[i]?.elevation ?? 0;
-  const elevC = elev(0);
-  const elevN = elev(1);
-  const elevE = elev(2);
-
-  // Meters per degree at this latitude
-  const mPerDegLat = 111320;
-  const mPerDegLon = 111320 * Math.cos(lat * Math.PI / 180);
-  const dy = d * mPerDegLat;
-  const dx = d * mPerDegLon;
-
-  const dzDx = (elevE - elevC) / dx;
-  const dzDy = (elevN - elevC) / dy;
-  const slopeRad = Math.atan(Math.sqrt(dzDx ** 2 + dzDy ** 2));
-  const slopeDeg = parseFloat((slopeRad * 180 / Math.PI).toFixed(1));
-  const slopePct = parseFloat((Math.tan(slopeRad) * 100).toFixed(1));
-
-  // Aspect = the DOWNHILL bearing (the way the slope faces / water flows), degrees clockwise from
-  // North. The gradient (dzDx, dzDy) points UPHILL, so negate it. Every consumer (sector water/frost
-  // arrows, contour direction, zone auto-suggest, "slope faces X" text) assumes downhill — this was
-  // returning uphill, i.e. 180° wrong on every real site (the demo site hardcodes aspect so it hid it).
-  let aspectDeg = Math.atan2(-dzDx, -dzDy) * 180 / Math.PI;
-  if (aspectDeg < 0) aspectDeg += 360;
-  aspectDeg = parseFloat(aspectDeg.toFixed(0));
-
-  return {
-    elevation: Math.round(elevC),
-    slopeDeg,
-    slopePct,
-    aspectDeg,
-    aspectLabel: aspectLabel(aspectDeg),
-  };
+  return deriveElevationData({
+    center: elev(0),
+    north: elev(1),
+    south: elev(2),
+    east: elev(3),
+    west: elev(4),
+  });
 }

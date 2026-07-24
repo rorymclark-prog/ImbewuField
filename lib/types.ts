@@ -53,6 +53,8 @@ export interface ElevationData {
   slopePct: number;
   aspectDeg: number;
   aspectLabel: string;
+  sampleBaselineM?: number;
+  directionConfidence?: 'site-local-indicative' | 'unconfirmed';
 }
 
 export interface SiteData {

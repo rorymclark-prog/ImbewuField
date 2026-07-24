@@ -6,7 +6,7 @@
     "dev": "next dev -p 4242",
     "build": "next build",
     "start": "next start",
-    "test": "node --import ./tests/register-alias.mjs --test tests/image-producer.test.ts tests/producer-labels.test.ts tests/canvas-labels.test.ts tests/glossy-filters.test.ts tests/base-layers.test.ts tests/solar.test.ts tests/regional-wind.test.ts tests/terracing.test.ts tests/design-rules-terracing.test.ts tests/driveway-access.test.ts tests/sector-cartography.test.ts tests/cartographic-symbols.test.ts tests/planting-cartography.test.ts tests/reference-feature-art.test.ts tests/structures-cartography.test.ts",
+    "test": "node --import ./tests/register-alias.mjs --test tests/image-producer.test.ts tests/producer-labels.test.ts tests/canvas-labels.test.ts tests/glossy-filters.test.ts tests/base-layers.test.ts tests/solar.test.ts tests/regional-wind.test.ts tests/terracing.test.ts tests/design-rules-terracing.test.ts tests/driveway-access.test.ts tests/sector-cartography.test.ts tests/cartographic-symbols.test.ts tests/planting-cartography.test.ts tests/reference-feature-art.test.ts tests/structures-cartography.test.ts tests/elevation.test.ts",
     "seed": "node scripts/seed.mjs",
     "seed:emulator": "node scripts/seed-emulator.mjs",
     "dev:emulator": "NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1 next dev -p 4243"

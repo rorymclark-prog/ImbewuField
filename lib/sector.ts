@@ -35,7 +35,14 @@ export interface SectorSite {
   biome?: string;
   rainfallMm?: number;
   rainfallPattern?: 'winter' | 'summer' | 'year-round';
-  elevation?: { slopeDeg: number; slopePct: number; aspectDeg: number; aspectLabel: string };
+  elevation?: {
+    slopeDeg: number;
+    slopePct: number;
+    aspectDeg: number;
+    aspectLabel: string;
+    sampleBaselineM?: number;
+    directionConfidence?: 'site-local-indicative' | 'unconfirmed';
+  };
   climate?: { windFromSummer?: string; windFromWinter?: string; windSpeed?: number; minTemp?: number; maxTemp?: number };
 }
 
@@ -93,9 +100,9 @@ export interface SectorModel {
     slopePct: number;
     indicative: boolean;
     fallModel: 'uniform-plane'; // computed, but a MODEL not a survey
-    sampleBaselineM: 1000; // literal — elevation.ts's ~1km sample offset (d = 0.01°)
+    sampleBaselineM: number;
   } | null;
-  frost: { downhillBearingDeg: number; indicative: boolean; confidence: 'inferred-from-1km-aspect' } | null; // only when minTemp < 5 && slope usable
+  frost: { downhillBearingDeg: number; indicative: boolean; confidence: 'inferred-from-local-dem' } | null; // only when minTemp < 5 && slope usable
 
   // Driveway-access energy (SECTOR-MODEL-SPEC deferred item, finished 2026-07-21): dust & noise
   // arriving from vehicle access, bearing FROM the house/site centroid TOWARD the driveway's own
@@ -197,9 +204,12 @@ export function deriveSectorModel(
   const elev = site?.elevation;
   const slopeDeg = elev?.slopeDeg ?? 0;
   const aspectDeg = elev?.aspectDeg;
-  const slopeUsable = slopeDeg > 0.5 && aspectDeg != null && Number.isFinite(aspectDeg);
+  const directionConfirmed = elev?.directionConfidence !== 'unconfirmed';
+  const slopeUsable = directionConfirmed && slopeDeg > 0.5 && aspectDeg != null && Number.isFinite(aspectDeg);
   const flat = !(slopeDeg >= 1.5); // below 1.5° reads flat (no contour lines) — matches lib/contours
-  const indicative = slopeUsable && slopeDeg < 1.5; // 0.5–1.5°: real direction, SRTM-coarse magnitude
+  // DEM-derived direction remains indicative even on a visibly steep site. It is property-local
+  // evidence, not a substitute for surveyed levels.
+  const indicative = slopeUsable && elev?.directionConfidence === 'site-local-indicative';
 
   if (!site) {
     notes.push('Site not analysed yet — open this place on the map to fetch climate & slope, then redraw.');
@@ -276,21 +286,23 @@ export function deriveSectorModel(
         slopePct: elev!.slopePct,
         indicative,
         fallModel: 'uniform-plane',
-        sampleBaselineM: 1000,
+        sampleBaselineM: elev?.sampleBaselineM ?? 1000,
       }
     : null;
 
   const minT = site?.climate?.minTemp;
   const frost: SectorModel['frost'] =
     minT != null && minT < 5 && slopeUsable
-      ? { downhillBearingDeg: aspectDeg!, indicative, confidence: 'inferred-from-1km-aspect' }
+      ? { downhillBearingDeg: aspectDeg!, indicative, confidence: 'inferred-from-local-dem' }
       : null;
   if (minT != null && minT < 5 && !slopeUsable) notes.push('Cold air settles in low spots on still, clear nights.');
-  // §4 wording fix: the 30 m figure is the RASTER's own resolution, not our sampling footprint —
-  // lib/elevation.ts samples 3 points ~1 km apart (d = 0.01°), so naming 30 m understates the
-  // footprint by ~30x. Both notes now name the true ~1 km sampling baseline.
-  if (indicative) notes.push('Slope estimated from SRTM elevation sampled about 1 km apart — one average fall for the whole hillside, not your plot.');
-  else if (flat && elev) notes.push('Site reads ~flat at this ~1 km sampling resolution — confirm fall on site.');
+  if (elev?.directionConfidence === 'unconfirmed') {
+    notes.push('Local DEM relief is too small to confirm a downhill direction — use neighbouring contours or measure the fall on site.');
+  } else if (indicative) {
+    notes.push(`Slope direction is estimated from a site-local SRTM sample across about ${elev?.sampleBaselineM ?? 120} m — indicative, not surveyed.`);
+  } else if (flat && elev) {
+    notes.push(`Site reads ~flat at this ${elev.sampleBaselineM ?? 120} m sampling scale — confirm fall on site.`);
+  }
 
   const driveway = drivewayGeometry
     ? deriveDrivewayAccess(drivewayGeometry.siteCentroid, drivewayGeometry.drivewayPoints)

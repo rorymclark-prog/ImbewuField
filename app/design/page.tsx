@@ -607,6 +607,8 @@ function DesignStudioInner() {
             slopePct: locationData.elevation.slopePct,
             aspectDeg: locationData.elevation.aspectDeg,
             aspectLabel: locationData.elevation.aspectLabel,
+            sampleBaselineM: locationData.elevation.sampleBaselineM,
+            directionConfidence: locationData.elevation.directionConfidence,
           }
         : undefined,
       climate: locationData.climate
