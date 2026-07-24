@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'One press now reliably continues from the exact locked map into the paid AI polish',
+      'AI-polished and Exact-only finishes are now shown as two equally clear choices',
       'Sector maps now have bold marks, labels and illustrated keys',
       'Small Structures symbols now print clearly and paths no longer border the driveway',
       'Planting now distinguishes banana, pawpaw, moringa, keyhole beds, herb spirals and hedges',

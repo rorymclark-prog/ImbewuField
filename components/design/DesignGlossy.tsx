@@ -46,6 +46,7 @@ import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorF
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
+import { lockedPolishAction } from '@/lib/locked-polish-flow';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -8132,28 +8133,37 @@ export default function DesignGlossy({
   // wait for React to switch the generator selection and then run the deterministic renderer.
   // This removes the old "pick a mode, then find the Generate button" two-click workflow.
   useEffect(() => {
-    if (!exactAfterFlipRef.current || mode !== 'exact' || !isExactRender || loading !== null) return;
+    const action = lockedPolishAction({
+      exactFlipPending: exactAfterFlipRef.current,
+      polishAfterExactPending: polishAfterExactRef.current,
+      aiFlipPending: polishAfterFlipRef.current,
+      mode,
+      isExactRender,
+      loading: loading !== null,
+      hasResult: resultImage !== null,
+    });
+    if (action !== 'render-exact') return;
     exactAfterFlipRef.current = false;
     setNotice(polishAfterExactRef.current
       ? 'Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…'
       : 'Building the exact geometry-locked map — no AI render cost…');
-    const timer = window.setTimeout(() => {
-      void runCurrentSheet();
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [mode, isExactRender, loading, selectedNo, runCurrentSheet]);
+    void runCurrentSheet();
+  }, [mode, isExactRender, loading, resultImage, selectedNo, runCurrentSheet]);
 
   // The primary one-press workflow always saves an exact master before spending an AI render.
   // Once the deterministic render has completed successfully, move to the selected AI style and
   // let the existing polish effect enqueue exactly one gpt-image-2 job.
   useEffect(() => {
-    if (
-      !polishAfterExactRef.current
-      || mode !== 'exact'
-      || !isExactRender
-      || loading !== null
-      || !resultImage
-    ) return;
+    const action = lockedPolishAction({
+      exactFlipPending: exactAfterFlipRef.current,
+      polishAfterExactPending: polishAfterExactRef.current,
+      aiFlipPending: polishAfterFlipRef.current,
+      mode,
+      isExactRender,
+      loading: loading !== null,
+      hasResult: resultImage !== null,
+    });
+    if (action !== 'switch-to-ai') return;
     polishAfterExactRef.current = false;
     polishAfterFlipRef.current = true;
     setNotice('Step 2 of 2 — starting one paid gpt-image-2 polish from the saved exact map…');
@@ -8167,14 +8177,20 @@ export default function DesignGlossy({
   // uses the deterministic composite as the factual input and restores protected geometry after
   // generation, so this is a child illustration rather than a replacement of the master.
   useEffect(() => {
-    if (!polishAfterFlipRef.current || mode !== 'ai' || isExactRender || loading !== null) return;
+    const action = lockedPolishAction({
+      exactFlipPending: exactAfterFlipRef.current,
+      polishAfterExactPending: polishAfterExactRef.current,
+      aiFlipPending: polishAfterFlipRef.current,
+      mode,
+      isExactRender,
+      loading: loading !== null,
+      hasResult: resultImage !== null,
+    });
+    if (action !== 'render-ai') return;
     polishAfterFlipRef.current = false;
     setNotice('Preparing a geometry-locked AI polish from this exact sheet…');
-    const timer = window.setTimeout(() => {
-      void runCurrentSheet();
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [mode, isExactRender, loading, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
+    void runCurrentSheet();
+  }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
 
   useEffect(() => {
     if (!error || loading !== null) return;
