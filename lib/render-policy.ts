@@ -71,3 +71,15 @@ export function exactModelInputMarks(_filter: GlossyLayerFilter): ModelInputMark
     showDrivewayMark: false,
   };
 }
+
+/** Paid Geometry-Lock polish shows the saved design context while keeping structure exact. */
+export function polishModelInputMarks(_filter: GlossyLayerFilter): ModelInputMarks {
+  return {
+    showToolGlyphs: true,
+    showDrivewayEdge: false,
+    showDesignLines: true,
+    showDesignItems: true,
+    showHouseMark: true,
+    showDrivewayMark: true,
+  };
+}

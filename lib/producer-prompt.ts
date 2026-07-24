@@ -65,19 +65,28 @@ function geometryLockTail(): string {
 export function buildLockedIllustrationPrompt(
   layerLabel: string,
   stylePreset: StylePreset,
+  elementsText = '',
+  designBrief = '',
 ): string {
   const layer = layerLabel.toUpperCase();
+  const exactFeatures = elementsText.trim()
+    ? `AUTHORITATIVE FEATURE REGISTER: ${elementsText.trim()}.`
+    : 'AUTHORITATIVE FEATURE REGISTER: use only the placed features already visible in the source.';
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
-        `WATER BACKGROUND ROLE: this pass creates only the polished landscape artwork beneath a professional Water, Greywater & Irrigation plan. The app adds every saved tank, tap, basin, pond, pipe, greywater route, drip route, leader, label and legend afterwards at measured positions. Do not paint, anticipate, duplicate or reinterpret that technical layer.`,
+        `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
         `TONAL HIERARCHY: use a deep dark-green illustrated forest context beyond the property, with a moderate olive/moss property interior. Keep the whole sheet high-contrast, moody and editorial from directly overhead; do not brighten or pale the land relative to the source.`,
         `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds and paving through layered watercolor-and-gouache texture with fine dry-brush grain. Keep the driveway quiet, flat and charcoal, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
-        `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible. Add no technical overlays, symbols, text or sheet furniture; the app adds them afterwards.`,
+        `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible or marked. Add no writing or sheet furniture; the app adds those afterwards.`,
       ].join('\n\n')
     : '';
   return [
     STYLE_LINES[stylePreset],
-    `TASK: turn this whole aerial photograph into one finished hand-illustrated ${layer} map sheet. Paint edge to edge — every corner of the image becomes artwork, including the land beyond the property boundary.`,
+    `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`,
+    exactFeatures,
+    designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
+    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
+    `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
     waterArtDirection,
     // Same gap, same fix as buildSectorRestylePrompt's paintWhatIsThere (see its comment): no
     // vocabulary for paved ground meant a concrete slab beside a building had nowhere to go except
@@ -85,12 +94,12 @@ export function buildLockedIllustrationPrompt(
     // prompts in this file that each independently describe ground texture — so the gap here is
     // the highest-impact of the three to have missed.
     `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`,
-    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the photograph. Where the ground is open it stays open — illustrated, but empty. Do not decorate, do not fill space, do not tidy the site.`,
+    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — illustrated, but empty. Do not decorate, fill space or redesign the site.`,
     `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
-    `FINAL CHECK: the entire frame is illustrated with no photographic patches left; every roof and boundary sits exactly where the photo put it; nothing has been added that was not already there; there is no text anywhere.`,
-  ].join('\n\n');
+    `FINAL CHECK: the entire frame is illustrated; every saved feature has the exact same count and position; every roof and boundary stays where the source put it; nothing is added; there is no text anywhere.`,
+  ].filter(Boolean).join('\n\n');
 }
 
 // Superseded by buildLockedIllustrationPrompt above; kept for an instant call-site rollback.

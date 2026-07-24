@@ -38,7 +38,7 @@ import {
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
-import { exactModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
@@ -434,11 +434,13 @@ interface ProtectMaskOptions {
 function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
   const structural = {
     protectOutside: true,
+    protectLines: false,
+    protectItems: false,
     houseHaloRatio: 0.003,
     houseFeatherRatio: 0.0012,
   };
   return filter === 'water'
-    ? { ...structural, protectLines: false, protectItems: false, protectBoundary: false }
+    ? { ...structural, protectBoundary: true, protectDriveway: true }
     : structural;
 }
 
@@ -4317,6 +4319,42 @@ function drawFilteredItems(
   }
 }
 
+type ExactFeaturePresentation = 'solid' | 'hybrid';
+
+/**
+ * Draw exact feature artwork onto a temporary layer, then blend it over the AI painting.
+ *
+ * The free exact renderer remains fully opaque. Paid hybrid sheets keep enough deterministic
+ * artwork to pin every saved footprint and count, while allowing the model's richer material and
+ * canopy painting to remain visible underneath. Routes, labels and the site boundary are drawn
+ * separately at full opacity because they are technical information rather than illustration.
+ */
+function drawExactFeaturesWithPresentation(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  H: number,
+  presentation: ExactFeaturePresentation,
+  draw: (featureCtx: CanvasRenderingContext2D) => void,
+): void {
+  if (presentation === 'solid') {
+    draw(ctx);
+    return;
+  }
+  const layer = document.createElement('canvas');
+  layer.width = W;
+  layer.height = H;
+  const layerCtx = layer.getContext('2d');
+  if (!layerCtx) {
+    draw(ctx);
+    return;
+  }
+  draw(layerCtx);
+  ctx.save();
+  ctx.globalAlpha = 0.68;
+  ctx.drawImage(layer, 0, 0);
+  ctx.restore();
+}
+
 /**
  * The exact saved design layer burned over an AI-painted base. This is the shared authority path
  * for every illustrated sheet: the model supplies texture, while this overlay supplies all factual
@@ -4332,6 +4370,7 @@ async function buildExactLayerOverlay(
   H: number,
   phase: 'ground' | 'features' = 'features',
   groundPresentation: 'standard' | 'illustrated' = 'standard',
+  featurePresentation: ExactFeaturePresentation = 'solid',
 ): Promise<string | undefined> {
   await preloadReferenceFeatureArtwork(state, filter, frame);
   const canvas = document.createElement('canvas');
@@ -4361,26 +4400,30 @@ async function buildExactLayerOverlay(
     // Water destination earthworks sit on the ground, their already-saved planting sits above,
     // and pipework/hardware stays readable over both. This is a semantic print stack only: no
     // item is moved, resized in storage, added or removed.
-    drawWaterFeatures(
-      ctx,
-      state,
-      W,
-      H,
-      pxPerM,
-      false,
-      (item) => WATER_DESTINATION_GROUND_IDS.has(item.defId),
-    );
-    drawContextItems(ctx, state, filter, px, py, pxPerM, frame);
+    drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
+      drawWaterFeatures(
+        featureCtx,
+        state,
+        W,
+        H,
+        pxPerM,
+        false,
+        (item) => WATER_DESTINATION_GROUND_IDS.has(item.defId),
+      );
+      drawContextItems(featureCtx, state, filter, px, py, pxPerM, frame);
+    });
     drawWaterRoutes(ctx, state, frame, W, H);
-    drawWaterFeatures(
-      ctx,
-      state,
-      W,
-      H,
-      pxPerM,
-      false,
-      (item) => !WATER_DESTINATION_GROUND_IDS.has(item.defId),
-    );
+    drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
+      drawWaterFeatures(
+        featureCtx,
+        state,
+        W,
+        H,
+        pxPerM,
+        false,
+        (item) => !WATER_DESTINATION_GROUND_IDS.has(item.defId),
+      );
+    });
     drawWaterLeaderLabels(ctx, state, refLayers, W, H);
   } else if (filter === 'all') {
     // Zone bands have a dedicated analytical sheet. The integrated benchmark is a physical
@@ -4391,7 +4434,9 @@ async function buildExactLayerOverlay(
     // share one biggest-first stack, so a small canopy/fitting is never hidden merely because its
     // category happened to be painted in an earlier subsystem pass.
     drawWaterRoutes(ctx, state, frame, W, H);
-    drawFilteredItems(ctx, state, filter, px, py, pxPerM);
+    drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+    });
   } else if (filter === 'structures') {
     // Prior planting remains visible as quiet context, matching the benchmark infrastructure
     // sheet. It is not counted or legended as Structures content.
@@ -4401,10 +4446,14 @@ async function buildExactLayerOverlay(
     drawFilteredItems(ctx, state, 'planting', px, py, pxPerM);
     ctx.restore();
     drawFilteredLines(ctx, state, filter, px, py);
-    drawFilteredItems(ctx, state, filter, px, py, pxPerM);
+    drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+    });
   } else {
     drawFilteredLines(ctx, state, filter, px, py);
-    drawFilteredItems(ctx, state, filter, px, py, pxPerM);
+    drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
+      drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
+    });
   }
 
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
@@ -5052,10 +5101,22 @@ function drawSectorAnalysis(
     ctx.restore();
   };
 
-  const directLabelRequests: Array<{ x: number; y: number; lines: string[]; color: string }> = [];
-  const directLabelAt = (x: number, y: number, lines: string[], color: string): void => {
+  const directLabelRequests: Array<{
+    x: number;
+    y: number;
+    lines: string[];
+    color: string;
+    tangentBias?: number;
+  }> = [];
+  const directLabelAt = (
+    x: number,
+    y: number,
+    lines: string[],
+    color: string,
+    tangentBias = 0,
+  ): void => {
     if (!externalLegend) return;
-    directLabelRequests.push({ x, y, lines, color });
+    directLabelRequests.push({ x, y, lines, color, tangentBias });
   };
   const flushDirectLabels = (): void => {
     if (!externalLegend || directLabelRequests.length === 0) return;
@@ -5070,8 +5131,11 @@ function drawSectorAnalysis(
       const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.4;
       const halfH = (lineH * request.lines.length) / 2 + fs * 0.32;
       const candidates: Array<[number, number]> = [
-        [0, 0], [0, lineH * 2.4], [0, -lineH * 2.4],
-        [lineH * 4, 0], [-lineH * 4, 0], [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
+        [request.tangentBias ?? 0, 0],
+        [request.tangentBias ?? 0, lineH * 2.4],
+        [request.tangentBias ?? 0, -lineH * 2.4],
+        [lineH * 4, 0], [-lineH * 4, 0],
+        [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
       ];
       let lx = request.x;
       let ly = request.y;
@@ -5149,8 +5213,7 @@ function drawSectorAnalysis(
     fromVec: [number, number],
     color: string,
     emphasis = 1,
-  ): void => {
-    if (!externalLegend) return;
+  ): { sxp: number; syp: number } => {
     const tailX = cx + fromVec[0] * (R + arrowLen * 1.42);
     const tailY = cy + fromVec[1] * (R + arrowLen * 1.42);
     const tipX = cx + fromVec[0] * R * 0.32;
@@ -5177,34 +5240,44 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
     ctx.closePath();
-    ctx.globalAlpha = 0.26;
+    ctx.globalAlpha = 0.32;
     ctx.fillStyle = color;
     ctx.fill();
-    ctx.globalAlpha = 0.72;
+    ctx.globalAlpha = 0.78;
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(2, W * 0.0015);
-    ctx.setLineDash([10, 7]);
+    ctx.stroke();
+    // Regional assumptions remain visibly dashed, but the dash is a quiet provenance spine
+    // inside one broad benchmark arrow rather than a second arrow and arrowhead on top.
+    ctx.globalAlpha = 0.64;
+    ctx.strokeStyle = 'rgba(249,246,234,0.9)';
+    ctx.lineWidth = Math.max(2, W * 0.0018);
+    ctx.setLineDash([12, 9]);
+    ctx.beginPath();
+    ctx.moveTo(tailX + ux * shaftHalf * 0.35, tailY + uy * shaftHalf * 0.35);
+    ctx.lineTo(headBaseX + ux * headLen * 0.22, headBaseY + uy * headLen * 0.22);
     ctx.stroke();
     ctx.restore();
+    return { sxp: tailX, syp: tailY };
   };
 
   // The KZN cold-front record explicitly carries driving rain. Small deterministic drops make
   // that sourced effect readable like the benchmark without inventing a separate storm bearing.
   const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
     if (!externalLegend) return;
-    const radii = [0.7, 0.9, 1.08];
-    const angular = [-0.5, 0, 0.5];
+    const radii = [0.66, 0.8, 0.94, 1.08, 1.22];
+    const angular = [-0.72, -0.36, 0, 0.36, 0.72];
     ctx.save();
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
-    ctx.globalAlpha = 0.58;
-    ctx.lineWidth = Math.max(1.4, W * 0.0011);
+    ctx.globalAlpha = 0.9;
+    ctx.lineWidth = Math.max(1.8, W * 0.0014);
     for (const radial of radii) {
       for (const offset of angular) {
         const v = bearingToUnitVector(bearingDeg + halfWidthDeg * offset);
         const x = cx + v[0] * R * radial;
         const y = cy + v[1] * R * radial;
-        const dropR = Math.max(4, W * 0.0037);
+        const dropR = Math.max(6, W * 0.0052);
         ctx.beginPath();
         ctx.moveTo(x, y - dropR * 1.35);
         ctx.bezierCurveTo(
@@ -5235,11 +5308,13 @@ function drawSectorAnalysis(
     const lp = bearingToUnitVector(model.fire.bearingDeg);
     labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
     drawSectorMarker('fire', cx + lp[0] * R * 0.68, cy + lp[1] * R * 0.68, SECTOR_STYLES.fire.color);
+    const fireTangentX = -lp[1];
     directLabelAt(
-      cx + lp[0] * (R + arrowLen * 0.62),
-      cy + lp[1] * (R + arrowLen * 0.62),
+      cx + lp[0] * (R + arrowLen * 0.5) + fireTangentX * rowH * 3.1,
+      cy + lp[1] * (R + arrowLen * 0.5) + lp[0] * rowH * 3.1,
       ['WINTER GRASSFIRE /', `EMBER RISK · ${model.fire.fromLabel}`],
       SECTOR_STYLES.fire.labelColor,
+      rowH * 2,
     );
   }
 
@@ -5355,9 +5430,10 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1);
+    const marker = externalLegend
+      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1)
+      : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
     if (w.id === 'cold_front') drawDrivingRain(w.bearingDeg, w.halfWidthDeg, color);
-    const marker = drawArrow(v, color, windWidth(kind) * (externalLegend ? 1.15 : 1), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.56 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
@@ -5365,7 +5441,16 @@ function drawSectorAnalysis(
       : w.id === 'cold_front'
         ? ['COLD-FRONT WIND', w.fromLabel]
         : ['SUMMER COOLING WIND', w.fromLabel];
-    directLabelAt(cx + v[0] * (R + arrowLen * 1.18), cy + v[1] * (R + arrowLen * 1.18), directLines, lblColor);
+    const tangentX = -v[1];
+    const tangentY = v[0];
+    const tangentShift = w.id === 'berg' ? -rowH * 2.8 : 0;
+    directLabelAt(
+      cx + v[0] * (R + arrowLen * 0.88) + tangentX * tangentShift,
+      cy + v[1] * (R + arrowLen * 0.88) + tangentY * tangentShift,
+      directLines,
+      lblColor,
+      w.id === 'berg' ? -rowH * 2 : 0,
+    );
   }
 
   // 6b. DRIVEWAY ACCESS — dust & noise arriving from vehicle access (SECTOR-MODEL-SPEC deferred
@@ -7321,7 +7406,7 @@ export default function DesignGlossy({
           : filter === 'all'
             ? 'Whole design'
             : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-        pushGallery(mapLabel, finalImage);
+        pushGallery(`${mapLabel} · AI illustrated`, finalImage);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
       } finally {
@@ -7476,7 +7561,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery(`${layerLabel} · ${styleDef.label}`, sheet);
+      pushGallery(`${layerLabel} · ${styleDef.label} · AI polished`, sheet);
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7522,7 +7607,7 @@ export default function DesignGlossy({
       const mapLabel = filter === 'all'
         ? 'Whole design'
         : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-      pushGallery(mapLabel, composite);
+      pushGallery(`${mapLabel} · Exact master`, composite);
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7556,7 +7641,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Implementation & phasing', composite);
+      pushGallery('Implementation & phasing · Exact master', composite);
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7581,7 +7666,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Sector analysis', composite);
+      pushGallery('Sector analysis · Exact master', composite);
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7605,7 +7690,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Existing site & base', composite);
+      pushGallery('Existing site & base · Exact master', composite);
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7631,7 +7716,7 @@ export default function DesignGlossy({
     let made = 0;
     const step = (label: string, image: string, cacheKey: string) => {
       try { saveGlossy(state.siteId, cacheKey, { image, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full — gallery still holds it */ }
-      pushGallery(label, image);
+      pushGallery(`${label} · Exact master`, image);
       made += 1;
       setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
     };
@@ -7779,7 +7864,7 @@ export default function DesignGlossy({
             at: new Date().toISOString(),
           });
         } catch { /* cache full — gallery still holds it */ }
-        pushGallery(`${layerLabel} · ${styleDef.label}`, sheet);
+        pushGallery(`${layerLabel} · ${styleDef.label} · AI polished`, sheet);
         made += 1;
         setNotice(`Styling your ${styleDef.label} plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
       }
@@ -7868,7 +7953,17 @@ export default function DesignGlossy({
         ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
       const exactFeatureOverlay = locked
-        ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'features')
+        ? await buildExactLayerOverlay(
+            state,
+            frame,
+            refLayers,
+            f,
+            W,
+            H,
+            'features',
+            'standard',
+            protectMask ? 'hybrid' : 'solid',
+          )
         : undefined;
       if (showcase && !locked) {
         const showcaseOverlay = await stackOverlayImages(undefined, structureOverlay, W, H);
@@ -7965,7 +8060,7 @@ export default function DesignGlossy({
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef, false, frame.satDataUrl ?? undefined, undefined, lockActive);
         try { saveGlossy(state.siteId, `producer:${styleKey}:zones`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
-        pushGallery(`Zones map · ${styleDef.label}`, zsheet);
+        pushGallery(`Zones map · ${styleDef.label} · Exact styled`, zsheet);
       }
       // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
       const modelFilters: GlossyLayerFilter[] = effectiveModelChrome
@@ -7973,7 +8068,16 @@ export default function DesignGlossy({
         : ['all', 'water', 'planting', 'structures'];
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const authorityFlags = renderAuthorityFlagsForStyle(styleKey);
-      const sheets = [] as Array<{ key: string; label: string; prompt: string; compositeDataUrl: string; protectMaskDataUrl?: string; showcase?: boolean; geometryLock?: boolean }>;
+      const sheets = [] as Array<{
+        key: string;
+        label: string;
+        prompt: string;
+        compositeDataUrl: string;
+        protectMaskDataUrl?: string;
+        useProtectMaskForEdit?: boolean;
+        showcase?: boolean;
+        geometryLock?: boolean;
+      }>;
       for (const f of modelFilters) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
         const composite = await buildComposite(
@@ -7982,7 +8086,11 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(f) : undefined,
+          isModelChromeStyle(styleKey)
+            ? OVERLAY_COMPOSITE_MARKS
+            : lockActive
+              ? polishModelInputMarks(f)
+              : undefined,
         );
         const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
           ? overlayElementsText(state, refLayers, f)
@@ -7993,15 +8101,17 @@ export default function DesignGlossy({
         const sheetInput = isModelChromeStyle(styleKey)
           ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
           : composite;
-        // Locked sheets send NO mask. OpenAI treats an edits mask as guidance, and the client-side
-        // restore it enabled pasted raw satellite pixels back over the painting (a photographic
-        // roof on a painted map, or — with a degenerate mask — the whole render thrown away).
-        // Exactness now comes from buildLockedStructureOverlay + burned labels drawn ON TOP.
-        const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
+        // Carry the structural mask through the queue for deterministic post-generation restore.
+        // It is deliberately NOT sent to the edits endpoint: GPT Image keeps the Precision Atlas
+        // style reference, then the browser restores house/driveway/boundary/outside pixels and
+        // verifies the opaque mask pixels byte-for-byte.
+        const protectMaskDataUrl = lockActive
+          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
+          : undefined;
         const prompt = isModelChromeStyle(styleKey)
           ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: f })
           : lockActive
-          ? buildLockedIllustrationPrompt(layerLabel, styleKey)
+          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
           : effectiveModelChrome
             ? (promptRewrite
               ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
@@ -8015,6 +8125,7 @@ export default function DesignGlossy({
           prompt,
           compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
+          ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
           showcase: authorityFlags.showcase,
           geometryLock: authorityFlags.geometryLock,
         });
@@ -8068,7 +8179,11 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        isModelChromeStyle(styleKey) ? OVERLAY_COMPOSITE_MARKS : lockActive ? lockedCompositeMarks(filter) : undefined,
+        isModelChromeStyle(styleKey)
+          ? OVERLAY_COMPOSITE_MARKS
+          : lockActive
+            ? polishModelInputMarks(filter)
+            : undefined,
       );
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(state, refLayers, filter)
@@ -8086,13 +8201,16 @@ export default function DesignGlossy({
       // occasional clipped roof). Zones included: when the toggle is on the farmer wants the pretty
       // model version, so we DON'T force the deterministic satellite-only sheet here.
       const useShowcase = effectiveModelChrome;
-      // See generateAllViaQueue: locked sheets send no mask; exactness is drawn on top instead.
-      const protectMaskDataUrl: string | undefined = undefined; // see NO_OVERLAY_MASK
+      // See generateAllViaQueue: this mask is a deterministic restoration contract, not an
+      // OpenAI edit mask. That preserves the style reference and still restores protected pixels.
+      const protectMaskDataUrl = lockActive
+        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
+        : undefined;
       showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
       const prompt = isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: filter })
         : lockActive
-        ? buildLockedIllustrationPrompt(layerLabel, styleKey)
+        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
         : useShowcase
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
@@ -8110,6 +8228,7 @@ export default function DesignGlossy({
           prompt,
           compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
+          ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
           showcase: authorityFlags.showcase,
           geometryLock: authorityFlags.geometryLock,
         }],
@@ -8429,7 +8548,11 @@ export default function DesignGlossy({
                 setSaved(record);
                 setLockedPolishStage(null);
               }
-              pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}${locked ? ' · Geometry locked' : ''}`, finalSheet);
+              const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
+              pushGallery(
+                `${sheet.label}${finishLabel} · AI polished${locked ? ' · Geometry locked' : ''}`,
+                finalSheet,
+              );
               assembled.add(sheet.key);
               if (locked) lockedAssembled += 1;
             } catch (e) {
@@ -8453,8 +8576,8 @@ export default function DesignGlossy({
           const firstErr = failedSheets[0]?.error;
           if (done > 0) {
             setNotice(refreshPendingRef.current
-              ? `Refreshed current sheet${lockedDone ? ' — Geometry Lock applied' : ''}; updated preview in your gallery.`
-              : `Done — ${done} AI sheet${done === 1 ? '' : 's'} in your gallery${lockedDone ? ` · Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Open the gallery to view or Download each sheet. (Print / Export builds the exact plan set — no AI.)`);
+              ? `Refreshed AI-polished sheet${lockedDone ? ' — Geometry Lock applied' : ''}; the exact master remains separately saved.`
+              : `Done — ${done} AI-polished sheet${done === 1 ? '' : 's'} in Saved maps${lockedDone ? ` · Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. The exact master is saved separately. Open Saved maps to compare or download.`);
             refreshPendingRef.current = false;
             setGalleryViewId(null);
             setGalleryOpen(true);

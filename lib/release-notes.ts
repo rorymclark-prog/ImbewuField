@@ -20,10 +20,12 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
-      'One-button AI polish now keeps the style you selected instead of falling back to the exact map',
-      'The temporary exact master stays in Saved maps while a clear AI-polish progress screen remains visible',
-      'One press now reliably continues from the exact locked map into the paid AI polish',
-      'AI-polished and Exact-only finishes are now shown as two equally clear choices',
+      'AI polish now keeps your selected style',
+      'AI polish now paints your saved trees, beds, tanks and structures',
+      'Protected roofs, driveways and boundaries are restored exactly',
+      'The exact master stays in Saved maps while AI polish runs',
+      'One press now continues from the exact map into paid AI polish',
+      'AI-polished and Exact-only finishes are both clearly shown',
       'Sector maps now have bold marks, labels and illustrated keys',
       'Small Structures symbols now print clearly and paths no longer border the driveway',
       'Planting now distinguishes banana, pawpaw, moringa, keyhole beds, herb spirals and hedges',

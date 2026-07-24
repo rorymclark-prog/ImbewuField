@@ -105,6 +105,7 @@ interface RenderSheet {
   prompt: string;
   inputPath: string;
   protectMaskPath?: string;
+  useProtectMaskForEdit?: boolean;
   status: 'queued' | 'running' | 'done' | 'error';
   outputPath?: string;
   error?: string;
@@ -362,7 +363,7 @@ export const runRenderJob = onDocumentCreated(
             const prompt = String(sheet.prompt ?? '').slice(0, PROMPT_MAX);
             if (!prompt) throw new Error('empty prompt');
             let maskB64: string | undefined;
-            if (sheet.protectMaskPath) {
+            if (sheet.protectMaskPath && sheet.useProtectMaskForEdit !== false) {
               const maskBuf = (await bucket.file(sheet.protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
               if (maskBuf.length) maskB64 = maskBuf.toString('base64');
             }

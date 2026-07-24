@@ -6,7 +6,7 @@ import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatell
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, hasConflictingRenderAuthority, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
 
@@ -145,6 +145,30 @@ test('exact style inputs contain no editor glyphs or model-interpreted design ma
       showDrivewayMark: false,
     });
   }
+});
+
+test('paid Geometry-Lock polish inputs show saved design context without a driveway edge', () => {
+  for (const filter of ['all', 'zones', 'water', 'planting', 'structures'] as const) {
+    assert.deepEqual(polishModelInputMarks(filter), {
+      showToolGlyphs: true,
+      showDrivewayEdge: false,
+      showDesignLines: true,
+      showDesignItems: true,
+      showHouseMark: true,
+      showDrivewayMark: true,
+    });
+  }
+});
+
+test('polish input marks do not change the exact input policy', () => {
+  assert.deepEqual(exactModelInputMarks('water'), {
+    showToolGlyphs: false,
+    showDrivewayEdge: false,
+    showDesignLines: false,
+    showDesignItems: false,
+    showHouseMark: false,
+    showDrivewayMark: false,
+  });
 });
 
 test('rendered driveways have no decorative border on any sheet', () => {
@@ -308,7 +332,12 @@ test('buildProducerPrompt keeps the style anchor first and the geometry lock las
 });
 
 test('locked illustration prompt paints the whole sheet without inventing features', () => {
-  const p = buildLockedIllustrationPrompt('Water', 'precision_atlas');
+  const p = buildLockedIllustrationPrompt(
+    'Water',
+    'precision_atlas',
+    'JoJo Tank 5000L ×2, Greywater line ×3',
+    'One fixed whole-site brief',
+  );
   assert.ok(p.startsWith(STYLE_LINES.precision_atlas), 'style leads so a length clamp can never cut it');
   // The flat-patch failure: the old locked prompt painted ground only, inside the plot only.
   assert.match(p, /edge to edge/i);
@@ -316,16 +345,19 @@ test('locked illustration prompt paints the whole sheet without inventing featur
   assert.match(p, /INVENT NOTHING/);
   // Labels, legend and north arrow are the browser's job — the model must not draw text.
   assert.match(p, /no writing, numbers, title, legend/i);
-  assert.match(p, /WATER BACKGROUND ROLE/);
+  assert.match(p, /WATER FEATURE ROLE/);
   assert.match(p, /deep dark-green illustrated forest context/);
   assert.match(p, /moderate olive\/moss property interior/);
   assert.match(p, /high-contrast, moody and editorial/);
   assert.doesNotMatch(p, /15-20% brighter/);
-  assert.match(p, /app adds every saved tank, tap, basin, pond, pipe, greywater route, drip route/);
-  assert.match(p, /Do not paint, anticipate, duplicate or reinterpret that technical layer/);
+  assert.match(p, /JoJo Tank 5000L ×2, Greywater line ×3/);
+  assert.match(p, /WHOLE-SITE CONSISTENCY BRIEF: One fixed whole-site brief/);
+  assert.match(p, /same centre, count, rotation and footprint/);
+  assert.match(p, /Keep buried water pipe blue, filtered-greywater routes purple/);
+  assert.match(p, /app reinforces the measured routes, leaders, labels and legend afterwards/i);
   assert.match(p, /no bright border, kerb, raised edge, hatch, shadow or roof-like treatment/);
   assert.doesNotMatch(p, /texture the land continuously/);
-  assert.doesNotMatch(buildLockedIllustrationPrompt('Planting', 'precision_atlas'), /WATER BACKGROUND ROLE/);
+  assert.doesNotMatch(buildLockedIllustrationPrompt('Planting', 'precision_atlas'), /WATER FEATURE ROLE/);
 });
 
 test('locked Water prompt delegates features and map furniture to deterministic drawing', () => {

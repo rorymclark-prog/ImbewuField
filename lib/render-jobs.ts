@@ -32,6 +32,12 @@ export interface RenderSheetSpec {
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
   compositeDataUrl: string; // data:image/png;base64,… — the model input
   protectMaskDataUrl?: string; // optional geometry-lock mask for the strict queue path
+  /**
+   * Pass the protect mask to the edits endpoint as well as using it for deterministic restoration.
+   * AI-polish jobs set this false: GPT keeps the style reference, then the browser restores every
+   * protected source pixel after generation. Older callers retain the original masked-edit path.
+   */
+  useProtectMaskForEdit?: boolean;
   // Showcase ("AI legend") sheet: the model drew its own legend/labels, so the finisher must NOT
   // clip/burn/chrome it. Persisted ON THE JOB DOC (not React state) because renders outlive the
   // component — a remount that re-attaches by job id must finish each sheet the way it was
@@ -49,6 +55,7 @@ export interface RenderSheetState {
   prompt: string;
   inputPath: string;
   protectMaskPath?: string;
+  useProtectMaskForEdit?: boolean;
   status: RenderSheetStatus;
   outputPath?: string;
   error?: string;
@@ -163,6 +170,9 @@ export async function enqueueRenderJob(opts: {
           prompt: s.prompt,
           inputPath,
           ...(protectMaskPath ? { protectMaskPath } : {}),
+          ...(typeof s.useProtectMaskForEdit === 'boolean'
+            ? { useProtectMaskForEdit: s.useProtectMaskForEdit }
+            : {}),
           status: 'queued',
           showcase: s.showcase === true,
           ...(typeof s.geometryLock === 'boolean' ? { geometryLock: s.geometryLock } : {}),
