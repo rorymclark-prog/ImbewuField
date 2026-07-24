@@ -871,6 +871,30 @@ export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
+/**
+ * Paid design-sheet polish — the input is the complete deterministic sheet saved by Step 1.
+ *
+ * The exact master remains the authority. Step 2 may redraw the presentation, including pictorial
+ * legend swatches, but may not redesign the farm or change any saved geometry or count.
+ */
+export function buildFinishedSheetPolishPrompt(
+  layerLabel: string,
+  stylePreset: StylePreset,
+  placeName?: string,
+): string {
+  const body = [
+    `TASK: turn this COMPLETE, already-correct ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''} into a visibly AI-polished, frame-worthy professional cartographic illustration. The supplied image is the factual blueprint and already contains the final aerial crop, property geometry, buildings, driveway, design elements, routes, labels, legend, north arrow and scale.`,
+    `POLISH THE WHOLE PAGE: redraw the landscape, map symbols, feature artwork, leader lines, title and legend as one coherent authored illustration in the requested style. Replace flat editor-like symbols with realistic orthographic top-down illustrations of the SAME named things. Legend swatches must use the same polished pictorial symbols as the map. This must look substantially more refined than the supplied exact sheet, not like the exact sheet with a light texture filter.`,
+    `PRESERVE THE DESIGN: keep the same canvas aspect ratio, map crop, north-up top-down view, panel placement, boundary, house footprint, driveway footprint, zones, beds, trees, tanks, basins, ponds, structures and every route in the same positions and shapes. Preserve every feature count. Do not move, resize, merge, duplicate or omit anything.`,
+    `FEATURE ART: every inserted feature must be fully opaque, solid and confidently coloured. Never make tanks, trees, basins, fittings or structures translucent. Remove all editor residue: no grey halo, white halo, selection ring, badge, pin, control handle or circular UI background around any feature. Adjacent tanks keep their saved centres and footprints but must read as separate solid vessels with distinct rims and a narrow visible separation; never merge or overlap them into one object.`,
+    `PRESERVE SYSTEMS: keep blue water pipes, sparse blue drip emitters and purple filtered-greywater routes distinct. Keep every connection and endpoint exactly where shown. Do not turn pipes into paths, borders, streams or planting. Keep the driveway visually subdued and empty.`,
+    `NO INVENTION: add no tree, crop bed, tank, pond, basin, path, pipe, fence, building, animal or structure that is not present on the supplied sheet. Open ground stays open. Nothing may cross into the driveway or outside the property boundary unless the supplied sheet already shows it there.`,
+    `TEXT AND LEGEND: preserve the supplied title, place name, labels and legend entries. Copy names and quantities exactly. Use a strong condensed technical cartographic sans-serif throughout, with bold uppercase headings and clear narrow body text; avoid bookish serif display type. Fill the legend panel vertically with balanced section spacing, larger pictorial swatches that match the map symbols, and a clearly separated NOTES block at the bottom. Do not leave a large empty middle or lower panel. Do not add, remove, rename or regroup factual entries.`,
+    `FINAL CHECK: the result is unmistakably a new AI-polished illustration in the requested style, while remaining recognisably the same saved plan with the same geometry, elements, counts, labels, routes and legend.`,
+  ].join('\n\n');
+  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
+}
+
 // Kept for one release as an instant rollback (call-site flip, no worker redeploy — the prompt is
 // built client-side). Delete once the rewrite above is verified against real renders. See the audit
 // doc for the before/after comparison plan.

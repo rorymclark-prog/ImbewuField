@@ -4,6 +4,7 @@ import MyRecords from '@/components/MyRecords';
 import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import LessonLink from '@/components/design/LessonLink';
 
 export default function JournalPage() {
   return (
@@ -14,6 +15,7 @@ export default function JournalPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Field Journal</span>
         <div className="flex-1" />
+        <LessonLink id="journal:overview" label="Learn" />
         <SettingsButton />
       </header>
 

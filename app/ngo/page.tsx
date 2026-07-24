@@ -9,6 +9,7 @@ import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
+import LessonLink from '@/components/design/LessonLink';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -33,6 +34,7 @@ export default function NgoPage() {
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>NGO · programme overview</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>demo data</span>
         <div className="flex-1" />
+        <LessonLink id="ngo:overview" label="Learn" />
         <SettingsButton />
         <RoleSwitcher current="ngo" />
       </header>

@@ -5,6 +5,7 @@ import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import LessonLink from '@/components/design/LessonLink';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -26,6 +27,7 @@ export default function FunderPage() {
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Funder · impact oversight</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>read-only · demo data</span>
         <div className="flex-1" />
+        <LessonLink id="funder:overview" label="Learn" />
         <SettingsButton />
         <RoleSwitcher current="funder" />
       </header>

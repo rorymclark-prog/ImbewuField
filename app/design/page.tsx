@@ -59,6 +59,7 @@ import DesignAdvisor from '@/components/design/DesignAdvisor';
 import BasePhotoImport, { type BasePhotoApplyResult } from '@/components/design/BasePhotoImport';
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
+import LessonLink from '@/components/design/LessonLink';
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
@@ -1405,6 +1406,9 @@ function DesignStudioInner() {
           <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
+        <span style={{ flexShrink: 0 }}>
+          <LessonLink id="design:overview" label="Learn" />
+        </span>
         <button
           type="button"
           onClick={toggleDesignMode}

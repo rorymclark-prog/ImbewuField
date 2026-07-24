@@ -12,6 +12,7 @@ import {
   loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
   paymentMethodLabel, type SavedInvoice, type PaymentMethod,
 } from '@/lib/invoices';
+import LessonLink from '@/components/design/LessonLink';
 
 interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
 
@@ -199,6 +200,7 @@ export default function InvoicePage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Invoice</span>
         <div className="flex-1" />
+        <LessonLink id="finances:invoices" label="Learn" />
         <button
           onClick={shareInvoice}
           disabled={!valid}

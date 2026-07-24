@@ -30,6 +30,13 @@ export interface DesignElementDef {
   nearHouseMaxM?: number; // daily-use max distance from house (herbs/veg)
   deprecated?: boolean; // kept for old saved maps, hidden from new-placement palettes
   deprecatedReason?: string;
+  // Scientific name, where the common name is ambiguous or shared by more than one South African
+  // species (e.g. "Wild Plum" means Harpephyllum caffrum on the coast and Pappea capensis in
+  // drier bushveld — two different trees). Optional and additive: populate it where confusion is
+  // a real risk (NEMBA status, climate suitability, farmer-facing course content all depend on
+  // knowing which species is meant); leave it off generic/deliberately-unspecified entries like
+  // 'Other Tree'.
+  botanical?: string;
   // Extra wizard steps this element is offered on, beyond the ones its category implies. Some
   // elements are honestly two things at once — a banana circle is a planted crop AND a greywater
   // sink — and forcing them into one category hid them from the step where the farmer looks.
@@ -159,7 +166,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#2F7A4A',
     zoneRec: [0, 1],
     nearRoofM: 3,
-    tip: '1.82 m diameter — check eave clearance and allow space to walk around for maintenance.',
+    tip: '1.85 m diameter — check eave clearance and allow space to walk around for maintenance.',
   },
   {
     id: 'jojo_10000',
@@ -453,7 +460,8 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     hM: 2,
     color: '#7D9A4A',
     zoneRec: [2, 3],
-    tip: 'A living bank of vetiver you cut again and again for mulch and compost. Slash it a few times a season, drop the leaf straight onto beds and tree basins. Its deep roots also hold the soil where it stands.',
+    botanical: 'Chrysopogon zizanioides (sterile cultivar only)',
+    tip: 'A living bank of vetiver you cut again and again for mulch and compost. Use the sterile, non-seeding cultivar — not a seeding local relative — so it stays a mulch bank and not a spreading grass. Slash it a few times a season, drop the leaf straight onto beds and tree basins. Its deep roots also hold the soil where it stands.',
   },
   {
     id: 'shed',
@@ -653,6 +661,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     zoneRec: [2, 3],
     castsShade: true,
     deprecated: true,
+    botanical: 'Psidium guajava',
     deprecatedReason: 'Hidden from new designs: invasive risk in warm coastal/subtropical South African sites.',
     tip: 'Hidden from new designs because guava can be invasive in warm coastal areas. Kept so old saved designs still render.',
   },
@@ -706,6 +715,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#4E8B3B',
     zoneRec: [2, 3],
     castsShade: true,
+    botanical: 'Carissa macrocarpa',
     tip: 'Indigenous fruiting coastal shrub/tree; useful as an edible hedge or small orchard edge.',
   },
   {
@@ -719,7 +729,8 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#4E8B3B',
     zoneRec: [3, 4],
     castsShade: true,
-    tip: 'Indigenous subtropical fruit/shade tree; give it room away from beds and buildings.',
+    botanical: 'Harpephyllum caffrum',
+    tip: 'This is the coastal/subtropical Wild Plum (Harpephyllum caffrum), umgwenya — not the drier-region Wild Plum (Pappea capensis), which is a smaller tree not yet in this catalog. Give it room away from beds and buildings.',
   },
   {
     id: 'tree_waterberry',
@@ -732,6 +743,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     color: '#4E8B3B',
     zoneRec: [3, 4],
     castsShade: true,
+    botanical: 'Syzygium cordatum',
     tip: 'Indigenous fruiting shade tree for moister edges and wildlife-friendly food forest zones.',
   },
   {
@@ -948,7 +960,8 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     hM: 5,
     color: '#4E8B3B',
     zoneRec: [2, 3, 4],
-    tip: 'Plant on-contour with slips 10-15 cm apart to stop erosion on slopes.',
+    botanical: 'Chrysopogon zizanioides (sterile cultivar only)',
+    tip: 'Plant on-contour with slips 10-15 cm apart to stop erosion on slopes. Use the sterile, non-seeding cultivar so the line holds ground rather than spreading as a seeding grass.',
   },
   {
     id: 'beehive',

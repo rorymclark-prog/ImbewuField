@@ -7,6 +7,7 @@ import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import LessonLink from '@/components/design/LessonLink';
 
 const FacilitatorCanvas = dynamic(() => import('@/components/FacilitatorCanvas'), {
   ssr: false,
@@ -51,6 +52,7 @@ function FacilitatorPageInner() {
         />
 
         <div className="flex-1" />
+        <LessonLink id="facilitator:overview" label="Learn" />
         <SettingsButton />
         <RoleSwitcher current="facilitator" />
       </header>

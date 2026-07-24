@@ -13,6 +13,7 @@ import {
 } from '@/lib/db/community-queries';
 import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
+import LessonLink from '@/components/design/LessonLink';
 
 const CROP_OPTIONS = [
   'maize', 'beans', 'tomato', 'spinach', 'cabbage', 'potato', 'pumpkin',
@@ -176,6 +177,7 @@ export default function CommunityProfilePage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
+        <LessonLink id="community:profile" label="Learn" />
         <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</span>
       </header>
 

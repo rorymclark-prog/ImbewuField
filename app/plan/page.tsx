@@ -7,6 +7,7 @@ import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
 import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarCheck } from 'lucide-react';
+import LessonLink from '@/components/design/LessonLink';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
 type Suitability = 'best' | 'soon' | 'off';
@@ -168,6 +169,7 @@ export default function PlanPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Crop Planner</span>
         <div className="flex-1" />
+        <LessonLink id="crops:planner" label="Learn" />
         <Link href="/cropplan"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
           style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B', textDecoration: 'none' }}>

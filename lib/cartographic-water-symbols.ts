@@ -449,17 +449,30 @@ function smallHardware(ctx: CanvasRenderingContext2D, w: number, h: number, stro
     line(ctx, [[-size * 0.36, 0], [size * 0.36, 0]]);
     return;
   }
-  ctx.fillStyle = kind === 'tap' ? '#8eb4be' : '#84909a';
+  if (kind === 'tap') {
+    // Directly overhead outdoor standpipe. The previous rectangular fallback read as a desktop
+    // monitor at print size; the round valve, cross handle and offset spout remain recognisable
+    // even when the painted reference asset has not loaded yet.
+    ellipse(ctx, 0, 0, size * 0.82, size * 0.82);
+    finish(ctx, '#287CA5', '#173F53', stroke);
+    ellipse(ctx, 0, 0, size * 0.42, size * 0.42);
+    finish(ctx, '#D0A45B', '#5B4528', Math.max(0.65, stroke * 0.58));
+    ctx.strokeStyle = '#F1D28F';
+    ctx.lineWidth = Math.max(0.8, stroke * 0.62);
+    line(ctx, [[-size * 0.68, 0], [size * 0.68, 0]]);
+    line(ctx, [[0, -size * 0.68], [0, size * 0.68]]);
+    ctx.strokeStyle = '#173F53';
+    ctx.lineWidth = Math.max(stroke, size * 0.24);
+    line(ctx, [[size * 0.72, 0], [size * 1.34, 0], [size * 1.34, size * 0.62]]);
+    ellipse(ctx, size * 1.34, size * 0.72, size * 0.22, size * 0.28);
+    finish(ctx, '#4CA9CB', '#173F53', Math.max(0.55, stroke * 0.5));
+    return;
+  }
+  ctx.fillStyle = '#84909a';
   ctx.lineWidth = stroke;
   ctx.fillRect(-size, -size * 0.7, size * 2, size * 1.4);
   ctx.strokeRect(-size, -size * 0.7, size * 2, size * 1.4);
   line(ctx, [[0, -size * 0.7], [0, -size * 1.45], [size * 0.65, -size * 1.45], [size * 0.65, -size * 0.95]]);
-  if (kind === 'tap') {
-    ctx.fillStyle = '#d2e6e5';
-    ctx.beginPath();
-    ctx.arc(0, size * 0.75, Math.max(stroke, size * 0.18), 0, TAU);
-    ctx.fill();
-  }
 }
 
 export function canonicalCartographicWaterId(raw: string): string {

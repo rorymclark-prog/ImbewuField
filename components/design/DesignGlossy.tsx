@@ -20,7 +20,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { computeContourLines } from '@/lib/contours';
-import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -1888,7 +1888,6 @@ function drawWaterFeature(
     naturalH * pointScale,
     W,
   );
-  const presentationScale = printed.scale;
   const w = printed.width;
   const h = printed.height;
   const radius = Math.min(w, h) / 2;
@@ -1904,21 +1903,6 @@ function drawWaterFeature(
   if (def.shape === 'rect' && item.rot) ctx.rotate((item.rot * Math.PI) / 180);
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
-
-  // A subtle shadow keeps small fittings readable without the bright white halos that made tanks
-  // and valves look pasted on top of the map.
-  if (presentationScale > 1) {
-    ctx.save();
-    ctx.shadowColor = 'rgba(18,30,24,0.42)';
-    ctx.shadowBlur = Math.max(2, W * 0.0013);
-    ctx.beginPath();
-    if (def.shape === 'circle') ctx.ellipse(0, 0, w * 0.52, h * 0.52, 0, 0, Math.PI * 2);
-    else roundRectPath(ctx, -w * 0.52, -h * 0.52, w * 1.04, h * 1.04, Math.max(2, Math.min(w, h) * 0.18));
-    ctx.strokeStyle = 'rgba(18,38,34,0.78)';
-    ctx.lineWidth = Math.max(2.4, W * 0.00135);
-    ctx.stroke();
-    ctx.restore();
-  }
 
   // The illustrated library is shared by map marks and legend keys. It accepts the catalog's
   // real IDs, clips to this exact footprint and returns false for anything it does not own, so the
@@ -2967,7 +2951,8 @@ function drawBlueprintLegendNote(
   return lines.length;
 }
 
-const REFERENCE_LABEL_FONT = '"Arial Narrow", "Avenir Next Condensed", "Roboto Condensed", sans-serif';
+const REFERENCE_LABEL_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
+const SHEET_BODY_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
 
 /** Draw benchmark-style map lettering directly over the artwork. A dark outline replaces the
  * dashboard pill while keeping the label readable over both pale lawn and dark forest. */
@@ -3847,29 +3832,14 @@ function drawPaintedReferenceFeature(
   if (def.shape === 'rect' && it.rot) ctx.rotate((it.rot * Math.PI) / 180);
   ctx.lineJoin = 'round';
 
-  // A restrained contact shadow gives the same readable relief as the benchmark while the clip
-  // below guarantees that the painted object itself cannot spill outside the saved footprint.
-  traceFootprint();
-  ctx.fillStyle = 'rgba(25,31,20,0.16)';
-  ctx.shadowColor = 'rgba(15,22,16,0.34)';
-  ctx.shadowBlur = Math.max(2, Math.min(wPx, hPx) * 0.1);
-  ctx.shadowOffsetX = Math.max(0.8, Math.min(wPx, hPx) * 0.025);
-  ctx.shadowOffsetY = Math.max(1, Math.min(wPx, hPx) * 0.04);
-  ctx.fill();
-  ctx.shadowColor = 'transparent';
-  ctx.shadowBlur = 0;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 0;
-
   ctx.save();
   traceFootprint();
   ctx.clip();
   ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
   ctx.restore();
 
-  // Keep the asset integrated with the aerial rather than turning it into a white-ringed editor
-  // sticker. The contact shadow above supplies separation; this restrained dark keyline only
-  // clarifies the saved footprint at print size.
+  // Keep the asset integrated with the aerial rather than turning it into a haloed editor sticker.
+  // A restrained dark keyline clarifies the saved footprint without changing its geometry.
   traceFootprint();
   ctx.strokeStyle = 'rgba(31,42,29,0.58)';
   ctx.lineWidth = Math.max(0.7, outline * 0.5);
@@ -3921,10 +3891,20 @@ function drawTrueFootprint(
         : emphasizeSmallFeatures && (def.category === 'growing' || def.category === 'earthworks')
           ? plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
           : { width: naturalW, height: naturalH };
+    const assetInset = def.id.startsWith('jojo_') ? 0.88 : 1;
     const cx = px(it.x);
     const cy = py(it.y);
     const outline = Math.max(1.2, ctx.canvas.width * 0.0009);
-    if (drawPaintedReferenceFeature(ctx, it, def, cx, cy, printed.width, printed.height, outline)) return;
+    if (drawPaintedReferenceFeature(
+      ctx,
+      it,
+      def,
+      cx,
+      cy,
+      printed.width * assetInset,
+      printed.height * assetInset,
+      outline,
+    )) return;
   }
   if (waterArtwork) {
     drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false);
@@ -4689,6 +4669,114 @@ export async function buildBlueprintBaseMap(
   );
 }
 
+interface ReferencePresentationContext {
+  state: DesignCanvasState;
+  frame: CanvasFrame;
+  refLayers: DesignGlossyProps['refLayers'];
+}
+
+/**
+ * Finished sheets should feature the designed property, not kilometres of unused satellite.
+ * This creates a presentation-only crop around the saved boundary while retaining the source
+ * aspect ratio. Metre dimensions remain untouched; mPerPx and normalised coordinates change
+ * together, so an accurately sized bed stays accurately sized after the visual zoom.
+ */
+async function boundaryPresentationContext(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+): Promise<ReferencePresentationContext> {
+  if (refLayers.boundary.length < 3) return { state, frame, refLayers };
+
+  const xs = refLayers.boundary.map(([x]) => x);
+  const ys = refLayers.boundary.map(([, y]) => y);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const boundarySpan = Math.max(maxX - minX, maxY - minY);
+  if (!Number.isFinite(boundarySpan) || boundarySpan <= 0 || boundarySpan >= 0.76) {
+    return { state, frame, refLayers };
+  }
+
+  // Equal x/y fractions preserve the aerial's aspect and keep north-up geometry undistorted.
+  const margin = Math.max(0.035, boundarySpan * 0.12);
+  const cropFraction = Math.min(1, Math.max(0.24, boundarySpan + margin * 2));
+  const centerX = (minX + maxX) / 2;
+  const centerY = (minY + maxY) / 2;
+  const cropX = Math.max(0, Math.min(1 - cropFraction, centerX - cropFraction / 2));
+  const cropY = Math.max(0, Math.min(1 - cropFraction, centerY - cropFraction / 2));
+  const point = ([x, y]: [number, number]): [number, number] => [
+    (x - cropX) / cropFraction,
+    (y - cropY) / cropFraction,
+  ];
+  const offset = (value: number | undefined): number | undefined => (
+    value == null ? undefined : value / cropFraction
+  );
+
+  let satDataUrl = frame.satDataUrl;
+  if (frame.satDataUrl) {
+    const source = await loadImage(frame.satDataUrl);
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = source.naturalWidth || source.width;
+    cropCanvas.height = source.naturalHeight || source.height;
+    const cropCtx = cropCanvas.getContext('2d');
+    if (cropCtx) {
+      cropCtx.drawImage(
+        source,
+        cropX * source.width,
+        cropY * source.height,
+        cropFraction * source.width,
+        cropFraction * source.height,
+        0,
+        0,
+        cropCanvas.width,
+        cropCanvas.height,
+      );
+      satDataUrl = cropCanvas.toDataURL('image/png');
+    }
+  }
+
+  const presentationFrame: CanvasFrame = {
+    ...frame,
+    mPerPx: frame.mPerPx * cropFraction,
+    satDataUrl,
+  };
+  const presentationState: DesignCanvasState = {
+    ...state,
+    frame: {
+      ...state.frame,
+      mPerPx: presentationFrame.mPerPx,
+    },
+    items: state.items.map((item) => {
+      const [x, y] = point([item.x, item.y]);
+      return { ...item, x, y };
+    }),
+    zones: state.zones.map((zone) => ({
+      ...zone,
+      points: zone.points.map(point),
+      labelDx: offset(zone.labelDx),
+      labelDy: offset(zone.labelDy),
+    })),
+    lines: state.lines.map((line) => ({
+      ...line,
+      points: line.points.map(point),
+      labelDx: offset(line.labelDx),
+      labelDy: offset(line.labelDy),
+    })),
+  };
+  return {
+    state: presentationState,
+    frame: presentationFrame,
+    refLayers: {
+      boundary: refLayers.boundary.map(point),
+      house: refLayers.house.map(point),
+      driveway: refLayers.driveway.map(point),
+      drivewayClosed: refLayers.drivewayClosed,
+    },
+  };
+}
+
 /**
  * One deterministic sheet pipeline for every design layer.
  *
@@ -4703,49 +4791,53 @@ async function buildReferenceBlueprintMap(
   filter: GlossyLayerFilter,
   placeName?: string,
 ): Promise<string> {
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
+  const presentation = await boundaryPresentationContext(state, frame, refLayers);
+  const renderState = presentation.state;
+  const renderFrame = presentation.frame;
+  const renderRefLayers = presentation.refLayers;
+  const W = renderFrame.imgW * SCALE;
+  const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
 
-  await drawBlueprintBase(ctx, frame, W, H);
-  const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, filter, W, H, 'ground');
+  await drawBlueprintBase(ctx, renderFrame, W, H);
+  const groundOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'ground');
   if (groundOverlay) ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
 
   // Restore the traced source roof and access after the ground treatment. Factual map features are
   // stacked next, so a pipe, tank or other saved item on the roof remains visible without giving the
   // model any authority to crop, reshape or duplicate the house.
-  const source = frame.satDataUrl;
+  const source = renderFrame.satDataUrl;
   const sourceStructures = source
-    ? await buildLockedStructureOverlay(source, frame, refLayers, W, H, 'precision_atlas')
+    ? await buildLockedStructureOverlay(source, renderFrame, renderRefLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) {
     ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
   } else {
     const px = (n: number) => n * W;
     const py = (n: number) => n * H;
-    const pxPerM = W / (frame.imgW * frame.mPerPx);
-    drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(48,54,59,0.94)', '#FBF6EC', 3);
-    drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, filter === 'structures');
+    const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
+    drawBlueprintHouse(ctx, renderRefLayers.house, px, py, 'rgba(48,54,59,0.94)', '#FBF6EC', 3);
+    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures');
   }
 
-  const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, filter, W, H, 'features');
+  const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
   if (featureOverlay) ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
 
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
   if (filter === 'planting' || filter === 'structures' || filter === 'all') {
-    drawBlueprintLabelPills(ctx, referenceBlueprintLabels(state, refLayers, W, H, filter));
+    drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter));
   }
 
   return composeStyleSheet(
     canvas.toDataURL('image/png'),
-    state,
-    frame,
-    refLayers,
+    renderState,
+    renderFrame,
+    renderRefLayers,
     filter,
     placeName,
     'Reference Blueprint',
@@ -6723,9 +6815,7 @@ async function composeStyleSheet(
   let y = panelInset + pad + Math.round(legendW * 0.07);
   ctx.fillStyle = '#20190F';
   const titleSize = Math.round(legendW * 0.067);
-  ctx.font = benchmarkPanel
-    ? `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`
-    : `800 ${titleSize}px Georgia, serif`;
+  ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
@@ -6745,7 +6835,7 @@ async function composeStyleSheet(
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(legendW * 0.045)}px system-ui, sans-serif`;
+  ctx.font = `700 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
   const styleWords = styleLabel.split(/\s+/);
   const styleLines: string[] = [];
   let styleLine = '';
@@ -6765,7 +6855,7 @@ async function composeStyleSheet(
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `500 ${Math.round(legendW * 0.04)}px system-ui, sans-serif`;
+  ctx.font = `600 ${Math.round(legendW * 0.04)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
@@ -6777,16 +6867,16 @@ async function composeStyleSheet(
 
   y += Math.round(legendW * 0.075);
   ctx.fillStyle = '#1F4D2B';
-  ctx.font = `800 ${Math.round(legendW * 0.05)}px system-ui, sans-serif`;
+  ctx.font = `800 ${Math.round(legendW * 0.05)}px ${REFERENCE_LABEL_FONT}`;
   ctx.fillText('LEGEND', lx, y);
 
   const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const legendTop = y + Math.round(legendW * 0.03);
-  const sw = Math.round(legendW * 0.052);
+  const sw = Math.round(legendW * 0.064);
   const tx = lx + sw + Math.round(legendW * 0.03);
   const textW = maxX - tx;
   const wrapLegendText = (value: string, fontSize: number): string[] => {
-    ctx.font = `500 ${fontSize}px system-ui, sans-serif`;
+    ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
     const lines: string[] = [];
     let current = '';
     for (const word of value.split(/\s+/)) {
@@ -6806,8 +6896,8 @@ async function composeStyleSheet(
   const footerTextW = maxX - lx;
   const wrapFooterText = (value: string): string[] => {
     ctx.font = options.footerHeading
-      ? `500 ${footerFs}px system-ui, sans-serif`
-      : `italic 500 ${footerFs}px system-ui, sans-serif`;
+      ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
+      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     const lines: string[] = [];
     let current = '';
     for (const word of value.split(/\s+/)) {
@@ -6849,6 +6939,10 @@ async function composeStyleSheet(
     fs -= 1;
     rowLayout = layoutRows(fs);
   }
+  const usedRowsH = rowLayout.reduce((sum, row) => sum + row.height, 0);
+  const rowGap = rowLayout.length
+    ? Math.min(Math.round(legendW * 0.026), Math.max(0, (availableRowsH - usedRowsH) / rowLayout.length))
+    : 0;
   const lineH = Math.max(11, Math.round(fs * 1.22));
   const sectionFs = Math.max(9, Math.round(fs * 0.82));
   y = legendTop;
@@ -6856,22 +6950,22 @@ async function composeStyleSheet(
     if (headingHeight && row.section) {
       ctx.textBaseline = 'alphabetic';
       ctx.fillStyle = '#1F4D2B';
-      ctx.font = `800 ${sectionFs}px system-ui, sans-serif`;
+      ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
       ctx.fillText(row.section, lx, y + sectionFs);
       y += headingHeight;
     }
     const symbolY = y + contentHeight / 2;
     drawStyleLegendSymbol(ctx, row, lx, symbolY, sw, Math.min(sw, contentHeight * 0.82));
     ctx.fillStyle = '#241E12';
-    ctx.font = `500 ${fs}px system-ui, sans-serif`;
+    ctx.font = `600 ${fs}px ${SHEET_BODY_FONT}`;
     ctx.textBaseline = 'middle';
     const textTop = symbolY - ((lines.length - 1) * lineH) / 2;
     lines.forEach((line, index) => ctx.fillText(line, tx, textTop + index * lineH));
-    y += contentHeight;
+    y += contentHeight + rowGap;
   }
   if (!rows.length) {
     ctx.fillStyle = '#6B6355';
-    ctx.font = `italic 500 ${fs}px system-ui, sans-serif`;
+    ctx.font = `italic 500 ${fs}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Nothing placed on this layer.', lx, y);
   }
   // Footer contract. Exact sheets state their provenance plainly; AI texture sheets retain the
@@ -6892,21 +6986,21 @@ async function composeStyleSheet(
       ctx.fillText(options.footerHeading, lx, footerY);
       footerY += footerHeadingH;
       ctx.fillStyle = '#6C6457';
-      ctx.font = `500 ${footerFs}px system-ui, sans-serif`;
+      ctx.font = `600 ${footerFs}px ${SHEET_BODY_FONT}`;
     } else {
-      ctx.font = `italic 500 ${footerFs}px system-ui, sans-serif`;
+      ctx.font = `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     }
     for (const line of customFooterLines) {
       ctx.fillText(line, lx, footerY);
       footerY += footerLineH;
     }
   } else if (exactGeometry) {
-    ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
+    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04));
   } else {
-    ctx.font = `italic 500 ${Math.round(legendW * 0.036)}px system-ui, sans-serif`;
+    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
@@ -6935,7 +7029,7 @@ async function composeStyleSheet(
   ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
   ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.016)}px system-ui, sans-serif`;
+  ctx.font = `700 ${Math.round(W * 0.016)}px ${REFERENCE_LABEL_FONT}`;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'bottom';
   ctx.lineWidth = 4;
@@ -6958,7 +7052,7 @@ async function composeStyleSheet(
   ctx.lineWidth = 3;
   ctx.stroke();
   ctx.fill();
-  ctx.font = `700 ${Math.round(W * 0.017)}px system-ui, sans-serif`;
+  ctx.font = `700 ${Math.round(W * 0.017)}px ${REFERENCE_LABEL_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
   ctx.lineWidth = 4;
@@ -7029,7 +7123,7 @@ interface SavedGlossy {
 // v51: reusable feature art loses its pale sticker halo and map callouts remain readable on phones.
 // v53: paid Sector polish sends the complete exact sheet to GPT Image instead of repainting only
 //      the ground and rebuilding the same hybrid page over it.
-const PLAN_VERSION = 'v53';
+const PLAN_VERSION = 'v54';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -7259,6 +7353,7 @@ export default function DesignGlossy({
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
+  const [galleryZoomOpen, setGalleryZoomOpen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
@@ -7280,6 +7375,15 @@ export default function DesignGlossy({
   const mapKeyRef = useRef(mapKey);
   mapKeyRef.current = mapKey;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
+
+  useEffect(() => {
+    if (!galleryZoomOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setGalleryZoomOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [galleryZoomOpen]);
 
   // Restore this site's saved sheets on mount / site change. Failure is silent by design: an
   // unavailable IndexedDB must still leave a working session-only gallery.
@@ -7992,20 +8096,10 @@ export default function DesignGlossy({
             protectMask ? 'hybrid' : 'solid',
           )
         : undefined;
-      if (showcase && !locked) {
-        const showcaseOverlay = await stackOverlayImages(undefined, structureOverlay, W, H);
-        return compositeAccurateMap({
-          modelImage: restoredImage,
-          satelliteImage: frame.satDataUrl ?? sourceImage ?? restoredImage,
-          boundaryPx: undefined, // no clip — a corner legend lives OUTSIDE the boundary polygon
-          overlayImage: showcaseOverlay,
-          labels: [], // the model authored the labels
-          labelStyle: styleDef.labelStyle,
-          contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
-          width: W,
-          height: H,
-        });
-      }
+      // A showcase job owns the complete page: title, map, pictorial legend and labels. Step 1 has
+      // already saved the exact app-owned master separately, so compositing app chrome back over
+      // this paid result would only turn it into the same hybrid again.
+      if (showcase && !locked) return restoredImage;
       // Locked sheets are painted edge to edge, so they must NOT be clipped to the plot: clipping
       // is what produced a small illustrated patch dropped into an untouched satellite photo.
       // Unlocked sheets keep the clip, which is what holds their art inside the boundary.
@@ -8200,7 +8294,22 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      const composite = await buildComposite(
+      // The main two-step action is different from the legacy direct style path. Step 1 already
+      // saved an exact finished sheet, so Step 2 gives that whole page to GPT Image and lets it
+      // author the visibly polished result. The exact master remains separately recoverable.
+      const fullSheetPolish = lockedPolishStage === 'ai';
+      const exactSheetInput = fullSheetPolish
+        ? filter === 'zones'
+          ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
+          : filter === 'water'
+            ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
+            : filter === 'planting'
+              ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
+              : filter === 'structures'
+                ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
+                : await buildBlueprintWholeMap(state, frame, refLayers, placeName)
+        : null;
+      const composite = exactSheetInput ?? await buildComposite(
         state,
         frame,
         refLayers,
@@ -8215,7 +8324,9 @@ export default function DesignGlossy({
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(state, refLayers, filter)
         : { elements: producerElementsText(state, refLayers, filter, !lockActive), fabric: '' };
-      const sheetInput = isModelChromeStyle(styleKey)
+      const sheetInput = fullSheetPolish
+        ? composite
+        : isModelChromeStyle(styleKey)
         ? (await extendWithLegendPanel(composite, frame.imgW * SCALE, frame.imgH * SCALE)).dataUrl
         : composite;
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
@@ -8230,11 +8341,13 @@ export default function DesignGlossy({
       const useShowcase = effectiveModelChrome;
       // See generateAllViaQueue: this mask is a deterministic restoration contract, not an
       // OpenAI edit mask. That preserves the style reference and still restores protected pixels.
-      const protectMaskDataUrl = lockActive
+      const protectMaskDataUrl = lockActive && !fullSheetPolish
         ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
         : undefined;
-      showcaseKeysRef.current = new Set(useShowcase ? [filter] : []);
-      const prompt = isModelChromeStyle(styleKey)
+      showcaseKeysRef.current = new Set(useShowcase || fullSheetPolish ? [filter] : []);
+      const prompt = fullSheetPolish
+        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName)
+        : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: filter })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
@@ -8256,19 +8369,21 @@ export default function DesignGlossy({
           compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
           ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
-          showcase: authorityFlags.showcase,
-          geometryLock: authorityFlags.geometryLock,
+          showcase: fullSheetPolish || authorityFlags.showcase,
+          geometryLock: fullSheetPolish ? false : authorityFlags.geometryLock,
         }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
-      setNotice(`Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
+      setNotice(fullSheetPolish
+        ? `Step 2 of 2 — GPT Image is repainting the complete ${layerLabel} sheet, including its pictorial legend, in ${styleDef.label}. The exact master remains saved separately.`
+        : `Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
     } catch (err) {
       refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage]);
 
   // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
   // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
@@ -9347,7 +9462,7 @@ export default function DesignGlossy({
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
               <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>🖼 Saved maps ({gallery.length})</span>
               <button
-                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); }}
+                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); }}
                 aria-label="Close saved maps"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
               >
@@ -9358,7 +9473,16 @@ export default function DesignGlossy({
               {galleryViewItem ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
+                  <button
+                    type="button"
+                    onClick={() => setGalleryZoomOpen(true)}
+                    aria-label={`Open ${galleryViewItem.label} full screen`}
+                    style={{ padding: 0, border: 'none', borderRadius: 12, background: 'transparent', cursor: 'zoom-in' }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
+                  </button>
+                  <span style={{ marginTop: -7, color: '#8A8172', fontSize: 11, fontWeight: 700 }}>Tap the map to inspect it full screen</span>
                   <p style={{ fontSize: 13, color: '#5C5040', margin: 0 }}>{galleryViewItem.label}</p>
                   <div
                     style={{
@@ -9466,6 +9590,70 @@ export default function DesignGlossy({
               )}
             </div>
           </div>
+        </div>
+      )}
+      {galleryZoomOpen && galleryViewItem && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Full-screen view of ${galleryViewItem.label}`}
+          onClick={() => setGalleryZoomOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 80,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 10,
+            padding: 12,
+            background: 'rgba(8,12,8,0.94)',
+            cursor: 'zoom-out',
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setGalleryZoomOpen(false)}
+            aria-label="Close full-screen map"
+            style={{
+              position: 'fixed',
+              top: 14,
+              right: 14,
+              zIndex: 81,
+              width: 42,
+              height: 42,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 12,
+              border: '1px solid rgba(255,255,255,0.45)',
+              background: 'rgba(251,246,236,0.94)',
+              color: DARK,
+              cursor: 'pointer',
+            }}
+          >
+            <X size={22} />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={galleryViewItem.image}
+            alt={galleryViewItem.label}
+            onClick={(event) => event.stopPropagation()}
+            style={{
+              maxWidth: '97vw',
+              maxHeight: '88vh',
+              width: 'auto',
+              height: 'auto',
+              objectFit: 'contain',
+              borderRadius: 10,
+              boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
+              cursor: 'default',
+            }}
+          />
+          <span style={{ maxWidth: '90vw', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
+            {galleryViewItem.label}
+          </span>
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
+import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -780,6 +780,26 @@ test('the paid sector polish uses the complete exact sheet as its visual bluepri
   assert.match(p, /visibly more polished/);
   assert.match(p, /Some Farm/);
   assert.match(p, /formal engraved masterplan/i);
+});
+
+test('the paid design polish redraws the whole exact sheet without changing its design', () => {
+  const p = buildFinishedSheetPolishPrompt('Water', 'chatgpt_atlas', 'Some Farm');
+  assert.match(p, /COMPLETE, already-correct Water plan sheet/);
+  assert.match(p, /POLISH THE WHOLE PAGE/);
+  assert.match(p, /Legend swatches must use the same polished pictorial symbols/);
+  assert.match(p, /same positions and shapes/);
+  assert.match(p, /Preserve every feature count/);
+  assert.match(p, /fully opaque, solid/);
+  assert.match(p, /no grey halo, white halo/);
+  assert.match(p, /separate solid vessels/);
+  assert.match(p, /blue water pipes/);
+  assert.match(p, /purple filtered-greywater/);
+  assert.match(p, /larger pictorial swatches/);
+  assert.match(p, /NOTES block at the bottom/);
+  assert.match(p, /condensed technical cartographic sans-serif/);
+  assert.match(p, /NO INVENTION/);
+  assert.match(p, /Some Farm/);
+  assert.match(p, /polished editorial cartography/i);
 });
 
 test('the access track is described as flat ground, never a slab or a roof', () => {

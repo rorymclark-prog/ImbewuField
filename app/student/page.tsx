@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { myCourseProgress, setCourseProgress } from '@/lib/db/queries';
@@ -10,6 +10,7 @@ import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory, ty
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LessonLink from '@/components/design/LessonLink';
 
 const CATEGORY_LABELS: Record<ModuleCategory, string> = {
   foundation: 'Foundation',
@@ -28,7 +29,7 @@ function formatDuration(mins: number) {
 
 // ── Quiz question ────────────────────────────────────────────────────────────
 
-function QuizQuestion({ q, options, correct }: { q: string; options: string[]; correct: number }) {
+function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
   const [selected, setSelected] = useState<number | null>(null);
   const revealed = selected !== null;
 
@@ -78,6 +79,12 @@ function QuizQuestion({ q, options, correct }: { q: string; options: string[]; c
           );
         })}
       </div>
+      {revealed && rationale && (
+        <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
+          <Lightbulb size={13} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
+          <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>{rationale}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -133,7 +140,7 @@ function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
               Check your understanding
             </p>
             {lesson.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} />
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
             ))}
           </div>
         </div>
@@ -254,6 +261,7 @@ export default function StudentPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>
         <div className="flex-1" />
+        <LessonLink id="student:overview" label="Learn" />
         <SettingsButton />
       </header>
 

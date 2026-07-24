@@ -59,13 +59,19 @@ export function plantingLegendSectionForFeature(id: string): PlantingLegendSecti
 }
 
 /**
- * Print-scale emphasis for the Planting sheet. Canopies and long beds need more visual weight
- * than their tiny true-footprint symbols at sheet size; centres and stored dimensions stay exact.
+ * Print-scale emphasis for point-like planting symbols. Mapped beds, hedges and strips retain
+ * their true dimensions so a correctly sized canvas feature cannot grow in the finished sheet.
  */
 export function plantingFeaturePresentationScale(id: string): number {
-  if (id === 'veg_bed' || id === 'raised_bed') return 1.38;
-  if (id === 'keyhole_bed' || id === 'herb_spiral') return 1.26;
-  if (id === 'pollinator_strip' || id === 'spekboom_hedge' || id === 'vetiver_row') return 1.28;
+  if (
+    id === 'veg_bed'
+    || id === 'raised_bed'
+    || id === 'keyhole_bed'
+    || id === 'herb_spiral'
+    || id === 'pollinator_strip'
+    || id === 'spekboom_hedge'
+    || id === 'vetiver_row'
+  ) return 1;
   if (GREYWATER_READY_BASINS.has(id)) return 1.28;
   if (id === 'banana_clump') return 1.3;
   if (id.startsWith('tree_')) return 1.36;

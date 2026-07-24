@@ -11,6 +11,7 @@ import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
+import LessonLink from '@/components/design/LessonLink';
 
 const ROLE_LABELS: Record<UserRole, string> = {
   farmer: 'Farmer', mentor: 'Mentor',
@@ -117,6 +118,7 @@ export default function AccountPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Account</span>
         <div className="flex-1" />
+        <LessonLink id="account:overview" label="Learn" />
         <button onClick={() => setSettingsOpen(true)} aria-label="Settings"
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}>

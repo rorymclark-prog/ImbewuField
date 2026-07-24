@@ -36,6 +36,7 @@ import HomeHeroCard from '@/components/home/HomeHeroCard';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
+import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
@@ -347,6 +348,7 @@ function HomeLandingInner() {
           </span>
         </div>
 
+        <LessonLink id="home:overview" label="Learn" />
         <button
           onClick={() => setSettingsOpen(true)}
           aria-label="Settings"

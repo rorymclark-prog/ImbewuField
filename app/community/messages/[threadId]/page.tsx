@@ -10,6 +10,7 @@ import { communityEnabled } from '@/lib/community/flag';
 import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/db/community-queries';
 import type { MessageThread, ThreadMessage } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
+import LessonLink from '@/components/design/LessonLink';
 
 function timeAgo(ts: unknown): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
@@ -91,6 +92,7 @@ export default function MessageThreadPage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
+        <LessonLink id="community:messages" label="Learn" />
         <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', textDecoration: 'none' }}>
           {otherName}
         </Link>

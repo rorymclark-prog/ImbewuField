@@ -14,6 +14,7 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
+import LessonLink from '@/components/design/LessonLink';
 
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
 function surveyKey(placeId: string | null) {
@@ -151,6 +152,7 @@ function SurveyInner() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Garden Survey{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
         <div className="flex-1" />
+        <LessonLink id="survey:garden" label="Learn" />
         {step === 5 && (
           <button onClick={() => window.print()}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"

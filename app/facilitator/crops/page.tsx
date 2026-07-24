@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
+import LessonLink from '@/components/design/LessonLink';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -797,6 +798,7 @@ function FacilitatorCropsPageInner() {
           </div>
         )}
         <div className="flex-1" />
+        <LessonLink id="crops:planner" label="Learn" />
         {region ? (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}>
             {patternMeta.icon} {region.name} · {patternMeta.label}

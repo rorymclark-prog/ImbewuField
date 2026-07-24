@@ -12,6 +12,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
+import LessonLink from '@/components/design/LessonLink';
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
@@ -249,6 +250,7 @@ export default function MentorPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
         <div className="flex-1" />
+        <LessonLink id="mentor:overview" label="Learn" />
         <SettingsButton />
       </header>
 

@@ -12,6 +12,7 @@ import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } f
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import type { Profile } from '@/lib/db/types';
+import LessonLink from '@/components/design/LessonLink';
 
 interface ContactReply {
   id: string;
@@ -129,6 +130,7 @@ export default function ContactPage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
+        <LessonLink id="contact:overview" label="Learn" />
         <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Contact</span>
       </header>
 

@@ -11,6 +11,7 @@ import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/
 import type { CommunityProfile } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
+import LessonLink from '@/components/design/LessonLink';
 
 export default function PublicCommunityProfilePage() {
   const { user, loading } = useAuth();
@@ -63,6 +64,7 @@ export default function PublicCommunityProfilePage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
+        <LessonLink id="community:profile" label="Learn" />
       </header>
 
       <main className="flex-1 overflow-y-auto" style={{ padding: '20px 16px', maxWidth: 480, width: '100%', margin: '0 auto' }}>

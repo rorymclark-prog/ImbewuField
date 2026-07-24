@@ -32,14 +32,14 @@ export const DESIGN_STEP_LESSONS: Record<Exclude<WizardStep, 'glossy'>, StepLess
   },
   water: {
     title: 'Water first, everything else second',
-    body: "Water is the heaviest thing to move and the first thing to run out. Catch it where it falls: tanks next to roofs, and swale lines along the slope so rain sinks into your soil instead of washing away. A garden planned around water survives a dry month; one without doesn't.",
+    body: "Water is the heaviest thing to move and the first thing to run out. Catch it where it falls: tanks next to roofs, and swale lines across the slope, on contour, so rain sinks into your soil instead of washing away. A garden planned around water survives a dry month; one without doesn't.",
     principle: 'Catch and store energy — harvest rain in the wet season, spend it in the dry.',
     tip: 'Place a tank within 3 m of a roof downpipe. Every 10 mm of rain on a 100 m² roof gives you about 1,000 litres.',
     courseModuleId: 'water-harvesting',
   },
   zones: {
     title: 'Put things where your feet already go',
-    body: 'Zones plan your energy, not just your space. Things you visit every day — herbs, veg beds, chickens — belong nearest the kitchen door. Things you visit weekly or monthly go further out. This one idea saves you hundreds of walking hours a year.',
+    body: 'Zones plan your energy, not just your space. Things you visit every day — herbs, veg beds, chickens — belong nearest the kitchen door. Things you visit weekly or monthly go further out. This one idea cuts real walking time over a season, and keeps your most-tended plants where you will actually notice if they need water.',
     principle: 'Zone planning — the more often you use it, the closer it lives.',
     tip: 'Stand at your kitchen door and count 20 steps. What you can reach is Zone 1 — keep your daily harvest inside it.',
     courseModuleId: 'intro-permaculture',
