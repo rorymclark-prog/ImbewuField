@@ -20,7 +20,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { computeContourLines } from '@/lib/contours';
-import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -321,10 +321,9 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   { key: 'master_atlas',        label: 'Master Atlas',        blurb: 'engraved masterplan for boards & funders', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #2B2E33 0%, #3E4A5C 55%, #B08D3E 100%)' },
 ];
 
-// Sector's Style picker excludes Satellite Overlay: that style's whole premise is the MODEL
-// lettering its own labels/legend (lib/producer-prompt.ts:434-441), which is exactly what
-// buildSectorRestylePrompt forbids on a sector render — offering it would either render no
-// differently from the exact sheet or invite the very legend/icon chrome the design bans.
+// Sector's paid polish starts from a complete exact sheet. Satellite Overlay is omitted because
+// its prompt expects editor markers on a photograph, not a finished analytical page. Every style
+// shown here supports the same full-sheet AI polish route.
 const SECTOR_STYLE_CHOICES = PRODUCER_STYLES.filter((s) => s.key !== 'satellite_overlay');
 
 /** Zones NEST: Zone 1 is typically drawn as a ring right around the house, which is Zone 0. Drawn
@@ -2506,11 +2505,11 @@ async function drawAnalysisBase(
     // it raised mean chroma on an already-muted aerial. ctx.filter scales what is there and cannot
     // invert like that. Guarded because Canvas filter support is not universal; without it the
     // paper wash below still lightens, just with the greens left in.
-    if ('filter' in ctx) ctx.filter = 'saturate(0.62) brightness(0.68) contrast(1.08)';
+    if ('filter' in ctx) ctx.filter = 'saturate(0.42) brightness(0.96) contrast(0.9)';
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
   } else {
-    ctx.fillStyle = '#24382B';
+    ctx.fillStyle = '#727466';
     ctx.fillRect(0, 0, W, H);
   }
   drawPaperWash(ctx, W, H);
@@ -2522,7 +2521,10 @@ async function drawAnalysisBase(
  *  brighten filter, which belongs only to a raw aerial, not to artwork the model already stylised. */
 function drawPaperWash(ctx: CanvasRenderingContext2D, W: number, H: number): void {
   ctx.save();
-  ctx.fillStyle = 'rgba(5, 24, 15, 0.3)';
+  // A pale neutral veil separates analytical colour from busy aerial texture without hiding the
+  // actual site. The previous dark-green scrim amplified dense foliage and made every overlay
+  // compete for attention, especially on phone-sized Sector sheets.
+  ctx.fillStyle = 'rgba(238, 234, 218, 0.2)';
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
 }
@@ -5123,7 +5125,7 @@ function drawSectorAnalysis(
     const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
       { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
     ];
-    const fs = Math.max(22, Math.round(W * 0.0142));
+    const fs = Math.max(18, Math.round(W * 0.0115));
     const lineH = Math.round(fs * 1.08);
     for (const request of directLabelRequests) {
       ctx.save();
@@ -5181,7 +5183,7 @@ function drawSectorAnalysis(
     const centerVec = bearingToUnitVector(bearingDeg);
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
-    const rr = R * (externalLegend ? 1.38 : 1.18);
+    const rr = R * (externalLegend ? 1.24 : 1.18);
     const tipX = cx + centerVec[0] * R * 0.48;
     const tipY = cy + centerVec[1] * R * 0.48;
     ctx.save();
@@ -5214,10 +5216,10 @@ function drawSectorAnalysis(
     color: string,
     emphasis = 1,
   ): { sxp: number; syp: number } => {
-    const tailX = cx + fromVec[0] * (R + arrowLen * 1.42);
-    const tailY = cy + fromVec[1] * (R + arrowLen * 1.42);
-    const tipX = cx + fromVec[0] * R * 0.32;
-    const tipY = cy + fromVec[1] * R * 0.32;
+    const tailX = cx + fromVec[0] * (R + arrowLen * 1.16);
+    const tailY = cy + fromVec[1] * (R + arrowLen * 1.16);
+    const tipX = cx + fromVec[0] * R * 0.42;
+    const tipY = cy + fromVec[1] * R * 0.42;
     const dx = tipX - tailX;
     const dy = tipY - tailY;
     const len = Math.hypot(dx, dy) || 1;
@@ -5225,9 +5227,9 @@ function drawSectorAnalysis(
     const uy = dy / len;
     const nx = -uy;
     const ny = ux;
-    const shaftHalf = Math.max(11, W * 0.0105) * emphasis;
-    const headHalf = shaftHalf * 2.15;
-    const headLen = Math.max(30, W * 0.036) * emphasis;
+    const shaftHalf = Math.max(8, W * 0.0074) * emphasis;
+    const headHalf = shaftHalf * 2;
+    const headLen = Math.max(26, W * 0.029) * emphasis;
     const headBaseX = tipX - ux * headLen;
     const headBaseY = tipY - uy * headLen;
     ctx.save();
@@ -5240,10 +5242,10 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
     ctx.closePath();
-    ctx.globalAlpha = 0.4;
+    ctx.globalAlpha = 0.3;
     ctx.fillStyle = color;
     ctx.fill();
-    ctx.globalAlpha = 0.86;
+    ctx.globalAlpha = 0.76;
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(2, W * 0.0015);
     ctx.stroke();
@@ -5265,19 +5267,21 @@ function drawSectorAnalysis(
   // that sourced effect readable like the benchmark without inventing a separate storm bearing.
   const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
     if (!externalLegend) return;
-    const radii = [0.66, 0.8, 0.94, 1.08, 1.22, 1.34];
-    const angular = [-0.78, -0.52, -0.26, 0, 0.26, 0.52, 0.78];
+    // A few drops identify the sourced cold-front sector. A previous 6x7 field obscured the house
+    // and lawn and falsely read as 42 separate observations.
+    const radii = [0.88, 1.08, 1.27];
+    const angular = [-0.5, 0, 0.5];
     ctx.save();
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
-    ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 0.62;
     ctx.lineWidth = Math.max(1.8, W * 0.0014);
     for (const radial of radii) {
       for (const offset of angular) {
         const v = bearingToUnitVector(bearingDeg + halfWidthDeg * offset);
         const x = cx + v[0] * R * radial;
         const y = cy + v[1] * R * radial;
-        const dropR = Math.max(6, W * 0.0056);
+        const dropR = Math.max(4.5, W * 0.0042);
         ctx.beginPath();
         ctx.moveTo(x, y - dropR * 1.35);
         ctx.bezierCurveTo(
@@ -5309,13 +5313,8 @@ function drawSectorAnalysis(
     labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
     drawSectorMarker('fire', cx + lp[0] * R * 0.68, cy + lp[1] * R * 0.68, SECTOR_STYLES.fire.color);
     const fireTangentX = -lp[1];
-    directLabelAt(
-      cx + lp[0] * (R + arrowLen * 0.5) + fireTangentX * rowH * 3.1,
-      cy + lp[1] * (R + arrowLen * 0.5) + lp[0] * rowH * 3.1,
-      ['WINTER GRASSFIRE /', `EMBER RISK · ${model.fire.fromLabel}`],
-      SECTOR_STYLES.fire.labelColor,
-      rowH * 2,
-    );
+    // The fire sector shares the berg-wind ray. Its exact wording stays in the external legend;
+    // repeating it on the map caused both labels to print over the same upper-left arrow.
   }
 
   // 5. SUN — TWO real arcs (summer + winter), each swept through the actual computed rise/set
@@ -5376,8 +5375,8 @@ function drawSectorAnalysis(
     );
     drawSectorMarker('summer-sun', cx + summerApex[0] * summerR, cy + summerApex[1] * summerR, '#D89A35');
     directLabelAt(
-      cx + summerApex[0] * (summerR + rowH * 0.95),
-      cy + summerApex[1] * (summerR + rowH * 0.95),
+      cx,
+      H * 0.08,
       [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16}`],
       SECTOR_STYLES['summer-sun'].labelColor,
     );
@@ -5391,8 +5390,8 @@ function drawSectorAnalysis(
     );
     drawSectorMarker('winter-sun', cx + winterApex[0] * winterR, cy + winterApex[1] * winterR, '#C9AA5B');
     directLabelAt(
-      cx + winterApex[0] * (winterR + rowH * 1.3),
-      cy + winterApex[1] * (winterR + rowH * 1.3),
+      cx,
+      H * 0.125,
       [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16}`],
       SECTOR_STYLES['winter-sun'].labelColor,
     );
@@ -5483,9 +5482,11 @@ function drawSectorAnalysis(
   if (model.water) {
     const dn = bearingToUnitVector(model.water.downhillBearingDeg);
     const cross: [number, number] = [-dn[1], dn[0]];
-    const slopeOffsets = externalLegend ? [-0.32, 0, 0.32] : [0];
-    const startAlong = externalLegend ? -0.24 : -0.45;
-    const endAlong = externalLegend ? 0.48 : 0.58;
+    // One authoritative downhill arrow is clearer than three parallel copies of the same
+    // single-plane estimate. It keeps the bearing honest without covering the building.
+    const slopeOffsets = [0];
+    const startAlong = externalLegend ? -0.08 : -0.45;
+    const endAlong = externalLegend ? 0.44 : 0.58;
     const centerEndX = cx + dn[0] * siteR * endAlong;
     const centerEndY = cy + dn[1] * siteR * endAlong;
     ctx.save();
@@ -5541,7 +5542,15 @@ function drawSectorAnalysis(
         ctx.strokeStyle = 'rgba(126,212,107,0.9)';
         ctx.lineWidth = 2;
         ctx.setLineDash([7, 6]);
-        for (const ln of contour.lines) {
+        const displayedContourLines = externalLegend && contour.lines.length > 4
+          ? contour.lines.filter((_, index) =>
+              index === 0
+              || index === contour.lines.length - 1
+              || index === Math.floor(contour.lines.length / 3)
+              || index === Math.floor((contour.lines.length * 2) / 3))
+          : contour.lines;
+        ctx.globalAlpha = externalLegend ? 0.46 : 1;
+        for (const ln of displayedContourLines) {
           ctx.beginPath();
           ctx.moveTo(px(ln.a[0]), py(ln.a[1]));
           ctx.lineTo(px(ln.b[0]), py(ln.b[1]));
@@ -5554,6 +5563,7 @@ function drawSectorAnalysis(
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         contour.lines.forEach((ln, i) => {
+          if (externalLegend) return;
           if (i % 2 !== 0) return;
           const mx = (px(ln.a[0]) + px(ln.b[0])) / 2, my = (py(ln.a[1]) + py(ln.b[1])) / 2;
           ctx.fillText(`${ln.elevM > 0 ? '+' : ''}${ln.elevM}m`, mx, my);
@@ -5888,7 +5898,10 @@ async function composeSectorSheet(
   //    both bases share one tone. Either way, nothing about this base is trusted for geometry.
   if (baseImage) {
     const img = await loadImage(baseImage);
+    ctx.save();
+    if ('filter' in ctx) ctx.filter = 'saturate(0.68) brightness(0.94) contrast(0.92)';
     ctx.drawImage(img, 0, 0, W, H);
+    ctx.restore();
     drawPaperWash(ctx, W, H);
   } else {
     await drawAnalysisBase(ctx, frame, W, H);
@@ -7014,7 +7027,9 @@ interface SavedGlossy {
 // v50: Sector uses a quieter aerial base, broad sourced energies, visible driving rain and three
 //      larger terrain-fall arrows; bearings and evidence gates remain unchanged.
 // v51: reusable feature art loses its pale sticker halo and map callouts remain readable on phones.
-const PLAN_VERSION = 'v51';
+// v53: paid Sector polish sends the complete exact sheet to GPT Image instead of repainting only
+//      the ground and rebuilding the same hybrid page over it.
+const PLAN_VERSION = 'v53';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -7299,6 +7314,7 @@ export default function DesignGlossy({
             : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`,
         );
       });
+      return item.id;
     },
     [state.siteId],
   );
@@ -8254,33 +8270,17 @@ export default function DesignGlossy({
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite]);
 
-  // Composite-back for the AI Sector sheet. Unlike finishStyledSheet there is no clip-to-strict/
-  // showcase split: sector is always the SAME treatment — the restyled ground stays edge to edge
-  // (no boundary clip, since the deterministic arrows/wedges deliberately reach past it) with the
-  // measured bearings from buildSectorOverlayImage composited unclipped on top, exactly the slot
-  // lib/image-producer.ts's overlayImage docblock describes ("the sector-wedge sticker").
-  // Composite-back for the AI Sector sheet: hand the model's restyled ground to composeSectorSheet
-  // as its base and let it draw the FULL deterministic sheet on top — house, driveway, boundary,
-  // ground labels and the whole sector legend, at true measured coordinates, exactly as the exact
-  // sheet does. This used to composite only a chrome overlay (buildSectorOverlayImage) and trust
-  // the model to have painted the house/boundary/driveway in the right place underneath it —
-  // gpt-image-2 reframes the scene, so that trust is what put the boundary through the house four
-  // renders running (967c345). Routing through composeSectorSheet instead of compositeAccurateMap
-  // means there is no boundary clip to fight either: the old sticker-look defect (a hard-edged
-  // illustrated quad on raw photograph) came from compositeAccurateMap's boundary-clip path, which
-  // this no longer touches at all — composeSectorSheet always paints edge to edge.
+  // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
+  // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
+  // directly; old in-flight jobs remain safe and still receive deterministic analysis geometry.
   const finishSectorSheet = useCallback(
     (modelImage: string): Promise<string> => composeSectorSheet(modelImage, state, frame, refLayers, site, placeName),
     [state, frame, refLayers, site, placeName],
   );
 
-  // Sector's single-sheet AI path: restyle-only (buildSectorRestylePrompt forbids the model from
-  // drawing any arrow, arc or bearing), with the deterministic analysis composited on top by
-  // finishSectorSheet. Never gated on layerContentCount — like renderSectorMap, sector never refuses;
-  // its content is measured site data (lib/sector.deriveSectorModel), not placed elements. Never
-  // folded into generateAllViaQueue/generateAllStyledSheets/generateAllSheets: MAX_SHEETS_PER_JOB is
-  // 5 and the batch's modelFilters already fills it, so sector stays reachable only via the Sector
-  // chip + AI mode + this single-sheet CTA (RENDER-INVESTIGATION.md 'sector-ai' finding 4).
+  // Sector's paid path starts with the complete deterministic sheet, not a bare aerial. This makes
+  // the second result a visibly AI-authored page while Step 1 remains the separately saved exact
+  // authority. Site 01 retains its ground-only restyle route.
   const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
     const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
@@ -8289,11 +8289,13 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      // Same call renderBaseMap/sheet-01 already uses: boundary+house+driveway marks, zero design
-      // content (drawDesign=false) — the model's restyle input is built by code already proven, not
-      // a new composite path.
-      const composite = await buildComposite(state, frame, refLayers, 'all', false);
-      const prompt = buildSectorRestylePrompt(styleKey, placeName);
+      const fullSectorPolish = kind === 'sector';
+      const composite = fullSectorPolish
+        ? await composeSectorSheet(null, state, frame, refLayers, site, placeName)
+        : await buildComposite(state, frame, refLayers, 'all', false);
+      const prompt = fullSectorPolish
+        ? buildSectorSheetPolishPrompt(styleKey, placeName)
+        : buildSectorRestylePrompt(styleKey, placeName);
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
@@ -8303,21 +8305,23 @@ export default function DesignGlossy({
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
           prompt,
           compositeDataUrl: composite,
-          showcase: false,
+          // For Sector this flag means the model owns the already-complete polished page. The
+          // finisher must not redraw the hybrid analysis over it. Older false jobs stay compatible.
+          showcase: fullSectorPolish,
           geometryLock: false,
         }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(kind === 'sector'
-        ? 'Rendering your Sector Analysis sheet in the background — AI restyles the ground only. Site sun, slope, drainage and access are computed; named winds and fire remain clearly marked regional context. All analysis is composited on top, never guessed by the model. It’ll appear in your gallery when ready (a few minutes).'
+        ? 'AI is polishing the complete Sector Analysis sheet in the background. The exact computed sheet is already saved separately; this paid copy improves the whole page in your chosen style. It’ll open when ready.'
         : 'Rendering your Existing Site sheet in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
     } catch (err) {
       refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, placeName]);
+  }, [producerStyle, state, frame, refLayers, site, placeName]);
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
@@ -8486,6 +8490,7 @@ export default function DesignGlossy({
     // an unchanged preview — the "Refresh does nothing" report.
     const assembled = new Set<string>();
     let lockedAssembled = 0;
+    let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
     // Snapshots must be handled ONE AT A TIME. Assembling a sheet takes seconds (two downloads plus
     // canvas work) while `finished` is marked synchronously, so an unserialised handler lets the
@@ -8544,7 +8549,9 @@ export default function DesignGlossy({
               // whose zone/water overlay branches and producerLabels() call assume a real
               // GlossyLayerFilter — `sheet.key as GlossyLayerFilter` would be a lie for both.
               const finalSheet = sheet.key === 'sector'
-                ? await finishSectorRef.current(raw)
+                ? showcase
+                  ? raw
+                  : await finishSectorRef.current(raw)
                 : sheet.key === 'base'
                 ? raw
                 : styleDef
@@ -8564,7 +8571,7 @@ export default function DesignGlossy({
                 }
               }
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
-              pushGallery(
+              lastAssembledGalleryId = pushGallery(
                 `${sheet.label}${finishLabel} · AI polished${locked ? ' · Geometry locked' : ''}`,
                 finalSheet,
               );
@@ -8591,10 +8598,10 @@ export default function DesignGlossy({
           const firstErr = failedSheets[0]?.error;
           if (done > 0) {
             setNotice(refreshPendingRef.current
-              ? `Refreshed AI-polished sheet${lockedDone ? ' — Geometry Lock applied' : ''}; the exact master remains separately saved.`
-              : `Done — ${done} AI-polished sheet${done === 1 ? '' : 's'} in Saved maps${lockedDone ? ` · Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. The exact master is saved separately. Open Saved maps to compare or download.`);
+              ? `AI POLISH COMPLETE — the new gpt-image-2 result is open now${lockedDone ? ' with Geometry Lock applied' : ''}. The exact no-AI master remains separately saved.`
+              : `AI POLISH COMPLETE — ${done} paid gpt-image-2 result${done === 1 ? '' : 's'} finished${lockedDone ? ` with Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. The new AI result is open now; the exact no-AI master is saved separately.`);
             refreshPendingRef.current = false;
-            setGalleryViewId(null);
+            setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
           } else if (serverDone > 0) {
             // The render succeeded and was paid for, but this device could not assemble it.
@@ -8892,7 +8899,7 @@ export default function DesignGlossy({
             : restyleAiKind === 'base'
             ? `Generate an AI-styled Existing Site sheet (plan-set 01) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the model repaints the ground only; your boundary, roof and access stay exactly where they are, and nothing is designed onto it. Renders in the background (~mins).`
             : sectorAiMode
-            ? `Generate an AI-styled Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — AI restyles the ground only. Site sun, slope, drainage and access are computed; named winds and fire are clearly marked regional context. The complete analysis is drawn deterministically on top, never guessed by the model. Renders in the background (~mins).`
+            ? `Create a paid AI-polished Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. The exact computed sheet is saved first, then GPT Image polishes the complete page — aerial, arrows, labels and legend — as a separate visual copy. All visible Sector styles support this route; Satellite Overlay is intentionally unavailable here.`
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
@@ -8920,6 +8927,22 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '10px 14px', background: DARK, color: GOLD, fontWeight: 700, fontSize: 14 }}>
+              <span
+                style={{
+                  display: 'inline-flex',
+                  marginRight: 10,
+                  padding: '3px 8px',
+                  borderRadius: 999,
+                  background: isExactRender ? 'rgba(255,255,255,0.12)' : GOLD,
+                  color: isExactRender ? PAPER : DARK,
+                  fontSize: 10,
+                  fontWeight: 900,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {isExactRender ? 'Exact master · no AI' : 'AI-polished · gpt-image-2'}
+              </span>
               {placeName ?? 'Your design'}
               {exactSheet === 'base'
                 ? ' · Existing site (sheet 01)'
@@ -9203,7 +9226,7 @@ export default function DesignGlossy({
                     ? 'Step 2 of 2 · AI polishing in the background'
                     : 'Generating your map… ~1 min'
                 : selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
-                  ? `${resultImage ? 'Create fresh' : 'Create'} AI-polished finished map`
+                  ? `${resultImage ? 'Create another' : 'Create'} paid AI-polished map`
                 : exactSheet === 'implementation'
                   ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                   : producerStyle
@@ -9214,7 +9237,7 @@ export default function DesignGlossy({
             </span>
             {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && loading === null && (
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.78 }}>
-                Exact lock first · then 1 paid AI render
+                PRESS THIS FOR AI · exact lock first, then 1 paid gpt-image-2 render
               </span>
             )}
           </button>
@@ -9241,7 +9264,7 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.55 : 1,
               }}
             >
-              <span>Exact geometry map only</span>
+              <span>Free exact map only · NO AI</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72 }}>
                 Instant · no AI cost
               </span>
@@ -9337,6 +9360,23 @@ export default function DesignGlossy({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
                   <p style={{ fontSize: 13, color: '#5C5040', margin: 0 }}>{galleryViewItem.label}</p>
+                  <div
+                    style={{
+                      alignSelf: 'flex-start',
+                      padding: '5px 9px',
+                      borderRadius: 999,
+                      background: galleryViewItem.label.includes('AI polished') ? '#F2C977' : '#E8E3D8',
+                      color: DARK,
+                      fontSize: 10.5,
+                      fontWeight: 900,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    {galleryViewItem.label.includes('AI polished')
+                      ? 'Paid AI-polished result · gpt-image-2'
+                      : 'Exact master · no AI'}
+                  </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     <a
                       href={galleryViewItem.image}

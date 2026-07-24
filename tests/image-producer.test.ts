@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
-import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
+import { buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
@@ -768,6 +768,18 @@ test('the sector restyle still refuses to draw any analysis', () => {
     assert.ok(p.includes(banned), `must forbid ${banned}`);
   }
   assert.match(p, /no lettering of any kind/);
+});
+
+test('the paid sector polish uses the complete exact sheet as its visual blueprint', () => {
+  const p = buildSectorSheetPolishPrompt('master_atlas', 'Some Farm');
+  assert.match(p, /COMPLETE, already-correct Sector Analysis/);
+  assert.match(p, /PRESERVE CONTENT/);
+  assert.match(p, /same position/);
+  assert.match(p, /same directions/);
+  assert.match(p, /same labels and same legend/);
+  assert.match(p, /visibly more polished/);
+  assert.match(p, /Some Farm/);
+  assert.match(p, /formal engraved masterplan/i);
 });
 
 test('the access track is described as flat ground, never a slab or a roof', () => {

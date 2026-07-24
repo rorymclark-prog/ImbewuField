@@ -848,6 +848,29 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
 
+/**
+ * Paid Sector polish — the input is already the complete deterministic sheet.
+ *
+ * This is intentionally separate from buildSectorRestylePrompt. That older prompt produces a safe
+ * hybrid by painting only the aerial ground before the app redraws every analytical mark. It is a
+ * useful fallback, but it cannot create the visibly authored, frame-worthy Sector sheet requested
+ * by the paid "AI-polished" action. Here the exact sheet is the reference and the model polishes the
+ * whole page. The exact source is saved separately before this runs, so AI typography or styling
+ * variation can never destroy the authoritative bearings.
+ */
+export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
+  const body = [
+    `TASK: polish this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} into a frame-worthy professional cartographic illustration. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar.`,
+    `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel width, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
+    `PRESERVE CONTENT: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature.`,
+    `POLISH, DO NOT REDESIGN: improve the aerial illustration, hierarchy, line finish, arrow rendering, legend spacing, icon quality, typography, contrast and overall visual unity in the requested style. Make the analytical marks feel deliberately integrated with the landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`,
+    `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
+    `TEXT: copy the supplied wording exactly. Do not paraphrase, translate or add commentary. If a word cannot be rendered confidently, retain the supplied printed text rather than inventing replacement text.`,
+    `FINAL CHECK: this is visibly more polished than the supplied exact sheet, but it is recognisably the same Sector Analysis with the same site, same analytical geometry, same directions, same labels and same legend.`,
+  ].join('\n\n');
+  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
+}
+
 // Kept for one release as an instant rollback (call-site flip, no worker redeploy — the prompt is
 // built client-side). Delete once the rewrite above is verified against real renders. See the audit
 // doc for the before/after comparison plan.
