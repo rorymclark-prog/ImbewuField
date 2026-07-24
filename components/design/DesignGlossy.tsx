@@ -46,7 +46,7 @@ import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorF
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
-import { lockedPolishAction } from '@/lib/locked-polish-flow';
+import { lockedPolishAction, lockedPolishStyle } from '@/lib/locked-polish-flow';
 import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -5062,7 +5062,7 @@ function drawSectorAnalysis(
     const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
       { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
     ];
-    const fs = Math.max(20, Math.round(W * 0.0126));
+    const fs = Math.max(22, Math.round(W * 0.0142));
     const lineH = Math.round(fs * 1.08);
     for (const request of directLabelRequests) {
       ctx.save();
@@ -5139,6 +5139,88 @@ function drawSectorAnalysis(
     ctx.moveTo(tipX, tipY);
     ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
     ctx.stroke();
+    ctx.restore();
+  };
+
+  // Finished Sector sheets use the benchmark's broad atmospheric arrows underneath the exact
+  // dashed centreline. Their bearing and direction still come from the sourced regional record;
+  // this only increases visual weight and never creates another energy or changes its geometry.
+  const drawBroadEnergyArrow = (
+    fromVec: [number, number],
+    color: string,
+    emphasis = 1,
+  ): void => {
+    if (!externalLegend) return;
+    const tailX = cx + fromVec[0] * (R + arrowLen * 1.42);
+    const tailY = cy + fromVec[1] * (R + arrowLen * 1.42);
+    const tipX = cx + fromVec[0] * R * 0.32;
+    const tipY = cy + fromVec[1] * R * 0.32;
+    const dx = tipX - tailX;
+    const dy = tipY - tailY;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len;
+    const uy = dy / len;
+    const nx = -uy;
+    const ny = ux;
+    const shaftHalf = Math.max(11, W * 0.0105) * emphasis;
+    const headHalf = shaftHalf * 2.15;
+    const headLen = Math.max(30, W * 0.036) * emphasis;
+    const headBaseX = tipX - ux * headLen;
+    const headBaseY = tipY - uy * headLen;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(tailX + nx * shaftHalf, tailY + ny * shaftHalf);
+    ctx.lineTo(headBaseX + nx * shaftHalf, headBaseY + ny * shaftHalf);
+    ctx.lineTo(headBaseX + nx * headHalf, headBaseY + ny * headHalf);
+    ctx.lineTo(tipX, tipY);
+    ctx.lineTo(headBaseX - nx * headHalf, headBaseY - ny * headHalf);
+    ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
+    ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
+    ctx.closePath();
+    ctx.globalAlpha = 0.26;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 0.72;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Math.max(2, W * 0.0015);
+    ctx.setLineDash([10, 7]);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  // The KZN cold-front record explicitly carries driving rain. Small deterministic drops make
+  // that sourced effect readable like the benchmark without inventing a separate storm bearing.
+  const drawDrivingRain = (bearingDeg: number, halfWidthDeg: number, color: string): void => {
+    if (!externalLegend) return;
+    const radii = [0.7, 0.9, 1.08];
+    const angular = [-0.5, 0, 0.5];
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.globalAlpha = 0.58;
+    ctx.lineWidth = Math.max(1.4, W * 0.0011);
+    for (const radial of radii) {
+      for (const offset of angular) {
+        const v = bearingToUnitVector(bearingDeg + halfWidthDeg * offset);
+        const x = cx + v[0] * R * radial;
+        const y = cy + v[1] * R * radial;
+        const dropR = Math.max(4, W * 0.0037);
+        ctx.beginPath();
+        ctx.moveTo(x, y - dropR * 1.35);
+        ctx.bezierCurveTo(
+          x + dropR * 0.95, y - dropR * 0.15,
+          x + dropR * 0.7, y + dropR,
+          x, y + dropR,
+        );
+        ctx.bezierCurveTo(
+          x - dropR * 0.7, y + dropR,
+          x - dropR * 0.95, y - dropR * 0.15,
+          x, y - dropR * 1.35,
+        );
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
     ctx.restore();
   };
 
@@ -5273,6 +5355,8 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
+    drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1);
+    if (w.id === 'cold_front') drawDrivingRain(w.bearingDeg, w.halfWidthDeg, color);
     const marker = drawArrow(v, color, windWidth(kind) * (externalLegend ? 1.15 : 1), [...SECTOR_STYLES[kind].dash], externalLegend ? R * 0.56 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
     drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
@@ -6951,6 +7035,8 @@ export default function DesignGlossy({
   const exactAfterFlipRef = useRef(false);
   const polishAfterExactRef = useRef(false);
   const polishAfterFlipRef = useRef(false);
+  const polishStyleRef = useRef<StylePreset>(DEFAULT_PRODUCER_STYLE);
+  const [lockedPolishStage, setLockedPolishStage] = useState<'exact' | 'ai' | null>(null);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
@@ -8166,9 +8252,13 @@ export default function DesignGlossy({
     if (action !== 'switch-to-ai') return;
     polishAfterExactRef.current = false;
     polishAfterFlipRef.current = true;
+    setLockedPolishStage('ai');
     setNotice('Step 2 of 2 — starting one paid gpt-image-2 polish from the saved exact map…');
     setMode('ai');
-    if (selectedSheet) applySheet(selectedSheet, 'ai');
+    if (selectedSheet) {
+      applySheet(selectedSheet, 'ai');
+      setProducerStyle(polishStyleRef.current);
+    }
     setResultImage(null);
   }, [mode, isExactRender, loading, resultImage, selectedSheet, applySheet]);
 
@@ -8197,6 +8287,7 @@ export default function DesignGlossy({
     exactAfterFlipRef.current = false;
     polishAfterExactRef.current = false;
     polishAfterFlipRef.current = false;
+    setLockedPolishStage(null);
   }, [error, loading]);
 
   const runExactStep = useCallback(() => {
@@ -8221,6 +8312,8 @@ export default function DesignGlossy({
     }
     setError(null);
     setNotice('Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…');
+    polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
+    setLockedPolishStage('exact');
     polishAfterExactRef.current = true;
     setResultImage(null);
     if (mode === 'exact' && isExactRender) {
@@ -8230,7 +8323,7 @@ export default function DesignGlossy({
     exactAfterFlipRef.current = true;
     setMode('exact');
     applySheet(selectedSheet, 'exact');
-  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
+  }, [selectedSheet, loading, mode, isExactRender, producerStyle, runCurrentSheet, applySheet]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -8281,6 +8374,7 @@ export default function DesignGlossy({
         // still-running, still-billed render (audit find). The old job may still finish
         // server-side; its outputs land in the cache for this site if the user reopens.
         setError('Lost connection to the background render — it may still finish in the background; reopen this step in a few minutes to check before paying for a re-run.');
+        setLockedPolishStage(null);
         setLoading(null);
         clearPersistedJobId(siteId);
         setQueueJobId(null);
@@ -8333,6 +8427,7 @@ export default function DesignGlossy({
               if (job.sheets.length === 1) {
                 setResultImage(finalSheet);
                 setSaved(record);
+                setLockedPolishStage(null);
               }
               pushGallery(`${sheet.label} · ${styleDef?.label ?? ''}${locked ? ' · Geometry locked' : ''}`, finalSheet);
               assembled.add(sheet.key);
@@ -8366,9 +8461,11 @@ export default function DesignGlossy({
           } else if (serverDone > 0) {
             // The render succeeded and was paid for, but this device could not assemble it.
             setError(`The sheet rendered but could not be assembled on this device${lastAssembleError ? ` (${lastAssembleError})` : ''} — tap Refresh to try again.`);
+            setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
             setError(job.error || firstErr || 'The render did not complete — please try again.');
+            setLockedPolishStage(null);
             refreshPendingRef.current = false;
           }
           setLoading(null);
@@ -8410,6 +8507,13 @@ export default function DesignGlossy({
     };
     img.src = resultImage;
   }, [resultImage, placeName]);
+
+  // The exact master is an implementation detail of the one-button workflow. Keep it in Saved
+  // maps, but never present it in the main preview while the paid style pass is still running:
+  // doing that made the selected style look as though it had silently degraded to Geometry Lock.
+  const visibleResultImage = lockedPolishStage === null ? resultImage : null;
+  const lockedPolishStyleLabel =
+    PRODUCER_STYLES.find((style) => style.key === polishStyleRef.current)?.label ?? 'selected style';
 
   return (
     <div
@@ -8608,7 +8712,40 @@ export default function DesignGlossy({
         </div>
       )}
 
-      {!resultImage && (
+      {lockedPolishStage && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 10,
+            minHeight: 210,
+            padding: '24px',
+            borderRadius: 16,
+            border: `3px solid ${GOLD}`,
+            background: 'linear-gradient(145deg, #132319 0%, #1E4128 62%, #315A38 100%)',
+            color: PAPER,
+            textAlign: 'center',
+          }}
+        >
+          <Gem size={30} color={GOLD} />
+          <strong style={{ fontSize: 19 }}>
+            {lockedPolishStage === 'exact'
+              ? 'Step 1 of 2 · locking the exact map'
+              : `Step 2 of 2 · painting ${lockedPolishStyleLabel}`}
+          </strong>
+          <span style={{ maxWidth: 620, fontSize: 13.5, lineHeight: 1.55, opacity: 0.86 }}>
+            {lockedPolishStage === 'exact'
+              ? 'The accurate master is being saved to Saved maps. It will not replace your chosen style.'
+              : `Your exact master is safe. gpt-image-2 is now creating the real ${lockedPolishStyleLabel} finish in the background; only that finished AI image will replace this progress screen.`}
+          </span>
+        </div>
+      )}
+
+      {!visibleResultImage && !lockedPolishStage && (
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {exactSheet === 'base'
             ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
@@ -8630,7 +8767,7 @@ export default function DesignGlossy({
         </p>
       )}
 
-      {resultImage && (
+      {visibleResultImage && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: '100%', minWidth: 0 }}>
           <div
             style={{
@@ -8667,7 +8804,7 @@ export default function DesignGlossy({
             <div style={{ position: 'relative' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={resultImage}
+                src={visibleResultImage}
                 alt={isExactRender ? 'Exact plan sheet of the design' : "AI artist's impression of the design"}
                 style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
               />
@@ -8684,7 +8821,7 @@ export default function DesignGlossy({
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
             </div>
           </div>
-          {saved && resultImage === saved.image && (
+          {saved && visibleResultImage === saved.image && (
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               Saved render · {relativeDate(saved.at)} · {PROVIDER_LABEL[saved.provider]}
             </div>
@@ -8991,7 +9128,7 @@ export default function DesignGlossy({
             </>
           )}
         </div>
-        {!resultImage && gallery.length > 0 && (
+        {!visibleResultImage && !lockedPolishStage && gallery.length > 0 && (
           <button
             onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
             style={{

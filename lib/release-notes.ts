@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'One-button AI polish now keeps the style you selected instead of falling back to the exact map',
+      'The temporary exact master stays in Saved maps while a clear AI-polish progress screen remains visible',
       'One press now reliably continues from the exact locked map into the paid AI polish',
       'AI-polished and Exact-only finishes are now shown as two equally clear choices',
       'Sector maps now have bold marks, labels and illustrated keys',

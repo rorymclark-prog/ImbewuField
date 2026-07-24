@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { lockedPolishAction, type LockedPolishState } from '@/lib/locked-polish-flow';
+import { lockedPolishAction, lockedPolishStyle, type LockedPolishState } from '@/lib/locked-polish-flow';
 
 const READY: LockedPolishState = {
   exactFlipPending: false,
@@ -57,4 +57,15 @@ test('the paid stage waits for the exact result and settled AI mode', () => {
     aiFlipPending: true,
     loading: true,
   }), 'wait');
+});
+
+test('the exact master step cannot replace the chosen AI style', () => {
+  assert.equal(
+    lockedPolishStyle('homestead_storybook', 'precision_atlas'),
+    'homestead_storybook',
+  );
+  assert.equal(
+    lockedPolishStyle(null, 'precision_atlas'),
+    'precision_atlas',
+  );
 });

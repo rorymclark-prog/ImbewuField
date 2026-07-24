@@ -49,3 +49,11 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
 
   return 'wait';
 }
+
+/** Keep the farmer's chosen AI style while the component temporarily switches to exact mode. */
+export function lockedPolishStyle<T extends string>(
+  selectedStyle: T | null | undefined,
+  fallbackStyle: T,
+): T {
+  return selectedStyle ?? fallbackStyle;
+}

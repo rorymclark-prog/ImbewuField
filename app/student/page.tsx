@@ -18,6 +18,7 @@ const CATEGORY_LABELS: Record<ModuleCategory, string> = {
   plants:     'Plants',
   design:     'Design',
   business:   'Business',
+  seeds:      'Seeds',
 };
 
 function formatDuration(mins: number) {
