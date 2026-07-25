@@ -19,6 +19,7 @@ import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
+import { WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -207,10 +208,32 @@ const LINE_KIND_LABEL: Record<LineShape['kind'], string> = {
   greywater: 'Greywater line',
 };
 
+const WATER_ROUTE_KINDS = new Set<string>(['swale', 'pipe', 'drip', 'greywater']);
+
 function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; dash?: string; opacity?: number } {
+  // Water route COLOUR is sourced from lib/water-cartography.ts's WATER_ROUTE_STYLE — the same
+  // constant the exact/exported sheets use — so editor and export can never independently drift
+  // apart on what a swale/pipe/drip/greywater line is coloured (found live, editing here: swale
+  // was #4EA6D8 while every exported sheet drew it #258DBA, a second hardcoded copy that had
+  // quietly gone out of sync with the export path this codebase already treats as authoritative).
+  // Width/dash stay editor-specific on purpose — screen pixels at an arbitrary zoom aren't the same
+  // unit as the export's metres-per-pixel scale, and a dashed editor line reads better against a
+  // busy canvas than the solid export line does on a printed sheet.
+  if (WATER_ROUTE_KINDS.has(kind)) {
+    const style = WATER_ROUTE_STYLE[kind as WaterRouteKind];
+    switch (kind) {
+      case 'swale':
+        return { stroke: style.color, width: 3, dash: '6 4' };
+      case 'pipe':
+        return { stroke: style.color, width: 2.4 };
+      case 'drip':
+        return { stroke: style.color, width: 1.5, dash: '2 3' };
+      case 'greywater':
+      default:
+        return { stroke: style.color, width: 2.1, dash: '5 3' };
+    }
+  }
   switch (kind) {
-    case 'swale':
-      return { stroke: '#4EA6D8', width: 3, dash: '6 4' };
     case 'fence':
       // Dusty violet — the one hue not used by boundary-green / zones / water / paths, and the
       // CAD convention for fencing. Rendered as a SOLID line + round posts (fencePosts), NOT the
@@ -218,12 +241,6 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
       return { stroke: '#8E7CC3', width: 2 };
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dash: '4 5' };
-    case 'pipe':
-      return { stroke: '#087CB8', width: 2.4 };
-    case 'drip':
-      return { stroke: '#238ACB', width: 1.5, dash: '2 3' };
-    case 'greywater':
-      return { stroke: '#8A43B3', width: 2.1, dash: '5 3' };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, opacity: 0.5 };
     default:
