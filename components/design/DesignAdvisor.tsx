@@ -10,7 +10,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { Sparkles, X, ChevronUp, ChevronDown, TriangleAlert, Lightbulb, Loader2 } from 'lucide-react';
 import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { pointInRing } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, GROUND_FEATURES } from '@/lib/design-elements';
 import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
 
 const GOLD = '#F7C97E';
@@ -62,6 +62,19 @@ function zoneForItem(item: PlacedItem, zones: ZoneShape[]): number | null {
   return null;
 }
 
+// Rough shoelace area in normalised units, scaled by frame metres for a ballpark m² — shared by
+// the effort-zone and ground-feature summaries below so the two can't compute area two ways.
+function ringAreaM2(points: Array<[number, number]>, frame: DesignCanvasState['frame']): number {
+  let area2 = 0;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    const [xi, yi] = points[i];
+    const [xj, yj] = points[j];
+    area2 += xj * yi - xi * yj;
+  }
+  const normArea = Math.abs(area2) / 2;
+  return Math.round(normArea * frame.imgW * frame.mPerPx * frame.imgH * frame.mPerPx);
+}
+
 function buildDesignSummary(state: DesignCanvasState) {
   // Ground-feature areas (house/patio/lawn…) ride on ZoneShape but are NOT effort-zones —
   // exclude them from the advisor's zone reasoning.
@@ -77,20 +90,18 @@ function buildDesignSummary(state: DesignCanvasState) {
     };
   });
 
-  const zones = effortZones.map((z) => {
-    // Rough shoelace area in normalised units, scaled by frame metres for a ballpark m².
-    let area2 = 0;
-    for (let i = 0, j = z.points.length - 1; i < z.points.length; j = i++) {
-      const [xi, yi] = z.points[i];
-      const [xj, yj] = z.points[j];
-      area2 += xj * yi - xi * yj;
-    }
-    const normArea = Math.abs(area2) / 2;
-    const areaApprox = Math.round(
-      normArea * state.frame.imgW * state.frame.mPerPx * state.frame.imgH * state.frame.mPerPx,
-    );
-    return { zone: z.zone, areaApprox };
-  });
+  const zones = effortZones.map((z) => ({ zone: z.zone, areaApprox: ringAreaM2(z.points, state.frame) }));
+
+  // EXISTING SITE FABRIC — the farmer's traced house, patio, driveway, lawn, veg garden, orchard,
+  // cleared ground and boundary. Lima answering "where should I put a chicken coop" or "is this a
+  // good spot for a food forest" with no idea the farmer already has a lawn there, or where the
+  // driveway runs, is exactly the "advice that ignores the actual design" gap this summary exists to
+  // close (docs/ACTIVE-MAP-QUALITY-TASKS.md P3: "Give Ask Lima structured design and location
+  // context ... existing elements"). Read-only: this only widens what Lima is TOLD, never what it
+  // can do — Lima still only proposes, the farmer still places everything themselves.
+  const groundFeatures = state.zones
+    .filter((z) => z.feature && z.feature !== 'boundary' && z.points.length >= 3)
+    .map((z) => ({ kind: GROUND_FEATURES[z.feature!]?.label ?? z.feature, areaApprox: ringAreaM2(z.points, state.frame) }));
 
   const lineKinds = state.lines.reduce<Record<string, number>>((acc, l) => {
     acc[l.kind] = (acc[l.kind] ?? 0) + 1;
@@ -98,10 +109,12 @@ function buildDesignSummary(state: DesignCanvasState) {
   }, {});
 
   return {
+    currentStep: state.step,
     items,
     zones,
+    groundFeatures,
     lines: lineKinds,
-    counts: { items: state.items.length, zones: state.zones.length, lines: state.lines.length },
+    counts: { items: state.items.length, zones: state.zones.length, lines: state.lines.length, groundFeatures: groundFeatures.length },
   };
 }
 
