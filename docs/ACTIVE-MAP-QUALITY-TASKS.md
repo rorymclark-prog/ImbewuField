@@ -76,7 +76,10 @@ or looking correct in source code is not enough.
 ### 01 Existing site / base
 
 - [ ] Rebuild the panel into `EXISTING BUILT` and `GROUND & LEVELS` sections.
-- [ ] Show saved patio/paving only when it exists; never infer it from the photo.
+- [x] Show saved patio/paving only when it exists; never infer it from the photo. Verified by
+  construction: `patio` is a `GroundFeatureKind` — the whole architecture only draws ground features
+  a farmer has explicitly traced (`state.zones` with that `.feature` set); there is no code path that
+  infers a patio from the satellite photo at all. No change needed.
 - [ ] Use saved terrace names and levels where available and add the short authority note.
 - [ ] Verify house, driveway, ground hierarchy and terrace labels against benchmark sheet 01.
 
