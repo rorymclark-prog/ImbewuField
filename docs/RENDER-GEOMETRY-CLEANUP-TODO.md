@@ -22,8 +22,11 @@ design-time option before it may rewrite source geometry.
   fence/boundary line. The gate must be close to that line and the break must use the gate's actual
   width and orientation. `lib/boundary-geometry.ts` + `drawBlueprintBoundary`; not yet visually
   confirmed against a real render.
-- Make design-time route colours match the plan grammar: water/irrigation pipe blue, drip blue with
-  emitter marks, and filtered greywater purple dashed.
+- [DONE, commit a7ff660] Make design-time route colours match the plan grammar. Found a real,
+  currently-live mismatch while fixing this, not just a theoretical risk: the editor drew swale
+  lines as #4EA6D8, every exported sheet drew the same line kind as #258DBA — two independent
+  hardcoded colour copies that had already drifted apart. Now both read from the same
+  `WATER_ROUTE_STYLE` constant in `lib/water-cartography.ts`.
 
 ## Product and layer audit
 

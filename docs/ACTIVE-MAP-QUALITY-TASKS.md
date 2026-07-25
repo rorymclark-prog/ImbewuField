@@ -169,7 +169,7 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
 - [ ] Confirm tapping an item's delete `X` while a placement tool is armed deletes the item and does
   not place another one.
 - [ ] Verify the Icons toggle hides only editor glyphs, not real feature artwork or labels.
-- [ ] Make design-time route colours use the same grammar as exports.
+- [x] Make design-time route colours use the same grammar as exports. (a7ff660 — found and fixed a real live mismatch, not just a theoretical risk: editor swale was #4EA6D8, export was #258DBA.)
 - [ ] Prevent the palette and bottom safe area from clipping the last elements on phone/tablet.
 - [ ] Cap, paginate or thumbnail the saved-map gallery so many full-size images do not freeze
   semantic browser interaction or exhaust memory. `Clear all` must remove the intended gallery
