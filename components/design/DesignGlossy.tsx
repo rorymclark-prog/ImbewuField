@@ -8679,9 +8679,42 @@ export default function DesignGlossy({
       }
       // Property boundary — vector data, always exact regardless of what the model painted.
       drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
-      return canvas.toDataURL('image/png');
+      // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
+      // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
+      // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
+      drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H));
+
+      // Title, legend, north arrow and scale — the other half of "our exact elements locked back on
+      // top" that every other sheet's Hybrid mode already delivers. Same legend-row recipe as
+      // buildBlueprintBaseMap, so the exact sheet and this Hybrid sheet can never list different
+      // ground features. styleLabel reflects the CHOSEN style (unlike the exact sheet, which is
+      // always labelled "Reference Blueprint" since it has no style choice) — matching how every
+      // other sheet's finishStyledSheet passes styleDef.label through to composeStyleSheet.
+      const legendRows: StyleLegendRow[] = groundRows(state, refLayers, 'all').map((row) => ({
+        swatch: row.color,
+        text: row.label,
+        kind: 'ground',
+      }));
+      if (refLayers.house.length >= 3) legendRows.unshift({ swatch: '#3E4648', text: 'House / building', kind: 'surface' });
+      if (refLayers.driveway.length >= 2) legendRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
+      if (refLayers.boundary.length >= 3) legendRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+      const styleLabel = PRODUCER_STYLES.find((s) => s.key === styleKey)?.label ?? 'AI Hybrid';
+
+      return composeStyleSheet(
+        canvas.toDataURL('image/png'),
+        state,
+        frame,
+        refLayers,
+        'all',
+        placeName,
+        styleLabel,
+        'Existing Site',
+        false,
+        true,
+        { sheetNumber: '01', legendRows },
+      );
     },
-    [frame, refLayers],
+    [frame, refLayers, state, placeName],
   );
 
   // Sector's paid path starts with the complete deterministic sheet, not a bare aerial. This makes
