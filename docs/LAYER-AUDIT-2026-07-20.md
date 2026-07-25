@@ -5,6 +5,27 @@ agent instructed to refute it. 52 confirmed, 4 refuted. Fixed in 2ea84ec: the zo
 element list, the empty-brief refusal, per-element sheet membership, and the sheet-number table.
 Everything below that is not marked DONE is still open.
 
+## Status as of 2026-07-25 (commit 58fdc70) — this doc is stale, do not act on it directly
+
+This doc's own file:line citations are 5+ days out of date — `DesignGlossy.tsx` roughly doubled in
+size in that time and every render function it cites was rewritten to delegate to a new shared
+`buildReferenceBlueprintMap` pipeline, with the old code kept only as dormant `*Legacy` rollback
+functions. A 5-agent sweep re-checked all 52 findings against CURRENT code (not this doc's stale
+citations): **39 were already fixed** (mostly by citing a now-dead Legacy function whose current
+live equivalent never had the bug, or already fixed it independently) — **zones is 9/9 fixed, no
+action needed there at all.** **13 were confirmed still real** and have now been fixed in commit
+58fdc70: the complete absence of livestock/animal-facility vocabulary on both AI prompt paths;
+Chicken Coop misdescribed as the wheeled Chicken Tractor; Worm Farm misdescribed as a compost bay;
+Greywater Outlet/Diverter misdescribed as a gravel basin; 11 missing water-element icon entries;
+buildProducerPrompt's self-contradictory legend instruction; missing empty-brief guards on two
+prompt paths; an unconditional driveway caption; unsanitised farmer-typed labels; a colour
+collision between the Litchi/Citrus legend swatch and the Orchard ground-feature swatch; and a
+non-filter-aware legend-section lookup that put a PLANTING heading on the WATER sheet. Full detail
+in commit 58fdc70's message and `docs/HANDOVER-2026-07-25-claude.md`.
+
+**If you are about to act on a finding below**: verify it against current code first — most of what
+follows is already fixed. Do not re-fix from the stale line numbers in this document.
+
 ## zones — 9 confirmed
 
 ### [broken] (B-ai) The overlay prompt has no concept of a zone band — even a perfect element list cannot produce zones
