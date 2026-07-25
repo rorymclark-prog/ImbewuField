@@ -6035,14 +6035,142 @@ export async function buildBlueprintSectorMap(
   return composeSectorSheet(null, state, frame, refLayers, site, placeName);
 }
 
-// Composite the Phasing (08) AI Hybrid result: draw the model's decorative illustrated background,
-// then lock the real schedule panel (from buildImplementationMap) back on top. The model is NEVER
-// passed the schedule text in the first place (see buildPhasingHybridInput below), and the protect
-// mask covers the entire panel region too — this is a belt-and-braces composite-back, the same
-// "paint the fabric, app draws the facts" contract composeSectorSheet uses for Sector analysis.
+// Single source of truth for the Phasing schedule panel's geometry — used by buildImplementationMap
+// (the exact sheet), composePhasingSheet (Hybrid/Polish composite-back), buildPhasingHybridInput and
+// blankPhasingPanel (what the model is shown), and buildPhasingProtectMask. Before this, the same
+// four numbers (pad=W*0.02, lgW=W*0.34, lgX, lgBottom) were copy-pasted literally in four places —
+// exactly the "same question answered twice" pattern the handover's recurring-bug-pattern section
+// warns about (a future panel-width change would silently desync the blank-out, the mask and the
+// composite-back from the real panel, exposing or misplacing schedule pixels).
+function phasingPanelRect(W: number, H: number) {
+  const pad = Math.round(W * 0.02);
+  const lgW = Math.round(W * 0.34);
+  const lgX = W - pad - lgW;
+  const lgY = pad;
+  const lgBottom = H - pad;
+  return { pad, lgW, lgX, lgY, lgBottom };
+}
+
+// Draws every EXACT-content layer of the Phasing sheet that is not the schedule panel itself:
+// ground, structures, features, boundary, and the numbered phase pins. Shared by
+// buildImplementationMap (draws it once, then adds the panel) and composePhasingSheet (redraws it
+// on top of the model's decorative art, for BOTH the Hybrid and the Full Treatment polish stage —
+// the model never owns this content). A second, independently-written copy of the pin-centroid
+// logic here is exactly the class of drift bug this file's own recurring-bug-pattern comments warn
+// about, so buildImplementationMap no longer has its own inline copy — this is the only one.
+async function drawPhasingExactContent(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  plan: ReturnType<typeof buildPhasePlan>,
+  W: number,
+  H: number,
+): Promise<void> {
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+
+  const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
+  if (groundOverlay) {
+    ctx.save();
+    ctx.globalAlpha = 0.82;
+    ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
+    ctx.restore();
+  }
+  const sourceStructures = frame.satDataUrl
+    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
+    : undefined;
+  if (sourceStructures) {
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+    ctx.restore();
+  } else {
+    drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
+    drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
+  }
+  const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
+  if (featureOverlay) {
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
+    ctx.restore();
+  }
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+
+  // Phase pin positions: centroid of each phase's built objects, with distinct NW/SE fallback
+  // anchors for the two bookend phases so set-out and commissioning never stack when neither a
+  // driveway nor a house is traced.
+  const centroidOfPts = (pts: Array<[number, number]>): [number, number] | null => {
+    if (!pts.length) return null;
+    const n = pts.length;
+    return [pts.reduce((s, p) => s + p[0], 0) / n, pts.reduce((s, p) => s + p[1], 0) / n];
+  };
+  const itemById = new Map(state.items.map((it) => [it.id, it]));
+  const lineById = new Map(state.lines.map((l) => [l.id, l]));
+  const houseC = centroidOfPts(refLayers.house);
+  const gateC: [number, number] | null = refLayers.driveway.length >= 1 ? refLayers.driveway[0] : null;
+  const bpts = refLayers.boundary;
+  const bb = bpts.length
+    ? { x0: Math.min(...bpts.map((p) => p[0])), y0: Math.min(...bpts.map((p) => p[1])), x1: Math.max(...bpts.map((p) => p[0])), y1: Math.max(...bpts.map((p) => p[1])) }
+    : null;
+  const nwAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.28, bb.y0 + (bb.y1 - bb.y0) * 0.28] : [0.4, 0.4];
+  const seAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.72, bb.y0 + (bb.y1 - bb.y0) * 0.72] : [0.6, 0.6];
+  const pinPos = (phase: (typeof plan.phases)[number]): [number, number] => {
+    const pts: Array<[number, number]> = [];
+    for (const id of phase.itemIds) {
+      const it = itemById.get(id);
+      if (it) { pts.push([it.x, it.y]); continue; }
+      const ln = lineById.get(id);
+      if (ln) { const c = centroidOfPts(ln.points); if (c) pts.push(c); }
+    }
+    const c = centroidOfPts(pts);
+    if (c) return c;
+    if (phase.key === 'setout') return gateC ?? nwAnchor;
+    return houseC ?? seAnchor;
+  };
+
+  // Pins are drawn BEFORE the panel (by the caller, afterward): one whose centroid falls under the
+  // right-hand panel is hidden rather than floating over the legend — still fully described in the
+  // panel by the same number and colour, so nothing is lost.
+  const pinR = Math.max(15, W * 0.015);
+  for (const phase of plan.phases) {
+    const [nx, ny] = pinPos(phase);
+    const cx = px(nx), cy = py(ny);
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.55)';
+    ctx.shadowBlur = 9;
+    ctx.beginPath();
+    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
+    ctx.fillStyle = phase.colour;
+    ctx.fill();
+    ctx.restore();
+    ctx.beginPath();
+    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.stroke();
+    ctx.fillStyle = readableTextOn(phase.colour);
+    ctx.font = `bold ${Math.round(pinR * 1.15)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(phase.n), cx, cy);
+  }
+}
+
+// Composite the Phasing (08) AI result — Hybrid OR Full Treatment polish — back over exact content.
+// The model NEVER sees the schedule text at any stage (buildPhasingHybridInput blanks it for the
+// Hybrid input; the polish stage separately re-blanks the Hybrid's own output before sending it on,
+// see generatePhasingViaQueue). This function is the one place that puts the real facts back: ground,
+// structures, boundary and phase pins (drawPhasingExactContent) are redrawn on top of the model's
+// art — not merely copied from a side region — and the schedule panel + scale bar + north arrow are
+// drawn as exact vector/copied content, never left as whatever the model painted underneath.
 //
 // baseImage null → exact mode: returns buildImplementationMap directly (zero AI involvement).
-// baseImage set → hybrid mode: draws model's art, then composites exact panel + chrome on top.
+// baseImage set → composites the model's decorative art with 100% exact facts on top, for either
+// the Hybrid stage or the polish stage — same treatment both times, so a poorly-behaved polish pass
+// cannot ship AI-authored geometry or schedule content under an honest 'hybrid'/'ai-polished' label.
 async function composePhasingSheet(
   baseImage: string | null,
   state: DesignCanvasState,
@@ -6051,15 +6179,9 @@ async function composePhasingSheet(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
-  // Build the full exact implementation map — this is both the "exact mode" return value AND the
-  // source of the schedule panel we composite back on top in AI hybrid mode. Calling it once here
-  // means the panel dimensions/layout can NEVER drift from the model shown to the model, because
-  // both the protect mask (buildPhasingProtectMask) and this composite use the SAME geometry from
-  // the same function — exactly the single-source principle the recurring-bug-pattern section of
-  // the handover asks us to uphold.
-  const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
-  if (!baseImage) return exactSheet; // exact mode: nothing to composite
+  if (!baseImage) return buildImplementationMap(state, frame, refLayers, site, placeName);
 
+  const plan = buildPhasePlan(state, refLayers, site);
   const W = frame.imgW * SCALE;
   const H = frame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -6067,40 +6189,41 @@ async function composePhasingSheet(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+  const pad = Math.round(W * 0.02);
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
 
-  // 1. Draw the model's decorative illustrated background at full frame size. gpt-image-2 may
-  //    return at a slightly different scale/offset; drawImage normalises it to W×H so our
-  //    subsequent exact-coordinate composites land in the right place.
+  // 1. The model's decorative illustrated background, normalised to the exact frame size.
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, 0, 0, W, H);
 
-  // 2. Composite the right-hand panel and associated chrome (scale bar, north arrow) from the
-  //    exact sheet. The panel occupies the same region that the protect mask covers, so the model's
-  //    output in that region is already the blank cream panel we sent — but we overwrite it with the
-  //    REAL schedule content regardless, as a belt-and-braces guarantee that no model reframing or
-  //    protect-mask imprecision can ever expose schedule pixels without the correct data on top.
-  //    Panel geometry mirrors buildImplementationMap exactly: pad=W*0.02, lgW=W*0.34.
+  // 2. Every exact fact — ground, structures, boundary, phase pins — redrawn on top from saved
+  //    design data, never copied from (or left as) the model's own paint of that region.
+  await drawPhasingExactContent(ctx, state, frame, refLayers, plan, W, H);
+
+  // 3. Scale bar and north arrow, drawn as exact vector chrome (not a photographic strip copied
+  //    from a separately rendered sheet, which risked a hard seam and could clip the north arrow).
+  const scaleRowH = Math.round(W * 0.026);
+  drawBlueprintScaleBar(ctx, W, H, pad, scaleRowH, pxPerM);
+  const { lgX } = phasingPanelRect(W, H);
+  const naSize = Math.max(30, Math.round(W * 0.026));
+  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+
+  // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
+  //    text is guaranteed byte-identical to buildImplementationMap's own render rather than a second,
+  //    independently laid-out copy that could drift from it under a future font/wrap change.
+  const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
   const exactImg = await loadImage(exactSheet);
-  const pad = Math.round(W * 0.02);
-  const lgW = Math.round(W * 0.34);
-  const lgX = W - pad - lgW; // schedule panel left edge (≈ 64 % of W)
-
-  // Copy the ENTIRE right portion from the exact sheet (panel + any right margin).
+  // The whole right-hand strip, full height — not just the rounded panel rect. The panel's corners
+  // are rounded, so a tighter copy would leave slivers of the model's paint showing through at the
+  // four corners; copying the full strip matches what buildImplementationMap itself drew there.
   ctx.drawImage(exactImg, lgX, 0, W - lgX, H, lgX, 0, W - lgX, H);
-
-  // Copy the bottom strip from the exact sheet to restore the scale bar and north arrow.
-  // Scale bar is at the bottom-left corner; north arrow sits just left of the panel foot.
-  // A 7 % height strip safely captures both without overwriting too much of the model's art.
-  const bottomStripH = Math.round(H * 0.07);
-  ctx.drawImage(exactImg, 0, H - bottomStripH, lgX, bottomStripH, 0, H - bottomStripH, lgX, bottomStripH);
 
   return canvas.toDataURL('image/png');
 }
 
-// Build the input image sent to the model for the Phasing Hybrid stage. The schedule panel
-// is BLANKED (empty cream rectangle, no text) so the model structurally cannot see any date,
-// task or hold point — not just told not to touch them. The protect mask (buildPhasingProtectMask)
-// additionally covers that same region so the model's output preserves the blank panel exactly.
+// Build the input image sent to the model for the Phasing Hybrid stage — the complete exact sheet
+// with the schedule panel ERASED (opaque blank rectangle, zero text) so the model structurally
+// cannot see any date, task or hold point at any stage — not just told not to touch them.
 async function buildPhasingHybridInput(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -6110,29 +6233,27 @@ async function buildPhasingHybridInput(
 ): Promise<string> {
   const W = frame.imgW * SCALE;
   const H = frame.imgH * SCALE;
-
-  // Start from the complete exact sheet (satellite + design overlays + phase pins + panel with text).
   const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
+  return blankPhasingPanel(exactSheet, W, H);
+}
 
+// Erases the schedule panel region on an ARBITRARY already-rendered Phasing sheet with a fully
+// OPAQUE fill (not a near-opaque one — an alpha short of 1.0 leaves the text underneath faintly
+// recoverable with a contrast stretch, which defeats the entire point of blanking it). Used both
+// for the Hybrid stage's input (starting from the exact sheet) and the Full Treatment polish
+// stage's input (starting from the Hybrid stage's OWN finished output — see generatePhasingViaQueue
+// — so the polish pass is never shown real schedule text either, matching the Hybrid stage's
+// guarantee instead of relying on buildFinishedSheetPolishPrompt's prompt-only wording).
+async function blankPhasingPanel(imageDataUrl: string, W: number, H: number): Promise<string> {
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+  ctx.drawImage(await loadImage(imageDataUrl), 0, 0, W, H);
 
-  ctx.drawImage(await loadImage(exactSheet), 0, 0, W, H);
-
-  // Erase the schedule panel by overwriting it with a BLANK cream rectangle — the same shape the
-  // real panel has, at the same position, but with zero text. The model sees the page layout (a
-  // document with a cream panel on the right) but no schedule content whatsoever.
-  // Geometry is identical to buildImplementationMap so the two can never drift apart.
-  const pad = Math.round(W * 0.02);
-  const lgW = Math.round(W * 0.34);
-  const lgX = W - pad - lgW;
-  const lgY = pad;
-  const lgBottom = H - pad;
-
-  ctx.fillStyle = 'rgba(251,246,236,0.97)'; // same cream as buildImplementationMap's panel fill
+  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
+  ctx.fillStyle = '#FBF6EC'; // fully opaque — same cream as buildImplementationMap's panel fill
   roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
   ctx.fill();
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
@@ -6143,10 +6264,16 @@ async function buildPhasingHybridInput(
   return canvas.toDataURL('image/png');
 }
 
-// Build the protect mask for the Phasing Hybrid stage. The ENTIRE schedule panel region is opaque
-// (fully protected), so the model cannot modify any pixel there regardless of what its output
-// contains. This is structural safety, not prompt-only: masking the region means the worker's
-// gpt-image-2 call is literally unable to change those pixels.
+// Build the protect mask for the Phasing Hybrid stage. Uploaded alongside the job but — like every
+// other sheet's mask in this file — NOT sent to the OpenAI edit call itself (useProtectMaskForEdit
+// is false; see lib/render-jobs.ts's own comment: "a deterministic restoration contract, not an
+// OpenAI edit mask"). The actual, structural guarantee that schedule content never ships
+// AI-authored is composePhasingSheet's full redraw of exact content on top afterward (both stages)
+// plus this mask's real purpose: letting the worker/browser restoration pipeline (shared with every
+// other geometry-locked sheet) recognise this as a protected region for its own bookkeeping. Do not
+// read the opaque fill below as "the model literally cannot touch these pixels" — it can; the
+// guarantee comes from never showing it real content (blankPhasingPanel) and never trusting its
+// output for that region (composePhasingSheet's redraw).
 function buildPhasingProtectMask(frame: CanvasFrame): string {
   const W = frame.imgW * SCALE;
   const H = frame.imgH * SCALE;
@@ -6155,18 +6282,10 @@ function buildPhasingProtectMask(frame: CanvasFrame): string {
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-
-  // Fully transparent = editable everywhere by default.
   ctx.clearRect(0, 0, W, H);
 
-  // Protect the schedule panel region (same geometry as buildPhasingHybridInput's blank-out).
-  const pad = Math.round(W * 0.02);
-  const lgW = Math.round(W * 0.34);
-  const lgX = W - pad - lgW;
-  const lgY = pad;
-  const lgBottom = H - pad;
-
-  ctx.fillStyle = '#FFFFFF'; // opaque = protected (model cannot touch these pixels)
+  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
+  ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
 
   return canvas.toDataURL('image/png');
@@ -6196,111 +6315,17 @@ export async function buildImplementationMap(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-  const px = (n: number) => n * W;
-  const py = (n: number) => n * H;
   const pxPerM = W / (frame.imgW * frame.mPerPx);
-  const pad = Math.round(W * 0.02);
+  const { pad, lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
 
   // 1. Satellite + scrim.
   await drawBlueprintBase(ctx, frame, W, H);
 
-  // 2. The complete saved design UNDER the phase pins. A phasing map describes the order in which
-  //    the design is built, so showing only the roof and six floating numbers removes the very
-  //    systems those numbers refer to. Reuse the same exact ground/features/structure overlays as
-  //    the masterplan, without labels, and quieten them slightly so the phase colours stay primary.
-  const groundOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
-  if (groundOverlay) {
-    ctx.save();
-    ctx.globalAlpha = 0.82;
-    ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
-    ctx.restore();
-  }
-  const sourceStructures = frame.satDataUrl
-    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
-    : undefined;
-  if (sourceStructures) {
-    ctx.save();
-    ctx.globalAlpha = 0.88;
-    ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
-    ctx.restore();
-  } else {
-    drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
-    drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
-  }
-  const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
-  if (featureOverlay) {
-    ctx.save();
-    ctx.globalAlpha = 0.88;
-    ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
-    ctx.restore();
-  }
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
-
-  // 3. Resolve each phase's pin position (normalised 0..1) as the centroid of the objects it builds.
-  //    itemIds hold BOTH PlacedItem and LineShape ids (one id space), so a pin averages item points
-  //    and line centroids together. The two bookend phases carry no elements, so they fall back to a
-  //    semantic anchor: set-out starts at the gate (driveway head), commissioning ends at the house
-  //    — distinct points, so the two never stack.
-  const centroidOfPts = (pts: Array<[number, number]>): [number, number] | null => {
-    if (!pts.length) return null;
-    const n = pts.length;
-    return [pts.reduce((s, p) => s + p[0], 0) / n, pts.reduce((s, p) => s + p[1], 0) / n];
-  };
-  const itemById = new Map(state.items.map((it) => [it.id, it]));
-  const lineById = new Map(state.lines.map((l) => [l.id, l]));
-  const houseC = centroidOfPts(refLayers.house);
-  const gateC: [number, number] | null = refLayers.driveway.length >= 1 ? refLayers.driveway[0] : null;
-  // Distinct bookend fallbacks. When NEITHER a driveway nor a house is traced, both bookends used
-  // to collapse onto boundaryC/frameC and stack the "1" and last pins on the same spot. Anchor
-  // set-out to the NW quarter and commissioning to the SE quarter of the boundary bbox (or fixed
-  // offset points if there's no boundary) so they can never coincide.
-  const bpts = refLayers.boundary;
-  const bb = bpts.length
-    ? { x0: Math.min(...bpts.map((p) => p[0])), y0: Math.min(...bpts.map((p) => p[1])), x1: Math.max(...bpts.map((p) => p[0])), y1: Math.max(...bpts.map((p) => p[1])) }
-    : null;
-  const nwAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.28, bb.y0 + (bb.y1 - bb.y0) * 0.28] : [0.4, 0.4];
-  const seAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.72, bb.y0 + (bb.y1 - bb.y0) * 0.72] : [0.6, 0.6];
-  const pinPos = (phase: (typeof plan.phases)[number]): [number, number] => {
-    const pts: Array<[number, number]> = [];
-    for (const id of phase.itemIds) {
-      const it = itemById.get(id);
-      if (it) { pts.push([it.x, it.y]); continue; }
-      const ln = lineById.get(id);
-      if (ln) { const c = centroidOfPts(ln.points); if (c) pts.push(c); }
-    }
-    const c = centroidOfPts(pts);
-    if (c) return c;
-    if (phase.key === 'setout') return gateC ?? nwAnchor;
-    return houseC ?? seAnchor; // commissioning → hand over at the house (SE if no house traced)
-  };
-
-  // 4. Phase pins. Drawn BEFORE the panel: a pin whose centroid falls under the right-hand panel is
-  //    hidden rather than floating over the legend — it is still fully described in the panel by the
-  //    same number and colour, so nothing is lost. (Every sheet's legend covers some of the map;
-  //    this panel is just taller. The phase palette is chosen to stay distinct on the dark scrim.)
-  const pinR = Math.max(15, W * 0.015);
-  for (const phase of plan.phases) {
-    const [nx, ny] = pinPos(phase);
-    const cx = px(nx), cy = py(ny);
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.55)';
-    ctx.shadowBlur = 9;
-    ctx.beginPath();
-    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
-    ctx.fillStyle = phase.colour;
-    ctx.fill();
-    ctx.restore();
-    ctx.beginPath();
-    ctx.arc(cx, cy, pinR, 0, Math.PI * 2);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.stroke();
-    ctx.fillStyle = readableTextOn(phase.colour);
-    ctx.font = `bold ${Math.round(pinR * 1.15)}px system-ui, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(phase.n), cx, cy);
-  }
+  // 2-4. The complete saved design UNDER the phase pins — ground, structures, features, boundary,
+  //    then the numbered phase pins. Shared with composePhasingSheet's AI composite-back via
+  //    drawPhasingExactContent, so the exact sheet and the Hybrid/Full-Treatment sheets can never
+  //    draw this content two different ways.
+  await drawPhasingExactContent(ctx, state, frame, refLayers, plan, W, H);
 
   // 5. The title moves into the shared right-hand sheet panel below. Keeping a second giant title
   // over the map made sheet 08 the odd one out and consumed the clear northwest map space.
@@ -6315,10 +6340,6 @@ export async function buildImplementationMap(
   //    the legend body size); when content would overflow we shed task bullets and surplus site
   //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
   //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
-  const lgW = Math.round(W * 0.34);
-  const lgX = W - pad - lgW;
-  const lgY = pad;
-  const lgBottom = H - pad;
   const ip = Math.round(lgW * 0.055);
   const innerX = lgX + ip;
   const innerW = lgW - ip * 2;
@@ -8619,10 +8640,12 @@ export default function DesignGlossy({
     [state, frame, refLayers, site, placeName],
   );
 
-  // Finisher for Phasing (08) Hybrid jobs. The model painted a decorative background over the map
-  // area; this composites the real schedule panel (from buildImplementationMap) back on top. Called
-  // only for the Hybrid stage (showcase:false, locked:true); the Full Treatment polish stage sets
-  // showcase:true and the completion handler returns raw directly (see handleSnapshot below).
+  // Finisher for BOTH Phasing (08) stages — Hybrid and Full Treatment polish. The model painted a
+  // decorative background over the map area (and, for polish, over an already-blanked hybrid); this
+  // composites every exact fact — ground, structures, boundary, phase pins, the real schedule panel
+  // — back on top, regardless of which stage produced the input. Unlike every other sheet, Phasing's
+  // polish stage does NOT ship the model's raw output (see handleSnapshot below): a build calendar
+  // must never be AI-authored even under a well-worded polish prompt.
   const finishPhasingSheet = useCallback(
     (modelImage: string): Promise<string> => composePhasingSheet(modelImage, state, frame, refLayers, site, placeName),
     [state, frame, refLayers, site, placeName],
@@ -8728,17 +8751,25 @@ export default function DesignGlossy({
   //                On completion, composePhasingSheet (via finishPhasingRef) draws the REAL
   //                schedule panel back on top. showcase:false, geometryLock:true.
   //
-  // Polish stage:  feeds hybridResultRef.current (the finished hybrid WITH the real schedule on top)
-  //                to buildFinishedSheetPolishPrompt — the same generic polish used by the 5 design-
-  //                layer sheets. showcase:true (model owns the complete polished page). The real
-  //                schedule IS visible to the model in this stage; that is consistent with how Full
-  //                Treatment works for every other sheet (the polish step receives the complete
-  //                finished hybrid). The exact master is always preserved separately.
+  // Polish stage:  takes hybridResultRef.current (the finished hybrid, WITH the real schedule
+  //                already composited on top by the Hybrid stage) and re-blanks the same panel
+  //                region via blankPhasingPanel BEFORE sending it to buildFinishedSheetPolishPrompt.
+  //                showcase:true (model owns the complete polished page) but geometryLock:false,
+  //                exactly like every other sheet's polish stage — those two flags can never both be
+  //                true (enqueueRenderJob's hasConflictingRenderAuthority rejects the job outright;
+  //                an earlier version of this code set geometryLock:true here and broke Full
+  //                Treatment entirely — adversarial review, 2026-07-25). Unlike every other sheet,
+  //                the real schedule is NEVER visible to the model at this stage either — this is a
+  //                deliberate departure from "the polish step receives the complete finished sheet",
+  //                because a build calendar must never be AI-authored even under a well-worded
+  //                prompt-only instruction not to touch it.
   //
-  // SAFETY NOTE: The protect-mask exclusion in the Hybrid stage is the load-bearing safety
-  // mechanism — the model structurally cannot see or modify the schedule panel there. The polish
-  // stage is an OPTIONAL paid upgrade; if it garbles schedule text the farmer uses the exact
-  // master or the AI Hybrid instead. The saved exact master is the authority in every case.
+  // SAFETY NOTE: neither stage's protect mask is actually enforced by the OpenAI edit call itself
+  // (useProtectMaskForEdit is false here, same as every other sheet's mask — see
+  // buildPhasingProtectMask's own comment). The real, load-bearing guarantee is two-fold: the model
+  // is never shown real schedule text in the first place (blankPhasingPanel, both stages), and
+  // finishPhasingRef's composePhasingSheet redraws every exact fact back on top of whatever the
+  // model returns, regardless of stage. The saved exact master is the authority in every case.
   const generatePhasingViaQueue = useCallback(async () => {
     const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
@@ -8752,8 +8783,20 @@ export default function DesignGlossy({
       if (polishStage && !hybridResultRef.current) {
         throw new Error('The AI hybrid sheet was not available to polish — please try again.');
       }
-      const hybridInput = polishStage ? hybridResultRef.current : null;
+      let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
+
+      // Full Treatment's polish stage must NEVER see the real schedule text either — not just the
+      // Hybrid stage. hybridInput here is the Hybrid stage's own FINISHED sheet (composePhasingSheet
+      // already composited the real panel back onto it), so re-blank the same panel region before
+      // sending it on. Without this, the model saw dates/tasks/hold-points with only
+      // buildFinishedSheetPolishPrompt's generic wording asking it not to touch them — exactly the
+      // prompt-only protection this sheet was built to avoid (adversarial review, 2026-07-25).
+      if (polishStage && hybridInput) {
+        const W = frame.imgW * SCALE;
+        const H = frame.imgH * SCALE;
+        hybridInput = await blankPhasingPanel(hybridInput, W, H);
+      }
 
       const compositeDataUrl = hybridInput ?? await buildPhasingHybridInput(state, frame, refLayers, site, placeName);
       const protectMaskDataUrl = polishStage ? undefined : buildPhasingProtectMask(frame);
@@ -8773,9 +8816,17 @@ export default function DesignGlossy({
           compositeDataUrl,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
           ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
-          // Polish stage: model owns the complete polished page.
-          // Hybrid stage: geometry-locked — the schedule panel is protected; composePhasingSheet
-          // draws the real schedule back on top (same contract as composeSectorSheet for Sector).
+          // geometryLock:true + showcase:true is a REJECTED combination — enqueueRenderJob's
+          // hasConflictingRenderAuthority throws before anything uploads (adversarial review,
+          // 2026-07-25, caught this as a live regression: an earlier version of this fix set both
+          // true, which meant Full Treatment could never even start). geometryLock therefore stays
+          // false on the polish stage exactly like every other sheet — but unlike every other sheet,
+          // Phasing's actual safety does NOT come from that flag or from trusting the polish prompt:
+          // it comes structurally from blankPhasingPanel (the model is never shown real schedule
+          // text, at either stage) and composePhasingSheet (every exact fact is redrawn on top of
+          // whatever the model returns, at either stage, regardless of showcase/geometryLock). The
+          // "Geometry locked" gallery badge simply won't show on the polish result; that's cosmetic,
+          // not a safety gap.
           showcase: polishStage,
           geometryLock: !polishStage,
         }],
@@ -8978,11 +9029,11 @@ export default function DesignGlossy({
 
   // Drives both the Hybrid and Full Treatment guided flows — they share every stage up to and
   // including Hybrid; Full Treatment alone continues into the polish stage afterward.
-  // Phasing (08) is now included: the Hybrid stage structurally excludes the schedule panel via
-  // a protect mask (buildPhasingProtectMask) and a blanked input (buildPhasingHybridInput), so the
-  // model never sees any date, task or hold point. The real schedule composites back on top via
-  // composePhasingSheet. The previous early-return for Phasing is intentionally removed — see
-  // generatePhasingViaQueue for the safety architecture that makes this safe.
+  // Phasing (08) is now included: at BOTH the Hybrid and the polish stage, the model is shown a
+  // blanked panel (buildPhasingHybridInput / blankPhasingPanel) — never any date, task or hold
+  // point — and the real schedule composites back on top afterward via composePhasingSheet,
+  // regardless of stage. The previous early-return for Phasing is intentionally removed — see
+  // generatePhasingViaQueue for the full safety architecture that makes this safe.
   const runLockedPolishFlow = useCallback((targetMode: Extract<SheetOutputMode, 'hybrid' | 'full'>) => {
     if (!selectedSheet || loading !== null) return;
     setError(null);
@@ -9097,14 +9148,14 @@ export default function DesignGlossy({
               // honours the "AI owns the fabric, app owns the facts" contract. Polish/showcase jobs
               // (locked:false) ship the model's output as-is, same as every other sheet's polish
               // stage. Must NOT reach finishStyledSheet for either case — see above.
-              // 'implementation' (Phasing 08): Hybrid stage (showcase:false, locked:true) routes to
-              // finishPhasingRef which composites the REAL schedule panel back on top of the model's
-              // decorative background. Polish stage (showcase:true) ships the model's complete
-              // polished page as-is — same pattern as Sector's showcase:true branch.
+              // 'implementation' (Phasing 08): BOTH stages route to finishPhasingRef, unlike every
+              // other sheet's showcase:true branch. The polish stage never earns a "ship raw" exit
+              // here — a build calendar's dates/tasks/hold-points must never be AI-authored, so
+              // finishPhasingRef's composePhasingSheet always redraws the real schedule panel and
+              // every exact fact (ground, structures, boundary, phase pins) back on top, regardless
+              // of which stage produced the model's decorative background underneath it.
               const finalSheet = sheet.key === 'implementation'
-                ? showcase
-                  ? raw
-                  : await finishPhasingRef.current(raw)
+                ? await finishPhasingRef.current(raw)
                 : sheet.key === 'sector'
                 ? showcase
                   ? raw
