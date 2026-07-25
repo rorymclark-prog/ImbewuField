@@ -106,8 +106,11 @@ or looking correct in source code is not enough.
   restrained emitter dots on both map and legend.
 - [x] Confirm tanks, basins, taps, pump/filter, diverter, pond and routes remain visible at phone size
   without white editor-style halos.
-- [ ] Confirm tiny same-type route gaps are cleaned without joining pipe, drip and greywater to one
-  another or inventing plumbing.
+- [x] Confirm tiny same-type route gaps are cleaned without joining pipe, drip and greywater to one
+  another or inventing plumbing. Already correctly implemented (`waterRoutesWithVisualBridges`,
+  `lib/water-cartography.ts`) and already covered by two tests in `tests/image-producer.test.ts`
+  that explicitly prove a pipe bridges to a same-type pipe but not to an adjacent greywater line
+  placed deliberately close by. No code change needed.
 - [ ] Add or approve exact artwork for the important missing Water hardware listed below.
 
 ### 05 Planting and agroforestry
