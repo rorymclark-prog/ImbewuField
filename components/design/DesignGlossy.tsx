@@ -1063,6 +1063,33 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+/**
+ * Downscales a saved sheet's full render (1-3 MB, per lib/sheet-store.ts's own sizing note) into a
+ * small JPEG for gallery grid display. The grid used to point every thumbnail's <img> straight at
+ * the full-resolution PNG data URL — a farmer with a few dozen saved maps (very plausible after
+ * iterating across all 8 sheets x 3 output modes) was decoding tens of MB of image data into the DOM
+ * at once, on a phone, just to show 3-column thumbnails. JPEG at moderate quality is fine here
+ * because this is presentation-only: the full-resolution image is what's actually saved and shown
+ * in the zoomed detail view; this function never touches or replaces it.
+ */
+async function makeGalleryThumbnail(dataUrl: string, maxSize = 240): Promise<string | undefined> {
+  try {
+    const img = await loadImage(dataUrl);
+    const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.max(1, Math.round(img.naturalWidth * scale));
+    const h = Math.max(1, Math.round(img.naturalHeight * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return undefined;
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL('image/jpeg', 0.72);
+  } catch {
+    return undefined; // the grid falls back to the full image — never block a save on a thumbnail
+  }
+}
+
 // AI-painted feature art is generated once, shipped with the app, and reused without another paid
 // model call. The exact renderer waits for only the assets present on this sheet; failures fall back
 // to drawTrueFootprint's deterministic vector treatment rather than failing a paid render.
@@ -7384,6 +7411,9 @@ interface GalleryItem {
   id: string;
   label: string;
   image: string;
+  /** Small JPEG for grid display — see makeGalleryThumbnail. Absent on sheets saved before this
+   *  existed; the grid falls back to `image` for those rather than force-migrating old records. */
+  thumb?: string;
   resultKind: SheetResultKind;
   provider: SheetProvider;
   geometryLock: boolean;
@@ -7620,11 +7650,24 @@ export default function DesignGlossy({
         id: r.id,
         label: r.planVersion === PLAN_VERSION ? r.label : `${r.label} · older version`,
         image: r.image,
+        thumb: r.thumb,
         resultKind: r.resultKind ?? 'legacy',
         provider: r.provider ?? 'unknown',
         geometryLock: r.geometryLock ?? false,
         showcase: r.showcase ?? false,
       })));
+      // Backfill thumbnails for sheets saved before makeGalleryThumbnail existed — otherwise a
+      // farmer's EXISTING gallery (the case most likely to actually have the memory problem this
+      // fixes, having had the longest time to accumulate full-resolution entries) never benefits.
+      // One at a time, best-effort, never blocking the already-shown grid.
+      for (const r of rows) {
+        if (r.thumb) continue;
+        void makeGalleryThumbnail(r.image).then((thumb) => {
+          if (cancelled || !thumb) return;
+          setGallery((prev) => prev.map((g) => (g.id === r.id ? { ...g, thumb } : g)));
+          void saveSheet({ ...r, thumb });
+        });
+      }
     });
     return () => {
       cancelled = true;
@@ -7655,6 +7698,14 @@ export default function DesignGlossy({
             ? null
             : `Couldn't save “${label}” to this device (storage full or unavailable) — download it before you close this tab.`,
         );
+      });
+      // Thumbnail generation is separate and best-effort: the sheet is already on screen and saved
+      // above, so a slow or failed thumbnail must never delay or block that. Once ready, patch it
+      // onto both the visible gallery item and the persisted record.
+      void makeGalleryThumbnail(image).then((thumb) => {
+        if (!thumb) return;
+        setGallery((prev) => prev.map((g) => (g.id === item.id ? { ...g, thumb } : g)));
+        void saveSheet({ ...item, thumb, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
       });
       return item.id;
     },
@@ -10203,7 +10254,7 @@ export default function DesignGlossy({
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={g.image} alt={g.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          <img src={g.thumb ?? g.image} alt={g.label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                           <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
                         </button>
                         <button

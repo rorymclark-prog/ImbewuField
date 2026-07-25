@@ -29,6 +29,10 @@ export interface StoredSheet {
   label: string;
   /** PNG data URL, exactly as the renderer produced it. */
   image: string;
+  /** Small JPEG for gallery grid display, generated best-effort after the save that matters (see
+   *  makeGalleryThumbnail in DesignGlossy.tsx). Absent on sheets saved before this existed or when
+   *  generation failed; callers fall back to `image` for those rather than force-migrating them. */
+  thumb?: string;
   /** ISO timestamp — newest last, so the gallery reads in render order. */
   at: string;
   /** Which generation of the plan set produced this sheet. Bumping the render rules changes what a
