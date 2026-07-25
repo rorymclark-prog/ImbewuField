@@ -174,11 +174,10 @@ For the output contract, keep a visible checklist:
 Passing means the selected mode actually ran, provenance is correct, geometry/counts remain exact,
 and the style did not silently change the output mode.
 
-## Uncommitted checkpoint at handoff time
+## Safe checkpoint at handoff time
 
-Branch tip before the latest local edits was `b330da3` (`Polish map output and add contextual
-learning`). The following local work was intentionally left in the worktree and must not be
-discarded:
+The handoff checkpoint is commit `6ec2105` (`Checkpoint map presentation and Claude handover`) on
+`codex/reference-blueprint-quality`. It contains:
 
 - presentation-only compact-property framing in `lib/reference-presentation.ts`
 - tests in `tests/reference-presentation.test.ts` and the `package.json` test list
@@ -188,7 +187,8 @@ discarded:
 - this handover document
 
 At this checkpoint the complete test suite passed **187 tests**, the production build passed, and
-`git diff --check` passed. Review and commit these files before starting the three-output refactor.
+`git diff --check` passed. Start the three-output refactor from this commit or a newer branch tip;
+do not reset behind it.
 
 ## Visual evidence and benchmark files
 
