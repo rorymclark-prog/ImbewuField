@@ -223,8 +223,14 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   prompt vocabulary, label and legend. Enforce the matrix in tests.
 - [ ] Add a pre-render Water completeness review covering source, storage, treatment, main route,
   delivery and destination without inventing missing parts.
-- [ ] Give Ask Lima structured design and location context so advice can consider current geometry,
+- [x] Give Ask Lima structured design and location context so advice can consider current geometry,
   layers, climate, access, water and existing elements. Lima may propose, but never place, content.
+  Site climate (rainfall/wind/slope/aspect/biome) and design geometry (items/zones/lines) were
+  already sent; the real gap was traced ground features (house, patio, driveway, lawn, orchard, veg
+  garden, cleared) being explicitly filtered out of the summary, plus no signal for which step the
+  farmer is actively on. Both added, read-only (widens what Lima is told, not what it can do).
+  Live-tested against the deployed endpoint with a synthetic payload — suggestions correctly
+  referenced the supplied slope, driveway and tank position.
 - [ ] Fix cross-device design-state pull/sync so changes made in one browser appear in another
   without duplication.
 
