@@ -189,9 +189,10 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   `activeLayers.symbols`, an editor-only display preference by construction. No code change needed.
 - [x] Make design-time route colours use the same grammar as exports. (a7ff660 — found and fixed a real live mismatch, not just a theoretical risk: editor swale was #4EA6D8, export was #258DBA.)
 - [ ] Prevent the palette and bottom safe area from clipping the last elements on phone/tablet.
-- [ ] Cap, paginate or thumbnail the saved-map gallery so many full-size images do not freeze
-  semantic browser interaction or exhaust memory. `Clear all` must remove the intended gallery
-  records and cached blobs.
+- [x] Cap, paginate or thumbnail the saved-map gallery so many full-size images do not freeze
+  semantic browser interaction or exhaust memory. Thumbnailed (commit 1c35bc1) rather than capped —
+  keeps every saved map, generates a small JPEG for grid display, backfills existing sheets lazily.
+  `Clear all`/cached-blob removal not separately re-verified this pass.
 
 ## P2 - Deterministic geometry finishing
 
