@@ -872,6 +872,47 @@ export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName
 }
 
 /**
+ * Phasing sheet (08) — decorative ground-texture restyle.
+ *
+ * This mirrors buildSectorRestylePrompt's "paint the fabric, never the facts" pattern. The input
+ * image has the schedule panel BLANKED to a cream rectangle (the model never sees dates, tasks or
+ * hold points — not just told to ignore them). The protect mask covers the ENTIRE panel region so
+ * the model structurally cannot modify any pixel there. The app composites the real schedule text
+ * on top of the model's output afterwards (composePhasingSheet in DesignGlossy.tsx).
+ *
+ * Intentionally NOT consolidated with buildSectorRestylePrompt: Sector paints a sector-analysis
+ * background (bearing/wind/fire/sun context) while Phasing paints a planning/document context
+ * (parchment-style map behind a schedule panel). Different subjects, different model guidance, same
+ * "paint the fabric" contract. Keeping them separate honours the single-place-for-one-answer rule
+ * from the recurring-bug-pattern section of the handover: one function per distinct prompt context.
+ */
+export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: string): string {
+  const edgeToEdge =
+    `PAINT EDGE TO EDGE: every corner of the image becomes artwork, including the land beyond the property boundary. Neighbouring plots, roofs, trees and tracks are painted in the same hand as the rest of the sheet — never left as raw photograph, never faded out, never framed. No part of the output is a photographic patch.`;
+  const paintWhatIsThere =
+    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never given a ridge or pitch; it reads as ground you can walk on. Render any building as a quiet, low-key roof colour sitting in the ground fabric — the exact outline is drawn separately afterwards. The small coloured circles with numbers on the map are phase-sequence pins; leave them exactly as they appear — they are app-drawn chrome that will be re-composited.`;
+  const restyleOnly =
+    `RESTYLE ONLY: this is a ground-texture and parchment-atmosphere pass, not a survey. Keep the same north-up, flat orthographic top-down view and roughly the same crop and scale as the source photograph — no oblique view, no perspective tilt, no 3D camera, no zoom or recentering. The property boundary, every roof and the driveway will be drawn separately afterwards, at measured positions, directly over this artwork.`;
+  const noInvent =
+    `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
+  const noScheduleContent =
+    `DO NOT DRAW THE SCHEDULE: draw no dates, week ranges, task lists, hold points, phase titles, critical-order text or any other scheduling or planning content anywhere on the image. Draw no legend panel, no planning panel content, no title block, no north arrow, no scale bar and no lettering of any kind. This is a ground-only decorative pass — the exact schedule text, phase details and all planning content are drawn by the app afterwards from the real design data, never guessed off this image.`;
+  const blankPanel =
+    `BLANK RIGHT-HAND PANEL: the cream-coloured rectangular area on the right side of the image is reserved for the schedule text the app inserts afterwards. Do not add any text, numbers, titles, labels, lines, colour fills, illustrations or decorations of any kind inside this panel — it must remain a plain cream background, exactly as it already appears in the source.`;
+  const body = [
+    `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map background, edge to edge, in the style below. This is the decorative underlayer of an implementation and phasing plan sheet — the parchment-style ground artwork behind a build-schedule table; the schedule itself is filled in by the app from the real design data.`,
+    edgeToEdge,
+    paintWhatIsThere,
+    restyleOnly,
+    noInvent,
+    noScheduleContent,
+    blankPanel,
+    `FINAL CHECK: the entire frame is richly illustrated with no photographic patches and no hard edge anywhere; no building is drawn sharper than the ground around it; nothing has been added that was not already there; the cream panel on the right is completely untouched — a plain cream background with no marks in it; there is no text, schedule content, planning information, title, legend, north arrow or scale bar anywhere on the image.`,
+  ].join('\n\n');
+  return `${STYLE_LINES[stylePreset]}\n\n${body}`;
+}
+
+/**
  * Paid design-sheet polish — the input is the complete deterministic sheet saved by Step 1.
  *
  * The exact master remains the authority. Step 2 may redraw the presentation, including pictorial
