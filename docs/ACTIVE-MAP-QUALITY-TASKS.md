@@ -63,9 +63,16 @@ or looking correct in source code is not enough.
 ## P0 - Required before any quality claim
 
 - [x] Deploy the current branch checkpoint to the preview alias and confirm the build badge/hash.
-- [ ] Use the in-app Refresh update control on desktop and mobile and verify the new build actually
-  takes control. Add a regression test or stronger instrumentation if the prompt still fails to
-  appear when a newer build exists.
+- [~] Use the in-app Refresh update control on desktop and mobile and verify the new build actually
+  takes control. Partially verified 2026-07-25: pushed `ef2e666` to origin, confirmed Vercel
+  auto-built a Preview deployment matching that exact SHA, re-pointed the stale `imbewufield-preview.vercel.app`
+  alias (was 3 days behind) to it, confirmed a fresh load has an active non-waiting service worker
+  and zero console errors, and read `PWAUpdateNotifier.tsx` end-to-end — the detection logic
+  (SW controllerchange, SW installed-state watcher, and an independent `/api/build-info` SHA poll
+  every 60s + on focus/visibility/online as a fallback) and `isDifferentBuild` are sound. **Not
+  verified**: the actual "banner appears → click Refresh → new build takes over" moment, which needs
+  a second real deploy landing while a tab stays open — inherently a live, multi-deploy test. Next
+  deploy is a free opportunity to watch this happen for real.
 - [ ] Generate fresh Reference Blueprint outputs from the deployed app. Do not judge cached gallery
   images made by older plan versions.
 - [ ] Review each output at exported size and phone/gallery size beside the committed benchmark.
