@@ -46,7 +46,7 @@ import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorF
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
-import { lockedPolishAction, lockedPolishStyle } from '@/lib/locked-polish-flow';
+import { lockedPolishAction, lockedPolishStyle, type SheetOutputMode } from '@/lib/locked-polish-flow';
 import { calculateBoundaryPresentationCrop } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
@@ -7238,10 +7238,19 @@ export default function DesignGlossy({
   const setGeometryLock = onGeometryLockChange ?? setGeometryLockInternal;
   const refreshPendingRef = useRef(false);
   const exactAfterFlipRef = useRef(false);
-  const polishAfterExactRef = useRef(false);
+  const hybridAfterExactRef = useRef(false);
+  const hybridAfterFlipRef = useRef(false);
+  // Full Treatment only: after the Hybrid stage completes, advance once more into the polish stage.
+  // Hybrid-only stops here, so this stays false for that flow.
+  const polishAfterHybridRef = useRef(false);
   const polishAfterFlipRef = useRef(false);
   const polishStyleRef = useRef<StylePreset>(DEFAULT_PRODUCER_STYLE);
-  const [lockedPolishStage, setLockedPolishStage] = useState<'exact' | 'ai' | null>(null);
+  // Full Treatment's polish stage feeds on the Hybrid stage's OWN finished sheet — not a rebuilt
+  // exact sheet — so there is something actually painted for the model to polish. Set when the
+  // Hybrid stage completes with polishAfterHybridRef pending; read by generateOneViaQueue's
+  // 'polish' branch; cleared once consumed so a stale image can never leak into an unrelated run.
+  const hybridResultRef = useRef<string | null>(null);
+  const [lockedPolishStage, setLockedPolishStage] = useState<'exact' | 'hybrid' | 'polish' | null>(null);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
   // exactly those — no boundary clip, no burned labels, no cream chrome over the model's own).
@@ -8363,21 +8372,18 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      // The main two-step action is different from the legacy direct style path. Step 1 already
-      // saved an exact finished sheet, so Step 2 gives that whole page to GPT Image and lets it
-      // author the visibly polished result. The exact master remains separately recoverable.
-      const fullSheetPolish = lockedPolishStage === 'ai';
-      const exactSheetInput = fullSheetPolish
-        ? filter === 'zones'
-          ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
-          : filter === 'water'
-            ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
-            : filter === 'planting'
-              ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
-              : filter === 'structures'
-                ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
-                : await buildBlueprintWholeMap(state, frame, refLayers, placeName)
-        : null;
+      // Full Treatment's polish stage feeds on the FINISHED HYBRID sheet — the AI-painted
+      // underlayer with our exact elements already locked back on top — stashed in hybridResultRef
+      // by the queue-completion handler when the Hybrid stage finishes. It never rebuilds the bare
+      // exact sheet here: sending the model something it never touched to "polish" is the exact bug
+      // this two-stage rewrite exists to fix (Water's paid result used to look untouched because
+      // there was nothing painted underneath for the polish pass to actually polish).
+      const fullSheetPolish = lockedPolishStage === 'polish';
+      if (fullSheetPolish && !hybridResultRef.current) {
+        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+      }
+      const exactSheetInput = fullSheetPolish ? hybridResultRef.current : null;
+      if (fullSheetPolish) hybridResultRef.current = null; // consume-once — never leaks into an unrelated render
       const composite = exactSheetInput ?? await buildComposite(
         state,
         frame,
@@ -8445,7 +8451,7 @@ export default function DesignGlossy({
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(fullSheetPolish
-        ? `Step 2 of 2 — GPT Image is repainting the complete ${layerLabel} sheet, including its pictorial legend, in ${styleDef.label}. The exact master remains saved separately.`
+        ? `Step 3 of 3 — GPT Image is polishing the complete ${layerLabel} hybrid sheet in ${styleDef.label}. The exact master and the AI hybrid both remain saved separately.`
         : `Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
     } catch (err) {
       refreshPendingRef.current = false;
@@ -8473,12 +8479,23 @@ export default function DesignGlossy({
     setNotice(null);
     setLoading('falgpt');
     try {
-      const fullSectorPolish = kind === 'sector';
-      const composite = fullSectorPolish
+      // Same two-stage contract as generateOneViaQueue: the polish stage feeds on the FINISHED
+      // Hybrid sheet stashed in hybridResultRef, never a rebuilt ground-only composite — Sector
+      // used to send composeSectorSheet(null,...) (nothing painted yet) straight to the polish
+      // prompt, the same "polish an empty page" bug the 5-sheet path had.
+      const polishStage = lockedPolishStage === 'polish';
+      if (polishStage && !hybridResultRef.current) {
+        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+      }
+      const hybridInput = polishStage ? hybridResultRef.current : null;
+      if (polishStage) hybridResultRef.current = null; // consume-once
+      const composite = hybridInput ?? (kind === 'sector'
         ? await composeSectorSheet(null, state, frame, refLayers, site, placeName)
-        : await buildComposite(state, frame, refLayers, 'all', false);
-      const prompt = fullSectorPolish
-        ? buildSectorSheetPolishPrompt(styleKey, placeName)
+        : await buildComposite(state, frame, refLayers, 'all', false));
+      const prompt = polishStage
+        ? kind === 'sector'
+          ? buildSectorSheetPolishPrompt(styleKey, placeName)
+          : buildFinishedSheetPolishPrompt('Existing Site', styleKey, placeName)
         : buildSectorRestylePrompt(styleKey, placeName);
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
@@ -8489,23 +8506,27 @@ export default function DesignGlossy({
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
           prompt,
           compositeDataUrl: composite,
-          // For Sector this flag means the model owns the already-complete polished page. The
-          // finisher must not redraw the hybrid analysis over it. Older false jobs stay compatible.
-          showcase: fullSectorPolish,
-          geometryLock: false,
+          // showcase:true on the polish stage means the model owns the already-complete polished
+          // page — the finisher must not redraw the hybrid analysis over it. The hybrid stage is
+          // now genuinely geometry-locked (composeSectorSheet(modelImage,...) composites our own
+          // bearings/legend/labels back on top), so it earns resultKind:'hybrid', not 'legacy'.
+          showcase: polishStage,
+          geometryLock: !polishStage,
         }],
       });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
-      setNotice(kind === 'sector'
-        ? 'AI is polishing the complete Sector Analysis sheet in the background. The exact computed sheet is already saved separately; this paid copy improves the whole page in your chosen style. It’ll open when ready.'
-        : 'Rendering your Existing Site sheet in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
+      setNotice(polishStage
+        ? `Step 3 of 3 — GPT Image is polishing the complete ${kind === 'sector' ? 'Sector Analysis' : 'Existing Site'} hybrid sheet. The exact master and the AI hybrid both remain saved separately.`
+        : kind === 'sector'
+          ? 'AI is painting the Sector Analysis hybrid underlayer; your measured bearings and legend lock back on top afterward. It’ll appear in your gallery when ready (a few minutes).'
+          : 'Rendering your Existing Site hybrid in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
     } catch (err) {
       refreshPendingRef.current = false;
       setError(err instanceof Error ? err.message : 'Could not start the render.');
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage]);
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
@@ -8538,9 +8559,12 @@ export default function DesignGlossy({
   // This removes the old "pick a mode, then find the Generate button" two-click workflow.
   useEffect(() => {
     const action = lockedPolishAction({
+      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
       exactFlipPending: exactAfterFlipRef.current,
-      polishAfterExactPending: polishAfterExactRef.current,
-      aiFlipPending: polishAfterFlipRef.current,
+      hybridAfterExactPending: hybridAfterExactRef.current,
+      hybridFlipPending: hybridAfterFlipRef.current,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
       mode,
       isExactRender,
       loading: loading !== null,
@@ -8548,30 +8572,34 @@ export default function DesignGlossy({
     });
     if (action !== 'render-exact') return;
     exactAfterFlipRef.current = false;
-    setNotice(polishAfterExactRef.current
-      ? 'Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…'
+    setNotice(hybridAfterExactRef.current
+      ? `Step 1 of ${polishAfterHybridRef.current ? 3 : 2} — saving the exact geometry-locked map first (no AI cost)…`
       : 'Building the exact geometry-locked map — no AI render cost…');
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, runCurrentSheet]);
 
-  // The primary one-press workflow always saves an exact master before spending an AI render.
-  // Once the deterministic render has completed successfully, move to the selected AI style and
-  // let the existing polish effect enqueue exactly one gpt-image-2 job.
+  // The primary guided flow always saves an exact master before spending any AI render, then
+  // moves to the selected AI style so the next effect can enqueue the real Hybrid pass — an
+  // AI-painted underlayer with our own exact elements composited back on top, never a rebuilt
+  // exact sheet with nothing painted for a later polish step to actually polish.
   useEffect(() => {
     const action = lockedPolishAction({
+      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
       exactFlipPending: exactAfterFlipRef.current,
-      polishAfterExactPending: polishAfterExactRef.current,
-      aiFlipPending: polishAfterFlipRef.current,
+      hybridAfterExactPending: hybridAfterExactRef.current,
+      hybridFlipPending: hybridAfterFlipRef.current,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
       mode,
       isExactRender,
       loading: loading !== null,
       hasResult: resultImage !== null,
     });
-    if (action !== 'switch-to-ai') return;
-    polishAfterExactRef.current = false;
-    polishAfterFlipRef.current = true;
-    setLockedPolishStage('ai');
-    setNotice('Step 2 of 2 — starting one paid gpt-image-2 polish from the saved exact map…');
+    if (action !== 'switch-to-hybrid') return;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = true;
+    setLockedPolishStage('hybrid');
+    setNotice(`Step 2 of ${polishAfterHybridRef.current ? 3 : 2} — painting the AI hybrid underlayer, then locking your exact elements back on top…`);
     setMode('ai');
     if (selectedSheet) {
       applySheet(selectedSheet, 'ai');
@@ -8580,31 +8608,89 @@ export default function DesignGlossy({
     setResultImage(null);
   }, [mode, isExactRender, loading, resultImage, selectedSheet, applySheet]);
 
-  // Direct Step 2 button. The exact result remains in the gallery; after React has switched this
+  // Direct Step-2 trigger. The exact result remains in the gallery; after React has switched this
   // same sheet into its locked AI mode, start the existing queue path automatically. That path
   // uses the deterministic composite as the factual input and restores protected geometry after
   // generation, so this is a child illustration rather than a replacement of the master.
   useEffect(() => {
     const action = lockedPolishAction({
+      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
       exactFlipPending: exactAfterFlipRef.current,
-      polishAfterExactPending: polishAfterExactRef.current,
-      aiFlipPending: polishAfterFlipRef.current,
+      hybridAfterExactPending: hybridAfterExactRef.current,
+      hybridFlipPending: hybridAfterFlipRef.current,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
       mode,
       isExactRender,
       loading: loading !== null,
       hasResult: resultImage !== null,
     });
-    if (action !== 'render-ai') return;
+    if (action !== 'render-hybrid') return;
+    hybridAfterFlipRef.current = false;
+    setNotice('Preparing a geometry-locked AI hybrid from this exact sheet…');
+    void runCurrentSheet();
+  }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
+
+  // Full Treatment only: once the Hybrid stage has actually finished and its image is stashed in
+  // hybridResultRef (see the queue-completion handler), advance once more into the polish stage —
+  // still mode 'ai', so no mode flip is needed, just a fresh render pass over the SAME sheet.
+  useEffect(() => {
+    const action = lockedPolishAction({
+      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+      exactFlipPending: exactAfterFlipRef.current,
+      hybridAfterExactPending: hybridAfterExactRef.current,
+      hybridFlipPending: hybridAfterFlipRef.current,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
+      mode,
+      isExactRender,
+      loading: loading !== null,
+      hasResult: resultImage !== null,
+    });
+    if (action !== 'switch-to-polish') return;
+    if (!hybridResultRef.current) {
+      // The Hybrid stage finished but nothing was stashed — a real bug, not a transient state.
+      // Never silently fall back to polishing the bare exact sheet again (the exact bug this
+      // whole rewrite exists to remove); surface it and stop the guided flow instead.
+      setError('The AI hybrid finished but its image was not captured — please try again.');
+      polishAfterHybridRef.current = false;
+      setLockedPolishStage(null);
+      return;
+    }
+    polishAfterHybridRef.current = false;
+    polishAfterFlipRef.current = true;
+    setLockedPolishStage('polish');
+    setNotice('Step 3 of 3 — starting one paid gpt-image-2 polish pass over the AI hybrid…');
+    setResultImage(null);
+  }, [mode, isExactRender, loading, resultImage]);
+
+  useEffect(() => {
+    const action = lockedPolishAction({
+      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+      exactFlipPending: exactAfterFlipRef.current,
+      hybridAfterExactPending: hybridAfterExactRef.current,
+      hybridFlipPending: hybridAfterFlipRef.current,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
+      mode,
+      isExactRender,
+      loading: loading !== null,
+      hasResult: resultImage !== null,
+    });
+    if (action !== 'render-polish') return;
     polishAfterFlipRef.current = false;
-    setNotice('Preparing a geometry-locked AI polish from this exact sheet…');
+    setNotice('Polishing the AI hybrid sheet…');
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, runCurrentSheet]);
 
   useEffect(() => {
     if (!error || loading !== null) return;
     exactAfterFlipRef.current = false;
-    polishAfterExactRef.current = false;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = false;
+    polishAfterHybridRef.current = false;
     polishAfterFlipRef.current = false;
+    hybridResultRef.current = null;
     setLockedPolishStage(null);
   }, [error, loading]);
 
@@ -8622,17 +8708,22 @@ export default function DesignGlossy({
     setResultImage(null);
   }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
 
-  const runLockedPolishFlow = useCallback(() => {
+  // Drives both the Hybrid and Full Treatment guided flows — they share every stage up to and
+  // including Hybrid; Full Treatment alone continues into the polish stage afterward.
+  const runLockedPolishFlow = useCallback((targetMode: Extract<SheetOutputMode, 'hybrid' | 'full'>) => {
     if (!selectedSheet || loading !== null) return;
     if ('exact' in selectedSheet && selectedSheet.exact === 'implementation') {
       setNotice('The Phasing sheet stays exact because AI must not rewrite dates, tasks or hold points.');
       return;
     }
     setError(null);
-    setNotice('Step 1 of 2 — saving the exact geometry-locked map first (no AI cost)…');
+    const totalSteps = targetMode === 'full' ? 3 : 2;
+    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…`);
     polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
     setLockedPolishStage('exact');
-    polishAfterExactRef.current = true;
+    hybridAfterExactRef.current = true;
+    polishAfterHybridRef.current = targetMode === 'full';
+    hybridResultRef.current = null;
     setResultImage(null);
     if (mode === 'exact' && isExactRender) {
       void runCurrentSheet();
@@ -8741,6 +8832,14 @@ export default function DesignGlossy({
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                   : raw;
+              // Full Treatment only: this completion IS the Hybrid stage — stash its finished image
+              // so the polish stage (generateOneViaQueue's 'polish' branch) has something genuinely
+              // painted to poish, instead of silently falling back to the bare exact sheet again.
+              // Gated on the ref, not on `showcase`/`locked` alone, so an unrelated Hybrid-only or
+              // batch render can never be mistaken for the one this flow is actually waiting on.
+              if (polishAfterHybridRef.current && !showcase && locked) {
+                hybridResultRef.current = finalSheet;
+              }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
               // A one-sheet refresh must update the actual preview, not only append a gallery
@@ -8748,18 +8847,27 @@ export default function DesignGlossy({
               // collect every sheet without flickering the preview.
               const targetMapKey = `producer:${styleKey}:${sheet.key}`;
               if (job.sheets.length === 1) {
-                setLockedPolishStage(null);
+                // Full Treatment: leave lockedPolishStage set (still 'hybrid') so the progress
+                // panel doesn't blink to nothing between this stage finishing and the polish stage's
+                // own switch-to-polish effect setting it to 'polish' a moment later.
+                if (!hybridResultRef.current) setLockedPolishStage(null);
                 if (job.siteId === state.siteId && mapKeyRef.current === targetMapKey) {
                   setResultImage(finalSheet);
                   setSaved(record);
                 }
               }
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
+              // Label text must track resultKind, not always say "AI polished" — a Hybrid-only save
+              // (mode 2, stops there) is genuinely AI-touched but is not a paid polish pass (mode 3).
+              const finishKindLabel = showcase ? 'AI polished' : locked ? 'AI hybrid' : 'AI (legacy)';
               lastAssembledGalleryId = pushGallery(
-                `${sheet.label}${finishLabel} · AI polished${locked ? ' · Geometry locked' : ''}`,
+                `${sheet.label}${finishLabel} · ${finishKindLabel}${locked ? ' · Geometry locked' : ''}`,
                 finalSheet,
                 {
-                  resultKind: showcase ? 'ai-polished' : locked ? 'hybrid' : 'ai-polished',
+                  // showcase:false + locked:false is only reachable for a pre-flag legacy job (see
+                  // the comment on showcaseKeysRef above) — under the 3-mode contract that
+                  // combination is never a genuine paid polish, so it must not claim to be one.
+                  resultKind: showcase ? 'ai-polished' : locked ? 'hybrid' : 'legacy',
                   provider: 'openai',
                   geometryLock: locked,
                   showcase,
@@ -9041,9 +9149,11 @@ export default function DesignGlossy({
 
       {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
         <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>Choose your finish below.</strong> AI-polished first saves the exact
-          geometry-locked master, then automatically starts <strong>one paid AI image render</strong>.
-          Exact only stops after the free locked map. Neither choice changes your canvas design.
+          <strong>Choose your finish below.</strong> Exact Canvas is free and instant. AI Hybrid
+          saves the exact geometry-locked master, then spends <strong>one paid AI render</strong> on
+          a painted underlayer with your exact elements locked back on top. Full Treatment does that,
+          then spends <strong>a second paid AI render</strong> polishing the finished hybrid. None of
+          these choices ever change your canvas design.
         </div>
       )}
 
@@ -9068,14 +9178,19 @@ export default function DesignGlossy({
         >
           <Gem size={30} color={GOLD} />
           <strong style={{ fontSize: 19 }}>
-            {lockedPolishStage === 'exact'
-              ? 'Step 1 of 2 · locking the exact map'
-              : `Step 2 of 2 · painting ${lockedPolishStyleLabel}`}
+            {(() => {
+              const total = polishAfterHybridRef.current || lockedPolishStage === 'polish' ? 3 : 2;
+              if (lockedPolishStage === 'exact') return `Step 1 of ${total} · locking the exact map`;
+              if (lockedPolishStage === 'hybrid') return `Step 2 of ${total} · painting the AI hybrid underlayer`;
+              return `Step 3 of 3 · polishing the AI hybrid in ${lockedPolishStyleLabel}`;
+            })()}
           </strong>
           <span style={{ maxWidth: 620, fontSize: 13.5, lineHeight: 1.55, opacity: 0.86 }}>
             {lockedPolishStage === 'exact'
               ? 'The accurate master is being saved to Saved maps. It will not replace your chosen style.'
-              : `Your exact master is safe. gpt-image-2 is now creating the real ${lockedPolishStyleLabel} finish in the background; only that finished AI image will replace this progress screen.`}
+              : lockedPolishStage === 'hybrid'
+              ? `Your exact master is safe. gpt-image-2 is painting the ${lockedPolishStyleLabel} underlayer, then your exact elements lock back on top.`
+              : `Your exact master and AI hybrid are both safe. gpt-image-2 is now polishing the complete hybrid sheet; only that finished AI image will replace this progress screen.`}
           </span>
         </div>
       )}
@@ -9184,7 +9299,7 @@ export default function DesignGlossy({
               type="button"
               onClick={() => {
                 if (mode === 'exact') {
-                  runLockedPolishFlow();
+                  runLockedPolishFlow('full');
                   return;
                 }
                 setMode('exact');
@@ -9375,16 +9490,102 @@ export default function DesignGlossy({
               Choose your finish
             </div>
           )}
+          {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') ? (
+          // The three modes every sheet supports: Exact Canvas (free), AI Hybrid (one paid render,
+          // stops there), Full Treatment (Hybrid, then a second paid render polishes it). Full
+          // Treatment always runs through Hybrid first — see runLockedPolishFlow/generateOneViaQueue.
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: 10 }}>
+            <button
+              type="button"
+              onClick={runExactStep}
+              disabled={loading !== null}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                minHeight: 72,
+                padding: '11px 14px',
+                border: `2px solid ${GREEN}`,
+                borderRadius: 12,
+                background: '#fffdf8',
+                color: GREEN,
+                fontWeight: 800,
+                fontSize: 14,
+                cursor: loading !== null ? 'default' : 'pointer',
+                opacity: loading !== null ? 0.55 : 1,
+              }}
+            >
+              <span>Exact Canvas</span>
+              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
+                Straight canvas render · instant · no AI cost
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => runLockedPolishFlow('hybrid')}
+              disabled={loading !== null}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                minHeight: 72,
+                padding: '11px 14px',
+                borderRadius: 12,
+                border: `2px solid ${DARK}`,
+                background: 'rgba(31,77,43,0.06)',
+                color: DARK,
+                fontWeight: 800,
+                fontSize: 14,
+                cursor: loading !== null ? 'default' : 'pointer',
+                opacity: loading !== null ? 0.55 : 1,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} AI Hybrid</span>
+              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
+                AI underlayer + your exact elements on top · 1 paid render
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => runLockedPolishFlow('full')}
+              disabled={loading !== null}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                minHeight: 72,
+                padding: '12px 14px',
+                borderRadius: 12,
+                border: 'none',
+                background: GOLD,
+                color: DARK,
+                fontWeight: 800,
+                fontSize: 14,
+                cursor: loading !== null ? 'default' : 'pointer',
+                opacity: loading !== null ? 0.7 : 1,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} Full Treatment</span>
+              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.78, textAlign: 'center' }}>
+                Hybrid, then a 2nd AI polish pass · 2 paid renders
+              </span>
+            </button>
+          </div>
+          ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 10 }}>
           <button
             onClick={
-              selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
-                ? runLockedPolishFlow
-                : selectedSheet
-                  ? runExactStep
-                  : resultImage
-                    ? refreshCurrentSheet
-                    : () => { void runCurrentSheet(); }
+              selectedSheet
+                ? runExactStep
+                : resultImage
+                  ? refreshCurrentSheet
+                  : () => { void runCurrentSheet(); }
             }
             disabled={loading !== null}
             style={{
@@ -9409,14 +9610,10 @@ export default function DesignGlossy({
               {resultImage ? <RefreshCw size={18} /> : <Gem size={18} />}
               {loading !== null
                 ? loading === 'exact'
-                  ? polishAfterExactRef.current
-                    ? 'Step 1 of 2 · saving exact geometry…'
-                    : 'Drawing your exact map…'
+                  ? 'Drawing your exact map…'
                   : loading === 'falgpt'
-                    ? 'Step 2 of 2 · AI polishing in the background'
+                    ? 'AI working in the background…'
                     : 'Generating your map… ~1 min'
-                : selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation')
-                  ? `${resultImage ? 'Create another' : 'Create'} paid AI-polished map`
                 : exactSheet === 'implementation'
                   ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                   : producerStyle
@@ -9425,42 +9622,9 @@ export default function DesignGlossy({
                       ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
                       : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
             </span>
-            {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && loading === null && (
-              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.78 }}>
-                PRESS THIS FOR AI · exact lock first, then 1 paid gpt-image-2 render
-              </span>
-            )}
           </button>
-          {selectedSheet && (!('exact' in selectedSheet) || selectedSheet.exact !== 'implementation') && (
-            <button
-              type="button"
-              onClick={runExactStep}
-              disabled={loading !== null}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 3,
-                minHeight: 64,
-                padding: '11px 18px',
-                border: `2px solid ${GREEN}`,
-                borderRadius: 12,
-                background: '#fffdf8',
-                color: GREEN,
-                fontWeight: 800,
-                fontSize: 14,
-                cursor: loading !== null ? 'default' : 'pointer',
-                opacity: loading !== null ? 0.55 : 1,
-              }}
-            >
-              <span>Free exact map only · NO AI</span>
-              <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72 }}>
-                Instant · no AI cost
-              </span>
-            </button>
-          )}
           </div>
+          )}
         </div>
 
         <div style={{ fontSize: 11, opacity: 0.6 }}>

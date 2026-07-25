@@ -4,58 +4,120 @@ import test from 'node:test';
 import { lockedPolishAction, lockedPolishStyle, type LockedPolishState } from '@/lib/locked-polish-flow';
 
 const READY: LockedPolishState = {
+  outputMode: 'hybrid',
   exactFlipPending: false,
-  polishAfterExactPending: false,
-  aiFlipPending: false,
+  hybridAfterExactPending: false,
+  hybridFlipPending: false,
+  polishAfterHybridPending: false,
+  polishFlipPending: false,
   mode: 'ai',
   isExactRender: false,
   loading: false,
   hasResult: false,
 };
 
-test('one-button polish advances exact render -> AI switch -> AI render', () => {
+test('Hybrid mode advances exact render -> switch to hybrid -> hybrid render, then stops', () => {
   assert.equal(lockedPolishAction({
     ...READY,
     exactFlipPending: true,
-    polishAfterExactPending: true,
+    hybridAfterExactPending: true,
     mode: 'exact',
     isExactRender: true,
   }), 'render-exact');
 
   assert.equal(lockedPolishAction({
     ...READY,
-    polishAfterExactPending: true,
+    hybridAfterExactPending: true,
     mode: 'exact',
     isExactRender: true,
     hasResult: true,
-  }), 'switch-to-ai');
+  }), 'switch-to-hybrid');
 
   assert.equal(lockedPolishAction({
     ...READY,
-    aiFlipPending: true,
-  }), 'render-ai');
+    hybridFlipPending: true,
+  }), 'render-hybrid');
+
+  // No polishAfterHybridPending set — Hybrid mode has nowhere further to go once rendered.
+  assert.equal(lockedPolishAction({
+    ...READY,
+    hasResult: true,
+  }), 'wait');
 });
 
-test('the paid stage waits for the exact result and settled AI mode', () => {
+test('Full Treatment continues past Hybrid into a second, polish stage', () => {
   assert.equal(lockedPolishAction({
     ...READY,
-    polishAfterExactPending: true,
+    outputMode: 'full',
+    exactFlipPending: true,
+    hybridAfterExactPending: true,
+    polishAfterHybridPending: true,
     mode: 'exact',
     isExactRender: true,
-  }), 'wait');
+  }), 'render-exact');
 
   assert.equal(lockedPolishAction({
     ...READY,
-    aiFlipPending: true,
+    outputMode: 'full',
+    hybridAfterExactPending: true,
+    polishAfterHybridPending: true,
     mode: 'exact',
     isExactRender: true,
     hasResult: true,
-  }), 'wait');
+  }), 'switch-to-hybrid');
 
   assert.equal(lockedPolishAction({
     ...READY,
-    aiFlipPending: true,
+    outputMode: 'full',
+    hybridFlipPending: true,
+    polishAfterHybridPending: true,
+  }), 'render-hybrid');
+
+  // Hybrid has finished (hasResult) and polishAfterHybridPending is still set — Full Treatment
+  // advances again instead of stopping, unlike the Hybrid-only case above.
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'full',
+    polishAfterHybridPending: true,
+    hasResult: true,
+  }), 'switch-to-polish');
+
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'full',
+    polishFlipPending: true,
+  }), 'render-polish');
+});
+
+test('every stage waits for a settled, non-loading state before firing', () => {
+  assert.equal(lockedPolishAction({
+    ...READY,
+    hybridAfterExactPending: true,
+    mode: 'exact',
+    isExactRender: true,
+  }), 'wait'); // no hasResult yet
+
+  assert.equal(lockedPolishAction({
+    ...READY,
+    hybridFlipPending: true,
+    mode: 'exact',
+    isExactRender: true,
+    hasResult: true,
+  }), 'wait'); // still in exact mode, not flipped to ai yet
+
+  assert.equal(lockedPolishAction({
+    ...READY,
+    hybridFlipPending: true,
     loading: true,
+  }), 'wait'); // a render is already in flight
+
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'full',
+    polishAfterHybridPending: true,
+    mode: 'exact', // Full Treatment's polish stage also runs in 'ai' mode, not 'exact'
+    isExactRender: true,
+    hasResult: true,
   }), 'wait');
 });
 
