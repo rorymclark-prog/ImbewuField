@@ -8468,6 +8468,39 @@ export default function DesignGlossy({
     [state, frame, refLayers, site, placeName],
   );
 
+  // Finisher for Site 01 Hybrid jobs (geometryLock:true). The model paints ground texture; this
+  // composites the app's exact house, driveway and boundary back on top — the same "AI owns the
+  // fabric, app owns the facts" contract every other sheet's Hybrid mode already enforces.
+  // Mirrors buildBlueprintBaseMap's recipe: buildLockedStructureOverlay for source-pixel-derived
+  // structures, then drawBlueprintBoundary for vector-exact boundary. Never touches geometry.
+  const finishSiteSheet = useCallback(
+    async (modelImage: string, styleKey: StylePreset): Promise<string> => {
+      const W = frame.imgW * SCALE;
+      const H = frame.imgH * SCALE;
+      // Satellite photo is the source of truth for what the house/driveway pixels look like —
+      // same source buildBlueprintBaseMap uses. Do not derive structure pixels from the AI output.
+      const cleanSource = frame.satDataUrl;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return modelImage; // fallback: ship the raw model image rather than nothing
+      const px = (n: number) => n * W;
+      const py = (n: number) => n * H;
+      // Model's painted ground is the underlayer.
+      ctx.drawImage(await loadImage(modelImage), 0, 0, W, H);
+      // House + driveway locked back on top from source pixels — geometry-exact, never AI-authored.
+      if (cleanSource) {
+        const structureOverlay = await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleKey);
+        if (structureOverlay) ctx.drawImage(await loadImage(structureOverlay), 0, 0, W, H);
+      }
+      // Property boundary — vector data, always exact regardless of what the model painted.
+      drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+      return canvas.toDataURL('image/png');
+    },
+    [frame, refLayers],
+  );
+
   // Sector's paid path starts with the complete deterministic sheet, not a bare aerial. This makes
   // the second result a visibly AI-authored page while Step 1 remains the separately saved exact
   // authority. Site 01 retains its ground-only restyle route.
@@ -8753,6 +8786,8 @@ export default function DesignGlossy({
   styleRef.current = producerStyle;
   const finishSectorRef = useRef(finishSectorSheet);
   finishSectorRef.current = finishSectorSheet;
+  const finishSiteRef = useRef(finishSiteSheet);
+  finishSiteRef.current = finishSiteSheet;
 
   // Stream the active job; finish each sheet as it completes; clear on a terminal status.
   useEffect(() => {
@@ -8819,16 +8854,19 @@ export default function DesignGlossy({
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
               // 'sector-ai' finding 3), so route it to the dedicated finisher instead of casting.
-              // 'base' (Site 01) is a pure restyle: there is no analysis geometry to guarantee, so
-              // the model's image IS the sheet. Like 'sector' it must NOT reach finishStyledSheet,
-              // whose zone/water overlay branches and producerLabels() call assume a real
-              // GlossyLayerFilter — `sheet.key as GlossyLayerFilter` would be a lie for both.
+              // 'base' (Site 01): on a locked Hybrid job the model painted ground texture only —
+              // composite the app's exact house, driveway and boundary back on top so the result
+              // honours the "AI owns the fabric, app owns the facts" contract. Polish/showcase jobs
+              // (locked:false) ship the model's output as-is, same as every other sheet's polish
+              // stage. Must NOT reach finishStyledSheet for either case — see above.
               const finalSheet = sheet.key === 'sector'
                 ? showcase
                   ? raw
                   : await finishSectorRef.current(raw)
                 : sheet.key === 'base'
-                ? raw
+                ? locked
+                  ? await finishSiteRef.current(raw, styleKey)
+                  : raw
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                   : raw;
