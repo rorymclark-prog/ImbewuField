@@ -355,6 +355,74 @@ verified command output or explicitly marked as unverified. Commit `ed8da18` on
   bearings) the 5 design-layer sheets don't have — reused the generic one for Site's new polish
   stage instead of writing a third near-duplicate.
 
+## Update — Site and Phasing landed (same day, later in the session)
+
+Both remaining gaps from the section above are now closed, via a Sonnet-implements/Fable-5-reviews
+swarm — commits `4793744` (Site), `67e6153` (Phasing, first version), `805a4d1` (Phasing fixes).
+
+**Site** (`4793744`): `finishSiteSheet` now composites the app's exact house, driveway and boundary
+back on top of the model's Hybrid output, reusing `buildLockedStructureOverlay` +
+`drawBlueprintBoundary` — the same recipe `buildBlueprintBaseMap` already used for the exact sheet,
+not a new one. Reviewed and judged safe on the first pass: never mutates saved geometry, sources
+structure pixels from the satellite (never the AI output), gates correctly on the persisted
+`geometryLock` flag. One acknowledged remaining gap: Site's Hybrid still lacks labels/legend/title
+chrome (the restyle prompt forbids the model from drawing them, and nothing composites them back
+on top afterward) — strictly better than shipping raw, not a safety issue, left as follow-up.
+
+**Phasing** (`67e6153` then `805a4d1`): built the AI Hybrid + Full Treatment path from scratch —
+`buildPhasingRestylePrompt`, `functions/src/index.ts`'s `ALLOWED_KEYS` gained `'implementation'`,
+and a family of compositing functions in `DesignGlossy.tsx` (`composePhasingSheet`,
+`buildPhasingHybridInput`, `buildPhasingProtectMask`, `phasingPanelRect`,
+`drawPhasingExactContent`, `blankPhasingPanel`). The approved design: AI paints a decorative
+parchment underlayer; the schedule panel is erased with a fully opaque fill before the model ever
+sees the input, at BOTH the Hybrid and the polish stage; every exact fact (ground, structures,
+boundary, phase pins, the real schedule) is redrawn from saved data on top of whatever the model
+returns, regardless of which stage produced it.
+
+**This went through two real review failures before it was safe, and the record is worth keeping
+precisely, not smoothing over:**
+
+- Round 1 (Fable 5 reviewing the Sonnet-authored `67e6153`): verdict `do-not-merge`. Two genuine
+  blockers, not nitpicks — (a) the polish stage sent the model the finished hybrid WITH real
+  schedule text visible, protected only by generic prompt wording, exactly the prompt-only
+  protection this sheet was built to avoid; (b) the Hybrid composite-back never redrew boundary,
+  house, driveway or phase pins — that content shipped as whatever the model painted, under a
+  `'Geometry locked'` label that was therefore false, the identical defect class just fixed on Site,
+  reintroduced here with dishonest provenance. Plus three lesser findings: a 97%-opaque (not
+  opaque) panel blank-out leaking recoverable text; a code comment falsely claiming the protect mask
+  itself blocks model edits (it's never sent to the OpenAI call, same as every sheet's mask); the
+  panel geometry independently copy-pasted in four places.
+- I fixed all five findings directly (not re-delegated) — extracted `drawPhasingExactContent` and
+  `phasingPanelRect` as single sources of truth, made the polish stage re-blank the hybrid's own
+  output before sending it on, routed both stages through the same composite-back finisher, fixed
+  the opacity and the comment.
+- Round 2 (Fable 5 reviewing MY fix): verdict `do-not-merge` again. The label-honesty fix
+  (`geometryLock:true` on the polish stage, so the "Geometry locked" badge would be accurate) was a
+  live regression: `geometryLock:true` + `showcase:true` trips `hasConflictingRenderAuthority`
+  (`lib/render-policy.ts`) and `enqueueRenderJob` rejects the job before anything uploads — every
+  Phasing Full Treatment run would have failed at step 3, with the hybrid stage's paid result
+  already consumed and unrecoverable (`hybridResultRef` nulled before the throw). Also: three
+  comments (in `finishPhasingSheet`, `generatePhasingViaQueue`, `runLockedPolishFlow`) still
+  described the pre-fix behavior as current, and `buildImplementationMap` still computed the panel
+  rectangle inline instead of calling the new `phasingPanelRect` helper — "single source of truth"
+  half-installed while a comment claimed it was done.
+- Fixed all of round 2's findings (`805a4d1`): reverted to `geometryLock: !polishStage` (matching
+  every other sheet — Phasing's real protection was never that flag), corrected the three stale
+  comments, routed `buildImplementationMap` through `phasingPanelRect`.
+
+**Verified after every round, by actually running the commands:** `npx tsc --noEmit` clean,
+`npm test` 188/188, `npm run build` clean — currently true at `805a4d1`. Not independently
+re-reviewed a third time; the round-2 fixes are mechanical and traced by hand (a boolean revert
+matching an established pattern, comment corrections, one duplicate-computation removal), but that
+is a lower bar of confidence than the two agent-driven review rounds that preceded it.
+
+**Still true, unchanged from the section above:** no live AI render has been generated and looked
+at, for any sheet, in this whole session's worth of work on this branch. Every claim of "fixed" here
+rests on code tracing, a passing test suite, and a clean build — which the round-2 finding proves is
+necessary but not sufficient, since all three were green when a real enqueue-time crash shipped.
+Generating and looking at one real render — Water and Phasing are the two highest-value checks —
+remains the one thing on this list that isn't done.
+
 ## Working style notes
 
 Carried forward from `docs/HANDOVER-2026-07-21.md`, still accurate and still the standing bar:
