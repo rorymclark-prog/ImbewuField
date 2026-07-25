@@ -18,8 +18,10 @@ design-time option before it may rewrite source geometry.
   farmer's polygon.
 - Snap neighbouring Zone edges to one shared edge within a small screen/ground tolerance; fill only
   proven micro-gaps and never overlap, reorder or invent a zone.
-- Let a placed driveway gate create a measured break in the rendered fence/boundary line. The gate
-  must be close to that line and the break must use the gate's actual width and orientation.
+- [DONE, commit c8ec653] Let a placed driveway gate create a measured break in the rendered
+  fence/boundary line. The gate must be close to that line and the break must use the gate's actual
+  width and orientation. `lib/boundary-geometry.ts` + `drawBlueprintBoundary`; not yet visually
+  confirmed against a real render.
 - Make design-time route colours match the plan grammar: water/irrigation pipe blue, drip blue with
   emitter marks, and filtered greywater purple dashed.
 

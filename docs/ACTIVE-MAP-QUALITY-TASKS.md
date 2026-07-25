@@ -182,7 +182,7 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
 - [ ] Add an explicit previewed and undoable `Tidy outline` design action; never silently rewrite
   saved geometry.
 - [ ] Snap neighbouring zone edges only within a strict tolerance and never merge different zones.
-- [ ] Cut a measured boundary/fence break when a correctly placed Gate intersects it.
+- [x] Cut a measured boundary/fence break when a correctly placed Gate intersects it. (lib/boundary-geometry.ts, commit c8ec653 — needs a live render with a placed Gate to visually confirm, same as every other item on this list.)
 - [ ] Cover false joins, excessive movement, overlapping zones and gate-away-from-boundary cases
   with tests.
 
