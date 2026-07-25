@@ -180,7 +180,13 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   Not independently live-tested (no jsdom/RTL in this repo to automate it, and no authenticated
   session available here) — worth one real tap-through on your phone to be certain, but the logic
   itself checks out.
-- [ ] Verify the Icons toggle hides only editor glyphs, not real feature artwork or labels.
+- [x] Verify the Icons toggle hides only editor glyphs, not real feature artwork or labels. Traced
+  `activeLayers.symbols` in `DesignCanvas.tsx`: it gates only the small centred emoji-icon disc
+  drawn over a placed item; the item's true-scale footprint (fill+stroke) renders unconditionally a
+  few lines above it, and label pills are laid out in a completely separate code pass driven by the
+  independent `activeLayers.labels` toggle, not this one. It also cannot reach exported sheet
+  rendering at all — that's a different file (`DesignGlossy.tsx`) with no reference to
+  `activeLayers.symbols`, an editor-only display preference by construction. No code change needed.
 - [x] Make design-time route colours use the same grammar as exports. (a7ff660 — found and fixed a real live mismatch, not just a theoretical risk: editor swale was #4EA6D8, export was #258DBA.)
 - [ ] Prevent the palette and bottom safe area from clipping the last elements on phone/tablet.
 - [ ] Cap, paginate or thumbnail the saved-map gallery so many full-size images do not freeze
