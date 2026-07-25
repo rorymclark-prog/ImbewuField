@@ -192,7 +192,9 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
 - [x] Cap, paginate or thumbnail the saved-map gallery so many full-size images do not freeze
   semantic browser interaction or exhaust memory. Thumbnailed (commit 1c35bc1) rather than capped —
   keeps every saved map, generates a small JPEG for grid display, backfills existing sheets lazily.
-  `Clear all`/cached-blob removal not separately re-verified this pass.
+  `Clear all` fixed separately (commit 902ab35): it emptied the durable IndexedDB gallery but left a
+  small (2-entry-capped) localStorage last-render cache untouched, so a farmer could still briefly
+  see a just-cleared render reappear. Now clears both.
 
 ## P2 - Deterministic geometry finishing
 
