@@ -20,6 +20,9 @@ const DB_NAME = 'imbewu-sheets';
 const DB_VERSION = 1;
 const STORE = 'sheets';
 
+export type SheetResultKind = 'exact' | 'hybrid' | 'ai-polished' | 'ai-illustrated' | 'legacy';
+export type SheetProvider = 'exact' | 'openai' | 'gemini' | 'unknown';
+
 export interface StoredSheet {
   id: string;
   siteId: string;
@@ -34,6 +37,12 @@ export interface StoredSheet {
    *  downloadable. Absent on anything saved before versioning existed, which is itself the signal
    *  that it is old. */
   planVersion?: string;
+  /** Durable provenance. Labels are presentation copy and must never be used to infer whether a
+   * paid model actually produced the saved pixels. Older rows omit these fields and read as legacy. */
+  resultKind?: SheetResultKind;
+  provider?: SheetProvider;
+  geometryLock?: boolean;
+  showcase?: boolean;
 }
 
 function openDb(): Promise<IDBDatabase | null> {

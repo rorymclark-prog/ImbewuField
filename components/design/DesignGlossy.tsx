@@ -47,7 +47,8 @@ import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { lockedPolishAction, lockedPolishStyle } from '@/lib/locked-polish-flow';
-import { loadSheets, saveSheet, deleteSheet, clearSheets } from '@/lib/sheet-store';
+import { calculateBoundaryPresentationCrop } from '@/lib/reference-presentation';
+import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -4686,26 +4687,9 @@ async function boundaryPresentationContext(
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
 ): Promise<ReferencePresentationContext> {
-  if (refLayers.boundary.length < 3) return { state, frame, refLayers };
-
-  const xs = refLayers.boundary.map(([x]) => x);
-  const ys = refLayers.boundary.map(([, y]) => y);
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs);
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-  const boundarySpan = Math.max(maxX - minX, maxY - minY);
-  if (!Number.isFinite(boundarySpan) || boundarySpan <= 0 || boundarySpan >= 0.76) {
-    return { state, frame, refLayers };
-  }
-
-  // Equal x/y fractions preserve the aerial's aspect and keep north-up geometry undistorted.
-  const margin = Math.max(0.035, boundarySpan * 0.12);
-  const cropFraction = Math.min(1, Math.max(0.24, boundarySpan + margin * 2));
-  const centerX = (minX + maxX) / 2;
-  const centerY = (minY + maxY) / 2;
-  const cropX = Math.max(0, Math.min(1 - cropFraction, centerX - cropFraction / 2));
-  const cropY = Math.max(0, Math.min(1 - cropFraction, centerY - cropFraction / 2));
+  const crop = calculateBoundaryPresentationCrop(refLayers.boundary);
+  if (!crop) return { state, frame, refLayers };
+  const { cropX, cropY, cropFraction } = crop;
   const point = ([x, y]: [number, number]): [number, number] => [
     (x - cropX) / cropFraction,
     (y - cropY) / cropFraction,
@@ -7123,7 +7107,7 @@ interface SavedGlossy {
 // v51: reusable feature art loses its pale sticker halo and map callouts remain readable on phones.
 // v53: paid Sector polish sends the complete exact sheet to GPT Image instead of repainting only
 //      the ground and rebuilding the same hybrid page over it.
-const PLAN_VERSION = 'v54';
+const PLAN_VERSION = 'v55';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -7204,6 +7188,30 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
   falgpt: 'gpt-image-2',
   exact: 'Exact map · no AI',
 };
+
+interface GalleryItem {
+  id: string;
+  label: string;
+  image: string;
+  resultKind: SheetResultKind;
+  provider: SheetProvider;
+  geometryLock: boolean;
+  showcase: boolean;
+}
+
+function galleryResultBadge(item: GalleryItem): string {
+  if (item.resultKind === 'exact') return 'Exact master · no AI';
+  if (item.resultKind === 'hybrid') {
+    return `Geometry-locked hybrid · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+  }
+  if (item.resultKind === 'ai-polished') {
+    return `Paid AI-polished result · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+  }
+  if (item.resultKind === 'ai-illustrated') {
+    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? 'gpt-image-2' : 'provider unknown'}`;
+  }
+  return 'Older saved map · provenance unavailable';
+}
 
 export default function DesignGlossy({
   state,
@@ -7349,7 +7357,7 @@ export default function DesignGlossy({
   // written nowhere, so closing the tab destroyed sheets that cost real money and minutes to
   // render. `storageWarning` is set when a sheet could not be persisted, so we say so rather than
   // let the word "Saved" imply a durability we do not have.
-  const [gallery, setGallery] = useState<Array<{ id: string; label: string; image: string }>>([]);
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
@@ -7398,6 +7406,10 @@ export default function DesignGlossy({
         id: r.id,
         label: r.planVersion === PLAN_VERSION ? r.label : `${r.label} · older version`,
         image: r.image,
+        resultKind: r.resultKind ?? 'legacy',
+        provider: r.provider ?? 'unknown',
+        geometryLock: r.geometryLock ?? false,
+        showcase: r.showcase ?? false,
       })));
     });
     return () => {
@@ -7406,8 +7418,20 @@ export default function DesignGlossy({
   }, [state.siteId]);
 
   const pushGallery = useCallback(
-    (label: string, image: string) => {
-      const item = { id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, image };
+    (
+      label: string,
+      image: string,
+      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'geometryLock' | 'showcase'>> = {},
+    ) => {
+      const item: GalleryItem = {
+        id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        label,
+        image,
+        resultKind: provenance.resultKind ?? 'legacy',
+        provider: provenance.provider ?? 'unknown',
+        geometryLock: provenance.geometryLock ?? false,
+        showcase: provenance.showcase ?? false,
+      };
       setGallery((prev) => [...prev, item]);
       // Persist alongside the state update, never instead of it — a sheet that fails to save must
       // still be on screen and downloadable.
@@ -7537,7 +7561,12 @@ export default function DesignGlossy({
           : filter === 'all'
             ? 'Whole design'
             : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-        pushGallery(`${mapLabel} · AI illustrated`, finalImage);
+        pushGallery(`${mapLabel} · AI illustrated`, finalImage, {
+          resultKind: 'ai-illustrated',
+          provider: useProvider === 'gemini' ? 'gemini' : 'openai',
+          geometryLock: false,
+          showcase: true,
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Render failed.');
       } finally {
@@ -7692,7 +7721,12 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery(`${layerLabel} · ${styleDef.label} · AI polished`, sheet);
+      pushGallery(`${layerLabel} · ${styleDef.label} · Geometry-locked hybrid`, sheet, {
+        resultKind: 'hybrid',
+        provider: producerEngine === 'openai' ? 'openai' : 'gemini',
+        geometryLock,
+        showcase: false,
+      });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7738,7 +7772,12 @@ export default function DesignGlossy({
       const mapLabel = filter === 'all'
         ? 'Whole design'
         : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-      pushGallery(`${mapLabel} · Exact master`, composite);
+      pushGallery(`${mapLabel} · Exact master`, composite, {
+        resultKind: 'exact',
+        provider: 'exact',
+        geometryLock: true,
+        showcase: false,
+      });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7772,7 +7811,12 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Implementation & phasing · Exact master', composite);
+      pushGallery('Implementation & phasing · Exact master', composite, {
+        resultKind: 'exact',
+        provider: 'exact',
+        geometryLock: true,
+        showcase: false,
+      });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7797,7 +7841,12 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Sector analysis · Exact master', composite);
+      pushGallery('Sector analysis · Exact master', composite, {
+        resultKind: 'exact',
+        provider: 'exact',
+        geometryLock: true,
+        showcase: false,
+      });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7821,7 +7870,12 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Existing site & base · Exact master', composite);
+      pushGallery('Existing site & base · Exact master', composite, {
+        resultKind: 'exact',
+        provider: 'exact',
+        geometryLock: true,
+        showcase: false,
+      });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice('Refreshed current sheet — preview updated in your gallery.');
@@ -7847,7 +7901,12 @@ export default function DesignGlossy({
     let made = 0;
     const step = (label: string, image: string, cacheKey: string) => {
       try { saveGlossy(state.siteId, cacheKey, { image, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full — gallery still holds it */ }
-      pushGallery(`${label} · Exact master`, image);
+      pushGallery(`${label} · Exact master`, image, {
+        resultKind: 'exact',
+        provider: 'exact',
+        geometryLock: true,
+        showcase: false,
+      });
       made += 1;
       setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
     };
@@ -7995,7 +8054,12 @@ export default function DesignGlossy({
             at: new Date().toISOString(),
           });
         } catch { /* cache full — gallery still holds it */ }
-        pushGallery(`${layerLabel} · ${styleDef.label} · AI polished`, sheet);
+        pushGallery(`${layerLabel} · ${styleDef.label} · Geometry-locked hybrid`, sheet, {
+          resultKind: 'hybrid',
+          provider: producerEngine === 'openai' && !fellBack ? 'openai' : 'gemini',
+          geometryLock,
+          showcase: false,
+        });
         made += 1;
         setNotice(`Styling your ${styleDef.label} plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
       }
@@ -8181,7 +8245,12 @@ export default function DesignGlossy({
         const base = frame.satDataUrl ?? (await buildComposite(state, frame, refLayers, 'zones'));
         const zsheet = await finishStyledSheet(base, 'zones', styleDef, false, frame.satDataUrl ?? undefined, undefined, lockActive);
         try { saveGlossy(state.siteId, `producer:${styleKey}:zones:exact`, { image: zsheet, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full */ }
-        pushGallery(`Zones map · ${styleDef.label} · Exact styled`, zsheet);
+        pushGallery(`Zones map · ${styleDef.label} · Exact styled`, zsheet, {
+          resultKind: 'exact',
+          provider: 'exact',
+          geometryLock: true,
+          showcase: false,
+        });
       }
       // With showcase on, zones joins the model list — 5 sheets, exactly MAX_SHEETS_PER_JOB.
       const modelFilters: GlossyLayerFilter[] = effectiveModelChrome
@@ -8689,6 +8758,12 @@ export default function DesignGlossy({
               lastAssembledGalleryId = pushGallery(
                 `${sheet.label}${finishLabel} · AI polished${locked ? ' · Geometry locked' : ''}`,
                 finalSheet,
+                {
+                  resultKind: showcase ? 'ai-polished' : locked ? 'hybrid' : 'ai-polished',
+                  provider: 'openai',
+                  geometryLock: locked,
+                  showcase,
+                },
               );
               assembled.add(sheet.key);
               if (locked) lockedAssembled += 1;
@@ -9489,7 +9564,7 @@ export default function DesignGlossy({
                       alignSelf: 'flex-start',
                       padding: '5px 9px',
                       borderRadius: 999,
-                      background: galleryViewItem.label.includes('AI polished') ? '#F2C977' : '#E8E3D8',
+                      background: galleryViewItem.resultKind === 'ai-polished' ? '#F2C977' : '#E8E3D8',
                       color: DARK,
                       fontSize: 10.5,
                       fontWeight: 900,
@@ -9497,9 +9572,7 @@ export default function DesignGlossy({
                       letterSpacing: '0.04em',
                     }}
                   >
-                    {galleryViewItem.label.includes('AI polished')
-                      ? 'Paid AI-polished result · gpt-image-2'
-                      : 'Exact master · no AI'}
+                    {galleryResultBadge(galleryViewItem)}
                   </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     <a
@@ -9557,7 +9630,10 @@ export default function DesignGlossy({
                         style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', border: '1px solid #E2D8C4', aspectRatio: '1 / 1', background: DARK }}
                       >
                         <button
-                          onClick={() => setGalleryViewId(g.id)}
+                          onClick={() => {
+                            setGalleryViewId(g.id);
+                            setGalleryZoomOpen(true);
+                          }}
                           aria-label={`Open ${g.label}`}
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
