@@ -166,8 +166,17 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   must create an editable offset copy.
 - [ ] Add a clear mobile Copy/Paste affordance only if Duplicate does not cover the real workflow.
 - [ ] Verify the smaller resize/rotate/edit/delete handles on phone and tablet.
-- [ ] Confirm tapping an item's delete `X` while a placement tool is armed deletes the item and does
-  not place another one.
+- [x] Confirm tapping an item's delete `X` while a placement tool is armed deletes the item and does
+  not place another one. Verified by tracing the actual event flow, not assumed: the delete `✕`
+  (`DesignCanvas.tsx`, `deleteItem` call) calls `stopPropagation()` on `pointerdown`, which prevents
+  `handleBackgroundPointerDown` from ever setting `panState.current` for that pointer; on
+  `pointerup`, `handleBackgroundPointerUp` gates `runTapAction` (the place-new-item logic) behind
+  `panState.current` being set for that same pointer — so even though the `pointerup` event itself
+  still bubbles to the background handler, its own gate correctly skips placement. Same protection
+  confirmed on the zone-vertex delete `−` badge. No code change needed; this was already correct.
+  Not independently live-tested (no jsdom/RTL in this repo to automate it, and no authenticated
+  session available here) — worth one real tap-through on your phone to be certain, but the logic
+  itself checks out.
 - [ ] Verify the Icons toggle hides only editor glyphs, not real feature artwork or labels.
 - [x] Make design-time route colours use the same grammar as exports. (a7ff660 — found and fixed a real live mismatch, not just a theoretical risk: editor swale was #4EA6D8, export was #258DBA.)
 - [ ] Prevent the palette and bottom safe area from clipping the last elements on phone/tablet.
