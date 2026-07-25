@@ -7387,6 +7387,23 @@ function saveGlossy(siteId: string, mapKey: string, saved: SavedGlossy) {
   }
 }
 
+/** "Clear all" on the Saved Maps gallery emptied the durable IndexedDB store (clearSheets) but left
+ *  this separate localStorage last-render cache untouched — GLOSSY_CACHE_MAX keeps it small (2
+ *  entries across ALL sites), so this was never an unbounded leak, but a farmer who cleared their
+ *  gallery could still briefly see one of their own just-cleared renders reappear as the "last
+ *  shown result" for whichever sheet+style it was cached under, since loadSavedGlossy checks this
+ *  cache independently of the gallery. Removes every glossyKey for this site, any mapKey suffix. */
+function clearGlossyCacheForSite(siteId: string) {
+  try {
+    const prefix = `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`;
+    for (const k of Object.keys(localStorage)) {
+      if (k === prefix || k.startsWith(`${prefix}_`)) localStorage.removeItem(k);
+    }
+  } catch {
+    /* best effort — Clear all already cleared the durable store either way */
+  }
+}
+
 function relativeDate(iso: string): string {
   const then = new Date(iso).getTime();
   if (Number.isNaN(then)) return '';
@@ -10272,7 +10289,7 @@ export default function DesignGlossy({
                       {storageWarning ?? 'Saved on this device — these stay here after you close the app.'}
                     </p>
                     <button
-                      onClick={() => { setGallery([]); setGalleryViewId(null); void clearSheets(state.siteId); }}
+                      onClick={() => { setGallery([]); setGalleryViewId(null); void clearSheets(state.siteId); clearGlossyCacheForSite(state.siteId); }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 9, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 11, cursor: 'pointer', whiteSpace: 'nowrap' }}
                     >
                       <Trash2 size={12} /> Clear all
