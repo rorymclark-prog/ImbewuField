@@ -1480,6 +1480,13 @@ function overlayElementsText(
   filter: GlossyLayerFilter = 'all',
 ): { elements: string; fabric: string; served: string } {
   const byName = new Map<string, Array<string | null>>();
+  // Strips characters overlayElementsText's own OUTPUT uses as structural delimiters (buildSatelliteOverlayPrompt
+  // splits grouped rows on ',' — see its `collapseRows((list ?? '').split(','))`). Moved to the top of
+  // this function (it used to be defined only where the FABRIC channel used it, far below) so it can
+  // also sanitise farmer-typed element names — a label like "Tank, north side" was going straight
+  // into `parts` unsanitised and came out of the legend as two rows, "Tank" and "north side", the
+  // second with no icon vocabulary at all (audit finding, 2026-07-25).
+  const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
   // Legend section per element name. A flat 30-row legend is unreadable on the whole-design sheet;
   // the reference masterplan groups its key into WATER / PLANTING / INFRASTRUCTURE and that is what
   // makes it scannable.
@@ -1490,17 +1497,31 @@ function overlayElementsText(
   };
   // 'earthworks' is a build category, not a reading category. A farmer reading the sheet files a
   // banana circle and a tree basin under PLANTING (they are where things grow) and a greywater or
-  // infiltration basin under WATER, whatever the catalog calls them.
-  const SECTION_BY_ID: Record<string, string> = {
-    banana_circle: 'PLANTING', tree_basin: 'PLANTING', mulch_bank: 'PLANTING',
-    keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
-    greywater_basin: 'WATER', infiltration_basin: 'WATER',
-  };
+  // infiltration basin under WATER, whatever the catalog calls them. BUT on the WATER sheet
+  // specifically, banana_circle/tree_basin appear via ADDITIONAL_SHEETS as genuine water content
+  // (they are a greywater sink) — filing them under a PLANTING heading on a sheet titled WATER PLAN
+  // is confusing regardless of the catalog's PRIMARY sheet (audit finding, 2026-07-25: this table
+  // was not filter-aware, so the same two elements got the same heading on every sheet they appear
+  // on, even where that heading doesn't match the sheet). lib/water-cartography.ts's
+  // waterLegendSectionForFeature already answers "what heading on the Water sheet" correctly for the
+  // deterministic path; mirrored here rather than imported since this table's section names (WATER/
+  // PLANTING/INFRASTRUCTURE/ZONES) are coarser than that module's four-way water split.
+  const SECTION_BY_ID: Record<string, string> = filter === 'water'
+    ? {
+        banana_circle: 'WATER', tree_basin: 'WATER', mulch_bank: 'PLANTING',
+        keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
+        greywater_basin: 'WATER', infiltration_basin: 'WATER',
+      }
+    : {
+        banana_circle: 'PLANTING', tree_basin: 'PLANTING', mulch_bank: 'PLANTING',
+        keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
+        greywater_basin: 'WATER', infiltration_basin: 'WATER',
+      };
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def || !itemInFilter(def.category, filter, def.id)) continue;
-    sectionOf.set(it.label ?? def.name, SECTION_BY_ID[def.id] ?? SECTION[def.category] ?? 'INFRASTRUCTURE');
-    const name = it.label ?? def.name;
+    const name = clean(it.label ?? def.name);
+    sectionOf.set(name, SECTION_BY_ID[def.id] ?? SECTION[def.category] ?? 'INFRASTRUCTURE');
     const arr = byName.get(name) ?? [];
     arr.push(placeLabelFor([it.x, it.y], state.zones));
     byName.set(name, arr);
@@ -1514,7 +1535,7 @@ function overlayElementsText(
     if (places.length > 1 && distinct.size > 1 && named.length === places.length) {
       const seen = new Map<string, number>();
       for (const p of places) seen.set(p!, (seen.get(p!) ?? 0) + 1);
-      for (const [place, n] of seen) parts.push(`${name} (${place})${n > 1 ? ` ×${n}` : ''}`);
+      for (const [place, n] of seen) parts.push(`${name} (${clean(place)})${n > 1 ? ` ×${n}` : ''}`);
     } else {
       parts.push(`${name}${places.length > 1 ? ` ×${places.length}` : ''}`);
     }
@@ -1601,7 +1622,7 @@ function overlayElementsText(
   // tree basins no veg bed drip irrigation!!!"). They have to be visible for the routes to mean
   // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
   // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
-  const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
+  // (clean() is defined near the top of this function now — shared with the element-name sanitising above.)
   // 'all' deliberately, NOT this function's own `filter` — this text feeds every sheet's `fabric`
   // string, content or context alike, and the prompt's own fabricIsContent (groundRegister) is
   // what decides caption/legend wording downstream. Narrowing to `filter` here would silently
@@ -3225,9 +3246,15 @@ function blueprintLegendCapacity(H: number, pad: number, rowH: number): number {
 //     month's sheet is comparable with last month's.
 // A catalog edit can shift the palette, which is cosmetic only: the legend on the sheet always
 // shows the mapping that sheet actually used.
+// Index 7 was '#2F7A4A' — byte-identical to GROUND_FEATURES.orchard.color (lib/design-elements.ts).
+// Whichever species landed at that index (Litchi at the time of the audit finding, 2026-07-25;
+// SHEET_OVERRIDE's five earthworks-to-planting remaps have since shifted it to Citrus) shared its
+// legend swatch with the Orchard ground-feature row on the same sheet — two different rows, same
+// colour chip, no way to tell them apart at a glance. Replaced with a muted rust not used elsewhere
+// in this palette or by any GROUND_FEATURES colour.
 const SPECIES_PALETTE = [
   '#E4572E', '#F4A259', '#F6D55C', '#C9A227', '#A3B565', '#7FD46B',
-  '#4E9F3D', '#2F7A4A', '#3CBBB1', '#4EA6D8', '#2B6FA6', '#5C6BC0',
+  '#4E9F3D', '#9C5B3C', '#3CBBB1', '#4EA6D8', '#2B6FA6', '#5C6BC0',
   '#9B6FD4', '#C879C0', '#E8639B', '#D64550', '#B5651D', '#8C6239',
   '#C98A2C', '#7A9E9F', '#B8C4A9', '#E0B0A0', '#6FB1FC', '#D9D06A',
 ];
@@ -8581,7 +8608,7 @@ export default function DesignGlossy({
           ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
           : undefined;
         const prompt = isModelChromeStyle(styleKey)
-          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: f })
+          ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: f, hasDriveway: refLayers.driveway.length >= 2 })
           : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
           : effectiveModelChrome
@@ -8696,7 +8723,7 @@ export default function DesignGlossy({
       const prompt = fullSheetPolish
         ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName)
         : isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: filter })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(state), placeName, sheetKind: filter, hasDriveway: refLayers.driveway.length >= 2 })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
         : useShowcase

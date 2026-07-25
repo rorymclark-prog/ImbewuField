@@ -132,6 +132,16 @@ export function buildProducerPrompt(
   retry = false,
   designBrief = '',
 ): string {
+  // NEVER BRIEF THE MODEL ON NOTHING — same guard, same reasoning as buildSatelliteOverlayPrompt
+  // (audit finding, 2026-07-25: this path had no guard at all, so a boundary-only design on any
+  // non-satellite style passed the UI-level layerContentCount gate with an empty elementsText and
+  // the model invented content to fill the page). Scoped to mapKind==='full': the 'base' map
+  // legitimately renders from the photograph alone with no placed elements.
+  if (mapKind === 'full' && !elementsText.trim()) {
+    throw new Error(
+      `Refusing to render${layerLabel ? ` the ${layerLabel} sheet` : ' this sheet'}: it has no elements to describe, and a sheet built from an empty brief is invented, not drawn.`,
+    );
+  }
   const isLayerMap = !!layerLabel && layerLabel !== 'Full design';
   const titleLabel = layerLabel ? ` (${layerLabel})` : '';
   const task = mapKind === 'base'
@@ -169,8 +179,14 @@ export function buildProducerPrompt(
   const styleRule = isLayerMap
     ? `STYLE NOTE: keep the open ground quiet and natural so the ${layerLabel} layer reads clearly. Use muted grass, veld and soil textures around the marked features.`
     : `STYLE NOTE: paint the whole plot as a finished illustrated landscape with living land, visible ground texture and crisp property edges.`;
+  // No legend/heading language here — layoutRule above already tells the model this pass adds no
+  // title block, legend panel or sheet furniture at all (the app draws it afterwards). This used to
+  // demand "grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES" in the
+  // same prompt that told it not to add a legend panel — a direct contradiction (audit finding,
+  // 2026-07-25). The grouping/heading logic still exists; it belongs to the app's own deterministic
+  // legend (sheetLegendRows) and the showcase/satellite prompts that DO own their own chrome.
   const waterRule = /water/i.test(layerLabel ?? '')
-    ? `WATER SHEET: make the water network the hero. Use a crisp editorial plan-sheet composition with clear callouts and grouped legend sections for RAINWATER, IRRIGATION, FILTERED GREYWATER and NOTES. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
+    ? `WATER SHEET: make the water network the hero. Show only tanks, taps, pumps, filters, overflow basins, swales, pipes and drip lines that are already marked or visible; do not invent extra water systems or extra water-related landforms.`
     : '';
 
   const briefBlock = designBrief
@@ -371,16 +387,39 @@ const M = {
   greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
   greywater_line: 'a solid violet line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
+  // ADDED (audit finding, 2026-07-25): this table had NO entry at all for tap, borehole, or any
+  // fitting/earthwork/livestock element — a farmer on any default style (not Satellite Overlay)
+  // placing a borehole, a chicken coop or a goat pen got zero drawing instruction. Text mirrors the
+  // equivalent OVERLAY_ICONS entries so the two paths describe the same object the same way.
+  tap: 'a small tap marker is a plain garden tap on its own — just the spout and handle, no post, no plinth',
+  borehole: 'a small blue concentric-circle marker is a borehole — a grey collar ring around the wellhead',
+  greywater_fitting: 'a small marker beside a tank or basin is a greywater outlet or diverter — a small grey plastic fitting flush with the ground, a short pipe stub, no gravel bed and no visible basin',
+  half_moon: 'a circular earthwork marker is a half-moon water-harvesting basin — a shallow crescent depression open on its downhill side, backed by a low curved earth bund',
+  berm: 'a narrow long rectangular marker is an on-contour earth berm — a low grassed ridge running exactly along that line, no taller than knee height',
+  terrace: 'a narrow long rectangular marker is a terrace retaining bank — a hatched, textured retained riser face holding back a level change',
+  coop: 'a marker is a fixed chicken coop — a small timber hen house on low legs with a sloped roof and a wire-mesh run, no wheels',
+  chicken_tractor: 'a marker is a chicken tractor — a small wheeled A-frame ark on skids, NOT the fixed coop',
+  nursery: 'a marker is a nursery table — a waist-high slatted timber bench with seedling trays under light shade cloth',
+  compost: 'a marker is a compost bay — three adjacent open-topped timber-slat bays in a row',
+  worm_farm: 'a marker is a worm farm — a stack of 2-3 dark plastic trays on short legs, lidded, never open-topped bays',
+  goat_pen: 'a fenced marker is a goat pen — post-and-rail fencing around bare earth, no roof, no animals painted inside',
+  pig_pen: 'a fenced marker is a pig pen — solid lower rails around bare earth, no roof, no animals painted inside',
+  kraal: 'a fenced marker is a livestock kraal — a ring of stout timber poles lashed close together, bare earth inside, no roof',
+  rabbit_hutch: 'a small narrow marker is a rabbit hutch — a raised timber hutch on short legs with a wire-mesh front panel',
+  duck_pond: 'a small circular water marker is a duck pond, with reeds and rough grass at the edge, never paved like a garden pond',
+  livestock_trough: 'a narrow rectangular marker is a livestock water trough — a low open-topped galvanised-steel trough, no roof',
+  biodigester: 'a small circular marker is a biodigester — a sealed dome-topped tank at ground level with one visible inlet pipe',
+  market_stall: 'a square marker is a market stall — a simple open-sided timber stall with a pitched roof and a waist-high counter, empty of produce',
 } as const;
 
 type ShowcaseMarkerKey = keyof typeof M;
 
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
-  all: ['bed', 'tree', 'windbreak', 'tank', 'dam', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'zones'],
+  all: ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'zones'],
   zones: ['zones', 'driveway'],
-  water: ['tank', 'dam', 'swale', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line'],
+  water: ['tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace'],
   planting: ['bed', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
-  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway'],
+  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall'],
 };
 
 const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
@@ -404,6 +443,25 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   greywater_basin: /greywater basin|infiltration basin/i,
   greywater_line: /greywater line/i,
   zones: /\bzone\s*[0-5]\b|permaculture zone/i,
+  tap: /\btap\b|standpipe|faucet/i,
+  borehole: /borehole|\bwell\b/i,
+  greywater_fitting: /greywater outlet|greywater diverter/i,
+  half_moon: /half-moon|half moon/i,
+  berm: /\bberm\b/i,
+  terrace: /terrace|retaining bank/i,
+  coop: /chicken coop/i,
+  chicken_tractor: /chicken tractor/i,
+  nursery: /nursery/i,
+  compost: /\bcompost\b/i,
+  worm_farm: /worm farm/i,
+  goat_pen: /goat pen/i,
+  pig_pen: /pig pen/i,
+  kraal: /\bkraal\b/i,
+  rabbit_hutch: /rabbit hutch/i,
+  duck_pond: /duck pond/i,
+  livestock_trough: /livestock trough/i,
+  biodigester: /biodigester/i,
+  market_stall: /market stall/i,
 };
 
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
@@ -420,6 +478,15 @@ export function buildShowcasePrompt(
   placeName = '',
   sheetKind: ShowcaseSheetKind = 'all',
 ): string {
+  // NEVER BRIEF THE MODEL ON NOTHING — same guard as buildSatelliteOverlayPrompt (audit finding,
+  // 2026-07-25: this path had no guard, and its own noInvent line below tells the model "the
+  // feature list below is complete", so an empty list is a positive assertion the sheet is empty,
+  // which a model resolves by inventing content rather than rendering a blank page).
+  if (!elementsText.trim()) {
+    throw new Error(
+      `Refusing to render the ${sheetKind} sheet: it has no elements to describe, and a sheet built from an empty brief is invented, not drawn.`,
+    );
+  }
   const title = `${(layerLabel ?? 'Site plan').toUpperCase()}${placeName ? ' — ' + placeName : ''}`;
   const singleLayer = sheetKind !== 'all'
     ? `SHEET FOCUS: this sheet shows one layer of the plan. The named features are the stars, while the rest of the plot stays a quiet softly painted base of lawn, veld and existing buildings in the same style.`
@@ -474,7 +541,18 @@ const OVERLAY_ICONS: Record<string, string> = {
   tank:      'a small drum/cylinder marker → a blue cylindrical JoJo water tank seen from a high top-down angle, ribbed body, darker lid disc, soft shadow to the lower-right',
   tap:       'a small tap/valve marker → a plain garden tap on its own, drawn small and low-key: just the spout and handle, no post, no plinth and no concrete base pad',
   dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
+  // Narrowed to actual BASINS only (audit finding, 2026-07-25): the old /greywater|grey water/i
+  // regex also matched "Greywater Outlet" and "Greywater Diverter & Filter" — small point fittings,
+  // not sunken basins — and sent the model this basin's gravel-sump description for both. Real
+  // basins keep this description; the two fittings get their own entry below.
   basin:     'a greywater or infiltration basin marker → a gravel-filled circular sump with a visible inlet pipe entering one side and low reeds around the rim only',
+  greywater_fitting: 'a small greywater outlet or diverter marker → a small grey plastic fitting flush with the ground, a short pipe stub, no gravel bed, no reeds, no visible basin',
+  water_trough: 'a narrow rectangular marker → a low open-topped galvanised-steel livestock water trough, plain and utilitarian, no roof',
+  first_flush: 'a tiny circular marker on a downpipe → a first-flush diverter: a short vertical pipe with a small ball-valve cap at its base, mounted low on the tank\'s downpipe',
+  pump_filter: 'a small square marker → a compact pump-and-filter unit on a concrete pad: a small grey pump housing beside a cylindrical inline filter canister, no larger than a bar fridge',
+  half_moon: 'a circular earthwork marker → a half-moon water-harvesting basin: a shallow crescent-shaped depression open on its downhill side, backed by a low curved earth bund on the uphill side',
+  berm: 'a narrow long rectangular marker → an on-contour earth berm: a low grassed ridge of compacted soil running exactly along that line, no taller than knee height',
+  terrace: 'a narrow long rectangular marker → a terrace retaining bank: a hatched, textured retained riser face holding back the level change, visibly distinct from the flat ground on either side of it',
   banana:    'a banana-circle marker → a sunken pit about 2 m across filled with dark mulch and ringed by a raised earth bund, with four or five broad paddle-shaped banana leaves fanning out over the rim',
   // "along exactly that line" was the ghost-hedge bug. Vetiver Bank (mulch_bank) is shape 'rect',
   // 2x2 m by default — it has NO line. So this clause ordered a continuous band along a line that
@@ -494,9 +572,25 @@ const OVERLAY_ICONS: Record<string, string> = {
   // unsafe one. The water prompt already routes greywater here, which only works with this
   // geometry: water enters the moat, away from the trunk.
   tree_basin: 'a tree-basin marker → the EARTHWORK only: a low raised mound of bare prepared soil at the centre, ringed by a doughnut-shaped mulched moat — a shallow annular trench of dark mulch held by a low outer soil berm — with clear dry ground between the mulch and the mound. THE MOUND CARRIES NO PLANT OF ITS OWN: any tree that belongs here has its own separate marker, and a basin marker on its own is prepared ground waiting to be planted. Whatever is planted here later sits ON the mound, never down in a dip. Opposite silhouette to a banana circle: that is a SUNKEN pit with plants around its rim, this is a RAISED bare mound with the mulch ring around it',
-  coop:      'a chicken-tractor marker → a small A-frame ark on skids about 2 m long, timber ends and chicken-wire sloping sides, two small wheels at one end. It is a movable hen house, NOT a tractor and not any kind of vehicle',
+  // COOP is a FIXED hen house — the wheeled-ark description belongs to chicken_tractor alone,
+  // which has its own marker and never reaches this key. Audit finding 2026-07-25: ICON_MATCH.coop
+  // was /chicken tractor|chicken coop/i, so a stationary "Chicken Coop" got the movable-ark
+  // description meant for a different catalog element.
+  coop:      'a chicken-coop marker → a small fixed timber hen house on low legs, a sloped roof, a wire-mesh run alongside it, no wheels and no skids',
+  chicken_tractor: 'a chicken-tractor marker → a small A-frame ark on skids about 2 m long, timber ends and chicken-wire sloping sides, two small wheels at one end. It is a movable hen house, NOT a tractor and not any kind of vehicle',
   nursery:   'a nursery-table marker → a waist-high slatted timber bench carrying rows of small black seedling trays under light shade cloth',
   compost:   'a compost-bay marker → three adjacent open-topped timber-slat bays in a row, the left one heaped with dark brown compost',
+  // WORM FARM is a stacked bin system, not a compost bay — audit finding 2026-07-25: ICON_MATCH.compost
+  // was /compost|worm farm/i, so a farmer's worm farm got the three-open-bay description.
+  worm_farm: 'a small square marker → a stack of 2-3 dark plastic worm-farm trays on short legs, a tap at the base, lidded and enclosed — never open-topped bays',
+  goat_pen:  'a fenced-pen marker → a small livestock enclosure: post-and-rail timber fencing around bare trampled earth, no roof, no animals painted inside — the paddock only',
+  pig_pen:   'a fenced-pen marker → a small livestock enclosure with solid lower rails (not open rail) around bare earth, no roof, no animals painted inside — the paddock only',
+  kraal:     'a larger fenced-enclosure marker → a traditional livestock kraal: a ring of stout timber poles lashed close together, bare earth inside, no roof',
+  rabbit_hutch: 'a small narrow rectangular marker → a raised timber hutch on short legs with a wire-mesh front panel',
+  duck_pond: 'a small circular water marker → a shallow duck pond with reeds and rough grass at the edge, distinct from a garden pond by its plain grassy verge, never paved',
+  livestock_trough: 'a narrow rectangular marker → a low open-topped galvanised-steel livestock water trough, plain and utilitarian, no roof',
+  biodigester: 'a small circular marker → a sealed dome-topped biodigester tank at ground level, dark grey-green plastic, one visible inlet pipe',
+  market_stall: 'a square marker → a simple open-sided timber market stall with a pitched roof and a waist-high front counter, empty of produce',
   // Same defect as `mulch` above: pollinator_strip is rect 1x5 m, a narrow RECTANGLE, not a line.
   // "following exactly that line" sent the strips off along the boundary too — which is why the
   // pollinator labels came out sitting just off the fence.
@@ -516,20 +610,34 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'nursery', 'compost', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
-  water:      ['tank', 'tap', 'dam', 'basin', 'tree_basin', 'banana', 'mulch', 'borehole', 'swale', 'pipe', 'drip'],
+  // half_moon/berm/terrace are 'earthworks' category, which sheetForElement routes to 'water' —
+  // same authority DesignGlossy.tsx's sheetForElement/SHEET_OVERRIDE use, so this list can't drift
+  // from which sheet an element actually prints on.
+  water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip'],
   planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
-  structures: ['building', 'hive', 'coop', 'nursery', 'compost', 'patio', 'fence', 'path'],
+  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'patio', 'fence', 'path'],
 };
 
 // Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
 // for is how a prompt talks a model into drawing one.
 const ICON_MATCH: Record<string, RegExp> = {
   tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /\bdam\b|\bpond\b/i, // anchored: unanchored, this fired on "Maca-dam-ia Tree"
-  basin: /greywater|grey water|infiltration/i, tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
-  borehole: /borehole|well/i, bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
-  hive: /hive/i, coop: /chicken tractor|chicken coop/i, nursery: /nursery/i, compost: /compost|worm farm/i, pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  // Narrowed to actual basins (audit finding 2026-07-25) — see the OVERLAY_ICONS.basin comment.
+  basin: /greywater basin|infiltration basin/i, greywater_fitting: /greywater outlet|greywater diverter/i,
+  tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
+  borehole: /borehole|well/i, water_trough: /water trough/i, first_flush: /first-flush|first flush/i,
+  pump_filter: /pump\s*&?\s*filter/i, half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
+  bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
+  hive: /hive/i,
+  // Split so a fixed Chicken Coop and a wheeled Chicken Tractor get their own, different, correct
+  // descriptions instead of one regex routing both to whichever came first (audit finding 2026-07-25).
+  coop: /chicken coop/i, chicken_tractor: /chicken tractor/i,
+  nursery: /nursery/i, compost: /\bcompost\b/i, worm_farm: /worm farm/i,
+  goat_pen: /goat pen/i, pig_pen: /pig pen/i, kraal: /\bkraal\b/i, rabbit_hutch: /rabbit hutch/i,
+  duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i,
+  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
 };
@@ -553,8 +661,10 @@ export function buildSatelliteOverlayPrompt(args: {
   systems?: { rainwater: boolean; irrigation: boolean; greywater: boolean; greywaterLine?: boolean };
   placeName?: string;
   sheetKind: ShowcaseSheetKind;
+  /** Whether a driveway was actually traced — gates the 'all' sheet's "TARRED DRIVEWAY" caption. */
+  hasDriveway?: boolean;
 }): string {
-  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind } = args;
+  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind, hasDriveway = false } = args;
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
@@ -625,10 +735,15 @@ export function buildSatelliteOverlayPrompt(args: {
   // The driveway is CONTEXT, not a designed feature. It was being drawn as a solid near-black
   // polygon with a caption on every layer sheet, which made an access track compete with the actual
   // design work. It now stays as the photograph already shows it — quiet grey — and only earns a
-  // label on the whole-design sheet, where the site's fabric is the subject.
-  const drivewayRule = sheetKind === 'all'
+  // label on the whole-design sheet, where the site's fabric is the subject — and only when a
+  // driveway was actually traced (audit finding, 2026-07-25: the caption clause fired unconditionally
+  // for every 'all' sheet, even a farm with no driveway at all, ordering a caption for a track that
+  // is not on the photograph — the same "positive assertion of something absent" invention risk the
+  // empty-elementsText guards above exist to prevent, just for one specific feature).
+  const quietDriveway = 'The driveway is existing site fabric, not a designed feature: the near-black #12140F shape on the ground is the ACCESS TRACK, not a building — leave it as the photograph already shows it, a quiet tar surface at ground level, kept clear of plantings, with no bold outline, no dark fill and no label of its own — it is background here. It is FLAT GROUND and nothing else: a surface painted onto the earth, with no thickness, no raised edge, no side walls, no drop shadow and no shadow cast onto the land around it. It is never a slab, platform, deck, plinth or roof, and it is never shaded as though it stood above the ground.';
+  const drivewayRule = sheetKind === 'all' && hasDriveway
     ? 'The driveway is existing site fabric, not a designed feature: the near-black #12140F shape on the ground is the ACCESS TRACK, not a building — leave it as the photograph already shows it, a quiet tar surface at ground level, kept clear of plantings, with no bold outline and no dark fill laid over it. It is FLAT GROUND and nothing else: a surface painted onto the earth, with no thickness, no raised edge, no side walls, no drop shadow and no shadow cast onto the land around it. It is never a slab, platform, deck, plinth or roof, and it is never shaded as though it stood above the ground. On this sheet only, give it one small white caption reading "TARRED DRIVEWAY".'
-    : 'The driveway is existing site fabric, not a designed feature: the near-black #12140F shape on the ground is the ACCESS TRACK, not a building — leave it as the photograph already shows it, a quiet tar surface at ground level, kept clear of plantings, with no bold outline, no dark fill and no label of its own — it is background here. It is FLAT GROUND and nothing else: a surface painted onto the earth, with no thickness, no raised edge, no side walls, no drop shadow and no shadow cast onto the land around it. It is never a slab, platform, deck, plinth or roof, and it is never shaded as though it stood above the ground.';
+    : quietDriveway;
 
   // ZONE BANDS. The composite paints the permaculture effort-zones as large translucent washes with
   // a numbered badge each — and this prompt had NO concept of them. Rule 1 orders the interior
