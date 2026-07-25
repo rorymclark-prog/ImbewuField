@@ -20,6 +20,12 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { computeContourLines } from '@/lib/contours';
+import {
+  gateBoundaryBreaks,
+  boundarySegmentsWithBreaks,
+  type GateLike as GateLikeGeom,
+  type FrameLike as BoundaryFrameGeom,
+} from '@/lib/boundary-geometry';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
@@ -2702,50 +2708,77 @@ function drawBlueprintGround(
 }
 
 /** Site boundary styled as the benchmark's lime post-and-wire fence. */
+/** Placed Gate items near enough to the boundary to plausibly be its gate — see
+ *  lib/boundary-geometry.ts. Extracted once here so every drawBlueprintBoundary caller can pass
+ *  the same answer instead of each re-deriving "what counts as a gate" separately. */
+function gatesNearBoundary(state: DesignCanvasState): GateLikeGeom[] {
+  return state.items
+    .filter((it) => it.defId === 'gate')
+    .map((it) => ({ x: it.x, y: it.y, wM: it.wM ?? ELEMENTS_BY_ID[it.defId]?.wM }));
+}
+
 function drawBlueprintBoundary(
   ctx: CanvasRenderingContext2D,
   boundary: Array<[number, number]>,
   px: (n: number) => number,
   py: (n: number) => number,
   W: number,
+  // Optional: when both are supplied, a placed Gate crossing the boundary cuts a measured break in
+  // the drawn fence line at the gate's real width (docs/RENDER-GEOMETRY-CLEANUP-TODO.md). Render-only
+  // — never touches the saved boundary or gate geometry. Omitted at legacy call sites, which keep
+  // drawing an unbroken ring exactly as before.
+  state?: DesignCanvasState,
+  frame?: BoundaryFrameGeom,
 ): void {
   if (boundary.length < 3) return;
-  const b = boundary.map(([x, y]) => [px(x), py(y)] as [number, number]);
+  const breaks = state && frame ? gateBoundaryBreaks(boundary, gatesNearBoundary(state), frame) : [];
+  const segments = boundarySegmentsWithBreaks(boundary, frame ?? { imgW: 1, imgH: 1, mPerPx: 1 }, breaks)
+    .map((seg) => seg.map(([x, y]) => [px(x), py(y)] as [number, number]));
   // This is composited after generation, so it can match the reference set without teaching the
   // image model to invent a hedge. A dark casing keeps the lime wire readable on both forest and
   // pale ground; sparse perpendicular crossbars read as fence posts, not editor control points.
   ctx.save();
-  ctx.beginPath();
-  b.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
-  ctx.closePath();
-  ctx.strokeStyle = 'rgba(20,30,20,0.78)';
-  ctx.lineWidth = 5;
-  ctx.stroke();
-  ctx.strokeStyle = '#A8D35F';
-  ctx.lineWidth = 2.3;
-  ctx.stroke();
+  for (const seg of segments) {
+    if (seg.length < 2) continue;
+    ctx.beginPath();
+    seg.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+    // Breaks make this an OPEN run, not a closed ring — no closePath. With zero breaks there is
+    // exactly one segment already closed back to its own first point (boundarySegmentsWithBreaks'
+    // no-breaks case), so this still draws the original unbroken loop byte-for-byte.
+    ctx.strokeStyle = 'rgba(20,30,20,0.78)';
+    ctx.lineWidth = 5;
+    ctx.stroke();
+    ctx.strokeStyle = '#A8D35F';
+    ctx.lineWidth = 2.3;
+    ctx.stroke();
+  }
   const postHalf = Math.max(6, W * 0.0046);
   const step = Math.max(42, W * 0.03);
-  for (let i = 0; i < b.length; i++) {
-    const [x1, y1] = b[i];
-    const [x2, y2] = b[(i + 1) % b.length];
-    const dx = x2 - x1, dy = y2 - y1;
-    const len = Math.hypot(dx, dy) || 1;
-    const nx = -dy / len, ny = dx / len;
-    for (let t = 0; t < len; t += step) {
-      const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
-      ctx.beginPath();
-      ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
-      ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
-      ctx.strokeStyle = 'rgba(20,30,20,0.82)';
-      ctx.lineWidth = 4;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
-      ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
-      ctx.strokeStyle = '#B7DE6F';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+  for (const seg of segments) {
+    // Open run: post ticks along each consecutive pair, never wrapping the last point back to the
+    // first (that wrap only belongs to the no-breaks closed-ring case, already included above via
+    // the segment's own repeated first/last point).
+    for (let i = 0; i < seg.length - 1; i++) {
+      const [x1, y1] = seg[i];
+      const [x2, y2] = seg[i + 1];
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      for (let t = 0; t < len; t += step) {
+        const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
+        ctx.beginPath();
+        ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
+        ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
+        ctx.strokeStyle = 'rgba(20,30,20,0.82)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
+        ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
+        ctx.strokeStyle = '#B7DE6F';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
     }
   }
   ctx.restore();
@@ -4439,7 +4472,7 @@ async function buildExactLayerOverlay(
     });
   }
 
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
   return canvas.toDataURL('image/png');
 }
 
@@ -4643,7 +4676,7 @@ export async function buildBlueprintBaseMap(
     ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
   drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, W, H));
 
   const legendRows: StyleLegendRow[] = groundRows(state, refLayers, 'all').map((row) => ({
@@ -5991,7 +6024,7 @@ async function composeSectorSheet(
   drawBlueprintHouse(ctx, refLayers.house, px, py, 'rgba(58,63,74,0.85)', 'rgba(255,255,255,0.85)', 2.5);
   drawBlueprintDriveway(ctx, refLayers, px, py, pxPerM, false);
   ctx.restore();
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
   const analysis = drawSectorAnalysis(
     ctx, W, H, frame, refLayers, site, placeName, pad, rowH, pxPerM,
@@ -6097,7 +6130,7 @@ async function drawPhasingExactContent(
     ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
     ctx.restore();
   }
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
   // Phase pin positions: centroid of each phase's built objects, with distinct NW/SE fallback
   // anchors for the two bookend phases so set-out and commissioning never stack when neither a
@@ -8678,7 +8711,7 @@ export default function DesignGlossy({
         if (structureOverlay) ctx.drawImage(await loadImage(structureOverlay), 0, 0, W, H);
       }
       // Property boundary — vector data, always exact regardless of what the model painted.
-      drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
+      drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
       // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
       // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
       // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
