@@ -11,8 +11,8 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
-import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
+import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, mergeIncomingPlaces, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, mergeIncomingWaterPoints, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
@@ -1653,12 +1653,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             restoredRef.current = true;
             recompute();
           }
-          // Canonical key/event used by lib/saved-places.ts — the old 'imbewu_places' was a
-          // dead key, so shared places never loaded.
-          localStorage.setItem('permamap_saved_places', JSON.stringify(data.places));
-          window.dispatchEvent(new CustomEvent('permamap-places-changed'));
-          localStorage.setItem('imbewu_water_points', JSON.stringify(data.waterPoints));
-          window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
+          // Merge (not overwrite) the shared places/water points into localStorage — a raw
+          // full-array setItem here bypassed loadPlaces()/mergeItems()/local tombstones
+          // entirely, so importing a shared site could silently clobber places this device
+          // added locally since its last sync, or resurrect a place it had just deleted. These
+          // go through the same union-by-id/newest-updatedAt-wins/tombstone-aware merge path
+          // every other write in this app uses (lib/user-sync.ts's mergeItems, via
+          // lib/saved-places.ts's mergeIncomingPlaces / lib/water-points.ts's
+          // mergeIncomingWaterPoints) — the shared places/water points still arrive, they just
+          // can't clobber or resurrect local state that outranks them. Each helper fires its
+          // own 'permamap-places-changed' / 'imbewu-water-points-changed' event.
+          mergeIncomingPlaces(data.places);
+          mergeIncomingWaterPoints(data.waterPoints);
           setSavedPins(loadPlaces());
           mapInst.flyTo({ center: data.mapCenter as [number, number], zoom: data.mapZoom });
           history.replaceState(null, '', window.location.pathname);

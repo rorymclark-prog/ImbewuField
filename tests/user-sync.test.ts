@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { mergeItems } from '../lib/user-sync.ts';
+import { mergeItems, isDeleteStale, TOMB_TTL_MS } from '../lib/user-sync.ts';
+import { LOCAL_TOMBSTONE_TTL_MS } from '../lib/local-tombstones.ts';
 
 // Coverage for the deletion-resurrection fix (lib/local-tombstones.ts): mergeItems is the merge
 // primitive every reconcile/listener call site in lib/user-sync.ts and lib/site-elements.ts
@@ -60,13 +61,20 @@ test('local and remote tombstones for the same id merge to the max (most recent)
   assert.equal(deleted['p1'], 4000);
 });
 
-test("mergeItems' own tombstone map is TTL-pruned using the `now` it's given", () => {
-  const TTL = 90 * 24 * 60 * 60 * 1000;
+test("mergeItems' own tombstone map is TTL-pruned using the `now` it's given, and the TTL is the SAME constant lib/local-tombstones.ts uses — not an independently hardcoded duplicate", () => {
+  // Deliberately imports LOCAL_TOMBSTONE_TTL_MS rather than re-hardcoding "90 days" as a
+  // literal here: if lib/user-sync.ts's internal TOMB_TTL_MS ever stops importing
+  // LOCAL_TOMBSTONE_TTL_MS and drifts to its own value, this test (built against the one true
+  // constant) starts failing even though its own arithmetic never changed.
   const now = 200 * 24 * 60 * 60 * 1000; // arbitrary "now" far past epoch, in ms
-  const remoteDel = { old: now - TTL - 1000, fresh: now - 1000 };
+  const remoteDel = { old: now - LOCAL_TOMBSTONE_TTL_MS - 1000, fresh: now - 1000 };
   const { deleted } = mergeItems([], [], remoteDel, {}, getId, getTs, now);
   assert.equal(deleted['old'], undefined);
   assert.equal(deleted['fresh'], now - 1000);
+});
+
+test('lib/user-sync.ts TOMB_TTL_MS is the SAME constant as lib/local-tombstones.ts LOCAL_TOMBSTONE_TTL_MS — single authority, not two independently hardcoded 90-day literals that could drift apart', () => {
+  assert.equal(TOMB_TTL_MS, LOCAL_TOMBSTONE_TTL_MS);
 });
 
 test('union by id: newest updatedAt wins between remote and local copies of the same item', () => {
@@ -74,4 +82,47 @@ test('union by id: newest updatedAt wins between remote and local copies of the 
   const local: Item[] = [{ id: 'p1', updatedAt: 9000 }];
   const { items } = mergeItems(remote, local, {}, {}, getId, getTs, 10000);
   assert.deepEqual(items, [{ id: 'p1', updatedAt: 9000 }]);
+});
+
+// ── isDeleteStale — the write-side delete-race fix ──────────────────────────────────────────
+//
+// removePlace()/removeWaterPoint()/removeSiteElement() used to unconditionally filter the item
+// out and stamp a FRESH Date.now() as the tombstone whenever their fire-and-forget transaction
+// finally committed. On a slow/rural connection that commit can land minutes after the farmer's
+// actual delete tap — long enough for a genuinely NEWER edit from another device to land on the
+// remote item in between, and get retroactively destroyed by a tombstone stamped with a clock
+// that has drifted forward past that edit.
+//
+// The fix: judge staleness against the ORIGINAL local delete timestamp (`deletedAtMs`, threaded
+// in from each delete*() call site's synchronous addTombstone() call — lib/local-tombstones.ts),
+// not the transaction's own commit-time clock. isDeleteStale() is the extracted pure predicate
+// each remove*() now guards on before writing anything; table-tested here exactly like
+// mergeItems above, without needing to spin up a mocked Firestore transaction.
+test.describe('isDeleteStale (table)', () => {
+  const cases: Array<[string, number | undefined, number, boolean]> = [
+    // [description, remoteItemTs, deletedAtMs, expected "stale — must no-op"]
+    ['no remote item at all (undefined ts) → never stale, delete proceeds', undefined, 5000, false],
+    ['remote item older than the delete → delete proceeds (normal case)', 1000, 5000, false],
+    ['remote item edited AFTER the delete → stale, delete must no-op (the bug this fixes)', 9000, 5000, true],
+    ['remote item timestamp exactly equal to the delete → NOT stale (only strictly-newer wins, mirrors mergeItems\' tombstone filter)', 5000, 5000, false],
+    ['remote item one ms newer than the delete → stale', 5001, 5000, true],
+    ['remote item ts of 0 vs a later delete → not stale', 0, 5000, false],
+  ];
+  for (const [desc, remoteItemTs, deletedAtMs, expected] of cases) {
+    test(desc, () => {
+      assert.equal(isDeleteStale(remoteItemTs, deletedAtMs), expected);
+    });
+  }
+});
+
+test('isDeleteStale mirrors the tomb > ts guard upsertPlace/upsertWaterPoint/upsertSiteElement already use from the upsert side — same strict-greater-than rule, just from the delete side', () => {
+  // upsertPlace's inline guard is `tomb > ts` (a newer deletion outranks an older edit, drop the
+  // upsert). isDeleteStale is the mirror: `remoteItemTs > deletedAtMs` (a newer edit outranks an
+  // older delete, drop the removal). Same operator, same strictness, opposite direction.
+  const tomb = 5000;
+  const editTs = 6000; // newer edit — upsert side: tomb(5000) > ts(6000) is false → upsert proceeds
+  assert.equal(tomb > editTs, false);
+  // delete side, mirrored inputs: an edit at 6000 against a delete recorded at 5000 → the edit is
+  // newer than the delete, so the delete must be stale (no-op), exactly the mirror image.
+  assert.equal(isDeleteStale(editTs, tomb), true);
 });

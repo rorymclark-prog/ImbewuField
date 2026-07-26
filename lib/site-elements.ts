@@ -2,6 +2,7 @@ import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/fires
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
 import { readTombstones, addTombstone } from './local-tombstones';
+import { isDeleteStale } from './user-sync';
 
 export type SiteElementType =
   | 'jojo_tank'
@@ -83,12 +84,16 @@ export function saveSiteElement(siteId: string, el: SiteElement): void {
 export function deleteSiteElement(siteId: string, id: string): void {
   // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
   // (closes the deletion-resurrection window against a concurrent remote snapshot).
-  addTombstone(deletedKeyFor(siteId), id);
+  const deletedAt = Date.now();
+  addTombstone(deletedKeyFor(siteId), id, deletedAt);
   const updated = loadSiteElements(siteId).filter((e) => e.id !== id);
   localStorage.setItem(keyFor(siteId), JSON.stringify(updated));
   notify();
   const uid = currentUid();
-  if (uid) removeSiteElement(uid, siteId, id).catch(() => {});
+  // Thread the SAME timestamp into removeSiteElement() as its `deletedAtMs` — see
+  // removePlace()/isDeleteStale() in lib/user-sync.ts for why a fresh Date.now() sampled at
+  // transaction-commit time would let a delayed delete kill a genuinely newer remote edit.
+  if (uid) removeSiteElement(uid, siteId, id, deletedAt).catch(() => {});
 }
 
 // ── Firebase sync (mirrors upsertWaterPoint/removeWaterPoint in user-sync.ts) ──
@@ -126,7 +131,11 @@ async function upsertSiteElement(uid: string, siteId: string, el: SiteElement): 
   } catch (e) { console.error('[sync] upsertSiteElement', e); }
 }
 
-async function removeSiteElement(uid: string, siteId: string, id: string): Promise<void> {
+// `deletedAtMs` is the ORIGINAL local delete timestamp (from deleteSiteElement() above) — see
+// removePlace()/isDeleteStale() in lib/user-sync.ts for why this can't be Date.now() sampled
+// fresh inside the transaction (a delayed/retried transaction would judge staleness against a
+// clock that has drifted forward from the farmer's actual delete tap).
+async function removeSiteElement(uid: string, siteId: string, id: string, deletedAtMs: number = Date.now()): Promise<void> {
   const d = db(); if (!d) return;
   const ref = doc(d, 'user_map_data', uid, 'data', `site_elements_${siteId}`);
   try {
@@ -134,7 +143,11 @@ async function removeSiteElement(uid: string, siteId: string, id: string): Promi
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
       const remote: SiteElement[] = data.elements ?? [];
-      const deleted: Tombstones = { ...(data.deleted ?? {}), [id]: Date.now() };
+      const remoteItem = remote.find((e) => e.id === id);
+      if (isDeleteStale(remoteItem ? elementTs(remoteItem) : undefined, deletedAtMs)) {
+        return; // remote item was edited (elsewhere) after this device's delete — newest-wins, no-op
+      }
+      const deleted: Tombstones = { ...(data.deleted ?? {}), [id]: deletedAtMs };
       tx.set(ref, { elements: remote.filter((e) => e.id !== id), deleted, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] removeSiteElement', e); }

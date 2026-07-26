@@ -1,6 +1,6 @@
-import { upsertWaterPoint, removeWaterPoint } from './user-sync';
+import { upsertWaterPoint, removeWaterPoint, mergeItems } from './user-sync';
 import { getFirebase } from './firebase/init';
-import { addTombstone } from './local-tombstones';
+import { addTombstone, readTombstones } from './local-tombstones';
 
 export type WaterPointCategory = 'Dam' | 'Borehole' | 'Spring' | 'Well' | 'Pond' | 'Tank' | 'Other';
 
@@ -57,15 +57,37 @@ export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
 export function deleteWaterPoint(id: string): WaterPoint[] {
   // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
   // (closes the deletion-resurrection window against a concurrent remote snapshot).
-  addTombstone(DELETED_KEY, id);
+  const deletedAt = Date.now();
+  addTombstone(DELETED_KEY, id, deletedAt);
   const updated = loadWaterPoints().filter((p) => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
   const uid = currentUid();
-  if (uid) removeWaterPoint(uid, id).catch(() => {});
+  // Thread the SAME timestamp into removeWaterPoint() as its `deletedAtMs` — see
+  // removePlace()/isDeleteStale() in lib/user-sync.ts for why a fresh Date.now() sampled at
+  // transaction-commit time would let a delayed delete kill a genuinely newer remote edit.
+  if (uid) removeWaterPoint(uid, id, deletedAt).catch(() => {});
   return updated;
 }
 
 export function generateWaterPointId(): string {
   return `wp_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+/**
+ * Merge an externally-sourced batch of water points — currently only the `?share=<code>` site
+ * import in components/Map.tsx — into localStorage through the same union-by-id/newest-wins/
+ * tombstone-aware path every other write goes through (lib/user-sync.ts's mergeItems()), instead
+ * of a raw full-array overwrite. See lib/saved-places.ts's mergeIncomingPlaces() for the full
+ * rationale — this is the water-point mirror of the same fix.
+ */
+export function mergeIncomingWaterPoints(incoming: WaterPoint[]): WaterPoint[] {
+  if (typeof window === 'undefined') return incoming;
+  const local = loadWaterPoints();
+  const localDel = readTombstones(DELETED_KEY);
+  const getTs = (p: WaterPoint) => p.updatedAt ?? (p.createdAt ? Date.parse(p.createdAt) || 0 : 0);
+  const { items } = mergeItems(incoming, local, {}, localDel, (p) => p.id, getTs, Date.now());
+  localStorage.setItem(KEY, JSON.stringify(items));
+  notify();
+  return items;
 }
