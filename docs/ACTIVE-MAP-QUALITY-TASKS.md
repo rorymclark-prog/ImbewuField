@@ -233,6 +233,16 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   referenced the supplied slope, driveway and tank position.
 - [ ] Fix cross-device design-state pull/sync so changes made in one browser appear in another
   without duplication.
+- [x] Full Treatment dead-end under Satellite Overlay (live-hit 2026-07-26, Water sheet, Ubhejane
+  Creche): "The AI hybrid finished but its image was not captured" fired AFTER the paid hybrid
+  render was consumed. lockedPolishStyle() passed satellite_overlay through to the guided flow, so
+  the Hybrid job enqueued showcase:true/geometryLock:false and the completion handler's stash gate
+  never captured the image for the polish stage. Fixed at the single authority (lockedPolishStyle
+  now maps model-chrome styles to the locked fallback), plus a pre-payment guard in
+  generateOneViaQueue that fails FREE if the drift ever recurs, plus the substitution announced in
+  the Step 1 notice. Fourth confirmed instance of the "multiple places answering the same question
+  drift apart" pattern — Site/Sector/Phasing sanitise in applySheet; the layer sheets' guided flow
+  didn't. Shipped e0bf17a; 200/200 tests, adversarially verified.
 
 ## Evidence log
 
