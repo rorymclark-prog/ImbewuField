@@ -351,7 +351,9 @@ export function zoneFillPolys(
     if (other.id === z.id || other.feature || other.points.length < 3) continue;
     if (other.zone < z.zone) cutters.push([other.points]);
   }
-  if (z.zone !== 0 && refLayers.house.length >= 3) cutters.push([refLayers.house]);
+  if (z.zone !== 0) {
+    for (const footprint of authoritativeHouseFootprints(state, refLayers)) cutters.push([footprint]);
+  }
   if (!cutters.length) return subject;
   try {
     const out = polygonClipping.difference(subject as never, ...(cutters as never[]));
@@ -396,6 +398,23 @@ export interface DesignGlossyProps {
   initialFilter?: GlossyLayerFilter;
 }
 
+/**
+ * Every saved built footprint is structural authority, regardless of which tracing surface
+ * created it. Older projects can carry the house in refLayers while Design Studio projects store
+ * it as a ground-feature zone. Render safety must protect and restore both forms.
+ */
+export function authoritativeHouseFootprints(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+): Array<Array<[number, number]>> {
+  const footprints: Array<Array<[number, number]>> = [];
+  if (refLayers.house.length >= 3) footprints.push(refLayers.house);
+  for (const zone of state.zones) {
+    if (zone.feature === 'house' && zone.points.length >= 3) footprints.push(zone.points);
+  }
+  return footprints;
+}
+
 export const SCALE = 2;
 
 export interface CompositeMarkOptions {
@@ -433,6 +452,8 @@ interface ProtectMaskOptions {
   protectItems?: boolean;
   protectBoundary?: boolean;
   protectDriveway?: boolean;
+  protectUnmarkedGround?: boolean;
+  editableItemScale?: number;
   houseHaloRatio?: number;
   houseFeatherRatio?: number;
 }
@@ -442,6 +463,7 @@ function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions
     protectOutside: true,
     protectLines: false,
     protectItems: false,
+    protectUnmarkedGround: true,
     houseHaloRatio: 0.003,
     houseFeatherRatio: 0.0012,
   };
@@ -517,26 +539,28 @@ export function drawMarks(
     ctx.stroke();
   }
 
-  // House ring
-  if (showHouseMark && refLayers.house.length >= 3) {
-    ctx.beginPath();
-    refLayers.house.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
-    ctx.closePath();
-    // ROOF GREY WITH A WHITE OUTLINE — never a dark slab. This was rgba(58,53,44,·), which is the
-    // same near-black family as tar, so the composite handed the model two dark shapes and rule 8
-    // ("THE TWO DARK SHAPES ARE DIFFERENT THINGS … they never merge") asked it to separate things
-    // we had already merged for it. On the overlay style the driveway is not drawn into the
-    // composite at all, so the only dark region the model could find to paint tar onto was this
-    // house. Hence "the blooming driveway bleeds into the house again". A light roof with a bright
-    // outline cannot be mistaken for a carriageway.
-    ctx.fillStyle = `${GROUND_FEATURES.house.color}A6`; // #8A8D91
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,0.95)';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
+  // House rings — both legacy ref-layer houses and Studio-traced house feature zones are facts.
+  if (showHouseMark) {
+    for (const footprint of authoritativeHouseFootprints(state, refLayers)) {
+      ctx.beginPath();
+      footprint.forEach(([x, y], i) => {
+        const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+        fn.call(ctx, px(x), py(y));
+      });
+      ctx.closePath();
+      // ROOF GREY WITH A WHITE OUTLINE — never a dark slab. This was rgba(58,53,44,·), which is the
+      // same near-black family as tar, so the composite handed the model two dark shapes and rule 8
+      // ("THE TWO DARK SHAPES ARE DIFFERENT THINGS … they never merge") asked it to separate things
+      // we had already merged for it. On the overlay style the driveway is not drawn into the
+      // composite at all, so the only dark region the model could find to paint tar onto was this
+      // house. Hence "the blooming driveway bleeds into the house again". A light roof with a bright
+      // outline cannot be mistaken for a carriageway.
+      ctx.fillStyle = `${GROUND_FEATURES.house.color}A6`; // #8A8D91
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
   }
 
   // Driveway — a real tar/asphalt road (dark carriageway + light kerb casing) so it reads as a
@@ -591,7 +615,7 @@ export function drawMarks(
   // one sheet where it matters most. Fill only, at low alpha, with no stroke and no glyph — the
   // same discriminator the zone-band wash below relies on to read as an area, not a marker.
   {
-    const houseCovered = refLayers.house.length >= 3;
+    const houseCovered = showHouseMark && authoritativeHouseFootprints(state, refLayers).length > 0;
     const drivewayCovered = refLayers.driveway.length >= 2;
     // THE ACCESS TRACK AS FABRIC. OVERLAY_COMPOSITE_MARKS sets showDrivewayMark:false so the tar
     // stops competing with the design — but the consequence was that the driveway was in the
@@ -898,13 +922,76 @@ async function buildProtectMask(
 
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
+  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#FFFFFF';
 
-  // Whole house polygon protected.
-  if (refLayers.house.length >= 3) {
+  // A locked Hybrid is not permission to reinterpret the whole property. Start protected and
+  // punch out only narrow regions around saved design content. The model may add texture there;
+  // untouched lawn, neighbouring land and every unmarked patch are restored from the source.
+  if (options.protectUnmarkedGround) {
+    ctx.fillRect(0, 0, imgW, imgH);
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = '#000000';
+    ctx.strokeStyle = '#000000';
+
+    // Effort-zone boundaries get a modest editable band, not a whole editable field where an AI
+    // could invent buildings or gardens. The exact zone polygons are burned back afterwards.
+    if (zonesInFilter(filter)) {
+      for (const zone of state.zones) {
+        if (zone.feature || zone.points.length < 3) continue;
+        ctx.beginPath();
+        zone.points.forEach(([x, y], i) => {
+          const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+          fn.call(ctx, px(x), py(y));
+        });
+        ctx.closePath();
+        ctx.lineWidth = Math.max(16 * SCALE, maskPxPerM * 1.5);
+        ctx.stroke();
+      }
+    }
+
+    for (const line of state.lines) {
+      if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
+      ctx.beginPath();
+      line.points.forEach(([x, y], i) => {
+        const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+        fn.call(ctx, px(x), py(y));
+      });
+      ctx.lineWidth = Math.max(18 * SCALE, maskPxPerM * 2.5);
+      ctx.stroke();
+    }
+
+    for (const item of state.items) {
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
+      const editableItemScale = options.editableItemScale ?? 1.7;
+      const w = Math.max(14 * SCALE, (item.wM ?? def.wM) * maskPxPerM * editableItemScale);
+      const h = Math.max(14 * SCALE, (item.hM ?? def.hM) * maskPxPerM * editableItemScale);
+      const cx = px(item.x);
+      const cy = py(item.y);
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (item.rot) ctx.rotate((item.rot * Math.PI) / 180);
+      ctx.beginPath();
+      if (def.shape === 'circle') {
+        ctx.arc(0, 0, Math.max(w, h) / 2, 0, Math.PI * 2);
+      } else {
+        ctx.rect(-w / 2, -h / 2, w, h);
+      }
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#FFFFFF';
+  }
+
+  // Whole authoritative house polygons protected, including Studio-traced feature zones.
+  for (const footprint of authoritativeHouseFootprints(state, refLayers)) {
     ctx.beginPath();
-    refLayers.house.forEach(([x, y], i) => {
+    footprint.forEach(([x, y], i) => {
       const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
       fn.call(ctx, px(x), py(y));
     });
@@ -958,8 +1045,6 @@ async function buildProtectMask(
     ctx.lineWidth = 8 * SCALE;
     ctx.stroke();
   }
-
-  const maskPxPerM = imgW / (frame.imgW * frame.mPerPx);
 
   // Protect the driveway's actual surface, not a generic centre-line band. A closed driveway is
   // an area polygon, so its entire fill is locked; an open trace uses the same ~3 m width as the
@@ -2342,12 +2427,14 @@ function traceNormalisedPath(
 // a photographic sticker on a painted map.
 async function buildHouseOverlay(
   sourceImage: string,
+  state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
   H: number,
   treatment: LockedStructureTreatment = 'source',
 ): Promise<string | undefined> {
-  if (refLayers.house.length < 3) return undefined;
+  const footprints = authoritativeHouseFootprints(state, refLayers);
+  if (footprints.length === 0) return undefined;
   const img = await loadImage(sourceImage);
   const canvas = document.createElement('canvas');
   canvas.width = W;
@@ -2355,7 +2442,13 @@ async function buildHouseOverlay(
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
   ctx.save();
-  traceNormalisedPath(ctx, refLayers.house, W, H, true);
+  ctx.beginPath();
+  for (const footprint of footprints) {
+    footprint.forEach(([x, y], i) => (
+      i === 0 ? ctx.moveTo(x * W, y * H) : ctx.lineTo(x * W, y * H)
+    ));
+    ctx.closePath();
+  }
   ctx.clip();
   if (treatment === 'precision_atlas') {
     ctx.filter = 'saturate(0.48) contrast(1.08) brightness(1.05)';
@@ -2368,11 +2461,13 @@ async function buildHouseOverlay(
   }
   ctx.restore();
   // One fine line records the traced footprint without widening or double-roofing it.
-  traceNormalisedPath(ctx, refLayers.house, W, H, true);
-  ctx.lineJoin = 'round';
-  ctx.strokeStyle = 'rgba(45,43,38,0.9)';
-  ctx.lineWidth = Math.max(2, W * 0.0012);
-  ctx.stroke();
+  for (const footprint of footprints) {
+    traceNormalisedPath(ctx, footprint, W, H, true);
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(45,43,38,0.9)';
+    ctx.lineWidth = Math.max(2, W * 0.0012);
+    ctx.stroke();
+  }
   return canvas.toDataURL('image/png');
 }
 
@@ -2448,6 +2543,7 @@ async function buildDrivewayOverlay(
 
 async function buildLockedStructureOverlay(
   sourceImage: string | undefined,
+  state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
@@ -2457,7 +2553,7 @@ async function buildLockedStructureOverlay(
   const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
   const driveway = await buildDrivewayOverlay(sourceImage, frame, refLayers, W, H, treatment);
   const house = sourceImage
-    ? await buildHouseOverlay(sourceImage, refLayers, W, H, treatment)
+    ? await buildHouseOverlay(sourceImage, state, refLayers, W, H, treatment)
     : undefined;
   return stackOverlayImages(driveway, house, W, H);
 }
@@ -4727,7 +4823,7 @@ export async function buildBlueprintBaseMap(
   const ground = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'ground');
   if (ground) ctx.drawImage(await loadImage(ground), 0, 0, W, H);
   const sourceStructures = frame.satDataUrl
-    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
+    ? await buildLockedStructureOverlay(frame.satDataUrl, state, frame, refLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
@@ -4883,7 +4979,7 @@ async function buildReferenceBlueprintMap(
   // model any authority to crop, reshape or duplicate the house.
   const source = renderFrame.satDataUrl;
   const sourceStructures = source
-    ? await buildLockedStructureOverlay(source, renderFrame, renderRefLayers, W, H, 'precision_atlas')
+    ? await buildLockedStructureOverlay(source, renderState, renderFrame, renderRefLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) {
     ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
@@ -6166,7 +6262,7 @@ async function drawPhasingExactContent(
     ctx.restore();
   }
   const sourceStructures = frame.satDataUrl
-    ? await buildLockedStructureOverlay(frame.satDataUrl, frame, refLayers, W, H, 'precision_atlas')
+    ? await buildLockedStructureOverlay(frame.satDataUrl, state, frame, refLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) {
     ctx.save();
@@ -7981,7 +8077,7 @@ export default function DesignGlossy({
         : filter === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
         : undefined;
       const structureOverlay = geometryLock
-        ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
+        ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, state, frame, refLayers, W, H, styleDef.key)
         : undefined;
       const mergedOverlay = filter === 'water' && geometryLock
         ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
@@ -8314,7 +8410,7 @@ export default function DesignGlossy({
           : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
           : undefined;
         const structureOverlay = geometryLock
-          ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, frame, refLayers, W, H, styleDef.key)
+          ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, state, frame, refLayers, W, H, styleDef.key)
           : undefined;
         const mergedOverlay = f === 'water' && geometryLock
           ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
@@ -8451,7 +8547,7 @@ export default function DesignGlossy({
         ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
         : modelImage;
       const structureOverlay = locked
-        ? await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleDef.key)
+        ? await buildLockedStructureOverlay(cleanSource, state, frame, refLayers, W, H, styleDef.key)
         : undefined;
       const exactGroundOverlay = locked
         ? await buildExactLayerOverlay(state, frame, refLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
@@ -8809,7 +8905,7 @@ export default function DesignGlossy({
       ctx.drawImage(await loadImage(modelImage), 0, 0, W, H);
       // House + driveway locked back on top from source pixels — geometry-exact, never AI-authored.
       if (cleanSource) {
-        const structureOverlay = await buildLockedStructureOverlay(cleanSource, frame, refLayers, W, H, styleKey);
+        const structureOverlay = await buildLockedStructureOverlay(cleanSource, state, frame, refLayers, W, H, styleKey);
         if (structureOverlay) ctx.drawImage(await loadImage(structureOverlay), 0, 0, W, H);
       }
       // Property boundary — vector data, always exact regardless of what the model painted.
