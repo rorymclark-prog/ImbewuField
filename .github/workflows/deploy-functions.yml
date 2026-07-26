@@ -1,0 +1,59 @@
+name: Deploy Cloud Functions
+
+# The AI render worker (runRenderJob + sweepStaleRenderJobs, europe-west1).
+# Auto-deploys when functions/ changes on main; ALSO manually runnable from any
+# branch via the Actions tab ("Run workflow") — that path exists so a stale
+# worker allow-list can be fixed from a phone, with no laptop involved.
+#
+# Needs ONE repo secret: FIREBASE_SERVICE_ACCOUNT — the full JSON key of a
+# Google Cloud service account on project fieldproof-sa with roles
+# "Editor" + "Service Account User". The workflow skips with a warning until
+# the secret exists. The OpenAI key is NOT needed here: it already lives in
+# Secret Manager and deploys bind to it by name.
+
+on:
+  push:
+    branches: [main]
+    paths: ['functions/**']
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-functions
+  cancel-in-progress: false # never kill a half-finished functions rollout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check credential
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::warning::Add the FIREBASE_SERVICE_ACCOUNT secret (service-account JSON for fieldproof-sa) to enable functions auto-deploy."
+            echo "HAS=false" >> "$GITHUB_ENV"
+          else
+            echo "HAS=true" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/setup-node@v4
+        if: env.HAS == 'true'
+        with:
+          node-version: '20'
+      - name: Write credential file
+        if: env.HAS == 'true'
+        run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+      - name: Build functions
+        if: env.HAS == 'true'
+        working-directory: functions
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy
+        if: env.HAS == 'true'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+        run: npx firebase-tools@latest deploy --only functions --project fieldproof-sa --non-interactive --force
+      - name: Scrub credential file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.json"
