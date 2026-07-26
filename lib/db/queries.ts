@@ -22,6 +22,10 @@ import type {
   CourseProgress, GardenerProfile, MentorVisit,
   Survey, SurveyQuestion, SurveyResponse,
 } from './types';
+import type { CourseEnrollment } from '@/lib/course-enrollment';
+import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enrollment';
+import type { CourseAssignment } from '@/lib/course-assignments';
+import { assignmentDocId } from '@/lib/course-assignments';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -364,4 +368,102 @@ export async function listTrainees(): Promise<Profile[]> {
     getDocs(query(collection(f.db, 'profiles'), where('role', '==', 'student'), where('org_id', '==', myOrgId))),
   ]);
   return [...rows<Profile>(farmers), ...rows<Profile>(students)];
+}
+
+// ---- course enrollment + assignments ----
+// Domain logic and types live in lib/course-enrollment.ts and lib/course-assignments.ts
+// (both pure and unit-tested); this section is only the Firestore edge, matching the
+// pattern used by every other collection above. Sample mode never touches either
+// collection: a demo session must not enrol, assign to, or read a real learner.
+
+export async function myEnrollment(track: string = DEFAULT_TRACK): Promise<CourseEnrollment | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); const u = uid(); if (!f || !u) return null;
+  const s = await getDoc(doc(f.db, 'course_enrollments', enrollmentDocId(u, track)));
+  return s.exists() ? ({ id: s.id, ...s.data() } as unknown as CourseEnrollment) : null;
+}
+
+/** Every enrollment in the caller's org. Rules require the org_id filter — a bare query
+ *  is denied, not silently empty (same constraint as listGardens). */
+export async function listOrgEnrollments(): Promise<CourseEnrollment[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const me = await getMyProfile();
+  if (!me?.org_id) return [];
+  const s = await getDocs(query(collection(f.db, 'course_enrollments'), where('org_id', '==', me.org_id)));
+  return rows<CourseEnrollment>(s);
+}
+
+/** Enrol a learner. Upsert on a deterministic id, so pressing Enrol twice is harmless.
+ *  `enrolled_by`/`org_id` are stamped from the caller, never accepted from the UI. */
+export async function enrolLearner(profileId: string, opts?: { cohort?: string | null; track?: string }): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  const me = await getMyProfile();
+  const track = opts?.track ?? DEFAULT_TRACK;
+  const row = newEnrollment({
+    profile_id: profileId,
+    enrolled_by: u,
+    org_id: me?.org_id ?? null,
+    cohort: opts?.cohort ?? null,
+    track,
+    enrolled_at: new Date().toISOString(),
+  });
+  const { id: _id, ...data } = row;
+  await setDoc(doc(f.db, 'course_enrollments', row.id), { ...data, updated_at: serverTimestamp() }, { merge: true });
+}
+
+/** Only 'paused' and 'withdrawn' are stored — the other statuses are derived from progress
+ *  by effectiveStatus(), so writing them here would let the stored value drift. */
+export async function setEnrollmentStatus(
+  profileId: string,
+  status: 'paused' | 'withdrawn' | 'active',
+  track: string = DEFAULT_TRACK,
+): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await setDoc(
+    doc(f.db, 'course_enrollments', enrollmentDocId(profileId, track)),
+    { status, updated_at: serverTimestamp() },
+    { merge: true },
+  );
+}
+
+export async function myAssignments(): Promise<CourseAssignment[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'course_assignments'), where('profile_id', '==', u)));
+  return rows<CourseAssignment>(s);
+}
+
+export async function getAssignments(profileId: string): Promise<CourseAssignment[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); if (!f) return [];
+  const s = await getDocs(query(collection(f.db, 'course_assignments'), where('profile_id', '==', profileId)));
+  return rows<CourseAssignment>(s);
+}
+
+/** Assign (or re-assign, which just moves the due date) one module to one learner. */
+export async function assignModule(input: {
+  profile_id: string; module: string; due_at?: string | null; note?: string | null;
+}): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  const me = await getMyProfile();
+  await setDoc(doc(f.db, 'course_assignments', assignmentDocId(input.profile_id, input.module)), {
+    profile_id: input.profile_id,
+    module: input.module,
+    assigned_by: u,
+    org_id: me?.org_id ?? null,
+    due_at: input.due_at ?? null,
+    note: input.note ?? null,
+    assigned_at: new Date().toISOString(),
+    updated_at: serverTimestamp(),
+  });
+}
+
+export async function unassignModule(profileId: string, module: string): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); if (!f) return;
+  await deleteDoc(doc(f.db, 'course_assignments', assignmentDocId(profileId, module)));
 }

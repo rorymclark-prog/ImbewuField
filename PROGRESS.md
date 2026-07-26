@@ -52,6 +52,36 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-26 (course enrolment + mentor-set assignments)
+- Built the two modules the last handover assumed already existed: **`lib/course-enrollment.ts`**
+  and **`lib/course-assignments.ts`**. Neither was in the repo — the mentor dashboard's
+  "Learners will appear here once they enrol" empty state was unreachable because nothing in
+  the app could enrol anybody.
+- **Enrolment** is a separate record from `course_progress`, which stays the single source of
+  truth for "is this module finished". Status is DERIVED from progress (none → not started,
+  some → in progress, all → complete); only a mentor's `paused`/`withdrawn` is stored, and a
+  manual pause is never overruled by progress.
+- **Assignments** are mentor-owned: learner, module, optional due date, optional note. They
+  never record completion. The learner's Portal lifts outstanding assigned modules to the top
+  of the list without removing anything — the full syllabus stays reachable.
+- Firestore rules for both collections: a learner reads their own and can write neither. Only
+  a mentor or staff member in a **non-null** org may enrol or assign (`inMyOrg()` is stricter
+  than `sameOrg()` — it refuses to match two org-less accounts through `null == null`).
+  `profile_id` and `org_id` are pinned on update, so an enrolment can't be re-pointed at a
+  different learner or walked across to another org. No composite indexes needed — every query
+  is a single-field equality.
+- Mentor writes are optimistic for a slow rural connection, and re-read from the server on
+  failure rather than leaving an unsaved value on screen.
+- Date handling is deliberate: due dates are plain `YYYY-MM-DD`, day arithmetic goes through
+  `Date.UTC` so a DST transition can't round a deadline to the wrong side of zero, and "today"
+  resolves after mount so server and client can't disagree across midnight.
+- **Not touched, on purpose:** no lesson body, key point, quiz question, rationale or species
+  name in `lib/course-modules.ts` was edited.
+- Verified: 26 new unit tests, **222 passing** total, `npx tsc --noEmit` clean, `npm run build`
+  passes, and `firestore.rules` loads in the Firestore emulator without a compile error.
+  Branch `feat/course-enrollment` — **not merged, not deployed.** Still needs a live run against
+  a real mentor + learner pair before it goes near `main`.
+
 ### 2026-07-19 (production Geometry Lock quality audit + reversible style reference)
 - Verified Geometry Lock against the real saved **Carl and Sandys Place / Water** sheet on the
   production domain. The exact house, driveway, boundary, labels and tool-glyph cleanup improved,

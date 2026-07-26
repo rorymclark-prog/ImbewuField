@@ -2,10 +2,14 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { listTrainees, getCourseProgress, logMentorVisit } from '@/lib/db/queries';
+import {
+  listTrainees, getCourseProgress, logMentorVisit,
+  listOrgEnrollments, enrolLearner, setEnrollmentStatus,
+  getAssignments, assignModule, unassignModule,
+} from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
 import type { Profile, CourseProgress } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
@@ -13,6 +17,14 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
+import {
+  DEFAULT_TRACK, STATUS_LABEL, effectiveStatus, enrollmentDocId, summariseCohort,
+  type CourseEnrollment, type EnrollmentStatus,
+} from '@/lib/course-enrollment';
+import {
+  assignmentDocId, assignmentState, formatDue, toDateKey,
+  type CourseAssignment,
+} from '@/lib/course-assignments';
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
@@ -27,6 +39,31 @@ const SAMPLE_DONE: Record<string, string[]> = {
   s2: COURSE_MODULES.slice(0, 3).map((m) => m.id),
   s3: COURSE_MODULES.map((m) => m.id),
   s4: COURSE_MODULES.slice(0, 1).map((m) => m.id),
+};
+
+const SAMPLE_ENROLLMENTS: CourseEnrollment[] = ['s1', 's2', 's3'].map((id) => ({
+  id: enrollmentDocId(id),
+  profile_id: id,
+  track: DEFAULT_TRACK,
+  cohort: 'Ubhejane 2026',
+  status: 'invited',
+  enrolled_by: 'sample-mentor',
+  org_id: null,
+  enrolled_at: '2026-03-02T08:00:00.000Z',
+}));
+
+const SAMPLE_ASSIGNMENTS: Record<string, CourseAssignment[]> = {
+  s2: [
+    { id: assignmentDocId('s2', COURSE_MODULES[3]?.id ?? 'm4'), profile_id: 's2', module: COURSE_MODULES[3]?.id ?? 'm4', assigned_by: 'sample-mentor', org_id: null, due_at: '2026-07-31', note: 'Before the next farm visit.', assigned_at: '2026-07-10T08:00:00.000Z' },
+  ],
+};
+
+const STATUS_TONE: Record<EnrollmentStatus, { fg: string; bg: string }> = {
+  invited:   { fg: '#8C7A62', bg: 'rgba(140,122,98,0.12)' },
+  active:    { fg: '#C07A1E', bg: 'rgba(192,122,30,0.12)' },
+  paused:    { fg: '#235E86', bg: 'rgba(35,94,134,0.12)' },
+  completed: { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.12)' },
+  withdrawn: { fg: '#8C7A62', bg: 'rgba(140,122,98,0.12)' },
 };
 
 function initials(name: string | null) {
@@ -46,9 +83,25 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
   );
 }
 
-function TraineeCard({ trainee, doneIds, isLive }: {
-  trainee: Profile; doneIds: Set<string>; isLive: boolean;
-}) {
+interface TraineeCardProps {
+  trainee: Profile;
+  doneIds: Set<string>;
+  isLive: boolean;
+  enrollment: CourseEnrollment | null;
+  assignments: CourseAssignment[];
+  /** 'YYYY-MM-DD', or null before the client has resolved today's date. */
+  today: string | null;
+  busy: boolean;
+  onEnrol: (profileId: string) => void;
+  onSetStatus: (profileId: string, status: 'paused' | 'active') => void;
+  onAssign: (profileId: string, module: string, due: string | null) => void;
+  onUnassign: (profileId: string, module: string) => void;
+}
+
+function TraineeCard({
+  trainee, doneIds, isLive, enrollment, assignments, today, busy,
+  onEnrol, onSetStatus, onAssign, onUnassign,
+}: TraineeCardProps) {
   const [open, setOpen] = useState(false);
   const [logging, setLogging] = useState(false);
   const [notes, setNotes] = useState('');
@@ -58,6 +111,17 @@ function TraineeCard({ trainee, doneIds, isLive }: {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (saveTimer.current) clearTimeout(saveTimer.current); }, []);
+
+  const assignmentByModule = new Map(assignments.map((a) => [a.module, a] as const));
+  // Stored status is only ever 'paused'/'withdrawn' by hand; everything else is derived from
+  // what the learner has actually ticked, so the badge can never drift from the progress bar.
+  const status: EnrollmentStatus | null = enrollment
+    ? effectiveStatus(
+        enrollment,
+        [...doneIds].map((module) => ({ id: `${trainee.id}_${module}`, profile_id: trainee.id, module, done: true, updated_at: '' })),
+        COURSE_MODULES.map((m) => m.id),
+      )
+    : null;
 
   async function handleLog() {
     if (!notes.trim()) return;
@@ -86,8 +150,21 @@ function TraineeCard({ trainee, doneIds, isLive }: {
           {initials(trainee.full_name)}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
-            {trainee.full_name ?? 'Unnamed'}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
+              {trainee.full_name ?? 'Unnamed'}
+            </span>
+            {status ? (
+              <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                style={{ background: STATUS_TONE[status].bg, color: STATUS_TONE[status].fg }}>
+                {STATUS_LABEL[status]}
+              </span>
+            ) : (
+              <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                style={{ background: 'rgba(32,25,15,0.06)', color: '#8C7A62' }}>
+                Not enrolled
+              </span>
+            )}
           </div>
           <ProgressBar value={doneIds.size} max={TOTAL_MODULES} />
         </div>
@@ -96,22 +173,101 @@ function TraineeCard({ trainee, doneIds, isLive }: {
 
       {open && (
         <div className="px-4 pb-4" style={{ borderTop: '1px solid #E2D8C4' }}>
-          <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>Module sign-off</div>
+
+          {/* Enrolment */}
+          {!enrollment ? (
+            <div className="pt-3">
+              <p className="text-xs font-sans leading-relaxed mb-2" style={{ color: '#5C5040' }}>
+                Not on the course yet. Enrolling lets you set modules and due dates for them.
+              </p>
+              <button onClick={() => onEnrol(trainee.id)} disabled={busy}
+                className="flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
+                style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
+                Enrol on the course
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 pt-3 flex-wrap">
+              <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}enrolled {new Date(enrollment.enrolled_at).toLocaleDateString()}
+              </span>
+              <div className="flex-1" />
+              <button
+                onClick={() => onSetStatus(trainee.id, enrollment.status === 'paused' ? 'active' : 'paused')}
+                disabled={busy}
+                className="flex items-center gap-1.5 text-xs font-display font-semibold px-2.5 py-1.5 rounded-xl"
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: busy ? 'wait' : 'pointer' }}>
+                {enrollment.status === 'paused' ? <PlayCircle size={12} /> : <PauseCircle size={12} />}
+                {enrollment.status === 'paused' ? 'Resume' : 'Pause'}
+              </button>
+            </div>
+          )}
+
+          <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>
+            {enrollment ? 'Modules — tick is theirs, due date is yours' : 'Module sign-off'}
+          </div>
+
           {COURSE_MODULES.map((mod) => {
             const done = doneIds.has(mod.id);
+            const assignment = assignmentByModule.get(mod.id);
+            const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
+            const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
             return (
-              <div key={mod.id} className="flex items-center gap-2.5 py-1.5" style={{ borderBottom: '1px solid rgba(226,216,196,0.5)' }}>
-                <div className="flex-shrink-0 flex items-center justify-center rounded-full"
-                  style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : '#E2D8C4'}` }}>
-                  {done && <CheckCircle size={12} style={{ color: '#EAF3E2' }} />}
+              <div key={mod.id} className="py-1.5" style={{ borderBottom: '1px solid rgba(226,216,196,0.5)' }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="flex-shrink-0 flex items-center justify-center rounded-full"
+                    style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : '#E2D8C4'}` }}>
+                    {done && <CheckCircle size={12} style={{ color: '#EAF3E2' }} />}
+                  </div>
+                  <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#8C7A62' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
+                    {mod.title}
+                  </span>
+                  <span className="text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0"
+                    style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_COLORS[mod.category] }}>
+                    {mod.durationMins}m
+                  </span>
+                  {enrollment && (assignment ? (
+                    <button onClick={() => onUnassign(trainee.id, mod.id)} disabled={busy}
+                      aria-label={`Remove the ${mod.title} assignment`}
+                      className="flex-shrink-0 flex items-center justify-center rounded-lg"
+                      style={{ width: 26, height: 26, background: 'transparent', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: busy ? 'wait' : 'pointer' }}>
+                      <X size={12} />
+                    </button>
+                  ) : (
+                    <button onClick={() => onAssign(trainee.id, mod.id, null)} disabled={busy}
+                      className="flex-shrink-0 text-xs font-display font-semibold px-2 py-1 rounded-lg"
+                      style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B', cursor: busy ? 'wait' : 'pointer' }}>
+                      Assign
+                    </button>
+                  ))}
                 </div>
-                <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#8C7A62' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
-                  {mod.title}
-                </span>
-                <span className="text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0"
-                  style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_COLORS[mod.category] }}>
-                  {mod.durationMins}m
-                </span>
+
+                {enrollment && assignment && (
+                  <div className="flex items-center gap-2 pl-7 pt-1.5 flex-wrap">
+                    <label className="text-xs font-sans" style={{ color: '#8C7A62' }} htmlFor={`due-${trainee.id}-${mod.id}`}>
+                      Due
+                    </label>
+                    <input
+                      id={`due-${trainee.id}-${mod.id}`}
+                      type="date"
+                      value={assignment.due_at ?? ''}
+                      onChange={(e) => onAssign(trainee.id, mod.id, e.target.value || null)}
+                      className="text-xs font-sans rounded-lg px-2 py-1 outline-none"
+                      style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+                    />
+                    {state && state !== 'done' && dueText && (
+                      <span className="flex items-center gap-1 text-xs font-sans"
+                        style={{ color: state === 'overdue' ? '#B03A2E' : state === 'due-soon' ? '#C07A1E' : '#8C7A62' }}>
+                        {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
+                        {dueText}
+                      </span>
+                    )}
+                    {state === 'done' && (
+                      <span className="text-xs font-sans" style={{ color: '#1F4D2B' }}>Finished</span>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -171,8 +327,15 @@ export default function MentorPage() {
   const [msgUnread, setMsgUnread] = useState(0);
   const [trainees, setTrainees] = useState<Profile[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress[]>>({});
+  const [enrollBy, setEnrollBy] = useState<Record<string, CourseEnrollment>>({});
+  const [assignBy, setAssignBy] = useState<Record<string, CourseAssignment[]>>({});
   const [fetching, setFetching] = useState(false);
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [syncError, setSyncError] = useState(false);
   const [search, setSearch] = useState('');
+  // Resolved after mount so server and client can't disagree about what "today" is.
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
   useEffect(() => {
     if (!loading && !user && isLive) router.replace('/login');
@@ -182,13 +345,28 @@ export default function MentorPage() {
     setFetching(true);
     try {
       if (isLive) {
-        const list = await listTrainees();
+        const [list, enrollments] = await Promise.all([
+          listTrainees(),
+          listOrgEnrollments().catch(() => [] as CourseEnrollment[]),
+        ]);
         setTrainees(list);
-        const map: Record<string, CourseProgress[]> = {};
-        await Promise.all(list.map(async (t) => { map[t.id] = await getCourseProgress(t.id).catch(() => []); }));
-        setProgressMap(map);
+        setEnrollBy(Object.fromEntries(enrollments.map((e) => [e.profile_id, e])));
+        const progress: Record<string, CourseProgress[]> = {};
+        const assigns: Record<string, CourseAssignment[]> = {};
+        await Promise.all(list.map(async (t) => {
+          const [p, a] = await Promise.all([
+            getCourseProgress(t.id).catch(() => [] as CourseProgress[]),
+            getAssignments(t.id).catch(() => [] as CourseAssignment[]),
+          ]);
+          progress[t.id] = p;
+          assigns[t.id] = a;
+        }));
+        setProgressMap(progress);
+        setAssignBy(assigns);
       } else {
         setTrainees(SAMPLE);
+        setEnrollBy(Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e])));
+        setAssignBy(SAMPLE_ASSIGNMENTS);
       }
     } catch {
       // listTrainees itself failed — leave trainees empty, spinner clears via finally
@@ -198,6 +376,76 @@ export default function MentorPage() {
   }, [isLive]);
 
   useEffect(() => { load(); }, [load]);
+
+  // Every mutation below updates local state first so the control responds immediately on a
+  // slow rural connection, then writes. On a failed write we re-read from the server rather
+  // than leaving an optimistic value on screen that never actually saved.
+  const afterWrite = useCallback(async (write: () => Promise<void>) => {
+    setSyncError(false);
+    try {
+      await write();
+    } catch {
+      setSyncError(true);
+      await load();
+    }
+  }, [load]);
+
+  const handleEnrol = useCallback(async (profileId: string) => {
+    setBusyId(profileId);
+    const optimistic: CourseEnrollment = {
+      id: enrollmentDocId(profileId),
+      profile_id: profileId,
+      track: DEFAULT_TRACK,
+      cohort: null,
+      status: 'invited',
+      enrolled_by: user?.uid ?? 'me',
+      org_id: null,
+      enrolled_at: new Date().toISOString(),
+    };
+    setEnrollBy((prev) => ({ ...prev, [profileId]: optimistic }));
+    if (isLive) await afterWrite(() => enrolLearner(profileId));
+    setBusyId(null);
+  }, [isLive, user, afterWrite]);
+
+  const handleSetStatus = useCallback(async (profileId: string, status: 'paused' | 'active') => {
+    setBusyId(profileId);
+    setEnrollBy((prev) => {
+      const cur = prev[profileId];
+      return cur ? { ...prev, [profileId]: { ...cur, status } } : prev;
+    });
+    if (isLive) await afterWrite(() => setEnrollmentStatus(profileId, status));
+    setBusyId(null);
+  }, [isLive, afterWrite]);
+
+  const handleAssign = useCallback(async (profileId: string, module: string, due: string | null) => {
+    setBusyId(profileId);
+    setAssignBy((prev) => {
+      const list = prev[profileId] ?? [];
+      const existing = list.find((a) => a.module === module);
+      const next: CourseAssignment = existing
+        ? { ...existing, due_at: due }
+        : {
+            id: assignmentDocId(profileId, module),
+            profile_id: profileId,
+            module,
+            assigned_by: user?.uid ?? 'me',
+            org_id: null,
+            due_at: due,
+            note: null,
+            assigned_at: new Date().toISOString(),
+          };
+      return { ...prev, [profileId]: [...list.filter((a) => a.module !== module), next] };
+    });
+    if (isLive) await afterWrite(() => assignModule({ profile_id: profileId, module, due_at: due }));
+    setBusyId(null);
+  }, [isLive, user, afterWrite]);
+
+  const handleUnassign = useCallback(async (profileId: string, module: string) => {
+    setBusyId(profileId);
+    setAssignBy((prev) => ({ ...prev, [profileId]: (prev[profileId] ?? []).filter((a) => a.module !== module) }));
+    if (isLive) await afterWrite(() => unassignModule(profileId, module));
+    setBusyId(null);
+  }, [isLive, afterWrite]);
 
   if (!loading && user && isLive && role && !MENTOR_ALLOWED_ROLES.has(role)) {
     return (
@@ -240,8 +488,17 @@ export default function MentorPage() {
     return new Set((progressMap[id] ?? []).filter((p) => p.done).map((p) => p.module));
   }
 
-  const totalFull = trainees.filter((t) => doneIdsFor(t.id).size === TOTAL_MODULES).length;
-  const totalPartial = trainees.filter((t) => { const s = doneIdsFor(t.id).size; return s > 0 && s < TOTAL_MODULES; }).length;
+  // Cohort figures describe the people actually ON the course. The list below stays the full
+  // org directory, so someone not yet enrolled is still reachable — they just don't count here.
+  const moduleIds = COURSE_MODULES.map((m) => m.id);
+  const cohort = summariseCohort(
+    Object.values(enrollBy).filter((e) => trainees.some((t) => t.id === e.profile_id)),
+    Object.fromEntries(trainees.map((t) => [
+      t.id,
+      [...doneIdsFor(t.id)].map((module) => ({ id: `${t.id}_${module}`, profile_id: t.id, module, done: true, updated_at: '' })),
+    ])),
+    moduleIds,
+  );
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
@@ -294,9 +551,9 @@ export default function MentorPage() {
         {/* Cohort at a glance */}
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Learners',      value: trainees.length, color: '#235E86' },
-            { label: 'Graduated',     value: totalFull,        color: '#1F4D2B' },
-            { label: 'In progress',   value: totalPartial,     color: '#C07A1E' },
+            { label: 'Enrolled',    value: cohort.enrolled,   color: '#235E86' },
+            { label: 'In progress', value: cohort.inProgress, color: '#C07A1E' },
+            { label: 'Complete',    value: cohort.completed,  color: '#1F4D2B' },
           ].map(({ label, value, color }) => (
             <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
@@ -323,6 +580,15 @@ export default function MentorPage() {
           </div>
         </div>
 
+        {syncError && (
+          <div className="rounded-2xl px-4 py-3" style={{ background: 'rgba(176,58,46,0.08)', border: '1px solid rgba(176,58,46,0.28)' }}>
+            <p className="text-xs font-sans leading-relaxed" style={{ color: '#B03A2E' }}>
+              That change did not save. The list has been reloaded from the server, so what you
+              see now is what is actually stored — please try again.
+            </p>
+          </div>
+        )}
+
         {/* Search */}
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#8C7A62' }} />
@@ -347,7 +613,20 @@ export default function MentorPage() {
         ) : (
           <div className="space-y-3">
             {filtered.map((t) => (
-              <TraineeCard key={t.id} trainee={t} doneIds={doneIdsFor(t.id)} isLive={isLive} />
+              <TraineeCard
+                key={t.id}
+                trainee={t}
+                doneIds={doneIdsFor(t.id)}
+                isLive={isLive}
+                enrollment={enrollBy[t.id] ?? null}
+                assignments={assignBy[t.id] ?? []}
+                today={today}
+                busy={busyId === t.id}
+                onEnrol={handleEnrol}
+                onSetStatus={handleSetStatus}
+                onAssign={handleAssign}
+                onUnassign={handleUnassign}
+              />
             ))}
           </div>
         )}
