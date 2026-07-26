@@ -3,12 +3,18 @@
 import { doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
+import { readTombstones } from './local-tombstones';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 
 const FARM_KEY      = 'imbewu_farm_shapes';
 const PLACES_KEY    = 'permamap_saved_places';
 const WATER_KEY     = 'imbewu_water_points';
+// Local deletion tombstones (see lib/local-tombstones.ts) — MUST match the DELETED_KEY constants
+// in lib/saved-places.ts / lib/water-points.ts so deletePlace()/deleteWaterPoint() and the merge
+// call sites below read/write the same localStorage key.
+const PLACES_DELETED_KEY = `${PLACES_KEY}_deleted`;
+const WATER_DELETED_KEY  = `${WATER_KEY}_deleted`;
 const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per site: imbewu_site_survey_<siteId> (legacy blobs are keyed by placeId instead)
 const COLL          = 'user_map_data';
 const TOMB_TTL_MS = 90 * 24 * 60 * 60 * 1000; // prune deletion tombstones after 90 days
@@ -127,7 +133,19 @@ function mergeTombstones(a: Tombstones, b: Tombstones): Tombstones {
 
 // Generic CRDT-ish merge: union by id, newest updatedAt wins, drop ids whose deletion
 // tombstone is newer than the surviving item's last update. Returns merged items + tombstones.
-function mergeItems<T>(
+//
+// `localDel` should be this device's local tombstone map (lib/local-tombstones.ts's
+// readTombstones()) rather than {} — a local delete removes the item from localStorage
+// synchronously but its remote tombstone transaction (removePlace/removeWaterPoint) commits
+// async, so without a local tombstone a remote snapshot landing in that gap can resurrect the
+// item. Exported (not just extract-testable) so tests can exercise the merge/tombstone logic
+// directly without spinning up Firestore.
+//
+// Semantics check: the filter below is `!(tomb && tomb > getTs(it))` — a tombstone only beats
+// an item whose last edit predates the deletion. So a farmer who deletes a place and then
+// deliberately re-adds it (a fresh save stamps a NEW updatedAt, newer than the tombstone) gets
+// an item that survives this filter: re-adding after deleting is not blocked.
+export function mergeItems<T>(
   remote: T[], local: T[],
   remoteDel: Tombstones, localDel: Tombstones,
   getId: (x: T) => string, getTs: (x: T) => number,
@@ -192,7 +210,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
         const data = snap.exists() ? snap.data() : {};
         const remote: SavedPlace[] = data.places ?? [];
         const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(PLACES_KEY), remoteDel, {}, placeId, placeTs, now);
+        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(PLACES_KEY), remoteDel, readTombstones(PLACES_DELETED_KEY), placeId, placeTs, now);
         localStorage.setItem(PLACES_KEY, JSON.stringify(items));
         tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
       });
@@ -204,7 +222,7 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
         const data = snap.exists() ? snap.data() : {};
         const remote: WaterPoint[] = data.points ?? [];
         const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<WaterPoint>(WATER_KEY), remoteDel, {}, waterId, waterTs, now);
+        const { items, deleted } = mergeItems(remote, readLocal<WaterPoint>(WATER_KEY), remoteDel, readTombstones(WATER_DELETED_KEY), waterId, waterTs, now);
         localStorage.setItem(WATER_KEY, JSON.stringify(items));
         tx.set(waterRef, { points: items, deleted, updatedAt: serverTimestamp() });
       });
@@ -267,14 +285,14 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
     // unrelated remote change. Remote tombstones still propagate deletions.
     unsubs.push(onSnapshot(placesRef, (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(PLACES_KEY), snap.data().deleted ?? {}, {}, placeId, placeTs, Date.now());
+      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(PLACES_KEY), snap.data().deleted ?? {}, readTombstones(PLACES_DELETED_KEY), placeId, placeTs, Date.now());
       localStorage.setItem(PLACES_KEY, JSON.stringify(items));
       handlers.onPlaces?.();
     }, (e) => console.error('[sync] places listener', e)));
 
     unsubs.push(onSnapshot(waterRef, (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(WATER_KEY), snap.data().deleted ?? {}, {}, waterId, waterTs, Date.now());
+      const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(WATER_KEY), snap.data().deleted ?? {}, readTombstones(WATER_DELETED_KEY), waterId, waterTs, Date.now());
       localStorage.setItem(WATER_KEY, JSON.stringify(items));
       handlers.onWater?.();
     }, (e) => console.error('[sync] water listener', e)));

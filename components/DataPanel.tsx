@@ -5,7 +5,7 @@ import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
-import { savePlace, generateId, loadPlaces } from '@/lib/saved-places';
+import { savePlace, generateId, loadPlaces, promptNearbyUpdate } from '@/lib/saved-places';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadReports, deleteReport, type SavedReport } from '@/lib/saved-reports';
 import InsightsPanel from './InsightsPanel';
@@ -553,6 +553,22 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // One-tap save of the current location (prominent, vs the Places tab form).
   const quickSavePlace = () => {
     if (!data || !coords) return;
+    // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
+    // The one-tap button is the EASIEST place to mint a second row for the same farm; updating
+    // keeps the existing id (and the farmer's chosen name/notes/label/colour) so coordinate-keyed
+    // downstream data (surveys, design studio) doesn't fork onto a second id.
+    const nearby = promptNearbyUpdate(coords.lat, coords.lon);
+    if (nearby) {
+      savePlace({
+        ...nearby,
+        lat: coords.lat, lon: coords.lon,
+        biome: data.biome.name,
+        rainfall: data.rainfall.annual,
+        elevation: data.elevation.elevation,
+      });
+      setPlaceSaved(true);
+      return;
+    }
     const name = data.biome.name !== 'Outside South Africa'
       ? `${data.biome.name} site`
       : `${Math.abs(coords.lat).toFixed(3)}°S ${coords.lon.toFixed(3)}°E`;

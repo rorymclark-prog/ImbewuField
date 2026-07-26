@@ -1,6 +1,7 @@
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
+import { readTombstones, addTombstone } from './local-tombstones';
 
 export type SiteElementType =
   | 'jojo_tank'
@@ -49,6 +50,8 @@ export function getElementMeta(type: SiteElementType): { icon: string; label: st
 }
 
 const keyFor = (siteId: string) => `imbewu_site_elements_${siteId}`;
+// Local deletion tombstones for this site's elements — see lib/local-tombstones.ts.
+const deletedKeyFor = (siteId: string) => `${keyFor(siteId)}_deleted`;
 
 function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-site-elements-changed'));
@@ -78,6 +81,9 @@ export function saveSiteElement(siteId: string, el: SiteElement): void {
 }
 
 export function deleteSiteElement(siteId: string, id: string): void {
+  // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
+  // (closes the deletion-resurrection window against a concurrent remote snapshot).
+  addTombstone(deletedKeyFor(siteId), id);
   const updated = loadSiteElements(siteId).filter((e) => e.id !== id);
   localStorage.setItem(keyFor(siteId), JSON.stringify(updated));
   notify();
@@ -145,11 +151,13 @@ async function removeSiteElement(uid: string, siteId: string, id: string): Promi
 const elementId = (e: SiteElement) => e.id;
 const elementTs = (e: SiteElement) => e.updatedAt ?? (e.createdAt ? Date.parse(e.createdAt) || 0 : 0);
 
-// Union by id (newest updatedAt wins), then drop ids whose deletion tombstone is newer than
-// the surviving item's last edit. Local deletions aren't tracked as tombstones on this device
-// (deleteSiteElement just drops the row from localStorage — the tombstone lives server-side,
-// written by removeSiteElement), so localDel is always {} in practice; kept as a parameter for
-// symmetry with the remote side.
+// Union by id (newest updatedAt wins), then drop ids whose deletion tombstone is newer than the
+// surviving item's last edit. `localDel` comes from readTombstones(deletedKeyFor(siteId)) at the
+// call sites below — deleteSiteElement() records a local tombstone synchronously (see
+// lib/local-tombstones.ts) so a remote snapshot that lands before the async removeSiteElement()
+// transaction commits can't resurrect an item this device just deleted. A deliberate re-add
+// after deletion still survives: its fresh updatedAt outranks the tombstone (see the filter
+// below and lib/local-tombstones.ts's semantics note).
 function mergeElements(
   remote: SiteElement[], local: SiteElement[],
   remoteDel: Tombstones, localDel: Tombstones,
@@ -182,7 +190,7 @@ export async function reconcileSiteElements(uid: string, siteId: string): Promis
       const data = snap.exists() ? snap.data() : {};
       const remote: SiteElement[] = data.elements ?? [];
       const remoteDel: Tombstones = data.deleted ?? {};
-      const { items, deleted } = mergeElements(remote, loadSiteElements(siteId), remoteDel, {});
+      const { items, deleted } = mergeElements(remote, loadSiteElements(siteId), remoteDel, readTombstones(deletedKeyFor(siteId)));
       localStorage.setItem(keyFor(siteId), JSON.stringify(items));
       tx.set(ref, { elements: items, deleted, updatedAt: serverTimestamp() });
     });
@@ -204,7 +212,7 @@ export function subscribeSiteElementsLive(uid: string, siteId: string): () => vo
       const data = snap.data();
       const remote: SiteElement[] = data.elements ?? [];
       const remoteDel: Tombstones = data.deleted ?? {};
-      const { items } = mergeElements(remote, loadSiteElements(siteId), remoteDel, {});
+      const { items } = mergeElements(remote, loadSiteElements(siteId), remoteDel, readTombstones(deletedKeyFor(siteId)));
       localStorage.setItem(keyFor(siteId), JSON.stringify(items));
       notify();
     },
