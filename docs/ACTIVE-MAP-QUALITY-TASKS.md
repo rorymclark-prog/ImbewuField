@@ -231,8 +231,20 @@ asset exists, keep the deterministic fallback; never substitute a physically dif
   farmer is actively on. Both added, read-only (widens what Lima is told, not what it can do).
   Live-tested against the deployed endpoint with a synthetic payload — suggestions correctly
   referenced the supplied slope, driveway and tank position.
-- [ ] Fix cross-device design-state pull/sync so changes made in one browser appear in another
-  without duplication.
+- [x] Fix cross-device design-state pull/sync so changes made in one browser appear in another
+  without duplication. A 5-vector adversarial audit (2026-07-26) found the design-canvas path
+  itself SOUND (whole-state pickWinner + rev counters + wouldDestroy backstop — no duplication
+  possible by construction) but confirmed two real defects in the sibling collections, both fixed
+  in 7095d6d: (1) deletion resurrection — no LOCAL tombstone existed, so a remote snapshot landing
+  before the async remote tombstone committed re-inserted a just-deleted place/water point/site
+  element (new lib/local-tombstones.ts, threaded into every merge call site); (2) duplicate farm
+  rows — two saves of the same real-world spot minted two SavedPlace ids and forked the
+  coordinate-keyed survey/design buckets (promptNearbyUpdate() 60 m guard, ONE authority wired
+  into all three save entry points). Refuted with named guards: canvas echo races, UI-layer
+  duplication, survey dual-keying (doc pollution possible, never farmer-visible). Known residual
+  gaps, recorded honestly: write-side delete race (removePlace stamps a fresh Date.now() tombstone
+  that can retroactively kill a genuinely newer remote edit), >90-day-offline tombstone-TTL
+  resurrection, and the ?share= import's raw localStorage overwrite bypassing merge entirely.
 - [x] Full Treatment dead-end under Satellite Overlay (live-hit 2026-07-26, Water sheet, Ubhejane
   Creche): "The AI hybrid finished but its image was not captured" fired AFTER the paid hybrid
   render was consumed. lockedPolishStyle() passed satellite_overlay through to the guided flow, so
