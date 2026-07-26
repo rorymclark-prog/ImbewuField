@@ -608,6 +608,24 @@ export default function DesignPalette({
         </div>
       </div>
 
+      {/* Below the tool row, everything is unbounded in height: the element catalog can carry a
+          note line, the hint/lesson block can run to two lines, and which chip row shows at all
+          varies by step. None of that has ever had its own scroll boundary — it just relied on
+          the page happening to be tall enough. It usually isn't: <body> is `h-screen
+          overflow-hidden` (app/layout.tsx) with no fallback page scroll, and the canvas above
+          this bar has a deliberate non-negotiable `minHeight: 45dvh` floor (app/design/page.tsx)
+          so tool chrome can never squeeze it away. On a short viewport — a phone rotated to
+          landscape (the natural orientation for a wide site plan) is the common real case, not
+          an edge case — 45dvh of canvas plus the header plus this tool row can leave this block
+          less room than it needs, and the excess used to be silently cropped by <body>'s
+          overflow-hidden with no way to reach it, not merely scrolled off. Bounding it and
+          letting IT scroll (same maxHeight+overflowY idiom as the sheets elsewhere in this app,
+          e.g. EvidenceSheet.tsx/ProfileSheet.tsx) turns an invisible, untappable cutoff into a
+          reachable one. Scoped to start AFTER the tool row on purpose: the Layers popover lives
+          inside the tool row and opens upward with no overflow ancestor of its own ("never
+          clipped" — see its comment above); wrapping the tool row in this too would clip it. */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, maxHeight: '30dvh' }}>
+
       {/* Element chips: shown on placing steps (and all steps in Pro) */}
       {showElementCatalog && (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -834,6 +852,7 @@ export default function DesignPalette({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

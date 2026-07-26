@@ -1648,7 +1648,11 @@ export default function DesignCanvas({
   const itemActionStrokeW = worldPx(1.5);
   const itemActionFont = worldPx(12);
   const itemActionGap = worldPx(4);
-  const itemGripHit = worldPx(18);
+  // 20 (not 18) to match the ~40px comfortable-touch-target radius this file already uses
+  // elsewhere for vertexHitR and itemActionHitR — the resize grips (corner + both edges, below)
+  // were the one outlier still sized under that baseline. +2px per side; the visible glyphs
+  // (itemGrip/itemGripSmall) are untouched, so this only widens the invisible tap zone.
+  const itemGripHit = worldPx(20);
   const itemGrip = worldPx(10);
   const itemGripSmall = worldPx(7);
   const itemRotateStem = worldPx(18);
