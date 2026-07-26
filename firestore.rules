@@ -15,6 +15,10 @@ service cloud.firestore {
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
     function sameOrg(d)    { return isStaff() && d.org_id == myOrg(); }
+    // Stricter than sameOrg(): also admits mentors, and refuses to match two org-less
+    // accounts against each other (null == null would otherwise be true).
+    function inMyOrg(d)      { return signedIn() && myOrg() != null && d.org_id == myOrg(); }
+    function isCourseStaff() { return isMentor() || isStaff(); }
     // Backend kill switch for the community layer — evaluated ONLY inside the
     // community_* match blocks below, so it never adds a read to unrelated
     // collections. Doc absent or enabled != true => every community read/write
@@ -27,7 +31,13 @@ service cloud.firestore {
     }
 
     match /profiles/{uid} {
-      allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
+      // `get` and `list` are split deliberately. A LIST is authorised once, up front, before
+      // any document has been read, so the per-document `uid == request.auth.uid` term below
+      // cannot be proven and drags the whole OR to false — which is why the mentor dashboard
+      // could never load a cohort and always showed its empty state. Querying the directory
+      // is a staff/mentor capability and nothing else, so `list` says exactly that.
+      allow get:    if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
+      allow list:   if signedIn() && (isStaff() || isMentor());
       // Self-service signup may pick one of the offered roles, but NEVER admin, and may
       // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
       allow create: if signedIn() && uid == request.auth.uid
@@ -121,6 +131,41 @@ service cloud.firestore {
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.module is string
         && request.resource.data.done is bool;
+    }
+
+    // Enrollment and assignments are MENTOR-OWNED. The learner owns their own
+    // course_progress tick (above) and nothing else here: they cannot enrol themselves onto
+    // a programme, cannot set their own deadlines, and cannot delete an assignment they
+    // would rather not do. Every rule below also requires a non-null org, so two org-less
+    // accounts can never see each other through a null == null match.
+
+    match /course_enrollments/{id} {
+      allow read: if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
+      allow create: if isCourseStaff()
+        && inMyOrg(request.resource.data)
+        && request.resource.data.enrolled_by == request.auth.uid
+        && request.resource.data.profile_id is string
+        && request.resource.data.track is string
+        && request.resource.data.status in ['invited', 'active', 'paused', 'completed', 'withdrawn'];
+      // profile_id and org_id are pinned: an enrollment can never be re-pointed at a
+      // different learner or walked across to another org by an update.
+      allow update: if isCourseStaff()
+        && inMyOrg(resource.data)
+        && request.resource.data.profile_id == resource.data.profile_id
+        && request.resource.data.org_id == resource.data.org_id
+        && request.resource.data.status in ['invited', 'active', 'paused', 'completed', 'withdrawn'];
+      allow delete: if isCourseStaff() && inMyOrg(resource.data);
+    }
+
+    match /course_assignments/{id} {
+      allow read: if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
+      allow create, update: if isCourseStaff()
+        && inMyOrg(request.resource.data)
+        && request.resource.data.assigned_by == request.auth.uid
+        && request.resource.data.profile_id is string
+        && request.resource.data.module is string
+        && (request.resource.data.due_at == null || request.resource.data.due_at is string);
+      allow delete: if isCourseStaff() && inMyOrg(resource.data);
     }
 
     match /mentor_visits/{id} {
