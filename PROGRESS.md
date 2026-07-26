@@ -52,6 +52,35 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-26 (live emulator walkthrough — found and fixed two pre-existing bugs)
+Ran the whole flow against the Firebase emulator with a seeded mentor + learner in one org
+(`scripts/seed-course-demo.mjs`), driven end to end in a real browser. Static checks had all
+passed; the walkthrough still found two bugs, both older than this branch.
+
+- **The mentor dashboard could never load a cohort from Firestore.** Two independent causes:
+  1. `firestore.rules` had a single `allow read` on `/profiles/{uid}` combining
+     `uid == request.auth.uid || isStaff() || isMentor()`. A **list** is authorised once, up
+     front, before any document is read, so the per-document `uid` term cannot be proven and
+     drags the whole OR to false. Every profile query a mentor made was `PERMISSION_DENIED`.
+     Split into `allow get` (unchanged) and `allow list` (staff/mentor only) — strictly no more
+     permissive than the original intent, since list was previously denied to everyone.
+  2. `app/mentor/page.tsx` ran `load()` on mount instead of waiting for auth. Every query in it
+     is org-scoped and the org comes from the caller's own profile, so running while
+     `currentUser` was still null returned empty lists with **no error** and never retried. The
+     student page already had this guard; the mentor page did not.
+- Both failures rendered as the same innocent empty state — "Learners will appear here once
+  they enrol" — which is precisely why static verification could not see them. The mentor page
+  also swallowed load errors in a bare `catch {}`; it now logs and shows the sync banner, so a
+  denial can never again be mistaken for an empty cohort.
+- **Verified live, in the browser:** mentor signs in → sees the learner at 2/10 with status
+  "Not enrolled" → enrols (cohort counter goes to 1) → assigns Seeds with a due date → both
+  documents land in Firestore with the mentor's uid and org stamped, zero rules denials. Learner
+  signs in → "Set by your mentor · 0 of 1 done · 1 due this week" → Seeds lifted to the top of
+  the list keeping its curriculum number 6, badged "Due in 4 days" → opens it → isiZulu
+  narration plays (`/course-audio/seeds-sovereignty/zu/slide-02.mp3`, clock running, 84s
+  duration matching the file). Screenshots in `docs/verification/`.
+- 233 tests pass, `tsc --noEmit` clean, `npm run build` passes.
+
 ### 2026-07-26 (recorded isiZulu + English module narration, playing in the app)
 - Rory's Gemini/Antigravity narration of the Seeds facilitator deck is now **in the app**: 10
   slide clips per language, isiZulu and English, plus a full-module track. Sourced from the

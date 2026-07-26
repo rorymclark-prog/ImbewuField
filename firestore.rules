@@ -31,7 +31,13 @@ service cloud.firestore {
     }
 
     match /profiles/{uid} {
-      allow read:   if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
+      // `get` and `list` are split deliberately. A LIST is authorised once, up front, before
+      // any document has been read, so the per-document `uid == request.auth.uid` term below
+      // cannot be proven and drags the whole OR to false — which is why the mentor dashboard
+      // could never load a cohort and always showed its empty state. Querying the directory
+      // is a staff/mentor capability and nothing else, so `list` says exactly that.
+      allow get:    if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
+      allow list:   if signedIn() && (isStaff() || isMentor());
       // Self-service signup may pick one of the offered roles, but NEVER admin, and may
       // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
       allow create: if signedIn() && uid == request.auth.uid

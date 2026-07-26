@@ -368,14 +368,22 @@ export default function MentorPage() {
         setEnrollBy(Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e])));
         setAssignBy(SAMPLE_ASSIGNMENTS);
       }
-    } catch {
-      // listTrainees itself failed — leave trainees empty, spinner clears via finally
+    } catch (err) {
+      // Leave trainees empty (the spinner clears via finally), but do NOT swallow the reason.
+      // A silent catch here is how a rules denial looked exactly like "this mentor has no
+      // learners yet" — indistinguishable in the UI and invisible in the console.
+      console.error('[mentor] could not load the cohort:', err);
+      setSyncError(true);
     } finally {
       setFetching(false);
     }
-  }, [isLive]);
+  }, [isLive, user]);
 
-  useEffect(() => { load(); }, [load]);
+  // Wait for auth to resolve before loading. Every query in load() is org-scoped, and the
+  // org comes from the caller's own profile — run it while `currentUser` is still null and
+  // each one returns an empty list with no error, which renders as "this mentor has no
+  // learners" and never retries. Mirrors the guard the student page already had.
+  useEffect(() => { if (!loading) load(); }, [loading, load]);
 
   // Every mutation below updates local state first so the control responds immediately on a
   // slow rural connection, then writes. On a failed write we re-read from the server rather
