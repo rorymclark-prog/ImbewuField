@@ -53,6 +53,7 @@ import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import { lockedPolishAction, lockedPolishStyle, type SheetOutputMode } from '@/lib/locked-polish-flow';
+import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
 import { calculateBoundaryPresentationCrop } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
@@ -288,7 +289,8 @@ const DESIGN_SHEETS: DesignSheet[] = [
   { no: '07', label: 'Whole', filter: 'all' },
   { no: '08', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
-const DEFAULT_PRODUCER_STYLE: StylePreset = 'precision_atlas';
+// DEFAULT_PRODUCER_STYLE now lives in lib/sheet-render-route.ts (imported above) so that pure lib
+// has no dependency on this component; every call site here keeps the same name.
 
 // Analysis map styles — the richer report-style maps (the "8-map pack"). These are illustrated
 // / analytical (sun & wind arrows, opportunity notes, phased build-out) that the strict
@@ -7656,7 +7658,10 @@ export default function DesignGlossy({
       // render must never do (see the Style-grid filter below).
       if ((sheet.exact === 'base' || sheet.exact === 'sector') && m === 'ai') {
         setExactSheet(null); setAnalysisStyle(null);
-        setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
+        // Seeded style comes from the single routing authority (lib/sheet-render-route.ts) instead
+        // of a second inline copy of "null or satellite_overlay -> DEFAULT" — 'hybrid' vs 'full'
+        // makes no difference to styleUsed, see sheetRenderRoute's doc.
+        setProducerStyle((cur) => sheetRenderRoute({ exact: sheet.exact }, 'hybrid', cur).styleUsed);
         return;
       }
       // Phasing (08) in AI mode: the model paints only a decorative background; the complete
@@ -7666,7 +7671,8 @@ export default function DesignGlossy({
       // exactSheet null so runCurrentSheet routes to generatePhasingViaQueue" contract.
       if (sheet.exact === 'implementation' && m === 'ai') {
         setExactSheet(null); setAnalysisStyle(null);
-        setProducerStyle((cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE));
+        // Same single-authority seeding as the Site/Sector branch above.
+        setProducerStyle((cur) => sheetRenderRoute({ exact: sheet.exact }, 'hybrid', cur).styleUsed);
         return;
       }
       // Reached by Site/Sector in exact mode (their AI mode returned above), and by Phasing in
@@ -8803,10 +8809,18 @@ export default function DesignGlossy({
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const authorityFlags = renderAuthorityFlagsForStyle(styleKey);
       // Guided-flow invariant, checked BEFORE any payment: the Hybrid stage must run with app
-      // authority (locked underlayer + exact elements composited back). If a model-chrome style
-      // ever leaks back in — the exact drift lockedPolishStyle() now guards against — fail free
-      // and immediately, never after the paid render is consumed.
-      if (lockedPolishStage === 'hybrid' && (authorityFlags.showcase || !authorityFlags.geometryLock)) {
+      // authority (locked underlayer + exact elements composited back). Compared against
+      // sheetRenderRoute's own hybridFlags — the SAME single source generateSectorViaQueue/
+      // generatePhasingViaQueue and applySheet's seeded style all derive from — rather than a
+      // hardcoded "showcase || !geometryLock" copy of what "locked" means. If a model-chrome style
+      // ever leaks back in — the exact drift lockedPolishStyle() now guards against — fail free and
+      // immediately, never after the paid render is consumed.
+      const expectedHybridFlags = sheetRenderRoute({ filter }, 'hybrid', producerStyle).hybridFlags;
+      if (
+        lockedPolishStage === 'hybrid'
+        && expectedHybridFlags
+        && (authorityFlags.showcase !== expectedHybridFlags.showcase || authorityFlags.geometryLock !== expectedHybridFlags.geometryLock)
+      ) {
         throw new Error('The AI hybrid stage needs a geometry-locked style — pick a style other than Satellite Overlay and try again.');
       }
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
@@ -9109,6 +9123,39 @@ export default function DesignGlossy({
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
+    // Cross-check against the single routing authority (lib/sheet-render-route.ts): the dispatch
+    // below must never independently drift from what sheetRenderRoute computes for the SAME
+    // sheet+style — the exact drift pattern that has bitten repeatedly (see that file's header,
+    // commit e0bf17a). Never throws — a disagreement is logged, not fatal, so a real mismatch is
+    // caught in dev/tests without ever taking down a live render.
+    //
+    // Two branches below are DELIBERATELY outside sheetRenderRoute's model (its SheetRoutePath has
+    // no slot for them) and are skipped rather than flagged: the Gemini analysis-map path
+    // (analysisStyle — not one of the 3 farmer-facing output modes sheetRenderRoute knows about at
+    // all) and the direct non-queue /api/image-producer path (engine 'gemini' + no lock + a
+    // non-chrome style — the acknowledged secondary route the comment below explains).
+    if (selectedSheet) {
+      const spec: SheetSpec = 'exact' in selectedSheet ? { exact: selectedSheet.exact } : { filter: selectedSheet.filter };
+      // runCurrentSheet's own state never distinguishes 'hybrid' from 'full' — both dispatch to the
+      // identical branch below; the hybrid-stage-vs-polish-stage split happens INSIDE the queue
+      // functions via lockedPolishStage. 'hybrid' is a faithful stand-in for PATH comparison:
+      // sheetRenderRoute returns the same path for 'hybrid' and 'full'.
+      const outputMode: SheetOutputMode = isExactRender ? 'exact' : 'hybrid';
+      const route = sheetRenderRoute(spec, outputMode, producerStyle);
+      const viaQueue = !producerStyle || engine === 'falgpt' || geometryLock || isModelChromeStyle(producerStyle);
+      const actual: SheetRoutePath | null =
+        exactSheet === 'base' ? 'render-base'
+        : exactSheet === 'sector' ? 'render-sector'
+        : exactSheet === 'implementation' ? 'render-implementation'
+        : phasingAiMode ? 'phasing-queue'
+        : restyleAiKind ? 'sector-queue'
+        : producerStyle ? (viaQueue ? 'one-via-queue' : null)
+        : analysisStyle ? null
+        : 'render-design-map';
+      if (actual !== null && actual !== route.path) {
+        console.error('[glossy] sheet-render-route disagreement — runCurrentSheet is about to take a different path than sheetRenderRoute computed', { spec, outputMode, computedPath: route.path, actualPath: actual });
+      }
+    }
     if (exactSheet === 'base') return renderBaseMap();
     if (exactSheet === 'sector') return renderSectorMap();
     if (exactSheet === 'implementation') return renderImplementationMap();
@@ -9135,7 +9182,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // Direct Step 1 button. If this sheet is already in exact mode, redraw immediately. Otherwise,
   // wait for React to switch the generator selection and then run the deterministic renderer.

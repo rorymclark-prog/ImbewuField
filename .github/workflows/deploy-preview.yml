@@ -1,0 +1,57 @@
+name: Deploy preview
+
+# Every push to a non-main branch → Vercel PREVIEW deploy, then point the stable
+# preview domain at it. This is the CI twin of the manual `vercel deploy` +
+# `vercel alias set … imbewufield-preview.vercel.app` flow — it exists so cloud
+# Claude sessions (claude.ai/code) and any other laptop-free contributor can
+# ship testable builds by pushing alone. Production is deliberately NOT touched
+# here: main → prod stays in deploy.yml.
+# Live URL: imbewufield-preview.vercel.app
+
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_7BrNEJFlmUBuWXhpUGXMs3cl
+      VERCEL_PROJECT_ID: prj_YIOnoi39oQlq6r0pDecV8wPHn4EP
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::warning::Add VERCEL_TOKEN secret to enable preview auto-deploy."
+            echo "HAS=false" >> "$GITHUB_ENV"
+          else
+            echo "HAS=true" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/setup-node@v4
+        if: env.HAS == 'true'
+        with:
+          node-version: '20'
+      - name: Install Vercel CLI
+        if: env.HAS == 'true'
+        run: npm install -g vercel@latest
+      - name: Pull + build + deploy (preview)
+        if: env.HAS == 'true'
+        id: deploy
+        run: |
+          vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          vercel build --token="$VERCEL_TOKEN"
+          url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed preview → $url"
+      - name: Point the stable preview domain at it
+        if: env.HAS == 'true'
+        run: |
+          vercel alias set "${{ steps.deploy.outputs.url }}" imbewufield-preview.vercel.app --token="$VERCEL_TOKEN"
+          echo "imbewufield-preview.vercel.app → ${{ steps.deploy.outputs.url }} (branch ${GITHUB_REF_NAME})"

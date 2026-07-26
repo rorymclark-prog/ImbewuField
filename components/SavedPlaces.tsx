@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { loadPlaces, savePlace, deletePlace, generateId, type SavedPlace } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, generateId, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -47,16 +47,46 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
 
   function handleSave() {
     if (!coords || !locationData || !name.trim()) return;
+    const trimmedName = name.trim();
+    const trimmedNotes = notes.trim() || undefined;
+
+    // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate
+    // (same guard as DataPanel's quick save and Map's pin save): two saves of the same real-world
+    // farm would otherwise mint a second SavedPlace row, and coordinate-keyed downstream data
+    // (designSiteIdFromLocation, 5dp-rounded) forks between the two ids. Never merges silently.
+    const nearby = promptNearbyUpdate(coords.lat, coords.lon);
+    if (nearby) {
+      // Keep the existing id — that's the entire point, so downstream coordinate-keyed data
+      // (design studio sites, surveys) doesn't fork onto a second id. Reuse savePlace(), the
+      // same update/upsert path updatePlacePosition() already uses elsewhere in this codebase.
+      const updated: SavedPlace = {
+        ...nearby,
+        lat: coords.lat,
+        lon: coords.lon,
+        biome: locationData.biome.name,
+        rainfall: locationData.rainfall.annual,
+        elevation: locationData.elevation.elevation,
+        name: trimmedName || nearby.name,
+        notes: trimmedNotes ?? nearby.notes,
+      };
+      setPlaces(savePlace(updated));
+      setSaving(false);
+      setSaved(true);
+      setNotes('');
+      return;
+    }
+    // No nearby place, or the farmer declined → save as a brand-new place.
+
     const place: SavedPlace = {
       id: generateId(),
-      name: name.trim(),
+      name: trimmedName,
       lat: coords.lat,
       lon: coords.lon,
       biome: locationData.biome.name,
       rainfall: locationData.rainfall.annual,
       elevation: locationData.elevation.elevation,
       savedAt: new Date().toISOString(),
-      notes: notes.trim() || undefined,
+      notes: trimmedNotes,
     };
     setPlaces(savePlace(place));
     setSaving(false);

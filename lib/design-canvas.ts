@@ -169,6 +169,16 @@ export function contentCountOf(
   return state ? state.items.length + state.zones.length + state.lines.length : 0;
 }
 
+/** Single source of truth for PlacedItem.rot's storage convention (rounded integer degrees,
+ *  wrapped into [0,360), 0 stored as undefined) — shared by the drag-rotate handle
+ *  (DesignCanvas.tsx endDragRotate) and the Angle number field (DesignPalette.tsx +
+ *  app/design/page.tsx onRotateSelected) so the two commit paths can never drift apart on
+ *  rounding/wrapping and disagree about what "0°" means on disk. */
+export function normaliseRotation(deg: number): number | undefined {
+  const wrapped = ((Math.round(deg) % 360) + 360) % 360;
+  return wrapped === 0 ? undefined : wrapped;
+}
+
 // ── Web-Mercator helpers (adapted from components/GeometryDesignStudio.tsx) ──────
 // Same maths as the Mapbox Static Images API tile grid — do NOT swap in the
 // hardcoded 156543/2^z formula, tile size assumptions differ.

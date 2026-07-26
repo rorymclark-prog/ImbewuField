@@ -1,6 +1,7 @@
 import { upsertPlace, removePlace } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
+import { addTombstone } from './local-tombstones';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -33,6 +34,7 @@ export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string 
   p.color ?? placeColor(p.label);
 
 const KEY = 'permamap_saved_places';
+const DELETED_KEY = `${KEY}_deleted`; // local deletion tombstones — see lib/local-tombstones.ts
 
 export function loadPlaces(): SavedPlace[] {
   if (isSampleMode()) return getSandboxPlaces();
@@ -75,6 +77,10 @@ export function deletePlace(id: string): SavedPlace[] {
     notify();
     return updated;
   }
+  // Record the local tombstone BEFORE the array rewrite: closes the window where a concurrent
+  // remote snapshot (written before the async removePlace() transaction below lands) would
+  // otherwise resurrect this item on the very next merge. See lib/local-tombstones.ts.
+  addTombstone(DELETED_KEY, id);
   const updated = loadPlaces().filter(p => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
@@ -106,6 +112,63 @@ export function updatePlacePosition(id: string, lat: number, lon: number): Saved
 
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+const EARTH_RADIUS_M = 6371000;
+
+/** Great-circle distance between two lat/lon points, in metres. Pure, no dependency added —
+ * no other geo/haversine helper existed in lib/ to reuse (checked). */
+export function distanceMeters(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 2 * EARTH_RADIUS_M * Math.asin(Math.min(1, Math.sqrt(a)));
+}
+
+/**
+ * Find the nearest already-saved place within `radiusM` metres of (lat, lon) — used by the
+ * save flow (components/SavedPlaces.tsx handleSave) to warn before minting a second SavedPlace
+ * row for the same real-world farm (two saves of the same site fork downstream coordinate-keyed
+ * data, e.g. designSiteIdFromLocation's 5dp-rounded site id). Pure — reads via loadPlaces() —
+ * so it's trivially unit-testable and does no merging/deciding on its own; callers decide what
+ * to do with the match.
+ */
+export function findNearbyPlace(lat: number, lon: number, radiusM = 60): SavedPlace | null {
+  let best: SavedPlace | null = null;
+  let bestDist = Infinity;
+  for (const p of loadPlaces()) {
+    const d = distanceMeters(lat, lon, p.lat, p.lon);
+    if (d <= radiusM && d < bestDist) {
+      best = p;
+      bestDist = d;
+    }
+  }
+  return best;
+}
+
+/**
+ * THE save-time duplicate-site guard — the ONE authority every SavedPlace-creation entry point
+ * must call before minting a new id (components/SavedPlaces.tsx handleSave, components/
+ * DataPanel.tsx quickSavePlace, components/Map.tsx confirmSavePlace). A review caught the guard
+ * wired into only one of the three save buttons; per this repo's recurring drift pattern, the
+ * check + wording live here once rather than being pasted per call site.
+ *
+ * Returns the existing nearby place the farmer chose to UPDATE (callers must reuse its id — that
+ * is the entire point, so coordinate-keyed downstream data doesn't fork onto a second id), or
+ * null to proceed with a brand-new save (no nearby place, farmer declined, or SSR).
+ */
+export function promptNearbyUpdate(lat: number, lon: number): SavedPlace | null {
+  if (typeof window === 'undefined') return null;
+  const nearby = findNearbyPlace(lat, lon);
+  if (!nearby) return null;
+  const distM = Math.round(distanceMeters(lat, lon, nearby.lat, nearby.lon));
+  const update = window.confirm(
+    `You already saved "${nearby.name}" about ${distM} m from here. Update that place instead of creating a second one? (OK = update "${nearby.name}", Cancel = save as a new place)`,
+  );
+  return update ? nearby : null;
 }
 
 const MAIN_KEY = 'imbewu_main_site_id';

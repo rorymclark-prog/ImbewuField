@@ -35,6 +35,7 @@ import {
   CanvasSaveError,
   migrateStateToFrame,
   newId,
+  normaliseRotation,
   DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
@@ -498,6 +499,16 @@ function DesignStudioInner() {
       if (additive) return prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
       return [id];
     });
+  }, []);
+  // Marquee (drag-rectangle multi-select) release — DesignCanvas already did the geometry (which
+  // ids the rect caught); this just applies them to selection state the same way handleSelect
+  // does for a single id. additive=true (Shift/Cmd held) UNIONS onto the existing selection —
+  // dragging a second marquee while holding Shift keeps building one selection, and re-catching
+  // an already-selected id is a harmless no-op (Set dedupes). additive=false REPLACES it,
+  // including with an empty array when the marquee caught nothing (a deliberate "start fresh"
+  // drag over empty ground clears whatever was selected, same as a plain background tap does).
+  const handleSelectMany = useCallback((ids: string[], additive: boolean) => {
+    setSelectedIds((prev) => (additive ? Array.from(new Set([...prev, ...ids])) : ids));
   }, []);
   // Touch multi-select mode (phones have no Shift/Cmd) — a plain tap adds while this is on.
   const [multiSelectMode, setMultiSelectMode] = useState(false);
@@ -1124,6 +1135,28 @@ function DesignStudioInner() {
       }
     : null;
 
+  // Angle field (palette) for the selected item — only when exactly one item is selected (not a
+  // zone/line, and not a multi-selection: selectedId is already null for both of those) AND its
+  // def is rect-shaped, mirroring onDuplicateSelected/onDeleteSelected's null-means-hide
+  // convention. Commits through handleChange, the SAME onChange/undo path the canvas's own
+  // drag-rotate handle (endDragRotate in DesignCanvas.tsx) uses, so typing an angle and dragging
+  // the rotate knob are two doors into one commit — one undo entry either way.
+  const selectedItemForAngle = selectedId ? canvasState?.items.find((it) => it.id === selectedId) ?? null : null;
+  const angleControl =
+    selectedItemForAngle && ELEMENTS_BY_ID[selectedItemForAngle.defId]?.shape === 'rect'
+      ? {
+          deg: selectedItemForAngle.rot ?? 0,
+          onRotate: (deg: number) => {
+            const id = selectedItemForAngle.id;
+            handleChange((prev) => ({
+              ...prev,
+              items: prev.items.map((it) => (it.id === id ? { ...it, rot: normaliseRotation(deg) } : it)),
+              updatedAt: new Date().toISOString(),
+            }));
+          },
+        }
+      : null;
+
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
   // element · Escape = deselect. Ignored while typing in a field.
@@ -1671,6 +1704,7 @@ function DesignStudioInner() {
               selectedId={selectedId}
               selectedIds={selectedIds}
               onSelect={handleSelect}
+              onSelectMany={handleSelectMany}
               additiveSelect={multiSelectMode}
               onToggleAdditive={() => setMultiSelectMode((m) => !m)}
               onEditItem={setEditItemId}
@@ -1940,6 +1974,7 @@ function DesignStudioInner() {
           canRedo={redoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
           onDuplicateSelected={onDuplicateSelected}
+          angleControl={angleControl}
           siteBiome={site?.biome}
         />
       )}

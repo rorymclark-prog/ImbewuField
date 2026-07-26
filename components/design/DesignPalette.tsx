@@ -8,6 +8,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { normaliseRotation } from '@/lib/design-canvas';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import LessonLink from './LessonLink';
 
@@ -54,6 +55,16 @@ export interface DesignPaletteProps {
   // Duplicate the current selection (same offset-and-select pattern as Delete's group handling).
   // null = nothing selected, same disabled convention as onDeleteSelected.
   onDuplicateSelected: (() => void) | null;
+  // Angle field for rect-shaped placed items (strips/beds/rows) — precise numeric alternative to
+  // the drag-rotate handle on the canvas. null hides the control entirely, same "nothing to act
+  // on" convention as onDuplicateSelected/onDeleteSelected going null: it means either nothing is
+  // selected, more than one thing is selected, or the single selected item's def isn't
+  // rect-shaped (circles are rotation-invariant — see PlacedItem.rot in lib/design-canvas.ts).
+  // `deg` is the item's current rotation for display (0 when item.rot is undefined). `onRotate`
+  // is called with the farmer's raw typed degrees on commit (blur/Enter only, never mid-keystroke)
+  // — the parent normalises via normaliseRotation and commits through the same onChange/undo path
+  // the drag-rotate handle uses, so both commit paths land exactly one undo entry.
+  angleControl: { deg: number; onRotate: (deg: number) => void } | null;
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
@@ -197,6 +208,7 @@ export default function DesignPalette({
   canRedo,
   onDeleteSelected,
   onDuplicateSelected,
+  angleControl,
   siteBiome,
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -403,6 +415,77 @@ export default function DesignPalette({
         >
           📋 Duplicate
         </button>
+        {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
+            polyline deliberately has NO angle control here: a polyline has no single angle, and
+            "rotating" one would mean rewriting every saved point, not turning one number. That is
+            a scope decision, not an oversight — see angleControl's doc comment above). */}
+        {angleControl && (
+          <div
+            style={{
+              minHeight: guided ? 52 : 44,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+              flexShrink: 0,
+              padding: guided ? '0 12px' : '0 10px',
+              borderRadius: 10,
+              border: '1px solid rgba(0,0,0,0.15)',
+              background: PAPER,
+              color: DARK,
+              fontWeight: 600,
+              fontSize: guided ? 14.5 : 13,
+            }}
+          >
+            <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>
+              ∠
+            </span>
+            <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Angle</span>
+            <input
+              // Uncontrolled + keyed on the committed value: typing never round-trips through
+              // parent state per keystroke (no mid-typing canvas jumps), but the field still picks
+              // up outside changes — undo/redo, the drag-rotate handle, or switching selection to
+              // another item — because a changed `angleControl.deg` changes `key` and remounts the
+              // input fresh from `defaultValue`.
+              key={angleControl.deg}
+              defaultValue={angleControl.deg}
+              type="number"
+              inputMode="numeric"
+              min={0}
+              max={359}
+              step={1}
+              onPointerDown={(e) => e.stopPropagation()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') e.currentTarget.blur();
+              }}
+              onBlur={(e) => {
+                const raw = Number(e.target.value);
+                if (!Number.isFinite(raw)) {
+                  e.currentTarget.value = String(angleControl.deg);
+                  return;
+                }
+                // Snap the field to what will actually be stored right away — normaliseRotation
+                // wraps/rounds/zero-maps the same way the parent's commit does, so e.g. typing
+                // "359.6" reads back as "0" immediately rather than sitting there mismatched until
+                // some unrelated re-render happens to remount the field.
+                e.currentTarget.value = String(normaliseRotation(raw) ?? 0);
+                angleControl.onRotate(raw);
+              }}
+              style={{
+                width: 44,
+                minHeight: guided ? 34 : 28,
+                border: '1px solid rgba(0,0,0,0.18)',
+                borderRadius: 7,
+                background: PAPER,
+                color: DARK,
+                fontSize: guided ? 13.5 : 12,
+                fontWeight: 700,
+                textAlign: 'center',
+                padding: '2px 2px',
+              }}
+            />
+            <span style={{ fontSize: guided ? 13 : 11.5 }}>°</span>
+          </div>
+        )}
         <button
           type="button"
           style={{

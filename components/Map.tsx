@@ -11,7 +11,7 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -458,16 +458,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     if (!namingPlace) return;
     const existingId = editingPlaceId;
     const existing = existingId ? savedPins.find((p) => p.id === existingId) : null;
+    // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
+    // Only for brand-new pin saves: the explicit edit flow (existingId set via startEditPlace) is
+    // already an update of a known id. When the farmer opts to update the nearby place, its id
+    // (and savedAt/notes) survive so coordinate-keyed downstream data doesn't fork.
+    const nearby = existingId ? null : promptNearbyUpdate(namingPlace.lat, namingPlace.lon);
+    const target = existing ?? nearby;
     savePlace({
-      id: existingId ?? generateId(),
-      name: placeName.trim() || 'My place',
+      id: target?.id ?? generateId(),
+      name: placeName.trim() || target?.name || 'My place',
       lat: namingPlace.lat, lon: namingPlace.lon,
-      biome: existing?.biome ?? locationData?.biome?.name ?? '',
-      rainfall: existing?.rainfall ?? locationData?.rainfall?.annual ?? 0,
-      elevation: existing?.elevation ?? locationData?.elevation?.elevation ?? 0,
+      biome: target?.biome ?? locationData?.biome?.name ?? '',
+      rainfall: target?.rainfall ?? locationData?.rainfall?.annual ?? 0,
+      elevation: target?.elevation ?? locationData?.elevation?.elevation ?? 0,
       label: placeLabel,
       color: customPlaceColor || undefined,
-      savedAt: existing?.savedAt ?? new Date().toISOString(),
+      savedAt: target?.savedAt ?? new Date().toISOString(),
+      // Not editable in this sheet — carry existing notes through instead of dropping them.
+      notes: target?.notes,
     });
     setSavedPins(loadPlaces());
     setEditingPlaceId(null);

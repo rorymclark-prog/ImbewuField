@@ -1,5 +1,6 @@
 import { upsertWaterPoint, removeWaterPoint } from './user-sync';
 import { getFirebase } from './firebase/init';
+import { addTombstone } from './local-tombstones';
 
 export type WaterPointCategory = 'Dam' | 'Borehole' | 'Spring' | 'Well' | 'Pond' | 'Tank' | 'Other';
 
@@ -28,6 +29,7 @@ export function categoryColor(cat?: string): string {
 }
 
 const KEY = 'imbewu_water_points';
+const DELETED_KEY = `${KEY}_deleted`; // local deletion tombstones — see lib/local-tombstones.ts
 
 function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-water-points-changed'));
@@ -53,6 +55,9 @@ export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
 }
 
 export function deleteWaterPoint(id: string): WaterPoint[] {
+  // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
+  // (closes the deletion-resurrection window against a concurrent remote snapshot).
+  addTombstone(DELETED_KEY, id);
   const updated = loadWaterPoints().filter((p) => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
