@@ -2,16 +2,17 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { myCourseProgress, setCourseProgress, myAssignments } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
+import LessonInfographic from '@/components/course/LessonInfographic';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import {
@@ -109,14 +110,30 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color, moduleId, lang }: {
+function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }: {
   lesson: Lesson; color: string; moduleId: string; lang: string;
+  /** True for exactly one render after a "related lessons" jump targets this lesson — see
+   *  jumpToLesson() below. A one-way switch: it opens the panel, but going false again never
+   *  closes it back up. */
+  autoOpen?: boolean;
+  onJumpToLesson: (lessonId: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
+  const hasAudio = lessonTracks.length > 0;
+  const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
+  const hasLeadIn = hasAudio || hasInfographic;
+
+  // Silently drop any related-lesson id that doesn't resolve to a real lesson, rather than
+  // rendering a dead button — tests/course-content.test.ts is what catches the bad data itself.
+  const related = (lesson.relatedLessonIds ?? [])
+    .map((id) => LESSON_INDEX.get(id))
+    .filter((entry): entry is { lesson: Lesson; moduleId: string } => Boolean(entry));
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22` }}>
+    // Anchors "related lessons" jumps from other lessons to this one (see jumpToLesson).
+    <div id={`lesson-${lesson.id}`} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22`, scrollMarginTop: 64 }}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
@@ -133,7 +150,7 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
 
       {open && (
         <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
-          {lessonTracks.length > 0 && (
+          {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
                 moduleId={moduleId}
@@ -144,8 +161,15 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
             </div>
           )}
 
+          {/* Infographic — a diagram frames the reading, so it sits after audio, before body */}
+          {hasInfographic && (
+            <div className={hasAudio ? '' : 'pt-4'}>
+              <LessonInfographic url={lesson.infographicUrl!} alt={lesson.infographicAlt!} />
+            </div>
+          )}
+
           {/* Body */}
-          <div className={lessonTracks.length > 0 ? 'space-y-3' : 'space-y-3 pt-4'}>
+          <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
             {lesson.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
@@ -166,6 +190,24 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
             </ul>
           </div>
 
+          {/* Facilitator video — a link, never an inline player: KZN connectivity cannot
+              stream video per-visit, so a farmer must never land on this by accident. */}
+          {lesson.videoUrl && (
+            <a
+              href={lesson.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
+              style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
+            >
+              <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
+                Facilitator training video — for in-person sessions, not for streaming here.
+              </span>
+              <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
+            </a>
+          )}
+
           {/* Quiz */}
           <div className="space-y-3">
             <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
@@ -175,6 +217,29 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
               <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
             ))}
           </div>
+
+          {/* Related lessons — jumps to another lesson's panel; a dangling id is filtered out
+              above rather than rendered as a dead button. */}
+          {related.length > 0 && (
+            <div className="space-y-2">
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+                Related lessons
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {related.map(({ lesson: rl }) => (
+                  <button
+                    key={rl.id}
+                    type="button"
+                    onClick={() => onJumpToLesson(rl.id)}
+                    className="px-3 py-1.5 rounded-full text-xs font-sans font-medium text-left transition-colors"
+                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color, cursor: 'pointer' }}
+                  >
+                    {rl.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -200,6 +265,9 @@ export default function StudentPage() {
   const [fetching, setFetching] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
+  // not durable UI state — see jumpToLesson() and the effect that consumes it.
+  const [jumpToLessonId, setJumpToLessonId] = useState<string | null>(null);
 
   useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
@@ -242,6 +310,24 @@ export default function StudentPage() {
   function toggleExpand(moduleId: string) {
     setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
   }
+
+  /** Expand the module that owns lessonId and scroll its panel into view. A dangling id (one
+   *  that doesn't resolve) is a no-op — the button that would have called this is never
+   *  rendered in the first place, since LessonPanel already filters those out. */
+  function jumpToLesson(lessonId: string) {
+    const owner = LESSON_INDEX.get(lessonId);
+    if (!owner) return;
+    setExpandedModuleId(owner.moduleId);
+    setJumpToLessonId(lessonId);
+  }
+
+  // Runs once the target module's lessons are in the DOM (both state updates above land in the
+  // same commit), scrolls the target panel into view, then clears the one-shot signal.
+  useEffect(() => {
+    if (!jumpToLessonId) return;
+    document.getElementById(`lesson-${jumpToLessonId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setJumpToLessonId(null);
+  }, [jumpToLessonId, expandedModuleId]);
 
   const assignmentByModule = useMemo(() => {
     const m = new Map<string, CourseAssignment>();
@@ -545,7 +631,15 @@ export default function StudentPage() {
                       Lessons
                     </p>
                     {mod.lessons.map((lesson) => (
-                      <LessonPanel key={lesson.id} lesson={lesson} color={color} moduleId={mod.id} lang={lang} />
+                      <LessonPanel
+                        key={lesson.id}
+                        lesson={lesson}
+                        color={color}
+                        moduleId={mod.id}
+                        lang={lang}
+                        autoOpen={jumpToLessonId === lesson.id}
+                        onJumpToLesson={jumpToLesson}
+                      />
                     ))}
                   </div>
                 )}

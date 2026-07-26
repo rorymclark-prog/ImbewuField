@@ -13,6 +13,32 @@ export interface Lesson {
   body: string;
   keyPoints: string[];
   quiz: QuizQuestion[];
+  /**
+   * Farmer-facing still image — a diagram or infographic (typically generated from this
+   * lesson's content via NotebookLM, then proofread). Optional: most lessons have none yet.
+   * See docs/COURSE-VISUAL-ASSETS.md for how to add one and where the file goes.
+   */
+  infographicUrl?: string;
+  /**
+   * Alt text for infographicUrl — required by convention whenever infographicUrl is set (not
+   * enforced by the type, since most lessons legitimately have neither field). It matters for
+   * accessibility, and it's what a farmer reads on a failed image load on a slow connection.
+   * tests/course-content.test.ts fails the build if one is set without the other.
+   */
+  infographicAlt?: string;
+  /**
+   * Facilitator/training video. Deliberately never rendered as an inline player for farmers —
+   * KZN connectivity cannot stream video per-visit. The student page renders this as a plain
+   * external link labelled as facilitator material, so a farmer never accidentally streams it.
+   */
+  videoUrl?: string;
+  /**
+   * Cross-links to other lessons worth reading alongside this one. Every id here must resolve
+   * to a real lesson somewhere in COURSE_MODULES — checked by tests/course-content.test.ts,
+   * and defensively re-checked at render time (app/student/page.tsx) so a bad id is skipped
+   * silently rather than showing a dead button.
+   */
+  relatedLessonIds?: string[];
 }
 
 export interface CourseModule {
@@ -1290,3 +1316,13 @@ export const CATEGORY_COLORS: Record<ModuleCategory, string> = {
 };
 
 export const TOTAL_MODULES = COURSE_MODULES.length;
+
+/**
+ * Flat lookup, built once at import time: lesson id -> the lesson plus the id of the module
+ * that owns it. Exists so callers that only have a lesson id in hand — the student page's
+ * "related lessons" row jumping between accordion sections, or a test checking a cross-link
+ * resolves — don't each need to walk COURSE_MODULES themselves.
+ */
+export const LESSON_INDEX: Map<string, { lesson: Lesson; moduleId: string }> = new Map(
+  COURSE_MODULES.flatMap((m) => m.lessons.map((l) => [l.id, { lesson: l, moduleId: m.id }] as const)),
+);
