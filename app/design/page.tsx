@@ -500,6 +500,16 @@ function DesignStudioInner() {
       return [id];
     });
   }, []);
+  // Marquee (drag-rectangle multi-select) release — DesignCanvas already did the geometry (which
+  // ids the rect caught); this just applies them to selection state the same way handleSelect
+  // does for a single id. additive=true (Shift/Cmd held) UNIONS onto the existing selection —
+  // dragging a second marquee while holding Shift keeps building one selection, and re-catching
+  // an already-selected id is a harmless no-op (Set dedupes). additive=false REPLACES it,
+  // including with an empty array when the marquee caught nothing (a deliberate "start fresh"
+  // drag over empty ground clears whatever was selected, same as a plain background tap does).
+  const handleSelectMany = useCallback((ids: string[], additive: boolean) => {
+    setSelectedIds((prev) => (additive ? Array.from(new Set([...prev, ...ids])) : ids));
+  }, []);
   // Touch multi-select mode (phones have no Shift/Cmd) — a plain tap adds while this is on.
   const [multiSelectMode, setMultiSelectMode] = useState(false);
   const [tool, setTool] = useState<'select' | 'place' | 'zone' | 'line'>('select');
@@ -1694,6 +1704,7 @@ function DesignStudioInner() {
               selectedId={selectedId}
               selectedIds={selectedIds}
               onSelect={handleSelect}
+              onSelectMany={handleSelectMany}
               additiveSelect={multiSelectMode}
               onToggleAdditive={() => setMultiSelectMode((m) => !m)}
               onEditItem={setEditItemId}

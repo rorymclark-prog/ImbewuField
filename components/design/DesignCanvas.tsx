@@ -15,6 +15,7 @@ import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKin
 import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
+import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
@@ -126,6 +127,10 @@ export interface DesignCanvasProps {
   selectedId: string | null; // the SINGLE selection (edit/resize/rotate handles); null if 0 or >1
   selectedIds: string[]; // every selected id (highlight rings + group delete)
   onSelect: (id: string | null, additive?: boolean) => void;
+  // Drag-rectangle multi-select ("marquee") release: every id the rect caught (see
+  // collectMarqueeSelection below). additive=true (Shift/Cmd held) ADDS to the existing
+  // selection; additive=false (the multiSelectMode path — phones have no Shift) REPLACES it.
+  onSelectMany: (ids: string[], additive: boolean) => void;
   // Touch multi-select: when on, a plain tap ADDS to the selection (phones have no Shift/Cmd
   // key). The toggle button + the desktop Shift/Cmd+tap both feed the same additive path.
   additiveSelect?: boolean;
@@ -461,6 +466,7 @@ export default function DesignCanvas({
   additiveSelect,
   onToggleAdditive,
   onSelect,
+  onSelectMany,
   suggestions,
   onEditItem,
   onToolChange,
@@ -535,6 +541,33 @@ export default function DesignCanvas({
   // pre-drag shape, not the (already-translated) preview from the previous pointermove.
   const dragShape = useRef<{ id: string; kind: 'zone' | 'line'; originPoints: Array<[number, number]>; startWorldX: number; startWorldY: number } | null>(null);
   const [shapeDragDelta, setShapeDragDelta] = useState<[number, number] | null>(null);
+
+  // GROUP move (marquee follow-up): a press-drag that starts on an item/zone/line already part
+  // of a MULTI-selection (selectedIds.length > 1 and includes it) translates the WHOLE selection
+  // together instead of just that one shape — see startDragItem/startDragShape's branch into
+  // startGroupDrag below. Mirrors dragShape's snapshot-then-preview-then-commit pattern,
+  // generalised to N shapes: origins are captured ONCE at drag start (never re-derived from the
+  // translating preview, same reason dragShape snapshots originPoints), and only OWNED members
+  // (ownedByCurrentStep) are captured — a foreign-step/boundary shape that somehow rides along in
+  // selectedIds can never be translated. endGroupDrag emits exactly one onChange (one undo entry
+  // for the whole group), never per-pointermove.
+  const dragGroup = useRef<{
+    itemOrigins: Map<string, [number, number]>;
+    zoneOrigins: Map<string, Array<[number, number]>>;
+    lineOrigins: Map<string, Array<[number, number]>>;
+    startWorldX: number;
+    startWorldY: number;
+  } | null>(null);
+  const [groupDragDelta, setGroupDragDelta] = useState<[number, number] | null>(null);
+
+  // Drag-rectangle multi-select ("marquee"). Starts INSTEAD of the usual background pan when, in
+  // the select tool, either a desktop Shift/Cmd/Ctrl modifier is held on pointerdown (activation
+  // rule a), or multiSelectMode is on (rule b — phones have no modifier keys; multiSelectMode is
+  // already the "no Shift available" substitute the touch UI uses for additive taps). Coordinates
+  // are normalised [0..1] WORLD-space (clientToNorm — the same space item.x/y and zone/line
+  // points already live in), so the rect can be hit-tested against state with no extra transform.
+  const marqueeState = useRef<{ pointerId: number; startClientX: number; startClientY: number; additive: boolean } | null>(null);
+  const [marqueeRect, setMarqueeRect] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
 
   // Drag state for a zone/feature/line NAME LABEL — moves just the label (a normalised offset from
   // the shape's anchor point — ring centroid for zones, midpoint for lines), not the shape itself,
@@ -767,8 +800,10 @@ export default function DesignCanvas({
 
     if (activePointers.current.size === 2) {
       // Entering a two-finger gesture (pinch and/or two-finger pan) — cancel any
-      // in-progress one-finger pan.
+      // in-progress one-finger pan or marquee.
       panState.current = null;
+      marqueeState.current = null;
+      setMarqueeRect(null);
       const pts = Array.from(activePointers.current.values());
       const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1;
       const midClientX = (pts[0].x + pts[1].x) / 2;
@@ -782,6 +817,27 @@ export default function DesignCanvas({
       return;
     }
     if (activePointers.current.size > 2) return;
+
+    // Single-pointer marquee activation (see dragGroup/marqueeState comments above): in the
+    // select tool only, a Shift/Cmd/Ctrl-held pointerdown (desktop) or ANY background drag while
+    // additiveSelect (the multiSelectMode toggle, phones have no Shift) is on starts a
+    // drag-rectangle instead of the usual pan. Other tools keep their existing background tap
+    // behaviour (place/draft-point) completely untouched.
+    if (tool === 'select' && (e.shiftKey || e.metaKey || e.ctrlKey || additiveSelect)) {
+      const pt = clientToNorm(e.clientX, e.clientY);
+      if (pt) {
+        marqueeState.current = {
+          pointerId: e.pointerId,
+          startClientX: e.clientX,
+          startClientY: e.clientY,
+          // Shift/Cmd ADDS to the existing selection; the multiSelectMode-only path (no
+          // modifier held) REPLACES it — activation rules a/b, spec'd verbatim.
+          additive: Boolean(e.shiftKey || e.metaKey || e.ctrlKey),
+        };
+        setMarqueeRect({ x0: pt[0], y0: pt[1], x1: pt[0], y1: pt[1] });
+        return;
+      }
+    }
 
     // Single-pointer: prime a potential pan for EVERY tool. The tool-specific tap action
     // (place item / append draft point / deselect) is deferred to pointerup's
@@ -850,6 +906,13 @@ export default function DesignCanvas({
       return;
     }
 
+    const marquee = marqueeState.current;
+    if (marquee && marquee.pointerId === e.pointerId) {
+      const pt = clientToNorm(e.clientX, e.clientY);
+      if (pt) setMarqueeRect((prev) => (prev ? { x0: prev.x0, y0: prev.y0, x1: pt[0], y1: pt[1] } : { x0: pt[0], y0: pt[1], x1: pt[0], y1: pt[1] }));
+      return;
+    }
+
     const pan = panState.current;
     if (pan && pan.pointerId === e.pointerId) {
       const dx = e.clientX - pan.startX;
@@ -864,9 +927,50 @@ export default function DesignCanvas({
     }
   }
 
+  // Every CURRENT-STEP-OWNED shape the marquee rect caught: an item if its centre is inside, a
+  // zone/line if ANY vertex is inside (see lib/marquee.ts for why the two rules differ). Reuses
+  // ownedByCurrentStep — the exact same predicate startDragItem/startDragShape already gate on —
+  // so a foreign-step shape can never be marquee-selected. Precision note (adversarial review):
+  // the boundary ring, like every ground feature, IS owned on the Base step where the farmer
+  // traces it — marquee/group-move there matches how single-shape drag has always behaved — and
+  // it is untouchable from every other step.
+  function collectMarqueeSelection(rect: Rect): string[] {
+    const ids: string[] = [];
+    for (const it of state.items) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })) continue;
+      if (itemCenterInRect(it.x, it.y, rect)) ids.push(it.id);
+    }
+    for (const z of state.zones) {
+      if (!ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) continue;
+      if (anyVertexInRect(z.points, rect)) ids.push(z.id);
+    }
+    for (const l of state.lines) {
+      if (!ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) continue;
+      if (anyVertexInRect(l.points, rect)) ids.push(l.id);
+    }
+    return ids;
+  }
+
   function handleBackgroundPointerUp(e: React.PointerEvent<SVGSVGElement>) {
     activePointers.current.delete(e.pointerId);
     if (activePointers.current.size < 2) pinchState.current = null;
+
+    const marquee = marqueeState.current;
+    if (marquee && marquee.pointerId === e.pointerId) {
+      marqueeState.current = null;
+      const rect = marqueeRect;
+      setMarqueeRect(null);
+      const draggedPx = Math.hypot(e.clientX - marquee.startClientX, e.clientY - marquee.startClientY);
+      // A sub-4px drag is treated as the normal background tap it would have been without the
+      // modifier/multiSelectMode — no accidental empty marquees from a slightly-jittery tap.
+      if (rect && draggedPx >= 4) {
+        onSelectMany(collectMarqueeSelection(rectFromCorners([rect.x0, rect.y0], [rect.x1, rect.y1])), marquee.additive);
+        return;
+      }
+      runTapAction(e);
+      return;
+    }
 
     const pan = panState.current;
     if (pan && pan.pointerId === e.pointerId) {
@@ -884,6 +988,8 @@ export default function DesignCanvas({
     activePointers.current.delete(e.pointerId);
     if (activePointers.current.size < 2) pinchState.current = null;
     if (panState.current?.pointerId === e.pointerId) panState.current = null;
+    marqueeState.current = null;
+    setMarqueeRect(null);
     dragItemId.current = null;
     setDragPos(null);
     dragVertex.current = null;
@@ -892,6 +998,8 @@ export default function DesignCanvas({
     setResizePreview(null);
     dragShape.current = null;
     setShapeDragDelta(null);
+    dragGroup.current = null;
+    setGroupDragDelta(null);
     dragLabel.current = null;
     setLabelDragDelta(null);
     dragDraftVertex.current = null;
@@ -912,6 +1020,15 @@ export default function DesignCanvas({
     if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
+    // A press-drag starting on a shape that's ALREADY part of a multi-selection moves the WHOLE
+    // selection together (see dragGroup above) instead of the usual "replace selection with just
+    // this one" tap behaviour — checked against the selectedIds this render already has, i.e.
+    // BEFORE any onSelect call below can change it. Additive (Shift/Cmd) taps always toggle
+    // membership first, exactly as today, and never start any drag — group or single.
+    if (!additive && selectedIds.length > 1 && selectedIds.includes(id)) {
+      startGroupDrag(e, selectedIds);
+      return;
+    }
     onSelect(id, additive);
     if (additive) return; // toggle membership — no drag, no handles.
     (e.target as Element).setPointerCapture?.(e.pointerId);
@@ -1003,12 +1120,95 @@ export default function DesignCanvas({
     if (!owned) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
+    // See startDragItem — same group-move branch, generalised to zones/lines.
+    if (!additive && selectedIds.length > 1 && selectedIds.includes(id)) {
+      startGroupDrag(e, selectedIds);
+      return;
+    }
     onSelect(id, additive);
     if (additive) return; // toggle membership — no drag.
     (e.target as Element).setPointerCapture?.(e.pointerId);
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
     dragShape.current = { id, kind, originPoints: shape.points, startWorldX: w[0], startWorldY: w[1] };
+  }
+
+  // Snapshots the CURRENT positions of every OWNED member of `ids` (ownedByCurrentStep — a
+  // foreign-step/boundary shape that somehow rides along in selectedIds is excluded, never
+  // translated) as the group's drag origin — captured ONCE, exactly like dragShape.originPoints,
+  // so the delta stays relative to the pre-drag layout rather than an already-translated preview.
+  function startGroupDrag(e: React.PointerEvent, ids: string[]) {
+    const idSet = new Set(ids);
+    const itemOrigins = new Map<string, [number, number]>();
+    const zoneOrigins = new Map<string, Array<[number, number]>>();
+    const lineOrigins = new Map<string, Array<[number, number]>>();
+    for (const it of state.items) {
+      if (!idSet.has(it.id)) continue;
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (def && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })) {
+        itemOrigins.set(it.id, [it.x, it.y]);
+      }
+    }
+    for (const z of state.zones) {
+      if (idSet.has(z.id) && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) {
+        zoneOrigins.set(z.id, z.points);
+      }
+    }
+    for (const l of state.lines) {
+      if (idSet.has(l.id) && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) {
+        lineOrigins.set(l.id, l.points);
+      }
+    }
+    if (itemOrigins.size + zoneOrigins.size + lineOrigins.size === 0) return; // nothing owned to move
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    dragGroup.current = { itemOrigins, zoneOrigins, lineOrigins, startWorldX: w[0], startWorldY: w[1] };
+  }
+
+  function moveGroupDrag(e: React.PointerEvent) {
+    const dg = dragGroup.current;
+    if (!dg) return;
+    const w = worldFromClient(e.clientX, e.clientY);
+    if (!w) return;
+    // Unclamped raw delta, same reasoning as moveDragShape — the clamp is applied once, uniformly,
+    // at render time and again on commit (see clampGroupDelta), never per-point mid-drag.
+    setGroupDragDelta([(w[0] - dg.startWorldX) / imgW, (w[1] - dg.startWorldY) / imgH]);
+  }
+
+  function collectGroupPoints(g: NonNullable<typeof dragGroup.current>): Array<[number, number]> {
+    const pts: Array<[number, number]> = [];
+    g.itemOrigins.forEach((p) => pts.push(p));
+    g.zoneOrigins.forEach((ps) => pts.push(...ps));
+    g.lineOrigins.forEach((ps) => pts.push(...ps));
+    return pts;
+  }
+
+  function endGroupDrag() {
+    const dg = dragGroup.current;
+    if (dg && groupDragDelta) {
+      // ONE clamp for the whole group (never per-point — see lib/marquee.ts clampGroupDelta) so
+      // the group moves rigidly: if any member would leave [0,1], every member is held back by
+      // the same amount rather than each independently snapping to the edge.
+      const [dx, dy] = clampGroupDelta(collectGroupPoints(dg), groupDragDelta[0], groupDragDelta[1]);
+      onChange({
+        ...state,
+        items: state.items.map((it) => {
+          const origin = dg.itemOrigins.get(it.id);
+          return origin ? { ...it, x: clamp01(origin[0] + dx), y: clamp01(origin[1] + dy) } : it;
+        }),
+        zones: state.zones.map((z) => {
+          const origin = dg.zoneOrigins.get(z.id);
+          return origin ? { ...z, points: origin.map(([x, y]) => [clamp01(x + dx), clamp01(y + dy)] as [number, number]) } : z;
+        }),
+        lines: state.lines.map((l) => {
+          const origin = dg.lineOrigins.get(l.id);
+          return origin ? { ...l, points: origin.map(([x, y]) => [clamp01(x + dx), clamp01(y + dy)] as [number, number]) } : l;
+        }),
+      });
+    }
+    dragGroup.current = null;
+    setGroupDragDelta(null);
   }
 
   function moveDragShape(e: React.PointerEvent) {
@@ -1453,6 +1653,32 @@ export default function DesignCanvas({
   const itemGripSmall = worldPx(7);
   const itemRotateStem = worldPx(18);
 
+  // Group-drag preview: the SAME clamped delta for every member (rigid group translate — see
+  // clampGroupDelta/endGroupDrag) computed ONCE per render so the live preview below and the
+  // eventual commit can never show/produce different positions. dragGroup.current is a ref (not
+  // reactive state) — reading it directly here is safe because groupDragDelta (a real state
+  // value, set in lockstep by moveGroupDrag) is what actually triggers the re-render.
+  const groupOrigins = dragGroup.current;
+  const clampedGroupDelta: [number, number] | null =
+    groupOrigins && groupDragDelta
+      ? clampGroupDelta(collectGroupPoints(groupOrigins), groupDragDelta[0], groupDragDelta[1])
+      : null;
+
+  // A placed item's live position: its own single-item drag preview wins if it's the one being
+  // individually dragged; otherwise its group-drag preview (if it's a member of the group
+  // currently moving) wins; otherwise its committed x/y. Shared by BOTH item render passes below
+  // (the footprint/icon loop and the separate label-pill layout pass) so the two can never
+  // disagree about where an item is mid-drag — a real bug this fixes: without it, a group-dragged
+  // item's icon would move while its name pill stayed pinned to the old position.
+  function effectiveItemPos(item: PlacedItem): [number, number] {
+    if (item.id === dragItemId.current && dragPos) return dragPos;
+    const origin = groupOrigins?.itemOrigins.get(item.id);
+    if (origin && clampedGroupDelta) {
+      return [clamp01(origin[0] + clampedGroupDelta[0]), clamp01(origin[1] + clampedGroupDelta[1])];
+    }
+    return [item.x, item.y];
+  }
+
   // touchAction 'none' whenever a two-finger pinch could occur (always, so the browser
   // never intercepts the gesture for native pinch-zoom/scroll) — panning/placing rely on
   // preventDefault + our own pointer handlers either way.
@@ -1475,6 +1701,7 @@ export default function DesignCanvas({
           moveDragShape(e);
           moveDragLabel(e);
           moveDragDraftVertex(e);
+          moveGroupDrag(e);
         }}
         onPointerUp={(e) => {
           handleBackgroundPointerUp(e);
@@ -1485,6 +1712,7 @@ export default function DesignCanvas({
           endDragShape();
           endDragLabel();
           endDragDraftVertex();
+          endGroupDrag();
         }}
         onPointerCancel={handleBackgroundPointerCancel}
         onDoubleClick={handleBackgroundDoubleClick}
@@ -1744,10 +1972,14 @@ export default function DesignCanvas({
             const isHighlighted = selectedIds.includes(z.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
             const isDraggingWholeShape = dragShape.current?.id === z.id && dragShape.current.kind === 'zone' && shapeDragDelta;
+            const groupOrigin = groupOrigins?.zoneOrigins.get(z.id);
+            const isGroupDraggingThis = groupOrigin && clampedGroupDelta;
             const effectivePoints = isDraggingVertexOfThisShape
               ? z.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
               : isDraggingWholeShape
               ? z.points.map(([x, y]) => [clamp01(x + shapeDragDelta![0]), clamp01(y + shapeDragDelta![1])] as [number, number])
+              : isGroupDraggingThis
+              ? groupOrigin.map(([x, y]) => [clamp01(x + clampedGroupDelta[0]), clamp01(y + clampedGroupDelta[1])] as [number, number])
               : z.points;
             const centroid = ringCentroid(effectivePoints);
             const onZonePointerDown = (e: React.PointerEvent) => startDragShape(e, z.id, 'zone');
@@ -2070,10 +2302,14 @@ export default function DesignCanvas({
             const isHighlighted = selectedIds.includes(line.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
             const isDraggingWholeShape = dragShape.current?.id === line.id && dragShape.current.kind === 'line' && shapeDragDelta;
+            const groupOrigin = groupOrigins?.lineOrigins.get(line.id);
+            const isGroupDraggingThis = groupOrigin && clampedGroupDelta;
             const effectivePoints = isDraggingVertexOfThisShape
               ? line.points.map((p, i) => (i === dragVertex.current!.index ? vertexPos! : p))
               : isDraggingWholeShape
               ? line.points.map(([x, y]) => [clamp01(x + shapeDragDelta![0]), clamp01(y + shapeDragDelta![1])] as [number, number])
+              : isGroupDraggingThis
+              ? groupOrigin.map(([x, y]) => [clamp01(x + clampedGroupDelta[0]), clamp01(y + clampedGroupDelta[1])] as [number, number])
               : line.points;
             const mid = effectivePoints[Math.floor(effectivePoints.length / 2)] ?? effectivePoints[0];
             return (
@@ -2352,8 +2588,7 @@ export default function DesignCanvas({
           const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
           const wPx = Math.max(wM / mPerPx, 6);
           const hPx = Math.max(hM / mPerPx, 6);
-          const isDragging = item.id === dragItemId.current && dragPos;
-          const [px, py] = isDragging ? dragPos : [item.x, item.y];
+          const [px, py] = effectiveItemPos(item);
           const cx = px * imgW;
           const cy = py * imgH;
           const isSelected = selectedId === item.id;
@@ -2552,8 +2787,7 @@ export default function DesignCanvas({
               const def = ELEMENTS_BY_ID[item.defId];
               if (!def) return null;
               if (!activeLayers[categoryLayerKey(def.category)]) return null;
-              const isDragging = item.id === dragItemId.current && dragPos;
-              const [nx, ny] = isDragging ? dragPos : [item.x, item.y];
+              const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
               const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
               const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
@@ -2741,6 +2975,31 @@ export default function DesignCanvas({
               </g>
             );
           })}
+
+        {/* Marquee (drag-rectangle multi-select) — light dashed selection rectangle, drawn last
+            in world-space so it always sits on top of every shape while dragging. Coordinates are
+            already normalised [0..1] world-space (see marqueeState above), so ×imgW/×imgH is the
+            only conversion needed — no extra transform, matching every other shape in this group. */}
+        {marqueeRect && (() => {
+          const x = Math.min(marqueeRect.x0, marqueeRect.x1) * imgW;
+          const y = Math.min(marqueeRect.y0, marqueeRect.y1) * imgH;
+          const w = Math.abs(marqueeRect.x1 - marqueeRect.x0) * imgW;
+          const h = Math.abs(marqueeRect.y1 - marqueeRect.y0) * imgH;
+          return (
+            <rect
+              x={x}
+              y={y}
+              width={w}
+              height={h}
+              fill={GOLD}
+              fillOpacity={0.12}
+              stroke={GOLD}
+              strokeWidth={worldPx(1.5)}
+              strokeDasharray={`${worldPx(6)} ${worldPx(4)}`}
+              pointerEvents="none"
+            />
+          );
+        })()}
 
         </g>
         {/* End world-space transform group — everything below is a fixed screen-space overlay. */}
