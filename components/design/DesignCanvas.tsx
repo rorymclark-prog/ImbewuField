@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
@@ -1279,10 +1279,10 @@ export default function DesignCanvas({
   function endDragRotate() {
     const id = dragRotateId.current;
     if (id && rotPreview !== null) {
-      const rot = rotPreview % 360;
+      const rot = normaliseRotation(rotPreview);
       onChange({
         ...state,
-        items: state.items.map((it) => (it.id === id ? { ...it, rot: rot === 0 ? undefined : rot } : it)),
+        items: state.items.map((it) => (it.id === id ? { ...it, rot } : it)),
       });
     }
     dragRotateId.current = null;

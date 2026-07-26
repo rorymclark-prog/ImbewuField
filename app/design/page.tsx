@@ -35,6 +35,7 @@ import {
   CanvasSaveError,
   migrateStateToFrame,
   newId,
+  normaliseRotation,
   DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
@@ -1124,6 +1125,28 @@ function DesignStudioInner() {
       }
     : null;
 
+  // Angle field (palette) for the selected item — only when exactly one item is selected (not a
+  // zone/line, and not a multi-selection: selectedId is already null for both of those) AND its
+  // def is rect-shaped, mirroring onDuplicateSelected/onDeleteSelected's null-means-hide
+  // convention. Commits through handleChange, the SAME onChange/undo path the canvas's own
+  // drag-rotate handle (endDragRotate in DesignCanvas.tsx) uses, so typing an angle and dragging
+  // the rotate knob are two doors into one commit — one undo entry either way.
+  const selectedItemForAngle = selectedId ? canvasState?.items.find((it) => it.id === selectedId) ?? null : null;
+  const angleControl =
+    selectedItemForAngle && ELEMENTS_BY_ID[selectedItemForAngle.defId]?.shape === 'rect'
+      ? {
+          deg: selectedItemForAngle.rot ?? 0,
+          onRotate: (deg: number) => {
+            const id = selectedItemForAngle.id;
+            handleChange((prev) => ({
+              ...prev,
+              items: prev.items.map((it) => (it.id === id ? { ...it, rot: normaliseRotation(deg) } : it)),
+              updatedAt: new Date().toISOString(),
+            }));
+          },
+        }
+      : null;
+
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
   // element · Escape = deselect. Ignored while typing in a field.
@@ -1940,6 +1963,7 @@ function DesignStudioInner() {
           canRedo={redoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
           onDuplicateSelected={onDuplicateSelected}
+          angleControl={angleControl}
           siteBiome={site?.biome}
         />
       )}
