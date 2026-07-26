@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { myCourseProgress, setCourseProgress, myAssignments } from '@/lib/db/queries';
@@ -11,6 +11,9 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
+import { useLanguage } from '@/lib/i18n';
+import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import {
   assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
@@ -106,8 +109,11 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
+function LessonPanel({ lesson, color, moduleId, lang }: {
+  lesson: Lesson; color: string; moduleId: string; lang: string;
+}) {
   const [open, setOpen] = useState(false);
+  const lessonTracks = tracksForLesson(moduleId, lesson.id);
 
   return (
     <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22` }}>
@@ -127,8 +133,19 @@ function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
 
       {open && (
         <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
+          {lessonTracks.length > 0 && (
+            <div className="pt-4">
+              <CourseAudioPlayer
+                moduleId={moduleId}
+                appLang={lang}
+                tracks={lessonTracks}
+                label="Listen to this lesson"
+              />
+            </div>
+          )}
+
           {/* Body */}
-          <div className="space-y-3 pt-4">
+          <div className={lessonTracks.length > 0 ? 'space-y-3' : 'space-y-3 pt-4'}>
             {lesson.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
@@ -170,6 +187,7 @@ const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'ngo', 'funder', 'ad
 
 export default function StudentPage() {
   const { user, role, loading } = useAuth();
+  const { lang } = useLanguage();
   const router = useRouter();
   const isLive = isBackendConfigured();
 
@@ -469,6 +487,12 @@ export default function StudentPage() {
                         <Clock size={11} style={{ color: '#8C7A62' }} />
                         <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
                       </div>
+                      {hasNarration(mod.id) && (
+                        <div className="flex items-center gap-1">
+                          <Headphones size={11} style={{ color: '#1F4D2B' }} />
+                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>Audio</span>
+                        </div>
+                      )}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
@@ -507,11 +531,21 @@ export default function StudentPage() {
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
                   <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid #E2D8C4' }}>
+                    {hasNarration(mod.id) && (
+                      <div className="pt-3">
+                        <CourseAudioPlayer
+                          moduleId={mod.id}
+                          appLang={lang}
+                          tracks={allTracks(mod.id)}
+                          label="Listen to the whole module"
+                        />
+                      </div>
+                    )}
                     <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
                       Lessons
                     </p>
                     {mod.lessons.map((lesson) => (
-                      <LessonPanel key={lesson.id} lesson={lesson} color={color} />
+                      <LessonPanel key={lesson.id} lesson={lesson} color={color} moduleId={mod.id} lang={lang} />
                     ))}
                   </div>
                 )}

@@ -52,6 +52,40 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-26 (recorded isiZulu + English module narration, playing in the app)
+- Rory's Gemini/Antigravity narration of the Seeds facilitator deck is now **in the app**: 10
+  slide clips per language, isiZulu and English, plus a full-module track. Sourced from the
+  `Imbewu Learning Portal` notebook and imported from `~/Downloads/imbewu_seeds_audio`.
+- **`scripts/import-course-audio.mjs`** is the seam so the next module is one command, not a
+  manual copy: `node scripts/import-course-audio.mjs <moduleId> <exportDir>`. It normalises
+  whatever the export looks like into `public/course-audio/<module>/<lang>/slide-NN.mp3`,
+  warns when two languages have different track counts, and prints the manifest block to paste.
+- **`lib/course-audio.ts`** is the manifest and lookups. Slides map to lessons (2–3 → lesson 1,
+  4–6 → lesson 2, 7–9 → lesson 3, with 1 and 10 as module intro/recap), so the audio appears
+  both as a whole-module playlist and inside the lesson it belongs to. Every URL goes through
+  `trackUrl()`, so moving audio to Firebase Storage later is a one-line `baseUrl` change and no
+  component moves.
+- **`components/course/CourseAudioPlayer.tsx`**: nothing autoplays, `preload="none"` and the
+  `src` is only set on press, so a learner on a metered rural connection downloads the two
+  minutes they asked for and not eleven megabytes. Clips auto-advance to the end of the list
+  and stop — never loop. If a module was not recorded in the app's language the player *says*
+  which language it is playing instead of quietly substituting English.
+- This is the honest fix for the caveat in `lib/tts.ts`: SpeechSynthesis has no isiZulu voice
+  on most real devices, so isiZulu lessons were being read out in English or not at all.
+  Recorded narration side-steps the device. SpeechSynthesis stays for everything unrecorded.
+- Guard tests cross-check the manifest against the filesystem in both directions — a promised
+  clip that is not on disk fails, and an orphan clip on disk that no module claims also fails.
+  Module and lesson ids in the manifest are validated against `lib/course-modules.ts`.
+- Verified: 233 tests pass, `npx tsc --noEmit` clean, `npm run build` passes. Clip durations
+  read back correctly via ffprobe (isiZulu 7:52 total, English 5:45; isiZulu consistently ~35%
+  longer, matching the longer isiZulu script).
+- **NOT verified: that the isiZulu clips are actually spoken in an isiZulu voice.** Rory's own
+  notebook chat shows Gemini defaulting to an English voice model on isiZulu text for the video
+  overview. The same failure could have hit these clips. Someone who speaks isiZulu must listen
+  to one clip before this ships.
+- Built in a separate git worktree because another agent was editing `DesignGlossy.tsx` and
+  `lib/locked-polish-flow.ts` in the main checkout at the same time.
+
 ### 2026-07-26 (course enrolment + mentor-set assignments)
 - Built the two modules the last handover assumed already existed: **`lib/course-enrollment.ts`**
   and **`lib/course-assignments.ts`**. Neither was in the repo — the mentor dashboard's
