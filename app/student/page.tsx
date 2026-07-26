@@ -1,16 +1,23 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { myCourseProgress, setCourseProgress } from '@/lib/db/queries';
+import { myCourseProgress, setCourseProgress, myAssignments } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
+import { useLanguage } from '@/lib/i18n';
+import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
+import {
+  assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
+  type AssignmentState, type CourseAssignment,
+} from '@/lib/course-assignments';
 
 const CATEGORY_LABELS: Record<ModuleCategory, string> = {
   foundation: 'Foundation',
@@ -20,6 +27,17 @@ const CATEGORY_LABELS: Record<ModuleCategory, string> = {
   design:     'Design',
   business:   'Business',
   seeds:      'Seeds',
+};
+
+/** Curriculum position, fixed. The list below re-orders to put assigned work first, but
+ *  "module 7" must keep meaning the same module whichever order it is shown in. */
+const MODULE_NUMBER = new Map(COURSE_MODULES.map((m, i) => [m.id, i + 1] as const));
+
+const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border: string }> = {
+  overdue:    { fg: '#B03A2E', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
+  'due-soon': { fg: '#C07A1E', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
+  open:       { fg: '#235E86', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
+  done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
 
 function formatDuration(mins: number) {
@@ -91,8 +109,11 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
+function LessonPanel({ lesson, color, moduleId, lang }: {
+  lesson: Lesson; color: string; moduleId: string; lang: string;
+}) {
   const [open, setOpen] = useState(false);
+  const lessonTracks = tracksForLesson(moduleId, lesson.id);
 
   return (
     <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22` }}>
@@ -112,8 +133,19 @@ function LessonPanel({ lesson, color }: { lesson: Lesson; color: string }) {
 
       {open && (
         <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
+          {lessonTracks.length > 0 && (
+            <div className="pt-4">
+              <CourseAudioPlayer
+                moduleId={moduleId}
+                appLang={lang}
+                tracks={lessonTracks}
+                label="Listen to this lesson"
+              />
+            </div>
+          )}
+
           {/* Body */}
-          <div className="space-y-3 pt-4">
+          <div className={lessonTracks.length > 0 ? 'space-y-3' : 'space-y-3 pt-4'}>
             {lesson.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
@@ -155,13 +187,21 @@ const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'ngo', 'funder', 'ad
 
 export default function StudentPage() {
   const { user, role, loading } = useAuth();
+  const { lang } = useLanguage();
   const router = useRouter();
   const isLive = isBackendConfigured();
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
+  const [assignments, setAssignments] = useState<CourseAssignment[]>([]);
+  // Resolved after mount, never during render: `new Date()` on the server and on the client
+  // can straddle midnight and produce a hydration mismatch. Until it lands we show the plain
+  // curriculum order with no deadline badges, which is exactly the pre-assignment behaviour.
+  const [today, setToday] = useState<string | null>(null);
   const [fetching, setFetching] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+
+  useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
   useEffect(() => {
     if (!loading && !user && isLive) router.replace('/login');
@@ -170,8 +210,14 @@ export default function StudentPage() {
   const load = useCallback(async () => {
     setFetching(true);
     if (isLive && user) {
-      const rows = await myCourseProgress();
+      // An assignments read that fails (rules, offline) must not blank out progress —
+      // the learner can still work through the course without a mentor's list.
+      const [rows, mine] = await Promise.all([
+        myCourseProgress(),
+        myAssignments().catch(() => [] as CourseAssignment[]),
+      ]);
       setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
+      setAssignments(mine);
     }
     setFetching(false);
   }, [isLive, user]);
@@ -196,6 +242,26 @@ export default function StudentPage() {
   function toggleExpand(moduleId: string) {
     setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
   }
+
+  const assignmentByModule = useMemo(() => {
+    const m = new Map<string, CourseAssignment>();
+    for (const a of assignments) m.set(a.module, a);
+    return m;
+  }, [assignments]);
+
+  /** Outstanding assigned work floats to the top; the full syllabus is still listed. */
+  const orderedModules = useMemo(() => {
+    if (!today || assignments.length === 0) return COURSE_MODULES;
+    const byId = new Map(COURSE_MODULES.map((m) => [m.id, m] as const));
+    return orderModulesForLearner(COURSE_MODULES.map((m) => m.id), assignments, doneIds, today)
+      .map((id) => byId.get(id))
+      .filter((m): m is (typeof COURSE_MODULES)[number] => Boolean(m));
+  }, [today, assignments, doneIds]);
+
+  const assignSummary = useMemo(
+    () => (today && assignments.length > 0 ? summariseAssignments(assignments, doneIds, today) : null),
+    [today, assignments, doneIds],
+  );
 
   // Gate: do not render protected content while auth is resolving or user is absent
   if (isLive && (loading || !user)) {
@@ -321,13 +387,46 @@ export default function StudentPage() {
           </div>
         </div>
 
+        {/* What the mentor has actually asked for — only shown when there is something */}
+        {assignSummary && assignSummary.total > 0 && (
+          <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+            <div className="flex items-center gap-2 mb-2">
+              <ClipboardList size={14} style={{ color: '#1F4D2B' }} />
+              <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
+                Set by your mentor
+              </span>
+            </div>
+            <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+              {assignSummary.done} of {assignSummary.total} done.
+              {assignSummary.overdue > 0 && ' '}
+              {assignSummary.overdue > 0 && (
+                <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                  {assignSummary.overdue} {assignSummary.overdue === 1 ? 'is' : 'are'} overdue.
+                </span>
+              )}
+              {assignSummary.dueSoon > 0 && ' '}
+              {assignSummary.dueSoon > 0 && (
+                <span style={{ color: '#C07A1E', fontWeight: 600 }}>
+                  {assignSummary.dueSoon} due this week.
+                </span>
+              )}
+            </p>
+            <p className="font-sans text-xs mt-1.5" style={{ color: '#8C7A62' }}>
+              Assigned modules are listed first. Everything else is still open to you.
+            </p>
+          </div>
+        )}
+
         {/* Module list */}
         <div className="space-y-2.5">
-          {COURSE_MODULES.map((mod, idx) => {
+          {orderedModules.map((mod, idx) => {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
             const color = CATEGORY_COLORS[mod.category];
             const isExpanded = expandedModuleId === mod.id;
+            const assignment = assignmentByModule.get(mod.id);
+            const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
+            const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
 
             return (
               <div key={mod.id} className="rounded-2xl overflow-hidden"
@@ -345,7 +444,7 @@ export default function StudentPage() {
                     }}>
                     {done
                       ? <CheckCircle size={16} style={{ color: '#EAF3E2' }} />
-                      : <span className="font-mono text-xs font-bold" style={{ color: '#8C7A62' }}>{idx + 1}</span>}
+                      : <span className="font-mono text-xs font-bold" style={{ color: '#8C7A62' }}>{MODULE_NUMBER.get(mod.id) ?? idx + 1}</span>}
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -363,7 +462,23 @@ export default function StudentPage() {
                         style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
                         {CATEGORY_LABELS[mod.category]}
                       </span>
+                      {state && state !== 'done' && (
+                        <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{
+                            background: ASSIGNMENT_TONE[state].bg,
+                            color: ASSIGNMENT_TONE[state].fg,
+                            border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
+                          }}>
+                          {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
+                          {dueText ?? 'Assigned'}
+                        </span>
+                      )}
                     </div>
+                    {assignment?.note && (
+                      <p className="font-sans text-xs mt-1 leading-relaxed italic" style={{ color: '#5C5040' }}>
+                        &ldquo;{assignment.note}&rdquo;
+                      </p>
+                    )}
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {mod.description}
                     </p>
@@ -372,6 +487,12 @@ export default function StudentPage() {
                         <Clock size={11} style={{ color: '#8C7A62' }} />
                         <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
                       </div>
+                      {hasNarration(mod.id) && (
+                        <div className="flex items-center gap-1">
+                          <Headphones size={11} style={{ color: '#1F4D2B' }} />
+                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>Audio</span>
+                        </div>
+                      )}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
@@ -410,11 +531,21 @@ export default function StudentPage() {
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
                   <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid #E2D8C4' }}>
+                    {hasNarration(mod.id) && (
+                      <div className="pt-3">
+                        <CourseAudioPlayer
+                          moduleId={mod.id}
+                          appLang={lang}
+                          tracks={allTracks(mod.id)}
+                          label="Listen to the whole module"
+                        />
+                      </div>
+                    )}
                     <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
                       Lessons
                     </p>
                     {mod.lessons.map((lesson) => (
-                      <LessonPanel key={lesson.id} lesson={lesson} color={color} />
+                      <LessonPanel key={lesson.id} lesson={lesson} color={color} moduleId={mod.id} lang={lang} />
                     ))}
                   </div>
                 )}

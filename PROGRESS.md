@@ -52,6 +52,99 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-07-26 (live emulator walkthrough — found and fixed two pre-existing bugs)
+Ran the whole flow against the Firebase emulator with a seeded mentor + learner in one org
+(`scripts/seed-course-demo.mjs`), driven end to end in a real browser. Static checks had all
+passed; the walkthrough still found two bugs, both older than this branch.
+
+- **The mentor dashboard could never load a cohort from Firestore.** Two independent causes:
+  1. `firestore.rules` had a single `allow read` on `/profiles/{uid}` combining
+     `uid == request.auth.uid || isStaff() || isMentor()`. A **list** is authorised once, up
+     front, before any document is read, so the per-document `uid` term cannot be proven and
+     drags the whole OR to false. Every profile query a mentor made was `PERMISSION_DENIED`.
+     Split into `allow get` (unchanged) and `allow list` (staff/mentor only) — strictly no more
+     permissive than the original intent, since list was previously denied to everyone.
+  2. `app/mentor/page.tsx` ran `load()` on mount instead of waiting for auth. Every query in it
+     is org-scoped and the org comes from the caller's own profile, so running while
+     `currentUser` was still null returned empty lists with **no error** and never retried. The
+     student page already had this guard; the mentor page did not.
+- Both failures rendered as the same innocent empty state — "Learners will appear here once
+  they enrol" — which is precisely why static verification could not see them. The mentor page
+  also swallowed load errors in a bare `catch {}`; it now logs and shows the sync banner, so a
+  denial can never again be mistaken for an empty cohort.
+- **Verified live, in the browser:** mentor signs in → sees the learner at 2/10 with status
+  "Not enrolled" → enrols (cohort counter goes to 1) → assigns Seeds with a due date → both
+  documents land in Firestore with the mentor's uid and org stamped, zero rules denials. Learner
+  signs in → "Set by your mentor · 0 of 1 done · 1 due this week" → Seeds lifted to the top of
+  the list keeping its curriculum number 6, badged "Due in 4 days" → opens it → isiZulu
+  narration plays (`/course-audio/seeds-sovereignty/zu/slide-02.mp3`, clock running, 84s
+  duration matching the file). Screenshots in `docs/verification/`.
+- 233 tests pass, `tsc --noEmit` clean, `npm run build` passes.
+
+### 2026-07-26 (recorded isiZulu + English module narration, playing in the app)
+- Rory's Gemini/Antigravity narration of the Seeds facilitator deck is now **in the app**: 10
+  slide clips per language, isiZulu and English, plus a full-module track. Sourced from the
+  `Imbewu Learning Portal` notebook and imported from `~/Downloads/imbewu_seeds_audio`.
+- **`scripts/import-course-audio.mjs`** is the seam so the next module is one command, not a
+  manual copy: `node scripts/import-course-audio.mjs <moduleId> <exportDir>`. It normalises
+  whatever the export looks like into `public/course-audio/<module>/<lang>/slide-NN.mp3`,
+  warns when two languages have different track counts, and prints the manifest block to paste.
+- **`lib/course-audio.ts`** is the manifest and lookups. Slides map to lessons (2–3 → lesson 1,
+  4–6 → lesson 2, 7–9 → lesson 3, with 1 and 10 as module intro/recap), so the audio appears
+  both as a whole-module playlist and inside the lesson it belongs to. Every URL goes through
+  `trackUrl()`, so moving audio to Firebase Storage later is a one-line `baseUrl` change and no
+  component moves.
+- **`components/course/CourseAudioPlayer.tsx`**: nothing autoplays, `preload="none"` and the
+  `src` is only set on press, so a learner on a metered rural connection downloads the two
+  minutes they asked for and not eleven megabytes. Clips auto-advance to the end of the list
+  and stop — never loop. If a module was not recorded in the app's language the player *says*
+  which language it is playing instead of quietly substituting English.
+- This is the honest fix for the caveat in `lib/tts.ts`: SpeechSynthesis has no isiZulu voice
+  on most real devices, so isiZulu lessons were being read out in English or not at all.
+  Recorded narration side-steps the device. SpeechSynthesis stays for everything unrecorded.
+- Guard tests cross-check the manifest against the filesystem in both directions — a promised
+  clip that is not on disk fails, and an orphan clip on disk that no module claims also fails.
+  Module and lesson ids in the manifest are validated against `lib/course-modules.ts`.
+- Verified: 233 tests pass, `npx tsc --noEmit` clean, `npm run build` passes. Clip durations
+  read back correctly via ffprobe (isiZulu 7:52 total, English 5:45; isiZulu consistently ~35%
+  longer, matching the longer isiZulu script).
+- **NOT verified: that the isiZulu clips are actually spoken in an isiZulu voice.** Rory's own
+  notebook chat shows Gemini defaulting to an English voice model on isiZulu text for the video
+  overview. The same failure could have hit these clips. Someone who speaks isiZulu must listen
+  to one clip before this ships.
+- Built in a separate git worktree because another agent was editing `DesignGlossy.tsx` and
+  `lib/locked-polish-flow.ts` in the main checkout at the same time.
+
+### 2026-07-26 (course enrolment + mentor-set assignments)
+- Built the two modules the last handover assumed already existed: **`lib/course-enrollment.ts`**
+  and **`lib/course-assignments.ts`**. Neither was in the repo — the mentor dashboard's
+  "Learners will appear here once they enrol" empty state was unreachable because nothing in
+  the app could enrol anybody.
+- **Enrolment** is a separate record from `course_progress`, which stays the single source of
+  truth for "is this module finished". Status is DERIVED from progress (none → not started,
+  some → in progress, all → complete); only a mentor's `paused`/`withdrawn` is stored, and a
+  manual pause is never overruled by progress.
+- **Assignments** are mentor-owned: learner, module, optional due date, optional note. They
+  never record completion. The learner's Portal lifts outstanding assigned modules to the top
+  of the list without removing anything — the full syllabus stays reachable.
+- Firestore rules for both collections: a learner reads their own and can write neither. Only
+  a mentor or staff member in a **non-null** org may enrol or assign (`inMyOrg()` is stricter
+  than `sameOrg()` — it refuses to match two org-less accounts through `null == null`).
+  `profile_id` and `org_id` are pinned on update, so an enrolment can't be re-pointed at a
+  different learner or walked across to another org. No composite indexes needed — every query
+  is a single-field equality.
+- Mentor writes are optimistic for a slow rural connection, and re-read from the server on
+  failure rather than leaving an unsaved value on screen.
+- Date handling is deliberate: due dates are plain `YYYY-MM-DD`, day arithmetic goes through
+  `Date.UTC` so a DST transition can't round a deadline to the wrong side of zero, and "today"
+  resolves after mount so server and client can't disagree across midnight.
+- **Not touched, on purpose:** no lesson body, key point, quiz question, rationale or species
+  name in `lib/course-modules.ts` was edited.
+- Verified: 26 new unit tests, **222 passing** total, `npx tsc --noEmit` clean, `npm run build`
+  passes, and `firestore.rules` loads in the Firestore emulator without a compile error.
+  Branch `feat/course-enrollment` — **not merged, not deployed.** Still needs a live run against
+  a real mentor + learner pair before it goes near `main`.
+
 ### 2026-07-19 (production Geometry Lock quality audit + reversible style reference)
 - Verified Geometry Lock against the real saved **Carl and Sandys Place / Water** sheet on the
   production domain. The exact house, driveway, boundary, labels and tool-glyph cleanup improved,
