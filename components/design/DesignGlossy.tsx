@@ -8706,6 +8706,13 @@ export default function DesignGlossy({
         : composite;
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const authorityFlags = renderAuthorityFlagsForStyle(styleKey);
+      // Guided-flow invariant, checked BEFORE any payment: the Hybrid stage must run with app
+      // authority (locked underlayer + exact elements composited back). If a model-chrome style
+      // ever leaks back in — the exact drift lockedPolishStyle() now guards against — fail free
+      // and immediately, never after the paid render is consumed.
+      if (lockedPolishStage === 'hybrid' && (authorityFlags.showcase || !authorityFlags.geometryLock)) {
+        throw new Error('The AI hybrid stage needs a geometry-locked style — pick a style other than Satellite Overlay and try again.');
+      }
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
       // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
       // whole frame freely and draws its own legend + labels (the free-ChatGPT look), with NO boundary
@@ -9199,8 +9206,15 @@ export default function DesignGlossy({
     if (!selectedSheet || loading !== null) return;
     setError(null);
     const totalSteps = targetMode === 'full' ? 3 : 2;
-    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…`);
     polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
+    // Say the substitution out loud: lockedPolishStyle silently maps Satellite Overlay (the model
+    // letters its own sheet) to a locked style, and a farmer who picked Overlay deserves to know
+    // why the progress panel names a different style — not to discover it from the result.
+    const substituted = producerStyle !== null && polishStyleRef.current !== producerStyle;
+    const substitutedNote = substituted
+      ? ` Satellite Overlay lets the AI letter the whole sheet, so this guided flow paints in ${PRODUCER_STYLES.find((s) => s.key === polishStyleRef.current)?.label ?? 'the recommended style'} instead — your exact elements stay locked on top.`
+      : '';
+    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…${substitutedNote}`);
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
