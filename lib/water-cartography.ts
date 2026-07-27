@@ -135,6 +135,20 @@ export function waterFeaturePresentationDimensions(
   naturalWidth: number,
   naturalHeight: number,
   canvasWidth: number,
+  /**
+   * Centre-to-centre distance in PIXELS to the nearest OTHER emphasised feature, when the caller
+   * knows it. Emphasis is then capped so an enlarged symbol cannot grow across that gap.
+   *
+   * WHY: a jojo tank is emphasised 2.1x so it survives phone-size reduction, and Rory reported
+   * tanks "overlapping" on a real farm. Nothing was wrong with the saved geometry — two tanks a
+   * realistic distance apart had their PAINTED footprints inflated past that distance, so they
+   * merged on the sheet. The only prior protection was a line in the AI prompt asking for "narrow
+   * visible separation": advice, not a guarantee, and absent entirely from the free exact sheet.
+   *
+   * Omitted, behaviour is byte-for-byte what it was — a caller that does not know its neighbours
+   * loses nothing.
+   */
+  nearestNeighbourPx?: number,
 ): WaterPresentationDimensions {
   const baseScale = waterFeaturePresentationScale(id);
   if (baseScale === 1) {
@@ -145,13 +159,44 @@ export function waterFeaturePresentationDimensions(
   const minimumShortSide = Math.max(28, canvasWidth * 0.0195);
   const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.08);
   const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
-  const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
+  let cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
+  if (typeof nearestNeighbourPx === 'number' && Number.isFinite(nearestNeighbourPx) && nearestNeighbourPx > 0) {
+    // Two symbols of width W centred D apart touch when W reaches D. Hold the painted width to 82%
+    // of the gap so a lane of ground always survives between them — hardware that reads as one
+    // merged blob is worse than hardware that reads slightly smaller.
+    cappedScale = Math.min(cappedScale, (nearestNeighbourPx * 0.82) / Math.max(0.01, longSide));
+  }
+  // Never below 1: emphasis may be withheld, but a saved feature is never painted SMALLER than the
+  // farmer drew it.
   const scale = Math.max(1, cappedScale);
   return {
     width: naturalWidth * scale,
     height: naturalHeight * scale,
     scale,
   };
+}
+
+/**
+ * Centre-to-centre pixel distance from `index` to its nearest OTHER emphasised water feature, or
+ * undefined when it has none. Lives here beside the cap it feeds, but the caller supplies the list
+ * because only the renderer holds every placed feature's screen position.
+ */
+export function nearestWaterNeighbourPx(
+  features: ReadonlyArray<{ id: string; cx: number; cy: number }>,
+  index: number,
+): number | undefined {
+  const self = features[index];
+  if (!self) return undefined;
+  let best = Infinity;
+  for (let i = 0; i < features.length; i++) {
+    if (i === index) continue;
+    const other = features[i];
+    // An un-emphasised symbol is drawn at its true size and cannot balloon into us.
+    if (waterFeaturePresentationScale(other.id) === 1) continue;
+    const d = Math.hypot(other.cx - self.cx, other.cy - self.cy);
+    if (d > 0 && d < best) best = d;
+  }
+  return Number.isFinite(best) ? best : undefined;
 }
 
 /**
