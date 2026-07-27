@@ -8,6 +8,7 @@
 
 import type { Geometry, Position } from 'geojson';
 import type { DesignLayer } from '@/lib/design-studio';
+import type { LocalWindObservation } from '@/lib/local-wind';
 
 // ── Shared types (verbatim contract) ──────────────────────────────────────────
 
@@ -138,6 +139,16 @@ export interface DesignCanvasState {
   // race at the low rev it was saved with.
   // OPTIONAL for back-compat: states written before this field existed read as rev 0 (see revOf).
   rev?: number;
+  // The farmer's own on-site wind observation — confirms or overrides the Sector sheet's regional
+  // wind/fire-direction assumption (lib/regional-wind.ts) with what they actually see on their
+  // land, resolved via effectivePrevailingWind/effectiveFireWind (lib/local-wind.ts). Site-wide
+  // (one observation per design, not per shape) because wind isn't a per-ring measurement the way
+  // ZoneShape.measuredSlopePct is — it's a fact about the whole property. Optional so it stays
+  // JSON-safe and survives migrateStateToFrame's untouched spread, same reasoning as
+  // measuredSlopePct itself (lib/design-canvas.ts ZoneShape): absent by default, and absence must
+  // degrade honestly (fall back to the regional table, and SAY it is regional) rather than
+  // silently assuming a farmer input exists.
+  localWind?: LocalWindObservation;
 }
 
 /**

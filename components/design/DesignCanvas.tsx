@@ -20,6 +20,7 @@ import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
+import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
 import { WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
 import SectorOverlay from './SectorOverlay';
 
@@ -1624,6 +1625,25 @@ export default function DesignCanvas({
     [sectorSite, lat],
   );
 
+  // Farmer's on-site wind confirmation, surfaced as an honest note alongside the sector data-notes
+  // chip below — NOT baked into sectorModel.namedWind/fire themselves, which stay exactly what
+  // lib/regional-wind.ts asserts (SECTOR-MODEL-SPEC requires the regional table to keep reading as
+  // a regional assumption; see docs/ACTIVE-MAP-QUALITY-TASKS.md "02 Sector analysis"). This is a
+  // SEPARATE, additive fact — "here's what the farmer told us, on top of the unchanged regional
+  // table" — resolved through effectivePrevailingWind (lib/local-wind.ts), the one function every
+  // consumer of the confirm/override workflow must route through. When there is no observation yet
+  // the existing dataNotes chip already covers the honest-degradation case, so this only ever
+  // ADDS a note, never removes the caveat a farmer hasn't answered yet.
+  const effectiveWindNote = useMemo(() => {
+    if (!sectorModel || !state.localWind) return null;
+    const regional = regionalPrevailingPick(sectorModel.namedWind);
+    const effective = effectivePrevailingWind(state.localWind, regional);
+    if (!effective || effective.provenance !== 'observed on site') return null;
+    const recorded = new Date(state.localWind.recordedAt);
+    const when = Number.isFinite(recorded.getTime()) ? recorded.toLocaleDateString() : null;
+    return `✓ Wind confirmed on site: ${effective.fromLabel}${when ? ` (recorded ${when})` : ''}`;
+  }, [sectorModel, state.localWind]);
+
   // GROUND LABEL DE-COLLISION. Ground features nest, so their centroids sit almost on top of each
   // other — "Property boundary", "Lawn" and "House" traced one inside the next all land within a
   // few pixels, which is exactly the pile Rory reported. layoutCanvasLabels is the same engine that
@@ -3184,8 +3204,10 @@ export default function DesignCanvas({
 
       {/* Sector honest-degradation note — one small muted chip carrying the strongest caveat
           (e.g. "open this place on the map to fetch climate & slope"), so missing energies read as
-          "not analysed yet", not "no wind here". Nudged below the contours note when both are on. */}
-      {activeLayers.sector && sectorModel && sectorModel.dataNotes.length > 0 && (
+          "not analysed yet", not "no wind here". Nudged below the contours note when both are on.
+          effectiveWindNote (a farmer's on-site wind confirmation) takes priority when present —
+          positive confirmation feedback outranks an unrelated caveat in the one-line slot. */}
+      {activeLayers.sector && sectorModel && (effectiveWindNote || sectorModel.dataNotes.length > 0) && (
         <div
           style={{
             position: 'absolute',
@@ -3203,7 +3225,7 @@ export default function DesignCanvas({
             pointerEvents: 'none',
           }}
         >
-          {sectorModel.dataNotes[0]}
+          {effectiveWindNote ?? sectorModel.dataNotes[0]}
         </div>
       )}
 

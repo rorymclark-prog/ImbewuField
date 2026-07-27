@@ -14,6 +14,8 @@ import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
+import { resolveRegion } from '@/lib/regional-wind';
+import { regionalPrevailingPick, type LocalWindObservation } from '@/lib/local-wind';
 import {
   designSiteIdFromLocation,
   loadDesignStudioState,
@@ -1225,6 +1227,31 @@ function DesignStudioInner() {
         }
       : null;
 
+  // Wind control (palette, Sector step) — the farmer's confirm/override for the regional wind
+  // used to phrase the "prevailing wind" question (lib/local-wind.ts's own policy note on why
+  // summer_cooling, not the fire/berg wind, is what "prevailing" asks about). Independent of
+  // DesignCanvas's own sectorModel (computed there for the overlay/dataNotes chip) — this needs
+  // only the named-wind table, not the full sun/water/frost derivation, so resolveRegion is the
+  // lighter, more direct call. Reads `glossySite` (the full SectorSite, incl. rainfallPattern —
+  // the SAME object already passed to DesignCanvas as `sectorSite`), not the leaner local `site`
+  // (SiteCtx) which has no rainfallPattern at all. null regional is a valid, honest outcome (no
+  // regional table for this area) the control itself still renders for — see DesignPalette's
+  // windControl doc comment.
+  const regionalWind = useMemo(() => {
+    if (lat == null || !Number.isFinite(lat)) return null;
+    const region = resolveRegion(lat, lon, glossySite?.biome, glossySite?.rainfallPattern);
+    return regionalPrevailingPick(region.namedWind);
+  }, [lat, lon, glossySite?.biome, glossySite?.rainfallPattern]);
+  const windControl = canvasState
+    ? {
+        regional: regionalWind,
+        observation: canvasState.localWind ?? null,
+        onSet: (observation: LocalWindObservation | null) => {
+          handleChange((prev) => ({ ...prev, localWind: observation ?? undefined, updatedAt: new Date().toISOString() }));
+        },
+      }
+    : null;
+
   // Tidy outline (lib/tidy-outline.ts) — offered only when exactly one ZONE or LINE is selected
   // (selectedId is already null for both "nothing selected" and "multiple selected" — see
   // selectedItemForAngle's doc comment above for the same convention; a placed item has no
@@ -2154,6 +2181,7 @@ function DesignStudioInner() {
           onTidySelected={onTidySelected}
           onSnapSelected={onSnapSelected}
           angleControl={angleControl}
+          windControl={windControl}
           siteBiome={site?.biome}
         />
       )}

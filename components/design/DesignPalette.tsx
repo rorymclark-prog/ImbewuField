@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
 import { normaliseRotation } from '@/lib/design-canvas';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -81,6 +82,21 @@ export interface DesignPaletteProps {
   // — the parent normalises via normaliseRotation and commits through the same onChange/undo path
   // the drag-rotate handle uses, so both commit paths land exactly one undo entry.
   angleControl: { deg: number; onRotate: (deg: number) => void } | null;
+  // Sector step: confirm/override control for the farmer's on-site wind observation
+  // (lib/local-wind.ts LocalWindObservation) — the local counterpart to ZoneShape.measuredSlopePct.
+  // null hides the whole control, same "nothing to act on" convention as onDuplicateSelected going
+  // null — here it means there is no canvasState yet to record an observation into (see
+  // app/design/page.tsx). `regional` is what the app currently assumes for the "prevailing wind"
+  // question (lib/local-wind.ts regionalPrevailingPick over the site's regional named-wind table);
+  // null when the site has no regional table at all (still lets the farmer record what they see —
+  // see the render code below). `observation` is the farmer's saved answer, if any. `onSet` commits
+  // a new observation, or null to clear it back to "regional, honestly labelled" (the task's
+  // "Not sure" case) — through the same onChange/undo path every other edit uses.
+  windControl: {
+    regional: { fromLabel: string } | null;
+    observation: LocalWindObservation | null;
+    onSet: (observation: LocalWindObservation | null) => void;
+  } | null;
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
@@ -227,10 +243,15 @@ export default function DesignPalette({
   onTidySelected,
   onSnapSelected,
   angleControl,
+  windControl,
   siteBiome,
 }: DesignPaletteProps) {
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Local UI-only toggle for the wind control's direction picker — never persisted, just whether
+  // the 16-point list is currently open. Reset whenever the control's identity changes (observation
+  // set/cleared) so re-opening the Sector step never leaves a stale picker expanded.
+  const [windPicking, setWindPicking] = useState(false);
   // Right-edge "more this way" fade on the element strip. Tracked rather than always-on: a fade
   // still showing when you have scrolled to the last chip is a small lie, and the whole point of
   // the affordance is to be trusted.
@@ -805,6 +826,111 @@ export default function DesignPalette({
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* Sector step: confirm/override the farmer's on-site wind observation
+          (lib/local-wind.ts LocalWindObservation) — same chip-row idiom as the Base/Zones blocks
+          above, but a confirm/change/not-sure interaction rather than a draw-tool arm, since this
+          control commits a value directly instead of arming the canvas. The 16-point list (no
+          typing, no degrees — see CompassDirection16's own comment in lib/local-wind.ts for why 16
+          over 8) only appears once the farmer taps Change/Set direction. */}
+      {step === 'sector' && windControl && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {windControl.observation ? (
+            <>
+              <div style={{ fontSize: 11.5, color: '#6B6355' }}>
+                Wind confirmed: <strong style={{ color: DARK }}>{windControl.observation.prevailingFrom}</strong>
+                {' '}(recorded {new Date(windControl.observation.recordedAt).toLocaleDateString()})
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  type="button"
+                  onClick={() => setWindPicking((v) => !v)}
+                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                >
+                  ✏️ Change
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { windControl.onSet(null); setWindPicking(false); }}
+                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                >
+                  ✕ Clear
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize: 11.5, color: '#6B6355' }}>
+                {windControl.regional
+                  ? `We think your prevailing wind comes from the ${windControl.regional.fromLabel}. Is that right on your land?`
+                  : 'No regional wind pattern for this area yet — do you know which way your wind usually blows?'}
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {windControl.regional && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const label = windControl.regional!.fromLabel;
+                      if (!isCompassDirection16(label)) return; // defensive — regional labels are always 16-point in practice
+                      windControl.onSet({ prevailingFrom: label, recordedAt: new Date().toISOString() });
+                      setWindPicking(false);
+                    }}
+                    style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: guided ? 12.5 : 11.5 }}
+                  >
+                    ✅ Confirm
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setWindPicking((v) => !v)}
+                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                >
+                  ✏️ {windControl.regional ? 'Change' : 'Set direction'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { windControl.onSet(null); setWindPicking(false); }}
+                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                >
+                  🤷 Not sure
+                </button>
+              </div>
+            </>
+          )}
+          {windPicking && (
+            <div style={scrollStripStyle(guided ? 10 : 6)}>
+              {COMPASS16_ORDER.map((dir) => {
+                const active = windControl.observation?.prevailingFrom === dir;
+                return (
+                  <button
+                    key={dir}
+                    type="button"
+                    onClick={() => {
+                      windControl.onSet({ prevailingFrom: dir, recordedAt: new Date().toISOString() });
+                      setWindPicking(false);
+                    }}
+                    style={{
+                      minHeight: guided ? 44 : 36,
+                      minWidth: guided ? 44 : 36,
+                      padding: '0 8px',
+                      borderRadius: 10,
+                      border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                      background: active ? GREEN : PAPER,
+                      color: active ? PAPER : DARK,
+                      flexShrink: 0,
+                      cursor: 'pointer',
+                      fontWeight: 700,
+                      fontSize: guided ? 12.5 : 11,
+                    }}
+                  >
+                    {dir}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 
