@@ -79,6 +79,44 @@ resolve (in `LessonPanel` in `app/student/page.tsx`, via `LESSON_INDEX`), so if 
 does slip through, a farmer sees nothing rather than a dead button — but the test is what's
 supposed to catch it first, in CI, before it ships.
 
+## Generating the facilitator video (slides + narration → mp4)
+
+Three scripts, run in order:
+
+1. **`node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]`** — renders branded slide
+   images straight from `docs/narration/<module-id>.<lang>.md` (one `slide-NN.png` per numbered
+   section, same numbering as the narration).
+2. *(optional)* **`node scripts/animate-lesson.mjs <name> <out.mp4>`** — a handful of data-driven
+   motion diagrams for ideas a still can't carry (succession sowing, water on a slope, three
+   sisters, zones). Replace the still it corresponds to: e.g. delete `slide-09.png` and put the
+   output at `slide-09.mp4` in the same slides folder. You can also drop in a Gemini/Veo character
+   clip the same way — same folder, same numbering, `.mp4`/`.mov` instead of `.png`.
+3. **`node scripts/build-lesson-video.mjs <module-id> <lang> <slides-dir> [out.mp4]`** — pairs each
+   slide with its narration clip (`public/course-audio/<module-id>/<lang>/slide-NN.mp3`, put there
+   first with `scripts/import-course-audio.mjs`) and assembles the mp4. Each slide is held on
+   screen for exactly its own narration clip's length — audio/picture sync by construction, not by
+   hand-scrubbing.
+
+### Slide-NN.mp4 instead of slide-NN.png (motion slides)
+
+A slide in the folder from step 3 can be a video clip instead of a still — same numbering, same
+folder (`slide-07.mp4` alongside `slide-06.png`). Rules, enforced by `build-lesson-video.mjs`:
+
+- The clip always occupies **exactly** its narration clip's duration, same guarantee a still has
+  always had.
+- Clip **shorter** than the narration → the last frame freezes for the remainder (never loops — a
+  looping animation under narration that's moved on to the next sentence reads as a glitch, not a
+  choice).
+- Clip **longer** than the narration → it's trimmed, and the script prints which slide and by how
+  much *before* building (`slide 07: 10.0s clip trimmed to 8.3s of narration`), so you know before
+  you watch rather than mid-review.
+- The clip's own audio is always dropped — narration is the only voice on the mix.
+- A still **and** a video for the same slide number is refused with the slide number named — which
+  one should win is a guess the script won't make silently.
+- Adding a motion slide switches the whole video's frame rate from 2fps (fine for a pure slideshow,
+  and keeps file size down) to 24fps, so the motion isn't reduced to a stutter — file size goes up
+  accordingly.
+
 ## Facilitator video
 
 ```ts
@@ -91,7 +129,8 @@ supposed to catch it first, in CI, before it ships.
 
 Renders as a labelled external link only — never an inline player. See "The decision this is
 built on" above for why. Point it at wherever the facilitator deck/recording actually lives
-(Drive, YouTube unlisted, etc.) — the app does not host or proxy it.
+(Drive, YouTube unlisted, etc.) — the app does not host or proxy it. (This is the *wiring* step,
+after the mp4 from the previous section has been generated and uploaded somewhere.)
 
 ## Proofread the generated assets before wiring them in
 
