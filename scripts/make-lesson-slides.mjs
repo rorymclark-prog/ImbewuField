@@ -24,7 +24,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-const [, , moduleId, lang, outRaw] = process.argv;
+const argv = process.argv.slice(2);
+const imgFlag = argv.indexOf('--images');
+const imagesDir = imgFlag >= 0 && argv[imgFlag + 1] ? resolve(argv[imgFlag + 1].replace(/^~/, homedir())) : null;
+const positional = argv.filter((a, i) => a !== '--images' && argv[i - 1] !== '--images');
+const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
   console.error('\n  node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]\n');
   process.exit(1);
@@ -110,7 +114,7 @@ const payload = slides.map((s) => ({
 }));
 
 const jsonPath = join(tmpdir(), `imbewu-slides-${moduleId}-${lang}.json`);
-writeFileSync(jsonPath, JSON.stringify({ slides: payload, outDir, moduleId, lang }));
+writeFileSync(jsonPath, JSON.stringify({ slides: payload, outDir, moduleId, lang, imagesDir }));
 
 // ── Rendering happens in python/Pillow: no npm dependency added, and Pillow is already here.
 const PY = String.raw`
@@ -157,6 +161,24 @@ def wrap(draw, text, fnt, maxw):
     return lines
 
 total = len(cfg['slides'])
+def find_illustration(n):
+    """slide-NN.<ext> in the images dir, if one was supplied. Slides without one are not a
+    failure — a module rarely has an illustration for every slide, and a text-only slide beside
+    illustrated ones reads as deliberate pacing rather than a gap."""
+    base = cfg.get('imagesDir')
+    if not base:
+        return None
+    for ext in ('png', 'jpg', 'jpeg', 'webp', 'PNG', 'JPG'):
+        p = os.path.join(base, 'slide-%02d.%s' % (n, ext))
+        if os.path.exists(p):
+            return p
+    return None
+
+def fit(im, box_w, box_h):
+    """Contain, never crop: an instructional diagram that loses its edges loses its meaning."""
+    r = min(box_w / im.width, box_h / im.height)
+    return im.resize((max(1, int(im.width * r)), max(1, int(im.height * r))), Image.LANCZOS)
+
 for s in cfg['slides']:
     img = Image.new('RGB', (W, H), PAPER)
     d = ImageDraw.Draw(img)
@@ -167,10 +189,21 @@ for s in cfg['slides']:
 
     x = 110
     title_card = (s['n'] == 1)
+    illus = find_illustration(s['n'])
 
     if title_card:
+        # Title card: illustration sits BEHIND the words as a quiet band, not beside them, so the
+        # module name still lands first.
+        if illus:
+            try:
+                im = Image.open(illus).convert('RGB')
+                band_h = int(H * 0.42)
+                im = fit(im, W - 32, band_h)
+                img.paste(im, ((W - im.width) // 2 + 16, H - im.height - 40))
+            except Exception:
+                pass
         lines = wrap(d, s['title'], F_TITLE, W - x - 140)
-        y = (H - (len(lines) * 92 + 70)) // 2
+        y = 150
         for ln in lines:
             d.text((x, y), ln, font=F_TITLE, fill=INK); y += 92
         y += 12
@@ -178,19 +211,30 @@ for s in cfg['slides']:
             d.text((x, y), ln, font=F_SUB, fill=MUTED); y += 46
         d.line([(x, y + 30), (x + 180, y + 30)], fill=AMBER, width=5)
     else:
+        # With an illustration the slide splits: words left, picture right. Without one the text
+        # keeps the full width it always had — no awkward empty column where a picture would be.
+        text_w = (W - x - 140) if not illus else int(W * 0.44)
         y = 92
-        for ln in wrap(d, s['title'], F_TITLE, W - x - 140):
+        for ln in wrap(d, s['title'], F_TITLE, text_w):
             d.text((x, y), ln, font=F_TITLE, fill=INK); y += 88
-        for ln in wrap(d, s['subtitle'], F_SUB, W - x - 140):
+        for ln in wrap(d, s['subtitle'], F_SUB, text_w):
             d.text((x, y + 2), ln, font=F_SUB, fill=MUTED); y += 46
         y += 30
-        d.line([(x, y), (W - 140, y)], fill=RULE, width=2)
+        d.line([(x, y), (x + text_w, y)], fill=RULE, width=2)
         y += 46
         for b in s['bullets']:
             d.ellipse([x + 4, y + 16, x + 20, y + 32], fill=AMBER)
-            for i, ln in enumerate(wrap(d, b, F_BULL, W - x - 210)):
+            for i, ln in enumerate(wrap(d, b, F_BULL, text_w - 46)):
                 d.text((x + 46, y), ln, font=F_BULL, fill=INK2); y += 50
             y += 22
+        if illus:
+            try:
+                im = Image.open(illus).convert('RGB')
+                col_x = x + text_w + 60
+                im = fit(im, W - col_x - 70, H - 230)
+                img.paste(im, (col_x + (W - col_x - 70 - im.width) // 2, (H - im.height) // 2))
+            except Exception:
+                pass
 
     d.text((W - 140, H - 74), f"{s['n']}/{total}", font=F_NUM, fill=MUTED, anchor='ra')
     d.text((x, H - 74), 'ImbewuField · Imbewu Yoshintso', font=F_FOOT, fill=MUTED)
