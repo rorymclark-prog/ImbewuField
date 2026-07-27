@@ -26,7 +26,16 @@ test('the seeds module is recorded in isiZulu and English', () => {
   const n = narrationFor('seeds-sovereignty');
   assert.ok(n);
   assert.deepEqual([...n.languages].sort(), ['en', 'zu']);
-  assert.equal(n.tracks.length, 10);
+
+  // Slide numbers must be 1..N with no gap and no repeat. This replaced a hardcoded
+  // `tracks.length === 10`, which was a snapshot of one recording rather than a rule: when the
+  // module was re-cut from 10 slides to 24 the assertion failed while nothing was actually
+  // wrong, and a test that cries wolf on a legitimate re-record teaches people to edit the
+  // number and move on. A GAP is the thing worth catching — it means a missing clip, which is
+  // a dead player button for a farmer on a metered connection.
+  const slides = n.tracks.map((t) => t.slide);
+  assert.deepEqual(slides, [...slides].sort((a, b) => a - b), 'tracks must be in slide order');
+  assert.deepEqual(slides, Array.from({ length: slides.length }, (_, i) => i + 1), 'slides must run 1..N with no gaps');
 });
 
 test('language resolution prefers the app language, then English, and reports the swap', () => {
@@ -54,13 +63,41 @@ test('track titles fall back to English when a language has no translated title'
   assert.equal(trackTitle({ slide: 2, title: 'Only English', lesson: null }, 'zu'), 'Only English');
 });
 
-test('slides group under their lesson, with intro and recap held at module level', () => {
-  assert.deepEqual(tracksForLesson('seeds-sovereignty', 'seeds-sovereignty-l1').map((t) => t.slide), [2, 3]);
-  assert.deepEqual(tracksForLesson('seeds-sovereignty', 'seeds-sovereignty-l2').map((t) => t.slide), [4, 5, 6]);
-  assert.deepEqual(tracksForLesson('seeds-sovereignty', 'seeds-sovereignty-l3').map((t) => t.slide), [7, 8, 9]);
-  assert.deepEqual(moduleLevelTracks('seeds-sovereignty').map((t) => t.slide), [1, 10]);
-  // Every slide is accounted for exactly once — no clip is orphaned out of the lesson view.
-  assert.equal(allTracks('seeds-sovereignty').length, 10);
+test('slides group under their lesson, with intro and field work held at module level', () => {
+  // The partition is what matters, not which slide lands where. This used to assert the exact
+  // slide list per lesson, which is a snapshot of one deck: re-cutting the module from 10 slides
+  // to 24 broke it while everything was correct. The rule that actually protects a learner is
+  // that every recorded clip is reachable from exactly one place in the UI — a clip belonging to
+  // two lessons plays twice, and a clip belonging to none is paid-for narration nobody can hear.
+  const all = allTracks('seeds-sovereignty').map((t) => t.slide);
+  assert.ok(all.length >= 3, 'the module is recorded');
+
+  const lessonSlides = ['l1', 'l2', 'l3'].flatMap((l) =>
+    tracksForLesson('seeds-sovereignty', `seeds-sovereignty-${l}`).map((t) => t.slide),
+  );
+  const moduleSlides = moduleLevelTracks('seeds-sovereignty').map((t) => t.slide);
+  const covered = [...lessonSlides, ...moduleSlides].sort((a, b) => a - b);
+
+  assert.deepEqual(covered, [...all].sort((a, b) => a - b), 'every slide is reachable exactly once');
+  assert.equal(new Set(covered).size, covered.length, 'no slide appears under two lessons');
+
+  // Lessons must not INTERLEAVE — everything in l1 comes before everything in l2, and so on.
+  //
+  // Not "consecutive": that stricter rule was tried first and was wrong. Slide 3 is Learning
+  // Outcomes and sits at module level BETWEEN l1's slides 2 and 4, which is exactly how the deck
+  // should read. A lesson's slides may legitimately have module-level slides threaded through
+  // them. What would be a genuine defect is a lesson reaching back past another one — that means
+  // a mis-mapped `lesson:` field, and the learner sees a track from lesson 3 sitting inside
+  // lesson 1.
+  const ranges = ['l1', 'l2', 'l3']
+    .map((l) => tracksForLesson('seeds-sovereignty', `seeds-sovereignty-${l}`).map((t) => t.slide))
+    .filter((s) => s.length > 0);
+
+  for (let i = 1; i < ranges.length; i++) {
+    const prevMax = Math.max(...ranges[i - 1]);
+    const thisMin = Math.min(...ranges[i]);
+    assert.ok(prevMax < thisMin, `lesson ${i + 1} starts at slide ${thisMin}, before lesson ${i} ends at ${prevMax}`);
+  }
 });
 
 test('formatClock survives what an <audio> element reports before metadata loads', () => {

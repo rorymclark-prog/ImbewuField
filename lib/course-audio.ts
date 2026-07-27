@@ -44,17 +44,41 @@ export interface ModuleNarration {
 export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   'seeds-sovereignty': {
     languages: ['zu', 'en'],
+    // 24 slides, re-recorded 2026-07-28 to match the rewritten home-study scripts in
+    // docs/narration/. The earlier 10-clip take was cut from a 10-slide deck written in
+    // FACILITATOR voice — it addressed "the participants" and told the listener to pause the
+    // animation so the group could discuss, on a module a farmer studies alone on a phone.
+    // Voices: en-ZA-LeahNeural and zu-ZA-ThandoNeural at rate 0.88. Verified here rather than
+    // trusted: each clip's duration divided by its script block's word count came out at
+    // 2.00 w/s (sd 0.15) for English and 1.19 w/s (sd 0.07) for isiZulu. The isiZulu figure is
+    // lower because the language is agglutinative — one word carries what English needs three
+    // or four for — and the TIGHTNESS, not the rate, is what proves no clip was cut from the
+    // wrong block.
     tracks: [
-      { slide: 1,  lesson: null,                   title: 'Title',                            titleByLang: { zu: 'Isihloko' } },
-      { slide: 2,  lesson: 'seeds-sovereignty-l1', title: 'Two Kinds of Seed',                titleByLang: { zu: 'Izinhlobo Ezimbili Zembewu' } },
-      { slide: 3,  lesson: 'seeds-sovereignty-l1', title: 'Choosing Which Plant to Save From', titleByLang: { zu: 'Ukukhetha Isitshalo Esifanele Ukugcina Imbewu Kuso' } },
-      { slide: 4,  lesson: 'seeds-sovereignty-l2', title: 'Two Ways to Save Seed',            titleByLang: { zu: 'Izindlela Ezimbili Zokugcina Imbewu' } },
-      { slide: 5,  lesson: 'seeds-sovereignty-l2', title: 'The Tomato Fermentation Method',   titleByLang: { zu: 'Indlela Yamatamatisi Yekubilisa' } },
-      { slide: 6,  lesson: 'seeds-sovereignty-l2', title: 'Keeping a Variety Pure',           titleByLang: { zu: 'Ukugcina Uhlobo Lwembewu Luhlanzekile' } },
-      { slide: 7,  lesson: 'seeds-sovereignty-l3', title: 'The Three Enemies of Stored Seed', titleByLang: { zu: 'Izitha Ezintathu Zembewu Egcinwe Enqolobane' } },
-      { slide: 8,  lesson: 'seeds-sovereignty-l3', title: 'Test It Before You Plant',         titleByLang: { zu: 'Yihlolisise Ngaphambi Kokuba Uyitshale' } },
-      { slide: 9,  lesson: 'seeds-sovereignty-l3', title: 'Seed Swaps',                       titleByLang: { zu: 'Ukushintshisana Ngembewu' } },
-      { slide: 10, lesson: null,                   title: 'Recap',                            titleByLang: { zu: 'Ukubuyekeza' } },
+      { slide: 1,   lesson: null,                        title: 'Title',                                       titleByLang: { zu: 'Isihloko' } },
+      { slide: 2,   lesson: 'seeds-sovereignty-l1',      title: 'Why Saving Seed Matters',                     titleByLang: { zu: 'Kungani Ukulondoloza Imbewu Kubalulekile' } },
+      { slide: 3,   lesson: null,                        title: 'Learning Outcomes',                           titleByLang: { zu: 'Imiphumela Yokufunda' } },
+      { slide: 4,   lesson: 'seeds-sovereignty-l1',      title: 'Open-Pollinated Seed and F1 Seed',            titleByLang: { zu: 'Imbewu Evulekele Impova Ne-F1' } },
+      { slide: 5,   lesson: 'seeds-sovereignty-l1',      title: 'Watch: Open-Pollinated Seed and F1 Seed',     titleByLang: { zu: 'Buka: Imbewu Evulekele Impova Ne-F1' } },
+      { slide: 6,   lesson: 'seeds-sovereignty-l1',      title: 'Seed Sovereignty',                            titleByLang: { zu: 'Ubukhosi Bembewu' } },
+      { slide: 7,   lesson: 'seeds-sovereignty-l1',      title: 'Watch: Household Seed Network',               titleByLang: { zu: 'Buka: Inethiwekhi Yembewu Yasemakhaya' } },
+      { slide: 8,   lesson: 'seeds-sovereignty-l1',      title: 'Select Several Parent Plants',                titleByLang: { zu: 'Khetha Izitshalo Zabazali Eziningana' } },
+      { slide: 9,   lesson: 'seeds-sovereignty-l1',      title: 'Control Pollination',                         titleByLang: { zu: 'Lawula Impova' } },
+      { slide: 10,  lesson: 'seeds-sovereignty-l1',      title: 'Watch: Self-Pollination and Crossing',        titleByLang: { zu: 'Buka: Ukuzithuthela Impova Nokuxubana' } },
+      { slide: 11,  lesson: 'seeds-sovereignty-l2',      title: 'Dry and Wet Processing',                      titleByLang: { zu: 'Indlela Eyomile Nendlela Emanzi' } },
+      { slide: 12,  lesson: 'seeds-sovereignty-l2',      title: 'Process Dry Seed',                            titleByLang: { zu: 'Lungisa Imbewu Eyomile' } },
+      { slide: 13,  lesson: 'seeds-sovereignty-l2',      title: 'Watch: Dry Processing',                       titleByLang: { zu: 'Buka: Indlela Eyomile' } },
+      { slide: 14,  lesson: 'seeds-sovereignty-l2',      title: 'Wet Processing for Tomato Seed',              titleByLang: { zu: 'Indlela Emanzi Katamatisi' } },
+      { slide: 15,  lesson: 'seeds-sovereignty-l2',      title: 'Watch: Wet Processing for Tomato Seed',       titleByLang: { zu: 'Buka: Indlela Emanzi Katamatisi' } },
+      { slide: 16,  lesson: 'seeds-sovereignty-l2',      title: 'Practical Activity',                          titleByLang: { zu: 'Umsebenzi Wokwenza' } },
+      { slide: 17,  lesson: 'seeds-sovereignty-l3',      title: 'Dry First, Seal Later',                       titleByLang: { zu: 'Yomisa Kuqala, Vala Kamuva' } },
+      { slide: 18,  lesson: 'seeds-sovereignty-l3',      title: 'Protect Seed from Heat, Light and Moisture',  titleByLang: { zu: 'Vikela Imbewu Ekushiseni, Ekukhanyeni Nakwumswakama' } },
+      { slide: 19,  lesson: 'seeds-sovereignty-l3',      title: 'Label Every Packet',                          titleByLang: { zu: 'Bhala Imininingwane Ephaketheni' } },
+      { slide: 20,  lesson: 'seeds-sovereignty-l3',      title: 'Ten-Seed Germination Test',                   titleByLang: { zu: 'Hlola Ukuhluma Kwembewu Eyishumi' } },
+      { slide: 21,  lesson: 'seeds-sovereignty-l3',      title: 'Watch: Ten-Seed Germination Test',            titleByLang: { zu: 'Buka: Ukuhlolwa Kwembewu Eyishumi' } },
+      { slide: 22,  lesson: 'seeds-sovereignty-l3',      title: 'Share Seed with Its Information',             titleByLang: { zu: 'Yabelana Ngembewu Kanye Nolwazi' } },
+      { slide: 23,  lesson: null,                        title: 'Field Assignment',                            titleByLang: { zu: 'Umsebenzi Wasensimini' } },
+      { slide: 24,  lesson: null,                        title: 'Field Action',                                titleByLang: { zu: 'Isenzo Sasensimini' } },
     ],
   },
 };
