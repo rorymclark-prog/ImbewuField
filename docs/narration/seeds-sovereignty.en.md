@@ -1,123 +1,449 @@
-# Seeds and Seed Sovereignty — Narration Script
-**For:** Gemini TTS, ElevenLabs, or any text-to-speech engine
-**Deck:** ImbewuField_Seeds_Facilitator_Deck.pptx (10 slides)
-
-Each block below is written for listening, not reading — short sentences, one idea at a time, key facts repeated. Paste each block into your TTS tool as one clip, in order. Where you see `[pause]`, insert a beat of silence (most engines respect a blank line or a short SSML `<break>` — check your engine's syntax).
-
----
-
 **Slide 1 — Title**
 
-Welcome. This is Seeds and Seed Sovereignty. It's one of the ten modules in the ImbewuField training. In the next few minutes, we'll cover three things. Why seed saving matters. How to actually do it. And how to store and share what you save.
+Seed is where the next season begins.
 
----
+When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.
 
-**Slide 2 — Two Kinds of Seed**
-
-Let's start with the most important idea in this whole module. There are two kinds of seed.
-
-Open-pollinated seed breeds true. That means if you save it and plant it next season, you get the same plant again.
-
-Hybrid seed — sometimes called F1 — is different. It's a one-time cross between two parent plants. If you save hybrid seed and plant it, you don't get the same plant. You get something unpredictable. Often something much less productive.
-
-This isn't an accident. It's exactly why farmers have to keep buying new seed every single season, if all they grow is hybrids.
+In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.
 
 [pause]
 
-Seed sovereignty means something simple: the freedom to grow, save, and share your own seed. Not depending on a shop, every season, for something you could be growing yourself.
+Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?
+
+Try to name at least one crop whose seed is already being saved in your area.
 
 ---
 
-**Slide 3 — Choosing Which Plant to Save From**
+**Slide 2 — Why Saving Seed Matters**
 
-This season, pick one crop, and commit to saving seed from your best plant.
+Saving seed does not mean rejecting all bought seed. It means building practical choices.
 
-When you're choosing which plant to save from, don't just grab from whichever one gave you the most fruit. Look for the healthiest plant. No disease. Good shape. One of the first to mature. That's the plant whose traits you want to carry forward into next season.
+Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.
 
----
+[pause]
 
-**Slide 4 — Two Ways to Save Seed**
+Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?
 
-There are two ways to save seed, and which one you use depends on the crop.
-
-The dry method is simple. Beans, peas, maize, sunflower — you just let the seed dry fully on the plant, then you collect it and store it. Low risk, straightforward.
-
-The wet method is for crops like tomatoes, cucumbers, and squash. Here the seed is surrounded by pulp, and that pulp actually stops the seed from germinating too early. So you have to remove it first.
+Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once.
 
 ---
 
-**Slide 5 — The Tomato Fermentation Method**
+**Slide 3 — Learning Outcomes**
 
-Here's exactly how the wet method works, using tomato as the example, because it's the easiest one to start with.
+This lesson ends with a working seed store, not a list of facts.
 
-Scoop the seed and the pulp into a jar with a little water. Let it sit for two to three days. You'll see a light film of mould form on top — that's normal, that's what you want.
+You will make four decisions.
 
-Then rinse the seed well, and dry it thoroughly before you store it.
+What will you save?
 
-Try this yourself this season. It's the easiest wet-method entry point there is.
+How will you process it?
 
----
+How will you protect it?
 
-**Slide 6 — Keeping a Variety Pure**
+And how will you know it is still alive before you depend on it?
 
-One more thing before you save seed from more than one variety. You need to think about isolation distance — how far apart different varieties need to be, so they don't cross-pollinate.
+[pause]
 
-Tomatoes mostly self-pollinate. They need very little distance.
+Which of these four decisions is least familiar to you?
 
-Maize is completely different. Maize is wind-pollinated, and wind carries pollen a long way. If you're growing more than one type of maize in a small space, you need real distance between them, or you'll need to hand-pollinate.
-
----
-
-**Slide 7 — The Three Enemies of Stored Seed**
-
-Once your seed is dry, storage is what decides whether it's still alive next season.
-
-There are three enemies of stored seed: heat, light, and moisture. Keep all three low, and your seed can last for years.
-
-Use paper envelopes, never plastic. Store them somewhere shaded, cool, and dry — a sealed container with a little rice or dried milk powder inside helps pull out any extra moisture.
-
-And always label every envelope: the crop, the variety, and the date you saved it.
+Say them again in your own words: select, process, protect and verify.
 
 ---
 
-**Slide 8 — Test It Before You Plant**
+**Slide 4 — Open-Pollinated Seed and F1 Seed**
 
-Before a new planting season starts, test a small batch of your stored seed for germination.
+Open-pollinated seed is not magic.
 
-Seed can quietly lose its viability sitting in storage, and the last thing you want is to plant a whole season's worth of seed that's already dead.
+A stable variety can produce similar generations when it is properly isolated or self-pollinated.
 
-A quick test now saves you that whole season.
+F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.
 
----
+The problem is unpredictability, not failure to germinate.
 
-**Slide 9 — Seed Swaps**
+[pause]
 
-Here's something worth doing this season: organise a seed swap with your neighbours.
+Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?
 
-If five households each specialise in saving two or three varieties really well, instead of every household trying to save everything, the whole group ends up with far more variety, and far better seed, than any one household could manage alone.
+If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?
 
-What one household saves well, everyone can share.
-
----
-
-**Slide 10 — Recap**
-
-Let's recap.
-
-One: open-pollinated seed breeds true, hybrid seed doesn't — and that's why seed sovereignty matters.
-
-Two: use the dry method for beans and maize, the wet fermentation method for tomatoes and squash, and watch your isolation distances.
-
-Three: store seed cool, dark, and dry, test it before you plant, and share what you save.
-
-That's the whole module. Pick one crop this season, and start.
+Remember: the next F1 generation varies. It does not automatically die.
 
 ---
 
-## Practical notes on the TTS step
+**Slide 5 — Watch: Open-Pollinated Seed and F1 Seed**
 
-- **Total spoken length:** roughly 900 words. At a natural narration pace (~140 words/minute) that's about 6–7 minutes of audio — a reasonable single facilitator session.
-- **Voice choice:** either Gemini's TTS or ElevenLabs will handle this script cleanly — it's plain sentences, no jargon, nothing that needs phonetic hinting except perhaps "morogo"-style local terms, which don't appear in this particular script.
-- **Pacing:** most TTS engines read faster than a good facilitator would speak. If the output feels rushed, most APIs expose a speaking-rate parameter (Gemini and ElevenLabs both do) — try 0.9x as a starting point for this audience.
-- **Once you have audio per slide:** the simplest assembly is to drop each clip into the matching slide's timing in PowerPoint itself (Insert → Audio → Play across slides, or per-slide), or export the deck as a video and mux the audio in externally if you're already set up for that.
-- **isiZulu:** this script is English-only, matching where the course content itself currently stands (per the earlier research, the isiZulu translation pass is still the identified next step — this narration would need a separate translated version once that terminology work is done, not just a TTS re-run in isiZulu).
+Watch both sides.
+
+Both kinds of seed germinate.
+
+Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.
+
+Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.
+
+[pause]
+
+Ask yourself what this means when choosing seed to save.
+
+If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable.
+
+---
+
+**Slide 6 — Seed Sovereignty**
+
+Seed sovereignty does not live in a slogan.
+
+It lives in a dry packet, a written record and knowledge of how the seed behaves.
+
+Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.
+
+[pause]
+
+Which seed does your household already save best?
+
+Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.
+
+Sovereignty needs three things: usable seed, written information and exchange.
+
+---
+
+**Slide 7 — Watch: Household Seed Network**
+
+Well-saved seed becomes more powerful when it is known and shared.
+
+Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.
+
+By the end, each household holds more varieties than it had before.
+
+[pause]
+
+Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it.
+
+---
+
+**Slide 8 — Select Several Parent Plants**
+
+The largest fruit is not always the best seed parent.
+
+Look at the whole plant.
+
+Was it healthy?
+
+Did it mature at the right time?
+
+Was it true to type?
+
+Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.
+
+[pause]
+
+What would make you reject a seed plant even if its fruit were large?
+
+Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type.
+
+---
+
+**Slide 9 — Control Pollination**
+
+Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.
+
+Crops pollinated by wind or insects can cross over long distances.
+
+The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.
+
+[pause]
+
+How can you separate two varieties without using distance?
+
+You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.
+
+Remember the three tools: distance, flowering time or controlled pollination.
+
+---
+
+**Slide 10 — Watch: Self-Pollination and Crossing**
+
+Follow the path of the pollen.
+
+In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.
+
+In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.
+
+[pause]
+
+Think about how distance or different flowering times could prevent that on your own plot.
+
+---
+
+**Slide 11 — Dry and Wet Processing**
+
+There are two broad ways to process seed.
+
+Dry seed matures in a pod, head or cob. It is collected when fully mature.
+
+Seed inside a fleshy fruit must first be separated from the flesh.
+
+Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.
+
+[pause]
+
+Think about the crops in your area. Which fit the dry method? Which fit the wet method?
+
+If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest.
+
+---
+
+**Slide 12 — Process Dry Seed**
+
+Leave dry-seeded crops on the plant until the seed is fully mature.
+
+Collect it before weather, birds or bursting pods take the harvest.
+
+Remove chaff and damaged seed.
+
+Then spread the clean seed in a single layer in moving air and shade.
+
+[pause]
+
+What tells you that dry seed is mature enough to collect?
+
+If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.
+
+Wait for maturity. For final drying, use shade and airflow.
+
+---
+
+**Slide 13 — Watch: Dry Processing**
+
+Allow the seed to mature on the plant before collecting it.
+
+Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.
+
+The clean seed is then spread in a single layer in moving air and shade.
+
+[pause]
+
+Follow the steps in order: mature, collect, clean, dry.
+
+Think about where you could carry out each part of this process.
+
+---
+
+**Slide 14 — Wet Processing for Tomato Seed**
+
+Scoop tomato seed and flesh into a clean jar with a little water.
+
+Leave it open or loosely covered. Keep it out of direct sun.
+
+After two to three days, a light film and a sour smell may appear.
+
+Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.
+
+Do not seal an actively fermenting jar.
+
+[pause]
+
+Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.
+
+Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely.
+
+---
+
+**Slide 15 — Watch: Wet Processing for Tomato Seed**
+
+Watch the whole process in order.
+
+A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.
+
+The jar is left open or loosely covered for two to three days.
+
+When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.
+
+Finally, the seed is spread in a single layer in the shade until completely dry.
+
+[pause]
+
+Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely.
+
+---
+
+**Slide 16 — Practical Activity**
+
+This is where the lesson leaves the screen and reaches your hands.
+
+Start one real batch of wet-processed seed.
+
+Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.
+
+Put the seed, flesh and a little water into the jar. Add a label with the date.
+
+[pause]
+
+You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.
+
+Your jar needs a date and a return plan. Write down the date when you will inspect it after two days.
+
+---
+
+**Slide 17 — Dry First, Seal Later**
+
+Drying is not a decorative final step.
+
+Moist seed keeps breathing. It can heat, rot or die in storage.
+
+Use shade, moving air and time.
+
+Seal seed only when you are sure it is dry.
+
+[pause]
+
+Which place in your home has shade and airflow, but is protected from rain and cooking steam?
+
+Choose one safe drying place. Then identify one unsafe place.
+
+Repeat this to check your understanding: dry first, seal later.
+
+---
+
+**Slide 18 — Protect Seed from Heat, Light and Moisture**
+
+Paper packets breathe and organise seed. But they are not enough in a humid climate.
+
+Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.
+
+Keep the container as cool and dark as possible in your home.
+
+[pause]
+
+Which room or cupboard in your home stays coolest and driest?
+
+Compare a paper envelope on its own with an envelope inside a sealed container.
+
+Safe storage has two layers: a labelled paper packet inside a dry, sealed container.
+
+---
+
+**Slide 19 — Label Every Packet**
+
+Storage protects the seed physically. Written information protects its meaning.
+
+The packet must tell the next person what crop it is.
+
+It must give the variety or local name.
+
+It must say when the seed was saved and where it came from.
+
+[pause]
+
+Which local names could be lost if you write only the crop name?
+
+Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.
+
+Check again that all four are present.
+
+---
+
+**Slide 20 — Ten-Seed Germination Test**
+
+A seed packet can look perfect even when the seed is losing life.
+
+Ten seeds make the calculation easy.
+
+Keep them warm and moist. Do not submerge them in water.
+
+Then count the normal seedlings.
+
+Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.
+
+[pause]
+
+If eight seeds out of ten germinate, what percentage is that?
+
+The answer is eighty percent.
+
+Start a ten-seed test with an old packet. Write down the date and the day when you will count.
+
+---
+
+**Slide 21 — Watch: Ten-Seed Germination Test**
+
+Count exactly ten seeds.
+
+Place them in two rows of five.
+
+Keep them on moist paper or cloth. Do not submerge them in water.
+
+After some time, count again.
+
+Here, six have germinated. Four have not. The total is still ten.
+
+The germination rate is therefore sixty percent.
+
+[pause]
+
+Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?
+
+---
+
+**Slide 22 — Share Seed with Its Information**
+
+A seed exchange is not a table of unknown packets.
+
+A good exchange moves information with the seed.
+
+It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.
+
+This honesty strengthens the whole network.
+
+[pause]
+
+What information would help you trust seed from another household?
+
+Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together.
+
+---
+
+**Slide 23 — Field Assignment**
+
+This task is small enough to finish. It is important enough to matter.
+
+Build one working seed-storage container.
+
+Put labelled paper packets inside a dry, sealed container.
+
+Take a photograph of it.
+
+Then name the crop whose seed you will save this season.
+
+The photograph is evidence. The packet is a beginning.
+
+[pause]
+
+What do you still need to finish this at home?
+
+Write a short materials list. Choose a completion date.
+
+Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants.
+
+---
+
+**Slide 24 — Field Action**
+
+Select.
+
+Process.
+
+Protect.
+
+Verify.
+
+Those four actions carry a seed collection from this field into the next season.
+
+Begin with one crop and do it well.
+
+[pause]
+
+Which crop will you begin with?
+
+Say it aloud. Then choose one action you will take next.
+
+The next season is already inside the seed you choose today.

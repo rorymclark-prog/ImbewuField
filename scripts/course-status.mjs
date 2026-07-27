@@ -92,9 +92,15 @@ for (const r of rows) {
     if (!r.promised && r.audio[lang]) {
       problems.push(`${r.id}/${lang}: ${r.audio[lang]} clips on disk that lib/course-audio.ts does not claim`);
     }
+    // A script longer than the recording is NOT an integrity failure — it is the normal state of a
+    // module whose script has been rewritten and is waiting to be re-recorded. Seeds-Sovereignty
+    // sat exactly here: a new 24-block script against 10 existing clips. Flagging that as a problem
+    // sends someone hunting for a bug in a module that is simply mid-production, and the two are
+    // not even the same surface — the manifest feeds the app's per-lesson player, the script feeds
+    // the video build. It belongs on the work list, which is where it goes below.
     const s = r.script[lang];
-    if (s && r.promised && s.blocks !== r.promised) {
-      problems.push(`${r.id}/${lang}: script has ${s.blocks} narration blocks, manifest has ${r.promised} slides`);
+    if (s && r.promised && s.blocks !== r.promised && s.blocks < r.promised) {
+      problems.push(`${r.id}/${lang}: script has only ${s.blocks} blocks but ${r.promised} clips are claimed`);
     }
   }
 }
@@ -125,9 +131,11 @@ for (const r of rows) {
   if (r.withImage < r.lessons) todo.push(`${r.id}: ${r.lessons - r.withImage} lesson illustration(s) missing (${r.withImage}/${r.lessons})`);
   if (!r.script.en) todo.push(`${r.id}: no English narration script — ChatGPT, deck + script prompt`);
   else if (!r.audio.en) todo.push(`${r.id}: English script written, not yet recorded — Antigravity, en-ZA voice`);
+  else if (r.script.en.blocks > r.audio.en) todo.push(`${r.id}: English script rewritten to ${r.script.en.blocks} blocks, only ${r.audio.en} clips recorded — RE-RECORD`);
   if (!r.script.zu) todo.push(`${r.id}: no isiZulu script`);
   else if (r.script.zu.draft) todo.push(`${r.id}: isiZulu script is a DRAFT — needs a human isiZulu speaker before recording`);
   else if (!r.audio.zu) todo.push(`${r.id}: isiZulu script reviewed, not yet recorded`);
+  else if (r.script.zu.blocks > r.audio.zu) todo.push(`${r.id}: isiZulu script rewritten to ${r.script.zu.blocks} blocks, only ${r.audio.zu} clips recorded — RE-RECORD`);
 }
 
 if (problems.length) {
