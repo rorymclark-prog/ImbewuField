@@ -1,0 +1,354 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+// ── Catalog element matrix audit ────────────────────────────────────────────────────────────
+//
+// docs/ACTIVE-MAP-QUALITY-TASKS.md (~line 222): "Deep-audit every catalog element across editor
+// step, layer toggle, foreground/context sheet, prompt vocabulary, label and legend. Enforce the
+// matrix in tests." This repo's own documented recurring bug (5+ historical instances, see the
+// adversarial-review comments in lib/glossy-filters.ts and lib/design-elements.ts) is exactly
+// that these SIX independent systems drift apart:
+//
+//   1. WIZARD STEP     — which step places/edits an element (CATEGORY_STEP + alsoSteps,
+//                         lib/design-elements.ts; enforced by ownedByCurrentStep,
+//                         lib/glossy-filters.ts).
+//   2. LAYER TOGGLE     — which activeLayers switch shows/hides it (categoryLayerKey,
+//                         components/design/DesignCanvas.tsx).
+//   3. OUTPUT SHEET      — which printed/rendered sheet it counts as content on (sheetForElement /
+//                         SHEET_OVERRIDE / itemInFilter, lib/glossy-filters.ts).
+//   4. AI PROMPT VOCABULARY — whether the two illustrated AI render paths (buildShowcasePrompt's
+//                         M/SHOWCASE_MARKER_MATCH and buildSatelliteOverlayPrompt's
+//                         OVERLAY_ICONS/ICON_MATCH, both lib/producer-prompt.ts) know how to draw
+//                         it.
+//   5. LABEL             — whether it gets an on-map burned label (producerLabels,
+//                         lib/producer-labels.ts).
+//   6. LEGEND            — whether it appears in its sheet's legend, and whether that legend
+//                         groups it under a named section (sheetLegendRows,
+//                         components/design/DesignGlossy.tsx, plus the
+//                         water-/planting-/structures-cartography.ts section-lookup helpers).
+//
+// FILE-OWNERSHIP / IMPORT-SAFETY BOUNDARY — read this before extending this file:
+//
+//   - lib/producer-prompt.ts is Codex's file (do not edit — see docs/COORDINATION.md). Every
+//     assertion below that touches AI vocabulary calls its EXPORTED functions
+//     (buildShowcasePrompt / buildSatelliteOverlayPrompt) and inspects their OUTPUT TEXT. It never
+//     imports or duplicates the private OVERLAY_ICONS/ICON_MATCH/M/SHOWCASE_MARKER_MATCH tables —
+//     duplicating a private regex table outside its single-authority file is exactly the kind of
+//     second copy that drifts, which is the bug this whole test file exists to prevent.
+//
+//   - components/design/DesignCanvas.tsx and components/design/DesignGlossy.tsx are large
+//     'use client' React components with JSX. Node's native TypeScript loader (this test suite's
+//     `node --import ./tests/register-alias.mjs --test`) strips TYPES but cannot transform JSX, so
+//     neither file can be safely imported here — attempting it is a known way to sink hours
+//     chasing a loader error for no test coverage. Two systems live in those files:
+//
+//       * System 2 (LAYER TOGGLE): categoryLayerKey (DesignCanvas.tsx, read at commit time —
+//         search "function categoryLayerKey" — currently lines 170-185) is a plain, exhaustive
+//         `switch (category)` with NO default case, over the same closed ElementCategory union
+//         `lib/design-elements.ts` defines — an unhandled category is a COMPILE ERROR there, not a
+//         silent fallthrough. CATEGORY_LAYER_KEY below hand-mirrors it; `npx tsc --noEmit` on the
+//         real file is what keeps the mirror honest, and this file's own header comment is the
+//         second guard — anyone changing categoryLayerKey's mapping must update this constant too.
+//       * System 6's SHEET === 'all' (whole-design masterplan) legend grouping lives in
+//         `sheetLegendRows`'s `summaries` array (DesignGlossy.tsx, ~lines 6697-6727) and is NOT
+//         exercised dynamically here for the reason above. Reading it by hand (2026-07-27) found
+//         three earthworks elements — keyhole_bed, herb_spiral, half_moon — whose circular
+//         footprint and non-matching name fall through every one of its six regex/shape buckets,
+//         so they get no summarised legend row on the FINAL MASTERPLAN sheet specifically (they
+//         are still drawn on the map, still labelled, and still legended correctly on their own
+//         Planting/Water layer sheet — see the per-sheet LEGEND tests below, which ARE exercised
+//         dynamically). Recorded here and in docs/CATALOG-MATRIX-2026-07-27.md's Gaps section
+//         because it cannot be asserted without importing the forbidden file.
+//
+// Every other system below is asserted against the REAL exported function it names, over the
+// WHOLE catalog, so any future drift — a new element with no vocabulary, a category that stops
+// resolving to a layer key, a SHEET_OVERRIDE that silently spreads — fails a test here.
+
+import { ELEMENT_CATALOG, CATEGORY_STEP, type ElementCategory } from '../lib/design-elements.ts';
+import {
+  sheetForElement,
+  sheetsForElement,
+  itemInFilter,
+  ownedByCurrentStep,
+} from '../lib/glossy-filters.ts';
+import { producerLabels } from '../lib/producer-labels.ts';
+import type { DesignCanvasState } from '../lib/design-canvas.ts';
+import {
+  buildShowcasePrompt,
+  buildSatelliteOverlayPrompt,
+  type ShowcaseSheetKind,
+} from '../lib/producer-prompt.ts';
+import { waterLegendSectionForFeature } from '../lib/water-cartography.ts';
+import { plantingLegendSectionForFeature } from '../lib/planting-cartography.ts';
+import { structuresLegendSectionForFeature } from '../lib/structures-cartography.ts';
+
+type LayerSheet = 'water' | 'planting' | 'structures';
+const WIZARD_STEPS = ['water', 'planting', 'structures'] as const;
+const NON_ITEM_STEPS = ['base', 'sector', 'zones', 'review', 'glossy'] as const;
+
+// Mirrors components/design/DesignCanvas.tsx's categoryLayerKey (read-only — see header comment).
+const CATEGORY_LAYER_KEY: Record<ElementCategory, string> = {
+  water: 'water',
+  earthworks: 'earthworks',
+  growing: 'planting',
+  structure: 'structures',
+  animal: 'animals',
+  access: 'access',
+};
+
+// ── Shared fixtures/helpers ─────────────────────────────────────────────────────────────────
+
+const FRAME_W = 2224;
+const FRAME_H = 1488;
+const REF_LAYERS = { boundary: [[0, 0], [1, 0], [1, 1], [0, 1]] as Array<[number, number]>, house: [], driveway: [] };
+
+function singleItemState(defId: string): DesignCanvasState {
+  return {
+    siteId: 'catalog-matrix-fixture',
+    frame: { centerLng: 0, centerLat: 0, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.1 },
+    items: [{ id: 'i1', defId, x: 0.5, y: 0.5 }],
+    zones: [],
+    lines: [],
+    step: 'review',
+    updatedAt: '2026-07-27T00:00:00.000Z',
+  };
+}
+
+/** System 5 — does this element earn its own producerLabels row on its primary sheet? */
+function hasLabel(id: string, name: string, sheet: LayerSheet): boolean {
+  const out = producerLabels(singleItemState(id), REF_LAYERS, FRAME_W, FRAME_H, sheet, false);
+  return out.some((l) => l.text === name.toUpperCase());
+}
+
+/** System 4a — buildShowcasePrompt's marker glossary (M / SHOWCASE_MARKER_MATCH), tested on the
+ *  element's own bare catalog name in isolation (the worst case: a sheet containing only this one
+ *  element). Reads the "Marker glossary for this sheet only: …" line the function itself prints. */
+function showcaseVocabCovered(name: string, sheet: LayerSheet): boolean {
+  const text = buildShowcasePrompt('Catalog Matrix Test', 'precision_atlas', name, '', sheet as ShowcaseSheetKind);
+  const line = text.split('\n').find((l) => l.includes('Marker glossary for this sheet only:'));
+  return !!line && !line.includes('no additional marker types');
+}
+
+/** System 4b — buildSatelliteOverlayPrompt's icon language (OVERLAY_ICONS / ICON_MATCH), same
+ *  isolation strategy. Detects the covered/uncovered branch by the presence of the ": " that only
+ *  the non-empty iconSpec branch emits after "ICON LANGUAGE … shading". */
+function overlayVocabCovered(name: string, sheet: LayerSheet): boolean {
+  const text = buildSatelliteOverlayPrompt({
+    layerLabel: 'Catalog Matrix Test',
+    stylePreset: 'satellite_overlay',
+    elementsText: name,
+    sheetKind: sheet as ShowcaseSheetKind,
+  });
+  return text.includes('ICON LANGUAGE') && / shading: /.test(text);
+}
+
+/** System 6b — the named legend SECTION a layer sheet's deterministic legend groups this element
+ *  under (water-/planting-/structures-cartography.ts), or null when it falls through ungrouped —
+ *  it still gets a legend row (see the LEGEND PRESENCE test below), just no section heading. */
+function legendSection(id: string, sheet: LayerSheet): string | null {
+  if (sheet === 'water') return waterLegendSectionForFeature(id);
+  if (sheet === 'planting') return plantingLegendSectionForFeature(id);
+  return structuresLegendSectionForFeature(id);
+}
+
+const CATALOG = ELEMENT_CATALOG; // include deprecated ids too — old saved maps still render them
+
+// ── System 1: WIZARD STEP ───────────────────────────────────────────────────────────────────
+
+test('WIZARD STEP: ownedByCurrentStep matches CATEGORY_STEP + alsoSteps exactly, for every catalog element and every step', () => {
+  const mismatches: string[] = [];
+  for (const def of CATALOG) {
+    const owningSteps = new Set<string>([CATEGORY_STEP[def.category], ...(def.alsoSteps ?? [])]);
+    for (const step of WIZARD_STEPS) {
+      const expected = owningSteps.has(step);
+      const actual = ownedByCurrentStep(step, { kind: 'item', category: def.category, defId: def.id });
+      if (actual !== expected) mismatches.push(`${def.id} on step '${step}': expected ${expected}, got ${actual}`);
+    }
+    // Non-item wizard steps (base/sector/zones/review/glossy) never own a placed item — a shape
+    // that falls through every branch of ownedByCurrentStep renders as foreign/locked, which is
+    // the deliberately-safer reading (see that function's own doc comment).
+    for (const step of NON_ITEM_STEPS) {
+      const actual = ownedByCurrentStep(step, { kind: 'item', category: def.category, defId: def.id });
+      if (actual !== false) mismatches.push(`${def.id} on non-item step '${step}': expected false, got ${actual}`);
+    }
+  }
+  assert.deepEqual(mismatches, []);
+});
+
+// KNOWN GAP: greywater_basin declares `alsoSteps: ['water']` (lib/design-elements.ts) but its
+// category is 'earthworks', whose CATEGORY_STEP primary is ALREADY 'water' — ownedByCurrentStep
+// returns true for it on the category check alone, before alsoSteps is ever consulted (see that
+// function's own switch order). The declaration is inert: harmless, but it asserts nothing that
+// wasn't already true. Encoded explicitly so a future CATEGORY_STEP change that actually needs
+// this alsoSteps entry to do work doesn't silently keep passing on the old inert copy.
+test('WIZARD STEP: greywater_basin\'s alsoSteps is a documented no-op — KNOWN GAP', () => {
+  const def = CATALOG.find((d) => d.id === 'greywater_basin')!;
+  assert.deepEqual(def.alsoSteps, ['water']);
+  assert.equal(CATEGORY_STEP[def.category], 'water', 'the alsoSteps entry duplicates the already-true primary step');
+});
+
+// ── System 2: LAYER TOGGLE ──────────────────────────────────────────────────────────────────
+
+test('LAYER TOGGLE: every catalog category resolves to a defined activeLayers key (mirrors DesignCanvas.tsx categoryLayerKey)', () => {
+  const categories = new Set(CATALOG.map((d) => d.category));
+  for (const category of categories) {
+    assert.ok(CATEGORY_LAYER_KEY[category], `category '${category}' has no mirrored layer-toggle key`);
+  }
+});
+
+// ── System 1 + 2 + 3 cross-check: the deliberate three-way divergence ──────────────────────
+//
+// A raised bed, keyhole bed, herb spiral, banana circle and tree basin are category 'earthworks'
+// (WIZARD STEP + LAYER TOGGLE = 'water', via CATEGORY_STEP/categoryLayerKey) but SHEET_OVERRIDE'd
+// onto the Planting OUTPUT SHEET — a farmer places them from the Water step's palette but expects
+// to find them printed where he plants, not where he dug (lib/design-elements.ts's own comment on
+// CATEGORY_STEP). This is DESIGNED behaviour, twice adversarially reviewed (2026-07-21) after an
+// earlier version conflated "which step placed it" with "which sheet it prints on" and locked
+// these five elements the instant they were placed. Locking in the exact divergent set here means
+// a future change that collapses it back to one answer — reintroducing that exact bug — fails a
+// test instead of shipping quietly.
+test('the SHEET_OVERRIDE five are the ONLY elements where step, layer toggle and output sheet all disagree', () => {
+  const divergent = CATALOG
+    .filter((def) => CATEGORY_STEP[def.category] !== sheetForElement(def.category, def.id))
+    .map((def) => def.id)
+    .sort();
+  assert.deepEqual(divergent, ['banana_circle', 'herb_spiral', 'keyhole_bed', 'raised_bed', 'tree_basin']);
+  for (const id of divergent) {
+    const def = CATALOG.find((d) => d.id === id)!;
+    assert.equal(def.category, 'earthworks', `${id} should be category 'earthworks'`);
+    assert.equal(CATEGORY_STEP[def.category], 'water', `${id} step should be Water`);
+    assert.equal(CATEGORY_LAYER_KEY[def.category], 'earthworks', `${id} layer toggle should be Earthworks`);
+    assert.equal(sheetForElement(def.category, id), 'planting', `${id} output sheet should be Planting`);
+  }
+});
+
+// ── System 3: OUTPUT SHEET ──────────────────────────────────────────────────────────────────
+//
+// glossy-filters.test.ts already covers sheetForElement/itemInFilter in depth; this is the
+// matrix's own completeness check, phrased as "system 3 has an answer for every element" so this
+// file stands alone as the audit record.
+
+test('OUTPUT SHEET: every catalog element has exactly one primary sheet, and sheetsForElement agrees', () => {
+  for (const def of CATALOG) {
+    const primary = sheetForElement(def.category, def.id);
+    assert.ok(primary, `${def.id} (${def.category}) has no output sheet at all`);
+    assert.equal(sheetsForElement(def.category, def.id)[0], primary, `${def.id} sheetsForElement primary mismatch`);
+  }
+});
+
+// ── System 5: LABEL ──────────────────────────────────────────────────────────────────────────
+//
+// producerLabels buckets every placed item by `labelFamily` — an exhaustive `Record<LabelFamily,
+// string>` over 'trees' + every ElementCategory — so label coverage is structurally universal.
+// This test proves that behaviourally: EVERY catalog element, placed alone, earns its own on-map
+// label spelling its exact catalog name. No known gaps.
+
+test('LABEL: every catalog element earns a producerLabels row on its own primary sheet', () => {
+  const missing: string[] = [];
+  for (const def of CATALOG) {
+    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    if (!hasLabel(def.id, def.name, sheet)) missing.push(`${def.id} (${def.name}) on ${sheet}`);
+  }
+  assert.deepEqual(missing, []);
+});
+
+// ── System 6a: LEGEND PRESENCE ──────────────────────────────────────────────────────────────
+//
+// sheetLegendRows' per-layer-sheet branch (components/design/DesignGlossy.tsx, non-'all' filter)
+// pushes a legend row for every item that passes `itemInFilter(def.category, filter, def.id)` —
+// unconditionally, whether or not a named section is found for it (see System 6b below). That
+// gate is exactly itemInFilter, already exercised end-to-end by System 3 above, so legend
+// PRESENCE on the primary sheet is structurally guaranteed by "every element has a primary sheet"
+// — asserted here as its own named system so the matrix documents the connection explicitly
+// rather than leaving a reader to infer it.
+
+test('LEGEND presence: every catalog element passes the same itemInFilter gate sheetLegendRows uses on its own sheet', () => {
+  for (const def of CATALOG) {
+    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    assert.ok(itemInFilter(def.category, sheet, def.id), `${def.id} would not appear in its own sheet's legend`);
+  }
+});
+
+// ── System 6b: LEGEND SECTION GROUPING ──────────────────────────────────────────────────────
+//
+// KNOWN GAP: structuresLegendSectionForFeature (lib/structures-cartography.ts) only names a
+// section for 8 curated "special visual treatment" ids; every other structures/animal/access
+// element still gets a legend row (System 6a above) but with NO section heading, so it lists
+// above the grouped rows instead of under SITE ACCESS & SERVICE / COMPOST & NURSERY / LIVESTOCK &
+// APIARY / PROTECTED GROWING. waterLegendSectionForFeature and plantingLegendSectionForFeature
+// are total — every Water and Planting element gets a heading.
+const STRUCTURES_UNGROUPED_IDS = [
+  'shed', 'greenhouse_tunnel', 'chicken_coop', 'kraal', 'worm_farm', 'market_stall',
+  'other_structure', 'goat_pen', 'pig_pen', 'duck_pond', 'rabbit_hutch', 'water_trough2',
+  'biodigester', 'shade_sail', 'bench', 'sign', 'solar_panel_ground',
+].sort();
+
+test('LEGEND section grouping: water and planting section every element; structures leaves the documented 17 ungrouped', () => {
+  const ungroupedByOutputSheet: Record<LayerSheet, string[]> = { water: [], planting: [], structures: [] };
+  for (const def of CATALOG) {
+    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    if (legendSection(def.id, sheet) === null) ungroupedByOutputSheet[sheet].push(def.id);
+  }
+  assert.deepEqual(ungroupedByOutputSheet.water, [], 'every Water element should have a named legend section');
+  assert.deepEqual(ungroupedByOutputSheet.planting, [], 'every Planting element should have a named legend section');
+  assert.deepEqual(ungroupedByOutputSheet.structures.sort(), STRUCTURES_UNGROUPED_IDS);
+});
+
+// ── System 4: AI PROMPT VOCABULARY ──────────────────────────────────────────────────────────
+//
+// Two independent illustrated AI paths, two independent private vocabularies. Both are tested
+// through their PUBLIC exported prompt builders only (see the file-ownership header comment).
+//
+// KNOWN GAP (Showcase family — M / SHOWCASE_MARKER_MATCH): these catalog elements, placed alone
+// on their own primary sheet, get NO tailored marker-glossary sentence in buildShowcasePrompt's
+// output — the model is handed the bare name with no drawing instruction for it.
+const SHOWCASE_VOCAB_GAP_IDS = [
+  'water_trough', 'first_flush', 'pump_filter', 'herb_spiral',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'banana_clump', 'tree_pomegranate',
+  'other_water', 'other_planting', 'other_structure',
+  'pollinator_strip', 'vetiver_row',
+  'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
+].sort();
+
+test('AI PROMPT VOCABULARY (Showcase family): exactly the documented ids have no marker glossary entry', () => {
+  const gaps: string[] = [];
+  for (const def of CATALOG) {
+    if (def.deprecated) continue; // hidden from new placement; not farmer-reachable going forward
+    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    if (!showcaseVocabCovered(def.name, sheet)) gaps.push(def.id);
+  }
+  assert.deepEqual(gaps.sort(), SHOWCASE_VOCAB_GAP_IDS);
+});
+
+// KNOWN GAP (Satellite Overlay — OVERLAY_ICONS / ICON_MATCH): same test, the other vocabulary.
+// Mostly a DIFFERENT set of ids than the Showcase gap above — each AI path independently forgot
+// different elements, which is itself evidence the two vocabularies are hand-maintained copies
+// that already drifted from each other, not just from the catalog.
+const OVERLAY_VOCAB_GAP_IDS = [
+  'rain_barrel', 'herb_spiral',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_pomegranate',
+  'other_water', 'other_planting', 'other_structure',
+  'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
+].sort();
+
+test('AI PROMPT VOCABULARY (Satellite Overlay): exactly the documented ids have no icon-language entry', () => {
+  const gaps: string[] = [];
+  for (const def of CATALOG) {
+    if (def.deprecated) continue;
+    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    if (!overlayVocabCovered(def.name, sheet)) gaps.push(def.id);
+  }
+  assert.deepEqual(gaps.sort(), OVERLAY_VOCAB_GAP_IDS);
+});
+
+// The severe subset: elements with NO drawing instruction in EITHER illustrated AI path. A
+// farmer can place any of these 14, see it printed, labelled and legended correctly (Systems 1,
+// 2, 3, 5, 6 all pass), and still have an AI-styled render invent whatever it likes for it.
+test('AI PROMPT VOCABULARY: 14 catalog elements have zero vocabulary in BOTH illustrated AI paths', () => {
+  const both = SHOWCASE_VOCAB_GAP_IDS.filter((id) => OVERLAY_VOCAB_GAP_IDS.includes(id)).sort();
+  assert.deepEqual(both, [
+    'bench', 'gate', 'herb_spiral', 'other_planting', 'other_structure', 'other_water',
+    'shade_sail', 'sign', 'solar_panel_ground', 'tree_natal_plum', 'tree_pomegranate',
+    'tree_waterberry', 'tree_wild_plum', 'washline',
+  ].sort());
+});

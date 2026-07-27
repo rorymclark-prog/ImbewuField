@@ -55,6 +55,13 @@ export interface DesignPaletteProps {
   // Duplicate the current selection (same offset-and-select pattern as Delete's group handling).
   // null = nothing selected, same disabled convention as onDeleteSelected.
   onDuplicateSelected: (() => void) | null;
+  // Tidy outline (lib/tidy-outline.ts) — opens a PREVIEW of a simplified version of the single
+  // selected zone/line; the farmer confirms or cancels on the canvas itself (see DesignCanvas's
+  // tidyPreview prop). null = nothing selected, more than one thing is selected, or the selection
+  // is a placed item rather than a zone/line — same "nothing to act on" disabled convention as
+  // onDuplicateSelected/onDeleteSelected. Tapping this never itself changes the design; only the
+  // canvas's own Confirm button (wired to the SAME onChange/undo path every other edit uses) does.
+  onTidySelected: (() => void) | null;
   // Angle field for rect-shaped placed items (strips/beds/rows) — precise numeric alternative to
   // the drag-rotate handle on the canvas. null hides the control entirely, same "nothing to act
   // on" convention as onDuplicateSelected/onDeleteSelected going null: it means either nothing is
@@ -208,6 +215,7 @@ export default function DesignPalette({
   canRedo,
   onDeleteSelected,
   onDuplicateSelected,
+  onTidySelected,
   angleControl,
   siteBiome,
 }: DesignPaletteProps) {
@@ -415,6 +423,23 @@ export default function DesignPalette({
         >
           📋 Duplicate
         </button>
+        {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
+            has no ring/polyline to simplify, and a multi-selection has no single shape to preview
+            — see onTidySelected's doc comment in DesignPaletteProps). Tapping this only OPENS the
+            preview on the canvas; it never itself edits the design. */}
+        <button
+          type="button"
+          style={{
+            ...toolButtonStyle(false, guided),
+            opacity: onTidySelected ? 1 : 0.4,
+            cursor: onTidySelected ? 'pointer' : 'default',
+          }}
+          onClick={() => onTidySelected?.()}
+          disabled={!onTidySelected}
+          title="Preview a tidied version of the selected outline"
+        >
+          🧹 Tidy
+        </button>
         {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
             polyline deliberately has NO angle control here: a polyline has no single angle, and
             "rotating" one would mean rewriting every saved point, not turning one number. That is
@@ -607,6 +632,24 @@ export default function DesignPalette({
           )}
         </div>
       </div>
+
+      {/* Below the tool row, everything is unbounded in height: the element catalog can carry a
+          note line, the hint/lesson block can run to two lines, and which chip row shows at all
+          varies by step. None of that has ever had its own scroll boundary — it just relied on
+          the page happening to be tall enough. It usually isn't: <body> is `h-screen
+          overflow-hidden` (app/layout.tsx) with no fallback page scroll, and the canvas above
+          this bar has a deliberate non-negotiable `minHeight: 45dvh` floor (app/design/page.tsx)
+          so tool chrome can never squeeze it away. On a short viewport — a phone rotated to
+          landscape (the natural orientation for a wide site plan) is the common real case, not
+          an edge case — 45dvh of canvas plus the header plus this tool row can leave this block
+          less room than it needs, and the excess used to be silently cropped by <body>'s
+          overflow-hidden with no way to reach it, not merely scrolled off. Bounding it and
+          letting IT scroll (same maxHeight+overflowY idiom as the sheets elsewhere in this app,
+          e.g. EvidenceSheet.tsx/ProfileSheet.tsx) turns an invisible, untappable cutoff into a
+          reachable one. Scoped to start AFTER the tool row on purpose: the Layers popover lives
+          inside the tool row and opens upward with no overflow ancestor of its own ("never
+          clipped" — see its comment above); wrapping the tool row in this too would clip it. */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, maxHeight: '30dvh' }}>
 
       {/* Element chips: shown on placing steps (and all steps in Pro) */}
       {showElementCatalog && (
@@ -834,6 +877,7 @@ export default function DesignPalette({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

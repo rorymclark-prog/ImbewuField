@@ -1,23 +1,33 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones } from 'lucide-react';
+import Link from 'next/link';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { myCourseProgress, setCourseProgress, myAssignments } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import {
+  myCourseProgress, setCourseProgress, myAssignments,
+  myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
+} from '@/lib/db/queries';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
+import LessonInfographic from '@/components/course/LessonInfographic';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import {
   assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
 } from '@/lib/course-assignments';
+import {
+  isModuleUnlocked, currentModuleId, isCapstoneUnlocked, unlockReason,
+  assignmentFor, submittedModuleIds,
+  type GatingContext, type CourseSubmission, type ModuleAssignment,
+} from '@/lib/course-gating';
 
 const CATEGORY_LABELS: Record<ModuleCategory, string> = {
   foundation: 'Foundation',
@@ -109,14 +119,30 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color, moduleId, lang }: {
+function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }: {
   lesson: Lesson; color: string; moduleId: string; lang: string;
+  /** True for exactly one render after a "related lessons" jump targets this lesson — see
+   *  jumpToLesson() below. A one-way switch: it opens the panel, but going false again never
+   *  closes it back up. */
+  autoOpen?: boolean;
+  onJumpToLesson: (lessonId: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
+  const hasAudio = lessonTracks.length > 0;
+  const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
+  const hasLeadIn = hasAudio || hasInfographic;
+
+  // Silently drop any related-lesson id that doesn't resolve to a real lesson, rather than
+  // rendering a dead button — tests/course-content.test.ts is what catches the bad data itself.
+  const related = (lesson.relatedLessonIds ?? [])
+    .map((id) => LESSON_INDEX.get(id))
+    .filter((entry): entry is { lesson: Lesson; moduleId: string } => Boolean(entry));
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22` }}>
+    // Anchors "related lessons" jumps from other lessons to this one (see jumpToLesson).
+    <div id={`lesson-${lesson.id}`} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22`, scrollMarginTop: 64 }}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
@@ -133,7 +159,7 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
 
       {open && (
         <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
-          {lessonTracks.length > 0 && (
+          {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
                 moduleId={moduleId}
@@ -144,8 +170,15 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
             </div>
           )}
 
+          {/* Infographic — a diagram frames the reading, so it sits after audio, before body */}
+          {hasInfographic && (
+            <div className={hasAudio ? '' : 'pt-4'}>
+              <LessonInfographic url={lesson.infographicUrl!} alt={lesson.infographicAlt!} />
+            </div>
+          )}
+
           {/* Body */}
-          <div className={lessonTracks.length > 0 ? 'space-y-3' : 'space-y-3 pt-4'}>
+          <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
             {lesson.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
@@ -166,6 +199,24 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
             </ul>
           </div>
 
+          {/* Facilitator video — a link, never an inline player: KZN connectivity cannot
+              stream video per-visit, so a farmer must never land on this by accident. */}
+          {lesson.videoUrl && (
+            <a
+              href={lesson.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
+              style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
+            >
+              <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
+                Facilitator training video — for in-person sessions, not for streaming here.
+              </span>
+              <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
+            </a>
+          )}
+
           {/* Quiz */}
           <div className="space-y-3">
             <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
@@ -175,7 +226,179 @@ function LessonPanel({ lesson, color, moduleId, lang }: {
               <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
             ))}
           </div>
+
+          {/* Related lessons — jumps to another lesson's panel; a dangling id is filtered out
+              above rather than rendered as a dead button. */}
+          {related.length > 0 && (
+            <div className="space-y-2">
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+                Related lessons
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {related.map(({ lesson: rl }) => (
+                  <button
+                    key={rl.id}
+                    type="button"
+                    onClick={() => onJumpToLesson(rl.id)}
+                    className="px-3 py-1.5 rounded-full text-xs font-sans font-medium text-left transition-colors"
+                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color, cursor: 'pointer' }}
+                  >
+                    {rl.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
+      )}
+    </div>
+  );
+}
+
+// ── Submission screen (photo + self-check + optional voice — NO text inputs) ────────────────
+//
+// Deliberate accessibility constraint, not an omission: low-literacy, isiZulu-first learners on
+// entry-level Android. Every self-check item is a tap target, the photo/voice pickers are
+// explicit-tap (never auto-uploaded on file pick — the network cost only happens on Submit, which
+// matters on metered data). MODULE_ASSIGNMENTS ships empty (lib/course-gating.ts), so in practice
+// this never renders yet — see assignmentFor() gating its render site below.
+
+function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }: {
+  moduleId: string;
+  assignment: ModuleAssignment;
+  color: string;
+  existing?: CourseSubmission;
+  onSubmitted: () => void;
+}) {
+  const [checked, setChecked] = useState<Set<string>>(new Set(existing?.self_check ?? []));
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [voiceFile, setVoiceFile] = useState<File | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const voiceInputRef = useRef<HTMLInputElement>(null);
+  const previewUrlRef = useRef<string | null>(null);
+
+  useEffect(() => () => { if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current); }, []);
+
+  function toggleCheck(item: string) {
+    setChecked((prev) => {
+      const next = new Set(prev);
+      if (next.has(item)) next.delete(item); else next.add(item);
+      return next;
+    });
+  }
+
+  // File pickers only STAGE the file locally (with a local preview) — no network call here.
+  // The upload happens once, inside handleSubmit, on the learner's explicit Submit tap.
+  function onPickPhoto(file: File | undefined) {
+    if (!file) return;
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    const url = URL.createObjectURL(file);
+    previewUrlRef.current = url;
+    setPhotoFile(file);
+    setPhotoPreview(url);
+  }
+
+  async function handleSubmit() {
+    if (!photoFile || submitting) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const photo_path = await uploadCourseSubmissionFile(moduleId, photoFile, 'photo');
+      const voice_path = voiceFile ? await uploadCourseSubmissionFile(moduleId, voiceFile, 'voice') : null;
+      await submitCourseModule({ module: moduleId, self_check: [...checked], photo_path, voice_path });
+      onSubmitted();
+    } catch {
+      setError('Could not submit — check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  const canSubmit = Boolean(photoFile) && !submitting;
+
+  return (
+    <div className="rounded-xl p-4 space-y-3.5" style={{ background: `${color}0A`, border: `1px solid ${color}25` }}>
+      <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>{assignment.prompt}</p>
+
+      {assignment.selfCheckItems.length > 0 && (
+        <div className="space-y-1.5">
+          {assignment.selfCheckItems.map((item) => {
+            const isChecked = checked.has(item);
+            return (
+              <button
+                key={item}
+                type="button"
+                onClick={() => toggleCheck(item)}
+                className="w-full flex items-center gap-2.5 text-left px-3 py-2 rounded-lg transition-colors"
+                style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : '#E2D8C4'}` }}
+              >
+                {isChecked
+                  ? <CheckCircle size={15} style={{ color, flexShrink: 0 }} />
+                  : <Circle size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+                <span className="font-sans text-sm" style={{ color: '#3A3020' }}>{item}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Photo — required, explicit-tap only */}
+      <input ref={photoInputRef} type="file" accept="image/*" capture="environment" className="hidden"
+        onChange={(e) => onPickPhoto(e.target.files?.[0])} />
+      <button
+        type="button"
+        onClick={() => photoInputRef.current?.click()}
+        className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
+        style={{ background: '#FFFEFA', border: `1px dashed ${photoPreview ? color : '#E2D8C4'}` }}
+      >
+        {photoPreview
+          ? <img src={photoPreview} alt="" className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+          : <Camera size={16} style={{ color, flexShrink: 0 }} />}
+        <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
+          {photoPreview ? 'Photo added — tap to change' : 'Add a photo (required)'}
+        </span>
+      </button>
+
+      {/* Voice note — optional, explicit-tap only */}
+      <input ref={voiceInputRef} type="file" accept="audio/*" className="hidden"
+        onChange={(e) => setVoiceFile(e.target.files?.[0] ?? null)} />
+      <button
+        type="button"
+        onClick={() => voiceInputRef.current?.click()}
+        className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
+        style={{ background: '#FFFEFA', border: `1px dashed ${voiceFile ? color : '#E2D8C4'}` }}
+      >
+        <Mic size={16} style={{ color: voiceFile ? color : '#8C7A62', flexShrink: 0 }} />
+        <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
+          {voiceFile ? `Voice note added — ${voiceFile.name}` : 'Add a voice note (optional)'}
+        </span>
+      </button>
+
+      {error && <p className="font-sans text-xs" style={{ color: '#B03A2E' }}>{error}</p>}
+
+      <button
+        type="button"
+        onClick={handleSubmit}
+        disabled={!canSubmit}
+        className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
+        style={{
+          background: canSubmit ? color : 'rgba(226,216,196,0.6)',
+          color: canSubmit ? '#FFFEFA' : '#8C7A62',
+          cursor: canSubmit ? 'pointer' : 'not-allowed',
+        }}
+      >
+        {submitting
+          ? <><Loader2 size={14} className="animate-spin" />Submitting...</>
+          : existing ? 'Resubmit' : 'Submit'}
+      </button>
+
+      {existing && (
+        <p className="font-sans text-xs text-center" style={{ color: '#8C7A62' }}>
+          Already submitted — submitting again replaces the photo and voice note.
+        </p>
       )}
     </div>
   );
@@ -193,6 +416,9 @@ export default function StudentPage() {
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [assignments, setAssignments] = useState<CourseAssignment[]>([]);
+  const [submissions, setSubmissions] = useState<CourseSubmission[]>([]);
+  // Which module's submission screen is expanded — one at a time, mirrors expandedModuleId.
+  const [submissionOpenId, setSubmissionOpenId] = useState<string | null>(null);
   // Resolved after mount, never during render: `new Date()` on the server and on the client
   // can straddle midnight and produce a hydration mismatch. Until it lands we show the plain
   // curriculum order with no deadline badges, which is exactly the pre-assignment behaviour.
@@ -200,6 +426,9 @@ export default function StudentPage() {
   const [fetching, setFetching] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
+  // not durable UI state — see jumpToLesson() and the effect that consumes it.
+  const [jumpToLessonId, setJumpToLessonId] = useState<string | null>(null);
 
   useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
@@ -210,14 +439,16 @@ export default function StudentPage() {
   const load = useCallback(async () => {
     setFetching(true);
     if (isLive && user) {
-      // An assignments read that fails (rules, offline) must not blank out progress —
-      // the learner can still work through the course without a mentor's list.
-      const [rows, mine] = await Promise.all([
+      // An assignments/submissions read that fails (rules, offline) must not blank out
+      // progress — the learner can still work through the course without a mentor's list.
+      const [rows, mine, subs] = await Promise.all([
         myCourseProgress(),
         myAssignments().catch(() => [] as CourseAssignment[]),
+        myCourseSubmissions().catch(() => [] as CourseSubmission[]),
       ]);
       setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
       setAssignments(mine);
+      setSubmissions(subs);
     }
     setFetching(false);
   }, [isLive, user]);
@@ -243,6 +474,24 @@ export default function StudentPage() {
     setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
   }
 
+  /** Expand the module that owns lessonId and scroll its panel into view. A dangling id (one
+   *  that doesn't resolve) is a no-op — the button that would have called this is never
+   *  rendered in the first place, since LessonPanel already filters those out. */
+  function jumpToLesson(lessonId: string) {
+    const owner = LESSON_INDEX.get(lessonId);
+    if (!owner) return;
+    setExpandedModuleId(owner.moduleId);
+    setJumpToLessonId(lessonId);
+  }
+
+  // Runs once the target module's lessons are in the DOM (both state updates above land in the
+  // same commit), scrolls the target panel into view, then clears the one-shot signal.
+  useEffect(() => {
+    if (!jumpToLessonId) return;
+    document.getElementById(`lesson-${jumpToLessonId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setJumpToLessonId(null);
+  }, [jumpToLessonId, expandedModuleId]);
+
   const assignmentByModule = useMemo(() => {
     const m = new Map<string, CourseAssignment>();
     for (const a of assignments) m.set(a.module, a);
@@ -262,6 +511,24 @@ export default function StudentPage() {
     () => (today && assignments.length > 0 ? summariseAssignments(assignments, doneIds, today) : null),
     [today, assignments, doneIds],
   );
+
+  // Gating always reasons in fixed CURRICULUM order — never orderedModules above, which is a
+  // display-only reordering that lifts assigned work to the top (see lib/course-gating.ts).
+  const gatingCtx: GatingContext = useMemo(() => ({
+    moduleIds: COURSE_MODULES.map((m) => m.id),
+    doneIds,
+    submittedIds: submittedModuleIds(submissions),
+    assignments,
+  }), [doneIds, submissions, assignments]);
+
+  const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
+  const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
+
+  const submissionByModule = useMemo(() => {
+    const m = new Map<string, CourseSubmission>();
+    for (const s of submissions) m.set(s.module, s);
+    return m;
+  }, [submissions]);
 
   // Gate: do not render protected content while auth is resolving or user is absent
   if (isLive && (loading || !user)) {
@@ -428,9 +695,50 @@ export default function StudentPage() {
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
 
+            const unlocked = isModuleUnlocked(mod.id, gatingCtx);
+            const isCurrent = currentId === mod.id;
+
+            // LOCKED: content is unreachable, not merely visually hidden — the lessons list
+            // itself is never rendered for a locked module (nothing below this branch touches
+            // mod.lessons), and there's no expand control to reach it with. No "Mark done"
+            // toggle either, so a locked module can't be cheated past by ticking it directly.
+            if (!unlocked) {
+              const reason = unlockReason(mod.id, gatingCtx);
+              return (
+                <div key={mod.id} className="rounded-2xl overflow-hidden"
+                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', opacity: 0.7 }}>
+                  <div className="flex items-start gap-3 px-4 py-3.5">
+                    <div className="flex-shrink-0 flex items-center justify-center rounded-full mt-0.5"
+                      style={{ width: 32, height: 32, background: 'rgba(32,25,15,0.06)', border: '1.5px solid #E2D8C4' }}>
+                      <Lock size={14} style={{ color: '#8C7A62' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start gap-2 flex-wrap">
+                        <span className="font-display font-semibold text-sm leading-tight" style={{ color: '#8C7A62' }}>
+                          {mod.title}
+                        </span>
+                        <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: `${color}10`, color: `${color}A0`, border: `1px solid ${color}20` }}>
+                          {CATEGORY_LABELS[mod.category]}
+                        </span>
+                      </div>
+                      <p className="flex items-center gap-1.5 font-sans text-xs mt-1.5 leading-relaxed" style={{ color: '#8C7A62' }}>
+                        <Lock size={10} style={{ flexShrink: 0 }} />
+                        {reason ?? 'Locked'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            const content = assignmentFor(mod.id);
+            const submission = submissionByModule.get(mod.id);
+            const submissionOpen = submissionOpenId === mod.id;
+
             return (
               <div key={mod.id} className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFEFA', border: `1px solid ${done ? '#1F4D2B30' : '#E2D8C4'}` }}>
+                style={{ background: '#FFFEFA', border: `1px solid ${isCurrent ? color : (done ? '#1F4D2B30' : '#E2D8C4')}` }}>
 
                 {/* Module header row */}
                 <div className="flex items-start gap-3 px-4 py-3.5">
@@ -462,6 +770,12 @@ export default function StudentPage() {
                         style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
                         {CATEGORY_LABELS[mod.category]}
                       </span>
+                      {isCurrent && (
+                        <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
+                          Continue here
+                        </span>
+                      )}
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{
@@ -545,13 +859,85 @@ export default function StudentPage() {
                       Lessons
                     </p>
                     {mod.lessons.map((lesson) => (
-                      <LessonPanel key={lesson.id} lesson={lesson} color={color} moduleId={mod.id} lang={lang} />
+                      <LessonPanel
+                        key={lesson.id}
+                        lesson={lesson}
+                        color={color}
+                        moduleId={mod.id}
+                        lang={lang}
+                        autoOpen={jumpToLessonId === lesson.id}
+                        onJumpToLesson={jumpToLesson}
+                      />
                     ))}
+                  </div>
+                )}
+
+                {/* Submission entry point — only exists once real assignment content ships for
+                    this module (see the LOUD COMMENT on MODULE_ASSIGNMENTS in
+                    lib/course-gating.ts); degrades to nothing until then. */}
+                {content && (
+                  <div className="px-4 pb-4" style={{ borderTop: isExpanded ? 'none' : '1px solid #E2D8C4' }}>
+                    <button
+                      type="button"
+                      onClick={() => setSubmissionOpenId((prev) => (prev === mod.id ? null : mod.id))}
+                      className="w-full flex items-center gap-2 px-3.5 py-2.5 mt-3 rounded-xl transition-colors"
+                      style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
+                    >
+                      <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
+                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color }}>
+                        {submission ? 'Submitted — tap to resubmit' : 'Submit this module'}
+                      </span>
+                      {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
+                      {submissionOpen
+                        ? <ChevronUp size={12} style={{ color, flexShrink: 0 }} />
+                        : <ChevronDown size={12} style={{ color, flexShrink: 0 }} />}
+                    </button>
+                    {submissionOpen && (
+                      <div className="mt-2">
+                        <SubmissionPanel
+                          moduleId={mod.id}
+                          assignment={content}
+                          color={color}
+                          existing={submission}
+                          onSubmitted={() => { setSubmissionOpenId(null); load(); }}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             );
           })}
+        </div>
+
+        {/* Capstone — locked until every module is done + submitted; links to the EXISTING
+            Design Studio (/design), not a new tool. The plan-set export there is the
+            completion artifact. */}
+        <div className="rounded-2xl px-5 py-5"
+          style={{
+            background: capstoneUnlocked ? 'rgba(31,77,43,0.06)' : '#FFFEFA',
+            border: `1px solid ${capstoneUnlocked ? 'rgba(31,77,43,0.25)' : '#E2D8C4'}`,
+          }}>
+          <div className="flex items-center gap-2 mb-2">
+            {capstoneUnlocked
+              ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
+              : <Lock size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#8C7A62' }}>
+              Capstone: your farm design
+            </span>
+          </div>
+          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
+            {capstoneUnlocked
+              ? 'You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.'
+              : 'Finish and submit all 10 modules to unlock your capstone design.'}
+          </p>
+          {capstoneUnlocked && (
+            <Link href="/design"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
+              style={{ background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}>
+              Open Design Studio
+            </Link>
+          )}
         </div>
 
         {/* Completion banner */}

@@ -145,10 +145,27 @@ export interface DesignCanvasProps {
   // fence reference), pre-projected to this frame. Tapping one offers "Use in design",
   // which adopts it into an editable shape — the trace-then-redraw killer.
   tracedLayers?: TracedLayer[];
+  // Tidy outline (lib/tidy-outline.ts) PREVIEW — set by the parent (app/design/page.tsx) once the
+  // farmer taps the palette's Tidy button on a single selected zone/line. Drawn as a DISTINCT
+  // ghost overlay ON TOP of the shape's normal (unchanged) rendering — this canvas never rewrites
+  // state.zones/state.lines itself; committing happens only via onConfirmTidy, through the
+  // parent's own onChange/undo path, exactly like every other edit. null = no preview showing.
+  tidyPreview?: {
+    kind: 'zone' | 'line';
+    tidiedPoints: Array<[number, number]>; // lib/tidy-outline.ts TidyOutlineResult.points
+    summary: string; // plain-language copy — see lib/tidy-outline.ts's tidyOutlineSummary
+    canConfirm: boolean; // false when tidying would change nothing — Confirm is hidden
+  } | null;
+  onConfirmTidy?: () => void;
+  onCancelTidy?: () => void;
 }
 
 const GOLD = '#F7C97E';
 const CYAN = '#22D3EE';
+// A hue used ONLY for the Tidy outline preview ghost — deliberately distinct from GOLD
+// (selection highlight) and CYAN (edit-handle chrome) so a farmer can never mistake "this is what
+// tidying would produce" for "this is currently selected".
+const TIDY_PREVIEW = '#FF6EC7';
 const SCALE_STEPS_M = [5, 10, 20, 50, 100, 200] as const;
 // Same bone-white as DesignGlossy.tsx's BOUNDARY_BONE — the property boundary is a real
 // post-and-wire farm fence, never green, so it never reads as a row of plants (that
@@ -471,6 +488,9 @@ export default function DesignCanvas({
   onEditItem,
   onToolChange,
   tracedLayers,
+  tidyPreview,
+  onConfirmTidy,
+  onCancelTidy,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
@@ -1648,7 +1668,11 @@ export default function DesignCanvas({
   const itemActionStrokeW = worldPx(1.5);
   const itemActionFont = worldPx(12);
   const itemActionGap = worldPx(4);
-  const itemGripHit = worldPx(18);
+  // 20 (not 18) to match the ~40px comfortable-touch-target radius this file already uses
+  // elsewhere for vertexHitR and itemActionHitR — the resize grips (corner + both edges, below)
+  // were the one outlier still sized under that baseline. +2px per side; the visible glyphs
+  // (itemGrip/itemGripSmall) are untouched, so this only widens the invisible tap zone.
+  const itemGripHit = worldPx(20);
   const itemGrip = worldPx(10);
   const itemGripSmall = worldPx(7);
   const itemRotateStem = worldPx(18);
@@ -3001,6 +3025,47 @@ export default function DesignCanvas({
           );
         })()}
 
+        {/* Tidy outline preview (lib/tidy-outline.ts) — the shape's NORMAL rendering above is
+            untouched (nothing has been committed yet); this draws the CANDIDATE simplified
+            outline as a distinct ghost on top of it, in world-space so it pans/zooms with the
+            map exactly like the real shape does. Only drawn when there is something to show
+            (canConfirm — an "already tidy"/rejected preview has tidiedPoints identical to the
+            original, so overlaying it would just be a confusing duplicate outline). Drawn last
+            (after the marquee) so it is never hidden behind a real shape. */}
+        {tidyPreview && tidyPreview.canConfirm && (
+          <g pointerEvents="none">
+            {tidyPreview.kind === 'zone' ? (
+              <polygon
+                points={ringToPx(tidyPreview.tidiedPoints, imgW, imgH)}
+                fill="none"
+                stroke={TIDY_PREVIEW}
+                strokeWidth={worldPx(2.5)}
+                strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+              />
+            ) : (
+              <polyline
+                points={polylinePoints(tidyPreview.tidiedPoints, imgW, imgH)}
+                fill="none"
+                stroke={TIDY_PREVIEW}
+                strokeWidth={worldPx(3)}
+                strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+                strokeLinecap="round"
+              />
+            )}
+            {tidyPreview.tidiedPoints.map(([x, y], i) => (
+              <circle
+                key={i}
+                cx={x * imgW}
+                cy={y * imgH}
+                r={worldPx(3.5)}
+                fill={TIDY_PREVIEW}
+                stroke="#0B120B"
+                strokeWidth={worldPx(1)}
+              />
+            ))}
+          </g>
+        )}
+
         </g>
         {/* End world-space transform group — everything below is a fixed screen-space overlay. */}
 
@@ -3298,6 +3363,74 @@ export default function DesignCanvas({
               ✓ Finish {tool === 'line' ? 'line' : areaFeature ? GROUND_FEATURES[areaFeature].label : `Zone ${zoneDraw}`}
             </button>
           )}
+        </div>
+      )}
+
+      {/* Tidy outline preview panel — same bottom-CENTER slot/idiom as the Draw-action cluster
+          above (they never show at once: this only appears in the select tool with a single
+          zone/line selected). The plain-language summary is the whole point of "explicit,
+          previewed" — a farmer confirms or cancels an honest sentence, never a silent rewrite.
+          Confirm is omitted entirely when canConfirm is false (tidying would change nothing —
+          "offer no destructive action"), leaving just the explanation and a Close button. */}
+      {tidyPreview && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 'calc(12px + env(safe-area-inset-bottom))',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+            maxWidth: 'calc(100% - 24px)',
+            zIndex: 20,
+          }}
+        >
+          <div
+            style={{
+              padding: '6px 14px',
+              borderRadius: 14,
+              background: 'rgba(11,18,11,0.88)',
+              color: '#F4EDD8',
+              fontSize: 12.5,
+              fontWeight: 600,
+              textAlign: 'center',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            }}
+          >
+            {tidyPreview.summary}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => onCancelTidy?.()}
+              style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+            >
+              {tidyPreview.canConfirm ? '✕ Cancel' : 'Close'}
+            </button>
+            {tidyPreview.canConfirm && (
+              <button
+                type="button"
+                onClick={() => onConfirmTidy?.()}
+                style={{
+                  minHeight: 52,
+                  padding: '0 20px',
+                  borderRadius: 26,
+                  border: '2px solid #FBF6EC',
+                  background: '#1F4D2B',
+                  color: '#FBF6EC',
+                  fontWeight: 800,
+                  fontSize: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                ✓ Tidy outline
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

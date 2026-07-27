@@ -5,6 +5,25 @@ rules_version = '2';
 // signed-in user under their own folder.
 service firebase.storage {
   match /b/{bucket}/o {
+    // Course-portal submission evidence (photo + optional voice note per module). Private —
+    // unlike /photos/** above, NOT world-readable: scoped to the learner who submitted it plus
+    // the mentors/staff who can already read the matching course_submissions/course_progress
+    // Firestore docs (see firestore.rules). Cross-service Firestore lookup, same documented
+    // pattern Firebase Storage rules support for gating storage reads on a Firestore-held role —
+    // this repo has no prior example of it, so treat as unverified until deploy-checked
+    // (`firebase deploy --only storage --dry-run` or the emulator) before relying on it.
+    function isCourseStaffOrMentor() {
+      return request.auth != null
+        && firestore.exists(/databases/(default)/documents/profiles/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role in ['mentor', 'ngo', 'funder', 'admin'];
+    }
+    match /course_submissions/{uid}/{moduleId}/{file} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isCourseStaffOrMentor());
+      allow write: if request.auth != null && request.auth.uid == uid
+                   && request.resource.size < 10 * 1024 * 1024
+                   && (request.resource.contentType.matches('image/.*') || request.resource.contentType.matches('audio/.*'));
+    }
+
     match /photos/{folder}/{uid}/{file=**} {
       allow read: if true;
       allow write: if request.auth != null && request.auth.uid == uid

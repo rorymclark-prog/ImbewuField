@@ -3,7 +3,7 @@
 import { doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
-import { readTombstones } from './local-tombstones';
+import { readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 
@@ -17,7 +17,12 @@ const PLACES_DELETED_KEY = `${PLACES_KEY}_deleted`;
 const WATER_DELETED_KEY  = `${WATER_KEY}_deleted`;
 const SURVEY_PREFIX = 'imbewu_site_survey_'; // one localStorage key per site: imbewu_site_survey_<siteId> (legacy blobs are keyed by placeId instead)
 const COLL          = 'user_map_data';
-const TOMB_TTL_MS = 90 * 24 * 60 * 60 * 1000; // prune deletion tombstones after 90 days
+// Single authority for the tombstone TTL: imported from lib/local-tombstones.ts, not an
+// independently hardcoded 90-day literal — this repo's recurring drift pattern is exactly two
+// constants like this quietly diverging. Exported so tests can assert equality directly (and so
+// a future re-introduction of a separate hardcoded value here is caught, not just "same value by
+// coincidence"). The 90-day value itself is unchanged — see local-tombstones.ts for why.
+export const TOMB_TTL_MS = LOCAL_TOMBSTONE_TTL_MS;
 
 // SAMPLE-MODE GATE (safety layer 2 — see lib/sample-mode.ts): every function in this
 // module begins with `const d = db(); if (!d) …no-op`, so returning null here while the
@@ -169,6 +174,27 @@ const placeId = (p: SavedPlace) => p.id;
 const placeTs = (p: SavedPlace) => p.updatedAt ?? 0;
 const waterId = (p: WaterPoint) => p.id;
 const waterTs = (p: WaterPoint) => p.updatedAt ?? (p.createdAt ? Date.parse(p.createdAt) || 0 : 0);
+
+// Delete-side newest-wins guard — mirrors the `tomb > ts` check upsertPlace/upsertWaterPoint/
+// upsertSiteElement already do from the UPSERT side ("a newer deletion outranks this edit, drop
+// the upsert"). This is the same rule from the DELETE side: a remote item edited (from another
+// device) AFTER this device's farmer tapped delete is newer information than the delete, so the
+// delete must no-op instead of destroying it.
+//
+// Why this has to be a separate, explicitly-passed `deletedAtMs` rather than `Date.now()` sampled
+// inside the transaction: remove*() transactions are fire-and-forget and can retry/land minutes
+// later on a slow connection. Stamping the tombstone with the commit-time `Date.now()` (the old
+// behaviour) means a delayed delete judges staleness against a clock that has drifted forward
+// from the farmer's actual delete tap — long enough for a legitimate newer edit from another
+// device to land in between and get wrongly killed. `deletedAtMs` must be the timestamp recorded
+// synchronously at the moment of the local delete (the same value threaded into
+// lib/local-tombstones.ts's addTombstone() call at each delete*() call site), so the staleness
+// judgment reflects when the farmer actually deleted it, not when the network got around to it.
+//
+// Pure + exported (like mergeItems above) so it's directly table-testable without Firestore.
+export function isDeleteStale(remoteItemTs: number | undefined, deletedAtMs: number): boolean {
+  return remoteItemTs !== undefined && remoteItemTs > deletedAtMs;
+}
 
 export interface SyncHandlers {
   onPlaces?: () => void;
@@ -351,7 +377,10 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
   } catch (e) { console.error('[sync] upsertPlace', e); }
 }
 
-export async function removePlace(uid: string, id: string): Promise<void> {
+// `deletedAtMs` is the ORIGINAL local delete timestamp (from lib/saved-places.ts's deletePlace(),
+// the same instant it synchronously recorded via addTombstone()) — not sampled fresh here. See
+// isDeleteStale()'s comment above for why: this transaction can retry/land long after the tap.
+export async function removePlace(uid: string, id: string, deletedAtMs: number = Date.now()): Promise<void> {
   const d = db(); if (!d) return;
   const ref = doc(d, COLL, uid, 'data', 'places');
   try {
@@ -359,7 +388,11 @@ export async function removePlace(uid: string, id: string): Promise<void> {
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
       const remote: SavedPlace[] = data.places ?? [];
-      const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: Date.now() }, Date.now());
+      const remoteItem = remote.find((p) => p.id === id);
+      if (isDeleteStale(remoteItem ? placeTs(remoteItem) : undefined, deletedAtMs)) {
+        return; // remote item was edited (elsewhere) after this device's delete — newest-wins, no-op
+      }
+      const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: deletedAtMs }, Date.now());
       tx.set(ref, { places: remote.filter((p) => p.id !== id), deleted, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] removePlace', e); }
@@ -417,7 +450,9 @@ export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<voi
   } catch (e) { console.error('[sync] upsertWaterPoint', e); }
 }
 
-export async function removeWaterPoint(uid: string, id: string): Promise<void> {
+// `deletedAtMs` is the ORIGINAL local delete timestamp (from lib/water-points.ts's
+// deleteWaterPoint()) — see removePlace()/isDeleteStale()'s comments above for why.
+export async function removeWaterPoint(uid: string, id: string, deletedAtMs: number = Date.now()): Promise<void> {
   const d = db(); if (!d) return;
   const ref = doc(d, COLL, uid, 'data', 'water');
   try {
@@ -425,7 +460,11 @@ export async function removeWaterPoint(uid: string, id: string): Promise<void> {
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
       const remote: WaterPoint[] = data.points ?? [];
-      const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: Date.now() }, Date.now());
+      const remoteItem = remote.find((p) => p.id === id);
+      if (isDeleteStale(remoteItem ? waterTs(remoteItem) : undefined, deletedAtMs)) {
+        return; // remote item was edited (elsewhere) after this device's delete — newest-wins, no-op
+      }
+      const deleted: Tombstones = pruneTombstones({ ...(data.deleted ?? {}), [id]: deletedAtMs }, Date.now());
       tx.set(ref, { points: remote.filter((p) => p.id !== id), deleted, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] removeWaterPoint', e); }

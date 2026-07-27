@@ -50,8 +50,25 @@ jobs:
           url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed preview → $url"
-      - name: Point the stable preview domain at it
+      # ONE STABLE URL PER BRANCH. Originally every branch aliased imbewufield-preview, which in a
+      # multi-agent repo is last-push-wins: on 2026-07-26 Codex aliased its drawing-quality build
+      # and asked Rory to test it, then a push on the integration branch silently replaced it —
+      # so he would have tested the wrong code and reported on the wrong build. Each branch now
+      # owns its own hostname, and only the integration branch also holds the canonical
+      # imbewufield-preview name (the URL everyone already has).
+      - name: Point this branch's stable domain at it
         if: env.HAS == 'true'
         run: |
-          vercel alias set "${{ steps.deploy.outputs.url }}" imbewufield-preview.vercel.app --token="$VERCEL_TOKEN"
-          echo "imbewufield-preview.vercel.app → ${{ steps.deploy.outputs.url }} (branch ${GITHUB_REF_NAME})"
+          url="${{ steps.deploy.outputs.url }}"
+          # Branch → hostname slug: strip the owner prefix (codex/, claude/, feat/), lowercase,
+          # non-alphanumerics to '-', trim, cap at 40 chars so the hostname stays valid.
+          slug=$(printf '%s' "${GITHUB_REF_NAME#*/}" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed -e 's/[^a-z0-9]\+/-/g' -e 's/^-//' -e 's/-$//' \
+            | cut -c1-40)
+          vercel alias set "$url" "imbewufield-$slug.vercel.app" --token="$VERCEL_TOKEN"
+          echo "imbewufield-$slug.vercel.app → $url (branch ${GITHUB_REF_NAME})"
+          if [ "${GITHUB_REF_NAME}" = "codex/reference-blueprint-quality" ]; then
+            vercel alias set "$url" imbewufield-preview.vercel.app --token="$VERCEL_TOKEN"
+            echo "imbewufield-preview.vercel.app → $url (canonical integration build)"
+          fi

@@ -26,6 +26,8 @@ import type { CourseEnrollment } from '@/lib/course-enrollment';
 import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enrollment';
 import type { CourseAssignment } from '@/lib/course-assignments';
 import { assignmentDocId } from '@/lib/course-assignments';
+import type { CourseSubmission } from '@/lib/course-gating';
+import { courseSubmissionDocId } from '@/lib/course-gating';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -466,4 +468,60 @@ export async function unassignModule(profileId: string, module: string): Promise
   if (isSampleMode()) return;
   const f = fb(); if (!f) return;
   await deleteDoc(doc(f.db, 'course_assignments', assignmentDocId(profileId, module)));
+}
+
+// ---- course submissions (assignment evidence: photo + self-check, optional voice) ----
+// Firestore/Storage edge only — shape and doc id live in lib/course-gating.ts alongside the
+// gating logic that reads them (CourseSubmission, courseSubmissionDocId), same split as
+// course_enrollments/course_assignments above. Sample mode never touches this collection or
+// Storage folder: a demo session must not write real submission evidence.
+
+export async function myCourseSubmissions(): Promise<CourseSubmission[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); const u = uid(); if (!f || !u) return [];
+  const s = await getDocs(query(collection(f.db, 'course_submissions'), where('profile_id', '==', u)));
+  return rows<CourseSubmission>(s);
+}
+
+/** For a mentor/staff view of one learner's evidence — read parity with getCourseProgress. */
+export async function getCourseSubmissions(profileId: string): Promise<CourseSubmission[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); if (!f) return [];
+  const s = await getDocs(query(collection(f.db, 'course_submissions'), where('profile_id', '==', profileId)));
+  return rows<CourseSubmission>(s);
+}
+
+/**
+ * Uploads ONE evidence file to a fixed path — course_submissions/{uid}/{module}/photo.jpg or
+ * .../voice.m4a. Resubmitting a module overwrites the previous file rather than accumulating one
+ * per attempt. Returns the STORAGE PATH, not a download URL — see the comment on
+ * CourseSubmission.photo_path in lib/course-gating.ts for why that matters here specifically.
+ */
+export async function uploadCourseSubmissionFile(module: string, file: File, kind: 'photo' | 'voice'): Promise<string | null> {
+  if (isSampleMode()) return null; // demo submissions never touch real storage
+  const f = fb(); const u = uid(); if (!f || !u) return null;
+  const path = `course_submissions/${u}/${module}/${kind === 'photo' ? 'photo.jpg' : 'voice.m4a'}`;
+  const r = storageRef(f.storage, path);
+  await uploadBytes(r, file);
+  return path;
+}
+
+/** Submit (or resubmit) one module's evidence. Deterministic doc id upserts, same pattern as
+ *  setCourseProgress/assignModule. This is the ONLY write course_submissions needs — submitting
+ *  unlocks the next module immediately (see lib/course-gating.ts), there is no separate
+ *  mentor-approval step, so a farmer is never blocked on an offline mentor. */
+export async function submitCourseModule(input: {
+  module: string; self_check: string[]; photo_path: string | null; voice_path: string | null;
+}): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); const u = uid(); if (!f || !u) return;
+  await setDoc(doc(f.db, 'course_submissions', courseSubmissionDocId(u, input.module)), {
+    profile_id: u,
+    module: input.module,
+    submitted_at: new Date().toISOString(),
+    self_check: input.self_check,
+    photo_path: input.photo_path,
+    voice_path: input.voice_path,
+    updated_at: serverTimestamp(),
+  });
 }

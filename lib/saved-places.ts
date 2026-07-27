@@ -1,7 +1,7 @@
-import { upsertPlace, removePlace } from './user-sync';
+import { upsertPlace, removePlace, mergeItems } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
-import { addTombstone } from './local-tombstones';
+import { addTombstone, readTombstones } from './local-tombstones';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -80,13 +80,46 @@ export function deletePlace(id: string): SavedPlace[] {
   // Record the local tombstone BEFORE the array rewrite: closes the window where a concurrent
   // remote snapshot (written before the async removePlace() transaction below lands) would
   // otherwise resurrect this item on the very next merge. See lib/local-tombstones.ts.
-  addTombstone(DELETED_KEY, id);
+  const deletedAt = Date.now();
+  addTombstone(DELETED_KEY, id, deletedAt);
   const updated = loadPlaces().filter(p => p.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
   const uid = currentUid();
-  if (uid) removePlace(uid, id).catch(() => {});
+  // Thread the SAME timestamp into removePlace() as its `deletedAtMs` — not a fresh Date.now()
+  // sampled whenever that async transaction eventually commits — so a delayed delete on a slow
+  // connection can't retroactively kill a genuinely newer edit from another device. See
+  // removePlace()/isDeleteStale() in lib/user-sync.ts.
+  if (uid) removePlace(uid, id, deletedAt).catch(() => {});
   return updated;
+}
+
+/**
+ * Merge an externally-sourced batch of places — currently only the `?share=<code>` site import
+ * in components/Map.tsx — into localStorage through the SAME union-by-id/newest-updatedAt-wins/
+ * tombstone-aware path every other write in this app goes through (lib/user-sync.ts's
+ * mergeItems()), instead of a raw full-array `localStorage.setItem` overwrite.
+ *
+ * Why this matters: the raw overwrite bypassed loadPlaces()/mergeItems()/tombstones entirely, so
+ * importing a shared site could silently clobber places this device had added locally since its
+ * last sync, or resurrect a place this device had just deleted (its local tombstone — see
+ * lib/local-tombstones.ts — was never consulted). This still delivers the shared places: any
+ * incoming place absent locally, or newer (by updatedAt) than what's stored locally, wins the
+ * merge exactly as it would from any other sync path — only a place this device deliberately
+ * tombstoned in a way that outranks the incoming copy is excluded.
+ *
+ * A shared site carries no deletion tombstones of its own (see lib/site-share.ts's
+ * SharedSiteData — no `deleted` field), so `remoteDel` is always {}.
+ */
+export function mergeIncomingPlaces(incoming: SavedPlace[]): SavedPlace[] {
+  if (isSampleMode()) return getSandboxPlaces(); // sample mode never accepts external data (safety layer)
+  if (typeof window === 'undefined') return incoming;
+  const local = loadPlaces();
+  const localDel = readTombstones(DELETED_KEY);
+  const { items } = mergeItems(incoming, local, {}, localDel, (p) => p.id, (p) => p.updatedAt ?? 0, Date.now());
+  localStorage.setItem(KEY, JSON.stringify(items));
+  notify();
+  return items;
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {

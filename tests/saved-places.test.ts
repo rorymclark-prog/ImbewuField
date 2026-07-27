@@ -18,11 +18,17 @@ const fakeLocalStorage = new FakeStorage();
 // isSampleMode() (lib/sample-mode.ts) reads window.sessionStorage — must exist too, or its
 // try/catch swallows a ReferenceError and we can't be sure sample mode is really reporting off.
 (globalThis as unknown as { sessionStorage: unknown }).sessionStorage = new FakeStorage();
+// mergeIncomingPlaces() (below) calls this module's notify(), which does
+// `window.dispatchEvent(new CustomEvent(...))` — plain globalThis isn't a real EventTarget, so
+// stub a no-op. CustomEvent itself is a real Node global (no polyfill needed).
+(globalThis as unknown as { dispatchEvent: unknown }).dispatchEvent = () => true;
 
-const { findNearbyPlace, distanceMeters } = await import('../lib/saved-places.ts');
+const { findNearbyPlace, distanceMeters, mergeIncomingPlaces } = await import('../lib/saved-places.ts');
+const { addTombstone } = await import('../lib/local-tombstones.ts');
 type SavedPlace = Awaited<ReturnType<typeof findNearbyPlace>>;
 
 const PLACES_KEY = 'permamap_saved_places';
+const PLACES_DELETED_KEY = `${PLACES_KEY}_deleted`;
 
 function place(id: string, lat: number, lon: number): NonNullable<SavedPlace> {
   return {
@@ -99,4 +105,66 @@ test('findNearbyPlace ignores candidates outside the radius even when they are t
 
 test('distanceMeters(a, a) is zero', () => {
   assert.equal(distanceMeters(-29.6, 30.4, -29.6, 30.4), 0);
+});
+
+// ── mergeIncomingPlaces — the ?share= import merge-path fix ─────────────────────────────────
+//
+// components/Map.tsx's ?share=<code> import used to do a raw full-array
+// localStorage.setItem('permamap_saved_places', ...) overwrite, bypassing loadPlaces()/
+// mergeItems()/local tombstones entirely — a shared-site import could silently clobber places
+// this device had added locally, or resurrect a place it had just deleted. mergeIncomingPlaces()
+// routes the same import through the app's normal union-by-id/newest-updatedAt-wins/
+// tombstone-aware merge path (lib/user-sync.ts's mergeItems) instead.
+
+test('mergeIncomingPlaces: a shared place absent locally still arrives (the import\'s actual purpose is preserved)', () => {
+  fakeLocalStorage.clear();
+  seed([]);
+  const shared = place('shared1', -29.6, 30.4);
+  const items = mergeIncomingPlaces([shared]);
+  assert.deepEqual(items, [shared]);
+  assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(PLACES_KEY)!), [shared]);
+});
+
+test('mergeIncomingPlaces does NOT clobber a locally-added place absent from the shared batch (union, not overwrite)', () => {
+  fakeLocalStorage.clear();
+  const local = place('local_only', -29.7, 30.5);
+  seed([local]);
+  const shared = place('shared1', -29.6, 30.4);
+  const items = mergeIncomingPlaces([shared]);
+  const ids = items.map((p) => p!.id).sort();
+  assert.deepEqual(ids, ['local_only', 'shared1']);
+});
+
+test('mergeIncomingPlaces: newest-wins when the same id exists both locally and in the shared batch', () => {
+  fakeLocalStorage.clear();
+  const localNewer = { ...place('p1', -29.6, 30.4), updatedAt: 9000 };
+  seed([localNewer]);
+  const sharedOlder = { ...place('p1', -29.61, 30.41), updatedAt: 1000 }; // stale copy in the share
+  const items = mergeIncomingPlaces([sharedOlder]);
+  assert.equal(items.length, 1);
+  assert.equal(items[0]!.updatedAt, 9000);
+  assert.equal(items[0]!.lat, -29.6); // the newer LOCAL copy's data wins, not the shared one's
+});
+
+test('mergeIncomingPlaces respects a local deletion tombstone — a shared import cannot resurrect a place this device just deleted', () => {
+  fakeLocalStorage.clear();
+  seed([]); // already removed locally
+  const now = Date.now();
+  // Realistic recent-past timestamps: readTombstones() prunes anything older than the 90-day
+  // TTL relative to the REAL current time, so a tiny epoch-relative value (e.g. `5000`) would be
+  // pruned away as "90 days old" before the merge even runs — use `now`-relative deltas instead.
+  addTombstone(PLACES_DELETED_KEY, 'deleted1', now - 5000);
+  const staleSharedCopy = { ...place('deleted1', -29.6, 30.4), updatedAt: now - 9000 }; // predates the tombstone
+  const items = mergeIncomingPlaces([staleSharedCopy]);
+  assert.deepEqual(items, []); // stays deleted — the shared copy does not resurrect it
+});
+
+test('mergeIncomingPlaces: a shared place edited AFTER this device\'s local tombstone still arrives (deliberate re-add semantics, mirrors mergeItems)', () => {
+  fakeLocalStorage.clear();
+  seed([]);
+  const now = Date.now();
+  addTombstone(PLACES_DELETED_KEY, 'p1', now - 5000);
+  const sharedNewer = { ...place('p1', -29.6, 30.4), updatedAt: now - 1000 }; // postdates the tombstone
+  const items = mergeIncomingPlaces([sharedNewer]);
+  assert.deepEqual(items, [sharedNewer]);
 });

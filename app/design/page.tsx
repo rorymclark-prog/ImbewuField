@@ -44,6 +44,7 @@ import {
   type WizardStep,
   type ZoneShape,
 } from '@/lib/design-canvas';
+import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
@@ -490,6 +491,24 @@ function DesignStudioInner() {
   // can be deleted together (Rory's "command-select for multiple + delete" ask).
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const selectedId = selectedIds.length === 1 ? selectedIds[0] : null;
+
+  // Tidy outline (lib/tidy-outline.ts) preview — set only while previewing a pending tidy of the
+  // single selected zone/line; `id` pins the preview to that ONE shape so a selection change or a
+  // remote edit that removes it can be detected and the stale preview dropped (see the effect
+  // below). Never written to directly outside onTidySelected/onConfirmTidy/onCancelTidy/this
+  // cleanup effect.
+  const [tidyPreview, setTidyPreview] = useState<{ id: string; kind: 'zone' | 'line'; result: TidyOutlineResult } | null>(null);
+  useEffect(() => {
+    if (!tidyPreview) return;
+    const stillSelected = selectedId === tidyPreview.id;
+    const stillExists = canvasState
+      ? tidyPreview.kind === 'zone'
+        ? canvasState.zones.some((z) => z.id === tidyPreview.id)
+        : canvasState.lines.some((l) => l.id === tidyPreview.id)
+      : false;
+    if (!stillSelected || !stillExists) setTidyPreview(null);
+  }, [tidyPreview, selectedId, canvasState]);
+
   const handleSelect = useCallback((id: string | null, additive?: boolean) => {
     if (id === null) {
       setSelectedIds([]);
@@ -1157,6 +1176,47 @@ function DesignStudioInner() {
         }
       : null;
 
+  // Tidy outline (lib/tidy-outline.ts) — offered only when exactly one ZONE or LINE is selected
+  // (selectedId is already null for both "nothing selected" and "multiple selected" — see
+  // selectedItemForAngle's doc comment above for the same convention; a placed item has no
+  // ring/polyline to tidy, so it is excluded the same way angleControl excludes zones/lines).
+  const selectedZoneForTidy = selectedId ? canvasState?.zones.find((z) => z.id === selectedId) ?? null : null;
+  const selectedLineForTidy = selectedZoneForTidy ? null : selectedId ? canvasState?.lines.find((l) => l.id === selectedId) ?? null : null;
+  // Tapping Tidy only COMPUTES and OPENS a preview — it never itself edits the design. See
+  // DesignCanvas's tidyPreview prop for the overlay + confirm/cancel panel this feeds.
+  const onTidySelected = (selectedZoneForTidy || selectedLineForTidy) && frame
+    ? () => {
+        const kind: 'zone' | 'line' = selectedZoneForTidy ? 'zone' : 'line';
+        const shapePoints = selectedZoneForTidy ? selectedZoneForTidy.points : selectedLineForTidy!.points;
+        const result = tidyOutline(shapePoints, { frame, closed: kind === 'zone' });
+        setTidyPreview({ id: selectedId!, kind, result });
+      }
+    : null;
+  // Confirm commits through handleChange — the SAME onChange/undo path every other edit in this
+  // file uses (Delete/Duplicate/the Angle field/the drag handles all funnel through it too) — so
+  // this is exactly ONE undo entry, and undo restores the pre-tidy points verbatim like any other
+  // edit. Only offered when the preview actually changed something (result.changed); "nothing to
+  // change" previews show no Confirm button at all (see DesignCanvas's canConfirm).
+  const onConfirmTidy = tidyPreview && tidyPreview.result.changed
+    ? () => {
+        const preview = tidyPreview;
+        handleChange((prev) => ({
+          ...prev,
+          zones: preview.kind === 'zone'
+            ? prev.zones.map((z) => (z.id === preview.id ? { ...z, points: preview.result.points } : z))
+            : prev.zones,
+          lines: preview.kind === 'line'
+            ? prev.lines.map((l) => (l.id === preview.id ? { ...l, points: preview.result.points } : l))
+            : prev.lines,
+          updatedAt: new Date().toISOString(),
+        }));
+        setTidyPreview(null);
+      }
+    : null;
+  // Cancel changes nothing — just drops the preview. No handleChange call, so no undo entry is
+  // created (there is nothing to undo: the design was never touched).
+  const onCancelTidy = tidyPreview ? () => setTidyPreview(null) : null;
+
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
   // element · Escape = deselect. Ignored while typing in a field.
@@ -1710,6 +1770,18 @@ function DesignStudioInner() {
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
               tracedLayers={tracedLayers}
+              tidyPreview={
+                tidyPreview
+                  ? {
+                      kind: tidyPreview.kind,
+                      tidiedPoints: tidyPreview.result.points,
+                      summary: tidyOutlineSummary(tidyPreview.result),
+                      canConfirm: tidyPreview.result.changed,
+                    }
+                  : null
+              }
+              onConfirmTidy={onConfirmTidy ?? undefined}
+              onCancelTidy={onCancelTidy ?? undefined}
             />
           </>
         ) : (
@@ -1974,6 +2046,7 @@ function DesignStudioInner() {
           canRedo={redoStack.current.length > 0}
           onDeleteSelected={onDeleteSelected}
           onDuplicateSelected={onDuplicateSelected}
+          onTidySelected={onTidySelected}
           angleControl={angleControl}
           siteBiome={site?.biome}
         />
