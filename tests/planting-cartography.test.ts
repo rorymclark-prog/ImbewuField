@@ -9,6 +9,10 @@ import {
   plantingLegendSectionForFeature,
   plantingRouteStyleFor,
 } from '@/lib/planting-cartography';
+import {
+  nearestWaterNeighbourPx,
+  waterFeaturePresentationDimensions,
+} from '@/lib/water-cartography';
 
 test('Planting legend follows the Reference Blueprint reading order', () => {
   assert.deepEqual(PLANTING_LEGEND_SECTION_ORDER, [
@@ -66,4 +70,47 @@ test('windbreak styling is explicit and does not create styles for unrelated rou
   assert.equal(plantingRouteStyleFor('pipe'), undefined);
   assert.equal(PLANTING_ROUTE_STYLE.windbreak.label, 'Windbreak hedge');
   assert.deepEqual(PLANTING_ROUTE_STYLE.windbreak.dash, []);
+});
+
+// ── Water emphasis must not make neighbouring tanks collide ───────────────────
+// Rory, on a real farm: "the tanks overlapping?". His saved geometry was fine — a jojo tank is
+// emphasised 2.1x so it survives phone-size reduction, and two tanks a realistic distance apart
+// had their PAINTED footprints inflated past that distance. The only prior protection was a line
+// in the AI prompt asking for "narrow visible separation", which does nothing on the free sheet.
+test('water emphasis is capped so an enlarged tank cannot collide with its neighbour', () => {
+  const NATURAL = 40;      // px — the tank's true painted size at this zoom
+  const CANVAS = 2000;
+
+  const unconstrained = waterFeaturePresentationDimensions('jojo_2500', NATURAL, NATURAL, CANVAS);
+  assert.ok(unconstrained.scale > 2, 'a lone tank still gets its full print emphasis');
+
+  // A neighbour 60px away: unconstrained the tank would paint ~84px wide and swallow the gap.
+  const constrained = waterFeaturePresentationDimensions('jojo_2500', NATURAL, NATURAL, CANVAS, 60);
+  assert.ok(constrained.width < 60, 'the painted width must stay inside the gap to its neighbour');
+  assert.ok(constrained.width <= 60 * 0.82 + 1e-6, 'and leave a visible lane of ground between them');
+  assert.ok(constrained.scale >= 1, 'a saved feature is never painted smaller than it was drawn');
+});
+
+test('a distant neighbour does not reduce emphasis at all', () => {
+  const a = waterFeaturePresentationDimensions('jojo_2500', 40, 40, 2000);
+  const b = waterFeaturePresentationDimensions('jojo_2500', 40, 40, 2000, 4000);
+  assert.equal(b.scale, a.scale, 'far-apart tanks keep full emphasis');
+});
+
+test('omitting the neighbour distance preserves the previous behaviour exactly', () => {
+  for (const id of ['jojo_2500', 'rain_barrel', 'tap_point', 'tree_basin']) {
+    const before = waterFeaturePresentationDimensions(id, 33, 21, 1600);
+    const after = waterFeaturePresentationDimensions(id, 33, 21, 1600, undefined);
+    assert.deepEqual(after, before, `${id} must be unchanged when no neighbour is supplied`);
+  }
+});
+
+test('nearestWaterNeighbourPx ignores un-emphasised features and self', () => {
+  const feats = [
+    { id: 'jojo_2500', cx: 0, cy: 0 },
+    { id: 'swale', cx: 10, cy: 0 },        // not emphasised — cannot balloon into us
+    { id: 'jojo_5000', cx: 100, cy: 0 },
+  ];
+  assert.equal(nearestWaterNeighbourPx(feats, 0), 100);
+  assert.equal(nearestWaterNeighbourPx([feats[0]], 0), undefined, 'a lone feature has no neighbour');
 });
