@@ -197,22 +197,45 @@ test('SAFETY: a snap that would mirror a near-flat vertex across its base and fl
   assert.deepEqual(result.points, target.points);
 });
 
-// ── SAFETY INVARIANT: area change stays under maxAreaChangePct ────────────────
-// Both right-hand corners of a 10m square are within tolerance of a neighbour edge 0.49m inside
-// the true edge — well before that's enough to self-intersect or flip winding, but enough to eat
-// ~4.9% of the square's area, over the default 2% budget.
+// ── AREA CHANGE: a pathology backstop, NOT the primary safety rail ────────────
+// The tolerance is what actually protects a farmer's drawing (no vertex moves more than 0.5m,
+// enforced constructively and re-checked defensively). Area change is bounded by roughly
+// perimeter × tolerance, which on a SMALL zone is a large percentage of a small number — so a
+// tight percentage cap punishes small zones hardest, exactly backwards. See the two tests below.
 
-test('SAFETY: a snap that would shrink the enclosed area too much is rejected', () => {
-  const targetM = square(0, 0, 10);
+// REGRESSION, caught by Rory on a live farm 2026-07-27: this exact case — an ordinary zone with an
+// ordinary seam — was REFUSED with "would change the enclosed area too much", because the default
+// had been copied from tidyOutline's 2%. Snapping MOVES an edge onto a neighbour, so an area change
+// is the intended outcome, not a symptom: closing a 0.49m seam on a 10m-wide zone is ~4.9% and is
+// precisely the correct result. The guard was blocking the exact thing the feature exists to do.
+test('an ordinary seam on an ordinary zone SNAPS — the area guard must not block the feature', () => {
+  const targetM = square(0, 0, 10); // 100 m²
   const neighbourM: Array<[number, number]> = [[9.51, -1], [9.51, 11]];
   const target: SnapTargetRing = { kind: 'zone', points: toNorm(targetM, FRAME) };
   const neighbours: SnapNeighbourRing[] = [{ id: 'n', kind: 'zone', points: toNorm(neighbourM, FRAME) }];
 
-  const result = snapToNeighbours(target, neighbours, { frame: FRAME }); // default maxAreaChangePct: 2%
+  const result = snapToNeighbours(target, neighbours, { frame: FRAME });
+
+  assert.equal(result.reason, 'snapped');
+  assert.equal(result.changed, true);
+  assert.ok(result.moved > 0, 'at least one corner should meet the neighbour');
+  // The tolerance is the REAL safety rail here, and it still holds.
+  assert.ok(result.maxMovedM <= 0.5 + 1e-6, 'no corner may move further than the promised tolerance');
+});
+
+// The backstop still exists — it now catches pathological geometry rather than ordinary work.
+// A 1m sliver losing 0.4m of its width is a 40% change: a shape being deformed, not a seam closed.
+test('SAFETY: the area backstop still fires on pathological geometry', () => {
+  const targetM = square(0, 0, 1); // 1 m² — small enough that a 0.4m move is a huge proportion
+  const neighbourM: Array<[number, number]> = [[0.6, -1], [0.6, 2]];
+  const target: SnapTargetRing = { kind: 'zone', points: toNorm(targetM, FRAME) };
+  const neighbours: SnapNeighbourRing[] = [{ id: 'n', kind: 'zone', points: toNorm(neighbourM, FRAME) }];
+
+  const result = snapToNeighbours(target, neighbours, { frame: FRAME });
 
   assert.equal(result.reason, 'area_change_exceeded');
   assert.equal(result.changed, false);
-  assert.deepEqual(result.points, target.points);
+  assert.deepEqual(result.points, target.points, 'the original must come back untouched');
 });
 
 // ── "FALSE JOIN" guard: two of the target's OWN vertices must never coincide ──────────────────

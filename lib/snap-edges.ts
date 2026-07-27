@@ -93,9 +93,8 @@ export interface SnapEdgesOptions {
   // Max distance, in METRES, a single vertex may move. Default 0.5m — a farmer's traced boundary
   // is a physical fact; see the module doc comment.
   toleranceM?: number;
-  // Same role as tidyOutline's maxAreaChangePct: the target ring's absolute area may drift from
-  // the original's by at most this many PERCENT. Exceeding it reverts to the original untouched —
-  // small enough that closing a seam can never quietly resize the zone.
+  // A PATHOLOGY BACKSTOP, not the primary safety rail — see DEFAULT_MAX_AREA_CHANGE_PCT below for
+  // why this is deliberately loose here and tight in tidyOutline. Exceeding it reverts untouched.
   maxAreaChangePct?: number;
 }
 
@@ -121,7 +120,23 @@ export interface SnapEdgesResult {
 }
 
 const DEFAULT_TOLERANCE_M = 0.5;
-const DEFAULT_MAX_AREA_CHANGE_PCT = 2;
+// 25%, NOT tidyOutline's 2% — copying that number here was a real bug, caught by Rory on a live
+// farm on 2026-07-27: every snap he tried was refused with "would change the enclosed area too
+// much", i.e. the guard blocked the exact thing the feature exists to do.
+//
+// The two actions are not the same shape. tidyOutline REMOVES points and must leave the enclosed
+// area alone — 2% is right there. snapToNeighbours MOVES an edge onto a neighbour, so an area
+// change is the intended OUTCOME, not a symptom. Closing a 0.4m seam along a 20m shared edge adds
+// ~8m²; on a 200m² zone that is 4% — refused at 2%, while being precisely the correct result.
+//
+// The real safety rail here is toleranceM: no vertex may move more than 0.5m, enforced both
+// constructively (candidates beyond it are never considered) and defensively (re-checked against
+// each vertex's ORIGINAL position afterwards). Area change is therefore already bounded by roughly
+// perimeter × tolerance, which for a small zone is a large PERCENTAGE of a small area — so a tight
+// percentage cap punishes small zones hardest, exactly backwards. This 25% remains only to catch
+// pathological geometry (a degenerate sliver ring inverting), alongside the self-intersection,
+// winding and false-join guards which are the ones actually doing the protective work.
+const DEFAULT_MAX_AREA_CHANGE_PCT = 25;
 const EPS_M = 1e-9;
 // Below this, two of the TARGET's own vertices are considered coincident for the false-join guard
 // — deliberately much smaller than any sane toleranceM (a farmer will never place two corners this
