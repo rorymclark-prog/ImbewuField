@@ -1,0 +1,54 @@
+name: Tests
+
+# Until now NOTHING ran the test suite automatically. The three deploy workflows
+# build and ship; none of them calls `npm test` or `tsc`. So 487 tests only ever
+# ran on Rory's Mac, and any contributor who could not run them locally — a cloud
+# Codex sandbox, a cloud Claude session, Rory on his phone — was shipping blind.
+#
+# That is the whole reason this file exists. A cloud agent does not need a working
+# local toolchain if pushing is itself the verification.
+#
+# NODE VERSION IS LOAD-BEARING. The tests are TypeScript and are loaded by Node's
+# native type stripping (see tests/register-alias.mjs — it only registers the '@/'
+# alias resolver; it does NOT transpile). Type stripping is on by default from
+# Node 22.18 / 23.6 onward. On Node 20 every test file fails to load with
+# ERR_UNKNOWN_FILE_EXTENSION — which is exactly what cloud Codex kept reporting
+# and mistaking for a broken repo. The deploy workflows stay on 20 because Vercel
+# builds are fine there; this one must not.
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch: {}
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test
+
+      # Deliberately NOT running `npm run build` here. app/layout.tsx imports
+      # Newsreader and Public Sans via next/font/google, so a build needs network
+      # access to fonts.googleapis.com at compile time. It succeeds on Vercel and
+      # in the deploy workflows; it fails in any network-restricted sandbox, and
+      # chasing that failure has already cost real time. Build coverage comes from
+      # deploy-preview.yml, which runs on the same push.
