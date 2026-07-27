@@ -60,6 +60,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "intro-permaculture-l1",
+        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l1.jpg",
+        infographicAlt: "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
         title: "The Three Ethics: Earth Care, People Care, Fair Share",
         body: "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
         keyPoints: [
@@ -95,6 +97,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "intro-permaculture-l2",
+        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+        infographicAlt: "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
         title: "Twelve Principles: Designing with Nature",
         body: "Bill Mollison and David Holmgren distilled permaculture into twelve design principles. Three matter most for South African smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — a monoculture maize field can be wiped out by one hailstorm; a mixed planting rarely is.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
         keyPoints: [
@@ -130,6 +134,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "intro-permaculture-l3",
+        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
+        infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
         body: "Zones and sectors are permaculture's main tool for cutting wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. A Lowveld farm facing north-west gets hot dry berg winds in August — that tells you where to plant a windbreak. A KZN farm has a summer rain sector from the north-east.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [
@@ -174,6 +180,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "reading-landscape-l1",
+        infographicUrl: "/course-images/reading-landscape/reading-landscape-l1.jpg",
+        infographicAlt: "A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow, and where it soaks in as the ground flattens.",
         title: "Understanding Water Flow: Where Rain Goes on Your Land",
         body: "Before you harvest water, learn where it already goes. Walk your land during and right after heavy rain — this is the single most useful observation you can make. Watch for rills, places where water fans out, where it ponds, and where it leaves your property. Every exit point is a resource lost.\n\nBuild an A-frame level from three poles and a weighted string. Two people can trace contour lines — points at the same height — across a two-hectare property in a morning. No surveyor needed. These lines guide where you place swales, dams, and tree rows.\n\nThe rule is: slow it high, sink it mid, control it low. The higher up the slope you slow water, the moister your land stays, and the less it erodes lower down.",
         keyPoints: [
@@ -209,6 +217,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "reading-landscape-l2",
+        infographicUrl: "/course-images/reading-landscape/reading-landscape-l2.jpg",
+        infographicAlt: "A slope with the sun in the north. Shadows from the building and the tree fall south, down the slope.",
         title: "Sun Angles, Shade, and Aspect: Getting the Most from Sunlight",
         body: "In South Africa the sun tracks across the northern sky, so north-facing slopes run warmer and drier, and south-facing slopes stay cooler and moister — frost can sit in south-facing hollows long after it clears elsewhere. This decides where you plant tender crops and site buildings.\n\nWinter sun sits lower and further north than summer sun. A wall that casts no shade in summer can shade a bed for hours in winter. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nFor frost-sensitive plants — pawpaw, young citrus — a north-facing wall that radiates heat at night can be the difference between life and death.",
         keyPoints: [
@@ -244,6 +254,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "reading-landscape-l3",
+        infographicUrl: "/course-images/reading-landscape/reading-landscape-l3.jpg",
+        infographicAlt: "A farm from above with three sets of arrows: the direction the wind usually comes from, cold air draining downhill into a frost hollow, and the direction the land slopes.",
         title: "Wind, Frost, and Topography: Reading the Invisible Forces",
         body: "Wind is one of the most damaging, most ignored forces on a smallholding. Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies that bring fungal disease in summer. Know your region's pattern before you plant.\n\nFrost behaves like water — it flows downhill at night and pools in low ground. A valley bottom frosts weeks before and after the slopes above it. A gap in a ridgeline can funnel cold air two or three hundred metres into a sheltered valley.\n\nWalk your land at dawn on a cold June morning. Frost shows as mist or frozen dew. Wherever it lingers longest is where your most vulnerable crops should never go.",
         keyPoints: [
@@ -279,6 +291,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "reading-landscape-l4",
+        infographicUrl: "/course-images/reading-landscape/reading-landscape-l4.jpg",
+        infographicAlt: "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
         title: "Making a Simple Site Map: Your Design Starts on Paper",
         body: "A site map needs paper, a tape measure, a compass, and a morning to walk your land. Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick — both are pioneer weeds that mean disturbed or compacted soil.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
         keyPoints: [
@@ -323,6 +337,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "water-harvesting-l1",
+        infographicUrl: "/course-images/water-harvesting/water-harvesting-l1.jpg",
+        infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
         body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off. The excavated soil forms a berm on the downhill side. Trees planted there draw on stored water long after the rain has stopped.\n\nOn the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam. An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent.\n\nSwales work well on 1 to 15% slopes. Above 15 to 20%, use vetiver grass contour lines or terraces instead — test a 60cm pit with water first; if it drains within the hour, plan for drier conditions.",
@@ -359,6 +375,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "water-harvesting-l2",
+        infographicUrl: "/course-images/water-harvesting/water-harvesting-l2.jpg",
+        infographicAlt: "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
         title: "Farm Dams and Ponds: Storing Water for the Dry Season",
         body: "A well-sited dam stores a season's rain to carry you through the dry months. In summer-rainfall South Africa, rain falls October to March, then largely stops — a dam makes you far less dependent on boreholes or municipal supply through winter.\n\nSite your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall. A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season. Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself.\n\nIn Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year. Shade trees on the western and northern banks cut this significantly. Ducks aerate the water; indigenous bulrushes stabilise the banks.",
         keyPoints: [
@@ -394,6 +412,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "water-harvesting-l3",
+        infographicUrl: "/course-images/water-harvesting/water-harvesting-l3.jpg",
+        infographicAlt: "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
         title: "Rainwater Tanks and Roof Catchment: Harvesting Clean Water",
         body: "Your roof is a harvesting surface. Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses. A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs.\n\nFit a first-flush diverter: the first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank. For drinking water, add a filter downstream. For irrigation, untreated tank water is fine.\n\nMatch tank size to your dry season, not just one dry spell. In KZN, 5,000 litres may bridge a two-to-three-week gap. On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic.",
         keyPoints: [
@@ -429,6 +449,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "water-harvesting-l4",
+        infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
+        infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
         title: "Greywater Recycling: A Free Daily Water Source",
         body: "Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling. Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted.\n\nUse plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots. Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots.\n\nNever use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high. Fruit trees, established shrubs, and non-edible landscaping are the right use. Check your municipality's rules before installing a permanent greywater system.",
         keyPoints: [
@@ -473,6 +495,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "soil-health-l1",
+        infographicUrl: "/course-images/soil-health/soil-health-l1.jpg",
+        infographicAlt: "A spade cut through the ground showing dark crumbly topsoil above pale subsoil, with worm channels. Beside it, a jar of soil settled into three layers — sand, silt and clay.",
         title: "Understanding Your Soil: The Foundation of Everything",
         body: "Healthy soil is alive. A teaspoon of good topsoil holds more organisms than there are people on Earth — bacteria, fungi, and the underground fungal threads that move nutrients between plants. Years of monoculture, overgrazing, or stubble-burning strip that life out, leaving soil that depends on bought fertiliser to produce anything.\n\nDig a 30cm hole and look. Healthy topsoil is dark, smells like rain or mushrooms, and shows worm channels. Degraded soil is pale, compacted, and smells of nothing or sour.\n\nTry the jar test: fill a jar one-third with soil, top up with water and a drop of dish soap, shake, and let it settle for a day. Sand settles first, then silt, with clay staying suspended longest — showing you your soil's texture.",
 
@@ -509,6 +533,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "soil-health-l2",
+        infographicUrl: "/course-images/soil-health/soil-health-l2.jpg",
+        infographicAlt: "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
         title: "Making and Using Compost",
         body: "Compost is decomposed organic matter that rebuilds soil structure and feeds soil life. A hot heap reaches usable compost in four to six weeks in warm, humid KZN, or eight to twelve weeks on the cooler Highveld. Aim for a core temperature of 55 to 65C, this speeds decomposition and kills most weed seeds and pathogens.\n\nBalance carbon (dry grass, straw, cardboard, maize stalks) with nitrogen (fresh grass, kitchen scraps, manure): 20 to 30cm of browns to every 5 to 10cm of greens. Too much green turns the heap slimy and ammonia-smelling; too much brown keeps it cold for months.\n\nAvoid meat, dairy, cooked scraps, and diseased plants. Keep wattle seed pods out, the hard seed coat survives ordinary composting heat, so pods can spread the plant through finished compost. Bark alone, without pods, is safe, it just breaks down slowly. Turn every five to seven days and keep the heap moist, not wet.",
         keyPoints: [
@@ -544,6 +570,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "soil-health-l3",
+        infographicUrl: "/course-images/soil-health/soil-health-l3.jpg",
+        infographicAlt: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         title: "Mulching and Cover Crops: Protecting and Building Soil",
         body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn kitchen scraps into rich castings in three to four weeks. The liquid leachate, diluted 1:10 with water, makes a strong root feed.",
         keyPoints: [
@@ -588,6 +616,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "vegetables-staples-l1",
+        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        infographicAlt: "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
         title: "Preparing and Planting Your Beds",
         body: "Good beds start before you plant a single seed. No-dig beds — layers of compost and mulch over the existing ground — suit most smallholder soils and save labour; double-digging, loosening two spade-depths down, suits compacted or heavy clay soil that needs deeper drainage.\n\nKeep beds 1 to 1.2m wide, so you can reach the centre from either side without ever standing on the growing area — compaction is the enemy of root growth. Raised beds help in high-rainfall areas with poor drainage; sunken beds hold moisture better in dry regions.\n\nTransplant seedlings for crops that need a head start — tomatoes, brassicas — and direct-seed fast growers like beans and carrots, which resent root disturbance. Crowded plants compete for light and water and underperform badly; space for your climate, not the seed packet's minimum. This weekend, mark out and prepare one 1.2m by 3m bed.",
         keyPoints: [
@@ -623,6 +653,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "vegetables-staples-l2",
+        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        infographicAlt: "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
         title: "Succession Planting and Intercropping",
         body: "Succession planting stops the feast-or-famine cycle. Instead of sowing all your spinach or lettuce at once, sow a short row every two to three weeks — you harvest steadily instead of drowning in one glut then running short for a month.\n\nIntercropping puts complementary plants together. The Three Sisters — maize, beans, and pumpkin — is the classic southern African example: maize gives beans a climbing frame, beans fix nitrogen for the maize, and pumpkin's broad leaves shade out weeds beneath both.\n\nEvery region has a hungry gap — weeks between one harvest ending and the next beginning, when stored food runs low before fresh food arrives. Know when yours falls, and plan a succession sowing specifically to fill it.",
         keyPoints: [
@@ -659,6 +691,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "vegetables-staples-l3",
+        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        infographicAlt: "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
         title: "Staple Crops: Maize, Beans, and Root Vegetables",
         body: "A staple crop is calorie-dense, stores well, and often carries cultural weight. Maize is southern Africa's central staple — choose open-pollinated varieties over hybrids if you want to save seed, since hybrid seed won't breed true to the parent plant next season.\n\nBeans, both Phaseolus and Vigna species, are the most important protein crop for most smallholders — productive, storable dry, and nitrogen-fixing in the ground while they grow.\n\nSweet potatoes are drought-tolerant, productive even on poor soil, and give you both a root harvest and edible leaves. Amadumbe, or taro, is an underused traditional staple well suited to KZN and coastal conditions, tolerating wetter ground than maize.\n\nGrowing at least two staples together, not relying on one alone, protects your household against any single crop failing in a bad season.",
         keyPoints: [
@@ -694,6 +728,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "vegetables-staples-l4",
+        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+        infographicAlt: "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
         title: "Pest and Disease Management Without Chemicals",
         body: "Pests usually signal a system out of balance — a stressed plant, a monoculture, or natural predators disrupted by chemical use. Address the imbalance and the pest pressure often eases on its own.\n\nThe basic neem spray — neem oil, a small amount of soft soap as an emulsifier, and water — is a non-negotiable tool for any smallholder facing soft-bodied pests like aphids.\n\nBiological controls do the rest: ladybirds hunt aphids, braconid wasps parasitise caterpillars, spiders take whitefly. Companion planting supports them — basil near tomatoes, nasturtium drawing pests from brassicas, marigold alongside legumes.\n\nBefore reaching for any treatment, check whether it's really a pest problem at all. Yellow leaves are just as often a soil or watering issue as a bug problem — treating the wrong cause wastes time and money.",
         keyPoints: [
@@ -738,6 +774,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "seeds-sovereignty-l1",
+        infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
+        infographicAlt: "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
         title: "Why Seed Saving Matters",
         body: "Open-pollinated seed breeds true, season after season — plant it, save it, and the next generation matches the parent. Hybrid, or F1, seed is a one-time cross bred for uniform commercial traits; its saved seed grows into something unpredictable, often far less productive. That's not an accident — it's what keeps farmers buying new seed every season.\n\nSeed sovereignty means the freedom to grow, save, and share seed without depending on a seed company for every planting. It matters more as climate becomes less predictable: a wide pool of locally adapted varieties gives your household and community more chance of having something that survives a bad season.\n\nThis season, pick one crop and commit to saving seed from your best plant — not your biggest harvest, your healthiest plant.",
         keyPoints: [
@@ -773,6 +811,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "seeds-sovereignty-l2",
+        infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l2.jpg",
+        infographicAlt: "Two ways to save seed. Dry method: pods dry on the plant, then seed is collected. Wet method: seed ferments in water until a film forms, then is rinsed and dried.",
         title: "How to Save Seed: Dry and Wet Methods",
         body: "Dry-method crops — beans, peas, maize, sunflower — are left to dry fully on the plant before you collect and store the seed. Simple and low-risk.\n\nWet-method crops — tomatoes, cucumbers, squash — need their seed separated from pulp that contains natural germination inhibitors. Scoop the seed and pulp into a jar with a little water, let it ferment two to three days until a light mould film forms on top, then rinse and dry the seed thoroughly before storing.\n\nIsolation distance matters to keep varieties pure. Tomatoes self-pollinate and need very little isolation. Maize cross-pollinates by wind over long distances and needs real separation between varieties, or hand-pollination if you're growing more than one type in a small space. Try the tomato fermentation method this season — it's the easiest wet-method entry point.",
         keyPoints: [
@@ -809,6 +849,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "seeds-sovereignty-l3",
+        infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+        infographicAlt: "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
         title: "Drying, Storing, and Sharing Seed",
         body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture; get all three low and seed can last for years.\n\nLabel every envelope with crop, variety, and date saved. Store in a cool, dark, dry place — a sealed container with a little rice or dried milk powder as a moisture absorber works well.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
         keyPoints: [
@@ -1083,6 +1125,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "small-livestock-l1",
+        infographicUrl: "/course-images/small-livestock/small-livestock-l1.jpg",
+        infographicAlt: "A moveable chicken pen shown in two positions along a strip of ground, with an arrow showing it being moved on. The ground it has left is scratched over and enriched.",
         title: "Chickens in the System: Pest Control, Fertility, and Food",
         body: "Chickens earn their keep when they're part of the system, not just fed bought feed in a fixed pen. Scratching through a bed after harvest, they eat pest larvae, snails, and weed seeds — real pest control with no spray. Their manure, mixed with bedding, makes some of the richest compost material there is.\n\nA chicken tractor — a portable, floorless pen — is the ideal smallholder setup. Move it across the land in rotation, a week or two per bed, so manure concentrates without overloading any one spot while the land rests between passes. Four to six chickens rotated through a 500m² plot can maintain fertility all year with no bought fertiliser.\n\nTiming matters: only put chickens into a bed after harvest, when it's empty. Never around seedlings — they'll scratch them straight out. Ducks are gentler and better suited to established beds.",
         keyPoints: [
@@ -1118,6 +1162,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "small-livestock-l2",
+        infographicUrl: "/course-images/small-livestock/small-livestock-l2.jpg",
+        infographicAlt: "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
         title: "Bees: Pollination, Honey, and System Ecology",
         body: "Honeybees are essential pollinators — watermelon, squash, beans, litchi, avocado, macadamia, and citrus all depend on bee visits. A food forest without healthy bees nearby is producing well below its potential. One or two well-placed hives can lift yields across an entire site.\n\nSouth Africa has two native honeybee subspecies: the Cape bee in the southern and south-western Cape, and the African honeybee across the north and east. Both are more defensive than European strains but more resistant to varroa mite. A single hive, positioned away from foot traffic and facing north-east so morning sun warms the entrance early, is a realistic start.\n\nHealthy, well-foraging colonies signal a biodiverse, chemically clean smallholding. Plant a year-round flowering calendar to keep colonies strong. Every beekeeper in South Africa, even with a single hive, must register with DALRRD.",
         keyPoints: [
@@ -1153,6 +1199,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "small-livestock-l3",
+        infographicUrl: "/course-images/small-livestock/small-livestock-l3.jpg",
+        infographicAlt: "A closed loop of four steps: animals produce manure, manure becomes compost, compost feeds the growing area, and the growing area feeds the animals.",
         title: "Integrating Livestock Cycles: Closing the Loop",
         body: "The real power of small livestock is closing nutrient loops. On a conventional farm, bought feed comes in, meat and eggs leave, and manure is a waste problem. On an integrated smallholding, chickens eat scraps, pest insects, and surplus produce, and return their waste as fertility — costs drop and value rises. The same logic applies to ducks, guinea fowl, and bees.\n\nGuinea fowl, indigenous to southern Africa, are exceptional tick and grasshopper controllers — a small free-ranging flock can cut tick burdens sharply in KZN and Limpopo's humid, tick-heavy conditions.\n\nFor each animal, ask three questions: what does it eat that I already have? What does it produce that helps another part of the system? What does it need that I can supply from within the system?",
         keyPoints: [
@@ -1197,6 +1245,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "market-community-l1",
+        infographicUrl: "/course-images/market-community/market-community-l1.jpg",
+        infographicAlt: "A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.",
         title: "Record-Keeping: Knowing What Your Farm Is Actually Producing",
         body: "Most smallholders undersell what their farm produces because they've never recorded it. Write down every kilogram of tomatoes, every dozen eggs, every bundle of morogo, and where it went — family, sold, gifted, composted — and your farm starts looking like an economy, not just a garden.\n\nOne season of records answers the questions that matter: which crops yield best per bed? Which cost more in seeds, water and compost than they return? Which months leave you buying food?\n\nFor pricing, records reveal your true cost of production. Selling below that cost because a neighbour charges less isn't competition, it's a loss draining your household. A simple cost sheet, including an honest hourly rate for your own labour, shows your real minimum price.",
         keyPoints: [
@@ -1233,6 +1283,8 @@ export const COURSE_MODULES: CourseModule[] = [
 
       {
         id: "market-community-l2",
+        infographicUrl: "/course-images/market-community/market-community-l2.jpg",
+        infographicAlt: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
         title: "Selling Surplus: Where to Sell and How to Price",
         body: "Know your customer before you sell. A formal farmers' market may pay premium prices but demands registration and a consistent weekly supply. An informal market or taxi rank stall pays less but asks nothing of you in return. A school or clinic buying direct may pay below retail but offers a stable, predictable order.\n\nDirect selling — door to door, a WhatsApp order group, weekly deliveries — usually pays best, since you keep the full price with no middleman. A box scheme, where customers subscribe to a regular vegetable box, gives predictable income and lets you plan production around real demand. Ten regular box customers can provide meaningful monthly income from a 200 to 500m² garden.\n\nTrust, built through farm visits and an honest reputation, matters more than expensive organic certification for most smallholders.",
         keyPoints: [
@@ -1268,6 +1320,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "market-community-l3",
+        infographicUrl: "/course-images/market-community/market-community-l3.jpg",
+        infographicAlt: "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
         title: "Building Community Food Networks: Strength in Numbers",
         body: "No smallholder farm stands alone. A seed swap between five neighbours turns five households' seed diversity into twenty-five, because each grower can focus on saving a few varieties well rather than many poorly. Tool sharing puts expensive items — a water pump, a grain mill — within reach of everyone.\n\nLocal food networks, whether a formal cooperative or an informal WhatsApp group, create demand close to home. Roughly a third of fresh fruit and vegetables grown by smallholders is lost between harvest and sale, from poor transport, packaging, and storage delays. Selling within walking distance removes most of that loss entirely.\n\nSkill sharing matters as much as material sharing. A farmer who's mastered grafting, or managing fungal disease in humid KZN summers, can transform ten neighbours' farms by teaching it. Document what you learn and pass it on.",
         keyPoints: [
