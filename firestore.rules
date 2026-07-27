@@ -168,6 +168,27 @@ service cloud.firestore {
       allow delete: if isCourseStaff() && inMyOrg(resource.data);
     }
 
+    // Course-portal submission evidence (photo + optional voice, plus self-check ticks) —
+    // gating for what this unlocks lives in lib/course-gating.ts (client-side; these rules are
+    // the actual boundary). Deterministic id `${profile_id}_${module}`, same upsert pattern as
+    // course_progress and course_assignments — resubmitting a module overwrites its evidence
+    // rather than growing a duplicate row. No org_id field (mirrors course_progress, not the
+    // org-scoped enrollment/assignment rules above): read parity is with course_progress
+    // specifically — a mentor/staff member who can already see a module is done can see the
+    // evidence that unlocked it, which is the same trust boundary, not a bigger one. Writes are
+    // learner-only; mentors/staff never write a submission on a learner's behalf.
+    match /course_submissions/{id} {
+      allow read: if owns(resource.data) || isStaff() || isMentor();
+      allow create, update: if signedIn()
+        && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.module is string
+        && request.resource.data.submitted_at is string
+        && request.resource.data.self_check is list
+        && (!('photo_path' in request.resource.data) || request.resource.data.photo_path == null || request.resource.data.photo_path is string)
+        && (!('voice_path' in request.resource.data) || request.resource.data.voice_path == null || request.resource.data.voice_path is string);
+      allow delete: if false; // evidence is append/overwrite only — no client-side deletion
+    }
+
     match /mentor_visits/{id} {
       allow read:   if signedIn() && (
         resource.data.mentor_id == request.auth.uid ||
