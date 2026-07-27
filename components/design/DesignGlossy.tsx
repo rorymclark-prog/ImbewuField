@@ -475,6 +475,24 @@ function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions
 }
 
 /**
+ * Sector analysis protects factual existing fabric without freezing the plot interior. This leaves
+ * room for an illustrated sector underlayer while keeping every house, access route and site edge
+ * byte-exact after the model returns.
+ */
+function sectorProtectMaskOptions(): ProtectMaskOptions {
+  return {
+    protectOutside: true,
+    protectBoundary: true,
+    protectDriveway: true,
+    protectLines: false,
+    protectItems: false,
+    protectUnmarkedGround: false,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+}
+
+/**
  * NO_OVERLAY_MASK — Satellite Overlay deliberately sends NO protect mask. Measured, not assumed.
  *
  * The idea was to protect the roof so it could not be merged into the tar driveway. It backfired
@@ -6195,15 +6213,17 @@ async function composeSectorSheet(
   // authoritative house, driveway, boundary, arrows and arcs below.
   ctx.save();
   ctx.globalAlpha = 0.55;
-  drawBlueprintHouse(
-    ctx,
-    renderRefLayers.house,
-    px,
-    py,
-    'rgba(58,63,74,0.85)',
-    'rgba(255,255,255,0.85)',
-    2.5,
-  );
+  for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
+    drawBlueprintHouse(
+      ctx,
+      footprint,
+      px,
+      py,
+      'rgba(58,63,74,0.85)',
+      'rgba(255,255,255,0.85)',
+      2.5,
+    );
+  }
   drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, false);
   ctx.restore();
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
@@ -9203,6 +9223,8 @@ export default function DesignGlossy({
       if (polishStage) hybridResultRef.current = null; // consume-once
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderFrame = presentation.frame;
+      const mapWidth = renderFrame.imgW * SCALE;
+      const mapHeight = renderFrame.imgH * SCALE;
       // Hybrid starts with map-only imagery. Feeding composeSectorSheet's complete page into a
       // map-space finisher made the model's legend and title shrink into the map panel. Full
       // Treatment may receive the finished Hybrid page, but its returned page is cropped back to
@@ -9216,6 +9238,18 @@ export default function DesignGlossy({
           'all',
           false,
         );
+      const sectorMapMask = kind === 'sector'
+        ? await buildProtectMask(
+          presentation.state,
+          renderFrame,
+          presentation.refLayers,
+          'all',
+          sectorProtectMaskOptions(),
+        )
+        : undefined;
+      const protectMaskDataUrl = sectorMapMask && polishStage
+        ? await extendProtectMaskToStyleSheet(sectorMapMask, mapWidth, mapHeight)
+        : sectorMapMask;
       const prompt = polishStage
         ? kind === 'sector'
           ? buildSectorSheetPolishPrompt(styleKey, placeName)
@@ -9230,6 +9264,7 @@ export default function DesignGlossy({
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
           prompt,
           compositeDataUrl: composite,
+          ...(protectMaskDataUrl ? { protectMaskDataUrl, useProtectMaskForEdit: false } : {}),
           // showcase:true on the polish stage means the model owns the already-complete polished
           // page — the finisher must not redraw the hybrid analysis over it. The hybrid stage is
           // now genuinely geometry-locked (composeSectorSheet(modelImage,...) composites our own
@@ -9702,10 +9737,18 @@ export default function DesignGlossy({
               // every exact fact (ground, structures, boundary, phase pins) back on top, regardless
               // of which stage produced the model's decorative background underneath it.
               let factualModelImage = raw;
+              if (sheet.key === 'sector' && sourceImage && protectMask) {
+                try {
+                  factualModelImage = await restoreProtectedPixels(sourceImage, raw, protectMask);
+                } catch (restoreError) {
+                  console.error('[glossy] Sector protected-pixel restore failed; using factual source', restoreError);
+                  factualModelImage = sourceImage;
+                }
+              }
               if (showcase && (sheet.key === 'sector' || sheet.key === 'base')) {
                 const presentation = await boundaryPresentationContext(state, frame, refLayers);
                 factualModelImage = await cropStyleSheetToMap(
-                  raw,
+                  factualModelImage,
                   presentation.frame.imgW * SCALE,
                   presentation.frame.imgH * SCALE,
                 );
