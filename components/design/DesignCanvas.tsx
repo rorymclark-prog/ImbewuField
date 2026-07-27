@@ -158,6 +158,18 @@ export interface DesignCanvasProps {
   } | null;
   onConfirmTidy?: () => void;
   onCancelTidy?: () => void;
+  // Snap to neighbour (lib/snap-edges.ts) PREVIEW — set by the parent (app/design/page.tsx) once
+  // the farmer taps the palette's Snap button on a single selected zone. Same shape as tidyPreview
+  // directly above (distinct ghost overlay ON TOP of the shape's normal, unchanged rendering; this
+  // canvas never rewrites state.zones itself — committing happens only via onConfirmSnap, through
+  // the parent's own onChange/undo path, exactly like every other edit). null = no preview showing.
+  snapPreview?: {
+    snappedPoints: Array<[number, number]>; // lib/snap-edges.ts SnapEdgesResult.points
+    summary: string; // plain-language copy — see lib/snap-edges.ts's snapToNeighboursSummary
+    canConfirm: boolean; // false when snapping would change nothing — Confirm is hidden
+  } | null;
+  onConfirmSnap?: () => void;
+  onCancelSnap?: () => void;
 }
 
 const GOLD = '#F7C97E';
@@ -166,6 +178,10 @@ const CYAN = '#22D3EE';
 // (selection highlight) and CYAN (edit-handle chrome) so a farmer can never mistake "this is what
 // tidying would produce" for "this is currently selected".
 const TIDY_PREVIEW = '#FF6EC7';
+// A hue used ONLY for the Snap-to-neighbour preview ghost — distinct from GOLD (selection), CYAN
+// (edit-handle chrome), and TIDY_PREVIEW (the OTHER previewed geometry action) so a farmer can
+// never confuse "this is what snapping would produce" with either of those.
+const SNAP_PREVIEW = '#5EC8F2';
 const SCALE_STEPS_M = [5, 10, 20, 50, 100, 200] as const;
 // Same bone-white as DesignGlossy.tsx's BOUNDARY_BONE — the property boundary is a real
 // post-and-wire farm fence, never green, so it never reads as a row of plants (that
@@ -491,6 +507,9 @@ export default function DesignCanvas({
   tidyPreview,
   onConfirmTidy,
   onCancelTidy,
+  snapPreview,
+  onConfirmSnap,
+  onCancelSnap,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
@@ -3066,6 +3085,35 @@ export default function DesignCanvas({
           </g>
         )}
 
+        {/* Snap-to-neighbour preview (lib/snap-edges.ts) — same idiom as the Tidy outline preview
+            directly above (the shape's NORMAL rendering is untouched; this draws the CANDIDATE
+            snapped ring as a distinct ghost on top of it), just always a closed polygon (Snap only
+            ever targets a ZONE, never a line — see onSnapSelected in app/design/page.tsx). Only
+            drawn when canConfirm (a "nothing in tolerance"/rejected preview has snappedPoints
+            identical to the original). Drawn last so it is never hidden behind a real shape. */}
+        {snapPreview && snapPreview.canConfirm && (
+          <g pointerEvents="none">
+            <polygon
+              points={ringToPx(snapPreview.snappedPoints, imgW, imgH)}
+              fill="none"
+              stroke={SNAP_PREVIEW}
+              strokeWidth={worldPx(2.5)}
+              strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+            />
+            {snapPreview.snappedPoints.map(([x, y], i) => (
+              <circle
+                key={i}
+                cx={x * imgW}
+                cy={y * imgH}
+                r={worldPx(3.5)}
+                fill={SNAP_PREVIEW}
+                stroke="#0B120B"
+                strokeWidth={worldPx(1)}
+              />
+            ))}
+          </g>
+        )}
+
         </g>
         {/* End world-space transform group — everything below is a fixed screen-space overlay. */}
 
@@ -3428,6 +3476,73 @@ export default function DesignCanvas({
                 }}
               >
                 ✓ Tidy outline
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Snap-to-neighbour preview panel — same bottom-CENTER slot/idiom as the Tidy outline
+          preview panel directly above (app/design/page.tsx keeps tidyPreview and snapPreview
+          mutually exclusive, so the two never show at once). Confirm is omitted entirely when
+          canConfirm is false (nothing was within tolerance — "offer no destructive action"),
+          leaving just the explanation and a Close button. */}
+      {snapPreview && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 'calc(12px + env(safe-area-inset-bottom))',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+            maxWidth: 'calc(100% - 24px)',
+            zIndex: 20,
+          }}
+        >
+          <div
+            style={{
+              padding: '6px 14px',
+              borderRadius: 14,
+              background: 'rgba(11,18,11,0.88)',
+              color: '#F4EDD8',
+              fontSize: 12.5,
+              fontWeight: 600,
+              textAlign: 'center',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            }}
+          >
+            {snapPreview.summary}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => onCancelSnap?.()}
+              style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+            >
+              {snapPreview.canConfirm ? '✕ Cancel' : 'Close'}
+            </button>
+            {snapPreview.canConfirm && (
+              <button
+                type="button"
+                onClick={() => onConfirmSnap?.()}
+                style={{
+                  minHeight: 52,
+                  padding: '0 20px',
+                  borderRadius: 26,
+                  border: '2px solid #FBF6EC',
+                  background: '#1F4D2B',
+                  color: '#FBF6EC',
+                  fontWeight: 800,
+                  fontSize: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                ✓ Snap to neighbour
               </button>
             )}
           </div>

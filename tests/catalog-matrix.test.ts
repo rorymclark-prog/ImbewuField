@@ -271,19 +271,17 @@ test('LEGEND presence: every catalog element passes the same itemInFilter gate s
 
 // ── System 6b: LEGEND SECTION GROUPING ──────────────────────────────────────────────────────
 //
-// KNOWN GAP: structuresLegendSectionForFeature (lib/structures-cartography.ts) only names a
-// section for 8 curated "special visual treatment" ids; every other structures/animal/access
-// element still gets a legend row (System 6a above) but with NO section heading, so it lists
-// above the grouped rows instead of under SITE ACCESS & SERVICE / COMPOST & NURSERY / LIVESTOCK &
-// APIARY / PROTECTED GROWING. waterLegendSectionForFeature and plantingLegendSectionForFeature
-// are total — every Water and Planting element gets a heading.
-const STRUCTURES_UNGROUPED_IDS = [
-  'shed', 'greenhouse_tunnel', 'chicken_coop', 'kraal', 'worm_farm', 'market_stall',
-  'other_structure', 'goat_pen', 'pig_pen', 'duck_pond', 'rabbit_hutch', 'water_trough2',
-  'biodigester', 'shade_sail', 'bench', 'sign', 'solar_panel_ground',
-].sort();
+// FIXED (was "Minor — Gap 4" in docs/CATALOG-MATRIX-2026-07-27.md): structuresLegendSectionForFeature
+// (lib/structures-cartography.ts) used to only name a section for 8 curated "special visual
+// treatment" ids; every other structures/animal/access element still got a legend row (System 6a
+// above) but with NO section heading, so it listed above the grouped rows instead of under SITE
+// ACCESS & SERVICE / COMPOST & NURSERY / LIVESTOCK & APIARY / PROTECTED GROWING.
+// structuresLegendSectionForFeature now has its own independent, catalog-ID-keyed section registry
+// (decoupled from the narrower FEATURE_VISUALS symbol/scale map that used to double as its only
+// source), matching waterLegendSectionForFeature / plantingLegendSectionForFeature's idiom — every
+// Water, Planting AND Structures element now gets a named legend section.
 
-test('LEGEND section grouping: water and planting section every element; structures leaves the documented 17 ungrouped', () => {
+test('LEGEND section grouping: water, planting and structures each section every element', () => {
   const ungroupedByOutputSheet: Record<LayerSheet, string[]> = { water: [], planting: [], structures: [] };
   for (const def of CATALOG) {
     const sheet = sheetForElement(def.category, def.id) as LayerSheet;
@@ -291,7 +289,7 @@ test('LEGEND section grouping: water and planting section every element; structu
   }
   assert.deepEqual(ungroupedByOutputSheet.water, [], 'every Water element should have a named legend section');
   assert.deepEqual(ungroupedByOutputSheet.planting, [], 'every Planting element should have a named legend section');
-  assert.deepEqual(ungroupedByOutputSheet.structures.sort(), STRUCTURES_UNGROUPED_IDS);
+  assert.deepEqual(ungroupedByOutputSheet.structures, [], 'every Structures element should have a named legend section');
 });
 
 // ── System 4: AI PROMPT VOCABULARY ──────────────────────────────────────────────────────────

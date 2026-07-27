@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import { ELEMENT_CATALOG } from '@/lib/design-elements';
+import { sheetForElement } from '@/lib/glossy-filters';
 import {
   STRUCTURES_LEGEND_SECTION_ORDER,
   structuresFeaturePresentationDimensions,
@@ -25,8 +27,58 @@ test('Structures legend is grouped in a stable editorial order', () => {
   assert.equal(structuresLegendSectionForFeature('beehive'), 'LIVESTOCK & APIARY');
   assert.equal(structuresLegendSectionForFeature('chicken_tractor'), 'LIVESTOCK & APIARY');
   assert.equal(structuresLegendSectionForFeature('shade_house'), 'PROTECTED GROWING');
-  assert.equal(structuresLegendSectionForFeature('chicken_coop'), null);
-  assert.equal(structuresLegendSectionForFeature('greenhouse_tunnel'), null);
+});
+
+// Previously a documented gap (docs/CATALOG-MATRIX-2026-07-27.md, "Minor — Gap 4"):
+// structuresLegendSectionForFeature only named a section for 8 curated "special visual treatment"
+// ids, so these 17 real structure/animal/access elements got a legend row with no heading. Fixed —
+// table-driven so every one of the 17 is proven individually, not just "some section came back".
+const PREVIOUSLY_UNGROUPED_IDS: Record<string, string> = {
+  greenhouse_tunnel: 'PROTECTED GROWING',
+  chicken_coop: 'LIVESTOCK & APIARY',
+  kraal: 'LIVESTOCK & APIARY',
+  worm_farm: 'COMPOST & NURSERY',
+  market_stall: 'SITE ACCESS & SERVICE',
+  other_structure: 'SITE ACCESS & SERVICE',
+  goat_pen: 'LIVESTOCK & APIARY',
+  pig_pen: 'LIVESTOCK & APIARY',
+  duck_pond: 'LIVESTOCK & APIARY',
+  rabbit_hutch: 'LIVESTOCK & APIARY',
+  water_trough2: 'LIVESTOCK & APIARY',
+  biodigester: 'SITE ACCESS & SERVICE',
+  shade_sail: 'SITE ACCESS & SERVICE',
+  bench: 'SITE ACCESS & SERVICE',
+  sign: 'SITE ACCESS & SERVICE',
+  solar_panel_ground: 'SITE ACCESS & SERVICE',
+  shed: 'SITE ACCESS & SERVICE',
+};
+
+test('the 17 previously-ungrouped Structures elements now each get their named section', () => {
+  assert.equal(Object.keys(PREVIOUSLY_UNGROUPED_IDS).length, 17);
+  for (const [id, expectedSection] of Object.entries(PREVIOUSLY_UNGROUPED_IDS)) {
+    assert.equal(
+      structuresLegendSectionForFeature(id),
+      expectedSection,
+      `${id} should be grouped under ${expectedSection}`,
+    );
+  }
+});
+
+// Table-driven coverage over the REAL catalog, not a hand-copied list — this is what makes the
+// test fail if a future catalog addition (a new 'structure'/'animal'/'access' element) is left
+// unsectioned, per the fix's requirement, rather than only re-checking today's known 24 ids.
+test('every catalog element that reaches the Structures output sheet gets a non-empty legend section', () => {
+  const unsectioned: string[] = [];
+  let structuresSheetCount = 0;
+  for (const def of ELEMENT_CATALOG) {
+    if (sheetForElement(def.category, def.id) !== 'structures') continue;
+    structuresSheetCount += 1;
+    if (structuresLegendSectionForFeature(def.id) === null) unsectioned.push(def.id);
+  }
+  // Sanity check the fixture itself still exercises real coverage — guards against this test
+  // silently passing because sheetForElement stopped returning 'structures' for anything.
+  assert.ok(structuresSheetCount >= 24, `expected at least 24 Structures-sheet elements, found ${structuresSheetCount}`);
+  assert.deepEqual(unsectioned, [], 'every Structures-sheet element must have a named legend section');
 });
 
 test('visual treatments use the real catalog IDs and preserve literal feature identity', () => {

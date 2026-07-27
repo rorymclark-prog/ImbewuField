@@ -37,6 +37,7 @@ import {
   newId,
   normaliseRotation,
   DESIGN_CANVAS_CHANGED_EVENT,
+  distM,
   type CanvasFrame,
   type DesignCanvasState,
   type GroundFeatureKind,
@@ -45,7 +46,14 @@ import {
   type ZoneShape,
 } from '@/lib/design-canvas';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
-import { ELEMENT_CATALOG, ELEMENTS_BY_ID, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import {
+  snapToNeighbours,
+  snapToNeighboursSummary,
+  type SnapEdgesResult,
+  type SnapNeighbourRing,
+  type SnapRingKind,
+} from '@/lib/snap-edges';
+import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
@@ -83,6 +91,34 @@ function readStoredGeometryLock(): boolean {
   } catch {
     return false;
   }
+}
+
+// Best-effort display label for the Snap preview sentence ("Moves 3 corners to meet Zone 2.") —
+// picks whichever ELIGIBLE neighbour's centroid sits closest to the target's, purely for the
+// sentence a farmer reads. snapToNeighbours (lib/snap-edges.ts) itself never reports which
+// neighbour a vertex snapped to — its return contract deliberately stays neighbour-agnostic (see
+// its module doc) — so naming one here is display-only and never claims a geometric fact the
+// library didn't actually check. Mirrors its own kind-matching rule (same `feature`, never the
+// boundary) so the named neighbour is always one that plausibly contributed to the snap. Reuses
+// centroidOf (below) — the same ring-centroid helper base-layer detection already uses.
+function nearestNeighbourLabel(target: ZoneShape, zones: ZoneShape[], frame: CanvasFrame): string | undefined {
+  const kind = target.feature ?? null;
+  const candidates = zones.filter((z) => z.id !== target.id && z.feature !== 'boundary' && (z.feature ?? null) === kind);
+  const targetCentroid = centroidOf(target.points);
+  if (candidates.length === 0 || !targetCentroid) return undefined;
+  let best: ZoneShape | null = null;
+  let bestD = Infinity;
+  for (const z of candidates) {
+    const c = centroidOf(z.points);
+    if (!c) continue;
+    const d = distM(targetCentroid, c, frame);
+    if (d < bestD) {
+      bestD = d;
+      best = z;
+    }
+  }
+  if (!best) return undefined;
+  return best.feature ? GROUND_FEATURES[best.feature].label : `Zone ${best.zone}`;
 }
 
 const PAPER = '#FFFEFA';
@@ -508,6 +544,19 @@ function DesignStudioInner() {
       : false;
     if (!stillSelected || !stillExists) setTidyPreview(null);
   }, [tidyPreview, selectedId, canvasState]);
+
+  // Snap to neighbour (lib/snap-edges.ts) preview — same "id-pinned, dropped on staleness" shape
+  // as tidyPreview directly above (same author, same problem class, see lib/snap-edges.ts's module
+  // doc for why it mirrors lib/tidy-outline.ts throughout). `neighbourLabel` is cosmetic-only
+  // display text for the preview sentence (see onSnapSelected below) — snapToNeighbours' own
+  // return contract deliberately never names which neighbour a vertex snapped to.
+  const [snapPreview, setSnapPreview] = useState<{ id: string; result: SnapEdgesResult; neighbourLabel?: string } | null>(null);
+  useEffect(() => {
+    if (!snapPreview) return;
+    const stillSelected = selectedId === snapPreview.id;
+    const stillExists = canvasState ? canvasState.zones.some((z) => z.id === snapPreview.id) : false;
+    if (!stillSelected || !stillExists) setSnapPreview(null);
+  }, [snapPreview, selectedId, canvasState]);
 
   const handleSelect = useCallback((id: string | null, additive?: boolean) => {
     if (id === null) {
@@ -1189,6 +1238,7 @@ function DesignStudioInner() {
         const kind: 'zone' | 'line' = selectedZoneForTidy ? 'zone' : 'line';
         const shapePoints = selectedZoneForTidy ? selectedZoneForTidy.points : selectedLineForTidy!.points;
         const result = tidyOutline(shapePoints, { frame, closed: kind === 'zone' });
+        setSnapPreview(null); // only one pending preview action at a time
         setTidyPreview({ id: selectedId!, kind, result });
       }
     : null;
@@ -1216,6 +1266,50 @@ function DesignStudioInner() {
   // Cancel changes nothing — just drops the preview. No handleChange call, so no undo entry is
   // created (there is nothing to undo: the design was never touched).
   const onCancelTidy = tidyPreview ? () => setTidyPreview(null) : null;
+
+  // Snap to neighbour (lib/snap-edges.ts) — offered only when exactly one ZONE is selected, and
+  // never the boundary (selectedId is already null for both "nothing selected" and "multiple
+  // selected" — same convention as selectedZoneForTidy above). A ground feature ring (lawn, house,
+  // …) is still a valid target — only the boundary itself is excluded, matching the
+  // Snap-button spec exactly ("not lines, not items, not the boundary"). Whether the boundary can
+  // be used as a NEIGHBOUR is a separate question snapToNeighbours itself hard-refuses regardless
+  // of what this file passes it (see lib/snap-edges.ts's module doc) — this check is only about
+  // what can be EDITED.
+  const selectedZoneForSnap = selectedId
+    ? canvasState?.zones.find((z) => z.id === selectedId && z.feature !== 'boundary') ?? null
+    : null;
+  // Tapping Snap only COMPUTES and OPENS a preview — it never itself edits the design, same as
+  // Tidy. Neighbours are every OTHER zone/ground-feature ring in the design (including the
+  // boundary) — snapToNeighbours itself decides what is actually eligible, so this file does not
+  // need to duplicate that policy here.
+  const onSnapSelected = selectedZoneForSnap && frame
+    ? () => {
+        const kind: SnapRingKind = (selectedZoneForSnap.feature ?? 'zone') as SnapRingKind;
+        const neighbours: SnapNeighbourRing[] = (canvasState?.zones ?? [])
+          .filter((z) => z.id !== selectedZoneForSnap.id)
+          .map((z) => ({ id: z.id, kind: (z.feature ?? 'zone') as SnapRingKind, points: z.points }));
+        const result = snapToNeighbours({ id: selectedZoneForSnap.id, kind, points: selectedZoneForSnap.points }, neighbours, { frame });
+        const neighbourLabel = result.changed ? nearestNeighbourLabel(selectedZoneForSnap, canvasState?.zones ?? [], frame) : undefined;
+        setTidyPreview(null); // only one pending preview action at a time
+        setSnapPreview({ id: selectedId!, result, neighbourLabel });
+      }
+    : null;
+  // Confirm commits through handleChange — the SAME onChange/undo path onConfirmTidy (and every
+  // other edit in this file) uses, so this is exactly ONE undo entry and undo restores the
+  // pre-snap points verbatim like any other edit.
+  const onConfirmSnap = snapPreview && snapPreview.result.changed
+    ? () => {
+        const preview = snapPreview;
+        handleChange((prev) => ({
+          ...prev,
+          zones: prev.zones.map((z) => (z.id === preview.id ? { ...z, points: preview.result.points } : z)),
+          updatedAt: new Date().toISOString(),
+        }));
+        setSnapPreview(null);
+      }
+    : null;
+  // Cancel changes nothing — just drops the preview, same as onCancelTidy.
+  const onCancelSnap = snapPreview ? () => setSnapPreview(null) : null;
 
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
@@ -1782,6 +1876,17 @@ function DesignStudioInner() {
               }
               onConfirmTidy={onConfirmTidy ?? undefined}
               onCancelTidy={onCancelTidy ?? undefined}
+              snapPreview={
+                snapPreview
+                  ? {
+                      snappedPoints: snapPreview.result.points,
+                      summary: snapToNeighboursSummary(snapPreview.result, snapPreview.neighbourLabel),
+                      canConfirm: snapPreview.result.changed,
+                    }
+                  : null
+              }
+              onConfirmSnap={onConfirmSnap ?? undefined}
+              onCancelSnap={onCancelSnap ?? undefined}
             />
           </>
         ) : (
@@ -2047,6 +2152,7 @@ function DesignStudioInner() {
           onDeleteSelected={onDeleteSelected}
           onDuplicateSelected={onDuplicateSelected}
           onTidySelected={onTidySelected}
+          onSnapSelected={onSnapSelected}
           angleControl={angleControl}
           siteBiome={site?.biome}
         />

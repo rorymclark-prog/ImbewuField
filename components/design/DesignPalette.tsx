@@ -62,6 +62,15 @@ export interface DesignPaletteProps {
   // onDuplicateSelected/onDeleteSelected. Tapping this never itself changes the design; only the
   // canvas's own Confirm button (wired to the SAME onChange/undo path every other edit uses) does.
   onTidySelected: (() => void) | null;
+  // Snap to neighbour (lib/snap-edges.ts) — opens a PREVIEW that closes hairline seams between the
+  // single selected ZONE and its already-saved neighbours; the farmer confirms or cancels on the
+  // canvas itself (see DesignCanvas's snapPreview prop), same shape as onTidySelected directly
+  // above (same author, same problem class). null = nothing selected, more than one thing is
+  // selected, or the selection is a line/item/the property boundary rather than a snappable zone —
+  // same "nothing to act on" disabled convention as onTidySelected. Tapping this never itself
+  // changes the design; only the canvas's own Confirm button (wired to the SAME onChange/undo path
+  // every other edit uses) does.
+  onSnapSelected: (() => void) | null;
   // Angle field for rect-shaped placed items (strips/beds/rows) — precise numeric alternative to
   // the drag-rotate handle on the canvas. null hides the control entirely, same "nothing to act
   // on" convention as onDuplicateSelected/onDeleteSelected going null: it means either nothing is
@@ -216,6 +225,7 @@ export default function DesignPalette({
   onDeleteSelected,
   onDuplicateSelected,
   onTidySelected,
+  onSnapSelected,
   angleControl,
   siteBiome,
 }: DesignPaletteProps) {
@@ -439,6 +449,23 @@ export default function DesignPalette({
           title="Preview a tidied version of the selected outline"
         >
           🧹 Tidy
+        </button>
+        {/* Snap to neighbour — offered only when exactly one ZONE is selected (not lines, not
+            items, not the property boundary — see onSnapSelected's doc comment in
+            DesignPaletteProps). Tapping this only OPENS the preview on the canvas; it never
+            itself edits the design. */}
+        <button
+          type="button"
+          style={{
+            ...toolButtonStyle(false, guided),
+            opacity: onSnapSelected ? 1 : 0.4,
+            cursor: onSnapSelected ? 'pointer' : 'default',
+          }}
+          onClick={() => onSnapSelected?.()}
+          disabled={!onSnapSelected}
+          title="Preview closing hairline seams with a neighbouring zone"
+        >
+          🧲 Snap
         </button>
         {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
             polyline deliberately has NO angle control here: a polyline has no single angle, and

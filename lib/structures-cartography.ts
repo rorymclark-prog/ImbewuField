@@ -35,6 +35,65 @@ export interface StructuresFeatureVisual {
   presentationScale: number;
 }
 
+// ── Legend section membership ────────────────────────────────────────────────────────────────
+//
+// Reading-order group for the deterministic Structures legend. Deliberately based on stable
+// element IDs rather than display names, matching the idiom in water-cartography.ts and
+// planting-cartography.ts, so a farmer can rename an item without moving it into a different
+// section. Kept independent of FEATURE_VISUALS below: FEATURE_VISUALS is a narrower, curated set
+// of point-symbol/print-scale treatments for a handful of small features, not a section registry
+// — folding legend-section membership into it is what left 17 real Structures-sheet elements with
+// a legend row but no heading (docs/CATALOG-MATRIX-2026-07-27.md, Gap 4).
+const PROTECTED_GROWING_FEATURES = new Set([
+  'shade_house', 'greenhouse_tunnel',
+]);
+
+const COMPOST_AND_NURSERY_FEATURES = new Set([
+  'compost_bay', 'nursery_table', 'worm_farm',
+]);
+
+const LIVESTOCK_AND_APIARY_FEATURES = new Set([
+  'beehive', 'chicken_tractor', 'chicken_coop', 'kraal', 'goat_pen', 'pig_pen', 'duck_pond',
+  'rabbit_hutch', 'water_trough2',
+]);
+
+// Everything else that reaches the Structures sheet is general site infrastructure: access
+// (gate), utility fittings (washline, solar_panel_ground, biodigester — a manure-to-gas utility
+// for the kitchen, not a compost pile), a customer-facing service point (market_stall), a
+// work/storage structure (shed), site amenities (bench, sign, shade_sail — shaded seating, not a
+// growing structure), and the uncatalogued fallback (other_structure). tap_point is included for
+// backward compatibility with its existing curated visual treatment even though its primary
+// output sheet is Water, not Structures — see FEATURE_VISUALS below.
+const SITE_ACCESS_AND_SERVICE_FEATURES = new Set([
+  'gate', 'tap_point', 'washline', 'shed', 'market_stall', 'other_structure', 'biodigester',
+  'shade_sail', 'bench', 'sign', 'solar_panel_ground',
+]);
+
+/**
+ * Returns the editorial legend section for a canonical catalog ID, or null when the ID has not
+ * been placed into one of the four sections. Kept null rather than defaulted to a catch-all
+ * bucket — like plantingLegendSectionForFeature's null for a genuinely unmapped ID — so a future
+ * catalog addition that nobody has classified yet fails the coverage test in
+ * tests/catalog-matrix.test.ts instead of silently landing in a section.
+ *
+ * TOTAL over every structure/animal/access element that currently reaches the Structures sheet
+ * (see sheetForElement in lib/glossy-filters.ts) — tests/structures-cartography.test.ts and
+ * tests/catalog-matrix.test.ts both prove this dynamically against the real catalog, the same way
+ * waterLegendSectionForFeature and plantingLegendSectionForFeature are proven total for their
+ * sheets.
+ */
+export function structuresLegendSectionForFeature(id: string): StructuresLegendSection | null {
+  if (PROTECTED_GROWING_FEATURES.has(id)) return 'PROTECTED GROWING';
+  if (COMPOST_AND_NURSERY_FEATURES.has(id)) return 'COMPOST & NURSERY';
+  if (LIVESTOCK_AND_APIARY_FEATURES.has(id)) return 'LIVESTOCK & APIARY';
+  if (SITE_ACCESS_AND_SERVICE_FEATURES.has(id)) return 'SITE ACCESS & SERVICE';
+  return null;
+}
+
+// ── Point-symbol / print-scale visual treatments ────────────────────────────────────────────
+//
+// A narrower, curated set of small features that get a bounded print-scale emphasis and a
+// dedicated glyph. Unrelated to legend section membership above (see the comment on that block).
 const FEATURE_VISUALS: Readonly<Record<string, StructuresFeatureVisual>> = {
   compost_bay: {
     section: 'COMPOST & NURSERY',
@@ -77,11 +136,6 @@ const FEATURE_VISUALS: Readonly<Record<string, StructuresFeatureVisual>> = {
     presentationScale: 1.1,
   },
 };
-
-/** Returns the editorial legend section for a canonical catalog ID, or null for unknown IDs. */
-export function structuresLegendSectionForFeature(id: string): StructuresLegendSection | null {
-  return FEATURE_VISUALS[id]?.section ?? null;
-}
 
 /** Returns the bounded visual treatment for a canonical catalog ID, or null for unknown IDs. */
 export function structuresFeatureVisualFor(id: string): StructuresFeatureVisual | null {

@@ -72,16 +72,16 @@ through that module instead.
 | `berm` | Berm / Contour Bank | earthworks |  | water | earthworks | water | Y | Y | WATER EARTHWORKS | Y | Y |
 | `terrace` | Terrace / Retaining Bank | earthworks |  | water | earthworks | water | Y | Y | WATER EARTHWORKS | Y | Y |
 | `mulch_bank` | Vetiver Bank | growing |  | planting | planting | planting | Y | Y | PRODUCTION PLANTING | Y | Y |
-| `shed` | Shed | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
-| `greenhouse_tunnel` | Greenhouse Tunnel | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
+| `shed` | Shed | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | Y | Y |
+| `greenhouse_tunnel` | Greenhouse Tunnel | structure |  | structures | structures | structures | Y | Y | PROTECTED GROWING | Y | Y |
 | `shade_house` | Shade House | structure |  | structures | structures | structures | Y | Y | PROTECTED GROWING | Y | Y |
-| `chicken_coop` | Chicken Coop | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
+| `chicken_coop` | Chicken Coop | structure |  | structures | structures | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
 | `chicken_tractor` | Chicken Tractor | structure |  | structures | structures | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
-| `kraal` | Kraal | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
+| `kraal` | Kraal | structure |  | structures | structures | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
 | `compost_bay` | Compost Bay (3-bin) | structure |  | structures | structures | structures | Y | Y | COMPOST & NURSERY | Y | Y |
-| `worm_farm` | Worm Farm | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
+| `worm_farm` | Worm Farm | structure |  | structures | structures | structures | Y | Y | COMPOST & NURSERY | Y | Y |
 | `nursery_table` | Nursery Table | structure |  | structures | structures | structures | Y | Y | COMPOST & NURSERY | Y | Y |
-| `market_stall` | Market Stall | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
+| `market_stall` | Market Stall | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | Y | Y |
 | `veg_bed` | Vegetable Bed | growing |  | planting | planting | planting | Y | Y | PRODUCTION PLANTING | Y | Y |
 | `tree_citrus` | Citrus Tree | growing |  | planting | planting | planting | Y | Y | PERENNIAL GUILDS | Y | Y |
 | `tree_mango` | Mango Tree | growing |  | planting | planting | planting | Y | Y | PERENNIAL GUILDS | Y | Y |
@@ -106,22 +106,22 @@ through that module instead.
 | `tree_olive` | Olive Tree | growing |  | planting | planting | planting | Y | Y | PERENNIAL GUILDS | Y | Y |
 | `other_water` | Other water thing | water |  | water | water | water | Y | Y | IRRIGATION | **N** | **N** |
 | `other_planting` | Other planting | growing |  | planting | planting | planting | Y | Y | OTHER PLANTING | **N** | **N** |
-| `other_structure` | Other structure | structure |  | structures | structures | structures | Y | Y | — | **N** | **N** |
+| `other_structure` | Other structure | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
 | `pollinator_strip` | Pollinator Strip | growing |  | planting | planting | planting | Y | Y | PRODUCTION PLANTING | N | Y |
 | `spekboom_hedge` | Spekboom Hedge | growing |  | planting | planting | planting | Y | Y | PRODUCTION PLANTING | Y | Y |
 | `vetiver_row` | Vetiver Row | growing |  | planting | planting | planting | Y | Y | PRODUCTION PLANTING | N | Y |
 | `beehive` | Beehive | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
-| `goat_pen` | Goat Pen | animal |  | structures | animals | structures | Y | Y | — | Y | Y |
-| `pig_pen` | Pig Pen | animal |  | structures | animals | structures | Y | Y | — | Y | Y |
-| `duck_pond` | Duck Pond | animal |  | structures | animals | structures | Y | Y | — | Y | Y |
-| `rabbit_hutch` | Rabbit Hutch | animal |  | structures | animals | structures | Y | Y | — | Y | Y |
-| `water_trough2` (Livestock Trough) | Livestock Trough | animal |  | structures | animals | structures | Y | Y | — | Y | Y |
-| `biodigester` | Biodigester | structure |  | structures | structures | structures | Y | Y | — | Y | Y |
-| `shade_sail` | Shade Sail | structure |  | structures | structures | structures | Y | Y | — | **N** | **N** |
+| `goat_pen` | Goat Pen | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
+| `pig_pen` | Pig Pen | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
+| `duck_pond` | Duck Pond | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
+| `rabbit_hutch` | Rabbit Hutch | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
+| `water_trough2` (Livestock Trough) | Livestock Trough | animal |  | structures | animals | structures | Y | Y | LIVESTOCK & APIARY | Y | Y |
+| `biodigester` | Biodigester | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | Y | Y |
+| `shade_sail` | Shade Sail | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
 | `gate` | Gate | access |  | structures | access | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
-| `bench` | Bench | structure |  | structures | structures | structures | Y | Y | — | **N** | **N** |
-| `sign` | Sign | structure |  | structures | structures | structures | Y | Y | — | **N** | **N** |
-| `solar_panel_ground` | Ground Solar Panel | structure |  | structures | structures | structures | Y | Y | — | **N** | **N** |
+| `bench` | Bench | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
+| `sign` | Sign | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
+| `solar_panel_ground` | Ground Solar Panel | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
 | `washline` | Washing Line | structure |  | structures | structures | structures | Y | Y | SITE ACCESS & SERVICE | **N** | **N** |
 
 `*` = "covered" but with the WRONG vocabulary — see Gap 3 below; presence-only automated checks
@@ -215,22 +215,41 @@ dynamically tested and passing) — the gap is specific to the **summarised** le
 whole-design sheet. Not encoded as an automated test: `sheetLegendRows` lives inside the
 JSX/`'use client'` component this test suite cannot import (see the import-safety note above).
 
-### Minor — Gap 4: 17 Structures-sheet elements have no named legend section
+### FIXED — Gap 4 (was Minor): 17 Structures-sheet elements had no named legend section
 
-`structuresLegendSectionForFeature` (`lib/structures-cartography.ts:82-84`) only names a section for
-8 curated "special visual treatment" ids (`compost_bay`, `nursery_table`, `beehive`,
-`chicken_tractor`, `shade_house`, `gate`, `tap_point`, `washline`). Every other structures/animal/
-access element still earns a legend row (System 6a passes for all of them — `sheetLegendRows` pushes
-a row unconditionally once `itemInFilter` is true, section or not) but with no heading, so it lists
-above the four named sections (SITE ACCESS & SERVICE / COMPOST & NURSERY / LIVESTOCK & APIARY /
-PROTECTED GROWING) instead of under one: `shed`, `greenhouse_tunnel`, `chicken_coop`, `kraal`,
-`worm_farm`, `market_stall`, `other_structure`, `goat_pen`, `pig_pen`, `duck_pond`, `rabbit_hutch`,
-`water_trough2`, `biodigester`, `shade_sail`, `bench`, `sign`, `solar_panel_ground`.
+`structuresLegendSectionForFeature` (`lib/structures-cartography.ts`) used to only name a section
+for 8 curated "special visual treatment" ids (`compost_bay`, `nursery_table`, `beehive`,
+`chicken_tractor`, `shade_house`, `gate`, `tap_point`, `washline`) because it read its section
+straight off the same narrow `FEATURE_VISUALS` record used for print-scale/symbol treatment. Every
+other structures/animal/access element still earned a legend row (System 6a passes for all of
+them — `sheetLegendRows` pushes a row unconditionally once `itemInFilter` is true, section or not)
+but with no heading, so it listed above the four named sections instead of under one: `shed`,
+`greenhouse_tunnel`, `chicken_coop`, `kraal`, `worm_farm`, `market_stall`, `other_structure`,
+`goat_pen`, `pig_pen`, `duck_pond`, `rabbit_hutch`, `water_trough2`, `biodigester`, `shade_sail`,
+`bench`, `sign`, `solar_panel_ground`.
 
-`waterLegendSectionForFeature` and `plantingLegendSectionForFeature` are both total over the
-catalog — every Water and every Planting element gets a named section. Structures is the one sheet
-where this was never finished. Locked in as `STRUCTURES_UNGROUPED_IDS` in
-`tests/catalog-matrix.test.ts` so the set can only change on purpose.
+`waterLegendSectionForFeature` and `plantingLegendSectionForFeature` were already total over the
+catalog — every Water and every Planting element gets a named section. Structures was the one sheet
+where this was never finished.
+
+**Fix:** `structuresLegendSectionForFeature` now has its own independent, catalog-ID-keyed section
+registry (four `Set`s, one per section), decoupled from `FEATURE_VISUALS`, matching the idiom the
+other two `*-cartography.ts` files already used. All 17 were placed into one of the existing four
+sections by function — no fifth section was needed:
+
+| Section | New arrivals | Why |
+|---|---|---|
+| PROTECTED GROWING | `greenhouse_tunnel` | Covered growing structure, same function as `shade_house`. |
+| COMPOST & NURSERY | `worm_farm` | Composting infrastructure, same function as `compost_bay`. |
+| LIVESTOCK & APIARY | `chicken_coop`, `kraal`, `goat_pen`, `pig_pen`, `duck_pond`, `rabbit_hutch`, `water_trough2` | Animal housing and livestock-watering furniture, same function as `beehive`/`chicken_tractor`. |
+| SITE ACCESS & SERVICE | `shed`, `market_stall`, `other_structure`, `biodigester`, `shade_sail`, `bench`, `sign`, `solar_panel_ground` | General site infrastructure/furniture/utility (storage, customer-facing service point, manure-to-gas utility, seating/signage/power), same family as `gate`/`washline`. |
+
+Was locked in as `STRUCTURES_UNGROUPED_IDS` in `tests/catalog-matrix.test.ts`; that constant is
+now removed and System 6b's `structures` branch asserts `[]` (fully grouped), the same shape as the
+`water`/`planting` assertions beside it. `tests/structures-cartography.test.ts` adds a table-driven
+test naming all 17 elements' expected section individually, plus a dynamic coverage test over the
+real `ELEMENT_CATALOG` (not a hand-copied id list) so a future catalog addition left unsectioned
+fails that test rather than silently landing ungrouped.
 
 ### Informational, no farmer impact
 
