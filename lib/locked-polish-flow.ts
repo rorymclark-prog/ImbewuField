@@ -1,9 +1,39 @@
-import { isModelChromeStyle, type StylePreset } from '@/lib/producer-prompt';
+import type { StylePreset } from '@/lib/producer-prompt';
 
 // Three output modes, one for every sheet — the farmer's own words: "straight canvas render",
 // "hybrid AI polish underlayer + our polished elements overlayed", "full treatment hybrid + 2nd
 // step AI polish". 'full' always builds on 'hybrid' — it is never a shortcut back to 'exact'.
 export type SheetOutputMode = 'exact' | 'hybrid' | 'full';
+
+/**
+ * Full Treatment starts from the completed Hybrid sheet. Its second paid pass must be free to
+ * improve the artwork and page design, while the few pixels that establish factual geometry are
+ * restored afterwards. Protecting unmarked ground, routes, items or the complete sheet chrome here
+ * makes the paid result visually collapse back to the Hybrid.
+ */
+export interface FullTreatmentProtectPolicy {
+  protectOutside: boolean;
+  protectBoundary: boolean;
+  protectDriveway: boolean;
+  protectLines: boolean;
+  protectItems: boolean;
+  protectUnmarkedGround: boolean;
+  houseHaloRatio: number;
+  houseFeatherRatio: number;
+}
+
+export function fullTreatmentProtectPolicy(): FullTreatmentProtectPolicy {
+  return {
+    protectOutside: true,
+    protectBoundary: true,
+    protectDriveway: true,
+    protectLines: false,
+    protectItems: false,
+    protectUnmarkedGround: false,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+}
 
 export type LockedPolishAction =
   | 'wait'
@@ -88,19 +118,10 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
   return 'wait';
 }
 
-/**
- * Keep the farmer's chosen AI style while the guided flow temporarily switches to exact mode —
- * EXCEPT model-chrome styles (Satellite Overlay). The 3-button flow promises "AI underlayer +
- * your exact elements on top", which requires app authority (geometryLock:true). A model-chrome
- * style enqueues showcase:true/geometryLock:false instead, so the completion handler never
- * stashes the hybrid image and Full Treatment dies at switch-to-polish AFTER the paid hybrid
- * render was already consumed (hit live 2026-07-26). Site/Sector/Phasing already sanitise this
- * in applySheet; this function is the ONE authority for the guided layer-sheet flow.
- */
+/** Keep the farmer's chosen visual style while the flow temporarily switches render modes. */
 export function lockedPolishStyle(
   selectedStyle: StylePreset | null | undefined,
   fallbackStyle: StylePreset,
 ): StylePreset {
-  if (!selectedStyle) return fallbackStyle;
-  return isModelChromeStyle(selectedStyle) ? fallbackStyle : selectedStyle;
+  return selectedStyle ?? fallbackStyle;
 }

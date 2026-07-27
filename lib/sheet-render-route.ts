@@ -11,7 +11,7 @@
 // Treatment dead-end (commit e0bf17a, 2026-07-26): lockedPolishStyle() was the fix there, and
 // sheetRenderRoute now composes it instead of leaving each call site to re-derive the same rule.
 import { lockedPolishStyle, type SheetOutputMode } from '@/lib/locked-polish-flow';
-import { renderAuthorityFlagsForStyle, type RenderAuthorityFlags } from '@/lib/render-policy';
+import type { RenderAuthorityFlags } from '@/lib/render-policy';
 import type { StylePreset } from '@/lib/producer-prompt';
 import type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -53,31 +53,9 @@ export interface SheetRoute {
  * DesignGlossy.tsx); a design-layer sheet renders through the deterministic blueprint
  * (renderDesignMap). Style is meaningless here — styleUsed/hybridFlags/polishFlags are all null.
  *
- * mode 'hybrid' | 'full' are the two AI-underlayer stages of the guided 3-button flow (the
- * farmer's own words: "hybrid AI polish underlayer + our polished elements overlayed" / "full
- * treatment hybrid + 2nd step AI polish" — see lib/locked-polish-flow.ts). Both ALWAYS sanitise
- * the selected style through lockedPolishStyle before using it — the ONE authority for "never a
- * model-chrome style in the locked flow", because a model-chrome style (Satellite Overlay) enqueues
- * showcase:true/geometryLock:false, which breaks the "AI underlayer + exact elements locked on
- * top" promise the 3-button flow makes (and is exactly how Full Treatment died post-payment in
- * e0bf17a).
- *
- * DesignGlossy.tsx's applySheet had its OWN inline copy of that same sanitising rule for
- * base/sector/implementation AI mode:
- *   (cur) => (cur && cur !== 'satellite_overlay' ? cur : DEFAULT_PRODUCER_STYLE)
- * This is provably equivalent to lockedPolishStyle(cur, DEFAULT_PRODUCER_STYLE): isModelChromeStyle
- * (lib/producer-prompt.ts) currently tests only `style === 'satellite_overlay'`, so both rules
- * reduce to "null or satellite_overlay -> DEFAULT_PRODUCER_STYLE, else pass the style through
- * unchanged" for every StylePreset value. Per the truth table:
- *   cur = null                -> inline: DEFAULT   | lockedPolishStyle: DEFAULT   (equal)
- *   cur = 'satellite_overlay' -> inline: DEFAULT   | lockedPolishStyle: DEFAULT   (equal)
- *   cur = anything else       -> inline: cur       | lockedPolishStyle: cur       (equal)
- * so this function uses lockedPolishStyle for EVERY sheet type (base/sector/implementation and
- * every design layer alike) rather than keeping a second, drift-prone copy of the same rule.
- *
- * hybridFlags therefore always comes out {showcase:false, geometryLock:true} for every style the
- * sanitiser can produce (renderAuthorityFlagsForStyle of any non-model-chrome style), matching the
- * app-owned "AI paints texture, app owns geometry/labels/chrome" contract every Hybrid stage makes.
+ * mode 'hybrid' | 'full' preserve the selected visual style exactly. Visual style never decides
+ * factual authority: Hybrid always paints an underlayer beneath app-owned geometry, while Full
+ * Treatment adds a second distinct AI polish pass.
  *
  * polishFlags is populated only for mode 'full', mirroring the fixed enqueue values every polish
  * stage uses (generateOneViaQueue/generateSectorViaQueue/generatePhasingViaQueue all enqueue
@@ -106,8 +84,7 @@ export function sheetRenderRoute(
 
   // mode is 'hybrid' | 'full' from here.
   const styleUsed = lockedPolishStyle(selectedStyle, DEFAULT_PRODUCER_STYLE);
-  const hybridFlags = renderAuthorityFlagsForStyle(styleUsed);
-  // Fixed contract, not style-derived — see doc above for why this is always these exact values.
+  const hybridFlags: RenderAuthorityFlags = { showcase: false, geometryLock: true };
   const polishFlags: RenderAuthorityFlags | null =
     mode === 'full' ? { showcase: true, geometryLock: false } : null;
 

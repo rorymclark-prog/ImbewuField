@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { lockedPolishAction, lockedPolishStyle, type LockedPolishState } from '@/lib/locked-polish-flow';
+import {
+  fullTreatmentProtectPolicy,
+  lockedPolishAction,
+  lockedPolishStyle,
+  type LockedPolishState,
+} from '@/lib/locked-polish-flow';
 
 const READY: LockedPolishState = {
   outputMode: 'hybrid',
@@ -132,14 +137,27 @@ test('the exact master step cannot replace the chosen AI style', () => {
   );
 });
 
-test('the guided flow never runs a model-chrome style — Satellite Overlay maps to the fallback', () => {
+test('the guided flow preserves every explicitly selected visual style', () => {
   assert.equal(
     lockedPolishStyle('satellite_overlay', 'precision_atlas'),
-    'precision_atlas',
+    'satellite_overlay',
   );
-  // Every non-chrome style still passes through untouched.
   assert.equal(
     lockedPolishStyle('master_atlas', 'precision_atlas'),
     'master_atlas',
   );
+});
+
+test('Full Treatment restores factual geometry without erasing the second paid polish', () => {
+  const policy = fullTreatmentProtectPolicy();
+
+  assert.equal(policy.protectOutside, true);
+  assert.equal(policy.protectBoundary, true);
+  assert.equal(policy.protectDriveway, true);
+
+  // These regions must remain editable during pass two or the completed Hybrid is simply copied
+  // back over nearly the entire paid result.
+  assert.equal(policy.protectLines, false);
+  assert.equal(policy.protectItems, false);
+  assert.equal(policy.protectUnmarkedGround, false);
 });

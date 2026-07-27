@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { deriveSectorModel } from '../lib/sector.ts';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
@@ -110,4 +111,30 @@ test('converts sector presentation tokens into phone-readable drawing values', (
   assert.equal(Number(sectorStrokeWidth('driveway', 1595).toFixed(3)), 5.742);
   assert.equal(sectorFillColor('summer-cooling-wind'), '#25BFC024');
   assert.equal(sectorFillColor('fire'), '#E7562D1f');
+});
+
+test('wires Sector jobs through authoritative houses and protected-pixel restoration', () => {
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const composeStart = source.indexOf('async function composeSectorSheet(');
+  const composeEnd = source.indexOf('export async function buildBlueprintSectorMap(', composeStart);
+  const queueStart = source.indexOf('const generateSectorViaQueue = useCallback(');
+  const queueEnd = source.indexOf('// Phasing (08) AI Hybrid', queueStart);
+  const completionStart = source.indexOf('async function handleSnapshot(');
+
+  assert.ok(composeStart >= 0 && composeEnd > composeStart);
+  assert.ok(queueStart >= 0 && queueEnd > queueStart);
+  assert.ok(completionStart >= 0);
+
+  const composer = source.slice(composeStart, composeEnd);
+  const queue = source.slice(queueStart, queueEnd);
+  const completion = source.slice(completionStart);
+
+  assert.match(composer, /authoritativeHouseFootprints\(renderState, renderRefLayers\)/);
+  assert.match(queue, /sectorProtectMaskOptions\(\)/);
+  assert.match(queue, /protectMaskDataUrl, useProtectMaskForEdit: false/);
+
+  const restoreAt = completion.indexOf("sheet.key === 'sector' && sourceImage && protectMask");
+  const cropAt = completion.indexOf("showcase && (sheet.key === 'sector' || sheet.key === 'base')");
+  assert.ok(restoreAt >= 0, 'Sector must restore protected source pixels');
+  assert.ok(cropAt > restoreAt, 'Sector must restore protected pixels before cropping the polished sheet');
 });

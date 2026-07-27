@@ -18,6 +18,7 @@ import { hasConflictingRenderAuthority } from '@/lib/render-policy';
 
 export type RenderSheetStatus = 'queued' | 'running' | 'done' | 'error';
 export type RenderJobStatus = 'queued' | 'running' | 'complete' | 'failed' | 'error';
+export type RenderResultKind = 'hybrid' | 'ai-polished' | 'legacy-ai';
 
 /** Max sheets per job and max bytes per composite — MUST match firestore.rules / storage.rules. */
 export const MAX_SHEETS_PER_JOB = 5;
@@ -46,6 +47,8 @@ export interface RenderSheetSpec {
   showcase?: boolean;
   /** Persist the lock decision with the job. A render can outlive the component or browser tab. */
   geometryLock?: boolean;
+  /** Explicit workflow stage; never infer this from a visual style or authority flags. */
+  resultKind?: RenderResultKind;
 }
 
 /** A sheet's state as it lives in the job doc (input uploaded; worker fills output/status). */
@@ -61,6 +64,7 @@ export interface RenderSheetState {
   error?: string;
   showcase?: boolean; // see RenderSheetSpec.showcase
   geometryLock?: boolean; // see RenderSheetSpec.geometryLock
+  resultKind?: RenderResultKind;
 }
 
 export interface RenderJobDoc {
@@ -176,6 +180,7 @@ export async function enqueueRenderJob(opts: {
           status: 'queued',
           showcase: s.showcase === true,
           ...(typeof s.geometryLock === 'boolean' ? { geometryLock: s.geometryLock } : {}),
+          ...(s.resultKind ? { resultKind: s.resultKind } : {}),
         };
       }),
     );
