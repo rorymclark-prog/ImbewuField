@@ -737,7 +737,7 @@ export function drawMarks(
       ctx.strokeStyle = '#FFFFFF';
       ctx.lineWidth = 3;
       ctx.stroke();
-      ctx.font = 'bold 18px sans-serif';
+      ctx.font = `bold 18px ${SHEET_BODY_FONT}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#FFFFFF';
@@ -886,7 +886,7 @@ export function drawMarks(
         ctx.lineTo(gx, gy);
         ctx.stroke();
       }
-      ctx.font = `${g.size}px sans-serif`;
+      ctx.font = `${g.size}px ${SHEET_GLYPH_FONT}`;
       ctx.fillStyle = '#0B120B';
       ctx.fillText(g.icon, gx, gy);
       placed.push({ x: gx, y: gy, r });
@@ -1905,7 +1905,7 @@ function buildZoneOverlay(
     ctx.lineWidth = 3;
     ctx.stroke();
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 24px sans-serif';
+    ctx.font = `bold 24px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(z.zone), cx, cy);
@@ -2249,7 +2249,7 @@ function drawWaterFeature(
   }
 
   if (includeToolGlyphs) {
-    ctx.font = `${Math.max(12, Math.min(24, Math.min(w, h) * 0.55))}px sans-serif`;
+    ctx.font = `${Math.max(12, Math.min(24, Math.min(w, h) * 0.55))}px ${SHEET_GLYPH_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#101812';
@@ -3007,10 +3007,10 @@ function drawBlueprintTitle(
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(W * 0.028)}px Georgia, serif`;
+  ctx.font = `800 ${Math.round(W * 0.028)}px ${SHEET_TITLE_FONT}`;
   ctx.fillText(title, pad, pad + Math.round(W * 0.028));
   ctx.fillStyle = '#B9C2C8';
-  ctx.font = `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`;
+  ctx.font = `600 ${Math.round(W * 0.015)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(subtitle, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024));
 }
 
@@ -3092,7 +3092,7 @@ function drawBlueprintLegendFrame(
   ctx.textAlign = 'left';
   let ry = lgY + ip + rowH * 0.4;
   ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(rowH * 0.72)}px system-ui, sans-serif`;
+  ctx.font = `800 ${Math.round(rowH * 0.72)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(heading, lgX + ip, ry);
   ry += rowH * 0.9;
   ctx.strokeStyle = 'rgba(255,255,255,0.2)';
@@ -3145,12 +3145,12 @@ function drawBlueprintLegendRows(
     let tx = lg.textX;
     if (row.icon) {
       ctx.fillStyle = '#EDE7DA';
-      ctx.font = `${Math.round(rowH * 0.5)}px sans-serif`;
+      ctx.font = `${Math.round(rowH * 0.5)}px ${SHEET_GLYPH_FONT}`;
       ctx.fillText(row.icon, tx, ry);
       tx += Math.round(rowH * 0.66);
     }
     ctx.fillStyle = '#EDE7DA';
-    ctx.font = `600 ${Math.round(rowH * 0.46)}px system-ui, sans-serif`;
+    ctx.font = `600 ${Math.round(rowH * 0.46)}px ${SHEET_BODY_FONT}`;
     // Ellipsise rather than spill past the panel edge — species names + counts get long.
     let label = row.label;
     const maxW = lg.lgX + lg.lgW - lg.ip - tx;
@@ -3178,7 +3178,7 @@ function drawBlueprintLegendNote(
   // it, cut off the page. A note that gets truncated is worse than no note: it looks like a bug and
   // it loses the actionable half. Returns the line count so a caller can size the panel for it.
   ctx.fillStyle = '#9AA6AC';
-  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px system-ui, sans-serif`;
+  ctx.font = `italic 500 ${Math.round(rowH * 0.4)}px ${SHEET_BODY_FONT}`;
   const maxW = lg.lgW - lg.ip * 2;
   const lines: string[] = [];
   let line = '';
@@ -3192,6 +3192,41 @@ function drawBlueprintLegendNote(
   return lines.length;
 }
 
+// ── The sheet's typeface system — TWO faces, declared once, used everywhere ───────────────────
+//
+// Rory kept reporting that the typography looked wrong without being able to say why. The reason
+// was that one sheet was set in several families at once: the title in Georgia, the legend in the
+// condensed stack below, and everything else — section headings, body copy, week labels, chips,
+// pin numbers — in bare `system-ui`. Two of those had been hoisted into constants and thirty other
+// sites stayed hardcoded, so the sheet was typographically inconsistent with itself and no single
+// edit could fix it. That is this codebase's recurring bug in its purest form: several places
+// independently answering one question and drifting apart. Every font on a sheet now comes from
+// here, so changing the system is one line rather than a treasure hunt.
+//
+// WHY A SYSTEM SERIF FOR TITLES RATHER THAN THE APP'S OWN DISPLAY FACE. The app is set in
+// Newsreader and Public Sans, loaded through next/font. next/font rewrites those into generated
+// family names (`__Newsreader_a1b2c3`) exposed only as CSS variables, while canvas `ctx.font`
+// takes a real family string — ask it for "Newsreader" and it silently falls through to the next
+// name in the stack. So a sheet claiming the app's display face would in practice be rendering
+// that face's FALLBACK, which is exactly what `Georgia, serif` already was: `--font-display` is
+// 'Newsreader', Georgia, serif with the real face removed. Naming the fallback honestly beats
+// naming a face we cannot reach. A sheet is also an export — a PDF or PNG opened on a phone, a
+// borrowed laptop, a print shop's machine — and a webfont that fails there reflows a plan someone
+// is holding in a field. System faces do not fail.
+//
+// WHY CONDENSED FOR EVERYTHING ELSE. Sheet lettering competes with the drawing underneath it and
+// must fit inside legend boxes, bed labels and route callouts. A condensed face buys roughly a
+// fifth more characters per line at the same size — which is why maps have used them for a century.
+//
+// A THIRD entry that is deliberately NOT one of the two faces. Icon and emoji glyphs
+// (`fillText(row.icon, …)`, tool glyphs, feature symbols) must stay on the generic family: a
+// condensed TEXT face is not guaranteed to contain those codepoints, and a canvas asked for a
+// glyph its font lacks falls back silently — usually at a different metric, so a symbol that
+// looked centred jumps. Four sites draw glyphs and two neighbouring ones draw zone NUMBERS, which
+// is why this sweep could not be a find-and-replace: in the source the two cases are the same
+// line, and they differ only in what reaches fillText.
+const SHEET_GLYPH_FONT = 'sans-serif';
+const SHEET_TITLE_FONT = 'Georgia, serif';
 const REFERENCE_LABEL_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
 const SHEET_BODY_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
 
@@ -3378,7 +3413,7 @@ function drawBlueprintScaleBar(
   ctx.moveTo(bx + barW, by - 8);
   ctx.lineTo(bx + barW, by + 8);
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px system-ui, sans-serif`;
+  ctx.font = `700 ${Math.round(W * 0.014)}px ${SHEET_BODY_FONT}`;
   ctx.textBaseline = 'bottom';
   ctx.textAlign = 'left';
   ctx.fillText(`${m} m`, bx, by - 12);
@@ -3678,7 +3713,7 @@ export async function buildBlueprintZoneMapLegacy(
     ctx.lineWidth = 2.5;
     ctx.stroke();
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = `bold ${Math.round(r * 1.1)}px system-ui, sans-serif`;
+    ctx.font = `bold ${Math.round(r * 1.1)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(n), cx, cy);
@@ -3718,12 +3753,12 @@ export async function buildBlueprintZoneMapLegacy(
     roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
     ctx.stroke();
     ctx.fillStyle = '#EDE7DA';
-    ctx.font = `700 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
+    ctx.font = `700 ${Math.round(rowH * 0.48)}px ${SHEET_BODY_FONT}`;
     const zLbl = `ZONE ${n}`;
     ctx.fillText(zLbl, textX, ry);
     const nameX = textX + ctx.measureText(zLbl).width + 8;
     ctx.fillStyle = '#B9C2C8';
-    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px ${SHEET_BODY_FONT}`;
     let name = `— ${ZONE_DEFS[n].label}`;
     const maxW = lgX + lgW - ip - nameX;
     while (ctx.measureText(name).width > maxW && name.length > 4) name = name.slice(0, -2);
@@ -3740,7 +3775,7 @@ export async function buildBlueprintZoneMapLegacy(
     ctx.lineTo(lgX + ip + sw * 1.5, ry);
     ctx.stroke();
     ctx.fillStyle = '#EDE7DA';
-    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px ${SHEET_BODY_FONT}`;
     // "Property boundary", not "Fence" — this map draws only the boundary ring, and the old
     // wording read as a second, planted-row kind of fence (layer-audit RC5).
     ctx.fillText('Property boundary', textX, ry);
@@ -3751,7 +3786,7 @@ export async function buildBlueprintZoneMapLegacy(
     roundRectPath(ctx, lgX + ip, ry - sw / 2, sw * 1.5, sw, 3);
     ctx.fill();
     ctx.fillStyle = '#EDE7DA';
-    ctx.font = `500 ${Math.round(rowH * 0.44)}px system-ui, sans-serif`;
+    ctx.font = `500 ${Math.round(rowH * 0.44)}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Tarred driveway', textX, ry);
     ry += rowH;
   }
@@ -3849,7 +3884,7 @@ export async function buildBlueprintWaterMapLegacy(
       ctx.fill();
       ctx.stroke();
     }
-    ctx.font = `${Math.max(12, Math.min(24, r))}px sans-serif`;
+    ctx.font = `${Math.max(12, Math.min(24, r))}px ${SHEET_GLYPH_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(def.icon, cx, cy);
@@ -3977,7 +4012,7 @@ export async function buildBlueprintWaterMapLegacy(
   let ry = lg.ry;
   for (const section of sections) {
     ctx.fillStyle = '#D3DEE5';
-    ctx.font = `900 ${Math.round(rowH * 0.5)}px system-ui, sans-serif`;
+    ctx.font = `900 ${Math.round(rowH * 0.5)}px ${SHEET_BODY_FONT}`;
     ctx.fillText(section.title, lg.lgX + lg.ip, ry);
     ry += rowH * 0.72;
     if (section.rows.length) {
@@ -5224,7 +5259,7 @@ function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: numbe
   ctx.fillStyle = '#F3EEE2';
   ctx.fill();
   ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(size * 0.34)}px system-ui, sans-serif`;
+  ctx.font = `800 ${Math.round(size * 0.34)}px ${SHEET_BODY_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
   ctx.fillText('N', cx, cy - R * 0.52);
@@ -5377,7 +5412,7 @@ function drawSectorAnalysis(
       ctx.lineWidth = Math.max(2.2, W * 0.0018);
       ctx.stroke();
       ctx.fillStyle = '#20190F';
-      ctx.font = `800 ${Math.round(r * 1.05)}px system-ui, sans-serif`;
+      ctx.font = `800 ${Math.round(r * 1.05)}px ${SHEET_BODY_FONT}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(String(n), chosen.x, chosen.y + 0.5);
@@ -5419,7 +5454,7 @@ function drawSectorAnalysis(
     ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = 'rgba(232,238,228,0.62)';
-    ctx.font = `700 ${Math.round(rowH * 0.6)}px system-ui, sans-serif`;
+    ctx.font = `700 ${Math.round(rowH * 0.6)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('N', cx, cy - R - rowH * 0.5);
@@ -5469,7 +5504,7 @@ function drawSectorAnalysis(
     // retains its direct labels; the benchmark sheet uses the clean analysis marks plus legend.
     if (externalLegend) return;
     ctx.save();
-    ctx.font = `800 ${Math.round(rowH * 0.48)}px system-ui, sans-serif`;
+    ctx.font = `800 ${Math.round(rowH * 0.48)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const halfW = ctx.measureText(text).width / 2 + 6;
@@ -5946,7 +5981,7 @@ function drawSectorAnalysis(
         }
         // Free wins already computed and previously discarded (SECTOR-MODEL-SPEC §5): each line's
         // own elevM, labelled on alternate lines only so it stays legible.
-        ctx.font = `700 ${Math.round(rowH * 0.32)}px system-ui, sans-serif`;
+        ctx.font = `700 ${Math.round(rowH * 0.32)}px ${SHEET_BODY_FONT}`;
         ctx.fillStyle = 'rgba(183,232,166,0.85)';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -6109,14 +6144,14 @@ function drawSectorAnalysis(
       ctx, pad,
       externalLegend ? [titleStr, subtitleStr] : [titleStr, subtitleStr, dataStripStr, sourcesStr],
       externalLegend
-        ? [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`]
-        : [`800 ${Math.round(W * 0.028)}px Georgia, serif`, `600 ${Math.round(W * 0.015)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`, `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`],
+        ? [`800 ${Math.round(W * 0.028)}px ${SHEET_TITLE_FONT}`, `600 ${Math.round(W * 0.015)}px ${SHEET_BODY_FONT}`]
+        : [`800 ${Math.round(W * 0.028)}px ${SHEET_TITLE_FONT}`, `600 ${Math.round(W * 0.015)}px ${SHEET_BODY_FONT}`, `600 ${Math.round(W * 0.013)}px ${SHEET_BODY_FONT}`, `600 ${Math.round(W * 0.011)}px ${SHEET_BODY_FONT}`],
     );
   }
   if (dataStripStr && !externalLegend) {
     ctx.save();
     ctx.fillStyle = '#B9C2C8';
-    ctx.font = `600 ${Math.round(W * 0.013)}px system-ui, sans-serif`;
+    ctx.font = `600 ${Math.round(W * 0.013)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.fillText(dataStripStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022));
@@ -6125,7 +6160,7 @@ function drawSectorAnalysis(
   if (!externalLegend) {
     ctx.save();
     ctx.fillStyle = 'rgba(185,194,200,0.75)';
-    ctx.font = `600 ${Math.round(W * 0.011)}px system-ui, sans-serif`;
+    ctx.font = `600 ${Math.round(W * 0.011)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.fillText(sourcesStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
@@ -6489,7 +6524,7 @@ async function drawPhasingExactContent(
     ctx.strokeStyle = '#FFFFFF';
     ctx.stroke();
     ctx.fillStyle = readableTextOn(phase.colour);
-    ctx.font = `bold ${Math.round(pinR * 1.15)}px system-ui, sans-serif`;
+    ctx.font = `bold ${Math.round(pinR * 1.15)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(phase.n), cx, cy);
@@ -6695,12 +6730,12 @@ export async function buildImplementationMap(
   const fsBody = Math.round(W * 0.0092);
   const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
-  const headerFont = `800 ${fsHeader}px Georgia, serif`;
-  const sectionFont = `800 ${fsSection}px system-ui, sans-serif`;
-  const titleFont = `800 ${Math.round(W * 0.0108)}px system-ui, sans-serif`;
-  const bodyFont = `500 ${fsBody}px system-ui, sans-serif`;
-  const weekFont = `600 ${fsBody}px system-ui, sans-serif`;
-  const holdFont = `italic 600 ${fsBody}px system-ui, sans-serif`;
+  const headerFont = `800 ${fsHeader}px ${SHEET_TITLE_FONT}`;
+  const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(W * 0.0108)}px ${SHEET_BODY_FONT}`;
+  const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
+  const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
 
   // Word-wrap to a pixel width in the given font. Returns at least one line.
   const wrap = (text: string, maxW: number, font: string): string[] => {
@@ -6775,11 +6810,11 @@ export async function buildImplementationMap(
     y += Math.round(fsHeader * 1.08);
   }
   ctx.fillStyle = '#6B6355';
-  ctx.font = `italic 500 ${fsBody}px system-ui, sans-serif`;
+  ctx.font = `italic 500 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText('Reference Blueprint', innerX, y);
   y += lineH;
   ctx.fillStyle = '#8A8172';
-  ctx.font = `500 ${fsBody}px system-ui, sans-serif`;
+  ctx.font = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', innerX, y);
   y += Math.round(lineH * 0.45);
   ctx.strokeStyle = 'rgba(32,25,15,0.24)';
@@ -6814,7 +6849,7 @@ export async function buildImplementationMap(
     roundRectPath(ctx, innerX, chipTop, chipS, chipS, 4);
     ctx.stroke();
     ctx.fillStyle = readableTextOn(phase.colour);
-    ctx.font = `bold ${Math.round(chipS * 0.62)}px system-ui, sans-serif`;
+    ctx.font = `bold ${Math.round(chipS * 0.62)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(phase.n), innerX + chipS / 2, chipTop + chipS / 2);
