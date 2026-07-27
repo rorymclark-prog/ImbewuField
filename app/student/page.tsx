@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy } from 'lucide-react';
+import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import {
@@ -17,6 +17,8 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
+import DeckPlayer from '@/components/course/DeckPlayer';
+import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import {
@@ -128,6 +130,9 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
   onJumpToLesson: (lessonId: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  // The slide player is opt-in per lesson and resets when the panel is left. Nothing in the deck
+  // downloads until it is opened, and reopening a lesson should not re-spend anyone's data.
+  const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
   const hasAudio = lessonTracks.length > 0;
@@ -167,6 +172,34 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                 tracks={lessonTracks}
                 label="Listen to this lesson"
               />
+            </div>
+          )}
+
+          {/* Watch and listen — the lesson in the form it was authored in: slides, in order, with
+              narration and the animations that a still cannot carry. Opt-in, and it replaces
+              nothing: the reading below stays exactly as it was for anyone who prefers to read, or
+              whose connection makes slides a bad idea today. */}
+          {hasDeck(moduleId) && (
+            <div className={hasAudio ? '' : 'pt-4'}>
+              {deckOpen ? (
+                <DeckPlayer moduleId={moduleId} lang={lang} lessonId={lesson.id} onClose={() => setDeckOpen(false)} />
+              ) : (
+                <button
+                  onClick={() => setDeckOpen(true)}
+                  className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left"
+                  style={{ border: `1px solid ${color}33`, background: `${color}0C` }}
+                >
+                  <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
+                  <span className="flex-1">
+                    <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
+                      Watch and listen
+                    </span>
+                    <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
+                      {deckSlideCount(moduleId, lesson.id)} slides, narrated. Nothing downloads until you press play.
+                    </span>
+                  </span>
+                </button>
+              )}
             </div>
           )}
 
