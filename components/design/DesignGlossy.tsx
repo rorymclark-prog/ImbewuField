@@ -52,7 +52,12 @@ import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorF
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
-import { lockedPolishAction, lockedPolishStyle, type SheetOutputMode } from '@/lib/locked-polish-flow';
+import {
+  fullTreatmentProtectPolicy,
+  lockedPolishAction,
+  lockedPolishStyle,
+  type SheetOutputMode,
+} from '@/lib/locked-polish-flow';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
 import { calculateBoundaryPresentationCrop } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
@@ -7458,13 +7463,15 @@ function styleSheetLegendWidth(mapWidth: number): number {
 
 /**
  * Full Treatment receives a complete Hybrid sheet, while buildProtectMask works in map
- * coordinates. Extend that map mask across the sheet and keep all deterministic chrome opaque:
- * title, legend, notes, scale and north arrow can never be rewritten by the second AI pass.
+ * coordinates. Hybrid keeps deterministic chrome exact; Full Treatment deliberately leaves the
+ * chrome editable so the second paid pass can produce the richer typography, pictorial legend and
+ * notes layout that distinguish it from Hybrid.
  */
 async function extendProtectMaskToStyleSheet(
   mapMaskDataUrl: string,
   mapWidth: number,
   mapHeight: number,
+  protectChrome = true,
 ): Promise<string> {
   const mask = await loadImage(mapMaskDataUrl);
   const canvas = document.createElement('canvas');
@@ -7473,11 +7480,11 @@ async function extendProtectMaskToStyleSheet(
   const ctx = canvas.getContext('2d');
   if (!ctx) return mapMaskDataUrl;
 
-  ctx.fillStyle = '#FFFFFF';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  // Preserve the transparent edit windows in the map mask; drawing a transparent PNG directly
-  // over a white fill would otherwise leave the whole map protected.
-  ctx.clearRect(0, 0, mapWidth, mapHeight);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (protectChrome) {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(mapWidth, 0, canvas.width - mapWidth, mapHeight);
+  }
   ctx.drawImage(mask, 0, 0, mapWidth, mapHeight);
   return canvas.toDataURL('image/png');
 }
@@ -8668,11 +8675,11 @@ export default function DesignGlossy({
         return sheetImage;
       }
 
-      // Full Treatment's second paid pass receives the complete finished Hybrid page. The page
-      // chrome and every authoritative map pixel are protected in a sheet-sized mask; only the
-      // deliberately opened element pockets may come back from GPT Image. Never ship that model
-      // page raw: a prompt is not a geometry guarantee, and doing so previously let it invent a
-      // second house and move saved features while still being labelled "Geometry locked".
+      // Full Treatment's second paid pass receives the complete finished Hybrid page. Restore only
+      // the factual pixels in its sheet-sized mask. The remaining page is intentionally left to
+      // the second pass so Full Treatment looks richer than Hybrid instead of being copied back to
+      // it almost wholesale. Never ship the model page raw: houses, access and site edges remain
+      // protected because a prompt alone is not a geometry guarantee.
       if (showcase && !locked && protectMask && sourceImage) {
         try {
           return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
@@ -9014,28 +9021,17 @@ export default function DesignGlossy({
       // OpenAI edit mask. That preserves the style reference and still restores protected pixels.
       let protectMaskDataUrl: string | undefined;
       if (fullSheetPolish) {
-        // The second pass may improve the rendering of saved feature symbols, but cannot touch
-        // the Hybrid's page chrome, house, boundary, driveway, routes or unmarked ground. Extend
-        // the map-space authority mask over the complete sheet so title/legend/notes are copied
-        // back byte-for-byte after generation.
+        // The second pass may improve the complete map artwork and sheet design. Restore only
+        // genuinely factual geometry afterwards; protecting the Hybrid's unmarked ground, routes
+        // and chrome made the paid result visually indistinguishable from Hybrid.
         const mapMask = await buildProtectMask(
           renderState,
           renderFrame,
           renderRefLayers,
           filter,
-          {
-            protectOutside: true,
-            protectBoundary: true,
-            protectDriveway: true,
-            protectLines: true,
-            protectItems: false,
-            protectUnmarkedGround: true,
-            editableItemScale: 1.15,
-            houseHaloRatio: 0.003,
-            houseFeatherRatio: 0.0012,
-          },
+          fullTreatmentProtectPolicy(),
         );
-        protectMaskDataUrl = await extendProtectMaskToStyleSheet(mapMask, mapW, mapH);
+        protectMaskDataUrl = await extendProtectMaskToStyleSheet(mapMask, mapW, mapH, false);
       } else if (lockActive) {
         protectMaskDataUrl = await buildProtectMask(
           renderState,
@@ -9248,7 +9244,7 @@ export default function DesignGlossy({
         )
         : undefined;
       const protectMaskDataUrl = sectorMapMask && polishStage
-        ? await extendProtectMaskToStyleSheet(sectorMapMask, mapWidth, mapHeight)
+        ? await extendProtectMaskToStyleSheet(sectorMapMask, mapWidth, mapHeight, false)
         : sectorMapMask;
       const prompt = polishStage
         ? kind === 'sector'

@@ -5,6 +5,36 @@ import { isModelChromeStyle, type StylePreset } from '@/lib/producer-prompt';
 // step AI polish". 'full' always builds on 'hybrid' — it is never a shortcut back to 'exact'.
 export type SheetOutputMode = 'exact' | 'hybrid' | 'full';
 
+/**
+ * Full Treatment starts from the completed Hybrid sheet. Its second paid pass must be free to
+ * improve the artwork and page design, while the few pixels that establish factual geometry are
+ * restored afterwards. Protecting unmarked ground, routes, items or the complete sheet chrome here
+ * makes the paid result visually collapse back to the Hybrid.
+ */
+export interface FullTreatmentProtectPolicy {
+  protectOutside: boolean;
+  protectBoundary: boolean;
+  protectDriveway: boolean;
+  protectLines: boolean;
+  protectItems: boolean;
+  protectUnmarkedGround: boolean;
+  houseHaloRatio: number;
+  houseFeatherRatio: number;
+}
+
+export function fullTreatmentProtectPolicy(): FullTreatmentProtectPolicy {
+  return {
+    protectOutside: true,
+    protectBoundary: true,
+    protectDriveway: true,
+    protectLines: false,
+    protectItems: false,
+    protectUnmarkedGround: false,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+}
+
 export type LockedPolishAction =
   | 'wait'
   | 'render-exact'
