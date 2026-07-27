@@ -2640,8 +2640,17 @@ export default function DesignCanvas({
             </g>
           ))}
 
-        {/* Placed items at true scale */}
-        {state.items.map((item) => {
+        {/* Placed items at true scale.
+            SELECTED ITEM RENDERS LAST. SVG has no z-index — paint order IS stacking order — so an
+            item early in the array had its resize/rotate grips and selection ring drawn UNDER every
+            item after it. In a row of vegetable beds (the common case: a farmer places six in a
+            line, overlapping slightly) the grips of the one you just tapped disappeared behind its
+            neighbours and could not be grabbed. Reported live 2026-07-27. Sorting only lifts the
+            single selected item to the end; every other item keeps its original paint order, and
+            the array itself is untouched — this is presentation, never saved geometry. */}
+        {[...state.items]
+          .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
+          .map((item) => {
           const def = ELEMENTS_BY_ID[item.defId];
           if (!def) return null;
           if (!activeLayers[categoryLayerKey(def.category)]) return null;
