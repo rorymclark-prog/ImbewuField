@@ -64,8 +64,16 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
   const current = slides[index];
   const total = slides.length;
 
-  const go = useCallback((next: number) => {
-    setIndex((i) => Math.min(total - 1, Math.max(0, next ?? i)));
+  // STEP BY A DELTA, never to a computed absolute.
+  //
+  // This took an absolute target and was called as go(index + 1), which reads `index` out of the
+  // render closure. Tapping Next four times in quick succession advanced ONE slide: every press
+  // computed the same target from the same stale index, and React collapsed them into one update.
+  // Caught by pressing it four times in a browser —
+  // it looks perfectly correct in the source, and a farmer paging through 24 slides taps far
+  // faster than a re-render. The functional updater sees the real current value each time.
+  const go = useCallback((delta: number) => {
+    setIndex((i) => Math.min(total - 1, Math.max(0, i + delta)));
   }, [total]);
 
   // Moving on stops the previous slide's narration. Two voices at once is worse than silence, and
@@ -77,8 +85,8 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') go(index + 1);
-      if (e.key === 'ArrowLeft') go(index - 1);
+      if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'ArrowLeft') go(-1);
       if (e.key === 'Escape' && onClose) onClose();
     };
     window.addEventListener('keydown', onKey);
@@ -95,7 +103,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
     if (!s) return;
     const dx = e.changedTouches[0].clientX - s.x;
     const dy = e.changedTouches[0].clientY - s.y;
-    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) go(index + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
     touchStart.current = null;
   };
 
@@ -178,7 +186,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <button
-          onClick={() => go(index - 1)}
+          onClick={() => go(-1)}
           disabled={index === 0}
           style={{ padding: '9px 14px', borderRadius: 10, border: `1px solid ${LINE}`, background: PAPER, color: index === 0 ? '#B9AC94' : INK, fontWeight: 700, fontSize: 13, cursor: index === 0 ? 'default' : 'pointer' }}
         >
@@ -188,7 +196,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
           <div style={{ width: `${((index + 1) / total) * 100}%`, height: '100%', background: GREEN }} />
         </div>
         <button
-          onClick={() => go(index + 1)}
+          onClick={() => go(1)}
           disabled={index === total - 1}
           style={{ padding: '9px 14px', borderRadius: 10, border: 'none', background: index === total - 1 ? '#D9D0BC' : GREEN, color: '#fff', fontWeight: 700, fontSize: 13, cursor: index === total - 1 ? 'default' : 'pointer' }}
         >
