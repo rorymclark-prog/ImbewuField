@@ -7815,6 +7815,38 @@ function galleryResultBadge(item: GalleryItem): string {
   return 'Older saved map · provenance unavailable';
 }
 
+/** The same provenance, compressed to fit a 3-across thumbnail.
+ *
+ *  WHY THIS EXISTS: Full Treatment deliberately saves THREE entries — exact master, AI hybrid, AI
+ *  polished — and that is the render handover's own requirement, not a bug to collapse. But a
+ *  gallery item's `label` is only the sheet name, so all three read "Water", and the thumbnails of
+ *  one sheet at three levels of polish are near-identical at 100px. Rory had to open every tile to
+ *  find the render he had PAID for. The honest text already existed in galleryResultBadge() — it
+ *  was just rendered in one place, inside the opened detail view, which is the one moment you no
+ *  longer need it.
+ *
+ *  Colour does the work before the word does: at thumbnail size the eye resolves a warm chip
+ *  against two cool ones long before it resolves five letters. Amber is spent on the paid result
+ *  for that reason — it is the one being searched for. `legacy` returns null rather than a "?"
+ *  chip: an old map with no recorded provenance should look plain, not faulty. */
+function galleryTileChip(kind: SheetResultKind): { text: string; bg: string; fg: string } | null {
+  switch (kind) {
+    case 'exact':          return { text: 'EXACT',  bg: 'rgba(56,52,44,0.88)',   fg: '#EFE7D6' };
+    case 'hybrid':         return { text: 'HYBRID', bg: 'rgba(43,86,112,0.90)',  fg: '#DCEEF8' };
+    case 'ai-polished':    return { text: 'PAID',   bg: 'rgba(178,124,26,0.94)', fg: '#FFF6E2' };
+    case 'ai-illustrated': return { text: 'AI',     bg: 'rgba(92,70,120,0.90)',  fg: '#EFE4F8' };
+    case 'legacy':         return null;
+    default: {
+      // Exhaustive on purpose. A `default: return null` would let a NEW SheetResultKind ship with
+      // no chip at all — the tile would look like a legacy map and the gallery would quietly go
+      // back to being unreadable, which is the bug this function exists to fix. This way adding a
+      // kind is a compile error until someone decides how it should read.
+      const exhaustive: never = kind;
+      return exhaustive;
+    }
+  }
+}
+
 export default function DesignGlossy({
   state,
   frame,
@@ -10841,11 +10873,28 @@ export default function DesignGlossy({
                             setGalleryViewId(g.id);
                             setGalleryZoomOpen(true);
                           }}
-                          aria-label={`Open ${g.label}`}
+                          // The sheet name alone is ambiguous here: Full Treatment saves three
+                          // entries for one sheet, so three tiles all announce "Water". Screen
+                          // reader users hit the same wall Rory did, with no thumbnail to fall
+                          // back on, so the provenance goes in the label too — full words, not
+                          // the chip's abbreviation.
+                          aria-label={`Open ${g.label} — ${galleryResultBadge(g)}`}
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={g.thumb ?? g.image} alt={g.label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          {(() => {
+                            const chip = galleryTileChip(g.resultKind);
+                            if (!chip) return null;
+                            return (
+                              <span
+                                aria-hidden
+                                style={{ position: 'absolute', top: 4, left: 4, fontSize: 8, lineHeight: 1, fontWeight: 800, letterSpacing: '0.06em', padding: '3px 5px', borderRadius: 5, background: chip.bg, color: chip.fg, boxShadow: '0 1px 3px rgba(20,16,10,0.45)', pointerEvents: 'none' }}
+                              >
+                                {chip.text}
+                              </span>
+                            );
+                          })()}
                           <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
                         </button>
                         <button
