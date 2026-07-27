@@ -55,6 +55,13 @@ export interface DesignPaletteProps {
   // Duplicate the current selection (same offset-and-select pattern as Delete's group handling).
   // null = nothing selected, same disabled convention as onDeleteSelected.
   onDuplicateSelected: (() => void) | null;
+  // Tidy outline (lib/tidy-outline.ts) — opens a PREVIEW of a simplified version of the single
+  // selected zone/line; the farmer confirms or cancels on the canvas itself (see DesignCanvas's
+  // tidyPreview prop). null = nothing selected, more than one thing is selected, or the selection
+  // is a placed item rather than a zone/line — same "nothing to act on" disabled convention as
+  // onDuplicateSelected/onDeleteSelected. Tapping this never itself changes the design; only the
+  // canvas's own Confirm button (wired to the SAME onChange/undo path every other edit uses) does.
+  onTidySelected: (() => void) | null;
   // Angle field for rect-shaped placed items (strips/beds/rows) — precise numeric alternative to
   // the drag-rotate handle on the canvas. null hides the control entirely, same "nothing to act
   // on" convention as onDuplicateSelected/onDeleteSelected going null: it means either nothing is
@@ -208,6 +215,7 @@ export default function DesignPalette({
   canRedo,
   onDeleteSelected,
   onDuplicateSelected,
+  onTidySelected,
   angleControl,
   siteBiome,
 }: DesignPaletteProps) {
@@ -414,6 +422,23 @@ export default function DesignPalette({
           title="Duplicate the selected item(s) — Cmd/Ctrl+D"
         >
           📋 Duplicate
+        </button>
+        {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
+            has no ring/polyline to simplify, and a multi-selection has no single shape to preview
+            — see onTidySelected's doc comment in DesignPaletteProps). Tapping this only OPENS the
+            preview on the canvas; it never itself edits the design. */}
+        <button
+          type="button"
+          style={{
+            ...toolButtonStyle(false, guided),
+            opacity: onTidySelected ? 1 : 0.4,
+            cursor: onTidySelected ? 'pointer' : 'default',
+          }}
+          onClick={() => onTidySelected?.()}
+          disabled={!onTidySelected}
+          title="Preview a tidied version of the selected outline"
+        >
+          🧹 Tidy
         </button>
         {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
             polyline deliberately has NO angle control here: a polyline has no single angle, and
