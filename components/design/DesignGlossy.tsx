@@ -4601,10 +4601,10 @@ type ExactFeaturePresentation = 'solid' | 'hybrid';
 /**
  * Draw exact feature artwork onto a temporary layer, then blend it over the AI painting.
  *
- * The free exact renderer remains fully opaque. Paid hybrid sheets keep enough deterministic
- * artwork to pin every saved footprint and count, while allowing the model's richer material and
- * canopy painting to remain visible underneath. Routes, labels and the site boundary are drawn
- * separately at full opacity because they are technical information rather than illustration.
+ * The free exact renderer and the factual Hybrid overlay remain fully opaque. The model's richer
+ * material painting is visible around those exact footprints, never through them: translucent
+ * tanks, beds and basins read as duplicate/ghost layers and weaken the geometry-lock contract.
+ * Routes, labels and the site boundary are also drawn separately at full opacity.
  */
 function drawExactFeaturesWithPresentation(
   ctx: CanvasRenderingContext2D,
@@ -4627,7 +4627,7 @@ function drawExactFeaturesWithPresentation(
   }
   draw(layerCtx);
   ctx.save();
-  ctx.globalAlpha = 0.68;
+  ctx.globalAlpha = 1;
   ctx.drawImage(layer, 0, 0);
   ctx.restore();
 }
