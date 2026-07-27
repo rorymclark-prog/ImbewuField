@@ -574,17 +574,29 @@ export function drawMarks(
         fn.call(ctx, px(x), py(y));
       });
       ctx.closePath();
-      // ROOF GREY WITH A WHITE OUTLINE — never a dark slab. This was rgba(58,53,44,·), which is the
-      // same near-black family as tar, so the composite handed the model two dark shapes and rule 8
-      // ("THE TWO DARK SHAPES ARE DIFFERENT THINGS … they never merge") asked it to separate things
-      // we had already merged for it. On the overlay style the driveway is not drawn into the
-      // composite at all, so the only dark region the model could find to paint tar onto was this
-      // house. Hence "the blooming driveway bleeds into the house again". A light roof with a bright
-      // outline cannot be mistaken for a carriageway.
-      ctx.fillStyle = `${GROUND_FEATURES.house.color}A6`; // #8A8D91
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,0.95)';
-      ctx.lineWidth = 2.5;
+      // OUTLINE ONLY — the roof inside stays the photograph.
+      //
+      // This used to fill the footprint with #8A8D91 at 65%. Rory, looking at a finished sheet:
+      // "the quality of the polygons everything is just not good at all". Those were the three flat
+      // grey slabs sitting where his buildings are — they read as unrendered placeholder boxes, and
+      // they were the single most damaging thing on the page.
+      //
+      // The fill was never going to work. It was a placeholder the model was asked to convert into
+      // a roof (rule 8: "the pale grey shape with the white outline is the ROOF"), but the same
+      // prompt tells it every unmarked pixel is the photograph exactly as supplied — so it reads a
+      // grey slab as photograph and leaves it. Worse, buildProtectMask protects every house
+      // footprint unconditionally and restores it byte-for-byte afterwards, so even a model that
+      // DID repaint the roof would have its work copied over. No prompt wording could have fixed
+      // this; the pixels were guaranteed to come back.
+      //
+      // So stop covering the roof. The satellite already contains a real roof, photographed from
+      // above, with its true ridges, wings and shadow. Painting over it destroyed the one piece of
+      // ground truth we had and replaced it with a grey rectangle. The outline still tells both the
+      // model and the reader exactly where the building is — bright, and thicker than before so it
+      // survives the crop — and the earlier "driveway bleeds into the house" failure stays fixed,
+      // because a photographed roof was never the near-black the model mistook for tar.
+      ctx.strokeStyle = 'rgba(255,255,255,0.96)';
+      ctx.lineWidth = 3.5;
       ctx.stroke();
     }
   }

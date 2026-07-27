@@ -705,14 +705,26 @@ test('the boundary is positively identified as a fence, not a planted row', () =
   assert.doesNotMatch(p, /perpendicular tick marks/);
 });
 
-test('the house is described as a pale roof, so tar can never be painted onto it', () => {
+test('the house is the photographed roof inside an outline, never a grey slab', () => {
+  // The composite used to fill each house footprint with #8A8D91 at 65% and this prompt described
+  // that slab as "the pale grey shape … is the ROOF", expecting the model to convert it. It never
+  // did — the same prompt tells it every unmarked pixel is the photograph as supplied, so it read
+  // the slab as photograph and left it — and buildProtectMask restored the footprint byte-for-word
+  // afterwards regardless. Rory saw three flat grey rectangles where his buildings are, on every
+  // render including the paid one.
+  //
+  // The fill is gone; only the outline is drawn, so the real photographed roof shows through. This
+  // asserts the prompt no longer promises the model a grey shape it will not find, while keeping
+  // the tar separation that the pale-roof wording originally existed to protect.
   const p = buildSatelliteOverlayPrompt({
     layerLabel: 'Water',
     stylePreset: 'satellite_overlay',
     elementsText: 'JoJo Tank 5000L ×2',
     sheetKind: 'water',
   });
-  assert.match(p, /pale grey shape with the white outline is the ROOF/);
+  assert.match(p, /white outline encloses the ROOF/);
+  assert.match(p, /photograph inside that outline IS the real roof/);
+  assert.doesNotMatch(p, /pale grey shape/, 'nothing paints a grey shape over the roof any more');
   assert.match(p, /no part of it is ever paved, darkened or turned into road surface/);
 });
 
