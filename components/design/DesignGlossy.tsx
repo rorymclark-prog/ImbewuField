@@ -45,7 +45,7 @@ import {
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -2027,6 +2027,7 @@ function drawWaterFeature(
   H: number,
   pxPerM: number,
   includeToolGlyphs: boolean,
+  nearestNeighbourPx?: number,
 ) {
   const cx = item.x * W;
   const cy = item.y * H;
@@ -2048,6 +2049,7 @@ function drawWaterFeature(
     naturalW * pointScale,
     naturalH * pointScale,
     W,
+    nearestNeighbourPx,
   );
   const w = printed.width;
   const h = printed.height;
@@ -2378,9 +2380,27 @@ function drawWaterInfrastructure(
 ) {
   drawWaterRoutes(ctx, state, frame, W, H);
   const pxPerM = W / (frame.imgW * frame.mPerPx);
-  for (const item of waterItemsFor(state)) {
+  const items = waterItemsFor(state);
+  const neighbourInputs = items.map((item) => ({
+    id: item.defId,
+    cx: item.x * W,
+    cy: item.y * H,
+  }));
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
     const def = ELEMENTS_BY_ID[item.defId];
-    if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
+    if (def) {
+      drawWaterFeature(
+        ctx,
+        item,
+        def,
+        W,
+        H,
+        pxPerM,
+        includeToolGlyphs,
+        nearestWaterNeighbourPx(neighbourInputs, index),
+      );
+    }
   }
   if (includeLeaderLabels) drawWaterLeaderLabels(ctx, state, refLayers, W, H);
 }
@@ -2398,10 +2418,27 @@ function drawWaterFeatures(
   includeToolGlyphs: boolean,
   select: (item: PlacedItem) => boolean,
 ) {
-  for (const item of waterItemsFor(state)) {
-    if (!select(item)) continue;
+  const items = waterItemsFor(state).filter(select);
+  const neighbourInputs = items.map((item) => ({
+    id: item.defId,
+    cx: item.x * W,
+    cy: item.y * H,
+  }));
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
     const def = ELEMENTS_BY_ID[item.defId];
-    if (def) drawWaterFeature(ctx, item, def, W, H, pxPerM, includeToolGlyphs);
+    if (def) {
+      drawWaterFeature(
+        ctx,
+        item,
+        def,
+        W,
+        H,
+        pxPerM,
+        includeToolGlyphs,
+        nearestWaterNeighbourPx(neighbourInputs, index),
+      );
+    }
   }
 }
 
@@ -4081,6 +4118,7 @@ function drawTrueFootprint(
   py: (n: number) => number,
   pxPerM: number,
   emphasizeSmallFeatures = true,
+  nearestNeighbourPx?: number,
 ): void {
   const waterArtwork = def.category === 'water' || [
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
@@ -4093,7 +4131,7 @@ function drawTrueFootprint(
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
     const printed = emphasizeSmallFeatures && waterArtwork
-      ? waterFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width)
+      ? waterFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width, nearestNeighbourPx)
       : emphasizeSmallFeatures && (
         def.category === 'structure' || def.category === 'animal' || def.category === 'access'
       )
@@ -4117,7 +4155,7 @@ function drawTrueFootprint(
     )) return;
   }
   if (waterArtwork) {
-    drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false);
+    drawWaterFeature(ctx, it, def, ctx.canvas.width, ctx.canvas.height, pxPerM, false, nearestNeighbourPx);
     return;
   }
 
@@ -4532,13 +4570,29 @@ function drawFilteredItems(
   pxPerM: number,
   excludeWater = false,
 ): void {
-  for (const it of byCartographicStack(state, filter)) {
+  const items = byCartographicStack(state, filter);
+  const neighbourInputs = items.map((it) => ({
+    id: it.defId,
+    cx: px(it.x),
+    cy: py(it.y),
+  }));
+  for (let index = 0; index < items.length; index++) {
+    const it = items[index];
     const def = ELEMENTS_BY_ID[it.defId];
     // The masterplan draws Water first, then all remaining items. Integrated features such as a
     // banana circle are Water AND Planting content, so test Water membership rather than only the
     // single primary sheet or they are painted twice in the same output.
     if (!def || (excludeWater && itemInFilter(def.category, 'water', def.id))) continue;
-    drawTrueFootprint(ctx, it, def, px, py, pxPerM);
+    drawTrueFootprint(
+      ctx,
+      it,
+      def,
+      px,
+      py,
+      pxPerM,
+      true,
+      nearestWaterNeighbourPx(neighbourInputs, index),
+    );
   }
 }
 
