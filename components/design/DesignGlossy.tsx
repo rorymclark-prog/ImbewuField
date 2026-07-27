@@ -45,7 +45,7 @@ import {
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -1208,18 +1208,14 @@ const referenceFeatureArtworkCache = new Map<string, HTMLImageElement>();
 async function preloadReferenceFeatureArtwork(
   state: DesignCanvasState,
   filter: GlossyLayerFilter,
-  frame?: CanvasFrame,
+  _frame?: CanvasFrame,
 ): Promise<void> {
   const urls = new Set<string>();
-  const pairedWaterCanopies = filter === 'water' && frame
-    ? pairedWaterDestinationCanopyIds(state, frame)
-    : new Set<string>();
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || (
       !itemInFilter(def.category, filter, def.id)
       && !isContextElement(def, filter)
-      && !pairedWaterCanopies.has(item.id)
     )) continue;
     const url = referenceFeatureArtworkUrl(def.id);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
@@ -2817,6 +2813,11 @@ function drawBlueprintGround(
   const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
   const rings = state.zones.filter((z) => {
     if (!z.feature || z.points.length < 3) return false;
+    // The paid Water underlayer already contains the real terrain and the protected existing
+    // structures. Repainting every traced lawn/orchard/cleared polygon here created several
+    // translucent copies of the design and made hidden Planting layers shine through. Exact-only
+    // sheets still retain the full traced context; the illustrated Water overlay stays technical.
+    if (presentation === 'illustrated' && filter === 'water') return false;
     if (z.feature === 'house' && houseCovered) return false;
     if (z.feature === 'driveway' && drivewayCovered) return false;
     return groundRegister(z.feature, filter) !== 'absent';
@@ -4463,16 +4464,13 @@ function drawContextItems(
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
-  frame: CanvasFrame,
+  _frame: CanvasFrame,
 ): void {
-  const pairedWaterCanopies = filter === 'water'
-    ? pairedWaterDestinationCanopyIds(state, frame)
-    : new Set<string>();
   ctx.save();
   const contextItems = state.items
     .filter((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
-      return !!def && (isContextElement(def, filter) || pairedWaterCanopies.has(it.id));
+      return !!def && isContextElement(def, filter);
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
@@ -4485,8 +4483,42 @@ function drawContextItems(
   for (const it of contextItems) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue;
-    ctx.globalAlpha = pairedWaterCanopies.has(it.id) ? 0.72 : 0.38;
-    drawTrueFootprint(ctx, it, def, px, py, pxPerM);
+    // Water needs the receiving earthwork footprint, not the Planting sheet's crops or canopy.
+    // Draw a quiet bare-soil symbol at the exact saved centre, dimensions and rotation.
+    const wPx = Math.max(2, (it.wM ?? def.wM) * pxPerM);
+    const hPx = Math.max(2, (it.hM ?? def.hM) * pxPerM);
+    ctx.save();
+    ctx.translate(px(it.x), py(it.y));
+    if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = '#6E5735';
+    ctx.strokeStyle = 'rgba(239,226,190,0.88)';
+    ctx.lineWidth = Math.max(1, ctx.canvas.width * 0.00075);
+    if (def.shape === 'circle') {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, wPx / 2, hPx / 2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, Math.min(5, Math.min(wPx, hPx) * 0.12));
+      ctx.fill();
+      ctx.stroke();
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(-wPx / 2, -hPx / 2, wPx, hPx);
+      ctx.clip();
+      ctx.strokeStyle = 'rgba(205,181,126,0.68)';
+      ctx.lineWidth = Math.max(0.8, ctx.canvas.width * 0.0005);
+      const spacing = Math.max(4, Math.min(wPx, hPx) * 0.22);
+      for (let x = -wPx / 2 + spacing; x < wPx / 2; x += spacing) {
+        ctx.beginPath();
+        ctx.moveTo(x, -hPx / 2);
+        ctx.lineTo(x, hPx / 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    ctx.restore();
   }
   ctx.restore();
 }
@@ -8993,22 +9025,13 @@ export default function DesignGlossy({
         ? (await extendWithLegendPanel(composite, mapW, mapH)).dataUrl
         : composite;
       const designBrief = buildDesignBrief(renderState, renderRefLayers, placeName, site);
-      const authorityFlags = renderAuthorityFlagsForStyle(styleKey);
-      // Guided-flow invariant, checked BEFORE any payment: the Hybrid stage must run with app
-      // authority (locked underlayer + exact elements composited back). Compared against
-      // sheetRenderRoute's own hybridFlags — the SAME single source generateSectorViaQueue/
-      // generatePhasingViaQueue and applySheet's seeded style all derive from — rather than a
-      // hardcoded "showcase || !geometryLock" copy of what "locked" means. If a model-chrome style
-      // ever leaks back in — the exact drift lockedPolishStyle() now guards against — fail free and
-      // immediately, never after the paid render is consumed.
-      const expectedHybridFlags = sheetRenderRoute({ filter }, 'hybrid', producerStyle).hybridFlags;
-      if (
-        lockedPolishStage === 'hybrid'
-        && expectedHybridFlags
-        && (authorityFlags.showcase !== expectedHybridFlags.showcase || authorityFlags.geometryLock !== expectedHybridFlags.geometryLock)
-      ) {
-        throw new Error('The AI hybrid stage needs a geometry-locked style — pick a style other than Satellite Overlay and try again.');
-      }
+      const renderStage = fullSheetPolish ? 'full' : 'hybrid';
+      const route = sheetRenderRoute({ filter }, renderStage, styleKey);
+      // Workflow stage owns render authority. A visual style may change colour, texture and type,
+      // but it must never silently turn Hybrid into an unlocked showcase or Full into Hybrid.
+      const authorityFlags = fullSheetPolish
+        ? route.polishFlags ?? { showcase: true, geometryLock: false }
+        : route.hybridFlags ?? { showcase: false, geometryLock: true };
       const layerLabel = filter === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === filter)?.label ?? 'Full design';
       // Showcase ("AI legend") mode now applies to WHATEVER sheet is selected — the model renders the
       // whole frame freely and draws its own legend + labels (the free-ChatGPT look), with NO boundary
@@ -9032,7 +9055,7 @@ export default function DesignGlossy({
           fullTreatmentProtectPolicy(),
         );
         protectMaskDataUrl = await extendProtectMaskToStyleSheet(mapMask, mapW, mapH, false);
-      } else if (lockActive) {
+      } else if (authorityFlags.geometryLock) {
         protectMaskDataUrl = await buildProtectMask(
           renderState,
           renderFrame,
@@ -9041,7 +9064,7 @@ export default function DesignGlossy({
           lockedProtectMaskOptions(filter),
         );
       }
-      showcaseKeysRef.current = new Set(useShowcase || fullSheetPolish ? [filter] : []);
+      showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
       const prompt = fullSheetPolish
         ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName)
         : isModelChromeStyle(styleKey)
@@ -9066,8 +9089,9 @@ export default function DesignGlossy({
           compositeDataUrl: sheetInput,
           ...(protectMaskDataUrl ? { protectMaskDataUrl } : {}),
           ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
-          showcase: fullSheetPolish || authorityFlags.showcase,
-          geometryLock: fullSheetPolish ? false : authorityFlags.geometryLock,
+          showcase: authorityFlags.showcase,
+          geometryLock: authorityFlags.geometryLock,
+          resultKind: fullSheetPolish ? 'ai-polished' : 'hybrid',
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9200,7 +9224,7 @@ export default function DesignGlossy({
   // the second result a visibly AI-authored page while Step 1 remains the separately saved exact
   // authority. Site 01 retains its ground-only restyle route.
   const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
-    const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
+    const styleKey = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     setError(null);
@@ -9267,6 +9291,7 @@ export default function DesignGlossy({
           // bearings/legend/labels back on top), so it earns resultKind:'hybrid', not 'legacy'.
           showcase: polishStage,
           geometryLock: !polishStage,
+          resultKind: polishStage ? 'ai-polished' : 'hybrid',
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9310,7 +9335,7 @@ export default function DesignGlossy({
   // finishPhasingRef's composePhasingSheet redraws every exact fact back on top of whatever the
   // model returns, regardless of stage. The saved exact master is the authority in every case.
   const generatePhasingViaQueue = useCallback(async () => {
-    const styleKey = producerStyle && producerStyle !== 'satellite_overlay' ? producerStyle : DEFAULT_PRODUCER_STYLE;
+    const styleKey = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     setError(null);
@@ -9368,6 +9393,7 @@ export default function DesignGlossy({
           // not a safety gap.
           showcase: polishStage,
           geometryLock: !polishStage,
+          resultKind: polishStage ? 'ai-polished' : 'hybrid',
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9611,14 +9637,7 @@ export default function DesignGlossy({
     setError(null);
     const totalSteps = targetMode === 'full' ? 3 : 2;
     polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
-    // Say the substitution out loud: lockedPolishStyle silently maps Satellite Overlay (the model
-    // letters its own sheet) to a locked style, and a farmer who picked Overlay deserves to know
-    // why the progress panel names a different style — not to discover it from the result.
-    const substituted = producerStyle !== null && polishStyleRef.current !== producerStyle;
-    const substitutedNote = substituted
-      ? ` Satellite Overlay lets the AI letter the whole sheet, so this guided flow paints in ${PRODUCER_STYLES.find((s) => s.key === polishStyleRef.current)?.label ?? 'the recommended style'} instead — your exact elements stay locked on top.`
-      : '';
-    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…${substitutedNote}`);
+    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…`);
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
@@ -9713,6 +9732,10 @@ export default function DesignGlossy({
               // sheet, never the current toggle value. Existing in-flight jobs created before the
               // flag was added remain locked when they contain a protect mask.
               const locked = sheet.geometryLock ?? Boolean(sheet.protectMaskPath);
+              const queuedResultKind = sheet.resultKind
+                ?? (showcase ? 'ai-polished' : locked ? 'hybrid' : 'legacy-ai');
+              const isHybridResult = queuedResultKind === 'hybrid';
+              const isPolishedResult = queuedResultKind === 'ai-polished';
               // Fetch on the MASK's existence, not on `locked`. Satellite Overlay persists
               // geometryLock:false (it is not a locked style) but still ships a roof mask, and
               // gating on `locked` silently skipped the restore that keeps its roof intact.
@@ -9768,7 +9791,7 @@ export default function DesignGlossy({
               // painted to poish, instead of silently falling back to the bare exact sheet again.
               // Gated on the ref, not on `showcase`/`locked` alone, so an unrelated Hybrid-only or
               // batch render can never be mistaken for the one this flow is actually waiting on.
-              if (polishAfterHybridRef.current && !showcase && locked) {
+              if (polishAfterHybridRef.current && isHybridResult) {
                 hybridResultRef.current = finalSheet;
               }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
@@ -9781,7 +9804,7 @@ export default function DesignGlossy({
                 // Full Treatment: leave lockedPolishStage set (still 'hybrid') so the progress
                 // panel doesn't blink to nothing between this stage finishing and the polish stage's
                 // own switch-to-polish effect setting it to 'polish' a moment later.
-                if (!hybridResultRef.current) setLockedPolishStage(null);
+                if (!(polishAfterHybridRef.current && isHybridResult)) setLockedPolishStage(null);
                 if (job.siteId === state.siteId && mapKeyRef.current === targetMapKey) {
                   setResultImage(finalSheet);
                   setSaved(record);
@@ -9790,7 +9813,7 @@ export default function DesignGlossy({
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
               // Label text must track resultKind, not always say "AI polished" — a Hybrid-only save
               // (mode 2, stops there) is genuinely AI-touched but is not a paid polish pass (mode 3).
-              const finishKindLabel = showcase ? 'AI polished' : locked ? 'AI hybrid' : 'AI (legacy)';
+              const finishKindLabel = isPolishedResult ? 'AI polished' : isHybridResult ? 'AI hybrid' : 'AI (legacy)';
               lastAssembledGalleryId = pushGallery(
                 `${sheet.label}${finishLabel} · ${finishKindLabel}${finalGeometryLocked ? ' · Geometry locked' : ''}`,
                 finalSheet,
@@ -9798,7 +9821,7 @@ export default function DesignGlossy({
                   // showcase:false + locked:false is only reachable for a pre-flag legacy job (see
                   // the comment on showcaseKeysRef above) — under the 3-mode contract that
                   // combination is never a genuine paid polish, so it must not claim to be one.
-                  resultKind: showcase ? 'ai-polished' : locked ? 'hybrid' : 'legacy',
+                  resultKind: isPolishedResult ? 'ai-polished' : isHybridResult ? 'hybrid' : 'legacy',
                   provider: 'openai',
                   geometryLock: finalGeometryLocked,
                   showcase,

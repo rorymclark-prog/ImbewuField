@@ -116,6 +116,7 @@ interface RenderSheet {
   error?: string;
   showcase?: boolean;
   geometryLock?: boolean;
+  resultKind?: 'hybrid' | 'ai-polished' | 'legacy-ai';
 }
 interface RenderJob {
   uid: string;

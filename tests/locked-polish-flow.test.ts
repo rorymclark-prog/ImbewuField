@@ -137,12 +137,11 @@ test('the exact master step cannot replace the chosen AI style', () => {
   );
 });
 
-test('the guided flow never runs a model-chrome style — Satellite Overlay maps to the fallback', () => {
+test('the guided flow preserves every explicitly selected visual style', () => {
   assert.equal(
     lockedPolishStyle('satellite_overlay', 'precision_atlas'),
-    'precision_atlas',
+    'satellite_overlay',
   );
-  // Every non-chrome style still passes through untouched.
   assert.equal(
     lockedPolishStyle('master_atlas', 'precision_atlas'),
     'master_atlas',

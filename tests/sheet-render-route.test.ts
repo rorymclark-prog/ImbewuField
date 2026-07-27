@@ -63,14 +63,8 @@ for (const { label: sheetLabel, spec } of SHEETS) {
           return;
         }
 
-        // ── hybrid/full: styleUsed is never the model-chrome style ────────────────────────
-        assert.notEqual(route.styleUsed, 'satellite_overlay');
-        assert.ok(route.styleUsed, 'styleUsed must be set for hybrid/full');
-        if (selectedStyle === 'satellite_overlay') {
-          assert.equal(route.styleUsed, DEFAULT_PRODUCER_STYLE);
-        } else {
-          assert.equal(route.styleUsed, selectedStyle);
-        }
+        // ── hybrid/full: visual style is independent of factual authority ─────────────────
+        assert.equal(route.styleUsed, selectedStyle);
 
         // ── hybridFlags: always the app-owned, geometry-locked contract ───────────────────
         const expectedHybridFlags: RenderAuthorityFlags = { showcase: false, geometryLock: true };
