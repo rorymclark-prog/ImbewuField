@@ -15,7 +15,8 @@ import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
-import { compositeAccurateMap, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { differenceMessage } from '@/lib/render-difference';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
@@ -7884,6 +7885,10 @@ export default function DesignGlossy({
   // Hybrid stage completes with polishAfterHybridRef pending; read by generateOneViaQueue's
   // 'polish' branch; cleared once consumed so a stale image can never leak into an unrelated run.
   const hybridResultRef = useRef<string | null>(null);
+  /** The image the paid polish pass was handed, kept so its output can be scored against it. */
+  const polishInputRef = useRef<string | null>(null);
+  /** Plain-English note when a paid pass came back with nothing new. Null when it went fine. */
+  const [polishNoChange, setPolishNoChange] = useState<string | null>(null);
   const [lockedPolishStage, setLockedPolishStage] = useState<'exact' | 'hybrid' | 'polish' | null>(null);
   const [promptRewrite, setPromptRewrite] = useState(true); // ON = rewritten prompts, OFF = legacy prompt for A/B rollback
   // Which sheet keys in the CURRENT job used the showcase prompt (so the async finisher softens
@@ -9118,6 +9123,13 @@ export default function DesignGlossy({
         throw new Error('The AI hybrid sheet was not available to polish — please try again.');
       }
       const exactSheetInput = fullSheetPolish ? hybridResultRef.current : null;
+      // Keep a SECOND reference to the same image, deliberately not consumed. The paid pass has to
+      // be scored against what it was actually given, and hybridResultRef is nulled on the next
+      // line so a stale hybrid can never leak into an unrelated render. Without this copy there is
+      // nothing left to compare the paid result to, which is precisely why six attempts to fix
+      // "the polished sheet looks identical to the hybrid" could each be signed off green: no code
+      // in this app has ever looked at the output image.
+      if (fullSheetPolish) polishInputRef.current = exactSheetInput;
       if (fullSheetPolish) hybridResultRef.current = null; // consume-once — never leaks into an unrelated render
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderState = presentation.state;
@@ -9763,6 +9775,10 @@ export default function DesignGlossy({
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
     hybridResultRef.current = null;
+    // Clear the last run's "the polish pass returned the same map" note. Leaving it up over a fresh
+    // render would read as a verdict on THIS attempt before it has produced anything.
+    polishInputRef.current = null;
+    setPolishNoChange(null);
     setResultImage(null);
     if (mode === 'exact' && isExactRender) {
       void runCurrentSheet();
@@ -9914,6 +9930,43 @@ export default function DesignGlossy({
               // batch render can never be mistaken for the one this flow is actually waiting on.
               if (polishAfterHybridRef.current && isHybridResult) {
                 hybridResultRef.current = finalSheet;
+              }
+              // ── Did the paid pass actually redraw anything? ──────────────────────────────────
+              // Rory paid for Full Treatment again and again and got back the picture he already
+              // had. Six commits over two days were reported as fixing it, each with a green suite,
+              // because until now no code in this app had ever looked at the output image. A pass
+              // that returned its own input verbatim cleared every existing check — the restore
+              // verifier only confirms that protected pixels came back, which a copy satisfies
+              // perfectly — and was then stored, labelled "AI polished", and charged for.
+              //
+              // Protected pixels are excluded from the score. fullTreatmentProtectPolicy restores
+              // the boundary, driveway, house halo and everything outside the plot byte-for-byte,
+              // which on a cropped frame is roughly a third of the sheet; counting that guaranteed
+              // -identical region would drag an honest render toward "unchanged" and make this gate
+              // useless exactly where it matters.
+              //
+              // Scoring never blocks a good render: any failure here is swallowed and the sheet
+              // ships. A measurement that can reject work it cannot measure is worse than none.
+              let polishRejected = false;
+              if (isPolishedResult && polishInputRef.current) {
+                try {
+                  const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
+                  console.info('[glossy] paid polish difference', sheet.key, diff);
+                  if (diff.verdict !== 'redrawn') {
+                    polishRejected = true;
+                    setPolishNoChange(differenceMessage(diff));
+                  }
+                } catch (err) {
+                  console.warn('[glossy] could not score the paid polish — keeping it', err);
+                }
+                polishInputRef.current = null;
+              }
+              if (polishRejected) {
+                // Keep the Hybrid on screen and add nothing to the gallery. A third near-identical
+                // thumbnail is exactly what made the gallery unreadable, and presenting a copy as a
+                // paid result is the app claiming something it did not get.
+                setLockedPolishStage(null);
+                continue;
               }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
               try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
@@ -10742,6 +10795,26 @@ export default function DesignGlossy({
           </button>
         )}
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
+        {/* A paid pass that came back with nothing new. Amber, not red — nothing is broken and no
+            work was lost; the farmer simply needs to know the second render did not earn its place,
+            rather than being handed a copy of the map they already had and told it was polished. */}
+        {polishNoChange && (
+          <div
+            role="status"
+            style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '10px 12px', borderRadius: 10, background: '#FDF4E3', border: '1px solid #E8D5A8' }}
+          >
+            <span aria-hidden style={{ fontSize: 14, lineHeight: '18px' }}>⚠︎</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.45, color: '#6B5320' }}>{polishNoChange}</p>
+              <button
+                onClick={() => setPolishNoChange(null)}
+                style={{ marginTop: 6, padding: 0, background: 'none', border: 'none', color: '#8A6D2A', fontWeight: 700, fontSize: 12, cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        )}
         {notice && !error && <p style={{ color: GREEN, fontSize: 12.5, fontWeight: 600 }}>{notice}</p>}
       </div>
 

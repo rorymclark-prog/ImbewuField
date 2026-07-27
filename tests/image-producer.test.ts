@@ -782,22 +782,52 @@ test('the paid sector polish uses the complete exact sheet as its visual bluepri
   assert.match(p, /formal engraved masterplan/i);
 });
 
-test('the paid design polish redraws the whole exact sheet without changing its design', () => {
+// ── The paid second pass ───────────────────────────────────────────────────────
+// Rory, after paying for Full Treatment: the polished sheet was indistinguishable from the free
+// Hybrid it was built on. An audit of the render path found the cause in this prompt rather than
+// in the mask, the stages or the opacity work that had all been tried before it.
+//
+// The polish pass was rechained in ed8da18 to feed on the HYBRID instead of the exact sheet — and
+// this prompt was never updated. It still opened by calling its input "COMPLETE, already-correct",
+// then spent five of eight paragraphs on preservation, and its single differentiating sentence
+// asked for something "more refined than the supplied exact sheet" — an image the model had not
+// been given for two days. Against an input that already looks acceptable, returning a near-copy
+// was the COMPLIANT answer. The model was doing as it was told.
+//
+// These assertions therefore check the prompt's JOB, not its wording. The previous version pinned
+// fourteen exact phrases, which meant the text could stay wrong for two days while the suite stayed
+// green — a snapshot test on a prompt records what someone typed, not whether it works.
+test('the paid second pass is told it received a DRAFT, and that copying it is a failure', () => {
   const p = buildFinishedSheetPolishPrompt('Water', 'chatgpt_atlas', 'Some Farm');
-  assert.match(p, /COMPLETE, already-correct Water plan sheet/);
-  assert.match(p, /POLISH THE WHOLE PAGE/);
-  assert.match(p, /Legend swatches must use the same polished pictorial symbols/);
-  assert.match(p, /same positions and shapes/);
-  assert.match(p, /Preserve every feature count/);
-  assert.match(p, /fully opaque, solid/);
-  assert.match(p, /no grey halo, white halo/);
-  assert.match(p, /separate solid vessels/);
-  assert.match(p, /blue water pipes/);
-  assert.match(p, /purple filtered-greywater/);
-  assert.match(p, /larger pictorial swatches/);
-  assert.match(p, /NOTES block at the bottom/);
-  assert.match(p, /condensed technical cartographic sans-serif/);
-  assert.match(p, /NO INVENTION/);
+
+  // 1. It must describe its real input. Calling a first-pass AI render "complete" or
+  //    "already-correct" invites the model to leave it alone.
+  assert.match(p, /FIRST-PASS AI render|draft, not a finished sheet/i);
+  assert.doesNotMatch(p, /COMPLETE, already-correct/, 'the input is a draft, not a finished sheet');
+
+  // 2. It must not reference the exact sheet — the polish pass has not seen one since ed8da18.
+  assert.doesNotMatch(p, /than the supplied exact sheet/, 'the model is given the hybrid, not the exact sheet');
+
+  // 3. The anti-copy instruction is the whole point of the rewrite.
+  assert.match(p, /RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT/);
+  assert.match(p, /global filter|grain, warmth or vignette/i, 'a filter pass must be named as failure too');
+
+  // 4. It must say what specifically to improve. "Polish" alone is not actionable for an image
+  //    model; naming materials, line weight and lighting is.
+  assert.match(p, /material/i);
+  assert.match(p, /line weight/i);
+  assert.match(p, /shadow|lighting|lit/i);
+
+  // 5. Geometry still may not move — the point was never to let it redesign the farm.
+  assert.match(p, /move none of them|WHAT MUST NOT MOVE/);
+  assert.match(p, /Invent nothing/i);
+
+  // 6. Preservation must not swamp the ask. The old prompt was five parts preservation to one part
+  //    instruction; that ratio is what made a copy compliant.
+  const paragraphs = p.split('\n\n');
+  const preservation = paragraphs.filter((s) => /preserve|must not|keep the|invent nothing/i.test(s)).length;
+  assert.ok(preservation <= paragraphs.length / 2, `preservation dominates the prompt (${preservation}/${paragraphs.length})`);
+
   assert.match(p, /Some Farm/);
   assert.match(p, /polished editorial cartography/i);
 });

@@ -17,6 +17,8 @@
 // Net: the model can hallucinate all it likes; the hallucination is clipped and
 // over-painted out of existence. Accuracy is guaranteed by construction.
 
+import { compareRenders, type DifferenceReport } from '@/lib/render-difference';
+
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
 
@@ -338,6 +340,43 @@ export function countProtectedPixelMismatches(
     }
   }
   return mismatches;
+}
+
+/**
+ * Did the paid pass actually redraw anything?
+ *
+ * The scoring itself lives in lib/render-difference.ts as a pure function so it can be tested
+ * against constructed images; this wrapper exists only because getting pixels out of a data URL
+ * needs a canvas, and every other pixel comparison in this file already does it this way.
+ *
+ * Both images are rasterised at the OUTPUT's dimensions. A model that returns a different size is
+ * self-evidently not returning its input, and rescaling to compare would invent differences that
+ * are really just resampling.
+ */
+export async function measureRenderDifference(
+  inputImage: ImageInput,
+  outputImage: ImageInput,
+  protectMaskImage?: ImageInput,
+): Promise<DifferenceReport> {
+  const [input, output, mask] = await Promise.all([
+    loadImage(inputImage),
+    loadImage(outputImage),
+    protectMaskImage ? loadImage(protectMaskImage) : Promise.resolve(null),
+  ]);
+
+  const width = output.naturalWidth || output.width;
+  const height = output.naturalHeight || output.height;
+  const pixels = (img: HTMLImageElement) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('measureRenderDifference: 2D context unavailable');
+    ctx.drawImage(img, 0, 0, width, height);
+    return ctx.getImageData(0, 0, width, height).data;
+  };
+
+  return compareRenders(pixels(input), pixels(output), mask ? { protectMask: pixels(mask) } : {});
 }
 
 /** Restore source pixels wherever the mask is opaque, then return a PNG data URL. */
