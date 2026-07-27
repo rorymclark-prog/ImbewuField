@@ -55,6 +55,12 @@ import {
   type SnapNeighbourRing,
   type SnapRingKind,
 } from '@/lib/snap-edges';
+import {
+  alignAndDistribute,
+  alignAndDistributeSummary,
+  type AlignInputItem,
+  type AlignItemsResult,
+} from '@/lib/align-items';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
@@ -72,6 +78,7 @@ import BasePhotoImport, { type BasePhotoApplyResult } from '@/components/design/
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
+import { usePhoneViewport } from '@/lib/use-phone-viewport';
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
@@ -560,6 +567,23 @@ function DesignStudioInner() {
     if (!stillSelected || !stillExists) setSnapPreview(null);
   }, [snapPreview, selectedId, canvasState]);
 
+  // Clean up (lib/align-items.ts) preview — set only while previewing a pending "clean up" of a
+  // MULTI-selection of 2+ placed items (Tidy/Snap above are deliberately single-selection; this
+  // one deliberately is not — see lib/align-items.ts's module doc). `ids` pins the preview to the
+  // EXACT SET of items it was computed against, same "id-pinned, dropped on staleness" shape as
+  // tidyPreview/snapPreview above: adding, removing, or losing any one member of the group (a
+  // selection change, or a remote edit deleting one of them) drops the stale preview rather than
+  // confirming a partial or outdated result. Never written to directly outside
+  // onCleanupSelected/onConfirmCleanup/onCancelCleanup/this cleanup effect.
+  const [cleanupPreview, setCleanupPreview] = useState<{ ids: string[]; result: AlignItemsResult } | null>(null);
+  useEffect(() => {
+    if (!cleanupPreview) return;
+    const stillSelected =
+      selectedIds.length === cleanupPreview.ids.length && cleanupPreview.ids.every((id) => selectedIds.includes(id));
+    const stillExists = canvasState ? cleanupPreview.ids.every((id) => canvasState.items.some((it) => it.id === id)) : false;
+    if (!stillSelected || !stillExists) setCleanupPreview(null);
+  }, [cleanupPreview, selectedIds, canvasState]);
+
   const handleSelect = useCallback((id: string | null, additive?: boolean) => {
     if (id === null) {
       setSelectedIds([]);
@@ -640,6 +664,52 @@ function DesignStudioInner() {
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
   const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  // Phone-only: auto-collapse the instant the farmer starts actually interacting with the
+  // canvas (a real drag, or a map scroll/zoom) — see the effect below, wired to canvasWrapRef.
+  // Deliberately one-directional (only ever sets chromeCollapsed(true), never false): restoring
+  // is the farmer's own tap on the existing "Show steps" control in the slim bar. Auto-restoring
+  // when the gesture ends would flicker the chrome mid-drawing, which is the one thing the spec
+  // for this explicitly rules out.
+  const isPhone = usePhoneViewport();
+  const canvasWrapRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!isPhone) return;
+    const el = canvasWrapRef.current;
+    if (!el) return;
+    const DRAG_THRESHOLD_PX = 6;
+    let pending: { x: number; y: number; pointerId: number } | null = null;
+    const onPointerDown = (e: PointerEvent) => {
+      pending = { x: e.clientX, y: e.clientY, pointerId: e.pointerId };
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (!pending || pending.pointerId !== e.pointerId) return;
+      const dx = e.clientX - pending.x;
+      const dy = e.clientY - pending.y;
+      if (Math.hypot(dx, dy) > DRAG_THRESHOLD_PX) {
+        setChromeCollapsed(true);
+        pending = null; // fire once per gesture, not on every subsequent pointermove
+      }
+    };
+    const onPointerEnd = () => {
+      pending = null;
+    };
+    // Map scroll/zoom (wheel on desktop trackpads/mice that happen to be under the phone
+    // breakpoint, e.g. a narrowed browser window; touch pinch-zoom goes through pointerdown/move
+    // above instead) — collapses immediately, no drag distance to clear.
+    const onWheel = () => setChromeCollapsed(true);
+    el.addEventListener('pointerdown', onPointerDown, { passive: true });
+    el.addEventListener('pointermove', onPointerMove, { passive: true });
+    el.addEventListener('pointerup', onPointerEnd, { passive: true });
+    el.addEventListener('pointercancel', onPointerEnd, { passive: true });
+    el.addEventListener('wheel', onWheel, { passive: true });
+    return () => {
+      el.removeEventListener('pointerdown', onPointerDown);
+      el.removeEventListener('pointermove', onPointerMove);
+      el.removeEventListener('pointerup', onPointerEnd);
+      el.removeEventListener('pointercancel', onPointerEnd);
+      el.removeEventListener('wheel', onWheel);
+    };
+  }, [isPhone]);
   const [printOpen, setPrintOpen] = useState(false);
   // Set when a local save genuinely failed (device storage full). Must be shown — a silent
   // failure here is how a design's zones went missing while the header still said "Saved".
@@ -1338,6 +1408,57 @@ function DesignStudioInner() {
   // Cancel changes nothing — just drops the preview, same as onCancelTidy.
   const onCancelSnap = snapPreview ? () => setSnapPreview(null) : null;
 
+  // Clean up (lib/align-items.ts) — offered only when 2+ PLACED ITEMS are selected and nothing
+  // else is mixed into the selection (a zone or line caught in the same multi-select means there
+  // is no group of PlacedItems to straighten, so this stays hidden — mirrors
+  // selectedZoneForTidy/selectedZoneForSnap's "wrong shape kind => null" convention). Deliberately
+  // NOT gated to exactly one item like Tidy/Snap — see lib/align-items.ts's module doc for why
+  // this action is the one deliberately scoped to a group.
+  const selectedItemsForCleanup: PlacedItem[] = selectedIds.length >= 2 && canvasState
+    ? selectedIds.map((id) => canvasState.items.find((it) => it.id === id)).filter((it): it is PlacedItem => !!it)
+    : [];
+  // Tapping Clean up only COMPUTES and OPENS a preview — it never itself edits the design, same
+  // as Tidy/Snap. See DesignCanvas's cleanupPreview prop for the overlay + confirm/cancel panel
+  // this feeds.
+  const onCleanupSelected =
+    selectedItemsForCleanup.length === selectedIds.length && selectedItemsForCleanup.length >= 2 && frame
+      ? () => {
+          const inputItems: AlignInputItem[] = selectedItemsForCleanup.map((it) => ({
+            id: it.id,
+            x: it.x,
+            y: it.y,
+            rot: it.rot,
+            shape: (ELEMENTS_BY_ID[it.defId]?.shape ?? 'rect') as 'rect' | 'circle',
+          }));
+          const result = alignAndDistribute(inputItems, { frame });
+          setTidyPreview(null); // only one pending preview action at a time
+          setSnapPreview(null);
+          setCleanupPreview({ ids: selectedIds, result });
+        }
+      : null;
+  // Confirm commits through handleChange — the SAME onChange/undo path every other edit in this
+  // file uses, so this is exactly ONE undo entry and undo restores every pre-cleanup position AND
+  // rotation verbatim, like any other edit. Only offered when the preview actually changed
+  // something (result.changed); "nothing to change" previews show no Confirm button at all (see
+  // DesignCanvas's canConfirm).
+  const onConfirmCleanup = cleanupPreview && cleanupPreview.result.changed
+    ? () => {
+        const preview = cleanupPreview;
+        const byId = new Map(preview.result.items.map((it) => [it.id, it]));
+        handleChange((prev) => ({
+          ...prev,
+          items: prev.items.map((it) => {
+            const aligned = byId.get(it.id);
+            return aligned ? { ...it, x: aligned.x, y: aligned.y, rot: aligned.rot } : it;
+          }),
+          updatedAt: new Date().toISOString(),
+        }));
+        setCleanupPreview(null);
+      }
+    : null;
+  // Cancel changes nothing — just drops the preview, same as onCancelTidy/onCancelSnap.
+  const onCancelCleanup = cleanupPreview ? () => setCleanupPreview(null) : null;
+
   // Desktop keyboard shortcuts for the canvas (power-user / facilitator convenience; phones
   // don't have these keys). Cmd/Ctrl+Z = undo · Delete/Backspace = delete the selected
   // element · Escape = deselect. Ignored while typing in a field.
@@ -1851,8 +1972,9 @@ function DesignStudioInner() {
       )}
 
       {/* Canvas (middle). minHeight floor (not 0) so the map can never be squeezed to a sliver
-          on a phone by the tool chrome below it — it always keeps ~45% of the screen. */}
-      <div style={{ flex: 1, position: 'relative', minHeight: '45dvh' }}>
+          on a phone by the tool chrome below it — it always keeps ~45% of the screen.
+          canvasWrapRef feeds the phone-only auto-collapse-top-chrome-on-drag effect above. */}
+      <div ref={canvasWrapRef} style={{ flex: 1, position: 'relative', minHeight: '45dvh' }}>
         {canvasState && frame && canvasState.step === 'glossy' ? (
           <DesignGlossyLazy
             state={canvasState}
@@ -1914,6 +2036,17 @@ function DesignStudioInner() {
               }
               onConfirmSnap={onConfirmSnap ?? undefined}
               onCancelSnap={onCancelSnap ?? undefined}
+              cleanupPreview={
+                cleanupPreview
+                  ? {
+                      items: cleanupPreview.result.items,
+                      summary: alignAndDistributeSummary(cleanupPreview.result),
+                      canConfirm: cleanupPreview.result.changed,
+                    }
+                  : null
+              }
+              onConfirmCleanup={onConfirmCleanup ?? undefined}
+              onCancelCleanup={onCancelCleanup ?? undefined}
             />
           </>
         ) : (
@@ -2180,6 +2313,7 @@ function DesignStudioInner() {
           onDuplicateSelected={onDuplicateSelected}
           onTidySelected={onTidySelected}
           onSnapSelected={onSnapSelected}
+          onCleanupSelected={onCleanupSelected}
           angleControl={angleControl}
           windControl={windControl}
           siteBiome={site?.biome}
