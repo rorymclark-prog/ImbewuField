@@ -171,6 +171,22 @@ export interface DesignCanvasProps {
   } | null;
   onConfirmSnap?: () => void;
   onCancelSnap?: () => void;
+  // Clean up (lib/align-items.ts) PREVIEW — set by the parent (app/design/page.tsx) once the
+  // farmer taps the palette's Clean up button on a MULTI-selection of 2+ placed items. Same
+  // distinct-ghost-overlay-on-top-of-unchanged-rendering idiom as tidyPreview/snapPreview above —
+  // this canvas never rewrites state.items itself; committing happens only via onConfirmCleanup,
+  // through the parent's own onChange/undo path, exactly like every other edit. `items` deliberately
+  // carries only id/x/y/rot (lib/align-items.ts's AlignedItem — the return type physically cannot
+  // carry wM/hM/defId/label), so this canvas looks each one up in `state.items` by id for the size/
+  // shape/colour a ghost footprint needs to draw, the same def lookup the real item-rendering loop
+  // below already does. null = no preview showing.
+  cleanupPreview?: {
+    items: Array<{ id: string; x: number; y: number; rot?: number }>; // lib/align-items.ts AlignItemsResult.items
+    summary: string; // plain-language copy — see lib/align-items.ts's alignAndDistributeSummary
+    canConfirm: boolean; // false when cleaning up would change nothing — Confirm is hidden
+  } | null;
+  onConfirmCleanup?: () => void;
+  onCancelCleanup?: () => void;
 }
 
 const GOLD = '#F7C97E';
@@ -183,6 +199,10 @@ const TIDY_PREVIEW = '#FF6EC7';
 // (edit-handle chrome), and TIDY_PREVIEW (the OTHER previewed geometry action) so a farmer can
 // never confuse "this is what snapping would produce" with either of those.
 const SNAP_PREVIEW = '#5EC8F2';
+// A hue used ONLY for the Clean up preview ghost — distinct from GOLD (selection), CYAN
+// (edit-handle chrome), TIDY_PREVIEW and SNAP_PREVIEW (the two OTHER previewed geometry actions)
+// so a farmer can never confuse "this is what cleaning up would produce" with any of those.
+const CLEANUP_PREVIEW = '#B98CE0';
 const SCALE_STEPS_M = [5, 10, 20, 50, 100, 200] as const;
 // Same bone-white as DesignGlossy.tsx's BOUNDARY_BONE — the property boundary is a real
 // post-and-wire farm fence, never green, so it never reads as a row of plants (that
@@ -511,6 +531,9 @@ export default function DesignCanvas({
   snapPreview,
   onConfirmSnap,
   onCancelSnap,
+  cleanupPreview,
+  onConfirmCleanup,
+  onCancelCleanup,
 }: DesignCanvasProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
@@ -3143,6 +3166,61 @@ export default function DesignCanvas({
           </g>
         )}
 
+        {/* Clean up preview (lib/align-items.ts) — same idiom as Tidy/Snap directly above: the
+            group's NORMAL rendering is untouched; this draws each item's CANDIDATE aligned
+            position/rotation as a distinct ghost footprint on top. wM/hM/shape/colour are read
+            from the ORIGINAL PlacedItem in state.items (cleanupPreview.items — lib/align-items.ts's
+            AlignedItem — physically cannot carry them, see the prop's own doc comment above), the
+            same def lookup the real item-rendering loop above already does. Only drawn when
+            canConfirm (a "nothing to align"/rejected preview has items identical to the
+            originals). Drawn last so it is never hidden behind a real shape. */}
+        {cleanupPreview && cleanupPreview.canConfirm && (
+          <g pointerEvents="none">
+            {cleanupPreview.items.map((aligned) => {
+              const orig = state.items.find((it) => it.id === aligned.id);
+              if (!orig) return null;
+              const def = ELEMENTS_BY_ID[orig.defId];
+              if (!def) return null;
+              const wM = orig.wM ?? def.wM;
+              const hM = orig.hM ?? def.hM;
+              const wPx = Math.max(wM / mPerPx, 6);
+              const hPx = Math.max(hM / mPerPx, 6);
+              const cx = aligned.x * imgW;
+              const cy = aligned.y * imgH;
+              const rot = def.shape === 'rect' ? aligned.rot ?? 0 : 0;
+              const rotXf = rot ? `rotate(${rot})` : undefined;
+              return (
+                <g key={aligned.id} transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}>
+                  <g transform={rotXf}>
+                    {def.shape === 'circle' ? (
+                      <circle
+                        r={wPx / 2}
+                        fill="none"
+                        stroke={CLEANUP_PREVIEW}
+                        strokeWidth={worldPx(2.5)}
+                        strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+                      />
+                    ) : (
+                      <rect
+                        x={-wPx / 2}
+                        y={-hPx / 2}
+                        width={wPx}
+                        height={hPx}
+                        fill="none"
+                        stroke={CLEANUP_PREVIEW}
+                        strokeWidth={worldPx(2.5)}
+                        strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+                        rx={3}
+                      />
+                    )}
+                  </g>
+                  <circle cx={0} cy={0} r={worldPx(3.5)} fill={CLEANUP_PREVIEW} stroke="#0B120B" strokeWidth={worldPx(1)} />
+                </g>
+              );
+            })}
+          </g>
+        )}
+
         </g>
         {/* End world-space transform group — everything below is a fixed screen-space overlay. */}
 
@@ -3574,6 +3652,73 @@ export default function DesignCanvas({
                 }}
               >
                 ✓ Snap to neighbour
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Clean up preview panel — same bottom-CENTER slot/idiom as the Tidy outline and
+          Snap-to-neighbour preview panels above (app/design/page.tsx keeps tidyPreview,
+          snapPreview and cleanupPreview mutually exclusive, so at most one ever shows at once).
+          Confirm is omitted entirely when canConfirm is false (cleaning up would change nothing —
+          "offer no destructive action"), leaving just the explanation and a Close button. */}
+      {cleanupPreview && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 'calc(12px + env(safe-area-inset-bottom))',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+            maxWidth: 'calc(100% - 24px)',
+            zIndex: 20,
+          }}
+        >
+          <div
+            style={{
+              padding: '6px 14px',
+              borderRadius: 14,
+              background: 'rgba(11,18,11,0.88)',
+              color: '#F4EDD8',
+              fontSize: 12.5,
+              fontWeight: 600,
+              textAlign: 'center',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            }}
+          >
+            {cleanupPreview.summary}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => onCancelCleanup?.()}
+              style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
+            >
+              {cleanupPreview.canConfirm ? '✕ Cancel' : 'Close'}
+            </button>
+            {cleanupPreview.canConfirm && (
+              <button
+                type="button"
+                onClick={() => onConfirmCleanup?.()}
+                style={{
+                  minHeight: 52,
+                  padding: '0 20px',
+                  borderRadius: 26,
+                  border: '2px solid #FBF6EC',
+                  background: '#1F4D2B',
+                  color: '#FBF6EC',
+                  fontWeight: 800,
+                  fontSize: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                ✓ Clean up
               </button>
             )}
           </div>
