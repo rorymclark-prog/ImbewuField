@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   calculateBoundaryPresentationCrop,
   calculateBoundaryPresentationLayout,
+  calculatePhasingSheetSize,
   MAX_PRESENTATION_MAP_ASPECT,
   MAX_PRESENTATION_SHEET_ASPECT,
 } from '@/lib/reference-presentation';
@@ -102,4 +103,31 @@ test('a one-to-four tall farm keeps the readable minimum legend width', () => {
   assert.ok(layout);
   assert.ok(layout.sheetAspect <= MAX_PRESENTATION_SHEET_ASPECT);
   assert.ok(layout.legendWidth >= 360);
+});
+
+test('sheet 08 adds the same panel column as the rest of a tall plan set', () => {
+  const layout = calculateBoundaryPresentationLayout(TALL_BOUNDARY, FRAME);
+  const sheet = calculatePhasingSheetSize(TALL_BOUNDARY, FRAME);
+
+  assert.ok(layout);
+  assert.equal(sheet.mapW, layout.imgW * 2);
+  assert.equal(sheet.mapH, layout.imgH * 2);
+  assert.equal(sheet.W, sheet.mapW + sheet.legendWidth);
+  assert.ok(sheet.W > sheet.mapW, 'the schedule must own a column instead of covering the map');
+  assert.equal(sheet.aspect, layout.sheetAspect);
+  assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);
+});
+
+test('a one-to-six plot can have a map over four-to-one while sheet 08 still stays within three-to-one', () => {
+  const boundary: Array<[number, number]> = [
+    [0.475, 0.275],
+    [0.525, 0.275],
+    [0.525, 0.725],
+    [0.475, 0.725],
+  ];
+  const sheet = calculatePhasingSheetSize(boundary, FRAME);
+
+  assert.ok(sheet.mapH / sheet.mapW > 4);
+  assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);
+  assert.ok(sheet.legendWidth >= 360);
 });

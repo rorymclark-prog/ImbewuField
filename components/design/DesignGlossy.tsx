@@ -63,6 +63,7 @@ import {
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
 import {
   calculateBoundaryPresentationLayout,
+  calculatePhasingSheetSize,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
@@ -6470,15 +6471,10 @@ export async function buildBlueprintSectorMap(
   return composeSectorSheet(null, state, frame, refLayers, site, placeName);
 }
 
-// Single source of truth for the Phasing schedule panel's geometry — used by buildImplementationMap
-// (the exact sheet), composePhasingSheet (Hybrid/Polish composite-back), buildPhasingHybridInput and
-// blankPhasingPanel (what the model is shown), and buildPhasingProtectMask. Before this, the same
-// four numbers (pad=W*0.02, lgW=W*0.34, lgX, lgBottom) were copy-pasted literally in four places —
-// exactly the "same question answered twice" pattern the handover's recurring-bug-pattern section
-// warns about (a future panel-width change would silently desync the blank-out, the mask and the
-// composite-back from the real panel, exposing or misplacing schedule pixels).
-// The pixel size sheet 08 renders at — ONE answer, shared by the exact sheet, the model's input,
-// the panel blank-out and the protect mask.
+// Single source of truth for sheet 08's complete map-plus-schedule envelope. The exact sheet, both
+// AI inputs, the panel blank-out and the protect mask must agree byte-for-byte about these bounds:
+// a private size in any one path either exposes real schedule text to the model or restores it into
+// the wrong place. calculatePhasingSheetSize shares the same map + readable-column rule as 01–07.
 //
 // Those four used to derive W/H from the RAW frame while nothing else did, which was fine only
 // while sheet 08 alone stayed 3:2. The moment it follows the boundary like sheets 01–07, any path
@@ -6493,31 +6489,16 @@ export async function buildBlueprintSectorMap(
 function phasingSheetSize(
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
-): { W: number; H: number } {
-  const layout = calculateBoundaryPresentationLayout(refLayers.boundary, frame, SCALE);
-  return {
-    W: (layout?.imgW ?? frame.imgW) * SCALE,
-    H: (layout?.imgH ?? frame.imgH) * SCALE,
-  };
+): ReturnType<typeof calculatePhasingSheetSize> {
+  return calculatePhasingSheetSize(refLayers.boundary, frame, SCALE);
 }
 
-function phasingPanelRect(W: number, H: number) {
-  const pad = Math.round(W * 0.02);
-  // A FLAT 34% OF WIDTH STOPPED WORKING once this sheet started following the boundary.
-  //
-  // On the old fixed 3:2 frame, 34% was always 653px and always readable. Framed to the plot, a
-  // tall narrow farm gives a 744px-wide map — and 34% of that is 253px, under 40% of the width
-  // this schedule's dates, tasks and hold-points were laid out for. The panel's HEIGHT triples on
-  // those sheets, so the room exists; it is only the horizontal share that collapses.
-  //
-  // styleSheetLegendWidth already owns "how wide is a readable panel" for sheets 01–07 (clamped
-  // 360–620). Using it here makes the whole plan set agree rather than letting this sheet keep a
-  // private second rule — the same reason OVERLAY_PANEL_RATIO was deleted. It also brings today's
-  // panel from 653 down to 620, the cap every other sheet has always respected.
-  const lgW = styleSheetLegendWidth(W);
-  const lgX = W - pad - lgW;
-  const lgY = pad;
-  const lgBottom = H - pad;
+function phasingPanelRect(size: ReturnType<typeof calculatePhasingSheetSize>) {
+  const pad = Math.round(size.mapW * 0.02);
+  const lgW = size.legendWidth;
+  const lgX = size.mapW;
+  const lgY = 0;
+  const lgBottom = size.H;
   return { pad, lgW, lgX, lgY, lgBottom };
 }
 
@@ -6659,30 +6640,29 @@ async function composePhasingSheet(
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
   const renderRefLayers = presentation.refLayers;
-  const W = renderFrame.imgW * SCALE;
-  const H = renderFrame.imgH * SCALE;
+  const size = phasingSheetSize(frame, refLayers);
+  const { mapW, mapH, W, H } = size;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-  const pad = Math.round(W * 0.02);
-  const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
+  const { pad, lgX } = phasingPanelRect(size);
+  const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
 
-  // 1. The model's decorative illustrated background, normalised to the exact frame size.
+  // 1. The model's decorative illustrated background, normalised to the complete sheet size.
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, 0, 0, W, H);
 
   // 2. Every exact fact — ground, structures, boundary, phase pins — redrawn on top from saved
-  //    design data, never copied from (or left as) the model's own paint of that region.
-  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, W, H);
+  //    design data into the map column only, never copied from (or left as) the model's paint.
+  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, mapW, mapH);
 
   // 3. Scale bar and north arrow, drawn as exact vector chrome (not a photographic strip copied
   //    from a separately rendered sheet, which risked a hard seam and could clip the north arrow).
-  const scaleRowH = Math.round(W * 0.026);
-  drawBlueprintScaleBar(ctx, W, H, pad, scaleRowH, pxPerM);
-  const { lgX } = phasingPanelRect(W, H);
-  const naSize = Math.max(30, Math.round(W * 0.026));
+  const scaleRowH = Math.round(mapW * 0.026);
+  drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
+  const naSize = Math.max(30, Math.round(mapW * 0.026));
   drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
 
   // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
@@ -6690,9 +6670,7 @@ async function composePhasingSheet(
   //    independently laid-out copy that could drift from it under a future font/wrap change.
   const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
   const exactImg = await loadImage(exactSheet);
-  // The whole right-hand strip, full height — not just the rounded panel rect. The panel's corners
-  // are rounded, so a tighter copy would leave slivers of the model's paint showing through at the
-  // four corners; copying the full strip matches what buildImplementationMap itself drew there.
+  // The whole right-hand column, full height, is app-owned schedule content.
   ctx.drawImage(exactImg, lgX, 0, W - lgX, H, lgX, 0, W - lgX, H);
 
   return canvas.toDataURL('image/png');
@@ -6710,9 +6688,9 @@ async function buildPhasingHybridInput(
 ): Promise<string> {
   // The same size buildImplementationMap just drew at — otherwise the blank-out lands somewhere
   // the panel is not and the model is shown real dates.
-  const { W, H } = phasingSheetSize(frame, refLayers);
+  const size = phasingSheetSize(frame, refLayers);
   const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
-  return blankPhasingPanel(exactSheet, W, H);
+  return blankPhasingPanel(exactSheet, size);
 }
 
 // Erases the schedule panel region on an ARBITRARY already-rendered Phasing sheet with a fully
@@ -6722,7 +6700,11 @@ async function buildPhasingHybridInput(
 // stage's input (starting from the Hybrid stage's OWN finished output — see generatePhasingViaQueue
 // — so the polish pass is never shown real schedule text either, matching the Hybrid stage's
 // guarantee instead of relying on buildFinishedSheetPolishPrompt's prompt-only wording).
-async function blankPhasingPanel(imageDataUrl: string, W: number, H: number): Promise<string> {
+async function blankPhasingPanel(
+  imageDataUrl: string,
+  size: ReturnType<typeof calculatePhasingSheetSize>,
+): Promise<string> {
+  const { W, H } = size;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -6730,13 +6712,14 @@ async function blankPhasingPanel(imageDataUrl: string, W: number, H: number): Pr
   if (!ctx) throw new Error('Canvas unavailable');
   ctx.drawImage(await loadImage(imageDataUrl), 0, 0, W, H);
 
-  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
+  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
   ctx.fillStyle = '#FBF6EC'; // fully opaque — same cream as buildImplementationMap's panel fill
-  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
-  ctx.fill();
+  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
-  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
+  ctx.beginPath();
+  ctx.moveTo(lgX, lgY);
+  ctx.lineTo(lgX, lgBottom);
   ctx.stroke();
 
   return canvas.toDataURL('image/png');
@@ -6753,7 +6736,8 @@ async function blankPhasingPanel(imageDataUrl: string, W: number, H: number): Pr
 // guarantee comes from never showing it real content (blankPhasingPanel) and never trusting its
 // output for that region (composePhasingSheet's redraw).
 function buildPhasingProtectMask(frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers']): string {
-  const { W, H } = phasingSheetSize(frame, refLayers);
+  const size = phasingSheetSize(frame, refLayers);
+  const { W, H } = size;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -6761,7 +6745,7 @@ function buildPhasingProtectMask(frame: CanvasFrame, refLayers: DesignGlossyProp
   if (!ctx) throw new Error('Canvas unavailable');
   ctx.clearRect(0, 0, W, H);
 
-  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
+  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
 
@@ -6784,12 +6768,12 @@ export async function buildImplementationMap(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
-  // FRAMED TO THE BOUNDARY, like sheets 01–07.
+  // FRAMED TO THE BOUNDARY, with a separate schedule column like sheets 01–07.
   //
-  // This sheet passed the raw frame while every other sheet went through
-  // boundaryPresentationContext, so on the Ubhejane demo the plan set came out with seven sheets
-  // at 1.98:1 and this one at 1.50:1. DesignPrint letterboxes each sheet into A4/A3, so the odd
-  // one out is not subtle on paper — it gets a visibly different band of white.
+  // v57 made the map follow the boundary but left the schedule sitting on top of it, so 08 still
+  // had no column in its outer dimensions. That kept its print aspect unlike 01–07 and let a tall
+  // map exceed the AI 3:1 limit even though the shared sheet calculation had already accounted for
+  // a column. The map now stays intact on the left and the schedule owns the full right column.
   //
   // The phase plan is built from the SAVED state, before presentation: phases are a fact about the
   // design, not about how it is being framed, and buildPhasePlan is what the schedule text is
@@ -6799,36 +6783,35 @@ export async function buildImplementationMap(
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
   const renderRefLayers = presentation.refLayers;
-  const W = renderFrame.imgW * SCALE;
-  const H = renderFrame.imgH * SCALE;
+  const size = phasingSheetSize(frame, refLayers);
+  const { mapW, mapH, W, H } = size;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-  const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
-  const { pad, lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
+  const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
+  const { pad, lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
 
   // 1. Satellite + scrim.
-  await drawBlueprintBase(ctx, renderFrame, W, H);
+  await drawBlueprintBase(ctx, renderFrame, mapW, mapH);
 
   // 2-4. The complete saved design UNDER the phase pins — ground, structures, features, boundary,
   //    then the numbered phase pins. Shared with composePhasingSheet's AI composite-back via
   //    drawPhasingExactContent, so the exact sheet and the Hybrid/Full-Treatment sheets can never
   //    draw this content two different ways.
-  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, W, H);
+  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, mapW, mapH);
 
   // 5. The title moves into the shared right-hand sheet panel below. Keeping a second giant title
   // over the map made sheet 08 the odd one out and consumed the clear northwest map space.
 
   // 6. Scale bar + north arrow. Scale bottom-left as on every sheet; north on a disc just left of
   //    the panel's foot (this sheet adds a north arrow the other Blueprints still lack).
-  const scaleRowH = Math.round(W * 0.026);
-  drawBlueprintScaleBar(ctx, W, H, pad, scaleRowH, pxPerM);
+  const scaleRowH = Math.round(mapW * 0.026);
+  drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
 
-  // 7. Right-hand panel — the phasing schedule. Wider than the legend panel (0.34 vs 0.27) because
-  //    it carries wrapped phase text. Fonts are FIXED at the established readable size (~W·0.012,
-  //    the legend body size); when content would overflow we shed task bullets and surplus site
+  // 7. Right-hand panel — the phasing schedule. Type follows the panel width, not the changing map
+  //    or widened sheet width. When content would overflow we shed task bullets and surplus site
   //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
   //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
   const ip = Math.round(lgW * 0.055);
@@ -6836,22 +6819,27 @@ export async function buildImplementationMap(
   const innerW = lgW - ip * 2;
   const panelBottom = lgBottom - ip;
 
-  ctx.fillStyle = 'rgba(251,246,236,0.97)';
-  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
-  ctx.fill();
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
-  roundRectPath(ctx, lgX, lgY, lgW, lgBottom - lgY, 14);
+  ctx.beginPath();
+  ctx.moveTo(lgX, lgY);
+  ctx.lineTo(lgX, lgBottom);
   ctx.stroke();
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(lgX, lgY, lgW, lgBottom - lgY);
+  ctx.clip();
 
-  const fsHeader = Math.round(W * 0.0165);
-  const fsSection = Math.round(W * 0.0112);
-  const fsBody = Math.round(W * 0.0092);
+  const fsHeader = Math.round(lgW * 0.051);
+  const fsSection = Math.round(lgW * 0.035);
+  const fsBody = Math.round(lgW * 0.029);
   const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
   const headerFont = `800 ${fsHeader}px ${SHEET_TITLE_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
-  const titleFont = `800 ${Math.round(W * 0.0108)}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(lgW * 0.034)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -7022,9 +7010,10 @@ export async function buildImplementationMap(
       drawLines(wrap(r, bulletTextW, bodyFont), bulletTextX, bodyFont, '#3E3A31');
     }
   }
+  ctx.restore();
 
   // North arrow, on its disc just left of the panel foot.
-  const naSize = Math.max(30, Math.round(W * 0.026));
+  const naSize = Math.max(30, Math.round(mapW * 0.026));
   drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
 
   return canvas.toDataURL('image/png');
@@ -7809,7 +7798,9 @@ interface SavedGlossy {
 //        the same presentation), and the Phasing schedule panel uses styleSheetLegendWidth like
 //        every other panel rather than a private flat 34%. Without this bump none of it is
 //        visible to anyone who has already rendered a sheet — the cached picture comes back.
-const PLAN_VERSION = 'v57';
+//   v58 — 2026-07-28: Phasing owns a separate schedule column instead of covering its map, so its
+//        outer aspect matches 01-07 and remains within the AI 3:1 limit on tall farms.
+const PLAN_VERSION = 'v58';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -9622,8 +9613,7 @@ export default function DesignGlossy({
       if (polishStage && hybridInput) {
         // The hybrid sheet was rendered at the boundary-framed size, so blank at that size — the
         // raw frame would clear a rectangle that is no longer where the panel sits.
-        const { W, H } = phasingSheetSize(frame, refLayers);
-        hybridInput = await blankPhasingPanel(hybridInput, W, H);
+        hybridInput = await blankPhasingPanel(hybridInput, phasingSheetSize(frame, refLayers));
       }
 
       const compositeDataUrl = hybridInput ?? await buildPhasingHybridInput(state, frame, refLayers, site, placeName);
