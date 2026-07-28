@@ -73,3 +73,24 @@ jobs:
           url="${{ steps.deploy.outputs.url }}"
           vercel alias set "$url" imbewufield.vercel.app --token="$VERCEL_TOKEN"
           vercel alias set "$url" permamap-sa.vercel.app --token="$VERCEL_TOKEN"
+
+      # PROVE THE LIVE SITE IS SERVING THIS COMMIT. Green CI meant "a deploy was attempted", which
+      # is not the thing anyone cares about — on 2026-07-28 production served a build 23 commits
+      # old while the runs looked broadly fine. /api/build-info is the same endpoint the farmer's
+      # update banner polls, so this asserts exactly what the banner would tell them.
+      - name: Verify imbewufield.vercel.app is serving this commit
+        if: env.HAS == 'true'
+        run: |
+          want="$(printf '%s' "$GITHUB_SHA" | cut -c1-7)"
+          for attempt in 1 2 3 4 5 6; do
+            got=$(curl -fsS "https://imbewufield.vercel.app/api/build-info?ci=$attempt" \
+              -H 'Cache-Control: no-cache' | sed -n 's/.*"sha":"\([^"]*\)".*/\1/p') || got=""
+            if [ "$got" = "$want" ]; then
+              echo "Live build is $got — matches this commit."
+              exit 0
+            fi
+            echo "Attempt $attempt: live build is '${got:-unreachable}', want '$want'. Waiting…"
+            sleep 10
+          done
+          echo "::error::imbewufield.vercel.app is still serving '${got:-unreachable}', not $want. Production did NOT update."
+          exit 1
