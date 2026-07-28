@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Snap now works on zones — it reaches the gaps, and stops claiming moves it never made',
+      'Map labels are readable: they now match the size the AI picks on the same plan',
       'AI maps stop numbering your beds — seven beds get one label, not "×1" to "×7"',
       'Plan sheets print evenly: the phasing sheet is now the same shape as the rest',
       'The phasing schedule no longer strikes a line through its own week dates',

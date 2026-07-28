@@ -85,6 +85,57 @@ the app uses, and say clearly in your report that the live confirmation is outst
 
 ---
 
+## 0b. The two tanks are labelled the other way round on the two styles — `codex/tank-label-identity`
+
+Rory rendered the SAME Water design twice and sent both PNGs at full resolution.
+
+| | top-left tank, on the boundary | middle tank, by the house |
+|---|---|---|
+| Satellite Overlay (model draws labels) | `JOJO TANK 2500L` | `JOJO TANK 5000L` |
+| Extension Blueprint (app draws labels) | `JOJO TANK 5000L` | `JOJO TANK 2500L` |
+
+**One of those sheets tells a farmer to stand the wrong tank on the wrong base.** A 5000L JoJo is a
+different footprint, a different plinth and a different delivered price from a 2500L. This is not a
+styling complaint.
+
+The app owns the placement in both cases — the model only paints over markers it was given. So the
+app-drawn sheet is the one to trust and the model is the likely culprit, but **do not assume that:
+prove which is right from the saved design before changing anything.**
+
+Start by rendering the exact (no-AI) Water sheet for the same design and seeing which of the two it
+agrees with. Then work out how the other one could disagree at all. Worth checking specifically:
+whether the label a marker carries is bound to the marker's own element id all the way through, or
+whether anywhere it is matched back by *type* or by index — with two tanks of the same type, an
+index or type match is exactly how two labels swap.
+
+If it turns out the model reordered them, that is a finding too, and the fix is that a tank's
+capacity is not something a model may letter — it becomes app-drawn chrome like the schedule panel.
+Say which of the two it is; do not fix both speculatively.
+
+---
+
+## 0c. The legend panel is three-quarters empty — `codex/legend-panel-fill`
+
+Same PNG. On the Extension Blueprint water sheet the legend column carries a title, six rows and
+then roughly **two thirds of the panel is blank cream** down to the NOTES block at the very bottom.
+Next to the Satellite Overlay render of the same design, where the rows are large and evenly spread
+down the column, it reads as unfinished.
+
+Two separate things to fix, and they are worth separating in the report:
+
+1. **Rows do not fill the column.** The panel is now as tall as the map (sheets follow the plot),
+   but the row rhythm is still sized as if the panel were short. Space the rows to the column they
+   are actually in — the phasing panel already sheds and re-fits content to its own height, so
+   there is a pattern in the codebase to follow rather than invent.
+2. **Counts appear on some rows and not others.** That sheet shows `Tap Point ×6` but plain
+   `JoJo Tank 2500L`, `Buried water pipe`, `Swale / contour water line`. A reader cannot tell
+   whether the absence of a number means "one" or "not counted". Pick one rule and apply it to
+   every row. Related to item 4's audit — the legend is the third of the three `×N` grammars.
+
+`PLAN_VERSION`. Verify by rendering, at both a wide and a tall boundary.
+
+---
+
 ## 1. A missing area is now priced at R0 instead of "we don't know" — `codex/unpriced-not-free`
 
 Introduced by `codex/price-book-tests`, so this is a follow-up to your own change, not a criticism
