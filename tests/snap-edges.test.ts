@@ -6,6 +6,7 @@ import {
   snapToNeighboursSummary,
   neighbourEligible,
   SNAP_EDGES_DEFAULTS,
+  defaultToleranceForKind,
   type SnapEdgesFrame,
   type SnapTargetRing,
   type SnapNeighbourRing,
@@ -225,9 +226,32 @@ test('an ordinary seam on an ordinary zone SNAPS — the area guard must not blo
 
 // The backstop still exists — it now catches pathological geometry rather than ordinary work.
 // A 1m sliver losing 0.4m of its width is a 40% change: a shape being deformed, not a seam closed.
+//
+// toleranceM is passed EXPLICITLY here. This case was written against the 0.5m default, and a zone
+// now defaults to 1.5m — at which the neighbour line is within reach of the LEFT corners too, all
+// four collapse onto it, and would_merge_vertices fires first. The original still comes back
+// untouched, so the safety property holds either way; but a test named for the area backstop must
+// actually reach the area backstop, so it names the tolerance its geometry was built for. The
+// companion test below covers the same guard at the zone default.
 test('SAFETY: the area backstop still fires on pathological geometry', () => {
   const targetM = square(0, 0, 1); // 1 m² — small enough that a 0.4m move is a huge proportion
   const neighbourM: Array<[number, number]> = [[0.6, -1], [0.6, 2]];
+  const target: SnapTargetRing = { kind: 'zone', points: toNorm(targetM, FRAME) };
+  const neighbours: SnapNeighbourRing[] = [{ id: 'n', kind: 'zone', points: toNorm(neighbourM, FRAME) }];
+
+  const result = snapToNeighbours(target, neighbours, { frame: FRAME, toleranceM: 0.5 });
+
+  assert.equal(result.reason, 'area_change_exceeded');
+  assert.equal(result.changed, false);
+  assert.deepEqual(result.points, target.points, 'the original must come back untouched');
+});
+
+// Same guard, sized for the tolerance a zone actually gets now. A 4m square whose right edge is
+// pulled 1.2m inward loses 30% of its area; the left edge is 2.8m away and stays out of reach, so
+// nothing merges and the AREA guard is the one that has to catch it.
+test('SAFETY: the area backstop still fires at the zone default tolerance', () => {
+  const targetM = square(0, 0, 4); // 16 m²
+  const neighbourM: Array<[number, number]> = [[2.8, -1], [2.8, 5]];
   const target: SnapTargetRing = { kind: 'zone', points: toNorm(targetM, FRAME) };
   const neighbours: SnapNeighbourRing[] = [{ id: 'n', kind: 'zone', points: toNorm(neighbourM, FRAME) }];
 
@@ -236,6 +260,52 @@ test('SAFETY: the area backstop still fires on pathological geometry', () => {
   assert.equal(result.reason, 'area_change_exceeded');
   assert.equal(result.changed, false);
   assert.deepEqual(result.points, target.points, 'the original must come back untouched');
+});
+
+// ── Rory, 2026-07-28: "snap didnt work on zones!" — two separate causes, both real ──────────────
+
+test('a corner already sitting ON a neighbour edge is not reported as having moved', () => {
+  // THE BUG: bestD starts AT toleranceM and the search accepts `d <= bestD`, so a vertex lying
+  // exactly on an eligible edge matches at distance 0 and was counted as moved. Snap then offered
+  // "Moves 2 corners. Nothing moves more than 0.0 m.", the farmer confirmed, an undo entry was
+  // spent, and the drawing came back byte-identical. Two zones of the demo farm share an edge
+  // exactly, which is how this reached a real phone.
+  const targetM = square(0, 0, 10);
+  // A neighbour edge lying exactly along the target's right edge — every candidate is at distance 0.
+  const neighbourM: Array<[number, number]> = [[10, -1], [10, 11]];
+  const target: SnapTargetRing = { kind: 'zone', points: toNorm(targetM, FRAME) };
+  const neighbours: SnapNeighbourRing[] = [{ id: 'n', kind: 'zone', points: toNorm(neighbourM, FRAME) }];
+
+  const result = snapToNeighbours(target, neighbours, { frame: FRAME });
+
+  assert.equal(result.changed, false, 'nothing actually moves, so nothing changed');
+  assert.equal(result.reason, 'nothing_in_tolerance');
+  assert.equal(result.moved, 0);
+  assert.equal(result.maxMovedM, 0);
+  assert.deepEqual(result.points, target.points);
+});
+
+test('a sketched zone reaches further than a traced ground feature', () => {
+  // A zone is drawn with a fingertip; a house ring is traced off a photograph. The same 0.9m seam
+  // must close for the zone and be refused for the house. Asserted as the RULE — zone reaches,
+  // feature does not — rather than by pinning either number, so it still means something when the
+  // tolerances are retuned.
+  const targetM = square(0, 0, 10);
+  const neighbourM: Array<[number, number]> = [[10.9, -1], [10.9, 11]];
+  const points = toNorm(targetM, FRAME);
+  const neighbours = (kind: 'zone' | 'house'): SnapNeighbourRing[] =>
+    [{ id: 'n', kind, points: toNorm(neighbourM, FRAME) }];
+
+  const asZone = snapToNeighbours({ kind: 'zone', points }, neighbours('zone'), { frame: FRAME });
+  const asHouse = snapToNeighbours({ kind: 'house', points }, neighbours('house'), { frame: FRAME });
+
+  assert.equal(asZone.changed, true, 'a 0.9m seam between two sketched zones should close');
+  assert.equal(asHouse.changed, false, 'the same seam between traced buildings should not');
+  assert.equal(asHouse.reason, 'nothing_in_tolerance');
+  assert.ok(
+    defaultToleranceForKind('zone') > defaultToleranceForKind('house'),
+    'a sketched ring must never be given a tighter tolerance than a traced one',
+  );
 });
 
 // ── "FALSE JOIN" guard: two of the target's OWN vertices must never coincide ──────────────────

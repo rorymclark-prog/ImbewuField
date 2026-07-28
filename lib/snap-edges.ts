@@ -119,7 +119,34 @@ export interface SnapEdgesResult {
   reason: SnapEdgesReason;
 }
 
+// A TRACED THING AND A SKETCHED THING DESERVE DIFFERENT TOLERANCES.
+//
+// 0.5m is right for a ground feature — a house ring, a patio, a driveway are physical objects
+// someone traced off a photograph, and moving a wall half a metre is already generous.
+//
+// A design ZONE is not that. It is an area a farmer sketches with a fingertip at zoom ~19.5, where
+// the finger itself covers a metre or two of ground. Rory reported "snap didn't work on zones" on
+// 2026-07-28, and the demo farm reproduces it exactly: at 0.5m, two of its four zones return
+// `nothing_in_tolerance` and the button does nothing at all. At 1.5m all four snap, moving at most
+// 1.12m. The seam a farmer is trying to close is simply bigger than the seam this number allowed.
+//
+// This is NOT a loosening of the safety story. Movement stays bounded both constructively and
+// defensively, the self-intersection, winding, false-join and area guards are untouched, and the
+// preview still states the largest movement in metres before anything is committed — with one
+// Undo. What changes is only that the action can now reach the gaps it exists to close.
 const DEFAULT_TOLERANCE_M = 0.5;
+const ZONE_TOLERANCE_M = 1.5;
+
+/** The tolerance a ring gets when the caller does not name one. See the note above. */
+export function defaultToleranceForKind(kind: SnapRingKind): number {
+  return kind === 'zone' ? ZONE_TOLERANCE_M : DEFAULT_TOLERANCE_M;
+}
+
+// Below this, a vertex has not really moved. See the `movedCount` guard in snapToNeighbours: a
+// vertex already sitting ON an eligible neighbour edge finds a candidate at distance ~0, and
+// counting that as a move is what made Snap claim "Moves 2 corners … nothing moves more than
+// 0.0 m" and then change nothing at all.
+const MOVED_EPS_M = 0.001;
 // 25%, NOT tidyOutline's 2% — copying that number here was a real bug, caught by Rory on a live
 // farm on 2026-07-27: every snap he tried was refused with "would change the enclosed area too
 // much", i.e. the guard blocked the exact thing the feature exists to do.
@@ -144,7 +171,10 @@ const EPS_M = 1e-9;
 const MERGE_EPS_M = 0.01;
 
 export const SNAP_EDGES_DEFAULTS = {
+  /** Ground features (house, patio, driveway…) — traced physical things. */
   toleranceM: DEFAULT_TOLERANCE_M,
+  /** Design zones — sketched with a fingertip, so the seams are bigger. */
+  zoneToleranceM: ZONE_TOLERANCE_M,
   maxAreaChangePct: DEFAULT_MAX_AREA_CHANGE_PCT,
 } as const;
 
@@ -271,7 +301,7 @@ export function snapToNeighbours(
   opts: SnapEdgesOptions,
 ): SnapEdgesResult {
   const { frame } = opts;
-  const toleranceM = opts.toleranceM ?? DEFAULT_TOLERANCE_M;
+  const toleranceM = opts.toleranceM ?? defaultToleranceForKind(target.kind);
   const maxAreaChangePct = opts.maxAreaChangePct ?? DEFAULT_MAX_AREA_CHANGE_PCT;
 
   if (!(frame.imgW > 0) || !(frame.imgH > 0) || !(frame.mPerPx > 0)) {
@@ -306,7 +336,13 @@ export function snapToNeighbours(
         }
       }
     }
-    if (best) {
+    // A CANDIDATE IS NOT A MOVE. `bestD` starts AT toleranceM and accepts `d <= bestD`, so a vertex
+    // already lying exactly on an eligible neighbour edge matches at distance 0. Counting that as
+    // moved is what let this function return changed:true / moved:2 / maxMovedM:0.000 — the farmer
+    // got a preview reading "Moves 2 corners. Nothing moves more than 0.0 m.", confirmed it, spent
+    // an undo entry, and the drawing came back byte-identical. Reproduced on the demo farm, whose
+    // zone 2 and zone 3 already share an edge exactly.
+    if (best && dist(wp.m, best) > MOVED_EPS_M) {
       movedCount += 1;
       return best;
     }
