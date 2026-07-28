@@ -74,8 +74,27 @@ export const MIN_FONT_SIZE = 12;
  * remains the honest print-legibility stop for the narrowest map.
  */
 export function leaderLabelFontSize(mapWidth: number): number {
-  return Math.max(MIN_FONT_SIZE, Math.round(mapWidth * 0.011));
+  return Math.max(MIN_FONT_SIZE, Math.round(mapWidth * LABEL_SHARE_OF_MAP_WIDTH));
 }
+
+/**
+ * Two percent of the map's width — measured off a real render, not chosen by feel.
+ *
+ * Making the type width-relative was right; carrying 0.011 across with it was not. That coefficient
+ * came from `Math.max(19, W * 0.011)`, where at every realistic sheet width the 19 won — so the
+ * fraction had never actually been exercised and nobody had cause to notice it was small. Dropping
+ * the floor to MIN_FONT_SIZE exposed it, and made these labels SMALLER: on the 1480px-wide map of
+ * Rory's Extension Blueprint water sheet, 19px would have become 16px.
+ *
+ * The reference is the same design rendered under Satellite Overlay, where the model sizes the
+ * labels itself and they read cleanly at arm's length — those sit at roughly 2% of map width. The
+ * app-drawn ones were at 1.1–1.3%, which is most of why one sheet looked authored and the other
+ * looked like a draft.
+ *
+ * Long names still shrink to fit their own margin (placeLeaderLabel), so a larger base size costs
+ * nothing on a crowded sheet — it only stops an uncrowded one being timid.
+ */
+const LABEL_SHARE_OF_MAP_WIDTH = 0.02;
 
 /**
  * Place one margin callout so that it is fully on the sheet.

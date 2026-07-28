@@ -7833,11 +7833,15 @@ interface SavedGlossy {
 //        the chip edge from striking through the tops of the week text.
 //   v61 — 2026-07-28: exact sheet paths and polygons remove shallow hand jitter at paint time while
 //        preserving meaningful corners and every saved vertex.
+//   v63 — 2026-07-28: map callout type is 2% of map width, measured against a model-drawn render
+//        of the same design. v59 made it width-relative but kept the old 0.011 coefficient, which
+//        the 19px floor had always been hiding — so on Rory's 1480px water map the labels would
+//        have gone from 19px to 16px, the wrong way.
 //   v62 — 2026-07-28: non-reference label pills clamp from their measured browser-font width,
 //        preventing wide fallbacks from crossing the right map edge. (Two branches each landed a
 //        'v61' independently; this is the merge of both, so the number moves on rather than one
 //        of the two render changes quietly inheriting the other's cache entry.)
-const PLAN_VERSION = 'v62';
+const PLAN_VERSION = 'v63';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

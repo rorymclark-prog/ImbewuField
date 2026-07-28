@@ -49,13 +49,39 @@ test('callout type keeps its map-width hierarchy across square, wide and tall fa
   // made tall and square equal and this ordering fail.
   assert.ok(sizes.tall < sizes.square);
   assert.ok(sizes.square < sizes.wide);
-  assert.equal(sizes.tall, MIN_FONT_SIZE);
+  assert.ok(sizes.tall >= MIN_FONT_SIZE, 'no map may be given type below the legibility floor');
 
   // Once clear of that legibility stop, type occupies the same share of each map. This catches a
   // replacement fixed constant without pinning the implementation's current ratio.
   const squareShare = sizes.square / mapWidths.square;
   const wideShare = sizes.wide / mapWidths.wide;
   assert.ok(Math.abs(squareShare - wideShare) < 0.001);
+});
+
+// This assertion used to read `assert.equal(sizes.tall, MIN_FONT_SIZE)` inside the test above —
+// true only because the tall map happened to land on the floor at the coefficient of the day, and
+// therefore a test that failed the moment the coefficient was corrected, for no user-facing reason.
+// The floor is a real rule and deserves its own case, exercised at a width where it must bind
+// however the share is tuned.
+test('the legibility floor binds on a map too narrow to earn its share', () => {
+  assert.equal(leaderLabelFontSize(1), MIN_FONT_SIZE, 'a degenerate width still gets readable type');
+  assert.ok(leaderLabelFontSize(200) >= MIN_FONT_SIZE);
+  assert.ok(leaderLabelFontSize(40_000) > MIN_FONT_SIZE, 'and a huge map is not held at the floor');
+});
+
+// The regression this whole change exists to prevent. Codex made the type width-relative (right)
+// but kept the 0.011 the old `Math.max(19, …)` had always been masking, so on Rory's 1480px-wide
+// Extension Blueprint water map the callouts would have gone 19px -> 16px — smaller, on the very
+// sheet that prompted the complaint. Asserted against the model-drawn reference: labels on the
+// Satellite Overlay render of the same design sit at roughly 2% of map width.
+test('callout type is close to the size a model picks for itself on the same design', () => {
+  for (const mapWidth of [744, 1104, 1480, 1936, 2404]) {
+    const share = leaderLabelFontSize(mapWidth) / mapWidth;
+    assert.ok(
+      share > 0.015 && share < 0.026,
+      `${mapWidth}px map -> ${(share * 100).toFixed(2)}% is outside the range a plan reads well at`,
+    );
+  }
 });
 
 test('a callout never crosses the sheet edge — at any width, either side, either font', () => {
