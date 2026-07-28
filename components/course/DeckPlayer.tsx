@@ -84,7 +84,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // lesson, in a window so you can immediately see it — press play, the audio starts auto and
   // moves through unless you stop the deck." A list of 24 play buttons is a filing cabinet; this
   // is a lesson.
-  const [autoplay, setAutoplay] = useState(false);
+  const [running, setRunning] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const current = slides[index];
@@ -101,6 +101,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // it looks perfectly correct in the source, and a farmer paging through 24 slides taps far
   // faster than a re-render. The functional updater sees the real current value each time.
   const go = useCallback((delta: number) => {
+    // TURNING THE PAGE ALSO STARTS THAT PAGE'S NARRATION.
+    //
+    // Rory, testing it: "ok so it does autoplay just not if you press next." Play-through was a
+    // mode you had to be inside; stepping forward yourself dropped you out of it and left the new
+    // slide silent, so a learner who paused to re-read one slide lost the voice for every slide
+    // after it. Moving through the deck IS the lesson, however you move.
+    //
+    // It doubles as the browser's autoplay unlock: a tap on Next is a user gesture, so the same
+    // <audio> element is permitted to play from here on.
+    setRunning(true);
     setIndex((i) => Math.min(total - 1, Math.max(0, i + delta)));
   }, [total]);
 
@@ -117,12 +127,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     if (!el) return;
     el.pause();
     el.currentTime = 0;
-    if (!autoplay) return;
+    if (!running) return;
     const started = el.play();
-    if (started) started.catch(() => setAutoplay(false));
+    if (started) started.catch(() => setRunning(false));
     // `audioForCurrent` is in the deps so switching language mid-lesson restarts THIS slide in the
     // new voice, rather than leaving the element pointing at a source it is no longer playing.
-  }, [index, autoplay, audioForCurrent]);
+  }, [index, running, audioForCurrent]);
 
   // A downloaded clip plays itself; one that is not downloaded still asks first.
   //
@@ -132,7 +142,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // cache: present means free, absent means the poster and its size stay, and the narration
   // carries the slide either way.
   useEffect(() => {
-    if (!autoplay || !current?.animation) return;
+    if (!running || !current?.animation) return;
     if (playing.has(current.slide)) return;
     let cancelled = false;
     (async () => {
@@ -146,19 +156,19 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       }
     })();
     return () => { cancelled = true; };
-  }, [autoplay, current, moduleId, playing]);
+  }, [running, current, moduleId, playing]);
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
   const advance = useCallback(() => {
     setIndex((i) => {
-      if (i >= total - 1) { setAutoplay(false); return i; }
+      if (i >= total - 1) { setRunning(false); return i; }
       return i + 1;
     });
   }, [total]);
 
   const onNarrationEnded = useCallback(() => {
-    if (autoplay) advance();
-  }, [autoplay, advance]);
+    if (running) advance();
+  }, [running, advance]);
 
   // A SLIDE WITH NO NARRATION MUST NOT END THE LESSON.
   //
@@ -171,10 +181,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Long enough to actually read the slide, since that is all there is to do on it.
   const SILENT_SLIDE_MS = 7000;
   useEffect(() => {
-    if (!autoplay || audioForCurrent) return;
+    if (!running || audioForCurrent) return;
     const t = setTimeout(advance, SILENT_SLIDE_MS);
     return () => clearTimeout(t);
-  }, [autoplay, audioForCurrent, advance]);
+  }, [running, audioForCurrent, advance]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -292,7 +302,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           // Under play-through the next clip is fetched the moment this slide appears, so the gap
           // between slides is not a silence while the phone thinks. Off otherwise: idle preloading
           // is the whole thing this module refuses to do.
-          preload={autoplay ? 'auto' : 'none'}
+          preload={running ? 'auto' : 'none'}
           style={{ width: '100%', height: 34 }}
         />
       )}
@@ -311,16 +321,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             steer; this is for someone who wants to be taught. It stays available on every slide,
             so stopping to re-read one and then carrying on is one tap, not a restart. */}
         <button
-          onClick={() => setAutoplay((on) => !on)}
-          aria-label={autoplay ? 'Stop the lesson' : 'Play the lesson'}
+          onClick={() => setRunning((on) => !on)}
+          aria-label={running ? 'Stop the lesson' : 'Play the lesson'}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, padding: '9px 15px', borderRadius: 10,
-            border: 'none', background: autoplay ? '#8A4B2A' : GREEN, color: '#fff',
+            border: 'none', background: running ? '#8A4B2A' : GREEN, color: '#fff',
             fontWeight: 700, fontSize: 13, cursor: 'pointer', flexShrink: 0,
           }}
         >
-          <span aria-hidden style={{ fontSize: 12 }}>{autoplay ? '■' : '▶'}</span>
-          {autoplay ? 'Stop' : 'Play lesson'}
+          <span aria-hidden style={{ fontSize: 12 }}>{running ? '■' : '▶'}</span>
+          {running ? 'Stop' : 'Play lesson'}
         </button>
         <button
           onClick={() => go(-1)}
