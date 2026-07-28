@@ -25,6 +25,19 @@ const SHELL_CACHE = 'imbewufield-shell-' + CACHE_VERSION;
 const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
 const PRECACHE_URLS = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
 
+// COURSE DOWNLOADS — deliberately NOT versioned by CACHE_VERSION, and deliberately spared by the
+// activate sweep below.
+//
+// Everything else here is per-deploy and disposable: a new build should drop the old shell. This
+// one is the opposite. It holds a module a farmer chose to download in town, with their own
+// airtime, to use for weeks at a homestead with no signal. Naming it with CACHE_VERSION would have
+// deleted it on the next deploy — the farmer would open the app, see it had updated, and find the
+// lessons they paid for gone, with no way to get them back until the next trip.
+//
+// Written only by lib/offline-cache.ts, on an explicit tap. This worker never adds to it.
+const COURSE_CACHE = 'imbewu-course-v1';
+const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
+
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(SHELL_CACHE).then(function (cache) {
@@ -45,7 +58,10 @@ self.addEventListener('activate', function (event) {
     caches.keys().then(function (keys) {
       return Promise.all(
         keys
-          .filter(function (key) { return key !== SHELL_CACHE && key !== RUNTIME_CACHE; })
+          .filter(function (key) {
+            // COURSE_CACHE survives every deploy on purpose — see the comment on its declaration.
+            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE;
+          })
           .map(function (key) { return caches.delete(key); })
       );
     }).then(function () {
@@ -63,6 +79,26 @@ self.addEventListener('fetch', function (event) {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // leave Firebase/Mapbox/etc alone
   if (url.pathname.indexOf('/api/') === 0) return; // never cache dynamic API responses
+
+  // A DOWNLOADED course asset is answered from the download, before anything else.
+  //
+  // It has to come first because the generic handler below is stale-while-revalidate: it would
+  // return the cached copy and then fire a background fetch to refresh it. That is right for a JS
+  // chunk and wrong here — these files never change, and the background request would spend a
+  // farmer's data re-downloading a 700 KB clip they already own, every time they open the slide.
+  //
+  // A course asset that was NOT downloaded falls through untouched, so streaming one stays the
+  // learner's choice, made on the page with the size in front of them.
+  if (COURSE_PATH.test(url.pathname)) {
+    event.respondWith(
+      caches.open(COURSE_CACHE).then(function (cache) {
+        return cache.match(request, { ignoreSearch: true }).then(function (hit) {
+          return hit || fetch(request);
+        });
+      })
+    );
+    return;
+  }
 
   if (request.mode === 'navigate') {
     // Network-first for HTML: a fresh deploy's shell (and therefore its new,

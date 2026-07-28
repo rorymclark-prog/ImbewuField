@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -131,10 +131,20 @@ test('the data cost is stated honestly, because the farmer is paying it', () => 
   assert.equal(formatBytes(64_000), '63 KB');
   assert.equal(formatBytes(2_306_000), '2.2 MB');
 
-  // Watching every clip in the module is ~11 MB. That number needs to be reachable so a screen can
-  // warn before a "play all" rather than after it.
+  // The module total must be reachable so a screen can warn before a "play all" rather than after.
+  //
+  // This used to pin the total inside a 10–12 MB window, which is a snapshot of a constant, not a
+  // rule: it passed while the numbers were right, and then FAILED when the clips were legitimately
+  // re-encoded from 10.9 MB down to 5.1 MB — flagging the improvement instead of a defect. It could
+  // never have caught the thing that actually went wrong, which was the manifest disagreeing with
+  // the files. So the rule is: the advertised total is the sum of the real files, and the ceiling
+  // is the one that would genuinely hurt — the 101 MB of animated GIF that arrived once before.
   const total = deckAnimationBytes('seeds-sovereignty');
-  assert.ok(total > 10_000_000 && total < 12_000_000, `unexpected module total: ${formatBytes(total)}`);
+  const fromDisk = (COURSE_DECKS['seeds-sovereignty'].slides)
+    .filter((s) => s.animation)
+    .reduce((sum, s) => sum + statSync(new URL(`course-animations/seeds-sovereignty/${s.animation!.src}.mp4`, PUBLIC)).size, 0);
+  assert.equal(total, fromDisk, 'the advertised total is not what the files actually weigh');
+  assert.ok(total < 20_000_000, `a module's clips now total ${formatBytes(total)} — too much to offer a farmer`);
 });
 
 test('only modules that really have a deck advertise one', () => {

@@ -18,6 +18,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DeckPlayer from '@/components/course/DeckPlayer';
+import OfflineDownload from '@/components/course/OfflineDownload';
 import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
@@ -718,6 +719,16 @@ export default function StudentPage() {
           </div>
         )}
 
+        {/* ONE TAP, THE WHOLE COURSE, WHILE THE SIGNAL IS GOOD.
+            The learner is in town roughly once a fortnight; that is the only moment this is cheap.
+            It sits above the module list rather than in a settings screen because it is a thing
+            you do on purpose before you leave, not a preference you configure. */}
+        <OfflineDownload
+          moduleIds={orderedModules.map((m) => m.id)}
+          lang={lang}
+          label="Save the whole course to this phone"
+        />
+
         {/* Module list */}
         <div className="space-y-2.5">
           {orderedModules.map((mod, idx) => {
@@ -907,6 +918,16 @@ export default function StudentPage() {
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
                   <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid #E2D8C4' }}>
+                    {/* TAKE IT HOME. Sits directly above the players, because it is the answer to
+                        the question those players raise: a farmer who has just seen what the
+                        slides and narration are worth is the one who wants them on the phone
+                        before leaving town. */}
+                    <OfflineDownload
+                      moduleIds={[mod.id]}
+                      lang={lang}
+                      compact
+                      label={`Save ${mod.title} to this phone`}
+                    />
                     {hasNarration(mod.id) && (
                       <div className="pt-3">
                         <CourseAudioPlayer

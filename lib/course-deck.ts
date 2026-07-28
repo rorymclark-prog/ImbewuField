@@ -57,14 +57,19 @@ const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
   // Verified by content rather than filename order: each clip was sampled mid-way and matched to
   // the slide it teaches. Assuming video_01..06 mapped to the animation slides in order would have
   // been right here, but a wrong animation under a farming instruction is not a cosmetic error.
-  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 629_000,   seconds: 10 }, // uniform vs varied seedlings
-  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 1_153_000, seconds: 10 }, // households exchanging packets
-  8:  { src: 'new_seed-selection-and-drying', poster: 'new_seed-selection-and-drying', bytes: 2_306_000, seconds: 10 },
-  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 629_000,   seconds: 10 }, // maize tassels, crossing
-  13: { src: 'imbewu_isiZulu_video_04', poster: 'imbewu_isiZulu_video_04', bytes: 1_153_000, seconds: 10 }, // cleaning seed on a plate
-  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 2_202_000, seconds: 20 }, // tomato in a jar — the long one
-  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 2_726_000, seconds: 10 },
-  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 629_000,   seconds: 10 }, // germination test on cloth
+  //
+  // `bytes` is the EXACT size of the file on disk, and tests/course-deck.test.ts stats each one and
+  // fails on any difference. These were hand-rounded before, which meant re-encoding the clips
+  // turned every play button into a wrong promise about somebody's data allowance — the one number
+  // on this screen a farmer is asked to trust.
+  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10 }, // uniform vs varied seedlings
+  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10 }, // households exchanging packets
+  8:  { src: 'new_seed-selection-and-drying', poster: 'new_seed-selection-and-drying', bytes: 530_021, seconds: 10 },
+  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10 }, // maize tassels, crossing
+  13: { src: 'imbewu_isiZulu_video_04', poster: 'imbewu_isiZulu_video_04', bytes: 736_559,   seconds: 10 }, // cleaning seed on a plate
+  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20 }, // tomato in a jar — the long one
+  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10 },
+  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10 }, // germination test on cloth
 };
 
 /**

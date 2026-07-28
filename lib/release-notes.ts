@@ -20,6 +20,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'NEW: Download a module, or the whole course, and use it with no airtime',
+      'A downloaded module now survives app updates instead of being cleared',
+      'Lessons are half the size to download — isiZulu slides and clips are much smaller',
+      'The size on every play button is now the real size of the file',
       'Finished-map labels are larger and feature art no longer has white sticker outlines',
       'Sector maps now use three large slope arrows instead of five thin ones',
       'Sector wind and driving rain now stand out over a quieter aerial photo',
