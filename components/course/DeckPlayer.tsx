@@ -71,6 +71,8 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
   const current = slides[index];
   const total = slides.length;
+  // Resolved up here, not after the early return below, because the play-through effects need it.
+  const audioForCurrent = current ? slideAudioUrl(moduleId, lang, current.slide) : null;
 
   // STEP BY A DELTA, never to a computed absolute.
   //
@@ -127,13 +129,32 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
   }, [autoplay, current, moduleId, playing]);
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
-  const onNarrationEnded = useCallback(() => {
-    if (!autoplay) return;
+  const advance = useCallback(() => {
     setIndex((i) => {
       if (i >= total - 1) { setAutoplay(false); return i; }
       return i + 1;
     });
-  }, [autoplay, total]);
+  }, [total]);
+
+  const onNarrationEnded = useCallback(() => {
+    if (autoplay) advance();
+  }, [autoplay, advance]);
+
+  // A SLIDE WITH NO NARRATION MUST NOT END THE LESSON.
+  //
+  // Page turns are driven by the audio's `ended` event, so a slide with no clip fires nothing and
+  // play-through stops dead on it — the farmer sees a picture and waits, with a Stop button that
+  // implies something is still happening. Every Seeds slide has narration, so this cannot happen
+  // today; the next module recorded is where it would, and it would look like the app freezing
+  // rather than like a missing file.
+  //
+  // Long enough to actually read the slide, since that is all there is to do on it.
+  const SILENT_SLIDE_MS = 7000;
+  useEffect(() => {
+    if (!autoplay || audioForCurrent) return;
+    const t = setTimeout(advance, SILENT_SLIDE_MS);
+    return () => clearTimeout(t);
+  }, [autoplay, audioForCurrent, advance]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -163,7 +184,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
   const img = slideImageFor(moduleId, lang, current.slide);
   const anim = animationUrls(moduleId, current.slide);
-  const audio = slideAudioUrl(moduleId, lang, current.slide);
+  const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
