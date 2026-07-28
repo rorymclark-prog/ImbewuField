@@ -1,0 +1,129 @@
+// Where a margin callout sits on an exported sheet, and how wide it is allowed to be.
+//
+// WHY THIS IS ITS OWN MODULE: this maths lived inline in DesignGlossy's drawWaterLeaderLabels,
+// tangled with canvas calls, so it could not be tested — and it was wrong in a way nobody could
+// see without rendering at an unusual size. It is the third label system in this codebase
+// (lib/producer-labels.ts for plan sheets, lib/canvas-labels.ts for the interactive canvas), so
+// it is at least named and checkable now.
+//
+// THE BUG IT WAS EXTRACTED TO FIX:
+//
+//   const textW = Math.min(W * 0.24, ctx.measureText(text).width);
+//   const x = side === 'left' ? Math.max(safe, box.x0 * W - gap - textW) : ...
+//   drawReferenceMapText(ctx, text, x, ...)      // <- drawn at its REAL width
+//
+// The cap constrained the number used to POSITION the label, and did nothing at all to the text
+// actually painted. So whenever a name measured wider than 24% of the canvas, the label was placed
+// as though it were narrower and then drawn past the sheet edge — "GREYWATER DIVERTER & FILTER ×3"
+// is the worst case at 30 characters. It never showed up in review because the sheets that get
+// looked at are rendered wide; it appears as the canvas narrows, and the font does NOT shrink with
+// it (the size has a hard floor of 19px), so the two diverge exactly when space is tightest.
+//
+// It also cannot be reasoned about from the font stack: REFERENCE_LABEL_FONT asks for three
+// condensed faces and then falls back to plain `sans-serif`, which is ~30% wider per character. A
+// device missing all three silently gets the wide one. That is why this takes a `measure` callback
+// and trusts it, rather than estimating from character counts.
+
+export type LeaderSide = 'left' | 'right';
+
+export interface LeaderLabelPlacement {
+  /** Left edge of the text, in canvas pixels. */
+  x: number;
+  /** Font size to draw at — reduced from the requested size only if the text would not fit. */
+  fontSize: number;
+  /** Width the text will actually occupy at `fontSize`. */
+  textW: number;
+  /** True when the label had to be shrunk to stay on the sheet. Callers may want to know. */
+  shrunk: boolean;
+}
+
+export interface LeaderLabelInput {
+  text: string;
+  side: LeaderSide;
+  /** Canvas width in pixels. */
+  W: number;
+  /** Property bounding box, as fractions of W. Callouts sit outside it, in the margin. */
+  plotX0: number;
+  plotX1: number;
+  /** Preferred size. Reduced only when the text will not otherwise fit. */
+  fontSize: number;
+  /** Real text width at a given size — pass ctx.measureText, never an estimate. */
+  measure: (text: string, fontSize: number) => number;
+}
+
+/** Keeps callouts clear of the sheet edge and the deterministic scale bar. */
+export const SAFE_INSET_RATIO = 0.022;
+/** Space between the property edge and the start of the callout text. */
+export const LABEL_GAP_RATIO = 0.025;
+/**
+ * Smallest size a callout may shrink to.
+ *
+ * Below this a name on a printed plan is not readable at arm's length, and a label nobody can read
+ * is worse than one that is obviously clipped — it looks fine and says nothing. If the text still
+ * does not fit at this size the caller gets `shrunk: true` with the text overflowing, which is a
+ * visible failure rather than a silent one.
+ */
+export const MIN_FONT_SIZE = 12;
+
+/**
+ * Place one margin callout so that it is fully on the sheet.
+ *
+ * The available width is the real margin — sheet edge to property edge, less the safe inset and
+ * the gap — not a fixed fraction of the canvas. A fixed fraction is what broke: it does not know
+ * how much room there actually is on this particular sheet.
+ */
+export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement {
+  const { text, side, W, plotX0, plotX1, measure } = input;
+  const safe = Math.round(W * SAFE_INSET_RATIO);
+  const gap = Math.round(W * LABEL_GAP_RATIO);
+
+  const available = side === 'left'
+    ? Math.round(plotX0 * W) - gap - safe
+    : W - safe - (Math.round(plotX1 * W) + gap);
+
+  let fontSize = input.fontSize;
+  let textW = measure(text, fontSize);
+  // Shrink to fit rather than clip. A name is the whole point of a callout, so losing its tail is
+  // losing the information; losing a couple of points of size is not.
+  while (textW > available && fontSize > MIN_FONT_SIZE) {
+    fontSize -= 1;
+    textW = measure(text, fontSize);
+  }
+  const shrunk = fontSize < input.fontSize;
+
+  const x = side === 'left'
+    ? Math.max(safe, Math.round(plotX0 * W) - gap - textW)
+    : Math.min(W - safe - textW, Math.round(plotX1 * W) + gap);
+
+  return { x, fontSize, textW, shrunk };
+}
+
+/**
+ * Stack callouts down one margin without overlapping, keeping each near its own feature.
+ *
+ * Extracted unchanged in behaviour from drawWaterLeaderLabels except for the final clamp. Each
+ * label starts at its feature's average y, is pushed down past the one above it, and the whole
+ * column is shifted up if it runs past the bottom.
+ *
+ * THE CLAMP IS NEW. The original shifted the column up by the overflow and stopped there, so a
+ * side with more labels than fit produced negative positions — callouts drawn off the top of the
+ * sheet, gone rather than crowded. It needs enough labels to trigger that the water sheet has
+ * probably never hit it, but "probably never" is not a thing to leave in a renderer.
+ */
+export function stackLeaderRows(naturalY: number[], top: number, bottom: number, rowGap: number): number[] {
+  if (naturalY.length === 0) return [];
+  const rows = naturalY.map((y, i) => Math.max(top + i * rowGap, Math.min(bottom, y)));
+  for (let i = 1; i < rows.length; i++) rows[i] = Math.max(rows[i], rows[i - 1] + rowGap);
+
+  const overflow = rows[rows.length - 1] - bottom;
+  if (overflow > 0) for (let i = 0; i < rows.length; i++) rows[i] -= overflow;
+
+  // If there are more labels than the column can hold, shifting up put the first ones above the
+  // sheet. Pin the top and let the tail crowd instead: a crowded column is legible-ish and a label
+  // at y = -40 is simply not there.
+  if (rows[0] < top) {
+    const lift = top - rows[0];
+    for (let i = 0; i < rows.length; i++) rows[i] += lift;
+  }
+  return rows;
+}

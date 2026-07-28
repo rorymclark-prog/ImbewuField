@@ -45,6 +45,7 @@ import {
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
+import { placeLeaderLabel, stackLeaderRows } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
@@ -2330,28 +2331,34 @@ function drawWaterLeaderLabels(
   ctx.font = `700 ${fontSize}px ${REFERENCE_LABEL_FONT}`;
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
+  // Measures in the font this canvas will actually paint with — the only reliable answer, since
+  // REFERENCE_LABEL_FONT names three condensed faces and then falls back to plain sans-serif,
+  // roughly 30% wider, on a device that has none of them.
+  const measure = (t: string, size: number) => {
+    ctx.font = `700 ${size}px ${REFERENCE_LABEL_FONT}`;
+    return ctx.measureText(t).width;
+  };
+
   const placeSide = (side: 'left' | 'right') => {
     const sideGroups = groups.filter((group) => group.side === side).sort((a, b) => a.avgY - b.avgY);
     if (!sideGroups.length) return;
-    const positions = sideGroups.map((group, index) => Math.max(top + index * rowGap, Math.min(bottom, group.avgY)));
-    for (let i = 1; i < positions.length; i++) positions[i] = Math.max(positions[i], positions[i - 1] + rowGap);
-    const overflow = positions[positions.length - 1] - bottom;
-    if (overflow > 0) for (let i = 0; i < positions.length; i++) positions[i] -= overflow;
+    const positions = stackLeaderRows(sideGroups.map((group) => group.avgY), top, bottom, rowGap);
 
     sideGroups.forEach((group, index) => {
       // Several touching strokes form one saved network, not seven physical "greywater lines".
       // Counts remain useful for tanks/basins, but route labels name the system once.
       const showCount = group.points.length > 1 && !routeNames.has(group.name);
       const text = `${group.name.toUpperCase()}${showCount ? ` ×${group.points.length}` : ''}`;
-      const textW = Math.min(W * 0.24, ctx.measureText(text).width);
-      // Benchmark sheets keep callouts close to the property instead of throwing them to the
-      // canvas edge. The saved feature remains the anchor; only the render-time label moves.
-      const safe = Math.round(W * 0.022);
-      const labelGap = Math.round(W * 0.025);
-      const x = side === 'left'
-        ? Math.max(safe, Math.round(box.x0 * W) - labelGap - textW)
-        : Math.min(W - safe - textW, Math.round(box.x1 * W) + labelGap);
-      const leaderEndX = side === 'left' ? x + textW + fontSize * 0.35 : x - fontSize * 0.35;
+      // Placement moved to lib/leader-labels.ts so it could be tested. It used to cap the width
+      // used for POSITIONING at 24% of the canvas and then draw the text at its real width, which
+      // put long names — "GREYWATER DIVERTER & FILTER ×3" is the worst in the catalog — past the
+      // sheet edge on any render narrower than about 1400px.
+      const placed = placeLeaderLabel({
+        text, side, W, plotX0: box.x0, plotX1: box.x1, fontSize, measure,
+      });
+      const { x, textW } = placed;
+      const drawSize = placed.fontSize;
+      const leaderEndX = side === 'left' ? x + textW + drawSize * 0.35 : x - drawSize * 0.35;
       const elbowX = side === 'left'
         ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
         : Math.max(group.target[0] + 16, leaderEndX - Math.round(W * 0.025));
@@ -2374,7 +2381,7 @@ function drawWaterLeaderLabels(
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      drawReferenceMapText(ctx, text, x, positions[index], fontSize, 700, 'left');
+      drawReferenceMapText(ctx, text, x, positions[index], drawSize, 700, 'left');
     });
   };
   placeSide('left');
