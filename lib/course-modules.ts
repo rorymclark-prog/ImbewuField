@@ -895,6 +895,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "plant-guilds-l1",
+        infographicUrl: "/course-images/plant-guilds/plant-guilds-l1.jpg",
+        infographicAlt: "A hillside cut open to show what happens underground: leafy plants on the upper slope with round nodules along their roots, and fine trails of nutrients running downhill through the soil to reach a fruit tree standing lower down.",
         title: "Nitrogen Fixers: Plants That Feed the Soil",
         body: "Nitrogen is what most limits growth in degraded South African soils, and it's free from the air if you grow the right plants. Legumes partner with soil bacteria called rhizobia, pulling nitrogen from the air and fixing it in root nodules. When roots die back or the plant is cut, that nitrogen becomes available to neighbours.\n\nUseful nitrogen-fixing trees for South African conditions: Senegalia, formerly Acacia, species and relatives like flat-crown (Albizia adianthifolia); tagasaste for the Western Cape and highland zones — it self-seeds readily, so plant with care near untransformed land; and Sesbania sesban, not Sesbania punicea, the red-flowered invasive relative, which grows fast in warm, moist KZN coastal and Lowveld conditions.\n\nFor a fast annual option, sunn hemp reaches 2 metres in one season and adds roughly 100 to 165kg of nitrogen per hectare from its above-ground biomass alone.",
         keyPoints: [
@@ -930,6 +932,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "plant-guilds-l2",
+        infographicUrl: "/course-images/plant-guilds/plant-guilds-l2.jpg",
+        infographicAlt: "Two jobs in one picture. On the left a hand cuts a large-leaved plant and drops the leaves onto the soil at the base of a tree, building a mulch layer. On the right, low flowering plants with bees, a hoverfly and a ladybird arriving at the flowers.",
         title: "Mulch Plants and Pest Management",
         body: "Some plants have deep, wide-ranging roots that draw up minerals other crops can't reach — when cut and left as mulch, known as chop and drop, they return that material to the surface. Comfrey — use the sterile Bocking 14 cultivar, Symphytum times uplandicum, which won't spread by seed — is the classic example. How much this actually adds to soil fertility is debated among researchers, but the mulch value — moisture retention, weed suppression, steady organic matter — is well proven regardless.\n\nFor pests, permaculture works with biology rather than sprays. Ladybirds eat aphids, wasps parasitise caterpillars. Flowering plants like African basil, borage, and marigolds attract these predators and build a pest-control system that strengthens every year.\n\nIndigenous wild garlic, Tulbaghia violacea, is a standout — drought-tolerant, Highveld frost-hardy once established, and its sulphur compounds repel aphids and whitefly. It's edible too, and multiplies easily to share.",
         keyPoints: [
@@ -965,6 +969,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "plant-guilds-l3",
+        infographicUrl: "/course-images/plant-guilds/plant-guilds-l3.jpg",
+        infographicAlt: "Looking straight down on a planted circle: one small tree at the centre, ringed by five clearly different companion plants — a spiky clump, a broad-leaved patch, a low mat, a grassy tuft and a spreading ground cover — each a different shape so each reads as a different job.",
         title: "Building a Plant Guild: A Practical Example",
         body: "A plant guild is a group of plants chosen to support one central tree, usually fruit or nut. Each guild member does at least one job: fixing nitrogen, drawing up minerals, attracting beneficial insects, repelling pests, covering ground, or producing food. A well-built guild needs little from you once established, because the plants support each other.\n\nExample — a mango guild for KZN's Lowveld or coast: Sesbania sesban on the north-east and north-west sides, cut back yearly for nitrogen and mulch. Comfrey planted 60 to 80cm from the trunk in four spots, chopped and dropped regularly. Wild garlic in a ring at the outer edge for pest control. African basil between the comfrey, drawing in wasps that control fruit flies. Sweet potato carpeting the ground — suppressing weeds, holding moisture, and giving you a second harvest.",
         keyPoints: [
@@ -1010,6 +1016,8 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "food-forest-l1",
+        infographicUrl: "/course-images/food-forest/food-forest-l1.jpg",
+        infographicAlt: "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
         title: "The Seven Layers: How a Forest Feeds Itself",
         body: "An indigenous forest fills every vertical layer with different plants, each using the light and moisture available at its level. A food forest copies this using productive species instead. The seven layers: tall canopy (10m+), sub-canopy (4-8m), shrub (1-3m), herbaceous (under 1m), ground cover, root crops, and climbers using vertical space.\n\nFor a Highveld example: canopy might be a large Wild Fig or pecan; sub-canopy carries lemon, naartjie, and black mulberry; shrub layer holds Cape gooseberry and indigenous Wild Medlar; herbaceous layer holds vegetables and wild garlic; ground cover is sweet potato; climbers include granadilla.\n\nOnce established, a food forest needs far less labour than a vegetable garden the same size — no annual ploughing, no repeated planting. The first two to three years need real establishment work. By year three to five, the canopy closes and the system starts largely caring for itself.",
         keyPoints: [
@@ -1045,6 +1053,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "food-forest-l2",
+        infographicUrl: "/course-images/food-forest/food-forest-l2.jpg",
+        infographicAlt: "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
         title: "Species Selection for South African Food Forests",
         body: "Match species to your region before you plant — a mango that thrives on the KZN coast dies at the first Highveld frost, and a quince needing winter chill won't fruit in a frost-free coastal belt. Know your rainfall, minimum winter temperature, frost frequency, and summer humidity first.\n\nHighveld: canopy — pecan, walnut, indigenous fig; sub-canopy — apple, pear, plum, black mulberry, loquat, not in the Western Cape or forest biome; shrubs — rosemary, Wild Medlar, Cape gooseberry, Barbados cherry.\n\nKZN coast and Lowveld: canopy — mango, avocado, Natal Mahogany; sub-canopy — banana, pawpaw, litchi, Wild Fig; shrubs — Barbados cherry, Wild Dagga.\n\nLimpopo Lowveld: Marula, Mopane, baobab where appropriate — all edible and culturally significant.\n\nAim for at least 30% indigenous species throughout. They support the birds and insects that make a food forest function as an ecosystem, not just a fruit collection.",
         keyPoints: [
@@ -1080,6 +1090,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "food-forest-l3",
+        infographicUrl: "/course-images/food-forest/food-forest-l3.jpg",
+        infographicAlt: "The same patch of ground at four stages, left to right: cardboard and mulch going down on bare soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
         title: "Establishing a Food Forest: Planting Sequence and Timeline",
         body: "A food forest is planted in sequence, not all at once, mimicking how nature rebuilds bare ground. First come nitrogen-fixing pioneers to improve soil and offer some shade. Then the main canopy and sub-canopy fruit trees. Then the lower layers, once the canopy gives some protection. Climbers and ground covers come last.\n\nFor a 500m² plot: year one, sheet-mulch with cardboard and 20cm of wood chips, plant pioneers at 2m spacing, and start a nursery. Year two, plant your main fruit trees and interplant comfrey and wild garlic beneath. Years three to four, thin the pioneers, the cuttings become mulch, as fruit trees take over. By year five, expect real harvests with minimal outside inputs.\n\nPlant at the start of the rainy season so rain does your establishment watering. Never plant into dry soil — transplant shock plus drought stress rarely allows recovery.",
         keyPoints: [
