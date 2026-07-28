@@ -5,217 +5,164 @@ and — most importantly — **§5 LOOK AT WHAT YOU MADE**.
 
 **How to work this queue.** Take the top unstarted item. One branch per item, named in the item.
 Never push to `main`. When it is pushed, say so and **carry straight on to the next item** — do not
-wait for a review to come back. Claude reviews and merges behind you, and reviewing means opening a
-real render, not reading the diff. If a later item touches the same file as one still unmerged,
-branch from the unmerged branch and say so in the report.
+wait for a review. Claude reviews and merges behind you. If a later item touches the same file as
+one still unmerged, branch from the unmerged branch and say so in the report.
 
 Every item below was verified to be real before it was written down — the numbers are measured, not
 estimated. If you find one is already fixed or the premise is wrong, **say so and skip it**; that is
-a useful result, not a failure. An item you correctly skip with evidence is worth more than an item
-you "fix" without reproducing it first.
+a useful result, not a failure.
 
-**Two rules that have each cost a day already:**
+**Two rules that have each cost a day:**
 
-- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v58`) in the same commit
-  as *any* change to how a sheet is drawn. The cache keys on siteId + style + layer with no content
-  hash, so without the bump nobody who has already rendered a sheet sees your fix — including you,
-  when you go to check it.
-- **A test that pins today's constant cannot fail when the constant is wrong.** Assert the *rule*
-  (`the label stays inside the sheet`), not the *number* (`fontSize === 19`).
+- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v62`) in the same commit
+  as *any* change to how a sheet is drawn, or nobody who has already rendered sees your fix.
+- **A test that pins today's constant cannot fail when the constant is wrong.** Assert the *rule*,
+  not the *number*.
 
 ---
 
-## Done
+## Done — the previous run, all nine merged
 
-- ~~**1. Sheet 08 needs its own panel column** — `codex/phasing-column`~~ — **merged `fd3988b`.**
-  Verified by render: sheet 08 now comes out 2517×1268 (1.985:1), identical to sheets 01–07, and the
-  schedule column carries all six phases, hold points A–F, critical order and both site rules with
-  room to spare. This also closed the 3:1 AI-limit hole, because 08's map aspect is no longer its
-  sheet aspect. Good call moving the panel type onto `lgW`.
+`callout-type-scale`, `phase-chip-clearance`, `label-collision-audit`, `gate-break-verify`,
+`phasing-tests`, `crop-plan-tests`, `price-book-tests`, `polygon-polish`, `design-studio-i18n`, plus
+`phasing-column` before them. Merged as `ecc8742`. Two branches had both bumped `PLAN_VERSION` to
+`v61`, so the merge moved it to `v62`.
+
+The one worth knowing about: **crop rotation was only ever a preference.** The fallback pass would
+put the same food group back in the same bed next season, which is the single thing the rotation
+toggle exists to prevent. `BedRotation.repeats()` now makes an immediate repeat a hard block. That
+is what these items are for — the test found a real bug and you reported it instead of loosening
+the test.
 
 ---
 
-## 2. Map callout type does not scale with the sheet — `codex/callout-type-scale`
+## 1. A missing area is now priced at R0 instead of "we don't know" — `codex/unpriced-not-free`
 
-`components/design/DesignGlossy.tsx` line ~2326:
+Introduced by `codex/price-book-tests`, so this is a follow-up to your own change, not a criticism
+of it — the item you were given explicitly asked for "a quantity of zero produces a line of zero,
+not a missing line", and you did that correctly.
+
+`lib/price-book.ts`, `costForAreaLine`, changed `if (!key || areaM2 <= 0) return null;` to
+`areaM2 < 0`. Right for a genuine zero. The problem is the caller:
+
+`components/FacilitatorCanvas.tsx:2304`
 
 ```ts
-const fontSize = Math.max(19, Math.round(W * 0.011));
+...((AREA_LINE_KINDS.includes(l.kind) ? costForAreaLine(l.kind, l.areaM2 ?? 0) : costForLine(l.kind, l.m)) ?? { zar: null })
 ```
 
-The floor wins at every realistic width, so callout type is effectively **fixed at 19px** no matter
-how large or small the sheet is. That was harmless while every sheet was 1920px wide. Now that
-sheets take the shape of the plot, a tall narrow farm renders a 744px-wide map where 19px type is
-proportionally enormous, and a wide farm gets 2400px where it is small.
+That `?? 0` conflates **"this shape has no area recorded"** with **"this shape has zero area"**.
+Before your change both produced `null` → the BOQ showed the row as *unpriced*. Now the first case
+produces `{ zar: 0 }` → the BOQ shows **R0**, i.e. free.
 
-`lib/leader-labels.ts` already shrinks a label that would not fit its margin, so the overflow is
-handled — this is about the type reading at a consistent *size relative to the sheet*.
+The rule your own item was written to protect: *an element with no price is surfaced as unpriced,
+never silently priced at zero.* A BOQ that quietly says something is free is worse than one that
+admits it does not know — a farmer budgets from that number.
 
-Work out what the floor is actually protecting against (probably legibility when the sheet is shown
-as a phone-sized preview) and express that directly instead of as a hard 19. Check a square, a 3:1
-wide and a 1:4 tall plot.
-
----
-
-## 3. The phase chip sits on top of the week line — `codex/phase-chip-clearance`
-
-**Found by looking at the sheet 08 render, not by reading code.** The coloured phase chip's bottom
-edge clips the tops of the letters in the week range under it — visible on phases 2, 3, 4 and 5 of
-the Ubhejane demo as a bar through the top of "Weeks 1–4", "Weeks 3–6", "Weeks 5–9", "Weeks 8–12".
-
-It is not a missing clearance — the code already tries (`~line 6974`):
-
-```ts
-y = Math.max(lastTitleBaseline, chipTop + chipS) + Math.round(lineH * 0.35);
-drawLines([phase.weekRange], innerX, weekFont, '#6B6355');
-```
-
-The bug is that `0.35 * lineH` is **less than the week font's ascent**, so clearing the chip's
-bottom edge with the *baseline* still leaves the glyph tops above it. Measured, with
-`chipTop = y - 0.95·fsBody` and `chipS = 1.7·fsBody`:
-
-| | position |
-|---|---|
-| chip bottom | `y + 0.75·fsBody` |
-| week baseline | `y + 1.219·fsBody` |
-| week cap-height top | `y + 0.499·fsBody` |
-
-`0.499 < 0.75` → about `0.25·fsBody` of overlap, ≈4px at the demo's 17px body size.
-
-The gap after the chip has to be at least the next line's **ascent**, not a fraction of its line
-height. Fix it in terms of the font metric so it stays right when the panel width changes. The week
-range also starts at `innerX`, directly under the chip — indenting it to `titleX` instead would fix
-it too and might read better; your call, but say which you chose and why.
-
-Then look at the render. `PLAN_VERSION`.
+Fix at the caller: only ask for a price when there is an area to price. Check
+`app/facilitator/print/page.tsx:479` for the same shape. Add the test that distinguishes the two
+cases — undefined area and zero area must not produce the same row.
 
 ---
 
-## 4. Do the other sheets collide their labels? — `codex/label-collision-audit`
+## 2. Finish the Design Studio i18n sweep — `codex/design-studio-i18n-rest`
 
-`lib/leader-labels.ts` and `tests/leader-labels.test.ts` fixed callout placement for the **water**
-sheet only, after a long name was found running off the sheet edge.
+`codex/design-studio-i18n` proved the pattern on `StepGuide.tsx` and `DesignWizard.tsx` and it
+merged clean. Eleven files to go:
 
-`lib/producer-labels.ts` is a separate, older engine used by the other sheets. Nobody has checked
-whether it has the same class of bug. **Audit, then fix only what is real** — if it is sound, say so
-and close the item.
+`BasePhotoImport` · `DesignAdvisor` · `DesignCanvas` · `DesignGlossy` · `DesignPalette` ·
+`DesignPrint` · `LessonLink` · `LessonPanel` · `SectorOverlay` · `SectorSummary` · `TankCalculator`
 
-Look for: a label drawn wider than the space its placement assumed; two labels overlapping at high
-element density; a leader crossing another leader; a label over the legend or off the page. The
-useful test is the one that would have caught the water bug: render at several canvas widths with
-the longest names in the catalog (`GREYWATER DIVERTER & FILTER` is 27 characters) and assert nothing
-lands outside the sheet.
+Same rules as last time and they matter more at this size:
 
----
+- **English text in every language slot**, new keys listed in `docs/i18n-needs-translation.md`. Do
+  not write isiZulu, Afrikaans or anything else you cannot have checked. Module 2's narration is
+  already blocked waiting on an isiZulu-speaking agronomist for exactly this reason.
+- **Do not touch text that is drawn onto a canvas sheet.** `DesignGlossy` and `DesignPrint` letter
+  labels, legends and titles into the render, and those strings are load-bearing: the AI prompt
+  quotes them back as "the exact spellings", `lib/producer-labels.ts` measures them for fitting, and
+  `tests/sheet-typography.test.ts` checks them. UI chrome in those files only — buttons, step
+  headings, helper copy, error messages. If you are unsure whether a string ends up on a sheet,
+  leave it and list it in the report.
+- **No plant species name changes anywhere.** NEMBA.
 
-## 5. The driveway-gate break has never been looked at — `codex/gate-break-verify`
-
-`docs/RENDER-GEOMETRY-CLEANUP-TODO.md` records commit `c8ec653` as done, with the note "not yet
-visually confirmed against a real render". A gate is supposed to create a measured break in the
-drawn fence line, at the gate's real width and orientation.
-
-Render it. The demo fixture has a traced driveway; you will need to place a Gate element near the
-boundary where the driveway crosses it. If the break is wrong, missing, the wrong width or in the
-wrong place, fix it; if it is right, update that line in the TODO doc so nobody re-checks it.
+Split across two or three branches if it gets large; a reviewable diff beats one enormous one.
 
 ---
 
-## 6. `lib/phasing.ts` builds a printed schedule and has no tests — `codex/phasing-tests`
+## 3. Does the legend agree with the map? — `codex/legend-map-agreement`
 
-536 lines, **zero test files import it**. It generates every word on sheet 08: the six phases, their
-week ranges, the hold points, the critical order and the site rules — and a farmer builds from that
-sheet. A wrong hold point is a wall built before the trench is signed off.
+The prompt asserts it — rule 11 says *"Every row listed here also appears on the map"* — and
+nothing measures it. This is the same class of failure as the paid-render gate: an instruction
+nobody checks is a wish.
 
-This is not a coverage-number exercise. Read what the module actually promises and pin the promises:
+For the **exact** sheets this is fully checkable without spending a render, because the app draws
+both the legend and the markers from the same saved state. Write the check that proves it:
 
-- Hold points come out lettered in order (A, B, C…) with no gaps and no repeats, however many phases
-  the plan ends up with.
-- The critical order is a real topological order of the phases — nothing appears before something it
-  depends on.
-- A site rule that names an element (the driveway, the house footings) only appears when that
-  element is actually in the design. The demo fixture has a driveway and a house, so build a state
-  without them and assert those rules are gone. **Inventing a constraint about something the farmer
-  never drew is the failure mode that matters here.**
-- Week ranges are contiguous and non-decreasing across phases.
+- every legend row corresponds to at least one drawn element on that sheet;
+- every drawn element type has a legend row on that sheet;
+- the count in the legend row equals the number of markers drawn;
+- an element filtered off this sheet is in neither.
 
-If a test you write fails, that is the point of the item — report the bug rather than loosening the
-test to pass.
+Run it across all eight sheets and both demo fixtures. **If it fails, that is the result** — report
+it rather than adjusting the check until it passes.
 
----
-
-## 7. The crop-plan engine has no tests either — `codex/crop-plan-tests`
-
-`lib/crop-autosuggest.ts` (942 lines) and `lib/crop-plan.ts` (759 lines), **zero test files import
-either**. This is the bed-rotation and winter-coverage engine behind the auto-suggest button, and
-its output is printed as a planting plan.
-
-The rules worth pinning, in rough order of how much a farmer would be hurt if they broke:
-
-- **Rotation actually rotates.** The same botanical family must not land in the same bed in
-  consecutive seasons when the toggle is on — that is the entire point of the feature.
-- Every bed in the design gets a plan; no bed is silently skipped.
-- Winter coverage does what it says: with the option on, no bed is left bare through the winter
-  window.
-- Nothing is suggested outside its sowing window for the site's biome.
-- Turning the rotation toggle off changes the plan; turning it back on restores rotation.
-
-**Hard constraint: do not add, rename or substitute a plant species anywhere.** Some species are
-illegal to propagate in South Africa under NEMBA and the catalog has been agronomist-corrected. Test
-against whatever the catalog already contains.
+This does not cover the AI sheets, where the model draws the legend itself. Say so in the report
+rather than implying wider coverage than you have.
 
 ---
 
-## 8. `lib/price-book.ts` turns a design into money, untested — `codex/price-book-tests`
+## 4. Is a count welded to a name anywhere else? — `codex/prompt-data-audit`
 
-436 lines, **zero test files import it**. It produces the BOQ a farmer or a funder reads as a cost.
+Just fixed in `c1fe6fa`: `mapNames` handed the model `"VEGETABLE BED ×7"` while rule 10 told it to
+"spell every label exactly as the element list gives it" and demonstrated `"2 × JOJO TANKS 5000L
+EACH"`. A paid Water render came back with seven beds captioned `×1` … `×7`. The model was obeying
+the prompt; the prompt contained three different grammars for one idea.
 
-Pin the arithmetic and the honesty, not the prices:
+**Audit `lib/producer-prompt.ts` for the same shape** — anywhere an interpolated value carries both
+a datum and a piece of grammar, and a later rule tells the model to reproduce that value verbatim.
+Look at every `${...}` in every numbered rule and ask: *is this string data, an instruction, or
+both?* Both is the bug.
 
-- A quantity of zero produces a line of zero, not a missing line or `NaN`.
-- The total equals the sum of its lines, exactly — no rounding drift accumulating down the column.
-- Every line has a unit, and the unit matches what is being counted (m, m², each, L).
-- An element with no price in the book is surfaced as *unpriced*, never silently priced at zero.
-  A BOQ that quietly omits a cost is worse than one that says "we do not have a price for this".
-- Currency formatting is ZAR and does not depend on the browser locale.
+Known candidates worth checking rather than assuming: the `(House)` / `(Lawn)` place suffixes on tap
+names, `legendRows` (uses a third grammar, `Name (×N)`), the zone rows on the Zones sheet, and
+`${title}` in rule 11.
 
-**Do not change any price.** If a number looks wrong, say so in the report and leave it.
-
----
-
-## 9. Render-only polygon polish — `codex/polygon-polish`
-
-From `docs/RENDER-GEOMETRY-CLEANUP-TODO.md`, still open:
-
-- Smooth visibly shaky polygon and line segments **in the exported illustration only**.
-- Add restrained corner joining and antialiasing so exact polygons read as one clean plan shape.
-
-**Saved geometry is never touched** — every stored vertex stays exactly as the farmer drew it. This
-is paint-time only. Keep corners that communicate a real boundary, building or terrace break; the
-goal is to remove hand-jitter, not to round a building into a blob.
-
-Show a before/after of the same plot in the report. `PLAN_VERSION`.
+Fix only what is genuinely ambiguous, and add a test per fix that fails against today's text. If a
+candidate is fine, say why — that is a useful result and it stops the next agent re-auditing it.
 
 ---
 
-## 10. The whole Design Studio is English-only — `codex/design-studio-i18n`
+## 5. `lib/design-suggest.ts` — 1 127 lines, no tests — `codex/design-suggest-tests`
 
-Measured: **not one file under `components/design/` or `app/design/` imports `@/lib/i18n`.** Thirteen
-components, eight wizard steps, the palette, the print composer — all hard-coded English, in an app
-whose course narration is recorded in isiZulu and whose i18n layer already carries seven South
-African languages (`en`, `af`, `zu`, `xh`, `st`, `nso`, `tn`, ~1 140 keys each).
+**Zero test files import it.** It is the engine behind the design advice a farmer is shown, so a
+wrong suggestion is not a cosmetic defect.
 
-**Scope this deliberately — do not sweep all thirteen files.** Do `components/design/StepGuide.tsx`
-and `components/design/DesignWizard.tsx` only, and prove the pattern end to end: strings extracted to
-`lib/i18n.tsx`, `useLanguage()` wired, the language switch actually changing the step chrome.
+Pin what it promises, and pay attention to the guardrail this repo has learned the hard way: advice
+may recommend and constrain, but it must never assert a figure or an agronomic instruction that has
+no source. Specifically:
 
-**Put the English text in every language slot** and list the new keys in
-`docs/i18n-needs-translation.md`. Do not write isiZulu, Afrikaans or anything else you cannot have
-checked — a plausible-looking wrong translation in a farming app is worse than honest English, and
-module 2's narration is already blocked waiting on a real isiZulu-speaking agronomist for exactly
-this reason.
+- A suggestion that names an element only fires when that element is actually in the design or is
+  genuinely absent-and-needed — never because a code path defaulted.
+- Nothing suggests a species (NEMBA again) that is not already in the corrected catalog.
+- Slope, rainfall and biome thresholds behave at their boundaries, not just in the middle.
+- The same state produces the same advice — no ordering or `Math.random` dependence.
 
-If the pattern lands cleanly, say so in the report and the remaining eleven files become the next
-item.
+---
+
+## 6. `lib/water-system.ts` — 737 lines, no tests — `codex/water-system-tests`
+
+**Zero test files import it.** Tank sizing and harvest maths reach both the Water sheet and the
+report. The numbers a farmer plans a dry season around.
+
+- Roof area × rainfall × runoff coefficient is dimensionally right, and the units are stated.
+- A tank that cannot physically hold the harvest is not silently reported as sufficient.
+- Zero roof, zero rainfall and a missing tank each behave sensibly rather than producing `NaN` or
+  `Infinity` — and `NaN` never reaches a rendered string.
+- Litres vs m³ are never mixed. (The course had a NASA POWER mm/day unit bug once already; the same
+  class of error here would misplan a season's water.)
+
+**Do not change a coefficient or a rainfall figure.** If one looks wrong, report it.
 
 ---
 
@@ -223,9 +170,9 @@ item.
 
 - **Course content** — `docs/narration/*`, `lib/course-*.ts`, slides, audio, animations. Claude's
   lane, and `tests/narration-scripts.test.ts` enforces some of it.
-- **A real Full Treatment render.** The paid-difference gate now covers every sheet, but only Rory
-  can spend a paid render to exercise it.
+- **A real Full Treatment render.** Only Rory can spend a paid render. The `×N` label fix in
+  `c1fe6fa` is a prompt change and is unconfirmed until he does.
 - **Vegetables & Staples module 2.** Blocked on an isiZulu-speaking agronomist reviewing 22 coined
   terms — see `docs/narration/vegetables-staples.zu.md`. Not an engineering task.
-- **Any change to a plant species name, a price, or an agronomic figure.** Those have external
-  sources behind them. Report, do not edit.
+- **Any change to a plant species name, a price, a coefficient or an agronomic figure.** Those have
+  external sources behind them. Report, do not edit.
