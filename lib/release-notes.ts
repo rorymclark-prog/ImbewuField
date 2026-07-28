@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'NEW: Open a module and the slides are there — press Play and it teaches itself through',
+      'Downloaded clips now play by themselves; ones you have not downloaded still ask first',
       'NEW: Download a module, or the whole course, and use it with no airtime',
       'A downloaded module now survives app updates instead of being cleared',
       'Lessons are half the size to download — isiZulu slides and clips are much smaller',

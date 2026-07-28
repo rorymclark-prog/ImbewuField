@@ -12,6 +12,7 @@ import {
 } from '@/lib/course-deck';
 import { trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_CACHE } from '@/lib/offline-cache';
 
 // The module as it was actually written: 24 slides in a teaching order, narrated, with animations
 // where a still cannot carry the idea. Built for one farmer alone with a phone and metered data.
@@ -60,6 +61,12 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
   // Which slides the farmer has chosen to spend data on. Never persisted and never pre-filled —
   // reopening the module should not silently re-download 11 MB of clips.
   const [playing, setPlaying] = useState<Set<number>>(() => new Set());
+  // Play-through: narration plays and the deck turns its own pages until it is stopped.
+  // Rory, watching the finished module: "i wanted the full slidedeck at the beginning of the
+  // lesson, in a window so you can immediately see it — press play, the audio starts auto and
+  // moves through unless you stop the deck." A list of 24 play buttons is a filing cabinet; this
+  // is a lesson.
+  const [autoplay, setAutoplay] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const current = slides[index];
@@ -79,10 +86,54 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
   // Moving on stops the previous slide's narration. Two voices at once is worse than silence, and
   // on a slow connection the old clip can otherwise still be arriving when the new one starts.
+  //
+  // Under play-through the same effect starts the NEW slide's clip. The browser only allows that
+  // because the farmer's tap on Play unlocked this same <audio> element; changing its `src` keeps
+  // the permission, which is why there is one element for the whole deck rather than one per
+  // slide. If a browser refuses anyway, play-through switches itself off rather than leaving a
+  // Stop button that stops nothing.
   useEffect(() => {
     const el = audioRef.current;
-    if (el) { el.pause(); el.currentTime = 0; }
-  }, [index]);
+    if (!el) return;
+    el.pause();
+    el.currentTime = 0;
+    if (!autoplay) return;
+    const started = el.play();
+    if (started) started.catch(() => setAutoplay(false));
+  }, [index, autoplay]);
+
+  // A downloaded clip plays itself; one that is not downloaded still asks first.
+  //
+  // The rule the whole module is built on is that nothing costs data unasked — but a farmer who
+  // downloaded the module in town has already paid for these clips, and making them tap each
+  // one again would be asking twice for the same thing. So play-through consults the offline
+  // cache: present means free, absent means the poster and its size stay, and the narration
+  // carries the slide either way.
+  useEffect(() => {
+    if (!autoplay || !current?.animation) return;
+    if (playing.has(current.slide)) return;
+    let cancelled = false;
+    (async () => {
+      const urls = animationUrls(moduleId, current.slide);
+      if (!urls || typeof caches === 'undefined') return;
+      try {
+        const hit = await (await caches.open(COURSE_CACHE)).match(urls.video, { ignoreSearch: true });
+        if (hit && !cancelled) setPlaying((p) => new Set(p).add(current.slide));
+      } catch {
+        // No cache access — leave it as tap-to-play, which is the safe default.
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [autoplay, current, moduleId, playing]);
+
+  // When a clip ends, turn the page. On the last slide, stop rather than loop.
+  const onNarrationEnded = useCallback(() => {
+    if (!autoplay) return;
+    setIndex((i) => {
+      if (i >= total - 1) { setAutoplay(false); return i; }
+      return i + 1;
+    });
+  }, [autoplay, total]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -173,7 +224,11 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
           ref={audioRef}
           src={audio}
           controls
-          preload="none"
+          onEnded={onNarrationEnded}
+          // Under play-through the next clip is fetched the moment this slide appears, so the gap
+          // between slides is not a silence while the phone thinks. Off otherwise: idle preloading
+          // is the whole thing this module refuses to do.
+          preload={autoplay ? 'auto' : 'none'}
           style={{ width: '100%', height: 34 }}
         />
       )}
@@ -188,6 +243,21 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {/* THE PRIMARY ACTION. Everything else on this control strip is for someone who wants to
+            steer; this is for someone who wants to be taught. It stays available on every slide,
+            so stopping to re-read one and then carrying on is one tap, not a restart. */}
+        <button
+          onClick={() => setAutoplay((on) => !on)}
+          aria-label={autoplay ? 'Stop the lesson' : 'Play the lesson'}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 7, padding: '9px 15px', borderRadius: 10,
+            border: 'none', background: autoplay ? '#8A4B2A' : GREEN, color: '#fff',
+            fontWeight: 700, fontSize: 13, cursor: 'pointer', flexShrink: 0,
+          }}
+        >
+          <span aria-hidden style={{ fontSize: 12 }}>{autoplay ? '■' : '▶'}</span>
+          {autoplay ? 'Stop' : 'Play lesson'}
+        </button>
         <button
           onClick={() => go(-1)}
           disabled={index === 0}

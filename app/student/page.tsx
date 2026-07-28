@@ -928,7 +928,21 @@ export default function StudentPage() {
                       compact
                       label={`Save ${mod.title} to this phone`}
                     />
-                    {hasNarration(mod.id) && (
+                    {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
+                        Rory, on opening a finished module: "i wanted the full slidedeck at the
+                        beginning of the lesson, in a window so you can immediately see it — press
+                        play, the audio starts auto and moves through unless you stop the deck."
+                        The 24-row track list that used to sit here was a filing cabinet: it made
+                        the learner assemble the lesson themselves, one tap at a time, with no
+                        picture. The deck opens on slide 1 and one tap plays the whole thing.
+
+                        The audio-only player stays for a module that has narration but no slides,
+                        so a half-produced module still gives a farmer everything it does have. */}
+                    {hasDeck(mod.id) ? (
+                      <div className="pt-3">
+                        <DeckPlayer moduleId={mod.id} lang={lang} />
+                      </div>
+                    ) : hasNarration(mod.id) ? (
                       <div className="pt-3">
                         <CourseAudioPlayer
                           moduleId={mod.id}
@@ -937,7 +951,7 @@ export default function StudentPage() {
                           label="Listen to the whole module"
                         />
                       </div>
-                    )}
+                    ) : null}
                     <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
                       Lessons
                     </p>
