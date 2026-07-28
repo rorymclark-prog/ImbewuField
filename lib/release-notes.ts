@@ -20,10 +20,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
-      'The first AI map you pay for is now checked — if it comes back unchanged you are told, not charged for a copy',
+      'Paid AI maps are checked — if one comes back unchanged, you are told, not shown a copy',
       'Water sheets stop numbering the beds your irrigation feeds',
       'Zone maps keep zone names in the key instead of scattering them over the map',
-      'Water notes now say where the overflow should go, instead of implying your tank is too small',
+      'Water notes say where the overflow goes, instead of implying your tank is too small',
       'A plan area nobody measured is left unpriced instead of printed as free',
       'The whole design studio speaks your language now, not just parts of it',
       'The same design gives the same advice every time you open it',
