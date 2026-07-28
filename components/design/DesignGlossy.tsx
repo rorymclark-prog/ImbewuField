@@ -7846,7 +7846,12 @@ interface SavedGlossy {
 //        preventing wide fallbacks from crossing the right map edge. (Two branches each landed a
 //        'v61' independently; this is the merge of both, so the number moves on rather than one
 //        of the two render changes quietly inheriting the other's cache entry.)
-const PLAN_VERSION = 'v63';
+//   v64 — 2026-07-28: Water notes compare measured annual roof harvest with the stated capacity
+//        of placed tanks, and explicitly flag missing or unknown storage. (The unmeasured-area
+//        pricing fix that also landed as 'v63' on another branch is NOT listed here: it changes
+//        the facilitator BOQ, not a rendered sheet, so it has no business invalidating a render
+//        cache. Only things that change the PICTURE belong in this list.)
+const PLAN_VERSION = 'v64';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

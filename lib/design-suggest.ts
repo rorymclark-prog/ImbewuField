@@ -6,10 +6,39 @@
 // and every point/ring produced here is guaranteed inside the plot boundary.
 
 import polygonClipping from 'polygon-clipping';
-import { newId, pointInRing, type DetectSuggestion } from '@/lib/design-canvas';
+import { pointInRing, type DetectSuggestion } from '@/lib/design-canvas';
 
 type Ring = Array<[number, number]>;
 type Pt = [number, number];
+
+/**
+ * Advice is derived data: the same saved site must produce the same suggestions, including ids.
+ * Random `newId()` values made otherwise-identical advice look new on every run and defeated
+ * stable comparison/deduplication. Hash the factual suggestion payload instead; an occurrence
+ * suffix keeps two genuinely identical markers distinct without introducing time or randomness.
+ */
+function stableSuggestions(suggestions: DetectSuggestion[]): DetectSuggestion[] {
+  const occurrences = new Map<string, number>();
+  return suggestions.map((suggestion) => {
+    const payload = JSON.stringify({
+      kind: suggestion.kind,
+      points: suggestion.points,
+      sizeM: suggestion.sizeM,
+      zone: suggestion.zone,
+      note: suggestion.note,
+      status: suggestion.status,
+    });
+    let hash = 2166136261;
+    for (let i = 0; i < payload.length; i++) {
+      hash ^= payload.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    const base = `${suggestion.kind}_${(hash >>> 0).toString(36)}`;
+    const occurrence = (occurrences.get(base) ?? 0) + 1;
+    occurrences.set(base, occurrence);
+    return { ...suggestion, id: `ds_${base}_${occurrence}` };
+  });
+}
 
 // ── Small geometry helpers ────────────────────────────────────────────────────
 
@@ -524,7 +553,7 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
 
   // Zone 0 — the house itself, verbatim. It's already ground truth; nothing to derive.
   if (house.length >= 3) {
-    out.push({ id: newId(), kind: 'zone', zone: 0, points: house, note: 'The home', status: 'pending' });
+    out.push({ id: '', kind: 'zone', zone: 0, points: house, note: 'The home', status: 'pending' });
   }
 
   const boundaryPx = toPx(closeRing(boundary), frame);
@@ -591,8 +620,21 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
     usedSlope = true;
     const base: Pt = [anchorPx[0] + inward[0] * bandDist[3], anchorPx[1] + inward[1] * bandDist[3]];
     const lat = pad * 0.4;
-    seedsPx[3] = [base[0] - dir[0] * lat, base[1] - dir[1] * lat]; // zone 4 — uphill/level side
-    seedsPx[4] = [base[0] + dir[0] * lat, base[1] + dir[1] * lat]; // zone 5 — downhill side
+    const plotCentre = centroid(boundaryPx);
+    // A direction offset can put either seed outside a narrow or simply rectangular plot. The
+    // Voronoi cell for that seed may then vanish, so crossing the 3° threshold used to delete
+    // Zone 5 entirely on an ordinary south-facing test plot. Direction changes classification,
+    // never whether the zone exists: pull both seeds back onto real plot ground.
+    seedsPx[3] = nudgeInside(
+      [base[0] - dir[0] * lat, base[1] - dir[1] * lat],
+      plotCentre,
+      boundaryPx,
+    ); // zone 4 — uphill/level side
+    seedsPx[4] = nudgeInside(
+      [base[0] + dir[0] * lat, base[1] + dir[1] * lat],
+      plotCentre,
+      boundaryPx,
+    ); // zone 5 — downhill side
   }
 
   const cells = voronoiCells(open, seedsPx, pad);
@@ -624,7 +666,7 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
 
   const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
     if (ring.length < 3) return;
-    out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
+    out.push({ id: '', kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
   };
 
   emit(1, finish(cells[0], false), `Daily-use — ${anchorNote}`);
@@ -639,7 +681,7 @@ export function suggestZones(boundary: Ring, house: Ring, opts: ZoneSuggestOpts)
       : 'Wild edge & buffer — the ground farthest from the door',
   );
 
-  return out;
+  return stableSuggestions(out);
 }
 
 // ── suggestZonesFromPlan (hybrid AI-vision) ─────────────────────────────────────
@@ -676,7 +718,7 @@ export function suggestZonesFromPlan(
 
   // Zone 0 — the house itself, verbatim (same as suggestZones).
   if (house.length >= 3) {
-    out.push({ id: newId(), kind: 'zone', zone: 0, points: house, note: 'The home', status: 'pending' });
+    out.push({ id: '', kind: 'zone', zone: 0, points: house, note: 'The home', status: 'pending' });
   }
 
   const boundaryPx = toPx(closeRing(boundary), frame);
@@ -707,7 +749,7 @@ export function suggestZonesFromPlan(
 
   const emit = (zone: 1 | 2 | 3 | 4 | 5, ring: Ring, note: string) => {
     if (ring.length < 3) return;
-    out.push({ id: newId(), kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
+    out.push({ id: '', kind: 'zone', zone, points: toNorm(ring, frame), note, status: 'pending' });
   };
 
   // The AI already placed each zone's anchor where it belongs on THIS real plot; a nearest-anchor
@@ -727,7 +769,7 @@ export function suggestZonesFromPlan(
     emit(zone, finalizeZoneRing(cells[i], boundaryMulti, false, snapTargets, snapTol), note);
   });
 
-  return out;
+  return stableSuggestions(out);
 }
 
 // ── suggestFromAutoDesignPlan (AI Auto-Design — whole-farm intent → geometry) ─────
@@ -807,11 +849,11 @@ export function suggestFromAutoDesignPlan(
     const ring = largestOuterRing(claim);
     const note = plan.vegGarden.rationale?.trim() || 'Veg garden — flat, sunny, near the house';
     if (ring.length >= 3) {
-      out.push({ id: newId(), kind: 'veg_area', points: toNorm(ring, frame), note, status: 'pending' });
+      out.push({ id: '', kind: 'veg_area', points: toNorm(ring, frame), note, status: 'pending' });
     } else {
       // Ring clipped to nothing (anchor outside open space) — fall back to a single bed point.
       const pt = nudgeInside([clamp01(plan.vegGarden.anchor[0]), clamp01(plan.vegGarden.anchor[1])], h, boundary);
-      out.push({ id: newId(), kind: 'veg_bed', points: [pt], note, status: 'pending' });
+      out.push({ id: '', kind: 'veg_bed', points: [pt], note, status: 'pending' });
     }
   }
 
@@ -830,7 +872,7 @@ export function suggestFromAutoDesignPlan(
         const offM = t * half;
         const raw: Pt = [anchor[0] + perp[0] * dxNorm(offM), anchor[1] + perp[1] * dyNorm(offM)];
         const pt = nudgeInside(raw, h, boundary);
-        out.push({ id: newId(), kind: 'tree', points: [pt], sizeM: 5, note, status: 'pending' });
+        out.push({ id: '', kind: 'tree', points: [pt], sizeM: 5, note, status: 'pending' });
       }
     }
   }
@@ -843,7 +885,7 @@ export function suggestFromAutoDesignPlan(
       if (skipTanks) continue;
       const pt = nudgeInside(anchor, h, boundary);
       out.push({
-        id: newId(),
+        id: '',
         kind: 'water_tank',
         points: [pt],
         sizeM: 1.8,
@@ -853,7 +895,7 @@ export function suggestFromAutoDesignPlan(
     } else if (w.kind === 'dam') {
       const pt = nudgeInside(anchor, h, boundary);
       out.push({
-        id: newId(),
+        id: '',
         kind: 'pond',
         points: [pt],
         sizeM: Math.max(2, Math.min(w.extentM ?? 6, 40)),
@@ -870,7 +912,7 @@ export function suggestFromAutoDesignPlan(
         pts.push(nudgeInside(raw, h, boundary));
       }
       out.push({
-        id: newId(),
+        id: '',
         kind: 'swale',
         points: pts,
         note: w.rationale?.trim() || 'Swale on contour — check levels on the ground',
@@ -886,7 +928,7 @@ export function suggestFromAutoDesignPlan(
       // From the access edge (anchor) to the house — two-point path line.
       const start: Pt = nudgeInside([clamp01(plan.path.anchor[0]), clamp01(plan.path.anchor[1])], h, boundary);
       out.push({
-        id: newId(),
+        id: '',
         kind: 'driveway',
         points: [start, h],
         note: 'Main path from the access to the house',
@@ -895,7 +937,7 @@ export function suggestFromAutoDesignPlan(
     }
   }
 
-  return out;
+  return stableSuggestions(out);
 }
 
 // ── suggestWater ────────────────────────────────────────────────────────────────
@@ -938,7 +980,7 @@ export function suggestWater(
       ];
       const pt = nudgeInside(outward, h, boundary);
       out.push({
-        id: newId(),
+        id: '',
         kind: 'water_tank',
         points: [pt],
         sizeM: 1.8,
@@ -961,7 +1003,7 @@ export function suggestWater(
     const raw: Pt = [h[0] + (dirX / len) * dxNorm(6), h[1] + (dirY / len) * dyNorm(6)];
     const pt = nudgeInside(raw, h, boundary);
     out.push({
-      id: newId(),
+      id: '',
       kind: 'greywater',
       points: [pt],
       sizeM: 1.5,
@@ -995,7 +1037,7 @@ export function suggestWater(
         pts.push(nudgeInside(raw, h, boundary));
       }
       out.push({
-        id: newId(),
+        id: '',
         kind: 'swale',
         points: pts,
         note: 'Swale on contour — check levels on the ground',
@@ -1004,7 +1046,7 @@ export function suggestWater(
     }
   }
 
-  return out;
+  return stableSuggestions(out);
 }
 
 // ── suggestStructures ────────────────────────────────────────────────────────────
@@ -1037,7 +1079,7 @@ export function suggestStructures(
   const compostRaw: Pt = [h[0] + ux * dxNorm(5), h[1] + uy * dyNorm(5)];
   const compost = nudgeInside(compostRaw, h, boundary);
   out.push({
-    id: newId(),
+    id: '',
     kind: 'compost',
     points: [compost],
     note: 'Compost within a wheelbarrow run of the kitchen',
@@ -1050,7 +1092,7 @@ export function suggestStructures(
   const nurseryRaw: Pt = [compost[0] + perpX * dxNorm(4), compost[1] + perpY * dyNorm(4)];
   const nursery = nudgeInside(nurseryRaw, h, boundary);
   out.push({
-    id: newId(),
+    id: '',
     kind: 'nursery',
     points: [nursery],
     note: 'Nursery table beside the compost',
@@ -1071,7 +1113,7 @@ export function suggestStructures(
     const beehiveRaw: Pt = [far[0] + (h[0] - far[0]) * 0.08, far[1] + (h[1] - far[1]) * 0.08];
     const beehive = nudgeInside(beehiveRaw, h, boundary);
     out.push({
-      id: newId(),
+      id: '',
       kind: 'beehive',
       points: [beehive],
       note: 'Beehive on the quiet far edge — flight path away from paths',
@@ -1079,7 +1121,7 @@ export function suggestStructures(
     });
   }
 
-  return out;
+  return stableSuggestions(out);
 }
 
 // ── suggestPlanting ──────────────────────────────────────────────────────────────
@@ -1103,7 +1145,7 @@ export function suggestPlanting(
     const raw: Pt = [h[0] + dxNorm(dxM), h[1] + dyNorm(dyM)];
     const pt = nudgeInside(raw, h, boundary);
     out.push({
-      id: newId(),
+      id: '',
       kind: 'tree',
       points: [pt],
       sizeM: 5,
@@ -1116,12 +1158,12 @@ export function suggestPlanting(
   const vegRaw: Pt = [h[0] + dxNorm(6), h[1]];
   const veg = nudgeInside(vegRaw, h, boundary);
   out.push({
-    id: newId(),
+    id: '',
     kind: 'veg_bed',
     points: [veg],
     note: 'Veg bed close to the kitchen',
     status: 'pending',
   });
 
-  return out;
+  return stableSuggestions(out);
 }
