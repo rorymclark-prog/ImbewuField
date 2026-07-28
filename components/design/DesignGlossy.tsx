@@ -6966,9 +6966,18 @@ export async function buildImplementationMap(
     ctx.fillStyle = '#241E12';
     let ty = y;
     for (const ln of titleLines) { if (ty <= panelBottom) ctx.fillText(ln, titleX, ty); ty += lineH; }
-    // Advance below BOTH the chip and the (possibly multi-line) title.
+    // Advance below BOTH the chip and the (possibly multi-line) title. A baseline is not a text
+    // edge: the old 0.35 × line-height nudge left the week range's cap-height inside the chip by
+    // about 4px on the demo sheet. Clear the chip by the next font's measured ascent so this remains
+    // true when the schedule column changes width or the browser resolves a different fallback face.
     const lastTitleBaseline = y + (titleLines.length - 1) * lineH;
-    y = Math.max(lastTitleBaseline, chipTop + chipS) + Math.round(lineH * 0.35);
+    ctx.font = weekFont;
+    const weekAscent = Math.ceil(ctx.measureText(phase.weekRange).actualBoundingBoxAscent || fsBody * 0.75);
+    const weekTopGap = Math.max(1, Math.round(fsBody * 0.15));
+    y = Math.max(
+      lastTitleBaseline + lineH,
+      chipTop + chipS + weekAscent + weekTopGap,
+    );
     // Week range.
     drawLines([phase.weekRange], innerX, weekFont, '#6B6355');
     // Task bullets (capped).
@@ -7802,7 +7811,9 @@ interface SavedGlossy {
 //        outer aspect matches 01-07 and remains within the AI 3:1 limit on tall farms.
 //   v59 — 2026-07-28: map callout type follows the boundary-derived map width instead of staying
 //        fixed at 19px across radically different sheet shapes.
-const PLAN_VERSION = 'v59';
+//   v60 — 2026-07-28: phasing week ranges clear their chips by the resolved font ascent, preventing
+//        the chip edge from striking through the tops of the week text.
+const PLAN_VERSION = 'v60';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
