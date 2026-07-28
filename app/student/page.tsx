@@ -19,6 +19,7 @@ import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DeckPlayer from '@/components/course/DeckPlayer';
 import { hasDeck, deckSlideCount } from '@/lib/course-deck';
+import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import {
@@ -728,7 +729,19 @@ export default function StudentPage() {
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
 
-            const unlocked = isModuleUnlocked(mod.id, gatingCtx);
+            // A FINISHED MODULE IS ALWAYS OPEN.
+            //
+            // Rory needs to show the app before the course is finished, and the one module that is
+            // genuinely complete — illustrated, narrated in both languages, with its slide deck —
+            // sat locked behind five he had not done. So the thing he most wants seen was the one
+            // thing nobody could reach.
+            //
+            // Sequential gating still governs everything else, and it costs nothing here: modules
+            // are finished in curriculum order, so in normal use a complete module is one the
+            // learner has already unlocked. This only ever opens a module that is ahead of them
+            // AND finished, which is exactly the sample case. The badge says which it is.
+            const contentComplete = isModuleComplete_Content(mod.id);
+            const unlocked = isModuleUnlocked(mod.id, gatingCtx) || contentComplete;
             const isCurrent = currentId === mod.id;
 
             // LOCKED: content is unreachable, not merely visually hidden — the lessons list
@@ -809,6 +822,22 @@ export default function StudentPage() {
                           Continue here
                         </span>
                       )}
+                      {/* HOW FINISHED THIS MODULE IS, derived from what is on disk rather than a
+                          flag anyone can forget to withdraw. The app is being shown to people
+                          before the course is done: without this, one fully-produced module and
+                          nine text-only ones look identical, so either the whole course reads as
+                          half-built or the finished one is mistaken for the standard. The
+                          in-progress wording says what IS there — the lessons are real and
+                          readable today; it is the narration and slides that are still coming. */}
+                      <span
+                        title={readinessLabel(mod.id)?.detail}
+                        className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                        style={contentComplete
+                          ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
+                          : { background: 'rgba(32,25,15,0.05)', color: '#8C7A62', border: '1px solid #E2D8C4' }}
+                      >
+                        {readinessLabel(mod.id)?.text}
+                      </span>
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{
