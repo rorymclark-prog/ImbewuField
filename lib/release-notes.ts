@@ -20,6 +20,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Plan sheets now take the shape of your farm — a long thin plot fills the page',
       'NEW: Open a module and the slides are there — press Play and it teaches itself through',
       'Downloaded clips now play by themselves; ones you have not downloaded still ask first',
       'NEW: Download a module, or the whole course, and use it with no airtime',
