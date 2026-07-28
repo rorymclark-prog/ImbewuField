@@ -9417,6 +9417,12 @@ export default function DesignGlossy({
       }
       const hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
+      // MEASURE THIS PAID PASS TOO. The difference gate exists because a polish pass that returned
+      // its own input verbatim cleared every other check and was still stored, labelled "AI
+      // polished", and charged for. It was wired into generateOneViaQueue only, so the three
+      // analysis sheets — Site, Sector and Phasing — kept paying for an unverified pass on exactly
+      // the sheets where the app redraws the most on top and a near-copy is hardest to spot.
+      if (polishStage) polishInputRef.current = hybridInput;
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderFrame = presentation.frame;
       const mapWidth = renderFrame.imgW * SCALE;
@@ -9525,6 +9531,11 @@ export default function DesignGlossy({
       }
       let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
+      // Baseline for the paid-difference gate — captured BEFORE blankPhasingPanel below. Comparing
+      // against the blanked image would score the app's own redraw of the schedule panel as the
+      // model's work, so a verbatim copy would pass as "redrawn" and the gate would be worse than
+      // absent: it would actively certify the failure it was built to catch.
+      if (polishStage) polishInputRef.current = hybridInput;
 
       // Full Treatment's polish stage must NEVER see the real schedule text either — not just the
       // Hybrid stage. hybridInput here is the Hybrid stage's own FINISHED sheet (composePhasingSheet
