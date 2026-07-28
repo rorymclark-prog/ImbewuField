@@ -773,6 +773,20 @@ export function buildSatelliteOverlayPrompt(args: {
     ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';
 
+  // Served fixtures need the same data/grammar split as the designed-element list below. `served`
+  // is an inventory, so "Vegetable Bed ×7" is correct there; it is not a legal caption spelling.
+  // The old clause told the model to caption each fixture "exactly as written above", welding the
+  // inventory quantity back onto the name and recreating the ×1…×7 failure for Water-sheet
+  // context instead of Water-sheet content.
+  const servedLabelNames = [
+    ...new Set(
+      served
+        .split(',')
+        .map((name) => name.replace(/\s*\u00d7\s*\d+\s*$/, '').trim())
+        .filter(Boolean),
+    ),
+  ].join(', ');
+
   // WHAT THIS LAYER SERVES. Separate from siteFabric because the two want opposite treatment: ground
   // (lawn, patio, yard) is silent under rule 10, while the beds and basins an irrigation system
   // feeds must be NAMED or the farmer is reading unexplained shapes on his own plan. The
@@ -780,7 +794,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // with no such guard and the render came back with invented tree canopies and banana palms,
   // because "Tree Basin" contains "tree". Naming is only safe while this clause travels with it.
   const servedClause = served.trim()
-    ? `\n\nWHAT THIS SYSTEM SERVES — NAMED, BUT NOT PART OF IT. Small faint outlines are already marked on the photograph for the beds and basins this layer waters: ${served}. Every one of them is ALREADY THERE — redraw exactly what is marked, one for one, at the marked size, and ADD NONE. The marker count is the count: no extra bed, basin, tree, canopy, palm or shrub appears anywhere on this sheet, and the open lawn between them stays open lawn. Give each a small white caption naming it exactly as written above, and one legend row each under a heading reading EXISTING. They are what this system waters, not part of the system itself, so they are what this layer connects to, never part of it, and they never take one of this sheet's own system headings.`
+    ? `\n\nWHAT THIS SYSTEM SERVES — NAMED, BUT NOT PART OF IT. Small faint outlines are already marked on the photograph for the beds and basins this layer waters: ${served}. Every one of them is ALREADY THERE — redraw exactly what is marked, one for one, at the marked size, and ADD NONE. The marker count is the count: no extra bed, basin, tree, canopy, palm or shrub appears anywhere on this sheet, and the open lawn between them stays open lawn. Give each a small white caption using only these plain names, with no number or count added: ${servedLabelNames}. Give the plain names one legend row each under a heading reading EXISTING. They are what this system waters, not part of the system itself, so they are what this layer connects to, never part of it, and they never take one of this sheet's own system headings.`
     : '';
 
   // Generalises the zoneBands-only exemption below into a list naming whichever translucent-area
@@ -870,6 +884,12 @@ export function buildSatelliteOverlayPrompt(args: {
         .filter(Boolean),
     ),
   ].join(', ');
+  const labelRule = sheetKind === 'zones'
+    ? '10. LABELS — NO ELEMENT LABELS. This sheet has zone bands, not element markers. Put only the saved zone numeral inside each round zone badge. Do not write a zone name, zone description, item name or count anywhere on the map; the complete zone names belong in the legend panel only.'
+    : `10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, give the whole group ONE label — its plain name, with no number and no count — and run a leader from that single label to the group. Where the same element type appears in separate parts of the site, label each part with that same plain name and let its leader line show which it is. Repeating a name is correct; numbering it is not. THESE ARE THE ONLY SPELLINGS, and a label is exactly one of them in caps, with nothing added: ${labelNames}. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.`;
+  const wordsRule = sheetKind === 'zones'
+    ? '14. WORDS ON THE SHEET: the only lettering anywhere is the zone number badges, the zone legend rows, the title, the subtitle, "N" and "20 m". Zone names and descriptions appear in the legend only, never as map labels. All lettering is horizontal and print-legible.'
+    : `14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N"${fabricIsContent && siteFabric ? ', the existing-fabric captions' : ''} and "20 m". All spelled exactly as given, all horizontal, all print-legible.`;
 
   // Suppressed entirely when nothing matched. On a Zones sheet the element list carries zone names
   // only, so `present` is empty and this rule rendered as the literal fragment
@@ -906,7 +926,7 @@ ${iconRule}
 
 9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule}${routeRule}${waterSystems}${zoneBands}${siteFabric}${servedClause}
 
-10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, give the whole group ONE label — its plain name, with no number and no count — and run a leader from that single label to the group. Where the same element type appears in separate parts of the site, label each part with that same plain name and let its leader line show which it is. Repeating a name is correct; numbering it is not. THESE ARE THE ONLY SPELLINGS, and a label is exactly one of them in caps, with nothing added: ${labelNames}. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.
+${labelRule}
 
 11. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon. A line in CAPITALS with no icon is a SECTION HEADING — set it in small bold capitals above the rows beneath it, with a little space before it, exactly as the reference plan sets WATER, PLANTING and INFRASTRUCTURE:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
 
@@ -914,7 +934,7 @@ ${iconRule}
 
 13. VIEW: the output camera is the input camera — flat orthographic top-down, north-up, same crop, same scale, same aspect.
 
-14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N"${zoneBands ? ', the zone number badges' : ''}${fabricIsContent && siteFabric ? ', the existing-fabric captions' : ''} and "20 m". All spelled exactly as given, all horizontal, all print-legible.
+${wordsRule}
 
 FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly redrawn — even green lawn, crisp roof planes, no photographic grain or blotching — while outside the boundary is untouched photograph, and the boundary is the visible seam between them; (2) every legend row begins with the same pictorial icon used on the map, drawn larger — the tank row shows the little blue tank, the pond row shows the little pond; (3) every marker has become exactly one icon in its original spot, and there is not a single NEW tree, shrub or bed on the sheet that has no marker under it — trees already visible in the photograph, and the existing traced areas named above, stay exactly as they are; (4) boundary ticked chartreuse, drip runs as blue dots along the routes already traced, driveway near-black; (5) title, subtitle, north arrow and "20 m" scale bar present; (6) every word matches the spellings given above.`;
 

@@ -1113,3 +1113,35 @@ test('nothing in the prompt shows a count being lettered onto the sheet', () => 
   assert.doesNotMatch(labelRule, /"\s*\d+\s*×/, 'rule 10 demonstrates a count inside a label again');
   assert.doesNotMatch(labelRule, /×\s*\d+\s*[A-Z]/, 'rule 10 shows a quantity attached to a name');
 });
+
+test('Water context inventory counts never become served-fixture caption spellings', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 5000L',
+    served: 'Vegetable Bed ×7, Tree Basin ×2',
+    sheetKind: 'water',
+  });
+  const servedRule = p.split('WHAT THIS SYSTEM SERVES')[1].split('\n')[0];
+
+  assert.match(servedRule, /Vegetable Bed ×7, Tree Basin ×2/, 'the inventory lost its marker counts');
+  assert.match(servedRule, /plain names, with no number or count added: Vegetable Bed, Tree Basin/);
+  assert.doesNotMatch(servedRule, /caption naming it exactly as written above/);
+});
+
+test('Zones keep full zone names in the legend and only number badges on the map', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Zones',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'Zone 1 — Daily use, Zone 3 — Orchard / food forest',
+    sheetKind: 'zones',
+  });
+  const labelRule = p.split('10. LABELS')[1].split('\n')[0];
+  const legendRule = p.split('11. LEGEND PANEL')[1].split('12. SHEET FURNITURE')[0];
+
+  assert.match(labelRule, /NO ELEMENT LABELS/);
+  assert.match(labelRule, /only the saved zone numeral/);
+  assert.doesNotMatch(labelRule, /Zone 1 — Daily use|Zone 3 — Orchard/);
+  assert.match(legendRule, /Zone 1 — Daily use/);
+  assert.match(legendRule, /Zone 3 — Orchard \/ food forest/);
+});
