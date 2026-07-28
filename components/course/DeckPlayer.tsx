@@ -47,10 +47,28 @@ const PAPER = '#FFFEFA';
 const LINE = '#ECE3C9';
 const GREEN = '#2F6B3A';
 
-export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPlayerProps) {
+/** Human names for the languages a module can be recorded in; an unlisted code shows as-is. */
+const LANG_NAME: Record<string, string> = {
+  en: 'English', zu: 'isiZulu', af: 'Afrikaans', xh: 'isiXhosa', st: 'Sesotho',
+  nso: 'Sepedi', tn: 'Setswana', ts: 'Xitsonga', ve: 'Tshivenda', ss: 'siSwati', nr: 'isiNdebele',
+};
+const langName = (code: string) => LANG_NAME[code] ?? code;
+
+export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose }: DeckPlayerProps) {
   const deck = deckFor(moduleId);
-  const slideLang = resolveDeckLang(moduleId, lang);
   const narration = COURSE_NARRATION[moduleId];
+
+  // WHICH LANGUAGE THIS DECK IS IN, separately from the app's.
+  //
+  // Replacing the old track list with this player took the isiZulu/English switch away with it,
+  // and that switch was doing real work: a learner reading isiZulu may still want to hear the
+  // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
+  // change back. It defaults to the app's language and is only offered when the module actually
+  // has more than one recording.
+  const [lang, setLang] = useState(appLang);
+  useEffect(() => { setLang(appLang); }, [appLang]);
+  const slideLang = resolveDeckLang(moduleId, lang);
+  const languages = narration?.languages ?? [];
 
   const slides = useMemo(
     () => (deck?.slides ?? []).filter((s) => !lessonId || s.lesson === lessonId),
@@ -102,7 +120,9 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
     if (!autoplay) return;
     const started = el.play();
     if (started) started.catch(() => setAutoplay(false));
-  }, [index, autoplay]);
+    // `audioForCurrent` is in the deps so switching language mid-lesson restarts THIS slide in the
+    // new voice, rather than leaving the element pointing at a source it is no longer playing.
+  }, [index, autoplay, audioForCurrent]);
 
   // A downloaded clip plays itself; one that is not downloaded still asks first.
   //
@@ -196,6 +216,29 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
           {index + 1} / {total}
         </span>
         <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.25, color: INK, flex: 1, textWrap: 'balance' }}>{heading}</h3>
+        {languages.length > 1 && (
+          <div role="group" aria-label="Narration language" style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+            {languages.map((code) => {
+              const on = code === lang;
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setLang(code)}
+                  aria-pressed={on}
+                  style={{
+                    padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+                    background: on ? 'rgba(47,107,58,0.10)' : 'transparent',
+                    border: `1px solid ${on ? 'rgba(47,107,58,0.30)' : LINE}`,
+                    color: on ? GREEN : MUTED,
+                  }}
+                >
+                  {langName(code)}
+                </button>
+              );
+            })}
+          </div>
+        )}
         {onClose && (
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
