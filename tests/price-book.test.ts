@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   PRICE_BOOK,
   costForAreaLine,
+  costForMeasuredAreaLine,
   costForItem,
   costForLine,
   formatZar,
@@ -25,6 +26,18 @@ test('a zero quantity remains an explicit R0 line for every measured unit', () =
   ];
 
   for (const line of lines) assert.equal(line.zar, 0);
+});
+
+test('a missing area stays unpriced while a measured zero remains an explicit R0 row', () => {
+  assert.equal(
+    costForMeasuredAreaLine('driveway', undefined),
+    null,
+    'missing polygon geometry was silently presented as a free driveway',
+  );
+  assert.equal(
+    priced(costForMeasuredAreaLine('driveway', 0), 'measured zero-area driveway').zar,
+    0,
+  );
 });
 
 test('the BOQ total is exactly the sum of its rounded lines', () => {

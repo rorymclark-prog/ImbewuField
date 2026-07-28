@@ -15,6 +15,10 @@ import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-syn
 
 test('every Design Studio chrome key exists in every language slot instead of silently falling back', () => {
   const source = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  const translationNeeds = readFileSync(
+    new URL('../docs/i18n-needs-translation.md', import.meta.url),
+    'utf8',
+  );
   const localeStarts = [...source.matchAll(/^  ([a-z]+): \{/gm)];
   assert.ok(localeStarts.length > 1, 'the translation dictionary did not expose its language slots');
 
@@ -23,6 +27,11 @@ test('every Design Studio chrome key exists in every language slot instead of si
       source,
       new RegExp(`^  ${key}: [\"']`, 'm'),
       `${key} has no explicit pending English source text`,
+    );
+    assert.match(
+      translationNeeds,
+      new RegExp(`\\\`${key}\\\``),
+      `${key} is wired but missing from the fluent-review handoff`,
     );
   }
   for (const [index, match] of localeStarts.entries()) {
@@ -69,4 +78,56 @@ test('a nested language switch updates the provider used by Design Studio in the
   stop();
   announceLanguageChange(bus, 'af');
   assert.deepEqual(received, ['zu'], 'an unmounted provider kept receiving language changes');
+});
+
+test('every remaining Design Studio surface reads UI chrome from the active language context', () => {
+  const components = [
+    'BasePhotoImport',
+    'DesignAdvisor',
+    'DesignCanvas',
+    'DesignGlossy',
+    'DesignPalette',
+    'DesignPrint',
+    'LessonLink',
+    'LessonPanel',
+    'SectorOverlay',
+    'SectorSummary',
+    'TankCalculator',
+  ];
+  const representativeKeys: Record<string, string> = {
+    BasePhotoImport: 'designPhotoTitle',
+    DesignAdvisor: 'designAdvisorAskLima',
+    DesignCanvas: 'designCanvasUseInDesign',
+    DesignGlossy: 'designGlossyPlanSet',
+    DesignPalette: 'designPaletteExistingHelp',
+    DesignPrint: 'designPrintTitle',
+    LessonLink: 'designLessonHeading',
+    LessonPanel: 'designLessonPrinciple',
+    SectorOverlay: 'designSectorFire',
+    SectorSummary: 'designSectorTitle',
+    TankCalculator: 'designTankTitle',
+  };
+
+  for (const component of components) {
+    const source = readFileSync(
+      new URL(`../components/design/${component}.tsx`, import.meta.url),
+      'utf8',
+    );
+    assert.match(source, /\buseLanguage\(\)/, `${component} is still detached from the active locale`);
+    assert.match(
+      source,
+      new RegExp(`t\\(['"]${representativeKeys[component]}['"]\\)`),
+      `${component} does not resolve its representative chrome key at render time`,
+    );
+  }
+});
+
+test('localising UI chrome does not translate load-bearing text painted onto exported sheets', () => {
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const print = readFileSync(new URL('../components/design/DesignPrint.tsx', import.meta.url), 'utf8');
+
+  assert.match(glossy, /ctx\.fillText\('LEGEND'/, 'the exported glossy legend spelling moved behind UI translation');
+  assert.match(print, /ctx\.fillText\('Legend'/, 'the exported print legend spelling moved behind UI translation');
+  assert.doesNotMatch(glossy, /ctx\.fillText\(t\(/, 'DesignGlossy now paints translated UI text into a sheet');
+  assert.doesNotMatch(print, /ctx\.fillText\(t\(/, 'DesignPrint now paints translated UI text into a sheet');
 });

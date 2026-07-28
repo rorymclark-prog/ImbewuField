@@ -14,6 +14,8 @@
 
 import type { ReactElement } from 'react';
 import { bearingToUnitVector, type SectorModel } from '@/lib/sector';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 
 // Palette lifted verbatim from buildBlueprintSectorMap so the overlay and the printed sheet read
 // as the same analysis. Kept a touch lighter here (thin strokes + a group-wide ~0.7 opacity).
@@ -45,6 +47,7 @@ export interface SectorOverlayProps {
 // centre = boundary centroid (fallback frame centre), radius sized to the plot and capped so the
 // arrows/labels stay inside the frame at fit-zoom. All maths in viewBox px (the group's units).
 export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: SectorOverlayProps) {
+  const { t } = useLanguage();
   const isSH = model.southernHemisphere;
 
   let cx = W / 2;
@@ -129,10 +132,10 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
   els.push(<circle key="ring" cx={cx} cy={cy} r={R} fill="none" stroke={RING} strokeWidth={1.5} strokeDasharray="6 6" />);
   els.push(
     <g key="ticks" fontFamily="system-ui, sans-serif" fontWeight={700} fontSize={tickFont} fill={TICK} textAnchor="middle" dominantBaseline="central">
-      <text x={cx} y={cy - R - rowH * 0.5}>N</text>
-      <text x={cx} y={cy + R + rowH * 0.5}>S</text>
-      <text x={cx + R + rowH * 0.55} y={cy}>E</text>
-      <text x={cx - R - rowH * 0.55} y={cy}>W</text>
+      <text x={cx} y={cy - R - rowH * 0.5}>{t('designSectorNorth')}</text>
+      <text x={cx} y={cy + R + rowH * 0.5}>{t('designSectorSouth')}</text>
+      <text x={cx + R + rowH * 0.55} y={cy}>{t('designSectorEast')}</text>
+      <text x={cx - R - rowH * 0.55} y={cy}>{t('designSectorWest')}</text>
     </g>,
   );
 
@@ -154,10 +157,10 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     const lp = bearingToUnitVector(model.fire.bearingDeg);
     const fireOnWind = model.fire.bearingDeg === model.windWinter?.bearingDeg || model.fire.bearingDeg === model.windSummer?.bearingDeg;
     if (fireOnWind) {
-      els.push(label('fire-lbl', cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, 'FIRE', FIRE_LBL));
+      els.push(label('fire-lbl', cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, t('designSectorFire'), FIRE_LBL));
     } else {
       arrow('fire-arr', lp, FIRE, Math.max(2.4, W * 0.004), '10 6');
-      els.push(label('fire-lbl', cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), 'FIRE', FIRE_LBL));
+      els.push(label('fire-lbl', cx + lp[0] * (R + arrowLen * 0.95), cy + lp[1] * (R + arrowLen * 0.95), t('designSectorFire'), FIRE_LBL));
     }
   }
 
@@ -177,19 +180,25 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
   );
   els.push(<circle key="sun-apex" cx={cx} cy={apexY} r={Math.max(6, W * 0.011)} fill={SUN} />);
   arrow('sun-ray', bearingToUnitVector(isSH ? 0 : 180), SUN, Math.max(3, W * 0.0045), undefined);
-  els.push(label('sun-lbl', cx, isSH ? cy - sunR - rowH * 0.7 : cy + sunR + rowH * 0.7, 'SUN', SUN));
+  els.push(label('sun-lbl', cx, isSH ? cy - sunR - rowH * 0.7 : cy + sunR + rowH * 0.7, t('designSectorSun'), SUN));
 
   // 4. WIND — summer + winter arrows entering from where each wind blows FROM.
   const windWidth = (spd?: number) => Math.max(2.2, (2 + Math.min(spd ?? 3, 8) * 0.5) * (W / 700));
   if (model.windSummer) {
     const v = bearingToUnitVector(model.windSummer.bearingDeg);
     arrow('wind-s-arr', v, SUMMER, windWidth(model.windSummer.speed), '9 5');
-    els.push(label('wind-s-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `SUMMER ${model.windSummer.fromLabel}`, SUMMER_LBL));
+    els.push(label('wind-s-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
+      season: t('designSectorSummer'),
+      direction: model.windSummer.fromLabel,
+    }), SUMMER_LBL));
   }
   if (model.windWinter) {
     const v = bearingToUnitVector(model.windWinter.bearingDeg);
     arrow('wind-w-arr', v, WINTER, windWidth(model.windWinter.speed), '9 5');
-    els.push(label('wind-w-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `WINTER ${model.windWinter.fromLabel}`, WINTER_LBL));
+    els.push(label('wind-w-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
+      season: t('designSectorWinter'),
+      direction: model.windWinter.fromLabel,
+    }), WINTER_LBL));
   }
 
   // 5. WATER — a downslope arrow through the centre (dashed when the slope is SRTM-indicative).
@@ -210,7 +219,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
         />
       </g>,
     );
-    els.push(label('water-lbl', wex, wey + rowH * 0.55, model.water.indicative ? 'DOWNHILL ~' : 'DOWNHILL', WATER_LBL));
+    els.push(label('water-lbl', wex, wey + rowH * 0.55, t(model.water.indicative ? 'designSectorDownhillApprox' : 'designSectorDownhill'), WATER_LBL));
   }
 
   // 6. FROST — icy dashed downslope arrow + frost-pocket ellipse at the low end.
@@ -224,7 +233,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
         <ellipse cx={fx} cy={fy} rx={Math.max(18, W * 0.026)} ry={Math.max(11, W * 0.016)} fill={FROST_FILL} stroke={FROST} strokeWidth={1.6} strokeDasharray="4 3" />
       </g>,
     );
-    els.push(label('frost-lbl', fx, fy, 'FROST', FROST_LBL));
+    els.push(label('frost-lbl', fx, fy, t('designSectorFrost'), FROST_LBL));
   }
 
   return (

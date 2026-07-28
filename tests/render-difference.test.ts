@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { compareRenders, differenceMessage } from '@/lib/render-difference';
+import { compareRenders, differenceMessage, paidRenderDecision } from '@/lib/render-difference';
 
 // Rory paid for Full Treatment repeatedly and got back the picture he already had. Six commits
 // across two days were reported as fixing it, every one with a green suite behind it, because
@@ -130,4 +130,21 @@ test('mismatched sizes throw rather than silently scoring nonsense', () => {
     () => compareRenders(solid(1, 1, 1), solid(2, 2, 2), { protectMask: new Uint8ClampedArray(8) }),
     /mask size mismatch/,
   );
+});
+
+test('the paid Hybrid gate rejects a known copy and keeps a known redraw', () => {
+  const input = solid(120, 130, 110);
+  const unchanged = paidRenderDecision(
+    compareRenders(input, new Uint8ClampedArray(input)),
+    'hybrid',
+  );
+  const redrawn = paidRenderDecision(
+    compareRenders(input, repainted(input, 0.55)),
+    'hybrid',
+  );
+
+  assert.equal(unchanged.keep, false);
+  assert.match(unchanged.message ?? '', /AI pass returned the same map/);
+  assert.match(unchanged.message ?? '', /exact map is unchanged/);
+  assert.deepEqual(redrawn, { keep: true, message: null });
 });
