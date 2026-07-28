@@ -224,7 +224,13 @@ const WINTER_MONTHS = [5, 6, 7, 8];
  */
 class BedRotation {
   private lastBedId: string | null = null;
-  constructor(private lastGroupByBed: Map<string, FoodGroup>, private rotateCrops: boolean) {}
+  private lastGroupByBed: Map<string, FoodGroup>;
+  private rotateCrops: boolean;
+
+  constructor(lastGroupByBed: Map<string, FoodGroup>, rotateCrops: boolean) {
+    this.lastGroupByBed = lastGroupByBed;
+    this.rotateCrops = rotateCrops;
+  }
 
   nextIndex(beds: PlanBed[]): number {
     if (!this.lastBedId) return 0;
@@ -237,6 +243,12 @@ class BedRotation {
     if (!this.rotateCrops) return false;
     const last = this.lastGroupByBed.get(bedId);
     return last !== undefined && group !== nextInRotation(last);
+  }
+
+  /** A hard rotation violation: the same group would follow itself in this bed. */
+  repeats(bedId: string, group: FoodGroup): boolean {
+    if (!this.rotateCrops) return false;
+    return this.lastGroupByBed.get(bedId) === group;
   }
 
   recordUse(bedId: string, group: FoodGroup) {
@@ -324,14 +336,18 @@ function planSuccession(
   // Snapshot taken BEFORE this call places anything — see BedRotation's own
   // doc comment for why this must not see this call's own later placements.
   const conflictedBedIds = new Set(bedsForCrop.filter((b) => rotation.conflicts(b.id, group)).map((b) => b.id));
+  const repeatedBedIds = new Set(bedsForCrop.filter((b) => rotation.repeats(b.id, group)).map((b) => b.id));
   for (const sowMonth of sowMonthsToTry) {
     let placed = false;
-    // Two passes: first try only beds that don't repeat this food group
-    // (real rotation), then fall back to any bed that fits — rotation is a
-    // preference, never a reason to leave a bed unplanted.
+    // Two passes: first target the ideal next group in each bed's rotation
+    // cycle, then accept another DIFFERENT group if that is what fits. The
+    // exact sequence is a preference; immediately repeating the same group
+    // is not — that would make the rotation toggle break its core promise.
+    // A later crop/group pass can still plan an otherwise-empty bed.
     for (let pass = 0; pass < 2 && !placed; pass++) {
       for (let i = 0; i < bedsForCrop.length; i++) {
         const bed = bedsForCrop[(bedCursor + i) % bedsForCrop.length];
+        if (repeatedBedIds.has(bed.id)) continue;
         if (pass === 0 && conflictedBedIds.has(bed.id)) continue;
         if (occupancy.fits(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction)) {
           occupancy.add(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction);
@@ -531,7 +547,9 @@ function backfillWinterGaps(
       continue;
     }
 
-    const chosen = candidates.find((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop))) ?? candidates[0];
+    const nonRepeating = candidates.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
+    if (!nonRepeating.length) continue;
+    const chosen = nonRepeating.find((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop))) ?? nonRepeating[0];
     const gap = monthsForward(nowMonth, chosen.sowMonth);
     if (gap > DELAYED_START_THRESHOLD_MONTHS) {
       laterThisYear.push({ cropKey: chosen.crop.key, nextWindowMonth: chosen.sowMonth });
@@ -680,8 +698,10 @@ function fillRemainingGaps(
           .sort((a, b) => (a.startGap - b.startGap) || (commercialScore(b.crop) - commercialScore(a.crop)));
         if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
-        const nonConflicting = fitting.filter((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop)));
-        const pool2 = nonConflicting.length ? nonConflicting : fitting;
+        const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
+        if (!nonRepeating.length) continue;
+        const nonConflicting = nonRepeating.filter((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop)));
+        const pool2 = nonConflicting.length ? nonConflicting : nonRepeating;
         const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
         const pick = nonRepeat[0] ?? pool2[0];
         chosen = { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
