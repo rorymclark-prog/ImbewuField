@@ -78,7 +78,10 @@ test('the phasing baseline is captured BEFORE the schedule panel is blanked', ()
 test('the gate compares against the baseline and refuses to save an unchanged pass', () => {
   // Guards the consumer end: the measurement is pointless if its verdict is not acted on.
   assert.match(SOURCE, /measureRenderDifference\(polishInputRef\.current,/);
-  assert.match(SOURCE, /diff\.verdict !== 'redrawn'/);
+  // Both paid stages now share paidRenderDecision instead of spelling the verdict comparison twice.
+  // Assert the decision is consumed, not the old inline expression.
+  assert.match(SOURCE, /paidRenderDecision\(diff, 'polish'\)/);
+  assert.match(SOURCE, /if \(!decision\.keep\)/);
   assert.match(SOURCE, /polishRejected = true/);
 });
 
@@ -93,4 +96,33 @@ test('scoring can never reject a render it merely failed to measure', () => {
     /polishRejected\s*=\s*true/,
     'a failure to measure must not reject the render',
   );
+});
+
+test('the first paid Hybrid is scored raw input-vs-output before exact content is composited back', () => {
+  const inputFetch = SOURCE.indexOf(
+    "const sourceImage = (isHybridResult || sheet.protectMaskPath)",
+  );
+  const hybridScore = SOURCE.indexOf(
+    "measureRenderDifference(sourceImage, raw, protectMask)",
+    inputFetch,
+  );
+  const finalAssembly = SOURCE.indexOf('const finalSheet =', inputFetch);
+
+  assert.ok(inputFetch !== -1, 'Hybrid completion must fetch the exact uploaded model input');
+  assert.ok(hybridScore > inputFetch, 'Hybrid must compare its uploaded input with the raw model return');
+  assert.ok(
+    hybridScore < finalAssembly,
+    'Hybrid scoring must happen before app-owned geometry and chrome can manufacture a difference',
+  );
+});
+
+test('an unchanged Hybrid is not saved, labelled, or advanced into Full Treatment polish', () => {
+  const gateStart = SOURCE.indexOf("const decision = paidRenderDecision(diff, 'hybrid')");
+  const gateEnd = SOURCE.indexOf('// finishStyledSheet', gateStart);
+  const gate = SOURCE.slice(gateStart, gateEnd);
+
+  assert.match(gate, /if \(!decision\.keep\)/);
+  assert.match(gate, /polishAfterHybridRef\.current = false/);
+  assert.match(gate, /hybridResultRef\.current = null/);
+  assert.match(gate, /continue/);
 });

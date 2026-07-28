@@ -16,7 +16,7 @@ import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
-import { differenceMessage } from '@/lib/render-difference';
+import { paidRenderDecision } from '@/lib/render-difference';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
@@ -10012,6 +10012,10 @@ export default function DesignGlossy({
     // a failure there used to be swallowed while the user still got the green success notice with
     // an unchanged preview — the "Refresh does nothing" report.
     const assembled = new Set<string>();
+    // A measured copy/filter-only return is neither assembled nor an assembly failure. Keep it
+    // separate so the terminal snapshot does not replace the honest paid-pass warning with the
+    // generic "could not assemble" error merely because we deliberately refused to save it.
+    const rejected = new Set<string>();
     let lockedAssembled = 0;
     let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
@@ -10065,8 +10069,35 @@ export default function DesignGlossy({
               // Fetch on the MASK's existence, not on `locked`. Satellite Overlay persists
               // geometryLock:false (it is not a locked style) but still ships a roof mask, and
               // gating on `locked` silently skipped the restore that keeps its roof intact.
-              const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
+              // Hybrid scoring compares the bytes sent TO the model with the bytes returned BY it,
+              // before any exact geometry/chrome is composited back. Fetch the input even when
+              // there is no mask; after a reload this Storage object is the only durable baseline.
+              const sourceImage = (isHybridResult || sheet.protectMaskPath)
+                ? await fetchRenderOutput(sheet.inputPath)
+                : undefined;
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              if (isHybridResult && sourceImage) {
+                try {
+                  const diff = await measureRenderDifference(sourceImage, raw, protectMask);
+                  const decision = paidRenderDecision(diff, 'hybrid');
+                  console.info('[glossy] paid hybrid difference', sheet.key, diff);
+                  if (!decision.keep) {
+                    rejected.add(sheet.key);
+                    setPolishNoChange(decision.message);
+                    // Full Treatment must not advance to polish a Hybrid the gate just proved was
+                    // unchanged. Hybrid-only stops here for the same reason: no AI result exists
+                    // to present, save, or label.
+                    polishAfterHybridRef.current = false;
+                    hybridResultRef.current = null;
+                    setLockedPolishStage(null);
+                    continue;
+                  }
+                } catch (err) {
+                  // Scoring is diagnostic, never a new failure mode. If pixels cannot be measured,
+                  // finish and keep the paid result exactly as before.
+                  console.warn('[glossy] could not score the paid hybrid — keeping it', err);
+                }
+              }
               // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
@@ -10140,10 +10171,11 @@ export default function DesignGlossy({
               if (isPolishedResult && polishInputRef.current) {
                 try {
                   const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
+                  const decision = paidRenderDecision(diff, 'polish');
                   console.info('[glossy] paid polish difference', sheet.key, diff);
-                  if (diff.verdict !== 'redrawn') {
+                  if (!decision.keep) {
                     polishRejected = true;
-                    setPolishNoChange(differenceMessage(diff));
+                    setPolishNoChange(decision.message);
                   }
                 } catch (err) {
                   console.warn('[glossy] could not score the paid polish — keeping it', err);
@@ -10155,6 +10187,7 @@ export default function DesignGlossy({
                 // thumbnail is exactly what made the gallery unreadable, and presenting a copy as a
                 // paid result is the app claiming something it did not get.
                 setLockedPolishStage(null);
+                rejected.add(sheet.key);
                 continue;
               }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
@@ -10205,6 +10238,7 @@ export default function DesignGlossy({
           // browser could not assemble is a failure the farmer must be told about — otherwise a
           // paid render silently vanishes behind a success message.
           const done = assembled.size;
+          const rejectedDone = rejected.size;
           const lockedDone = lockedAssembled;
           const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
@@ -10218,6 +10252,12 @@ export default function DesignGlossy({
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
+          } else if (rejectedDone > 0) {
+            // The worker succeeded, and the browser deliberately rejected the measured output as
+            // unchanged/filter-only. The amber paid-pass explanation is already on screen.
+            setNotice(null);
+            setLockedPolishStage(null);
+            refreshPendingRef.current = false;
           } else if (serverDone > 0) {
             // The render succeeded and was paid for, but this device could not assemble it.
             setError(formatDesignTranslation(t('designGlossyAssembleError'), {
