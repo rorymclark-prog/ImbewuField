@@ -129,6 +129,40 @@ export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement 
   return { x, fontSize, textW, shrunk };
 }
 
+/** One leader, as the three points it is stroked through: element → elbow → label. */
+export interface LeaderPath {
+  from: [number, number];
+  elbow: [number, number];
+  to: [number, number];
+}
+
+/**
+ * The polyline joining an element to its callout.
+ *
+ * THE RULE, AND WHY IT IS A RULE: the long horizontal run follows the LABEL's row, never the
+ * element's. Label rows are de-collided by stackLeaderRows, so no two labels share a row and no two
+ * long runs can coincide. Element positions have no such guarantee — nothing stops two icons being
+ * a few pixels apart in y.
+ *
+ * Both leader drawers in DesignGlossy used to run the horizontal at the element's y and then cut a
+ * diagonal to the label. On the Ubhejane demo the JoJo tank (y≈239) and the compost bay (y≈245) are
+ * six pixels apart and both on the left, so their two runs overlapped into what reads as a single
+ * unbroken line from "JOJO TANK 2500L" clear across the sheet to the compost bay. The data was
+ * right and the page was wrong, which is the worst combination — nothing in a test or a diff could
+ * see it, and a farmer reading that sheet stands the wrong thing on the wrong base.
+ *
+ * Keeping the long run on `labelY` means what leaves each element is a short diagonal at its own
+ * angle, which also reads better: the eye follows the slope back to its own icon.
+ */
+export function leaderPath(
+  element: [number, number],
+  elbowX: number,
+  leaderEndX: number,
+  labelY: number,
+): LeaderPath {
+  return { from: element, elbow: [elbowX, labelY], to: [leaderEndX, labelY] };
+}
+
 /**
  * Stack callouts down one margin without overlapping, keeping each near its own feature.
  *

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, MIN_FONT_SIZE, SAFE_INSET_RATIO,
+  leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, MIN_FONT_SIZE, SAFE_INSET_RATIO,
   type LeaderSide,
 } from '@/lib/leader-labels';
 import { calculateBoundaryPresentationLayout } from '@/lib/reference-presentation';
@@ -181,4 +181,39 @@ test('rows follow their features, and identical designs stack identically', () =
 
 test('an empty side places nothing rather than throwing', () => {
   assert.deepEqual(stackLeaderRows([], 140, 1030, 34), []);
+});
+
+// ── Leader routing ───────────────────────────────────────────────────────────
+// Regression cover for the crossed-leader bug found by rendering exact sheet 07 for the Ubhejane
+// demo and looking at it: "JOJO TANK 2500L" appeared to point at the compost bay because the two
+// leaders' long runs sat six pixels apart and merged into one line.
+
+test('the long run follows the label row, so two leaders can never share it', () => {
+  const rows = stackLeaderRows([239, 245], 100, 900, 40); // two elements only 6px apart in y
+  assert.notEqual(rows[0], rows[1], 'label rows must be de-collided before this rule can hold');
+
+  // Same crowded pair, drawn through the real path helper.
+  const tank = leaderPath([308, 239], 256, 193, rows[0]);
+  const compost = leaderPath([727, 245], 293, 230, rows[1]);
+
+  // The segment a reader traces is elbow→to. Those must never lie on the same horizontal.
+  assert.equal(tank.elbow[1], tank.to[1], 'the long run is horizontal');
+  assert.equal(compost.elbow[1], compost.to[1], 'the long run is horizontal');
+  assert.notEqual(tank.to[1], compost.to[1], 'two long runs on one line is the bug');
+
+  // And each still starts at its own element, untouched.
+  assert.deepEqual(tank.from, [308, 239]);
+  assert.deepEqual(compost.from, [727, 245]);
+});
+
+test('the leader never runs along the element row, however close the label is to it', () => {
+  // The old code passed the element's y here. Pinning the rule rather than the pixel: whatever the
+  // label row is, that is where the run goes — even when it happens to equal the element's y.
+  const p = leaderPath([500, 400], 300, 200, 400);
+  assert.equal(p.elbow[1], 400);
+  assert.equal(p.to[1], 400);
+
+  const moved = leaderPath([500, 400], 300, 200, 640);
+  assert.equal(moved.elbow[1], 640, 'the elbow tracks the LABEL, not the element');
+  assert.equal(moved.from[1], 400, 'the anchor stays on the element');
 });

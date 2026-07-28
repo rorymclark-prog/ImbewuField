@@ -46,7 +46,7 @@ import {
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
-import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows } from '@/lib/leader-labels';
+import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
@@ -2371,10 +2371,13 @@ function drawWaterLeaderLabels(
         ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
         : Math.max(group.target[0] + 16, leaderEndX - Math.round(W * 0.025));
 
+      // The routing rule (long run on the LABEL's row, never the element's) lives in
+      // lib/leader-labels.ts so both drawers share one tested definition of it.
+      const path = leaderPath(group.target as [number, number], elbowX, leaderEndX, positions[index]);
       ctx.beginPath();
-      ctx.moveTo(group.target[0], group.target[1]);
-      ctx.lineTo(elbowX, group.target[1]);
-      ctx.lineTo(leaderEndX, positions[index]);
+      ctx.moveTo(path.from[0], path.from[1]);
+      ctx.lineTo(path.elbow[0], path.elbow[1]);
+      ctx.lineTo(path.to[0], path.to[1]);
       ctx.strokeStyle = 'rgba(18,24,19,0.72)';
       ctx.lineWidth = 4.5;
       ctx.stroke();
@@ -3341,16 +3344,31 @@ function drawBlueprintLabelPills(
       const elbowX = onLeft
         ? Math.min(l.cx - fs * 0.6, leaderEndX + W * 0.018)
         : Math.max(l.cx + fs * 0.6, leaderEndX - W * 0.018);
-      ctx.lineTo(elbowX, l.cy);
-      ctx.lineTo(leaderEndX, l.ay);
+      // THE LONG RUN GOES ALONG THE LABEL'S OWN ROW, NEVER THE ELEMENT'S.
+      //
+      // This used to be `lineTo(elbowX, l.cy)` — a long horizontal at the ELEMENT's height, then a
+      // diagonal to the label. Label rows are de-collided so no two share a row; element heights
+      // are not, and nothing stopped two of them being a few pixels apart. On the Ubhejane demo the
+      // JoJo tank sits at y≈239 and the compost bay at y≈245, both on the left: their two horizontal
+      // runs overlapped into what reads as ONE unbroken line from "JOJO TANK 2500L" across the sheet
+      // to the compost bay. The label was correctly attached in the data and unmistakably wrong on
+      // the page — which is how a farmer ends up standing the wrong thing on the wrong base.
+      //
+      // Routing the long segment along `l.ay` inherits the de-collision the labels already have, so
+      // two runs can no longer coincide. What leaves each element is a short diagonal at its own
+      // angle, which is also the clearer read: the eye follows the slope back to its own icon.
+      // Shared with drawWaterLeaderLabels via lib/leader-labels.ts, where the rule is tested.
+      const path = leaderPath([l.cx, l.cy], elbowX, leaderEndX, l.ay);
+      ctx.lineTo(path.elbow[0], path.elbow[1]);
+      ctx.lineTo(path.to[0], path.to[1]);
       ctx.strokeStyle = 'rgba(14,20,16,0.78)';
       ctx.lineWidth = 4.5;
       ctx.setLineDash([]);
       ctx.stroke();
       ctx.beginPath();
-      ctx.moveTo(l.cx, l.cy);
-      ctx.lineTo(elbowX, l.cy);
-      ctx.lineTo(leaderEndX, l.ay);
+      ctx.moveTo(path.from[0], path.from[1]);
+      ctx.lineTo(path.elbow[0], path.elbow[1]);
+      ctx.lineTo(path.to[0], path.to[1]);
       ctx.strokeStyle = '#F3EEDB';
       ctx.lineWidth = 1.6;
       ctx.stroke();
@@ -7860,7 +7878,11 @@ interface SavedGlossy {
 //        labels were "" while also being told to label every element.
 //        (Merged from codex/prompt-data-audit, which changed the prompt without bumping this. A
 //        prompt change with no bump is invisible to every farmer who has already rendered.)
-const PLAN_VERSION = 'v65';
+//   v66 — 2026-07-29: leader lines run along the LABEL's row instead of the ELEMENT's, so two
+//        elements at a similar height stop merging into one line that appears to point at the
+//        wrong icon. Found by rendering the exact sheet 07 for the Ubhejane demo and looking at
+//        it: "JOJO TANK 2500L" read as pointing at the compost bay.
+const PLAN_VERSION = 'v66';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
