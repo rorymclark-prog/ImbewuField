@@ -416,7 +416,8 @@ const AREA_LINE_KIND_MAP: Record<string, string> = {
 
 /**
  * Estimate cost for an area-type facilitator line (driveway, patio) from its
- * traced polygon area. Returns null for unknown kinds or a non-positive area.
+ * traced polygon area. A measured zero is a real R0 line; negative or unknown
+ * inputs remain unpriced.
  */
 export function costForAreaLine(
   kind: string,
@@ -430,6 +431,17 @@ export function costForAreaLine(
 
   const zar = Math.round(areaM2 * entry.zar);
   return { zar, basis: `${entry.label}: ${areaM2.toFixed(1)} m² × ${formatZar(entry.zar)}/m²`, unit: 'm²' };
+}
+
+/**
+ * Price an area only when the caller actually measured one. Missing geometry
+ * is not a zero-sized surface and must never enter a BOQ as "free".
+ */
+export function costForMeasuredAreaLine(
+  kind: string,
+  areaM2: number | undefined,
+): CostLine | null {
+  return areaM2 === undefined ? null : costForAreaLine(kind, areaM2);
 }
 
 /** Sum already-rounded BOQ lines exactly; unpriced/null lines never masquerade as free input. */

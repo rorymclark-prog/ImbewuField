@@ -19,6 +19,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Loader2, RotateCcw, RotateCw, X } from 'lucide-react';
 import { DEFAULT_IMG_W, DEFAULT_IMG_H } from '@/lib/design-canvas';
 import { uploadPhoto } from '@/lib/db/queries';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -44,6 +46,7 @@ function distancePx(a: Point, b: Point): number {
 }
 
 export default function BasePhotoImport({ onApply, onClose }: Props) {
+  const { t } = useLanguage();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const [rotationDeg, setRotationDeg] = useState(0); // 0-359, 0 = assume already north-up
   const [points, setPoints] = useState<Point[]>([]);
@@ -116,14 +119,14 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
   function onPickFile(file: File) {
     setError('');
     if (!file.type.startsWith('image/')) {
-      setError('That file is not a photo — please choose a JPEG or PNG.');
+      setError(t('designPhotoNotImage'));
       return;
     }
     const reader = new FileReader();
-    reader.onerror = () => setError('Could not read that photo — please try another file.');
+    reader.onerror = () => setError(t('designPhotoReadError'));
     reader.onload = (e) => {
       const image = new Image();
-      image.onerror = () => setError('Could not open that photo — please try a JPEG or PNG.');
+      image.onerror = () => setError(t('designPhotoOpenError'));
       image.onload = () => {
         setImg(image);
         setRotationDeg(0);
@@ -161,13 +164,13 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
     try {
       const previewDataUrl = canvas.toDataURL('image/jpeg', 0.88);
       const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88));
-      if (!blob) throw new Error('Could not prepare the photo for saving.');
+      if (!blob) throw new Error(t('designPhotoPrepareError'));
       const file = new File([blob], `site-photo-${Date.now()}.jpg`, { type: 'image/jpeg' });
       const url = await uploadPhoto(file, 'design-base');
-      if (!url) throw new Error('Could not save your photo — check you are signed in and try again.');
+      if (!url) throw new Error(t('designPhotoSaveError'));
       onApply({ url, mPerPx, previewDataUrl });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong saving your photo.');
+      setError(err instanceof Error ? err.message : t('designPhotoUnknownError'));
     } finally {
       setBusy(false);
     }
@@ -202,10 +205,10 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-          <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>Use your own photo</div>
+          <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>{t('designPhotoTitle')}</div>
           <button
             type="button"
-            aria-label="Close"
+            aria-label={t('designClose')}
             onClick={onClose}
             style={{ border: 'none', background: 'transparent', color: '#6B6355', cursor: 'pointer', padding: 4 }}
           >
@@ -216,7 +219,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
         {!img && (
           <>
             <p style={{ fontSize: 12.5, color: '#5C5040', marginBottom: 10 }}>
-              Add a drone photo or any aerial photo of your land. You&apos;ll be able to line it up and set the scale next.
+              {t('designPhotoIntro')}
             </p>
             <input
               ref={fileInputRef}
@@ -245,7 +248,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
               }}
             >
               <Camera size={28} />
-              <span style={{ fontSize: 13, fontWeight: 700 }}>Choose a photo</span>
+              <span style={{ fontSize: 13, fontWeight: 700 }}>{t('designPhotoChoose')}</span>
             </button>
           </>
         )}
@@ -273,12 +276,12 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
             {/* Rotation */}
             <div style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 4 }}>
-                Turn the photo so the top faces north
+                {t('designPhotoNorth')}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button
                   type="button"
-                  aria-label="Rotate left 90 degrees"
+                  aria-label={t('designPhotoRotateLeft')}
                   onClick={() => setRotationDeg((r) => (r + 270) % 360)}
                   style={rotateBtnStyle}
                 >
@@ -291,11 +294,11 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                   value={rotationDeg}
                   onChange={(e) => setRotationDeg(Number(e.target.value))}
                   style={{ flex: 1 }}
-                  aria-label="Fine rotation"
+                  aria-label={t('designPhotoFineRotation')}
                 />
                 <button
                   type="button"
-                  aria-label="Rotate right 90 degrees"
+                  aria-label={t('designPhotoRotateRight')}
                   onClick={() => setRotationDeg((r) => (r + 90) % 360)}
                   style={rotateBtnStyle}
                 >
@@ -303,20 +306,21 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                 </button>
               </div>
               <div style={{ fontSize: 11, color: '#8C7A62', marginTop: 2 }}>
-                {rotationDeg === 0 ? 'Not turned — leave this if the photo already faces north.' : `Turned ${rotationDeg}°`}
+                {rotationDeg === 0
+                  ? t('designPhotoNotTurned')
+                  : formatDesignTranslation(t('designPhotoTurned'), { degrees: rotationDeg })}
               </div>
             </div>
 
             {/* Scale calibration */}
             <div style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 4 }}>
-                Set the scale
+                {t('designPhotoSetScale')}
               </div>
               <div style={{ fontSize: 11.5, color: '#5C5040', marginBottom: 6 }}>
-                Tap two points in the photo that you know the real distance between — like two corners of a
-                building, or two fence posts you can measure. {points.length === 0 && 'Tap the first point.'}
-                {points.length === 1 && 'Now tap the second point.'}
-                {points.length === 2 && 'Now enter the real distance between them.'}
+                {t('designPhotoScaleHelp')} {points.length === 0 && t('designPhotoFirstPoint')}
+                {points.length === 1 && t('designPhotoSecondPoint')}
+                {points.length === 2 && t('designPhotoEnterDistance')}
               </div>
               {points.length === 2 && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -325,7 +329,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                     inputMode="decimal"
                     min={0}
                     step="0.1"
-                    placeholder="e.g. 10"
+                    placeholder={t('designPhotoDistanceExample')}
                     value={metres}
                     onChange={(e) => setMetres(e.target.value)}
                     style={{
@@ -336,13 +340,13 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                       fontSize: 14,
                     }}
                   />
-                  <span style={{ fontSize: 13, color: '#5C5040' }}>metres apart</span>
+                  <span style={{ fontSize: 13, color: '#5C5040' }}>{t('designPhotoMetresApart')}</span>
                   <button
                     type="button"
                     onClick={() => { setPoints([]); setMetres(''); }}
                     style={{ marginLeft: 'auto', border: 'none', background: 'transparent', color: OCHRE, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
                   >
-                    Retap
+                    {t('designPhotoRetap')}
                   </button>
                 </div>
               )}
@@ -356,7 +360,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                 onClick={() => { setImg(null); setPoints([]); setMetres(''); setRotationDeg(0); }}
                 style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: '1px solid #E2D8C4', background: PAPER, color: '#5C5040', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
               >
-                Choose a different photo
+                {t('designPhotoChooseDifferent')}
               </button>
               <button
                 type="button"
@@ -378,7 +382,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                   gap: 6,
                 }}
               >
-                {busy ? <><Loader2 size={14} className="animate-spin" /> Saving...</> : 'Use this photo'}
+                {busy ? <><Loader2 size={14} className="animate-spin" /> {t('designPhotoSaving')}</> : t('designPhotoUse')}
               </button>
             </div>
           </>
