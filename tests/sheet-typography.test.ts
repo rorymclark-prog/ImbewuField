@@ -71,3 +71,16 @@ test('title fonts keep the shorthand shape the scrim measures them by', () => {
   // And the measuring regex itself still finds a size in a rendered example.
   assert.equal('800 34px Georgia, serif'.match(SIZE_BEFORE_PX)?.[1], '34');
 });
+
+test('the phasing schedule sizes its type from its own column, not the changing map or sheet width', () => {
+  const start = SOURCE.indexOf('const fsHeader =');
+  const end = SOURCE.indexOf('// Word-wrap to a pixel width', start);
+  assert.ok(start >= 0 && end > start, 'phasing type-size block exists');
+  const block = SOURCE.slice(start, end);
+
+  assert.match(block, /fsHeader = Math\.round\(lgW \*/);
+  assert.match(block, /fsSection = Math\.round\(lgW \*/);
+  assert.match(block, /fsBody = Math\.round\(lgW \*/);
+  assert.match(block, /titleFont = .*Math\.round\(lgW \*/);
+  assert.doesNotMatch(block, /Math\.round\((?:W|mapW) \*/);
+});

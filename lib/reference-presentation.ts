@@ -16,11 +16,33 @@ export interface BoundaryPresentationLayout {
   sheetAspect: number;
 }
 
+export interface StyleSheetSize {
+  mapW: number;
+  mapH: number;
+  legendWidth: number;
+  W: number;
+  H: number;
+  aspect: number;
+}
+
 export const MAX_PRESENTATION_MAP_ASPECT = 2.35;
 export const MAX_PRESENTATION_SHEET_ASPECT = 3;
 
 export function styleSheetLegendWidth(mapWidth: number): number {
   return Math.min(620, Math.max(360, Math.round(mapWidth * 0.3)));
+}
+
+export function calculateStyleSheetSize(mapW: number, mapH: number): StyleSheetSize {
+  const legendWidth = styleSheetLegendWidth(mapW);
+  const W = mapW + legendWidth;
+  return {
+    mapW,
+    mapH,
+    legendWidth,
+    W,
+    H: mapH,
+    aspect: Math.max(W / mapH, mapH / W),
+  };
 }
 
 interface BoundaryBounds {
@@ -82,12 +104,11 @@ export function calculateBoundaryPresentationLayout(
     const dimensions = dimensionsForAspect(aspect);
     const mapWidth = dimensions.imgW * renderScale;
     const mapHeight = dimensions.imgH * renderScale;
-    const legendWidth = styleSheetLegendWidth(mapWidth);
-    const sheetWidth = mapWidth + legendWidth;
+    const sheet = calculateStyleSheetSize(mapWidth, mapHeight);
     return {
       ...dimensions,
-      legendWidth,
-      sheetAspect: Math.max(sheetWidth / mapHeight, mapHeight / sheetWidth),
+      legendWidth: sheet.legendWidth,
+      sheetAspect: sheet.aspect,
     };
   };
 
@@ -155,6 +176,22 @@ export function calculateBoundaryPresentationLayout(
     legendWidth,
     sheetAspect,
   };
+}
+
+/**
+ * Sheet 08 uses the same map-plus-column envelope as every other plan sheet. Keeping this beside
+ * the boundary layout prevents its exact canvas, AI input, blank-out and protect mask from
+ * independently rediscovering dimensions and exposing schedule text at the wrong coordinates.
+ */
+export function calculatePhasingSheetSize(
+  boundary: Array<[number, number]>,
+  frame: { imgW: number; imgH: number },
+  renderScale = 2,
+): StyleSheetSize {
+  const layout = calculateBoundaryPresentationLayout(boundary, frame, renderScale);
+  const mapW = (layout?.imgW ?? frame.imgW) * renderScale;
+  const mapH = (layout?.imgH ?? frame.imgH) * renderScale;
+  return calculateStyleSheetSize(mapW, mapH);
 }
 
 /**
