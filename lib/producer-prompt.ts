@@ -841,8 +841,35 @@ export function buildSatelliteOverlayPrompt(args: {
         .join('\n')
     : collapseRows(elementNames.split(',')).join('\n');
 
+  // THE SAME STRING CANNOT BE BOTH A QUANTITY AND A NAME.
+  //
+  // `mapNames` below reads "VEGETABLE BED ×7, JOJO TANK 2500L, TAP POINT ×6". Rule 7 needs those
+  // counts — they are how the model knows to draw seven beds. Rule 10 then told it to "spell every
+  // label exactly as the element list gives it", which handed it a name with a quantity welded on,
+  // and rule 10's own worked example ("2 × JOJO TANKS 5000L EACH") taught it that a count belongs
+  // in a label. Given seven markers and the string "VEGETABLE BED ×7", the model did the only
+  // sensible thing available to a per-item label that must carry a number: it enumerated them. A
+  // paid Water render came back with seven beds captioned VEGETABLE BED ×1 … VEGETABLE BED ×7.
+  //
+  // Three grammars for one idea were live in a single prompt — "NAME ×N" in rule 7, "N × NAMES" in
+  // rule 10's example, "Name (×N)" in the legend rows. The fix is not a firmer instruction, it is
+  // removing the ambiguity: map labels get names with no number in them at all, rule 7 keeps the
+  // counts for deciding how many icons to draw, and the legend panel stays the one place a reader
+  // is given a quantity. The exact (non-AI) sheet already worked this way — it draws one grouped
+  // "VEGETABLE BED ×7" callout — which is why only the AI sheets ever showed this.
+  //
   // Labels on the MAP never carry the section machinery — only the element names.
   const mapNames = elementNames.replace(/\s*\|\s*/g, ', ').replace(/[A-Z ]+\u00bb\s*/g, '').trim();
+
+  /** The same list with every quantity removed — the only spellings allowed in a drawn map label. */
+  const labelNames = [
+    ...new Set(
+      mapNames
+        .split(',')
+        .map((n) => n.replace(/\s*\u00d7\s*\d+\s*$/, '').trim())
+        .filter(Boolean),
+    ),
+  ].join(', ');
 
   // Suppressed entirely when nothing matched. On a Zones sheet the element list carries zone names
   // only, so `present` is empty and this rule rendered as the literal fragment
@@ -873,13 +900,13 @@ The boundary line itself is the crisp seam between the two.
 
 ${iconRule}
 
-7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. The WATER / PLANTING / INFRASTRUCTURE headings are a printing order for the legend panel only. They say nothing about where anything sits and they are not a drawing order: never move an element to stand near others from its own legend section — each icon goes on its own marker and nowhere else. That list is the COMPLETE set of DESIGNED ELEMENTS on this ${(layerLabel || 'site').toUpperCase()} sheet — no other tank, bed, tree, structure or fitting is added anywhere, and the other layers of the plan set carry everything else. It is not the whole of what the sheet SHOWS: the existing ground, the boundary fence and anything named under the rules below are also on this sheet, and each is governed by its own rule. Nothing outside that list and those rules is drawn. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count.
+7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. The WATER / PLANTING / INFRASTRUCTURE headings are a printing order for the legend panel only. They say nothing about where anything sits and they are not a drawing order: never move an element to stand near others from its own legend section — each icon goes on its own marker and nowhere else. That list is the COMPLETE set of DESIGNED ELEMENTS on this ${(layerLabel || 'site').toUpperCase()} sheet — no other tank, bed, tree, structure or fitting is added anywhere, and the other layers of the plan set carry everything else. It is not the whole of what the sheet SHOWS: the existing ground, the boundary fence and anything named under the rules below are also on this sheet, and each is governed by its own rule. Nothing outside that list and those rules is drawn. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count. A "×N" is a QUANTITY, never part of an element’s name: it tells you how many to draw and it is never lettered onto the sheet. No drawn label contains a number of items, and no element is numbered or itemised — there is no "×1", no "×2", no "BED 1 / BED 2". Quantities appear in the legend panel and nowhere else.
 
 8. THE ROOF AND THE ACCESS TRACK ARE DIFFERENT THINGS, AND THEY ARE DIFFERENT COLOURS. Slate grey #3C4247 is ROOF; near-black #12140F is TAR ON THE GROUND. Never draw one in the other's colour and never give the near-black shape a ridge, a hip, a pitched plane or a shadow. The bright white outline encloses the ROOF of the house, and the photograph inside that outline IS the real roof, shot from above — draw it as a building with ridges, hips and pitched planes casting a shadow, keeping every edge and every wing exactly as the photograph shows them. Nothing covers that roof: if it looks like a flat grey rectangle you are looking at the wrong thing. It is a building, and no part of it is ever paved, darkened or turned into road surface. The access track is separate, flat, at ground level, and lies where the photograph already shows it. They never merge and they never swap.
 
 9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule}${routeRule}${waterSystems}${zoneBands}${siteFabric}${servedClause}
 
-10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, use one grouped label carrying the count: "2 × JOJO TANKS 5000L EACH", "2 × BANANA CIRCLES". Where the same element type appears in separate parts of the site, label each one plainly with its own name and let its leader line show which it is. Spell every label exactly as the element list gives it, in caps. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.
+10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, give the whole group ONE label — its plain name, with no number and no count — and run a leader from that single label to the group. Where the same element type appears in separate parts of the site, label each part with that same plain name and let its leader line show which it is. Repeating a name is correct; numbering it is not. THESE ARE THE ONLY SPELLINGS, and a label is exactly one of them in caps, with nothing added: ${labelNames}. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.
 
 11. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon. A line in CAPITALS with no icon is a SECTION HEADING — set it in small bold capitals above the rows beneath it, with a little space before it, exactly as the reference plan sets WATER, PLANTING and INFRASTRUCTURE:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
 

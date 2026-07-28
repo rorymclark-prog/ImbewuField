@@ -1066,3 +1066,50 @@ test('the legend collapses place-suffixed variants into one row', () => {
   // …but the MAP labels keep the suffix, which is the whole reason it exists.
   assert.match(p, /Tap Point \(Lawn\)/);
 });
+
+// ── A drawn map label never carries a quantity ────────────────────────────────────────────────
+//
+// Rory ran a paid Full Treatment on the Water sheet and got seven vegetable beds captioned
+// "VEGETABLE BED ×1" through "VEGETABLE BED ×7". Nothing invented them — the element list really
+// does say "VEGETABLE BED ×7", because rule 7 needs that count to know how many icons to draw.
+// Rule 10 then said "spell every label exactly as the element list gives it" and demonstrated
+// "2 × JOJO TANKS 5000L EACH", so the model was told, twice, that a number belongs in a label. With
+// seven markers and one string carrying a 7, enumerating them is the only coherent reading.
+//
+// These pin the separation rather than the wording: the count list and the label list are now two
+// different strings, and the label list may not contain a digit-bearing quantity.
+test('the map-label list is the element list with every quantity stripped', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: '🌱 Vegetable Bed ×7, ⛽ JoJo Tank 2500L, 🚰 Tap Point ×6',
+    placeName: 'Ubhejane Creche',
+    sheetKind: 'water',
+  });
+
+  // Rule 7 still gets the counts — they are how the model knows to draw seven beds, not one.
+  const rule7 = p.split("THIS SHEET'S ELEMENTS AND EXACT SPELLINGS:")[1].split('\n')[0];
+  assert.match(rule7, /Vegetable Bed ×7/i, 'rule 7 lost the count it needs to draw the right number');
+
+  // Rule 10's allowed spellings carry the same names with no quantity attached.
+  const rule10 = p.split('THESE ARE THE ONLY SPELLINGS')[1].split('\n')[0];
+  assert.match(rule10, /Vegetable Bed/i);
+  assert.match(rule10, /Tap Point/i);
+  assert.doesNotMatch(rule10, /×\s*\d/, 'a quantity reached the list of allowed label spellings');
+});
+
+test('nothing in the prompt shows a count being lettered onto the sheet', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: '🌱 Vegetable Bed ×7, ⛽ JoJo Tank 5000L ×2',
+    placeName: 'Ubhejane Creche',
+    sheetKind: 'water',
+  });
+  const labelRule = p.split('10. LABELS')[1].split(/\n\d{2}\./)[0];
+
+  // The worked example used to be "2 × JOJO TANKS 5000L EACH" — a quantity in quotes, inside the
+  // rule that draws labels. Any quoted example of that shape teaches the behaviour back in.
+  assert.doesNotMatch(labelRule, /"\s*\d+\s*×/, 'rule 10 demonstrates a count inside a label again');
+  assert.doesNotMatch(labelRule, /×\s*\d+\s*[A-Z]/, 'rule 10 shows a quantity attached to a name');
+});

@@ -20,6 +20,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'AI maps stop numbering your beds — seven beds get one label, not "×1" to "×7"',
+      'Plan sheets print evenly: the phasing sheet is now the same shape as the rest',
+      'The phasing schedule no longer strikes a line through its own week dates',
+      'Map labels grow and shrink with the sheet instead of staying one size',
+      'Long labels stay on the map on every sheet, not just Water',
+      'Hand-drawn shapes read as clean plan lines — your saved drawing is untouched',
+      'Crop rotation really rotates: the same plant family cannot follow itself in a bed',
+      'The design studio steps can now speak your language',
       'Slide 13 now shows the dry method it teaches, not the wet one',
       'NEW: a Higher quality download for facilitators and funders on wifi — more data',
       'Plan sheets now take the shape of your farm — a long thin plot fills the page',
