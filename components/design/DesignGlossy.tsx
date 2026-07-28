@@ -45,7 +45,7 @@ import {
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { producerLabels, plotBox } from '@/lib/producer-labels';
-import { placeLeaderLabel, stackLeaderRows } from '@/lib/leader-labels';
+import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
@@ -2324,7 +2324,7 @@ function drawWaterLeaderLabels(
     return { ...group, avgY, side, target };
   });
 
-  const fontSize = Math.max(19, Math.round(W * 0.011));
+  const fontSize = leaderLabelFontSize(W);
   const rowGap = Math.max(34, Math.round(fontSize * 1.7));
   // Keep callouts away from the browser/card edges and the deterministic scale bar. The old
   // 1.8% inset made labels look cropped whenever a mobile page drifted horizontally by a few px.
@@ -7800,7 +7800,9 @@ interface SavedGlossy {
 //        visible to anyone who has already rendered a sheet — the cached picture comes back.
 //   v58 — 2026-07-28: Phasing owns a separate schedule column instead of covering its map, so its
 //        outer aspect matches 01-07 and remains within the AI 3:1 limit on tall farms.
-const PLAN_VERSION = 'v58';
+//   v59 — 2026-07-28: map callout type follows the boundary-derived map width instead of staying
+//        fixed at 19px across radically different sheet shapes.
+const PLAN_VERSION = 'v59';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
