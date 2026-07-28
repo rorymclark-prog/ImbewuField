@@ -51,6 +51,15 @@ HTTP 403 (no registry access) and any Google Fonts fetch failure.
 
 ---
 
+## 1b. There is a queue
+
+`docs/CODEX-QUEUE.md` holds the current backlog, in priority order, one branch per item. Take the
+top unstarted item unless you have been given something else. Every item in it was verified real
+before it was written down — if you find one is already fixed or its premise is wrong, say so and
+skip it. That is a useful result, not a failure.
+
+---
+
 ## 2. Push, or the work does not exist
 
 Work has been lost to this three times: `codex/drawing-quality` sat invisible for
