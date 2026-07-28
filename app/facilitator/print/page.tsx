@@ -22,7 +22,7 @@ import {
   loadFacilitatorState, DEFAULT_PX_PER_M,
   LAYER_ORDER, LAYERS, defaultLayerForType, defaultLayerForLine, AREA_LINE_KINDS,
 } from '@/lib/facilitator-design';
-import { costForItem, costForLine, costForAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
+import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
@@ -438,14 +438,16 @@ export default function FacilitatorPrintPage() {
       itemTally[it.type] = cur;
     });
 
-    const lineTally: Partial<Record<LineKind, { count: number; m: number; areaM2: number }>> = {};
+    const lineTally: Partial<Record<LineKind, { count: number; m: number; areaM2?: number }>> = {};
     linePts.forEach(({ l, pts }) => {
-      const cur = lineTally[l.kind] ?? { count: 0, m: 0, areaM2: 0 };
+      const cur = lineTally[l.kind] ?? { count: 0, m: 0 };
       cur.count += 1;
       cur.m += polylineLengthM(pts, l.closed ?? false);
       // Area kinds (driveway/patio/waterbody) are priced by ground/water
       // covered, not outline length — same shoelace helper used for roof m².
-      if (AREA_LINE_KINDS.includes(l.kind) && l.closed && pts.length >= 3) cur.areaM2 += shoelaceArea(pts);
+      if (AREA_LINE_KINDS.includes(l.kind) && l.closed && pts.length >= 3) {
+        cur.areaM2 = (cur.areaM2 ?? 0) + shoelaceArea(pts);
+      }
       lineTally[l.kind] = cur;
     });
 
@@ -476,9 +478,11 @@ export default function FacilitatorPrintPage() {
       const t = lineTally[kind]!;
       const L = LINES[kind];
       const isArea = AREA_LINE_KINDS.includes(kind);
-      const cost = isArea ? costForAreaLine(kind, t.areaM2) : costForLine(kind, t.m);
+      const cost = isArea ? costForMeasuredAreaLine(kind, t.areaM2) : costForLine(kind, t.m);
       if (cost) total += cost.zar;
-      const qty = isArea ? `${t.areaM2.toFixed(1)} m²` : `${t.m.toFixed(1)} m`;
+      const qty = isArea
+        ? t.areaM2 === undefined ? '— m²' : `${t.areaM2.toFixed(1)} m²`
+        : `${t.m.toFixed(1)} m`;
       boqRows.push({ label: L.label, icon: L.icon, qty, zar: cost ? cost.zar : null });
     });
 
@@ -649,7 +653,9 @@ export default function FacilitatorPrintPage() {
                   {(Object.keys(c.lineTally) as LineKind[]).map((kind) => {
                     const t = c.lineTally[kind]!;
                     const L = LINES[kind];
-                    const measure = AREA_LINE_KINDS.includes(kind) ? `${t.areaM2.toFixed(1)} m²` : `${t.m.toFixed(1)} m`;
+                    const measure = AREA_LINE_KINDS.includes(kind)
+                      ? t.areaM2 === undefined ? '— m²' : `${t.areaM2.toFixed(1)} m²`
+                      : `${t.m.toFixed(1)} m`;
                     return (
                       <div key={kind} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
                         <span style={{ width: 14, height: 3, background: L.color, flexShrink: 0, display: 'inline-block' }} />
