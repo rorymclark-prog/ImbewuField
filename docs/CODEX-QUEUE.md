@@ -36,6 +36,55 @@ the test.
 
 ---
 
+## 0. NOBODY MEASURES THE FIRST PAID RENDER — `codex/measure-hybrid-pass`
+
+**Added mid-run. Take this next, whatever you are on** (finish and push what you have first).
+
+Rory ran a Full Treatment on the Water sheet under **Reference Blueprint** and got a sheet whose
+ground is still the raw satellite photograph — the paid passes added nothing visible to it. Under
+**Satellite Overlay** the same design came back fully illustrated. So the pipeline can spend two
+paid renders and ship something the model barely touched, and nothing notices.
+
+Measured, not assumed. `components/design/DesignGlossy.tsx`:
+
+```
+grep -n measureRenderDifference components/design/DesignGlossy.tsx
+  18:    import ...
+  10111:  const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
+```
+
+**One call site, and it is guarded by `if (isPolishedResult && polishInputRef.current)`.** The
+Hybrid stage — the *first* paid render, and the one every Hybrid user pays for on its own — is
+never scored. `lib/render-difference.ts` and `tests/render-difference.test.ts` are sound; they are
+simply not attached to that stage.
+
+This is the same bug that was already fixed once for the polish pass, quoted from the comment
+above that call site: *"until now no code in this app had ever looked at the output image. A pass
+that returned its own input verbatim cleared every existing check … and was then stored, labelled
+'AI polished', and charged for."* Exactly that is still true one stage earlier.
+
+**The trap — read this before writing the comparison.** You cannot naively compare the Hybrid's
+finished sheet against the Hybrid's input, because between them the app composites all the exact
+content back on top. That composite-back alone repaints a large fraction of the sheet, so a model
+that returned its input verbatim would still score as "redrawn" and the gate would pass everything.
+
+The comparison has to be **what was sent to the model vs what the model sent back**, before the
+exact content goes on. Find where the model's raw return is available in the queue-completion path
+and score it there. `fullTreatmentProtectPolicy`'s protect mask must be excluded from the score for
+the same reason it already is on the polish pass — restored pixels are identical by construction
+and would drag an honest render toward "unchanged".
+
+**Keep the existing failure philosophy, which is right:** scoring never blocks a good render, any
+error in scoring is swallowed and the sheet ships. A measurement that can reject work it cannot
+measure is worse than none. What should change on a failed Hybrid is the same as on a failed
+polish — do not present it as an AI result, and tell the farmer plainly.
+
+Verification is a real render, and only Rory can spend one. So: write it, prove the scoring with a
+unit test that feeds a known-unchanged pair and a known-redrawn pair through the *same* code path
+the app uses, and say clearly in your report that the live confirmation is outstanding.
+
+---
+
 ## 1. A missing area is now priced at R0 instead of "we don't know" — `codex/unpriced-not-free`
 
 Introduced by `codex/price-book-tests`, so this is a follow-up to your own change, not a criticism
