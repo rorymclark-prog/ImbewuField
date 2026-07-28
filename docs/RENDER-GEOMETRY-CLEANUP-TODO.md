@@ -20,8 +20,10 @@ design-time option before it may rewrite source geometry.
   proven micro-gaps and never overlap, reorder or invent a zone.
 - [DONE, commit c8ec653] Let a placed driveway gate create a measured break in the rendered
   fence/boundary line. The gate must be close to that line and the break must use the gate's actual
-  width and orientation. `lib/boundary-geometry.ts` + `drawBlueprintBoundary`; not yet visually
-  confirmed against a real render.
+  width and orientation. `lib/boundary-geometry.ts` + `drawBlueprintBoundary`. Visually confirmed
+  2026-07-28 on the Ubhejane exact masterplan: a Gate placed where the traced driveway crosses the
+  north boundary opens a centred break matching its footprint, and both fence strokes resume on the
+  same line.
 - [DONE, commit a7ff660] Make design-time route colours match the plan grammar. Found a real,
   currently-live mismatch while fixing this, not just a theoretical risk: the editor drew swale
   lines as #4EA6D8, every exported sheet drew the same line kind as #258DBA — two independent

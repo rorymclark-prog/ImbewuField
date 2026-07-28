@@ -18,6 +18,13 @@ import {
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
+import {
+  DESIGN_CHROME_KEYS,
+  formatDesignTranslation,
+  translatedDesignStepGuidance,
+  translatedDesignStepLabel,
+} from '@/lib/design-studio-i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
 import type { DesignMode } from './DesignPalette';
 
@@ -36,27 +43,11 @@ interface DesignWizardProps {
 
 export const STEP_ORDER: WizardStep[] = ['base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
 
-export const STEP_LABELS: Record<WizardStep, string> = {
-  base: 'Base',
-  sector: 'Sector',
-  water: 'Water',
-  zones: 'Zones',
-  planting: 'Planting',
-  structures: 'Structures',
-  review: 'Review',
-  glossy: 'Glossy',
-};
-
-const STEP_GUIDANCE: Record<WizardStep, string> = {
-  base: "Check your boundary and house are showing — trace them on the main map if not.",
-  sector: "The land's energies — sun, wind, fire, water. Nothing to draw: check it matches what you know of your land.",
-  water: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope.',
-  zones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow. Tap "Where do my zones go?" if you want Lima\'s advice.',
-  planting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
-  structures: 'Add sheds, pens, compost, beehives — mind the beehive flight path.',
-  review: 'Toggle layers to check each map: water, zones, planting.',
-  glossy: "Glossy map (beta · experimental) — the AI isn't reliable yet, and you may need a few tries.",
-};
+// app/design still imports this compatibility map. Its English now comes from the same dictionary
+// keys as the translated wizard rather than a second hard-coded source.
+export const STEP_LABELS = Object.fromEntries(
+  STEP_ORDER.map((step) => [step, translatedDesignStepLabel((key) => translate('en', key), step)]),
+) as Record<WizardStep, string>;
 
 function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPresent: { boundary: boolean; house: boolean }): boolean {
   switch (step) {
@@ -116,6 +107,7 @@ export { LessonPanel };
 // Guided: quiet, full-width 44px labelled row under the guidance blurb — matches the
 // hand-holding tone of the rest of GuidedWizard.
 function GuidedLessonExpander({ step }: { step: WizardStep }) {
+  const { t } = useLanguage();
   const { expanded, toggle, lesson } = useLessonExpand(step);
   if (!lesson) return null;
   return (
@@ -140,7 +132,7 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
         }}
       >
         <HelpCircle size={13} />
-        Why this step?
+        {t(DESIGN_CHROME_KEYS.whyThisStep)}
         {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
       </button>
       {expanded && <LessonPanel lesson={lesson} />}
@@ -152,13 +144,14 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
 // hand-holding); caller places the button inline and the returned panel wherever full-width
 // space is available (below the toolbar row), so the two pieces are exposed separately.
 function useProLessonExpander(step: WizardStep) {
+  const { t } = useLanguage();
   const { expanded, toggle, lesson } = useLessonExpand(step);
   if (!lesson) return { button: null, panel: null };
   const button = (
     <button
       type="button"
       onClick={toggle}
-      aria-label="Why this step?"
+      aria-label={t(DESIGN_CHROME_KEYS.whyThisStep)}
       aria-expanded={expanded}
       style={{
         minHeight: 30,
@@ -193,9 +186,11 @@ function GuidedWizard({
   step: WizardStep;
   setStep: (s: WizardStep) => void;
 }) {
+  const { t } = useLanguage();
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
+  const stepLabel = translatedDesignStepLabel(t, step);
 
   return (
     <div
@@ -228,9 +223,12 @@ function GuidedWizard({
 
       <div>
         <div style={{ fontSize: 11, lineHeight: 1.2, fontWeight: 700, color: GREEN, letterSpacing: 0.3, textTransform: 'uppercase' }}>
-          Step {idx + 1} of {STEP_ORDER.length}
+          {formatDesignTranslation(t(DESIGN_CHROME_KEYS.stepProgress), {
+            current: idx + 1,
+            total: STEP_ORDER.length,
+          })}
         </div>
-        <div style={{ fontSize: 17, lineHeight: 1.15, fontWeight: 800, color: DARK, marginTop: 1 }}>{STEP_LABELS[step]}</div>
+        <div style={{ fontSize: 17, lineHeight: 1.15, fontWeight: 800, color: DARK, marginTop: 1 }}>{stepLabel}</div>
       </div>
 
       <div
@@ -243,7 +241,7 @@ function GuidedWizard({
           padding: '8px 12px',
         }}
       >
-        {STEP_GUIDANCE[step]}
+        {translatedDesignStepGuidance(t, step)}
       </div>
 
       <GuidedLessonExpander step={step} />
@@ -252,7 +250,7 @@ function GuidedWizard({
         <button
           onClick={() => canBack && setStep(STEP_ORDER[idx - 1])}
           disabled={!canBack}
-          aria-label="Back"
+          aria-label={t(DESIGN_CHROME_KEYS.back)}
           style={{
             minHeight: 44,
             width: 44,
@@ -288,7 +286,10 @@ function GuidedWizard({
             cursor: canNext ? 'pointer' : 'default',
           }}
         >
-          Next: {canNext ? STEP_LABELS[STEP_ORDER[idx + 1]] : ''} <ChevronRight size={17} />
+          {formatDesignTranslation(t(DESIGN_CHROME_KEYS.nextStep), {
+            step: canNext ? translatedDesignStepLabel(t, STEP_ORDER[idx + 1]) : '',
+          })}{' '}
+          <ChevronRight size={17} />
         </button>
       </div>
     </div>
@@ -311,6 +312,7 @@ function ProWizard({
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
 }) {
+  const { t } = useLanguage();
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
@@ -338,7 +340,7 @@ function ProWizard({
               <button
                 key={s}
                 onClick={() => setStep(s)}
-                title={STEP_LABELS[s]}
+                title={translatedDesignStepLabel(t, s)}
                 style={{
                   flex: '0 0 auto',
                   display: 'flex',
@@ -373,7 +375,7 @@ function ProWizard({
                 >
                   {done ? <Check size={9} /> : i + 1}
                 </span>
-                {STEP_LABELS[s]}
+                {translatedDesignStepLabel(t, s)}
               </button>
             );
           })}
@@ -382,7 +384,7 @@ function ProWizard({
         <button
           onClick={() => canBack && setStep(STEP_ORDER[idx - 1])}
           disabled={!canBack}
-          aria-label="Back"
+          aria-label={t(DESIGN_CHROME_KEYS.back)}
           style={{
             minHeight: 30,
             minWidth: 30,
@@ -402,7 +404,7 @@ function ProWizard({
         <button
           onClick={() => canNext && setStep(STEP_ORDER[idx + 1])}
           disabled={!canNext}
-          aria-label="Next"
+          aria-label={t(DESIGN_CHROME_KEYS.next)}
           style={{
             minHeight: 30,
             minWidth: 30,
@@ -423,7 +425,7 @@ function ProWizard({
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <div style={{ flex: 1, fontSize: 11.5, lineHeight: 1.3, color: 'rgba(11,18,11,0.75)' }}>
-          {STEP_GUIDANCE[step]}
+          {translatedDesignStepGuidance(t, step)}
         </div>
         {lessonButton}
       </div>

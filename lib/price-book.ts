@@ -26,6 +26,14 @@ export interface PriceEntry {
   note?: string;
 }
 
+export type CostUnit = 'each' | 'm' | 'm²';
+
+export interface CostLine {
+  zar: number;
+  basis: string;
+  unit: CostUnit;
+}
+
 /**
  * Keyed price book. Keys are intentionally stable strings used by
  * costForItem/costForLine to look up rates — do not rename without
@@ -323,7 +331,7 @@ export function costForItem(
   wM: number,
   hM: number,
   litres?: number
-): { zar: number; basis: string } | null {
+): CostLine | null {
   const mapped = ITEM_TYPE_MAP[type];
   if (!mapped) return null;
 
@@ -331,14 +339,14 @@ export function costForItem(
     const vol = typeof litres === 'number' && litres > 0 ? litres : 5000;
     const key = nearestTankKey(vol);
     const entry = PRICE_BOOK[key];
-    return { zar: entry.zar, basis: `${entry.label} (nearest match to ${vol}L)` };
+    return { zar: entry.zar, basis: `${entry.label} (nearest match to ${vol}L)`, unit: 'each' };
   }
 
   const entry = PRICE_BOOK[mapped];
   if (!entry) return null;
 
   if (entry.unit === 'each') {
-    return { zar: entry.zar, basis: `${entry.label} x1` };
+    return { zar: entry.zar, basis: `${entry.label} x1`, unit: 'each' };
   }
 
   if (entry.unit === 'per_m2') {
@@ -351,12 +359,13 @@ export function costForItem(
     return {
       zar,
       basis: `${entry.label}: ${area.toFixed(1)} m² × ${formatZar(entry.zar)}/m²`,
+      unit: 'm²',
     };
   }
 
   // per_m fallback (shouldn't normally hit for item types, but handle gracefully)
   const zar = Math.round(wM * entry.zar);
-  return { zar, basis: `${entry.label}: ${wM.toFixed(1)} m × ${formatZar(entry.zar)}/m` };
+  return { zar, basis: `${entry.label}: ${wM.toFixed(1)} m × ${formatZar(entry.zar)}/m`, unit: 'm' };
 }
 
 /**
@@ -382,7 +391,7 @@ const FREE_LINE_KINDS = new Set(['building', 'contour']);
 export function costForLine(
   kind: string,
   lengthM: number
-): { zar: number; basis: string } | null {
+): CostLine | null {
   if (FREE_LINE_KINDS.has(kind)) return null;
 
   const key = LINE_KIND_MAP[kind];
@@ -392,7 +401,7 @@ export function costForLine(
   if (!entry) return null;
 
   const zar = Math.round(lengthM * entry.zar);
-  return { zar, basis: `${entry.label}: ${lengthM.toFixed(1)} m × ${formatZar(entry.zar)}/m` };
+  return { zar, basis: `${entry.label}: ${lengthM.toFixed(1)} m × ${formatZar(entry.zar)}/m`, unit: 'm' };
 }
 
 /**
@@ -412,15 +421,20 @@ const AREA_LINE_KIND_MAP: Record<string, string> = {
 export function costForAreaLine(
   kind: string,
   areaM2: number
-): { zar: number; basis: string } | null {
+): CostLine | null {
   const key = AREA_LINE_KIND_MAP[kind];
-  if (!key || areaM2 <= 0) return null;
+  if (!key || areaM2 < 0) return null;
 
   const entry = PRICE_BOOK[key];
   if (!entry) return null;
 
   const zar = Math.round(areaM2 * entry.zar);
-  return { zar, basis: `${entry.label}: ${areaM2.toFixed(1)} m² × ${formatZar(entry.zar)}/m²` };
+  return { zar, basis: `${entry.label}: ${areaM2.toFixed(1)} m² × ${formatZar(entry.zar)}/m²`, unit: 'm²' };
+}
+
+/** Sum already-rounded BOQ lines exactly; unpriced/null lines never masquerade as free input. */
+export function totalZar(lines: readonly CostLine[]): number {
+  return lines.reduce((sum, line) => sum + line.zar, 0);
 }
 
 /**

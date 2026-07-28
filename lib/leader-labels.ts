@@ -16,8 +16,8 @@
 // actually painted. So whenever a name measured wider than 24% of the canvas, the label was placed
 // as though it were narrower and then drawn past the sheet edge — "GREYWATER DIVERTER & FILTER ×3"
 // is the worst case at 30 characters. It never showed up in review because the sheets that get
-// looked at are rendered wide; it appears as the canvas narrows, and the font does NOT shrink with
-// it (the size has a hard floor of 19px), so the two diverge exactly when space is tightest.
+// looked at are rendered wide; it appears as the canvas narrows. The label size therefore has to
+// follow the map width until it reaches the explicit printed-legibility floor below.
 //
 // It also cannot be reasoned about from the font stack: REFERENCE_LABEL_FONT asks for three
 // condensed faces and then falls back to plain `sans-serif`, which is ~30% wider per character. A
@@ -64,6 +64,18 @@ export const LABEL_GAP_RATIO = 0.025;
  * visible failure rather than a silent one.
  */
 export const MIN_FONT_SIZE = 12;
+
+/**
+ * Preferred map-callout size before a particular long name is shrunk to fit its margin.
+ *
+ * A bitmap-pixel floor cannot protect a phone preview: the browser scales the whole sheet, floor
+ * and all. It only made the same 19px label occupy wildly different shares of a 784px tall-plot
+ * map and a 2404px wide-plot map. Width-relative type keeps that hierarchy stable; MIN_FONT_SIZE
+ * remains the honest print-legibility stop for the narrowest map.
+ */
+export function leaderLabelFontSize(mapWidth: number): number {
+  return Math.max(MIN_FONT_SIZE, Math.round(mapWidth * 0.011));
+}
 
 /**
  * Place one margin callout so that it is fully on the sheet.

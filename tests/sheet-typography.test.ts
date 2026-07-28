@@ -84,3 +84,16 @@ test('the phasing schedule sizes its type from its own column, not the changing 
   assert.match(block, /titleFont = .*Math\.round\(lgW \*/);
   assert.doesNotMatch(block, /Math\.round\((?:W|mapW) \*/);
 });
+
+test('a phasing week baseline clears the chip by the week font ascent', () => {
+  const start = SOURCE.indexOf('// Advance below BOTH the chip');
+  const end = SOURCE.indexOf('// Week range.', start);
+  assert.ok(start >= 0 && end > start, 'phasing chip-clearance block exists');
+  const block = SOURCE.slice(start, end);
+
+  // The rule is about glyph geometry, not today's font size: the baseline must include the actual
+  // ascent of the font that will be painted. A line-height fraction can pass while caps overlap.
+  assert.match(block, /ctx\.measureText\(phase\.weekRange\)\.actualBoundingBoxAscent/);
+  assert.match(block, /chipTop \+ chipS \+ weekAscent \+ weekTopGap/);
+  assert.doesNotMatch(block, /lineH \* 0\.35/);
+});

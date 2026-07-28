@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  placeLeaderLabel, stackLeaderRows, MIN_FONT_SIZE, SAFE_INSET_RATIO,
+  leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, MIN_FONT_SIZE, SAFE_INSET_RATIO,
   type LeaderSide,
 } from '@/lib/leader-labels';
+import { calculateBoundaryPresentationLayout } from '@/lib/reference-presentation';
 
 // A margin callout names a real thing on a real farm plan. Off the sheet edge it is gone, and the
 // farmer is left with a coloured line and a legend to cross-reference — which is the exact problem
@@ -24,6 +25,38 @@ const MEASURES: Array<[string, (t: string, s: number) => number]> = [
 // The real worst case in the catalog, with a count suffix.
 const LONGEST = 'GREYWATER DIVERTER & FILTER ×3';
 const SIDES: LeaderSide[] = ['left', 'right'];
+
+test('callout type keeps its map-width hierarchy across square, wide and tall farm sheets', () => {
+  const frame = { imgW: 960, imgH: 640, mPerPx: 0.4 };
+  const boundaries: Record<'square' | 'wide' | 'tall', Array<[number, number]>> = {
+    square: [[0.4, 0.35], [0.6, 0.35], [0.6, 0.65], [0.4, 0.65]],
+    wide: [[0.3, 0.425], [0.7, 0.425], [0.7, 0.575], [0.3, 0.575]],
+    tall: [[0.45, 0.2], [0.55, 0.2], [0.55, 0.8], [0.45, 0.8]],
+  };
+  const mapWidths = Object.fromEntries(Object.entries(boundaries).map(([name, boundary]) => {
+    const layout = calculateBoundaryPresentationLayout(boundary, frame);
+    assert.ok(layout);
+    return [name, layout.imgW * 2];
+  })) as Record<keyof typeof boundaries, number>;
+  const sizes = {
+    tall: leaderLabelFontSize(mapWidths.tall),
+    square: leaderLabelFontSize(mapWidths.square),
+    wide: leaderLabelFontSize(mapWidths.wide),
+  };
+
+  // This is the user-facing rule: a boundary-derived map that doubles in width gets larger type,
+  // while the narrowest printable map stops at the named legibility floor. The former hard floor
+  // made tall and square equal and this ordering fail.
+  assert.ok(sizes.tall < sizes.square);
+  assert.ok(sizes.square < sizes.wide);
+  assert.equal(sizes.tall, MIN_FONT_SIZE);
+
+  // Once clear of that legibility stop, type occupies the same share of each map. This catches a
+  // replacement fixed constant without pinning the implementation's current ratio.
+  const squareShare = sizes.square / mapWidths.square;
+  const wideShare = sizes.wide / mapWidths.wide;
+  assert.ok(Math.abs(squareShare - wideShare) < 0.001);
+});
 
 test('a callout never crosses the sheet edge — at any width, either side, either font', () => {
   // THE BUG. The old code capped the width used for POSITIONING at 24% of the canvas and drew the
