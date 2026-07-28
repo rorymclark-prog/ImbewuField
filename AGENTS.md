@@ -13,9 +13,18 @@ people act on. That single fact drives most of the rules below.
 
 ```bash
 npx tsc --noEmit     # must be clean
-npm test             # must be 100% pass — currently 487 tests
+npm test             # must be 100% pass, every test, every time
 git diff --check     # no whitespace damage
 ```
+
+**Never edit a test to make it pass.** If a test fails, either the code is wrong or
+the test encodes a claim that is no longer true — and the second case needs the
+claim rewritten with its reason, not the assertion deleted. Two tests in this repo
+failed because they PINNED A CONSTANT rather than a rule: one asserted a 10–12 MB
+animation total and failed when the clips were legitimately made smaller; another
+asserted "isiZulu is missing slide 13" and failed when that slide was rebuilt.
+Both were right to fail and both needed rewriting upward, into the rule they were
+really about. Deleting either would have removed real coverage.
 
 **Do not run `npm run build` in a sandbox.** `app/layout.tsx` imports `Newsreader`
 and `Public_Sans` via `next/font/google`, so the build fetches from
@@ -70,7 +79,8 @@ long-running uncommitted change guarantees a conflict.
 | `lib/producer-prompt.ts` | `lib/user-sync.ts`, `lib/local-tombstones.ts` |
 | `lib/render-policy.ts`, `lib/render-jobs.ts` | `lib/tidy-outline.ts`, `snap-edges.ts`, `align-items.ts` |
 | `lib/locked-polish-flow.ts`, `lib/sheet-render-route.ts` | `docs/narration/*`, course content |
-| `functions/`, `firestore.rules` | `.github/workflows/*` |
+| `lib/leader-labels.ts`, `lib/render-difference.ts` | `lib/offline-*.ts`, `lib/narration-*.ts` |
+| `functions/`, `firestore.rules` | `.github/workflows/*`, `docs/narration/*` |
 
 `lib/water-cartography.ts` is shared — say so in the ledger before changing it.
 
@@ -100,7 +110,52 @@ you finish, post the branch and SHA there.
 
 ---
 
-## 5. House style
+## 5. LOOK AT WHAT YOU MADE
+
+This is the rule that matters most on this repo, and the one that has been broken
+most expensively.
+
+Rory paid for the AI "Full Treatment" render again and again and got back the
+picture he already had. **Six commits over two days were each reported as fixing
+it, every one with a green test suite**, because no code in the app had ever
+looked at an output image. A pass that returned its own input verbatim satisfied
+every check — including the protected-pixel verifier, which a byte-for-byte copy
+passes perfectly — and was then stored, labelled "AI polished", and charged for.
+
+His words at the end of it: *"this is still shit meh after days of coding with
+codex and you its still shit"*, and *"i am just burning tokens over tokens for no
+result"*. Both were fair.
+
+So:
+
+- **A green suite is not evidence that a rendered thing looks right.** Tests prove
+  arithmetic and wiring. They cannot see a squashed sheet, a label off the edge, a
+  grey slab over a house, or two legends fighting on one page.
+- **Never write "fixed" about anything visual you have not seen.** Say exactly what
+  you verified and what you did not. "tsc and tests pass; I could not render the
+  sheet, so the visual result is unverified" is a good report. "Fixed the sheet
+  framing" without a rendered sheet is not.
+- **If you cannot see it, say so and hand it back.** Rory or Claude can open a
+  preview URL. Every branch push gets one automatically
+  (`imbewufield-<slug>.vercel.app`, see §6). Naming the exact thing to look at —
+  which sheet, which style, what should be different — is far more useful than a
+  confident summary.
+- **Where a difference can be measured, measure it.** `lib/render-difference.ts`
+  exists for exactly this: `measureRenderDifference(before, after, protectMask)`
+  scores an output against its input, excluding protected pixels, and returns
+  `redrawn` / `filtered-only` / `unchanged`. If you add a paid render path, wire
+  it in — `tests/paid-render-gate.test.ts` enforces that every flow which enqueues
+  a paid pass records a baseline to compare against.
+
+The general form: **the check must be able to fail.** A test that pins whatever the
+code currently does, a verifier that only confirms the bytes it restored itself, a
+word-count rule that cannot fire on the language it was written for — all of these
+pass forever and protect nothing. Before you finish, ask what would have to break
+for your check to notice, and confirm it actually would.
+
+---
+
+## 6. House style
 
 - **Comments explain *why*, not *what*.** Most comments in this repo record the
   real-world observation or bug that forced the code to be the way it is —
@@ -115,7 +170,7 @@ you finish, post the branch and SHA there.
 
 ---
 
-## 6. Branches
+## 7. Branches
 
 `main` is production (auto-deploys via `deploy.yml`). All work happens on branches.
 Every push to a non-main branch gets its own stable preview hostname —
