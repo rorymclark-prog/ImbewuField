@@ -7837,7 +7837,7 @@ interface SavedGlossy {
 //        preventing wide fallbacks from crossing the right map edge. (Two branches each landed a
 //        'v61' independently; this is the merge of both, so the number moves on rather than one
 //        of the two render changes quietly inheriting the other's cache entry.)
-const PLAN_VERSION = 'v62';
+const PLAN_VERSION = 'v63';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
