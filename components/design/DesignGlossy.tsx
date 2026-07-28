@@ -6477,9 +6477,44 @@ export async function buildBlueprintSectorMap(
 // exactly the "same question answered twice" pattern the handover's recurring-bug-pattern section
 // warns about (a future panel-width change would silently desync the blank-out, the mask and the
 // composite-back from the real panel, exposing or misplacing schedule pixels).
+// The pixel size sheet 08 renders at — ONE answer, shared by the exact sheet, the model's input,
+// the panel blank-out and the protect mask.
+//
+// Those four used to derive W/H from the RAW frame while nothing else did, which was fine only
+// while sheet 08 alone stayed 3:2. The moment it follows the boundary like sheets 01–07, any path
+// still measuring the raw frame puts phasingPanelRect somewhere the panel is not — blanking the
+// wrong rectangle, protecting the wrong pixels, and exposing real schedule text to the model. That
+// is the precise failure the comment on phasingPanelRect warns about, one level up.
+//
+// Deliberately SYNCHRONOUS. calculateBoundaryPresentationLayout needs only the boundary;
+// boundaryPresentationContext is async purely because it re-crops the satellite. Keeping this sync
+// means buildPhasingProtectMask does not have to become async and grow a new failure mode.
+// Falls back to the raw frame on a site with no usable boundary, exactly as the context does.
+function phasingSheetSize(
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+): { W: number; H: number } {
+  const layout = calculateBoundaryPresentationLayout(refLayers.boundary, frame, SCALE);
+  return {
+    W: (layout?.imgW ?? frame.imgW) * SCALE,
+    H: (layout?.imgH ?? frame.imgH) * SCALE,
+  };
+}
+
 function phasingPanelRect(W: number, H: number) {
   const pad = Math.round(W * 0.02);
-  const lgW = Math.round(W * 0.34);
+  // A FLAT 34% OF WIDTH STOPPED WORKING once this sheet started following the boundary.
+  //
+  // On the old fixed 3:2 frame, 34% was always 653px and always readable. Framed to the plot, a
+  // tall narrow farm gives a 744px-wide map — and 34% of that is 253px, under 40% of the width
+  // this schedule's dates, tasks and hold-points were laid out for. The panel's HEIGHT triples on
+  // those sheets, so the room exists; it is only the horizontal share that collapses.
+  //
+  // styleSheetLegendWidth already owns "how wide is a readable panel" for sheets 01–07 (clamped
+  // 360–620). Using it here makes the whole plan set agree rather than letting this sheet keep a
+  // private second rule — the same reason OVERLAY_PANEL_RATIO was deleted. It also brings today's
+  // panel from 653 down to 620, the cap every other sheet has always respected.
+  const lgW = styleSheetLegendWidth(W);
   const lgX = W - pad - lgW;
   const lgY = pad;
   const lgBottom = H - pad;
@@ -6616,16 +6651,23 @@ async function composePhasingSheet(
 ): Promise<string> {
   if (!baseImage) return buildImplementationMap(state, frame, refLayers, site, placeName);
 
+  // The phase plan comes from the SAVED state — phases are a fact about the design, not about how
+  // it is framed. Everything drawn below uses the boundary-framed presentation, matching the exact
+  // sheet this composites over.
   const plan = buildPhasePlan(state, refLayers, site);
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
+  const presentation = await boundaryPresentationContext(state, frame, refLayers);
+  const renderState = presentation.state;
+  const renderFrame = presentation.frame;
+  const renderRefLayers = presentation.refLayers;
+  const W = renderFrame.imgW * SCALE;
+  const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   const pad = Math.round(W * 0.02);
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
 
   // 1. The model's decorative illustrated background, normalised to the exact frame size.
   const modelImg = await loadImage(baseImage);
@@ -6633,7 +6675,7 @@ async function composePhasingSheet(
 
   // 2. Every exact fact — ground, structures, boundary, phase pins — redrawn on top from saved
   //    design data, never copied from (or left as) the model's own paint of that region.
-  await drawPhasingExactContent(ctx, state, frame, refLayers, plan, W, H);
+  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, W, H);
 
   // 3. Scale bar and north arrow, drawn as exact vector chrome (not a photographic strip copied
   //    from a separately rendered sheet, which risked a hard seam and could clip the north arrow).
@@ -6666,8 +6708,9 @@ async function buildPhasingHybridInput(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
+  // The same size buildImplementationMap just drew at — otherwise the blank-out lands somewhere
+  // the panel is not and the model is shown real dates.
+  const { W, H } = phasingSheetSize(frame, refLayers);
   const exactSheet = await buildImplementationMap(state, frame, refLayers, site, placeName);
   return blankPhasingPanel(exactSheet, W, H);
 }
@@ -6709,9 +6752,8 @@ async function blankPhasingPanel(imageDataUrl: string, W: number, H: number): Pr
 // read the opaque fill below as "the model literally cannot touch these pixels" — it can; the
 // guarantee comes from never showing it real content (blankPhasingPanel) and never trusting its
 // output for that region (composePhasingSheet's redraw).
-function buildPhasingProtectMask(frame: CanvasFrame): string {
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
+function buildPhasingProtectMask(frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers']): string {
+  const { W, H } = phasingSheetSize(frame, refLayers);
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -6742,25 +6784,39 @@ export async function buildImplementationMap(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
+  // FRAMED TO THE BOUNDARY, like sheets 01–07.
+  //
+  // This sheet passed the raw frame while every other sheet went through
+  // boundaryPresentationContext, so on the Ubhejane demo the plan set came out with seven sheets
+  // at 1.98:1 and this one at 1.50:1. DesignPrint letterboxes each sheet into A4/A3, so the odd
+  // one out is not subtle on paper — it gets a visibly different band of white.
+  //
+  // The phase plan is built from the SAVED state, before presentation: phases are a fact about the
+  // design, not about how it is being framed, and buildPhasePlan is what the schedule text is
+  // written from.
   const plan = buildPhasePlan(state, refLayers, site);
-  const W = frame.imgW * SCALE;
-  const H = frame.imgH * SCALE;
+  const presentation = await boundaryPresentationContext(state, frame, refLayers);
+  const renderState = presentation.state;
+  const renderFrame = presentation.frame;
+  const renderRefLayers = presentation.refLayers;
+  const W = renderFrame.imgW * SCALE;
+  const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
   const { pad, lgW, lgX, lgY, lgBottom } = phasingPanelRect(W, H);
 
   // 1. Satellite + scrim.
-  await drawBlueprintBase(ctx, frame, W, H);
+  await drawBlueprintBase(ctx, renderFrame, W, H);
 
   // 2-4. The complete saved design UNDER the phase pins — ground, structures, features, boundary,
   //    then the numbered phase pins. Shared with composePhasingSheet's AI composite-back via
   //    drawPhasingExactContent, so the exact sheet and the Hybrid/Full-Treatment sheets can never
   //    draw this content two different ways.
-  await drawPhasingExactContent(ctx, state, frame, refLayers, plan, W, H);
+  await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, W, H);
 
   // 5. The title moves into the shared right-hand sheet panel below. Keeping a second giant title
   // over the map made sheet 08 the odd one out and consumed the clear northwest map space.
@@ -7748,7 +7804,12 @@ interface SavedGlossy {
 // v51: reusable feature art loses its pale sticker halo and map callouts remain readable on phones.
 // v53: paid Sector polish sends the complete exact sheet to GPT Image instead of repainting only
 //      the ground and rebuilding the same hybrid page over it.
-const PLAN_VERSION = 'v56';
+//   v57 — 2026-07-28: every sheet now takes the shape of the traced boundary instead of a fixed
+//        3:2 frame (sheets 01-07 via calculateBoundaryPresentationLayout, sheet 08 routed through
+//        the same presentation), and the Phasing schedule panel uses styleSheetLegendWidth like
+//        every other panel rather than a private flat 34%. Without this bump none of it is
+//        visible to anyone who has already rendered a sheet — the cached picture comes back.
+const PLAN_VERSION = 'v57';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
@@ -9559,13 +9620,14 @@ export default function DesignGlossy({
       // buildFinishedSheetPolishPrompt's generic wording asking it not to touch them — exactly the
       // prompt-only protection this sheet was built to avoid (adversarial review, 2026-07-25).
       if (polishStage && hybridInput) {
-        const W = frame.imgW * SCALE;
-        const H = frame.imgH * SCALE;
+        // The hybrid sheet was rendered at the boundary-framed size, so blank at that size — the
+        // raw frame would clear a rectangle that is no longer where the panel sits.
+        const { W, H } = phasingSheetSize(frame, refLayers);
         hybridInput = await blankPhasingPanel(hybridInput, W, H);
       }
 
       const compositeDataUrl = hybridInput ?? await buildPhasingHybridInput(state, frame, refLayers, site, placeName);
-      const protectMaskDataUrl = polishStage ? undefined : buildPhasingProtectMask(frame);
+      const protectMaskDataUrl = polishStage ? undefined : buildPhasingProtectMask(frame, refLayers);
 
       const prompt = polishStage
         ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName)
