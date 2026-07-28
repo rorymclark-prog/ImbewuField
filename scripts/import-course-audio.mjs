@@ -20,9 +20,12 @@
 // Nothing is deleted and nothing outside public/course-audio/<moduleId> is touched. Re-running
 // overwrites that module's files, which is what you want after a re-record.
 
-import { readdirSync, statSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { readdirSync, statSync, mkdirSync, copyFileSync, existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { homedir } from 'node:os';
+import { execFileSync } from 'node:child_process';
+
+import { parseScriptBlocks, checkPacing, describeOutlier } from '@/lib/narration-check';
 
 // Directory name in the export -> app language code (lib/tts.ts LANG_TO_BCP47 keys).
 // Add a row here when a new language is recorded; nothing else needs to change.
@@ -104,11 +107,66 @@ if (langs.length === 0) fail(`No recognised language folders under ${source}`);
 // A track present in one language but missing in another is the failure that actually bites:
 // the player would silently drop a slide when a learner switches language. Say so, loudly.
 const counts = langs.map((l) => `${l}=${imported[l].length}`).join(' ');
-const sizes = new Set(langs.map((l) => imported[l].length));
 console.log(`\n  Imported ${copied} files into public/course-audio/${moduleId}/  (${counts})`);
+
+// ── Verification ────────────────────────────────────────────────────────────────────────────────
+// Everything below used to be a console.warn. A warning in a terminal scroll is how the isiZulu
+// Seeds deck shipped one slide short and shifted ELEVEN slides out of step with their narration,
+// with nothing visibly broken to warn anyone. These are now failures, because the alternative is
+// discovering them in a farmer's ear.
+const problems = [];
+
+const sizes = new Set(langs.map((l) => imported[l].length));
 if (sizes.size > 1) {
-  console.warn('  WARNING: languages have different track counts — a learner switching language will lose slides.');
+  problems.push(`languages have different track counts (${counts}) — a learner switching language loses slides`);
 }
+
+// Against the SCRIPT, not just against each other: both languages can be equally wrong.
+for (const lang of langs) {
+  const scriptPath = join(process.cwd(), 'docs/narration', `${moduleId}.${lang}.md`);
+  if (!existsSync(scriptPath)) {
+    problems.push(`no script at docs/narration/${moduleId}.${lang}.md to check the recording against`);
+    continue;
+  }
+  const blocks = parseScriptBlocks(readFileSync(scriptPath, 'utf8'));
+  if (blocks.length !== imported[lang].length) {
+    problems.push(`${lang}: script has ${blocks.length} blocks, ${imported[lang].length} clips were imported`);
+  }
+
+  // Does each clip actually contain the words it claims? Duration / word count gives a speaking
+  // rate; a correct set has a tight spread, and a clip cut from the wrong block falls off it.
+  const timings = [];
+  for (const t of imported[lang]) {
+    const file = join(outRoot, lang, t.name);
+    try {
+      const out = execFileSync('ffprobe', [
+        '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', file,
+      ], { encoding: 'utf8' }).trim();
+      timings.push({ slide: t.n, seconds: Number(out) });
+    } catch {
+      problems.push(`${lang}: could not read the duration of ${t.name} (is ffprobe installed?)`);
+    }
+  }
+  if (timings.length) {
+    const report = checkPacing(blocks, timings);
+    console.log(`  ${lang}: ${report.count} clips, median ${report.median.toFixed(2)} words/sec`);
+    for (const o of report.outliers) problems.push(`${lang}: ${describeOutlier(o, report.median)}`);
+  }
+}
+
+if (problems.length) {
+  console.error(`\n  ${problems.length} problem(s) — these files are NOT ready to ship:\n`);
+  for (const p of problems) console.error(`    - ${p}`);
+  // Copied first, verified second, on purpose: hearing the bad clip is usually how you work out
+  // whether the recording or the script is wrong. The cost is a dirty working tree, so say exactly
+  // how to undo it rather than leaving someone to find it in a later diff — which is how a pair of
+  // deliberately-swapped test clips nearly got committed.
+  console.error('\n  The files WERE copied so you can listen to them, so your working tree now holds');
+  console.error('  them. Fix the recording or the script and re-run (it overwrites), or discard with:');
+  console.error(`      git checkout -- public/course-audio/${moduleId}\n`);
+  process.exit(1);
+}
+console.log('  All clips match their script blocks.');
 
 const first = imported[langs[0]] ?? [];
 console.log('\n  Add or update this module in lib/course-audio.ts:\n');
