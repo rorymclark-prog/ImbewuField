@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, Droplets } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { computeTankSizing } from '@/lib/tank-sizing';
+import { useLanguage } from '@/lib/i18n';
 
 // Studio palette (kept in sync with StepGuide.tsx) + the water-layer accent.
 const PAPER = '#FFFEFA';
@@ -51,6 +52,7 @@ export interface TankCalculatorProps {
 }
 
 export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProps) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(true);
   const [roofArea, setRoofArea] = useState(DEFAULT_ROOF_M2);
   const [dailyUse, setDailyUse] = useState(DEFAULT_DAILY_L);
@@ -89,7 +91,7 @@ export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProp
           }}
         >
           <Droplets size={15} color={BLUE} style={{ flexShrink: 0 }} />
-          <span style={{ fontSize: 12.5, fontWeight: 800, flex: 1 }}>Tank calculator</span>
+          <span style={{ fontSize: 12.5, fontWeight: 800, flex: 1 }}>{t('designTankTitle')}</span>
           {open ? <ChevronUp size={16} color={BLUE} /> : <ChevronDown size={16} color={BLUE} />}
         </button>
 
@@ -97,13 +99,13 @@ export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProp
           <div style={{ padding: '8px 10px 10px' }}>
             {!hasRain ? (
               <div style={{ fontSize: 12, lineHeight: 1.45, color: 'rgba(11,18,11,0.7)' }}>
-                Open this place on the map to fetch its rainfall first — then this sizes your tanks from the site’s real rain.
+                {t('designTankNeedRain')}
               </div>
             ) : (
               <>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <label style={{ flex: 1 }}>
-                    <span style={labelStyle}>Roof area (m²)</span>
+                    <span style={labelStyle}>{t('designTankRoofArea')}</span>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -114,7 +116,7 @@ export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProp
                     />
                   </label>
                   <label style={{ flex: 1 }}>
-                    <span style={labelStyle}>Daily use (ℓ)</span>
+                    <span style={labelStyle}>{t('designTankDailyUse')}</span>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -145,12 +147,12 @@ export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProp
                       </div>
                     )}
                     <div style={{ marginTop: 6, fontSize: 10.5, color: 'rgba(11,18,11,0.5)', lineHeight: 1.4 }}>
-                      From this site’s 30-yr rainfall, 0.85 roof runoff. A typical year — size up for drought.
+                      {t('designTankMethod')}
                     </div>
                   </div>
                 ) : (
                   <div style={{ marginTop: 9, fontSize: 12, color: OCHRE, fontWeight: 700 }}>
-                    Enter a roof area and daily use to size your tanks.
+                    {t('designTankEnterValues')}
                   </div>
                 )}
               </>

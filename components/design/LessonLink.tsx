@@ -9,13 +9,14 @@
 import { useState } from 'react';
 import { BookOpen, X } from 'lucide-react';
 import { getLesson } from '@/lib/lesson-registry';
+import { useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
 
 const GREEN = '#1F4D2B';
 
 export default function LessonLink({
   id,
-  label = 'Learn',
+  label,
   tone = 'link',
 }: {
   id: string;
@@ -23,6 +24,8 @@ export default function LessonLink({
   /** 'link' = quiet inline text button; 'chip' = rounded outlined pill. */
   tone?: 'link' | 'chip';
 }) {
+  const { t } = useLanguage();
+  const resolvedLabel = label ?? t('designLearn');
   const [open, setOpen] = useState(false);
 
   const trigger =
@@ -65,7 +68,7 @@ export default function LessonLink({
         }}
         style={trigger as React.CSSProperties}
       >
-        <BookOpen size={13} /> {label}
+        <BookOpen size={13} /> {resolvedLabel}
       </button>
 
       {open && (
@@ -99,11 +102,11 @@ export default function LessonLink({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
               <BookOpen size={16} color={GREEN} />
-              <span style={{ fontWeight: 800, color: GREEN, fontSize: 12.5, letterSpacing: 0.4 }}>LESSON</span>
+              <span style={{ fontWeight: 800, color: GREEN, fontSize: 12.5, letterSpacing: 0.4 }}>{t('designLessonHeading')}</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close lesson"
+                aria-label={t('designLessonClose')}
                 style={{
                   marginLeft: 'auto',
                   display: 'inline-flex',

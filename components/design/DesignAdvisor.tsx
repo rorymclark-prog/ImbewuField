@@ -12,6 +12,8 @@ import type { DesignCanvasState, PlacedItem, ZoneShape } from '@/lib/design-canv
 import { pointInRing } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES } from '@/lib/design-elements';
 import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 
 const GOLD = '#F7C97E';
 const DARK = '#0B120B';
@@ -119,6 +121,7 @@ function buildDesignSummary(state: DesignCanvasState) {
 }
 
 export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: DesignAdvisorProps) {
+  const { t } = useLanguage();
   const [advice, setAdvice] = useState<Advice[]>([]);
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
   // itself, and the effect below reset the dismissal on EVERY edit (lastChangeId is updatedAt,
@@ -195,10 +198,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
     : state.step === 'structures' ? 'structures'
     : null;
   const layerName =
-    stepLayer === 'water' ? 'Water'
-    : stepLayer === 'zones' ? 'Zones'
-    : stepLayer === 'planting' ? 'Planting'
-    : stepLayer === 'structures' ? 'Structures'
+    stepLayer === 'water' ? t('designAdvisorLayerWater')
+    : stepLayer === 'zones' ? t('designAdvisorLayerZones')
+    : stepLayer === 'planting' ? t('designAdvisorLayerPlanting')
+    : stepLayer === 'structures' ? t('designAdvisorLayerStructures')
     : null;
   // On a specific step: this layer's tips (+ general/untagged ones) here; everything else demoted
   // to a "+N on other layers" line so a real warning is never fully hidden, just moved down.
@@ -224,7 +227,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
-        throw new Error(errBody?.error || `Request failed (${res.status})`);
+        throw new Error(errBody?.error || formatDesignTranslation(t('designAdvisorRequestFailed'), {
+          status: res.status,
+        }));
       }
       const data = await res.json();
       const suggestions: string[] = Array.isArray(data?.suggestions) ? data.suggestions : [];
@@ -233,10 +238,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
       // empty pills.
       const clean = suggestions.map((s) => (typeof s === 'string' ? s.trim() : '')).filter(Boolean);
       setAiSuggestions(clean.map((msg) => ({ msg })));
-      if (clean.length === 0) setAiError('Lima had nothing to add on this one — your design looks sound.');
+      if (clean.length === 0) setAiError(t('designAdvisorNothingToAdd'));
       else setExpanded(true);
     } catch (err) {
-      setAiError(err instanceof Error ? err.message : 'Could not reach Lima.');
+      setAiError(err instanceof Error ? err.message : t('designAdvisorUnavailable'));
     } finally {
       setAiLoading(false);
     }
@@ -269,7 +274,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
     return (
       <div ref={containerRef} style={shell}>
         <div style={inner}>
-          <AskAiButton onClick={askAi} loading={aiLoading} />
+          <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
           {aiError && <ErrorPill message={aiError} />}
           {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
         </div>
@@ -284,7 +289,11 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         <div style={inner}>
           <button
             onClick={() => setTipOpen(true)}
-            aria-label={`Lima: ${forThisLayer.length} ${layerName ?? 'design'} tip${forThisLayer.length === 1 ? '' : 's'} — tap to read`}
+            aria-label={formatDesignTranslation(t('designAdvisorTapToRead'), {
+              count: forThisLayer.length,
+              layer: layerName ?? t('designAdvisorDesign'),
+              tips: t(forThisLayer.length === 1 ? 'designAdvisorTip' : 'designAdvisorTips'),
+            })}
             style={{
               minHeight: 32,
               padding: '4px 11px',
@@ -302,9 +311,10 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
             }}
           >
             {top.severity === 'warn' ? <TriangleAlert size={14} color="#E8974A" /> : <Lightbulb size={14} color="#7ED694" />}
-            Lima · {forThisLayer.length}{layerName ? ` ${layerName}` : ''} tip{forThisLayer.length === 1 ? '' : 's'}
+            Lima · {forThisLayer.length}{layerName ? ` ${layerName}` : ''}{' '}
+            {t(forThisLayer.length === 1 ? 'designAdvisorTip' : 'designAdvisorTips')}
           </button>
-          <AskAiButton onClick={askAi} loading={aiLoading} />
+          <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
           {aiError && <ErrorPill message={aiError} />}
           {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
         </div>
@@ -342,7 +352,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         <div style={{ flex: 1, fontSize: 13, lineHeight: 1.35 }}>{top.msg}</div>
         <button
           onClick={() => setTipOpen(false)}
-          aria-label="Close tip"
+          aria-label={t('designAdvisorCloseTip')}
           style={{
             minWidth: 28,
             minHeight: 28,
@@ -380,16 +390,19 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
               cursor: 'pointer',
             }}
           >
-            {moreCount} more
+            {formatDesignTranslation(t('designAdvisorMore'), { count: moreCount })}
             {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           </button>
         )}
-        <AskAiButton onClick={askAi} loading={aiLoading} />
+        <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
       </div>
 
       {otherLayerCount > 0 && (
         <div style={{ fontSize: 11, color: '#B9C2C8', paddingLeft: 2 }}>
-          +{otherLayerCount} tip{otherLayerCount === 1 ? '' : 's'} on other layers
+          {formatDesignTranslation(t('designAdvisorOtherLayers'), {
+            count: otherLayerCount,
+            tips: t(otherLayerCount === 1 ? 'designAdvisorTip' : 'designAdvisorTips'),
+          })}
         </div>
       )}
 
@@ -431,7 +444,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
   );
 }
 
-function AskAiButton({ onClick, loading }: { onClick: () => void; loading: boolean }) {
+function AskAiButton({ onClick, loading, label }: { onClick: () => void; loading: boolean; label: string }) {
   return (
     <button
       onClick={onClick}
@@ -453,7 +466,7 @@ function AskAiButton({ onClick, loading }: { onClick: () => void; loading: boole
       }}
     >
       {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} color={GOLD} />}
-      Ask Lima
+      {label}
     </button>
   );
 }
