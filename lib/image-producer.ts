@@ -39,6 +39,25 @@ export interface ProducerLabel {
   leader?: boolean;
 }
 
+/**
+ * Place a measured label pill inside the rendered map.
+ *
+ * producerLabels can only estimate text width before a browser resolves the requested font.
+ * burnLabels is the first point that knows the real width, so it is the final authority for the
+ * horizontal edge. This prevents a wider system-font fallback from hanging the same long label
+ * off every right-hand sheet, while leaving the saved feature and leader anchor untouched.
+ */
+export function fitMeasuredPillX(
+  requestedX: number,
+  measuredWidth: number,
+  frameWidth: number,
+  safeInset = 16,
+): number {
+  const left = Math.min(safeInset, Math.max(0, frameWidth - measuredWidth));
+  const right = Math.max(left, frameWidth - safeInset - measuredWidth);
+  return Math.max(left, Math.min(requestedX, right));
+}
+
 export type LabelStyle = 'ink' | 'storybook' | 'blueprint' | 'reference' | 'folk' | 'clean';
 
 export interface CompositeInputs {
@@ -204,12 +223,16 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
     // so the hierarchy reads at a glance. Set per-label because measureText below depends on it.
     const isHeader = l.kind === 'header';
     ctx.font = `${isHeader ? 800 : 600} ${fs}px ${s.font}`;
+    const measuredWidth = padX * 2 + ctx.measureText(l.text).width;
+    const x = fitMeasuredPillX(l.ax, measuredWidth, ctx.canvas.width);
+    const onLeft = l.ax < ctx.canvas.width / 2;
+    const leaderEndX = onLeft ? x + measuredWidth : x;
     if (l.leader !== false) {
       // Leader — dark under-stroke + light over-stroke reads on any background.
       ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
+      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(leaderEndX, l.ay);
       ctx.strokeStyle = 'rgba(20,16,10,0.55)'; ctx.lineWidth = style === 'blueprint' ? 7 : 5; ctx.setLineDash([]); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(l.lx, l.ay);
+      ctx.beginPath(); ctx.moveTo(l.cx, l.cy); ctx.lineTo(leaderEndX, l.ay);
       ctx.strokeStyle = '#FBF6EC'; ctx.lineWidth = style === 'blueprint' ? 3 : 2; ctx.setLineDash([8, 6]); ctx.stroke();
       ctx.setLineDash([]);
       // Anchor dot at the true position.
@@ -217,8 +240,8 @@ function burnLabels(ctx: CanvasRenderingContext2D, labels: ProducerLabel[], styl
       ctx.fillStyle = '#FBF6EC'; ctx.fill(); ctx.strokeStyle = s.stroke; ctx.lineWidth = 2; ctx.stroke();
     }
     // Pill.
-    const w = padX * 2 + ctx.measureText(l.text).width;
-    const x = l.ax, y = l.ay - h / 2, r = h / 2;
+    const w = measuredWidth;
+    const y = l.ay - h / 2, r = h / 2;
     ctx.beginPath();
     ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
     ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();

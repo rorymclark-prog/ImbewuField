@@ -7800,7 +7800,9 @@ interface SavedGlossy {
 //        visible to anyone who has already rendered a sheet — the cached picture comes back.
 //   v58 — 2026-07-28: Phasing owns a separate schedule column instead of covering its map, so its
 //        outer aspect matches 01-07 and remains within the AI 3:1 limit on tall farms.
-const PLAN_VERSION = 'v58';
+//   v61 — 2026-07-28: non-reference label pills clamp from their measured browser-font width,
+//        preventing wide fallbacks from crossing the right map edge.
+const PLAN_VERSION = 'v61';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
