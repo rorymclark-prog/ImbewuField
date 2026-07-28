@@ -12,80 +12,82 @@ Every item below was verified to be real before it was written down — the numb
 estimated. If you find one is already fixed or the premise is wrong, **say so and skip it**; that is
 a useful result, not a failure.
 
-**Two rules that have each cost a day:**
+**Three rules that have each cost a day:**
 
-- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v62`) in the same commit
+- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v65`) in the same commit
   as *any* change to how a sheet is drawn, or nobody who has already rendered sees your fix.
+  **A prompt change IS a sheet-drawing change.** Last run's item 4 reasoned "prompt-only, no
+  deterministic sheet drawing change — no bump", but the prompt is the entire instruction set the
+  model draws an AI sheet from, and AI sheets share that cache key. Claude caught it at merge and
+  bumped to v65. If your change can alter a pixel on any sheet, exact or AI, bump it.
 - **A test that pins today's constant cannot fail when the constant is wrong.** Assert the *rule*,
   not the *number*.
+- **A rule that fires on every design is not a finding.** Before shipping a note or a warning, work
+  out what fraction of real designs trigger it. See the previous run's water note below.
 
 ---
 
-## Done — the previous run, all nine merged
+## Done — the previous run
 
-`callout-type-scale`, `phase-chip-clearance`, `label-collision-audit`, `gate-break-verify`,
-`phasing-tests`, `crop-plan-tests`, `price-book-tests`, `polygon-polish`, `design-studio-i18n`, plus
-`phasing-column` before them. Merged as `ecc8742`. Two branches had both bumped `PLAN_VERSION` to
-`v61`, so the merge moved it to `v62`.
+Items 0, 1, 2, 4, 5, 6 merged as `a1a89a4`. **Item 3 was correctly refused** — see item 1 below,
+which is that refusal turned into work.
 
-The one worth knowing about: **crop rotation was only ever a preference.** The fallback pass would
-put the same food group back in the same bed next season, which is the single thing the rotation
-toggle exists to prevent. `BedRotation.repeats()` now makes an immediate repeat a hard block. That
-is what these items are for — the test found a real bug and you reported it instead of loosening
-the test.
+Two things from that run worth carrying forward:
 
----
+**The `×N` fix had a second home, and item 4 found it.** v63 fixed the designed-element list; the
+Water sheet's "what this system serves" clause still said to caption each served bed "exactly as
+written above", where above is an inventory reading `Vegetable Bed ×7`. Good audit — that is the
+kind of second-order hit the item was written to catch.
 
-## 0. NOBODY MEASURES THE FIRST PAID RENDER — `codex/measure-hybrid-pass`
-
-**Added mid-run. Take this next, whatever you are on** (finish and push what you have first).
-
-Rory ran a Full Treatment on the Water sheet under **Reference Blueprint** and got a sheet whose
-ground is still the raw satellite photograph — the paid passes added nothing visible to it. Under
-**Satellite Overlay** the same design came back fully illustrated. So the pipeline can spend two
-paid renders and ship something the model barely touched, and nothing notices.
-
-Measured, not assumed. `components/design/DesignGlossy.tsx`:
-
-```
-grep -n measureRenderDifference components/design/DesignGlossy.tsx
-  18:    import ...
-  10111:  const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
-```
-
-**One call site, and it is guarded by `if (isPolishedResult && polishInputRef.current)`.** The
-Hybrid stage — the *first* paid render, and the one every Hybrid user pays for on its own — is
-never scored. `lib/render-difference.ts` and `tests/render-difference.test.ts` are sound; they are
-simply not attached to that stage.
-
-This is the same bug that was already fixed once for the polish pass, quoted from the comment
-above that call site: *"until now no code in this app had ever looked at the output image. A pass
-that returned its own input verbatim cleared every existing check … and was then stored, labelled
-'AI polished', and charged for."* Exactly that is still true one stage earlier.
-
-**The trap — read this before writing the comparison.** You cannot naively compare the Hybrid's
-finished sheet against the Hybrid's input, because between them the app composites all the exact
-content back on top. That composite-back alone repaints a large fraction of the sheet, so a model
-that returned its input verbatim would still score as "redrawn" and the gate would pass everything.
-
-The comparison has to be **what was sent to the model vs what the model sent back**, before the
-exact content goes on. Find where the model's raw return is available in the queue-completion path
-and score it there. `fullTreatmentProtectPolicy`'s protect mask must be excluded from the score for
-the same reason it already is on the polish pass — restored pixels are identical by construction
-and would drag an honest render toward "unchanged".
-
-**Keep the existing failure philosophy, which is right:** scoring never blocks a good render, any
-error in scoring is swallowed and the sheet ships. A measurement that can reject work it cannot
-measure is worse than none. What should change on a failed Hybrid is the same as on a failed
-polish — do not present it as an AI result, and tell the farmer plainly.
-
-Verification is a real render, and only Rory can spend one. So: write it, prove the scoring with a
-unit test that feeds a known-unchanged pair and a known-redrawn pair through the *same* code path
-the app uses, and say clearly in your report that the live confirmation is outstanding.
+**Item 6's storage note was reverted at review.** It compared placed tank capacity against measured
+annual roof harvest and warned when capacity fell short. Measured: 100 m² of roof at 800 mm/yr
+harvests 64 kL, so it takes **more than ten 10 000 L JoJos** before that comparison goes quiet — it
+fires on essentially every real design, and it reads as "your tank is too small" to a farmer who
+cannot afford another one. Annual harvest was never a sizing basis; a tank is drawn down and
+refilled all year. The overflow advice was the useful half and it survives. The tests you wrote were
+otherwise good — the dimensional `mm × m² = L` identity test is exactly right.
 
 ---
 
-## 0b. The two tanks are labelled the other way round on the two styles — `codex/tank-label-identity`
+## 1. The legend does not agree with the map, and you proved it — `codex/legend-map-agreement`
+
+**This is your own finding from last run, promoted to the top of the queue.** You audited sheets
+03, 04 and 06, found the exact renderer already violates legend↔map agreement, and reported it
+instead of weakening the check to match. That was the right call and this is the follow-through.
+
+What you reported, to save you re-deriving it:
+
+- **sheet 03** draws all saved design items as 20 %-alpha ghosts (`drawFilteredItems(..., 'all')`)
+  while its legend contains zones and ground only.
+- **sheet 04** draws filtered planting fixtures through `drawContextItems` with no legend rows.
+- **sheet 06** draws filtered planting items and routes at 24 % alpha with no legend rows.
+
+So a filtered-off element is on the map but absent from the legend, reproducible against the
+checked-in demo design and demo geometry fixtures.
+
+**Decide what the rule should be before writing code, and say which you chose.** There are two
+defensible answers and they are not the same product:
+
+1. *Context is not content.* A ghosted, low-alpha element is deliberate context — it is there so
+   the reader can orient — and context legitimately carries no legend row. Then the rule is not
+   "everything drawn is in the legend" but "everything drawn **at full strength** is in the
+   legend", and the fix is to the check, with the alpha threshold as the explicit boundary.
+2. *If it is on the page, name it.* Then ghosted elements get their own quiet legend treatment —
+   a CONTEXT heading, or a muted row — and the fix is to the renderer.
+
+Option 1 is more likely right, but it is exactly the shape of change that can be used to make a
+failing test pass, which is why it needs to be argued rather than assumed. Whichever you pick, the
+end state is the same: **an honest assertion that runs over all eight sheets and both fixtures and
+passes for the right reason.**
+
+Then look at a rendered sheet 03, 04 and 06 and confirm the reader can actually tell context from
+content — because if a farmer cannot, option 1 is wrong regardless of what the code says.
+
+`PLAN_VERSION` only if you change what is drawn.
+
+---
+
+## 2. The two tanks are labelled the other way round on the two styles — `codex/tank-label-identity`
 
 Rory rendered the SAME Water design twice and sent both PNGs at full resolution.
 
@@ -112,9 +114,14 @@ If it turns out the model reordered them, that is a finding too, and the fix is 
 capacity is not something a model may letter — it becomes app-drawn chrome like the schedule panel.
 Say which of the two it is; do not fix both speculatively.
 
+**Note:** both PNGs were rendered on build `76a63c3`, which predates the v63/v65 label work — a
+deploy failure had frozen production for 23 commits. The swap is a label-identity question, not a
+type-size one, so it is very unlikely to have been fixed by those commits, but re-render before you
+conclude it is still live.
+
 ---
 
-## 0c. The legend panel is three-quarters empty — `codex/legend-panel-fill`
+## 3. The legend panel is three-quarters empty — `codex/legend-panel-fill`
 
 Same PNG. On the Extension Blueprint water sheet the legend column carries a title, six rows and
 then roughly **two thirds of the panel is blank cream** down to the NOTES block at the very bottom.
@@ -130,149 +137,173 @@ Two separate things to fix, and they are worth separating in the report:
 2. **Counts appear on some rows and not others.** That sheet shows `Tap Point ×6` but plain
    `JoJo Tank 2500L`, `Buried water pipe`, `Swale / contour water line`. A reader cannot tell
    whether the absence of a number means "one" or "not counted". Pick one rule and apply it to
-   every row. Related to item 4's audit — the legend is the third of the three `×N` grammars.
+   every row. The legend is the third of the three `×N` grammars — items 4 and this one are the
+   same underlying confusion seen from different ends.
 
 `PLAN_VERSION`. Verify by rendering, at both a wide and a tall boundary.
 
 ---
 
-## 1. A missing area is now priced at R0 instead of "we don't know" — `codex/unpriced-not-free`
+## 4. Snap a whole selection at once — `codex/marquee-snap-all`
 
-Introduced by `codex/price-book-tests`, so this is a follow-up to your own change, not a criticism
-of it — the item you were given explicitly asked for "a quantity of zero produces a line of zero,
-not a missing line", and you did that correctly.
+**Rory asked for this directly:** *"perhaps consider a cleanup operation via marquee that snaps all
+the zone boundaries etc?"*
 
-`lib/price-book.ts`, `costForAreaLine`, changed `if (!key || areaM2 <= 0) return null;` to
-`areaM2 < 0`. Right for a genuine zero. The problem is the caller:
+The pieces already exist. Marquee multi-select and group move are in `components/design/
+DesignCanvas.tsx`; single-ring snapping is `lib/snap-edges.ts`, which now works on zones (it did
+not until `641fa9d` — the tolerance was sized for tracing a house off a photo, and a corner already
+lying on a neighbour's edge was counted as a move). This item joins them: with several rings
+selected, snap all of their shared edges in one operation.
 
-`components/FacilitatorCanvas.tsx:2304`
+**The safety architecture is the whole job, and it is already written — do not weaken it.**
+`lib/snap-edges.ts` is guard-then-revert: the boundary is never an eligible neighbour, and
+self-intersection, winding, false-join, area-change and movement guards each veto a move. Read that
+file before you start.
 
-```ts
-...((AREA_LINE_KINDS.includes(l.kind) ? costForAreaLine(l.kind, l.areaM2 ?? 0) : costForLine(l.kind, l.m)) ?? { zar: null })
+The new question a bulk operation raises, which the single-ring version never had to answer: **what
+happens when one ring in the selection fails its guards?** Snapping four zones and silently
+reverting one is the worst outcome — the farmer sees "snapped" and does not know which. Decide, say
+which you chose, and make it visible in the confirm summary:
+
+- all-or-nothing (safest, most frustrating on a 6-zone selection), or
+- per-ring, with the summary naming exactly which rings moved and which were left alone.
+
+The existing confirm summary is the model to follow — it already reports *"Moves 2 corners to meet
+Zone 2. Nothing moves more than 1.1 m"*, which is the right level of specificity. A bulk summary
+that just says "Snapped 4 zones" is not good enough.
+
+One undo entry for the whole operation, not one per ring.
+
+Tests: a selection where every ring snaps; a selection where one ring would self-intersect and must
+be left untouched while the others still move; and a selection containing the boundary, which must
+never be dragged into a zone. Verify in the running app on the demo farm, not only in the unit test.
+
+---
+
+## 5. The app has two different runoff coefficients — `codex/runoff-coefficient-split`
+
+**Measured, not suspected:**
+
+```
+lib/water-system.ts:107   const ROOF_RUNOFF_COEFF = 0.8;   // Water plan sheet notes
+lib/tank-sizing.ts:52     const RUNOFF_COEFFICIENT = 0.85; // Tank Calculator
 ```
 
-That `?? 0` conflates **"this shape has no area recorded"** with **"this shape has zero area"**.
-Before your change both produced `null` → the BOQ showed the row as *unpriced*. Now the first case
-produces `{ zar: 0 }` → the BOQ shows **R0**, i.e. free.
+Same physical quantity — the fraction of rain landing on a roof that reaches the tank. A farmer can
+open the Tank Calculator and the Water sheet for the same design and read harvest figures about 6 %
+apart, with nothing on either screen explaining why.
 
-The rule your own item was written to protect: *an element with no price is surfaced as unpriced,
-never silently priced at zero.* A BOQ that quietly says something is free is worse than one that
-admits it does not know — a farmer budgets from that number.
+**Do not pick one and delete the other.** A coefficient is an agronomic figure: report, do not edit.
+What this item wants is:
 
-Fix at the caller: only ask for a price when there is an area to price. Check
-`app/facilitator/print/page.tsx:479` for the same shape. Add the test that distinguishes the two
-cases — undefined area and zero area must not produce the same row.
+1. A single shared constant, in one module, imported by both — so the *structure* can no longer
+   drift, whatever the value ends up being.
+2. A short written case for which value belongs there, with a source, put in the report and in a
+   comment next to the constant. 0.8 and 0.85 are both defensible published figures for corrugated
+   roofing; the point is that the repo should say which one it chose and why.
+3. If the honest answer is "these are different because the two screens model different things"
+   (first-flush diversion counted in one and not the other, say) then that is the finding, and the
+   fix is that both screens *say so* — not that the numbers silently disagree.
 
----
+**Flag the value change to Rory rather than shipping it**, exactly as you would a price. Landing the
+shared-constant structure with today's two values preserved behind named exports is a complete,
+mergeable result on its own.
 
-## 2. Finish the Design Studio i18n sweep — `codex/design-studio-i18n-rest`
-
-`codex/design-studio-i18n` proved the pattern on `StepGuide.tsx` and `DesignWizard.tsx` and it
-merged clean. Eleven files to go:
-
-`BasePhotoImport` · `DesignAdvisor` · `DesignCanvas` · `DesignGlossy` · `DesignPalette` ·
-`DesignPrint` · `LessonLink` · `LessonPanel` · `SectorOverlay` · `SectorSummary` · `TankCalculator`
-
-Same rules as last time and they matter more at this size:
-
-- **English text in every language slot**, new keys listed in `docs/i18n-needs-translation.md`. Do
-  not write isiZulu, Afrikaans or anything else you cannot have checked. Module 2's narration is
-  already blocked waiting on an isiZulu-speaking agronomist for exactly this reason.
-- **Do not touch text that is drawn onto a canvas sheet.** `DesignGlossy` and `DesignPrint` letter
-  labels, legends and titles into the render, and those strings are load-bearing: the AI prompt
-  quotes them back as "the exact spellings", `lib/producer-labels.ts` measures them for fitting, and
-  `tests/sheet-typography.test.ts` checks them. UI chrome in those files only — buttons, step
-  headings, helper copy, error messages. If you are unsure whether a string ends up on a sheet,
-  leave it and list it in the report.
-- **No plant species name changes anywhere.** NEMBA.
-
-Split across two or three branches if it gets large; a reviewable diff beats one enormous one.
+Tests: both call sites derive from the same source; the identity `1 mm on 1 m² ≤ 1 L` holds for
+whatever value is chosen (`tests/water-system.test.ts` already asserts this for one of them).
 
 ---
 
-## 3. Does the legend agree with the map? — `codex/legend-map-agreement`
+## 6. The Water sheet ignores the real sizing engine — `codex/water-sheet-uses-sizing`
 
-The prompt asserts it — rule 11 says *"Every row listed here also appears on the map"* — and
-nothing measures it. This is the same class of failure as the paid-render gate: an instruction
-nobody checks is a wish.
+`lib/tank-sizing.ts` does a proper **monthly water balance**: `computeTankSizing` walks twelve
+months of rainfall against `DAYS_IN_MONTH × dailyUseL` and works out the storage a household
+actually needs to get through the dry season. That is the correct way to answer "is my tank big
+enough", and it already exists in this repo, fully written.
 
-For the **exact** sheets this is fully checkable without spending a render, because the app draws
-both the legend and the markers from the same saved state. Write the check that proves it:
+It has exactly one consumer:
 
-- every legend row corresponds to at least one drawn element on that sheet;
-- every drawn element type has a legend row on that sheet;
-- the count in the legend row equals the number of markers drawn;
-- an element filtered off this sheet is in neither.
+```
+components/design/TankCalculator.tsx:70   computeTankSizing({ monthlyRainfallMm, roofAreaM2, dailyUseL })
+```
 
-Run it across all eight sheets and both demo fixtures. **If it fails, that is the result** — report
-it rather than adjusting the check until it passes.
+The Water plan sheet — the thing that gets printed and taken to the field — does none of this. It
+multiplies annual rainfall by roof area and stops. Last run's storage note tried to close that gap
+by comparing capacity against *annual harvest*, which is not a sizing basis and fired on every
+design (see "Done" above); it was reverted at review.
 
-This does not cover the AI sheets, where the model draws the legend itself. Say so in the report
-rather than implying wider coverage than you have.
+**The gap is real and this is the right way to close it.** Make the Water sheet's storage note come
+from the same monthly balance the Tank Calculator uses.
 
----
+The blocker to solve first, and the reason this is a real piece of work rather than a one-line
+import: `computeTankSizing` needs **`dailyUseL`** and **twelve months of rainfall**, and
+`deriveWaterSystem` currently receives a single annual `rainfallMm`. So:
 
-## 4. Is a count welded to a name anywhere else? — `codex/prompt-data-audit`
+- Where does monthly rainfall come from on the sheet path? `lib/nasa-power.ts` already returns
+  twelve monthly totals (it correctly multiplies NASA's mm/day climatology by days-in-month — do not
+  "fix" that). Find out whether the sheet path has access to it or only to the annual figure.
+- `dailyUseL` is a household input, not something to invent. If the design has no household size
+  saved, **the note must say what it does not know** rather than assume a figure. "Sizing needs your
+  daily household use — set it in the Tank Calculator" is a good note. A guessed default is not.
 
-Just fixed in `c1fe6fa`: `mapNames` handed the model `"VEGETABLE BED ×7"` while rule 10 told it to
-"spell every label exactly as the element list gives it" and demonstrated `"2 × JOJO TANKS 5000L
-EACH"`. A paid Water render came back with seven beds captioned `×1` … `×7`. The model was obeying
-the prompt; the prompt contained three different grammars for one idea.
+If it turns out the monthly data genuinely is not available on that path, **stop and report that**
+— it is a data-plumbing finding worth knowing, and half-wiring it with an assumed default would
+reintroduce exactly the problem review just removed.
 
-**Audit `lib/producer-prompt.ts` for the same shape** — anywhere an interpolated value carries both
-a datum and a piece of grammar, and a later rule tells the model to reproduce that value verbatim.
-Look at every `${...}` in every numbered rule and ask: *is this string data, an instruction, or
-both?* Both is the bug.
-
-Known candidates worth checking rather than assuming: the `(House)` / `(Lawn)` place suffixes on tap
-names, `legendRows` (uses a third grammar, `Name (×N)`), the zone rows on the Zones sheet, and
-`${title}` in rule 11.
-
-Fix only what is genuinely ambiguous, and add a test per fix that fails against today's text. If a
-candidate is fine, say why — that is a useful result and it stops the next agent re-auditing it.
+`PLAN_VERSION` (sheet notes change).
 
 ---
 
-## 5. `lib/design-suggest.ts` — 1 127 lines, no tests — `codex/design-suggest-tests`
+## 7–20. Untested modules, in farmer-risk order
 
-**Zero test files import it.** It is the engine behind the design advice a farmer is shown, so a
-wrong suggestion is not a cosmetic defect.
+Fourteen modules with no test coverage at all. Measured with a script over `lib/` against `tests/`;
+line counts are current. **One branch per module**, named `codex/test-<module>`.
 
-Pin what it promises, and pay attention to the guardrail this repo has learned the hard way: advice
-may recommend and constrain, but it must never assert a figure or an agronomic instruction that has
-no source. Specifically:
+These are not busywork. The last two rounds of this exact item found: crop rotation never rotating,
+random ids making identical advice differ run to run, a slope seed deleting Zone 5, and an area of
+zero being priced as free. Assume there is something real in each one.
 
-- A suggestion that names an element only fires when that element is actually in the design or is
-  genuinely absent-and-needed — never because a code path defaulted.
-- Nothing suggests a species (NEMBA again) that is not already in the corrected catalog.
-- Slope, rainfall and biome thresholds behave at their boundaries, not just in the middle.
-- The same state produces the same advice — no ordering or `Math.random` dependence.
+**For every module in this list, the job is the same:**
 
----
+- Read it and write down what it *promises* — the invariants a farmer's decision rests on.
+- Test the rule, never today's constant. If you find yourself writing the current number into an
+  assertion, you are pinning a snapshot.
+- Zero, negative, missing, `NaN` and `Infinity` inputs must produce sensible farmer-facing output,
+  never `NaN` on a printed sheet.
+- **If a test fails, that is the result.** Report it. Do not adjust the test until it agrees.
+- Do not change a price, a coefficient, an agronomic figure or a species name to make a test pass.
 
-## 6. `lib/water-system.ts` — 737 lines, no tests — `codex/water-system-tests`
+Order matters — work down it. Each line names what makes that module risky, which is what your
+tests should aim at:
 
-**Zero test files import it.** Tank sizing and harvest maths reach both the Water sheet and the
-report. The numbers a farmer plans a dry season around.
+| # | Branch | Module | Lines | What is actually at stake |
+|---|---|---|---|---|
+| 7 | `codex/test-tank-sizing` | `lib/tank-sizing.ts` | 197 | The monthly water balance itself. Does a dry-season deficit ever get reported as sufficient? Does `suggestJojoTanks` ever recommend a combination that does not reach the required litres? |
+| 8 | `codex/test-water-calc` | `lib/water-calc.ts` | 173 | Second water-figures module. Check first whether it duplicates `water-system` or `tank-sizing` — a third runoff constant would be item 5 all over again. |
+| 9 | `codex/test-harvest-reconciliation` | `lib/harvest-reconciliation.ts` | 341 | Yield figures the catalog audit already found to be systematically optimistic. Does reconciliation preserve a shortfall, or average it away? |
+| 10 | `codex/test-biome` | `lib/biome.ts` | 225 | Biome classification steers planting advice. What happens at a boundary between biomes, and outside South Africa entirely? |
+| 11 | `codex/test-nasa-power` | `lib/nasa-power.ts` | 183 | The mm/day → monthly conversion is correct today (`PRECTOTCORR × DAYS_IN_MONTH`) and must be pinned so nobody "simplifies" it. Also: what happens when the API is down or returns partial months? |
+| 12 | `codex/test-report-doc` | `lib/report-doc.ts` | 400 | The 11-section report is the product's differentiator. A section that silently renders empty is worse than one that errors. |
+| 13 | `codex/test-facilitator-design` | `lib/facilitator-design.ts` | 394 | Feeds the BOQ. Item 1 of the last run found unmeasured areas priced as free here; look for its siblings. |
+| 14 | `codex/test-render-jobs` | `lib/render-jobs.ts` | 248 | The paid-render queue. A job lost, duplicated or double-charged is real money. |
+| 15 | `codex/test-offline-cache` | `lib/offline-cache.ts` | 202 | A farmer spends their own airtime in town on these downloads. A deploy must never wipe them (`COURSE_CACHE` is deliberately unversioned — pin that). |
+| 16 | `codex/test-design-canvas-sync` | `lib/design-canvas-sync.ts` | 202 | Cross-device sync has already produced duplication once. Shapes must stay JSON strings (Firestore rejects nested arrays). Last-write-wins against a stale device is data loss. |
+| 17 | `codex/test-site-progress` | `lib/site-progress.ts` | 206 | Drives what the farmer is told to do next. |
+| 18 | `codex/test-task-board` | `lib/task-board.ts` | 263 | Same, for the task-first home screen. |
+| 19 | `codex/test-completion-score` | `lib/completion-score.ts` | 148 | A score that can exceed 100 %, or sit at 0 for a finished design, is visible and embarrassing. |
+| 20 | `codex/test-design-substeps` | `lib/design-substeps.ts` | 292 | Step gating. A farmer locked out of a step they have completed is a support call. |
 
-- Roof area × rainfall × runoff coefficient is dimensionally right, and the units are stated.
-- A tank that cannot physically hold the harvest is not silently reported as sufficient.
-- Zero roof, zero rainfall and a missing tank each behave sensibly rather than producing `NaN` or
-  `Infinity` — and `NaN` never reaches a rendered string.
-- Litres vs m³ are never mixed. (The course had a NASA POWER mm/day unit bug once already; the same
-  class of error here would misplan a season's water.)
-
-**Do not change a coefficient or a rainfall figure.** If one looks wrong, report it.
+If you finish 20, keep going with the same recipe on `lib/lesson-registry.ts` (378),
+`lib/sheet-store.ts` (156), `lib/invoices.ts` (115), `lib/site-survey.ts` (191),
+`lib/evidence-catalogue.ts` (148) and `lib/design-overlay.ts` (171) — branch
+`codex/test-<module>` as above.
 
 ---
 
 ## Not for Codex
 
-- **Course content** — `docs/narration/*`, `lib/course-*.ts`, slides, audio, animations. Claude's
-  lane, and `tests/narration-scripts.test.ts` enforces some of it.
-- **A real Full Treatment render.** Only Rory can spend a paid render. The `×N` label fix in
-  `c1fe6fa` is a prompt change and is unconfirmed until he does.
-- **Vegetables & Staples module 2.** Blocked on an isiZulu-speaking agronomist reviewing 22 coined
-  terms — see `docs/narration/vegetables-staples.zu.md`. Not an engineering task.
-- **Any change to a plant species name, a price, a coefficient or an agronomic figure.** Those have
-  external sources behind them. Report, do not edit.
+Rory's own actions, listed here so nobody picks them up:
+
+- Find an isiZulu-speaking agronomist (sole blocker on module 2 — 22 coined terms need review).
+- Spend a real paid render to confirm the `×N` fix and the tank-label question above.
+- Give ChatGPT the Water Harvesting deck prompt.
