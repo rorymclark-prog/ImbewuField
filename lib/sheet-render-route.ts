@@ -11,8 +11,8 @@
 // Treatment dead-end (commit e0bf17a, 2026-07-26): lockedPolishStyle() was the fix there, and
 // sheetRenderRoute now composes it instead of leaving each call site to re-derive the same rule.
 import { lockedPolishStyle, type SheetOutputMode } from '@/lib/locked-polish-flow';
-import type { RenderAuthorityFlags } from '@/lib/render-policy';
-import type { StylePreset } from '@/lib/producer-prompt';
+import { renderAuthorityFlagsForStyle, type RenderAuthorityFlags } from '@/lib/render-policy';
+import { isModelChromeStyle, type StylePreset } from '@/lib/producer-prompt';
 import type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
 // Moved out of components/design/DesignGlossy.tsx (was a local const at ~291) so this lib carries
@@ -53,9 +53,32 @@ export interface SheetRoute {
  * DesignGlossy.tsx); a design-layer sheet renders through the deterministic blueprint
  * (renderDesignMap). Style is meaningless here — styleUsed/hybridFlags/polishFlags are all null.
  *
- * mode 'hybrid' | 'full' preserve the selected visual style exactly. Visual style never decides
- * factual authority: Hybrid always paints an underlayer beneath app-owned geometry, while Full
- * Treatment adds a second distinct AI polish pass.
+ * mode 'hybrid' | 'full' preserve the selected visual style exactly, AND the style decides who owns
+ * the finished page — because the style already decides everything else about that page.
+ *
+ * This paragraph used to claim the opposite: "visual style never decides factual authority", with
+ * hybridFlags hardcoded to { showcase: false, geometryLock: true } for EVERY style. That is a
+ * defensible principle in the abstract, and it was wrong here, because only half the pipeline obeys
+ * it. `isModelChromeStyle(style)` — not these flags — already decides the input shape
+ * (extendWithLegendPanel, DesignGlossy ~9191), the prompt (buildSatelliteOverlayPrompt, ~9239) and
+ * the finisher branch (the model-chrome early return in finishStyledSheet, ~8840).
+ *
+ * For satellite_overlay the hardcode therefore produced a sheet that was sent to the model as a
+ * full page, lettered by the model as a full page, and then handed to the app-chrome compositor —
+ * which draws into MAP dimensions while the model's output is 1.28x wider. The result came back
+ * horizontally squashed, with the satellite repainted over the model's own artwork, carrying the
+ * locked title "04 — WATER, GREYWATER & IRRIGATION" instead of the model's, and grew a SECOND
+ * legend panel beside the one the model had already drawn. Nothing threw. Rory reported it as
+ * "the quality of the polygons everything is just not good at all".
+ *
+ * It also meant one style produced two different products depending on which button was pressed:
+ * "AI · ALL sheets" went through renderAuthorityFlagsForStyle and came out correct, while the
+ * per-sheet Generate came through here and came out squashed.
+ *
+ * Authority now composes renderAuthorityFlagsForStyle instead of restating it, so the rule has one
+ * home. Note this is NOT a revert of c252349's good idea — workflow STAGE still owns the polish
+ * flags below, and resultKind (lib/render-jobs.ts) still decouples stage from style. Only the
+ * hardcode goes.
  *
  * polishFlags is populated only for mode 'full', mirroring the fixed enqueue values every polish
  * stage uses (generateOneViaQueue/generateSectorViaQueue/generatePhasingViaQueue all enqueue
@@ -83,8 +106,23 @@ export function sheetRenderRoute(
   }
 
   // mode is 'hybrid' | 'full' from here.
-  const styleUsed = lockedPolishStyle(selectedStyle, DEFAULT_PRODUCER_STYLE);
-  const hybridFlags: RenderAuthorityFlags = { showcase: false, geometryLock: true };
+  //
+  // THE THREE ANALYSIS SHEETS CANNOT RUN A MODEL-CHROME STYLE. Site (01), Sector (02) and Phasing
+  // (08) composite their own analysis marks, schedule text, labels and legend back over whatever
+  // the model returns — that is the entire contract of composeSectorSheet and composePhasingSheet.
+  // satellite_overlay's premise is the opposite: the model letters its own page. Running one
+  // through the other produces two legends and two sets of labels fighting on one sheet.
+  //
+  // This rule used to live inside lockedPolishStyle, which applied it to EVERY sheet and so also
+  // blocked satellite_overlay on the five design-layer sheets where it is the whole point — the
+  // Full Treatment dead-end of e0bf17a. c252349 removed it from there, correctly, and did not put
+  // it back anywhere, so applySheet's comment promising "a non-satellite_overlay producer style"
+  // became untrue. It belongs here, where the sheet is known.
+  const requested = lockedPolishStyle(selectedStyle, DEFAULT_PRODUCER_STYLE);
+  const styleUsed = 'exact' in sheet && isModelChromeStyle(requested)
+    ? DEFAULT_PRODUCER_STYLE
+    : requested;
+  const hybridFlags = renderAuthorityFlagsForStyle(styleUsed);
   const polishFlags: RenderAuthorityFlags | null =
     mode === 'full' ? { showcase: true, geometryLock: false } : null;
 
