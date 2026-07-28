@@ -61,7 +61,10 @@ import {
   type SheetOutputMode,
 } from '@/lib/locked-polish-flow';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
-import { calculateBoundaryPresentationCrop } from '@/lib/reference-presentation';
+import {
+  calculateBoundaryPresentationLayout,
+  styleSheetLegendWidth,
+} from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -1243,9 +1246,6 @@ async function preloadReferenceFeatureArtwork(
   }));
 }
 
-/** Width of the pre-composed legend column, as a fraction of the map width. */
-const OVERLAY_PANEL_RATIO = 0.28;
-
 /**
  * Extend a map composite rightward with a BLANK cream legend panel and a dark sheet frame.
  *
@@ -1264,9 +1264,8 @@ const OVERLAY_PANEL_RATIO = 0.28;
  *  placed into the map region alone or it would smear across the legend.
  *
  *  Everything is done in PROPORTIONS rather than the pixel sizes we sent, because the model returns
- *  whatever canvas size it likes: the map is the leftmost 1/(1 + OVERLAY_PANEL_RATIO) of whatever
- *  width comes back. That is the same split extendWithLegendPanel used on the way in, so the two
- *  cannot drift apart. */
+ *  whatever canvas size it likes. The overlay itself carries the authoritative map aspect, so its
+ *  width at the returned sheet height identifies the map panel without a second legend-width rule. */
 async function burnOverlayOnSheetMap(sheetDataUrl: string, overlayDataUrl: string): Promise<string> {
   const [sheet, overlay] = await Promise.all([loadImage(sheetDataUrl), loadImage(overlayDataUrl)]);
   const canvas = document.createElement('canvas');
@@ -1275,7 +1274,9 @@ async function burnOverlayOnSheetMap(sheetDataUrl: string, overlayDataUrl: strin
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   ctx.drawImage(sheet, 0, 0);
-  const mapW = canvas.width / (1 + OVERLAY_PANEL_RATIO);
+  const overlayWidth = overlay.naturalWidth || overlay.width;
+  const overlayHeight = overlay.naturalHeight || overlay.height;
+  const mapW = Math.min(canvas.width, canvas.height * (overlayWidth / overlayHeight));
   ctx.drawImage(overlay, 0, 0, mapW, canvas.height);
   return canvas.toDataURL('image/png');
 }
@@ -1285,7 +1286,7 @@ async function extendWithLegendPanel(
   W: number,
   H: number,
 ): Promise<{ dataUrl: string; width: number; height: number }> {
-  const panelW = Math.round(W * OVERLAY_PANEL_RATIO);
+  const panelW = styleSheetLegendWidth(W);
   const outW = W + panelW;
   const canvas = document.createElement('canvas');
   canvas.width = outW;
@@ -1309,7 +1310,7 @@ async function extendWithLegendPanel(
  * too. The panel stays fully transparent because the model has to be free to letter it.
  */
 async function extendMaskWithPanel(maskDataUrl: string, W: number, H: number): Promise<string> {
-  const outW = W + Math.round(W * OVERLAY_PANEL_RATIO);
+  const outW = W + styleSheetLegendWidth(W);
   const canvas = document.createElement('canvas');
   canvas.width = outW;
   canvas.height = H;
@@ -5069,40 +5070,54 @@ interface ReferencePresentationContext {
 
 /**
  * Finished sheets should feature the designed property, not kilometres of unused satellite.
- * This creates a presentation-only crop around the saved boundary while retaining the source
- * aspect ratio. Metre dimensions remain untouched; mPerPx and normalised coordinates change
- * together, so an accurately sized bed stays accurately sized after the visual zoom.
+ * This creates a presentation-only viewport whose shape follows the saved boundary. Metre
+ * dimensions remain untouched; one uniform source-to-output scale owns both axes, so an accurately
+ * sized bed stays accurately sized and the scale bar stays truthful after the visual zoom.
  */
 async function boundaryPresentationContext(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
 ): Promise<ReferencePresentationContext> {
-  const crop = calculateBoundaryPresentationCrop(refLayers.boundary);
-  if (!crop) return { state, frame, refLayers };
-  const { cropX, cropY, cropFraction } = crop;
+  const layout = calculateBoundaryPresentationLayout(refLayers.boundary, frame, SCALE);
+  if (!layout) return { state, frame, refLayers };
+  const {
+    cropX,
+    cropY,
+    cropWidth,
+    cropHeight,
+    imgW,
+    imgH,
+    sourcePixelsPerOutputPixel,
+  } = layout;
   const point = ([x, y]: [number, number]): [number, number] => [
-    (x - cropX) / cropFraction,
-    (y - cropY) / cropFraction,
+    (x - cropX) / cropWidth,
+    (y - cropY) / cropHeight,
   ];
-  const offset = (value: number | undefined): number | undefined => (
-    value == null ? undefined : value / cropFraction
+  const offsetX = (value: number | undefined): number | undefined => (
+    value == null ? undefined : value / cropWidth
+  );
+  const offsetY = (value: number | undefined): number | undefined => (
+    value == null ? undefined : value / cropHeight
   );
 
   let satDataUrl = frame.satDataUrl;
   if (frame.satDataUrl) {
     const source = await loadImage(frame.satDataUrl);
+    const sourceWidth = source.naturalWidth || source.width;
+    const sourceHeight = source.naturalHeight || source.height;
+    const sourcePixelScale = Math.min(sourceWidth / frame.imgW, sourceHeight / frame.imgH);
     const cropCanvas = document.createElement('canvas');
-    cropCanvas.width = source.naturalWidth || source.width;
-    cropCanvas.height = source.naturalHeight || source.height;
+    cropCanvas.width = Math.max(1, Math.round(imgW * sourcePixelScale));
+    cropCanvas.height = Math.max(1, Math.round(imgH * sourcePixelScale));
     const cropCtx = cropCanvas.getContext('2d');
     if (cropCtx) {
       cropCtx.drawImage(
         source,
-        cropX * source.width,
-        cropY * source.height,
-        cropFraction * source.width,
-        cropFraction * source.height,
+        cropX * sourceWidth,
+        cropY * sourceHeight,
+        cropWidth * sourceWidth,
+        cropHeight * sourceHeight,
         0,
         0,
         cropCanvas.width,
@@ -5114,13 +5129,17 @@ async function boundaryPresentationContext(
 
   const presentationFrame: CanvasFrame = {
     ...frame,
-    mPerPx: frame.mPerPx * cropFraction,
+    imgW,
+    imgH,
+    mPerPx: frame.mPerPx * sourcePixelsPerOutputPixel,
     satDataUrl,
   };
   const presentationState: DesignCanvasState = {
     ...state,
     frame: {
       ...state.frame,
+      imgW,
+      imgH,
       mPerPx: presentationFrame.mPerPx,
     },
     items: state.items.map((item) => {
@@ -5130,14 +5149,14 @@ async function boundaryPresentationContext(
     zones: state.zones.map((zone) => ({
       ...zone,
       points: zone.points.map(point),
-      labelDx: offset(zone.labelDx),
-      labelDy: offset(zone.labelDy),
+      labelDx: offsetX(zone.labelDx),
+      labelDy: offsetY(zone.labelDy),
     })),
     lines: state.lines.map((line) => ({
       ...line,
       points: line.points.map(point),
-      labelDx: offset(line.labelDx),
-      labelDy: offset(line.labelDy),
+      labelDx: offsetX(line.labelDx),
+      labelDy: offsetY(line.labelDy),
     })),
   };
   return {
@@ -7620,10 +7639,6 @@ async function composeStyleSheet(
   ctx.fillText('N', nx, ny - 34);
 
   return canvas.toDataURL('image/png');
-}
-
-function styleSheetLegendWidth(mapWidth: number): number {
-  return Math.min(620, Math.max(360, Math.round(mapWidth * 0.3)));
 }
 
 /**
