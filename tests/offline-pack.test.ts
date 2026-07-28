@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
-import { COURSE_DECKS } from '@/lib/course-deck';
+import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 
 const PUBLIC = join(process.cwd(), 'public');
@@ -73,16 +73,38 @@ test('one language, not both — packing both would double the download for nobo
   assert.ok(zuAudio.every((e) => e.url.includes('/zu/')), 'isiZulu pack must carry only isiZulu audio');
 });
 
-test('the isiZulu pack contains the English slide 13 it falls back to', () => {
-  // Seeds' isiZulu deck is missing exactly one slide and the player shows English for that one.
-  // Packing only isiZulu files would produce a module that is complete on paper and blank on
-  // slide 13 the moment the farmer is offline — the exact situation the download exists to avoid.
-  const missingSlides = COURSE_DECKS['seeds-sovereignty'].missingSlides?.zu ?? [];
-  assert.deepEqual(missingSlides, [13], 'this test is pinned to the known gap; update it if that changes');
+test('a pack carries whatever the player will actually show, including any fallback', () => {
+  // Packing only the learner's own language would produce a module that is complete on paper and
+  // blank on any slide the player falls back to English for — discovered offline at a homestead,
+  // which is exactly the situation the download exists to prevent.
+  //
+  // Written against the RULE rather than a specific gap. It was pinned to "zu is missing slide 13"
+  // until that slide was rebuilt, at which point a correct test failed for the wrong reason. This
+  // version keeps working whether a deck has gaps or not, which is the only way it can still be
+  // guarding anything when the next module lands.
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    for (const lang of deck.slideLanguages) {
+      const urls = new Set(offlinePack(moduleId, lang).entries.map((e) => e.url));
+      for (const slide of deck.slides) {
+        const shown = slideImageFor(moduleId, lang, slide.slide);
+        if (!shown) continue;
+        assert.ok(urls.has(shown.url), `${moduleId}/${lang} slide ${slide.slide}: player shows ${shown.url}, pack does not carry it`);
+      }
+    }
+  }
+});
 
-  const urls = new Set(offlinePack('seeds-sovereignty', 'zu').entries.map((e) => e.url));
-  assert.ok(urls.has('/course-decks/seeds-sovereignty/en/slide-13.jpg'), 'English fallback slide is not in the pack');
-  assert.ok(!urls.has('/course-decks/seeds-sovereignty/zu/slide-13.jpg'), 'a file that does not exist must not be listed');
+test('both languages of the finished module are whole — no slide falls back', () => {
+  // Seeds is the module being shown to people as the finished sample. A farmer reading isiZulu
+  // should not meet an English slide in it.
+  const deck = COURSE_DECKS['seeds-sovereignty'];
+  for (const lang of deck.slideLanguages) {
+    for (const slide of deck.slides) {
+      const shown = slideImageFor('seeds-sovereignty', lang, slide.slide);
+      assert.ok(shown, `${lang} slide ${slide.slide} has no image at all`);
+      assert.equal(shown!.exact, true, `${lang} slide ${slide.slide} falls back to ${shown!.lang}`);
+    }
+  }
 });
 
 test('a pack has one entry per file, even when two slides resolve to the same one', () => {

@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 146 files, 39.0 MB total.
+// 147 files, 39.1 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/seeds-sovereignty/imbewu_isiZulu_video_01.mp4': 420204,
@@ -108,6 +108,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/zu/slide-10.jpg': 59504,
   '/course-decks/seeds-sovereignty/zu/slide-11.jpg': 62642,
   '/course-decks/seeds-sovereignty/zu/slide-12.jpg': 86535,
+  '/course-decks/seeds-sovereignty/zu/slide-13.jpg': 58307,
   '/course-decks/seeds-sovereignty/zu/slide-14.jpg': 71712,
   '/course-decks/seeds-sovereignty/zu/slide-15.jpg': 70131,
   '/course-decks/seeds-sovereignty/zu/slide-16.jpg': 66183,

@@ -94,20 +94,24 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'seeds-sovereignty': {
     slideLanguages: ['en', 'zu'],
-    // The isiZulu deck is one slide short of the English one, and this is the whole reason it is
-    // recorded here rather than being silently absorbed.
+    // ALL 24 SLIDES NOW EXIST IN BOTH LANGUAGES. The history is kept because the failure was
+    // invisible and the next deck can fail the same way.
     //
-    // PowerPoint opened it as "Repaired" and reported 23 slides where the file contains 24 slide
-    // parts — the repair dropped one. Aligning the export against the English titles identified it
-    // exactly: slide 13, "Watch: Dry Processing". Everything from there on was therefore shifted by
-    // one, and the pages were renumbered on import to their TRUE slide numbers before being saved.
+    // PowerPoint opened the isiZulu deck as "Repaired" and reported 23 slides where the file
+    // contains 24 slide parts — the repair dropped one. Aligning the export against the English
+    // titles identified it exactly: slide 13, "Buka: Indlela Eyomile". Everything after it was
+    // therefore shifted by one, and the pages were renumbered on import to their TRUE slide
+    // numbers. Wiring the 23 pages in order would instead have put the wrong narration under
+    // eleven consecutive slides — a farmer hearing the tomato wet method while looking at dry seed
+    // cleaning, with nothing visibly broken to warn anyone.
     //
-    // That mattered more than it sounds. Wiring the 23 pages in order would have put the wrong
-    // narration under eleven consecutive slides — a farmer hearing the tomato wet method while
-    // looking at a picture of dry seed cleaning, with nothing visibly broken to warn anyone. The
-    // alignment was confirmed by comparing slides 14 and 15 side by side in both languages: same
-    // illustrations, same four-step diagram.
-    missingSlides: { zu: [13] },
+    // The missing slide was rebuilt from the standalone isiZulu PowerPoint Rory supplied: its
+    // eyebrow, title and caption are that file's own text, composited onto the English slide's
+    // artwork, with the type geometry solved against zu/slide-05 and zu/slide-07 so it sits
+    // unnoticed among its neighbours. No isiZulu was written or translated by the app.
+    //
+    // `missingSlides` stays in the type on purpose — resolveDeckLang and slideImageFor still
+    // implement per-slide fallback, and the next module's deck will very likely need it.
     slides: slidesFromNarration('seeds-sovereignty', SEEDS_ANIMATIONS),
   },
 };

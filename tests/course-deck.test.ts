@@ -87,21 +87,41 @@ test('a slide with no animation offers none — the still is the lesson', () => 
 
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
-  // dropped slide 13, "Watch: Dry Processing". Falling the whole module back to English because of
+  // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of
   // one missing slide would take a finished isiZulu lesson away from the person it was made for,
   // and would apologise 23 times for something true once.
+  //
+  // That slide has since been rebuilt, so Seeds no longer exercises the fallback. This test now
+  // asserts the MECHANISM on a synthetic gap instead of on Seeds' history — otherwise filling the
+  // gap would have quietly deleted the only coverage of per-slide fallback, right before the next
+  // module arrives with a gap of its own.
   const zu5 = slideImageFor('seeds-sovereignty', 'zu', 5);
   assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.jpg', lang: 'zu', exact: true });
 
-  const zu13 = slideImageFor('seeds-sovereignty', 'zu', 13);
-  assert.deepEqual(zu13, { url: '/course-decks/seeds-sovereignty/en/slide-13.jpg', lang: 'en', exact: false });
+  const deck = deckFor('seeds-sovereignty')!;
+  const saved = deck.missingSlides;
+  try {
+    deck.missingSlides = { zu: [13] };
+    assert.deepEqual(
+      slideImageFor('seeds-sovereignty', 'zu', 13),
+      { url: '/course-decks/seeds-sovereignty/en/slide-13.jpg', lang: 'en', exact: false },
+      'a declared gap must fall back to English for THAT slide',
+    );
+    // Every OTHER slide stays exact, or the note would appear where it does not belong.
+    const inexact = deck.slides
+      .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
+      .filter((x) => x.r && !x.r.exact)
+      .map((x) => x.n);
+    assert.deepEqual(inexact, [13], 'only the declared slide falls back');
+  } finally {
+    deck.missingSlides = saved;
+  }
 
-  // Every OTHER slide must be exact, or the note would appear where it does not belong.
-  const inexact = deckFor('seeds-sovereignty')!.slides
-    .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
-    .filter((x) => x.r && !x.r.exact)
-    .map((x) => x.n);
-  assert.deepEqual(inexact, [13], 'only slide 13 falls back');
+  // With nothing declared missing, which is the state Seeds is actually in, nothing falls back.
+  const stillInexact = deck.slides
+    .map((s) => slideImageFor('seeds-sovereignty', 'zu', s.slide))
+    .filter((r) => r && !r.exact);
+  assert.deepEqual(stillInexact, [], 'Seeds is complete in isiZulu — no slide should fall back');
 
   // A language with no deck at all still falls back wholesale, which is the right behaviour there.
   assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'st'), { lang: 'en', exact: false });
@@ -115,7 +135,10 @@ test('unknown modules and slides produce no url rather than a broken one', () =>
   assert.equal(deckFor('no-such-module'), null);
   assert.equal(resolveDeckLang('water-harvesting', 'en'), null);
   assert.equal(slideImageUrl('seeds-sovereignty', 'en', 99), null);
-  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), null, 'the one slide the repair dropped');
+  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 99), null);
+  // Slide 13 used to be asserted null here — the gap the PowerPoint repair left. It has been
+  // rebuilt, so the honest assertion is now the opposite one.
+  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), '/course-decks/seeds-sovereignty/zu/slide-13.jpg');
 });
 
 test('slides partition by lesson exactly as the narration does', () => {
