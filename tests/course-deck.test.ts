@@ -4,7 +4,7 @@ import test from 'node:test';
 
 import {
   COURSE_DECKS, animationUrls, deckAnimationBytes, deckFor, deckSlideCount, formatBytes,
-  hasDeck, resolveDeckLang, slideAudioUrl, slideImageUrl,
+  hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 
@@ -31,10 +31,37 @@ test('every promised slide image exists on disk', () => {
   // paid for the page load by the time they find out.
   const deck = deckFor('seeds-sovereignty')!;
   for (const lang of deck.slideLanguages) {
+    const known = deck.missingSlides?.[lang] ?? [];
     for (const s of deck.slides) {
       const url = slideImageUrl('seeds-sovereignty', lang, s.slide);
+      if (known.includes(s.slide)) {
+        // A slide DECLARED missing must return nothing, so slideImageFor falls back rather than
+        // emitting a url to a file that is not there. Declared-and-absent is a known state;
+        // undeclared-and-absent is the broken image this test exists to catch.
+        assert.equal(url, null, `${lang} slide ${s.slide} is declared missing but produced a url`);
+        continue;
+      }
       assert.ok(url, `no url for ${lang} slide ${s.slide}`);
       assert.ok(onDisk(url!), `missing file: ${url}`);
+    }
+  }
+});
+
+test('a declared-missing slide is really absent, and nothing else is', () => {
+  // Guards the manifest against drifting from the folder in either direction: a slide declared
+  // missing that later gets exported would stay hidden behind an English fallback forever, and a
+  // slide quietly deleted from the folder would 404 on a farmer's phone.
+  const deck = deckFor('seeds-sovereignty')!;
+  for (const lang of deck.slideLanguages) {
+    const declared = new Set(deck.missingSlides?.[lang] ?? []);
+    for (const s of deck.slides) {
+      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.jpg`;
+      assert.equal(
+        onDisk(path), !declared.has(s.slide),
+        declared.has(s.slide)
+          ? `${lang} slide ${s.slide} is declared missing but the file now exists — remove it from missingSlides`
+          : `${lang} slide ${s.slide} is missing from disk and not declared`,
+      );
     }
   }
 });
@@ -58,17 +85,29 @@ test('a slide with no animation offers none — the still is the lesson', () => 
   assert.ok(animationUrls('seeds-sovereignty', 5));
 });
 
-test('isiZulu gets isiZulu narration over English slides, and is told so', () => {
-  // The slides exist in isiZulu but would not export from either Keynote or PowerPoint. Falling
-  // back silently would show a farmer a language they may not read with no explanation; `exact:
-  // false` is what lets the UI say "the spoken lesson is in your language, these slides are not".
-  // Same contract resolveNarrationLang uses, deliberately.
-  assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'en'), { lang: 'en', exact: true });
-  assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'zu'), { lang: 'en', exact: false });
+test('the isiZulu fallback is PER SLIDE, not per module', () => {
+  // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
+  // dropped slide 13, "Watch: Dry Processing". Falling the whole module back to English because of
+  // one missing slide would take a finished isiZulu lesson away from the person it was made for,
+  // and would apologise 23 times for something true once.
+  const zu5 = slideImageFor('seeds-sovereignty', 'zu', 5);
+  assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.jpg', lang: 'zu', exact: true });
+
+  const zu13 = slideImageFor('seeds-sovereignty', 'zu', 13);
+  assert.deepEqual(zu13, { url: '/course-decks/seeds-sovereignty/en/slide-13.jpg', lang: 'en', exact: false });
+
+  // Every OTHER slide must be exact, or the note would appear where it does not belong.
+  const inexact = deckFor('seeds-sovereignty')!.slides
+    .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
+    .filter((x) => x.r && !x.r.exact)
+    .map((x) => x.n);
+  assert.deepEqual(inexact, [13], 'only slide 13 falls back');
+
+  // A language with no deck at all still falls back wholesale, which is the right behaviour there.
   assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'st'), { lang: 'en', exact: false });
 
-  // The narration itself IS in isiZulu — that is the half that works, and it must keep working.
-  assert.equal(slideAudioUrl('seeds-sovereignty', 'zu', 5), '/course-audio/seeds-sovereignty/zu/slide-05.mp3');
+  // The narration is isiZulu on every slide, including the one whose picture is English.
+  assert.equal(slideAudioUrl('seeds-sovereignty', 'zu', 13), '/course-audio/seeds-sovereignty/zu/slide-13.mp3');
 });
 
 test('unknown modules and slides produce no url rather than a broken one', () => {
@@ -76,7 +115,7 @@ test('unknown modules and slides produce no url rather than a broken one', () =>
   assert.equal(deckFor('no-such-module'), null);
   assert.equal(resolveDeckLang('water-harvesting', 'en'), null);
   assert.equal(slideImageUrl('seeds-sovereignty', 'en', 99), null);
-  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 5), null, 'zu slides do not exist yet');
+  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), null, 'the one slide the repair dropped');
 });
 
 test('slides partition by lesson exactly as the narration does', () => {

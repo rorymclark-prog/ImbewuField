@@ -42,6 +42,14 @@ export interface DeckSlide {
 export interface ModuleDeck {
   /** Languages with their OWN rendered slides. Others fall back — see resolveDeckLang. */
   slideLanguages: string[];
+  /**
+   * Slides a language is missing, by slide number.
+   *
+   * A whole-deck fallback would be a lie here. The isiZulu deck has 23 of the 24 slides — every
+   * one of them correct — and showing English for all 24 because ONE is absent would take a
+   * finished isiZulu lesson away from the person it was made for.
+   */
+  missingSlides?: Record<string, number[]>;
   slides: DeckSlide[];
 }
 
@@ -80,10 +88,21 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'seeds-sovereignty': {
-    // Only English slides are rendered so far. The isiZulu deck exists but would not export —
-    // Keynote and PowerPoint both fail on it. isiZulu learners get isiZulu NARRATION over English
-    // slides, and the UI says so rather than pretending. See resolveDeckLang.
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
+    // The isiZulu deck is one slide short of the English one, and this is the whole reason it is
+    // recorded here rather than being silently absorbed.
+    //
+    // PowerPoint opened it as "Repaired" and reported 23 slides where the file contains 24 slide
+    // parts — the repair dropped one. Aligning the export against the English titles identified it
+    // exactly: slide 13, "Watch: Dry Processing". Everything from there on was therefore shifted by
+    // one, and the pages were renumbered on import to their TRUE slide numbers before being saved.
+    //
+    // That mattered more than it sounds. Wiring the 23 pages in order would have put the wrong
+    // narration under eleven consecutive slides — a farmer hearing the tomato wet method while
+    // looking at a picture of dry seed cleaning, with nothing visibly broken to warn anyone. The
+    // alignment was confirmed by comparing slides 14 and 15 side by side in both languages: same
+    // illustrations, same four-step diagram.
+    missingSlides: { zu: [13] },
     slides: slidesFromNarration('seeds-sovereignty', SEEDS_ANIMATIONS),
   },
 };
@@ -116,7 +135,27 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   const deck = COURSE_DECKS[moduleId];
   if (!deck || !deck.slideLanguages.includes(lang)) return null;
   if (!deck.slides.some((s) => s.slide === slide)) return null;
+  if (deck.missingSlides?.[lang]?.includes(slide)) return null;
   return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.jpg`;
+}
+
+/**
+ * The image to show for one slide, and whether it is in the language asked for.
+ *
+ * PER SLIDE, not per deck. isiZulu has 23 of 24 slides; falling the whole module back to English
+ * because one is missing would take a finished isiZulu lesson away from the person it was made
+ * for. This way exactly one slide shows English, and `exact: false` is returned only on that
+ * slide, so the UI's explanation appears where it is true and nowhere else.
+ */
+export function slideImageFor(
+  moduleId: string,
+  lang: string,
+  slide: number,
+): { url: string; lang: string; exact: boolean } | null {
+  const own = slideImageUrl(moduleId, lang, slide);
+  if (own) return { url: own, lang, exact: true };
+  const fallback = lang === 'en' ? null : slideImageUrl(moduleId, 'en', slide);
+  return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
 export function animationUrls(moduleId: string, slide: number): { video: string; poster: string; bytes: number; seconds: number } | null {

@@ -8,7 +8,7 @@ import {
   formatBytes,
   resolveDeckLang,
   slideAudioUrl,
-  slideImageUrl,
+  slideImageFor,
 } from '@/lib/course-deck';
 import { trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
@@ -23,9 +23,10 @@ import { COURSE_NARRATION } from '@/lib/course-audio';
 //    with the size printed on the button. lib/course-modules.ts already says video is never given
 //    an inline player for this audience because KZN connectivity cannot stream it per visit.
 //
-// 2. It says what it does not have. isiZulu narration exists; isiZulu slides do not yet. Rather
-//    than quietly showing English, it says so — the same contract resolveNarrationLang uses for
-//    audio. A farmer who cannot read the slide should know that is our gap, not theirs.
+// 2. It says what it does not have, on the slide where it is true. isiZulu has 23 of the 24
+//    slides; the one it is missing shows English and says so, and the other 23 say nothing
+//    because there is nothing to apologise for. A whole-module warning would make a finished
+//    isiZulu lesson look unfinished to the person it was made for.
 //
 // 3. It works with the sound off. Every slide carries its title and the narration is optional, so
 //    a learner in a noisy room or without earphones still gets the sequence.
@@ -109,7 +110,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
 
   if (!deck || !slideLang || !current) return null;
 
-  const img = slideImageUrl(moduleId, slideLang.lang, current.slide);
+  const img = slideImageFor(moduleId, lang, current.slide);
   const anim = animationUrls(moduleId, current.slide);
   const audio = slideAudioUrl(moduleId, lang, current.slide);
   const track = narration?.tracks.find((t) => t.slide === current.slide);
@@ -147,7 +148,7 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={anim ? anim.poster : (img ?? '')}
+            src={anim ? anim.poster : (img?.url ?? '')}
             alt={heading}
             loading="lazy"
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
@@ -177,10 +178,12 @@ export default function DeckPlayer({ moduleId, lang, lessonId, onClose }: DeckPl
         />
       )}
 
-      {!slideLang.exact && (
-        // Say it plainly. The narration IS in their language; only the slide text is not.
+      {img && !img.exact && (
+        // Only on the slide it is actually true of. The isiZulu deck is missing ONE of its 24
+        // slides, so saying "these slides are in English" across the whole module would be false
+        // 23 times out of 24 — and would make a finished isiZulu lesson look unfinished.
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          The spoken lesson is in your language. These slides are only in English so far.
+          This one slide is only in English. The spoken lesson is in your language.
         </p>
       )}
 
