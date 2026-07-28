@@ -54,9 +54,20 @@ export interface ModuleDeck {
 }
 
 const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
-  // Verified by content rather than filename order: each clip was sampled mid-way and matched to
-  // the slide it teaches. Assuming video_01..06 mapped to the animation slides in order would have
-  // been right here, but a wrong animation under a farming instruction is not a cosmetic error.
+  // Matched to slides by watching the clips, not by reading their filenames.
+  //
+  // SAMPLING ONE MID-CLIP FRAME IS NOT ENOUGH, and this is the proof. Slide 13 teaches the DRY
+  // method — mature, collect, clean, dry — and carried `imbewu_isiZulu_video_04` because its
+  // middle frame shows seed being pressed on a plate, which reads exactly like dry processing.
+  // Watched end to end, that clip opens on tomato pulp going into a sieve: it is the WET method,
+  // and a shorter duplicate of the back half of slide 15's clip. A farmer following slide 13 was
+  // being shown one method while the voice taught another. (Rory: "you forgot to put part a into
+  // this animation ... its here a few slides forward".)
+  //
+  // Meanwhile slide 8's clip ran ten seconds and taught two different lessons: selection in the
+  // field, then threshing, winnowing and drying. It is now cut at 5.2s, where the farmer stops
+  // choosing plants and starts processing seed, so slide 8 gets the selection and slide 13 gets
+  // the dry process its narration actually describes. Both cuts come from the high-res original.
   //
   // `bytes` is the EXACT size of the file on disk, and tests/course-deck.test.ts stats each one and
   // fails on any difference. These were hand-rounded before, which meant re-encoding the clips
@@ -64,9 +75,9 @@ const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
   // on this screen a farmer is asked to trust.
   5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10 }, // uniform vs varied seedlings
   7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10 }, // households exchanging packets
-  8:  { src: 'new_seed-selection-and-drying', poster: 'new_seed-selection-and-drying', bytes: 530_021, seconds: 10 },
+  8:  { src: 'seed-selecting-parents', poster: 'seed-selecting-parents', bytes: 248_394, seconds: 5 }, // walking the rows, choosing, harvesting
   10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10 }, // maize tassels, crossing
-  13: { src: 'imbewu_isiZulu_video_04', poster: 'imbewu_isiZulu_video_04', bytes: 736_559,   seconds: 10 }, // cleaning seed on a plate
+  13: { src: 'seed-dry-processing', poster: 'seed-dry-processing', bytes: 311_237,   seconds: 5 }, // threshing, winnowing, drying on the mat
   15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20 }, // tomato in a jar — the long one
   18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10 },
   21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10 }, // germination test on cloth
