@@ -17,6 +17,7 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { differenceMessage } from '@/lib/render-difference';
+import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
@@ -2751,8 +2752,12 @@ function blueprintRing(
   px: (n: number) => number,
   py: (n: number) => number,
 ): void {
+  const drawPoints = polishedRenderPoints(
+    pts.map(([x, y]) => [px(x), py(y)] as RenderPoint),
+    { closed: true },
+  );
   ctx.beginPath();
-  pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+  drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
   ctx.closePath();
 }
 
@@ -2791,8 +2796,12 @@ function drawBlueprintDriveway(
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const trace = () => {
+    const drawPoints = polishedRenderPoints(
+      refLayers.driveway.map(([x, y]) => [px(x), py(y)] as RenderPoint),
+      { closed: refLayers.drivewayClosed },
+    );
     ctx.beginPath();
-    refLayers.driveway.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
   };
   if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
     trace();
@@ -2986,7 +2995,10 @@ function drawBlueprintBoundary(
   if (boundary.length < 3) return;
   const breaks = state && frame ? gateBoundaryBreaks(boundary, gatesNearBoundary(state), frame) : [];
   const segments = boundarySegmentsWithBreaks(boundary, frame ?? { imgW: 1, imgH: 1, mPerPx: 1 }, breaks)
-    .map((seg) => seg.map(([x, y]) => [px(x), py(y)] as [number, number]));
+    .map((seg) => polishedRenderPoints(
+      seg.map(([x, y]) => [px(x), py(y)] as RenderPoint),
+      { closed: breaks.length === 0 },
+    ));
   // This is composited after generation, so it can match the reference set without teaching the
   // image model to invent a hedge. A dark casing keeps the lime wire readable on both forest and
   // pale ground; sparse perpendicular crossbars read as fence posts, not editor control points.
@@ -3886,8 +3898,11 @@ export async function buildBlueprintWaterMapLegacy(
     const st = LINE_STYLE[l.kind];
     if (!st || l.points.length < 2) continue;
     const trace = () => {
+      const drawPoints = polishedRenderPoints(
+        l.points.map(([x, y]) => [px(x), py(y)] as RenderPoint),
+      );
       ctx.beginPath();
-      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+      drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
     };
     trace();
     ctx.setLineDash(st.dash);
@@ -4535,8 +4550,11 @@ function drawFilteredLines(
     const color = LINE_COLORS[l.kind];
     if (!color || l.points.length < 2 || !lineInFilter(l.kind, filter)) continue;
     const trace = () => {
+      const drawPoints = polishedRenderPoints(
+        l.points.map(([x, y]) => [px(x), py(y)] as RenderPoint),
+      );
       ctx.beginPath();
-      l.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+      drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
     };
     const routeVisual = filter === 'structures' ? structuresRouteVisualFor(l.kind) : null;
     const routeDash = routeVisual?.dash ?? [];
@@ -7813,7 +7831,9 @@ interface SavedGlossy {
 //        fixed at 19px across radically different sheet shapes.
 //   v60 — 2026-07-28: phasing week ranges clear their chips by the resolved font ascent, preventing
 //        the chip edge from striking through the tops of the week text.
-const PLAN_VERSION = 'v60';
+//   v61 — 2026-07-28: exact sheet paths and polygons remove shallow hand jitter at paint time while
+//        preserving meaningful corners and every saved vertex.
+const PLAN_VERSION = 'v61';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
