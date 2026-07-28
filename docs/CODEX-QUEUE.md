@@ -114,10 +114,23 @@ If it turns out the model reordered them, that is a finding too, and the fix is 
 capacity is not something a model may letter — it becomes app-drawn chrome like the schedule panel.
 Say which of the two it is; do not fix both speculatively.
 
-**Note:** both PNGs were rendered on build `76a63c3`, which predates the v63/v65 label work — a
-deploy failure had frozen production for 23 commits. The swap is a label-identity question, not a
-type-size one, so it is very unlikely to have been fixed by those commits, but re-render before you
-conclude it is still live.
+**READ THIS BEFORE YOU START — the likely cause has been found and fixed, so your job here is to
+confirm or refute, not to go hunting.**
+
+`415b8d5` (v66) fixed a **leader-line collision** in both exact drawers. The long horizontal segment
+of a leader used to run at the ELEMENT's y and then cut a diagonal to the label. Label rows are
+de-collided by `stackLeaderRows`; element positions are not. On the Ubhejane demo the JoJo tank sits
+at y≈239 and the compost bay at y≈245, both on the left, so the two runs overlapped into one
+unbroken line and `JOJO TANK 2500L` read as pointing at the compost bay three hundred pixels away.
+**The data was correct the whole time.** Found by rendering exact sheet 07 and looking at it.
+
+Rory's two tanks are the same shape of complaint, on a sheet where two same-type elements sit at
+similar heights. So **start by re-rendering his design on v66 and seeing whether the swap survives.**
+If it does not, say so and move on — that is a complete result. If it does, then it is a genuine
+identity bug and everything below applies.
+
+Both his PNGs were rendered on `76a63c3`, which a frozen deploy had pinned for 23 commits, so they
+predate every label fix.
 
 ---
 
