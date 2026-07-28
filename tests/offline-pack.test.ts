@@ -153,3 +153,44 @@ test('formatPackSize reaches GB — a whole course is not quoted in megabytes', 
   assert.equal(formatPackSize(1610612736), '1.50 GB');
   assert.ok(wholeCourseBytes('zu') > 0);
 });
+
+test('the high-quality pack is a real upgrade, never padding', () => {
+  // For facilitators, funders and anyone training off wifi. It must be genuinely bigger where
+  // better files exist and IDENTICAL where they do not — a "high quality" download that quietly
+  // ships the same bytes at a bigger advertised number would be the exact dishonesty the size
+  // label exists to prevent.
+  for (const lang of ['en', 'zu']) {
+    const std = offlinePack('seeds-sovereignty', lang, 'standard');
+    const hi = offlinePack('seeds-sovereignty', lang, 'high');
+    assert.deepEqual(hi.missing, [], `${lang}: high pack names a file that does not exist`);
+    assert.equal(hi.entries.length, std.entries.length, `${lang}: the two tiers must cover the same lesson`);
+    assert.ok(hi.bytes > std.bytes, `${lang}: high (${hi.bytes}) is not larger than standard (${std.bytes})`);
+
+    // Every entry is either the standard file or a strictly larger hi/ twin — never smaller.
+    const byKind = (p: typeof std, k: string) => p.entries.filter((e) => e.kind === k).reduce((s, e) => s + e.bytes, 0);
+    for (const kind of ['slide', 'audio', 'animation', 'poster', 'image']) {
+      assert.ok(byKind(hi, kind) >= byKind(std, kind), `${lang}/${kind}: high tier is smaller than standard`);
+    }
+  }
+});
+
+test('assets with no higher-quality original fall back instead of being upscaled', () => {
+  // The narration is 24 kbps mono because that is how it was recorded, and the English slides were
+  // only ever rendered at 960px. Inventing bigger versions would cost a facilitator data for zero
+  // extra detail, so those entries must be byte-identical across the two tiers.
+  const std = offlinePack('seeds-sovereignty', 'en', 'standard');
+  const hi = offlinePack('seeds-sovereignty', 'en', 'high');
+  const audio = (p: typeof std) => p.entries.filter((e) => e.kind === 'audio');
+  assert.deepEqual(audio(hi).map((e) => e.url), audio(std).map((e) => e.url), 'audio must not have a hi variant');
+  const slides = (p: typeof std) => p.entries.filter((e) => e.kind === 'slide').reduce((s, e) => s + e.bytes, 0);
+  assert.equal(slides(hi), slides(std), 'English slides have no higher-res original');
+});
+
+test('standard stays the default everywhere — a farmer never opts in by accident', () => {
+  const implicit = offlinePack('seeds-sovereignty', 'zu');
+  const explicit = offlinePack('seeds-sovereignty', 'zu', 'standard');
+  assert.equal(implicit.quality, 'standard');
+  assert.equal(implicit.bytes, explicit.bytes);
+  assert.ok(wholeCourseBytes('zu') < wholeCourseBytes('zu', 'high'));
+  assert.equal(downloadableModules('zu').length, downloadableModules('zu', 'high').length);
+});

@@ -25,6 +25,7 @@ export interface PackEntry {
 export interface OfflinePack {
   moduleId: string;
   lang: string;
+  quality: PackQuality;
   entries: PackEntry[];
   bytes: number;
   /**
@@ -37,14 +38,42 @@ export interface OfflinePack {
   missing: string[];
 }
 
+/**
+ * Which set of files a download pulls.
+ *
+ * 'standard' is what a farmer on metered KZN data gets, and remains the default everywhere.
+ * 'high' is for facilitators, funders and anyone training from a laptop on wifi — the same
+ * lesson, at the quality the assets were made at, at roughly double the size.
+ */
+export type PackQuality = 'standard' | 'high';
+
+/**
+ * The high-quality twin of an asset, where one exists.
+ *
+ * Higher-quality files live in a `hi/` folder beside their standard versions, so the two are
+ * always found by the same path with one segment inserted. NOT EVERY ASSET HAS ONE and that is
+ * deliberate rather than an oversight: the narration is 24 kbps mono because that is how it was
+ * recorded, the English slides were only ever rendered at 960px, and the rebuilt isiZulu slide 13
+ * was composited from a 960px source. Upscaling any of those would grow the download without
+ * adding a single pixel of real detail. Anything with no twin silently falls back to standard, so
+ * a "high quality" download is honestly the best that exists — never padding.
+ */
+function hiVariant(url: string): string | null {
+  const cut = url.lastIndexOf('/');
+  if (cut < 0) return null;
+  const hi = `${url.slice(0, cut)}/hi${url.slice(cut)}`;
+  return COURSE_ASSET_SIZES[hi] === undefined ? null : hi;
+}
+
 /** Sizes come from the generated manifest; anything absent is a real gap, not a zero. */
-function entry(url: string, kind: PackEntry['kind'], missing: string[]): PackEntry | null {
-  const bytes = COURSE_ASSET_SIZES[url];
+function entry(url: string, kind: PackEntry['kind'], missing: string[], quality: PackQuality = 'standard'): PackEntry | null {
+  const chosen = quality === 'high' ? (hiVariant(url) ?? url) : url;
+  const bytes = COURSE_ASSET_SIZES[chosen];
   if (bytes === undefined) {
-    missing.push(url);
+    missing.push(chosen);
     return null;
   }
-  return { url, bytes, kind };
+  return { url: chosen, bytes, kind };
 }
 
 /**
@@ -57,10 +86,11 @@ function entry(url: string, kind: PackEntry['kind'], missing: string[]): PackEnt
  * `full.mp3` is excluded on the same principle: it is the slide clips concatenated, so including
  * it would spend another 6–7 MB of a farmer's data on a second copy of audio they already have.
  */
-export function offlinePack(moduleId: string, lang: string): OfflinePack {
+export function offlinePack(moduleId: string, lang: string, quality: PackQuality = 'standard'): OfflinePack {
   const missing: string[] = [];
   const entries: PackEntry[] = [];
   const push = (e: PackEntry | null) => { if (e) entries.push(e); };
+  const at = (url: string, kind: PackEntry['kind']) => entry(url, kind, missing, quality);
 
   const deck = COURSE_DECKS[moduleId];
   if (deck) {
@@ -70,11 +100,11 @@ export function offlinePack(moduleId: string, lang: string): OfflinePack {
       // file for it, or the module reads as complete offline and shows a gap on slide 13.
       const own = slideImageUrl(moduleId, lang, slide.slide);
       const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
-      if (url) push(entry(url, 'slide', missing));
+      if (url) push(at(url, 'slide'));
 
       if (slide.animation) {
-        push(entry(`/course-animations/${moduleId}/${slide.animation.src}.mp4`, 'animation', missing));
-        push(entry(`/course-animations/${moduleId}/posters/${slide.animation.poster}.jpg`, 'poster', missing));
+        push(at(`/course-animations/${moduleId}/${slide.animation.src}.mp4`, 'animation'));
+        push(at(`/course-animations/${moduleId}/posters/${slide.animation.poster}.jpg`, 'poster'));
       }
     }
   }
@@ -82,12 +112,12 @@ export function offlinePack(moduleId: string, lang: string): OfflinePack {
   const narration = COURSE_NARRATION[moduleId];
   if (narration?.languages.includes(lang)) {
     for (const track of narration.tracks) {
-      push(entry(`/course-audio/${moduleId}/${lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio', missing));
+      push(at(`/course-audio/${moduleId}/${lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
     }
   }
 
   for (const lesson of COURSE_MODULES.find((m) => m.id === moduleId)?.lessons ?? []) {
-    if (lesson.infographicUrl) push(entry(lesson.infographicUrl, 'image', missing));
+    if (lesson.infographicUrl) push(at(lesson.infographicUrl, 'image'));
   }
 
   // A slide can be reached twice — its own file plus an English fallback pointing at the same
@@ -98,6 +128,7 @@ export function offlinePack(moduleId: string, lang: string): OfflinePack {
   return {
     moduleId,
     lang,
+    quality,
     entries: unique,
     bytes: unique.reduce((sum, e) => sum + e.bytes, 0),
     missing,
@@ -105,18 +136,18 @@ export function offlinePack(moduleId: string, lang: string): OfflinePack {
 }
 
 /** Every module that has anything to download, with its size in this language. */
-export function downloadableModules(lang: string): Array<{ moduleId: string; bytes: number; count: number }> {
+export function downloadableModules(lang: string, quality: PackQuality = 'standard'): Array<{ moduleId: string; bytes: number; count: number }> {
   return COURSE_MODULES
     .map((m) => {
-      const pack = offlinePack(m.id, lang);
+      const pack = offlinePack(m.id, lang, quality);
       return { moduleId: m.id, bytes: pack.bytes, count: pack.entries.length };
     })
     .filter((p) => p.count > 0);
 }
 
 /** The whole course in one language — what "download everything" actually costs. */
-export function wholeCourseBytes(lang: string): number {
-  return downloadableModules(lang).reduce((sum, m) => sum + m.bytes, 0);
+export function wholeCourseBytes(lang: string, quality: PackQuality = 'standard'): number {
+  return downloadableModules(lang, quality).reduce((sum, m) => sum + m.bytes, 0);
 }
 
 /**

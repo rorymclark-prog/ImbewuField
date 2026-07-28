@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, Check, Loader2, Trash2, AlertTriangle, WifiOff } from 'lucide-react';
 
-import { offlinePack, formatPackSize, type OfflinePack } from '@/lib/offline-pack';
+import { offlinePack, formatPackSize, type OfflinePack, type PackQuality } from '@/lib/offline-pack';
 import {
   downloadPack, packStatus, removePack, offlineSupported, requestPersistence, storageEstimate,
   CACHE_CHANGED_EVENT,
@@ -43,13 +43,25 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const [failed, setFailed] = useState<string[]>([]);
   const [notPersisted, setNotPersisted] = useState(false);
   const [tightOnSpace, setTightOnSpace] = useState(false);
+  // STANDARD BY DEFAULT, ALWAYS. The person this course is built for is on metered KZN data; the
+  // higher-quality set exists for facilitators, funders and anyone training off a laptop on wifi.
+  // Defaulting the other way would spend a farmer's airtime to serve a projector.
+  const [quality, setQuality] = useState<PackQuality>('standard');
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
+  // Both totals are known up front so the choice can be made with the two numbers side by side,
+  // rather than by toggling and watching a figure change.
+  const sizeFor = useCallback((q: PackQuality) => moduleIds
+    .map((id) => offlinePack(id, lang, q))
+    .reduce((s, p) => s + p.bytes, 0), [moduleIds, lang]);
+  const standardBytes = sizeFor('standard');
+  const highBytes = sizeFor('high');
+  const hasHigher = highBytes > standardBytes;
 
   useEffect(() => {
-    setPacks(moduleIds.map((id) => offlinePack(id, lang)).filter((p) => p.entries.length > 0));
-  }, [moduleIds, lang]);
+    setPacks(moduleIds.map((id) => offlinePack(id, lang, quality)).filter((p) => p.entries.length > 0));
+  }, [moduleIds, lang, quality]);
 
   const refresh = useCallback(async () => {
     if (packs.length === 0) return;
@@ -190,6 +202,43 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           </button>
         )}
       </div>
+
+      {/* THE QUALITY CHOICE, named for who it is for and priced in the same breath.
+          Rory: "i want a high res version available for facilitators and funders and those with
+          data and network ... label them so that people know its higher res more data."
+          Both sizes are shown at once so nobody has to toggle back and forth to compare, and the
+          higher option says who it is for — a farmer scanning this should be able to tell in one
+          read that it is not the one for them. Hidden entirely when the module has no
+          higher-quality files, rather than offering a choice that changes nothing. */}
+      {hasHigher && !busy && phase !== 'done' && (
+        <div role="group" aria-label="Download quality" className="flex flex-wrap items-center gap-1.5">
+          {([
+            { key: 'standard' as PackQuality, name: 'Standard', note: 'for phones on data', size: standardBytes },
+            { key: 'high' as PackQuality, name: 'Higher quality', note: 'facilitators & funders · wifi', size: highBytes },
+          ]).map((opt) => {
+            const on = quality === opt.key;
+            return (
+              <button
+                key={opt.key}
+                type="button"
+                onClick={() => setQuality(opt.key)}
+                aria-pressed={on}
+                className="text-left px-2.5 py-1.5 rounded-xl"
+                style={{
+                  background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
+                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : '#E2D8C4'}`,
+                  cursor: 'pointer',
+                }}
+              >
+                <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
+                  {opt.name} · {formatPackSize(opt.size)}
+                </span>
+                <span className="font-sans block" style={{ fontSize: 10.5, color: '#8C7A62' }}>{opt.note}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {(busy || phase === 'partial') && totalFiles > 0 && (
         <div className="w-full">

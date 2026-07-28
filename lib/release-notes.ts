@@ -20,6 +20,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'Slide 13 now shows the dry method it teaches, not the wet one',
+      'NEW: a Higher quality download for facilitators and funders on wifi — more data',
       'Plan sheets now take the shape of your farm — a long thin plot fills the page',
       'NEW: Open a module and the slides are there — press Play and it teaches itself through',
       'Downloaded clips now play by themselves; ones you have not downloaded still ask first',
