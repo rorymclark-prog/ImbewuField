@@ -57,13 +57,35 @@ test('roof harvest obeys the mm × m² = litre dimensional rule without pinning 
   assert.equal(annualRoofHarvestLitres(100, 0), 0);
 });
 
-test('a placed tank that cannot hold the annual harvest is never presented as sufficient', () => {
+test('placed storage always gets the overflow advice, and is never judged against annual harvest', () => {
   const system = derive([item('jojo_1000')], ROOF_100_M2, 800);
   const text = system.notes.join(' ');
 
   assert.match(text, /800 mm\/yr.*100 m².*kL\/yr/);
-  assert.match(text, /Placed storage totals .* and cannot hold the estimated .* annual roof harvest at once/);
+  assert.match(text, /Placed storage totals .*route the overflow/);
   assert.doesNotMatch(text, /\bm³\b/);
+
+  // A year of rain is many times any real tank, so "capacity < annual harvest" is arithmetic, not
+  // a finding. The sheet must never dress it up as one — a farmer reading "cannot hold" buys tanks
+  // they do not need. Sizing is a dry-season-demand question this app cannot yet answer.
+  assert.doesNotMatch(text, /cannot hold|too small|insufficient|not enough|undersized/i);
+});
+
+test('the overflow note reads the same however much storage is placed, so it cannot be mistaken for an adequacy verdict', () => {
+  const one = derive([item('jojo_1000')], ROOF_100_M2, 800).notes.join(' ');
+  // Ten of the largest tank in the catalog — 100 kL, MORE than the 64 kL this roof harvests, which
+  // is the only way the old comparison ever went quiet. Both designs must read the same.
+  const many = derive(
+    Array.from({ length: 10 }, (_, i) => item('jojo_10000', `jojo_10000_${i}`)),
+    ROOF_100_M2,
+    800,
+  ).notes.join(' ');
+
+  assert.match(one, /route the overflow/);
+  assert.match(many, /route the overflow/);
+  for (const text of [one, many]) {
+    assert.doesNotMatch(text, /sufficient|adequate|cannot hold/i);
+  }
 });
 
 test('catalog capacities stay in litres and capacity-less storage remains explicitly unknown', () => {

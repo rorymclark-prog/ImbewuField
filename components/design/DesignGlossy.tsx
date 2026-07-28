@@ -7851,7 +7851,16 @@ interface SavedGlossy {
 //        pricing fix that also landed as 'v63' on another branch is NOT listed here: it changes
 //        the facilitator BOQ, not a rendered sheet, so it has no business invalidating a render
 //        cache. Only things that change the PICTURE belong in this list.)
-const PLAN_VERSION = 'v64';
+//   v65 — 2026-07-29: the ×N fix reaches the SECOND place a count was welded to a name. v63's fix
+//        covered the designed-element list; the Water sheet's "what this system serves" clause
+//        still said to caption each served bed or basin "exactly as written above", where "above"
+//        is an inventory reading "Vegetable Bed ×7" — so the served fixtures kept the numbering the
+//        design elements had just lost. Zones sheets also get their own rule 10/14: their element
+//        list is zone names, so `labelNames` was empty and the model was told its only legal
+//        labels were "" while also being told to label every element.
+//        (Merged from codex/prompt-data-audit, which changed the prompt without bumping this. A
+//        prompt change with no bump is invisible to every farmer who has already rendered.)
+const PLAN_VERSION = 'v65';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

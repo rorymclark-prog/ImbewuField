@@ -759,9 +759,21 @@ export function deriveWaterSystem(
           notes.push(
             `${unknownCount} placed storage ${unknownCount === 1 ? 'item has' : 'items have'} no stated capacity, so total storage cannot be checked against the estimated annual harvest.`,
           );
-        } else if (statedCapacityL < annualHarvestL) {
+        } else {
+          // DO NOT turn this into "your storage is too small". Annual harvest is not a sizing
+          // target and never was: a tank is drawn down and refilled all year, so a year's rain is
+          // always many times any realistic tank. Measured on this catalog — 100 m² of roof at
+          // 800 mm/yr harvests 64 kL, so it would take more than ten 10 000 L JoJos before a
+          // capacity-vs-harvest comparison went quiet. A note that fires on every design is not a
+          // finding, and one that reads as a shortfall pushes a subsistence farmer toward tanks
+          // they do not need.
+          //
+          // What IS always true, and worth saying once, is the overflow: the roof will deliver far
+          // more over a year than the tanks hold, so the surplus needs somewhere safe to go.
+          // Sizing storage properly is a dry-season-demand question this app does not yet have the
+          // inputs to answer, and inventing a threshold here would be worse than saying nothing.
           notes.push(
-            `Placed storage totals ${formatLitres(statedCapacityL)} and cannot hold the estimated ${formatLitres(annualHarvestL)} annual roof harvest at once — provide a safe overflow route.`,
+            `Placed storage totals ${formatLitres(statedCapacityL)}; the roof yields about ${formatLitres(annualHarvestL)} over a year, so tanks will fill and overflow repeatedly — route the overflow to a swale, basin or soakaway rather than against a wall or path.`,
           );
         }
       }

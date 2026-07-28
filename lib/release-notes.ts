@@ -20,6 +20,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: 'Latest',
     changes: [
+      'The first AI map you pay for is now checked — if it comes back unchanged you are told, not charged for a copy',
+      'Water sheets stop numbering the beds your irrigation feeds',
+      'Zone maps keep zone names in the key instead of scattering them over the map',
+      'Water notes now say where the overflow should go, instead of implying your tank is too small',
+      'A plan area nobody measured is left unpriced instead of printed as free',
+      'The whole design studio speaks your language now, not just parts of it',
+      'The same design gives the same advice every time you open it',
       'Snap now works on zones — it reaches the gaps, and stops claiming moves it never made',
       'Map labels are readable: they now match the size the AI picks on the same plan',
       'AI maps stop numbering your beds — seven beds get one label, not "×1" to "×7"',
