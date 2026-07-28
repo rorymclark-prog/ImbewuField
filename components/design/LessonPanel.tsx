@@ -9,11 +9,13 @@ import Link from 'next/link';
 import { Sprout, Lightbulb } from 'lucide-react';
 import type { StepLesson } from '@/lib/design-lessons';
 import SpeakButton from '@/components/SpeakButton';
+import { useLanguage } from '@/lib/i18n';
 
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
 
 export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean } }) {
+  const { t } = useLanguage();
   const narration = `${lesson.title}. ${lesson.body} ${lesson.principle} ${lesson.tip}`;
   return (
     <div
@@ -44,7 +46,7 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
               color: GREEN,
             }}
           >
-            The principle
+            {t('designLessonPrinciple')}
           </span>
           {lesson.principle}
         </div>
@@ -62,7 +64,7 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
               color: GREEN,
             }}
           >
-            Try this
+            {t('designLessonTryThis')}
           </span>
           {lesson.tip}
         </div>
@@ -72,12 +74,12 @@ export function LessonPanel({ lesson }: { lesson: StepLesson & { draft?: boolean
           href={`/student?module=${lesson.courseModuleId}`}
           style={{ alignSelf: 'flex-start', fontSize: 12, fontWeight: 700, color: GREEN, textDecoration: 'underline' }}
         >
-          Learn more in the course
+          {t('designLessonCourse')}
         </Link>
       )}
       {lesson.draft && (
         <div style={{ fontSize: 10.5, color: 'rgba(11,18,11,0.5)', fontStyle: 'italic' }}>
-          Draft lesson — a fuller version is coming.
+          {t('designLessonDraft')}
         </div>
       )}
     </div>

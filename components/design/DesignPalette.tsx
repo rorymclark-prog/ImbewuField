@@ -42,6 +42,8 @@ import { normaliseRotation } from '@/lib/design-canvas';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -148,14 +150,14 @@ const GREEN = '#1F4D2B';
 const PAPER = '#FFFEFA';
 const DARK = '#0B120B';
 
-const LINE_KINDS: Array<{ id: LineShape['kind']; label: string; icon: string }> = [
-  { id: 'swale', label: 'Swale', icon: '〰️' },
-  { id: 'fence', label: 'Fence', icon: '🚧' },
-  { id: 'path', label: 'Path', icon: '🥾' },
-  { id: 'pipe', label: 'Pipe', icon: '🧵' },
-  { id: 'drip', label: 'Drip', icon: '💧' },
-  { id: 'greywater', label: 'Greywater', icon: '🚿' },
-  { id: 'windbreak', label: 'Windbreak', icon: '🌬️' },
+const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string }> = [
+  { id: 'swale', labelKey: 'designPaletteLineSwale', icon: '〰️' },
+  { id: 'fence', labelKey: 'designPaletteLineFence', icon: '🚧' },
+  { id: 'path', labelKey: 'designPaletteLinePath', icon: '🥾' },
+  { id: 'pipe', labelKey: 'designPaletteLinePipe', icon: '🧵' },
+  { id: 'drip', labelKey: 'designPaletteLineDrip', icon: '💧' },
+  { id: 'greywater', labelKey: 'designPaletteLineGreywater', icon: '🚿' },
+  { id: 'windbreak', labelKey: 'designPaletteLineWindbreak', icon: '🌬️' },
 ];
 
 // Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
@@ -165,23 +167,23 @@ const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio',
 
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
-const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; label: string; icon: string }> = [
-  { key: 'baseMap', label: 'Base map', icon: '🛰️' },
+const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
+  { key: 'baseMap', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
   // "Existing", not "Ground": this layer is the farmer's EXISTING site reality (house/patio/lawn/
   // veg garden the app draws), i.e. the "Draw what's already here" chips — distinct from the
   // proposed Structures layer and from the satellite Base map. (Fable Q1; internal key stays.)
-  { key: 'ground', label: 'Existing', icon: '🏠' },
-  { key: 'water', label: 'Water', icon: '💧' },
-  { key: 'earthworks', label: 'Earthworks', icon: '⛏️' },
-  { key: 'zones', label: 'Zones', icon: '🗺️' },
-  { key: 'planting', label: 'Planting', icon: '🌱' },
-  { key: 'structures', label: 'Structures', icon: '🏚️' },
-  { key: 'access', label: 'Access', icon: '🚪' },
-  { key: 'animals', label: 'Animals', icon: '🐔' },
-  { key: 'labels', label: 'Labels', icon: '🏷️' },
-  { key: 'symbols', label: 'Icons', icon: '🔘' },
-  { key: 'contours', label: 'Contours', icon: '⛰️' },
-  { key: 'sector', label: 'Sector energies', icon: '☀️' },
+  { key: 'ground', labelKey: 'designPaletteLayerExisting', icon: '🏠' },
+  { key: 'water', labelKey: 'designPaletteLayerWater', icon: '💧' },
+  { key: 'earthworks', labelKey: 'designPaletteLayerEarthworks', icon: '⛏️' },
+  { key: 'zones', labelKey: 'designPaletteLayerZones', icon: '🗺️' },
+  { key: 'planting', labelKey: 'designPaletteLayerPlanting', icon: '🌱' },
+  { key: 'structures', labelKey: 'designPaletteLayerStructures', icon: '🏚️' },
+  { key: 'access', labelKey: 'designPaletteLayerAccess', icon: '🚪' },
+  { key: 'animals', labelKey: 'designPaletteLayerAnimals', icon: '🐔' },
+  { key: 'labels', labelKey: 'designPaletteLayerLabels', icon: '🏷️' },
+  { key: 'symbols', labelKey: 'designPaletteLayerIcons', icon: '🔘' },
+  { key: 'contours', labelKey: 'designPaletteLayerContours', icon: '⛰️' },
+  { key: 'sector', labelKey: 'designPaletteLayerSector', icon: '☀️' },
 ];
 
 // Element category → the layer toggle that shows/hides it. A Record (not a ternary chain) so
@@ -296,6 +298,7 @@ export default function DesignPalette({
   windControl,
   siteBiome,
 }: DesignPaletteProps) {
+  const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
   // Local UI-only toggle for the wind control's direction picker — never persisted, just whether
@@ -438,13 +441,13 @@ export default function DesignPalette({
 
   const armedHintLabel =
     tool === 'place' && armedDef
-      ? `Tap the map to place ${armedDef.name}`
+      ? formatDesignTranslation(t('designPaletteTapPlace'), { name: armedDef.name })
       : tool === 'zone' && areaFeature
-        ? `Draw your ${GROUND_FEATURES[areaFeature].label} — tap corners, then ✓ Finish`
+        ? formatDesignTranslation(t('designPaletteDrawFeature'), { feature: GROUND_FEATURES[areaFeature].label })
         : tool === 'zone'
-          ? `Tap the map to paint Zone ${zoneDraw}`
+          ? formatDesignTranslation(t('designPalettePaintZone'), { zone: zoneDraw })
           : tool === 'line'
-            ? `Tap corners, then ✓ Finish`
+            ? t('designPaletteTapCorners')
             : null;
 
   // The lesson for whatever's currently armed — connects zones, ground features, drawn lines and
@@ -481,7 +484,7 @@ export default function DesignPalette({
               setHintDefId(null);
             }}
           >
-            ↖️ Select
+            {t('designPaletteSelect')}
           </button>
           <button
             type="button"
@@ -489,7 +492,7 @@ export default function DesignPalette({
             onClick={onUndo}
             disabled={!canUndo}
           >
-            ↩️ Undo
+            {t('designPaletteUndo')}
           </button>
           <button
             type="button"
@@ -497,7 +500,7 @@ export default function DesignPalette({
             onClick={onRedo}
             disabled={!canRedo}
           >
-            ↪️ Redo
+            {t('designPaletteRedo')}
           </button>
           <button
             type="button"
@@ -508,9 +511,9 @@ export default function DesignPalette({
             }}
             onClick={() => onDuplicateSelected?.()}
             disabled={!onDuplicateSelected}
-            title="Duplicate the selected item(s) — Cmd/Ctrl+D"
+            title={t('designPaletteDuplicateTitle')}
           >
-            📋 Duplicate
+            {t('designPaletteDuplicate')}
           </button>
           {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
               has no ring/polyline to simplify, and a multi-selection has no single shape to preview
@@ -525,9 +528,9 @@ export default function DesignPalette({
             }}
             onClick={() => onTidySelected?.()}
             disabled={!onTidySelected}
-            title="Preview a tidied version of the selected outline"
+            title={t('designPaletteTidyTitle')}
           >
-            🧹 Tidy
+            {t('designPaletteTidy')}
           </button>
           {/* Snap to neighbour — offered only when exactly one ZONE is selected (not lines, not
               items, not the property boundary — see onSnapSelected's doc comment in
@@ -542,9 +545,9 @@ export default function DesignPalette({
             }}
             onClick={() => onSnapSelected?.()}
             disabled={!onSnapSelected}
-            title="Preview closing hairline seams with a neighbouring zone"
+            title={t('designPaletteSnapTitle')}
           >
-            🧲 Snap
+            {t('designPaletteSnap')}
           </button>
           {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected; Tidy
               and Snap above are deliberately single-selection, this one deliberately is not — see
@@ -559,9 +562,9 @@ export default function DesignPalette({
             }}
             onClick={() => onCleanupSelected?.()}
             disabled={!onCleanupSelected}
-            title="Preview straightening and evenly spacing the selected items"
+            title={t('designPaletteCleanupTitle')}
           >
-            📐 Clean up
+            {t('designPaletteCleanup')}
           </button>
           {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
               polyline deliberately has NO angle control here: a polyline has no single angle, and
@@ -587,7 +590,7 @@ export default function DesignPalette({
               <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>
                 ∠
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Angle</span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteAngle')}</span>
               <input
                 // Uncontrolled + keyed on the committed value: typing never round-trips through
                 // parent state per keystroke (no mid-typing canvas jumps), but the field still picks
@@ -646,7 +649,7 @@ export default function DesignPalette({
             onClick={() => onDeleteSelected?.()}
             disabled={!onDeleteSelected}
           >
-            🗑️ Delete
+            {t('designPaletteDelete')}
           </button>
           </div>
           {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
@@ -675,9 +678,9 @@ export default function DesignPalette({
               }}
             >
               <span aria-hidden>🛰️</span>
-              <span>Layers</span>
+              <span>{t('designPaletteLayers')}</span>
               {hiddenLayerCount > 0 && (
-                <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} off</span>
+                <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
               )}
             </button>
             {layersOpen && (
@@ -702,9 +705,9 @@ export default function DesignPalette({
                 {/* Master switch — flip every layer at once instead of tapping nine chips. */}
                 <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                   <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.5, marginRight: 'auto' }}>
-                    Layers
+                    {t('designPaletteLayers')}
                   </span>
-                  {([['All on', true], ['All off', false]] as const).map(([label, val]) => (
+                  {([[t('designPaletteAllOn'), true], [t('designPaletteAllOff'), false]] as const).map(([label, val]) => (
                     <button
                       key={label}
                       type="button"
@@ -749,7 +752,7 @@ export default function DesignPalette({
                       }}
                     >
                       <span>{lt.icon}</span>
-                      <span>{lt.label}</span>
+                      <span>{t(lt.labelKey)}</span>
                     </button>
                   );
                 })}
@@ -769,13 +772,15 @@ export default function DesignPalette({
         {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
             {orderedCatalog.length === 0
-              ? 'No layers on — turn on an element layer (Layers ▸) to place its elements.'
-              : 'PRO — showing elements for your switched-on layers. Toggle more in Layers ▸.'}
+              ? t('designPaletteNoLayers')
+              : t('designPaletteProLayers')}
           </div>
         )}
         {climateFilterActive && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-            🌡️ Showing climate-suited planting options{siteBiome ? ` for ${siteBiome}` : ''}. Deprecated/invasive or wrong-climate trees are hidden.
+            {t('designPaletteClimate')}
+            {siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}
+            {t('designPaletteClimateHidden')}
           </div>
         )}
         {/* Wrapped so the "there is more to the right" fade can sit over the strip's right edge.
@@ -791,7 +796,7 @@ export default function DesignPalette({
                 key={def.id}
                 type="button"
                 onClick={() => pickElement(def)}
-                title={suited ? undefined : `Better in a different climate — ${def.name} may struggle here`}
+                title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
                 style={{
                   position: 'relative',
                   minHeight: guided ? 50 : 40,
@@ -851,7 +856,7 @@ export default function DesignPalette({
       /* Base step: ground-feature chips — draw the real house / paving / lawn / veg garden /
           orchard / cleared ground that's already on site (filled labelled areas). */
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <div style={{ fontSize: 11.5, color: '#6B6355' }}>Draw what&apos;s already here — tap a feature, then trace its corners.</div>
+        <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>
         <div style={scrollStripStyle(guided ? 10 : 6)}>
           {GROUND_FEATURE_KINDS.map((kind) => {
             const gf = GROUND_FEATURES[kind];
@@ -910,8 +915,10 @@ export default function DesignPalette({
         {windControl.observation ? (
           <>
             <div style={{ fontSize: 11.5, color: '#6B6355' }}>
-              Wind confirmed: <strong style={{ color: DARK }}>{windControl.observation.prevailingFrom}</strong>
-              {' '}(recorded {new Date(windControl.observation.recordedAt).toLocaleDateString()})
+              {t('designPaletteWindConfirmed')} <strong style={{ color: DARK }}>{windControl.observation.prevailingFrom}</strong>
+              {' '}{formatDesignTranslation(t('designPaletteRecorded'), {
+                date: new Date(windControl.observation.recordedAt).toLocaleDateString(),
+              })}
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <button
@@ -919,14 +926,14 @@ export default function DesignPalette({
                 onClick={() => setWindPicking((v) => !v)}
                 style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
               >
-                ✏️ Change
+                ✏️ {t('designPaletteChange')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
                 style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
               >
-                ✕ Clear
+                ✕ {t('designPaletteClear')}
               </button>
             </div>
           </>
@@ -934,8 +941,8 @@ export default function DesignPalette({
           <>
             <div style={{ fontSize: 11.5, color: '#6B6355' }}>
               {windControl.regional
-                ? `We think your prevailing wind comes from the ${windControl.regional.fromLabel}. Is that right on your land?`
-                : 'No regional wind pattern for this area yet — do you know which way your wind usually blows?'}
+                ? formatDesignTranslation(t('designPaletteRegionalWind'), { direction: windControl.regional.fromLabel })
+                : t('designPaletteNoRegionalWind')}
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {windControl.regional && (
@@ -949,7 +956,7 @@ export default function DesignPalette({
                   }}
                   style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: guided ? 12.5 : 11.5 }}
                 >
-                  ✅ Confirm
+                  ✅ {t('designPaletteConfirm')}
                 </button>
               )}
               <button
@@ -957,14 +964,14 @@ export default function DesignPalette({
                 onClick={() => setWindPicking((v) => !v)}
                 style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
               >
-                ✏️ {windControl.regional ? 'Change' : 'Set direction'}
+                ✏️ {t(windControl.regional ? 'designPaletteChange' : 'designPaletteSetDirection')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
                 style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
               >
-                🤷 Not sure
+                🤷 {t('designPaletteNotSure')}
               </button>
             </div>
           </>
@@ -1072,7 +1079,7 @@ export default function DesignPalette({
               }}
             >
               <span>{lk.icon}</span>
-              <span>{lk.label}</span>
+              <span>{t(lk.labelKey)}</span>
             </button>
           );
         })}
@@ -1099,12 +1106,12 @@ export default function DesignPalette({
             <div>
               {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
             </div>
-            <LessonLink id={`element:${hintDef.id}`} label="Learn about this" />
+            <LessonLink id={`element:${hintDef.id}`} label={t('designPaletteLearnAbout')} />
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div>{armedHintLabel}</div>
-            {armedLessonId && <LessonLink id={armedLessonId} label="Learn about this" />}
+            {armedLessonId && <LessonLink id={armedLessonId} label={t('designPaletteLearnAbout')} />}
           </div>
         )}
       </div>
@@ -1184,7 +1191,7 @@ export default function DesignPalette({
           role="button"
           tabIndex={0}
           aria-expanded={sheetOpen}
-          aria-label={sheetOpen ? 'Collapse element palette' : 'Expand element palette'}
+          aria-label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();

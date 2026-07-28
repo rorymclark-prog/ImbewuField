@@ -19,7 +19,7 @@ import {
   buildGhosts,
   DEFAULT_PX_PER_M, geomPxToM, geomMToPx,
 } from '@/lib/facilitator-design';
-import { costForItem, costForLine, costForAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
+import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
@@ -2273,8 +2273,11 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const groupLines = (list: LineEl[]) => (Object.keys(LINES) as LineKind[]).map((kind) => {
     const of = list.filter((l) => l.kind === kind); if (!of.length) return null;
     const m = of.reduce((s, l) => s + lineLengthM(l.points, l.closed), 0);
+    const measuredAreas = of.filter((l) => l.closed && l.points.length >= 6);
     const areaM2 = AREA_LINE_KINDS.includes(kind)
-      ? of.filter((l) => l.closed && l.points.length >= 6).reduce((s, l) => s + shoelaceAreaPx2(l.points) / (pxPerM * pxPerM), 0)
+      ? measuredAreas.length > 0
+        ? measuredAreas.reduce((s, l) => s + shoelaceAreaPx2(l.points) / (pxPerM * pxPerM), 0)
+        : undefined
       : undefined;
     return { kind, label: LINES[kind].label, icon: LINES[kind].icon, count: of.length, m, areaM2 };
   }).filter(Boolean) as { kind: LineKind; label: string; icon: string; count: number; m: number; areaM2?: number }[];
@@ -2301,7 +2304,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   });
   const lineCosts = plannedLineTotals.map((l) => ({
     kind: l.kind,
-    ...((AREA_LINE_KINDS.includes(l.kind) ? costForAreaLine(l.kind, l.areaM2 ?? 0) : costForLine(l.kind, l.m)) ?? { zar: null }),
+    ...((AREA_LINE_KINDS.includes(l.kind) ? costForMeasuredAreaLine(l.kind, l.areaM2) : costForLine(l.kind, l.m)) ?? { zar: null }),
   }));
   const estBudgetTotal =
     boqCosts.reduce((s, b) => s + (b.zar ?? 0), 0) + lineCosts.reduce((s, l) => s + (l.zar ?? 0), 0);

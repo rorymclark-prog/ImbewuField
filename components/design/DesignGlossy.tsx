@@ -16,7 +16,7 @@ import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
-import { differenceMessage } from '@/lib/render-difference';
+import { paidRenderDecision } from '@/lib/render-difference';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
@@ -68,6 +68,8 @@ import {
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -387,10 +389,13 @@ const EMPTY_LAYER_STEP: Record<GlossyLayerFilter, string> = {
 
 // Shown instead of rendering an empty layer. Names the step to go draw on, AND says plainly that
 // if the farmer HAS drawn it, this is a bug — an empty layer must never be papered over.
-function emptyLayerMessage(filter: GlossyLayerFilter): string {
+function emptyLayerMessage(filter: GlossyLayerFilter, t: (key: string) => string): string {
   const step = EMPTY_LAYER_STEP[filter];
-  if (filter === 'all') return 'Nothing drawn yet — trace your boundary and place some elements first.';
-  return `No ${step.toLowerCase()} found on this design, so there's nothing to map — draw them on the ${step} step first. (A ${step.toLowerCase()} map is built from your real ${step.toLowerCase()}, never guessed. If you HAVE drawn them and still see this, it's a bug — please report it.)`;
+  if (filter === 'all') return t('designGlossyEmptyAll');
+  return formatDesignTranslation(t('designGlossyEmptyLayer'), {
+    step,
+    stepLower: step.toLowerCase(),
+  });
 }
 
 export interface DesignGlossyProps {
@@ -8009,6 +8014,7 @@ export default function DesignGlossy({
   onGeometryLockChange,
   initialFilter,
 }: DesignGlossyProps) {
+  const { t } = useLanguage();
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
@@ -8406,7 +8412,7 @@ export default function DesignGlossy({
           showcase: true,
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Render failed.');
+        setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
       } finally {
         setLoading(null);
       }
@@ -8426,7 +8432,7 @@ export default function DesignGlossy({
     // the image-producer's 'openai' path) or Gemini Pro.
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
     if (layerContentCount(state, refLayers, filter) === 0) {
-      setError(emptyLayerMessage(filter));
+      setError(emptyLayerMessage(filter, t));
       return;
     }
     setLoading(engine);
@@ -8479,7 +8485,7 @@ export default function DesignGlossy({
           // gpt-image-2 (via fal.ai) frequently returns 403 (fal/OpenAI verification). Don't fail
           // the whole render — fall back to the always-available Gemini engine and say so.
           if (producerEngine === 'openai') {
-            setNotice('gpt-image-2 was unavailable — generated with Gemini Pro instead.');
+            setNotice(t('designGlossyFallbackGemini'));
             modelImage = await requestProducer(
               stripDataUrl(composite),
               layerLabel,
@@ -8567,11 +8573,11 @@ export default function DesignGlossy({
       });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
-        setNotice('Refreshed current sheet — preview updated in your gallery.');
+        setNotice(t('designGlossyRefreshed'));
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8586,7 +8592,7 @@ export default function DesignGlossy({
   // beautify path for when a farmer wants the artist's impression instead.
   const renderDesignMap = useCallback(async () => {
     if (layerContentCount(state, refLayers, filter) === 0) {
-      setError(emptyLayerMessage(filter));
+      setError(emptyLayerMessage(filter, t));
       return;
     }
     setLoading('exact');
@@ -8618,11 +8624,11 @@ export default function DesignGlossy({
       });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
-        setNotice('Refreshed current sheet — preview updated in your gallery.');
+        setNotice(t('designGlossyRefreshed'));
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8637,7 +8643,7 @@ export default function DesignGlossy({
     const plan = buildPhasePlan(state, refLayers, site);
     if (plan.phases.length === 0) {
       setError(
-        'Nothing to phase yet — trace your boundary and place some elements (water, beds, trees…) first. The implementation plan is built from your real design, never guessed.',
+        t('designGlossyNothingToPhase'),
       );
       return;
     }
@@ -8657,11 +8663,11 @@ export default function DesignGlossy({
       });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
-        setNotice('Refreshed current sheet — preview updated in your gallery.');
+        setNotice(t('designGlossyRefreshed'));
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8687,11 +8693,11 @@ export default function DesignGlossy({
       });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
-        setNotice('Refreshed current sheet — preview updated in your gallery.');
+        setNotice(t('designGlossyRefreshed'));
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8716,11 +8722,11 @@ export default function DesignGlossy({
       });
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
-        setNotice('Refreshed current sheet — preview updated in your gallery.');
+        setNotice(t('designGlossyRefreshed'));
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8746,7 +8752,10 @@ export default function DesignGlossy({
         showcase: false,
       });
       made += 1;
-      setNotice(`Generating your plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+      setNotice(formatDesignTranslation(t('designGlossyGeneratingProgress'), {
+        count: made,
+        sheets: t(made === 1 ? 'designGlossySheet' : 'designGlossySheets'),
+      }));
     };
     try {
       // Canonical 8-map order (docs/PLAN-SET-SPEC.md). Analysis (02 Sector) before design.
@@ -8772,11 +8781,11 @@ export default function DesignGlossy({
       if (plan.phases.length > 0) {
         step('08 · Implementation & phasing', await buildImplementationMap(state, frame, refLayers, site, placeName), 'implementation-exact');
       }
-      setNotice(`Done — ${made} sheets in your gallery. Open it to view or Print the set.`);
+      setNotice(formatDesignTranslation(t('designGlossyDoneExact'), { count: made }));
       setGalleryViewId(null);
       setGalleryOpen(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -8899,18 +8908,26 @@ export default function DesignGlossy({
           showcase: false,
         });
         made += 1;
-        setNotice(`Styling your ${styleDef.label} plan set… ${made} sheet${made === 1 ? '' : 's'} done`);
+        setNotice(formatDesignTranslation(t('designGlossyStylingProgress'), {
+          style: styleDef.label,
+          count: made,
+          sheets: t(made === 1 ? 'designGlossySheet' : 'designGlossySheets'),
+        }));
       }
       if (made === 0) {
-        setError('Nothing to style yet — trace your boundary and place some elements first.');
+        setError(t('designGlossyNothingToStyle'));
         setNotice(null);
       } else {
-        setNotice(`Done — ${made} ${styleDef.label} sheets in your gallery${fellBack ? ' (gpt-image-2 unavailable → Gemini)' : ''}. Open it to view or Print.`);
+        setNotice(formatDesignTranslation(t('designGlossyDoneStyle'), {
+          count: made,
+          style: styleDef.label,
+          fallback: fellBack ? ' (gpt-image-2 unavailable → Gemini)' : '',
+        }));
         setGalleryViewId(null);
         setGalleryOpen(true);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Render failed.');
+      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
     } finally {
       setLoading(null);
     }
@@ -9226,8 +9243,8 @@ export default function DesignGlossy({
       if (sheets.length === 0) {
         setNotice(
           layerContentCount(renderState, renderRefLayers, 'zones') > 0
-            ? 'Zones sheet done. Add water, planting or structures for more.'
-            : 'Nothing to render yet — place some elements first.',
+            ? t('designGlossyZonesDone')
+            : t('designGlossyNothingToRender'),
         );
         setLoading(null);
         return;
@@ -9235,10 +9252,13 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: 'openai', sheets });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
-      setNotice(`Rendering ${sheets.length} sheet${sheets.length === 1 ? '' : 's'} in the background — they'll appear in your gallery when ready (a few minutes). You can keep working.`);
+      setNotice(formatDesignTranslation(t('designGlossyBackgroundCount'), {
+        count: sheets.length,
+        sheets: t(sheets.length === 1 ? 'designGlossySheet' : 'designGlossySheets'),
+      }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite]);
@@ -9255,7 +9275,7 @@ export default function DesignGlossy({
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
     if (layerContentCount(state, refLayers, filter) === 0) {
-      setError(emptyLayerMessage(filter));
+      setError(emptyLayerMessage(filter, t));
       return;
     }
     setExactSheet(null);
@@ -9381,11 +9401,14 @@ export default function DesignGlossy({
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(fullSheetPolish
-        ? `Step 3 of 3 — GPT Image is polishing the complete ${layerLabel} hybrid sheet in ${styleDef.label}. The exact master and the AI hybrid both remain saved separately.`
-        : `Rendering your ${layerLabel} sheet in the background — it'll appear in your gallery when ready (a few minutes). You can keep working.`);
+        ? formatDesignTranslation(t('designGlossyFullPolishProgress'), {
+          layer: layerLabel,
+          style: styleDef.label,
+        })
+        : formatDesignTranslation(t('designGlossyBackgroundSheet'), { layer: layerLabel }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage]);
@@ -9587,13 +9610,15 @@ export default function DesignGlossy({
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(polishStage
-        ? `Step 3 of 3 — GPT Image is polishing the complete ${kind === 'sector' ? 'Sector Analysis' : 'Existing Site'} hybrid sheet. The exact master and the AI hybrid both remain saved separately.`
+        ? formatDesignTranslation(t('designGlossySectorPolishProgress'), {
+          sheet: kind === 'sector' ? 'Sector Analysis' : 'Existing Site',
+        })
         : kind === 'sector'
-          ? 'AI is painting the Sector Analysis hybrid underlayer; your measured bearings and legend lock back on top afterward. It’ll appear in your gallery when ready (a few minutes).'
-          : 'Rendering your Existing Site hybrid in the background — the AI repaints the ground only; your boundary, roof and access stay exactly where they are. It’ll appear in your gallery when ready (a few minutes).');
+          ? t('designGlossySectorHybrid')
+          : t('designGlossyBaseHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage]);
@@ -9694,11 +9719,11 @@ export default function DesignGlossy({
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(polishStage
-        ? 'Step 3 of 3 — GPT Image is polishing the complete Implementation & Phasing hybrid sheet. The exact master and the AI hybrid both remain saved separately.'
-        : 'AI is painting a decorative parchment background behind the phasing schedule; the complete schedule locks back on top afterwards. It\'ll appear in your gallery when ready (a few minutes).');
+        ? t('designGlossyPhasingPolish')
+        : t('designGlossyPhasingHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : 'Could not start the render.');
+      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage]);
@@ -9785,8 +9810,10 @@ export default function DesignGlossy({
     if (action !== 'render-exact') return;
     exactAfterFlipRef.current = false;
     setNotice(hybridAfterExactRef.current
-      ? `Step 1 of ${polishAfterHybridRef.current ? 3 : 2} — saving the exact geometry-locked map first (no AI cost)…`
-      : 'Building the exact geometry-locked map — no AI render cost…');
+      ? formatDesignTranslation(t('designGlossySavingExact'), {
+        total: polishAfterHybridRef.current ? 3 : 2,
+      })
+      : t('designGlossyBuildingExact'));
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, runCurrentSheet]);
 
@@ -9811,7 +9838,9 @@ export default function DesignGlossy({
     hybridAfterExactRef.current = false;
     hybridAfterFlipRef.current = true;
     setLockedPolishStage('hybrid');
-    setNotice(`Step 2 of ${polishAfterHybridRef.current ? 3 : 2} — painting the AI hybrid underlayer, then locking your exact elements back on top…`);
+    setNotice(formatDesignTranslation(t('designGlossyPaintingHybrid'), {
+      total: polishAfterHybridRef.current ? 3 : 2,
+    }));
     setMode('ai');
     if (selectedSheet) {
       applySheet(selectedSheet, 'ai');
@@ -9839,7 +9868,7 @@ export default function DesignGlossy({
     });
     if (action !== 'render-hybrid') return;
     hybridAfterFlipRef.current = false;
-    setNotice('Preparing a geometry-locked AI hybrid from this exact sheet…');
+    setNotice(t('designGlossyPreparingHybrid'));
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, phasingAiMode, runCurrentSheet]);
 
@@ -9864,7 +9893,7 @@ export default function DesignGlossy({
       // The Hybrid stage finished but nothing was stashed — a real bug, not a transient state.
       // Never silently fall back to polishing the bare exact sheet again (the exact bug this
       // whole rewrite exists to remove); surface it and stop the guided flow instead.
-      setError('The AI hybrid finished but its image was not captured — please try again.');
+      setError(t('designGlossyMissingHybrid'));
       polishAfterHybridRef.current = false;
       setLockedPolishStage(null);
       return;
@@ -9872,7 +9901,7 @@ export default function DesignGlossy({
     polishAfterHybridRef.current = false;
     polishAfterFlipRef.current = true;
     setLockedPolishStage('polish');
-    setNotice('Step 3 of 3 — starting one paid gpt-image-2 polish pass over the AI hybrid…');
+    setNotice(t('designGlossyStartingPolish'));
     setResultImage(null);
   }, [mode, isExactRender, loading, resultImage]);
 
@@ -9891,7 +9920,7 @@ export default function DesignGlossy({
     });
     if (action !== 'render-polish') return;
     polishAfterFlipRef.current = false;
-    setNotice('Polishing the AI hybrid sheet…');
+    setNotice(t('designGlossyPolishing'));
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, phasingAiMode, runCurrentSheet]);
 
@@ -9932,7 +9961,7 @@ export default function DesignGlossy({
     setError(null);
     const totalSteps = targetMode === 'full' ? 3 : 2;
     polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
-    setNotice(`Step 1 of ${totalSteps} — saving the exact geometry-locked map first (no AI cost)…`);
+    setNotice(formatDesignTranslation(t('designGlossySavingExact'), { total: totalSteps }));
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
@@ -9957,7 +9986,7 @@ export default function DesignGlossy({
     if (loading !== null) return;
     setError(null);
     refreshPendingRef.current = true;
-    setNotice('Refreshing the current sheet…');
+    setNotice(t('designGlossyRefreshing'));
     setTimeout(() => {
       void runCurrentSheet();
     }, 0);
@@ -9985,6 +10014,10 @@ export default function DesignGlossy({
     // a failure there used to be swallowed while the user still got the green success notice with
     // an unchanged preview — the "Refresh does nothing" report.
     const assembled = new Set<string>();
+    // A measured copy/filter-only return is neither assembled nor an assembly failure. Keep it
+    // separate so the terminal snapshot does not replace the honest paid-pass warning with the
+    // generic "could not assemble" error merely because we deliberately refused to save it.
+    const rejected = new Set<string>();
     let lockedAssembled = 0;
     let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
@@ -10004,7 +10037,7 @@ export default function DesignGlossy({
         // Clear the job reference too — leaving it made the next Generate silently orphan a
         // still-running, still-billed render (audit find). The old job may still finish
         // server-side; its outputs land in the cache for this site if the user reopens.
-        setError('Lost connection to the background render — it may still finish in the background; reopen this step in a few minutes to check before paying for a re-run.');
+        setError(t('designGlossyLostConnection'));
         setLockedPolishStage(null);
         setLoading(null);
         clearPersistedJobId(siteId);
@@ -10038,8 +10071,35 @@ export default function DesignGlossy({
               // Fetch on the MASK's existence, not on `locked`. Satellite Overlay persists
               // geometryLock:false (it is not a locked style) but still ships a roof mask, and
               // gating on `locked` silently skipped the restore that keeps its roof intact.
-              const sourceImage = sheet.protectMaskPath ? await fetchRenderOutput(sheet.inputPath) : undefined;
+              // Hybrid scoring compares the bytes sent TO the model with the bytes returned BY it,
+              // before any exact geometry/chrome is composited back. Fetch the input even when
+              // there is no mask; after a reload this Storage object is the only durable baseline.
+              const sourceImage = (isHybridResult || sheet.protectMaskPath)
+                ? await fetchRenderOutput(sheet.inputPath)
+                : undefined;
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
+              if (isHybridResult && sourceImage) {
+                try {
+                  const diff = await measureRenderDifference(sourceImage, raw, protectMask);
+                  const decision = paidRenderDecision(diff, 'hybrid');
+                  console.info('[glossy] paid hybrid difference', sheet.key, diff);
+                  if (!decision.keep) {
+                    rejected.add(sheet.key);
+                    setPolishNoChange(decision.message);
+                    // Full Treatment must not advance to polish a Hybrid the gate just proved was
+                    // unchanged. Hybrid-only stops here for the same reason: no AI result exists
+                    // to present, save, or label.
+                    polishAfterHybridRef.current = false;
+                    hybridResultRef.current = null;
+                    setLockedPolishStage(null);
+                    continue;
+                  }
+                } catch (err) {
+                  // Scoring is diagnostic, never a new failure mode. If pixels cannot be measured,
+                  // finish and keep the paid result exactly as before.
+                  console.warn('[glossy] could not score the paid hybrid — keeping it', err);
+                }
+              }
               // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
@@ -10113,10 +10173,11 @@ export default function DesignGlossy({
               if (isPolishedResult && polishInputRef.current) {
                 try {
                   const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
+                  const decision = paidRenderDecision(diff, 'polish');
                   console.info('[glossy] paid polish difference', sheet.key, diff);
-                  if (diff.verdict !== 'redrawn') {
+                  if (!decision.keep) {
                     polishRejected = true;
-                    setPolishNoChange(differenceMessage(diff));
+                    setPolishNoChange(decision.message);
                   }
                 } catch (err) {
                   console.warn('[glossy] could not score the paid polish — keeping it', err);
@@ -10128,6 +10189,7 @@ export default function DesignGlossy({
                 // thumbnail is exactly what made the gallery unreadable, and presenting a copy as a
                 // paid result is the app claiming something it did not get.
                 setLockedPolishStage(null);
+                rejected.add(sheet.key);
                 continue;
               }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
@@ -10178,6 +10240,7 @@ export default function DesignGlossy({
           // browser could not assemble is a failure the farmer must be told about — otherwise a
           // paid render silently vanishes behind a success message.
           const done = assembled.size;
+          const rejectedDone = rejected.size;
           const lockedDone = lockedAssembled;
           const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
@@ -10191,13 +10254,21 @@ export default function DesignGlossy({
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
+          } else if (rejectedDone > 0) {
+            // The worker succeeded, and the browser deliberately rejected the measured output as
+            // unchanged/filter-only. The amber paid-pass explanation is already on screen.
+            setNotice(null);
+            setLockedPolishStage(null);
+            refreshPendingRef.current = false;
           } else if (serverDone > 0) {
             // The render succeeded and was paid for, but this device could not assemble it.
-            setError(`The sheet rendered but could not be assembled on this device${lastAssembleError ? ` (${lastAssembleError})` : ''} — tap Refresh to try again.`);
+            setError(formatDesignTranslation(t('designGlossyAssembleError'), {
+              detail: lastAssembleError ? ` (${lastAssembleError})` : '',
+            }));
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
-            setError(job.error || firstErr || 'The render did not complete — please try again.');
+            setError(job.error || firstErr || t('designGlossyRenderIncomplete'));
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           }
@@ -10217,7 +10288,7 @@ export default function DesignGlossy({
     const stored = readPersistedJobId(state.siteId);
     if (stored) {
       setLoading('falgpt');
-      setNotice('Reconnecting to your background render…');
+      setNotice(t('designGlossyReconnecting'));
       setQueueJobId(stored);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -10279,7 +10350,7 @@ export default function DesignGlossy({
         {!compact && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          Your plan set · 8 sheets (01–08)
+          {t('designGlossyPlanSet')}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {DESIGN_SHEETS.map((sheet) => {
@@ -10310,7 +10381,7 @@ export default function DesignGlossy({
               >
                 <span>{sheet.label}</span>
                 <span style={{ fontSize: 9.5, fontWeight: 600, opacity: active ? 0.85 : 0.55 }}>
-                  sheet {sheet.no}
+                  {formatDesignTranslation(t('designGlossySheetNumber'), { number: sheet.no })}
                 </span>
               </button>
             );
@@ -10326,7 +10397,7 @@ export default function DesignGlossy({
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', minHeight: 50, marginTop: 10, padding: '12px 20px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: loading !== null ? 'default' : 'pointer', opacity: loading !== null ? 0.7 : 1 }}
         >
           <Gem size={18} />
-          {loading === 'falgpt' ? 'Rendering with gpt-image-2 in the background…' : '✨ Generate 5 design sheets — AI (gpt-image-2)'}
+          {loading === 'falgpt' ? t('designGlossyRenderingBackground') : t('designGlossyGenerateFive')}
         </button>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 6 }}>
           {/* Honest about what this button does NOT cover. Site (build-schedule facts) and Phasing
@@ -10336,7 +10407,7 @@ export default function DesignGlossy({
               5-sheet batch (MAX_SHEETS_PER_JOB caps it at 5 and the batch is already full); reach it
               from the Sector chip's own AI toggle. Was silently omitted before — Rory: "it produced
               5 not 8 sheets?" */}
-          <span style={{ fontSize: 11, opacity: 0.65 }}>Whole · Zones · Water · Planting · Structures. Site &amp; Phasing stay exact; Sector has an AI option on its own sheet — lands in your gallery in a few minutes.</span>
+          <span style={{ fontSize: 11, opacity: 0.65 }}>{t('designGlossyBatchNote')}</span>
           {/* Quiet exact-all link (mockup) — the non-AI option. */}
           <button
             type="button"
@@ -10344,7 +10415,7 @@ export default function DesignGlossy({
             disabled={loading !== null}
             style={{ flexShrink: 0, padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
           >
-            {loading === 'exact' ? 'Drawing…' : 'All sheets — exact, no AI →'}
+            {loading === 'exact' ? t('designGlossyDrawing') : t('designGlossyAllExact')}
           </button>
         </div>
         </>
@@ -10357,7 +10428,7 @@ export default function DesignGlossy({
         {aiLayerMode && (
         <>
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
-          Style {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+          {t('designGlossyStyle')} {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
           {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
@@ -10388,7 +10459,7 @@ export default function DesignGlossy({
                 }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={`${s.blurb}${s.recommended ? ' (recommended)' : ''}`}
+                title={`${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -10423,7 +10494,7 @@ export default function DesignGlossy({
                       textTransform: 'uppercase',
                     }}
                   >
-                    Recommended
+                    {t('designGlossyRecommended')}
                   </span>
                 )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
@@ -10439,11 +10510,7 @@ export default function DesignGlossy({
 
       {selectedSheet && (
         <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>Choose your finish below.</strong> Exact Canvas is free and instant. AI Hybrid
-          saves the exact geometry-locked master, then spends <strong>one paid AI render</strong> on
-          a painted underlayer with your exact elements locked back on top. Full Treatment does that,
-          then spends <strong>a second paid AI render</strong> polishing the finished hybrid. None of
-          these choices ever change your canvas design.
+          <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
         </div>
       )}
 
@@ -10561,13 +10628,13 @@ export default function DesignGlossy({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={visibleResultImage}
-                alt={isExactRender ? 'Exact plan sheet of the design' : "AI artist's impression of the design"}
+                alt={t(isExactRender ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
                 style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
               />
               {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
               {!isExactRender && (
                 <span style={{ position: 'absolute', left: 10, bottom: 10, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 999, background: 'rgba(20,16,10,0.72)', color: '#F5E9CE', fontSize: 11.5, fontWeight: 700 }}>
-                  <FlaskConical size={12} /> Beta — may need a re-try
+                  <FlaskConical size={12} /> {t('designGlossyBeta')}
                 </span>
               )}
             </div>
@@ -10579,7 +10646,10 @@ export default function DesignGlossy({
           </div>
           {saved && visibleResultImage === saved.image && (
             <div style={{ fontSize: 12, opacity: 0.65 }}>
-              Saved render · {relativeDate(saved.at)} · {PROVIDER_LABEL[saved.provider]}
+              {formatDesignTranslation(t('designGlossySavedRender'), {
+                date: relativeDate(saved.at),
+                provider: PROVIDER_LABEL[saved.provider],
+              })}
             </div>
           )}
           {/* Flip the SAME sheet between its AI and exact renders. From an exact result this is a
@@ -10633,7 +10703,7 @@ export default function DesignGlossy({
               }}
             >
               <Download size={18} />
-              Download
+              {t('designGlossyDownload')}
             </button>
             {gallery.length > 0 && (
               <button
@@ -10652,7 +10722,7 @@ export default function DesignGlossy({
                 }}
               >
                 <Images size={18} />
-                Saved maps ({gallery.length})
+                {formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}
               </button>
             )}
           </div>
@@ -10663,7 +10733,7 @@ export default function DesignGlossy({
         {/* Gemini note for the analytical sheets (01/02/08 in AI mode) — no Style, no engine. */}
         {!producerStyle && analysisStyle && (
           <div style={{ fontSize: 11.5, opacity: 0.7 }}>
-            Drawn by <strong>Gemini Pro</strong> — an illustrated analysis over your real site. About a minute.
+            {t('designGlossyGeminiNote')}
           </div>
         )}
 
@@ -10678,7 +10748,7 @@ export default function DesignGlossy({
             aria-expanded={moreOpen}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '10px 14px', background: 'transparent', border: 'none', color: DARK, fontWeight: 800, fontSize: 13, cursor: 'pointer' }}
           >
-            <span>More options</span>
+            <span>{t('designGlossyMoreOptions')}</span>
             <span style={{ opacity: 0.55 }}>{moreOpen ? '▴' : '▾'}</span>
           </button>
           {moreOpen && (
@@ -10688,7 +10758,7 @@ export default function DesignGlossy({
               {ENGINES.length > 1 && (
               <div>
                 <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-                  AI engine
+                  {t('designGlossyEngine')}
                 </div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {ENGINES.map((e) => {
@@ -10777,7 +10847,7 @@ export default function DesignGlossy({
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
           {selectedSheet && (
             <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
-              Choose your finish
+              {t('designGlossyFinishHeading')}
             </div>
           )}
           {selectedSheet ? (
@@ -10807,9 +10877,9 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.55 : 1,
               }}
             >
-              <span>Exact Canvas</span>
+              <span>{t('designGlossyExactCanvas')}</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
-                Straight canvas render · instant · no AI cost
+                {t('designGlossyExactCanvasHint')}
               </span>
             </button>
             <button
@@ -10834,9 +10904,9 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.55 : 1,
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} AI Hybrid</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyAiHybrid')}</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
-                AI underlayer + your exact elements on top · 1 paid render
+                {t('designGlossyAiHybridHint')}
               </span>
             </button>
             <button
@@ -10861,9 +10931,9 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.7 : 1,
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} Full Treatment</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyFullTreatment')}</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.78, textAlign: 'center' }}>
-                Hybrid, then a 2nd AI polish pass · 2 paid renders
+                {t('designGlossyFullTreatmentHint')}
               </span>
             </button>
           </div>
@@ -10920,16 +10990,17 @@ export default function DesignGlossy({
         <div style={{ fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
-              Drawn straight from your design — <strong>exact, no AI</strong>. Your satellite,
-              boundary, zones, elements and labels, nothing invented.
+              {t('designGlossyExactFootnote')}
               {aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}
             </>
           ) : (
             <>
               {analysisStyle
-                ? <><strong>Gemini Pro</strong> · illustrated analysis — great to look at, less exact on geometry.</>
-                : <><strong>{ENGINES.find((e) => e.key === engine)?.label}</strong> · if the result looks off, generate again or switch engine (More options).</>}{' '}
-              Your canvas design is always the exact version.
+                ? t('designGlossyAnalysisFootnote')
+                : formatDesignTranslation(t('designGlossyEngineFootnote'), {
+                  engine: ENGINES.find((e) => e.key === engine)?.label ?? '',
+                })}{' '}
+              {t('designGlossyExactVersion')}
             </>
           )}
         </div>
@@ -10953,7 +11024,7 @@ export default function DesignGlossy({
             }}
           >
             <Images size={16} />
-            Saved maps ({gallery.length})
+            {formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}
           </button>
         )}
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
@@ -10972,7 +11043,7 @@ export default function DesignGlossy({
                 onClick={() => setPolishNoChange(null)}
                 style={{ marginTop: 6, padding: 0, background: 'none', border: 'none', color: '#8A6D2A', fontWeight: 700, fontSize: 12, cursor: 'pointer', textDecoration: 'underline' }}
               >
-                Got it
+                {t('designGlossyGotIt')}
               </button>
             </div>
           </div>
@@ -11009,10 +11080,10 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>🖼 Saved maps ({gallery.length})</span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>🖼 {formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}</span>
               <button
                 onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); }}
-                aria-label="Close saved maps"
+                aria-label={t('designGlossyCloseSaved')}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
               >
                 <X size={14} />
@@ -11025,13 +11096,13 @@ export default function DesignGlossy({
                   <button
                     type="button"
                     onClick={() => setGalleryZoomOpen(true)}
-                    aria-label={`Open ${galleryViewItem.label} full screen`}
+                    aria-label={formatDesignTranslation(t('designGlossyOpenFullScreen'), { label: galleryViewItem.label })}
                     style={{ padding: 0, border: 'none', borderRadius: 12, background: 'transparent', cursor: 'zoom-in' }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
                   </button>
-                  <span style={{ marginTop: -7, color: '#8A8172', fontSize: 11, fontWeight: 700 }}>Tap the map to inspect it full screen</span>
+                  <span style={{ marginTop: -7, color: '#8A8172', fontSize: 11, fontWeight: 700 }}>{t('designGlossyInspectFullScreen')}</span>
                   <p style={{ fontSize: 13, color: '#5C5040', margin: 0 }}>{galleryViewItem.label}</p>
                   <div
                     style={{
@@ -11054,7 +11125,7 @@ export default function DesignGlossy({
                       download={`imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: GREEN, color: PAPER, fontWeight: 700, fontSize: 13, textDecoration: 'none' }}
                     >
-                      <Download size={15} /> Download
+                      <Download size={15} /> {t('designDownload')}
                     </a>
                     {/* Native share (WhatsApp-first — how SA farmers actually pass maps around).
                         Rendered only where the Web Share API exists (i.e. phones); data-URL →
@@ -11071,30 +11142,30 @@ export default function DesignGlossy({
                               await navigator.share({ title: galleryViewItem.label, text: `${galleryViewItem.label} — my farm plan, made with ImbewuField`, url: 'https://imbewufield.vercel.app' });
                             }
                           } catch (err) {
-                            if (!(err instanceof DOMException && err.name === 'AbortError')) setError('Could not share this map — use Download instead.');
+                            if (!(err instanceof DOMException && err.name === 'AbortError')) setError(t('designGlossyShareError'));
                           }
                         }}
                         style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${GREEN}`, color: GREEN, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
                       >
-                        <Share2 size={15} /> Share
+                        <Share2 size={15} /> {t('designShare')}
                       </button>
                     )}
                     <button
                       onClick={() => setGalleryViewId(null)}
                       style={{ padding: '8px 14px', borderRadius: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
                     >
-                      ‹ Back
+                      ‹ {t('designBackAction')}
                     </button>
                     <button
                       onClick={() => removeGallery(galleryViewItem.id)}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginLeft: 'auto', padding: '8px 14px', borderRadius: 12, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
                     >
-                      <Trash2 size={15} /> Delete
+                      <Trash2 size={15} /> {t('designDelete')}
                     </button>
                   </div>
                 </div>
               ) : gallery.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>No saved maps yet this session.</p>
+                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>{t('designGlossyNoSaved')}</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
@@ -11113,7 +11184,10 @@ export default function DesignGlossy({
                           // reader users hit the same wall Rory did, with no thumbnail to fall
                           // back on, so the provenance goes in the label too — full words, not
                           // the chip's abbreviation.
-                          aria-label={`Open ${g.label} — ${galleryResultBadge(g)}`}
+                          aria-label={formatDesignTranslation(t('designGlossyOpenResult'), {
+                            label: g.label,
+                            result: galleryResultBadge(g),
+                          })}
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -11134,7 +11208,7 @@ export default function DesignGlossy({
                         </button>
                         <button
                           onClick={() => removeGallery(g.id)}
-                          aria-label={`Delete ${g.label}`}
+                          aria-label={formatDesignTranslation(t('designGlossyDeleteNamed'), { label: g.label })}
                           style={{ position: 'absolute', top: 4, right: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: 8, background: 'rgba(181,58,58,0.92)', border: '1px solid rgba(255,255,255,0.35)', color: '#fff', cursor: 'pointer', boxShadow: '0 1px 4px rgba(20,16,10,0.4)' }}
                         >
                           <Trash2 size={13} />
@@ -11144,13 +11218,13 @@ export default function DesignGlossy({
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                     <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
-                      {storageWarning ?? 'Saved on this device — these stay here after you close the app.'}
+                      {storageWarning ?? t('designGlossySavedOnDevice')}
                     </p>
                     <button
                       onClick={() => { setGallery([]); setGalleryViewId(null); void clearSheets(state.siteId); clearGlossyCacheForSite(state.siteId); }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 9, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 11, cursor: 'pointer', whiteSpace: 'nowrap' }}
                     >
-                      <Trash2 size={12} /> Clear all
+                      <Trash2 size={12} /> {t('designClearAll')}
                     </button>
                   </div>
                 </div>
@@ -11163,7 +11237,7 @@ export default function DesignGlossy({
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`Full-screen view of ${galleryViewItem.label}`}
+          aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), { label: galleryViewItem.label })}
           onClick={() => setGalleryZoomOpen(false)}
           style={{
             position: 'fixed',
@@ -11182,7 +11256,7 @@ export default function DesignGlossy({
           <button
             type="button"
             onClick={() => setGalleryZoomOpen(false)}
-            aria-label="Close full-screen map"
+            aria-label={t('designGlossyCloseFullScreen')}
             style={{
               position: 'fixed',
               top: 14,

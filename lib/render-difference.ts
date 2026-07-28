@@ -40,6 +40,13 @@ export interface DifferenceReport {
   verdict: 'redrawn' | 'filtered-only' | 'unchanged';
 }
 
+export type PaidRenderStage = 'hybrid' | 'polish';
+
+export interface PaidRenderDecision {
+  keep: boolean;
+  message: string | null;
+}
+
 /** Below this per-channel delta a pixel is the same pixel — encoder noise, not a decision. */
 const TRIVIAL_DELTA = 4;
 /** At or above this, a human sees a different surface rather than a shifted tone. */
@@ -114,13 +121,29 @@ export function compareRenders(
  * What to tell the farmer. Deliberately plain and non-technical — the person reading this paid
  * money and deserves to know what they got, in the words they would use themselves.
  */
-export function differenceMessage(report: DifferenceReport): string | null {
+export function differenceMessage(
+  report: DifferenceReport,
+  stage: PaidRenderStage = 'polish',
+): string | null {
   if (report.verdict === 'redrawn') return null;
+  const pass = stage === 'hybrid' ? 'AI pass' : 'polish pass';
+  const fallback = stage === 'hybrid' ? 'exact map' : 'hybrid map';
   if (report.comparedPixels === 0) {
-    return 'The polish pass had nothing it was allowed to change on this sheet. Your hybrid map is unchanged and you have not been charged for a second result.';
+    return `The ${pass} had nothing it was allowed to change on this sheet. Your ${fallback} is unchanged.`;
   }
   if (report.verdict === 'filtered-only') {
-    return 'The polish pass only tinted the map instead of redrawing it, so it is not worth keeping. Your hybrid map is unchanged.';
+    return `The ${pass} only tinted the map instead of redrawing it, so it is not worth keeping. Your ${fallback} is unchanged.`;
   }
-  return 'The polish pass returned the same map it was given, so there is nothing new to show. Your hybrid map is unchanged.';
+  return `The ${pass} returned the same map it was given, so there is nothing new to show. Your ${fallback} is unchanged.`;
+}
+
+/** The one keep/reject decision shared by the Hybrid and polish completion gates. */
+export function paidRenderDecision(
+  report: DifferenceReport,
+  stage: PaidRenderStage,
+): PaidRenderDecision {
+  return {
+    keep: report.verdict === 'redrawn',
+    message: differenceMessage(report, stage),
+  };
 }

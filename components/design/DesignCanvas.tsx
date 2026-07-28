@@ -22,6 +22,8 @@ import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
 import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
 import { WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
+import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -535,6 +537,7 @@ export default function DesignCanvas({
   onConfirmCleanup,
   onCancelCleanup,
 }: DesignCanvasProps) {
+  const { t } = useLanguage();
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
 
@@ -2024,7 +2027,7 @@ export default function DesignCanvas({
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      Use in design
+                      {t('designCanvasUseInDesign')}
                     </div>
                   </foreignObject>
                 </g>
@@ -2216,7 +2219,7 @@ export default function DesignCanvas({
                                 onChange={(e) => setEditingLevelText(e.target.value)}
                                 onPointerDown={(e) => e.stopPropagation()}
                                 {...keyHandlers}
-                                placeholder="Level here (m), e.g. 0.0 or -3.0"
+                                placeholder={t('designCanvasLevelPlaceholder')}
                                 inputMode="decimal"
                                 style={fieldStyle}
                               />
@@ -2226,7 +2229,9 @@ export default function DesignCanvas({
                                   onChange={(e) => setEditingSlopeText(e.target.value)}
                                   onPointerDown={(e) => e.stopPropagation()}
                                   {...keyHandlers}
-                                  placeholder={`Slope here (%) — avg ${wholeSiteAvg != null ? wholeSiteAvg.toFixed(0) : '—'}%`}
+                                  placeholder={formatDesignTranslation(t('designCanvasSlopePlaceholder'), {
+                                    average: wholeSiteAvg != null ? wholeSiteAvg.toFixed(0) : '—',
+                                  })}
                                   inputMode="decimal"
                                   style={fieldStyle}
                                 />
@@ -3284,8 +3289,8 @@ export default function DesignCanvas({
           }}
         >
           {contours.tooFlat
-            ? 'Ground reads flat here — no useful contours to show'
-            : `Approx. contours ~${contours.intervalM} m apart — lay swales/vetiver along these lines`}
+            ? t('designCanvasFlatContours')
+            : formatDesignTranslation(t('designCanvasContourInterval'), { interval: contours.intervalM })}
         </div>
       )}
 
@@ -3322,8 +3327,8 @@ export default function DesignCanvas({
       {onToggleBaseMap && (
         <button
           type="button"
-          aria-label={activeLayers.baseMap ? 'Hide base map' : 'Show base map'}
-          title={activeLayers.baseMap ? 'Base map: shown — tap to hide' : 'Base map: hidden — tap to show'}
+          aria-label={t(activeLayers.baseMap ? 'designCanvasHideBase' : 'designCanvasShowBase')}
+          title={t(activeLayers.baseMap ? 'designCanvasBaseShown' : 'designCanvasBaseHidden')}
           onClick={onToggleBaseMap}
           style={{
             position: 'absolute',
@@ -3355,8 +3360,8 @@ export default function DesignCanvas({
         <button
           type="button"
           aria-pressed={!!activeLayers.sector}
-          aria-label={activeLayers.sector ? 'Sector energies on — tap to hide' : 'Show sector energies (sun, wind, fire, water)'}
-          title={activeLayers.sector ? 'Sector energies: shown — tap to hide' : 'Sector energies: sun path, wind, fire & water — tap to show'}
+          aria-label={t(activeLayers.sector ? 'designCanvasSectorOn' : 'designCanvasShowSector')}
+          title={t(activeLayers.sector ? 'designCanvasSectorShown' : 'designCanvasSectorHidden')}
           onClick={onToggleSector}
           style={{
             position: 'absolute',
@@ -3387,8 +3392,8 @@ export default function DesignCanvas({
         <button
           type="button"
           aria-pressed={!!additiveSelect}
-          aria-label={additiveSelect ? 'Multi-select on — tap to turn off' : 'Select multiple'}
-          title={additiveSelect ? 'Selecting multiple — tap items to add, then Delete' : 'Select multiple items'}
+          aria-label={t(additiveSelect ? 'designCanvasMultiOn' : 'designCanvasSelectMultiple')}
+          title={t(additiveSelect ? 'designCanvasSelectingMultiple' : 'designCanvasSelectMultiple')}
           onClick={onToggleAdditive}
           style={{
             position: 'absolute',
@@ -3489,14 +3494,14 @@ export default function DesignCanvas({
             onClick={() => setDraftPoints([])}
             style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
           >
-            ✕ Cancel
+            {t('designCanvasCancel')}
           </button>
           <button
             type="button"
             onClick={() => setDraftPoints((prev) => prev.slice(0, -1))}
             style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
           >
-            ↩ Point
+            {t('designCanvasPoint')}
           </button>
           {draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
             <button
@@ -3517,7 +3522,13 @@ export default function DesignCanvas({
                 animation: 'imbewuFinishPulse 1.8s ease-in-out infinite',
               }}
             >
-              ✓ Finish {tool === 'line' ? 'line' : areaFeature ? GROUND_FEATURES[areaFeature].label : `Zone ${zoneDraw}`}
+              {formatDesignTranslation(t('designCanvasFinish'), {
+                thing: tool === 'line'
+                  ? t('designCanvasLine')
+                  : areaFeature
+                    ? GROUND_FEATURES[areaFeature].label
+                    : formatDesignTranslation(t('designCanvasZone'), { zone: zoneDraw }),
+              })}
             </button>
           )}
         </div>
@@ -3564,7 +3575,7 @@ export default function DesignCanvas({
               onClick={() => onCancelTidy?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {tidyPreview.canConfirm ? '✕ Cancel' : 'Close'}
+              {tidyPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {tidyPreview.canConfirm && (
               <button
@@ -3584,7 +3595,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                ✓ Tidy outline
+                {t('designCanvasTidy')}
               </button>
             )}
           </div>
@@ -3631,7 +3642,7 @@ export default function DesignCanvas({
               onClick={() => onCancelSnap?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {snapPreview.canConfirm ? '✕ Cancel' : 'Close'}
+              {snapPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {snapPreview.canConfirm && (
               <button
@@ -3651,7 +3662,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                ✓ Snap to neighbour
+                {t('designCanvasSnap')}
               </button>
             )}
           </div>
@@ -3698,7 +3709,7 @@ export default function DesignCanvas({
               onClick={() => onCancelCleanup?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {cleanupPreview.canConfirm ? '✕ Cancel' : 'Close'}
+              {cleanupPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {cleanupPreview.canConfirm && (
               <button
@@ -3718,7 +3729,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                ✓ Clean up
+                {t('designCanvasCleanup')}
               </button>
             )}
           </div>
