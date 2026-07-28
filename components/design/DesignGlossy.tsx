@@ -7833,7 +7833,11 @@ interface SavedGlossy {
 //        the chip edge from striking through the tops of the week text.
 //   v61 — 2026-07-28: exact sheet paths and polygons remove shallow hand jitter at paint time while
 //        preserving meaningful corners and every saved vertex.
-const PLAN_VERSION = 'v61';
+//   v62 — 2026-07-28: non-reference label pills clamp from their measured browser-font width,
+//        preventing wide fallbacks from crossing the right map edge. (Two branches each landed a
+//        'v61' independently; this is the merge of both, so the number moves on rather than one
+//        of the two render changes quietly inheriting the other's cache entry.)
+const PLAN_VERSION = 'v62';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'

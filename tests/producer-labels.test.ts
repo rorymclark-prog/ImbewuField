@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { producerLabels } from '../lib/producer-labels.ts';
 import type { LabelRefLayers } from '../lib/producer-labels.ts';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
-import type { ProducerLabel } from '../lib/image-producer.ts';
+import { fitMeasuredPillX, type ProducerLabel } from '../lib/image-producer.ts';
 
 // ── Fixture: a WATER-sheet design that reproduces the production bug ─────────
 //
@@ -84,6 +84,10 @@ const H = 1488;
 
 function labels(): ProducerLabel[] {
   return producerLabels(waterSheetState(), waterSheetRefLayers(), W, H, 'water', false);
+}
+
+function labelsAt(width: number, height: number): ProducerLabel[] {
+  return producerLabels(waterSheetState(), waterSheetRefLayers(), width, height, 'water', false);
 }
 
 // Mirrors burnLabels' non-blueprint pill geometry (lib/image-producer.ts): fs = 26, padX = 14,
@@ -166,4 +170,62 @@ test('producerLabels never renders the same text twice on the same side', () => 
     0,
     `expected no duplicate label text on either side, found ${duplicated.length} duplicated text(s): ${duplicated.map(([k, c]) => `${k} ×${c}`).join(', ')}`,
   );
+});
+
+test('the longest catalog name stays inside every measured output width even with a wider fallback font', () => {
+  const state = waterSheetState();
+  state.items = [{
+    id: 'longest-label',
+    defId: 'greywater_diverter',
+    x: 0.82,
+    y: 0.5,
+  }];
+  const widths = [700, 900, 1100, 1400, 1800, 2400];
+
+  for (const width of widths) {
+    const [label] = producerLabels(state, waterSheetRefLayers(), width, Math.round(width / 1.5), 'water', false);
+    assert.ok(label, `W=${width}: longest catalog item should produce a label`);
+
+    // producerLabels deliberately estimates before the browser resolves its font. Model a wider
+    // fallback than that estimate; the final draw must use the measured width and still fit.
+    const measuredWidth = 28 + label.text.length * 26 * 0.70;
+    const fittedX = fitMeasuredPillX(label.ax, measuredWidth, width);
+    assert.ok(fittedX >= 0, `W=${width}: label starts outside the sheet`);
+    assert.ok(fittedX + measuredWidth <= width + 0.001, `W=${width}: label ends outside the sheet`);
+  }
+});
+
+test('dense producer-label columns stay ordered and non-overlapping at real boundary-derived map shapes', () => {
+  // Tall, square and maximally-wide maps from calculateBoundaryPresentationLayout. These are the
+  // actual shapes the renderer can now produce, rather than one snapshot constant.
+  for (const [width, height] of [[784, 3136], [1568, 1568], [2404, 1022]] as const) {
+    const out = labelsAt(width, height);
+    const rects = out.map((label) => {
+      const fs = 26;
+      const padX = 14;
+      const mult = label.kind === 'header' ? 0.66 : 0.62;
+      const pillWidth = padX * 2 + label.text.length * fs * mult;
+      const x = fitMeasuredPillX(label.ax, pillWidth, width);
+      return { left: x, right: x + pillWidth, top: label.ay - 20, bottom: label.ay + 20 };
+    });
+    for (let i = 0; i < rects.length; i++) {
+      assert.ok(rects[i].left >= 0 && rects[i].right <= width, `${width}x${height}: label ${i} is outside`);
+      for (let j = i + 1; j < rects.length; j++) {
+        assert.equal(rectsOverlap(rects[i], rects[j]), false, `${width}x${height}: labels ${i}/${j} overlap`);
+      }
+    }
+
+    for (const side of ['left', 'right'] as const) {
+      const leaders = out
+        .filter((label) => label.leader !== false)
+        .filter((label) => (label.ax < width / 2 ? 'left' : 'right') === side)
+        .sort((a, b) => a.cy - b.cy);
+      for (let i = 1; i < leaders.length; i++) {
+        assert.ok(
+          leaders[i].ay >= leaders[i - 1].ay,
+          `${width}x${height} ${side}: leader order reverses, so two leaders can cross`,
+        );
+      }
+    }
+  }
 });
