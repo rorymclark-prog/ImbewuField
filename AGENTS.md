@@ -58,6 +58,14 @@ top unstarted item unless you have been given something else. Every item in it w
 before it was written down — if you find one is already fixed or its premise is wrong, say so and
 skip it. That is a useful result, not a failure.
 
+**Do not stop after one item.** Push the branch, write the report, then take the next item straight
+away. Claude reviews and merges behind you; waiting for that review is what turns a long run into a
+short one. Only stop when the queue is empty or something is genuinely blocking you — and if it is
+blocking, skip to an item it does not block rather than idling.
+
+If the next item touches a file you changed on a branch that has not been merged yet, branch from
+that branch instead of `main`, and say so in the report so the merge order is obvious.
+
 ---
 
 ## 2. Push, or the work does not exist
