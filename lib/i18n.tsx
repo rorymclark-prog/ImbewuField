@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
 
 export const APP_LANGS = [
   { code: 'en', label: 'English', native: 'English' },
@@ -18,8 +19,50 @@ export const APP_LANGS = [
 
 type Dict = Record<string, string>;
 
+// Queue item 10 establishes the Design Studio i18n path without pretending unreviewed farming
+// translations are safe. Spreading this block into every locale makes the pending English explicit
+// in each slot (rather than hiding gaps behind translate()'s fallback); translators can then
+// override individual keys inside their locale after review.
+const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
+  designStepBase: 'Base',
+  designStepSector: 'Sector',
+  designStepWater: 'Water',
+  designStepZones: 'Zones',
+  designStepPlanting: 'Planting',
+  designStepStructures: 'Structures',
+  designStepReview: 'Review',
+  designStepGlossy: 'Glossy',
+  designGuidanceBase: 'Check your boundary and house are showing — trace them on the main map if not.',
+  designGuidanceSector: "The land's energies — sun, wind, fire, water. Nothing to draw: check it matches what you know of your land.",
+  designGuidanceWater: 'Start with water: place tanks by roofs, mark taps, draw swale lines across the slope.',
+  designGuidanceZones: 'Paint your zones — Zone 1 nearest the kitchen door, wilder as numbers grow. Tap "Where do my zones go?" if you want Lima\'s advice.',
+  designGuidancePlanting: "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
+  designGuidanceStructures: 'Add sheds, pens, compost, beehives — mind the beehive flight path.',
+  designGuidanceReview: 'Toggle layers to check each map: water, zones, planting.',
+  designGuidanceGlossy: "Glossy map (beta · experimental) — the AI isn't reliable yet, and you may need a few tries.",
+  designWhyThisStep: 'Why this step?',
+  designStepProgress: 'Step {current} of {total}',
+  designBack: 'Back',
+  designNext: 'Next',
+  designNextStep: 'Next: {step}',
+  designGuideAllDone: 'All done — open to review',
+  designGuideStepByStep: 'step-by-step',
+  designGuideMinimise: 'Minimise guide',
+  designGuideCelebration: 'Nice — ticked off. Here’s the next one.',
+  designGuideOptional: 'optional',
+  designGuideSkipped: 'skipped',
+  designGuideDoThis: 'Do this',
+  designGuideSkip: 'Skip',
+  designGuideLater: 'Later',
+  designGuidePlanCrops: 'Plan my crops',
+  designGuidePlanCropsHint: 'Just beds & trees? Jump straight to planning what to grow — you can always come back.',
+  designGuideChecklistWorked: 'You’ve worked through the {step} checklist.',
+  designGuideWhyMatters: 'Why this matters',
+};
+
 const T: Record<string, Dict> = {
   en: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Permaculture Intelligence',
     welcomeTitle: 'Welcome to ImbewuField',
     welcomeSub: 'Smart permaculture planning for South African land.',
@@ -874,6 +917,7 @@ const T: Record<string, Dict> = {
     addToolsPanelRow: 'Add to my map',
   },
   af: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Permakultuur-Intelligensie',
     welcomeTitle: 'Welkom by ImbewuField',
     welcomeSub: 'Slim permakultuur-beplanning vir Suid-Afrikaanse grond.',
@@ -1591,6 +1635,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Begin nou',
   },
   zu: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Ubuhlakani be-Permaculture',
     welcomeTitle: 'Wamukelekile ku-ImbewuField',
     welcomeSub: 'Ukuhlela kwe-permaculture okuhlakaniphile komhlaba waseNingizimu Afrika.',
@@ -2308,6 +2353,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Qala',
   },
   xh: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Ubukrelekrele be-Permaculture',
     welcomeTitle: 'Wamkelekile ku-ImbewuField',
     welcomeSub: 'Ucwangciso lwe-permaculture olukrelekrele lomhlaba waseMzantsi Afrika.',
@@ -3025,6 +3071,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Qala',
   },
   st: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Bohlale ba Permaculture',
     welcomeTitle: 'O amohelehile ho ImbewuField',
     welcomeSub: 'Moralo o bohlale oa permaculture bakeng sa naha ea Afrika Boroa.',
@@ -3742,6 +3789,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Qala',
   },
   nso: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Bohlale bja Permaculture',
     welcomeTitle: 'O amogetšwe go ImbewuField',
     welcomeSub: 'Peakanyo ye bohlale ya permaculture ya naga ya Afrika Borwa.',
@@ -4459,6 +4507,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Thoma',
   },
   tn: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Botlhale jwa Permaculture',
     welcomeTitle: 'O amogetswe mo ImbewuField',
     welcomeSub: 'Thulaganyo e e botlhale ya permaculture ya lefatshe la Aforika Borwa.',
@@ -5176,6 +5225,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Simolola',
   },
   ts: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Vutlhari bya Permaculture',
     welcomeTitle: 'U amukeriwile eka ImbewuField',
     welcomeSub: 'Ku kunguhata ko tlhariha ka permaculture ka misava ya Afrika Dzonga.',
@@ -5893,6 +5943,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Tshika',
   },
   ve: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Vhutali ha Permaculture',
     welcomeTitle: 'No ṱanganedzwa kha ImbewuField',
     welcomeSub: 'Khunguwedzo ya vhutali ya permaculture ya mavu a Afrika Tshipembe.',
@@ -6610,6 +6661,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Thoma',
   },
   ss: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Buhlakani be-Permaculture',
     welcomeTitle: 'Wemukelekile ku-ImbewuField',
     welcomeSub: 'Kuhlela lokuhlakaniphile kwe-permaculture kwemhlaba waseNingizimu Afrika.',
@@ -7327,6 +7379,7 @@ const T: Record<string, Dict> = {
     popiaGetStarted: 'Qala',
   },
   nr: {
+    ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Ubuhlakani be-Permaculture',
     welcomeTitle: 'Wamukelekile ku-ImbewuField',
     welcomeSub: 'Ukuhlela okuhlakaniphileko kwe-permaculture komhlaba weSewula Afrika.',
@@ -8070,11 +8123,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const done = localStorage.getItem('permamap_onboarded') === '1';
     if (saved) setLangState(saved);
     setOnboarded(done);
+
+    // /farmer currently carries its own provider inside the root provider. Without a same-tab
+    // signal, changing its language updated only the inner tree; client navigation to Design
+    // Studio kept reading the root provider's old language until a full reload.
+    return listenForLanguageChanges(window, setLangState);
   }, []);
 
   const setLang = (code: string) => {
     setLangState(code);
     localStorage.setItem('permamap_lang', code);
+    announceLanguageChange(window, code);
   };
   const completeOnboarding = (code: string) => {
     setLang(code);

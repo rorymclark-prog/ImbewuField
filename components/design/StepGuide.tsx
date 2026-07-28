@@ -12,7 +12,13 @@ import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { subStepsForStep, type SubStep, type SubStepArm, type SubStepCtx } from '@/lib/design-substeps';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
-import { STEP_LABELS, STEP_ORDER, LessonPanel } from './DesignWizard';
+import {
+  DESIGN_CHROME_KEYS,
+  formatDesignTranslation,
+  translatedDesignStepLabel,
+} from '@/lib/design-studio-i18n';
+import { useLanguage } from '@/lib/i18n';
+import { STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
 import SectorSummary from './SectorSummary';
@@ -61,6 +67,7 @@ export interface StepGuideProps {
 }
 
 export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCropsHref }: StepGuideProps) {
+  const { t, lang } = useLanguage();
   const subSteps = useMemo(() => subStepsForStep(step), [step]);
 
   // Collapsed by default — the one-line form still shows the current task, so guidance stays
@@ -129,10 +136,12 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
   const lesson = step === 'glossy' || step === 'review' ? undefined : DESIGN_STEP_LESSONS[step];
   if (subSteps.length === 0) return null;
 
-  const stepLabel = STEP_LABELS[step];
+  const stepLabel = translatedDesignStepLabel(t, step);
   const accent = STEP_ACCENT[step];
   const idx = STEP_ORDER.indexOf(step);
-  const nextLabel = idx >= 0 && idx < STEP_ORDER.length - 1 ? STEP_LABELS[STEP_ORDER[idx + 1]] : null;
+  const nextLabel = idx >= 0 && idx < STEP_ORDER.length - 1
+    ? translatedDesignStepLabel(t, STEP_ORDER[idx + 1])
+    : null;
   const current: SubStep | null = allResolved ? null : subSteps[currentIndex];
   const hasBeds = state.items.some((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId));
   const showPlanCrops = step === 'planting' && hasBeds && !!planCropsHref;
@@ -183,7 +192,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
             {doneCount}/{subSteps.length}
           </span>
           <span style={{ fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-            {allResolved ? 'All done — open to review' : current?.title}
+            {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current?.title}
           </span>
           <ChevronDown size={16} color={accent} style={{ flexShrink: 0 }} />
         </button>
@@ -209,14 +218,14 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: accent }}>
           <Compass size={17} color={PAPER} style={{ flexShrink: 0 }} />
           <span style={{ fontWeight: 900, fontSize: 13.5, color: PAPER, letterSpacing: 0.3, textTransform: 'uppercase' }}>{stepLabel}</span>
-          <span style={{ fontSize: 11.5, fontWeight: 600, color: PAPER, opacity: 0.85 }}>step-by-step</span>
+          <span style={{ fontSize: 11.5, fontWeight: 600, color: PAPER, opacity: 0.85 }}>{t(DESIGN_CHROME_KEYS.guideStepByStep)}</span>
           <span style={{ marginLeft: 'auto', fontSize: 12, fontWeight: 800, color: PAPER }}>
             {doneCount}/{subSteps.length}
           </span>
           <button
             type="button"
             onClick={toggleCollapsed}
-            aria-label="Minimise guide"
+            aria-label={t(DESIGN_CHROME_KEYS.guideMinimise)}
             style={{ display: 'inline-flex', border: 'none', background: 'transparent', color: PAPER, cursor: 'pointer', padding: 4 }}
           >
             <ChevronUp size={17} />
@@ -225,7 +234,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
 
         {celebrate && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(31,77,43,0.10)', color: GREEN, fontWeight: 700, fontSize: 12.5 }}>
-            <PartyPopper size={14} /> Nice — ticked off. Here’s the next one.
+            <PartyPopper size={14} /> {t(DESIGN_CHROME_KEYS.guideCelebration)}
           </div>
         )}
 
@@ -253,10 +262,10 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
                     <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : DARK, textDecoration: done ? 'line-through' : 'none' }}>
                       {ss.title}
                       {ss.optional && !done && (
-                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>optional</span>
+                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
                       )}
                       {skipped && (
-                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'rgba(11,18,11,0.4)', textTransform: 'uppercase', letterSpacing: 0.3 }}>skipped</span>
+                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'rgba(11,18,11,0.4)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideSkipped)}</span>
                       )}
                     </div>
 
@@ -274,7 +283,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
                               onClick={() => onArm(ss.arm)}
                               style={{ minHeight: 40, padding: '8px 16px', borderRadius: 10, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 13, cursor: 'pointer' }}
                             >
-                              Do this
+                              {t(DESIGN_CHROME_KEYS.guideDoThis)}
                             </button>
                           )}
                           <button
@@ -282,7 +291,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
                             onClick={() => skip(ss.id)}
                             style={{ minHeight: 40, padding: '8px 12px', borderRadius: 10, border: '1px solid rgba(11,18,11,0.18)', background: 'transparent', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: 'pointer' }}
                           >
-                            {ss.optional ? 'Skip' : 'Later'}
+                            {ss.optional ? t(DESIGN_CHROME_KEYS.guideSkip) : t(DESIGN_CHROME_KEYS.guideLater)}
                           </button>
                           <SpeakButton text={narration} englishText={narration} size={16} color={GREEN} />
                         </div>
@@ -310,10 +319,10 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
               href={planCropsHref!}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 6, alignSelf: 'flex-start', minHeight: 42, padding: '8px 16px', borderRadius: 10, background: OCHRE, color: PAPER, fontWeight: 800, fontSize: 13, textDecoration: 'none' }}
             >
-              <Sprout size={16} /> Plan my crops <ArrowRight size={15} />
+              <Sprout size={16} /> {t(DESIGN_CHROME_KEYS.guidePlanCrops)} <ArrowRight size={15} />
             </Link>
             <div style={{ fontSize: 11, color: 'rgba(11,18,11,0.6)' }}>
-              Just beds & trees? Jump straight to planning what to grow — you can always come back.
+              {t(DESIGN_CHROME_KEYS.guidePlanCropsHint)}
             </div>
           </div>
         )}
@@ -323,7 +332,9 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderTop: '1px solid rgba(11,18,11,0.08)', background: 'rgba(31,77,43,0.06)' }}>
             <Check size={16} color={GREEN} />
             <span style={{ fontSize: 12.5, color: DARK, flex: 1 }}>
-              You’ve worked through the {stepLabel.toLowerCase()} checklist.
+              {formatDesignTranslation(t(DESIGN_CHROME_KEYS.guideChecklistWorked), {
+                step: stepLabel.toLocaleLowerCase(lang),
+              })}
             </span>
             {nextLabel && (
               <button
@@ -331,7 +342,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
                 onClick={onNextStep}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 4, minHeight: 38, padding: '6px 14px', borderRadius: 10, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 12.5, cursor: 'pointer' }}
               >
-                Next: {nextLabel} <ArrowRight size={15} />
+                {formatDesignTranslation(t(DESIGN_CHROME_KEYS.nextStep), { step: nextLabel })} <ArrowRight size={15} />
               </button>
             )}
           </div>
@@ -346,7 +357,7 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
               aria-expanded={lessonOpen}
               style={{ display: 'flex', alignItems: 'center', gap: 6, minHeight: 40, border: 'none', background: 'transparent', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', padding: '0 2px' }}
             >
-              <HelpCircle size={15} /> Why this matters {lessonOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+              <HelpCircle size={15} /> {t(DESIGN_CHROME_KEYS.guideWhyMatters)} {lessonOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
             </button>
             {lessonOpen && <LessonPanel lesson={lesson} />}
           </div>
