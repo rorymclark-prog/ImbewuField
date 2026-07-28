@@ -47,7 +47,11 @@ jobs:
         run: |
           vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
           vercel build --token="$VERCEL_TOKEN"
-          url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")
+          # One tarball, not ~500 files — see the long note in deploy.yml. Previews are the bigger
+          # half of that problem: every branch push from either agent deploys, so a nine-item Codex
+          # run can spend the repo's whole daily upload quota on builds nobody opened, and then the
+          # thing that cannot deploy is PRODUCTION.
+          url=$(vercel deploy --prebuilt --archive=tgz --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed preview → $url"
       # ONE STABLE URL PER BRANCH. Originally every branch aliased imbewufield-preview, which in a

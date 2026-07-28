@@ -50,7 +50,21 @@ jobs:
         run: |
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
           vercel build --prod --token="$VERCEL_TOKEN"
-          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+          # --archive=tgz UPLOADS ONE TARBALL INSTEAD OF ~500 SEPARATE FILES, and it is the
+          # difference between deploying and not deploying at all.
+          #
+          # On 2026-07-28 every deploy — prod and preview — began failing with
+          # `Too many requests … (more than 5000, code: "api-upload-free")`. The free plan counts
+          # UPLOADED FILES per 24h, and public/ alone is 206 files (62 MB of course audio,
+          # animations and decks) before the .next chunks. That puts the ceiling at roughly ten
+          # deploys a day across the whole repo, which a two-agent day passes before lunch.
+          #
+          # It hid because the BUILD still succeeded — only the upload failed, at the very end. So
+          # the run was red in a place nobody reads, production sat 23 commits behind for hours,
+          # and the farmer's update banner correctly showed nothing: there was genuinely no new
+          # build to tell them about. Vercel's own error message recommends this flag; the whole
+          # deployment then counts as one upload.
+          url=$(vercel deploy --prebuilt --prod --archive=tgz --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed → $url"
       - name: Point all domains at the new deployment
