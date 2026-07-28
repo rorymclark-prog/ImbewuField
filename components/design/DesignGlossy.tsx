@@ -2899,10 +2899,30 @@ function drawBlueprintGround(
       ? hard ? (isContent ? '28' : '16') : (isContent ? '38' : '20')
       : hard ? (isContent ? '55' : '33') : (isContent ? '99' : '55');
     const strokeAlpha = illustrated ? (isContent ? '80' : '5A') : (isContent ? 'F2' : 'B0');
+    // A ROOF IS NOT GROUND, SO IT GETS NO GROUND WASH.
+    //
+    // Rory, on a finished sheet: "the quality of the polygons everything is just not good at all",
+    // pointing at flat grey rectangles where his buildings are. Half of that was the placeholder in
+    // drawMarks, fixed separately. This is the other half, and it is the one that shows on the FREE
+    // exact sheet: every ground feature here is washed with its own colour, and `house` was in the
+    // set — so a Studio-traced building got a 33% grey layer painted over the real roof.
+    //
+    // The wash is right for ground. Lawn, orchard, cleared veld, patio: the photograph shows you
+    // green, and the wash is what tells you which green has been claimed for what. A roof is the
+    // opposite case. The satellite already shows the actual building, photographed from above with
+    // its true ridges, wings and shadow — the single most recognisable thing on a farmer's own
+    // plot — and covering it with flat grey replaces information with a rectangle.
+    //
+    // The outline below still draws, so the building is still delineated and still legible in the
+    // legend. `houseCovered` does not catch this: it only counts LEGACY refLayers houses, and
+    // Studio-traced house zones fall straight through it.
+    const isRoof = z.feature === 'house';
     ctx.save();
     blueprintRing(ctx, z.points, px, py);
-    ctx.fillStyle = `${meta.color}${fillAlpha}`;
-    ctx.fill();
+    if (!isRoof) {
+      ctx.fillStyle = `${meta.color}${fillAlpha}`;
+      ctx.fill();
+    }
     if (hard) {
       ctx.clip();
       const xs = z.points.map((p) => px(p[0]));
@@ -2921,8 +2941,12 @@ function drawBlueprintGround(
     }
     ctx.restore();
     blueprintRing(ctx, z.points, px, py);
-    ctx.strokeStyle = `${meta.color}${strokeAlpha}`;
-    ctx.lineWidth = illustrated ? 1.4 : 2.5;
+    // With no fill behind it, a roof's outline is the only thing marking the building — and the
+    // feature's own grey against a dark aerial is barely a line. White, and thicker, matching the
+    // treatment the model composite uses so a house looks the same on the free sheet and the paid
+    // one. Every other feature keeps its own colour, which is how the legend stays readable.
+    ctx.strokeStyle = isRoof ? 'rgba(255,255,255,0.96)' : `${meta.color}${strokeAlpha}`;
+    ctx.lineWidth = isRoof ? (illustrated ? 2.4 : 3.5) : (illustrated ? 1.4 : 2.5);
     ctx.stroke();
   }
 }
