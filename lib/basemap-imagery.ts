@@ -30,21 +30,46 @@ export const ESRI_PROVIDER = 'esri' as const;
 export type BasemapProvider = typeof MAPBOX_PROVIDER | typeof ESRI_PROVIDER;
 
 /**
+ * The licensed Esri key, or '' when none is configured.
+ *
+ * THE OPEN ENDPOINT IS NOT AN OPTION AND IS DELIBERATELY NOT IN THIS FILE. Esri's World Imagery is
+ * reachable without any key at server.arcgisonline.com, and that is how this was first prototyped —
+ * but ArcGIS Online content is licensed for "personal or noncommercial use", where noncommercial
+ * means the service is provided at no charge and generates no income. ImbewuField invoices farmers
+ * and sells paid renders, so it is commercial use and that endpoint would be a licence breach. It
+ * was removed rather than left behind a flag, because a flag is something somebody eventually flips.
+ *
+ * The licensed route is ArcGIS Location Platform, which explicitly permits unlimited commercial
+ * applications and includes 2 000 000 basemap tiles a month free. A plan frame costs ~4 tiles, so
+ * that free tier is on the order of half a million plans a month.
+ */
+export const ARCGIS_API_KEY =
+  (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_ARCGIS_API_KEY) || '';
+
+/**
  * Which imagery the app draws under a plan.
  *
- * THE DEFAULT IS STILL MAPBOX ON PURPOSE. Esri's imagery is far better over the rural sites this
- * app exists to serve — the measurements are above and the difference is not subtle — but changing
- * a commercial product's imagery supplier is a licensing decision, not an engineering one. Esri's
- * World Imagery carries its own terms and an attribution obligation, and that call belongs to
- * whoever owns the business, not to whoever wrote the renderer.
+ * NOT A HAND-FLIPPED CONSTANT. It follows the key: configure NEXT_PUBLIC_ARCGIS_API_KEY and every
+ * plan is drawn on Esri's imagery; leave it unset and nothing changes from Mapbox. That way the
+ * switch cannot be thrown before the licence exists to back it, and turning it on later needs no
+ * code change at all.
  *
- * The path is complete, tested and verified end to end. Flipping this one constant to
- * ESRI_PROVIDER is the entire change.
+ * Why it is worth turning on, measured 2026-07-29 across eight rural sites in seven provinces:
+ * Esri holds real imagery to z18 everywhere tested, then serves an identical 2 521-byte placeholder
+ * at z19; Mapbox's tile bytes fall monotonically with zoom at every one of those sites, which is the
+ * signature of a single coarse image being enlarged. Compared side by side at Ubhejane (KZN) and
+ * Mthatha (Eastern Cape) — 700 km apart — Esri resolves individual trees, footpaths, fence lines and
+ * parked vehicles where Mapbox resolves nothing.
  */
-export const SATELLITE_PROVIDER: BasemapProvider = MAPBOX_PROVIDER;
+export function satelliteProvider(): BasemapProvider {
+  return ARCGIS_API_KEY ? ESRI_PROVIDER : MAPBOX_PROVIDER;
+}
 
-/** Credit line for whatever provider is live, or '' when none is required. */
-export function basemapAttribution(provider: BasemapProvider = SATELLITE_PROVIDER): string {
+/** Credit line for whatever provider is live, or '' when none is required.
+ *
+ *  Esri's imagery must be credited wherever it is shown — this is a licence term, not a courtesy,
+ *  so the string travels with the provider rather than being left to each sheet to remember. */
+export function basemapAttribution(provider: BasemapProvider = satelliteProvider()): string {
   return provider === ESRI_PROVIDER ? ESRI_ATTRIBUTION : '';
 }
 
@@ -58,8 +83,10 @@ export const ESRI_MAX_NATIVE_ZOOM = 18;
 /** Required credit for Esri World Imagery. Rendered on any sheet that uses it. */
 export const ESRI_ATTRIBUTION = 'Imagery: Esri, Maxar, Earthstar Geographics';
 
+/** ArcGIS Location Platform's licensed World Imagery tiles. Same /tile/{z}/{row}/{col} shape as the
+ *  open ArcGIS Online service, on the authenticated host and with a token. */
 export const ESRI_TILE_URL =
-  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile';
+  'https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile';
 
 const TILE_PX = 256;
 
