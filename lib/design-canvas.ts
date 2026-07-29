@@ -8,7 +8,7 @@
 
 import type { Geometry, Position } from 'geojson';
 import type { DesignLayer } from '@/lib/design-studio';
-import type { LocalWindObservation } from '@/lib/local-wind';
+import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 
 // ── Shared types (verbatim contract) ──────────────────────────────────────────
 
@@ -491,6 +491,42 @@ export function computeCanvasFrame(
 export const DESIGN_CANVAS_CHANGED_EVENT = 'imbewu-design-canvas-changed';
 
 const keyFor = (siteId: string) => `imbewu_design_canvas_${siteId}`;
+const CANVAS_STEPS = new Set<WizardStep>([
+  'base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy',
+]);
+function canvasRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function finiteCanvasPoint(value: unknown): value is [number, number] {
+  return Array.isArray(value) && value.length === 2
+    && value.every((coordinate) => typeof coordinate === 'number'
+      && Number.isFinite(coordinate) && coordinate >= 0 && coordinate <= 1);
+}
+
+function uniqueNonEmptyIds(values: unknown[]): boolean {
+  const ids = values.map((value) => canvasRecord(value) ? value.id : undefined);
+  return ids.every((id) => typeof id === 'string' && id.length > 0)
+    && new Set(ids).size === ids.length;
+}
+
+function dedupeCanvasRows(values: unknown[]): unknown[] {
+  const seen = new Set<string>();
+  return values.filter((value) => {
+    if (!canvasRecord(value) || typeof value.id !== 'string' || !value.id) return true;
+    if (seen.has(value.id)) return false;
+    seen.add(value.id);
+    return true;
+  });
+}
+
+function optionalFiniteCanvasNumber(value: unknown): boolean {
+  return value === undefined || (typeof value === 'number' && Number.isFinite(value));
+}
+
+function optionalCanvasText(value: unknown): boolean {
+  return value === undefined || typeof value === 'string';
+}
 
 // Legacy designs (and some cross-device round-trips) persisted a zone's `zone` as a STRING
 // ("1") rather than the number 1. Object-key access (ZONE_DEFS[z.zone]) and the number badge
@@ -578,13 +614,112 @@ export function normalizeZoneNumbers(state: DesignCanvasState): DesignCanvasStat
   return changed ? { ...state, zones } : state;
 }
 
+export function normaliseCanvasState(value: unknown, siteId: string): DesignCanvasState | null {
+  if (!canvasRecord(value) || !siteId || value.siteId !== siteId
+      || !canvasRecord(value.frame)
+      || !Array.isArray(value.items)
+      || !Array.isArray(value.zones)
+      || !Array.isArray(value.lines)
+      || typeof value.updatedAt !== 'string' || !Number.isFinite(Date.parse(value.updatedAt))
+      || typeof value.step !== 'string' || !CANVAS_STEPS.has(value.step as WizardStep)
+      || !uniqueNonEmptyIds(value.items)
+      || !uniqueNonEmptyIds(value.zones)
+      || !uniqueNonEmptyIds(value.lines)) {
+    if (canvasRecord(value)
+        && Array.isArray(value.items) && Array.isArray(value.zones) && Array.isArray(value.lines)) {
+      const items = dedupeCanvasRows(value.items);
+      const zones = dedupeCanvasRows(value.zones);
+      const lines = dedupeCanvasRows(value.lines);
+      if (items.length !== value.items.length
+          || zones.length !== value.zones.length
+          || lines.length !== value.lines.length) {
+        return normaliseCanvasState({ ...value, items, zones, lines }, siteId);
+      }
+    }
+    return null;
+  }
+
+  const frame = value.frame;
+  if (typeof frame.centerLng !== 'number' || !Number.isFinite(frame.centerLng)
+      || frame.centerLng < -180 || frame.centerLng > 180
+      || typeof frame.centerLat !== 'number' || !Number.isFinite(frame.centerLat)
+      || frame.centerLat < -90 || frame.centerLat > 90
+      || typeof frame.zoom !== 'number' || !Number.isFinite(frame.zoom)
+      || frame.zoom < 0 || frame.zoom > 24
+      || typeof frame.imgW !== 'number' || !Number.isFinite(frame.imgW) || frame.imgW <= 0
+      || typeof frame.imgH !== 'number' || !Number.isFinite(frame.imgH) || frame.imgH <= 0
+      || typeof frame.mPerPx !== 'number' || !Number.isFinite(frame.mPerPx) || frame.mPerPx <= 0) {
+    return null;
+  }
+
+  if (!value.items.every((candidate) => {
+    if (!canvasRecord(candidate)) return false;
+    return typeof candidate.defId === 'string' && candidate.defId.length > 0
+      && typeof candidate.x === 'number' && Number.isFinite(candidate.x) && candidate.x >= 0 && candidate.x <= 1
+      && typeof candidate.y === 'number' && Number.isFinite(candidate.y) && candidate.y >= 0 && candidate.y <= 1
+      && (candidate.wM === undefined
+        || (typeof candidate.wM === 'number' && Number.isFinite(candidate.wM) && candidate.wM > 0))
+      && (candidate.hM === undefined
+        || (typeof candidate.hM === 'number' && Number.isFinite(candidate.hM) && candidate.hM > 0))
+      && optionalFiniteCanvasNumber(candidate.rot)
+      && optionalCanvasText(candidate.label)
+      && optionalCanvasText(candidate.note);
+  })) return null;
+
+  if (!value.zones.every((candidate) => {
+    if (!canvasRecord(candidate) || !Array.isArray(candidate.points)
+        || candidate.points.length < 3 || !candidate.points.every(finiteCanvasPoint)) return false;
+    return (candidate.feature === undefined || typeof candidate.feature === 'string')
+      && optionalCanvasText(candidate.name)
+      && optionalFiniteCanvasNumber(candidate.labelDx)
+      && optionalFiniteCanvasNumber(candidate.labelDy)
+      && optionalFiniteCanvasNumber(candidate.levelM)
+      && optionalFiniteCanvasNumber(candidate.measuredSlopePct);
+  })) return null;
+
+  if (!value.lines.every((candidate) => {
+    if (!canvasRecord(candidate) || typeof candidate.kind !== 'string' || !candidate.kind
+        || !Array.isArray(candidate.points)
+        || candidate.points.length < 2 || !candidate.points.every(finiteCanvasPoint)) return false;
+    return optionalCanvasText(candidate.name)
+      && optionalFiniteCanvasNumber(candidate.labelDx)
+      && optionalFiniteCanvasNumber(candidate.labelDy);
+  })) return null;
+
+  if (value.useCustomBase !== undefined && typeof value.useCustomBase !== 'boolean') return null;
+  if (value.customBase !== undefined && value.customBase !== null) {
+    if (!canvasRecord(value.customBase)
+        || typeof value.customBase.url !== 'string' || !value.customBase.url
+        || typeof value.customBase.mPerPx !== 'number'
+        || !Number.isFinite(value.customBase.mPerPx) || value.customBase.mPerPx <= 0
+        || typeof value.customBase.uploadedAt !== 'string'
+        || !Number.isFinite(Date.parse(value.customBase.uploadedAt))) return null;
+  }
+  if (value.localWind !== undefined) {
+    if (!canvasRecord(value.localWind)
+        || typeof value.localWind.prevailingFrom !== 'string'
+        || !isCompassDirection16(value.localWind.prevailingFrom)
+        || (value.localWind.strongestFrom !== undefined
+          && (typeof value.localWind.strongestFrom !== 'string'
+            || !isCompassDirection16(value.localWind.strongestFrom)))
+        || typeof value.localWind.recordedAt !== 'string'
+        || !Number.isFinite(Date.parse(value.localWind.recordedAt))) return null;
+  }
+  if (value.dailyWaterUseL !== undefined
+      && (typeof value.dailyWaterUseL !== 'number'
+        || !Number.isFinite(value.dailyWaterUseL) || value.dailyWaterUseL < 0)) return null;
+
+  const state = normalizeZoneNumbers(value as unknown as DesignCanvasState);
+  const rev = revOf(state);
+  return state.rev === rev ? state : { ...state, rev };
+}
+
 export function loadCanvasState(siteId: string): DesignCanvasState | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(keyFor(siteId));
     if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? normalizeZoneNumbers(parsed as DesignCanvasState) : null;
+    return normaliseCanvasState(JSON.parse(raw), siteId);
   } catch {
     return null;
   }
@@ -621,13 +756,15 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
   // currently in localStorage. Taking the max of the two would let a caller working off a stale
   // in-memory snapshot inherit a high rev and then out-rank the good cloud copy, which is the
   // very bug this counter exists to stop. A stale caller must produce a LOW rev and lose.
+  const clean = normaliseCanvasState(state, state?.siteId);
+  if (!clean) throw new CanvasSaveError('Could not save an invalid design.');
   const stamped: DesignCanvasState = {
-    ...state,
+    ...clean,
     updatedAt: new Date().toISOString(),
-    rev: revOf(state) + 1,
+    rev: revOf(clean) + 1,
   };
   if (typeof window === 'undefined') return stamped;
-  const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(stamped));
+  const write = () => localStorage.setItem(keyFor(clean.siteId), JSON.stringify(stamped));
   try {
     write();
   } catch {
@@ -650,7 +787,9 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
 // so they share the mechanics and document the intent separately.
 function writeCanvasStateVerbatim(state: DesignCanvasState): void {
   if (typeof window === 'undefined') return;
-  const write = () => localStorage.setItem(keyFor(state.siteId), JSON.stringify(state));
+  const clean = normaliseCanvasState(state, state?.siteId);
+  if (!clean) return;
+  const write = () => localStorage.setItem(keyFor(clean.siteId), JSON.stringify(clean));
   try {
     write();
   } catch {
