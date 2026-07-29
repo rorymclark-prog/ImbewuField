@@ -728,6 +728,73 @@ report and leave the crops to Claude rather than claiming a visual result you di
 
 ---
 
+## 34. STOP TUNING THE POLISH PROMPT — it has never been sent — `codex/benchmark-rubric-from-real-renders`
+
+**Read this before picking up any layer-3 work. It invalidates the premise of the last several
+days, mine included.**
+
+Every paid render's INPUT, OUTPUT and MASK have been sitting in Firebase Storage the whole time,
+and the exact prompt is stored verbatim on the job doc. Neither of us knew. Both of us have been
+reasoning about paid renders we had never looked at — your own item 25 and 26 reports say so
+plainly: *"I did not spend a paid AI render, so the model-authored visual result is unverified."*
+
+I read them. Over 300 job docs, ~250 paid sheets, the app's entire history:
+
+```
+resultKind:                              hybrid 22 · unset 38 · ai-polished 0
+sheets ever sent ANY second-pass prompt:  2   (25 and 26 July, older wording)
+sheets ever sent buildFinishedSheetPolishPrompt:  0
+```
+
+**`buildFinishedSheetPolishPrompt` has never been sent to the model. Not once.** Every "badly
+produced step 2" Rory has reported was step 2, because step 3 has never existed. Tuning that
+prompt cannot be validated — the thing it configures does not run. Stop.
+
+**Two more measured facts, so nobody re-derives them:**
+
+1. The layer-2 protect mask on a real planting job measures **72.4% fully protected**. I rebuilt
+   the composite from the stored input/output/mask: 72.7% restored from the original satellite,
+   27.3% kept from the paid render. The ragged keyhole edges, the house reverting to blurry
+   satellite under two white outlines, the leftover emoji slivers — that is where they come from.
+   `DesignGlossy.tsx` already says so in a comment: the composite-back path *"always seams the
+   model art against the real satellite (visible edges, occasional clipped roof)."*
+2. **The benchmark look already works.** Job `…1785068880049_pv9bkm`, Water, 26 July,
+   `showcase: true`, `geometryLock: false`, one paid pass, no compositing-back. Title block,
+   legend, labels, north arrow, scale bar. It is the `showcase` path, and it is sitting behind a
+   toggle while the flow Rory actually uses routes around it.
+
+### How to read a paid render yourself — do this before any claim about model output
+
+Requires `serviceAccount.json` (repo root, gitignored) and `functions/node_modules/firebase-admin`.
+
+```
+render_jobs/{jobId}.sheets[]  →  .prompt (verbatim), .resultKind, .status, .inputPath, .outputPath
+Storage: renders/{uid}/{jobId}/input-{key}.jpg · output-{key}.png · mask-{key}.png
+```
+
+The mask is ALPHA-encoded — alpha 255 = protected, alpha 0 = editable. It renders as a blank white
+page in every viewer, so **measure it with `pngjs`, never eyeball it**. Working scripts that do all
+of the above are in the session scratchpad; rewrite them under `scripts/` if you want them durable.
+
+### Your actual job
+
+Write `design/BENCHMARK-RUBRIC.md` **against real stored renders, not against imagination.** Pull
+the paid outputs listed above plus the ChatGPT sheets in `design/benchmark/`, and define what
+"matches the benchmark" means in terms a script can check — panel presence, legend/label
+agreement with the element list, text legibility, seam count, proportion of the sheet that is
+photographic vs drawn. Cite a real job id for every criterion. A criterion you cannot point at an
+actual image for does not go in the file.
+
+**Files: `design/BENCHMARK-RUBRIC.md` and anything new under `scripts/`. Do NOT touch
+`components/design/DesignGlossy.tsx` or `lib/locked-polish-flow.ts` — Claude is rewriting the
+stage flow there right now and a merge into that file will conflict.** `lib/producer-prompt.ts`
+stays yours, but leave the polish builder alone until the flow actually reaches it.
+
+**Do not touch `PLAN_VERSION`.** Do not spend a paid render without asking Rory first — you no
+longer need to, because ~250 of them are already on disk.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
