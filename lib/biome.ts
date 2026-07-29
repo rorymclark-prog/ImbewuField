@@ -1,4 +1,5 @@
 import type { SABiome } from './types';
+import { SOUTH_AFRICA_POLYGONS } from './south-africa-boundary';
 
 export const BIOMES: Record<string, SABiome> = {
   SAVANNA: {
@@ -131,7 +132,49 @@ export const BIOMES: Record<string, SABiome> = {
     soilStrategy: 'Select a location within South Africa for site-specific analysis.',
     challenges: [],
   },
+  UNCLASSIFIED: {
+    name: 'Climate data unavailable',
+    code: 'UNK',
+    description: 'The site is in South Africa, but its climate data is incomplete',
+    color: '#555555',
+    rainfallPattern: 'year-round',
+    meanRainfall: 'unknown',
+    keySpecies: [],
+    soilType: 'unknown',
+    waterStrategy: 'Retry the site analysis before acting on location-specific water advice.',
+    soilStrategy: 'Retry the site analysis before acting on location-specific soil advice.',
+    challenges: [],
+  },
 };
+
+type LonLat = readonly [lon: number, lat: number];
+
+function pointOnSegment(lon: number, lat: number, a: LonLat, b: LonLat): boolean {
+  const cross = (lon - a[0]) * (b[1] - a[1]) - (lat - a[1]) * (b[0] - a[0]);
+  if (Math.abs(cross) > 1e-10) return false;
+  return lon >= Math.min(a[0], b[0]) && lon <= Math.max(a[0], b[0])
+    && lat >= Math.min(a[1], b[1]) && lat <= Math.max(a[1], b[1]);
+}
+
+function pointInRing(lon: number, lat: number, ring: readonly LonLat[]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const a = ring[j];
+    const b = ring[i];
+    if (pointOnSegment(lon, lat, a, b)) return true;
+    const crosses = (a[1] > lat) !== (b[1] > lat)
+      && lon < ((b[0] - a[0]) * (lat - a[1])) / (b[1] - a[1]) + a[0];
+    if (crosses) inside = !inside;
+  }
+  return inside;
+}
+
+export function isWithinSouthAfrica(lat: number, lon: number): boolean {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
+  return SOUTH_AFRICA_POLYGONS.some(([outer, ...enclaves]) =>
+    pointInRing(lon, lat, outer)
+    && !enclaves.some((ring) => pointInRing(lon, lat, ring)));
+}
 
 export function classifyBiome(
   lat: number,
@@ -140,7 +183,17 @@ export function classifyBiome(
   coldestMonthTemp: number,
   monthlyRain: number[]
 ): SABiome {
-  if (lat < -35.5 || lat > -21 || lon < 15.5 || lon > 33.5) return BIOMES.OUTSIDE;
+  if (!isWithinSouthAfrica(lat, lon)) return BIOMES.OUTSIDE;
+  if (
+    !Number.isFinite(annualRainfall)
+    || annualRainfall < 0
+    || !Number.isFinite(coldestMonthTemp)
+    || !Array.isArray(monthlyRain)
+    || monthlyRain.length < 12
+    || monthlyRain.slice(0, 12).some((value) => !Number.isFinite(value) || value < 0)
+  ) {
+    return BIOMES.UNCLASSIFIED;
+  }
 
   // Winter vs summer rainfall dominance
   const summerRain = monthlyRain.slice(0, 3).reduce((a, b) => a + b, 0) +
@@ -185,6 +238,7 @@ export function classifyBiome(
 }
 
 export function aspectLabel(deg: number): string {
+  if (!Number.isFinite(deg)) return '—';
   const dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
   return dirs[Math.round(((deg % 360) + 360) % 360 / 22.5) % 16];
 }
@@ -197,6 +251,15 @@ export function koppenClassify(
   summerRain: number,
   winterRain: number
 ): { code: string; description: string } {
+  const values = [annualRainfall, meanTemp, hotMonthTemp, coldMonthTemp, summerRain, winterRain];
+  if (
+    values.some((value) => !Number.isFinite(value))
+    || annualRainfall < 0
+    || summerRain < 0
+    || winterRain < 0
+  ) {
+    return { code: '?', description: 'Unknown' };
+  }
   const isWinter = winterRain > summerRain;
 
   // Arid
