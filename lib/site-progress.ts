@@ -14,7 +14,8 @@ import { useEffect, useState } from 'react';
 import { loadPlaces } from '@/lib/saved-places';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import { loadCanvasState } from '@/lib/design-canvas';
-import { loadCropPlan } from '@/lib/crop-plan';
+import { CROP_PLAN_CHANGED_EVENT, loadCropPlan, type CropPlanState } from '@/lib/crop-plan';
+import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import {
@@ -35,22 +36,28 @@ export const SURVEY_TOTAL_FIELDS = 10;
 export function surveyFilledCount(s: SiteSurvey | null): number {
   if (!s) return 0;
   const checks = [
-    !!s.adults,
-    (s.goals?.length ?? 0) > 0,
-    (s.waterSource?.length ?? 0) > 0,
-    (s.waterStorage?.length ?? 0) > 0,
-    s.roofMainM2 != null,
+    s.siteType === 'community' ? !!s.memberCount : !!s.adults,
+    Array.isArray(s.goals) && s.goals.length > 0,
+    Array.isArray(s.waterSource) && s.waterSource.length > 0,
+    Array.isArray(s.waterStorage) && s.waterStorage.length > 0,
+    typeof s.roofMainM2 === 'number' && Number.isFinite(s.roofMainM2) && s.roofMainM2 >= 0,
     !!s.landPrepMethod,
     !!s.soilCondition,
     !!s.hasFencing,
-    (s.existingCrops?.length ?? 0) > 0,
+    Array.isArray(s.existingCrops) && s.existingCrops.length > 0,
     !!s.farmingPractice,
   ];
   return checks.filter(Boolean).length;
 }
 
+function validCoords(c: Coords): boolean {
+  return Number.isFinite(c.lat) && Number.isFinite(c.lon)
+    && c.lat >= -90 && c.lat <= 90 && c.lon >= -180 && c.lon <= 180;
+}
+
 /** A saved place exists within ~55 m (±0.0005°) of these coords — per-site "located". */
 export function savedPlaceAtCoords(c: Coords): boolean {
+  if (!validCoords(c)) return false;
   return loadPlaces().some(
     (p) => Math.abs(p.lat - c.lat) < 0.0005 && Math.abs(p.lon - c.lon) < 0.0005,
   );
@@ -59,37 +66,72 @@ export function savedPlaceAtCoords(c: Coords): boolean {
 /** A non-water polygon whose first vertex lies within ~2 km (±0.02°) of these coords.
  *  Drawn shapes are stored user-globally, so this scoping is what stops one farm's
  *  boundary from crediting every site. */
-export function boundaryNearCoords(c: Coords): boolean {
+export function boundaryPointCountNearCoords(c: Coords): number {
+  if (!validCoords(c)) return 0;
   const fc = readLocalFarmShapes();
-  return !!fc?.features?.some((f) => {
-    if (f.properties?.featureType === 'water') return false;
-    if (f.geometry?.type !== 'Polygon' && f.geometry?.type !== 'MultiPolygon') return false;
+  let best = 0;
+  for (const f of fc?.features ?? []) {
+    if (f.properties?.featureType === 'water') continue;
+    if (f.geometry?.type !== 'Polygon' && f.geometry?.type !== 'MultiPolygon') continue;
     const ring = f.geometry.type === 'Polygon'
       ? f.geometry.coordinates[0]
       : f.geometry.coordinates[0]?.[0];
     const pt = ring?.[0];
-    return Array.isArray(pt)
+    const near = Array.isArray(pt)
+      && Number.isFinite(pt[0]) && Number.isFinite(pt[1])
       && Math.abs(pt[0] - c.lon) < 0.02
       && Math.abs(pt[1] - c.lat) < 0.02;
-  });
+    if (!near || !ring) continue;
+    const points = ring.filter((point) =>
+      Array.isArray(point) && point.length >= 2
+      && Number.isFinite(point[0]) && Number.isFinite(point[1]));
+    const unique = new Set(points.map((point) => `${point[0]},${point[1]}`)).size;
+    if (unique >= 3) best = Math.max(best, unique);
+  }
+  return best;
+}
+
+export function boundaryNearCoords(c: Coords): boolean {
+  return boundaryPointCountNearCoords(c) >= 3;
+}
+
+/** A global crop plan credits this site only when a planting names one of this canvas's beds. */
+export function cropPlanBelongsToCanvas(
+  canvas: ReturnType<typeof loadCanvasState>,
+  plan: CropPlanState,
+): boolean {
+  const bedIds = new Set(bedsFromDesignCanvas(canvas).map((bed) => bed.id));
+  return bedIds.size > 0 && plan.plantings.some((planting) => bedIds.has(planting.bedId));
 }
 
 /** Pure synchronous gather — every read is localStorage. `assumeSaved` covers the
  *  instant after a Save tap, before loadPlaces() reflects the new place. */
 export function gatherSiteInputs(c: Coords, opts?: { assumeSaved?: boolean }): CompletionScoreInputs {
+  if (!validCoords(c)) {
+    return {
+      hasSite: false,
+      boundaryPointCount: 0,
+      surveyFilledFields: 0,
+      surveyTotalFields: SURVEY_TOTAL_FIELDS,
+      zoneCount: 0,
+      elementCount: 0,
+      hasCropPlan: false,
+    };
+  }
   const surveySiteId = designSiteIdFromLocation({ lat: c.lat, lon: c.lon } as LocationData);
   const survey = loadSurvey(surveySiteId);
   const canvas = loadCanvasState(surveySiteId);
-  const zoneCount = canvas?.zones.length ?? 0;
-  const elementCount = canvas?.items.length ?? 0;
+  const zoneCount = Array.isArray(canvas?.zones) ? canvas.zones.length : 0;
+  const elementCount = Array.isArray(canvas?.items) ? canvas.items.length : 0;
+  const cropPlan = loadCropPlan();
   return {
     hasSite: !!opts?.assumeSaved || savedPlaceAtCoords(c),
-    boundaryPointCount: boundaryNearCoords(c) ? 3 : 0,
+    boundaryPointCount: boundaryPointCountNearCoords(c),
     surveyFilledFields: surveyFilledCount(survey),
     surveyTotalFields: SURVEY_TOTAL_FIELDS,
     zoneCount,
     elementCount,
-    hasCropPlan: (zoneCount > 0 || elementCount > 0) && loadCropPlan().plantings.length > 0,
+    hasCropPlan: (zoneCount > 0 || elementCount > 0) && cropPlanBelongsToCanvas(canvas, cropPlan),
   };
 }
 
@@ -132,11 +174,12 @@ export function getSiteProgress(c: Coords, opts?: { assumeSaved?: boolean }): Si
 }
 
 /** The store-change events that can move a site's progress. */
-const PROGRESS_EVENTS = [
+export const PROGRESS_EVENTS = [
   'permamap-places-changed',
   'imbewu-surveys-changed',
   'imbewu-design-canvas-changed', // DESIGN_CANVAS_CHANGED_EVENT
   'imbewu-map-state-changed',     // MAP_STATE_EVENT (drawn shapes)
+  CROP_PLAN_CHANGED_EVENT,
 ];
 
 /** Recompute on mount + whenever any underlying store changes. Returns null until
@@ -171,26 +214,40 @@ export interface GuidedModeState {
 
 const GUIDED_DEFAULT: GuidedModeState = { enabled: true, dismissals: 0, retired: false };
 
+function guidedDefault(): GuidedModeState {
+  return { ...GUIDED_DEFAULT };
+}
+
+function normaliseGuidedState(value: unknown): GuidedModeState {
+  if (!value || typeof value !== 'object') return guidedDefault();
+  const parsed = value as Partial<GuidedModeState>;
+  const dismissals = typeof parsed.dismissals === 'number'
+    && Number.isFinite(parsed.dismissals)
+    && parsed.dismissals > 0
+    ? Math.floor(parsed.dismissals)
+    : 0;
+  return {
+    enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : GUIDED_DEFAULT.enabled,
+    dismissals,
+    retired: typeof parsed.retired === 'boolean' ? parsed.retired : false,
+  };
+}
+
 export function getGuidedState(): GuidedModeState {
-  if (typeof window === 'undefined') return GUIDED_DEFAULT;
+  if (typeof window === 'undefined') return guidedDefault();
   try {
     const raw = window.localStorage.getItem(GUIDED_MODE_KEY);
-    if (!raw) return GUIDED_DEFAULT;
+    if (!raw) return guidedDefault();
     const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object') return GUIDED_DEFAULT;
-    return {
-      enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : GUIDED_DEFAULT.enabled,
-      dismissals: Number.isFinite(parsed.dismissals) ? parsed.dismissals : 0,
-      retired: typeof parsed.retired === 'boolean' ? parsed.retired : false,
-    };
+    return normaliseGuidedState(parsed);
   } catch {
-    return GUIDED_DEFAULT;
+    return guidedDefault();
   }
 }
 
 export function setGuidedState(patch: Partial<GuidedModeState>): void {
   if (typeof window === 'undefined') return;
-  const next = { ...getGuidedState(), ...patch };
+  const next = normaliseGuidedState({ ...getGuidedState(), ...patch });
   try {
     window.localStorage.setItem(GUIDED_MODE_KEY, JSON.stringify(next));
     window.dispatchEvent(new CustomEvent(GUIDED_CHANGED_EVENT));
