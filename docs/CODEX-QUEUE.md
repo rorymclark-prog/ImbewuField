@@ -449,6 +449,34 @@ it. Same one-authority rule as item 23.
 
 ---
 
+## 25. The AI prompt and the legend describe the same sheet — prove it — `codex/prompt-legend-agreement`
+
+**This is now the project's highest priority. Rory, 2026-07-29: "I want a real well produced AI
+polished accurate map and design of each layer with the hybrid working too — this is my biggest
+goal, steer everything towards this."**
+
+`tests/legend-map-agreement.test.ts` proves the EXACT sheets' legend matches what is drawn. Nothing
+proves the same for the AI path, and the AI path is the product. `overlayElementsText` in
+DesignGlossy.tsx (~1611) builds the text handed to the image model — the list of what is on this
+sheet — while `exactSheetElementLegendGroups` in lib/glossy-filters.ts builds the legend rows. Two
+independent lists of the same thing is exactly the shape that produced items 22 and 23.
+
+Export `overlayElementsText` (or extract it to lib/ — better, since it is pure text assembly over
+state and belongs beside `glossy-filters`), then table-test all eight sheets: **anything the prompt
+names must have a legend row, and anything the legend lists must be named to the model.** Where they
+legitimately differ — context features the prompt mentions so the model keeps them visible but the
+legend deliberately omits — encode that as a rule with its reason, not as an exception list.
+
+Two known asymmetries to start from, both already in the code and both deliberate:
+- `if (refLayers.driveway.length >= 2 && filter === 'all') parts.push('Tarred driveway')` (~1878)
+- `if (refLayers.driveway.length >= 2 && filter !== 'all') fabricParts.push('Tarred driveway')` (~1767)
+
+If you find a real disagreement, fix it in ONE place both paths read — the `sheetElementNaming()` /
+`groundRegister()` pattern. **Do not touch PLAN_VERSION**; say in your report whether the picture
+changes.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
