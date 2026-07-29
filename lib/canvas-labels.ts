@@ -43,6 +43,15 @@ export interface CanvasLabelOut {
   moved: boolean;
 }
 
+/** A malformed saved item must never become `translate(NaN, …)` in the SVG canvas. */
+export function isUsableCanvasLabelInput(input: CanvasLabelInput): boolean {
+  return input.id.trim().length > 0
+    && [input.cx, input.cy, input.gap, input.w, input.h, input.iconR].every(Number.isFinite)
+    && input.w >= 0
+    && input.h >= 0
+    && input.iconR >= 0;
+}
+
 /** Vertical clearance kept between two pills that would otherwise touch. */
 const GAP_Y = 2;
 /** Displacement past which a pill gets a leader line drawn back to its icon. */
@@ -57,7 +66,8 @@ const LEADER_AFTER = 3;
  * y only ever increases within the sweep, so this always terminates.
  */
 export function layoutCanvasLabels(inputs: CanvasLabelInput[]): CanvasLabelOut[] {
-  const natural = inputs.map((i) => ({ ...i, y: i.cy + i.gap }));
+  const usable = inputs.filter(isUsableCanvasLabelInput);
+  const natural = usable.map((i) => ({ ...i, y: i.cy + i.gap }));
   const order = [...natural].sort((a, b) => a.y - b.y || a.cx - b.cx || (a.id < b.id ? -1 : 1));
 
   // Seed the occupied set with every icon disc, so pills route AROUND plants rather than over
@@ -94,7 +104,7 @@ export function layoutCanvasLabels(inputs: CanvasLabelInput[]): CanvasLabelOut[]
   }
 
   // Return in the caller's original order so React keys and draw order stay stable.
-  return inputs.map((i) => out.get(i.id)!);
+  return usable.map((i) => out.get(i.id)!);
 }
 
 /**
@@ -114,5 +124,8 @@ export function layoutCanvasLabels(inputs: CanvasLabelInput[]): CanvasLabelOut[]
 export const PILL_CHAR_EM = 0.62;
 
 export function estimatePillWidth(text: string, fontSize: number, padX: number, max: number): number {
-  return Math.min(max, padX * 2 + text.length * fontSize * PILL_CHAR_EM);
+  const safeFontSize = Number.isFinite(fontSize) && fontSize >= 0 ? fontSize : 0;
+  const safePadX = Number.isFinite(padX) && padX >= 0 ? padX : 0;
+  const safeMax = Number.isFinite(max) && max >= 0 ? max : 0;
+  return Math.min(safeMax, safePadX * 2 + text.length * safeFontSize * PILL_CHAR_EM);
 }

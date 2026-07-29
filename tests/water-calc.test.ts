@@ -45,6 +45,24 @@ test('nearestRainfall really selects the minimum squared-degree distance', () =>
   }
 });
 
+test('coordinates must describe a real point on Earth before a region is selected', () => {
+  for (const lat of [-90, 90]) {
+    assert.ok(nearestRainfall(lat, 0));
+  }
+  for (const lon of [-180, 180]) {
+    assert.ok(nearestRainfall(0, lon));
+  }
+  for (const [lat, lon] of [
+    [-90.000_001, 0],
+    [90.000_001, 0],
+    [0, -180.000_001],
+    [0, 180.000_001],
+  ]) {
+    assert.equal(nearestRainfall(lat, lon), null);
+    assert.equal(describeHarvest(100, lat, lon), null);
+  }
+});
+
 test('harvest preserves the 1 mm × 1 m² dimensional rule for every roof material', () => {
   for (const coefficient of Object.values(RUNOFF)) {
     const unit = annualHarvestLitres(1, 1, coefficient);
@@ -118,4 +136,11 @@ test('zero, negative, missing-scale, NaN and Infinity inputs never create farmer
   assert.equal(nearestRainfall(-29.86, Number.POSITIVE_INFINITY), null);
   assert.equal(describeHarvest(100, Number.NaN, 31.02), null);
   assert.equal(describeHarvest(100, -29.86, Number.NEGATIVE_INFINITY), null);
+  assert.equal(
+    describeHarvest(Number.EPSILON, -29.86, 31.02),
+    null,
+    'a description must never print 0 m² beside a positive harvest',
+  );
+  assert.equal(recommendedTankLitres(Number.MAX_VALUE, 'winter'), 0);
+  assert.equal(describeHarvest(Number.MAX_VALUE, -29.86, 31.02), null);
 });

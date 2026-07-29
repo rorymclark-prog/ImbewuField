@@ -213,6 +213,25 @@ function emptyByPhase<T>(make: () => T): Record<PhaseKey, T> {
   };
 }
 
+function isNormalisedPoint(point: [number, number]): boolean {
+  return Number.isFinite(point[0])
+    && Number.isFinite(point[1])
+    && point[0] >= 0
+    && point[0] <= 1
+    && point[1] >= 0
+    && point[1] <= 1;
+}
+
+function isBuildableItem(item: PlacedItem): boolean {
+  return isNormalisedPoint([item.x, item.y]);
+}
+
+function isBuildableLine(line: LineShape): boolean {
+  if (line.points.length < 2 || !line.points.every(isNormalisedPoint)) return false;
+  const [x0, y0] = line.points[0];
+  return line.points.some(([x, y]) => x !== x0 || y !== y0);
+}
+
 function takeInventory(state: DesignCanvasState): Inventory {
   const ids = emptyByPhase<string[]>(() => []);
   const counts: Record<string, number> = {};
@@ -221,13 +240,14 @@ function takeInventory(state: DesignCanvasState): Inventory {
   // Sorted by id so the plan is byte-identical across renders regardless of placement order —
   // determinism is the product promise (same design in, same sheet out).
   for (const item of [...state.items].sort((a, b) => a.id.localeCompare(b.id))) {
+    if (!isBuildableItem(item)) continue;
     const key = phaseForItem(item);
     if (!key) continue;
     ids[key].push(item.id);
     counts[item.defId] = (counts[item.defId] ?? 0) + 1;
   }
   for (const line of [...state.lines].sort((a, b) => a.id.localeCompare(b.id))) {
-    if (line.points.length < 2) continue; // a half-drawn line is not work
+    if (!isBuildableLine(line)) continue; // a half-drawn or malformed line is not work
     lineKinds.add(line.kind);
     ids[PHASE_BY_LINE_KIND[line.kind]].push(line.id);
   }

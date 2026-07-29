@@ -67,7 +67,8 @@ export const REGIONAL_RAINFALL: RegionalRainfall[] = [
  * need for haversine precision here).
  */
 export function nearestRainfall(lat: number, lon: number): RegionalRainfall | null {
-  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  if (!Number.isFinite(lat) || lat < -90 || lat > 90
+      || !Number.isFinite(lon) || lon < -180 || lon > 180) return null;
   let best = REGIONAL_RAINFALL[0];
   let bestDist = (lat - best.lat) ** 2 + (lon - best.lon) ** 2;
   for (const region of REGIONAL_RAINFALL) {
@@ -119,6 +120,7 @@ export function recommendedTankLitres(
   const share = STORAGE_SHARE_BY_PATTERN[pattern];
   if (!Number.isFinite(annualLitres) || annualLitres <= 0 || !Number.isFinite(share)) return 0;
   const target = annualLitres * share;
+  if (!Number.isFinite(target) || target <= 0 || target > Number.MAX_SAFE_INTEGER) return 0;
 
   for (const size of TANK_STEP_SIZES) {
     if (target <= size) return size;
@@ -161,6 +163,9 @@ export function describeHarvest(
   const annualLitres = annualHarvestLitres(roofM2, region.annualMm);
   const recommendedTank = recommendedTankLitres(annualLitres, region.pattern);
   const roundedRoofM2 = Math.round(roofM2);
+  if (!Number.isFinite(annualLitres) || annualLitres <= 0
+      || !Number.isFinite(recommendedTank) || recommendedTank <= 0
+      || !Number.isFinite(roundedRoofM2) || roundedRoofM2 <= 0) return null;
 
   const sentence =
     `Your ${roundedRoofM2} m² of roof can harvest ≈ ${formatLitres(annualLitres)} L/yr ` +

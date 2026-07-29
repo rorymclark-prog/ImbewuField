@@ -134,6 +134,43 @@ test('an empty or half-drawn design produces no invented implementation plan', (
   assert.deepEqual(buildPhasePlan(halfDrawn, ALL_REFS), { phases: [], criticalOrder: [], siteRules: [] });
 });
 
+test('malformed or zero-length geometry cannot manufacture implementation work', () => {
+  const malformed = state(
+    [
+      { ...item('nan-item', 'jojo_1000'), x: Number.NaN },
+      { ...item('outside-item', 'tree_citrus'), y: 2 },
+    ],
+    [
+      { id: 'same-point', kind: 'pipe', points: [[0.5, 0.5], [0.5, 0.5]] },
+      { id: 'nan-line', kind: 'swale', points: [[0.2, 0.2], [Number.NaN, 0.8]] },
+      { id: 'outside-line', kind: 'drip', points: [[0.2, 0.2], [1.2, 0.8]] },
+    ],
+  );
+  const before = structuredClone(malformed);
+
+  assert.deepEqual(
+    buildPhasePlan(malformed, ALL_REFS),
+    { phases: [], criticalOrder: [], siteRules: [] },
+  );
+  assert.deepEqual(malformed, before, 'phasing validation must not rewrite saved geometry');
+});
+
+test('one malformed object does not erase valid buildable work', () => {
+  const design = state(
+    [
+      item('tank', 'jojo_1000'),
+      { ...item('bad-tree', 'tree_citrus'), x: Number.POSITIVE_INFINITY },
+    ],
+    [
+      line('pipe', 'pipe'),
+      { id: 'bad-swale', kind: 'swale', points: [[0.4, 0.4], [0.4, 0.4]] },
+    ],
+  );
+  const ownedIds = buildPhasePlan(design, NO_REFS).phases.flatMap((phase) => phase.itemIds);
+
+  assert.deepEqual(ownedIds.sort(), ['pipe', 'tank']);
+});
+
 test('every catalog element and every buildable line is assigned to exactly one phase', () => {
   const items = Object.keys(ELEMENTS_BY_ID).map((defId, index) => ({
     ...item(`item-${index}`, defId),

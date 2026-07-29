@@ -75,6 +75,56 @@ test('the LARGEST of two Studio rings tagged with the same feature wins', () => 
   assert.equal(out.source.house, 'studio');
 });
 
+test('degenerate Studio rings cannot override usable mapped geometry', () => {
+  const unusableRings: Array<Array<[number, number]>> = [
+    [[0.1, 0.1], [0.2, 0.2], [0.3, 0.3]],
+    [[0.1, 0.1], [0.1, 0.1], [0.1, 0.1]],
+    [[0.1, 0.1], [0.2, 0.1], [Number.NaN, 0.2]],
+    [[0.1, 0.1], [0.2, 0.1], [1.1, 0.2]],
+  ];
+  for (const points of unusableRings) {
+    const out = resolveBaseLayers(stateWith([zone('house', points)]), MAP_ONLY);
+    assert.equal(out.source.house, 'map');
+    assert.equal(out.house, MAP_ONLY.house);
+  }
+});
+
+test('malformed mapped geometry resolves to none rather than renderable linework', () => {
+  const out = resolveBaseLayers(stateWith([]), {
+    boundary: [[0, 0], [0.5, 0.5], [1, 1]],
+    house: [[0, 0], [1, 0], [Number.POSITIVE_INFINITY, 1]],
+    driveway: [[0.2, 0.2], [0.2, 0.2]],
+    drivewayClosed: true,
+  });
+  assert.deepEqual(out.source, { boundary: 'none', house: 'none', driveway: 'none' });
+  assert.deepEqual(out.boundary, []);
+  assert.deepEqual(out.house, []);
+  assert.deepEqual(out.driveway, []);
+  assert.equal(out.drivewayClosed, false);
+});
+
+test('an absent driveway can never retain a stale closed flag', () => {
+  const out = resolveBaseLayers(stateWith([]), {
+    boundary: [],
+    house: [],
+    driveway: [],
+    drivewayClosed: true,
+  });
+  assert.equal(out.source.driveway, 'none');
+  assert.equal(out.drivewayClosed, false);
+});
+
+test('resolution is a non-mutating view over valid saved geometry', () => {
+  const state = stateWith([zone('house', SMALL_SQUARE)]);
+  const stateBefore = structuredClone(state);
+  const mapBefore = structuredClone(MAP_ONLY);
+  const out = resolveBaseLayers(state, MAP_ONLY);
+  assert.equal(out.house, state.zones[0].points);
+  assert.equal(out.boundary, MAP_ONLY.boundary);
+  assert.deepEqual(state, stateBefore);
+  assert.deepEqual(MAP_ONLY, mapBefore);
+});
+
 test('a Studio-drawn driveway ring is always reported closed, regardless of the map flag', () => {
   const state = stateWith([zone('driveway', SMALL_SQUARE)]);
   const closedMap: MapRefLayers = { ...MAP_ONLY, drivewayClosed: false };

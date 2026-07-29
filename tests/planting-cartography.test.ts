@@ -65,6 +65,52 @@ test('presentation dimensions preserve aspect ratio with bounded print emphasis'
   );
 });
 
+test('presentation dimensions stay finite, preserve aspect, and never shrink valid footprints', () => {
+  for (const id of ['tree_mango', 'banana_circle', 'tree_basin', 'veg_bed', 'unknown']) {
+    for (const naturalWidth of [0.01, 1, 17, 1000]) {
+      for (const naturalHeight of [0.01, 2, 31, 1000]) {
+        for (const canvasWidth of [1, 320, 1595, 10000]) {
+          const result = plantingFeaturePresentationDimensions(
+            id,
+            naturalWidth,
+            naturalHeight,
+            canvasWidth,
+          );
+          assert.ok(Number.isFinite(result.width) && result.width >= naturalWidth);
+          assert.ok(Number.isFinite(result.height) && result.height >= naturalHeight);
+          assert.ok(Number.isFinite(result.scale) && result.scale >= 1);
+          assert.ok(Math.abs(result.width / result.height - naturalWidth / naturalHeight) < 1e-9);
+          assert.ok(Math.abs(result.width - naturalWidth * result.scale) < 1e-9);
+          assert.ok(Math.abs(result.height - naturalHeight * result.scale) < 1e-9);
+        }
+      }
+    }
+  }
+});
+
+test('invalid dimensions cannot become painted geometry or invented emphasis', () => {
+  for (const invalid of [
+    0,
+    -1,
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]) {
+    assert.deepEqual(
+      plantingFeaturePresentationDimensions('tree_mango', invalid, 10, 1000),
+      { width: 0, height: 0, scale: 1 },
+    );
+    assert.deepEqual(
+      plantingFeaturePresentationDimensions('tree_mango', 10, invalid, 1000),
+      { width: 0, height: 0, scale: 1 },
+    );
+    assert.deepEqual(
+      plantingFeaturePresentationDimensions('tree_mango', 10, 20, invalid),
+      { width: 10, height: 20, scale: 1 },
+    );
+  }
+});
+
 test('windbreak styling is explicit and does not create styles for unrelated routes', () => {
   assert.deepEqual(plantingRouteStyleFor('windbreak'), PLANTING_ROUTE_STYLE.windbreak);
   assert.equal(plantingRouteStyleFor('pipe'), undefined);

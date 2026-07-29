@@ -96,6 +96,22 @@ test('geometry lock verifies every fully protected pixel byte-for-byte', () => {
   assert.equal(countProtectedPixelMismatches(source, restored, mask), 1);
 });
 
+test('pixel protection helpers reject partial RGBA pixels instead of reading missing channels', () => {
+  const partial = new Uint8ClampedArray([10, 20, 30]);
+  assert.throws(
+    () => blendProtectedPixels(partial, partial, partial),
+    /whole RGBA pixels/,
+  );
+  assert.throws(
+    () => maskEditableFraction(partial),
+    /whole RGBA pixels/,
+  );
+  assert.throws(
+    () => countProtectedPixelMismatches(partial, partial, partial),
+    /whole RGBA pixels/,
+  );
+});
+
 test('geometry lock always overrides free-form model chrome', () => {
   assert.equal(shouldUseModelChrome(true, true), false);
   assert.equal(shouldUseModelChrome(false, true), false);

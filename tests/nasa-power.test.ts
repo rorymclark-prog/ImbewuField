@@ -102,6 +102,17 @@ test('invalid daily precipitation never creates a finite-looking monthly normal'
     values[50] = invalid;
     assert.equal(monthlyNormalsFromDailyRainfall(complete.dates, values), null);
   }
+  assert.equal(
+    monthlyNormalsFromDailyRainfall(complete.dates, complete.values.map(() => Number.MAX_VALUE)),
+    null,
+  );
+  assert.equal(
+    monthlyNormalsFromDailyRainfall(
+      [2021 as unknown as string, ...complete.dates.slice(1)],
+      complete.values,
+    ),
+    null,
+  );
 });
 
 test('Open-Meteo outage, bad status and partial payload all return null', async () => {
@@ -147,6 +158,22 @@ test('NASA daily climatology is multiplied by each month length before annual su
   assert.equal(result.rainfall.rainfallSource, 'nasa-power');
 });
 
+test('both climate requests carry bounded abort signals', async () => {
+  const signals: AbortSignal[] = [];
+  await withFetch(
+    (async (_input, init) => {
+      assert.ok(init?.signal instanceof AbortSignal);
+      signals.push(init.signal);
+      return signals.length === 1
+        ? response(nasaPayload())
+        : response({}, false, 503);
+    }) as typeof fetch,
+    () => fetchNasaPower(-29, 31),
+  );
+  assert.equal(signals.length, 2);
+  assert.ok(signals.every((signal) => !signal.aborted));
+});
+
 test('missing or sentinel NASA rainfall months reject instead of becoming zero-rain months', async () => {
   const partial = monthValues(1);
   delete partial.FEB;
@@ -155,6 +182,7 @@ test('missing or sentinel NASA rainfall months reject instead of becoming zero-r
     { ...monthValues(1), FEB: -999 },
     { ...monthValues(1), FEB: Number.NaN },
     { ...monthValues(1), FEB: Number.POSITIVE_INFINITY },
+    { ...monthValues(1), FEB: Number.MAX_VALUE },
   ]) {
     await withFetch(
       (async () => response(nasaPayload({ PRECTOTCORR: precipitation }))) as typeof fetch,
@@ -164,6 +192,23 @@ test('missing or sentinel NASA rainfall months reject instead of becoming zero-r
       ),
     );
   }
+});
+
+test('March rainfall cannot be misclassified as austral summer DJF rain', async () => {
+  const precipitation = monthValues(1);
+  precipitation.MAR = 100;
+  let calls = 0;
+  const result = await withFetch(
+    (async () => {
+      calls += 1;
+      return calls === 1
+        ? response(nasaPayload({ PRECTOTCORR: precipitation }))
+        : response({}, false, 503);
+    }) as typeof fetch,
+    () => fetchNasaPower(-29, 31),
+  );
+
+  assert.equal(result.rainfall.pattern, 'year-round');
 });
 
 test('a partial Open-Meteo response leaves complete NASA rainfall in charge', async () => {
@@ -227,6 +272,35 @@ test('missing wind directions stay unknown rather than averaging sentinels to no
   assert.equal(result.climate.windFromSummer, '—');
   assert.equal(result.climate.windFromWinter, '—');
   assert.doesNotMatch(JSON.stringify(result), /NaN|Infinity/);
+});
+
+test('negative wind and solar values and out-of-domain directions stay unavailable', async () => {
+  let calls = 0;
+  const result = await withFetch(
+    (async () => {
+      calls += 1;
+      return calls === 1
+        ? response(nasaPayload({
+          ALLSKY_SFC_SW_DWN: monthValues(-1),
+          WS2M: monthValues(-1),
+          WD10M: monthValues(361),
+        }))
+        : response({}, false, 503);
+    }) as typeof fetch,
+    () => fetchNasaPower(-29, 31),
+  );
+
+  assert.equal(result.climate.solarRadiation, 0);
+  assert.equal(result.climate.windSpeed, 0);
+  assert.equal(result.climate.windFromSummer, '—');
+  assert.equal(result.climate.windFromWinter, '—');
+});
+
+test('a malformed NASA payload fails with a stable data error', async () => {
+  await withFetch(
+    (async () => response({ properties: {} })) as typeof fetch,
+    async () => assert.rejects(fetchNasaPower(-29, 31), /climate data/i),
+  );
 });
 
 test('invalid coordinates are rejected before spending a network request', async () => {

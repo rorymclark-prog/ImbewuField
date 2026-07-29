@@ -26,6 +26,19 @@ function positiveDimension(value: number): number {
   return Number.isFinite(value) && value > 0 ? value : 1;
 }
 
+function safeBedDimensions(widthValue: number, heightValue: number): {
+  widthM: number;
+  heightM: number;
+  areaM2: number;
+} {
+  const widthM = positiveDimension(widthValue);
+  const heightM = positiveDimension(heightValue);
+  const areaM2 = widthM * heightM;
+  return Number.isFinite(areaM2) && areaM2 > 0
+    ? { widthM, heightM, areaM2 }
+    : { widthM: 1, heightM: 1, areaM2: 1 };
+}
+
 /**
  * Beds = design items of type 'bed'/'hugel', with the virtual-bed fallback
  * when none exist. Deliberately duplicated from app/facilitator/crops/
@@ -41,14 +54,12 @@ export function bedsFromDesign(state: FacilitatorDesignState | null): PlanBed[] 
   for (const it of state?.items ?? []) {
     if (it.type === 'bed') {
       bedN += 1;
-      const widthM = positiveDimension(it.wM);
-      const heightM = positiveDimension(it.hM);
-      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2: widthM * heightM, minDimM: Math.min(widthM, heightM) });
+      const { widthM, heightM, areaM2 } = safeBedDimensions(it.wM, it.hM);
+      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2, minDimM: Math.min(widthM, heightM) });
     } else if (it.type === 'hugel') {
       hugelN += 1;
-      const widthM = positiveDimension(it.wM);
-      const heightM = positiveDimension(it.hM);
-      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2: widthM * heightM, minDimM: Math.min(widthM, heightM) });
+      const { widthM, heightM, areaM2 } = safeBedDimensions(it.wM, it.hM);
+      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2, minDimM: Math.min(widthM, heightM) });
     }
   }
   return beds.length > 0 ? beds : [VIRTUAL_BED];
@@ -70,6 +81,7 @@ function saSeasonMonths0(m: number): number[] {
 
 /** The calendar months (1-12) covered by a period, relative to `now`. */
 export function monthsForPeriod(period: Period, now: Date): number[] {
+  if (!(now instanceof Date) || !Number.isFinite(now.getTime())) return [];
   if (period === 'year') return Array.from({ length: 12 }, (_, i) => i + 1);
   if (period === 'month') return [now.getMonth() + 1];
   return saSeasonMonths0(now.getMonth()).map((m0) => m0 + 1);
@@ -105,6 +117,7 @@ function inPeriod(iso: string | null | undefined, period: Period, now: Date): bo
 // data), lowercases, and normalizes punctuation/whitespace so "Swiss chard",
 // "swiss chard!" and "  Swiss   Chard " all compare equal.
 function normalize(raw: string): string {
+  if (typeof raw !== 'string') return '';
   return raw
     .toLowerCase()
     .replace(/^sample\s*[—-]\s*/, '')
@@ -194,7 +207,9 @@ export function intendedKgByMonthPerCrop(plantings: Planting[], beds: PlanBed[])
     const kgPerMonth = totalKg / (freshSpan + 1);
     const arr = byCrop.get(crop.key) ?? Array<number>(13).fill(0);
     for (let off = 0; off <= freshSpan; off++) {
-      arr[wrapMonth(hMonth + off)] += kgPerMonth;
+      const month = wrapMonth(hMonth + off);
+      const next = arr[month] + kgPerMonth;
+      if (Number.isFinite(next)) arr[month] = next;
     }
     byCrop.set(crop.key, arr);
   }
@@ -241,6 +256,32 @@ function validLoggedKg(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) && value > 0
     ? value
     : 0;
+}
+
+function safeKgTotal<T>(rows: T[], value: (row: T) => unknown): number {
+  return rows.reduce((sum, row) => {
+    const next = sum + validLoggedKg(value(row));
+    return Number.isFinite(next) ? next : sum;
+  }, 0);
+}
+
+/**
+ * A record id identifies one persisted log. Repeated copies can arrive when
+ * local and remote lists are combined; count the first copy once. Rows without
+ * a usable id remain distinct because there is no honest way to identify them.
+ */
+function uniqueLogsById<T extends { id: string }>(rows: T[]): T[] {
+  const seen = new Set<string>();
+  return rows.filter((row) => {
+    if (typeof row?.id !== 'string' || !row.id.trim()) return true;
+    if (seen.has(row.id)) return false;
+    seen.add(row.id);
+    return true;
+  });
+}
+
+function loggedCropLabel(value: unknown): string {
+  return typeof value === 'string' ? value : '';
 }
 
 export interface CropRow {
@@ -302,8 +343,12 @@ export function buildReconciliation(
   const cropKeys = new Set(plantings.map((p) => p.cropKey));
   const currentMonth = now.getMonth() + 1;
 
-  const productionInPeriod = production.filter((p) => inPeriod(p.logged_at, period, now));
-  const salesInPeriod = sales.filter((s) => inPeriod(s.sold_at, period, now));
+  const productionInPeriod = uniqueLogsById(
+    production.filter((p) => inPeriod(p.logged_at, period, now)),
+  );
+  const salesInPeriod = uniqueLogsById(
+    sales.filter((s) => inPeriod(s.sold_at, period, now)),
+  );
 
   const matched: CropRow[] = [];
   const notYetHarvested: CropRow[] = [];
@@ -316,15 +361,21 @@ export function buildReconciliation(
     if (!crop) continue;
 
     const monthArr = intendedByCrop.get(cropKey);
-    const intendedKg = monthArr ? periodMonths.reduce((sum, m) => sum + (monthArr[m] ?? 0), 0) : 0;
+    const intendedKg = monthArr
+      ? safeKgTotal(periodMonths, (month) => monthArr[month] ?? 0)
+      : 0;
 
-    const harvestRows = productionInPeriod.filter((p) => matchCropKey(p.crop, aliasIndex) === cropKey);
-    const saleRows = salesInPeriod.filter((s) => matchCropKey(s.crop, aliasIndex) === cropKey);
+    const harvestRows = productionInPeriod.filter(
+      (p) => matchCropKey(loggedCropLabel(p.crop), aliasIndex) === cropKey,
+    );
+    const saleRows = salesInPeriod.filter(
+      (s) => matchCropKey(loggedCropLabel(s.crop), aliasIndex) === cropKey,
+    );
     harvestRows.forEach((r) => matchedProductionIds.add(r.id));
     saleRows.forEach((r) => matchedSalesIds.add(r.id));
 
-    const harvestedKg = harvestRows.reduce((s, r) => s + validLoggedKg(r.kg), 0);
-    const soldKg = saleRows.reduce((s, r) => s + validLoggedKg(r.kg), 0);
+    const harvestedKg = safeKgTotal(harvestRows, (row) => row.kg);
+    const soldKg = safeKgTotal(saleRows, (row) => row.kg);
 
     const row: CropRow = {
       cropKey, cropName: crop.name, icon: crop.icon,
@@ -342,25 +393,30 @@ export function buildReconciliation(
   }
 
   const unplannedMap = new Map<string, UnplannedRow>();
-  const bucketKey = (raw: string) => normalize(raw) || raw.trim().toLowerCase();
+  const bucketKey = (raw: string) => {
+    const label = loggedCropLabel(raw);
+    return normalize(label) || label.trim().toLowerCase() || 'unnamed';
+  };
   const emptyRow = (raw: string): UnplannedRow => ({
-    label: raw.trim() || 'Unnamed',
+    label: loggedCropLabel(raw).trim() || 'Unnamed',
     harvestedKg: 0,
     soldKg: 0,
-    ambiguous: matchCropCandidates(raw, aliasIndex).length > 1,
+    ambiguous: matchCropCandidates(loggedCropLabel(raw), aliasIndex).length > 1,
   });
   for (const p of productionInPeriod) {
     if (matchedProductionIds.has(p.id)) continue;
     const key = bucketKey(p.crop);
     const row = unplannedMap.get(key) ?? emptyRow(p.crop);
-    row.harvestedKg += validLoggedKg(p.kg);
+    const next = row.harvestedKg + validLoggedKg(p.kg);
+    if (Number.isFinite(next)) row.harvestedKg = next;
     unplannedMap.set(key, row);
   }
   for (const s of salesInPeriod) {
     if (matchedSalesIds.has(s.id)) continue;
     const key = bucketKey(s.crop);
     const row = unplannedMap.get(key) ?? emptyRow(s.crop);
-    row.soldKg += validLoggedKg(s.kg);
+    const next = row.soldKg + validLoggedKg(s.kg);
+    if (Number.isFinite(next)) row.soldKg = next;
     unplannedMap.set(key, row);
   }
 

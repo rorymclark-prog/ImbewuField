@@ -122,6 +122,52 @@ test('tiny painted structures remain readable without changing centre or aspect 
   );
 });
 
+test('structure dimensions stay finite, preserve aspect, and never shrink valid footprints', () => {
+  for (const id of ['beehive', 'gate', 'shade_house', 'unknown']) {
+    for (const naturalWidth of [0.01, 1, 17, 1000]) {
+      for (const naturalHeight of [0.01, 2, 31, 1000]) {
+        for (const canvasWidth of [1, 320, 1595, 10000]) {
+          const result = structuresFeaturePresentationDimensions(
+            id,
+            naturalWidth,
+            naturalHeight,
+            canvasWidth,
+          );
+          assert.ok(Number.isFinite(result.width) && result.width >= naturalWidth);
+          assert.ok(Number.isFinite(result.height) && result.height >= naturalHeight);
+          assert.ok(Number.isFinite(result.scale) && result.scale >= 1);
+          assert.ok(Math.abs(result.width / result.height - naturalWidth / naturalHeight) < 1e-9);
+          assert.ok(Math.abs(result.width - naturalWidth * result.scale) < 1e-9);
+          assert.ok(Math.abs(result.height - naturalHeight * result.scale) < 1e-9);
+        }
+      }
+    }
+  }
+});
+
+test('invalid structure dimensions cannot become painted geometry or invented emphasis', () => {
+  for (const invalid of [
+    0,
+    -1,
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]) {
+    assert.deepEqual(
+      structuresFeaturePresentationDimensions('beehive', invalid, 10, 1000),
+      { width: 0, height: 0, scale: 1 },
+    );
+    assert.deepEqual(
+      structuresFeaturePresentationDimensions('beehive', 10, invalid, 1000),
+      { width: 0, height: 0, scale: 1 },
+    );
+    assert.deepEqual(
+      structuresFeaturePresentationDimensions('beehive', 10, 20, invalid),
+      { width: 10, height: 20, scale: 1 },
+    );
+  }
+});
+
 test('walking paths are dashed while fences stay solid', () => {
   assert.deepEqual(structuresRouteVisualFor('path'), { dash: [12, 8], width: 3.2 });
   assert.deepEqual(structuresRouteVisualFor('fence'), { dash: [], width: 3.5 });

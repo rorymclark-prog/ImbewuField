@@ -39,6 +39,10 @@ export interface SolarModel {
 const DEG2RAD = Math.PI / 180;
 const RAD2DEG = 180 / Math.PI;
 
+export function isValidEarthLatitude(latDeg: number): boolean {
+  return Number.isFinite(latDeg) && latDeg >= -90 && latDeg <= 90;
+}
+
 function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v));
 }
@@ -95,6 +99,9 @@ function sunPath(latDeg: number, declDeg: number, season: SunPath['season']): Su
  *  any site between the equator and its own hemisphere's tropic (|lat| < OBLIQUITY_DEG),
  *  where the old hardcoded `sh ? 'N' : 'S'` was flatly wrong (SECTOR-MODEL-SPEC §0.2). */
 export function deriveSolar(latDeg: number): SolarModel {
+  if (!isValidEarthLatitude(latDeg)) {
+    throw new RangeError('Solar latitude must be a finite Earth latitude');
+  }
   const sh = latDeg < 0;
   const decJune = sunPath(latDeg, sh ? -OBLIQUITY_DEG : OBLIQUITY_DEG, sh ? 'december' : 'june');
   const juneDec = sunPath(latDeg, sh ? OBLIQUITY_DEG : -OBLIQUITY_DEG, sh ? 'june' : 'december');

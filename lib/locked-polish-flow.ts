@@ -78,7 +78,8 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
   }
 
   if (
-    state.hybridAfterExactPending
+    state.outputMode !== 'exact'
+    && state.hybridAfterExactPending
     && state.mode === 'exact'
     && state.isExactRender
     && !state.loading
@@ -88,7 +89,8 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
   }
 
   if (
-    state.hybridFlipPending
+    state.outputMode !== 'exact'
+    && state.hybridFlipPending
     && state.mode === 'ai'
     && !state.isExactRender
     && !state.loading
@@ -97,7 +99,8 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
   }
 
   if (
-    state.polishAfterHybridPending
+    state.outputMode === 'full'
+    && state.polishAfterHybridPending
     && state.mode === 'ai'
     && !state.isExactRender
     && !state.loading
@@ -107,7 +110,8 @@ export function lockedPolishAction(state: LockedPolishState): LockedPolishAction
   }
 
   if (
-    state.polishFlipPending
+    state.outputMode === 'full'
+    && state.polishFlipPending
     && state.mode === 'ai'
     && !state.isExactRender
     && !state.loading

@@ -112,6 +112,31 @@ test('protected pixels are excluded, so a good pass is not punished for the app 
   assert.ok(unmasked.redrawnFraction < 0.55);
 });
 
+test('partially protected pixels are scored exactly as their visible blended result', () => {
+  const before = solid(120, 130, 110);
+  const after = repainted(before, 0.55);
+  const mask = new Uint8ClampedArray(before.length);
+  const alphas = [1, 64, 128, 192];
+  const visiblyRestored = new Uint8ClampedArray(after);
+
+  for (let i = 0; i < mask.length; i += 4) {
+    const alphaByte = alphas[(i / 4) % alphas.length];
+    const protection = alphaByte / 255;
+    mask[i + 3] = alphaByte;
+    for (let channel = 0; channel < 4; channel += 1) {
+      visiblyRestored[i + channel] = Math.round(
+        before[i + channel] * protection + after[i + channel] * (1 - protection),
+      );
+    }
+  }
+
+  assert.deepEqual(
+    compareRenders(before, after, { protectMask: mask }),
+    compareRenders(before, visiblyRestored),
+    'the gate must score the same pixels the compositor will show',
+  );
+});
+
 test('a fully protected sheet reports honestly instead of blaming the model', () => {
   // If the mask covers everything, the model had no canvas. Calling that "unchanged" would send
   // someone off to re-prompt a model that was never allowed to draw.
@@ -129,6 +154,10 @@ test('mismatched sizes throw rather than silently scoring nonsense', () => {
   assert.throws(
     () => compareRenders(solid(1, 1, 1), solid(2, 2, 2), { protectMask: new Uint8ClampedArray(8) }),
     /mask size mismatch/,
+  );
+  assert.throws(
+    () => compareRenders(new Uint8ClampedArray(5), new Uint8ClampedArray(5)),
+    /whole pixels/,
   );
 });
 

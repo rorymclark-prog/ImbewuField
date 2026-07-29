@@ -172,6 +172,51 @@ test('invalid and degenerate shapes are quarantined instead of poisoning GeoJSON
   assert.equal(buildDesignOverlay('site:test'), null);
 });
 
+test('zero-area and self-crossing rings never become GeoJSON polygons', () => {
+  const star: Array<[number, number]> = [
+    [0.5, 0.05],
+    [0.76, 0.85],
+    [0.08, 0.35],
+    [0.92, 0.35],
+    [0.24, 0.85],
+  ];
+  install(canvas({
+    zones: [
+      {
+        id: 'collinear',
+        zone: 1,
+        points: [[0.1, 0.1], [0.5, 0.5], [0.9, 0.9]],
+      },
+      {
+        id: 'crossing',
+        zone: 2,
+        points: star,
+      },
+    ],
+  }));
+  assert.equal(buildDesignOverlay('site:test'), null);
+});
+
+test('valid concave and explicitly closed rings remain renderable', () => {
+  const concave: Array<[number, number]> = [
+    [0.1, 0.1],
+    [0.8, 0.1],
+    [0.4, 0.4],
+    [0.8, 0.8],
+    [0.1, 0.8],
+  ];
+  const closed = [...concave, concave[0]];
+  for (const points of [concave, closed]) {
+    install(canvas({
+      zones: [{ id: 'concave', zone: 2, points }],
+    }));
+    const overlay = buildDesignOverlay('site:test');
+    assert.ok(overlay);
+    assert.equal(overlay.collection.features.length, 1);
+    assert.equal(overlay.collection.features[0].geometry.type, 'Polygon');
+  }
+});
+
 test('malformed collection fields and frames degrade to no overlay', () => {
   for (const patch of [
     { centerLng: Infinity },

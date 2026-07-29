@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { producerLabels } from '../lib/producer-labels.ts';
+import { clusterByProximity, plotBox, producerLabels } from '../lib/producer-labels.ts';
 import type { LabelRefLayers } from '../lib/producer-labels.ts';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { fitMeasuredPillX, type ProducerLabel } from '../lib/image-producer.ts';
@@ -228,4 +228,56 @@ test('dense producer-label columns stay ordered and non-overlapping at real boun
       }
     }
   }
+});
+
+test('malformed presentation geometry is omitted without mutating valid saved labels', () => {
+  const state = waterSheetState();
+  state.items.push({
+    id: 'invalid-item',
+    defId: 'tap_point',
+    x: Number.NaN,
+    y: 0.5,
+    label: 'POISON COORDINATE',
+  });
+  const refLayers = waterSheetRefLayers();
+  refLayers.boundary[1] = [Number.POSITIVE_INFINITY, 0];
+  refLayers.driveway = [[0.5, 0.02], [Number.NaN, 0.5]];
+  const before = structuredClone({ state, refLayers });
+
+  const out = producerLabels(state, refLayers, W, H, 'water', false);
+
+  assert.ok(out.length > 0, 'one malformed feature must not erase valid labels');
+  assert.equal(out.some((label) => label.text.includes('POISON COORDINATE')), false);
+  assert.equal(out.some((label) => label.text.includes('DRIVEWAY')), false);
+  assert.ok(
+    out.every((label) => [label.cx, label.cy, label.ax, label.ay, label.lx].every(Number.isFinite)),
+  );
+  assert.deepEqual({ state, refLayers }, before, 'presentation cleanup must never rewrite saved geometry');
+});
+
+test('invalid canvas dimensions draw no producer labels', () => {
+  for (const invalid of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    assert.deepEqual(
+      producerLabels(waterSheetState(), waterSheetRefLayers(), invalid, H, 'water', false),
+      [],
+    );
+    assert.deepEqual(
+      producerLabels(waterSheetState(), waterSheetRefLayers(), W, invalid, 'water', false),
+      [],
+    );
+  }
+});
+
+test('exported geometry helpers return finite fallbacks and retain only usable points', () => {
+  assert.deepEqual(
+    plotBox([[0, 0], [Number.NaN, 0], [1, 1]]),
+    { x0: 0, y0: 0, x1: 1, y1: 1 },
+  );
+  const valid = { x: 0.4, y: 0.5, name: 'Tank', icon: '' };
+  const clusters = clusterByProximity([
+    valid,
+    { x: Number.NaN, y: 0.5, name: 'Invalid', icon: '' },
+    { x: 2, y: 0.5, name: 'Outside', icon: '' },
+  ], Number.NaN);
+  assert.deepEqual(clusters, [[valid]]);
 });

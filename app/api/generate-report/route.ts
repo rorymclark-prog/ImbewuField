@@ -5,7 +5,7 @@ export const maxDuration = 300;
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt } from '@/lib/site-survey';
-import { deriveSolar } from '@/lib/solar';
+import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -115,7 +115,11 @@ export async function POST(req: NextRequest) {
   if (
     !locationData ||
     typeof locationData.lat !== 'number' ||
+    !isValidEarthLatitude(locationData.lat) ||
     typeof locationData.lon !== 'number' ||
+    !Number.isFinite(locationData.lon) ||
+    locationData.lon < -180 ||
+    locationData.lon > 180 ||
     !locationData.rainfall?.monthly ||
     !Array.isArray(locationData.rainfall.monthly) ||
     !locationData.elevation?.aspectLabel ||

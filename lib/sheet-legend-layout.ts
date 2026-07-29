@@ -23,7 +23,18 @@ export function legendRowGap(
   /** The natural line rhythm of this legend — the gap is never allowed to dwarf it. */
   rowRhythm = Number.POSITIVE_INFINITY,
 ): number {
-  if (!Number.isFinite(availableHeight) || !Number.isFinite(usedHeight) || rowCount <= 0) return 0;
+  // Both halves of this guard earned their place. The negative/non-integer rejections came from a
+  // hardening pass; the rhythm ceiling below came from looking at a rendered sheet. Merging kept
+  // both, because the hardening branch was cut before the ceiling existed and taking its side
+  // wholesale would have quietly restored the over-justified legend it never knew about.
+  if (
+    !Number.isFinite(availableHeight)
+    || availableHeight < 0
+    || !Number.isFinite(usedHeight)
+    || usedHeight < 0
+    || !Number.isSafeInteger(rowCount)
+    || rowCount <= 0
+  ) return 0;
   const shared = Math.max(0, (availableHeight - usedHeight) / rowCount);
   const ceiling = Number.isFinite(rowRhythm) ? Math.max(0, rowRhythm) * MAX_GAP_TO_ROW_RHYTHM : Infinity;
   return Math.min(shared, ceiling);
@@ -32,5 +43,8 @@ export function legendRowGap(
 /** Countable map content always says how many markers/routes the row represents. An omitted count
  * used to mean either "one" or "not counted", which a farmer could not distinguish. */
 export function countedLegendText(label: string, count: number): string {
+  if (!Number.isSafeInteger(count) || count < 0) {
+    throw new RangeError('Legend count must be a non-negative safe integer');
+  }
   return `${label} ×${count}`;
 }

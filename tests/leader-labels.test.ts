@@ -70,6 +70,14 @@ test('the legibility floor binds on a map too narrow to earn its share', () => {
   assert.ok(leaderLabelFontSize(40_000) > MIN_FONT_SIZE, 'and a huge map is not held at the floor');
 });
 
+test('invalid map widths cannot turn a label font into a non-finite canvas value', () => {
+  for (const width of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, -1]) {
+    const size = leaderLabelFontSize(width);
+    assert.ok(Number.isFinite(size));
+    assert.ok(size >= MIN_FONT_SIZE);
+  }
+});
+
 // The regression this whole change exists to prevent. Codex made the type width-relative (right)
 // but kept the 0.011 the old `Math.max(19, …)` had always been masking, so on Rory's 1480px-wide
 // Extension Blueprint water map the callouts would have gone 19px -> 16px — smaller, on the very
@@ -142,6 +150,22 @@ test('a label that already fits is not shrunk at all', () => {
   assert.equal(p.shrunk, false);
 });
 
+test('invalid placement inputs cannot manufacture non-finite canvas coordinates', () => {
+  for (const invalid of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+    const p = placeLeaderLabel({
+      text: LONGEST,
+      side: 'right',
+      W: invalid,
+      plotX0: invalid,
+      plotX1: invalid,
+      fontSize: invalid,
+      measure: () => invalid,
+    });
+    assert.ok([p.x, p.fontSize, p.textW].every(Number.isFinite), JSON.stringify(p));
+    assert.ok(p.fontSize >= MIN_FONT_SIZE);
+  }
+});
+
 test('left callouts end before the property, right callouts start after it', () => {
   // The whole point of a margin column: a callout drawn over the plan hides the thing it names.
   const W = 1600;
@@ -182,6 +206,17 @@ test('rows follow their features, and identical designs stack identically', () =
 
 test('an empty side places nothing rather than throwing', () => {
   assert.deepEqual(stackLeaderRows([], 140, 1030, 34), []);
+});
+
+test('row stacking preserves every label and returns only finite positions for invalid inputs', () => {
+  const rows = stackLeaderRows(
+    [100, Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, 300],
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NaN,
+  );
+  assert.equal(rows.length, 5, 'sanitising one bad feature must not drop another feature label');
+  assert.ok(rows.every(Number.isFinite), rows.join(', '));
 });
 
 // ── Leader routing ───────────────────────────────────────────────────────────

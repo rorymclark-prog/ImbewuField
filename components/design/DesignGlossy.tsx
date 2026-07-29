@@ -7927,7 +7927,19 @@ interface SavedGlossy {
 //        part of the plan was the single label the legend could not decode. DesignGlossy had
 //        already written the rule down where it names a sheet's parts; producerLabels just never
 //        applied it, and only the masterplan's curated callout layer filtered the pill back out.
-const PLAN_VERSION = 'v81';
+//   v82 — 2026-07-29: a 25-commit hardening pass across the geometry modules — elevation, sector,
+//        solar, contours, base layers, overlays, planting/structures presentation sizes, legend
+//        layout, label geometry, phasing inventory, render metadata and the paid-render gate. Each
+//        rejects malformed or non-finite input instead of drawing from it, which is this codebase's
+//        recurring defect: bad saved data rendering a believable wrong picture rather than an error.
+//
+//        ARRIVED AS v97. That branch was cut at v79 and bumped the version on every one of its
+//        commits — eighteen times, for work that is almost entirely defensive. A bump is not free:
+//        it re-keys the sheet gallery, so an AI sheet a farmer has already PAID for stops being
+//        found. None of v82–v97 ever shipped, so no farmer's cache is owed them, and they collapse
+//        to this single bump. The protocol changed with this merge — PLAN_VERSION is now assigned
+//        once, at merge, and never by a working branch. Eight collisions was enough.
+const PLAN_VERSION = 'v82';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

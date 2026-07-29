@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { middayFromLat } from '@/lib/sector';
+import { isValidEarthLatitude } from '@/lib/solar';
 
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
@@ -72,7 +73,7 @@ interface RenderContext {
 // 'mixed'. Defaults to the old "north" assumption when no latitude is supplied — correct for the
 // large majority of South African sites this app serves.
 function sunSideFromLat(latDeg?: number): 'N' | 'S' | 'mixed' {
-  return latDeg != null && Number.isFinite(latDeg) ? middayFromLat(latDeg) : 'N';
+  return latDeg != null && isValidEarthLatitude(latDeg) ? middayFromLat(latDeg) : 'N';
 }
 
 function layerTheme(layer: RenderLayer, latDeg?: number): string {

@@ -46,3 +46,11 @@ test('driveway centroid coinciding with the site centroid → null, not a divide
   const driveway: Array<[number, number]> = [[0.5, 0.5], [0.5, 0.5]];
   assert.equal(deriveDrivewayAccess(site, driveway), null);
 });
+
+test('non-finite traced geometry never becomes a driveway bearing', () => {
+  const invalid = [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
+  for (const value of invalid) {
+    assert.equal(deriveDrivewayAccess([value, 0.5], [[0.1, 0.1], [0.2, 0.2]]), null);
+    assert.equal(deriveDrivewayAccess([0.5, 0.5], [[0.1, 0.1], [value, 0.2]]), null);
+  }
+});

@@ -126,6 +126,52 @@ test('every stage waits for a settled, non-loading state before firing', () => {
   }), 'wait');
 });
 
+test('the declared output mode is a hard ceiling on later paid stages', () => {
+  const readyExactResult = {
+    ...READY,
+    mode: 'exact' as const,
+    isExactRender: true,
+    hasResult: true,
+  };
+
+  assert.equal(lockedPolishAction({
+    ...readyExactResult,
+    outputMode: 'exact',
+    hybridAfterExactPending: true,
+  }), 'wait', 'Exact-only output must not advance into AI');
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'exact',
+    hybridFlipPending: true,
+  }), 'wait', 'Exact-only output must not spend a Hybrid render');
+
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'hybrid',
+    polishAfterHybridPending: true,
+    hasResult: true,
+  }), 'wait', 'Hybrid output must not advance into Full Treatment');
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'hybrid',
+    polishFlipPending: true,
+  }), 'wait', 'Hybrid output must not spend the polish render');
+});
+
+test('Full Treatment remains the only mode allowed to enter both polish transitions', () => {
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'full',
+    polishAfterHybridPending: true,
+    hasResult: true,
+  }), 'switch-to-polish');
+  assert.equal(lockedPolishAction({
+    ...READY,
+    outputMode: 'full',
+    polishFlipPending: true,
+  }), 'render-polish');
+});
+
 test('the exact master step cannot replace the chosen AI style', () => {
   assert.equal(
     lockedPolishStyle('homestead_storybook', 'precision_atlas'),

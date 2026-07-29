@@ -15,6 +15,7 @@ import {
   ringAreaOf,
   type DesignCanvasState,
 } from '../lib/design-canvas.ts';
+import { computeContourLines } from '../lib/contours.ts';
 
 function stateFixture(): DesignCanvasState {
   return {
@@ -198,4 +199,85 @@ test('geometry helpers respect nested GeoJSON, winding, concavity, and non-squar
   assert.equal(pointInRing([1, 1.75], concave), false);
   assert.equal(distM([0, 0], [1, 1], frame), Math.hypot(frame.imgW, frame.imgH) * frame.mPerPx);
   assert.equal(distM([1, 1], [0, 0], frame), distM([0, 0], [1, 1], frame));
+});
+
+const CONTOUR_BOUNDARY: Array<[number, number]> = [
+  [0.1, 0.2],
+  [0.9, 0.2],
+  [0.9, 0.8],
+  [0.1, 0.8],
+];
+
+test('contours remain perpendicular to downhill in physical frame space', () => {
+  const frames = [
+    { imgW: 1200, imgH: 400 },
+    { imgW: 400, imgH: 1200 },
+  ];
+  for (const frame of frames) {
+    for (const aspectDeg of [0, 37, 90, 181, 270, 359]) {
+      const result = computeContourLines(
+        8,
+        aspectDeg,
+        CONTOUR_BOUNDARY,
+        0.4,
+        frame.imgW,
+        frame.imgH,
+      );
+      assert.equal(result.status, 'ok');
+      assert.ok(result.lines.length > 0);
+      assert.ok(Number.isFinite(result.intervalM) && result.intervalM > 0);
+
+      const downhill = [
+        Math.sin(aspectDeg * Math.PI / 180),
+        -Math.cos(aspectDeg * Math.PI / 180),
+      ];
+      for (const line of result.lines) {
+        const lineVector = [
+          (line.b[0] - line.a[0]) * frame.imgW,
+          (line.b[1] - line.a[1]) * frame.imgH,
+        ];
+        const length = Math.hypot(lineVector[0], lineVector[1]);
+        assert.ok(length > 0 && Number.isFinite(length));
+        const dot = (lineVector[0] * downhill[0] + lineVector[1] * downhill[1]) / length;
+        assert.ok(Math.abs(dot) < 1e-10);
+        assert.ok(Number.isFinite(line.elevM));
+      }
+    }
+  }
+});
+
+test('contour compass turns are periodic without mutating the boundary', () => {
+  const before = structuredClone(CONTOUR_BOUNDARY);
+  const west = computeContourLines(7, 270, CONTOUR_BOUNDARY, 0.5, 900, 600);
+  const sameWest = computeContourLines(7, -90, CONTOUR_BOUNDARY, 0.5, 900, 600);
+  assert.deepEqual(sameWest, west);
+  assert.deepEqual(CONTOUR_BOUNDARY, before);
+});
+
+test('flat ground is distinct from unavailable contour evidence', () => {
+  const flat = computeContourLines(0, 180, CONTOUR_BOUNDARY, 0.5, 900, 600);
+  assert.equal(flat.status, 'too-flat');
+  assert.equal(flat.tooFlat, true);
+  assert.deepEqual(flat.lines, []);
+
+  const invalidCalls: Array<() => ReturnType<typeof computeContourLines>> = [
+    () => computeContourLines(Number.NaN, 180, CONTOUR_BOUNDARY, 0.5, 900, 600),
+    () => computeContourLines(Number.POSITIVE_INFINITY, 180, CONTOUR_BOUNDARY, 0.5, 900, 600),
+    () => computeContourLines(-1, 180, CONTOUR_BOUNDARY, 0.5, 900, 600),
+    () => computeContourLines(90, 180, CONTOUR_BOUNDARY, 0.5, 900, 600),
+    () => computeContourLines(7, Number.NaN, CONTOUR_BOUNDARY, 0.5, 900, 600),
+    () => computeContourLines(7, 180, CONTOUR_BOUNDARY, 0, 900, 600),
+    () => computeContourLines(7, 180, CONTOUR_BOUNDARY, 0.5, 0, 600),
+    () => computeContourLines(7, 180, CONTOUR_BOUNDARY, 0.5, 900, Number.POSITIVE_INFINITY),
+    () => computeContourLines(7, 180, [[0, 0], [0.5, 0.5], [1, 1]], 0.5, 900, 600),
+    () => computeContourLines(7, 180, [[0, 0], [1.1, 0], [0, 1]], 0.5, 900, 600),
+    () => computeContourLines(7, 180, [[0, 0], [1, 0], [Number.NaN, 1]], 0.5, 900, 600),
+  ];
+  for (const compute of invalidCalls) {
+    const unavailable = compute();
+    assert.equal(unavailable.status, 'unavailable');
+    assert.equal(unavailable.tooFlat, false);
+    assert.deepEqual(unavailable.lines, []);
+    assert.equal(unavailable.intervalM, 0);
+  }
 });

@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { deriveSectorModel, type SectorModel, type SectorSite } from '@/lib/sector';
+import { isValidEarthLatitude } from '@/lib/solar';
 import { formatDesignTranslation, type DesignStudioTranslate } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 
@@ -187,7 +188,7 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
   const effSite = site ?? resolved?.site ?? null;
 
   const model = useMemo(
-    () => (effLat != null && Number.isFinite(effLat) ? deriveSectorModel(effSite, effLat, effLon) : null),
+    () => (effLat != null && isValidEarthLatitude(effLat) ? deriveSectorModel(effSite, effLat, effLon) : null),
     [effSite, effLat, effLon],
   );
 

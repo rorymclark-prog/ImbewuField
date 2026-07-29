@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { layoutCanvasLabels, estimatePillWidth, type CanvasLabelInput } from '../lib/canvas-labels.ts';
+import {
+  layoutCanvasLabels,
+  estimatePillWidth,
+  isUsableCanvasLabelInput,
+  type CanvasLabelInput,
+} from '../lib/canvas-labels.ts';
 
 type Box = { x0: number; x1: number; y0: number; y1: number };
 const boxOf = (i: CanvasLabelInput, x: number, y: number): Box => ({
@@ -111,6 +116,22 @@ test('results come back in the caller order, so React keys stay stable', () => {
   );
 });
 
+test('invalid label geometry is rejected before it can become an SVG transform', () => {
+  const invalid = [
+    { ...GUILD[0], id: '', cx: 100 },
+    { ...GUILD[0], id: 'nan', cx: Number.NaN },
+    { ...GUILD[0], id: 'infinite', gap: Number.POSITIVE_INFINITY },
+    { ...GUILD[0], id: 'negative-width', w: -1 },
+    { ...GUILD[0], id: 'negative-height', h: -1 },
+    { ...GUILD[0], id: 'negative-radius', iconR: -1 },
+  ];
+  assert.ok(invalid.every((input) => !isUsableCanvasLabelInput(input)));
+
+  const out = layoutCanvasLabels([GUILD[0], ...invalid, GUILD[1]]);
+  assert.deepEqual(out.map((label) => label.id), [GUILD[0].id, GUILD[1].id]);
+  assert.ok(out.every((label) => [label.x, label.y].every(Number.isFinite)));
+});
+
 test('pill width estimate clears the WIDEST width actually measured in the browser', () => {
   // Under-estimating lets two pills that really touch be treated as clear — that is the whole
   // failure mode. These are real measurements taken from the rendered canvas at 9px; the estimate
@@ -132,6 +153,16 @@ test('pill width estimate clears the WIDEST width actually measured in the brows
   assert.equal(estimatePillWidth('a'.repeat(400), 9, 5, 120), 120, 'clamped to max');
 });
 
+test('pill width estimation remains finite and non-negative for malformed sizing inputs', () => {
+  for (const invalid of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, -1]) {
+    const values = [
+      estimatePillWidth('Tap point', invalid, 5, 120),
+      estimatePillWidth('Tap point', 9, invalid, 120),
+      estimatePillWidth('Tap point', 9, 5, invalid),
+    ];
+    assert.ok(values.every((width) => Number.isFinite(width) && width >= 0));
+  }
+});
 // ── Release notes shown under the Refresh button ──────────────────────────────
 import { visibleNotes, RELEASE_NOTES, MAX_SHOWN } from '../lib/release-notes.ts';
 
