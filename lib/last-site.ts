@@ -34,7 +34,7 @@ function textArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every(text);
 }
 
-function validLocation(value: unknown): value is LocationData {
+export function isValidLocationData(value: unknown): value is LocationData {
   if (!isRecord(value)) return false;
   const biome = value.biome;
   const rainfall = value.rainfall;
@@ -63,7 +63,7 @@ function validLocation(value: unknown): value is LocationData {
     && finite(elevation.aspectDeg) && text(elevation.aspectLabel);
 }
 
-function validSite(value: unknown): value is SiteData {
+export function isValidSiteData(value: unknown): value is SiteData {
   return isRecord(value)
     && finite(value.areaM2) && value.areaM2 >= 0
     && finite(value.areaHa) && value.areaHa >= 0
@@ -71,7 +71,7 @@ function validSite(value: unknown): value is SiteData {
     && finite(value.perimeterKm) && value.perimeterKm >= 0;
 }
 
-function validWater(value: unknown): value is WaterData {
+export function isValidWaterData(value: unknown): value is WaterData {
   return isRecord(value)
     && finite(value.count) && value.count >= 0
     && finite(value.areaM2) && value.areaM2 >= 0
@@ -80,13 +80,13 @@ function validWater(value: unknown): value is WaterData {
 }
 
 function normaliseLastSite(value: unknown): LastSite | null {
-  if (!isRecord(value) || !validLocation(value.locationData)) return null;
+  if (!isRecord(value) || !isValidLocationData(value.locationData)) return null;
   const result: LastSite = { locationData: value.locationData };
   if ('siteData' in value) {
-    result.siteData = value.siteData == null ? null : validSite(value.siteData) ? value.siteData : null;
+    result.siteData = value.siteData == null ? null : isValidSiteData(value.siteData) ? value.siteData : null;
   }
   if ('waterData' in value) {
-    result.waterData = value.waterData == null ? null : validWater(value.waterData) ? value.waterData : null;
+    result.waterData = value.waterData == null ? null : isValidWaterData(value.waterData) ? value.waterData : null;
   }
   return result;
 }
