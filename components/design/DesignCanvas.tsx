@@ -1633,12 +1633,13 @@ export default function DesignCanvas({
   const refOpacityFactor = 1;
 
   // Approximate on-contour guide lines (parallel, perpendicular to the slope). Cheap to compute
-  // and only used when the Contours layer is on. `tooFlat` when the site is <1.5° or no slope data.
+  // and only used when the Contours layer is on. Missing data is distinct from genuinely flat
+  // ground so the UI never labels an unanalysed site as flat.
   const contours = useMemo(
     () =>
       slopeDeg != null && aspectDeg != null && refLayers.boundary.length >= 3
         ? computeContourLines(slopeDeg, aspectDeg, refLayers.boundary, mPerPx, imgW, imgH)
-        : { lines: [], intervalM: 0, tooFlat: true },
+        : { lines: [], intervalM: 0, tooFlat: false, status: 'unavailable' as const },
     [slopeDeg, aspectDeg, refLayers.boundary, mPerPx, imgW, imgH],
   );
 
@@ -3269,7 +3270,7 @@ export default function DesignCanvas({
 
       {/* Contours note — top-centre. Shown only when the layer is on so the farmer knows the
           lines are a slope-based guide (and why they're absent on flat ground). */}
-      {activeLayers.contours && (
+      {activeLayers.contours && contours.status !== 'unavailable' && (
         <div
           style={{
             position: 'absolute',

@@ -19,6 +19,36 @@ export interface ContourResult {
   lines: ContourLine[];
   intervalM: number; // vertical spacing between lines
   tooFlat: boolean;
+  status: 'ok' | 'too-flat' | 'unavailable';
+}
+
+const unavailableResult = (): ContourResult => ({
+  lines: [],
+  intervalM: 0,
+  tooFlat: false,
+  status: 'unavailable',
+});
+
+function hasUsableBoundary(boundary: Array<[number, number]>): boolean {
+  if (
+    boundary.length < 3
+    || boundary.some(([x, y]) =>
+      !Number.isFinite(x)
+      || !Number.isFinite(y)
+      || x < 0
+      || x > 1
+      || y < 0
+      || y > 1)
+  ) {
+    return false;
+  }
+  let twiceArea = 0;
+  for (let i = 0; i < boundary.length; i++) {
+    const [ax, ay] = boundary[i];
+    const [bx, by] = boundary[(i + 1) % boundary.length];
+    twiceArea += ax * by - bx * ay;
+  }
+  return Number.isFinite(twiceArea) && twiceArea !== 0;
 }
 
 /**
@@ -38,8 +68,23 @@ export function computeContourLines(
   imgH: number,
 ): ContourResult {
   // Below ~1.5° the ground reads as flat — contours would be metres apart and meaningless.
-  if (!Number.isFinite(slopeDeg) || slopeDeg < 1.5 || boundary.length < 3) {
-    return { lines: [], intervalM: 0, tooFlat: true };
+  if (
+    !Number.isFinite(slopeDeg)
+    || slopeDeg < 0
+    || slopeDeg >= 90
+    || !Number.isFinite(aspectDeg)
+    || !Number.isFinite(mPerPx)
+    || mPerPx <= 0
+    || !Number.isFinite(imgW)
+    || imgW <= 0
+    || !Number.isFinite(imgH)
+    || imgH <= 0
+    || !hasUsableBoundary(boundary)
+  ) {
+    return unavailableResult();
+  }
+  if (slopeDeg < 1.5) {
+    return { lines: [], intervalM: 0, tooFlat: true, status: 'too-flat' };
   }
 
   // Work in logical px so metres↔px is a single mPerPx scale, then normalise at the end.
@@ -52,7 +97,8 @@ export function computeContourLines(
   const cy = (minY + maxY) / 2;
   const diag = Math.hypot(maxX - minX, maxY - minY);
 
-  const aspectRad = (aspectDeg * Math.PI) / 180;
+  const canonicalAspectDeg = ((aspectDeg % 360) + 360) % 360;
+  const aspectRad = (canonicalAspectDeg * Math.PI) / 180;
   // Canvas is y-DOWN, North is up. Downhill unit vector for a compass bearing:
   const dHat: [number, number] = [Math.sin(aspectRad), -Math.cos(aspectRad)];
   // Contours run perpendicular to downhill.
@@ -73,7 +119,7 @@ export function computeContourLines(
   const rawIntervalM = (rangePx / targetLines) * mPerPx * Math.tan(slopeRad);
   const intervalM = niceInterval(rawIntervalM);
   const spacingPx = intervalM / mPerPx / Math.tan(slopeRad);
-  if (!Number.isFinite(spacingPx) || spacingPx <= 0) return { lines: [], intervalM: 0, tooFlat: true };
+  if (!Number.isFinite(spacingPx) || spacingPx <= 0) return unavailableResult();
 
   const half = diag; // each line spans well past the bbox; SVG clipPath trims to the boundary
   const lines: ContourLine[] = [];
@@ -88,7 +134,18 @@ export function computeContourLines(
     // Uphill is OPPOSITE the downhill vector, so elevation increases as offset decreases.
     lines.push({ a, b, elevM: Math.round(-i * intervalM * 10) / 10 });
   }
-  return { lines, intervalM, tooFlat: false };
+  if (
+    lines.length === 0
+    || lines.some(({ a, b, elevM }) =>
+      !Number.isFinite(a[0])
+      || !Number.isFinite(a[1])
+      || !Number.isFinite(b[0])
+      || !Number.isFinite(b[1])
+      || !Number.isFinite(elevM))
+  ) {
+    return unavailableResult();
+  }
+  return { lines, intervalM, tooFlat: false, status: 'ok' };
 }
 
 // Round a raw interval to a tidy 1 / 2 / 5 × 10ⁿ step so labels read cleanly.
