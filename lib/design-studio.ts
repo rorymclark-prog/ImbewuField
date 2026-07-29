@@ -2,7 +2,11 @@
 
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
-import { markLocalStorageKeyUpdated, readLocalFarmShapes } from '@/lib/map-sync';
+import {
+  isValidFarmGeometry,
+  markLocalStorageKeyUpdated,
+  readLocalFarmShapes,
+} from '@/lib/map-sync';
 import {
   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   roofHarvestLitres,
@@ -95,6 +99,11 @@ export interface DesignStudioState {
 }
 
 type StoredDesignState = Record<string, DesignStudioState>;
+const DESIGN_LAYER_TYPES = new Set<DesignLayerType>([
+  'property_boundary', 'cultivation', 'water_body', 'roof', 'access', 'tree_belt',
+  'structure', 'unknown',
+]);
+const DESIGN_FEATURE_TYPES = new Set<DesignLayer['featureType']>(['site', 'water', 'unknown']);
 
 const TYPE_LABELS: Record<DesignLayerType, string> = {
   property_boundary: 'Property boundary',
@@ -154,18 +163,153 @@ export function emptyDesignStudioState(siteId: string): DesignStudioState {
   };
 }
 
-function safeParse<T>(raw: string | null, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
+function studioRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function studioText(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+function studioStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every(studioText);
+}
+
+function validPlanSections(value: unknown, liveLayerIds: Set<string>): value is DesignPlanSection[] {
+  return Array.isArray(value) && value.every((section) => (
+    studioRecord(section)
+    && studioText(section.title)
+    && studioText(section.body)
+    && studioStringArray(section.layerIds)
+    && section.layerIds.every((id) => liveLayerIds.has(id))
+  ));
+}
+
+function validWaterCalc(value: unknown): value is WaterCalcSummary {
+  if (!studioRecord(value)) return false;
+  const required = [
+    'householdDailyLitres', 'householdMonthlyLitres', 'dryBufferLitres90Day',
+    'roofAreaM2Used', 'cultivationAreaM2',
+  ];
+  const nullable = [
+    'roofHarvestAnnualLitres', 'roofHarvestAnnualKL',
+    'gardenIrrigationDrySeasonDailyLitres', 'gardenIrrigationDrySeasonMonthlyLitres',
+    'rainfallMmUsed',
+  ];
+  return required.every((key) => (
+    typeof value[key] === 'number' && Number.isFinite(value[key]) && value[key] >= 0
+  )) && nullable.every((key) => (
+    value[key] === null
+    || (typeof value[key] === 'number' && Number.isFinite(value[key]) && value[key] >= 0)
+  ));
+}
+
+function validSurveySnapshot(value: unknown): boolean {
+  if (!studioRecord(value)) return false;
+  return (value.soilCondition === undefined || studioText(value.soilCondition))
+    && (value.challenges === undefined || studioStringArray(value.challenges))
+    && (value.existingCrops === undefined || studioStringArray(value.existingCrops))
+    && (value.waterSources === undefined || studioStringArray(value.waterSources))
+    && (value.isCommercial === undefined || typeof value.isCommercial === 'boolean')
+    && (value.farmingPractice === undefined || studioText(value.farmingPractice))
+    && (value.householdSize === undefined
+      || (typeof value.householdSize === 'number'
+        && Number.isFinite(value.householdSize) && value.householdSize >= 0));
+}
+
+function normaliseGeneratedPlan(
+  value: unknown,
+  siteId: string,
+  liveLayerIds: Set<string>,
+): GeneratedDesignPlan | null {
+  if (value === null || value === undefined) return null;
+  if (!studioRecord(value)
+      || !studioText(value.id) || !value.id
+      || !studioText(value.generatedAt) || !Number.isFinite(Date.parse(value.generatedAt))
+      || value.siteId !== siteId
+      || !studioText(value.summary)
+      || !studioStringArray(value.lockedLayerIds)
+      || !value.lockedLayerIds.every((id) => liveLayerIds.has(id))
+      || !validPlanSections(value.sectorMap, liveLayerIds)
+      || !validPlanSections(value.zoneMap, liveLayerIds)
+      || !validPlanSections(value.waterMap, liveLayerIds)
+      || !validPlanSections(value.opportunityMap, liveLayerIds)
+      || !studioStringArray(value.exportNotes)
+      || (value.waterCalc !== undefined && !validWaterCalc(value.waterCalc))
+      || (value.surveyGoals !== undefined && !studioStringArray(value.surveyGoals))
+      || (value.surveySnapshot !== undefined && !validSurveySnapshot(value.surveySnapshot))) {
+    return null;
   }
+  return value as unknown as GeneratedDesignPlan;
+}
+
+function validDesignLayer(value: unknown, siteId: string): value is DesignLayer {
+  if (!studioRecord(value)) return false;
+  return studioText(value.id) && value.id.length > 0
+    && studioText(value.featureId) && value.featureId.length > 0
+    && value.siteId === siteId
+    && studioText(value.name)
+    && DESIGN_LAYER_TYPES.has(value.layerType as DesignLayerType)
+    && DESIGN_FEATURE_TYPES.has(value.featureType as DesignLayer['featureType'])
+    && studioText(value.geometryType)
+    && isValidFarmGeometry(value.geometry)
+    && value.geometryType === value.geometry.type
+    && typeof value.areaM2 === 'number' && Number.isFinite(value.areaM2) && value.areaM2 >= 0
+    && studioText(value.areaLabel)
+    && value.source === 'manual_map'
+    && typeof value.confidenceScore === 'number' && Number.isFinite(value.confidenceScore)
+    && value.confidenceScore >= 0 && value.confidenceScore <= 1
+    && typeof value.approved === 'boolean'
+    && typeof value.locked === 'boolean'
+    && studioText(value.color)
+    && (value.notes === undefined || studioText(value.notes))
+    && studioText(value.updatedAt) && Number.isFinite(Date.parse(value.updatedAt));
+}
+
+export function normaliseDesignStudioState(value: unknown, siteId: string): DesignStudioState | null {
+  let copy: unknown;
+  try {
+    copy = JSON.parse(JSON.stringify(value));
+  } catch {
+    return null;
+  }
+  if (!studioRecord(copy) || !siteId || copy.siteId !== siteId
+      || !Array.isArray(copy.layers)
+      || !studioText(copy.updatedAt) || !Number.isFinite(Date.parse(copy.updatedAt))) return null;
+
+  const layers: DesignLayer[] = [];
+  const layerIds = new Set<string>();
+  const featureIds = new Set<string>();
+  for (const candidate of copy.layers) {
+    if (!validDesignLayer(candidate, siteId)
+        || layerIds.has(candidate.id) || featureIds.has(candidate.featureId)) continue;
+    layerIds.add(candidate.id);
+    featureIds.add(candidate.featureId);
+    layers.push(candidate);
+  }
+  if (copy.layers.length > 0 && layers.length === 0) return null;
+  return {
+    siteId,
+    layers,
+    generatedPlan: normaliseGeneratedPlan(copy.generatedPlan, siteId, layerIds),
+    updatedAt: copy.updatedAt,
+  };
 }
 
 function readStore(): StoredDesignState {
   if (typeof window === 'undefined') return {};
-  return safeParse<StoredDesignState>(window.localStorage.getItem(DESIGN_STUDIO_KEY), {});
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(DESIGN_STUDIO_KEY) ?? '{}');
+    if (!studioRecord(parsed)) return {};
+    const store: StoredDesignState = {};
+    for (const [siteId, value] of Object.entries(parsed)) {
+      const state = normaliseDesignStudioState(value, siteId);
+      if (state) store[siteId] = state;
+    }
+    return store;
+  } catch {
+    return {};
+  }
 }
 
 function writeStore(store: StoredDesignState, notify: boolean): void {
@@ -179,10 +323,11 @@ export function loadDesignStudioState(siteId: string): DesignStudioState {
 }
 
 export function saveDesignStudioState(state: DesignStudioState, opts?: { notify?: boolean }): DesignStudioState {
-  const next = {
+  const next = normaliseDesignStudioState({
     ...state,
     updatedAt: new Date().toISOString(),
-  };
+  }, state?.siteId);
+  if (!next) throw new Error('Could not save an invalid Design Studio state.');
   writeStore({ ...readStore(), [state.siteId]: next }, opts?.notify ?? true);
   return next;
 }

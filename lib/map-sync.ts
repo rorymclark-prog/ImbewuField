@@ -41,7 +41,7 @@ function isRing(value: unknown): value is Position[] {
   return isLine(value, 4) && samePosition(value[0], value[value.length - 1]);
 }
 
-function isGeometry(value: unknown): value is Geometry {
+export function isValidFarmGeometry(value: unknown): value is Geometry {
   if (!isRecord(value) || typeof value.type !== 'string') return false;
   switch (value.type) {
     case 'Point':
@@ -60,14 +60,14 @@ function isGeometry(value: unknown): value is Geometry {
         (polygon) => Array.isArray(polygon) && polygon.length > 0 && polygon.every(isRing),
       );
     case 'GeometryCollection':
-      return Array.isArray(value.geometries) && value.geometries.every(isGeometry);
+      return Array.isArray(value.geometries) && value.geometries.every(isValidFarmGeometry);
     default:
       return false;
   }
 }
 
 function isFeature(value: unknown): value is Feature {
-  if (!isRecord(value) || value.type !== 'Feature' || !isGeometry(value.geometry)) return false;
+  if (!isRecord(value) || value.type !== 'Feature' || !isValidFarmGeometry(value.geometry)) return false;
   if (value.properties !== null && value.properties !== undefined && !isRecord(value.properties)) return false;
   return value.id === undefined
     || typeof value.id === 'string'
