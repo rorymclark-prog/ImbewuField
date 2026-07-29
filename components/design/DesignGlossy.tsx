@@ -5480,14 +5480,30 @@ function drawSectorAnalysis(
   // sector (namedWind + fire). Dashed boundary lines are mechanism 1 of the regional-assumption
   // labelling contract (SECTOR-MODEL-SPEC §4): computed geometry (sun arcs, water/contour lines)
   // is always solid; regional assumptions are always dashed.
+  // WHERE AN INCOMING REGIONAL ENERGY STOPS, as a fraction of the ring radius R (which sits just
+  // outside the plot). Rory, comparing sheet 02 with a set of reference sheets he rates: "I don't
+  // like the look of the sector map."
+  //
+  // The reason was geometric, not decorative. Both energy renderers drove their tip to ~0.45 R —
+  // roughly halfway from the plot centre to its edge — so every wind, the fire approach and the
+  // access arrow were drawn straight ACROSS the farm, over the house, the beds and the contours.
+  // Five overlapping translucent wedges on top of the one thing the sheet is about.
+  //
+  // On the reference sheets each energy enters from outside and STOPS AT THE BOUNDARY. The farm
+  // underneath stays completely readable, which is the whole reason those sheets breathe. Same
+  // bearings, same half-widths, same sourced regional record — only where the shape ends changes.
+  const SECTOR_ENERGY_TIP = 0.94;
+
   const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, kind: SectorVisualKind) => {
     const color = SECTOR_STYLES[kind].color;
     const centerVec = bearingToUnitVector(bearingDeg);
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
-    const rr = R * (externalLegend ? 1.24 : 1.18);
-    const tipX = cx + centerVec[0] * R * 0.48;
-    const tipY = cy + centerVec[1] * R * 0.48;
+    // The wedge now lives entirely OUTSIDE the plot: it reaches the boundary and stops. The base is
+    // pushed further out so it still reads as a broad regional energy rather than a thin pennant.
+    const rr = R * (externalLegend ? 1.52 : 1.45);
+    const tipX = cx + centerVec[0] * R * SECTOR_ENERGY_TIP;
+    const tipY = cy + centerVec[1] * R * SECTOR_ENERGY_TIP;
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(tipX, tipY);
@@ -5518,10 +5534,12 @@ function drawSectorAnalysis(
     color: string,
     emphasis = 1,
   ): { sxp: number; syp: number } => {
-    const tailX = cx + fromVec[0] * (R + arrowLen * 1.16);
-    const tailY = cy + fromVec[1] * (R + arrowLen * 1.16);
-    const tipX = cx + fromVec[0] * R * 0.42;
-    const tipY = cy + fromVec[1] * R * 0.42;
+    // Tail pushed further out to keep the arrow's length now that the tip stops at the boundary
+    // instead of driving to 0.42R — see SECTOR_ENERGY_TIP.
+    const tailX = cx + fromVec[0] * (R + arrowLen * 1.75);
+    const tailY = cy + fromVec[1] * (R + arrowLen * 1.75);
+    const tipX = cx + fromVec[0] * R * SECTOR_ENERGY_TIP;
+    const tipY = cy + fromVec[1] * R * SECTOR_ENERGY_TIP;
     const dx = tipX - tailX;
     const dy = tipY - tailY;
     const len = Math.hypot(dx, dy) || 1;
@@ -7774,7 +7792,17 @@ interface SavedGlossy {
 //        isoLines) and only the interactive map used it. Now lib/sheet-contours.ts feeds the sheets
 //        from the same source, clipped to the plot, and keeps the too-flat / unavailable honesty:
 //        land the data cannot resolve still SAYS so rather than drawing confident wrong lines.
-const PLAN_VERSION = 'v87';
+//   v88 — 2026-07-29: the sector energies stop AT the boundary instead of driving across the farm.
+//        Rory, comparing sheet 02 with reference sheets he rates: "I don't like the look of the
+//        sector map." The cause was geometric. Both energy renderers put their tip at ~0.45 R —
+//        about halfway from the plot centre to its edge — so every wind, the fire approach and the
+//        access arrow were painted straight over the house, the beds and the new contours. Five
+//        translucent wedges layered on top of the one thing the sheet exists to show. On the
+//        reference sheets each energy enters from outside and stops at the boundary, which is why
+//        they breathe and ours did not. SECTOR_ENERGY_TIP is the one rule both renderers now read.
+//        Bearings, half-widths and the sourced regional record are untouched — only where the
+//        shape ends.
+const PLAN_VERSION = 'v88';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
