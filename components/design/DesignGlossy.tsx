@@ -7640,14 +7640,20 @@ async function composeStyleSheet(
     }
   } else if (exactGeometry) {
     ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
-    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04));
-    // Esri's imagery must be credited wherever it is shown. Same italic footer style, same column,
-    // continuing the three lines above at their spacing — and only drawn at all when the live
-    // provider is actually Esri (attributionLine is '' on Mapbox, so nothing else on the sheet moves).
+    // A fourth line does not fit BELOW the third — appending one put the Esri credit through the
+    // bottom of the panel, half-clipped, on the first render that used it. The block is LIFTED
+    // instead, so whatever its line count, it still ends on the baseline the three-line version
+    // ended on. footerBlockH already reserved the extra height above (0.16 -> 0.2 of legendW), so
+    // the legend rows above have the clearance for it.
+    const lift = attributionLine ? Math.round(legendW * 0.045) : 0;
+    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05) - lift);
+    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005) - lift);
+    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04) - lift);
+    // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy. Only
+    // drawn when the live provider is actually Esri; on Mapbox attributionLine is '' and lift is 0,
+    // so nothing on the sheet moves at all.
     if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.04));
     }
   } else {
     ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
