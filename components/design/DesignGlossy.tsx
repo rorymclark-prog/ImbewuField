@@ -69,7 +69,9 @@ import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-sy
 import {
   fullTreatmentProtectPolicy,
   lockedPolishAction,
+  lockedPolishResultKind,
   lockedPolishStyle,
+  useLockedPolishHandoff,
   type SheetOutputMode,
 } from '@/lib/locked-polish-flow';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
@@ -8084,11 +8086,11 @@ export default function DesignGlossy({
   // Hybrid-only stops here, so this stays false for that flow.
   const polishAfterHybridRef = useRef(false);
   const polishAfterFlipRef = useRef(false);
-  /** WHAT THE FARMER ASKED FOR, kept for the audit trail rather than for the flow.
-   *  The flow already knows its next step from the pending flags; what nothing recorded was the
-   *  INTENT — and "I selected 3 steps and got 2" is a sentence you can only check against intent.
-   *  Without this field the audit can see a Hybrid that was kept and no polish, and still not know
-   *  whether a third layer was ever wanted. See lib/render-audit.ts. */
+  /** WHAT THE FARMER ASKED FOR — the stable authority for both the guided flow and audit trail.
+   *  Pending refs say which transition has not yet been consumed; they cannot also encode intent,
+   *  because switch-to-polish consumes its pending bit before render-polish runs. Without this
+   *  separate value Full was downgraded to Hybrid between those two effects, so enqueue 2 could
+   *  never happen. The audit uses the same stable intent. See lib/render-audit.ts. */
   const requestedModeRef = useRef<SheetOutputMode>('exact');
   const polishStyleRef = useRef<StylePreset>(DEFAULT_PRODUCER_STYLE);
   // Full Treatment's polish stage feeds on the Hybrid stage's OWN finished sheet — not a rebuilt
@@ -8096,6 +8098,11 @@ export default function DesignGlossy({
   // Hybrid stage completes with polishAfterHybridRef pending; read by generateOneViaQueue's
   // 'polish' branch; cleared once consumed so a stale image can never leak into an unrelated run.
   const hybridResultRef = useRef<string | null>(null);
+  // React signal paired with hybridResultRef. The finished Hybrid may be intentionally hidden from
+  // the preview when the user changes maps, so resultImage is not proof that the handoff exists.
+  // Unlike the ref, this state also guarantees the switch-to-polish effect runs after the async
+  // completion handler has stashed the image.
+  const [hybridHandoffReady, setHybridHandoffReady] = useState(false);
   /** The image the paid polish pass was handed, kept so its output can be scored against it. */
   const polishInputRef = useRef<string | null>(null);
   /** Plain-English note when a paid pass came back with nothing new. Null when it went fine. */
@@ -9468,7 +9475,7 @@ export default function DesignGlossy({
           ...(protectMaskDataUrl ? { useProtectMaskForEdit: false } : {}),
           showcase: authorityFlags.showcase,
           geometryLock: authorityFlags.geometryLock,
-          resultKind: fullSheetPolish ? 'ai-polished' : 'hybrid',
+          resultKind: lockedPolishResultKind(lockedPolishStage),
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9677,7 +9684,7 @@ export default function DesignGlossy({
           // bearings/legend/labels back on top), so it earns resultKind:'hybrid', not 'legacy'.
           showcase: polishStage,
           geometryLock: !polishStage,
-          resultKind: polishStage ? 'ai-polished' : 'hybrid',
+          resultKind: lockedPolishResultKind(lockedPolishStage),
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9786,7 +9793,7 @@ export default function DesignGlossy({
           // not a safety gap.
           showcase: polishStage,
           geometryLock: !polishStage,
-          resultKind: polishStage ? 'ai-polished' : 'hybrid',
+          resultKind: lockedPolishResultKind(lockedPolishStage),
         }],
       });
       persistJobId(state.siteId, jobId);
@@ -9869,7 +9876,7 @@ export default function DesignGlossy({
   // This removes the old "pick a mode, then find the Generate button" two-click workflow.
   useEffect(() => {
     const action = lockedPolishAction({
-      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+      outputMode: requestedModeRef.current,
       exactFlipPending: exactAfterFlipRef.current,
       hybridAfterExactPending: hybridAfterExactRef.current,
       hybridFlipPending: hybridAfterFlipRef.current,
@@ -9896,7 +9903,7 @@ export default function DesignGlossy({
   // exact sheet with nothing painted for a later polish step to actually polish.
   useEffect(() => {
     const action = lockedPolishAction({
-      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+      outputMode: requestedModeRef.current,
       exactFlipPending: exactAfterFlipRef.current,
       hybridAfterExactPending: hybridAfterExactRef.current,
       hybridFlipPending: hybridAfterFlipRef.current,
@@ -9928,7 +9935,7 @@ export default function DesignGlossy({
   // generation, so this is a child illustration rather than a replacement of the master.
   useEffect(() => {
     const action = lockedPolishAction({
-      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+      outputMode: requestedModeRef.current,
       exactFlipPending: exactAfterFlipRef.current,
       hybridAfterExactPending: hybridAfterExactRef.current,
       hybridFlipPending: hybridAfterFlipRef.current,
@@ -9945,42 +9952,13 @@ export default function DesignGlossy({
     void runCurrentSheet();
   }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, phasingAiMode, runCurrentSheet]);
 
-  // Full Treatment only: once the Hybrid stage has actually finished and its image is stashed in
-  // hybridResultRef (see the queue-completion handler), advance once more into the polish stage —
-  // still mode 'ai', so no mode flip is needed, just a fresh render pass over the SAME sheet.
-  useEffect(() => {
-    const action = lockedPolishAction({
-      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
-      exactFlipPending: exactAfterFlipRef.current,
-      hybridAfterExactPending: hybridAfterExactRef.current,
-      hybridFlipPending: hybridAfterFlipRef.current,
-      polishAfterHybridPending: polishAfterHybridRef.current,
-      polishFlipPending: polishAfterFlipRef.current,
-      mode,
-      isExactRender,
-      loading: loading !== null,
-      hasResult: resultImage !== null,
-    });
-    if (action !== 'switch-to-polish') return;
-    if (!hybridResultRef.current) {
-      // The Hybrid stage finished but nothing was stashed — a real bug, not a transient state.
-      // Never silently fall back to polishing the bare exact sheet again (the exact bug this
-      // whole rewrite exists to remove); surface it and stop the guided flow instead.
-      setError(t('designGlossyMissingHybrid'));
-      polishAfterHybridRef.current = false;
-      setLockedPolishStage(null);
-      return;
-    }
-    polishAfterHybridRef.current = false;
-    polishAfterFlipRef.current = true;
-    setLockedPolishStage('polish');
-    setNotice(t('designGlossyStartingPolish'));
-    setResultImage(null);
-  }, [mode, isExactRender, loading, resultImage]);
+  const clearLockedPolishResult = useCallback(() => setResultImage(null), []);
 
-  useEffect(() => {
-    const action = lockedPolishAction({
-      outputMode: polishAfterHybridRef.current ? 'full' : 'hybrid',
+  // Full Treatment only: the mounted hook owns the two consecutive React effects between a
+  // completed Hybrid and enqueue 2. It waits for the finished-image state signal, commits the
+  // 'polish' stage, then invokes the freshly committed polish-stage runCurrentSheet callback.
+  useLockedPolishHandoff(
+    {
       exactFlipPending: exactAfterFlipRef.current,
       hybridAfterExactPending: hybridAfterExactRef.current,
       hybridFlipPending: hybridAfterFlipRef.current,
@@ -9990,12 +9968,25 @@ export default function DesignGlossy({
       isExactRender,
       loading: loading !== null,
       hasResult: resultImage !== null,
-    });
-    if (action !== 'render-polish') return;
-    polishAfterFlipRef.current = false;
-    setNotice(t('designGlossyPolishing'));
-    void runCurrentSheet();
-  }, [mode, isExactRender, loading, resultImage, selectedNo, producerStyle, restyleAiKind, phasingAiMode, runCurrentSheet]);
+      stage: lockedPolishStage,
+      hybridHandoffReady,
+    },
+    {
+      requestedModeRef,
+      polishAfterHybridRef,
+      polishAfterFlipRef,
+      hybridResultRef,
+      setHybridHandoffReady,
+      setStage: setLockedPolishStage,
+      setError,
+      missingHybridMessage: t('designGlossyMissingHybrid'),
+      setNotice,
+      startingPolishMessage: t('designGlossyStartingPolish'),
+      polishingMessage: t('designGlossyPolishing'),
+      clearResult: clearLockedPolishResult,
+      renderCurrentSheet: runCurrentSheet,
+    },
+  );
 
   useEffect(() => {
     if (!error || loading !== null) return;
@@ -10005,6 +9996,7 @@ export default function DesignGlossy({
     polishAfterHybridRef.current = false;
     polishAfterFlipRef.current = false;
     hybridResultRef.current = null;
+    setHybridHandoffReady(false);
     setLockedPolishStage(null);
   }, [error, loading]);
 
@@ -10012,6 +10004,8 @@ export default function DesignGlossy({
     if (!selectedSheet || loading !== null) return;
     setError(null);
     setNotice(null);
+    requestedModeRef.current = 'exact';
+    setHybridHandoffReady(false);
     if (mode === 'exact' && isExactRender) {
       void runCurrentSheet();
       return;
@@ -10040,6 +10034,7 @@ export default function DesignGlossy({
     polishAfterHybridRef.current = targetMode === 'full';
     requestedModeRef.current = targetMode;
     hybridResultRef.current = null;
+    setHybridHandoffReady(false);
     // Clear the last run's "the polish pass returned the same map" note. Leaving it up over a fresh
     // render would read as a verdict on THIS attempt before it has produced anything.
     polishInputRef.current = null;
@@ -10112,6 +10107,7 @@ export default function DesignGlossy({
         // still-running, still-billed render (audit find). The old job may still finish
         // server-side; its outputs land in the cache for this site if the user reopens.
         setError(t('designGlossyLostConnection'));
+        setHybridHandoffReady(false);
         setLockedPolishStage(null);
         setLoading(null);
         clearPersistedJobId(siteId);
@@ -10125,6 +10121,7 @@ export default function DesignGlossy({
           // A TTL-deleted or malformed durable job must not leave this design permanently attached
           // to a queue entry it can never finish. Clear the persisted pointer so Generate works.
           setError(t('designGlossyRenderIncomplete'));
+          setHybridHandoffReady(false);
           setLockedPolishStage(null);
           setLoading(null);
           clearPersistedJobId(siteId);
@@ -10194,6 +10191,7 @@ export default function DesignGlossy({
                     // to present, save, or label.
                     polishAfterHybridRef.current = false;
                     hybridResultRef.current = null;
+                    setHybridHandoffReady(false);
                     setLockedPolishStage(null);
                     continue;
                   }
@@ -10258,13 +10256,28 @@ export default function DesignGlossy({
                 || sheet.key === 'sector'
                 || sheet.key === 'base'
                 || (showcase && Boolean(protectMask));
+              const targetMapKey = `producer:${styleKey}:${sheet.key}`;
+              const handoffTargetIsCurrent = job.sheets.length === 1
+                && job.siteId === state.siteId
+                && mapKeyRef.current === targetMapKey;
               // Full Treatment only: this completion IS the Hybrid stage — stash its finished image
               // so the polish stage (generateOneViaQueue's 'polish' branch) has something genuinely
-              // painted to poish, instead of silently falling back to the bare exact sheet again.
+              // painted to polish, instead of silently falling back to the bare exact sheet again.
               // Gated on the ref, not on `showcase`/`locked` alone, so an unrelated Hybrid-only or
               // batch render can never be mistaken for the one this flow is actually waiting on.
+              // If the farmer navigated meanwhile, stop explicitly: dispatching runCurrentSheet
+              // from the new UI state would spend the second pass on the wrong farm or sheet.
               if (polishAfterHybridRef.current && isHybridResult) {
-                hybridResultRef.current = finalSheet;
+                if (handoffTargetIsCurrent) {
+                  hybridResultRef.current = finalSheet;
+                  setHybridHandoffReady(true);
+                } else {
+                  polishAfterHybridRef.current = false;
+                  hybridResultRef.current = null;
+                  setHybridHandoffReady(false);
+                  setLockedPolishStage(null);
+                  setError(t('designGlossyMissingHybrid'));
+                }
               }
               // ── Did the paid pass actually redraw anything? ──────────────────────────────────
               // Rory paid for Full Treatment again and again and got back the picture he already
@@ -10316,6 +10329,7 @@ export default function DesignGlossy({
                 // thumbnail is exactly what made the gallery unreadable, and presenting a copy as a
                 // paid result is the app claiming something it did not get.
                 setLockedPolishStage(null);
+                setHybridHandoffReady(false);
                 rejected.add(sheet.key);
                 continue;
               }
@@ -10324,13 +10338,12 @@ export default function DesignGlossy({
               // A one-sheet refresh must update the actual preview, not only append a gallery
               // thumbnail, but only while its original target remains open. Batch jobs still
               // collect every sheet without flickering the preview.
-              const targetMapKey = `producer:${styleKey}:${sheet.key}`;
               if (job.sheets.length === 1) {
                 // Full Treatment: leave lockedPolishStage set (still 'hybrid') so the progress
                 // panel doesn't blink to nothing between this stage finishing and the polish stage's
                 // own switch-to-polish effect setting it to 'polish' a moment later.
                 if (!(polishAfterHybridRef.current && isHybridResult)) setLockedPolishStage(null);
-                if (job.siteId === state.siteId && mapKeyRef.current === targetMapKey) {
+                if (handoffTargetIsCurrent) {
                   setResultImage(finalSheet);
                   setSaved(record);
                 }
@@ -10385,6 +10398,7 @@ export default function DesignGlossy({
             // The worker succeeded, and the browser deliberately rejected the measured output as
             // unchanged/filter-only. The amber paid-pass explanation is already on screen.
             setNotice(null);
+            setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else if (serverDone > 0) {
@@ -10392,10 +10406,12 @@ export default function DesignGlossy({
             setError(formatDesignTranslation(t('designGlossyAssembleError'), {
               detail: lastAssembleError ? ` (${lastAssembleError})` : '',
             }));
+            setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
             setError(job.error || firstErr || t('designGlossyRenderIncomplete'));
+            setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           }
