@@ -2,8 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  ARCGIS_API_KEY,
   ESRI_MAX_NATIVE_ZOOM,
   esriTileUrl,
+  fetchEsriBasemapDataUrl,
   lngLatToWorldPx,
   planEsriTiles,
   tileCount,
@@ -86,10 +88,21 @@ test('a degenerate frame yields a finite plan instead of a divide-by-zero', () =
   assert.ok(Number.isFinite(plan.x0) && Number.isFinite(plan.y1));
 });
 
-test('tile URLs are row/column ordered the way the ArcGIS service expects', () => {
+test('tile URLs are row/column ordered the way the ArcGIS service expects, with the token appended', () => {
   // ArcGIS serves /tile/{z}/{row}/{col} — y BEFORE x. Swapping them returns a real image of
   // somewhere else entirely, which is exactly the kind of wrong that renders fine.
-  assert.equal(esriTileUrl(18, 154346, 152099).endsWith('/18/152099/154346'), true);
+  const url = esriTileUrl(18, 154346, 152099, 'test-token');
+  assert.equal(url.includes('/18/152099/154346?'), true, `path order wrong: ${url}`);
+  assert.equal(url.endsWith('token=test-token'), true, `token not appended: ${url}`);
+});
+
+test('fetchEsriBasemapDataUrl refuses to request tiles when no ArcGIS key is configured', async () => {
+  // Unauthenticated Esri World Imagery is licensed for personal/noncommercial use only (see the
+  // ARCGIS_API_KEY comment in lib/basemap-imagery.ts) — ImbewuField invoices farmers, so firing a
+  // tile request with no token would be a licence breach. The check must happen before any network
+  // or canvas call, which is exactly what makes it testable here with no DOM available.
+  assert.equal(ARCGIS_API_KEY, '', 'this test assumes no key is configured in the test environment');
+  await assert.rejects(() => fetchEsriBasemapDataUrl(LON, LAT, ZOOM, IMG_W, IMG_H));
 });
 
 test('a far-south and a far-north site both plan without wrapping', () => {
