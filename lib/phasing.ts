@@ -244,6 +244,20 @@ function takeInventory(state: DesignCanvasState): Inventory {
 const has = (inv: Inventory, ...defIds: string[]) => defIds.some((id) => (inv.counts[id] ?? 0) > 0);
 const hasAny = (inv: Inventory, prefix: string) =>
   Object.keys(inv.counts).some((id) => id.startsWith(prefix) && inv.counts[id] > 0);
+const hasWaterInfrastructure = (inv: Inventory) =>
+  inv.lineKinds.has('pipe') ||
+  inv.lineKinds.has('greywater') ||
+  hasAny(inv, 'jojo_') ||
+  has(
+    inv,
+    'rain_barrel',
+    'borehole',
+    'tap_point',
+    'pump_filter',
+    'first_flush',
+    'water_trough',
+    'water_trough2',
+  );
 
 // ── Week ranges ──────────────────────────────────────────────────────────────────────────────
 // Durations scale with the amount of work — a plan with one tank and a plan with four tanks, a
@@ -464,7 +478,7 @@ function buildSiteRules(inv: Inventory, refLayers: PhasingRefLayers, site: Phasi
     rules.push('Never excavate the FACE of a bank or terrace — cut from above, never undercut it.');
   if (inv.lineKinds.has('pipe') && refLayers.driveway.length >= 2)
     rules.push('Sleeve any pipe that crosses the driveway or a path before it is backfilled.');
-  if (inv.units.access_water > 0 || inv.lineKinds.has('pipe'))
+  if (hasWaterInfrastructure(inv))
     rules.push('Test the water before it goes onto food beds or into a trough.');
   if (has(inv, 'greywater_basin'))
     rules.push('Greywater goes to basins and fruit trees only — never onto leaf crops.');
@@ -474,8 +488,18 @@ function buildSiteRules(inv: Inventory, refLayers: PhasingRefLayers, site: Phasi
     rules.push('No animals on site until fences, shade and water are signed off.');
   if (refLayers.boundary.length >= 3)
     rules.push('Work inside the pegged boundary — agree anything on the line with the neighbour first.');
-  if (mm !== null && mm < 500)
-    rules.push(`Water is the constraint here (~${mm} mm/yr): the water spine and earthworks finish before any planting starts.`);
+  const plantingPlanned = inv.units.beds > 0 || inv.units.perennials > 0;
+  if (mm !== null && mm < 500 && plantingPlanned) {
+    const prerequisites = [
+      hasWaterInfrastructure(inv) ? 'water spine' : null,
+      inv.units.earthworks > 0 ? 'earthworks' : null,
+    ].filter((part): part is string => part !== null);
+    rules.push(
+      prerequisites.length
+        ? `Water is the constraint here (~${mm} mm/yr): ${prerequisites.join(' and ')} finish before planting starts.`
+        : `Water is the constraint here (~${mm} mm/yr): confirm an establishment-water source before planting starts.`,
+    );
+  }
   rules.push('Confirm every dimension on site — the plan is the intent, the ground is the truth.');
   return rules;
 }

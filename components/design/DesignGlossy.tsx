@@ -7897,7 +7897,10 @@ interface SavedGlossy {
 //        outside the boundary. A route may now take TWO elbows to get around a structure rather
 //        than falling back to a straight line through it. These are DERIVED routes — no saved
 //        item, line or ring is touched, which is the guardrail that matters here.
-const PLAN_VERSION = 'v75';
+//   v76 — 2026-07-29: the phasing schedule names only work that is actually planned. A design
+//        with no pipes was still told to pressure-test the main line before backfilling, and
+//        one with no drip to check every emitter — hold points for work that does not exist.
+const PLAN_VERSION = 'v76';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
