@@ -45,7 +45,7 @@ export interface TankSizingResult {
   dryMonths: number;
   /** Cumulative shortfall (use − catch) summed across that dry run, litres. */
   dryRunShortfallL: number;
-  /** Recommended storage to bridge the dry run, litres (the shortfall, clamped sensibly). */
+  /** Recommended storage to bridge the year's worst cumulative drawdown, clamped sensibly. */
   recommendedStorageL: number;
   /** True when the roof simply can't meet annual demand — a tank helps but can't close the gap. */
   waterNegative: boolean;
@@ -75,29 +75,23 @@ function round100(n: number): number {
  */
 export function suggestJojoTanks(litres: number): string {
   if (!Number.isFinite(litres) || litres <= 0) return '1× 2 500 ℓ JoJo (buffer)';
-
-  let best: { tens: number; fives: number; small: number; total: number; count: number } | null = null;
-  const maxTens = Math.ceil(litres / JOJO_SIZES[0]) + 1;
-  // fives/small only ever fill the sub-10 000 ℓ remainder, so 0..2 of each spans it in 2 500 ℓ steps.
-  for (let tens = 0; tens <= maxTens; tens++) {
-    for (let fives = 0; fives <= 2; fives++) {
-      for (let small = 0; small <= 2; small++) {
-        const count = tens + fives + small;
-        if (count === 0) continue;
-        const total = tens * 10000 + fives * 5000 + small * 2500;
-        if (total < litres) continue;
-        if (!best || total < best.total || (total === best.total && count < best.count)) {
-          best = { tens, fives, small, total, count };
-        }
-      }
-    }
+  if (litres > Number.MAX_SAFE_INTEGER) {
+    return 'engineered storage system (capacity exceeds calculator range)';
   }
-  if (!best) return '1× 2 500 ℓ JoJo (buffer)';
+
+  // All available sizes are 2 500 L units. First round up to the minimum
+  // reachable capacity, then use as many 10 000 L units as possible; the
+  // remainder has the unique minimum-count decomposition below.
+  const units = Math.ceil(litres / JOJO_SIZES[2]);
+  const tens = Math.floor(units / 4);
+  const remainder = units % 4;
+  const fives = remainder >= 2 ? 1 : 0;
+  const small = remainder % 2;
 
   const parts: string[] = [];
-  if (best.tens) parts.push(`${best.tens}× 10 000 ℓ`);
-  if (best.fives) parts.push(`${best.fives}× 5 000 ℓ`);
-  if (best.small) parts.push(`${best.small}× 2 500 ℓ`);
+  if (tens) parts.push(`${tens}× 10 000 ℓ`);
+  if (fives) parts.push(`${fives}× 5 000 ℓ`);
+  if (small) parts.push(`${small}× 2 500 ℓ`);
   return `${parts.join(' + ')} JoJo`;
 }
 
@@ -130,6 +124,24 @@ function longestDryRun(isDry: boolean[]): { length: number; months: Set<number> 
   return { length: bestLen, months };
 }
 
+/**
+ * Maximum cumulative deficit in a repeating water-positive year. A month with
+ * a tiny surplus reduces the outstanding deficit; it does not magically refill
+ * the tank and split one storage drawdown into two unrelated dry runs.
+ */
+function cyclicStorageDrawdown(monthlyHarvestL: number[], monthlyUseL: number[]): number {
+  let outstanding = 0;
+  let maximum = 0;
+  // Two passes expose a Dec→Jan drawdown regardless of the calendar index at
+  // which the input begins. A water-positive year must recover within a cycle.
+  for (let i = 0; i < monthlyHarvestL.length * 2; i++) {
+    const month = i % monthlyHarvestL.length;
+    outstanding = Math.max(0, outstanding + monthlyUseL[month] - monthlyHarvestL[month]);
+    maximum = Math.max(maximum, outstanding);
+  }
+  return maximum;
+}
+
 export function computeTankSizing(input: TankSizingInput): TankSizingResult {
   const { monthlyRainfallMm, roofAreaM2, dailyUseL } = input;
 
@@ -153,13 +165,20 @@ export function computeTankSizing(input: TankSizingInput): TankSizingResult {
   if (!validRain || !Number.isFinite(roofAreaM2) || roofAreaM2 <= 0 || !Number.isFinite(dailyUseL) || dailyUseL <= 0) {
     return empty;
   }
+  if (monthlyRainfallMm.some((mm) =>
+    Number.isFinite(mm) && mm > 0
+    && !Number.isFinite(roofAreaM2 * mm * TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT))) {
+    return empty;
+  }
 
   const monthlyHarvestL = monthlyRainfallMm.map((mm) =>
     roofHarvestLitres(roofAreaM2, mm, TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT));
   const monthlyUseL = DAYS_IN_MONTH.map((days) => days * dailyUseL);
+  if (!monthlyHarvestL.every(Number.isFinite) || !monthlyUseL.every(Number.isFinite)) return empty;
 
   const annualHarvestL = monthlyHarvestL.reduce((a, b) => a + b, 0);
   const annualUseL = monthlyUseL.reduce((a, b) => a + b, 0);
+  if (!Number.isFinite(annualHarvestL) || !Number.isFinite(annualUseL)) return empty;
 
   const isDry = monthlyHarvestL.map((h, i) => h < monthlyUseL[i]);
   const { length: dryMonths, months: dryMonthSet } = longestDryRun(isDry);
@@ -174,7 +193,10 @@ export function computeTankSizing(input: TankSizingInput): TankSizingResult {
 
   const waterNegative = annualHarvestL < annualUseL;
   // Never recommend storing more than a year's use — beyond that the bottleneck is catchment, not tanks.
-  const recommendedStorageL = round100(Math.min(dryRunShortfallL, annualUseL));
+  const storageDrawdownL = waterNegative
+    ? dryRunShortfallL
+    : cyclicStorageDrawdown(monthlyHarvestL, monthlyUseL);
+  const recommendedStorageL = round100(Math.min(storageDrawdownL, annualUseL));
   const jojoSuggestion = suggestJojoTanks(recommendedStorageL);
 
   const roofTxt = `${groupThousands(roofAreaM2)} m²`;

@@ -6,6 +6,7 @@ import {
   suggestJojoTanks,
   type TankSizingInput,
 } from '../lib/tank-sizing.ts';
+import { TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT } from '../lib/roof-runoff.ts';
 
 const seasonalRain = [150, 150, 100, 60, 20, 10, 10, 20, 50, 80, 80, 70];
 
@@ -62,6 +63,25 @@ test('the longest dry run can wrap across December to January', () => {
   assert.equal(result.recommendedStorageL, result.dryRunShortfallL);
 });
 
+test('a barely-surplus month reduces a deficit but does not pretend to refill the tank', () => {
+  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const roofAreaM2 = 100;
+  const dailyUseL = 100;
+  const netByMonth = [-1_000, -1_000, 1, -1_000, -1_000, 10_000, 1_000, 1_000, 1_000, 1_000, 1_000, 10_000];
+  const rainfall = netByMonth.map(
+    (net, month) =>
+      (days[month] * dailyUseL + net)
+      / (roofAreaM2 * TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT),
+  );
+  const result = sizing({ monthlyRainfallMm: rainfall, roofAreaM2, dailyUseL });
+
+  assert.equal(result.waterNegative, false);
+  assert.equal(result.dryMonths, 2);
+  assert.equal(result.dryRunShortfallL, 2_000);
+  assert.equal(result.recommendedStorageL, 4_000);
+  assert.ok(result.recommendedStorageL > result.dryRunShortfallL);
+});
+
 test('equal annual rainfall with different seasonality does not collapse to one storage answer', () => {
   const uniform = Array(12).fill(seasonalRain.reduce((sum, mm) => sum + mm, 0) / 12);
   const seasonal = sizing();
@@ -95,6 +115,19 @@ test('suggested capacity is the smallest available 2 500 L step that reaches dem
   }
 });
 
+test('JoJo selection is exact across many denominations and rejects unsafe magnitudes', () => {
+  for (let requiredL = 1; requiredL <= 250_000; requiredL += 1_337) {
+    const { capacityL, count } = suggestionCapacity(suggestJojoTanks(requiredL));
+    const minimumCapacity = Math.ceil(requiredL / 2_500) * 2_500;
+    const units = minimumCapacity / 2_500;
+    const remainder = units % 4;
+    const minimumCount = Math.floor(units / 4) + (remainder === 3 ? 2 : remainder > 0 ? 1 : 0);
+    assert.equal(capacityL, minimumCapacity);
+    assert.equal(count, minimumCount);
+  }
+  assert.match(suggestJojoTanks(Number.MAX_VALUE), /exceeds calculator range/);
+});
+
 test('zero, negative, missing, NaN and Infinity inputs return a finite honest no-result', () => {
   const cases: TankSizingInput[] = [
     { monthlyRainfallMm: [], roofAreaM2: 100, dailyUseL: 100 },
@@ -108,6 +141,8 @@ test('zero, negative, missing, NaN and Infinity inputs return a finite honest no
     { monthlyRainfallMm: seasonalRain, roofAreaM2: 100, dailyUseL: -1 },
     { monthlyRainfallMm: seasonalRain, roofAreaM2: 100, dailyUseL: Number.NaN },
     { monthlyRainfallMm: seasonalRain, roofAreaM2: 100, dailyUseL: Number.POSITIVE_INFINITY },
+    { monthlyRainfallMm: seasonalRain, roofAreaM2: Number.MAX_VALUE, dailyUseL: 100 },
+    { monthlyRainfallMm: seasonalRain, roofAreaM2: 100, dailyUseL: Number.MAX_VALUE },
   ];
 
   for (const input of cases) {
