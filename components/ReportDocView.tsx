@@ -11,7 +11,11 @@ import type {
   LandscapeSoil,
   SectorAnalysis,
   ZoneEntry,
+  DesignFeature,
+  PlantingTable,
   ImplementationPhase,
+  CostLine,
+  MonitoringMetric,
 } from '@/lib/report-doc';
 
 const MAP_LABEL: Record<MapRef, string> = {
@@ -121,7 +125,11 @@ export default function ReportDocView({
   const soil = s['landscape-soil'] as LandscapeSoil | undefined;
   const sector = s.sector as SectorAnalysis | undefined;
   const zones = s.zone as ZoneEntry[] | undefined;
+  const master = s['master-design'] as DesignFeature[] | undefined;
+  const planting = s.planting as PlantingTable[] | undefined;
   const impl = s.implementation as ImplementationPhase[] | undefined;
+  const costs = s['cost-labour'] as CostLine[] | undefined;
+  const monitoring = s.monitoring as MonitoringMetric[] | undefined;
 
   return (
     <div style={{ background: '#FAF5EA', borderRadius: 16, border: '1px solid rgba(98,83,61,0.18)', padding: 16 }}>
@@ -278,8 +286,62 @@ export default function ReportDocView({
         </div>
       )}
 
+      {!!master?.length && (
+        <div id="sec-master-design">
+          <SectionShell title="Master Design" map="design" status={metaFor('master-design')?.status ?? 'skeleton'} onViewMap={onViewMap}>
+            {master.map((feature) => (
+              <div key={feature.key} style={{ marginBottom: 8 }}>
+                <strong style={{ color: GREEN }}>{feature.name}</strong>
+                {feature.dimensions ? <span style={{ color: '#7B6A52' }}> · {feature.dimensions}</span> : null}
+                <p style={{ margin: '2px 0' }}>{feature.purpose}</p>
+                <Bullets items={feature.construction} />
+              </div>
+            ))}
+          </SectionShell>
+        </div>
+      )}
+
+      {!!planting?.length && (
+        <div id="sec-planting">
+          <SectionShell title="Planting" map="zone" status={metaFor('planting')?.status ?? 'skeleton'} onViewMap={onViewMap}>
+            {planting.map((table) => (
+              <div key={table.category} style={{ marginBottom: 8 }}>
+                {table.rows.map((row, index) => (
+                  <p key={`${table.category}-${index}`} style={{ margin: '3px 0' }}>
+                    <strong>{row.species}</strong>
+                    <span style={{ color: '#7B6A52' }}> — {row.spacing}; {row.season}. {row.purpose}</span>
+                  </p>
+                ))}
+              </div>
+            ))}
+          </SectionShell>
+        </div>
+      )}
+
+      {!!costs?.length && (
+        <div id="sec-cost-labour">
+          <SectionShell title="Cost & Labour" map="implementation" status={metaFor('cost-labour')?.status ?? 'skeleton'} onViewMap={onViewMap}>
+            {costs.map((line, index) => (
+              <p key={`${line.phase}-${index}`} style={{ margin: '4px 0' }}>
+                <strong>Phase {line.phase}:</strong> {line.item}
+                {line.materialsCostZar ? <> Materials<Chip v={line.materialsCostZar} /></> : null}
+                {line.labourDays ? <> Labour<Chip v={line.labourDays} /></> : null}
+              </p>
+            ))}
+          </SectionShell>
+        </div>
+      )}
+
+      {!!monitoring?.length && (
+        <div id="sec-monitoring">
+          <SectionShell title="Monitoring" map="design" status={metaFor('monitoring')?.status ?? 'skeleton'} onViewMap={onViewMap}>
+            <Bullets items={monitoring.map((metric) => `${metric.label}: ${metric.howToMeasure}`)} />
+          </SectionShell>
+        </div>
+      )}
+
       <p style={{ fontSize: 10.5, color: '#9A8268', marginTop: 12, marginBottom: 0 }}>
-        Sections without AI enrichment yet (Master Design, Planting, Cost & Labour, Monitoring) appear once you generate the full report.
+        This local skeleton is available immediately. Generate the full report to enrich each section with site-specific detail.
       </p>
     </div>
   );
