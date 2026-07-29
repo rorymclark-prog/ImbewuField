@@ -7851,7 +7851,9 @@ interface SavedGlossy {
 //   v69 — 2026-07-29: the Water sheet footer reads the same twelve-month dry-season balance as the
 //        Tank Calculator. Daily use is saved only when the farmer enters it; without that input the
 //        sheet says what is missing instead of inventing household demand.
-const PLAN_VERSION = 'v69';
+//   v70 — 2026-07-29: invalid facilitator roof/location inputs no longer fabricate a Durban
+//        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
+const PLAN_VERSION = 'v70';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
