@@ -56,7 +56,7 @@ import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
-import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
@@ -3975,18 +3975,24 @@ function drawPaintedReferenceFeature(
   ctx.translate(cx, cy);
   if (def.shape === 'rect' && it.rot) ctx.rotate((it.rot * Math.PI) / 180);
   ctx.lineJoin = 'round';
+  const isMatureCanopy = def.category === 'growing' && def.shape === 'circle';
 
   ctx.save();
   traceFootprint();
   ctx.clip();
+  if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.artworkAlpha;
   ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
   ctx.restore();
 
-  // Keep the asset integrated with the aerial rather than turning it into a haloed editor sticker.
-  // A restrained dark keyline clarifies the saved footprint without changing its geometry.
+  // A mature canopy is spacing evidence, not an opaque sticker: its illustrated fill lets the
+  // neighbouring tree and ground remain readable while the stronger edge keeps both saved
+  // footprints explicit through an overlap. Non-canopy assets retain their previous treatment.
   traceFootprint();
-  ctx.strokeStyle = 'rgba(31,42,29,0.58)';
-  ctx.lineWidth = Math.max(0.7, outline * 0.5);
+  ctx.strokeStyle = isMatureCanopy ? PLANTING_CANOPY_PAINT.edgeColor : 'rgba(31,42,29,0.58)';
+  if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.edgeAlpha;
+  ctx.lineWidth = isMatureCanopy
+    ? Math.max(1, outline * PLANTING_CANOPY_PAINT.edgeWidthScale)
+    : Math.max(0.7, outline * 0.5);
   ctx.stroke();
   ctx.restore();
   return true;
@@ -4100,6 +4106,7 @@ function drawTrueFootprint(
     const r = wPx / 2;
     const palette = CANOPY_PALETTES[(SPECIES_INDEX[def.id] ?? 0) % CANOPY_PALETTES.length];
     const seed = `${def.id}:${it.id}`;
+    const inheritedAlpha = ctx.globalAlpha;
     const traceCanopy = () => {
       const points = 24;
       ctx.beginPath();
@@ -4123,7 +4130,9 @@ function drawTrueFootprint(
     canopyWash.addColorStop(0.56, palette[1]);
     canopyWash.addColorStop(1, palette[0]);
     ctx.fillStyle = canopyWash;
+    ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.washAlpha;
     ctx.fill();
+    ctx.globalAlpha = inheritedAlpha;
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;
@@ -4141,7 +4150,11 @@ function drawTrueFootprint(
       ctx.beginPath();
       ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1.2, br), 0, Math.PI * 2);
       ctx.fillStyle = palette[i % palette.length];
-      ctx.globalAlpha = 0.42 + stableCartographicUnit(seed, 400 + i) * 0.3;
+      ctx.globalAlpha = inheritedAlpha * (
+        PLANTING_CANOPY_PAINT.detailAlphaMin
+        + stableCartographicUnit(seed, 400 + i)
+          * (PLANTING_CANOPY_PAINT.detailAlphaMax - PLANTING_CANOPY_PAINT.detailAlphaMin)
+      );
       ctx.fill();
     }
     if (r >= 7) {
@@ -4158,17 +4171,19 @@ function drawTrueFootprint(
           Math.PI * 2,
         );
         ctx.fillStyle = i % 3 === 0 ? '#D7D89A' : '#A9B774';
-        ctx.globalAlpha = 0.48;
+        ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.detailAlphaMax;
         ctx.fill();
       }
     }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = inheritedAlpha;
     ctx.restore();
 
     traceCanopy();
-    ctx.strokeStyle = 'rgba(244,238,218,0.62)';
-    ctx.lineWidth = outline + 0.25;
+    ctx.strokeStyle = PLANTING_CANOPY_PAINT.edgeColor;
+    ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.edgeAlpha;
+    ctx.lineWidth = Math.max(1, outline * PLANTING_CANOPY_PAINT.edgeWidthScale);
     ctx.stroke();
+    ctx.globalAlpha = inheritedAlpha;
     if (r >= 5) {
       for (let i = 0; i < 4; i++) {
         const a = stableCartographicUnit(seed, 500 + i) * Math.PI * 2;

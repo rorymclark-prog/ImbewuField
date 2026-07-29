@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  PLANTING_CANOPY_PAINT,
   PLANTING_LEGEND_SECTION_ORDER,
   PLANTING_ROUTE_STYLE,
   plantingFeaturePresentationScale,
@@ -86,6 +87,40 @@ test('presentation dimensions stay finite, preserve aspect, and never shrink val
       }
     }
   }
+});
+
+test('overlapping mature canopies preserve the lower tree edge and the ground beneath both fills', () => {
+  const style = PLANTING_CANOPY_PAINT;
+  for (const alpha of [
+    style.artworkAlpha,
+    style.washAlpha,
+    style.detailAlphaMin,
+    style.detailAlphaMax,
+    style.edgeAlpha,
+  ]) {
+    assert.ok(alpha > 0 && alpha < 1, 'canopy paint must contribute without becoming opaque');
+  }
+  assert.ok(style.detailAlphaMin <= style.detailAlphaMax);
+
+  // In the normal illustrated-asset path, the earlier tree's keyline survives the later tree more
+  // strongly than that later fill. This is the overlap itself becoming readable, not a paint-order
+  // swap that merely chooses which canopy wins.
+  const earlierAssetEdgeAfterOverlap = style.edgeAlpha * (1 - style.artworkAlpha);
+  assert.ok(
+    earlierAssetEdgeAfterOverlap > style.artworkAlpha,
+    'the later canopy fill must not erase the earlier canopy edge',
+  );
+
+  // The fallback has a wash plus its densest leaf detail. Even where those coincide on both trees,
+  // some underlying map remains visible instead of the pair becoming one solid green mass.
+  const strongestFallbackFill = 1 - (1 - style.washAlpha) * (1 - style.detailAlphaMax);
+  const groundAfterTwoFallbackCanopies = (1 - strongestFallbackFill) ** 2;
+  assert.ok(
+    groundAfterTwoFallbackCanopies > 0.25,
+    'beds, paths and routes beneath two fallback canopies must remain readable',
+  );
+  assert.ok(style.edgeAlpha > strongestFallbackFill, 'the canopy edge must be stronger than its fill');
+  assert.ok(style.edgeWidthScale > 0);
 });
 
 test('invalid dimensions cannot become painted geometry or invented emphasis', () => {
