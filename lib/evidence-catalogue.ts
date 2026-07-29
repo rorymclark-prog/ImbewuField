@@ -129,12 +129,12 @@ export const QUICK_NUMBERS: Record<string, { key: string; label: string; unit: s
 
 // Lima coaching tips per evidence group
 export const LIMA_TIPS: Record<string, string> = {
-  water: '"Snap your municipal bill — I\'ll read the litres and cost so you don\'t have to type them."',
-  soil: '"Take soil photos from at least 3 different spots across the land — corner to corner gives me the full picture."',
-  trees: '"For fruit trees, I need two shots: canopy from 5 m back, then base & trunk up close. I\'ll ID the species for you."',
-  structures: '"Stand back so I can see the whole roof — catchment area and condition tell me how much rain you can harvest."',
-  animals: '"Even empty kraals and coops help me plan — I\'ll design the animal systems into your water and soil cycles."',
-  energy: '"Snap your electricity bill and I\'ll extract the monthly usage automatically."',
+  water: '"Keep a clear photo of the municipal bill, then enter its litres in the quick numbers so the report can use the measured amount."',
+  soil: '"Keep soil photos from at least 3 different spots, corner to corner, and add a note about what you saw at each spot."',
+  trees: '"For fruit trees, keep two shots: canopy from 5 m back, then base and trunk up close. Add the known name, or note that a mentor must confirm it."',
+  structures: '"Stand back to record the whole roof, add a note about its condition, and trace it on the map for a measured catchment area."',
+  animals: '"Record even empty kraals and coops, and add a note naming the animals they serve so the report has useful context."',
+  energy: '"Keep a clear photo of the electricity bill, then enter the monthly kWh in the quick numbers so the report can use it."',
 };
 
 export const INDIGENOUS_EDIBLES = [
