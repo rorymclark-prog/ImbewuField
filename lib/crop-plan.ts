@@ -688,9 +688,9 @@ export function buildFoodValueByMonth(
  * a cut-and-come-again crop still physically holds the bed while it keeps
  * producing, but a storageMonths crop's shelf life happens OFF the bed (in
  * a shed/pantry), so that doesn't extend occupancy. 1-indexed 13-slot like
- * the other month aggregations here ([0] unused). Not capped at 100% — a
- * bed genuinely over-committed (stacked fractional plantings summing past
- * 1) should show as an honest >100%, not be silently clamped.
+ * the other month aggregations here ([0] unused). Each physical bed is
+ * capped at its own area before the site total is calculated: overlapping
+ * successions cannot make one bed more than 100% occupied.
  */
 export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[]): number[] {
   const totalArea = beds.reduce((s, b) => s + b.areaM2, 0);
