@@ -88,3 +88,64 @@ test('ZAR formatting is deterministic and independent of browser locale', () => 
   assert.equal(formatZar(-1_234.6), '-R1 235');
   assert.doesNotMatch(formatZar(1_000_000), /[,.]/, 'locale punctuation leaked into ZAR output');
 });
+
+test('every published rate is usable without pinning today’s prices', () => {
+  const validUnits = new Set(['each', 'per_m', 'per_m2']);
+
+  assert.ok(Object.keys(PRICE_BOOK).length > 0);
+  for (const [key, entry] of Object.entries(PRICE_BOOK)) {
+    assert.ok(entry.label.trim(), `${key} has no farmer-facing label`);
+    assert.ok(validUnits.has(entry.unit), `${key} has an unsupported unit`);
+    assert.ok(Number.isFinite(entry.zar) && entry.zar > 0, `${key} has an unusable rate`);
+  }
+});
+
+test('quantity changes cost according to the measurement unit', () => {
+  const oneMetre = priced(costForLine('fence', 1), 'one metre of fence');
+  const twoMetres = priced(costForLine('fence', 2), 'two metres of fence');
+  assert.equal(twoMetres.zar, oneMetre.zar * 2);
+
+  const oneSquare = priced(costForItem('bed', 1, 1), 'one-square-metre bed');
+  const fourSquares = priced(costForItem('bed', 2, 2), 'four-square-metre bed');
+  assert.equal(fourSquares.zar, oneSquare.zar * 4);
+
+  const oneBay = priced(costForItem('compost', 1, 1), 'one compost bay');
+  const oddlySizedBay = priced(costForItem('compost', 99, 0), 'oddly sized compost bay');
+  assert.equal(oddlySizedBay.zar, oneBay.zar, 'each-priced items must ignore drawing dimensions');
+});
+
+test('aliases resolve to the same priced work', () => {
+  assert.deepEqual(costForItem('bed', 3, 2), costForItem('veg_bed', 3, 2));
+  assert.deepEqual(costForItem('compost', 1, 1), costForItem('compost_bay', 1, 1));
+  assert.deepEqual(costForItem('hive', 1, 1), costForItem('beehive', 1, 1));
+});
+
+test('invalid measurements stay unpriced instead of leaking non-finite or negative totals', () => {
+  const invalid = [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, -1];
+
+  for (const value of invalid) {
+    assert.equal(costForLine('fence', value), null, `line accepted ${value}`);
+    assert.equal(costForAreaLine('driveway', value), null, `area accepted ${value}`);
+    assert.equal(costForItem('bed', value, 1), null, `item width accepted ${value}`);
+    assert.equal(costForItem('bed', 1, value), null, `item height accepted ${value}`);
+    assert.equal(costForItem('tank', 1, 1, value), null, `tank accepted ${value}`);
+  }
+});
+
+test('a tank request uses one of the published tank sizes and keeps the requested volume visible', () => {
+  const requestedLitres = 7_500;
+  const line = priced(costForItem('tank', 1, 1, requestedLitres), 'tank');
+  const tankLabels = Object.entries(PRICE_BOOK)
+    .filter(([key]) => /^tank_\d+$/.test(key))
+    .map(([, entry]) => entry.label);
+
+  assert.ok(tankLabels.some((label) => line.basis.startsWith(label)));
+  assert.match(line.basis, new RegExp(`${requestedLitres}L`));
+});
+
+test('non-finite values are never formatted as plausible currency', () => {
+  for (const value of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+    assert.equal(formatZar(value), '—');
+    assert.doesNotMatch(formatZar(value), /NaN|Infinity|R/);
+  }
+});
