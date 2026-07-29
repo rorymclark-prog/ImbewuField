@@ -48,8 +48,45 @@ export interface AutoSuggestResult {
   laterThisYear: { cropKey: string; nextWindowMonth: number }[];
 }
 
-function genId(): string {
-  return `auto-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+function plantingId(
+  bedId: string,
+  cropKey: string,
+  sowMonth: number,
+  areaFraction: number | undefined,
+): string {
+  const fraction = areaFraction ?? 1;
+  return `auto:${encodeURIComponent(bedId)}:${encodeURIComponent(cropKey)}:${sowMonth}:${fraction}`;
+}
+
+/**
+ * Several coverage passes may independently choose the same cohort. Present
+ * that as one planting with their combined bed share, not duplicate rows
+ * distinguished only by opaque ids.
+ */
+function consolidatePlantings(plantings: readonly Planting[]): Planting[] {
+  const byCohort = new Map<string, Planting>();
+  for (const planting of plantings) {
+    const key = `${planting.bedId}\u0000${planting.cropKey}\u0000${planting.sowMonth}`;
+    const existing = byCohort.get(key);
+    if (!existing) {
+      byCohort.set(key, { ...planting });
+      continue;
+    }
+    const combinedFraction = Math.min(
+      1,
+      (existing.areaFraction ?? 1) + (planting.areaFraction ?? 1),
+    );
+    existing.areaFraction = combinedFraction < 1 ? combinedFraction : undefined;
+  }
+  return [...byCohort.values()].map((planting) => ({
+    ...planting,
+    id: plantingId(
+      planting.bedId,
+      planting.cropKey,
+      planting.sowMonth,
+      planting.areaFraction,
+    ),
+  }));
 }
 
 function monthsForward(from: number, to: number): number {
@@ -70,8 +107,10 @@ interface Cluster { start: number; end: number; months: number[] }
  * succession must never straddle that real gap.
  */
 export function clusterSowMonths(months: number[]): Cluster[] {
-  if (!months.length) return [];
-  const sorted = [...new Set(months)].sort((a, b) => a - b);
+  const sorted = [...new Set(months.filter(
+    (month) => Number.isInteger(month) && month >= 1 && month <= 12,
+  ))].sort((a, b) => a - b);
+  if (!sorted.length) return [];
   const clusters: Cluster[] = [];
   for (const m of sorted) {
     const last = clusters[clusters.length - 1];
@@ -170,7 +209,16 @@ class Occupancy {
   private byBed = new Map<string, Map<number, number>>();
 
   seed(plantings: Planting[], daysToHarvestOf: (p: Planting) => number) {
-    for (const p of plantings) this.add(p.bedId, p.sowMonth, daysToHarvestOf(p), p.areaFraction ?? 1);
+    for (const p of plantings) {
+      if (!Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
+      const fraction = p.areaFraction;
+      const safeFraction = fraction === undefined
+        ? 1
+        : Number.isFinite(fraction) && fraction > 0 && fraction <= 1
+          ? fraction
+          : 1;
+      this.add(p.bedId, p.sowMonth, daysToHarvestOf(p), safeFraction);
+    }
   }
 
   private monthMap(bedId: string): Map<number, number> {
@@ -351,9 +399,13 @@ function planSuccession(
         if (pass === 0 && conflictedBedIds.has(bed.id)) continue;
         if (occupancy.fits(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction)) {
           occupancy.add(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction);
+          const areaFraction = perBatchFraction < 1 ? perBatchFraction : undefined;
           plantings.push({
-            id: genId(), bedId: bed.id, cropKey: crop.key, sowMonth,
-            areaFraction: perBatchFraction < 1 ? perBatchFraction : undefined,
+            id: plantingId(bed.id, crop.key, sowMonth, areaFraction),
+            bedId: bed.id,
+            cropKey: crop.key,
+            sowMonth,
+            areaFraction,
           });
           rotation.recordUse(bed.id, group);
           bedCursor = (bedCursor + i + 1) % bedsForCrop.length;
@@ -444,9 +496,12 @@ function runCommercialConcentration(
   const laterThisYear: { cropKey: string; nextWindowMonth: number }[] = [];
   const plantings: Planting[] = [];
 
-  const focusN = Math.min(focusCropCount, targetBeds.length || 1);
-  if (focusCropCount > focusN) {
-    notes.push(`You asked to focus on ${focusCropCount} crops, but only ${focusN} bed${focusN === 1 ? ' is' : 's are'} free — picked the top ${focusN} by productivity instead.`);
+  const requestedFocus = Number.isFinite(focusCropCount) && focusCropCount > 0
+    ? Math.floor(focusCropCount)
+    : 1;
+  const focusN = Math.min(requestedFocus, targetBeds.length || 1);
+  if (requestedFocus > focusN) {
+    notes.push(`You asked to focus on ${requestedFocus} crops, but only ${focusN} bed${focusN === 1 ? ' is' : 's are'} free — picked the top ${focusN} by productivity instead.`);
   }
   const ranked = [...pool].sort((a, b) => commercialScore(b) - commercialScore(a));
   const focusCrops = ranked.slice(0, focusN);
@@ -558,7 +613,12 @@ function backfillWinterGaps(
     }
     occupancy.add(bed.id, chosen.sowMonth, chosen.crop.daysToHarvest, 1);
     rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
-    plantings.push({ id: genId(), bedId: bed.id, cropKey: chosen.crop.key, sowMonth: chosen.sowMonth });
+    plantings.push({
+      id: plantingId(bed.id, chosen.crop.key, chosen.sowMonth, undefined),
+      bedId: bed.id,
+      cropKey: chosen.crop.key,
+      sowMonth: chosen.sowMonth,
+    });
     notes.push(`${bed.label} would otherwise rest all winter — added ${chosen.crop.name} (sow ${MONTHS_SHORT[chosen.sowMonth - 1]}) to keep it covered through May-Aug.`);
   }
 
@@ -713,9 +773,13 @@ function fillRemainingGaps(
       occupancy.add(bed.id, chosen.sowMonth, chosen.crop.daysToHarvest, chosen.fraction);
       rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
       lastCropByBed.set(bed.id, chosen.crop.key);
+      const areaFraction = chosen.fraction < 1 ? chosen.fraction : undefined;
       plantings.push({
-        id: genId(), bedId: bed.id, cropKey: chosen.crop.key, sowMonth: chosen.sowMonth,
-        areaFraction: chosen.fraction < 1 ? chosen.fraction : undefined,
+        id: plantingId(bed.id, chosen.crop.key, chosen.sowMonth, areaFraction),
+        bedId: bed.id,
+        cropKey: chosen.crop.key,
+        sowMonth: chosen.sowMonth,
+        areaFraction,
       });
     }
   }
@@ -794,8 +858,42 @@ export function autoSuggestPlan(
   const laterThisYear: { cropKey: string; nextWindowMonth: number }[] = [];
   const added: Planting[] = [];
 
+  const seenBedIds = new Set<string>();
+  const usableBeds = beds.filter((bed) => {
+    if (
+      !bed.id.trim()
+      || seenBedIds.has(bed.id)
+      || !Number.isFinite(bed.areaM2)
+      || bed.areaM2 <= 0
+      || (bed.minDimM !== undefined && (!Number.isFinite(bed.minDimM) || bed.minDimM <= 0))
+    ) return false;
+    seenBedIds.add(bed.id);
+    return true;
+  });
+  if (usableBeds.length !== beds.length) {
+    notes.push(`${beds.length - usableBeds.length} unusable or duplicate bed record${beds.length - usableBeds.length === 1 ? ' was' : 's were'} left out of the suggestion.`);
+  }
+  beds = usableBeds;
+
+  if (!Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) {
+    notes.push('The current month was unavailable, so suggestions start from January.');
+    nowMonth = 1;
+  }
+
+  const usableBedIds = new Set(beds.map((bed) => bed.id));
+  const usableExistingPlantings = existingPlantings.filter(
+    (planting) =>
+      usableBedIds.has(planting.bedId)
+      && Number.isInteger(planting.sowMonth)
+      && planting.sowMonth >= 1
+      && planting.sowMonth <= 12,
+  );
+  if (usableExistingPlantings.length !== existingPlantings.length) {
+    notes.push(`${existingPlantings.length - usableExistingPlantings.length} existing planting record${existingPlantings.length - usableExistingPlantings.length === 1 ? ' was' : 's were'} missing a usable bed or sowing month and could not be scheduled.`);
+  }
+
   const occupancy = new Occupancy();
-  occupancy.seed(existingPlantings, (p) => {
+  occupancy.seed(usableExistingPlantings, (p) => {
     const crop = CROPS.find((c) => c.key === p.cropKey);
     return crop ? crop.daysToHarvest : 0; // unknown crop key — occupy just the sow month (spanMonths(0) === 1)
   });
@@ -808,7 +906,7 @@ export function autoSuggestPlan(
   // finished growing most recently as "what's actually there now".
   const bedLastGroup = new Map<string, FoodGroup>();
   const bedLastRecency = new Map<string, number>(); // smaller = more recently harvested
-  for (const p of existingPlantings) {
+  for (const p of usableExistingPlantings) {
     const crop = CROPS.find((c) => c.key === p.cropKey);
     if (!crop) continue;
     const recency = monthsForward(harvestMonth(p.sowMonth, crop.daysToHarvest), nowMonth);
@@ -958,5 +1056,9 @@ export function autoSuggestPlan(
   const seenLater = new Set<string>();
   const dedupedLater = laterThisYear.filter((l) => (seenLater.has(l.cropKey) ? false : (seenLater.add(l.cropKey), true)));
 
-  return { plantings: added, notes, laterThisYear: dedupedLater };
+  return {
+    plantings: consolidatePlantings(added),
+    notes,
+    laterThisYear: dedupedLater,
+  };
 }

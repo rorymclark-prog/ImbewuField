@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { autoSuggestPlan, type AutoSuggestAnswers } from '@/lib/crop-autosuggest';
+import {
+  autoSuggestPlan,
+  clusterSowMonths,
+  type AutoSuggestAnswers,
+} from '@/lib/crop-autosuggest';
 import { cropByKey, CROPS, type RainPattern } from '@/lib/crop-catalog';
 import { foodGroupOf } from '@/lib/crop-groups';
 import {
@@ -136,6 +140,124 @@ test('the rotation toggle changes the plan, and turning it back on restores it',
 
   assert.notDeepEqual(rotationOff, rotationOn, 'rotation toggle had no effect on the proposed plan');
   assert.deepEqual(rotationRestored, rotationOn, 'turning rotation back on did not restore the rotation-aware plan');
+});
+
+test('auto-suggest is fully deterministic, including stable semantic planting ids', () => {
+  const first = autoSuggestPlan(ANSWERS, 'mild-frost', BEDS, [], 7);
+  const second = autoSuggestPlan(
+    structuredClone(ANSWERS),
+    'mild-frost',
+    structuredClone(BEDS),
+    [],
+    7,
+  );
+
+  assert.deepEqual(second, first);
+  assert.equal(new Set(first.plantings.map((planting) => planting.id)).size, first.plantings.length);
+  for (const planting of first.plantings) {
+    assert.equal(
+      planting.id,
+      `auto:${encodeURIComponent(planting.bedId)}:${encodeURIComponent(planting.cropKey)}:${planting.sowMonth}:${planting.areaFraction ?? 1}`,
+    );
+  }
+});
+
+test('sowing-window clustering ignores corrupt months, deduplicates, wraps, and never mutates input', () => {
+  const input = [12, 2, 1, 11, 2, 0, 13, Number.NaN, Number.POSITIVE_INFINITY, 3.5];
+  const before = [...input];
+  const clusters = clusterSowMonths(input);
+
+  assert.deepEqual(input, before);
+  assert.deepEqual(clusters, [{ start: 11, end: 2, months: [11, 12, 1, 2] }]);
+  assert.ok(clusters.flatMap((cluster) => cluster.months).every(
+    (month) => Number.isInteger(month) && month >= 1 && month <= 12,
+  ));
+});
+
+test('unusable and duplicate beds never receive crop recommendations', () => {
+  const beds: PlanBed[] = [
+    BEDS[0],
+    { ...BEDS[0], label: 'Duplicate id' },
+    { id: 'zero', label: 'Zero area', areaM2: 0 },
+    { id: 'negative', label: 'Negative area', areaM2: -1 },
+    { id: 'nan', label: 'Bad area', areaM2: Number.NaN },
+    { id: 'infinite', label: 'Infinite area', areaM2: Number.POSITIVE_INFINITY },
+    { id: 'bad-width', label: 'Bad width', areaM2: 8, minDimM: Number.NaN },
+  ];
+  const before = structuredClone(beds);
+  const result = autoSuggestPlan(ANSWERS, 'mild-frost', beds, [], 7);
+
+  assert.ok(result.plantings.length > 0);
+  assert.ok(result.plantings.every((planting) => planting.bedId === BEDS[0].id));
+  assert.match(result.notes.join(' '), /unusable|duplicate/i);
+  assert.doesNotMatch(JSON.stringify(result), /NaN|Infinity/);
+  assert.deepEqual(beds, before);
+});
+
+test('invalid calendar input falls back explicitly without changing January’s plan', () => {
+  const january = autoSuggestPlan(ANSWERS, 'mild-frost', BEDS, [], 1);
+
+  for (const invalidMonth of [0, 13, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+    const result = autoSuggestPlan(ANSWERS, 'mild-frost', BEDS, [], invalidMonth);
+    assert.deepEqual(result.plantings, january.plantings);
+    assert.deepEqual(result.laterThisYear, january.laterThisYear);
+    assert.match(result.notes.join(' '), /current month.*January/i);
+  }
+});
+
+test('damaged existing rows are accounted for conservatively and inputs are never mutated', () => {
+  const existing: Planting[] = [
+    { id: 'bad-fraction', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 7, areaFraction: Number.NaN },
+    { id: 'bad-month', bedId: BEDS[1].id, cropKey: 'cabbage', sowMonth: 99 },
+    { id: 'missing-bed', bedId: 'retired-bed', cropKey: 'cabbage', sowMonth: 7 },
+  ];
+  const answers = structuredClone(ANSWERS);
+  const beds = structuredClone(BEDS);
+  const before = {
+    answers: structuredClone(answers),
+    beds: structuredClone(beds),
+    existing: structuredClone(existing),
+  };
+  const result = autoSuggestPlan(answers, 'mild-frost', beds, existing, 7);
+
+  assert.match(result.notes.join(' '), /existing planting record/i);
+  assert.doesNotMatch(JSON.stringify(result), /NaN|Infinity/);
+  assert.deepEqual({ answers, beds, existing }, before);
+  const cabbage = cropByKey('cabbage');
+  assert.ok(cabbage);
+  const blockedMonths = occupiedMonths({ ...existing[0], areaFraction: 1 });
+  assert.ok(result.plantings
+    .filter((planting) => planting.bedId === BEDS[0].id)
+    .every((planting) => !occupiedMonths(planting).some((month) => blockedMonths.includes(month))));
+});
+
+test('every suggestion has a real bed, catalog crop, valid month, bounded fraction and sowing window', () => {
+  const patterns: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
+  const goals: AutoSuggestAnswers['goal'][] = ['family', 'commercial', 'hybrid'];
+
+  for (const pattern of patterns) {
+    for (const goal of goals) {
+      const result = autoSuggestPlan({
+        ...ANSWERS,
+        goal,
+        focusCropCount: goal === 'family' ? undefined : 2,
+      }, pattern, BEDS, [], 7);
+      const bedIds = new Set(BEDS.map((bed) => bed.id));
+
+      for (const planting of result.plantings) {
+        assert.ok(bedIds.has(planting.bedId));
+        const crop = cropFor(planting);
+        assert.ok(crop.sowMonths[pattern].includes(planting.sowMonth));
+        assert.ok(Number.isInteger(planting.sowMonth) && planting.sowMonth >= 1 && planting.sowMonth <= 12);
+        assert.ok((planting.areaFraction ?? 1) > 0 && (planting.areaFraction ?? 1) <= 1);
+      }
+      assert.equal(new Set(result.plantings.map((planting) => planting.id)).size, result.plantings.length);
+      assert.equal(new Set(result.laterThisYear.map((entry) => entry.cropKey)).size, result.laterThisYear.length);
+      assert.ok(result.laterThisYear.every(
+        (entry) => cropByKey(entry.cropKey) && entry.nextWindowMonth >= 1 && entry.nextWindowMonth <= 12,
+      ));
+    }
+  }
 });
 
 test('harvest and next-sowing month arithmetic stays inside the calendar and wraps across year end', () => {
