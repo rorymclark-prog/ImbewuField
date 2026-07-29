@@ -148,6 +148,28 @@ test('malformed images and conflicting rendering authorities fail before any job
     showcase: true,
     geometryLock: true,
   })]) ?? '', /incompatible render modes/);
+  assert.equal(workerRenderJobContractError(workerJob([sheet('water', {
+    showcase: true,
+    geometryLock: true,
+  })])), 'conflicting render authority');
+});
+
+test('malformed render metadata fails before upload and before worker quota accounting', () => {
+  const malformed: Array<[Partial<RenderSheetSpec>, RegExp, string]> = [
+    [{ showcase: 'yes' as unknown as boolean }, /showcase flag/, 'invalid showcase flag'],
+    [{ geometryLock: 1 as unknown as boolean }, /geometry-lock flag/, 'invalid geometry lock flag'],
+    [{ useProtectMaskForEdit: 'false' as unknown as boolean }, /protection-mask mode/, 'invalid mask mode'],
+    [{ resultKind: 'exact' as RenderSheetSpec['resultKind'] }, /result kind/, 'invalid result kind'],
+  ];
+
+  for (const [override, clientMessage, workerMessage] of malformed) {
+    const invalidSheet = sheet('water', override);
+    assert.match(renderJobRequestError([invalidSheet]) ?? '', clientMessage);
+    assert.equal(
+      workerRenderJobContractError(workerJob([invalidSheet])),
+      workerMessage,
+    );
+  }
 });
 
 test('worker input validation is exhaustive for empty, oversized and wrong-engine jobs', () => {

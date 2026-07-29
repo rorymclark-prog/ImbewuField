@@ -120,6 +120,21 @@ export function renderJobRequestError(sheets: readonly RenderSheetSpec[]): strin
     if (hasConflictingRenderAuthority(sheet)) {
       return `Sheet “${sheet.label}” requested two incompatible render modes.`;
     }
+    if (sheet.showcase !== undefined && typeof sheet.showcase !== 'boolean') {
+      return `Sheet “${sheet.label}” has an invalid showcase flag.`;
+    }
+    if (sheet.geometryLock !== undefined && typeof sheet.geometryLock !== 'boolean') {
+      return `Sheet “${sheet.label}” has an invalid geometry-lock flag.`;
+    }
+    if (
+      sheet.useProtectMaskForEdit !== undefined
+      && typeof sheet.useProtectMaskForEdit !== 'boolean'
+    ) {
+      return `Sheet “${sheet.label}” has an invalid protection-mask mode.`;
+    }
+    if (sheet.resultKind !== undefined && !RESULT_KINDS.has(sheet.resultKind)) {
+      return `Sheet “${sheet.label}” has an invalid result kind.`;
+    }
     if (!validImageDataUrl(sheet.compositeDataUrl)) {
       return `Sheet “${sheet.label}” does not contain a valid image.`;
     }
