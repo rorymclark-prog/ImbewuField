@@ -15,7 +15,7 @@ import type { PlanBed } from '@/lib/crop-plan';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 /** defIds that count as plantable beds for the crop planner. */
-export const BED_DEF_IDS = ['veg_bed', 'keyhole_bed', 'herb_spiral'] as const;
+export const BED_DEF_IDS = ['veg_bed', 'raised_bed', 'keyhole_bed', 'herb_spiral'] as const;
 
 const round1 = (n: number): number => Math.round(n * 10) / 10;
 

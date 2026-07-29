@@ -7,6 +7,7 @@ import type {
   LineShape,
   WizardStep,
 } from '../lib/design-canvas.ts';
+import { BED_DEF_IDS, bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import {
   STEP_SUBSTEPS,
@@ -112,10 +113,12 @@ test('every live bed the catalog offers satisfies the vegetable-bed task', () =>
     .filter((def) => !def.deprecated && (def.id.endsWith('_bed') || def.id === 'herb_spiral'))
     .map((def) => def.id);
   assert.ok(bedIds.length > 1);
+  assert.deepEqual([...BED_DEF_IDS].sort(), [...bedIds].sort());
   for (const defId of bedIds) {
     const state = canvas();
     state.items.push({ id: defId, defId, x: 0.5, y: 0.5 });
     assert.equal(task.done(state, ctx), true, defId);
+    assert.equal(bedsFromDesignCanvas(state).length, 1, `${defId} must reach the crop planner`);
   }
 });
 
@@ -183,6 +186,34 @@ test('empty and non-finite persisted geometry cannot falsely tick a task', () =>
   assert.equal(stepById('water-drip').done(bad, ctx), false);
   assert.equal(stepById('zone-1').done(bad, ctx), false);
   assert.equal(stepById('base-house').done(bad, ctx), false);
+});
+
+test('off-canvas, zero-length and duplicate-point geometry cannot tick a task or crash the guide', () => {
+  const bad = canvas();
+  bad.items.push({ id: 'tank', defId: 'jojo_2500', x: -0.1, y: 0.5 });
+  bad.lines.push({
+    id: 'zero-line',
+    kind: 'swale',
+    points: [[0.2, 0.2], [0.2, 0.2]],
+  });
+  bad.zones.push({
+    id: 'zero-zone',
+    zone: 1,
+    points: [[0.2, 0.2], [0.2, 0.2], [0.2, 0.2]],
+  });
+
+  assert.equal(stepById('water-tanks').done(bad, ctx), false);
+  assert.equal(stepById('water-swales').done(bad, ctx), false);
+  assert.equal(stepById('zone-1').done(bad, ctx), false);
+
+  const malformed = canvas();
+  malformed.lines.push({
+    id: 'malformed',
+    kind: 'drip',
+    points: [null, [0.2, 0.2]] as unknown as Array<[number, number]>,
+  });
+  assert.doesNotThrow(() => stepById('water-drip').done(malformed, ctx));
+  assert.equal(stepById('water-drip').done(malformed, ctx), false);
 });
 
 test('boundary and house context only completes on genuine boolean evidence', () => {
