@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import type { DesignCanvasState, LineShape, PlacedItem } from '@/lib/design-canvas';
+import { BIOMES } from '@/lib/biome';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { buildPhasePlan, type PhasingRefLayers } from '@/lib/phasing';
 
 const FRAME = {
@@ -122,4 +124,108 @@ test('week ranges move forward without leaving an unplanned gap between phases',
     assert.ok(current.weekEnd >= previous.weekEnd, `${current.key} ends before ${previous.key}`);
     assert.ok(current.weekStart <= previous.weekEnd, `gap between ${previous.key} and ${current.key}`);
   }
+});
+
+test('an empty or half-drawn design produces no invented implementation plan', () => {
+  const empty = state([]);
+  const halfDrawn = state([], [{ id: 'half', kind: 'pipe', points: [[0.5, 0.5]] }]);
+
+  assert.deepEqual(buildPhasePlan(empty, ALL_REFS), { phases: [], criticalOrder: [], siteRules: [] });
+  assert.deepEqual(buildPhasePlan(halfDrawn, ALL_REFS), { phases: [], criticalOrder: [], siteRules: [] });
+});
+
+test('every catalog element and every buildable line is assigned to exactly one phase', () => {
+  const items = Object.keys(ELEMENTS_BY_ID).map((defId, index) => ({
+    ...item(`item-${index}`, defId),
+  }));
+  const lineKinds: LineShape['kind'][] = ['path', 'pipe', 'greywater', 'swale', 'drip', 'fence', 'windbreak'];
+  const lines = lineKinds.map((kind, index) => line(`line-${index}`, kind));
+  const plan = buildPhasePlan(state(items, lines), ALL_REFS);
+  const assigned = plan.phases.flatMap((phase) => phase.itemIds);
+  const expected = [...items.map((entry) => entry.id), ...lines.map((entry) => entry.id)].sort();
+
+  assert.deepEqual([...assigned].sort(), expected);
+  assert.equal(new Set(assigned).size, assigned.length);
+});
+
+test('phase output is independent of placement order and never mutates the saved design', () => {
+  const design = completeDesign();
+  const before = structuredClone(design);
+  const reversed: DesignCanvasState = {
+    ...structuredClone(design),
+    items: [...design.items].reverse(),
+    lines: [...design.lines].reverse(),
+  };
+  const first = buildPhasePlan(design, ALL_REFS, { biome: 'Savanna', rainfallMm: 650 });
+  const second = buildPhasePlan(reversed, structuredClone(ALL_REFS), {
+    biome: 'Savanna',
+    rainfallMm: 650,
+  });
+
+  assert.deepEqual(second, first);
+  assert.deepEqual(design, before);
+});
+
+test('phase ids, numbers, colours and item ownership stay unambiguous', () => {
+  const phases = buildPhasePlan(completeDesign(), ALL_REFS).phases;
+
+  assert.deepEqual(phases.map((phase) => phase.n), phases.map((_, index) => index + 1));
+  assert.equal(new Set(phases.map((phase) => phase.key)).size, phases.length);
+  assert.equal(new Set(phases.map((phase) => phase.colour)).size, phases.length);
+  assert.equal(new Set(phases.flatMap((phase) => phase.itemIds)).size, phases.flatMap((phase) => phase.itemIds).length);
+  assert.ok(phases.every((phase) => phase.tasks.length > 0));
+  assert.ok(phases.every((phase) => phase.holdPoint.startsWith(`Hold Point ${String.fromCharCode(64 + phase.n)}:`)));
+});
+
+test('access/water titles name only the kinds of work actually present', () => {
+  const accessOnly = buildPhasePlan(state([item('gate', 'gate')]), NO_REFS).phases
+    .find((phase) => phase.key === 'access_water');
+  const waterOnly = buildPhasePlan(state([item('tank', 'jojo_1000')]), NO_REFS).phases
+    .find((phase) => phase.key === 'access_water');
+  const both = buildPhasePlan(
+    state([item('gate', 'gate'), item('tank', 'jojo_1000')]),
+    NO_REFS,
+  ).phases.find((phase) => phase.key === 'access_water');
+
+  assert.equal(accessOnly?.title, 'Safe Access');
+  assert.equal(waterOnly?.title, 'Water Spine');
+  assert.equal(both?.title, 'Safe Access & Water Spine');
+});
+
+test('rain-window advice follows known biome seasonality and stays honest when biome is unknown', () => {
+  const design = state([item('tree', 'tree_citrus')]);
+  const summer = buildPhasePlan(design, NO_REFS, { biome: 'Savanna' }).phases
+    .find((phase) => phase.key === 'perennials')?.tasks.join(' ');
+  const winterBiome = Object.values(BIOMES)
+    .find((biome) => biome.rainfallPattern === 'winter');
+  assert.ok(winterBiome, 'biome catalogue must include a winter-rainfall region');
+  const winter = buildPhasePlan(design, NO_REFS, { biome: winterBiome.name }).phases
+    .find((phase) => phase.key === 'perennials')?.tasks.join(' ');
+  const unknown = buildPhasePlan(design, NO_REFS, { biome: 'not a real biome' }).phases
+    .find((phase) => phase.key === 'perennials')?.tasks.join(' ');
+
+  assert.match(summer ?? '', /summer rains/);
+  assert.match(winter ?? '', /winter rains/);
+  assert.match(unknown ?? '', /reliable rains/);
+  assert.doesNotMatch(unknown ?? '', /\b(?:Oct|Nov|Apr|May)\b/);
+});
+
+test('low-rainfall constraints never name planting or prerequisites absent from the design', () => {
+  const accessOnly = buildPhasePlan(
+    state([item('gate', 'gate')]),
+    NO_REFS,
+    { rainfallMm: 300 },
+  ).siteRules.join(' ');
+
+  assert.doesNotMatch(accessOnly, /water|planting|earthworks/i);
+});
+
+test('commissioning-only closeout never talks about animals that are not planned', () => {
+  const closeout = buildPhasePlan(state([item('bed', 'veg_bed')]), NO_REFS).phases.at(-1);
+
+  assert.equal(closeout?.key, 'livestock');
+  assert.equal(closeout?.title, 'Commissioning & Handover');
+  assert.equal(closeout?.itemIds.length, 0);
+  assert.doesNotMatch(closeout?.tasks.join(' ') ?? '', /animal|stock|trough|hive/i);
+  assert.match(closeout?.holdPoint ?? '', /as-built record/i);
 });
