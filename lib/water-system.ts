@@ -231,33 +231,48 @@ export function segmentCrossesRing(a: Pt, b: Pt, ring: Pt[]): boolean {
   return false;
 }
 
-/** Route from → to with AT MOST ONE elbow, kept out of the house.
+/** Route from → to with AT MOST TWO elbows, kept out of the house.
  *
- *  Deliberately not a pathfinder. If the straight run is clear it wins; otherwise we try each house
- *  corner (pushed ELBOW_CLEAR_M clear of the wall) as a single elbow and take the shortest that
- *  works. If none works we return the straight run rather than inventing a baroque path: a plan
- *  that leaves one pipe for the installer to think about beats one that confidently draws nonsense,
- *  and the notes box already says "confirm levels on site". */
+ *  Deliberately not a general pathfinder. If the straight run is clear it wins; otherwise we try
+ *  each house corner (pushed ELBOW_CLEAR_M clear of the wall), first singly and then in pairs, and
+ *  take the shortest clear route. Opposite-side endpoints around an ordinary rectangle need two
+ *  corners; falling back to the straight line in that case drew a pipe through the building. */
 export function routeAround(from: Pt, to: Pt, houseRing: Pt[], frame: FrameMetrics): Pt[] {
   if (houseRing.length < 3 || !segmentCrossesRing(from, to, houseRing)) return [from, to];
 
   const centre = ringCentroid(houseRing);
   const centreM = toMetres(centre, frame);
-  let best: { elbow: Pt; lenM: number } | null = null;
-
-  for (const v of houseRing) {
+  const elbows: Pt[] = houseRing.map((v) => {
     const vm = toMetres(v, frame);
     const ox = vm[0] - centreM[0];
     const oy = vm[1] - centreM[1];
     const len = Math.hypot(ox, oy);
     // Corner pushed radially off the wall, so the pipe skirts the building instead of hugging it.
-    const elbow: Pt = len < 1e-6 ? v : toNorm([vm[0] + (ox / len) * ELBOW_CLEAR_M, vm[1] + (oy / len) * ELBOW_CLEAR_M], frame);
-    if (segmentCrossesRing(from, elbow, houseRing) || segmentCrossesRing(elbow, to, houseRing)) continue;
-    const lenM = distM(from, elbow, frame) + distM(elbow, to, frame);
-    if (!best || lenM < best.lenM) best = { elbow, lenM };
+    return len < 1e-6
+      ? v
+      : toNorm([vm[0] + (ox / len) * ELBOW_CLEAR_M, vm[1] + (oy / len) * ELBOW_CLEAR_M], frame);
+  });
+  let best: { points: Pt[]; lenM: number } | null = null;
+  const consider = (points: Pt[]): void => {
+    let lenM = 0;
+    for (let i = 1; i < points.length; i++) {
+      if (segmentCrossesRing(points[i - 1], points[i], houseRing)) return;
+      lenM += distM(points[i - 1], points[i], frame);
+    }
+    if (!best || lenM < best.lenM) best = { points, lenM };
+  };
+
+  for (const elbow of elbows) consider([from, elbow, to]);
+  if (!best) {
+    for (let i = 0; i < elbows.length; i++) {
+      for (let j = 0; j < elbows.length; j++) {
+        if (i !== j) consider([from, elbows[i], elbows[j], to]);
+      }
+    }
   }
 
-  return best ? [from, best.elbow, to] : [from, to];
+  const selected = best as { points: Pt[]; lenM: number } | null;
+  return selected ? selected.points : [from, to];
 }
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
@@ -377,7 +392,24 @@ function proposeInfiltrationBasin(tankCluster: Pt, house: Pt[], boundary: Pt[], 
     const cand = stepToward(anchor, tankCluster, anchorM + d, frame);
     if (boundary.length < 3 || pointInRing(cand, boundary)) return cand;
   }
-  return stepToward(anchor, tankCluster, anchorM + BASIN_TRY_M[BASIN_TRY_M.length - 1], frame);
+  const smallest = stepToward(
+    anchor,
+    tankCluster,
+    anchorM + BASIN_TRY_M[BASIN_TRY_M.length - 1],
+    frame,
+  );
+  if (!pointInRing(tankCluster, boundary)) return tankCluster;
+
+  // Even the smallest preferred stand-off can leave a tiny plot. Walk the final segment back to
+  // the furthest point still inside the traced boundary instead of putting the soakaway next door.
+  let inside = tankCluster;
+  let outside = smallest;
+  for (let i = 0; i < 24; i++) {
+    const mid: Pt = [(inside[0] + outside[0]) / 2, (inside[1] + outside[1]) / 2];
+    if (pointInRing(mid, boundary)) inside = mid;
+    else outside = mid;
+  }
+  return inside;
 }
 
 // ── Bed geometry ──────────────────────────────────────────────────────────────
