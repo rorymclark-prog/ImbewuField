@@ -65,6 +65,7 @@ import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
 import { resolveBaseLayers, type MapRefLayers } from '@/lib/base-layers';
+import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
@@ -929,7 +930,10 @@ function DesignStudioInner() {
         } else {
           setFrame({ ...frameNoImg, satDataUrl: null });
           if (url) {
-            fetchImageAsDataUrl(url)
+            // Through fetchBasemapForFrame, not fetchImageAsDataUrl directly — see that function
+            // for why. This is the surface the farmer actually uses; a provider branch that skips
+            // it is a provider branch that does nothing.
+            fetchBasemapForFrame(frameNoImg, url, fetchImageAsDataUrl)
               .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
               .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
           }

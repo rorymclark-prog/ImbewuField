@@ -43,8 +43,16 @@ export type BasemapProvider = typeof MAPBOX_PROVIDER | typeof ESRI_PROVIDER;
  * applications and includes 2 000 000 basemap tiles a month free. A plan frame costs ~4 tiles, so
  * that free tier is on the order of half a million plans a month.
  */
-export const ARCGIS_API_KEY =
-  (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_ARCGIS_API_KEY) || '';
+// WRITTEN EXACTLY LIKE THIS ON PURPOSE — `process.env.NEXT_PUBLIC_X`, no optional chaining, no
+// destructuring, no dynamic key. Next.js inlines NEXT_PUBLIC_* vars into the client bundle by
+// TEXTUAL SUBSTITUTION at build time, so it only replaces that literal form. The first version of
+// this line read `process.env?.NEXT_PUBLIC_ARCGIS_API_KEY` behind a `typeof process` guard, which
+// looks more defensive and is strictly worse: the guard defeated the substitution, the variable
+// stayed an empty runtime lookup in the browser, and the app silently kept using Mapbox with a
+// perfectly valid key sitting in .env.local. Nothing errored — satelliteProvider() just saw '' and
+// answered 'mapbox', which is exactly what it is supposed to do when there is no key.
+// Every other file here (design-canvas.ts, Map.tsx, NgoDashboard.tsx) uses the plain form. Match it.
+export const ARCGIS_API_KEY = process.env.NEXT_PUBLIC_ARCGIS_API_KEY ?? '';
 
 /**
  * Which imagery the app draws under a plan.
@@ -164,6 +172,40 @@ export function esriTileUrl(z: number, x: number, y: number, token: string): str
 /** Number of tile requests a plan will make — callers log this rather than fetch blind. */
 export function tileCount(plan: TilePlan): number {
   return (plan.tx1 - plan.tx0 + 1) * (plan.ty1 - plan.ty0 + 1);
+}
+
+/** The frame fields any basemap provider needs. Structural, so both `CanvasFrame` and the design
+ *  studio's own fit object satisfy it without importing each other. */
+export interface BasemapFrame {
+  centerLng: number;
+  centerLat: number;
+  zoom: number;
+  imgW: number;
+  imgH: number;
+}
+
+/**
+ * THE ONE PLACE THAT DECIDES WHO SERVES THE PHOTO. Every surface that needs a basemap calls this.
+ *
+ * It exists because wiring the provider per-surface went wrong immediately: the first version was
+ * added to `GeometryDesignStudio`, which turned out not to be what `/design` renders at all — so a
+ * valid API key sat in .env.local, the code was correct, every test passed, and the farmer-facing
+ * sheets quietly kept drawing Mapbox. Nothing errored, because falling back to Mapbox is exactly
+ * what the code is supposed to do when there is no key. A second provider branch somewhere else is
+ * how that happens twice.
+ *
+ * `mapboxUrl` is whatever the caller already computed for Mapbox — passing it in keeps this
+ * function ignorant of tokens and URL shapes it has no business knowing.
+ */
+export async function fetchBasemapForFrame(
+  frame: BasemapFrame,
+  mapboxUrl: string,
+  fetchMapbox: (url: string) => Promise<string>,
+): Promise<string> {
+  if (satelliteProvider() === ESRI_PROVIDER) {
+    return fetchEsriBasemapDataUrl(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH);
+  }
+  return fetchMapbox(mapboxUrl);
 }
 
 /**
