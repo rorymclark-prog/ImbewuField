@@ -8,6 +8,8 @@ import {
   RenderJobError,
   dataUrlBytes,
   enqueueRenderJob,
+  maskHasProtectedAndEditablePixels,
+  normaliseRenderJobDoc,
   renderJobRequestError,
   type RenderSheetSpec,
 } from '../lib/render-jobs.ts';
@@ -104,26 +106,44 @@ test('the worker derives every privileged Storage path from owner, job and sheet
   assert.doesNotMatch(source, /bucket\.file\(sheet\.protectMaskPath\)/);
 });
 
+test('a failed parallel upload waits for slower siblings before taking the rollback list', () => {
+  const source = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
+  const settle = source.indexOf('await Promise.allSettled(uploadTasks)');
+  const rollback = source.indexOf('uploaded.map((p) => deleteObject', settle);
+  assert.ok(settle >= 0);
+  assert.ok(rollback > settle);
+  assert.doesNotMatch(source, /sheets\s*=\s*await Promise\.all\(\s*opts\.sheets\.map/);
+});
+
 test('decoded data URL size handles base64 padding exactly and enforces the upload cap', () => {
   assert.equal(dataUrlBytes('data:image/png;base64,TQ=='), 1);
   assert.equal(dataUrlBytes('data:image/png;base64,TWE='), 2);
   assert.equal(dataUrlBytes('data:image/png;base64,TWFu'), 3);
 
-  const allowedPayload = 'A'.repeat(Math.floor(MAX_COMPOSITE_BYTES * 4 / 3));
-  const tooLargePayload = `${allowedPayload}AAAA`;
-  assert.ok(dataUrlBytes(`data:image/png;base64,${allowedPayload}`) <= MAX_COMPOSITE_BYTES);
-  assert.ok(dataUrlBytes(`data:image/png;base64,${tooLargePayload}`) > MAX_COMPOSITE_BYTES);
+  const storageRules = readFileSync(new URL('../storage.rules', import.meta.url), 'utf8');
+  const renderRule = storageRules.slice(storageRules.indexOf('match /renders/{uid}/{allPaths=**}'));
+  const cap = renderRule.match(/request\.resource\.size\s*(<)\s*(\d+)\s*\*\s*1024\s*\*\s*1024/);
+  assert.equal(cap?.[1], '<');
+  assert.equal(Number(cap?.[2]) * 1024 * 1024, MAX_COMPOSITE_BYTES);
+
+  const allowedPayload = 'A'.repeat(Math.floor((MAX_COMPOSITE_BYTES - 3) * 4 / 3));
+  const boundaryPayload = 'A'.repeat(Math.floor(MAX_COMPOSITE_BYTES * 4 / 3));
+  assert.ok(dataUrlBytes(`data:image/png;base64,${allowedPayload}`) < MAX_COMPOSITE_BYTES);
+  assert.equal(dataUrlBytes(`data:image/png;base64,${boundaryPayload}`), MAX_COMPOSITE_BYTES);
   assert.equal(renderJobRequestError([sheet('water', {
     compositeDataUrl: `data:image/png;base64,${allowedPayload}`,
   })]), null);
   assert.match(renderJobRequestError([sheet('water', {
-    compositeDataUrl: `data:image/png;base64,${tooLargePayload}`,
+    compositeDataUrl: `data:image/png;base64,${boundaryPayload}`,
   })]) ?? '', /too large/);
 });
 
 test('malformed images and conflicting rendering authorities fail before any job exists', () => {
   assert.match(renderJobRequestError([sheet('water', { compositeDataUrl: 'not an image' })]) ?? '', /valid image/);
+  assert.match(renderJobRequestError([sheet('water', { compositeDataUrl: 'data:image/png;base64,A' })]) ?? '', /valid image/);
   assert.match(renderJobRequestError([sheet('water', { protectMaskDataUrl: 'not a mask' })]) ?? '', /invalid protection mask/);
+  const oversizedMask = `data:image/png;base64,${'A'.repeat(Math.floor(MAX_COMPOSITE_BYTES * 4 / 3) + 4)}`;
+  assert.match(renderJobRequestError([sheet('water', { protectMaskDataUrl: oversizedMask })]) ?? '', /protection mask is too large/);
   assert.match(renderJobRequestError([sheet('water', {
     showcase: true,
     geometryLock: true,
@@ -142,4 +162,98 @@ test('worker input validation is exhaustive for empty, oversized and wrong-engin
   }), 'too many sheets');
   assert.equal(workerRenderJobContractError({ ...valid, engine: 'other' }), 'invalid engine');
   assert.equal(workerRenderJobContractError({ ...valid, siteId: '' }), 'invalid site');
+});
+
+test('a queue mask must contain both protected and editable pixels', () => {
+  assert.equal(maskHasProtectedAndEditablePixels(new Uint8ClampedArray([0, 0, 0, 0])), false);
+  assert.equal(maskHasProtectedAndEditablePixels(new Uint8ClampedArray([0, 0, 0, 255])), false);
+  assert.equal(maskHasProtectedAndEditablePixels(new Uint8ClampedArray([
+    0, 0, 0, 0,
+    0, 0, 0, 255,
+  ])), true);
+  // Anti-aliased protection still matters: restoration blends partial alpha rather than ignoring it.
+  assert.equal(maskHasProtectedAndEditablePixels(new Uint8ClampedArray([0, 0, 0, 128])), true);
+});
+
+test('subscription snapshots are accepted only when every storage path belongs to that exact job', () => {
+  const jobId = 'farmer-1_123_abc';
+  const valid = {
+    uid: 'farmer-1',
+    siteId: 'farm-1',
+    style: 'precision_atlas',
+    engine: 'openai',
+    status: 'complete',
+    sheets: [{
+      key: 'water',
+      label: 'Water',
+      prompt: 'render',
+      inputPath: `renders/farmer-1/${jobId}/input-water.jpg`,
+      protectMaskPath: `renders/farmer-1/${jobId}/mask-water.png`,
+      useProtectMaskForEdit: false,
+      status: 'done',
+      outputPath: `renders/farmer-1/${jobId}/output-water.png`,
+      showcase: false,
+      geometryLock: true,
+      resultKind: 'hybrid',
+    }],
+  };
+
+  assert.deepEqual(normaliseRenderJobDoc(jobId, valid), valid);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...valid,
+    sheets: [{ ...valid.sheets[0], outputPath: 'renders/another-user/private.png' }],
+  }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...valid,
+    sheets: [{ ...valid.sheets[0], inputPath: `renders/farmer-1/another-job/input-water.jpg` }],
+  }), null);
+  assert.ok(normaliseRenderJobDoc(jobId, {
+    ...valid,
+    sheets: [{ ...valid.sheets[0], outputPath: `renders/farmer-1/${jobId}/output-water.jpg` }],
+  }));
+});
+
+test('subscription snapshots reject impossible status, authority and identity combinations', () => {
+  const jobId = 'farmer-1_123_abc';
+  const baseSheet = {
+    key: 'water',
+    label: 'Water',
+    prompt: 'render',
+    inputPath: `renders/farmer-1/${jobId}/input-water.jpg`,
+    status: 'queued',
+    showcase: false,
+    geometryLock: true,
+    resultKind: 'hybrid',
+  };
+  const job = {
+    uid: 'farmer-1',
+    siteId: 'farm-1',
+    style: 'precision_atlas',
+    engine: 'openai',
+    status: 'queued',
+    sheets: [baseSheet],
+  };
+
+  assert.ok(normaliseRenderJobDoc(jobId, job));
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, status: 'invented' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...job,
+    sheets: [{ ...baseSheet, key: 'unknown' }],
+  }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...job,
+    sheets: [baseSheet, { ...baseSheet }],
+  }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...job,
+    sheets: [{ ...baseSheet, showcase: true }],
+  }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...job,
+    sheets: [{ ...baseSheet, status: 'done' }],
+  }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, {
+    ...job,
+    sheets: [{ ...baseSheet, outputPath: `renders/farmer-1/${jobId}/output-water.png` }],
+  }), null);
 });

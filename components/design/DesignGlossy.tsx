@@ -7853,7 +7853,7 @@ interface SavedGlossy {
 //        sheet says what is missing instead of inventing household demand.
 //   v70 — 2026-07-29: invalid facilitator roof/location inputs no longer fabricate a Durban
 //        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
-const PLAN_VERSION = 'v78'; // Structure symbols reject invalid geometry and normalise persisted IDs.
+const PLAN_VERSION = 'v79'; // Paid queue rejects unusable masks and unowned render snapshots.
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
@@ -10087,7 +10087,16 @@ export default function DesignGlossy({
 
     async function handleSnapshot(job: Parameters<Parameters<typeof subscribeRenderJob>[1]>[0]): Promise<void> {
       {
-        if (!job) return;
+        if (!job) {
+          // A TTL-deleted or malformed durable job must not leave this design permanently attached
+          // to a queue entry it can never finish. Clear the persisted pointer so Generate works.
+          setError(t('designGlossyRenderIncomplete'));
+          setLockedPolishStage(null);
+          setLoading(null);
+          clearPersistedJobId(siteId);
+          setQueueJobId(null);
+          return;
+        }
         // Style + showcase come off the JOB DOC, not React state: a remount (Preview-map hop,
         // reload on a spotty connection) resets local state to defaults, and the old code then
         // finished a Storybook/showcase job as strict Extension Blueprint (audit must-fix).
