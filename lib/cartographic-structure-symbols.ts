@@ -64,8 +64,12 @@ const CATEGORY_KIND: Partial<Record<ElementCategory, SymbolKind>> = {
 };
 
 function kindFor(element: CartographicSymbolElement): SymbolKind | undefined {
-  if (typeof element === 'object') return ID_KIND[element.id] ?? CATEGORY_KIND[element.category];
-  return ID_KIND[element] ?? CATEGORY_KIND[element as ElementCategory];
+  if (typeof element === 'object') {
+    const id = element.id.trim().toLowerCase().replace(/[\s_-]+/g, '_');
+    return ID_KIND[id] ?? CATEGORY_KIND[element.category];
+  }
+  const key = element.trim().toLowerCase().replace(/[\s_-]+/g, '_');
+  return ID_KIND[key] ?? CATEGORY_KIND[key as ElementCategory];
 }
 
 export function supportsCartographicStructureSymbol(element: CartographicSymbolElement): boolean {
@@ -328,7 +332,15 @@ export function drawCartographicStructureSymbol(
   options: CartographicSymbolOptions = {},
 ): boolean {
   const kind = kindFor(element);
-  if (!kind || width <= 0 || height <= 0) return false;
+  if (
+    !kind
+    || !Number.isFinite(width)
+    || !Number.isFinite(height)
+    || !Number.isFinite(outlineWidth)
+    || width <= 0
+    || height <= 0
+    || outlineWidth < 0
+  ) return false;
   const seed = Number.isFinite(options.seed) ? Math.trunc(options.seed as number) : 0;
   ctx.save();
   ctx.beginPath();
