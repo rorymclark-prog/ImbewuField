@@ -164,7 +164,16 @@ export interface CoachCounts {
 }
 
 export function coachTip(layer: LayerId, c: CoachCounts): string {
-  const n = (l: LayerId) => (c.itemsByLayer[l] ?? 0) + (c.linesByLayer[l] ?? 0);
+  const count = (value: number | undefined): number =>
+    Number.isFinite(value) && (value ?? 0) > 0 ? Math.floor(value!) : 0;
+  const amount = (value: number): number =>
+    Number.isFinite(value) && value > 0 ? value : 0;
+  const n = (l: LayerId) => count(c.itemsByLayer[l]) + count(c.linesByLayer[l]);
+  const sectors = count(c.sectors);
+  const tanks = count(c.tanks);
+  const totalLitres = amount(c.totalLitres);
+  const bedAreaM2 = amount(c.bedAreaM2);
+  const paths = count(c.paths);
   switch (layer) {
     case 'base':
       if (!c.hasBg) return 'Load a base map: "From my map sites" gives you your real satellite photo with the scale already set.';
@@ -174,23 +183,23 @@ export function coachTip(layer: LayerId, c: CoachCounts): string {
       if (n('existing') === 0) return 'Nothing marked yet. Tap 🗺 Find map features to pull your buildings and roads from map data, then tap to place your big trees.';
       return `${n('existing')} existing feature${n('existing') > 1 ? 's' : ''} marked ✓ — next, map your sectors: sun, wind and fire.`;
     case 'sectors':
-      if (c.sectors === 0) return 'Place at least winter sun (from the north in SA) and prevailing wind. Drag to position, rotate to aim.';
-      if (c.sectors < 2) return 'Good start. Add the wind sector too — windbreaks and fire planning depend on it.';
-      return `${c.sectors} sectors mapped ✓ — now design water, the hardest thing to change later.`;
+      if (sectors === 0) return 'Place at least winter sun (from the north in SA) and prevailing wind. Drag to position, rotate to aim.';
+      if (sectors < 2) return 'Good start. Add the wind sector too — windbreaks and fire planning depend on it.';
+      return `${sectors} sectors mapped ✓ — now design water, the hardest thing to change later.`;
     case 'water':
-      if (c.tanks === 0) return 'Every roof needs a tank. Place a JoJo tank at a roof corner, then think about swales on contour.';
-      if (c.totalLitres < 5000) return 'Tank placed — consider more storage. A SA household garden wants 10 kL+ to bridge the dry season.';
-      return `${(c.totalLitres / 1000).toFixed(1)} kL of storage ✓ — move on to paths and access.`;
+      if (tanks === 0) return 'Every roof needs a tank. Place a JoJo tank at a roof corner, then think about swales on contour.';
+      if (totalLitres < 5000) return 'Tank placed — consider more storage. A SA household garden wants 10 kL+ to bridge the dry season.';
+      return `${(totalLitres / 1000).toFixed(1)} kL of storage ✓ — move on to paths and access.`;
     case 'access':
-      if (c.paths === 0) return 'Draw the main path from the door to the most-visited spots: tank, veg beds, compost.';
+      if (paths === 0) return 'Draw the main path from the door to the most-visited spots: tank, veg beds, compost.';
       return 'Access mapped ✓ — now place your structures.';
     case 'structures':
       if (n('structures') === 0) return 'Compost within 20 steps of the kitchen; chicken coop between garden and orchard so the birds work for you.';
       return `${n('structures')} structure${n('structures') > 1 ? 's' : ''} placed ✓ — time to plant.`;
     case 'planting':
-      if (c.bedAreaM2 === 0) return 'Start with veg beds nearest the door — daily-picked food must be on the daily path.';
-      if (c.bedAreaM2 < 20) return `${c.bedAreaM2.toFixed(0)} m² of beds so far. 20–40 m² feeds a family its vegetables.`;
-      return `${c.bedAreaM2.toFixed(0)} m² growing ✓ — you are ready to review and save.`;
+      if (bedAreaM2 === 0) return 'Start with veg beds nearest the door — daily-picked food must be on the daily path.';
+      if (bedAreaM2 < 20) return `${bedAreaM2.toFixed(0)} m² of beds so far. 20–40 m² feeds a family its vegetables.`;
+      return `${bedAreaM2.toFixed(0)} m² growing ✓ — you are ready to review and save.`;
     case 'review':
       return 'Run the AI review for warnings, then Save design. Share it with a farmer to put it on their phone.';
   }
@@ -235,25 +244,47 @@ export interface BgRect { x: number; y: number; w: number; h: number }
 
 /** Map normalised detect output into stage-pixel ghosts positioned over the background image. */
 export function buildGhosts(res: DetectResponse, bg: BgRect): GhostFeature[] {
+  if (![bg.x, bg.y, bg.w, bg.h].every(Number.isFinite) || bg.w <= 0 || bg.h <= 0) {
+    return [];
+  }
+  const normalisePoints = (value: unknown): Array<[number, number]> | null => {
+    if (!Array.isArray(value)) return null;
+    const points: Array<[number, number]> = [];
+    for (const point of value) {
+      if (!Array.isArray(point) || point.length < 2) return null;
+      const [nx, ny] = point;
+      if (!Number.isFinite(nx) || !Number.isFinite(ny)) return null;
+      points.push([
+        Math.max(0, Math.min(1, nx as number)),
+        Math.max(0, Math.min(1, ny as number)),
+      ]);
+    }
+    return points;
+  };
   const toPx = (pts: Array<[number, number]>): number[] =>
     pts.flatMap(([nx, ny]) => [bg.x + nx * bg.w, bg.y + ny * bg.h]);
   const ghosts: GhostFeature[] = [];
-  if (res.boundary && res.boundary.length >= 3) {
-    ghosts.push({ id: 'ghost-boundary', kind: 'boundary', lineKind: 'fence', pxPoints: toPx(res.boundary), note: 'Property boundary', layer: 'existing' });
+  const boundary = normalisePoints(res.boundary);
+  if (boundary && boundary.length >= 3) {
+    ghosts.push({ id: 'ghost-boundary', kind: 'boundary', lineKind: 'fence', pxPoints: toPx(boundary), note: 'Property boundary', layer: 'existing' });
   }
-  res.features.forEach((f, i) => {
-    if (f.kind === 'veg_area' && f.points.length >= 3) {
-      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: 'bed', pxPoints: toPx(f.points), sizeM: f.sizeM, note: f.note, layer: 'existing' });
+  const features = Array.isArray(res.features) ? res.features : [];
+  features.forEach((f, i) => {
+    const points = normalisePoints(f?.points);
+    if (!points) return;
+    const sizeM = Number.isFinite(f.sizeM) && (f.sizeM ?? 0) > 0 ? f.sizeM : undefined;
+    if (f.kind === 'veg_area' && points.length >= 3) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: 'bed', pxPoints: toPx(points), sizeM, note: f.note, layer: 'existing' });
       return;
     }
     const line = DETECT_TO_LINE[f.kind];
-    if (line && f.points.length >= 2) {
-      ghosts.push({ id: `ghost-${i}`, kind: f.kind, lineKind: line, pxPoints: toPx(f.points), note: f.note, layer: 'existing' });
+    if (line && points.length >= 2) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, lineKind: line, pxPoints: toPx(points), note: f.note, layer: 'existing' });
       return;
     }
     const el = DETECT_TO_EL[f.kind];
-    if (el && f.points.length >= 1) {
-      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: el, pxPoints: toPx([f.points[0]]), sizeM: f.sizeM, note: f.note, layer: 'existing' });
+    if (el && points.length >= 1) {
+      ghosts.push({ id: `ghost-${i}`, kind: f.kind, elType: el, pxPoints: toPx([points[0]]), sizeM, note: f.note, layer: 'existing' });
     }
   });
   return ghosts;
@@ -312,31 +343,41 @@ export interface FacilitatorDesignState {
 /** Default px-per-metre used when metre-based geometry must be restored with no background at all. */
 export const DEFAULT_PX_PER_M = 5;
 
+function validTransform(bgRect: BgRect, pxPerM: number): boolean {
+  return Number.isFinite(pxPerM) && pxPerM > 0
+    && [bgRect.x, bgRect.y].every(Number.isFinite);
+}
+
 /** Convert one item's px geometry to bg-relative metres (mutating copy). */
 export function itemPxToM(it: FacItem, bgRect: BgRect, pxPerM: number): FacItem {
+  if (!validTransform(bgRect, pxPerM) || !Number.isFinite(it.x) || !Number.isFinite(it.y)) return { ...it };
   return { ...it, xM: (it.x - bgRect.x) / pxPerM, yM: (it.y - bgRect.y) / pxPerM };
 }
 export function itemMToPx(it: FacItem, bgRect: BgRect, pxPerM: number): FacItem {
-  if (it.xM === undefined || it.yM === undefined) return it;
-  return { ...it, x: bgRect.x + it.xM * pxPerM, y: bgRect.y + it.yM * pxPerM };
+  const { xM, yM } = it;
+  if (!validTransform(bgRect, pxPerM) || !Number.isFinite(xM) || !Number.isFinite(yM)) return { ...it };
+  return { ...it, x: bgRect.x + xM! * pxPerM, y: bgRect.y + yM! * pxPerM };
 }
 
 export function linePxToM(l: FacLine, bgRect: BgRect, pxPerM: number): FacLine {
+  if (!validTransform(bgRect, pxPerM) || l.points.length % 2 !== 0 || !l.points.every(Number.isFinite)) return { ...l };
   const pointsM = l.points.map((v, i) => i % 2 === 0 ? (v - bgRect.x) / pxPerM : (v - bgRect.y) / pxPerM);
   return { ...l, pointsM };
 }
 export function lineMToPx(l: FacLine, bgRect: BgRect, pxPerM: number): FacLine {
-  if (!l.pointsM) return l;
+  if (!l.pointsM || !validTransform(bgRect, pxPerM) || l.pointsM.length % 2 !== 0 || !l.pointsM.every(Number.isFinite)) return { ...l };
   const points = l.pointsM.map((v, i) => i % 2 === 0 ? bgRect.x + v * pxPerM : bgRect.y + v * pxPerM);
   return { ...l, points };
 }
 
 export function sectorPxToM(s: FacSector, bgRect: BgRect, pxPerM: number): FacSector {
+  if (!validTransform(bgRect, pxPerM) || !Number.isFinite(s.x) || !Number.isFinite(s.y)) return { ...s };
   return { ...s, xM: (s.x - bgRect.x) / pxPerM, yM: (s.y - bgRect.y) / pxPerM };
 }
 export function sectorMToPx(s: FacSector, bgRect: BgRect, pxPerM: number): FacSector {
-  if (s.xM === undefined || s.yM === undefined) return s;
-  return { ...s, x: bgRect.x + s.xM * pxPerM, y: bgRect.y + s.yM * pxPerM };
+  const { xM, yM } = s;
+  if (!validTransform(bgRect, pxPerM) || !Number.isFinite(xM) || !Number.isFinite(yM)) return { ...s };
+  return { ...s, x: bgRect.x + xM! * pxPerM, y: bgRect.y + yM! * pxPerM };
 }
 
 /** Convert full geometry px → metres relative to bgRect, for saving under geomVersion 2. */
@@ -363,6 +404,67 @@ export function geomMToPx(
 
 const STORE_KEY = 'imbewu_facilitator_design_v1';
 
+const layerIds = new Set<LayerId>(LAYER_ORDER);
+const elementTypes = new Set<ElType>(Object.keys(TYPE_LAYER) as ElType[]);
+const lineKinds = new Set<LineKind>(Object.keys(LINE_LAYER) as LineKind[]);
+const sectorKinds = new Set<SectorKind>(Object.keys(SECTOR_DEFS) as SectorKind[]);
+const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
+
+/**
+ * Validate the storage boundary without mutating the parsed document. One corrupt
+ * feature is discarded rather than poisoning every BOQ total with NaN.
+ */
+export function normaliseFacilitatorState(value: unknown): FacilitatorDesignState | null {
+  if (!value || typeof value !== 'object') return null;
+  const s = value as Partial<FacilitatorDesignState>;
+  if (s.version !== 1 || !Array.isArray(s.items)) return null;
+
+  const items = s.items.filter((item): item is FacItem =>
+    !!item && typeof item.id === 'string' && elementTypes.has(item.type)
+    && [item.x, item.y, item.wM, item.hM, item.rotation].every(finite)
+    && item.wM > 0 && item.hM > 0);
+  const lines = (Array.isArray(s.lines) ? s.lines : []).filter((line): line is FacLine =>
+    !!line && typeof line.id === 'string' && lineKinds.has(line.kind)
+    && Array.isArray(line.points) && line.points.length % 2 === 0
+    && line.points.every(finite));
+  const sectors = (Array.isArray(s.sectors) ? s.sectors : []).filter((sector): sector is FacSector =>
+    !!sector && typeof sector.id === 'string' && sectorKinds.has(sector.kind)
+    && [sector.x, sector.y, sector.rotation, sector.radiusM, sector.spanDeg].every(finite)
+    && sector.radiusM > 0 && sector.spanDeg > 0);
+  const pxPerM = finite(s.pxPerM) && s.pxPerM > 0 ? s.pxPerM : DEFAULT_PX_PER_M;
+  const activeLayer = s.activeLayer && layerIds.has(s.activeLayer) ? s.activeLayer : 'base';
+  const hiddenLayers = Array.isArray(s.hiddenLayers)
+    ? [...new Set(s.hiddenLayers.filter((layer): layer is LayerId => layerIds.has(layer)))]
+    : [];
+  const bgRect = s.bgRect && [s.bgRect.x, s.bgRect.y, s.bgRect.w, s.bgRect.h].every(finite)
+    && s.bgRect.w > 0 && s.bgRect.h > 0
+    ? { ...s.bgRect }
+    : undefined;
+  const { bgRect: _storedBgRect, ...stored } = s;
+
+  return {
+    ...stored,
+    version: 1,
+    items: items.map((item) => ({ ...item })),
+    lines: lines.map((line) => {
+      const { points, pointsM, ...rest } = line;
+      return {
+        ...rest,
+        points: [...points],
+        ...(Array.isArray(pointsM) && pointsM.length % 2 === 0 && pointsM.every(finite)
+          ? { pointsM: [...pointsM] }
+          : {}),
+      };
+    }),
+    sectors: sectors.map((sector) => ({ ...sector })),
+    pxPerM,
+    activeLayer,
+    hiddenLayers,
+    ...(bgRect ? { bgRect } : {}),
+    savedAt: finite(s.savedAt) ? s.savedAt : 0,
+  };
+}
+
 export function saveFacilitatorState(s: FacilitatorDesignState): void {
   if (isSampleMode()) { setSandboxFacilitatorState(s); return; }
   try {
@@ -376,13 +478,11 @@ export function saveFacilitatorState(s: FacilitatorDesignState): void {
 }
 
 export function loadFacilitatorState(): FacilitatorDesignState | null {
-  if (isSampleMode()) return getSandboxFacilitatorState();
+  if (isSampleMode()) return normaliseFacilitatorState(getSandboxFacilitatorState());
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return null;
-    const s = JSON.parse(raw) as FacilitatorDesignState;
-    if (s?.version !== 1 || !Array.isArray(s.items)) return null;
-    return s;
+    return normaliseFacilitatorState(JSON.parse(raw));
   } catch {
     return null;
   }
