@@ -6,8 +6,8 @@ import {
   clusterSowMonths,
   type AutoSuggestAnswers,
 } from '@/lib/crop-autosuggest';
-import { cropByKey, CROPS, type RainPattern } from '@/lib/crop-catalog';
-import { foodGroupOf } from '@/lib/crop-groups';
+import { cropByKey, CROPS, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
+import { FOOD_GROUP, GROUP_PRIORITY, foodGroupOf } from '@/lib/crop-groups';
 import {
   bedOverlapFraction,
   buildFieldUtilizationByMonth,
@@ -258,6 +258,110 @@ test('every suggestion has a real bed, catalog crop, valid month, bounded fracti
       ));
     }
   }
+});
+
+test('the crop catalogue has stable unique identities and a complete lookup', () => {
+  const keys = CROPS.map((crop) => crop.key);
+
+  assert.ok(keys.length > 0);
+  assert.equal(new Set(keys).size, keys.length);
+  assert.ok(keys.every((key) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(key)), 'a crop key is unsafe for saved plans');
+  for (const crop of CROPS) {
+    assert.equal(cropByKey(crop.key), crop);
+  }
+  for (const unknown of ['', 'unknown-crop', ' CABBAGE ']) {
+    assert.equal(cropByKey(unknown), undefined);
+  }
+});
+
+test('every crop has complete, finite physical data without pinning agronomic values', () => {
+  const requiredPositive = ['daysToHarvest', 'spacingCm', 'yieldKgPerM2'] as const;
+  const optionalPositive = [
+    'rowSpacingCm',
+    'inRowSpacingCm',
+    'sowDepthCm',
+    'harvestWindowMonths',
+    'storageMonths',
+  ] as const;
+
+  for (const crop of CROPS) {
+    assert.ok(crop.name.trim(), `${crop.key} has no farmer-facing name`);
+    assert.ok(crop.icon.trim(), `${crop.key} has no icon`);
+    assert.ok(crop.note.trim(), `${crop.key} has no planting guidance`);
+    assert.doesNotMatch(`${crop.name} ${crop.note}`, /NaN|Infinity/);
+    for (const field of requiredPositive) {
+      assert.ok(Number.isFinite(crop[field]) && crop[field] > 0, `${crop.key}.${field} is unusable`);
+    }
+    for (const field of optionalPositive) {
+      const value = crop[field];
+      if (value !== undefined) {
+        assert.ok(Number.isFinite(value) && value > 0, `${crop.key}.${field} is unusable`);
+      }
+    }
+    if (crop.harvestWindowMonths !== undefined) {
+      assert.ok(Number.isInteger(crop.harvestWindowMonths), `${crop.key} has a fractional harvest window`);
+    }
+    if (crop.storageMonths !== undefined) {
+      assert.ok(Number.isInteger(crop.storageMonths), `${crop.key} has a fractional storage life`);
+    }
+  }
+});
+
+test('every rain-pattern window is a non-empty, unique calendar subset that clusters losslessly', () => {
+  const patterns: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
+
+  for (const crop of CROPS) {
+    for (const pattern of patterns) {
+      const months = crop.sowMonths[pattern];
+      assert.ok(months.length > 0, `${crop.key} has no ${pattern} sowing window`);
+      assert.equal(new Set(months).size, months.length, `${crop.key} repeats a ${pattern} month`);
+      assert.ok(months.every((month) =>
+        Number.isInteger(month) && month >= 1 && month <= MONTHS_SHORT.length));
+
+      const clustered = clusterSowMonths(months).flatMap((cluster) => cluster.months);
+      assert.deepEqual(
+        [...clustered].sort((a, b) => a - b),
+        [...months].sort((a, b) => a - b),
+        `${crop.key} ${pattern} window changed during clustering`,
+      );
+    }
+  }
+});
+
+test('every catalog crop belongs explicitly to one advertised food group', () => {
+  const advertisedGroups = new Set(GROUP_PRIORITY);
+
+  assert.equal(advertisedGroups.size, GROUP_PRIORITY.length, 'food-group priority repeats a group');
+  for (const crop of CROPS) {
+    assert.ok(Object.hasOwn(FOOD_GROUP, crop.key), `${crop.key} fell through to a guessed food group`);
+    assert.ok(advertisedGroups.has(foodGroupOf(crop)), `${crop.key} belongs to a group the planner never offers`);
+  }
+  for (const group of GROUP_PRIORITY) {
+    assert.ok(CROPS.some((crop) => foodGroupOf(crop) === group), `${group} has no selectable crops`);
+  }
+});
+
+test('variety advice is unique and complete wherever the catalogue offers it', () => {
+  for (const crop of CROPS) {
+    if (!crop.varieties) continue;
+    assert.ok(crop.varieties.length > 0, `${crop.key} exposes an empty variety list`);
+    assert.equal(
+      new Set(crop.varieties.map((variety) => variety.name.trim().toLowerCase())).size,
+      crop.varieties.length,
+      `${crop.key} repeats a variety`,
+    );
+    for (const variety of crop.varieties) {
+      assert.ok(variety.name.trim(), `${crop.key} has an unnamed variety`);
+      assert.ok(variety.bestFor.trim(), `${crop.key}/${variety.name} does not say when it suits`);
+      assert.ok(variety.note.trim(), `${crop.key}/${variety.name} has no explanation`);
+    }
+  }
+});
+
+test('month labels are a complete, unique calendar in display order', () => {
+  assert.equal(MONTHS_SHORT.length, 12);
+  assert.equal(new Set(MONTHS_SHORT).size, MONTHS_SHORT.length);
+  assert.ok(MONTHS_SHORT.every((label) => label.trim().length > 0));
 });
 
 test('harvest and next-sowing month arithmetic stays inside the calendar and wraps across year end', () => {
