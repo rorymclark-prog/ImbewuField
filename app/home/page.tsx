@@ -377,7 +377,7 @@ function HomeLandingInner() {
             it never reads or writes any real farmer's saved data. ── */}
         <button
           type="button"
-          onClick={() => { enterSampleMode(); router.push('/farmer?panel=Overview'); }}
+          onClick={() => { if (enterSampleMode()) router.push('/farmer?panel=Overview'); }}
           style={{
             display: 'block',
             width: '100%',

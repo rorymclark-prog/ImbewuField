@@ -92,12 +92,23 @@ export function isSampleMode(): boolean {
   }
 }
 
-export function enterSampleMode(): void {
-  if (typeof window === 'undefined') return;
+export function enterSampleMode(): boolean {
+  if (typeof window === 'undefined') return false;
   sandbox = freshSandbox(); // always a clean slate — never a previous demo session's edits
   resetShimStore(); // reseed the localStorage shim too
-  try { window.sessionStorage.setItem(FLAG_KEY, '1'); } catch { /* ignore */ }
+  try {
+    window.sessionStorage.setItem(FLAG_KEY, '1');
+    // A storage implementation can silently refuse a write (privacy/quota modes), so
+    // verify the flag before callers navigate into a view that promises demo isolation.
+    if (window.sessionStorage.getItem(FLAG_KEY) !== '1') throw new Error('sample flag refused');
+  } catch {
+    sandbox = null;
+    resetShimStore();
+    try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* best-effort cleanup */ }
+    return false;
+  }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
+  return true;
 }
 
 // Callers should follow this with a hard window.location.href navigation
