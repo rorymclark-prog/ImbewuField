@@ -232,22 +232,39 @@ export function loadCompletedTaskIds(): Set<string> {
     if (!raw) return new Set();
     const parsed = JSON.parse(raw);
     return new Set(Array.isArray(parsed)
-      ? parsed.filter((k) => typeof k === 'string' && k.trim().length > 0)
+      ? parsed
+        .filter((k): k is string => typeof k === 'string' && k.trim().length > 0)
+        .map((k) => k.trim())
       : []);
   } catch {
     return new Set();
   }
 }
 
-export function saveCompletedTaskIds(ids: Set<string>): void {
-  if (typeof window === 'undefined' || !window.localStorage) return;
+export function saveCompletedTaskIds(ids: Set<string>): boolean {
+  if (typeof window === 'undefined' || !window.localStorage) return false;
   try {
-    window.localStorage.setItem(COMPLETED_TASKS_KEY, JSON.stringify(
-      [...ids].filter((id) => typeof id === 'string' && id.trim().length > 0),
-    ));
+    const clean = new Set([...ids]
+      .filter((id) => typeof id === 'string' && id.trim().length > 0)
+      .map((id) => id.trim()));
+    window.localStorage.setItem(COMPLETED_TASKS_KEY, JSON.stringify([...clean]));
+    return true;
   } catch {
-    // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
+    return false;
   }
+}
+
+/** Toggle one durable completion without rebuilding the shared set from the visible crop rows.
+ * Survey/lesson tasks and crop work that is temporarily off-board must survive untouched. */
+export function setCompletedTaskState(id: string, completed: boolean): Set<string> {
+  const before = loadCompletedTaskIds();
+  const cleanId = typeof id === 'string' ? id.trim() : '';
+  if (!cleanId) return before;
+  const next = new Set(before);
+  if (completed) next.add(cleanId);
+  else next.delete(cleanId);
+  if (next.size === before.size && next.has(cleanId) === before.has(cleanId)) return before;
+  return saveCompletedTaskIds(next) ? next : before;
 }
 
 // ── Add to calendar (.ics) ───────────────────────────────────────────────────
