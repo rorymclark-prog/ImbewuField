@@ -1,12 +1,30 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import {
+  createElement,
+  useCallback,
+  useRef,
+  useState,
+  type MutableRefObject,
+} from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 
 import {
   fullTreatmentProtectPolicy,
   lockedPolishAction,
+  lockedPolishResultKind,
   lockedPolishStyle,
+  useLockedPolishHandoff,
+  type LockedPolishStage,
   type LockedPolishState,
+  type SheetOutputMode,
 } from '@/lib/locked-polish-flow';
+
+const DESIGN_GLOSSY_SOURCE = readFileSync(
+  new URL('../components/design/DesignGlossy.tsx', import.meta.url),
+  'utf8',
+);
 
 const READY: LockedPolishState = {
   outputMode: 'hybrid',
@@ -20,6 +38,221 @@ const READY: LockedPolishState = {
   loading: false,
   hasResult: false,
 };
+
+interface EnqueuedSheet {
+  resultKind: 'hybrid' | 'ai-polished';
+  compositeDataUrl: string | null;
+  committedStage: LockedPolishStage;
+}
+
+interface HandoffController {
+  startHybrid: () => void;
+  completeHybrid: (finishedHybrid: string, visibleInPreview?: boolean) => void;
+  completeHybridWithoutInput: () => void;
+  settleCurrentJob: () => void;
+}
+
+interface HandoffHarnessProps {
+  outputMode: Extract<SheetOutputMode, 'hybrid' | 'full'>;
+  enqueued: EnqueuedSheet[];
+  errors: string[];
+  controller: MutableRefObject<HandoffController | null>;
+}
+
+function HandoffHarness({
+  outputMode,
+  enqueued,
+  errors,
+  controller,
+}: HandoffHarnessProps) {
+  const requestedModeRef = useRef<SheetOutputMode>(outputMode);
+  requestedModeRef.current = outputMode;
+  const polishAfterHybridRef = useRef(outputMode === 'full');
+  const polishAfterFlipRef = useRef(false);
+  const hybridResultRef = useRef<string | null>(null);
+  const [stage, setStage] = useState<LockedPolishStage>('hybrid');
+  const [loading, setLoading] = useState(false);
+  const [hasResult, setHasResult] = useState(false);
+  const [hybridHandoffReady, setHybridHandoffReady] = useState(false);
+
+  // This is the queue edge the production hook invokes. Deriving provenance from the committed
+  // stage means the test catches the stale-closure failure too: an early dispatch records another
+  // Hybrid instead of the required ai-polished job.
+  const renderCurrentSheet = useCallback(() => {
+    const resultKind = lockedPolishResultKind(stage);
+    enqueued.push({
+      resultKind,
+      compositeDataUrl: resultKind === 'ai-polished'
+        ? hybridResultRef.current
+        : 'exact-input',
+      committedStage: stage,
+    });
+    if (resultKind === 'ai-polished') hybridResultRef.current = null;
+    setLoading(true);
+  }, [enqueued, stage]);
+
+  const clearResult = useCallback(() => setHasResult(false), []);
+  const recordError = useCallback((message: string) => errors.push(message), [errors]);
+  const ignoreNotice = useCallback((_message: string) => undefined, []);
+
+  useLockedPolishHandoff(
+    {
+      exactFlipPending: false,
+      hybridAfterExactPending: false,
+      hybridFlipPending: false,
+      polishAfterHybridPending: polishAfterHybridRef.current,
+      polishFlipPending: polishAfterFlipRef.current,
+      mode: 'ai',
+      isExactRender: false,
+      loading,
+      hasResult,
+      stage,
+      hybridHandoffReady,
+    },
+    {
+      requestedModeRef,
+      polishAfterHybridRef,
+      polishAfterFlipRef,
+      hybridResultRef,
+      setHybridHandoffReady,
+      setStage,
+      setError: recordError,
+      missingHybridMessage: 'missing finished Hybrid',
+      setNotice: ignoreNotice,
+      startingPolishMessage: 'starting polish',
+      polishingMessage: 'polishing',
+      clearResult,
+      renderCurrentSheet,
+    },
+  );
+
+  controller.current = {
+    startHybrid: renderCurrentSheet,
+    completeHybrid: (finishedHybrid: string, visibleInPreview = true) => {
+      setHasResult(visibleInPreview);
+      if (polishAfterHybridRef.current) {
+        hybridResultRef.current = finishedHybrid;
+        setHybridHandoffReady(true);
+      }
+      setLoading(false);
+    },
+    completeHybridWithoutInput: () => {
+      setHasResult(true);
+      setHybridHandoffReady(true);
+      setLoading(false);
+    },
+    settleCurrentJob: () => setLoading(false),
+  };
+
+  return null;
+}
+
+function mountHandoff(
+  outputMode: Extract<SheetOutputMode, 'hybrid' | 'full'>,
+): {
+  controller: MutableRefObject<HandoffController | null>;
+  enqueued: EnqueuedSheet[];
+  errors: string[];
+  renderer: ReactTestRenderer;
+} {
+  const controller: MutableRefObject<HandoffController | null> = { current: null };
+  const enqueued: EnqueuedSheet[] = [];
+  const errors: string[] = [];
+  let renderer: ReactTestRenderer | null = null;
+  act(() => {
+    renderer = create(createElement(HandoffHarness, {
+      outputMode,
+      enqueued,
+      errors,
+      controller,
+    }));
+  });
+  assert.ok(renderer);
+  assert.ok(controller.current);
+  return { controller, enqueued, errors, renderer };
+}
+
+test('Full Treatment completion mounts the real effects and enqueues one polish job from the finished Hybrid', () => {
+  const { controller, enqueued, errors, renderer } = mountHandoff('full');
+  const api = controller.current;
+  assert.ok(api);
+
+  act(() => api.startHybrid());
+  // A preview can be hidden by its own identity guard. The paid handoff is still valid and must
+  // advance from its dedicated completion signal rather than waiting forever on resultImage.
+  act(() => api.completeHybrid('finished-hybrid', false));
+  // A later state change must not spend a duplicate pass after the render-polish flag was consumed.
+  act(() => controller.current?.settleCurrentJob());
+
+  assert.deepEqual(enqueued, [
+    {
+      resultKind: 'hybrid',
+      compositeDataUrl: 'exact-input',
+      committedStage: 'hybrid',
+    },
+    {
+      resultKind: 'ai-polished',
+      compositeDataUrl: 'finished-hybrid',
+      committedStage: 'polish',
+    },
+  ]);
+  assert.deepEqual(errors, []);
+  act(() => renderer.unmount());
+});
+
+test('a published handoff with no finished Hybrid stops with an error before spending again', () => {
+  const { controller, enqueued, errors, renderer } = mountHandoff('full');
+  const api = controller.current;
+  assert.ok(api);
+
+  act(() => api.startHybrid());
+  act(() => api.completeHybridWithoutInput());
+  act(() => controller.current?.settleCurrentJob());
+
+  assert.deepEqual(enqueued, [{
+    resultKind: 'hybrid',
+    compositeDataUrl: 'exact-input',
+    committedStage: 'hybrid',
+  }]);
+  assert.deepEqual(errors, ['missing finished Hybrid']);
+  act(() => renderer.unmount());
+});
+
+test('Hybrid-only completion stops after its one paid job', () => {
+  const { controller, enqueued, errors, renderer } = mountHandoff('hybrid');
+  const api = controller.current;
+  assert.ok(api);
+
+  act(() => api.startHybrid());
+  act(() => api.completeHybrid('finished-hybrid'));
+  act(() => controller.current?.settleCurrentJob());
+
+  assert.deepEqual(enqueued, [{
+    resultKind: 'hybrid',
+    compositeDataUrl: 'exact-input',
+    committedStage: 'hybrid',
+  }]);
+  assert.deepEqual(errors, []);
+  act(() => renderer.unmount());
+});
+
+test('DesignGlossy wires queue completion into the mounted handoff and queue provenance', () => {
+  assert.match(
+    DESIGN_GLOSSY_SOURCE,
+    /useLockedPolishHandoff\([\s\S]*requestedModeRef,[\s\S]*renderCurrentSheet: runCurrentSheet/,
+    'the production component must mount the tested handoff with stable Full intent',
+  );
+  assert.match(
+    DESIGN_GLOSSY_SOURCE,
+    /if \(handoffTargetIsCurrent\) \{[\s\S]*hybridResultRef\.current = finalSheet;[\s\S]*setHybridHandoffReady\(true\)/,
+    'a valid finished Hybrid must publish the React signal that starts the tested sequence',
+  );
+  assert.equal(
+    DESIGN_GLOSSY_SOURCE.match(/resultKind: lockedPolishResultKind\(lockedPolishStage\)/g)?.length,
+    3,
+    'all three paid queue routes must derive resultKind from the committed stage',
+  );
+});
 
 test('Hybrid mode advances exact render -> switch to hybrid -> hybrid render, then stops', () => {
   assert.equal(lockedPolishAction({
