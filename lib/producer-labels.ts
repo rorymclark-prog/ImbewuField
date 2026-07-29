@@ -9,7 +9,12 @@ import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import type { DesignCanvasState } from '@/lib/design-canvas';
 import type { ProducerLabel } from '@/lib/image-producer';
-import { itemInFilter, zonesInFilter, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import {
+  itemInFilter,
+  sheetElementNaming,
+  zonesInFilter,
+  type GlossyLayerFilter,
+} from '@/lib/glossy-filters';
 
 /** Structural stand-in for DesignGlossyProps['refLayers'] (components/design/DesignGlossy.tsx) —
  *  kept identical field-for-field so the two stay assignable to each other. */
@@ -191,6 +196,7 @@ export function producerLabels(
 
   const box = plotBox(refLayers.boundary);
   const aspect = H > 0 ? W / H : 1;
+  const naming = sheetElementNaming(filter);
   for (const [family, pts] of families) {
     const clusters = clusterByProximity(pts, aspect);
     for (const cluster of clusters) {
@@ -204,7 +210,7 @@ export function producerLabels(
       }
       const names = [...byName.entries()].sort((a, b) => b[1].xs.length - a[1].xs.length || a[0].localeCompare(b[0]));
 
-      if (names.length < GROUP_MIN_NAMES) {
+      if (naming === 'individual' || names.length < GROUP_MIN_NAMES) {
         // Too few kinds to be worth a header — one pill per kind with its own leader, as before.
         // It now anchors on the name's centroid WITHIN this cluster, so two veg patches at
         // opposite ends of the plot no longer share one pill pointing at the empty middle.

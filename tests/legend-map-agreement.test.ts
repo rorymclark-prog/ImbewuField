@@ -177,3 +177,34 @@ test('no driveway geometry means no driveway label on any sheet', () => {
     assert.equal(labels.filter((l) => /DRIVEWAY/.test(l.text)).length, 0, filter);
   }
 });
+
+test('Planting callouts use the same species identities as the Planting legend', () => {
+  const state = buildDemoDesignCanvasState();
+  // referenceBlueprintLabels canonicalises farmer nicknames before the exact reference sheet is
+  // painted, so exercise the same path here rather than comparing "BED 1" with "Vegetable Bed".
+  const canonicalState = {
+    ...state,
+    items: state.items.map(({ label: _label, ...item }) => item),
+  };
+  const labels = producerLabels(canonicalState, DRIVEWAY_FIXTURE_REF, 2000, 1200, 'planting', false)
+    .filter((label) => label.leader !== false);
+  const legendNames = new Set(
+    exactSheetElementLegendGroups(state, 'planting').map((row) => row.text.toUpperCase()),
+  );
+
+  assert.equal(
+    labels.some((label) => label.kind === 'header'),
+    false,
+    'a grouped tree header cannot be decoded from species-specific legend rows',
+  );
+  assert.ok(labels.some((label) => /^AVOCADO TREE(?: ×\d+)?$/.test(label.text)));
+  assert.ok(labels.some((label) => /^MANGO TREE(?: ×\d+)?$/.test(label.text)));
+  for (const label of labels) {
+    // Repeated specimens in separate clusters retain a compass prefix so their leaders remain
+    // distinguishable; the species identity after that prefix must still be a real legend row.
+    const identity = label.text
+      .replace(/^(?:NORTHERN|SOUTHERN|EASTERN|WESTERN|CENTRAL) /, '')
+      .replace(/ ×\d+$/, '');
+    assert.ok(legendNames.has(identity), `Planting callout "${label.text}" has no matching legend identity`);
+  }
+});
