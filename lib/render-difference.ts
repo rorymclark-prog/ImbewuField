@@ -20,7 +20,9 @@ export interface DifferenceOptions {
    * Pixels the app restores byte-for-byte after the model returns — the boundary ring, the
    * driveway, outside the plot, the house halo. Including them would guarantee a large identical
    * region and drag every score toward "unchanged", punishing a pass that did redraw everything
-   * it was allowed to touch. Alpha > 0 means protected. Omit to compare the whole frame.
+   * it was allowed to touch. Alpha 255 is fully protected; intermediate alpha
+   * is scored after the same proportional blend the compositor applies. Omit
+   * to compare the whole frame.
    */
   protectMask?: Uint8ClampedArray;
 }
@@ -72,6 +74,9 @@ export function compareRenders(
   if (before.length !== after.length) {
     throw new Error(`compareRenders: size mismatch (${before.length} vs ${after.length})`);
   }
+  if (before.length % 4 !== 0) {
+    throw new Error(`compareRenders: RGBA buffers must contain whole pixels (${before.length} bytes)`);
+  }
   const { protectMask } = options;
   if (protectMask && protectMask.length !== before.length) {
     throw new Error(`compareRenders: mask size mismatch (${protectMask.length} vs ${before.length})`);
@@ -83,12 +88,18 @@ export function compareRenders(
   let deltaSum = 0;
 
   for (let i = 0; i < before.length; i += 4) {
-    if (protectMask && protectMask[i + 3] > 0) continue; // restored afterwards — not the model's work
+    const protection = protectMask ? protectMask[i + 3] / 255 : 0;
+    if (protection >= 1) continue; // restored byte-for-byte afterwards — not the model's work
     compared++;
 
-    const dr = Math.abs(before[i] - after[i]);
-    const dg = Math.abs(before[i + 1] - after[i + 1]);
-    const db = Math.abs(before[i + 2] - after[i + 2]);
+    // Score what the farmer will actually see after restoreProtectedPixels.
+    // Anti-aliased/soft masks blend the source and model proportionally; an
+    // alpha of 1 is almost entirely editable, not equivalent to alpha 255.
+    const visible = (channel: number): number =>
+      Math.round(before[i + channel] * protection + after[i + channel] * (1 - protection));
+    const dr = Math.abs(before[i] - visible(0));
+    const dg = Math.abs(before[i + 1] - visible(1));
+    const db = Math.abs(before[i + 2] - visible(2));
     const delta = Math.max(dr, dg, db);
 
     deltaSum += (dr + dg + db) / 3;
