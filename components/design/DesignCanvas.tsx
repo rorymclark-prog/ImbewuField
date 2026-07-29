@@ -161,14 +161,12 @@ export interface DesignCanvasProps {
   } | null;
   onConfirmTidy?: () => void;
   onCancelTidy?: () => void;
-  // Snap to neighbour (lib/snap-edges.ts) PREVIEW — set by the parent (app/design/page.tsx) once
-  // the farmer taps the palette's Snap button on a single selected zone. Same shape as tidyPreview
-  // directly above (distinct ghost overlay ON TOP of the shape's normal, unchanged rendering; this
-  // canvas never rewrites state.zones itself — committing happens only via onConfirmSnap, through
-  // the parent's own onChange/undo path, exactly like every other edit). null = no preview showing.
+  // Batch Snap PREVIEW — one candidate ring per safe member of the selected ring group. Vetoed
+  // members remain in their normal, unchanged rendering and are named in `summary`; this canvas
+  // never rewrites state.zones itself. null = no preview showing.
   snapPreview?: {
-    snappedPoints: Array<[number, number]>; // lib/snap-edges.ts SnapEdgesResult.points
-    summary: string; // plain-language copy — see lib/snap-edges.ts's snapToNeighboursSummary
+    rings: Array<{ id: string; points: Array<[number, number]> }>;
+    summary: string; // plain-language copy — see lib/bulk-snap-edges.ts
     canConfirm: boolean; // false when snapping would change nothing — Confirm is hidden
   } | null;
   onConfirmSnap?: () => void;
@@ -3142,31 +3140,31 @@ export default function DesignCanvas({
           </g>
         )}
 
-        {/* Snap-to-neighbour preview (lib/snap-edges.ts) — same idiom as the Tidy outline preview
-            directly above (the shape's NORMAL rendering is untouched; this draws the CANDIDATE
-            snapped ring as a distinct ghost on top of it), just always a closed polygon (Snap only
-            ever targets a ZONE, never a line — see onSnapSelected in app/design/page.tsx). Only
-            drawn when canConfirm (a "nothing in tolerance"/rejected preview has snappedPoints
-            identical to the original). Drawn last so it is never hidden behind a real shape. */}
+        {/* Batch Snap preview — normal rings stay untouched; every safe candidate is drawn as a
+            distinct ghost. Vetoed rings have no ghost and are named in the preview summary. */}
         {snapPreview && snapPreview.canConfirm && (
           <g pointerEvents="none">
-            <polygon
-              points={ringToPx(snapPreview.snappedPoints, imgW, imgH)}
-              fill="none"
-              stroke={SNAP_PREVIEW}
-              strokeWidth={worldPx(2.5)}
-              strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
-            />
-            {snapPreview.snappedPoints.map(([x, y], i) => (
-              <circle
-                key={i}
-                cx={x * imgW}
-                cy={y * imgH}
-                r={worldPx(3.5)}
-                fill={SNAP_PREVIEW}
-                stroke="#0B120B"
-                strokeWidth={worldPx(1)}
-              />
+            {snapPreview.rings.map((ring) => (
+              <g key={ring.id}>
+                <polygon
+                  points={ringToPx(ring.points, imgW, imgH)}
+                  fill="none"
+                  stroke={SNAP_PREVIEW}
+                  strokeWidth={worldPx(2.5)}
+                  strokeDasharray={`${worldPx(3)} ${worldPx(3)}`}
+                />
+                {ring.points.map(([x, y], i) => (
+                  <circle
+                    key={i}
+                    cx={x * imgW}
+                    cy={y * imgH}
+                    r={worldPx(3.5)}
+                    fill={SNAP_PREVIEW}
+                    stroke="#0B120B"
+                    strokeWidth={worldPx(1)}
+                  />
+                ))}
+              </g>
             ))}
           </g>
         )}

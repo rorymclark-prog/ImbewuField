@@ -24,6 +24,11 @@ import type { CanvasFrame, DesignCanvasState, PlacedItem } from '@/lib/design-ca
 import { distM, pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import {
+  WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
+import { computeTankSizing } from '@/lib/tank-sizing';
 
 // ── Public contract ───────────────────────────────────────────────────────────
 
@@ -48,6 +53,8 @@ export interface WaterSystem {
   runs: WaterRun[];
   nodes: WaterNode[];
   notes: string[];
+  /** The subset printed in the Water sheet footer; kept separate from routing/site notes. */
+  storageNotes: string[];
 }
 
 /** `proposed: false` means the FARMER put it there; `proposed: true` means WE inferred it. The
@@ -104,7 +111,6 @@ const CIRCLE_LATERAL_FRAC = 0.9; // keep round-bed laterals off the tangent poin
 const ELBOW_CLEAR_M = 1.2; // push a detour this far off the wall it is going around
 const BASIN_TRY_M = [6, 4, 2.5]; // infiltration basin: preferred stand-off, then fallbacks
 const CROSS_SAMPLES = 32; // interior samples per segment for the house-crossing test
-const ROOF_RUNOFF_COEFF = 0.8; // standard for corrugated/tile roof after losses
 
 // ── Exported pure helpers ─────────────────────────────────────────────────────
 // Small and exported rather than inlined: every one of these is used from several rules below, and
@@ -163,9 +169,7 @@ export function ringAreaM2(ring: Pt[], frame: FrameMetrics): number {
  * for losses without changing units. Invalid or absent measurements deliberately produce zero,
  * never NaN/Infinity that could leak into a farmer-facing sheet. */
 export function annualRoofHarvestLitres(roofM2: number, rainfallMm: number): number {
-  if (!Number.isFinite(roofM2) || !Number.isFinite(rainfallMm) || roofM2 <= 0 || rainfallMm <= 0) return 0;
-  const litres = roofM2 * rainfallMm * ROOF_RUNOFF_COEFF;
-  return Number.isFinite(litres) && litres > 0 ? litres : 0;
+  return roofHarvestLitres(roofM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
 }
 
 /** Capacity stated by the catalog label, in litres. A capacity-less name is unknown rather than
@@ -472,12 +476,17 @@ export function deriveWaterSystem(
     driveway: Array<[number, number]>;
     drivewayClosed?: boolean;
   },
-  site?: { rainfallMm?: number } | null,
+  site?: { rainfallMm?: number; monthlyRainfallMm?: number[] } | null,
 ): WaterSystem {
   const runs: WaterRun[] = [];
   const nodes: WaterNode[] = [];
   const notes: string[] = [];
-  const empty: WaterSystem = { runs: [], nodes: [], notes: [] };
+  const storageNotes: string[] = [];
+  const empty: WaterSystem = { runs: [], nodes: [], notes: [], storageNotes: [] };
+  const addStorageNote = (note: string): void => {
+    storageNotes.push(note);
+    notes.push(note);
+  };
 
   const raw = state?.frame as CanvasFrame | undefined;
   if (!raw) return empty;
@@ -738,51 +747,76 @@ export function deriveWaterSystem(
   }
 
   // ── Rule 8: NOTES ──
-  const rainfallMm = site?.rainfallMm;
+  const monthlyRainfallMm = Array.isArray(site?.monthlyRainfallMm)
+    && site.monthlyRainfallMm.length === 12
+    && site.monthlyRainfallMm.some((mm) => Number.isFinite(mm) && mm > 0)
+    ? site.monthlyRainfallMm
+    : null;
+  const rainfallMm = typeof site?.rainfallMm === 'number' && Number.isFinite(site.rainfallMm) && site.rainfallMm > 0
+    ? site.rainfallMm
+    : monthlyRainfallMm?.reduce((sum, mm) => sum + (Number.isFinite(mm) && mm > 0 ? mm : 0), 0);
   if (typeof rainfallMm === 'number' && Number.isFinite(rainfallMm) && rainfallMm > 0) {
     const mm = Math.round(rainfallMm);
     const roofM2 = ringAreaM2(house, frame);
     if (roofM2 >= 1) {
-      // 1 mm on 1 m² = 1 L; ROOF_RUNOFF_COEFF covers splash, wetting and first-flush losses.
+      // 1 mm on 1 m² = 1 L; the shared coefficient covers collection losses.
       const annualHarvestL = annualRoofHarvestLitres(roofM2, mm);
-      notes.push(
+      addStorageNote(
         `~${mm} mm/yr on the ~${Math.round(roofM2)} m² traced roof ≈ ${formatLitres(annualHarvestL)}/yr — size tanks and first-flush against that catchment.`,
       );
 
+      const dailyUseL = state.dailyWaterUseL;
+      const hasDailyUse = typeof dailyUseL === 'number' && Number.isFinite(dailyUseL) && dailyUseL > 0;
+      const sizing = monthlyRainfallMm && hasDailyUse
+        ? computeTankSizing({ monthlyRainfallMm, roofAreaM2: roofM2, dailyUseL })
+        : null;
+
+      if (!monthlyRainfallMm) {
+        addStorageNote('Seasonal storage sizing needs all 12 monthly rainfall totals; this sheet only has the annual figure.');
+      } else if (!hasDailyUse) {
+        addStorageNote('Sizing needs your daily household use — set it in the Tank Calculator.');
+      } else if (sizing?.ok) {
+        // The exact same monthly balance and summary the Tank Calculator shows — one source of
+        // truth for wet-season banking, dry-run shortfall and the water-negative warning.
+        addStorageNote(sizing.summary);
+      }
+
       if (tanks.length === 0) {
-        notes.push(`No rainwater storage is placed, so none of the estimated ${formatLitres(annualHarvestL)}/yr can be stored.`);
+        addStorageNote(`No rainwater storage is placed, so none of the estimated ${formatLitres(annualHarvestL)}/yr can be stored.`);
       } else {
         const capacities = tanks.map((tank) => statedTankCapacityLitres(tank.def));
         const unknownCount = capacities.filter((capacity) => capacity == null).length;
         const statedCapacityL = capacities.reduce<number>((sum, capacity) => sum + (capacity ?? 0), 0);
         if (unknownCount > 0) {
-          notes.push(
-            `${unknownCount} placed storage ${unknownCount === 1 ? 'item has' : 'items have'} no stated capacity, so total storage cannot be checked against the estimated annual harvest.`,
+          addStorageNote(
+            `${unknownCount} placed storage ${unknownCount === 1 ? 'item has' : 'items have'} no stated capacity, so total storage cannot be checked against the monthly balance.`,
+          );
+        } else if (sizing?.ok && sizing.waterNegative) {
+          addStorageNote(
+            `Placed storage totals ${formatLitres(statedCapacityL)}. The monthly balance is water-negative, so more tank capacity alone cannot close the annual catchment gap.`,
+          );
+        } else if (sizing?.ok) {
+          const recommended = sizing.recommendedStorageL;
+          addStorageNote(
+            statedCapacityL >= recommended
+              ? `Placed storage totals ${formatLitres(statedCapacityL)} and meets the monthly-balance recommendation of ${formatLitres(recommended)}.`
+              : `Placed storage totals ${formatLitres(statedCapacityL)}, which is ${formatLitres(recommended - statedCapacityL)} below the monthly-balance recommendation of ${formatLitres(recommended)}.`,
           );
         } else {
-          // DO NOT turn this into "your storage is too small". Annual harvest is not a sizing
-          // target and never was: a tank is drawn down and refilled all year, so a year's rain is
-          // always many times any realistic tank. Measured on this catalog — 100 m² of roof at
-          // 800 mm/yr harvests 64 kL, so it would take more than ten 10 000 L JoJos before a
-          // capacity-vs-harvest comparison went quiet. A note that fires on every design is not a
-          // finding, and one that reads as a shortfall pushes a subsistence farmer toward tanks
-          // they do not need.
-          //
-          // What IS always true, and worth saying once, is the overflow: the roof will deliver far
-          // more over a year than the tanks hold, so the surplus needs somewhere safe to go.
-          // Sizing storage properly is a dry-season-demand question this app does not yet have the
-          // inputs to answer, and inventing a threshold here would be worse than saying nothing.
-          notes.push(
-            `Placed storage totals ${formatLitres(statedCapacityL)}; the roof yields about ${formatLitres(annualHarvestL)} over a year, so tanks will fill and overflow repeatedly — route the overflow to a swale, basin or soakaway rather than against a wall or path.`,
+          addStorageNote(
+            `Placed storage totals ${formatLitres(statedCapacityL)}, but adequacy cannot be judged until the missing sizing input above is supplied.`,
           );
         }
+        addStorageNote('Always route the overflow to a swale, basin or soakaway rather than against a wall or path.');
       }
     } else {
-      notes.push(`~${mm} mm/yr average rainfall — size tanks off the measured roof catchment.`);
+      addStorageNote(`~${mm} mm/yr average rainfall — size tanks off the measured roof catchment.`);
     }
+  } else {
+    addStorageNote('Seasonal storage sizing needs the site rainfall record.');
   }
   if (!lines.some((l) => l.kind === 'swale')) notes.push('No swale proposed.');
   notes.push('Confirm pipe sizes, greywater source and levels on site.');
 
-  return { runs, nodes, notes };
+  return { runs, nodes, notes, storageNotes };
 }

@@ -23,8 +23,6 @@ const OCHRE = '#C07A1E';
 const BLUE = '#3E8FBF'; // STEP_ACCENT.water
 
 const DEFAULT_ROOF_M2 = 80;
-const DEFAULT_DAILY_L = 200;
-
 /** Read the same cached LocationData the /design page writes, using the ?lat/?lon URL params. */
 function resolveCachedRainfall(): number[] | null {
   if (typeof window === 'undefined') return null;
@@ -49,19 +47,29 @@ function resolveCachedRainfall(): number[] | null {
 export interface TankCalculatorProps {
   /** Optional override — 12 monthly rainfall totals (mm, Jan..Dec). When absent, self-resolves from cache. */
   monthlyRainfallMm?: number[];
+  /** Saved farmer-entered demand. Undefined deliberately renders blank; no household default is invented. */
+  dailyUseL?: number;
+  onDailyUseLChange?: (dailyUseL: number | undefined) => void;
 }
 
-export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProps) {
+export default function TankCalculator({
+  monthlyRainfallMm,
+  dailyUseL,
+  onDailyUseLChange,
+}: TankCalculatorProps) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(true);
   const [roofArea, setRoofArea] = useState(DEFAULT_ROOF_M2);
-  const [dailyUse, setDailyUse] = useState(DEFAULT_DAILY_L);
+  const [dailyUse, setDailyUse] = useState(dailyUseL ?? 0);
 
   // Prefer the prop; otherwise pull the site's cached rainfall on mount (client-only).
   const [cachedRain, setCachedRain] = useState<number[] | null>(null);
   useEffect(() => {
     if (!monthlyRainfallMm) setCachedRain(resolveCachedRainfall());
   }, [monthlyRainfallMm]);
+  useEffect(() => {
+    setDailyUse(dailyUseL ?? 0);
+  }, [dailyUseL]);
 
   const rainfall = monthlyRainfallMm ?? cachedRain;
   const hasRain = Array.isArray(rainfall) && rainfall.length === 12;
@@ -121,8 +129,13 @@ export default function TankCalculator({ monthlyRainfallMm }: TankCalculatorProp
                       type="number"
                       inputMode="numeric"
                       min={1}
-                      value={Number.isFinite(dailyUse) ? dailyUse : ''}
-                      onChange={(e) => setDailyUse(Math.max(0, Number(e.target.value)))}
+                      value={Number.isFinite(dailyUse) && dailyUse > 0 ? dailyUse : ''}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        const next = Number.isFinite(value) && value > 0 ? value : 0;
+                        setDailyUse(next);
+                        onDailyUseLChange?.(next > 0 ? next : undefined);
+                      }}
                       style={inputStyle}
                     />
                   </label>
