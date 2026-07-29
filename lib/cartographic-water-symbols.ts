@@ -3,6 +3,8 @@
  * The caller must translate the canvas origin to the item's centre.
  */
 
+import { normaliseLookupKey } from '@/lib/key-normalisation';
+
 export type CartographicWaterSymbolId =
   | 'jojo-tank'
   | 'rain-barrel'
@@ -34,6 +36,15 @@ export interface CartographicWaterSymbolOptions {
   outlineWidth: number;
   seed?: number;
 }
+
+export const CARTOGRAPHIC_WATER_SYMBOL_IDS = [
+  'jojo-tank', 'rain-barrel', 'small-pond', 'dam', 'greywater-basin', 'tree-basin',
+  'infiltration-basin', 'banana-circle', 'tap', 'borehole', 'trough', 'first-flush',
+  'pump', 'filter', 'greywater-outlet', 'diverter', 'vetiver-bank', 'half-moon',
+  'berm', 'terrace', 'unknown-water',
+] as const satisfies readonly CartographicWaterSymbolId[];
+
+const CARTOGRAPHIC_WATER_SYMBOL_ID_SET = new Set<string>(CARTOGRAPHIC_WATER_SYMBOL_IDS);
 
 const TAU = Math.PI * 2;
 
@@ -476,7 +487,7 @@ function smallHardware(ctx: CanvasRenderingContext2D, w: number, h: number, stro
 }
 
 export function canonicalCartographicWaterId(raw: string): string {
-  const key = raw.trim().toLowerCase().replace(/[_\s-]+/g, '-');
+  const key = normaliseLookupKey(raw, '-');
   if (/^jojo-\d+$/.test(key)) return 'jojo-tank';
   if (key === 'pond-small') return 'small-pond';
   if (key === 'tap-point') return 'tap';
@@ -490,12 +501,7 @@ export function canonicalCartographicWaterId(raw: string): string {
 }
 
 export function supportsCartographicWaterSymbol(id: string): boolean {
-  return new Set([
-    'jojo-tank', 'rain-barrel', 'small-pond', 'dam', 'greywater-basin', 'tree-basin',
-    'infiltration-basin', 'banana-circle', 'tap', 'borehole', 'trough', 'first-flush',
-    'pump', 'filter', 'greywater-outlet', 'diverter', 'vetiver-bank', 'half-moon',
-    'berm', 'terrace', 'unknown-water',
-  ]).has(canonicalCartographicWaterId(id));
+  return CARTOGRAPHIC_WATER_SYMBOL_ID_SET.has(canonicalCartographicWaterId(id));
 }
 
 /** Draw one handled symbol; returns false for unknown IDs. */

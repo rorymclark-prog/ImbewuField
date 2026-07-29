@@ -3,15 +3,27 @@ import test from 'node:test';
 
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import {
+  CARTOGRAPHIC_WATER_SYMBOL_IDS,
   canonicalCartographicWaterId,
   drawCartographicWaterSymbol,
   supportsCartographicWaterSymbol,
 } from '@/lib/cartographic-water-symbols';
 import {
+  CARTOGRAPHIC_STRUCTURE_LOOKUP_KEYS,
+  canonicalCartographicStructureId,
   cartographicStructureKind,
   drawCartographicStructureSymbol,
   supportsCartographicStructureSymbol,
 } from '@/lib/cartographic-structure-symbols';
+
+test('every symbol lookup key is already canonical under its table-specific separator', () => {
+  for (const key of CARTOGRAPHIC_WATER_SYMBOL_IDS) {
+    assert.equal(canonicalCartographicWaterId(key), key, `water lookup key ${key} does not round-trip`);
+  }
+  for (const key of CARTOGRAPHIC_STRUCTURE_LOOKUP_KEYS) {
+    assert.equal(canonicalCartographicStructureId(key), key, `structure lookup key ${key} does not round-trip`);
+  }
+});
 
 test('real catalog water IDs resolve to illustrated symbols', () => {
   for (const id of [

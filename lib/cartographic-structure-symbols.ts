@@ -1,4 +1,5 @@
 import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
+import { normaliseLookupKey } from '@/lib/key-normalisation';
 
 export type CartographicSymbolElement = DesignElementDef | string | ElementCategory;
 
@@ -63,12 +64,20 @@ const CATEGORY_KIND: Partial<Record<ElementCategory, SymbolKind>> = {
   animal: 'generic-animal',
 };
 
+export const CARTOGRAPHIC_STRUCTURE_LOOKUP_KEYS: readonly string[] =
+  Object.freeze(Object.keys(ID_KIND));
+
+export function canonicalCartographicStructureId(raw: unknown): string {
+  return normaliseLookupKey(raw, '_');
+}
+
 function kindFor(element: CartographicSymbolElement): SymbolKind | undefined {
   if (typeof element === 'object') {
-    const id = element.id.trim().toLowerCase().replace(/[\s_-]+/g, '_');
-    return ID_KIND[id] ?? CATEGORY_KIND[element.category];
+    const id = canonicalCartographicStructureId(element.id);
+    const category = canonicalCartographicStructureId(element.category) as ElementCategory;
+    return ID_KIND[id] ?? CATEGORY_KIND[category];
   }
-  const key = element.trim().toLowerCase().replace(/[\s_-]+/g, '_');
+  const key = canonicalCartographicStructureId(element);
   return ID_KIND[key] ?? CATEGORY_KIND[key as ElementCategory];
 }
 
