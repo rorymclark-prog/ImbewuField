@@ -20,6 +20,7 @@ import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
+import { isValidEarthLatitude } from '@/lib/solar';
 import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
 import { WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -1645,7 +1646,7 @@ export default function DesignCanvas({
   // Null until we have a latitude (hemisphere is undecidable without it); the overlay + its note
   // chip both gate on this. Cheap, but memoised so it doesn't re-derive on every pan/zoom render.
   const sectorModel = useMemo(
-    () => (lat != null && Number.isFinite(lat) ? deriveSectorModel(sectorSite ?? null, lat) : null),
+    () => (lat != null && isValidEarthLatitude(lat) ? deriveSectorModel(sectorSite ?? null, lat) : null),
     [sectorSite, lat],
   );
 

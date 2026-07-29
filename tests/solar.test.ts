@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { deriveSolar, OBLIQUITY_DEG } from '../lib/solar.ts';
+import { deriveSolar, isValidEarthLatitude, OBLIQUITY_DEG } from '../lib/solar.ts';
 
 const TOL = 0.05; // deg, per SECTOR-MODEL-SPEC-2026-07-21.md §1's unit-test table
 
@@ -97,4 +97,38 @@ test('deriveSolar(-70) — inside the polar circle: unusable, azimuths null, alt
   assert.equal(s.winter.sunsetAzDeg, null);
   assert.equal(s.winter.riseLabel16, null);
   close(s.winter.noonAltitudeDeg, -3.44);
+});
+
+test('solar geometry accepts exactly finite Earth latitudes', () => {
+  assert.equal(isValidEarthLatitude(-90), true);
+  assert.equal(isValidEarthLatitude(90), true);
+
+  for (const invalid of [
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+    -91,
+    91,
+  ]) {
+    assert.equal(isValidEarthLatitude(invalid), false);
+    assert.throws(() => deriveSolar(invalid), /finite Earth latitude/i);
+  }
+});
+
+test('every real latitude yields only finite or explicitly absent solar geometry', () => {
+  for (let lat = -90; lat <= 90; lat += 0.25) {
+    const model = deriveSolar(lat);
+    for (const path of [model.summer, model.winter, model.equinox]) {
+      assert.ok(Number.isFinite(path.declDeg));
+      assert.ok(Number.isFinite(path.noonAltitudeDeg));
+      assert.ok(path.shadowRatio === null || (Number.isFinite(path.shadowRatio) && path.shadowRatio >= 0));
+      for (const bearing of [path.sunriseAzDeg, path.sunsetAzDeg, path.sweepDeg]) {
+        assert.ok(bearing === null || (Number.isFinite(bearing) && bearing >= 0 && bearing <= 360));
+      }
+      assert.equal(path.sunriseAzDeg === null, path.sunsetAzDeg === null);
+      if (path.sunriseAzDeg !== null && path.sunsetAzDeg !== null) {
+        close(path.sunriseAzDeg + path.sunsetAzDeg, 360);
+      }
+    }
+  }
 });
