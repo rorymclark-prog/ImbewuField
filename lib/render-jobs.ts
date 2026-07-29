@@ -15,13 +15,17 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { hasConflictingRenderAuthority } from '@/lib/render-policy';
+import {
+  MAX_RENDER_SHEETS_PER_JOB,
+  renderSheetContractError,
+} from '@/lib/render-job-contract';
 
 export type RenderSheetStatus = 'queued' | 'running' | 'done' | 'error';
 export type RenderJobStatus = 'queued' | 'running' | 'complete' | 'failed' | 'error';
 export type RenderResultKind = 'hybrid' | 'ai-polished' | 'legacy-ai';
 
 /** Max sheets per job and max bytes per composite — MUST match firestore.rules / storage.rules. */
-export const MAX_SHEETS_PER_JOB = 5;
+export const MAX_SHEETS_PER_JOB = MAX_RENDER_SHEETS_PER_JOB;
 export const MAX_COMPOSITE_BYTES = 12 * 1024 * 1024;
 /** How long a job doc + its Storage artifacts live (also enforced by GCS lifecycle + Firestore TTL). */
 const JOB_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -83,10 +87,37 @@ export interface RenderJobDoc {
 export class RenderJobError extends Error {}
 
 /** Approx decoded byte size of a base64 data URL without allocating the buffer. */
-function dataUrlBytes(dataUrl: string): number {
+export function dataUrlBytes(dataUrl: string): number {
   const comma = dataUrl.indexOf(',');
   const b64 = comma >= 0 ? dataUrl.slice(comma + 1) : dataUrl;
-  return Math.floor(b64.length * 0.75);
+  const padding = b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0;
+  return Math.max(0, Math.floor(b64.length * 0.75) - padding);
+}
+
+function validImageDataUrl(value: string): boolean {
+  return /^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);
+}
+
+/** Pure fail-fast validation; no upload or billable job exists until this passes. */
+export function renderJobRequestError(sheets: readonly RenderSheetSpec[]): string | null {
+  const contractError = renderSheetContractError(sheets);
+  if (contractError) return contractError;
+  for (const sheet of sheets) {
+    if (!sheet.label.trim()) return `Sheet “${sheet.key}” has no label.`;
+    if (hasConflictingRenderAuthority(sheet)) {
+      return `Sheet “${sheet.label}” requested two incompatible render modes.`;
+    }
+    if (!validImageDataUrl(sheet.compositeDataUrl)) {
+      return `Sheet “${sheet.label}” does not contain a valid image.`;
+    }
+    if (dataUrlBytes(sheet.compositeDataUrl) > MAX_COMPOSITE_BYTES) {
+      return `Sheet “${sheet.label}” is too large to upload (max 12 MB).`;
+    }
+    if (sheet.protectMaskDataUrl && !validImageDataUrl(sheet.protectMaskDataUrl)) {
+      return `Sheet “${sheet.label}” has an invalid protection mask.`;
+    }
+  }
+  return null;
 }
 
 /** Uploads each composite to Storage and writes the job doc; the Cloud Function takes it from there.
@@ -127,22 +158,14 @@ export async function enqueueRenderJob(opts: {
   if (isSampleMode()) {
     throw new RenderJobError('AI sheets are switched off in the sample farm. Exit the sample and open your own farm to render AI sheets.');
   }
+  const requestError = renderJobRequestError(opts.sheets);
+  if (requestError) throw new RenderJobError(requestError);
+  if (!opts.siteId.trim()) throw new RenderJobError('Choose a farm before rendering AI sheets.');
+  if (opts.engine !== 'openai') throw new RenderJobError('Unknown AI render engine.');
+  if (!opts.style.trim()) throw new RenderJobError('Choose a render style.');
   const fb = getFirebase();
   const uid = fb?.auth.currentUser?.uid;
   if (!fb || !uid) throw new RenderJobError('You need to be signed in to generate AI sheets.');
-  if (opts.sheets.length === 0) throw new RenderJobError('Nothing to render.');
-  // Fail fast against the SAME limits the security rules enforce, before uploading anything.
-  if (opts.sheets.length > MAX_SHEETS_PER_JOB) {
-    throw new RenderJobError(`Too many sheets in one job (max ${MAX_SHEETS_PER_JOB}).`);
-  }
-  for (const s of opts.sheets) {
-    if (hasConflictingRenderAuthority(s)) {
-      throw new RenderJobError(`Sheet “${s.label}” requested two incompatible render modes.`);
-    }
-    if (dataUrlBytes(s.compositeDataUrl) > MAX_COMPOSITE_BYTES) {
-      throw new RenderJobError(`Sheet “${s.label}” is too large to upload (max 12 MB).`);
-    }
-  }
 
   const jobId = `${uid}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
