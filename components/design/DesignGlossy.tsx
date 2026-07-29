@@ -73,6 +73,7 @@ import {
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { basemapAttribution } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
@@ -7565,9 +7566,13 @@ async function composeStyleSheet(
   };
   const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
+  // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
+  // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
+  // reserves no extra space and changes nothing until NEXT_PUBLIC_ARCGIS_API_KEY is actually set.
+  const attributionLine = exactGeometry ? basemapAttribution() : '';
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH + footerHeadingH + Math.round(legendW * 0.035)
-    : Math.round(legendW * 0.16);
+    : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
@@ -7650,6 +7655,12 @@ async function composeStyleSheet(
     ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04));
+    // Esri's imagery must be credited wherever it is shown. Same italic footer style, same column,
+    // continuing the three lines above at their spacing — and only drawn at all when the live
+    // provider is actually Esri (attributionLine is '' on Mapbox, so nothing else on the sheet moves).
+    if (attributionLine) {
+      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+    }
   } else {
     ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));

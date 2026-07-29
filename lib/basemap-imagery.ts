@@ -152,8 +152,11 @@ export function planEsriTiles(
   };
 }
 
-export function esriTileUrl(z: number, x: number, y: number): string {
-  return `${ESRI_TILE_URL}/${z}/${y}/${x}`;
+/** ArcGIS Location Platform requires the token on every tile request — an unauthenticated request
+ *  to this host 403s outright, so `token` is a required parameter rather than an optional one a
+ *  caller could forget. */
+export function esriTileUrl(z: number, x: number, y: number, token: string): string {
+  return `${ESRI_TILE_URL}/${z}/${y}/${x}?token=${token}`;
 }
 
 /** Number of tile requests a plan will make — callers log this rather than fetch blind. */
@@ -179,6 +182,14 @@ export async function fetchEsriBasemapDataUrl(
   imgH: number,
   pixelRatio = 2,
 ): Promise<string> {
+  // Refuse before touching the network, not after. Firing tile requests with no token either 403s
+  // or — worse — is accepted by some other tier, which would put the app back in the noncommercial
+  // licence breach ARCGIS_API_KEY exists to prevent (see the comment on that constant above).
+  if (!ARCGIS_API_KEY) {
+    throw new Error(
+      'No ArcGIS API key configured (NEXT_PUBLIC_ARCGIS_API_KEY) — refusing to request Esri imagery without one.',
+    );
+  }
   const plan = planEsriTiles(centerLng, centerLat, zoom, imgW, imgH, pixelRatio);
   const canvas = document.createElement('canvas');
   canvas.width = plan.outW;
@@ -199,7 +210,7 @@ export async function fetchEsriBasemapDataUrl(
   for (let ty = plan.ty0; ty <= plan.ty1; ty++) {
     for (let tx = plan.tx0; tx <= plan.tx1; tx++) {
       jobs.push(
-        load(esriTileUrl(plan.tileZoom, tx, ty)).then((img) => {
+        load(esriTileUrl(plan.tileZoom, tx, ty, ARCGIS_API_KEY)).then((img) => {
           if (!img) return;
           const dx = (tx * TILE_PX - plan.x0) * plan.scale;
           const dy = (ty * TILE_PX - plan.y0) * plan.scale;

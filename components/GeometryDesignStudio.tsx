@@ -50,7 +50,7 @@ import {
 } from '@/lib/design-canvas';
 import {
   ESRI_PROVIDER,
-  SATELLITE_PROVIDER,
+  satelliteProvider,
   fetchEsriBasemapDataUrl,
 } from '@/lib/basemap-imagery';
 import { ELEMENTS_BY_ID, ZONE_COLORS, ZONE_KEY } from '@/lib/design-elements';
@@ -2703,7 +2703,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
   // `satFit`, so the two can never disagree about which frame was requested.
   const satKey = !satFit.useSatellite
     ? ''
-    : SATELLITE_PROVIDER === ESRI_PROVIDER
+    : satelliteProvider() === ESRI_PROVIDER
       ? `esri:${satFit.fit.centerLng},${satFit.fit.centerLat},${satFit.fit.zoom},${satFit.imgW},${satFit.imgH}`
       : satFit.url;
   useEffect(() => {
