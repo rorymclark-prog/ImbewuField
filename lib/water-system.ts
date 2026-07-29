@@ -24,6 +24,10 @@ import type { CanvasFrame, DesignCanvasState, PlacedItem } from '@/lib/design-ca
 import { distM, pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import {
+  WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
 
 // ── Public contract ───────────────────────────────────────────────────────────
 
@@ -104,7 +108,6 @@ const CIRCLE_LATERAL_FRAC = 0.9; // keep round-bed laterals off the tangent poin
 const ELBOW_CLEAR_M = 1.2; // push a detour this far off the wall it is going around
 const BASIN_TRY_M = [6, 4, 2.5]; // infiltration basin: preferred stand-off, then fallbacks
 const CROSS_SAMPLES = 32; // interior samples per segment for the house-crossing test
-const ROOF_RUNOFF_COEFF = 0.8; // standard for corrugated/tile roof after losses
 
 // ── Exported pure helpers ─────────────────────────────────────────────────────
 // Small and exported rather than inlined: every one of these is used from several rules below, and
@@ -163,9 +166,7 @@ export function ringAreaM2(ring: Pt[], frame: FrameMetrics): number {
  * for losses without changing units. Invalid or absent measurements deliberately produce zero,
  * never NaN/Infinity that could leak into a farmer-facing sheet. */
 export function annualRoofHarvestLitres(roofM2: number, rainfallMm: number): number {
-  if (!Number.isFinite(roofM2) || !Number.isFinite(rainfallMm) || roofM2 <= 0 || rainfallMm <= 0) return 0;
-  const litres = roofM2 * rainfallMm * ROOF_RUNOFF_COEFF;
-  return Number.isFinite(litres) && litres > 0 ? litres : 0;
+  return roofHarvestLitres(roofM2, rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
 }
 
 /** Capacity stated by the catalog label, in litres. A capacity-less name is unknown rather than

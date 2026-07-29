@@ -1,8 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
+import {
+  ROOF_RUNOFF_COEFFICIENTS,
+  TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT,
+  WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+} from '../lib/roof-runoff.ts';
+import { computeTankSizing } from '../lib/tank-sizing.ts';
 import {
   annualRoofHarvestLitres,
   deriveWaterSystem,
@@ -55,6 +62,35 @@ test('roof harvest obeys the mm × m² = litre dimensional rule without pinning 
   assert.equal(annualRoofHarvestLitres(100, 1600), baseline * 2);
   assert.equal(annualRoofHarvestLitres(0, 800), 0);
   assert.equal(annualRoofHarvestLitres(100, 0), 0);
+});
+
+test('Water sheet and Tank Calculator coefficients derive from one reviewed source', () => {
+  const waterSource = readFileSync(new URL('../lib/water-system.ts', import.meta.url), 'utf8');
+  const tankSource = readFileSync(new URL('../lib/tank-sizing.ts', import.meta.url), 'utf8');
+
+  assert.match(waterSource, /from '@\/lib\/roof-runoff'/);
+  assert.match(tankSource, /from '@\/lib\/roof-runoff'/);
+  assert.doesNotMatch(waterSource, /const\s+\w*RUNOFF\w*\s*=\s*0\.\d+/);
+  assert.doesNotMatch(tankSource, /const\s+\w*RUNOFF\w*\s*=\s*0\.\d+/);
+  assert.equal(WATER_SHEET_ROOF_RUNOFF_COEFFICIENT, ROOF_RUNOFF_COEFFICIENTS.waterSheet);
+  assert.equal(TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT, ROOF_RUNOFF_COEFFICIENTS.tankCalculator);
+});
+
+test('both centrally owned coefficients obey 1 mm on 1 m² ≤ 1 L', () => {
+  const waterUnit = annualRoofHarvestLitres(1, 1);
+  // Use a large exact multiple because TankSizingResult intentionally rounds farmer-facing litre
+  // totals to the nearest 100 L. Divide back to the 1 mm × 1 m² dimensional unit afterwards.
+  const tankYear = computeTankSizing({
+    monthlyRainfallMm: Array(12).fill(100),
+    roofAreaM2: 100,
+    dailyUseL: 1,
+  }).annualHarvestL;
+  const tankUnit = tankYear / (12 * 100 * 100);
+
+  assert.ok(waterUnit > 0 && waterUnit <= 1);
+  assert.ok(tankUnit > 0 && tankUnit <= 1);
+  assert.equal(waterUnit, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
+  assert.equal(tankUnit, TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT);
 });
 
 test('placed storage always gets the overflow advice, and is never judged against annual harvest', () => {

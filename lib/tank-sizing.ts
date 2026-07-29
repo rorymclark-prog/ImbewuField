@@ -6,16 +6,22 @@
 // number can and can't tell you):
 //
 //  • Catchment:  1 mm of rain on 1 m² of roof = exactly 1 litre. So gross litres = mm × m².
-//  • Runoff:     we keep 0.85 of that. The lost 15% is first-flush diversion, wind splash,
-//                gutter overshoot and evaporation off a hard roof (corrugated iron / tile sit
-//                around 0.8–0.9). A THATCH or soft roof harvests far less — treat 0.85 as an
-//                optimistic ceiling for a metal roof, not a promise.
+//  • Runoff:     uses the Tank Calculator's centrally recorded generic-roof assumption. It remains
+//                0.85 only to preserve today's farmer-facing answer pending approval of the
+//                recommended shared 0.80 value; see lib/roof-runoff.ts for the source and case.
+//                A THATCH or soft roof harvests far less — treat this as an optimistic ceiling for
+//                a hard roof, not a promise.
 //  • Rainfall:   these are NORMALS (a typical year, e.g. NASA POWER 1991–2020). A real drought
 //                year catches less, so size UP for resilience — the number is the median case.
 //  • Demand:     daily use is assumed flat year-round (no summer irrigation spike is modelled).
 //  • Overflow:   wet-season "catch" is the theoretical maximum. Once a tank is full, extra storm
 //                water overflows and is lost — so you rarely bank the full wet-season figure.
 //  • Calendar:   monthlyRainfallMm is Jan..Dec; month lengths are real (non-leap) day counts.
+
+import {
+  TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
 
 export interface TankSizingInput {
   /** 12 monthly rainfall totals in mm, indexed Jan(0)..Dec(11) — from LocationData.rainfall.monthly. */
@@ -49,7 +55,6 @@ export interface TankSizingResult {
   summary: string;
 }
 
-const RUNOFF_COEFFICIENT = 0.85;
 // Real (non-leap) month lengths, Jan..Dec — demand scales with days in the month.
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const JOJO_SIZES = [10000, 5000, 2500] as const;
@@ -149,7 +154,8 @@ export function computeTankSizing(input: TankSizingInput): TankSizingResult {
     return empty;
   }
 
-  const monthlyHarvestL = monthlyRainfallMm.map((mm) => (Number.isFinite(mm) && mm > 0 ? mm : 0) * roofAreaM2 * RUNOFF_COEFFICIENT);
+  const monthlyHarvestL = monthlyRainfallMm.map((mm) =>
+    roofHarvestLitres(roofAreaM2, mm, TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT));
   const monthlyUseL = DAYS_IN_MONTH.map((days) => days * dailyUseL);
 
   const annualHarvestL = monthlyHarvestL.reduce((a, b) => a + b, 0);
