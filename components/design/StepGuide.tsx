@@ -60,13 +60,24 @@ export interface StepGuideProps {
   ctx: SubStepCtx;
   mode: DesignMode;
   onArm: (arm: SubStepArm) => void;
+  monthlyRainfallMm?: number[];
+  onDailyWaterUseLChange: (dailyUseL: number | undefined) => void;
   onNextStep: () => void;
   // Simple Path handoff — link to the crop planner (shown on the Planting step once beds
   // exist), so a "just beds & trees" farmer can jump straight to planning what to grow.
   planCropsHref?: string;
 }
 
-export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCropsHref }: StepGuideProps) {
+export default function StepGuide({
+  step,
+  state,
+  ctx,
+  onArm,
+  monthlyRainfallMm,
+  onDailyWaterUseLChange,
+  onNextStep,
+  planCropsHref,
+}: StepGuideProps) {
   const { t, lang } = useLanguage();
   const subSteps = useMemo(() => subStepsForStep(step), [step]);
 
@@ -306,7 +317,13 @@ export default function StepGuide({ step, state, ctx, onArm, onNextStep, planCro
 
         {/* Rain-tank sizing — WATER step only. Sits below the checklist; reads the site's real
             rainfall to size JoJo storage from the roof area and daily use the farmer types in. */}
-        {step === 'water' && <TankCalculator />}
+        {step === 'water' && (
+          <TankCalculator
+            monthlyRainfallMm={monthlyRainfallMm}
+            dailyUseL={state.dailyWaterUseL}
+            onDailyUseLChange={onDailyWaterUseLChange}
+          />
+        )}
 
         {/* Sector energies — SECTOR step only. The plain-words reveal of the sun/wind/fire/water
             the app already drew on the canvas; "Looks right →" advances to Water. Nothing to draw. */}

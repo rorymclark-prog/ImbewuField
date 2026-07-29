@@ -57,6 +57,7 @@ import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimension
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { countedLegendText, legendRowGap } from '@/lib/sheet-legend-layout';
+import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -7847,8 +7848,25 @@ interface SavedGlossy {
 //        elements at a similar height stop merging into one line that appears to point at the
 //        wrong icon. Found by rendering the exact sheet 07 for the Ubhejane demo and looking at
 //        it: "JOJO TANK 2500L" read as pointing at the compost bay.
-const PLAN_VERSION = 'v68';
+//   v69 — 2026-07-29: the Water sheet footer reads the same twelve-month dry-season balance as the
+//        Tank Calculator. Daily use is saved only when the farmer enters it; without that input the
+//        sheet says what is missing instead of inventing household demand.
+const PLAN_VERSION = 'v69';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
+
+function waterReferenceFooterText(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: SectorSite | null,
+): string {
+  const storageNotes = deriveWaterSystem(state, refLayers, {
+    rainfallMm: site?.rainfallMm,
+    monthlyRainfallMm: site?.monthlyRainfallMm,
+  }).storageNotes;
+  return [...storageNotes, WATER_REFERENCE_NOTES].join(' ');
+}
+
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
     ? `imbewu_design_glossy_${PLAN_VERSION}_${siteId}`
@@ -8557,7 +8575,7 @@ export default function DesignGlossy({
         geometryLock && filter === 'water'
           ? {
               footerHeading: 'NOTES',
-              footerText: WATER_REFERENCE_NOTES,
+              footerText: waterReferenceFooterText(state, frame, refLayers, site),
             }
           : {},
       );
@@ -8891,7 +8909,7 @@ export default function DesignGlossy({
           geometryLock && f === 'water'
             ? {
                 footerHeading: 'NOTES',
-                footerText: WATER_REFERENCE_NOTES,
+                footerText: waterReferenceFooterText(state, frame, refLayers, site),
               }
             : {},
         );
@@ -9105,12 +9123,12 @@ export default function DesignGlossy({
         locked && f === 'water'
           ? {
               footerHeading: 'NOTES',
-              footerText: WATER_REFERENCE_NOTES,
+              footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
             }
           : {},
       );
     },
-    [state, frame, refLayers, placeName],
+    [state, frame, refLayers, site, placeName],
   );
 
   // "AI · ALL sheets" when the engine is gpt-image-2: enqueue a background job for the model sheets

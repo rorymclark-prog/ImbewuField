@@ -33,7 +33,7 @@ function item(defId: string, id = defId): PlacedItem {
   return { id, defId, x: 0.55, y: 0.45 };
 }
 
-function state(items: PlacedItem[] = []): DesignCanvasState {
+function state(items: PlacedItem[] = [], dailyWaterUseL?: number): DesignCanvasState {
   return {
     siteId: 'water-test',
     frame: FRAME,
@@ -42,14 +42,20 @@ function state(items: PlacedItem[] = []): DesignCanvasState {
     lines: [],
     step: 'water',
     updatedAt: '2026-07-28T00:00:00.000Z',
+    dailyWaterUseL,
   };
 }
 
-function derive(items: PlacedItem[], house: Ring, rainfallMm?: number) {
+function derive(
+  items: PlacedItem[],
+  house: Ring,
+  rainfall?: number | { rainfallMm?: number; monthlyRainfallMm?: number[] },
+  dailyWaterUseL?: number,
+) {
   return deriveWaterSystem(
-    state(items),
+    state(items, dailyWaterUseL),
     { boundary: BOUNDARY, house, driveway: [] },
-    { rainfallMm },
+    typeof rainfall === 'number' ? { rainfallMm: rainfall } : rainfall,
   );
 }
 
@@ -91,6 +97,68 @@ test('both centrally owned coefficients obey 1 mm on 1 m² ≤ 1 L', () => {
   assert.ok(tankUnit > 0 && tankUnit <= 1);
   assert.equal(waterUnit, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT);
   assert.equal(tankUnit, TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT);
+});
+
+test('without farmer-entered daily use, the sheet refuses to invent a household demand', () => {
+  const monthlyRainfallMm = [150, 150, 100, 60, 20, 10, 10, 20, 50, 80, 80, 70];
+  const system = derive(
+    [item('jojo_5000')],
+    ROOF_100_M2,
+    { rainfallMm: 800, monthlyRainfallMm },
+  );
+  const text = system.storageNotes.join(' ');
+
+  assert.match(text, /Sizing needs your daily household use — set it in the Tank Calculator/);
+  assert.doesNotMatch(text, /recommended storage|meets the monthly-balance recommendation|below the monthly-balance recommendation/);
+});
+
+test('the Water sheet prints the Tank Calculator monthly-balance result, not annual-harvest arithmetic', () => {
+  const monthlyRainfallMm = [150, 150, 100, 60, 20, 10, 10, 20, 50, 80, 80, 70];
+  const dailyUseL = 100;
+  const expected = computeTankSizing({
+    monthlyRainfallMm,
+    roofAreaM2: 100,
+    dailyUseL,
+  });
+  const system = derive(
+    [item('jojo_5000')],
+    ROOF_100_M2,
+    { rainfallMm: 800, monthlyRainfallMm },
+    dailyUseL,
+  );
+
+  assert.equal(expected.ok, true);
+  assert.ok(system.storageNotes.includes(expected.summary));
+  assert.match(system.storageNotes.join(' '), /monthly-balance recommendation/);
+});
+
+test('equal annual rain with different seasonality produces different storage advice', () => {
+  const seasonal = [150, 150, 100, 60, 20, 10, 10, 20, 50, 80, 80, 70];
+  const uniform = Array(12).fill(800 / 12);
+  const dailyUseL = 100;
+  const seasonalSystem = derive([], ROOF_100_M2, { rainfallMm: 800, monthlyRainfallMm: seasonal }, dailyUseL);
+  const uniformSystem = derive([], ROOF_100_M2, { rainfallMm: 800, monthlyRainfallMm: uniform }, dailyUseL);
+
+  assert.notDeepEqual(seasonalSystem.storageNotes, uniformSystem.storageNotes);
+  assert.ok(seasonalSystem.storageNotes.includes(computeTankSizing({
+    monthlyRainfallMm: seasonal,
+    roofAreaM2: 100,
+    dailyUseL,
+  }).summary));
+  assert.ok(uniformSystem.storageNotes.includes(computeTankSizing({
+    monthlyRainfallMm: uniform,
+    roofAreaM2: 100,
+    dailyUseL,
+  }).summary));
+});
+
+test('the exact Water sheet footer is wired to the derived storage notes', () => {
+  const glossySource = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+
+  assert.match(glossySource, /function waterReferenceFooterText\(/);
+  assert.match(glossySource, /deriveWaterSystem\(state, refLayers/);
+  assert.match(glossySource, /footerText: waterReferenceFooterText\(/);
+  assert.doesNotMatch(glossySource, /footerText:\s*WATER_REFERENCE_NOTES/);
 });
 
 test('placed storage always gets the overflow advice, and is never judged against annual harvest', () => {

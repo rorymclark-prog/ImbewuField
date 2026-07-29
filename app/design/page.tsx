@@ -724,6 +724,7 @@ function DesignStudioInner() {
     return {
       biome: locationData.biome?.name,
       rainfallMm: locationData.rainfall?.annual,
+      monthlyRainfallMm: locationData.rainfall?.monthly,
       rainfallPattern: locationData.rainfall?.pattern ?? locationData.biome?.rainfallPattern,
       elevation: locationData.elevation
         ? {
@@ -2133,6 +2134,14 @@ function DesignStudioInner() {
           ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
           mode={designMode}
           onArm={armSubStep}
+          monthlyRainfallMm={locationData?.rainfall?.monthly}
+          onDailyWaterUseLChange={(dailyWaterUseL) => {
+            handleChange((prev) => ({
+              ...prev,
+              dailyWaterUseL,
+              updatedAt: new Date().toISOString(),
+            }));
+          }}
           onNextStep={() => {
             const i = STEP_ORDER.indexOf(canvasState.step);
             if (i >= 0 && i < STEP_ORDER.length - 1) setStep(STEP_ORDER[i + 1]);

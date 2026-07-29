@@ -149,6 +149,10 @@ export interface DesignCanvasState {
   // degrade honestly (fall back to the regional table, and SAY it is regional) rather than
   // silently assuming a farmer input exists.
   localWind?: LocalWindObservation;
+  // Farmer-entered household demand used by the monthly tank-sizing balance. Optional because old
+  // designs have no value and guessing one would turn a Water-sheet recommendation into fiction.
+  // TankCalculator owns the input; the saved canvas carries it into exact sheet generation.
+  dailyWaterUseL?: number;
 }
 
 /**

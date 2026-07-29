@@ -34,6 +34,9 @@ export type { NamedWindSector, NamedWindId, RegionalFireSector } from '@/lib/reg
 export interface SectorSite {
   biome?: string;
   rainfallMm?: number;
+  // Jan..Dec totals from NASA POWER. The Water sheet needs the seasonal shape, not only the annual
+  // sum, to run the same dry-season storage balance as Tank Calculator.
+  monthlyRainfallMm?: number[];
   rainfallPattern?: 'winter' | 'summer' | 'year-round';
   elevation?: {
     slopeDeg: number;
