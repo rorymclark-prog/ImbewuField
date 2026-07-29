@@ -930,6 +930,65 @@ What the live verification used; reusable for any render-flow work:
 
 ---
 
+## 37. PRIORITY — one farmer's saved farm can silently write into another farmer's account on a shared device
+
+Found live during a fresh-signup walkthrough (30 July, emulator). This jumps ahead of items 35/36
+in urgency — it is a real cross-account data-integrity bug, proven with a clean repro, not a
+quality issue. Read this before continuing 35 if you have a natural stopping point; if you're
+mid-render on 35, finish that pass first (don't waste spent money mid-flight) and take this next.
+
+**Proof (reproducible in 2 minutes on the emulator):**
+1. Sign out of any account (or just have a browser that's ever had a farmer's data in it — see
+   why below, this isn't a contrived setup).
+2. `localStorage.setItem('permamap_saved_places', JSON.stringify([{id:'x', name:'FOREIGN PLOT', lat:-33.9, lon:18.4, ...}]))` — standing in for whatever the last real farmer on this device saved.
+3. Sign up as a BRAND NEW account. Confirmed via Admin SDK: `user_map_data/{newUid}/data/places`
+   does not exist — zero cloud data, genuinely fresh.
+4. Open `/farmer` (mounts `components/Map.tsx`, which calls `subscribeUserMapData(uid, ...)`).
+5. Check `user_map_data/{newUid}/data/places` again: **it now contains "FOREIGN PLOT"** — written
+   by the reconcile transaction itself, permanently, under the new farmer's own uid.
+
+**Root cause** — `lib/user-sync.ts`'s `subscribeUserMapData(uid, handlers)`, Phase 1 reconcile:
+```js
+const remote = data.places ?? [];                      // correctly scoped: doc path has {uid}
+const local = readLocal<SavedPlace>(PLACES_KEY);        // NOT scoped: PLACES_KEY is a bare constant
+const { items, deleted } = mergeItems(remote, local, ...);
+localStorage.setItem(PLACES_KEY, JSON.stringify(items));
+tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });  // writes union to THIS uid's doc
+```
+`PLACES_KEY = 'permamap_saved_places'` (`lib/saved-places.ts:36`, re-declared `lib/user-sync.ts:11`)
+carries no uid. Whatever the browser's local storage holds — genuinely the previous signed-in
+farmer's real data, not a contrived attack — gets merged into whoever is signed in NOW and pushed
+to their cloud record the moment the map mounts. `signOutUser` (`lib/auth.tsx:216`) calls Firebase
+`signOut()` and clears React state only; it touches no local storage.
+
+**This is not a places-only bug.** The same bare-constant pattern is confirmed on the sibling keys
+read by the same reconcile function: `FARM_KEY = 'imbewu_farm_shapes'`, `WATER_KEY =
+'imbewu_water_points'` (`lib/user-sync.ts:10-12`), and `DESIGN_STUDIO_KEY = 'imbewu_design_studio_v1'`
+(`lib/user-sync.ts:90`). I only ran the live repro against places — verify shapes/water/design
+each independently before assuming the fix covers them; each has its own reconcile block in
+`subscribeUserMapData` and may behave slightly differently (the shapes block in particular has
+different remote-authority semantics — read its comment before touching it).
+
+**Real-world exposure**: this app's own UI targets shared/low-resource use — NGO field workers
+demoing to multiple farmers on one tablet, a family or community device, an extension office
+computer. That is exactly the scenario this bug fires in, silently, with no confirmation dialog.
+
+**Your job**: fix the isolation, your choice of mechanism — options, not a mandate:
+(a) scope every local-first key by uid (touches every read/write call site — the kind of
+"second home" sweep item 33's `×N` fix needed), or
+(b) track the last-signed-in uid in one small key; on any auth-state change where it differs,
+clear the local-first keys before the next reconcile runs (one choke point, smaller diff, but
+find every place sign-in/sign-out/account-switch can happen: `lib/auth.tsx`,
+`components/AccountButton.tsx`, `components/Map.tsx`, `app/account/page.tsx`).
+Whichever you pick, prove it the same way I did: inject foreign data, switch accounts, confirm the
+new account's Firestore doc stays empty. Also check what a straight account-switch (not
+sign-out-then-sign-in, if the UI has one) does — it may not go through the same path.
+
+**Do not touch**: this doesn't overlap `DesignGlossy.tsx`/`lib/producer-prompt.ts` (item 35's
+files) — safe to pick up in parallel or right after.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
