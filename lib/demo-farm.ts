@@ -29,7 +29,7 @@ import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
 import { buildDemoGeometryLockFixture } from './demo-geometry-fixture';
 
-export const DEMO_SITE = { lat: -27.726231, lon: 31.963044, name: 'Ubhejane Creche' };
+export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 'Ubhejane Creche' });
 
 // A fictional caretaker profile so ProfileSheet has something plausible to
 // display/edit during the demo — never a real signed-in user's profile, and
@@ -98,7 +98,9 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
     pxPerM: 5,
     activeLayer: 'planting',
     hiddenLayers: [],
-    bgSite: DEMO_SITE,
+    // This state is editable in the sample UI. Never hand it the canonical module
+    // object by reference or one in-place edit can move every later demo builder.
+    bgSite: { ...DEMO_SITE },
     title: 'Ubhejane Creche — sample garden',
     savedAt: Date.now(),
   };
