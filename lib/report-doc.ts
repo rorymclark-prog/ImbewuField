@@ -246,13 +246,15 @@ export function buildSkeletonReportDoc(args: {
   const boundaryM2 = approved
     .filter((l) => l.layerType === 'property_boundary')
     .reduce((sum, layer) => sum + areaOf(layer), 0);
-  const totalM2 = boundaryM2 || approved.reduce((sum, layer) => sum + areaOf(layer), 0);
-  const sizeHa = totalM2 > 0 ? +(totalM2 / 10000).toFixed(3) : undefined;
-  const roof = approved.find((l) => l.layerType === 'roof');
-  const garden = approved.find((l) => l.layerType === 'cultivation');
-  const tree = approved.find((l) => l.layerType === 'tree_belt');
-  const roofAreaM2 = roof ? finitePositive(roof.areaM2) : undefined;
-  const gardenAreaM2 = garden ? finitePositive(garden.areaM2) : undefined;
+  // Feature footprints often overlap one another, so they cannot stand in for
+  // the site's area. Only a traced property boundary earns a size claim.
+  const sizeHa = boundaryM2 > 0 ? +(boundaryM2 / 10000).toFixed(3) : undefined;
+  const roofs = approved.filter((l) => l.layerType === 'roof');
+  const gardens = approved.filter((l) => l.layerType === 'cultivation');
+  const trees = approved.filter((l) => l.layerType === 'tree_belt');
+  const roofAreaM2 = roofs.reduce((sum, layer) => sum + areaOf(layer), 0) || undefined;
+  const gardenAreaM2 = gardens.reduce((sum, layer) => sum + areaOf(layer), 0) || undefined;
+  const hasTreeBelt = trees.length > 0;
   const calculatedHarvestLitres = roofAreaM2 && rainMm
     ? roofHarvestLitres(roofAreaM2, rainMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT)
     : 0;
@@ -268,7 +270,7 @@ export function buildSkeletonReportDoc(args: {
   if (harvestKL) opportunities.push(`Harvest ~${harvestKL.toLocaleString()} kL/year of rainwater off the roof — connect gutters to a tank.`);
   if (gardenAreaM2) opportunities.push(`Intensify the existing ${Math.round(gardenAreaM2)} m² vegetable garden with beds, compost and drip irrigation.`);
   opportunities.push('Establish a north-facing orchard / food forest on the open sunny ground.');
-  if (tree) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
+  if (hasTreeBelt) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
 
   const challenges = clean(survey?.challenges);
   const minTemp = finiteNumber(location.climate?.minTemp);
@@ -295,11 +297,11 @@ export function buildSkeletonReportDoc(args: {
   const existingSite: ExistingSite = {
     sizeHa: sizeHa !== undefined ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
     climateSummary: `${biome}${bruNote}. ${rainMm ? `~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall)` : 'Rainfall unavailable'}, ${minTemp !== undefined && maxTemp !== undefined ? `${Math.round(minTemp)}–${Math.round(maxTemp)} °C` : 'temperature unavailable'}.`,
-    currentLandUses: [gardenAreaM2 ? 'vegetable garden' : '', tree ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
+    currentLandUses: [gardenAreaM2 ? 'vegetable garden' : '', hasTreeBelt ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
     infrastructure: clean(survey?.otherInfra),
     existingCrops: crops,
     existingLivestock: livestock,
-    existingTrees: tree ? ['existing tree belt'] : [],
+    existingTrees: hasTreeBelt ? ['existing tree belt'] : [],
     observations: [],
   };
 
@@ -318,7 +320,7 @@ export function buildSkeletonReportDoc(args: {
     ],
     recommendedEarthworks: [
       { type: 'Swale', note: 'On contour, upslope of the garden.' },
-      { type: 'Tank', note: roof ? `Sized to the roof harvest above.` : 'JoJo tank at the house.' },
+      { type: 'Tank', note: roofs.length ? `Sized to the roof harvest above.` : 'JoJo tank at the house.' },
     ],
     estStorageCapacity: finitePositive(wc?.dryBufferLitres90Day)
       ? { value: Math.round(finitePositive(wc?.dryBufferLitres90Day)! / 1000), unit: 'kL', provenance: 'calculated', basis: '90-day household dry-season buffer' }
@@ -348,8 +350,8 @@ export function buildSkeletonReportDoc(args: {
 
   // ── Sector ──
   const cl = location.climate;
-  const validLatitude = finiteNonNegative(Math.abs(location.lat));
-  const isSH = validLatitude !== undefined ? location.lat < 0 : null;
+  const latitude = finiteNumber(location.lat);
+  const isSH = latitude !== undefined && Math.abs(latitude) <= 90 ? latitude < 0 : null;
   const windDescription = (direction: string | undefined, fallback: string): string =>
     direction && direction !== '—' ? direction : fallback;
   const sector: SectorAnalysis = {
@@ -357,7 +359,7 @@ export function buildSkeletonReportDoc(args: {
     windSummer: cl?.windFromSummer && cl.windFromSummer !== '—' ? `Summer wind from the ${cl.windFromSummer}.` : windDescription(undefined, 'Note the prevailing summer wind.'),
     windWinter: cl?.windFromWinter && cl.windFromWinter !== '—' ? `Winter wind from the ${cl.windFromWinter} — plant a windbreak on this edge.` : windDescription(undefined, 'Note the cold winter wind direction.'),
     fire: 'Keep fuel load down on the dry-wind edge; a green firebreak helps.',
-    wildlife: tree ? 'The tree belt is a wildlife corridor — keep a wild buffer.' : 'Leave a wild edge for beneficial wildlife.',
+    wildlife: hasTreeBelt ? 'The tree belt is a wildlife corridor — keep a wild buffer.' : 'Leave a wild edge for beneficial wildlife.',
     security: 'Position the house with clear sightlines to the gate and garden.',
     dust: 'Screen dust from the road/driveway with a hedge.',
     frost: minTemp !== undefined && minTemp < 5 ? 'Cold air drains to the low corner — keep tender crops above it.' : minTemp !== undefined ? 'Low frost risk.' : 'Frost data unavailable — confirm the coldest low point on site.',
@@ -426,8 +428,8 @@ export function buildSkeletonReportDoc(args: {
   }];
 
   // ── Implementation (default 3-phase ordering) ──
-  const roofIds = roof ? [roof.id] : [];
-  const gardenIds = garden ? [garden.id] : [];
+  const roofIds = roofs.map((roof) => roof.id);
+  const gardenIds = gardens.map((garden) => garden.id);
   const implementation: ImplementationPhase[] = [
     {
       phase: 1, label: 'Phase 1 — Water & Soil', monthRange: 'Months 1–3', budgetBand: 'low',
@@ -448,7 +450,7 @@ export function buildSkeletonReportDoc(args: {
     {
       phase: 3, label: 'Phase 3 — Systems & Edges', monthRange: 'Months 6–12', budgetBand: 'medium',
       steps: [
-        { seq: 7, task: 'Plant the windbreak / tree-belt edge', layerIds: tree ? [tree.id] : [], map: 'sector', why: 'Wind protection + biodiversity.' },
+        { seq: 7, task: 'Plant the windbreak / tree-belt edge', layerIds: trees.map((tree) => tree.id), map: 'sector', why: 'Wind protection + biodiversity.' },
         ...(livestock.length ? [{ seq: 8, task: `Set up the ${livestock[0]} system with fencing & rotation`, layerIds: [], map: 'zone' as MapRef, why: 'Integrated fertility & pest control.' }] : []),
       ],
     },
