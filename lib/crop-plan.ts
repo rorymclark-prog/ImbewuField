@@ -44,6 +44,7 @@ export interface CropPlanState {
 }
 
 const STORAGE_KEY = 'imbewu_crop_plan_v1';
+export const CROP_PLAN_CHANGED_EVENT = 'imbewu-crop-plan-changed';
 
 function emptyPlan(): CropPlanState {
   return { version: 1, plantings: [], updatedAt: Date.now() };
@@ -70,10 +71,15 @@ export function loadCropPlan(): CropPlanState {
 }
 
 export function saveCropPlan(s: CropPlanState): void {
-  if (isSampleMode()) { setSandboxCropPlan(s); return; }
+  if (isSampleMode()) {
+    setSandboxCropPlan(s);
+    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
+    return;
+  }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
   } catch {
     // Quota exceeded or storage unavailable — fail silently, plan just won't persist.
   }
