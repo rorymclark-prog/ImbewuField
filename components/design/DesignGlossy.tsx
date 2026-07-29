@@ -7903,7 +7903,9 @@ interface SavedGlossy {
 //   v77 — 2026-07-29: water symbols reject invalid geometry instead of drawing from it, and
 //        persisted symbol ids normalise whitespace/underscores/hyphens to one key — the same
 //        legacy-id class as the string zone numbers that once read 0 of 4 zones.
-const PLAN_VERSION = 'v77';
+//   v78 — 2026-07-29: structure symbols get the same treatment as v77's water symbols —
+//        invalid geometry rejected, persisted ids normalised to one key.
+const PLAN_VERSION = 'v78';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

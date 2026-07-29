@@ -9,6 +9,7 @@ import {
 } from '@/lib/cartographic-water-symbols';
 import {
   cartographicStructureKind,
+  drawCartographicStructureSymbol,
   supportsCartographicStructureSymbol,
 } from '@/lib/cartographic-structure-symbols';
 
@@ -67,6 +68,13 @@ test('distinct real-world systems never use the generic structure fallback', () 
     const kind = cartographicStructureKind(ELEMENTS_BY_ID[id]);
     assert.ok(kind && !kind.startsWith('generic-'), `${id} resolved to ${kind}`);
   }
+});
+
+test('persisted structure IDs are canonical despite harmless case and separator drift', () => {
+  assert.equal(cartographicStructureKind('  CHICKEN---COOP  '), 'chicken-tractor');
+  assert.equal(cartographicStructureKind('solar panel ground'), 'solar-panel');
+  assert.equal(cartographicStructureKind('STRUCTURE'), 'generic-structure');
+  assert.equal(cartographicStructureKind('ANIMAL'), 'generic-animal');
 });
 
 type RecordedCall = { name: string; args: unknown[] };
@@ -211,4 +219,83 @@ test('every catalog water feature can execute its advertised symbol path', () =>
     }), true, `${def.id} is advertised but not drawable`);
     assertFiniteDrawing(calls, def.id);
   }
+});
+
+test('every supported structure symbol executes finite geometry and restores canvas state', () => {
+  const supported = [
+    ...Object.values(ELEMENTS_BY_ID).filter((entry) => supportsCartographicStructureSymbol(entry)),
+    'structure',
+    'animal',
+  ];
+
+  for (const [index, element] of supported.entries()) {
+    const label = typeof element === 'string' ? element : element.id;
+    const { ctx, calls } = recordingContext();
+    assert.equal(drawCartographicStructureSymbol(
+      ctx,
+      element,
+      index % 2 ? 90 : 44,
+      index % 2 ? 44 : 90,
+      2,
+      { seed: index },
+    ), true, `${label} refused valid geometry`);
+    assert.ok(calls.length > 5, `${label} claimed success without drawing`);
+    const saves = calls.filter((call) => call.name === 'save').length;
+    const restores = calls.filter((call) => call.name === 'restore').length;
+    assert.ok(saves >= 1, `${label} did not protect caller canvas state`);
+    assert.equal(restores, saves, `${label} leaked canvas state`);
+    assertFiniteDrawing(calls, label);
+  }
+});
+
+test('invalid structure frames and unknown kinds are no-ops', () => {
+  const invalidCases: Array<Partial<{ width: number; height: number; outlineWidth: number }>> = [
+    { width: 0 },
+    { width: -1 },
+    { width: Number.NaN },
+    { width: Number.POSITIVE_INFINITY },
+    { height: 0 },
+    { height: -1 },
+    { height: Number.NaN },
+    { height: Number.POSITIVE_INFINITY },
+    { outlineWidth: -1 },
+    { outlineWidth: Number.NaN },
+    { outlineWidth: Number.POSITIVE_INFINITY },
+  ];
+
+  for (const override of invalidCases) {
+    const { ctx, calls } = recordingContext();
+    const values = { width: 50, height: 40, outlineWidth: 2, ...override };
+    assert.equal(drawCartographicStructureSymbol(
+      ctx,
+      'chicken_coop',
+      values.width,
+      values.height,
+      values.outlineWidth,
+    ), false);
+    assert.deepEqual(calls, [], `invalid structure frame ${JSON.stringify(override)} touched canvas`);
+  }
+
+  const { ctx, calls } = recordingContext();
+  assert.equal(drawCartographicStructureSymbol(ctx, 'invented-building', 50, 40, 2), false);
+  assert.deepEqual(calls, []);
+});
+
+test('structure texture seeds are deterministic and invalid seeds use the fallback', () => {
+  const transcript = (seed: number) => {
+    const { ctx, calls } = recordingContext();
+    assert.equal(drawCartographicStructureSymbol(
+      ctx,
+      'chicken_tractor',
+      80,
+      55,
+      2,
+      { seed },
+    ), true);
+    return calls;
+  };
+
+  assert.deepEqual(transcript(23), transcript(23));
+  assert.notDeepEqual(transcript(23), transcript(24));
+  assert.deepEqual(transcript(Number.NaN), transcript(0));
 });
