@@ -7952,7 +7952,14 @@ interface SavedGlossy {
 //        DRIVEWAY pill reached by a different route. `sheetElementNaming()` is now the single
 //        authority both the label path and the legend path read: layer sheets name individually,
 //        only the integrated masterplan groups, and its legend groups by the same families.
-const PLAN_VERSION = 'v83';
+//   v84 — 2026-07-29: traced ground is only NAMED on the sheets it is content for.
+//        groundLabelsForSheet took no `filter` at all, so a farmer's traced lawn or orchard was
+//        labelled identically on every sheet — including Water and Zones, where groundRegister
+//        calls it context and context is "never captioned, never legended". The demo farm traces no
+//        ground rings, which is the only reason this was invisible on a rendered sheet rather than
+//        obvious. groundContentRingsForSheet() is now the shared selector, and it also drops a
+//        Studio ring whose feature the main map already draws, so nothing is named twice.
+const PLAN_VERSION = 'v84';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
