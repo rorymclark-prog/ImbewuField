@@ -96,14 +96,10 @@ export interface DesignPaletteProps {
   // onDuplicateSelected/onDeleteSelected. Tapping this never itself changes the design; only the
   // canvas's own Confirm button (wired to the SAME onChange/undo path every other edit uses) does.
   onTidySelected: (() => void) | null;
-  // Snap to neighbour (lib/snap-edges.ts) — opens a PREVIEW that closes hairline seams between the
-  // single selected ZONE and its already-saved neighbours; the farmer confirms or cancels on the
-  // canvas itself (see DesignCanvas's snapPreview prop), same shape as onTidySelected directly
-  // above (same author, same problem class). null = nothing selected, more than one thing is
-  // selected, or the selection is a line/item/the property boundary rather than a snappable zone —
-  // same "nothing to act on" disabled convention as onTidySelected. Tapping this never itself
-  // changes the design; only the canvas's own Confirm button (wired to the SAME onChange/undo path
-  // every other edit uses) does.
+  // Snap to neighbour — opens one PREVIEW for every selected zone/feature ring. Each safe ring can
+  // move while vetoed rings (including the property boundary) remain byte-identical and are named
+  // in the preview. null = no ring selected, only the boundary selected, or a line/item is mixed
+  // into the selection. Confirm uses the same single undo entry as every other edit.
   onSnapSelected: (() => void) | null;
   // Clean up (lib/align-items.ts) — opens a PREVIEW that straightens and evenly spaces a
   // MULTI-selection of 2+ placed items; the farmer confirms or cancels on the canvas itself (see
@@ -532,10 +528,8 @@ export default function DesignPalette({
           >
             {t('designPaletteTidy')}
           </button>
-          {/* Snap to neighbour — offered only when exactly one ZONE is selected (not lines, not
-              items, not the property boundary — see onSnapSelected's doc comment in
-              DesignPaletteProps). Tapping this only OPENS the preview on the canvas; it never
-              itself edits the design. */}
+          {/* Snap to neighbour — offered for one or more selected rings, provided at least one can
+              move. A selected boundary stays unchanged and is called out in the preview. */}
           <button
             type="button"
             style={{
@@ -549,8 +543,7 @@ export default function DesignPalette({
           >
             {t('designPaletteSnap')}
           </button>
-          {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected; Tidy
-              and Snap above are deliberately single-selection, this one deliberately is not — see
+          {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected. See
               onCleanupSelected's doc comment in DesignPaletteProps. Tapping this only OPENS the
               preview on the canvas; it never itself edits the design. */}
           <button
