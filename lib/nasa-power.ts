@@ -29,6 +29,7 @@ export function monthlyNormalsFromDailyRainfall(
     || !Array.isArray(values)
     || dates.length === 0
     || dates.length !== values.length
+    || dates.some((date) => typeof date !== 'string')
     || !/^\d{4}-01-01$/.test(dates[0])
     || !/^\d{4}-12-31$/.test(dates[dates.length - 1])
   ) {
@@ -56,14 +57,17 @@ export function monthlyNormalsFromDailyRainfall(
     ) {
       return null;
     }
-    monthlySum[cursor.getUTCMonth()] += value;
+    const next = monthlySum[cursor.getUTCMonth()] + value;
+    if (!Number.isFinite(next)) return null;
+    monthlySum[cursor.getUTCMonth()] = next;
     index += 1;
     cursor.setUTCDate(cursor.getUTCDate() + 1);
   }
   if (index !== dates.length) return null;
 
   const yearCount = endYear - startYear + 1;
-  return monthlySum.map((sum) => Math.round((sum / yearCount) * 10) / 10);
+  const normals = monthlySum.map((sum) => Math.round((sum / yearCount) * 10) / 10);
+  return normals.every((value) => Number.isFinite(value) && value >= 0) ? normals : null;
 }
 
 /**
@@ -137,22 +141,35 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     format: 'JSON',
   });
 
-  const res = await fetch(
+  const nasaRequest = fetch(
     `https://power.larc.nasa.gov/api/temporal/climatology/point?${params}`,
-    { next: { revalidate: 86400 } }
+    {
+      signal: AbortSignal.timeout(8000),
+      next: { revalidate: 86400 },
+    } as RequestInit,
   );
+  // Both climatology sources are independent and slow, so overlap their I/O.
+  // fetchOpenMeteoRainfall catches its own outage/timeout and resolves null.
+  const openMeteoRequest = fetchOpenMeteoRainfall(lat, lon);
+  const res = await nasaRequest;
 
   if (!res.ok) throw new Error(`NASA POWER API error: ${res.status}`);
   const data = await res.json();
-  const p = data.properties.parameter;
+  const p: Record<string, unknown> = data?.properties?.parameter;
+  if (!p || typeof p !== 'object' || Array.isArray(p)) {
+    throw new Error('Incomplete NASA POWER climate data');
+  }
+  const asRecord = (value: unknown): Record<string, unknown> =>
+    typeof value === 'object' && value !== null && !Array.isArray(value)
+      ? value as Record<string, unknown>
+      : {};
 
   // NASA POWER climatology returns PRECTOTCORR as an average DAILY rate (mm/day) for each
   // month, and ANN as the annual average daily rate — NOT monthly/annual totals. Convert
   // each month to a monthly total (mm/month) by multiplying by its days, then sum for annual.
-  const rainfallRates = p?.PRECTOTCORR;
+  const rainfallRates = asRecord(p.PRECTOTCORR);
   if (
-    typeof rainfallRates !== 'object'
-    || rainfallRates === null
+    Object.keys(rainfallRates).length === 0
     || MONTH_KEYS.some((key) => {
       const value = rainfallRates[key];
       return typeof value !== 'number' || !Number.isFinite(value) || value < 0;
@@ -161,15 +178,19 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     throw new Error('Incomplete NASA POWER rainfall data');
   }
   const nasaMonthly = MONTH_KEYS.map((key, index) =>
-    parseFloat((rainfallRates[key] * DAYS_IN_MONTH[index]).toFixed(1))
+    parseFloat(((rainfallRates[key] as number) * DAYS_IN_MONTH[index]).toFixed(1))
   );
   const nasaAnnual = nasaMonthly.reduce((a: number, b: number) => a + b, 0);
+  if (!nasaMonthly.every((value) => Number.isFinite(value) && value >= 0)
+      || !Number.isFinite(nasaAnnual)) {
+    throw new Error('Incomplete NASA POWER rainfall data');
+  }
 
-  // Fetch Open-Meteo ERA5-Land data in parallel while we process the NASA response.
+  // Resolve the Open-Meteo request that started alongside the NASA request.
   // ERA5-Land is at 0.1°/~9km vs NASA POWER's 0.5°/~55km — much better for sites
   // on topographic transitions (escarpments, coastal ranges) where grid-averaging
   // produces severe wet bias in coarser datasets.
-  const openMeteoMonthly = await fetchOpenMeteoRainfall(lat, lon);
+  const openMeteoMonthly = await openMeteoRequest;
   const openMeteoAnnual = openMeteoMonthly
     ? openMeteoMonthly.reduce((a, b) => a + b, 0)
     : null;
@@ -192,6 +213,14 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   // Strip these before any reduction so they don't corrupt min/max/mean calculations.
   const clean = (v: unknown): number | null =>
     typeof v === 'number' && v > -900 && Number.isFinite(v) ? v : null;
+  const cleanNonNegative = (v: unknown): number | null => {
+    const value = clean(v);
+    return value !== null && value >= 0 ? value : null;
+  };
+  const cleanDirection = (v: unknown): number | null => {
+    const value = clean(v);
+    return value !== null && value >= 0 && value <= 360 ? value : null;
+  };
 
   // Reduce a POWER parameter object over MONTH_KEYS, applying fn to the clean values.
   // Returns fallback when all values are missing/sentinel.
@@ -207,22 +236,34 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
     return vals.length > 0 ? fn(vals) : fallback;
   };
 
-  const monthlyTemp = MONTH_KEYS.map((k) => clean(p.T2M[k]) ?? 20);
+  const temperatureByMonth = asRecord(p.T2M);
+  const monthlyTemp = MONTH_KEYS.map((k) => clean(temperatureByMonth[k]) ?? 20);
   const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
   const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
   const coldMonthTemp = reduceParam(p.T2M_MIN, (vals) => Math.min(...vals), 5);
   // NASA POWER returns ALLSKY_SFC_SW_DWN in MJ/m²/day — convert to kWh/m²/day (÷3.6) to match labels
-  const solarVals = MONTH_KEYS.map((k) => (clean(p.ALLSKY_SFC_SW_DWN[k]) ?? 0) / 3.6);
+  const solarByMonth = asRecord(p.ALLSKY_SFC_SW_DWN);
+  const solarVals = MONTH_KEYS.map((k) => (cleanNonNegative(solarByMonth[k]) ?? 0) / 3.6);
   const solarRadiation = parseFloat((solarVals.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
 
   // Wind — mean speed at 2m, and dominant direction (FROM) for summer (DJF) vs winter (JJA)
   const windSpeed = p.WS2M
-    ? parseFloat((reduceParam(p.WS2M, (vals) => vals.reduce((s, v) => s + v, 0) / vals.length, 0)).toFixed(1))
+    ? parseFloat((reduceParam(
+      p.WS2M,
+      (vals) => {
+        const physical = vals.filter((value) => value >= 0);
+        return physical.length
+          ? physical.reduce((sum, value) => sum + value, 0) / physical.length
+          : 0;
+      },
+      0,
+    )).toFixed(1))
     : 0;
   const wd = (keys: string[]) => {
     if (!p.WD10M) return '—';
+    const directionsByMonth = asRecord(p.WD10M);
     const directions = keys
-      .map((key) => clean(p.WD10M[key]))
+      .map((key) => cleanDirection(directionsByMonth[key]))
       .filter((value): value is number => value !== null);
     const mean = circularMeanDeg(directions);
     return mean === null ? '—' : aspectLabel(mean);
@@ -231,8 +272,8 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const windFromWinter = wd(['JUN', 'JUL', 'AUG']);
 
   // Rainfall pattern analysis
-  // SA months: Dec(0) Jan(1) Feb(2) = austral summer; Jun(5) Jul(6) Aug(7) = austral winter
-  const summerRain = monthly[0] + monthly[1] + monthly[2] + monthly[11]; // DJF + prev D
+  // SA months: Dec(11), Jan(0), Feb(1) = austral summer; Jun(5), Jul(6), Aug(7) = austral winter.
+  const summerRain = monthly[11] + monthly[0] + monthly[1];
   const winterRain = monthly[5] + monthly[6] + monthly[7];
   let pattern: 'summer' | 'winter' | 'year-round';
   let wetSeason: string;
