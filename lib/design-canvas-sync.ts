@@ -20,6 +20,7 @@ import {
   applyRemoteCanvasState,
   contentCountOf,
   loadCanvasState,
+  normaliseCanvasState,
   preserveCanvasNavigation,
   revOf,
   type DesignCanvasState,
@@ -81,10 +82,6 @@ export function pickWinner(mine: DesignCanvasState, theirs: DesignCanvasState): 
   return wouldDestroy(winner, loser) ? loser : winner;
 }
 
-const STEPS = new Set<DesignCanvasState['step']>([
-  'base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy',
-]);
-
 /** Firestore carries this as one JSON string because nested coordinate arrays are not writable. */
 export function parseDesignCanvasStore(json: unknown): Store {
   if (typeof json !== 'string') return {};
@@ -101,47 +98,7 @@ export function stringifyDesignCanvasStore(store: Store): string {
 }
 
 function stateAt(store: Store, siteId: string): DesignCanvasState | null {
-  const value = store[siteId];
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
-  const state = value as Partial<DesignCanvasState>;
-  if (state.siteId !== siteId
-    || !state.frame || typeof state.frame !== 'object'
-    || !Array.isArray(state.items)
-    || !Array.isArray(state.zones)
-    || !Array.isArray(state.lines)
-    || typeof state.updatedAt !== 'string'
-    || !state.step || !STEPS.has(state.step)) {
-    return null;
-  }
-  const frame = state.frame as DesignCanvasState['frame'];
-  if (![frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, frame.mPerPx].every(Number.isFinite)
-    || frame.imgW <= 0 || frame.imgH <= 0 || frame.mPerPx <= 0) {
-    return null;
-  }
-  const finitePoint = (point: unknown): boolean =>
-    Array.isArray(point) && point.length === 2 && point.every(Number.isFinite);
-  const optionalFinite = (value: unknown): boolean =>
-    value === undefined || (typeof value === 'number' && Number.isFinite(value));
-  const optionalPositive = (value: unknown): boolean =>
-    value === undefined || (typeof value === 'number' && Number.isFinite(value) && value > 0);
-  if (!state.items.every((item) =>
-    !!item && typeof item.id === 'string' && typeof item.defId === 'string'
-    && Number.isFinite(item.x) && Number.isFinite(item.y)
-    && optionalPositive(item.wM) && optionalPositive(item.hM) && optionalFinite(item.rot))
-    || !state.zones.every((zone) =>
-      !!zone && typeof zone.id === 'string' && Array.isArray(zone.points) && zone.points.every(finitePoint)
-      && optionalFinite(zone.labelDx) && optionalFinite(zone.labelDy)
-      && optionalFinite(zone.levelM) && optionalFinite(zone.measuredSlopePct))
-    || !state.lines.every((line) =>
-      !!line && typeof line.id === 'string' && Array.isArray(line.points) && line.points.every(finitePoint)
-      && optionalFinite(line.labelDx) && optionalFinite(line.labelDy))
-    || (state.customBase != null
-      && (!Number.isFinite(state.customBase.mPerPx) || state.customBase.mPerPx <= 0))
-    || (state.dailyWaterUseL !== undefined
-      && (!Number.isFinite(state.dailyWaterUseL) || state.dailyWaterUseL < 0))) {
-    return null;
-  }
-  return state as DesignCanvasState;
+  return normaliseCanvasState(store[siteId], siteId);
 }
 
 /**
