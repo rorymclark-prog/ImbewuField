@@ -313,6 +313,47 @@ If you finish 20, keep going with the same recipe on `lib/lesson-registry.ts` (3
 
 ---
 
+## 21. The same bug has now appeared FOUR times — `codex/legacy-key-normalisation`
+
+**This is a pattern, not an incident, and it is worth fixing once instead of a fifth time.**
+
+Every one of these was found and patched separately, in one night:
+
+| Where | What older data looked like | What broke |
+|---|---|---|
+| `ZoneShape.zone` | a **string** `"3"`, not a number | strict `Set.has` missed it — the Zones step read **0 of 4 zones** while rendering fine |
+| evidence groups | key prefix matched on `g.split('_')[0]` | `soil_texture` matched every `soil*` key — counts inflated across groups |
+| water symbols | `"jojo tank"` / `"jojo_tank"` / `"jojo-tank"` | fell through to a fallback symbol instead of the right one |
+| structure symbols | same, with a different separator | same |
+
+One shape: **data written by an older version of the app does not match what a newer lookup expects,
+and the miss is silent.** Nothing throws. A fallback renders. The farmer sees a plausible wrong
+thing, which is the worst outcome and the hardest to notice.
+
+**What this item wants — argue the approach in the report before coding it.** The obvious move is
+one shared normaliser, but note the two symbol modules already normalise to *different separators*
+(`-` for water, `_` for structures), each matching its own table's keys — so a single global
+function is not automatically right, and forcing one could break both. Options worth weighing:
+
+1. One `normaliseKey(raw, separator)` helper both tables call with their own separator, so the
+   *trimming and collapsing* is shared even where the output differs.
+2. Normalise the tables themselves at module load, so lookups compare like with like.
+3. A test-level guard: for each lookup table, assert that every key round-trips through its own
+   normaliser unchanged — which catches a new table added without one.
+
+Option 3 is the one that stops a **fifth** instance, so do that whichever else you pick.
+
+**Then go looking for the ones nobody has hit yet.** Any `Record<string, X>` indexed by persisted
+data is a candidate: element ids, line kinds, ground features, catalogue namespaces, storage keys.
+Grep for `[a-z]+\[.*\.id\]` and `startsWith(`. A miss that silently returns `undefined` and falls
+back is the signature.
+
+Do not change any persisted data or migrate anything on disk — the fix belongs at the read boundary,
+where a legacy value is interpreted. Rewriting a farmer's saved file to suit a lookup is the wrong
+direction and is not reversible.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
