@@ -74,7 +74,8 @@ export const MIN_FONT_SIZE = 12;
  * remains the honest print-legibility stop for the narrowest map.
  */
 export function leaderLabelFontSize(mapWidth: number): number {
-  return Math.max(MIN_FONT_SIZE, Math.round(mapWidth * LABEL_SHARE_OF_MAP_WIDTH));
+  const safeWidth = Number.isFinite(mapWidth) && mapWidth > 0 ? mapWidth : 0;
+  return Math.max(MIN_FONT_SIZE, Math.round(safeWidth * LABEL_SHARE_OF_MAP_WIDTH));
 }
 
 /**
@@ -104,7 +105,10 @@ const LABEL_SHARE_OF_MAP_WIDTH = 0.02;
  * how much room there actually is on this particular sheet.
  */
 export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement {
-  const { text, side, W, plotX0, plotX1, measure } = input;
+  const { text, side, measure } = input;
+  const W = Number.isFinite(input.W) && input.W > 0 ? input.W : 1;
+  const plotX0 = Number.isFinite(input.plotX0) ? Math.max(0, Math.min(1, input.plotX0)) : 0;
+  const plotX1 = Number.isFinite(input.plotX1) ? Math.max(0, Math.min(1, input.plotX1)) : 1;
   const safe = Math.round(W * SAFE_INSET_RATIO);
   const gap = Math.round(W * LABEL_GAP_RATIO);
 
@@ -112,13 +116,19 @@ export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement 
     ? Math.round(plotX0 * W) - gap - safe
     : W - safe - (Math.round(plotX1 * W) + gap);
 
-  let fontSize = input.fontSize;
-  let textW = measure(text, fontSize);
+  let fontSize = Number.isFinite(input.fontSize)
+    ? Math.max(MIN_FONT_SIZE, input.fontSize)
+    : MIN_FONT_SIZE;
+  const measuredWidth = (size: number) => {
+    const width = measure(text, size);
+    return Number.isFinite(width) && width >= 0 ? width : 0;
+  };
+  let textW = measuredWidth(fontSize);
   // Shrink to fit rather than clip. A name is the whole point of a callout, so losing its tail is
   // losing the information; losing a couple of points of size is not.
   while (textW > available && fontSize > MIN_FONT_SIZE) {
     fontSize -= 1;
-    textW = measure(text, fontSize);
+    textW = measuredWidth(fontSize);
   }
   const shrunk = fontSize < input.fontSize;
 
@@ -177,17 +187,23 @@ export function leaderPath(
  */
 export function stackLeaderRows(naturalY: number[], top: number, bottom: number, rowGap: number): number[] {
   if (naturalY.length === 0) return [];
-  const rows = naturalY.map((y, i) => Math.max(top + i * rowGap, Math.min(bottom, y)));
-  for (let i = 1; i < rows.length; i++) rows[i] = Math.max(rows[i], rows[i - 1] + rowGap);
+  const safeTop = Number.isFinite(top) ? top : 0;
+  const safeBottom = Number.isFinite(bottom) ? Math.max(safeTop, bottom) : safeTop;
+  const safeGap = Number.isFinite(rowGap) && rowGap >= 0 ? rowGap : 0;
+  const rows = naturalY.map((y, i) => {
+    const safeY = Number.isFinite(y) ? y : safeTop;
+    return Math.max(safeTop + i * safeGap, Math.min(safeBottom, safeY));
+  });
+  for (let i = 1; i < rows.length; i++) rows[i] = Math.max(rows[i], rows[i - 1] + safeGap);
 
-  const overflow = rows[rows.length - 1] - bottom;
+  const overflow = rows[rows.length - 1] - safeBottom;
   if (overflow > 0) for (let i = 0; i < rows.length; i++) rows[i] -= overflow;
 
   // If there are more labels than the column can hold, shifting up put the first ones above the
   // sheet. Pin the top and let the tail crowd instead: a crowded column is legible-ish and a label
   // at y = -40 is simply not there.
-  if (rows[0] < top) {
-    const lift = top - rows[0];
+  if (rows[0] < safeTop) {
+    const lift = safeTop - rows[0];
     for (let i = 0; i < rows.length; i++) rows[i] += lift;
   }
   return rows;

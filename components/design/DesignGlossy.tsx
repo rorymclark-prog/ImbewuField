@@ -7853,7 +7853,7 @@ interface SavedGlossy {
 //        sheet says what is missing instead of inventing household demand.
 //   v70 — 2026-07-29: invalid facilitator roof/location inputs no longer fabricate a Durban
 //        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
-const PLAN_VERSION = 'v90'; // Paint-time geometry polish now rejects non-finite inputs.
+const PLAN_VERSION = 'v91'; // Margin-label layout now keeps malformed measurements out of canvas paths.
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
