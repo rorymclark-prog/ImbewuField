@@ -7879,7 +7879,7 @@ interface SavedGlossy {
 //        they breathe and ours did not. SECTOR_ENERGY_TIP is the one rule both renderers now read.
 //        Bearings, half-widths and the sourced regional record are untouched — only where the
 //        shape ends.
-const PLAN_VERSION = 'v90';
+const PLAN_VERSION = 'v91';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
