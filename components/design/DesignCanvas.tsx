@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation } from '@/lib/design-canvas';
-import { layoutCanvasLabels, estimatePillWidth } from '@/lib/canvas-labels';
+import { layoutCanvasLabels, estimatePillWidth, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
@@ -1698,7 +1698,7 @@ export default function DesignCanvas({
           h: 22,
           iconR: 0, // a ground label has no icon disc of its own to avoid
         };
-      }),
+      }).filter(isUsableCanvasLabelInput),
     );
     for (const pos of laid) {
       const src = rings.find((r) => r.id === pos.id)!;
@@ -2914,7 +2914,7 @@ export default function DesignCanvas({
                 text,
               };
             })
-            .filter((v): v is NonNullable<typeof v> => !!v);
+            .filter((v): v is NonNullable<typeof v> => !!v && isUsableCanvasLabelInput(v));
           if (!shown.length) return null;
           const laid = layoutCanvasLabels(shown);
           return (
