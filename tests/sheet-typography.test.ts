@@ -106,3 +106,25 @@ test('a phasing week baseline clears the chip by the week font ascent', () => {
   assert.match(block, /chipTop \+ chipS \+ weekAscent \+ weekTopGap/);
   assert.doesNotMatch(block, /lineH \* 0\.35/);
 });
+
+test('sector provenance keeps its wording in a padded hairline box at the existing type floor', () => {
+  const sectorStart = SOURCE.indexOf('async function composeSectorSheet(');
+  const sectorEnd = SOURCE.indexOf('// The exact sheet is composeSectorSheet', sectorStart);
+  assert.ok(sectorStart >= 0 && sectorEnd > sectorStart, 'sector sheet composer exists');
+  const sectorComposer = SOURCE.slice(sectorStart, sectorEnd);
+
+  assert.match(sectorComposer, /footerHeading: 'NOTES & PROVENANCE'/);
+  assert.match(sectorComposer, /footerText: analysis\.noteText/);
+  assert.match(sectorComposer, /footerBox: true/);
+
+  const footerStart = SOURCE.indexOf('const footerFs =');
+  const footerEnd = SOURCE.indexOf('// ── Scale bar', footerStart);
+  assert.ok(footerStart >= 0 && footerEnd > footerStart, 'style-sheet footer painter exists');
+  const footerPainter = SOURCE.slice(footerStart, footerEnd);
+
+  assert.match(footerPainter, /footerFs = options\.footerText \? Math\.max\(9,/);
+  assert.match(footerPainter, /footerBoxPad = options\.footerBox \? Math\.max\(6,/);
+  assert.match(footerPainter, /footerTextX = lx \+ footerBoxPad/);
+  assert.match(footerPainter, /ctx\.lineWidth = 1;\s+roundRectPath\(/);
+  assert.doesNotMatch(sectorComposer, /analysis\.noteText\.(?:slice|replace|split|substring)/);
+});
