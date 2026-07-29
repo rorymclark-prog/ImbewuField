@@ -5481,10 +5481,11 @@ function drawSectorAnalysis(
   const BERG_COLOR = SECTOR_STYLES['berg-wind'].color;
   const BERG_LBL = SECTOR_STYLES['berg-wind'].labelColor;
 
-  // A dashed-edge translucent wedge — the shared shape for every regional-assumption wind/fire
-  // sector (namedWind + fire). Dashed boundary lines are mechanism 1 of the regional-assumption
-  // labelling contract (SECTOR-MODEL-SPEC §4): computed geometry (sun arcs, water/contour lines)
-  // is always solid; regional assumptions are always dashed.
+  // A translucent wedge — the shared shape for every regional-assumption wind/fire sector
+  // (namedWind + fire). Its two long edges used to repeat the dashed register twice per energy,
+  // leaving eight unexplained rays at the frame edge. The regional-assumption dash now has one
+  // owner: each named wind's arrow centreline below, or the fire centreline drawn after the winds.
+  // That keeps SECTOR-MODEL-SPEC §4's dashed register without outlining both sides of every wedge.
   // WHERE AN INCOMING REGIONAL ENERGY STOPS, as a fraction of the ring radius R (which sits just
   // outside the plot). Rory, comparing sheet 02 with a set of reference sheets he rates: "I don't
   // like the look of the sector map."
@@ -5500,7 +5501,6 @@ function drawSectorAnalysis(
   const SECTOR_ENERGY_TIP = 0.94;
 
   const drawRegionalWedge = (bearingDeg: number, halfWidthDeg: number, kind: SectorVisualKind) => {
-    const color = SECTOR_STYLES[kind].color;
     const centerVec = bearingToUnitVector(bearingDeg);
     const v1 = bearingToUnitVector(bearingDeg - halfWidthDeg);
     const v2 = bearingToUnitVector(bearingDeg + halfWidthDeg);
@@ -5517,16 +5517,21 @@ function drawSectorAnalysis(
     ctx.closePath();
     ctx.fillStyle = sectorFillColor(kind);
     ctx.fill();
+    ctx.restore();
+    return { centerVec, rr, tipX, tipY };
+  };
+
+  const drawRegionalCenterline = (
+    wedge: ReturnType<typeof drawRegionalWedge>,
+    color: string,
+  ): void => {
+    ctx.save();
     ctx.strokeStyle = color;
-    ctx.lineWidth = Math.max(1.8, sectorStrokeWidth(kind, W) * (externalLegend ? 0.42 : 0.28));
+    ctx.lineWidth = Math.max(1.8, sectorStrokeWidth('fire', W) * (externalLegend ? 0.42 : 0.28));
     ctx.setLineDash([10, 7]);
     ctx.beginPath();
-    ctx.moveTo(tipX, tipY);
-    ctx.lineTo(cx + v1[0] * rr, cy + v1[1] * rr);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(tipX, tipY);
-    ctx.lineTo(cx + v2[0] * rr, cy + v2[1] * rr);
+    ctx.moveTo(wedge.tipX, wedge.tipY);
+    ctx.lineTo(cx + wedge.centerVec[0] * wedge.rr, cy + wedge.centerVec[1] * wedge.rr);
     ctx.stroke();
     ctx.restore();
   };
@@ -5629,8 +5634,10 @@ function drawSectorAnalysis(
   // 4. FIRE wedge (under everything else) — regional-assumption, derived from the berg wind
   // (never from the demoted NASA winter mean — §0.1). A translucent dashed sector from the
   // berg-wind bearing.
+  const fireWedge = model.fire
+    ? drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, 'fire')
+    : null;
   if (model.fire) {
-    drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, 'fire');
     // Fire's bearing EQUALS the berg wind's bearing by construction. The legacy canvas keeps its
     // interior label; on the composed sheet queue a final-layer label off the shared ray so the
     // broad berg-wind arrow cannot paint over it.
@@ -5781,6 +5788,11 @@ function drawSectorAnalysis(
       w.id === 'berg' ? -rowH * 2 : 0,
     );
   }
+  // Fire and the berg wind deliberately share a bearing. Painting this when the fire wedge is
+  // created lets the later berg arrow erase it, so the fire legend's red dashed swatch describes
+  // no visible red dash. One final centreline after the wind arrows keeps both registers honest
+  // without restoring the wedge's two long edge rays.
+  if (fireWedge) drawRegionalCenterline(fireWedge, SECTOR_STYLES.fire.color);
 
   // 6b. DRIVEWAY ACCESS — dust & noise arriving from vehicle access (SECTOR-MODEL-SPEC deferred
   // item, finished 2026-07-21). UNLIKE the regional wedges above, this has a REAL geometric data
