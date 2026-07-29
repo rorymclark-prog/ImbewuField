@@ -3,6 +3,10 @@
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
 import { markLocalStorageKeyUpdated, readLocalFarmShapes } from '@/lib/map-sync';
+import {
+  WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import type { SiteSurvey } from '@/lib/site-survey';
@@ -130,6 +134,14 @@ export function formatDesignArea(m2: number): string {
 
 export function designSiteIdFromLocation(locationData: LocationData | null): string {
   if (!locationData) return 'site:unselected';
+  if (
+    !Number.isFinite(locationData.lat)
+    || !Number.isFinite(locationData.lon)
+    || locationData.lat < -90
+    || locationData.lat > 90
+    || locationData.lon < -180
+    || locationData.lon > 180
+  ) return 'site:unselected';
   return `site:${locationData.lat.toFixed(5)},${locationData.lon.toFixed(5)}`;
 }
 
@@ -442,6 +454,19 @@ function labelList(items: string[], labels: Record<string, string>): string {
   return items.map((item) => labels[item] ?? item).join(', ');
 }
 
+function finiteNumber(value: unknown): number | undefined {
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+}
+
+function nonNegativeNumber(value: unknown): number | undefined {
+  const finite = finiteNumber(value);
+  return finite !== undefined && finite >= 0 ? finite : undefined;
+}
+
+function sumUsableArea(layers: readonly DesignLayer[]): number {
+  return layers.reduce((sum, layer) => sum + (nonNegativeNumber(layer.areaM2) ?? 0), 0);
+}
+
 // ---------------------------------------------------------------------------
 // Water calculation helper
 // ---------------------------------------------------------------------------
@@ -463,25 +488,33 @@ function computeWaterCalc(
   const dryBufferLitres90Day = householdDailyLitres * 90;
 
   // Roof harvest: prefer mapped roof layers, fall back to survey roof m2
-  let roofAreaM2 = roofLayers.reduce((sum, layer) => sum + (layer.areaM2 ?? 0), 0);
+  let roofAreaM2 = sumUsableArea(roofLayers);
   if (roofAreaM2 === 0 && survey) {
-    roofAreaM2 = (survey.roofMainM2 ?? 0) + (survey.roofSecondaryM2 ?? 0);
+    roofAreaM2 =
+      (nonNegativeNumber(survey.roofMainM2) ?? 0)
+      + (nonNegativeNumber(survey.roofSecondaryM2) ?? 0);
   }
 
   let roofHarvestAnnualLitres: number | null = null;
   let roofHarvestAnnualKL: number | null = null;
-  if (roofAreaM2 > 0 && annualRainfallMm != null && annualRainfallMm > 0) {
-    // mm × m2 = litres (1 mm over 1 m2 = 1 litre), × 0.8 efficiency
-    roofHarvestAnnualLitres = Math.round(roofAreaM2 * annualRainfallMm * 0.8);
+  const rainfallMm = nonNegativeNumber(annualRainfallMm);
+  if (roofAreaM2 > 0 && rainfallMm != null && rainfallMm > 0) {
+    // mm × m² = litres before the shared, centrally reviewed collection loss.
+    roofHarvestAnnualLitres = Math.round(roofHarvestLitres(
+      roofAreaM2,
+      rainfallMm,
+      WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+    ));
     roofHarvestAnnualKL = Math.round(roofHarvestAnnualLitres / 1000);
   }
 
   // Garden irrigation: 2–5 L/m2/day dry season; use 3.5 as midpoint estimate.
   // Prefer mapped cultivation layers, fall back to the survey's existing-growing-area figure —
   // mirrors the roof-area fallback above.
-  let cultivationAreaM2 = cultivationLayers.reduce((sum, layer) => sum + (layer.areaM2 ?? 0), 0);
-  if (cultivationAreaM2 === 0 && survey?.existingGrowingAreaM2) {
-    cultivationAreaM2 = survey.existingGrowingAreaM2;
+  let cultivationAreaM2 = sumUsableArea(cultivationLayers);
+  const surveyedGrowingAreaM2 = nonNegativeNumber(survey?.existingGrowingAreaM2);
+  if (cultivationAreaM2 === 0 && surveyedGrowingAreaM2) {
+    cultivationAreaM2 = surveyedGrowingAreaM2;
   }
   let gardenIrrigationDrySeasonDailyLitres: number | null = null;
   let gardenIrrigationDrySeasonMonthlyLitres: number | null = null;
@@ -500,7 +533,7 @@ function computeWaterCalc(
     cultivationAreaM2,
     gardenIrrigationDrySeasonDailyLitres,
     gardenIrrigationDrySeasonMonthlyLitres,
-    rainfallMmUsed: annualRainfallMm ?? null,
+    rainfallMmUsed: rainfallMm ?? null,
   };
 }
 
@@ -519,8 +552,8 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const access = approved.filter((layer) => layer.layerType === 'access');
   const treeBelts = approved.filter((layer) => layer.layerType === 'tree_belt');
 
-  const annualRainfall = locationData?.rainfall?.annual;
-  const slope = locationData?.elevation?.slopeDeg;
+  const annualRainfall = nonNegativeNumber(locationData?.rainfall?.annual);
+  const slope = nonNegativeNumber(locationData?.elevation?.slopeDeg);
   const summerWind = locationData?.climate?.windFromSummer;
   const winterWind = locationData?.climate?.windFromWinter;
   const soilTexture = locationData?.soil?.textureClass;
@@ -528,8 +561,8 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const rainfallPattern = locationData?.rainfall?.pattern;
   const wetSeason = locationData?.rainfall?.wetSeason;
   const drySeason = locationData?.rainfall?.drySeason;
-  const minTemp = locationData?.climate?.minTemp;
-  const elevation = locationData?.elevation?.elevation;
+  const minTemp = finiteNumber(locationData?.climate?.minTemp);
+  const elevation = finiteNumber(locationData?.elevation?.elevation);
 
   // Load site survey by siteId. loadSurvey() also runs a one-time legacy-placeId migration
   // internally if nothing is filed under this key yet (see lib/site-survey.ts).
@@ -605,7 +638,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
 
   // Roof harvest human-readable
   const roofHarvestNote = waterCalc.roofHarvestAnnualKL != null
-    ? `Estimated roof harvest (${waterCalc.roofAreaM2Used} m² × ${Math.round(annualRainfall ?? 0)} mm × 80%): ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year.`
+    ? `Estimated roof harvest (${waterCalc.roofAreaM2Used} m² × ${Math.round(annualRainfall ?? 0)} mm × ${Math.round(WATER_SHEET_ROOF_RUNOFF_COEFFICIENT * 100)}%): ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year.`
     : roofOnly.length === 0 && (survey?.roofMainM2 ?? 0) === 0
       ? 'Roof area not yet mapped or surveyed — add it to calculate harvest potential.'
       : annualRainfall == null
@@ -659,9 +692,9 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   // Derived area labels for richer text
   // ---------------------------------------------------------------------------
   const boundaryAreaLabel = boundary ? ` (${formatDesignArea(boundary.areaM2)})` : '';
-  const cultivationTotalM2 = cultivation.reduce((s, l) => s + l.areaM2, 0);
+  const cultivationTotalM2 = sumUsableArea(cultivation);
   const cultivationAreaLabel = cultivationTotalM2 > 0 ? ` (${formatDesignArea(cultivationTotalM2)} total)` : '';
-  const treeBeltTotalM2 = treeBelts.reduce((s, l) => s + l.areaM2, 0);
+  const treeBeltTotalM2 = sumUsableArea(treeBelts);
   const treeBeltAreaLabel = treeBeltTotalM2 > 0 ? ` (${formatDesignArea(treeBeltTotalM2)})` : '';
 
   // Biome-specific advice
