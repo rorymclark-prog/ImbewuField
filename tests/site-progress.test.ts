@@ -29,8 +29,12 @@ import {
 
 class MemoryStorage {
   private rows = new Map<string, string>();
+  failWrites = false;
   getItem(key: string) { return this.rows.get(key) ?? null; }
-  setItem(key: string, value: string) { this.rows.set(String(key), String(value)); }
+  setItem(key: string, value: string) {
+    if (this.failWrites) throw new Error('quota');
+    this.rows.set(String(key), String(value));
+  }
   removeItem(key: string) { this.rows.delete(key); }
   clear() { this.rows.clear(); }
   key(index: number) { return [...this.rows.keys()][index] ?? null; }
@@ -203,6 +207,27 @@ test('boundary progress ignores water and degenerate rings, then reports real un
   assert.equal(boundaryNearCoords({ lat: -20, lon: 20 }), false);
 });
 
+test('a nearby parcel in any MultiPolygon part earns boundary progress', () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_farm_shapes', JSON.stringify({
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      properties: { featureType: 'site' },
+      geometry: {
+        type: 'MultiPolygon',
+        coordinates: [
+          [[[10, 10], [10.01, 10], [10, 10.01], [10, 10]]],
+          [[[31, -29], [31.01, -29], [31, -29.01], [31, -29]]],
+        ],
+      },
+    }],
+  }));
+
+  assert.equal(boundaryPointCountNearCoords({ lat: -29, lon: 31 }), 3);
+  assert.equal(boundaryNearCoords({ lat: -29, lon: 31 }), true);
+});
+
 test('saved-place and boundary scoping reject invalid coordinates', () => {
   const { local } = installBrowser();
   local.setItem('permamap_saved_places', JSON.stringify([{
@@ -283,6 +308,8 @@ test('guided-state corruption is normalised and defaults are returned as fresh v
   }
   local.setItem(GUIDED_MODE_KEY, JSON.stringify({ enabled: true, dismissals: 2.9, retired: false }));
   assert.equal(getGuidedState().dismissals, 2);
+  local.setItem(GUIDED_MODE_KEY, JSON.stringify({ enabled: true, dismissals: 3, retired: false }));
+  assert.equal(getGuidedState().retired, true);
 });
 
 test('guided changes are observable and repeated dismissals eventually retire the coach', () => {
@@ -302,4 +329,17 @@ test('guided changes are observable and repeated dismissals eventually retire th
 
   setGuidedState({ enabled: true, retired: false, dismissals: 0 });
   assert.deepEqual(getGuidedState(), { enabled: true, dismissals: 0, retired: false });
+});
+
+test('failed guided-state writes keep the prior state and emit no false change event', () => {
+  const { target, local } = installBrowser();
+  setGuidedState({ enabled: false });
+  const before = getGuidedState();
+  let events = 0;
+  target.addEventListener(GUIDED_CHANGED_EVENT, () => { events += 1; });
+  local.failWrites = true;
+
+  setGuidedState({ enabled: true, dismissals: 1 });
+  assert.deepEqual(getGuidedState(), before);
+  assert.equal(events, 0);
 });
