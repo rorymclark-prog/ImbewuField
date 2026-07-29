@@ -325,6 +325,41 @@ test('plan-sheet contours distinguish flat terrain from unavailable evidence', a
   assert.equal(terrainFlat.source, 'mapbox-terrain-rgb');
 });
 
+test('regional wedges keep one dashed provenance mark per energy, not two runaway edges', () => {
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const wedgeStart = source.indexOf('const drawRegionalWedge =');
+  const centerlineStart = source.indexOf('const drawRegionalCenterline =', wedgeStart);
+  const broadArrowStart = source.indexOf('const drawBroadEnergyArrow =', centerlineStart);
+  assert.ok(wedgeStart >= 0 && centerlineStart > wedgeStart && broadArrowStart > centerlineStart);
+
+  const wedgePainter = source.slice(wedgeStart, centerlineStart);
+  assert.match(wedgePainter, /ctx\.fill\(\)/, 'the translucent sector wedge remains');
+  assert.match(wedgePainter, /bearingDeg - halfWidthDeg/);
+  assert.match(wedgePainter, /bearingDeg \+ halfWidthDeg/);
+  assert.doesNotMatch(wedgePainter, /ctx\.stroke\(\)|setLineDash\(/, 'wedge edges are fill geometry, not two dashed rays');
+
+  const centerlinePainter = source.slice(centerlineStart, broadArrowStart);
+  assert.match(centerlinePainter, /setLineDash\(\[10, 7\]\)/);
+  assert.equal(centerlinePainter.match(/ctx\.stroke\(\)/g)?.length, 1, 'fire gets exactly one dashed centreline');
+  assert.match(centerlinePainter, /wedge\.centerVec\[0\] \* wedge\.rr/);
+  assert.match(centerlinePainter, /wedge\.centerVec\[1\] \* wedge\.rr/);
+
+  const windStart = source.indexOf('for (const w of model.namedWind)', broadArrowStart);
+  const drivewayStart = source.indexOf('// 6b. DRIVEWAY ACCESS', windStart);
+  assert.ok(windStart >= 0 && drivewayStart > windStart);
+  const regionalEnergyPainter = source.slice(windStart, drivewayStart);
+  assert.match(regionalEnergyPainter, /drawBroadEnergyArrow\(v, color/);
+  assert.match(regionalEnergyPainter, /drawArrow\(v, color, windWidth\(kind\), \[\.\.\.SECTOR_STYLES\[kind\]\.dash\]/);
+  assert.match(regionalEnergyPainter, /drawRegionalCenterline\(fireWedge, SECTOR_STYLES\.fire\.color\)/);
+
+  const legendStart = source.indexOf('const summerCoolingWind = model.namedWind.find');
+  const legendEnd = source.indexOf('if (model.water) rows.push', legendStart);
+  assert.ok(legendStart >= 0 && legendEnd > legendStart);
+  const legend = source.slice(legendStart, legendEnd);
+  assert.equal((legend.match(/style: 'dashline'/g) ?? []).length, 4, 'three winds and fire remain dashed in the legend');
+  assert.match(legend, /model\.driveway\)[\s\S]*style: 'line'/, 'computed driveway stays in the solid register');
+});
+
 test('wires Sector jobs through authoritative houses and protected-pixel restoration', () => {
   const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const composeStart = source.indexOf('async function composeSectorSheet(');
