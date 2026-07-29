@@ -409,60 +409,154 @@ const elementTypes = new Set<ElType>(Object.keys(TYPE_LAYER) as ElType[]);
 const lineKinds = new Set<LineKind>(Object.keys(LINE_LAYER) as LineKind[]);
 const sectorKinds = new Set<SectorKind>(Object.keys(SECTOR_DEFS) as SectorKind[]);
 const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
+const record = (value: unknown): value is Record<string, unknown> =>
+  !!value && typeof value === 'object' && !Array.isArray(value);
+const nonEmptyString = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+const validLayer = (value: unknown): value is LayerId =>
+  typeof value === 'string' && layerIds.has(value as LayerId);
+const validCoordinateList = (value: unknown, minimumValues: number): value is number[] =>
+  Array.isArray(value)
+  && value.length >= minimumValues
+  && value.length % 2 === 0
+  && value.every(finite);
 
 /**
  * Validate the storage boundary without mutating the parsed document. One corrupt
  * feature is discarded rather than poisoning every BOQ total with NaN.
  */
 export function normaliseFacilitatorState(value: unknown): FacilitatorDesignState | null {
-  if (!value || typeof value !== 'object') return null;
+  if (!record(value)) return null;
   const s = value as Partial<FacilitatorDesignState>;
   if (s.version !== 1 || !Array.isArray(s.items)) return null;
 
-  const items = s.items.filter((item): item is FacItem =>
-    !!item && typeof item.id === 'string' && elementTypes.has(item.type)
-    && [item.x, item.y, item.wM, item.hM, item.rotation].every(finite)
-    && item.wM > 0 && item.hM > 0);
-  const lines = (Array.isArray(s.lines) ? s.lines : []).filter((line): line is FacLine =>
-    !!line && typeof line.id === 'string' && lineKinds.has(line.kind)
-    && Array.isArray(line.points) && line.points.length % 2 === 0
-    && line.points.every(finite));
-  const sectors = (Array.isArray(s.sectors) ? s.sectors : []).filter((sector): sector is FacSector =>
-    !!sector && typeof sector.id === 'string' && sectorKinds.has(sector.kind)
-    && [sector.x, sector.y, sector.rotation, sector.radiusM, sector.spanDeg].every(finite)
-    && sector.radiusM > 0 && sector.spanDeg > 0);
+  // Selection, deletion and React keys all use one shared id namespace. Keep
+  // the first valid feature with an id and quarantine later collisions.
+  const claimedIds = new Set<string>();
+  const items: FacItem[] = [];
+  for (const candidate of s.items) {
+    if (!record(candidate)
+        || !nonEmptyString(candidate.id)
+        || claimedIds.has(candidate.id)
+        || !elementTypes.has(candidate.type as ElType)
+        || ![candidate.x, candidate.y, candidate.wM, candidate.hM, candidate.rotation].every(finite)
+        || (candidate.wM as number) <= 0
+        || (candidate.hM as number) <= 0) continue;
+    const item: FacItem = {
+      id: candidate.id,
+      type: candidate.type as ElType,
+      x: candidate.x as number,
+      y: candidate.y as number,
+      wM: candidate.wM as number,
+      hM: candidate.hM as number,
+      rotation: candidate.rotation as number,
+    };
+    if (finite(candidate.litres) && candidate.litres >= 0) item.litres = candidate.litres;
+    if (validLayer(candidate.layer)) item.layer = candidate.layer;
+    if (finite(candidate.xM) && finite(candidate.yM)) {
+      item.xM = candidate.xM;
+      item.yM = candidate.yM;
+    }
+    if (typeof candidate.label === 'string') item.label = candidate.label;
+    if (typeof candidate.species === 'string') item.species = candidate.species;
+    if (finite(candidate.count) && Number.isInteger(candidate.count) && candidate.count >= 1) {
+      item.count = candidate.count;
+    }
+    items.push(item);
+    claimedIds.add(item.id);
+  }
+
+  const lines: FacLine[] = [];
+  for (const candidate of Array.isArray(s.lines) ? s.lines : []) {
+    if (!record(candidate)
+        || !nonEmptyString(candidate.id)
+        || claimedIds.has(candidate.id)
+        || !lineKinds.has(candidate.kind as LineKind)) continue;
+    const kind = candidate.kind as LineKind;
+    const minimumValues = POLYGON_LINE_KINDS.includes(kind) ? 6 : 4;
+    const pixelPoints = candidate.points;
+    const metrePoints = candidate.pointsM;
+    const hasPixels = validCoordinateList(pixelPoints, minimumValues);
+    const hasMetres = validCoordinateList(metrePoints, minimumValues);
+    if (!hasPixels && !hasMetres) continue;
+    const line: FacLine = {
+      id: candidate.id,
+      kind,
+      points: hasPixels ? [...pixelPoints] : [],
+    };
+    if (typeof candidate.closed === 'boolean') line.closed = candidate.closed;
+    if (validLayer(candidate.layer)) line.layer = candidate.layer;
+    if (hasMetres) line.pointsM = [...metrePoints];
+    lines.push(line);
+    claimedIds.add(line.id);
+  }
+
+  const sectors: FacSector[] = [];
+  for (const candidate of Array.isArray(s.sectors) ? s.sectors : []) {
+    if (!record(candidate)
+        || !nonEmptyString(candidate.id)
+        || claimedIds.has(candidate.id)
+        || !sectorKinds.has(candidate.kind as SectorKind)
+        || ![candidate.x, candidate.y, candidate.rotation, candidate.radiusM, candidate.spanDeg].every(finite)
+        || (candidate.radiusM as number) <= 0
+        || (candidate.spanDeg as number) <= 0) continue;
+    const sector: FacSector = {
+      id: candidate.id,
+      kind: candidate.kind as SectorKind,
+      x: candidate.x as number,
+      y: candidate.y as number,
+      rotation: candidate.rotation as number,
+      radiusM: candidate.radiusM as number,
+      spanDeg: candidate.spanDeg as number,
+    };
+    if (finite(candidate.xM) && finite(candidate.yM)) {
+      sector.xM = candidate.xM;
+      sector.yM = candidate.yM;
+    }
+    sectors.push(sector);
+    claimedIds.add(sector.id);
+  }
+
   const pxPerM = finite(s.pxPerM) && s.pxPerM > 0 ? s.pxPerM : DEFAULT_PX_PER_M;
-  const activeLayer = s.activeLayer && layerIds.has(s.activeLayer) ? s.activeLayer : 'base';
+  const activeLayer = validLayer(s.activeLayer) ? s.activeLayer : 'base';
   const hiddenLayers = Array.isArray(s.hiddenLayers)
-    ? [...new Set(s.hiddenLayers.filter((layer): layer is LayerId => layerIds.has(layer)))]
+    ? [...new Set(s.hiddenLayers.filter(validLayer))]
     : [];
   const bgRect = s.bgRect && [s.bgRect.x, s.bgRect.y, s.bgRect.w, s.bgRect.h].every(finite)
     && s.bgRect.w > 0 && s.bgRect.h > 0
     ? { ...s.bgRect }
     : undefined;
-  const { bgRect: _storedBgRect, ...stored } = s;
+  const bgSite = s.bgSite
+    && finite(s.bgSite.lat) && s.bgSite.lat >= -90 && s.bgSite.lat <= 90
+    && finite(s.bgSite.lon) && s.bgSite.lon >= -180 && s.bgSite.lon <= 180
+    && typeof s.bgSite.name === 'string'
+    ? { ...s.bgSite }
+    : undefined;
+  const dismissedMapshapeIds = Array.isArray(s.dismissedMapshapeIds)
+    ? [...new Set(s.dismissedMapshapeIds.filter(nonEmptyString))]
+    : [];
 
-  return {
-    ...stored,
+  const result: FacilitatorDesignState = {
     version: 1,
-    items: items.map((item) => ({ ...item })),
-    lines: lines.map((line) => {
-      const { points, pointsM, ...rest } = line;
-      return {
-        ...rest,
-        points: [...points],
-        ...(Array.isArray(pointsM) && pointsM.length % 2 === 0 && pointsM.every(finite)
-          ? { pointsM: [...pointsM] }
-          : {}),
-      };
-    }),
-    sectors: sectors.map((sector) => ({ ...sector })),
+    items,
+    lines,
+    sectors,
     pxPerM,
     activeLayer,
     hiddenLayers,
-    ...(bgRect ? { bgRect } : {}),
-    savedAt: finite(s.savedAt) ? s.savedAt : 0,
+    savedAt: finite(s.savedAt) && s.savedAt >= 0 ? s.savedAt : 0,
   };
+  if (s.geomVersion === 2) result.geomVersion = 2;
+  if (typeof s.washOn === 'boolean') result.washOn = s.washOn;
+  if (typeof s.designId === 'string') result.designId = s.designId;
+  if (typeof s.title === 'string') result.title = s.title;
+  if (bgSite) result.bgSite = bgSite;
+  if (typeof s.bgDataUrl === 'string' && s.bgDataUrl.startsWith('data:image/')
+      && s.bgDataUrl.length < 1_500_000) result.bgDataUrl = s.bgDataUrl;
+  if (bgRect) result.bgRect = bgRect;
+  if (finite(s.bgOpacity) && s.bgOpacity >= 0 && s.bgOpacity <= 1) result.bgOpacity = s.bgOpacity;
+  if (dismissedMapshapeIds.length) result.dismissedMapshapeIds = dismissedMapshapeIds;
+  return result;
 }
 
 export function saveFacilitatorState(s: FacilitatorDesignState): void {
