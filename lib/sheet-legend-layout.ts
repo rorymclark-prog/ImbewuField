@@ -1,14 +1,32 @@
 /**
  * Space left between legend rows after their measured text/symbol blocks are known.
  *
- * The remaining height is distributed across the complete column instead of capped at a
- * map-width-derived rhythm. That cap was harmless on the old short 3:2 sheet, but once the sheet
- * followed a tall boundary it left two thirds of the cream panel empty. Using the actual available
- * height preserves readable type and makes the final gap the same rhythm as every preceding gap.
+ * The slack is shared out across the column rather than capped at a map-width-derived rhythm. That
+ * old cap was harmless on the short 3:2 sheet but left two thirds of a boundary-framed panel empty.
+ *
+ * BUT A LEGEND IS A LIST, NOT A JUSTIFIED COLUMN, and distributing without a ceiling is its own
+ * defect. Rendered water sheet 04 of the Ubhejane demo has three rows in a full-height panel:
+ * sharing all the slack put a visible hole between each one, so the legend read as broken rather
+ * than full — and, because the same gap is also left after the last row, the panel was STILL empty
+ * at the bottom. Worse than the problem it replaced.
+ *
+ * So the gap is capped at a multiple of the natural row rhythm. A well-populated legend still
+ * spreads to fill its column; a short one stays a compact block at the top with honest white space
+ * below it, which is what a legend on a large sheet is supposed to look like.
  */
-export function legendRowGap(availableHeight: number, usedHeight: number, rowCount: number): number {
+export const MAX_GAP_TO_ROW_RHYTHM = 1.15;
+
+export function legendRowGap(
+  availableHeight: number,
+  usedHeight: number,
+  rowCount: number,
+  /** The natural line rhythm of this legend — the gap is never allowed to dwarf it. */
+  rowRhythm = Number.POSITIVE_INFINITY,
+): number {
   if (!Number.isFinite(availableHeight) || !Number.isFinite(usedHeight) || rowCount <= 0) return 0;
-  return Math.max(0, (availableHeight - usedHeight) / rowCount);
+  const shared = Math.max(0, (availableHeight - usedHeight) / rowCount);
+  const ceiling = Number.isFinite(rowRhythm) ? Math.max(0, rowRhythm) * MAX_GAP_TO_ROW_RHYTHM : Infinity;
+  return Math.min(shared, ceiling);
 }
 
 /** Countable map content always says how many markers/routes the row represents. An omitted count

@@ -7584,8 +7584,10 @@ async function composeStyleSheet(
     rowLayout = layoutRows(fs);
   }
   const usedRowsH = rowLayout.reduce((sum, row) => sum + row.height, 0);
-  const rowGap = legendRowGap(availableRowsH, usedRowsH, rowLayout.length);
   const lineH = Math.max(11, Math.round(fs * 1.22));
+  // Pass the row rhythm so a three-row legend on a full-height panel stays a compact block instead
+  // of being justified down the column with a hole between every row. See MAX_GAP_TO_ROW_RHYTHM.
+  const rowGap = legendRowGap(availableRowsH, usedRowsH, rowLayout.length, lineH);
   const sectionFs = Math.max(9, Math.round(fs * 0.82));
   y = legendTop;
   for (const { row, lines, contentHeight, headingHeight } of rowLayout) {
@@ -7871,7 +7873,11 @@ interface SavedGlossy {
 //        longer mean either "one" or "not counted". (codex/legend-panel-fill arrived reusing v68,
 //        which the typeface fix above already owns — reusing a number means the second change
 //        inherits the first's cache entries and is invisible to anyone who rendered in between.)
-const PLAN_VERSION = 'v69';
+//   v70 - 2026-07-29: that legend distribution is capped. Sharing ALL the slack justified a
+//        three-row legend down a full-height panel with a hole between every row - it read as
+//        broken rather than full, and was still empty at the bottom. A legend is a list, not a
+//        justified column.
+const PLAN_VERSION = 'v70';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
