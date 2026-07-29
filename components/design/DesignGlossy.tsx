@@ -56,6 +56,7 @@ import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, p
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
+import { countedLegendText, legendRowGap } from '@/lib/sheet-legend-layout';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -7151,7 +7152,7 @@ export function sheetLegendRows(
     }
     const waterRows: StyleLegendRow[] = waterRouteLegendEntries(state.lines).map((route) => ({
       swatch: route.color,
-      text: `${route.label}${route.count > 1 ? ` ×${route.count}` : ''}`,
+      text: countedLegendText(route.label, route.count),
       lineKind: route.kind,
       section: 'WATER',
     }));
@@ -7191,22 +7192,24 @@ export function sheetLegendRows(
     rows.push({
       swatch: group.color,
       defId: group.defId,
-      text: `${group.name}${group.n > 1 ? ` ×${group.n}` : ''}`,
+      text: countedLegendText(group.name, group.n),
       section: group.section,
     });
   }
-  const kinds = new Set<string>();
+  const kindCounts = new Map<LineShape['kind'], number>();
   for (const l of state.lines) {
-    if (!lineInFilter(l.kind, filter) || kinds.has(l.kind)) continue;
-    kinds.add(l.kind);
-    const waterStyle = filter === 'water' ? waterRouteStyleFor(l.kind) : undefined;
-    const plantingStyle = filter === 'planting' ? plantingRouteStyleFor(l.kind) : undefined;
+    if (!lineInFilter(l.kind, filter)) continue;
+    kindCounts.set(l.kind, (kindCounts.get(l.kind) ?? 0) + 1);
+  }
+  for (const [kind, count] of kindCounts) {
+    const waterStyle = filter === 'water' ? waterRouteStyleFor(kind) : undefined;
+    const plantingStyle = filter === 'planting' ? plantingRouteStyleFor(kind) : undefined;
     rows.push({
-      swatch: waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[l.kind] ?? '#8C8577',
-      text: waterStyle?.label ?? plantingStyle?.label ?? l.kind.charAt(0).toUpperCase() + l.kind.slice(1),
-      lineKind: l.kind,
+      swatch: waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
+      text: countedLegendText(waterStyle?.label ?? plantingStyle?.label ?? kind.charAt(0).toUpperCase() + kind.slice(1), count),
+      lineKind: kind,
       section: waterStyle
-        ? waterLegendSectionForRoute(l.kind as Parameters<typeof waterLegendSectionForRoute>[0])
+        ? waterLegendSectionForRoute(kind as Parameters<typeof waterLegendSectionForRoute>[0])
         : plantingStyle ? 'PRODUCTION PLANTING' : undefined,
     });
   }
@@ -7576,9 +7579,7 @@ async function composeStyleSheet(
     rowLayout = layoutRows(fs);
   }
   const usedRowsH = rowLayout.reduce((sum, row) => sum + row.height, 0);
-  const rowGap = rowLayout.length
-    ? Math.min(Math.round(legendW * 0.026), Math.max(0, (availableRowsH - usedRowsH) / rowLayout.length))
-    : 0;
+  const rowGap = legendRowGap(availableRowsH, usedRowsH, rowLayout.length);
   const lineH = Math.max(11, Math.round(fs * 1.22));
   const sectionFs = Math.max(9, Math.round(fs * 0.82));
   y = legendTop;
@@ -7846,7 +7847,7 @@ interface SavedGlossy {
 //        elements at a similar height stop merging into one line that appears to point at the
 //        wrong icon. Found by rendering the exact sheet 07 for the Ubhejane demo and looking at
 //        it: "JOJO TANK 2500L" read as pointing at the compost bay.
-const PLAN_VERSION = 'v67';
+const PLAN_VERSION = 'v68';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
