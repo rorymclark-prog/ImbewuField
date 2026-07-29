@@ -576,6 +576,42 @@ label pixels in a render**, not by reading the code — the code already looks c
 
 ---
 
+## 29. The plan sheets draw fake contours while a real contour engine sits in the repo — `codex/sheets-use-real-contours`
+
+**HIGH VALUE. Rory: "contours have not been good on the other map." They are not good because the
+sheets do not use the contour engine this repo already has.**
+
+There are TWO contour systems here and the farmer-facing one is the crude one:
+
+- `lib/contours.ts` — what the PLAN SHEETS use. `lib/elevation.ts` samples **five points** (centre,
+  N, S, E, W) from OpenTopoData SRTM 30 m, derives ONE slope and ONE aspect for the whole farm, and
+  draws straight parallel lines at that angle. The file says so itself at line 3: *"HONEST SCOPE:
+  our elevation source samples only a few points and yields ONE slope + aspect for the whole site."*
+  On the rendered sector sheet those "contours" are perfectly straight diagonals. Real contours bend
+  around the land; these cannot, because there is only one number behind them.
+- `app/api/contours/route.ts` — what the INTERACTIVE MAP uses. Fetches Mapbox terrain-RGB tiles,
+  stitches them into a full elevation grid (hundreds of samples), and runs `marchingsquares`
+  `isoLines` at any requested interval, with caching. This is a real contour tracer and it already
+  works.
+
+**Make the sheets use the real one.** No new data provider, no new cost — terrain-RGB is already
+part of the Mapbox usage this app pays for, and the route already caches by bbox.
+
+Care needed, in roughly this order:
+1. The route is a server API; the sheet renderer runs in the browser. Fetch it the way the map does.
+2. Terrain-RGB has its own resolution limit. Keep `tooFlat` and the `status: 'ok' | 'too-flat' |
+   'unavailable'` honesty — a farm the data cannot resolve must SAY so, not draw confident wrong
+   lines. That is the whole point of the existing note.
+3. The sector sheet's slope arrow and the "~10% · INDICATIVE" figure come from the same 5-point
+   derivation. If contours become real, say plainly whether that figure is still the honest one.
+4. **Do not invent a contour interval.** The route defaults to 5 m; `lib/contours.ts` computes a
+   "nice" interval from the slope. Decide which is right for a smallholding and say why.
+
+This changes the picture on every sheet that shows contours. **Do not touch PLAN_VERSION** — say so
+in your report.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
