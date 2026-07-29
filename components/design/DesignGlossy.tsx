@@ -42,6 +42,9 @@ import {
   isContextElement,
   layerContentCount,
   groundRegister,
+  EXACT_CONTEXT_ALPHA,
+  INTEGRATED_LEGEND_FAMILIES,
+  exactSheetElementLegendGroups,
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
@@ -4650,7 +4653,7 @@ function drawContextItems(
     ctx.save();
     ctx.translate(px(it.x), py(it.y));
     if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
-    ctx.globalAlpha = 0.72;
+    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.water;
     ctx.fillStyle = '#6E5735';
     ctx.strokeStyle = 'rgba(239,226,190,0.88)';
     ctx.lineWidth = Math.max(1, ctx.canvas.width * 0.00075);
@@ -4790,7 +4793,7 @@ async function buildExactLayerOverlay(
     // Quiet element ghosts make the effort zones falsifiable without claiming those elements as
     // zone content. The exact zone bands then sit above them, as in the benchmark plan.
     ctx.save();
-    ctx.globalAlpha = 0.2;
+    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.zones;
     drawFilteredItems(ctx, state, 'all', px, py, pxPerM);
     ctx.restore();
     const zones = buildZoneOverlay(state, refLayers, W, H);
@@ -4840,7 +4843,7 @@ async function buildExactLayerOverlay(
     // Prior planting remains visible as quiet context, matching the benchmark infrastructure
     // sheet. It is not counted or legended as Structures content.
     ctx.save();
-    ctx.globalAlpha = 0.24;
+    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.structures;
     drawFilteredLines(ctx, state, 'planting', px, py);
     drawFilteredItems(ctx, state, 'planting', px, py, pxPerM);
     ctx.restore();
@@ -6575,7 +6578,7 @@ async function drawPhasingExactContent(
     : undefined;
   if (sourceStructures) {
     ctx.save();
-    ctx.globalAlpha = 0.88;
+    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
     ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
     ctx.restore();
   } else {
@@ -6585,7 +6588,7 @@ async function drawPhasingExactContent(
   const featureOverlay = await buildExactLayerOverlay(state, frame, refLayers, 'all', W, H, 'features');
   if (featureOverlay) {
     ctx.save();
-    ctx.globalAlpha = 0.88;
+    ctx.globalAlpha = EXACT_CONTEXT_ALPHA.implementation;
     ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
     ctx.restore();
   }
@@ -7140,48 +7143,14 @@ export function sheetLegendRows(
       });
     }
 
-    const summaries: Array<{
-      text: string;
-      swatch: string;
-      section: 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
-      matches: (def: DesignElementDef) => boolean;
-    }> = [
-      {
-        text: 'Water storage & fittings', swatch: '#3F879C', section: 'WATER',
-        matches: (def) => def.category === 'water' && !/pond|basin/i.test(def.name),
-      },
-      {
-        text: 'Ponds, basins & water earthworks', swatch: '#6E9DA5', section: 'WATER',
-        matches: (def) => /pond|basin|banana circle|berm|terrace/i.test(def.name),
-      },
-      {
-        text: 'Production beds & crops', swatch: '#6E7F45', section: 'PLANTING',
-        matches: (def) => (def.category === 'growing' || def.category === 'earthworks') && def.shape === 'rect',
-      },
-      {
-        text: 'Orchard & support trees', swatch: '#426044', section: 'PLANTING',
-        matches: (def) => def.category === 'growing' && def.shape === 'circle',
-      },
-      {
-        text: 'Structures & work areas', swatch: '#806645', section: 'INFRASTRUCTURE',
-        matches: (def) => def.category === 'structure' || def.category === 'access',
-      },
-      {
-        text: 'Livestock & apiary', swatch: '#C98A2C', section: 'INFRASTRUCTURE',
-        matches: (def) => def.category === 'animal',
-      },
-    ];
     const contentRows: StyleLegendRow[] = [];
-    for (const summary of summaries) {
-      const matches = state.items.filter((item) => {
-        const def = ELEMENTS_BY_ID[item.defId];
-        return Boolean(def && summary.matches(def));
-      });
-      if (!matches.length) continue;
+    for (const group of exactSheetElementLegendGroups(state, filter)) {
+      const summary = INTEGRATED_LEGEND_FAMILIES.find((family) => family.text === group.text);
+      if (!summary) continue;
       contentRows.push({
         swatch: summary.swatch,
-        defId: matches[0].defId,
-        text: `${summary.text} ×${matches.length}`,
+        defId: group.defId,
+        text: `${summary.text} ×${group.count}`,
         section: summary.section,
       });
     }
@@ -7200,40 +7169,35 @@ export function sheetLegendRows(
     return [...siteRows, ...orderedContent];
   }
 
-  const groups = new Map<string, { defId: string; color: string; n: number; section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection }>();
-  for (const it of state.items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
-    const name = def.name;
-    const g = groups.get(name) ?? {
-      defId: def.id,
-      color: speciesColor(def.id),
-      n: 0,
+  const groups = exactSheetElementLegendGroups(state, filter).map((group) => {
+    return {
+      name: group.text,
+      defId: group.defId,
+      color: speciesColor(group.defId),
+      n: group.count,
       section: filter === 'water'
-        ? waterLegendSectionForFeature(def.id)
+        ? waterLegendSectionForFeature(group.defId)
         : filter === 'planting'
-          ? plantingLegendSectionForFeature(def.id) ?? undefined
+          ? plantingLegendSectionForFeature(group.defId) ?? undefined
           : filter === 'structures'
-            ? structuresLegendSectionForFeature(def.id) ?? undefined
+            ? structuresLegendSectionForFeature(group.defId) ?? undefined
           : undefined,
     };
-    g.n += 1;
-    groups.set(name, g);
-  }
-  const orderedGroups = [...groups.entries()].sort((left, right) => {
+  });
+  const orderedGroups = groups.sort((left, right) => {
     const sectionOrder: readonly string[] = filter === 'water' ? WATER_LEGEND_SECTION_ORDER
       : filter === 'planting' ? PLANTING_LEGEND_SECTION_ORDER
         : filter === 'structures' ? STRUCTURES_LEGEND_SECTION_ORDER : [];
-    const leftOrder = left[1].section ? sectionOrder.indexOf(left[1].section) : Number.MAX_SAFE_INTEGER;
-    const rightOrder = right[1].section ? sectionOrder.indexOf(right[1].section) : Number.MAX_SAFE_INTEGER;
-    return leftOrder - rightOrder || left[0].localeCompare(right[0]);
+    const leftOrder = left.section ? sectionOrder.indexOf(left.section) : Number.MAX_SAFE_INTEGER;
+    const rightOrder = right.section ? sectionOrder.indexOf(right.section) : Number.MAX_SAFE_INTEGER;
+    return leftOrder - rightOrder || left.name.localeCompare(right.name);
   });
-  for (const [name, g] of orderedGroups) {
+  for (const group of orderedGroups) {
     rows.push({
-      swatch: g.color,
-      defId: g.defId,
-      text: `${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
-      section: g.section,
+      swatch: group.color,
+      defId: group.defId,
+      text: `${group.name}${group.n > 1 ? ` ×${group.n}` : ''}`,
+      section: group.section,
     });
   }
   const kinds = new Set<string>();
@@ -7895,6 +7859,11 @@ interface SavedGlossy {
 //   v68 — 2026-07-29: sheet 08's header joins the rest of the plan set. It was set in Georgia
 //        while 01-07 use the condensed face, so one sheet of a printed set arrived in a different
 //        typeface — and Georgia's oldstyle figures made the number read as "o8".
+//
+// NOT bumped for codex/legend-map-agreement: that branch moved the context alphas and the legend
+// families into lib/glossy-filters.ts with identical values, so no pixel changes. A bump is not
+// free — it re-keys the gallery, and an AI sheet a farmer already PAID for stops being found.
+// Bump when the picture changes; do not bump for a refactor.
 const PLAN_VERSION = 'v68';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>

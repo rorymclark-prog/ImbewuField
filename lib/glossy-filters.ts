@@ -27,6 +27,128 @@ export const REFERENCE_SHEET_LABEL: Record<GlossyLayerFilter, string> = {
   all: 'Final integrated masterplan',
 };
 
+/** The eight exact plan sheets do not all use saved design items the same way. A legend is an
+ * index of FULL-STRENGTH content, not of every faint orientation mark: sheets 03, 04, 06 and 08
+ * deliberately retain muted context so a farmer can locate the subject without claiming that
+ * context as the sheet's own content. Keeping that distinction explicit prevents a test from
+ * making a known mismatch "pass" through an undocumented exemption. */
+export type ExactPlanSheetKey =
+  | 'base'
+  | 'sector'
+  | 'zones'
+  | 'water'
+  | 'planting'
+  | 'structures'
+  | 'all'
+  | 'implementation';
+
+export type ExactElementRegister = 'content' | 'context' | 'absent';
+
+/** Full-strength is deliberately a hard boundary. Anything painted below this opacity is context
+ * and must remain visually subordinate; if a future renderer raises it to 1, it also takes on the
+ * obligation to give that element family a legend row. */
+export const EXACT_FULL_STRENGTH_ALPHA = 1;
+export const EXACT_CONTEXT_ALPHA = {
+  zones: 0.2,
+  water: 0.72,
+  structures: 0.24,
+  implementation: 0.88,
+} as const;
+
+export function exactSheetElementRegister(
+  def: Pick<DesignElementDef, 'category' | 'id' | 'name'>,
+  sheet: ExactPlanSheetKey,
+): ExactElementRegister {
+  if (sheet === 'base' || sheet === 'sector') return 'absent';
+  if (sheet === 'zones' || sheet === 'implementation') return 'context';
+  if (sheet === 'all' || itemInFilter(def.category, sheet, def.id)) return 'content';
+  if (sheet === 'water' && isContextElement(def, sheet)) return 'context';
+  if (sheet === 'structures' && itemInFilter(def.category, 'planting', def.id)) return 'context';
+  return 'absent';
+}
+
+export type IntegratedLegendSection = 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
+
+/** Families used by the integrated-sheet legend. An item may intentionally belong to more than
+ * one family under today's editorial taxonomy, so this remains an ordered list of predicates
+ * rather than a one-family lookup. The agreement test checks that every full-strength item hits at
+ * least one family and that each family's printed count equals its matching markers. */
+export const INTEGRATED_LEGEND_FAMILIES: ReadonlyArray<{
+  text: string;
+  swatch: string;
+  section: IntegratedLegendSection;
+  matches: (def: DesignElementDef) => boolean;
+}> = [
+  {
+    text: 'Water storage & fittings', swatch: '#3F879C', section: 'WATER',
+    matches: (def) => def.category === 'water' && !/pond|basin/i.test(def.name),
+  },
+  {
+    text: 'Ponds, basins & water earthworks', swatch: '#6E9DA5', section: 'WATER',
+    matches: (def) =>
+      (sheetForElement(def.category, def.id) === 'water' && def.category === 'earthworks')
+      || (sheetsForElement(def.category, def.id).includes('water') && /pond|basin|banana circle/i.test(def.name)),
+  },
+  {
+    text: 'Production beds & crops', swatch: '#6E7F45', section: 'PLANTING',
+    matches: (def) =>
+      sheetForElement(def.category, def.id) === 'planting'
+      && !(def.category === 'growing' && def.shape === 'circle'),
+  },
+  {
+    text: 'Orchard & support trees', swatch: '#426044', section: 'PLANTING',
+    matches: (def) => def.category === 'growing' && def.shape === 'circle',
+  },
+  {
+    text: 'Structures & work areas', swatch: '#806645', section: 'INFRASTRUCTURE',
+    matches: (def) => def.category === 'structure' || def.category === 'access',
+  },
+  {
+    text: 'Livestock & apiary', swatch: '#C98A2C', section: 'INFRASTRUCTURE',
+    matches: (def) => def.category === 'animal',
+  },
+];
+
+export interface ExactElementLegendGroup {
+  text: string;
+  count: number;
+  defId: string;
+}
+
+/** The exact renderer's item legend inventory, kept pure so the all-eight-sheet agreement check
+ * runs without a browser or React. `sheetLegendRows` consumes this same inventory; map membership
+ * remains independently owned by exactSheetElementRegister/itemInFilter, which is what lets the
+ * test catch a full-strength marker whose legend family is missing. */
+export function exactSheetElementLegendGroups(
+  state: DesignCanvasState,
+  sheet: ExactPlanSheetKey,
+): ExactElementLegendGroup[] {
+  if (sheet === 'base' || sheet === 'sector' || sheet === 'zones' || sheet === 'implementation') return [];
+
+  const content = state.items.filter((item) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    return Boolean(def && exactSheetElementRegister(def, sheet) === 'content');
+  });
+
+  if (sheet === 'all') {
+    const groups: ExactElementLegendGroup[] = [];
+    for (const family of INTEGRATED_LEGEND_FAMILIES) {
+      const matches = content.filter((item) => family.matches(ELEMENTS_BY_ID[item.defId]));
+      if (matches.length) groups.push({ text: family.text, count: matches.length, defId: matches[0].defId });
+    }
+    return groups;
+  }
+
+  const groups = new Map<string, ExactElementLegendGroup>();
+  for (const item of content) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    const group = groups.get(def.name) ?? { text: def.name, count: 0, defId: def.id };
+    group.count += 1;
+    groups.set(def.name, group);
+  }
+  return [...groups.values()];
+}
+
 // NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
 // A GlossyLayerFilter is not just a UI filter: FILTER_TO_LAYER below maps it to the API's
 // RenderLayer union ('overall'|'base'|'sector'|'zone'|'water'|'opportunity'|'planting'|
