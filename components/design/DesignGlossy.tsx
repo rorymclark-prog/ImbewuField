@@ -7893,7 +7893,9 @@ interface SavedGlossy {
 //   v74 — 2026-07-29: climate rainfall now rejects an incomplete series instead of reading a
 //        missing day as zero rain, so a site's monthly normals can change on a sheet.
 //        (Arrived reusing a taken number — sixth collision.)
-const PLAN_VERSION = 'v74';
+//   v75 — 2026-07-29: a water route may take two elbows to get around a structure instead of
+//        falling back to a line through it. Routes are DERIVED, not saved geometry.
+const PLAN_VERSION = 'v75';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

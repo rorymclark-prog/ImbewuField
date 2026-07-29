@@ -13,7 +13,14 @@ import { computeTankSizing } from '../lib/tank-sizing.ts';
 import {
   annualRoofHarvestLitres,
   deriveWaterSystem,
+  metresPerNormUnit,
+  nearestPointOnRing,
+  ringAreaM2,
+  routeAround,
+  segmentCrossesRing,
   statedTankCapacityLitres,
+  toMetres,
+  toNorm,
 } from '../lib/water-system.ts';
 
 type Ring = Array<[number, number]>;
@@ -220,4 +227,121 @@ test('zero and invalid measurements produce sensible finite sheet text', () => {
     const text = [...system.notes, ...system.runs.map((run) => run.label), ...system.nodes.map((node) => node.label)].join(' ');
     assert.doesNotMatch(text, /NaN|Infinity/);
   }
+});
+
+test('normalised water geometry converts through one isotropic metre space on non-square frames', () => {
+  const frame = { imgW: 1200, imgH: 400, mPerPx: 0.25 };
+  const points: Ring = [[0, 0], [0.2, 0.7], [1, 1]];
+
+  assert.deepEqual(metresPerNormUnit(frame), [frame.imgW * frame.mPerPx, frame.imgH * frame.mPerPx]);
+  for (const point of points) {
+    assert.deepEqual(toNorm(toMetres(point, frame), frame), point);
+  }
+
+  const rect: Ring = [[0.1, 0.2], [0.4, 0.2], [0.4, 0.6], [0.1, 0.6]];
+  const widthM = (0.4 - 0.1) * frame.imgW * frame.mPerPx;
+  const heightM = (0.6 - 0.2) * frame.imgH * frame.mPerPx;
+  assert.ok(Math.abs(ringAreaM2(rect, frame) - widthM * heightM) < 1e-9);
+  assert.equal(ringAreaM2([...rect].reverse(), frame), ringAreaM2(rect, frame));
+});
+
+test('nearest-edge selection is made in metres, not misleading normalised distance', () => {
+  const frame = { imgW: 1200, imgH: 300, mPerPx: 0.1 };
+  const openLine: Ring = [[0.3, 0.3], [0.7, 0.3], [0.7, 0.7]];
+  const point: [number, number] = [0.55, 0.5];
+  const hit = nearestPointOnRing(point, openLine, frame, false);
+
+  assert.ok(hit);
+  assert.equal(hit.index, 0, 'the physically nearer horizontal segment must win on a wide frame');
+  assert.ok(Math.abs(hit.point[0] - point[0]) < 1e-9);
+  assert.ok(Math.abs(hit.point[1] - 0.3) < 1e-9);
+});
+
+test('a house-crossing pipe gets at most two clear elbows while an already-clear pipe stays straight', () => {
+  const house: Ring = [[0.4, 0.4], [0.6, 0.4], [0.6, 0.6], [0.4, 0.6]];
+  const crossingFrom: [number, number] = [0.2, 0.5];
+  const crossingTo: [number, number] = [0.8, 0.5];
+  const clearFrom: [number, number] = [0.2, 0.2];
+  const clearTo: [number, number] = [0.8, 0.2];
+
+  assert.equal(segmentCrossesRing(crossingFrom, crossingTo, house), true);
+  const detour = routeAround(crossingFrom, crossingTo, house, FRAME);
+  assert.ok(detour.length >= 2 && detour.length <= 4);
+  for (let i = 1; i < detour.length; i++) {
+    assert.equal(segmentCrossesRing(detour[i - 1], detour[i], house), false);
+  }
+  assert.deepEqual(routeAround(clearFrom, clearTo, house, FRAME), [clearFrom, clearTo]);
+});
+
+test('derived infrastructure is deterministic, finite, conditional, and never mutates the saved design', () => {
+  const items = [
+    { ...item('jojo_5000', 'tank'), x: 0.3, y: 0.35 },
+    { ...item('veg_bed', 'bed'), x: 0.75, y: 0.7, wM: 4, hM: 10, rot: 30 },
+  ];
+  const savedState = state(items);
+  const before = structuredClone(savedState);
+  const first = deriveWaterSystem(savedState, { boundary: BOUNDARY, house: ROOF_100_M2, driveway: [] });
+  const second = deriveWaterSystem(structuredClone(savedState), {
+    boundary: structuredClone(BOUNDARY),
+    house: structuredClone(ROOF_100_M2),
+    driveway: [],
+  });
+
+  assert.deepEqual(second, first);
+  assert.deepEqual(savedState, before);
+  assert.ok(first.nodes.some((node) => node.kind === 'tank' && !node.proposed));
+  assert.ok(first.nodes.some((node) => node.kind === 'first_flush'));
+  assert.ok(first.nodes.some((node) => node.kind === 'pump'));
+  assert.ok(first.runs.some((run) => run.kind === 'gutter'));
+  assert.ok(first.runs.some((run) => run.kind === 'main'));
+  assert.ok(first.runs.some((run) => run.kind === 'drip_header'));
+  assert.ok(first.runs.some((run) => run.kind === 'drip_lateral'));
+  for (const point of [
+    ...first.nodes.map((node) => node.at),
+    ...first.runs.flatMap((run) => run.points),
+  ]) {
+    assert.ok(Number.isFinite(point[0]) && Number.isFinite(point[1]));
+  }
+});
+
+test('a farmer-drawn pipe remains existing infrastructure and suppresses a parallel proposed main', () => {
+  const saved = state([
+    { ...item('jojo_5000', 'tank'), x: 0.2, y: 0.2 },
+    { ...item('veg_bed', 'bed'), x: 0.8, y: 0.8 },
+  ]);
+  saved.lines = [{ id: 'existing-main', kind: 'pipe', points: [[0.2, 0.2], [0.8, 0.8]] }];
+  const system = deriveWaterSystem(saved, { boundary: BOUNDARY, house: [], driveway: [] });
+  const mainRuns = system.runs.filter((run) => run.kind === 'main');
+
+  assert.ok(mainRuns.some((run) => run.proposed === false && run.label === 'Existing pipe'));
+  assert.equal(mainRuns.some((run) => run.label === 'Buried irrigation main'), false);
+});
+
+test('invalid frames and absent sources produce empty or source-honest systems', () => {
+  const broken = state([item('jojo_5000')]);
+  broken.frame = { ...broken.frame, mPerPx: 0 };
+  assert.deepEqual(
+    deriveWaterSystem(broken, { boundary: BOUNDARY, house: ROOF_100_M2, driveway: [] }),
+    { runs: [], nodes: [], notes: [], storageNotes: [] },
+  );
+
+  const bedsOnly = derive([item('veg_bed')], []);
+  assert.equal(bedsOnly.runs.some((run) => run.kind === 'gutter' || run.kind === 'greywater'), false);
+  assert.equal(bedsOnly.nodes.some((node) => node.kind === 'pump' || node.kind === 'diverter'), false);
+});
+
+test('a proposed overflow basin never leaves even a very small traced boundary', () => {
+  const tinyBoundary: Ring = [[0.49, 0.49], [0.51, 0.49], [0.51, 0.51], [0.49, 0.51]];
+  const saved = state([
+    { ...item('jojo_5000', 'tank'), x: 0.5, y: 0.5 },
+    { ...item('veg_bed', 'bed'), x: 0.505, y: 0.505 },
+  ]);
+  const system = deriveWaterSystem(saved, { boundary: tinyBoundary, house: [], driveway: [] });
+  const basin = system.nodes.find((node) => node.kind === 'basin' && node.proposed);
+
+  assert.ok(basin, 'tank plus irrigated bed needs a safe overflow destination');
+  assert.ok(
+    basin.at[0] > 0.49 && basin.at[0] < 0.51 && basin.at[1] > 0.49 && basin.at[1] < 0.51,
+    `overflow basin escaped the property at ${basin.at.join(', ')}`,
+  );
 });
