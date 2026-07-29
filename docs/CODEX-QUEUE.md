@@ -867,6 +867,69 @@ Post the before/after (old polish-collapse vs new) and the registration measurem
 
 ---
 
+## 36. Failed enqueues leave orphaned uploads forever: the renders write rule breaks delete
+
+Found live during the emulator end-to-end run (evidence on issue #35, 30 July). `storage.rules`:
+
+```
+match /renders/{uid}/{allPaths=**} {
+  allow read:  if request.auth != null && request.auth.uid == uid;
+  allow write: if request.auth != null && request.auth.uid == uid
+               && request.resource.size < 12 * 1024 * 1024
+               && request.resource.contentType.matches('image/.*');
+}
+```
+
+`write` covers create, update AND delete — but on a delete `request.resource` is null, so
+`request.resource.size` doesn't evaluate to false, it **throws** (emulator log: "EvaluationException
+… storage.rules line [43] … Null value error"), and the delete is denied. Consequence:
+`enqueueRenderJob`'s rollback path (lib/render-jobs.ts — "on ANY failure every already-uploaded
+object is rolled back so no orphans are left") has NEVER actually deleted anything. Every failed
+enqueue in production history has left its `input-*.jpg` (and mask) objects orphaned in Storage,
+and the code's own comment claims the opposite.
+
+**Fix**: the standard split —
+
+```
+allow create, update: if request.auth != null && request.auth.uid == uid
+                      && request.resource.size < 12 * 1024 * 1024
+                      && request.resource.contentType.matches('image/.*');
+allow delete: if request.auth != null && request.auth.uid == uid;
+```
+
+Owner-scoped delete is safe here: a user deleting their own render inputs is exactly what rollback
+wants, and the worker's outputs are Admin-SDK-written (rules don't bind it) — though note a user
+COULD then delete a finished output object they own; the job doc survives, the gallery record
+holds its own copy, so that is acceptable. Verify in the emulator (see recipe below) that a forced
+enqueue failure now rolls back cleanly. **Do not deploy the rules** — flag it; Rory or Claude
+deploys rules in daylight hours.
+
+Optionally also: a small worker or scheduled cleanup for the existing production orphans —
+count them first (list `renders/**` objects whose jobId has no `render_jobs` doc or whose doc
+never reached 'running') and report the number before deleting anything.
+
+### The emulator render-loop recipe (free, no OpenAI, no production traffic)
+
+What the live verification used; reusable for any render-flow work:
+
+```
+1. firebase emulators:start --only auth,firestore,storage --project fieldproof-sa
+2. npm run seed:emulator        # test user + profile + app_config/renders kill switch
+3. npm run dev:emulator         # port 4243/4244 — NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1
+4. Seed demo canvas: buildDemoStorageSeeds() -> localStorage (S1 recipe), open
+   /design?lat=-27.72623&lon=31.96304, sign in as test@imbewufield.local / testpass123
+5. Renders enqueue to the EMULATOR Firestore/Storage; no worker runs. Complete jobs the way
+   functions/src/index.ts does (per-sheet {status:'done', outputPath:'renders/{uid}/{jobId}/
+   output-{key}.png'}, then job {status:'complete'}) with the Admin SDK against
+   FIRESTORE_EMULATOR_HOST=127.0.0.1:8080; storage via the REST endpoint
+   http://127.0.0.1:9199 with header 'Authorization: Bearer owner' (the admin bypass —
+   the Admin SDK's own GCS client ignores the storage emulator and hangs).
+6. Gotcha: input-{key}.jpg contains PNG bytes (data-URL upload) — sniff magic, don't trust
+   the extension.
+```
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle

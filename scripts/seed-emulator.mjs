@@ -118,6 +118,14 @@ async function seedFirestore(uid) {
   console.log('Firestore seeded (emulator only):');
   console.log(`  profile      -> profiles/${uid}`);
   console.log(`  saved place  -> user_map_data/${uid}/data/places (the path the map actually syncs)`);
+
+  // The AI-render kill switch (firestore.rules rendersOn()). Without this doc every emulator
+  // enqueue dies at the rules gate with an opaque "evaluation error", which reads like a bug in
+  // the flow when it is really just an unseeded config doc. Rendering in the emulator costs
+  // nothing — no Cloud Function worker runs here, so jobs sit 'queued' until a test completes
+  // them (see the emulator render-loop recipe in docs/CODEX-QUEUE.md item 36).
+  await db.doc('app_config/renders').set({ enabled: true }, { merge: true });
+  console.log('  kill switch  -> app_config/renders { enabled: true } (emulator renders allowed)');
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────
