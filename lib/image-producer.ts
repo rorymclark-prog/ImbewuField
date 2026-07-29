@@ -290,6 +290,9 @@ export function blendProtectedPixels(
   if (sourcePixels.length !== modelPixels.length || modelPixels.length !== maskPixels.length) {
     throw new Error('restore: image buffers must have the same size');
   }
+  if (modelPixels.length % 4 !== 0) {
+    throw new Error('restore: image buffers must contain whole RGBA pixels');
+  }
 
   const out = new Uint8ClampedArray(modelPixels.length);
   for (let i = 0; i < modelPixels.length; i += 4) {
@@ -325,6 +328,9 @@ export function blendProtectedPixels(
  * mask apart from a broken one instead of failing invisibly.
  */
 export function maskEditableFraction(maskPixels: Uint8ClampedArray): number {
+  if (maskPixels.length % 4 !== 0) {
+    throw new Error('mask: image buffer must contain whole RGBA pixels');
+  }
   let editable = 0;
   let total = 0;
   for (let i = 0; i < maskPixels.length; i += 4) {
@@ -348,6 +354,9 @@ export function countProtectedPixelMismatches(
 ): number {
   if (sourcePixels.length !== outputPixels.length || outputPixels.length !== maskPixels.length) {
     throw new Error('restore verification: image buffers must have the same size');
+  }
+  if (outputPixels.length % 4 !== 0) {
+    throw new Error('restore verification: image buffers must contain whole RGBA pixels');
   }
 
   let mismatches = 0;
