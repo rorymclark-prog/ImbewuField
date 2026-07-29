@@ -86,34 +86,46 @@ function clampPct(n: number): number {
   return Math.max(0, Math.min(100, Math.round(n)));
 }
 
+// Counts come from persisted browser data, which can outlive the schema that
+// wrote it. Treating Infinity or a fractional count as progress lets one corrupt
+// record turn an untouched step into "done".
+function safeCount(n: number): number {
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+}
+
 /**
  * Compute the 5-stage completion score for a site. Pure function — pass in
  * already-loaded booleans/counts, get back an overall % and a per-step
  * breakdown suitable for rendering directly.
  */
 export function computeCompletionScore(inputs: CompletionScoreInputs): CompletionScoreResult {
-  const locatedPct = inputs.hasSite ? 100 : 0;
+  const locatedPct = inputs.hasSite === true ? 100 : 0;
+  const boundaryPointCount = safeCount(inputs.boundaryPointCount);
+  const surveyFilledFields = safeCount(inputs.surveyFilledFields);
+  const surveyTotalFields = safeCount(inputs.surveyTotalFields);
+  const zoneCount = safeCount(inputs.zoneCount);
+  const elementCount = safeCount(inputs.elementCount);
 
   // A boundary needs at least 3 points to be a real polygon; treat 1-2 as a
   // partial start (e.g. the farmer began tracing but didn't close the shape).
-  const boundaryPct = inputs.boundaryPointCount >= 3
+  const boundaryPct = boundaryPointCount >= 3
     ? 100
-    : clampPct((inputs.boundaryPointCount / 3) * 100);
+    : clampPct((boundaryPointCount / 3) * 100);
 
-  const surveyPct = inputs.surveyTotalFields > 0
-    ? clampPct((inputs.surveyFilledFields / inputs.surveyTotalFields) * 100)
+  const surveyPct = surveyTotalFields > 0
+    ? clampPct((surveyFilledFields / surveyTotalFields) * 100)
     : 0;
 
   // Design is "done" once there's at least one zone AND one placed element —
   // a bare zone ring with nothing planted, or a stray icon with no zones,
   // both read as partial rather than complete.
-  const hasZones = inputs.zoneCount > 0;
-  const hasElements = inputs.elementCount > 0;
+  const hasZones = zoneCount > 0;
+  const hasElements = elementCount > 0;
   const designPct = hasZones && hasElements
     ? 100
     : (hasZones || hasElements ? 50 : 0);
 
-  const cropPlanPct = inputs.hasCropPlan ? 100 : 0;
+  const cropPlanPct = inputs.hasCropPlan === true ? 100 : 0;
 
   const steps: CompletionStep[] = [
     { key: 'located', label: LABELS.located, done: locatedPct === 100, pct: locatedPct },
@@ -139,10 +151,10 @@ export function computeCompletionScore(inputs: CompletionScoreInputs): Completio
  * (e.g. only show "Your land" when a boundary is actually traced near this site).
  */
 export function deriveSiteStage(inputs: CompletionScoreInputs): SiteStage {
-  const hasDesign = inputs.zoneCount > 0 || inputs.elementCount > 0;
-  if (inputs.hasCropPlan && hasDesign) return 'planned';
-  if (hasDesign || inputs.surveyFilledFields > 0) return 'designed';
-  if (inputs.boundaryPointCount >= 3) return 'traced';
-  if (inputs.hasSite) return 'saved';
+  const hasDesign = safeCount(inputs.zoneCount) > 0 || safeCount(inputs.elementCount) > 0;
+  if (inputs.hasCropPlan === true && hasDesign) return 'planned';
+  if (hasDesign || safeCount(inputs.surveyFilledFields) > 0) return 'designed';
+  if (safeCount(inputs.boundaryPointCount) >= 3) return 'traced';
+  if (inputs.hasSite === true) return 'saved';
   return 'scout';
 }
