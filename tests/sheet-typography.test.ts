@@ -106,3 +106,33 @@ test('a phasing week baseline clears the chip by the week font ascent', () => {
   assert.match(block, /chipTop \+ chipS \+ weekAscent \+ weekTopGap/);
   assert.doesNotMatch(block, /lineH \* 0\.35/);
 });
+
+test('sector labels sit directly on the photograph with a dark halo, never an opaque chip', () => {
+  const labelStart = SOURCE.indexOf('const labelAt =');
+  const directStart = SOURCE.indexOf('const directLabelAt =', labelStart);
+  const directFlushStart = SOURCE.indexOf('const flushDirectLabels =', directStart);
+  const paletteStart = SOURCE.indexOf('// Regional-assumption palette', directFlushStart);
+
+  assert.ok(labelStart >= 0 && directStart > labelStart, 'legacy sector label painter exists');
+  assert.ok(directFlushStart > directStart && paletteStart > directFlushStart, 'composed sector label painter exists');
+
+  const legacyPainter = SOURCE.slice(labelStart, directStart);
+  const composedPainter = SOURCE.slice(directFlushStart, paletteStart);
+
+  for (const [name, painter] of [
+    ['legacy', legacyPainter],
+    ['composed', composedPainter],
+  ] as const) {
+    const strokeAt = painter.indexOf('strokeText(');
+    const fillAt = painter.indexOf('fillText(');
+    assert.ok(strokeAt >= 0, `${name} sector labels draw a halo`);
+    assert.ok(fillAt > strokeAt, `${name} sector labels paint coloured text over the halo`);
+    assert.doesNotMatch(
+      painter,
+      /(?:fill|stroke)(?:Rect|RoundRect)|roundRect\(/,
+      `${name} sector labels must not punch an opaque chip through the aerial`,
+    );
+  }
+
+  assert.match(composedPainter, /lineJoin = 'round'/, 'wide composed-label halos keep soft corners');
+});
