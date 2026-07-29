@@ -7569,7 +7569,7 @@ async function composeStyleSheet(
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
   // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
   // reserves no extra space and changes nothing until NEXT_PUBLIC_ARCGIS_API_KEY is actually set.
-  const attributionLine = exactGeometry ? basemapAttribution() : '';
+  const attributionLine = basemapAttribution();
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH + footerHeadingH + Math.round(legendW * 0.035)
     : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
@@ -7666,6 +7666,14 @@ async function composeStyleSheet(
     ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
     ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
     ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+    // AN ILLUSTRATED SHEET IS BUILT ON THE SAME PHOTOGRAPH. The credit was first added only to the
+    // exact branch, which reads as reasonable until you follow where the imagery goes: satDataUrl
+    // is the underlay handed to the AI hybrid and full-treatment passes, so the illustrated sheets
+    // are DERIVED from Esri's imagery too — and those are the ones a farmer pays for. Crediting the
+    // free sheet and not the paid one would leave the obligation unmet exactly where it matters.
+    if (attributionLine) {
+      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+    }
   }
 
   // ── Scale bar (over the map, bottom-left) ──

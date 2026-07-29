@@ -156,7 +156,9 @@ export function planEsriTiles(
  *  to this host 403s outright, so `token` is a required parameter rather than an optional one a
  *  caller could forget. */
 export function esriTileUrl(z: number, x: number, y: number, token: string): string {
-  return `${ESRI_TILE_URL}/${z}/${y}/${x}?token=${token}`;
+  // Encoded, like buildSatelliteUrl does with the Mapbox token two files away. A key is expected to
+  // be URL-safe, but "expected to be" is how a key with a '+' in it silently fetches nothing.
+  return `${ESRI_TILE_URL}/${z}/${y}/${x}?token=${encodeURIComponent(token)}`;
 }
 
 /** Number of tile requests a plan will make — callers log this rather than fetch blind. */
