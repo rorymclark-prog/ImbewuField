@@ -8009,7 +8009,16 @@ interface SavedGlossy {
 //        and an earlier fix had moved the label INSIDE the wedge to dodge the berg LABEL, landing it
 //        under the berg ARROW instead. Now offset perpendicular to the shared ray. Measured, not
 //        eyeballed: the label colour went from 20 px to 1 743 px in the rendered sheet.
-const PLAN_VERSION = 'v86';
+//   v87 — 2026-07-29: the plan sheets draw REAL contours. They had been drawing straight parallel
+//        lines: lib/elevation.ts sampled FIVE points (centre, N, S, E, W) from SRTM 30 m, derived
+//        ONE slope and ONE aspect for the whole farm, and ruled lines at that angle — lib/contours.ts
+//        said so in its own header. A farmer siting a swale on contour was given a line that could
+//        not bend, because there was one number behind it. The real tracer already existed at
+//        app/api/contours/route.ts (Mapbox terrain-RGB stitched to a grid, marchingsquares
+//        isoLines) and only the interactive map used it. Now lib/sheet-contours.ts feeds the sheets
+//        from the same source, clipped to the plot, and keeps the too-flat / unavailable honesty:
+//        land the data cannot resolve still SAYS so rather than drawing confident wrong lines.
+const PLAN_VERSION = 'v87';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
