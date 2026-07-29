@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, MIN_FONT_SIZE, SAFE_INSET_RATIO,
+  leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath, minSizeFor,
+  MIN_FONT_SIZE, MIN_RELATIVE_SIZE, SAFE_INSET_RATIO,
   type LeaderSide,
 } from '@/lib/leader-labels';
 import { calculateBoundaryPresentationLayout } from '@/lib/reference-presentation';
@@ -216,4 +217,36 @@ test('the leader never runs along the element row, however close the label is to
   const moved = leaderPath([500, 400], 300, 200, 640);
   assert.equal(moved.elbow[1], 640, 'the elbow tracks the LABEL, not the element');
   assert.equal(moved.from[1], 400, 'the anchor stays on the element');
+});
+
+test('callouts on one sheet stay within a readable spread of each other', () => {
+  // Rendered water sheet 04 of the Ubhejane demo had SWALE at full size, GREYWATER LINE middling
+  // and JOJO TANK 2500L at a quarter of it — three sizes on one page. The margin is genuinely too
+  // narrow for the long name; shrinking to fit it was the wrong answer.
+  const base = leaderLabelFontSize(2517);
+  const narrow = { W: 2517, plotX0: 0.075, plotX1: 0.93, fontSize: base, measure: FALLBACK };
+
+  const short = placeLeaderLabel({ text: 'SWALE', side: 'right', ...narrow });
+  const long = placeLeaderLabel({ text: 'JOJO TANK 2500L', side: 'left', ...narrow });
+  const longest = placeLeaderLabel({ text: 'GREYWATER DIVERTER & FILTER ×3', side: 'left', ...narrow });
+
+  for (const p of [short, long, longest]) {
+    assert.ok(p.fontSize >= minSizeFor(base),
+      `${p.fontSize} is below the sheet floor ${minSizeFor(base)}`);
+  }
+  // The spread between the biggest and smallest callout on one sheet stays inside the band.
+  const sizes = [short.fontSize, long.fontSize, longest.fontSize];
+  assert.ok(Math.min(...sizes) / Math.max(...sizes) >= MIN_RELATIVE_SIZE - 0.01,
+    `sizes diverged: ${sizes.join(', ')}`);
+});
+
+test('a label that overruns its margin still starts on the sheet, never off the left edge', () => {
+  const base = leaderLabelFontSize(2517);
+  const placed = placeLeaderLabel({
+    text: 'GREYWATER DIVERTER & FILTER ×3', side: 'left',
+    W: 2517, plotX0: 0.075, plotX1: 0.93, fontSize: base, measure: FALLBACK,
+  });
+  // Overrunning onto the map is the deliberate trade. Leaving the sheet is not.
+  assert.ok(placed.x >= Math.round(2517 * SAFE_INSET_RATIO) - 1, `x=${placed.x} is outside the safe inset`);
+  assert.ok(placed.x + placed.textW <= 2517, 'the label must not run off the right edge either');
 });

@@ -66,6 +66,31 @@ export const LABEL_GAP_RATIO = 0.025;
 export const MIN_FONT_SIZE = 12;
 
 /**
+ * A callout may never shrink below this fraction of the sheet's own callout size.
+ *
+ * MIN_FONT_SIZE alone is an absolute floor, and on a 2517px sheet the base size is 50px — so a name
+ * that did not fit its margin was allowed to fall all the way to 12px, a quarter the size of its
+ * neighbours. Rendered water sheet 04 of the Ubhejane demo showed exactly that: "SWALE" full size,
+ * "GREYWATER LINE" middling, "JOJO TANK 2500L" a barely-legible scratch — three sizes on one sheet,
+ * which reads as a broken page rather than a designed one.
+ *
+ * The margins got tight when sheets started following the traced boundary (v57): the plot now fills
+ * the frame, so a side margin can be ~70px on a sheet whose callouts want 380px. Shrinking to fit
+ * that is not a solution, it is just a quieter failure.
+ *
+ * So the label stops shrinking here and is allowed to overrun its margin onto the map instead. That
+ * is safe: `placeLeaderLabel` already clamps x to the safe inset so nothing leaves the sheet, and
+ * drawReferenceMapText paints a dark halo under every glyph, which is what keeps the full-size
+ * "SWALE" readable where it already crosses the map today.
+ */
+export const MIN_RELATIVE_SIZE = 0.72;
+
+/** The smallest this particular sheet's callouts may become — never a quarter of their neighbours. */
+export function minSizeFor(requestedFontSize: number): number {
+  return Math.max(MIN_FONT_SIZE, Math.round(requestedFontSize * MIN_RELATIVE_SIZE));
+}
+
+/**
  * Preferred map-callout size before a particular long name is shrunk to fit its margin.
  *
  * A bitmap-pixel floor cannot protect a phone preview: the browser scales the whole sheet, floor
@@ -115,8 +140,12 @@ export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement 
   let fontSize = input.fontSize;
   let textW = measure(text, fontSize);
   // Shrink to fit rather than clip. A name is the whole point of a callout, so losing its tail is
-  // losing the information; losing a couple of points of size is not.
-  while (textW > available && fontSize > MIN_FONT_SIZE) {
+  // losing the information; losing a couple of points of size is not. But only down to
+  // minSizeFor() — past that the label stops shrinking and overruns onto the map, because a sheet
+  // whose callouts are four different sizes reads worse than one whose longest name crosses the
+  // plot edge. See MIN_RELATIVE_SIZE.
+  const floor = minSizeFor(input.fontSize);
+  while (textW > available && fontSize > floor) {
     fontSize -= 1;
     textW = measure(text, fontSize);
   }

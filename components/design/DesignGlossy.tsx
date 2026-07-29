@@ -7882,7 +7882,12 @@ interface SavedGlossy {
 //        elements at a similar height stop merging into one line that appears to point at the
 //        wrong icon. Found by rendering the exact sheet 07 for the Ubhejane demo and looking at
 //        it: "JOJO TANK 2500L" read as pointing at the compost bay.
-const PLAN_VERSION = 'v66';
+//   v67 — 2026-07-29: a callout can no longer shrink to a quarter of its neighbours. Rendered
+//        water sheet 04 had SWALE full size, GREYWATER LINE middling and JOJO TANK 2500L a
+//        scratch — the margins went narrow when sheets started following the boundary (v57), and
+//        shrink-to-fit turned that into three type sizes on one page. It now stops at 72% of the
+//        sheet's size and overruns onto the map, where the existing halo keeps it readable.
+const PLAN_VERSION = 'v67';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
