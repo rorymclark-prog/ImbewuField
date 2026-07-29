@@ -6329,7 +6329,13 @@ async function composeSectorSheet(
     'Sector analysis',
     false,
     true,
-    { sheetNumber: '02', legendRows, footerText: analysis.noteText },
+    {
+      sheetNumber: '02',
+      legendRows,
+      footerHeading: 'NOTES & PROVENANCE',
+      footerText: analysis.noteText,
+      footerBox: true,
+    },
   );
 }
 
@@ -7226,7 +7232,13 @@ async function composeStyleSheet(
   layerLabel: string,
   includeToolGlyphs = true,
   exactGeometry = false,
-  options: { sheetNumber?: string; legendRows?: StyleLegendRow[]; footerHeading?: string; footerText?: string } = {},
+  options: {
+    sheetNumber?: string;
+    legendRows?: StyleLegendRow[];
+    footerHeading?: string;
+    footerText?: string;
+    footerBox?: boolean;
+  } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
   const W = map.width;
@@ -7352,7 +7364,9 @@ async function composeStyleSheet(
   };
   const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
-  const footerTextW = maxX - lx;
+  const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
+  const footerTextX = lx + footerBoxPad;
+  const footerTextW = maxX - lx - footerBoxPad * 2;
   const wrapFooterText = (value: string): string[] => {
     ctx.font = options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
@@ -7378,7 +7392,10 @@ async function composeStyleSheet(
   // reserves no extra space and changes nothing until NEXT_PUBLIC_ARCGIS_API_KEY is actually set.
   const attributionLine = basemapAttribution();
   const footerBlockH = customFooterLines.length
-    ? customFooterLines.length * footerLineH + footerHeadingH + Math.round(legendW * 0.035)
+    ? customFooterLines.length * footerLineH
+      + footerHeadingH
+      + Math.round(legendW * 0.035)
+      + footerBoxPad * 2
     : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
@@ -7436,17 +7453,32 @@ async function composeStyleSheet(
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8A8172';
   if (customFooterLines.length) {
-    let footerY = footerTop + Math.round(legendW * 0.035);
-    if (options.footerHeading) {
-      ctx.strokeStyle = 'rgba(11,18,11,0.2)';
+    if (options.footerBox) {
+      ctx.strokeStyle = 'rgba(31,77,43,0.46)';
       ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(lx, footerTop);
-      ctx.lineTo(maxX, footerTop);
+      roundRectPath(
+        ctx,
+        lx,
+        footerTop,
+        maxX - lx,
+        footerBlockH,
+        Math.max(3, Math.round(legendW * 0.012)),
+      );
       ctx.stroke();
+    }
+    let footerY = footerTop + footerBoxPad + Math.round(legendW * 0.035);
+    if (options.footerHeading) {
+      if (!options.footerBox) {
+        ctx.strokeStyle = 'rgba(11,18,11,0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(lx, footerTop);
+        ctx.lineTo(maxX, footerTop);
+        ctx.stroke();
+      }
       ctx.fillStyle = '#1F4D2B';
       ctx.font = `800 ${Math.round(legendW * 0.034)}px ${REFERENCE_LABEL_FONT}`;
-      ctx.fillText(options.footerHeading, lx, footerY);
+      ctx.fillText(options.footerHeading, footerTextX, footerY);
       footerY += footerHeadingH;
       ctx.fillStyle = '#6C6457';
       ctx.font = `600 ${footerFs}px ${SHEET_BODY_FONT}`;
@@ -7454,7 +7486,7 @@ async function composeStyleSheet(
       ctx.font = `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
     }
     for (const line of customFooterLines) {
-      ctx.fillText(line, lx, footerY);
+      ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
     }
   } else if (exactGeometry) {
@@ -7820,7 +7852,7 @@ interface SavedGlossy {
 //        they breathe and ours did not. SECTOR_ENERGY_TIP is the one rule both renderers now read.
 //        Bearings, half-widths and the sourced regional record are untouched — only where the
 //        shape ends.
-const PLAN_VERSION = 'v89';
+const PLAN_VERSION = 'v90';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
