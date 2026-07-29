@@ -3014,7 +3014,17 @@ function drawBlueprintBoundary(
     ));
   // This is composited after generation, so it can match the reference set without teaching the
   // image model to invent a hedge. A dark casing keeps the lime wire readable on both forest and
-  // pale ground; sparse perpendicular crossbars read as fence posts, not editor control points.
+  // pale ground.
+  //
+  // POSTS ARE ROUND, NOT CROSSBARS. This used to stroke a short perpendicular bar at each interval
+  // and the comment claimed they "read as fence posts". They do not — they read as tick marks on a
+  // drawing, which is exactly what Rory has now said more than once. The AI prompt has required the
+  // right thing for a while ("Posts are circles, never ticks, dashes or leaves", rule 9), so the
+  // deterministic renderer was contradicting the app's own stated rule, and the exact sheets were
+  // the ones getting it wrong.
+  //
+  // Seen from above, a post IS a circle: the wire runs THROUGH it, so each post is drawn over the
+  // wire as a filled disc with a dark casing, at the same spacing the crossbars used.
   ctx.save();
   for (const seg of segments) {
     if (seg.length < 2) continue;
@@ -3030,7 +3040,8 @@ function drawBlueprintBoundary(
     ctx.lineWidth = 2.3;
     ctx.stroke();
   }
-  const postHalf = Math.max(6, W * 0.0046);
+  // Radius, not half-length: a crossbar had to be long to be visible, a post has to be round.
+  const postR = Math.max(3.2, W * 0.0026);
   const step = Math.max(42, W * 0.03);
   for (const seg of segments) {
     // Open run: post ticks along each consecutive pair, never wrapping the last point back to the
@@ -3045,16 +3056,11 @@ function drawBlueprintBoundary(
       for (let t = 0; t < len; t += step) {
         const cx = x1 + dx * (t / len), cy = y1 + dy * (t / len);
         ctx.beginPath();
-        ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
-        ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
-        ctx.strokeStyle = 'rgba(20,30,20,0.82)';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(cx - nx * postHalf, cy - ny * postHalf);
-        ctx.lineTo(cx + nx * postHalf, cy + ny * postHalf);
-        ctx.strokeStyle = '#B7DE6F';
-        ctx.lineWidth = 2;
+        ctx.arc(cx, cy, postR, 0, Math.PI * 2);
+        ctx.fillStyle = '#D7E9A8';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(20,30,20,0.85)';
+        ctx.lineWidth = 1.6;
         ctx.stroke();
       }
     }
@@ -7909,7 +7915,12 @@ interface SavedGlossy {
 //        statuses are closed sets, sheet keys are checked against the canonical list, and a
 //        base64 payload must be well-formed. A malformed job could previously reach the
 //        completion handler and be presented as a result.
-const PLAN_VERSION = 'v79';
+//   v80 — 2026-07-29: the property boundary is a POST-AND-WIRE fence, not a ticked line. The exact
+//        renderer stroked a perpendicular crossbar at each interval while the AI prompt has long
+//        required "posts are circles, never ticks" — so the deterministic sheets contradicted the
+//        app's own rule. Posts are now round, drawn over the wire. (Rory, twice: "it must be wire
+//        and post, not these lines".)
+const PLAN_VERSION = 'v80';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
