@@ -37,7 +37,12 @@ type Tombstones = Record<string, number>; // id → deletedAt (ms)
 type SurveyLike = { siteId?: string; placeId: string; updatedAt?: number; savedAt?: string };
 type SurveyMap = Record<string, SurveyLike>;
 
-const surveyTs = (s: SurveyLike) => s.updatedAt ?? (s.savedAt ? Date.parse(s.savedAt) || 0 : 0);
+function timestampOrZero(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : 0;
+}
+
+const surveyTs = (s: SurveyLike) =>
+  timestampOrZero(s.updatedAt ?? (s.savedAt ? Date.parse(s.savedAt) : 0));
 
 // Read every per-site survey out of localStorage into a {siteId: survey} map. Legacy blobs
 // saved before the siteId field existed are keyed by placeId instead — fall back to that so
@@ -85,7 +90,8 @@ function notifySurveys() {
 const DESIGN_STUDIO_KEY = 'imbewu_design_studio_v1';
 type DesignStateLike = { siteId: string; updatedAt?: string };
 type DesignStore = Record<string, DesignStateLike>;
-const designTs = (s: DesignStateLike) => (s.updatedAt ? Date.parse(s.updatedAt) || 0 : 0);
+const designTs = (s: DesignStateLike) =>
+  timestampOrZero(s.updatedAt ? Date.parse(s.updatedAt) : 0);
 
 function readLocalDesign(): DesignStore {
   try { const v = JSON.parse(localStorage.getItem(DESIGN_STUDIO_KEY) ?? '{}'); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
@@ -126,13 +132,21 @@ function parseShapes(shapesJson: unknown): ShapeFC | null {
 
 function pruneTombstones(t: Tombstones, now: number): Tombstones {
   const out: Tombstones = {};
-  for (const [id, ts] of Object.entries(t)) if (now - ts < TOMB_TTL_MS) out[id] = ts;
+  const referenceNow = timestampOrZero(now);
+  for (const [id, ts] of Object.entries(t)) {
+    if (Number.isFinite(ts) && ts >= 0 && referenceNow - ts < TOMB_TTL_MS) out[id] = ts;
+  }
   return out;
 }
 
 function mergeTombstones(a: Tombstones, b: Tombstones): Tombstones {
-  const out: Tombstones = { ...a };
-  for (const [id, ts] of Object.entries(b)) out[id] = Math.max(out[id] ?? 0, ts);
+  const out: Tombstones = {};
+  for (const source of [a, b]) {
+    for (const [id, ts] of Object.entries(source)) {
+      if (!Number.isFinite(ts) || ts < 0) continue;
+      out[id] = Math.max(out[id] ?? 0, ts);
+    }
+  }
   return out;
 }
 
@@ -161,19 +175,20 @@ export function mergeItems<T>(
   for (const it of [...remote, ...local]) {
     const id = getId(it);
     const cur = byId.get(id);
-    if (!cur || getTs(it) >= getTs(cur)) byId.set(id, it);
+    if (!cur || timestampOrZero(getTs(it)) >= timestampOrZero(getTs(cur))) byId.set(id, it);
   }
   const items = [...byId.values()].filter((it) => {
     const tomb = deleted[getId(it)];
-    return !(tomb && tomb > getTs(it)); // deleted after its last edit → stays deleted
+    return !(tomb !== undefined && tomb > timestampOrZero(getTs(it))); // deleted after its last edit → stays deleted
   });
   return { items, deleted };
 }
 
 const placeId = (p: SavedPlace) => p.id;
-const placeTs = (p: SavedPlace) => p.updatedAt ?? 0;
+const placeTs = (p: SavedPlace) => timestampOrZero(p.updatedAt);
 const waterId = (p: WaterPoint) => p.id;
-const waterTs = (p: WaterPoint) => p.updatedAt ?? (p.createdAt ? Date.parse(p.createdAt) || 0 : 0);
+const waterTs = (p: WaterPoint) =>
+  timestampOrZero(p.updatedAt ?? (p.createdAt ? Date.parse(p.createdAt) : 0));
 
 // Delete-side newest-wins guard — mirrors the `tomb > ts` check upsertPlace/upsertWaterPoint/
 // upsertSiteElement already do from the UPSERT side ("a newer deletion outranks this edit, drop
@@ -193,7 +208,9 @@ const waterTs = (p: WaterPoint) => p.updatedAt ?? (p.createdAt ? Date.parse(p.cr
 //
 // Pure + exported (like mergeItems above) so it's directly table-testable without Firestore.
 export function isDeleteStale(remoteItemTs: number | undefined, deletedAtMs: number): boolean {
-  return remoteItemTs !== undefined && remoteItemTs > deletedAtMs;
+  if (remoteItemTs === undefined) return false;
+  if (!Number.isFinite(deletedAtMs) || deletedAtMs < 0) return true;
+  return timestampOrZero(remoteItemTs) > deletedAtMs;
 }
 
 export interface SyncHandlers {
@@ -364,8 +381,8 @@ export async function upsertPlace(uid: string, place: SavedPlace): Promise<void>
       const data = snap.exists() ? snap.data() : {};
       const remote: SavedPlace[] = data.places ?? [];
       const deleted: Tombstones = { ...(data.deleted ?? {}) };
-      const tomb = deleted[place.id] ?? 0;
-      const ts = place.updatedAt ?? 0;
+      const tomb = timestampOrZero(deleted[place.id]);
+      const ts = placeTs(place);
       if (tomb > ts) {
         // A newer deletion outranks this edit — keep the item deleted, drop the upsert.
         tx.set(ref, { places: remote.filter((p) => p.id !== place.id), deleted, updatedAt: serverTimestamp() });
@@ -437,7 +454,7 @@ export async function upsertWaterPoint(uid: string, pt: WaterPoint): Promise<voi
       const data = snap.exists() ? snap.data() : {};
       const remote: WaterPoint[] = data.points ?? [];
       const deleted: Tombstones = { ...(data.deleted ?? {}) };
-      const tomb = deleted[pt.id] ?? 0;
+      const tomb = timestampOrZero(deleted[pt.id]);
       const ts = waterTs(pt);
       if (tomb > ts) {
         // A newer deletion outranks this edit — keep the item deleted, drop the upsert.

@@ -84,6 +84,89 @@ test('union by id: newest updatedAt wins between remote and local copies of the 
   assert.deepEqual(items, [{ id: 'p1', updatedAt: 9000 }]);
 });
 
+test('equal timestamps resolve to the local row deterministically', () => {
+  const remote: Array<Item & { value: string }> = [{ id: 'p1', updatedAt: 1000, value: 'remote' }];
+  const local: Array<Item & { value: string }> = [{ id: 'p1', updatedAt: 1000, value: 'local' }];
+  const { items } = mergeItems(remote, local, {}, {}, getId, getTs, 2000);
+
+  assert.deepEqual(items, local);
+});
+
+test('non-finite and negative item timestamps can never outrank a valid edit', () => {
+  const invalidTimestamps = [
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+    -1,
+  ];
+
+  for (const updatedAt of invalidTimestamps) {
+    const remote: Item[] = [{ id: 'p1', updatedAt }];
+    const local: Item[] = [{ id: 'p1', updatedAt: 1000 }];
+    const { items } = mergeItems(remote, local, {}, {}, getId, getTs, 2000);
+    assert.deepEqual(items, local, `${updatedAt} beat a real local edit`);
+
+    const reverse = mergeItems(local, remote, {}, {}, getId, getTs, 2000);
+    assert.deepEqual(reverse.items, local, `${updatedAt} beat a real remote edit`);
+  }
+});
+
+test('invalid tombstones are discarded and cannot delete an item forever', () => {
+  const item: Item = { id: 'p1', updatedAt: 1000 };
+  const invalidTombstones = {
+    nan: Number.NaN,
+    positiveInfinity: Number.POSITIVE_INFINITY,
+    negativeInfinity: Number.NEGATIVE_INFINITY,
+    negative: -1,
+  };
+  const { items, deleted } = mergeItems(
+    [item],
+    [],
+    { ...invalidTombstones, p1: Number.POSITIVE_INFINITY },
+    {},
+    getId,
+    getTs,
+    2000,
+  );
+
+  assert.deepEqual(items, [item]);
+  assert.deepEqual(deleted, {});
+  assert.doesNotMatch(JSON.stringify(deleted), /NaN|Infinity/);
+});
+
+test('tombstone expiry uses an exact TTL boundary and preserves future clock skew', () => {
+  const now = TOMB_TTL_MS * 2;
+  const { deleted } = mergeItems(
+    [],
+    [],
+    {
+      expiredAtBoundary: now - TOMB_TTL_MS,
+      stillFresh: now - TOMB_TTL_MS + 1,
+      futureDevice: now + 1000,
+    },
+    {},
+    getId,
+    getTs,
+    now,
+  );
+
+  assert.equal(deleted.expiredAtBoundary, undefined);
+  assert.equal(deleted.stillFresh, now - TOMB_TTL_MS + 1);
+  assert.equal(deleted.futureDevice, now + 1000);
+});
+
+test('mergeItems is deterministic and never mutates rows or tombstone maps', () => {
+  const remote: Item[] = [{ id: 'remote', updatedAt: 1000 }, { id: 'shared', updatedAt: 1000 }];
+  const local: Item[] = [{ id: 'local', updatedAt: 2000 }, { id: 'shared', updatedAt: 3000 }];
+  const remoteDeleted = { old: 100 };
+  const localDeleted = { fresh: 2500 };
+  const before = structuredClone({ remote, local, remoteDeleted, localDeleted });
+  const args = [remote, local, remoteDeleted, localDeleted, getId, getTs, 4000] as const;
+
+  assert.deepEqual(mergeItems(...args), mergeItems(...args));
+  assert.deepEqual({ remote, local, remoteDeleted, localDeleted }, before);
+});
+
 // ── isDeleteStale — the write-side delete-race fix ──────────────────────────────────────────
 //
 // removePlace()/removeWaterPoint()/removeSiteElement() used to unconditionally filter the item
@@ -107,6 +190,12 @@ test.describe('isDeleteStale (table)', () => {
     ['remote item timestamp exactly equal to the delete → NOT stale (only strictly-newer wins, mirrors mergeItems\' tombstone filter)', 5000, 5000, false],
     ['remote item one ms newer than the delete → stale', 5001, 5000, true],
     ['remote item ts of 0 vs a later delete → not stale', 0, 5000, false],
+    ['NaN remote timestamp cannot outrank a real delete', Number.NaN, 5000, false],
+    ['infinite remote timestamp cannot outrank a real delete', Number.POSITIVE_INFINITY, 5000, false],
+    ['negative remote timestamp cannot outrank a real delete', -1, 5000, false],
+    ['NaN delete timestamp cannot destroy an existing remote item', 1000, Number.NaN, true],
+    ['infinite delete timestamp cannot destroy an existing remote item', 1000, Number.POSITIVE_INFINITY, true],
+    ['negative delete timestamp cannot destroy an existing remote item', 1000, -1, true],
   ];
   for (const [desc, remoteItemTs, deletedAtMs, expected] of cases) {
     test(desc, () => {
