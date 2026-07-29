@@ -354,6 +354,50 @@ direction and is not reversible.
 
 ---
 
+## 22. `DRIVEWAY` is labelled on sheets it has no legend row on — `codex/ground-label-register`
+
+**Found by rendering the exact sheets and looking at them (v79, Ubhejane demo).**
+
+Sheet **05 (Planting)** and sheet **06 (Small Livestock & Infrastructure)** both draw a `DRIVEWAY`
+margin label. Neither legend contains a driveway row:
+
+- 05 legend: Vegetable Bed x7, Avocado x1, Mango x1, Moringa x2, Natal Plum x1.
+- 06 legend: Path x1, Compost Bay (3-bin) x1.
+
+So a named thing is on the map and absent from the key — the same disagreement you fixed for
+*elements* in `legend-map-agreement`, in the **ground-label channel** this time. It is also a site
+feature on a design sheet, which the AI prompt explicitly forbids ("LABEL THE DESIGN, NOT THE SITE
+... none on the driveway", rule 10) — so once again the deterministic renderer disagrees with the
+app's own written rule.
+
+**The lead, which is most of the work.** `lib/glossy-filters.ts` exports `groundRegister`, described
+in `lib/producer-prompt.ts:5` as *"the ONE authority for the ground content/context/absent split"*.
+Two of its three consumers honour it:
+
+- `groundRows(state, refLayers, filter)` — the legend. Gated. Correct.
+- the AI prompt's `fabric` clause. Gated. Correct.
+- **`groundLabelsForSheet(state, refLayers, W, H)` — the map labels. Takes no filter at all.**
+
+That third one is the bug: it labels every traced ground ring regardless of which sheet it is on.
+
+**But do not just add the parameter — first find out how these sheets are reaching it.** The call
+inside `buildComposite` is guarded by `if (!drawDesign && filter === 'all')`, which should exclude
+planting and structures entirely, yet the label is on both sheets. So either another call site
+(`buildBlueprintBaseMap`, or the hybrid path near the bottom of `DesignGlossy.tsx`) is producing
+them, or that guard is not doing what it reads like. **Establish which before changing anything** —
+the fix is different in each case, and the guard's comment claims a precision it may not have.
+
+**Not established, so do not assume it:** I also suspected the `DRIVEWAY` leader was anchored to the
+*house* rather than the driveway. I measured that off a downscaled screenshot and my own numeric
+check did not support it. Treat it as unverified. If you want to settle it, note that
+`groundLabelsForSheet` anchors on the **average of the ring's vertices**, which is not a polygon
+centroid — for an L-shaped or unevenly-sampled ring those differ, and the vertex average can fall
+outside the shape. That is worth checking on its own merits whatever the driveway turns out to do.
+
+`PLAN_VERSION` (the sheets change). Verify by rendering 05 and 06 and looking at them.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
