@@ -506,6 +506,43 @@ companion question of whether it changed it in the right PLACE.
 
 ---
 
+## 27. Two labels at the same y cross their leaders — `codex/label-row-tiebreak`
+
+**Found by rendering sheet 05 at v84 and looking. Two defects, both visible in one picture.**
+
+**(a) Crossed leaders.** Every label-row sort in the label pipeline orders by `a.cy - b.cy` with NO
+tie-break — four sites: `lib/producer-labels.ts:351`, and DesignGlossy `:3430`, `:3454`, `:3629`.
+When two labels share a cy the comparator returns 0, so the row order falls back to INSERTION order,
+which is catalogue order and has nothing to do with where the elements are.
+
+This is not hypothetical and it is not rare. The demo farm has:
+
+    demo-di-mango    x=0.355083  y=0.650491
+    demo-di-avocado  x=0.466558  y=0.650491   <- identical y
+
+Two trees planted on the same line, which is what a row of trees IS. v83 made layer sheets name
+elements individually, so where there was one `SOUTHERN TREES` pill there are now two — and on the
+rendered sheet AVOCADO TREE sits on the upper row pointing at the FURTHER tree while MANGO TREE sits
+below pointing at the NEARER one, so the two leaders cross.
+
+Break the tie on `cx` (and then on id, so the order is total and stable), in ALL FOUR places — or
+better, extract the comparator once and have all four call it, since four copies of an ordering rule
+is how they drifted apart in the first place. Assert the rule with a fixture that has tied y values;
+the demo farm already is one.
+
+**(b) A merged label that matches no legend row and points at neither tree.** The same sheet reads
+`SOUTHERN MORINGA TREE ×2` while its legend row reads `Moringa Tree ×2`. Two problems: the map text
+and the legend text for the same thing are not the same words, and the two moringas are at x=0.6449
+and x=0.4108 — a quarter of the plot apart — merged under one leader. `producer-labels.ts` already
+warns about exactly this in its own comment: *"Merging them instead would be wrong — one leader
+aimed at the centroid of two distant taps points at empty ground, which is the bug the clustering
+exists to prevent."* Check whether the leader lands on a tree or between them, and whether the
+compass prefix should apply to a counted group at all.
+
+**Do not touch PLAN_VERSION.** Both of these change the picture — say so in your report.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
