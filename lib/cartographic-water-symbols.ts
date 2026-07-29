@@ -476,7 +476,7 @@ function smallHardware(ctx: CanvasRenderingContext2D, w: number, h: number, stro
 }
 
 export function canonicalCartographicWaterId(raw: string): string {
-  const key = raw.toLowerCase().replace(/[_ ]+/g, '-');
+  const key = raw.trim().toLowerCase().replace(/[_\s-]+/g, '-');
   if (/^jojo-\d+$/.test(key)) return 'jojo-tank';
   if (key === 'pond-small') return 'small-pond';
   if (key === 'tap-point') return 'tap';
@@ -501,7 +501,14 @@ export function supportsCartographicWaterSymbol(id: string): boolean {
 /** Draw one handled symbol; returns false for unknown IDs. */
 export function drawCartographicWaterSymbol(options: CartographicWaterSymbolOptions): boolean {
   const { ctx, id, width, height, outlineWidth } = options;
-  if (!(width > 0) || !(height > 0) || !Number.isFinite(outlineWidth)) return false;
+  if (
+    !Number.isFinite(width)
+    || !Number.isFinite(height)
+    || !Number.isFinite(outlineWidth)
+    || width <= 0
+    || height <= 0
+    || outlineWidth < 0
+  ) return false;
   const key = canonicalCartographicWaterId(id);
   if (!supportsCartographicWaterSymbol(key)) return false;
 
