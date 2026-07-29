@@ -71,7 +71,7 @@ function areaValue(value: unknown): number | null {
 }
 
 function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
-  if (!value || typeof value !== 'object' || !siteId) return null;
+  if (!value || typeof value !== 'object' || Array.isArray(value) || !siteId) return null;
   const row = value as Partial<SiteSurvey>;
   const roofAreaSource = row.roofAreaSource === 'auto' || row.roofAreaSource === 'manual'
     ? row.roofAreaSource
@@ -219,7 +219,19 @@ const key = (id: string) => `imbewu_site_survey_${id}`;
 // Matches designSiteIdFromLocation()'s exact output format (site-survey.ts can't import
 // lib/design-studio.ts — design-studio.ts already imports loadSurvey from here, and importing
 // back would be circular).
-const SITE_ID_RE = /^site:(-?\d+\.\d+),(-?\d+\.\d+)$/;
+const SITE_ID_RE = /^site:(-?\d+\.\d{5}),(-?\d+\.\d{5})$/;
+
+export function canonicalSurveySiteId(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const match = SITE_ID_RE.exec(value);
+  if (!match) return null;
+  const lat = Number(match[1]);
+  const lon = Number(match[2]);
+  return Number.isFinite(lat) && lat >= -90 && lat <= 90
+    && Number.isFinite(lon) && lon >= -180 && lon <= 180
+    ? value
+    : null;
+}
 
 // One-time read-repair: survey answers saved under the old placeId-keyed scheme (before the
 // storage key was switched to the lat/lon-derived siteId) would otherwise never be found by
@@ -228,7 +240,9 @@ const SITE_ID_RE = /^site:(-?\d+\.\d+),(-?\d+\.\d+)$/;
 // directly next time and syncs to other devices.
 function migrateLegacySurvey(siteId: string): SiteSurvey | null {
   if (typeof window === 'undefined') return null;
-  const match = SITE_ID_RE.exec(siteId);
+  const canonicalSiteId = canonicalSurveySiteId(siteId);
+  if (!canonicalSiteId) return null;
+  const match = SITE_ID_RE.exec(canonicalSiteId);
   if (!match) return null;
   const [, latStr, lonStr] = match;
   const place = loadPlaces().find((p) =>
@@ -240,11 +254,11 @@ function migrateLegacySurvey(siteId: string): SiteSurvey | null {
 
   let legacy: SiteSurvey | null;
   try { legacy = JSON.parse(localStorage.getItem(key(place.id)) ?? 'null'); } catch { legacy = null; }
-  const repaired = normaliseSurvey(legacy, siteId);
+  const repaired = normaliseSurvey(legacy, canonicalSiteId);
   if (!repaired) return null;
 
   const migrated: SiteSurvey = repaired;
-  try { localStorage.setItem(key(siteId), JSON.stringify(migrated)); } catch {}
+  try { localStorage.setItem(key(canonicalSiteId), JSON.stringify(migrated)); } catch {}
   const uid = getFirebase()?.auth?.currentUser?.uid;
   if (uid) upsertSurvey(uid, migrated).catch(() => {});
   return migrated;
@@ -252,21 +266,30 @@ function migrateLegacySurvey(siteId: string): SiteSurvey | null {
 
 export function loadSurvey(siteId: string): SiteSurvey | null {
   if (typeof window === 'undefined') return null;
+  const canonicalSiteId = canonicalSurveySiteId(siteId);
+  if (!canonicalSiteId) return null;
   try {
-    const direct = JSON.parse(localStorage.getItem(key(siteId)) ?? 'null');
-    const repaired = normaliseSurvey(direct, siteId);
+    const direct = JSON.parse(localStorage.getItem(key(canonicalSiteId)) ?? 'null');
+    const repaired = normaliseSurvey(direct, canonicalSiteId);
     if (repaired) return repaired;
   } catch {}
-  return migrateLegacySurvey(siteId);
+  return migrateLegacySurvey(canonicalSiteId);
 }
 
-export function saveSurvey(survey: SiteSurvey): void {
-  if (typeof window === 'undefined') return;
-  const clean = normaliseSurvey(survey, stringValue(survey?.siteId));
-  if (!clean) return;
-  const stamped = { ...clean, updatedAt: Date.now() };
-  try { localStorage.setItem(key(stamped.siteId), JSON.stringify(stamped)); } catch {}
+export function saveSurvey(survey: SiteSurvey): SiteSurvey | null {
+  if (typeof window === 'undefined') return null;
+  const siteId = canonicalSurveySiteId(survey?.siteId);
+  if (!siteId) return null;
+  const clean = normaliseSurvey(survey, siteId);
+  if (!clean) return null;
+  const stamped: SiteSurvey = { ...clean, updatedAt: Date.now() };
+  try {
+    localStorage.setItem(key(stamped.siteId), JSON.stringify(stamped));
+  } catch {
+    return null;
+  }
   window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
   const uid = getFirebase()?.auth?.currentUser?.uid;
   if (uid) upsertSurvey(uid, stamped).catch(() => {});
+  return stamped;
 }

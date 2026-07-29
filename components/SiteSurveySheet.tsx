@@ -206,8 +206,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
       marketType: isCommercial ? marketType : undefined,
       notes,
     };
-    saveSurvey(survey);
-    onSaved(survey);
+    const saved = saveSurvey(survey);
+    if (saved) onSaved(saved);
   }, [siteId, placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, roofSource, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, existingGrowingArea, growingAreaSource, livestock, otherInfra, practice, challenges, isCommercial, marketType, notes, onSaved]);
 
   const Icon = STEP_ICONS[step];
