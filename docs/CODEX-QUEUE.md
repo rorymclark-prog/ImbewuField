@@ -676,6 +676,58 @@ centreline is the natural home for it, since every regional energy already draws
 
 ---
 
+## 33. The planting sheet HIDES a spacing conflict instead of showing it — `codex/canopy-overlap-legible`
+
+**This is the most important item in the queue. Rory, on the Planting sheet: "look underneath, it's
+a serious issue."**
+
+Mature tree canopies are painted as fully opaque radial-gradient fills with leaf blobs on top
+(`DesignGlossy.tsx`, the `def.category === 'growing' && def.shape === 'circle'` branch, ~line 4099).
+Where two canopies overlap, the later one simply erases the earlier. On the Ubhejane demo that
+produces one merged green mass on the south edge with THREE leader lines pointing into it, and the
+farmer cannot tell which tree is which or where to dig.
+
+**Measured on the demo design (frame 89.7 m x 59.8 m), so this is arithmetic, not an impression:**
+
+| pair | planted apart | mature canopy | result |
+|---|---|---|---|
+| mango ↔ moringa | 5.1 m | 5.0 m radius + 2.0 m radius | **1.9 m overlap** |
+| avocado ↔ moringa | 5.1 m | 4.0 m + 2.0 m | **0.9 m overlap** |
+| mango ↔ avocado | 10.0 m | 5.0 m + 4.0 m | 1.0 m clearance |
+
+Those canopy figures are correct and SOURCED — `tree_mango` is `wM: 10` with the tip "Mature canopy
+can reach 10 m+", avocado 8 m, macadamia 9 m, moringa 4 m. **Do not touch a single one of them, and
+do not invent new ones.** The numbers are right; the drawing is wrong.
+
+**The defect is that a real design conflict is being concealed by paint.** Spacing is the whole
+point of a permaculture plan. A farmer who plants from this sheet puts a moringa 5.1 m from a mango
+that will need 5.0 m of radius, and nothing on the sheet ever told them.
+
+What to do:
+
+1. **Make overlapping canopies individually legible.** The standard landscape-drafting convention is
+   a visible canopy EDGE with a fill light enough that what is beneath still reads — beds, paths,
+   water lines and the neighbouring canopy. Keep the illustrated look Rory likes; it is the opacity
+   and the erasure that have to go, not the artwork.
+2. **The overlap must end up visible on the sheet.** If two mature canopies intersect, a farmer
+   should be able to see that they do. How you show it is your call — an overlap tint, both edges
+   drawn through, whatever reads at 1:1 — but "you can no longer see it because the top tree won"
+   is the bug, so a fix that merely reorders which tree wins is not a fix.
+3. **Change NOTHING about placement.** Do not move, resize, respace or drop an element. The overlap
+   is the farmer's own design and the sheet's job is to show it, not to silently correct it. This
+   is a RENDERING change only.
+4. Sheet 05 also carries two pale unlabelled grey rectangles over the house/driveway area — the same
+   family of defect Claude just removed from sheet 02 in v89. Report what they are; fix only if it
+   is genuinely the same one-line cause.
+
+Prove it with 1:1 crops of the south-edge tree cluster before and after — the whole point is whether
+a human can now tell three trees apart. If your sandbox cannot run a browser, say so plainly in the
+report and leave the crops to Claude rather than claiming a visual result you did not see.
+
+**Do not touch `PLAN_VERSION`.**
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
