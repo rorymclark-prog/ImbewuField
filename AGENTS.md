@@ -71,17 +71,24 @@ confirm" because the real cause — a leader-line collision — had been found a
 earlier. An agent working from the copy it pulled at start-up would have spent an hour chasing a bug
 that no longer existed.
 
-Read `PLAN_VERSION` the same way — from `origin/main`, not from the number written in the queue
-text, which goes stale within the hour:
+### Never touch `PLAN_VERSION`
 
-```bash
-git show origin/main:components/design/DesignGlossy.tsx | grep -m1 "PLAN_VERSION ="
-```
+**Leave `PLAN_VERSION` exactly as you found it.** Do not bump it, ever, on any branch. If your work
+changes what a sheet looks like, say so in your report — "this changes the picture" — and Claude
+assigns the version once, at merge.
 
-Two branches landing the same version is the most common merge problem here, and it is not
-cosmetic: the second change silently inherits the first's cache entries, so it is invisible to
-anyone who rendered in between. Equally, **do not bump it for a refactor** — a bump re-keys the
-gallery, and an AI sheet a farmer already paid for stops being found. Bump when the picture changes.
+This rule replaced a more careful one, because the careful one did not work. Agents were told to
+read the current value from `origin/main` before each item and pick the next number. It collided
+**eight times in two days**: two branches take the same number, and the second change silently
+inherits the first's cache entries, so it is invisible to anyone who rendered in between. Then on
+2026-07-29 a 25-commit branch bumped on *every commit* — v79 to v97, eighteen bumps, almost all of
+it defensive input validation that changes no pixel — and had to be collapsed back to a single bump
+at merge.
+
+A version is a shared counter, and a shared counter cannot be coordinated by agents working in
+parallel from stale copies. The only fix is that exactly one writer owns it. A bump is also not
+free: it re-keys the sheet gallery, so an AI sheet a farmer has already **paid for** stops being
+found. That cost belongs to whoever can see the whole merge.
 
 **Deployments are a rationed resource — do not spend one per commit.** The Vercel free plan allows
 **100 deployments per 24h across the whole account**, and on 2026-07-29 an overnight run exhausted
@@ -98,6 +105,20 @@ blocking, skip to an item it does not block rather than idling.
 
 If the next item touches a file you changed on a branch that has not been merged yet, branch from
 that branch instead of `main`, and say so in the report so the merge order is obvious.
+
+### Say so BEFORE the queue runs dry
+
+**When you take the item that leaves three or fewer unstarted, post a comment on issue #35 saying
+so, and keep working.** One line is enough: `QUEUE LOW — 3 items left after this one.`
+
+This exists because of what happened on 2026-07-29. The queue emptied, the standing work in S1/S2/S3
+took over exactly as written, and the run spent six hours and 5 million tokens on module-by-module
+input hardening — real work, correctly done, and not what the project needed most that morning. From
+the outside it looked like an agent that had gone off-brief. It had not: **it ran out of brief, and
+nobody was told.** The fallback work is deliberately never-ending so a run never idles, which also
+means it will never itself signal that it is time to refill the queue.
+
+Refilling is Claude's job. Telling someone the tank is low is yours, and it costs you one comment.
 
 ---
 

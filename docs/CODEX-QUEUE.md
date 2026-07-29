@@ -354,7 +354,15 @@ direction and is not reversible.
 
 ---
 
-## 22. `DRIVEWAY` is labelled on sheets it has no legend row on — `codex/ground-label-register`
+## 22. DONE (by Claude, dfe8f35) — `DRIVEWAY` labelled on sheets with no legend row
+
+Fixed on main. The cause was `producerLabels` emitting the pill on every sheet while only the
+masterplan's curated callout layer filtered it back out. Gated at source on `filter === 'all'`.
+Verified by re-rendering all eight sheets: 05 and 06 changed by 3 473 px each, every other sheet
+by 0. Left here for the record — do not redo it. **Item 23 is the same family and is NOT fixed.**
+
+<details><summary>original item</summary>
+
 
 **Found by rendering the exact sheets and looking at them (v79, Ubhejane demo).**
 
@@ -395,6 +403,49 @@ centroid — for an L-shaped or unevenly-sampled ring those differ, and the vert
 outside the shape. That is worth checking on its own merits whatever the driveway turns out to do.
 
 `PLAN_VERSION` (the sheets change). Verify by rendering 05 and 06 and looking at them.
+
+---
+
+</details>
+
+---
+
+## 23. A grouped tree label matches no legend row — `codex/grouped-label-legend`
+
+**Verified on the rendered sheet, v82, Ubhejane demo. Not fixed.**
+
+Sheet 05 (Planting) labels the two large trees `SOUTHERN TREES` on the map. Its legend lists
+`Avocado Tree ×1` and `Mango Tree ×1` as separate rows. Nothing in the legend says "southern
+trees", so a farmer reading the legend to decode the map cannot connect the label to either row —
+the same failure as item 22, reached by a different route.
+
+Decide which is right and make both sides agree. Either the map should name the species it is
+pointing at, or the legend should carry the group. Do NOT invent a third name. Whichever way it
+goes, the rule belongs in ONE place that both the label path and the legend path read — that is
+the lesson of items 21 and 22, and of `groundRegister`.
+
+Say in your report whether the picture changes. **Do not touch PLAN_VERSION.**
+
+---
+
+## 24. `groundLabelsForSheet` cannot see which sheet it is on — `codex/ground-label-filter`
+
+**Verified by reading the signature. Not fixed.**
+
+`groundLabelsForSheet` in `components/design/DesignGlossy.tsx` (~line 3579) takes
+`(state, refLayers, W, H, avoidTopRight?)` — **no `filter`**. So it labels every traced ground
+feature the farmer drew, identically, on every sheet that calls it. But `groundRegister` in
+`lib/glossy-filters.ts` is documented as "THE single authority" for whether a ground feature is
+this sheet's `content`, mere `context`, or `absent` — and context is explicitly "never captioned,
+never legended".
+
+A function that cannot see the filter cannot honour that contract. The demo farm has no traced
+ground zones, which is the only reason this is not already visible on a rendered sheet — a farmer
+who traces a lawn or an orchard would get it labelled on the Water and Zones sheets, where it is
+context.
+
+Give it the filter, honour `groundRegister`, and add the fixture the demo lacks so a test can see
+it. Same one-authority rule as item 23.
 
 ---
 
