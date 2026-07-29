@@ -7,6 +7,7 @@ import {
   realpathSync,
   writeFileSync,
 } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -15,6 +16,28 @@ const DEFAULT_BUCKET = 'fieldproof-sa.firebasestorage.app';
 export function isPathInside(parentPath, candidatePath) {
   const rel = relative(resolve(parentPath), resolve(candidatePath));
   return rel === '' || (!rel.startsWith(`..${sep}`) && rel !== '..' && !isAbsolute(rel));
+}
+
+/**
+ * The real hazard is a credential that could be COMMITTED, not one that merely sits inside the
+ * working tree — this repo deliberately keeps `serviceAccount.json` at its root and relies on
+ * .gitignore, so "inside the repo" alone refused the only credential that exists and made this
+ * tool unrunnable. Fails closed: an unknown ignore status is treated as not-ignored.
+ */
+export function shouldRefuseServiceAccount({ inside, ignored }) {
+  return inside && !ignored;
+}
+
+/** True only when git itself confirms the path is ignored. Any failure answers false. */
+export function isIgnoredByGit(repositoryRoot, filePath, run = spawnSync) {
+  try {
+    const res = run('git', ['-C', repositoryRoot, 'check-ignore', '--quiet', filePath], {
+      stdio: 'ignore',
+    });
+    return res.status === 0;
+  } catch {
+    return false;
+  }
 }
 
 export function resolveJobSuffixes(jobIds, requestedSuffixes) {
@@ -83,8 +106,14 @@ export async function fetchStoredRenders(options) {
   if (isPathInside(repositoryRoot, outDir)) {
     throw new Error('Refusing to write paid-render artifacts inside the repository');
   }
-  if (isPathInside(repositoryRoot, serviceAccountPath)) {
-    throw new Error('Refusing to read a service-account file stored inside the repository');
+  if (shouldRefuseServiceAccount({
+    inside: isPathInside(repositoryRoot, serviceAccountPath),
+    ignored: isIgnoredByGit(repositoryRoot, serviceAccountPath),
+  })) {
+    throw new Error(
+      'Refusing to read a service-account file that is inside the repository and NOT git-ignored — '
+      + 'it could be committed. Add it to .gitignore or move it outside the repo.',
+    );
   }
 
   mkdirSync(outDir, { recursive: true });
