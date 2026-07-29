@@ -6,10 +6,14 @@ import assert from 'node:assert/strict';
 // browser-only style).
 class FakeStorage {
   #map = new Map<string, string>();
+  failKey: string | null = null;
   getItem(k: string): string | null { return this.#map.has(k) ? this.#map.get(k)! : null; }
-  setItem(k: string, v: string): void { this.#map.set(k, v); }
+  setItem(k: string, v: string): void {
+    if (k === this.failKey) throw new Error('storage unavailable');
+    this.#map.set(k, v);
+  }
   removeItem(k: string): void { this.#map.delete(k); }
-  clear(): void { this.#map.clear(); }
+  clear(): void { this.#map.clear(); this.failKey = null; }
 }
 
 (globalThis as unknown as { window: unknown }).window = globalThis;
@@ -18,10 +22,21 @@ const fakeLocalStorage = new FakeStorage();
 // mergeIncomingWaterPoints() calls this module's notify(), which does
 // `window.dispatchEvent(new CustomEvent(...))` — plain globalThis isn't a real EventTarget, so
 // stub a no-op. CustomEvent itself is a real Node global (no polyfill needed).
-(globalThis as unknown as { dispatchEvent: unknown }).dispatchEvent = () => true;
+const events: string[] = [];
+(globalThis as unknown as { dispatchEvent: unknown }).dispatchEvent = (event: Event) => {
+  events.push(event.type);
+  return true;
+};
 
-const { loadWaterPoints, mergeIncomingWaterPoints } = await import('../lib/water-points.ts');
-const { addTombstone } = await import('../lib/local-tombstones.ts');
+const {
+  deleteWaterPoint,
+  isValidWaterPoint,
+  loadWaterPoints,
+  mergeIncomingWaterPoints,
+  normaliseWaterPoints,
+  saveWaterPoint,
+} = await import('../lib/water-points.ts');
+const { addTombstone, readTombstones } = await import('../lib/local-tombstones.ts');
 
 type WaterPoint = ReturnType<typeof loadWaterPoints>[number];
 
@@ -44,6 +59,73 @@ function seed(points: WaterPoint[]): void {
   fakeLocalStorage.setItem(KEY, JSON.stringify(points));
 }
 
+test('the local store filters malformed records and keeps one newest copy per id', () => {
+  fakeLocalStorage.clear();
+  const older = pt('same', { name: 'old', updatedAt: 1000 });
+  const newer = pt('same', { name: 'new', updatedAt: 2000 });
+  const malformed: unknown[] = [
+    null,
+    { ...pt(''), id: '' },
+    { ...pt('bad-category'), category: 'River' },
+    { ...pt('bad-lat'), lat: 91 },
+    { ...pt('bad-lon'), lon: 181 },
+    { ...pt('bad-date'), createdAt: 'not-a-date' },
+    { ...pt('bad-update'), updatedAt: Number.POSITIVE_INFINITY },
+  ];
+  fakeLocalStorage.setItem(KEY, JSON.stringify([older, ...malformed, newer]));
+
+  assert.deepEqual(loadWaterPoints(), [newer]);
+  assert.deepEqual(normaliseWaterPoints([older, newer]), [newer]);
+  for (const value of malformed) assert.equal(isValidWaterPoint(value), false);
+});
+
+test('saving rejects invalid coordinates before storage, notification or cloud sync', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const invalid = pt('outside', { lat: 91 });
+
+  assert.throws(() => saveWaterPoint(invalid), /Invalid water point/);
+  assert.equal(fakeLocalStorage.getItem(KEY), null);
+  assert.deepEqual(events, []);
+});
+
+test('deleting a missing id is a truthful no-op with no tombstone or change event', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  seed([pt('kept')]);
+
+  assert.deepEqual(deleteWaterPoint('missing'), [pt('kept')]);
+  assert.deepEqual(readTombstones(DELETED_KEY), {});
+  assert.deepEqual(events, []);
+});
+
+test('a failed visible deletion never leaves a tombstone that can delete the still-present point', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const existing = pt('kept');
+  seed([existing]);
+  fakeLocalStorage.failKey = KEY;
+
+  assert.throws(() => deleteWaterPoint(existing.id), /storage unavailable/);
+  fakeLocalStorage.failKey = null;
+  assert.deepEqual(loadWaterPoints(), [existing]);
+  assert.deepEqual(readTombstones(DELETED_KEY), {});
+  assert.deepEqual(events, []);
+});
+
+test('a successful deletion persists the array and tombstone before announcing the change', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  seed([pt('delete-me'), pt('keep-me')]);
+
+  const result = deleteWaterPoint('delete-me');
+
+  assert.deepEqual(result, [pt('keep-me')]);
+  assert.deepEqual(loadWaterPoints(), [pt('keep-me')]);
+  assert.equal(typeof readTombstones(DELETED_KEY)['delete-me'], 'number');
+  assert.deepEqual(events, ['imbewu-water-points-changed']);
+});
+
 // mergeIncomingWaterPoints — the water-point mirror of lib/saved-places.ts's mergeIncomingPlaces
 // (see its tests for the full rationale). Both are the Gap 2 fix for components/Map.tsx's
 // ?share=<code> import, which used to do a raw full-array localStorage overwrite for water
@@ -56,6 +138,19 @@ test('mergeIncomingWaterPoints: a shared water point absent locally still arrive
   const items = mergeIncomingWaterPoints([shared]);
   assert.deepEqual(items, [shared]);
   assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(KEY)!), [shared]);
+});
+
+test('shared imports cannot inject malformed or duplicate water records into local storage', () => {
+  fakeLocalStorage.clear();
+  seed([pt('local')]);
+  const older = pt('shared', { name: 'old', updatedAt: 1000 });
+  const newer = pt('shared', { name: 'new', updatedAt: 2000 });
+  const invalid = pt('outside', { lon: 181 });
+
+  const items = mergeIncomingWaterPoints([older, invalid, newer]);
+
+  assert.deepEqual(items, [newer, pt('local')]);
+  assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(KEY)!), items);
 });
 
 test('mergeIncomingWaterPoints does NOT clobber a locally-added water point absent from the shared batch (union, not overwrite)', () => {

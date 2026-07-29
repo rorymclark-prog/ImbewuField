@@ -24,6 +24,10 @@ export const WATER_POINT_CATEGORIES: { v: WaterPointCategory; icon: string; colo
   { v: 'Other',    icon: '📍',  color: '#8C7A62' },
 ];
 
+const WATER_POINT_CATEGORY_VALUES = new Set<WaterPointCategory>(
+  WATER_POINT_CATEGORIES.map((category) => category.v),
+);
+
 export function categoryColor(cat?: string): string {
   return WATER_POINT_CATEGORIES.find((c) => c.v === cat)?.color ?? '#235E86';
 }
@@ -39,13 +43,51 @@ function currentUid(): string | undefined {
   return getFirebase()?.auth?.currentUser?.uid;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function isValidWaterPoint(value: unknown): value is WaterPoint {
+  if (!isRecord(value)) return false;
+  return typeof value.id === 'string' && value.id.trim().length > 0
+    && typeof value.name === 'string'
+    && (value.category === '' || WATER_POINT_CATEGORY_VALUES.has(value.category as WaterPointCategory))
+    && typeof value.lat === 'number' && Number.isFinite(value.lat) && value.lat >= -90 && value.lat <= 90
+    && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
+    && typeof value.createdAt === 'string' && Number.isFinite(Date.parse(value.createdAt))
+    && (value.updatedAt === undefined
+      || (typeof value.updatedAt === 'number' && Number.isFinite(value.updatedAt) && value.updatedAt >= 0));
+}
+
+function waterPointTimestamp(point: WaterPoint): number {
+  return point.updatedAt ?? Date.parse(point.createdAt);
+}
+
+export function normaliseWaterPoints(value: unknown): WaterPoint[] {
+  if (!Array.isArray(value)) return [];
+  const byId = new Map<string, WaterPoint>();
+  for (const candidate of value) {
+    if (!isValidWaterPoint(candidate)) continue;
+    const current = byId.get(candidate.id);
+    if (!current || waterPointTimestamp(candidate) >= waterPointTimestamp(current)) {
+      byId.set(candidate.id, candidate);
+    }
+  }
+  return [...byId.values()];
+}
+
 export function loadWaterPoints(): WaterPoint[] {
   if (typeof window === 'undefined') return [];
-  try { const v = JSON.parse(localStorage.getItem(KEY) ?? '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+  try {
+    return normaliseWaterPoints(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
+  } catch {
+    return [];
+  }
 }
 
 export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
-  const stamped = { ...pt, updatedAt: Date.now() };
+  if (!isValidWaterPoint(pt)) throw new Error('Invalid water point');
+  const stamped: WaterPoint = { ...pt, updatedAt: Date.now() };
   const updated = [stamped, ...loadWaterPoints().filter((p) => p.id !== stamped.id)];
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
@@ -55,12 +97,15 @@ export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
 }
 
 export function deleteWaterPoint(id: string): WaterPoint[] {
-  // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
-  // (closes the deletion-resurrection window against a concurrent remote snapshot).
+  const current = loadWaterPoints();
+  if (!id || !current.some((point) => point.id === id)) return current;
   const deletedAt = Date.now();
-  addTombstone(DELETED_KEY, id, deletedAt);
-  const updated = loadWaterPoints().filter((p) => p.id !== id);
+  const updated = current.filter((p) => p.id !== id);
+  // localStorage writes are synchronous: no snapshot callback can interleave these statements.
+  // Persist the visible deletion first so a quota/security failure cannot leave a tombstone for
+  // a point that is still present. The tombstone is then in place before control returns.
   localStorage.setItem(KEY, JSON.stringify(updated));
+  addTombstone(DELETED_KEY, id, deletedAt);
   notify();
   const uid = currentUid();
   // Thread the SAME timestamp into removeWaterPoint() as its `deletedAtMs` — see
@@ -82,11 +127,19 @@ export function generateWaterPointId(): string {
  * rationale — this is the water-point mirror of the same fix.
  */
 export function mergeIncomingWaterPoints(incoming: WaterPoint[]): WaterPoint[] {
-  if (typeof window === 'undefined') return incoming;
+  const safeIncoming = normaliseWaterPoints(incoming);
+  if (typeof window === 'undefined') return safeIncoming;
   const local = loadWaterPoints();
   const localDel = readTombstones(DELETED_KEY);
-  const getTs = (p: WaterPoint) => p.updatedAt ?? (p.createdAt ? Date.parse(p.createdAt) || 0 : 0);
-  const { items } = mergeItems(incoming, local, {}, localDel, (p) => p.id, getTs, Date.now());
+  const { items } = mergeItems(
+    safeIncoming,
+    local,
+    {},
+    localDel,
+    (p) => p.id,
+    waterPointTimestamp,
+    Date.now(),
+  );
   localStorage.setItem(KEY, JSON.stringify(items));
   notify();
   return items;
