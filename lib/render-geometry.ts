@@ -61,11 +61,19 @@ export function polishedRenderPoints(
   input: readonly RenderPoint[],
   options: RenderGeometryPolishOptions = {},
 ): RenderPoint[] {
+  if (input.some(([x, y]) => !Number.isFinite(x) || !Number.isFinite(y))) return [];
   if (input.length < 3) return input.map((point) => [...point]);
 
   const closed = options.closed === true;
-  const maxTurnRad = ((options.maxTurnDeg ?? 28) * Math.PI) / 180;
-  const maxShiftPx = Math.max(0, options.maxShiftPx ?? 3.5);
+  const requestedMaxTurnDeg = options.maxTurnDeg ?? 28;
+  const maxTurnDeg = Number.isFinite(requestedMaxTurnDeg)
+    ? Math.max(0, Math.min(180, requestedMaxTurnDeg))
+    : 28;
+  const maxTurnRad = (maxTurnDeg * Math.PI) / 180;
+  const requestedMaxShiftPx = options.maxShiftPx ?? 3.5;
+  const maxShiftPx = Number.isFinite(requestedMaxShiftPx)
+    ? Math.max(0, requestedMaxShiftPx)
+    : 3.5;
   const repeatsFirst = closed && input.length > 1 && samePoint(input[0], input[input.length - 1]);
   const source = (repeatsFirst ? input.slice(0, -1) : input).map((point) => [...point] as RenderPoint);
   if (source.length < 3) return input.map((point) => [...point]);
@@ -78,5 +86,7 @@ export function polishedRenderPoints(
   });
 
   if (repeatsFirst) out.push([...out[0]]);
-  return out;
+  return out.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y))
+    ? out
+    : input.map((point) => [...point]);
 }

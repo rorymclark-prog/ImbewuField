@@ -53,3 +53,59 @@ test('render polish never mutates the saved geometry it receives', () => {
   assert.notEqual(polished, saved);
   for (let i = 0; i < saved.length; i += 1) assert.notEqual(polished[i], saved[i]);
 });
+
+test('every polished point obeys the caller movement cap', () => {
+  const shapes: Array<{ points: RenderPoint[]; closed: boolean }> = [
+    {
+      points: [[0, 0], [20, 4], [40, -3], [60, 2], [80, 0]],
+      closed: false,
+    },
+    {
+      points: [[0, 0], [20, 2], [40, 0], [40, 30], [0, 30], [0, 0]],
+      closed: true,
+    },
+  ];
+  for (const maxShiftPx of [0, 0.1, 1, 3.5, 20]) {
+    for (const { points, closed } of shapes) {
+      const result = polishedRenderPoints(points, { closed, maxShiftPx, maxTurnDeg: 180 });
+      assert.equal(result.length, points.length);
+      for (let index = 0; index < points.length; index++) {
+        assert.ok(
+          Math.hypot(
+            result[index][0] - points[index][0],
+            result[index][1] - points[index][1],
+          ) <= maxShiftPx + 1e-9,
+        );
+      }
+    }
+  }
+});
+
+test('invalid options cannot manufacture non-finite render geometry', () => {
+  const points: RenderPoint[] = [[0, 0], [20, 2], [40, 0]];
+  for (const invalid of [
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]) {
+    const shiftResult = polishedRenderPoints(points, { maxShiftPx: invalid });
+    const turnResult = polishedRenderPoints(points, { maxTurnDeg: invalid });
+    for (const result of [shiftResult, turnResult]) {
+      assert.equal(result.length, points.length);
+      assert.ok(result.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y)));
+    }
+  }
+});
+
+test('a non-finite point set is refused instead of passed to a canvas path', () => {
+  for (const invalid of [
+    Number.NaN,
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]) {
+    assert.deepEqual(
+      polishedRenderPoints([[0, 0], [10, invalid], [20, 0]]),
+      [],
+    );
+  }
+});
