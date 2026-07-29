@@ -7893,8 +7893,10 @@ interface SavedGlossy {
 //   v74 — 2026-07-29: climate rainfall now rejects an incomplete series instead of reading a
 //        missing day as zero rain, so a site's monthly normals can change on a sheet.
 //        (Arrived reusing a taken number — sixth collision.)
-//   v75 — 2026-07-29: a water route may take two elbows to get around a structure instead of
-//        falling back to a line through it. Routes are DERIVED, not saved geometry.
+//   v75 — 2026-07-29: water routes never cross the house and an overflow sink is never placed
+//        outside the boundary. A route may now take TWO elbows to get around a structure rather
+//        than falling back to a straight line through it. These are DERIVED routes — no saved
+//        item, line or ring is touched, which is the guardrail that matters here.
 const PLAN_VERSION = 'v75';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
