@@ -54,11 +54,35 @@ function ringArea(pts: Array<[number, number]>): number {
   return Math.abs(a / 2);
 }
 
+function validNormalisedPoints(points: Array<[number, number]>, minimum: number): boolean {
+  return points.length >= minimum
+    && points.every(([x, y]) =>
+      Number.isFinite(x)
+      && Number.isFinite(y)
+      && x >= 0
+      && x <= 1
+      && y >= 0
+      && y <= 1);
+}
+
+function usableRing(points: Array<[number, number]>): boolean {
+  return validNormalisedPoints(points, 3) && ringArea(points) > 0;
+}
+
+function usableTrack(points: Array<[number, number]>): boolean {
+  if (!validNormalisedPoints(points, 2)) return false;
+  return points.some(([x, y], index) => {
+    if (index === 0) return false;
+    const [firstX, firstY] = points[0];
+    return x !== firstX || y !== firstY;
+  });
+}
+
 function largestStudioRing(state: DesignCanvasState, feature: GroundFeatureKind): Array<[number, number]> | null {
   let best: Array<[number, number]> | null = null;
   let bestArea = -1;
   for (const z of state.zones) {
-    if (z.feature !== feature || z.points.length < 3) continue;
+    if (z.feature !== feature || !usableRing(z.points)) continue;
     const a = ringArea(z.points);
     if (a > bestArea) {
       bestArea = a;
@@ -76,21 +100,27 @@ export function resolveBaseLayers(state: DesignCanvasState, refLayers: MapRefLay
   const source: Record<BaseLayerSlot, BaseLayerSource> = { boundary: 'none', house: 'none', driveway: 'none' };
 
   const boundaryStudio = largestStudioRing(state, 'boundary');
-  const boundary = boundaryStudio ?? (refLayers.boundary.length >= 3 ? refLayers.boundary : []);
-  source.boundary = boundaryStudio ? 'studio' : refLayers.boundary.length >= 3 ? 'map' : 'none';
+  const mapBoundaryUsable = usableRing(refLayers.boundary);
+  const boundary = boundaryStudio ?? (mapBoundaryUsable ? refLayers.boundary : []);
+  source.boundary = boundaryStudio ? 'studio' : mapBoundaryUsable ? 'map' : 'none';
 
   const houseStudio = largestStudioRing(state, 'house');
-  const house = houseStudio ?? (refLayers.house.length >= 3 ? refLayers.house : []);
-  source.house = houseStudio ? 'studio' : refLayers.house.length >= 3 ? 'map' : 'none';
+  const mapHouseUsable = usableRing(refLayers.house);
+  const house = houseStudio ?? (mapHouseUsable ? refLayers.house : []);
+  source.house = houseStudio ? 'studio' : mapHouseUsable ? 'map' : 'none';
 
   const drivewayStudio = largestStudioRing(state, 'driveway');
-  const driveway = drivewayStudio ?? (refLayers.driveway.length >= 2 ? refLayers.driveway : []);
-  source.driveway = drivewayStudio ? 'studio' : refLayers.driveway.length >= 2 ? 'map' : 'none';
+  const mapDrivewayUsable = refLayers.drivewayClosed
+    ? usableRing(refLayers.driveway)
+    : usableTrack(refLayers.driveway);
+  const driveway = drivewayStudio ?? (mapDrivewayUsable ? refLayers.driveway : []);
+  source.driveway = drivewayStudio ? 'studio' : mapDrivewayUsable ? 'map' : 'none';
   // A Studio-drawn feature ring is always a closed polygon — DesignCanvas.commitZone refuses
   // fewer than 3 points for every feature, boundary/house/driveway included — so a Studio-sourced
   // driveway is closed by construction. Only a MAP-sourced driveway can be the open TRACK line
   // drivewayClosed exists to distinguish from a traced paved area.
-  const drivewayClosed = source.driveway === 'studio' ? true : (refLayers.drivewayClosed ?? false);
+  const drivewayClosed = source.driveway === 'studio'
+    || (source.driveway === 'map' && refLayers.drivewayClosed === true);
 
   return { boundary, house, driveway, drivewayClosed, source };
 }
