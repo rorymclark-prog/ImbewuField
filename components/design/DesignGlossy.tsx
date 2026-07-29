@@ -10,7 +10,6 @@ import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } fro
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { pointInRing } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -44,20 +43,25 @@ import {
   groundRegister,
   groundContentRingsForSheet,
   EXACT_CONTEXT_ALPHA,
+  EXACT_DRIVEWAY_LEGEND_TEXT,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
+  exactSheetGroundLegendGroups,
+  exactSheetLineLegendGroups,
+  exactSheetZoneLegendGroups,
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import { countedLegendText, legendRowGap } from '@/lib/sheet-legend-layout';
+import { overlayElementsText } from '@/lib/overlay-elements';
 import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
@@ -1562,222 +1566,6 @@ async function requestProducer(
 
 // Short comma list of placed element names + counts, e.g. "Vegetable Bed x6, JoJo Tank".
 // Locked prompts omit editor glyphs so the image model cannot mistake them for final map art.
-/**
- * Which named ground feature an item stands in — "Lawn", "Veg garden", "Patio / Paving".
- *
- * This is the honest way to get the reference sheet's "TAP POINT (COURTYARD)" disambiguation. The
- * alternative — asking the image model to name the part of the site from the aerial photo — needs
- * scene semantics it does not reliably have, and a plausible-but-WRONG place word is worse than
- * none: it sends a farmer to the wrong tap. The farmer has already traced and named these areas,
- * so the answer is data we hold, not a guess. Smallest containing ring wins, so a lawn wrapping a
- * patio doesn't swallow everything inside it.
- */
-function placeLabelFor(pt: [number, number], zones: DesignCanvasState['zones']): string | null {
-  let best: { label: string; area: number } | null = null;
-  for (const z of zones) {
-    if (!z.feature || z.points.length < 3 || !pointInRing(pt, z.points)) continue;
-    // A Studio-traced 'boundary' ring is the whole plot — every element on the site sits inside
-    // it, so "(Property boundary)" as a place suffix disambiguates nothing (it would fire on
-    // every item that isn't ALSO inside a smaller named ring) and reads as a non-answer, the same
-    // failure the 'cleared' guard below exists to prevent. Unlike 'cleared', a farmer-given name
-    // doesn't rescue it — the ring still means "everywhere", not a place.
-    if (z.feature === 'boundary') continue;
-    // Shoelace — relative area only, so the sign and scale don't matter.
-    let a = 0;
-    for (let i = 0, j = z.points.length - 1; i < z.points.length; j = i++) {
-      a += (z.points[j][0] + z.points[i][0]) * (z.points[j][1] - z.points[i][1]);
-    }
-    const area = Math.abs(a / 2);
-    // 'cleared' is the "none of the above" bucket, so its default label is the non-answer
-    // "Cleared / other" — on a sheet that renders as "TREE BASINS (CLEARED / OTHER) ×5", which
-    // reads like a leaked database field and disambiguates nothing. A ring the farmer has NAMED
-    // is different: "Cleared" they typed themselves is a real place word, so only the default
-    // is suppressed.
-    if (z.feature === 'cleared' && !z.name) continue;
-    const label = z.name ?? GROUND_FEATURES[z.feature]?.label ?? null;
-    if (!label) continue;
-    if (!best || area < best.area) best = { label, area };
-  }
-  return best?.label ?? null;
-}
-
-/**
- * Element list for Satellite Overlay, where the MODEL letters every label and legend row.
- *
- * Differs from producerElementsText in one way that matters: when several of the same element sit
- * in DIFFERENT named areas, each gets its own row carrying that area — "Tap Point (Lawn)",
- * "Tap Point (Veg garden)" — which is what makes the reference sheet readable. Items that share an
- * area (or sit outside every traced feature) collapse back to a single "Name ×N" row.
- */
-function overlayElementsText(
-  state: DesignCanvasState,
-  refLayers: DesignGlossyProps['refLayers'],
-  filter: GlossyLayerFilter = 'all',
-): { elements: string; fabric: string; served: string } {
-  const byName = new Map<string, Array<string | null>>();
-  // Strips characters overlayElementsText's own OUTPUT uses as structural delimiters (buildSatelliteOverlayPrompt
-  // splits grouped rows on ',' — see its `collapseRows((list ?? '').split(','))`). Moved to the top of
-  // this function (it used to be defined only where the FABRIC channel used it, far below) so it can
-  // also sanitise farmer-typed element names — a label like "Tank, north side" was going straight
-  // into `parts` unsanitised and came out of the legend as two rows, "Tank" and "north side", the
-  // second with no icon vocabulary at all (audit finding, 2026-07-25).
-  const clean = (label: string) => label.replace(/[,|»]/g, '').trim();
-  // Legend section per element name. A flat 30-row legend is unreadable on the whole-design sheet;
-  // the reference masterplan groups its key into WATER / PLANTING / INFRASTRUCTURE and that is what
-  // makes it scannable.
-  const sectionOf = new Map<string, string>();
-  const SECTION: Record<string, string> = {
-    water: 'WATER', earthworks: 'WATER', growing: 'PLANTING',
-    structure: 'INFRASTRUCTURE', animal: 'INFRASTRUCTURE', access: 'INFRASTRUCTURE',
-  };
-  // 'earthworks' is a build category, not a reading category. A farmer reading the sheet files a
-  // banana circle and a tree basin under PLANTING (they are where things grow) and a greywater or
-  // infiltration basin under WATER, whatever the catalog calls them. BUT on the WATER sheet
-  // specifically, banana_circle/tree_basin appear via ADDITIONAL_SHEETS as genuine water content
-  // (they are a greywater sink) — filing them under a PLANTING heading on a sheet titled WATER PLAN
-  // is confusing regardless of the catalog's PRIMARY sheet (audit finding, 2026-07-25: this table
-  // was not filter-aware, so the same two elements got the same heading on every sheet they appear
-  // on, even where that heading doesn't match the sheet). lib/water-cartography.ts's
-  // waterLegendSectionForFeature already answers "what heading on the Water sheet" correctly for the
-  // deterministic path; mirrored here rather than imported since this table's section names (WATER/
-  // PLANTING/INFRASTRUCTURE/ZONES) are coarser than that module's four-way water split.
-  const SECTION_BY_ID: Record<string, string> = filter === 'water'
-    ? {
-        banana_circle: 'WATER', tree_basin: 'WATER', mulch_bank: 'PLANTING',
-        keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
-        greywater_basin: 'WATER', infiltration_basin: 'WATER',
-      }
-    : {
-        banana_circle: 'PLANTING', tree_basin: 'PLANTING', mulch_bank: 'PLANTING',
-        keyhole_bed: 'PLANTING', herb_spiral: 'PLANTING', raised_bed: 'PLANTING',
-        greywater_basin: 'WATER', infiltration_basin: 'WATER',
-      };
-  for (const it of state.items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
-    const name = clean(it.label ?? def.name);
-    sectionOf.set(name, SECTION_BY_ID[def.id] ?? SECTION[def.category] ?? 'INFRASTRUCTURE');
-    const arr = byName.get(name) ?? [];
-    arr.push(placeLabelFor([it.x, it.y], state.zones));
-    byName.set(name, arr);
-  }
-
-  const parts: string[] = [];
-  for (const [name, places] of byName) {
-    const named = places.filter((p): p is string => !!p);
-    const distinct = new Set(named);
-    // Only worth splitting when the places actually tell them apart.
-    if (places.length > 1 && distinct.size > 1 && named.length === places.length) {
-      const seen = new Map<string, number>();
-      for (const p of places) seen.set(p!, (seen.get(p!) ?? 0) + 1);
-      for (const [place, n] of seen) parts.push(`${name} (${clean(place)})${n > 1 ? ` ×${n}` : ''}`);
-    } else {
-      parts.push(`${name}${places.length > 1 ? ` ×${places.length}` : ''}`);
-    }
-  }
-
-  // ZONES. Rory's "I don't want zones in the legend" was about the ELEMENT sheets, where a column
-  // of "Zone 3 — Orchard / food forest (×1)" rows buried the actual design. It got applied to every
-  // sheet — including the Zones sheet, where the zones ARE the design. The old note here claimed
-  // "the sheet's own wash carries them": true of the deterministic Blueprint sheet, which paints
-  // its own washes, and FALSE of Satellite Overlay, where the model draws everything and this list
-  // is the only thing telling it what exists. So the Zones sheet handed the model an EMPTY brief
-  // while prompt rule 7 asserts that list is "the COMPLETE contents of this sheet" — and the model,
-  // obeying rule 5, read the visible bands as element markers and invented a farm to fill them.
-  // Listed on the Zones sheet only; the element sheets stay clean.
-  if (filter === 'zones') {
-    const byZone = new Map<number, number>();
-    for (const z of state.zones) {
-      if (z.feature || z.points.length < 3) continue;
-      byZone.set(z.zone, (byZone.get(z.zone) ?? 0) + 1);
-    }
-    for (const [zone, n] of [...byZone.entries()].sort((a, b) => a[0] - b[0])) {
-      const name = `Zone ${zone} — ${ZONE_DEFS[zone as 0 | 1 | 2 | 3 | 4 | 5].label}`;
-      sectionOf.set(name, 'ZONES');
-      parts.push(`${name}${n > 1 ? ` ×${n}` : ''}`);
-    }
-  }
-
-  const lineCounts = new Map<string, number>();
-  for (const l of state.lines) {
-    if (!lineInFilter(l.kind, filter)) continue;
-    lineCounts.set(l.kind, (lineCounts.get(l.kind) ?? 0) + 1);
-  }
-  const LINE_NAME: Record<string, string> = {
-    swale: 'Swale', fence: 'Fence line', path: 'Walking path',
-    pipe: 'Buried water pipe', drip: 'Drip irrigation line', windbreak: 'Windbreak hedge',
-    greywater: 'Greywater line',
-  };
-  for (const [kind, n] of lineCounts) {
-    const nm = `${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`;
-    const lineSection = kind === 'windbreak' ? 'PLANTING'
-      : (kind === 'swale' || kind === 'pipe' || kind === 'drip') ? 'WATER'
-      : 'INFRASTRUCTURE'; // paths and fences are access, not plumbing
-    sectionOf.set(nm.replace(/ ×\d+$/, ''), lineSection);
-    parts.push(nm);
-  }
-  // THE DRIVEWAY IS CONTENT ON THE MASTERPLAN AND FABRIC EVERYWHERE ELSE — but it must be named on
-  // BOTH, and that is the bug that kept erasing it. On a layer sheet it was named nowhere: the
-  // ground branch skips it once refLayers covers it, groundRows skips it for the same reason, and
-  // this block only fired for 'all'. Meanwhile the composite DOES draw it (the quiet tar fabric in
-  // drawMarks). Drawn and unnamed is the worst state there is — rule 7 says nothing outside the
-  // list and the rules is drawn, so the model erased a farmer's access track off his own plan,
-  // render after render, while every fix went into the drawing instead of the naming.
-  // Listing it as ELEMENT content on a layer sheet would give an access track a legend row beside
-  // the actual design work, which is why it was excluded in the first place. The fabric channel is
-  // exactly the register for this: named so it survives, no caption, no legend row.
-  if (refLayers.driveway.length >= 2 && filter === 'all') {
-    sectionOf.set('Tarred driveway', 'INFRASTRUCTURE');
-    parts.push('Tarred driveway');
-  }
-
-  // Group for the legend. Sections only earn their headings when there is more than one, otherwise
-  // a single-layer sheet gets a lone heading over its whole list for nothing.
-  const groups = new Map<string, string[]>();
-  for (const part of parts) {
-    const bare = part.replace(/ ×\d+$/, '').replace(/ \([^)]*\)$/, '');
-    const sec = sectionOf.get(bare) ?? sectionOf.get(part.replace(/ ×\d+$/, '')) ?? 'PLANTING';
-    groups.set(sec, [...(groups.get(sec) ?? []), part]);
-  }
-  const elements = groups.size < 2
-    ? parts.join(', ')
-    : [...groups.entries()].map(([sec, rows]) => `${sec} » ${rows.join(', ')}`).join(' | ');
-
-  // FABRIC — a SEPARATE channel from `elements`, never folded in. Rule 7 treats `elements` as "the
-  // COMPLETE contents of this sheet" and the empty-brief refusal above tests it for emptiness: a
-  // design that is only a traced orchard must still refuse (an orchard is not a design). Folding
-  // ground in here would also hand farmer-typed names like "Veg garden" or "Orchard / food forest"
-  // straight into the icon matcher, firing ICON_MATCH.bed / .tree the same way zone names once did.
-  // Built from the same rings drawMarks now paints, in the same biggest-first, dedupe-by-label
-  // order groundRows already uses for the deterministic legend, so the two can never drift on
-  // which ground exists or what it's called.
-  // CONTEXT ELEMENTS ride the same channel. A layer sheet is not only its own content: a Water plan
-  // whose drip lines run to nothing is unreadable, because the beds, banana circles and tree basins
-  // the irrigation SERVES now live on the Planting sheet (Rory: "water layer no driveway no beds no
-  // tree basins no veg bed drip irrigation!!!"). They have to be visible for the routes to mean
-  // anything, WITHOUT becoming water content — no legend row here, and Planting stays the sheet
-  // that counts them. Fabric is exactly the right channel: drawn and named, never legended.
-  // (clean() is defined near the top of this function now — shared with the element-name sanitising above.)
-  // 'all' deliberately, NOT this function's own `filter` — this text feeds every sheet's `fabric`
-  // string, content or context alike, and the prompt's own fabricIsContent (groundRegister) is
-  // what decides caption/legend wording downstream. Narrowing to `filter` here would silently
-  // empty the fabric text on Water/Zones, exactly the "drawn but unnamed gets erased" bug.
-  const fabricParts = groundRows(state, refLayers, 'all').map((r) => clean(r.label));
-  // …and the driveway joins it on every sheet that is not the masterplan (where it is already
-  // content, above). refLayers.driveway is the main-map access layer; a Studio-traced one is
-  // already in groundRows, so this covers the case groundRows deliberately skips.
-  if (refLayers.driveway.length >= 2 && filter !== 'all') fabricParts.push('Tarred driveway');
-  const fabric = fabricParts.filter(Boolean).join(', ');
-  // SERVED is a third channel, separate from fabric, because the two want opposite treatment.
-  // Ground — lawn, patio, yard — is SILENT: rule 10 forbids captioning what a farmer walks past
-  // every day. The beds and basins an irrigation system feeds are not that; leaving them unnamed
-  // left him looking at unexplained shapes on his own plan ("why doesnt it include all the right
-  // elements"). Folding both into one string would force one rule on both and caption the lawn.
-  const served = contextElementNames(state, filter).map(clean).filter(Boolean).join(', ');
-
-  return { elements, fabric, served };
-}
-
 /** Things a sheet must SHOW to be readable but must not COUNT as its own content.
  *
  *  Only the Water sheet needs this today, and for a specific reason: irrigation is a set of lines
@@ -1806,30 +1594,6 @@ export function waterSystemsPresent(state: DesignCanvasState): { rainwater: bool
     if (l.kind === 'greywater') { greywater = true; greywaterLine = true; }
   }
   return { rainwater, irrigation, greywater, greywaterLine };
-}
-
-function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
-  if (filter !== 'water') return [];
-  const counts = new Map<string, number>();
-  for (const it of state.items) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !isContextElement(def, filter)) continue;
-    const name = it.label ?? def.name;
-    counts.set(name, (counts.get(name) ?? 0) + 1);
-  }
-  // NAMED, and that is a deliberate reversal. An earlier version listed them individually and the
-  // render came back with invented tree canopies and banana palms — "Tree Basin" contains "tree",
-  // "Banana Circle" contains "banana", and naming a thing to a model that draws is asking it to
-  // draw that thing. The next version replaced the names with one generic phrase, which stopped the
-  // invention but left a farmer looking at unexplained shapes on his own plan. He chose names:
-  // "why doesnt it include all the right elements".
-  // So the names are back, and the invention is held off by the PROMPT instead — the site-fabric
-  // clause states that every one of these is ALREADY MARKED on the photograph, that the count is
-  // the marker count, and that no new planting appears anywhere. Naming is safe only while that
-  // clause travels with it; the two must be changed together.
-  return [...counts.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .map(([name, n]) => `${name}${n > 1 ? ` \u00d7${n}` : ''}`);
 }
 
 function producerElementsText(
@@ -3659,15 +3423,12 @@ export function groundRows(
   // MUST use the same predicate as drawBlueprintGround, or the legend and the map drift apart —
   // which is exactly what happened when ground started drawing on Zones, Water and Structures while
   // this function was still hard-coded to skip house and driveway: painted areas with no key.
-  return groundContentRingsForSheet(state, refLayers, filter)
-    .sort((a, b) => ringArea(b.points) - ringArea(a.points))
-    .map((z) => ({
-      color: GROUND_FEATURES[z.feature!].color,
-      label: z.name ?? GROUND_FEATURES[z.feature!].label,
+  return exactSheetGroundLegendGroups(state, refLayers, filter)
+    .map((group) => ({
+      color: group.color,
+      label: group.text,
       style: 'fill' as const,
-    }))
-    // Two lawns are one legend row.
-    .filter((row, i, all) => all.findIndex((r) => r.label === row.label) === i);
+    }));
 }
 
 /** Group a sheet's items into legend rows: one row per distinct name, with a count, commonest
@@ -7128,13 +6889,8 @@ export function sheetLegendRows(
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
   if (filter === 'zones') {
-    // One row per zone NUMBER, not per polygon — a site with three Zone-3 patches listed
-    // "Zone 3 — Orchard / food forest" three times.
-    const seen = new Set<number>();
-    for (const z of [...state.zones].sort((a, b) => a.zone - b.zone)) {
-      if (z.feature || z.points.length < 3 || seen.has(z.zone)) continue;
-      seen.add(z.zone);
-      rows.push({ swatch: ZONE_DEFS[z.zone].color, text: `Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`, kind: 'zone' });
+    for (const group of exactSheetZoneLegendGroups(state, filter)) {
+      rows.push({ swatch: ZONE_DEFS[group.zone].color, text: group.text, kind: 'zone' });
     }
   }
   // Ground fabric, register-aware. drawBlueprintGround paints traced house/patio/driveway/lawn/
@@ -7155,13 +6911,14 @@ export function sheetLegendRows(
       siteRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence', section: 'SITE EDGE' });
     }
     if (refLayers.driveway.length >= 2) {
-      siteRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface', section: 'SITE EDGE' });
+      siteRows.push({ swatch: '#5A5D57', text: EXACT_DRIVEWAY_LEGEND_TEXT, kind: 'surface', section: 'SITE EDGE' });
     }
-    const accessLines = state.lines.filter((line) => ['path', 'fence', 'windbreak'].includes(line.kind));
-    if (accessLines.length) {
+    const allLineGroups = exactSheetLineLegendGroups(state, filter);
+    const accessLineGroup = allLineGroups.find((group) => !group.lineKind);
+    if (accessLineGroup) {
       siteRows.push({
         swatch: '#8A6D3B',
-        text: `Paths, fences & windbreaks ×${accessLines.length}`,
+        text: countedLegendText(accessLineGroup.text, accessLineGroup.count),
         lineKind: 'path',
         section: 'SITE EDGE',
       });
@@ -7178,12 +6935,14 @@ export function sheetLegendRows(
         section: summary.section,
       });
     }
-    const waterRows: StyleLegendRow[] = waterRouteLegendEntries(state.lines).map((route) => ({
-      swatch: route.color,
-      text: countedLegendText(route.label, route.count),
-      lineKind: route.kind,
-      section: 'WATER',
-    }));
+    const waterRows: StyleLegendRow[] = allLineGroups
+      .filter((group): group is typeof group & { lineKind: LineShape['kind'] } => Boolean(group.lineKind))
+      .map((group) => ({
+        swatch: waterRouteStyleFor(group.lineKind)?.color ?? LINE_COLORS[group.lineKind] ?? '#8C8577',
+        text: countedLegendText(group.text, group.count),
+        lineKind: group.lineKind,
+        section: 'WATER',
+      }));
     const orderedContent = [
       ...contentRows.filter((row) => row.section === 'WATER'),
       ...waterRows,
@@ -7224,17 +6983,14 @@ export function sheetLegendRows(
       section: group.section,
     });
   }
-  const kindCounts = new Map<LineShape['kind'], number>();
-  for (const l of state.lines) {
-    if (!lineInFilter(l.kind, filter)) continue;
-    kindCounts.set(l.kind, (kindCounts.get(l.kind) ?? 0) + 1);
-  }
-  for (const [kind, count] of kindCounts) {
+  for (const group of exactSheetLineLegendGroups(state, filter)) {
+    const kind = group.lineKind;
+    if (!kind) continue;
     const waterStyle = filter === 'water' ? waterRouteStyleFor(kind) : undefined;
     const plantingStyle = filter === 'planting' ? plantingRouteStyleFor(kind) : undefined;
     rows.push({
       swatch: waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
-      text: countedLegendText(waterStyle?.label ?? plantingStyle?.label ?? kind.charAt(0).toUpperCase() + kind.slice(1), count),
+      text: countedLegendText(group.text, group.count),
       lineKind: kind,
       section: waterStyle
         ? waterLegendSectionForRoute(kind as Parameters<typeof waterLegendSectionForRoute>[0])
@@ -7253,10 +7009,6 @@ export function sheetLegendRows(
     });
     rows.splice(0, rows.length, ...contextRows, ...systemRows);
   }
-  // Water treats the driveway as quiet site context, so naming it after the water systems would
-  // make infrastructure look like Water-plan content. Other sheets retain the explicit row where
-  // built fabric is content.
-  if (filter !== 'water' && filter !== 'planting' && filter !== 'structures' && refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
   return rows;
 }
 

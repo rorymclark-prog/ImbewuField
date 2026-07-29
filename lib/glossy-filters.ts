@@ -6,10 +6,14 @@ import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from
 import {
   CATEGORY_STEP,
   ELEMENTS_BY_ID,
+  GROUND_FEATURES,
+  ZONE_DEFS,
   type DesignElementDef,
   type ElementCategory,
 } from '@/lib/design-elements';
 import type { MapRefLayers } from '@/lib/base-layers';
+import { PLANTING_ROUTE_STYLE } from '@/lib/planting-cartography';
+import { WATER_ROUTE_STYLE } from '@/lib/water-cartography';
 
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
 // base map + ground context always kept so the picture is legible). Only the drawn marks in
@@ -55,6 +59,9 @@ export const EXACT_CONTEXT_ALPHA = {
   structures: 0.24,
   implementation: 0.88,
 } as const;
+
+/** Main-map access track spelling shared by the AI content list and the exact masterplan legend. */
+export const EXACT_DRIVEWAY_LEGEND_TEXT = 'Tarred driveway';
 
 /**
  * One naming rule for both on-map callouts and legend inventory.
@@ -127,6 +134,23 @@ export interface ExactElementLegendGroup {
   defId: string;
 }
 
+export interface ExactLineLegendGroup {
+  text: string;
+  count: number;
+  lineKind?: LineShape['kind'];
+}
+
+export interface ExactZoneLegendGroup {
+  text: string;
+  zone: 0 | 1 | 2 | 3 | 4 | 5;
+}
+
+export interface ExactGroundLegendGroup {
+  text: string;
+  color: string;
+  feature: GroundFeatureKind;
+}
+
 /** The exact renderer's item legend inventory, kept pure so the all-eight-sheet agreement check
  * runs without a browser or React. `sheetLegendRows` consumes this same inventory; map membership
  * remains independently owned by exactSheetElementRegister/itemInFilter, which is what lets the
@@ -159,6 +183,70 @@ export function exactSheetElementLegendGroups(
     groups.set(def.name, group);
   }
   return [...groups.values()];
+}
+
+/** Line rows shared by the AI inventory and exact legend. This includes the masterplan's deliberate
+ * editorial grouping; rebuilding individual route names in the prompt made its legend describe a
+ * different sheet even when both paths counted the same saved lines. */
+export function exactSheetLineLegendGroups(
+  state: Pick<DesignCanvasState, 'lines'>,
+  sheet: ExactPlanSheetKey,
+): ExactLineLegendGroup[] {
+  if (
+    sheet === 'base'
+    || sheet === 'sector'
+    || sheet === 'zones'
+    || sheet === 'implementation'
+  ) return [];
+
+  if (sheet === 'all') {
+    const groups: ExactLineLegendGroup[] = [];
+    const accessCount = state.lines.filter((line) =>
+      line.points.length >= 2
+      && (line.kind === 'path' || line.kind === 'fence' || line.kind === 'windbreak')).length;
+    if (accessCount) groups.push({ text: 'Paths, fences & windbreaks', count: accessCount });
+    for (const kind of ['swale', 'pipe', 'drip', 'greywater'] as const) {
+      const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
+      if (count) groups.push({ text: WATER_ROUTE_STYLE[kind].label, count, lineKind: kind });
+    }
+    return groups;
+  }
+
+  const groups: ExactLineLegendGroup[] = [];
+  for (const kind of ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const) {
+    if (!lineInFilter(kind, sheet)) continue;
+    const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
+    if (!count) continue;
+    const text = sheet === 'water'
+      ? WATER_ROUTE_STYLE[kind as keyof typeof WATER_ROUTE_STYLE]?.label
+      : sheet === 'planting'
+        ? PLANTING_ROUTE_STYLE[kind as keyof typeof PLANTING_ROUTE_STYLE]?.label
+        : undefined;
+    groups.push({
+      text: text ?? kind.charAt(0).toUpperCase() + kind.slice(1),
+      count,
+      lineKind: kind,
+    });
+  }
+  return groups;
+}
+
+export function exactSheetZoneLegendGroups(
+  state: Pick<DesignCanvasState, 'zones'>,
+  sheet: ExactPlanSheetKey,
+): ExactZoneLegendGroup[] {
+  if (sheet !== 'zones') return [];
+  const seen = new Set<number>();
+  const groups: ExactZoneLegendGroup[] = [];
+  for (const zone of [...state.zones].sort((left, right) => left.zone - right.zone)) {
+    if (zone.feature || zone.points.length < 3 || seen.has(zone.zone)) continue;
+    seen.add(zone.zone);
+    groups.push({
+      text: `Zone ${zone.zone} — ${ZONE_DEFS[zone.zone].label}`,
+      zone: zone.zone,
+    });
+  }
+  return groups;
 }
 
 // NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
@@ -341,6 +429,32 @@ export function groundContentRingsForSheet(
     if (zone.feature === 'driveway' && drivewayCovered) return false;
     return groundRegister(zone.feature, filter) === 'content';
   });
+}
+
+function exactLegendRingArea(points: Array<[number, number]>): number {
+  let area = 0;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    area += points[j][0] * points[i][1] - points[i][0] * points[j][1];
+  }
+  return Math.abs(area / 2);
+}
+
+/** Named ground rows shared by the prompt fabric channel and the exact legend. Context callers may
+ * request `all` to name everything the model must preserve; only callers using the current sheet
+ * key are entitled to print these as content rows. */
+export function exactSheetGroundLegendGroups(
+  state: Pick<DesignCanvasState, 'zones'>,
+  refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
+  sheet: GlossyLayerFilter,
+): ExactGroundLegendGroup[] {
+  return groundContentRingsForSheet(state, refLayers, sheet)
+    .sort((left, right) => exactLegendRingArea(right.points) - exactLegendRingArea(left.points))
+    .map((zone) => ({
+      text: zone.name ?? GROUND_FEATURES[zone.feature!].label,
+      color: GROUND_FEATURES[zone.feature!].color,
+      feature: zone.feature!,
+    }))
+    .filter((row, index, all) => all.findIndex((candidate) => candidate.text === row.text) === index);
 }
 
 // How many REAL things the farmer has drawn on this layer. A layer map with zero content is always

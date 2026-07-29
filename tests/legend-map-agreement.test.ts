@@ -4,13 +4,22 @@ import assert from 'node:assert/strict';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
+import {
+  overlayElementsText,
+  type OverlayLegendContentGroup,
+} from '../lib/overlay-elements.ts';
 import { producerLabels } from '../lib/producer-labels.ts';
 import {
   EXACT_CONTEXT_ALPHA,
+  EXACT_DRIVEWAY_LEGEND_TEXT,
   EXACT_FULL_STRENGTH_ALPHA,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
   exactSheetElementRegister,
+  exactSheetGroundLegendGroups,
+  exactSheetLineLegendGroups,
+  exactSheetZoneLegendGroups,
+  groundRegister,
   type ExactPlanSheetKey,
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
@@ -44,6 +53,13 @@ const FIXTURES = [
   { name: 'Ubhejane demo', state: buildDemoDesignCanvasState() },
   { name: 'complete catalog demo', state: allCatalogFixture() },
 ];
+
+const PROMPT_REF_LAYERS = {
+  boundary: [[0.05, 0.05], [0.95, 0.05], [0.95, 0.95], [0.05, 0.95]] as Array<[number, number]>,
+  house: [] as Array<[number, number]>,
+  driveway: [[0.15, 0.75], [0.55, 0.72], [0.9, 0.68]] as Array<[number, number]>,
+  drivewayClosed: false,
+};
 
 function itemCountsByName(items: PlacedItem[]): Map<string, number> {
   const counts = new Map<string, number>();
@@ -128,7 +144,120 @@ for (const fixture of FIXTURES) {
       }
     }
   });
+
+  test(`${fixture.name}: AI prompt inventory and exact legend agree in both directions on all eight sheets`, () => {
+    for (const sheet of SHEETS) {
+      const prompt = overlayElementsText(fixture.state, PROMPT_REF_LAYERS, sheet);
+      const legend = exactSheetElementLegendGroups(fixture.state, sheet);
+
+      for (const named of prompt.legendElementGroups) {
+        assert.equal(
+          legend.filter((row) =>
+            row.text === named.text
+            && row.count === named.count
+            && row.defId === named.defId).length,
+          1,
+          `${sheet}: prompt names "${named.text}" ×${named.count} but the exact legend does not`,
+        );
+      }
+      for (const row of legend) {
+        assert.equal(
+          prompt.legendElementGroups.filter((named) =>
+            named.text === row.text
+            && named.count === row.count
+            && named.defId === row.defId).length,
+          1,
+          `${sheet}: legend lists "${row.text}" ×${row.count} but the model was not told it exists`,
+        );
+      }
+
+      const modelSheets = new Set<ExactPlanSheetKey>([
+        'zones',
+        'water',
+        'planting',
+        'structures',
+        'all',
+      ]);
+      const expectedContent: OverlayLegendContentGroup[] = modelSheets.has(sheet)
+        ? [
+            ...legend.map((row) => ({ kind: 'element' as const, text: row.text, count: row.count })),
+            ...exactSheetLineLegendGroups(fixture.state, sheet)
+              .map((row) => ({ kind: 'line' as const, text: row.text, count: row.count })),
+            ...exactSheetZoneLegendGroups(fixture.state, sheet)
+              .map((row) => ({ kind: 'zone' as const, text: row.text })),
+            ...exactSheetGroundLegendGroups(
+              fixture.state,
+              PROMPT_REF_LAYERS,
+              sheet as GlossyLayerFilter,
+            ).map((row) => ({ kind: 'ground' as const, text: row.text })),
+            ...(sheet === 'all'
+              ? [{ kind: 'driveway' as const, text: EXACT_DRIVEWAY_LEGEND_TEXT }]
+              : []),
+          ]
+        : [];
+
+      for (const named of prompt.legendContentGroups) {
+        assert.equal(
+          expectedContent.filter((row) =>
+            row.kind === named.kind
+            && row.text === named.text
+            && row.count === named.count).length,
+          1,
+          `${sheet}: prompt content "${named.text}" has no exact legend row`,
+        );
+      }
+      for (const row of expectedContent) {
+        assert.equal(
+          prompt.legendContentGroups.filter((named) =>
+            named.kind === row.kind
+            && named.text === row.text
+            && named.count === row.count).length,
+          1,
+          `${sheet}: exact legend content "${row.text}" was not named to the model`,
+        );
+      }
+    }
+  });
 }
+
+test('prompt-only context is structurally context, never an unlegended content exception', () => {
+  const state = allCatalogFixture();
+  for (const sheet of SHEETS) {
+    const prompt = overlayElementsText(state, PROMPT_REF_LAYERS, sheet);
+    for (const group of prompt.contextElementGroups) {
+      const def = ELEMENTS_BY_ID[group.defId];
+      assert.ok(def);
+      assert.equal(
+        exactSheetElementRegister(def, sheet),
+        'context',
+        `${sheet}: ${group.text} may be prompt-only only when the sheet register declares context`,
+      );
+      assert.equal(
+        prompt.legendElementGroups.some((content) => content.defId === group.defId),
+        false,
+        `${sheet}: context ${group.text} leaked into the content legend`,
+      );
+    }
+
+    if (sheet === 'water' || sheet === 'zones') {
+      assert.equal(groundRegister('lawn', sheet), 'context');
+    } else if (sheet === 'planting' || sheet === 'structures' || sheet === 'all') {
+      assert.equal(groundRegister('lawn', sheet), 'content');
+    }
+  }
+});
+
+test('driveway uses the content channel only on the masterplan and context fabric elsewhere', () => {
+  const state = buildDemoDesignCanvasState();
+  for (const sheet of ['zones', 'water', 'planting', 'structures'] as const) {
+    const prompt = overlayElementsText(state, PROMPT_REF_LAYERS, sheet);
+    assert.doesNotMatch(prompt.elements, /Tarred driveway/i, `${sheet}: context became content`);
+    assert.match(prompt.fabric, /Tarred driveway/i, `${sheet}: context must still be named to the model`);
+  }
+  const masterplan = overlayElementsText(state, PROMPT_REF_LAYERS, 'all');
+  assert.match(masterplan.elements, /Tarred driveway/i);
+  assert.doesNotMatch(masterplan.fabric, /Tarred driveway/i);
+});
 
 // A label the legend cannot explain is worse than no label. The Ubhejane render at v80 carried a
 // leadered DRIVEWAY callout on sheet 05 (Planting) and sheet 06 (Structures) while neither legend
