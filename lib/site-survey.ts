@@ -49,19 +49,86 @@ export interface SiteSurvey {
   notes: string;
 }
 
-export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string {
-  // Older-schema surveys loaded from localStorage may be missing array fields entirely.
-  // Default them all so the .map/.filter/.join calls below never throw (report 500).
-  s = {
-    ...s,
-    goals: s.goals ?? [], waterSource: s.waterSource ?? [], waterStorage: s.waterStorage ?? [],
-    soilAmendments: s.soilAmendments ?? [], existingCrops: s.existingCrops ?? [],
-    livestock: s.livestock ?? [], challenges: s.challenges ?? [], otherInfra: s.otherInfra ?? [],
+function stringValue(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function stringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  const clean: string[] = [];
+  for (const entry of value) {
+    const text = stringValue(entry);
+    if (!text || seen.has(text)) continue;
+    seen.add(text);
+    clean.push(text);
+  }
+  return clean;
+}
+
+function areaValue(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
+  if (!value || typeof value !== 'object' || !siteId) return null;
+  const row = value as Partial<SiteSurvey>;
+  const roofAreaSource = row.roofAreaSource === 'auto' || row.roofAreaSource === 'manual'
+    ? row.roofAreaSource
+    : undefined;
+  const existingGrowingAreaSource = row.existingGrowingAreaSource === 'auto'
+    || row.existingGrowingAreaSource === 'manual'
+    ? row.existingGrowingAreaSource
+    : undefined;
+  return {
+    siteId,
+    placeId: stringValue(row.placeId),
+    savedAt: stringValue(row.savedAt),
+    updatedAt: typeof row.updatedAt === 'number'
+      && Number.isFinite(row.updatedAt)
+      && row.updatedAt >= 0
+      ? row.updatedAt
+      : undefined,
+    siteType: row.siteType === 'community' ? 'community' : 'homestead',
+    adults: stringValue(row.adults),
+    memberCount: stringValue(row.memberCount) || undefined,
+    goals: stringArray(row.goals),
+    waterSource: stringArray(row.waterSource),
+    waterDelivery: stringArray(row.waterDelivery),
+    waterStorage: stringArray(row.waterStorage),
+    roofMainM2: areaValue(row.roofMainM2),
+    roofSecondaryM2: areaValue(row.roofSecondaryM2),
+    hasGutters: row.hasGutters === true,
+    roofAreaSource,
+    landPrepMethod: stringValue(row.landPrepMethod),
+    soilCondition: stringValue(row.soilCondition),
+    soilAmendments: stringArray(row.soilAmendments),
+    hasFencing: stringValue(row.hasFencing),
+    existingCrops: stringArray(row.existingCrops),
+    existingGrowingAreaM2: areaValue(row.existingGrowingAreaM2),
+    existingGrowingAreaSource,
+    livestock: stringArray(row.livestock),
+    otherInfra: stringArray(row.otherInfra),
+    farmingPractice: stringValue(row.farmingPractice),
+    challenges: stringArray(row.challenges),
+    isCommercial: row.isCommercial === true,
+    marketType: stringValue(row.marketType) || undefined,
+    notes: stringValue(row.notes),
   };
+}
+
+export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string {
+  // Reports are a public boundary for long-lived browser data. Normalise again
+  // even though load/save do it, because API callers can pass decoded JSON directly.
+  s = normaliseSurvey(s, stringValue(s?.siteId) || 'site:unknown')
+    ?? normaliseSurvey({}, 'site:unknown')!;
   const totalRoof = (s.roofMainM2 ?? 0) + (s.roofSecondaryM2 ?? 0);
+  const rainfallMm = Number.isFinite(annualRainfallMm) && annualRainfallMm >= 0
+    ? annualRainfallMm
+    : null;
   const efficiency = s.hasGutters ? 0.80 : 0.60;
-  const roofHarvestKL = totalRoof > 0
-    ? Math.round(totalRoof * annualRainfallMm * efficiency / 1000)
+  const roofHarvestKL = totalRoof > 0 && rainfallMm !== null
+    ? Math.round(totalRoof * rainfallMm * efficiency / 1000)
     : null;
 
   const goalLabels: Record<string, string> = {
@@ -102,8 +169,12 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
     if (s.roofSecondaryM2 && s.roofSecondaryM2 > 0) lines.push(`Secondary roofs (barn/shed/other): ${s.roofSecondaryM2} m²`);
     lines.push(`Gutters & downpipes in place: ${s.hasGutters ? 'Yes' : 'No (using 60% efficiency)'}`);
     lines.push(`Total harvestable roof area: ${totalRoof} m²`);
-    lines.push(`Estimated annual roof harvest at ${annualRainfallMm} mm rainfall: ~${roofHarvestKL} kL`);
-    lines.push(`Use this figure to size storage tanks and prioritise swale / contour placement.`);
+    if (roofHarvestKL !== null) {
+      lines.push(`Estimated annual roof harvest at ${rainfallMm} mm rainfall: ~${roofHarvestKL} kL`);
+      lines.push(`Use this figure to size storage tanks and prioritise swale / contour placement.`);
+    } else {
+      lines.push('Estimated annual roof harvest: unavailable until annual rainfall is known.');
+    }
   } else {
     lines.push(`Roof area: not measured — rely on location rainfall data for water yield estimates.`);
   }
@@ -118,7 +189,9 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('');
   lines.push('--- EXISTING RESOURCES ---');
   lines.push(`Crops growing now: ${s.existingCrops.filter(v => v !== 'nothing').join(', ') || 'nothing yet'}`);
-  if (s.existingGrowingAreaM2) lines.push(`Existing growing area (traced or entered): ${s.existingGrowingAreaM2} m²`);
+  if (s.existingGrowingAreaM2 && s.existingGrowingAreaM2 > 0) {
+    lines.push(`Existing growing area (traced or entered): ${s.existingGrowingAreaM2} m²`);
+  }
   lines.push(`Livestock: ${s.livestock.filter(v => v !== 'none').join(', ') || 'none'}`);
   lines.push(`Other infrastructure: ${s.otherInfra.length ? s.otherInfra.join(', ') : 'none mentioned'}`);
 
@@ -158,14 +231,19 @@ function migrateLegacySurvey(siteId: string): SiteSurvey | null {
   const match = SITE_ID_RE.exec(siteId);
   if (!match) return null;
   const [, latStr, lonStr] = match;
-  const place = loadPlaces().find((p) => p.lat.toFixed(5) === latStr && p.lon.toFixed(5) === lonStr);
+  const place = loadPlaces().find((p) =>
+    Number.isFinite(p.lat)
+    && Number.isFinite(p.lon)
+    && p.lat.toFixed(5) === latStr
+    && p.lon.toFixed(5) === lonStr);
   if (!place) return null;
 
   let legacy: SiteSurvey | null;
   try { legacy = JSON.parse(localStorage.getItem(key(place.id)) ?? 'null'); } catch { legacy = null; }
-  if (!legacy) return null;
+  const repaired = normaliseSurvey(legacy, siteId);
+  if (!repaired) return null;
 
-  const migrated: SiteSurvey = { ...legacy, siteId };
+  const migrated: SiteSurvey = repaired;
   try { localStorage.setItem(key(siteId), JSON.stringify(migrated)); } catch {}
   const uid = getFirebase()?.auth?.currentUser?.uid;
   if (uid) upsertSurvey(uid, migrated).catch(() => {});
@@ -176,14 +254,17 @@ export function loadSurvey(siteId: string): SiteSurvey | null {
   if (typeof window === 'undefined') return null;
   try {
     const direct = JSON.parse(localStorage.getItem(key(siteId)) ?? 'null');
-    if (direct) return direct;
+    const repaired = normaliseSurvey(direct, siteId);
+    if (repaired) return repaired;
   } catch {}
   return migrateLegacySurvey(siteId);
 }
 
 export function saveSurvey(survey: SiteSurvey): void {
   if (typeof window === 'undefined') return;
-  const stamped = { ...survey, updatedAt: Date.now() };
+  const clean = normaliseSurvey(survey, stringValue(survey?.siteId));
+  if (!clean) return;
+  const stamped = { ...clean, updatedAt: Date.now() };
   try { localStorage.setItem(key(stamped.siteId), JSON.stringify(stamped)); } catch {}
   window.dispatchEvent(new CustomEvent('imbewu-surveys-changed'));
   const uid = getFirebase()?.auth?.currentUser?.uid;
