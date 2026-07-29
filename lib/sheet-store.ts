@@ -49,6 +49,69 @@ export interface StoredSheet {
   showcase?: boolean;
 }
 
+const RESULT_KINDS = new Set<SheetResultKind>([
+  'exact',
+  'hybrid',
+  'ai-polished',
+  'ai-illustrated',
+  'legacy',
+]);
+const PROVIDERS = new Set<SheetProvider>(['exact', 'openai', 'gemini', 'unknown']);
+const IMAGE_DATA_URL = /^data:image\/(?:png|jpeg|webp);base64,([A-Za-z0-9+/]*={0,2})$/i;
+
+function nonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isImageDataUrl(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  const match = IMAGE_DATA_URL.exec(value);
+  if (!match) return false;
+  const payload = match[1];
+  return payload.length > 0 && payload.length % 4 === 0;
+}
+
+/** IndexedDB is durable but untyped. Validate every row at both boundaries so an interrupted old
+ * write, manual browser edit, or future incompatible build cannot masquerade as a saved render. */
+function normaliseStoredSheet(value: unknown): StoredSheet | null {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return null;
+  const row = value as Record<string, unknown>;
+  if (
+    !nonEmptyString(row.id)
+    || !nonEmptyString(row.siteId)
+    || !nonEmptyString(row.label)
+    || !isImageDataUrl(row.image)
+    || !nonEmptyString(row.at)
+    || !Number.isFinite(Date.parse(row.at))
+  ) return null;
+  if (row.thumb !== undefined && !isImageDataUrl(row.thumb)) return null;
+  if (row.planVersion !== undefined && !nonEmptyString(row.planVersion)) return null;
+  if (row.resultKind !== undefined && (
+    typeof row.resultKind !== 'string'
+    || !RESULT_KINDS.has(row.resultKind as SheetResultKind)
+  )) return null;
+  if (row.provider !== undefined && (
+    typeof row.provider !== 'string'
+    || !PROVIDERS.has(row.provider as SheetProvider)
+  )) return null;
+  if (row.geometryLock !== undefined && typeof row.geometryLock !== 'boolean') return null;
+  if (row.showcase !== undefined && typeof row.showcase !== 'boolean') return null;
+
+  return {
+    id: row.id,
+    siteId: row.siteId,
+    label: row.label,
+    image: row.image,
+    at: row.at,
+    ...(row.thumb === undefined ? {} : { thumb: row.thumb }),
+    ...(row.planVersion === undefined ? {} : { planVersion: row.planVersion }),
+    ...(row.resultKind === undefined ? {} : { resultKind: row.resultKind as SheetResultKind }),
+    ...(row.provider === undefined ? {} : { provider: row.provider as SheetProvider }),
+    ...(row.geometryLock === undefined ? {} : { geometryLock: row.geometryLock }),
+    ...(row.showcase === undefined ? {} : { showcase: row.showcase }),
+  };
+}
+
 function openDb(): Promise<IDBDatabase | null> {
   return new Promise((resolve) => {
     if (typeof indexedDB === 'undefined') return resolve(null);
@@ -94,6 +157,7 @@ function tx(db: IDBDatabase, mode: IDBTransactionMode): IDBObjectStore {
 
 /** Every sheet saved for this site, oldest first. Returns [] on any failure — never throws. */
 export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
+  if (!nonEmptyString(siteId)) return [];
   const db = await openDb();
   if (!db) return [];
   try {
@@ -101,8 +165,10 @@ export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
       try {
         const req = tx(db, 'readonly').index('siteId').getAll(siteId);
         req.onsuccess = () => {
-          const rows = (req.result as StoredSheet[]) ?? [];
-          rows.sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0));
+          const rows = ((req.result as unknown[]) ?? [])
+            .map(normaliseStoredSheet)
+            .filter((row): row is StoredSheet => row !== null && row.siteId === siteId);
+          rows.sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
           resolve(rows);
         };
         req.onerror = () => resolve([]);
@@ -118,13 +184,15 @@ export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
 /** Persist one sheet. Resolves false when storage was unavailable or full, so the caller can tell
  *  the farmer their sheet is session-only rather than silently implying it is safe. */
 export async function saveSheet(sheet: StoredSheet): Promise<boolean> {
+  const row = normaliseStoredSheet(sheet);
+  if (!row) return false;
   const db = await openDb();
   if (!db) return false;
   try {
     return await new Promise((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
-        transaction.objectStore(STORE).put(sheet);
+        transaction.objectStore(STORE).put(row);
         transaction.oncomplete = () => resolve(true);
         transaction.onabort = () => resolve(false);
         transaction.onerror = () => resolve(false); // QuotaExceeded lands here
@@ -137,19 +205,20 @@ export async function saveSheet(sheet: StoredSheet): Promise<boolean> {
   }
 }
 
-export async function deleteSheet(id: string): Promise<void> {
+export async function deleteSheet(id: string): Promise<boolean> {
+  if (!nonEmptyString(id)) return false;
   const db = await openDb();
-  if (!db) return;
+  if (!db) return false;
   try {
-    await new Promise<void>((resolve) => {
+    return await new Promise<boolean>((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
         transaction.objectStore(STORE).delete(id);
-        transaction.oncomplete = () => resolve();
-        transaction.onabort = () => resolve();
-        transaction.onerror = () => resolve();
+        transaction.oncomplete = () => resolve(true);
+        transaction.onabort = () => resolve(false);
+        transaction.onerror = () => resolve(false);
       } catch {
-        resolve();
+        resolve(false);
       }
     });
   } finally {
@@ -159,11 +228,12 @@ export async function deleteSheet(id: string): Promise<void> {
 
 /** Drop every sheet for one site (the gallery's "clear all"). Scoped to the site on purpose: a
  *  farmer clearing one design's maps must not lose another design's. */
-export async function clearSheets(siteId: string): Promise<void> {
+export async function clearSheets(siteId: string): Promise<boolean> {
+  if (!nonEmptyString(siteId)) return false;
   const db = await openDb();
-  if (!db) return;
+  if (!db) return false;
   try {
-    await new Promise<void>((resolve) => {
+    return await new Promise<boolean>((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
         const store = transaction.objectStore(STORE);
@@ -171,11 +241,12 @@ export async function clearSheets(siteId: string): Promise<void> {
         req.onsuccess = () => {
           for (const key of req.result ?? []) store.delete(key as IDBValidKey);
         };
-        transaction.oncomplete = () => resolve();
-        transaction.onabort = () => resolve();
-        transaction.onerror = () => resolve();
+        req.onerror = () => resolve(false);
+        transaction.oncomplete = () => resolve(true);
+        transaction.onabort = () => resolve(false);
+        transaction.onerror = () => resolve(false);
       } catch {
-        resolve();
+        resolve(false);
       }
     });
   } finally {
@@ -185,9 +256,10 @@ export async function clearSheets(siteId: string): Promise<void> {
 
 /** Rough byte size of a data URL, for quota messaging. base64 carries 3 bytes per 4 chars. */
 export function dataUrlBytes(dataUrl: string): number {
-  const comma = dataUrl.indexOf(',');
-  if (comma < 0) return 0;
-  const b64 = dataUrl.length - comma - 1;
+  const match = IMAGE_DATA_URL.exec(dataUrl);
+  if (!match || match[1].length === 0 || match[1].length % 4 !== 0) return 0;
+  const payload = match[1];
+  const b64 = payload.length;
   const padding = dataUrl.endsWith('==') ? 2 : dataUrl.endsWith('=') ? 1 : 0;
   return Math.max(0, Math.floor((b64 * 3) / 4) - padding);
 }
