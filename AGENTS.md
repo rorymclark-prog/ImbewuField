@@ -58,6 +58,31 @@ top unstarted item unless you have been given something else. Every item in it w
 before it was written down — if you find one is already fixed or its premise is wrong, say so and
 skip it. That is a useful result, not a failure.
 
+**Re-read the queue from `origin/main` before you start EACH item — it changes while you work.**
+
+```bash
+git fetch origin && git show origin/main:docs/CODEX-QUEUE.md
+```
+
+This is not ceremony. Claude edits the queue *during* your run: adding items it finds by rendering
+sheets, re-scoping an item whose cause has already been located, marking items done. On 2026-07-29
+item 2 (the swapped tank labels) was rewritten from "hunt for an id mismatch" to "re-render and
+confirm" because the real cause — a leader-line collision — had been found and fixed an hour
+earlier. An agent working from the copy it pulled at start-up would have spent an hour chasing a bug
+that no longer existed.
+
+Read `PLAN_VERSION` the same way — from `origin/main`, not from the number written in the queue
+text, which goes stale within the hour:
+
+```bash
+git show origin/main:components/design/DesignGlossy.tsx | grep -m1 "PLAN_VERSION ="
+```
+
+Two branches landing the same version is the most common merge problem here, and it is not
+cosmetic: the second change silently inherits the first's cache entries, so it is invisible to
+anyone who rendered in between. Equally, **do not bump it for a refactor** — a bump re-keys the
+gallery, and an AI sheet a farmer already paid for stops being found. Bump when the picture changes.
+
 **Do not stop after one item.** Push the branch, write the report, then take the next item straight
 away. Claude reviews and merges behind you; waiting for that review is what turns a long run into a
 short one. Only stop when the queue is empty or something is genuinely blocking you — and if it is
