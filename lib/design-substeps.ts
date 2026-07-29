@@ -40,35 +40,46 @@ export interface SubStep {
 // ── completion helpers ─────────────────────────────────────────────────────────
 function hasItem(s: DesignCanvasState, ids: string[]): boolean {
   const set = new Set(ids);
-  return s.items.some((it) => set.has(it.defId));
+  return s.items.some((it) =>
+    set.has(it.defId) && Number.isFinite(it.x) && Number.isFinite(it.y));
 }
 function hasItemCategory(s: DesignCanvasState, category: string): boolean {
-  return s.items.some((it) => ELEMENTS_BY_ID[it.defId]?.category === category);
+  return s.items.some((it) =>
+    ELEMENTS_BY_ID[it.defId]?.category === category
+    && Number.isFinite(it.x)
+    && Number.isFinite(it.y));
+}
+function hasFinitePoints(points: Array<[number, number]>, minimum: number): boolean {
+  return points.length >= minimum
+    && points.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
 }
 function hasLine(s: DesignCanvasState, kinds: LineShape['kind'][]): boolean {
   const set = new Set(kinds);
-  return s.lines.some((l) => set.has(l.kind));
+  return s.lines.some((l) => set.has(l.kind) && hasFinitePoints(l.points, 2));
 }
 function hasZoneN(s: DesignCanvasState, ns: number[]): boolean {
   const set = new Set(ns);
   // Number(z.zone): legacy data can persist zone as a string ("1"), which a strict Set.has
   // never matches — that made a painted Zones step still read "0/4". loadCanvasState now
   // normalises on load; this coercion also covers state already in memory this session.
-  return s.zones.some((z) => !z.feature && set.has(Number(z.zone)));
+  return s.zones.some((z) =>
+    !z.feature && set.has(Number(z.zone)) && hasFinitePoints(z.points, 3));
 }
 function hasFeature(s: DesignCanvasState, feats: GroundFeatureKind[]): boolean {
   const set = new Set(feats);
-  return s.zones.some((z) => z.feature && set.has(z.feature));
+  return s.zones.some((z) =>
+    z.feature && set.has(z.feature) && hasFinitePoints(z.points, 3));
 }
 
 const TANK_IDS = ['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000', 'rain_barrel'];
 const TREE_IDS = [
   'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
+  'tree_guava',
   'tree_pawpaw', 'tree_moringa', 'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry',
   'banana_clump', 'tree_indigenous', 'tree_other', 'banana_circle',
   'tree_apple', 'tree_pear', 'tree_plum', 'tree_peach', 'tree_fig', 'tree_pomegranate', 'tree_olive',
 ];
-const BED_IDS = ['veg_bed', 'keyhole_bed', 'herb_spiral'];
+const BED_IDS = ['veg_bed', 'raised_bed', 'keyhole_bed', 'herb_spiral'];
 
 // ── the catalog ─────────────────────────────────────────────────────────────────
 export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, SubStep[]> = {
@@ -79,7 +90,7 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
       instruction: 'Already traced your fence line on the main map? You’re done. Otherwise tap "Do this" and trace the outer edge of your land here, corner to corner.',
       where: 'The outer edge of your land, corner to corner.',
       arm: { kind: 'area', feature: 'boundary' },
-      done: (s, ctx) => ctx.hasBoundary || hasFeature(s, ['boundary']),
+      done: (s, ctx) => ctx.hasBoundary === true || hasFeature(s, ['boundary']),
     },
     {
       id: 'base-house',
@@ -87,7 +98,7 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
       instruction: 'Tap "Do this", then trace around your house roof on the map.',
       where: 'The building you live in — tanks and Zone 1 go closest to it.',
       arm: { kind: 'area', feature: 'house' },
-      done: (s, ctx) => ctx.hasHouse || hasFeature(s, ['house']),
+      done: (s, ctx) => ctx.hasHouse === true || hasFeature(s, ['house']),
     },
     {
       id: 'base-paving',
