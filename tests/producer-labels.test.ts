@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { clusterByProximity, plotBox, producerLabels } from '../lib/producer-labels.ts';
+import { clusterByProximity, compareLabelRows, plotBox, producerLabels } from '../lib/producer-labels.ts';
 import type { LabelRefLayers } from '../lib/producer-labels.ts';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { fitMeasuredPillX, type ProducerLabel } from '../lib/image-producer.ts';
@@ -228,6 +228,31 @@ test('dense producer-label columns stay ordered and non-overlapping at real boun
       }
     }
   }
+});
+
+test('a planted row with tied y anchors orders by x, then by stable item id', () => {
+  const state = waterSheetState();
+  state.items = [
+    { id: 'demo-di-mango', defId: 'tree_mango', x: 0.355083, y: 0.650491 },
+    { id: 'demo-di-avocado', defId: 'tree_avocado', x: 0.466558, y: 0.650491 },
+  ];
+
+  const leaders = producerLabels(state, waterSheetRefLayers(), W, H, 'planting', false)
+    .filter((label) => label.leader !== false);
+
+  assert.deepEqual(
+    leaders.map((label) => label.id),
+    ['demo-di-mango', 'demo-di-avocado'],
+    'the left tree must receive the upper row so equal-y leaders cannot cross',
+  );
+  assert.ok(leaders[0].ay <= leaders[1].ay);
+  assert.ok(
+    compareLabelRows(
+      { id: 'a', cx: 100, cy: 200 },
+      { id: 'b', cx: 100, cy: 200 },
+    ) < 0,
+    'source id is the deterministic final key when both coordinates tie',
+  );
 });
 
 test('malformed presentation geometry is omitted without mutating valid saved labels', () => {

@@ -101,7 +101,22 @@ export function compassWord(x: number, y: number, box: ReturnType<typeof plotBox
   return 'CENTRAL';
 }
 
-type LabelPt = { x: number; y: number; name: string; icon: string };
+type LabelPt = { id?: string; x: number; y: number; name: string; icon: string };
+
+/** Total, shared ordering for margin-label rows.
+ *
+ * Rows with the same vertical anchor are common in deliberately planted rows. Ordering only by
+ * `cy` made their layout depend on catalogue/insertion order, so a right-hand tree could receive
+ * the upper pill while a left-hand tree received the lower one and their leaders crossed.
+ */
+export function compareLabelRows(
+  a: Pick<ProducerLabel, 'cy' | 'cx'> & Partial<Pick<ProducerLabel, 'id' | 'text'>>,
+  b: Pick<ProducerLabel, 'cy' | 'cx'> & Partial<Pick<ProducerLabel, 'id' | 'text'>>,
+): number {
+  return a.cy - b.cy
+    || a.cx - b.cx
+    || (a.id ?? a.text ?? '').localeCompare(b.id ?? b.text ?? '');
+}
 
 /** Single-link clustering by proximity. `aspect` (W/H) makes the metric isotropic despite x and y
  *  both being normalised 0..1 over a non-square frame. Element counts are tens — O(n²) is fine. */
@@ -155,6 +170,7 @@ export function producerLabels(
   // `lone` carries the ingredients of a single-pill block so two identical pills can be merged or
   // re-labelled later without parsing the rendered text back apart.
   type Block = {
+    id: string;
     cx: number; cy: number; head: Row | null; members: Row[]; hidden: number;
     lone?: { icon: string; name: string; n: number };
   };
@@ -190,7 +206,7 @@ export function producerLabels(
     ) continue;
     const key = labelFamily(def);
     const arr = families.get(key) ?? [];
-    arr.push({ x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });
+    arr.push({ id: it.id, x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });
     families.set(key, arr);
   }
 
@@ -201,22 +217,46 @@ export function producerLabels(
     const clusters = clusterByProximity(pts, aspect);
     for (const cluster of clusters) {
       // Name groups within this cluster (renamed items get their own row), biggest first.
-      const byName = new Map<string, { icon: string; xs: number[]; ys: number[] }>();
+      const byName = new Map<string, { icon: string; ids: string[]; xs: number[]; ys: number[]; points: LabelPt[] }>();
       for (const p of cluster) {
-        const g = byName.get(p.name) ?? { icon: p.icon, xs: [], ys: [] };
+        const g = byName.get(p.name) ?? { icon: p.icon, ids: [], xs: [], ys: [], points: [] };
+        g.ids.push(p.id ?? `${p.name}:${p.x}:${p.y}`);
         g.xs.push(p.x);
         g.ys.push(p.y);
+        g.points.push(p);
         byName.set(p.name, g);
       }
       const names = [...byName.entries()].sort((a, b) => b[1].xs.length - a[1].xs.length || a[0].localeCompare(b[0]));
 
-      if (naming === 'individual' || names.length < GROUP_MIN_NAMES) {
+      if (naming === 'individual') {
+        // A family cluster is single-link: Avocado can connect Mango to two Moringas that are far
+        // apart from EACH OTHER. Species labels must therefore re-cluster their own specimens,
+        // otherwise one counted leader lands at the empty centroid between distant trees.
+        for (const [name, g] of names) {
+          for (const specimens of clusterByProximity(g.points, aspect)) {
+            const n = specimens.length;
+            blocks.push({
+              id: specimens.map((point) => point.id ?? `${point.name}:${point.x}:${point.y}`).sort().join('\u0000'),
+              cx: (specimens.reduce((sum, point) => sum + point.x, 0) / n) * W,
+              cy: (specimens.reduce((sum, point) => sum + point.y, 0) / n) * H,
+              head: null,
+              members: [itemRow(g.icon, name, n)],
+              hidden: 0,
+              lone: { icon: g.icon, name, n },
+            });
+          }
+        }
+        continue;
+      }
+
+      if (names.length < GROUP_MIN_NAMES) {
         // Too few kinds to be worth a header — one pill per kind with its own leader, as before.
         // It now anchors on the name's centroid WITHIN this cluster, so two veg patches at
         // opposite ends of the plot no longer share one pill pointing at the empty middle.
         for (const [name, g] of names) {
           const n = g.xs.length;
           blocks.push({
+            id: [...g.ids].sort().join('\u0000'),
             cx: (g.xs.reduce((a, b) => a + b, 0) / n) * W,
             cy: (g.ys.reduce((a, b) => a + b, 0) / n) * H,
             head: null,
@@ -238,6 +278,7 @@ export function producerLabels(
         .slice(0, GROUP_MAX_ROWS)
         .map(([name, g]) => ({ ...itemRow(g.icon, name, g.xs.length), leader: false }));
       blocks.push({
+        id: cluster.map((point) => point.id ?? `${point.name}:${point.x}:${point.y}`).sort().join('\u0000'),
         cx: nx * W,
         cy: ny * H,
         head: { text: head, kind: 'header', leader: true, pw: pillWidth(head, true) },
@@ -255,7 +296,7 @@ export function producerLabels(
       const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
       const text = `${includeToolGlyphs ? `${z.zone}️⃣ ` : `ZONE ${z.zone} — `}${ZONE_DEFS[z.zone].label}`.toUpperCase();
-      blocks.push({ cx, cy, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
+      blocks.push({ id: z.id, cx, cy, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
     }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
@@ -281,7 +322,7 @@ export function producerLabels(
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
     if (isNormalisedPoint(mid)) {
       const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
-      blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
+      blocks.push({ id: 'driveway', cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
     }
   }
 
@@ -309,25 +350,39 @@ export function producerLabels(
     b.members[0] = { ...row, text, pw: pillWidth(text, false) };
   }
 
-  // Pass 2 — anything still identical sits in the SAME compass sector, i.e. the two clusters are
-  // near each other after all. Merging is honest there: one leader to their combined centroid lands
-  // beside both, and the count adds up. This also guarantees the invariant terminates.
+  // Pass 2 — two far-apart specimens can still share one broad compass sector. They must keep one
+  // leader each: merging their counts aims a single leader at empty ground between them (the two
+  // demo Moringas reproduced exactly that failure). Refine the location word along the other axis
+  // instead, so the species identity stays intact and every leader still terminates on a specimen.
   counts = countTexts();
-  for (const [text, n] of counts) {
-    if (n < 2) continue;
+  for (const [text, count] of counts) {
+    if (count < 2) continue;
     const dupes = blocks.filter((b) => !b.head && b.lone && primaryText(b) === text);
     if (dupes.length < 2) continue;
-    const total = dupes.reduce((s, b) => s + (b.lone?.n ?? 1), 0);
-    const keep = dupes[0];
-    keep.cx = dupes.reduce((s, b) => s + b.cx * (b.lone?.n ?? 1), 0) / total;
-    keep.cy = dupes.reduce((s, b) => s + b.cy * (b.lone?.n ?? 1), 0) / total;
-    keep.lone = { ...keep.lone!, n: total };
-    // Rebuild from the merged count, but KEEP the compass word pass 1 gave it — rebuilding bare
-    // would collapse "NORTHERN TAP POINT" and "SOUTHERN TAP POINT" back into one shared text.
-    const merged = itemRow(keep.lone.icon, keep.lone.name, total);
-    const mergedText = `${compassWord(keep.cx / W, keep.cy / H, box)} ${merged.text}`;
-    keep.members = [{ ...merged, text: mergedText, pw: pillWidth(mergedText, false) }];
-    for (const drop of dupes.slice(1)) blocks.splice(blocks.indexOf(drop), 1);
+    const match = /^(NORTHERN|SOUTHERN|EASTERN|WESTERN|CENTRAL) (.+)$/.exec(text);
+    if (!match) continue;
+    const [, broad, identity] = match;
+    dupes.sort((a, b) => (
+      broad === 'NORTHERN' || broad === 'SOUTHERN' || broad === 'CENTRAL'
+        ? a.cx - b.cx || a.cy - b.cy || a.id.localeCompare(b.id)
+        : a.cy - b.cy || a.cx - b.cx || a.id.localeCompare(b.id)
+    ));
+    dupes.forEach((block, index) => {
+      const first = index === 0;
+      const last = index === dupes.length - 1;
+      let prefix: string;
+      if (broad === 'NORTHERN' || broad === 'SOUTHERN') {
+        const eastWest = first ? 'WESTERN' : last ? 'EASTERN' : 'CENTRAL';
+        prefix = `${broad === 'NORTHERN' ? 'NORTH' : 'SOUTH'}-${eastWest}`;
+      } else if (broad === 'EASTERN' || broad === 'WESTERN') {
+        const northSouth = first ? 'NORTH' : last ? 'SOUTH' : 'CENTRAL';
+        prefix = northSouth === 'CENTRAL' ? `CENTRAL-${broad}` : `${northSouth}-${broad}`;
+      } else {
+        prefix = first ? 'WESTERN' : last ? 'EASTERN' : 'CENTRAL';
+      }
+      const refinedText = `${prefix} ${identity}`;
+      block.members[0] = { ...block.members[0], text: refinedText, pw: pillWidth(refinedText, false) };
+    });
   }
 
   // Pin each BLOCK to the LEFT or RIGHT margin (by which half its elements sit in) and hug their
@@ -348,7 +403,9 @@ export function producerLabels(
   const scaleSafeTop = H - Math.max(110, Math.round(H * 0.11));
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
-    const col = blocks.filter((b) => (b.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+    const col = blocks
+      .filter((b) => (b.cx < W / 2 ? 'left' : 'right') === side)
+      .sort(compareLabelRows);
     if (!col.length) return;
     const sideBot = side === 'left' ? scaleSafeTop - pillH / 2 : bot;
     // FIT THE COLUMN FIRST. A column only holds ~28 rows; past that the overflow shift below
@@ -395,7 +452,7 @@ export function producerLabels(
       rows[i].forEach((row, k) => {
         const ax = side === 'left' ? 16 : Math.max(16, W - row.pw - 16);
         const lx = side === 'left' ? ax + row.pw : ax; // leader meets the pill's inner edge
-        out.push({ cx: b.cx, cy: b.cy, ax, ay: ys[i] + k * rowGap, lx, text: row.text, kind: row.kind, leader: row.leader });
+        out.push({ id: b.id, cx: b.cx, cy: b.cy, ax, ay: ys[i] + k * rowGap, lx, text: row.text, kind: row.kind, leader: row.leader });
       });
     });
   });
