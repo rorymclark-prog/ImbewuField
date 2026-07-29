@@ -12,6 +12,7 @@
 
 import { loadCanvasState, makeMercatorUnprojector, type LineShape } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_COLORS, ZONE_DEFS } from '@/lib/design-elements';
+import { waterRouteStyleFor } from '@/lib/water-cartography';
 
 export interface DesignOverlayItem {
   id: string;
@@ -31,22 +32,46 @@ export interface DesignOverlay {
 // read the same as they do in the Studio (that helper isn't exported, so the conventions
 // are duplicated here — keep in sync if the Studio palette changes).
 function lineStyle(kind: LineShape['kind']): { stroke: string; width: number; dashed: boolean } {
+  const waterStyle = waterRouteStyleFor(kind);
   switch (kind) {
     case 'swale':
-      return { stroke: '#4EA6D8', width: 3, dashed: true };
+      return { stroke: waterStyle!.color, width: 3, dashed: true };
     case 'fence':
-      return { stroke: '#3A352C', width: 2, dashed: false };
+      return { stroke: '#8E7CC3', width: 2, dashed: false };
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dashed: true };
     case 'pipe':
-      return { stroke: '#8C8577', width: 2, dashed: false };
+      return { stroke: waterStyle!.color, width: 2, dashed: false };
     case 'drip':
-      return { stroke: '#4EA6D8', width: 1.6, dashed: true };
+      return { stroke: waterStyle!.color, width: 1.6, dashed: true };
+    case 'greywater':
+      return { stroke: waterStyle!.color, width: 2.1, dashed: true };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, dashed: false };
     default:
       return { stroke: '#8C8577', width: 2, dashed: false };
   }
+}
+
+function validNormPoint(value: unknown): value is [number, number] {
+  return Array.isArray(value)
+    && value.length >= 2
+    && Number.isFinite(value[0])
+    && Number.isFinite(value[1])
+    && value[0] >= 0
+    && value[0] <= 1
+    && value[1] >= 0
+    && value[1] <= 1;
+}
+
+function validNormPath(
+  value: unknown,
+  minimumPoints: number,
+): value is Array<[number, number]> {
+  if (!Array.isArray(value) || value.length < minimumPoints || !value.every(validNormPoint)) {
+    return false;
+  }
+  return new Set(value.map(([x, y]) => `${x},${y}`)).size >= minimumPoints;
 }
 
 // Slightly darkened outline colour for filled areas so the edge reads on a bright fill.
@@ -66,11 +91,14 @@ function darken(hex: string, amount = 0.35): string {
 export function buildDesignOverlay(siteId: string): DesignOverlay | null {
   const state = loadCanvasState(siteId);
   if (!state) return null;
+  const zones = Array.isArray(state.zones) ? state.zones : [];
+  const lines = Array.isArray(state.lines) ? state.lines : [];
+  const placedItems = Array.isArray(state.items) ? state.items : [];
 
   const hasContent =
-    (state.zones?.length ?? 0) > 0 ||
-    (state.lines?.length ?? 0) > 0 ||
-    (state.items?.length ?? 0) > 0;
+    zones.length > 0 ||
+    lines.length > 0 ||
+    placedItems.length > 0;
   if (!hasContent) return null;
 
   const f = state.frame;
@@ -84,6 +112,12 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
     !Number.isFinite(f.zoom) ||
     !Number.isFinite(f.imgW) ||
     !Number.isFinite(f.imgH) ||
+    f.centerLng < -180 ||
+    f.centerLng > 180 ||
+    f.centerLat < -90 ||
+    f.centerLat > 90 ||
+    f.zoom < 0 ||
+    f.zoom > 30 ||
     f.imgW <= 0 ||
     f.imgH <= 0
   ) {
@@ -96,9 +130,10 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
   // Zones + ground-feature areas → filled polygons. A `feature` tag makes the ring a real
   // ground/built feature (house/patio/lawn/…); otherwise it's a permaculture effort-zone,
   // coloured by its 0..5 zone number.
-  for (const z of state.zones ?? []) {
-    if (!z.points || z.points.length < 3) continue;
+  for (const z of zones) {
+    if (!validNormPath(z.points, 3)) continue;
     const ring = z.points.map((p) => unproject(p));
+    if (ring.some(([lng, lat]) => !Number.isFinite(lng) || !Number.isFinite(lat))) continue;
     // GeoJSON polygon rings must be explicitly closed.
     const first = ring[0];
     const last = ring[ring.length - 1];
@@ -106,9 +141,10 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
 
     let fill: string;
     let label: string;
-    if (z.feature && GROUND_FEATURES[z.feature]) {
-      fill = GROUND_FEATURES[z.feature].color;
-      label = GROUND_FEATURES[z.feature].label;
+    const groundFeature = z.feature ? GROUND_FEATURES[z.feature] : undefined;
+    if (groundFeature) {
+      fill = groundFeature.color;
+      label = groundFeature.label;
     } else {
       fill = ZONE_COLORS[z.zone] ?? ZONE_COLORS[2];
       label = ZONE_DEFS[z.zone]?.label ?? `Zone ${z.zone}`;
@@ -117,7 +153,7 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
     features.push({
       type: 'Feature',
       properties: {
-        kind: z.feature ? 'ground' : 'zone',
+        kind: groundFeature ? 'ground' : 'zone',
         fill,
         stroke: darken(fill),
         label,
@@ -127,9 +163,10 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
   }
 
   // Lines → linestrings (swales, fences, paths, pipes, drip, windbreaks).
-  for (const l of state.lines ?? []) {
-    if (!l.points || l.points.length < 2) continue;
+  for (const l of lines) {
+    if (!validNormPath(l.points, 2)) continue;
     const coords = l.points.map((p) => unproject(p));
+    if (coords.some(([lng, lat]) => !Number.isFinite(lng) || !Number.isFinite(lat))) continue;
     const style = lineStyle(l.kind);
     features.push({
       type: 'Feature',
@@ -147,17 +184,19 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
   // Placed elements → point markers (rendered as react-map-gl <Marker>s by the map, so the
   // emoji icons render reliably — a Mapbox symbol layer can't show arbitrary emoji glyphs).
   const items: DesignOverlayItem[] = [];
-  for (const it of state.items ?? []) {
+  const itemIds = new Set<string>();
+  for (const it of placedItems) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def) continue;
+    if (!def || !it.id || itemIds.has(it.id) || !validNormPoint([it.x, it.y])) continue;
     const [lng, lat] = unproject([it.x, it.y]);
     if (!Number.isFinite(lng) || !Number.isFinite(lat)) continue;
+    itemIds.add(it.id);
     items.push({
       id: it.id,
       lng,
       lat,
       icon: def.icon,
-      label: it.label || def.name,
+      label: it.label?.trim() || def.name,
       color: def.color,
     });
   }
