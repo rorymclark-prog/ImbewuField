@@ -7967,7 +7967,17 @@ interface SavedGlossy {
 //        ground rings, which is the only reason this was invisible on a rendered sheet rather than
 //        obvious. groundContentRingsForSheet() is now the shared selector, and it also drops a
 //        Studio ring whose feature the main map already draws, so nothing is named twice.
-const PLAN_VERSION = 'v84';
+//   v85 — 2026-07-29: two labels whose targets share a y no longer cross their leaders, and a
+//        species label no longer points at empty ground between distant specimens. Every row sort
+//        ordered by `cy` alone, so a tie fell back to catalogue order — and the demo farm plants
+//        mango and avocado at exactly y=0.650491, because that is what a ROW of trees is. On sheet
+//        05 the upper pill took the further tree and the lower one the nearer, so the leaders
+//        crossed. `compareLabelRows()` is now the one total ordering (cy, then cx, then id).
+//        The second half was subtler: a family cluster is SINGLE-LINK, so an avocado could
+//        transitively join a mango to two moringas far from each other, and the merged "×2" leader
+//        landed at the empty centroid between them. Species labels now re-cluster their own
+//        specimens — which is what producer-labels.ts's own comment said clustering was for.
+const PLAN_VERSION = 'v85';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
