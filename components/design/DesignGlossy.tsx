@@ -7958,7 +7958,13 @@ interface SavedGlossy {
 //        found. None of v82–v97 ever shipped, so no farmer's cache is owed them, and they collapse
 //        to this single bump. The protocol changed with this merge — PLAN_VERSION is now assigned
 //        once, at merge, and never by a working branch. Eight collisions was enough.
-const PLAN_VERSION = 'v82';
+//   v83 — 2026-07-29: a callout on a layer sheet names the same thing its legend row does. Sheet 05
+//        labelled two trees `SOUTHERN TREES` while the legend listed `Avocado Tree ×1` and
+//        `Mango Tree ×1` — nothing in the legend decoded that label, the same disagreement as v81's
+//        DRIVEWAY pill reached by a different route. `sheetElementNaming()` is now the single
+//        authority both the label path and the legend path read: layer sheets name individually,
+//        only the integrated masterplan groups, and its legend groups by the same families.
+const PLAN_VERSION = 'v83';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
