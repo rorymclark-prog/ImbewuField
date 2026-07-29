@@ -7886,7 +7886,11 @@ interface SavedGlossy {
 //        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
 //        (Arrived as v70 — the fourth version collision of this run. See AGENTS.md: read
 //        PLAN_VERSION from origin/main at the START of each item, not from the queue text.)
-const PLAN_VERSION = 'v72';
+//   v73 — 2026-07-29: the national border is the real Natural Earth outline instead of a
+//        lat/lon rectangle, so site context can change on a sheet. The rectangle called Lesotho
+//        and Eswatini South African; the polygon carries the Lesotho enclave as a hole.
+//        (Arrived as v71 — fifth collision.)
+const PLAN_VERSION = 'v73';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
