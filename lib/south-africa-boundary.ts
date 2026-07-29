@@ -457,3 +457,15 @@ export const SOUTH_AFRICA_POLYGONS = [
     ],
   ],
 ] as const;
+
+// `as const` only protects TypeScript callers. Freeze every nested array as
+// well so one accidental runtime edit cannot silently move the national
+// boundary for every later biome classification in the same session.
+for (const polygon of SOUTH_AFRICA_POLYGONS) {
+  for (const ring of polygon) {
+    for (const coordinate of ring) Object.freeze(coordinate);
+    Object.freeze(ring);
+  }
+  Object.freeze(polygon);
+}
+Object.freeze(SOUTH_AFRICA_POLYGONS);
