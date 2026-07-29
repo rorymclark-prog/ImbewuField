@@ -49,7 +49,7 @@ import {
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
-import { producerLabels, plotBox } from '@/lib/producer-labels';
+import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
@@ -3427,7 +3427,7 @@ function referenceBlueprintLabels(
     for (const side of ['left', 'right'] as const) {
       const column = leaders
         .filter((label) => (label.cx < W / 2 ? 'left' : 'right') === side)
-        .sort((a, b) => a.cy - b.cy);
+        .sort(compareLabelRows);
       if (!column.length) continue;
       const positions = column.map((label) => Math.max(top, Math.min(bottom, label.cy)));
       for (let i = 1; i < positions.length; i++) positions[i] = Math.max(positions[i], positions[i - 1] + gap);
@@ -3451,7 +3451,7 @@ function referenceBlueprintLabels(
         const rank = (label: ProducerLabel) => label.kind === 'header' ? 0
           : /BEDS|CROPS|TREE|ORCHARD|BANANA|VETIVER|POLLINATOR/.test(label.text) ? 1
             : /DRIVEWAY/.test(label.text) ? 3 : 2;
-        return rank(a) - rank(b) || a.cy - b.cy;
+        return rank(a) - rank(b) || compareLabelRows(a, b);
       });
     return rebalance(ranked, 10);
   }
@@ -3477,7 +3477,7 @@ function referenceBlueprintLabels(
       return ar - br || a.index - b.index;
     })
     .slice(0, 9)
-    .sort((a, b) => a.label.cy - b.label.cy)
+    .sort((a, b) => compareLabelRows(a.label, b.label))
     .map(({ label }) => label);
   return rebalance(curated, 9);
 }
@@ -3615,7 +3615,7 @@ function groundLabelsForSheet(
       const text = (z.name ?? MAP_NAME[z.feature!] ?? GROUND_FEATURES[z.feature!].label).toUpperCase() + levelSuffix;
       const cx = (z.points.reduce((s2, p) => s2 + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s2, p) => s2 + p[1], 0) / z.points.length) * H;
-      return { text, cx, cy, pw: Math.min(W - 28, padX * 2 + text.length * fs * 0.62) };
+      return { id: z.id, text, cx, cy, pw: Math.min(W - 28, padX * 2 + text.length * fs * 0.62) };
     })
     // One row per NAME: two lawns AT THE SAME LEVEL are one label, or the margin fills with
     // repeats — but the level suffix above means two lawns at different levels no longer share
@@ -3626,7 +3626,9 @@ function groundLabelsForSheet(
   // as far as needed to clear the row above, so leaders cannot tangle.
   const out: ProducerLabel[] = [];
   (['left', 'right'] as const).forEach((side) => {
-    const col = rows.filter((r) => (r.cx < W / 2 ? 'left' : 'right') === side).sort((a, b) => a.cy - b.cy);
+    const col = rows
+      .filter((r) => (r.cx < W / 2 ? 'left' : 'right') === side)
+      .sort(compareLabelRows);
     // A right-column pill overlaps the reserved rectangle horizontally as soon as its OWN right
     // margin (16px from W) sits left of avoidTopRight.x1 — every right-pinned pill's left edge is
     // `W - pw - 16`, so unless pw is wider than the whole reserved box it always intersects the
@@ -3637,7 +3639,7 @@ function groundLabelsForSheet(
       const y = Math.max(r.cy, lastY + pillH + 10);
       lastY = y;
       const ax = side === 'left' ? 16 : Math.max(16, W - r.pw - 16);
-      out.push({ cx: r.cx, cy: r.cy, ax, ay: Math.min(y, H - 36), lx: side === 'left' ? ax + r.pw : ax, text: r.text, kind: 'item', leader: true });
+      out.push({ id: r.id, cx: r.cx, cy: r.cy, ax, ay: Math.min(y, H - 36), lx: side === 'left' ? ax + r.pw : ax, text: r.text, kind: 'item', leader: true });
     }
   });
   return out;

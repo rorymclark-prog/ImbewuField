@@ -186,7 +186,7 @@ test('Planting callouts use the same species identities as the Planting legend',
     ...state,
     items: state.items.map(({ label: _label, ...item }) => item),
   };
-  const labels = producerLabels(canonicalState, DRIVEWAY_FIXTURE_REF, 2000, 1200, 'planting', false)
+  const labels = producerLabels(canonicalState, DRIVEWAY_FIXTURE_REF, 1936, 1268, 'planting', false)
     .filter((label) => label.leader !== false);
   const legendNames = new Set(
     exactSheetElementLegendGroups(state, 'planting').map((row) => row.text.toUpperCase()),
@@ -199,11 +199,22 @@ test('Planting callouts use the same species identities as the Planting legend',
   );
   assert.ok(labels.some((label) => /^AVOCADO TREE(?: ×\d+)?$/.test(label.text)));
   assert.ok(labels.some((label) => /^MANGO TREE(?: ×\d+)?$/.test(label.text)));
+  const moringas = labels.filter((label) => label.id?.startsWith('demo-di-moringa-'));
+  assert.equal(moringas.length, 2, 'distant Moringas need one leader each, not one empty-centroid leader');
+  assert.ok(moringas.every((label) => !/×2/.test(label.text)));
+  assert.deepEqual(
+    moringas.map((label) => label.cx).sort((a, b) => a - b),
+    state.items
+      .filter((item) => item.id.startsWith('demo-di-moringa-'))
+      .map((item) => item.x * 1936)
+      .sort((a, b) => a - b),
+    'each Moringa leader must stay anchored to a saved tree',
+  );
   for (const label of labels) {
     // Repeated specimens in separate clusters retain a compass prefix so their leaders remain
     // distinguishable; the species identity after that prefix must still be a real legend row.
     const identity = label.text
-      .replace(/^(?:NORTHERN|SOUTHERN|EASTERN|WESTERN|CENTRAL) /, '')
+      .replace(/^(?:(?:NORTH|SOUTH|CENTRAL)-(?:WESTERN|EASTERN)|NORTHERN|SOUTHERN|EASTERN|WESTERN|CENTRAL) /, '')
       .replace(/ ×\d+$/, '');
     assert.ok(legendNames.has(identity), `Planting callout "${label.text}" has no matching legend identity`);
   }

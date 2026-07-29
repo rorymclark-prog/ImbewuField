@@ -24,6 +24,8 @@ export type ImageInput = string | HTMLImageElement;
 
 /** A true, in-frame label to burn onto the produced map. All coords are OUTPUT px. */
 export interface ProducerLabel {
+  /** Stable source identity used only as the final layout-order tie-break. */
+  id?: string;
   cx: number; cy: number; // leader start — the element's TRUE position
   ax: number; ay: number; // pill anchor (top-left-ish, already clamped in-frame)
   lx: number;             // leader END x — the pill's INNER edge (so it meets the pill cleanly)
