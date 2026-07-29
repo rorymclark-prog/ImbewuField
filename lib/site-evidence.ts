@@ -25,7 +25,6 @@ interface SiteEvidenceStore {
 
 const STORE_KEY = 'imbewu_evidence_v1';
 const MAX_PER_KEY = 4;
-const MAX_TOTAL = 40;
 const UNSAFE_KEYS = new Set(['__proto__', 'prototype', 'constructor']);
 
 type UnknownRecord = Record<string, unknown>;
@@ -144,9 +143,14 @@ function evictUntilWithinLimits(store: SiteEvidenceStore): void {
   const all = locatedItems(store);
   let count = all.length;
   for (const loc of all) {
-    const underCount = count <= MAX_TOTAL;
-    const underBytes = JSON.stringify(store).length * 2 <= BYTE_BUDGET; // conservative UTF-16 estimate
-    if (underCount && underBytes) break;
+    // STORAGE PRESSURE IS THE ONLY REASON TO DISCARD A FARMER'S PHOTO.
+    //
+    // A `count <= 40` cap was added alongside this budget and then removed here. The catalogue
+    // offers 52 evidence tiles at MAX_PER_KEY 4 each — 208 items the app itself invites someone to
+    // record — so a forty-item ceiling silently deleted the work of anyone who actually did the
+    // survey properly, while sitting far inside the 4 MB budget. The byte budget is a real
+    // constraint (localStorage runs out); a round number well below the app's own capacity is not.
+    if (JSON.stringify(store).length * 2 <= BYTE_BUDGET) break; // conservative UTF-16 estimate
     removeLocated(store, loc);
     count -= 1;
   }

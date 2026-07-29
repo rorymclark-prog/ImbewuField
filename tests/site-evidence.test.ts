@@ -76,7 +76,14 @@ test('per-key retention is bounded and drops the oldest item rather than inserti
   assert.ok(items.every((item) => Number.isFinite(item.takenAt)));
 });
 
-test('the documented global item limit is enforced across many keys', () => {
+test('a diligent survey is kept in full — eviction is storage pressure, not a round number', () => {
+  // This asserted `count < 70`, which only passed because of a `MAX_TOTAL = 40` cap. That cap was
+  // removed: the catalogue offers 52 evidence tiles at 4 items each — 208 the app itself invites
+  // someone to record — so a forty-item ceiling silently deleted the work of anyone who did the
+  // survey properly, while sitting far inside the 4 MB byte budget.
+  //
+  // The rule is that nothing is discarded until storage is actually under pressure. Seventy small
+  // notes are nowhere near 4 MB, so all seventy survive.
   reset();
   for (let index = 0; index < 70; index += 1) {
     assert.equal(evidence.addEvidenceItem('site', `group_${index}`, {
@@ -85,9 +92,9 @@ test('the documented global item limit is enforced across many keys', () => {
     }), true);
   }
 
-  const count = evidence.getTotalEvidenceCount('site');
-  assert.ok(count > 0 && count < 70, 'total evidence must remain globally bounded');
+  assert.equal(evidence.getTotalEvidenceCount('site'), 70, 'small notes must not be evicted');
   assert.equal(evidence.getEvidenceItems('site', 'group_69')[0]?.note, 'note-69');
+  assert.equal(evidence.getEvidenceItems('site', 'group_0')[0]?.note, 'note-0', 'the oldest survives too');
 });
 
 test('an item larger than the whole budget fails without evicting older evidence', () => {
