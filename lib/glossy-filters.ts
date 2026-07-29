@@ -321,6 +321,28 @@ export function groundRegister(kind: GroundFeatureKind, filter: GlossyLayerFilte
   return filter === 'all' || filter === 'planting' || filter === 'structures' ? 'content' : 'context';
 }
 
+/**
+ * Traced ground that may be named on a sheet, shared by the map-label and legend paths.
+ *
+ * Context remains drawable through drawBlueprintGround, but it never reaches this content-only
+ * selector. Main-map house/driveway geometry also owns its own dedicated rendering, so matching
+ * Studio rings stay out of both labels and legend rows rather than being named twice.
+ */
+export function groundContentRingsForSheet(
+  state: Pick<DesignCanvasState, 'zones'>,
+  refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
+  filter: GlossyLayerFilter,
+): DesignCanvasState['zones'] {
+  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
+  return state.zones.filter((zone) => {
+    if (!zone.feature || zone.points.length < 3) return false;
+    if (zone.feature === 'house' && houseCovered) return false;
+    if (zone.feature === 'driveway' && drivewayCovered) return false;
+    return groundRegister(zone.feature, filter) === 'content';
+  });
+}
+
 // How many REAL things the farmer has drawn on this layer. A layer map with zero content is always
 // wrong — either that layer hasn't been drawn yet, or something upstream dropped it. Either way we
 // must never render it silently and let the AI invent the layer (Rory: "it should be retrieving my

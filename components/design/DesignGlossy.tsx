@@ -42,6 +42,7 @@ import {
   isContextElement,
   layerContentCount,
   groundRegister,
+  groundContentRingsForSheet,
   EXACT_CONTEXT_ALPHA,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
@@ -727,7 +728,7 @@ export function drawMarks(
     // so this never fires on the AI-composite paths that reuse buildComposite with drawDesign:true
     // or a narrower filter (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §4a).
     if (!drawDesign && filter === 'all') {
-      drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, imgW, imgH));
+      drawBlueprintLabelPills(ctx, groundLabelsForSheet(state, refLayers, imgW, imgH, filter));
     }
   }
 
@@ -3581,6 +3582,7 @@ function groundLabelsForSheet(
   refLayers: DesignGlossyProps['refLayers'],
   W: number,
   H: number,
+  filter: GlossyLayerFilter,
   // Reserved rectangle no right-column label may start inside — the Sector sheet's legend panel
   // sits top-right and is drawn AFTER these labels, so a "PAVING" pill that landed under it got
   // silently clipped (Rory: a render showed a label reading "...VING", the rest hidden behind the
@@ -3590,7 +3592,7 @@ function groundLabelsForSheet(
   avoidTopRight?: { x0: number; y0: number; x1: number; y1: number },
 ): ProducerLabel[] {
   const fs = 26, padX = 14, pillH = fs + 14;
-  const rings = state.zones.filter((z) => z.feature && z.feature !== 'boundary' && z.points.length >= 3);
+  const rings = groundContentRingsForSheet(state, refLayers, filter);
   if (!rings.length) return [];
   const rows = rings
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
@@ -3654,15 +3656,7 @@ export function groundRows(
   // MUST use the same predicate as drawBlueprintGround, or the legend and the map drift apart —
   // which is exactly what happened when ground started drawing on Zones, Water and Structures while
   // this function was still hard-coded to skip house and driveway: painted areas with no key.
-  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
-  const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
-  return state.zones
-    .filter((z) => {
-      if (!z.feature || z.points.length < 3) return false;
-      if (z.feature === 'house' && houseCovered) return false;
-      if (z.feature === 'driveway' && drivewayCovered) return false;
-      return groundRegister(z.feature, filter) === 'content';
-    })
+  return groundContentRingsForSheet(state, refLayers, filter)
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
     .map((z) => ({
       color: GROUND_FEATURES[z.feature!].color,
@@ -5083,7 +5077,7 @@ export async function buildBlueprintBaseMap(
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
-  drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H));
+  drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all'));
 
   const legendRows: StyleLegendRow[] = groundRows(renderState, renderRefLayers, 'all').map((row) => ({
     swatch: row.color,
@@ -7120,17 +7114,11 @@ export function sheetLegendRows(
   // of ground a sheet only shows for orientation. groundRows(state, refLayers, filter) already
   // returns only the rings groundRegister calls this filter's CONTENT (all/planting/structures) —
   // list those by name, same as the Blueprint builders do. On a CONTEXT sheet (water/zones) that
-  // call always returns [] by construction, so we fall back to a single compressed row — present
-  // only when ground is actually drawn (checked via filter 'all', under which every non-boundary
-  // kind resolves to content) — so the reader gets a key for what they see without this sheet
-  // pretending the orchard is its subject. This was the audit's "water Blueprint paints ground its
-  // own legend can't explain" gap (RENDER-INVESTIGATION finding 9) — every composeStyleSheet-based
-  // sheet (buildBlueprintWaterMap plus every AI-styled render) shared it.
+  // call returns [] by construction: the quieter wash is deliberately orientation context, never
+  // a caption or legend claim.
   const contentGround = groundRows(state, refLayers, filter);
   if (contentGround.length) {
     for (const g of contentGround) rows.push({ swatch: g.color, text: g.label, kind: 'ground' });
-  } else if (groundRows(state, refLayers, 'all').length) {
-    rows.push({ swatch: '#8A8172', text: 'Existing site fabric (traced)', kind: 'ground' });
   }
 
   if (filter === 'all') {
@@ -7237,9 +7225,9 @@ export function sheetLegendRows(
     });
     rows.splice(0, rows.length, ...contextRows, ...systemRows);
   }
-  // Water treats the driveway as quiet site context; the compressed "Existing site fabric" row
-  // already explains it, so repeating it after the water systems makes the infrastructure look
-  // like a Water-plan feature. Other sheets retain the explicit row where built fabric is content.
+  // Water treats the driveway as quiet site context, so naming it after the water systems would
+  // make infrastructure look like Water-plan content. Other sheets retain the explicit row where
+  // built fabric is content.
   if (filter !== 'water' && filter !== 'planting' && filter !== 'structures' && refLayers.driveway.length >= 2) rows.push({ swatch: TAR, text: 'Tarred driveway', kind: 'surface' });
   return rows;
 }
@@ -9612,7 +9600,7 @@ export default function DesignGlossy({
       // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
       // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
       // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
-      drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H));
+      drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all'));
 
       // Title, legend, north arrow and scale — the other half of "our exact elements locked back on
       // top" that every other sheet's Hybrid mode already delivers. Same legend-row recipe as

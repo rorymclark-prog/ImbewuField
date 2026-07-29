@@ -8,6 +8,7 @@ import {
   zonesInFilter,
   sheetForElement,
   sheetsForElement,
+  groundContentRingsForSheet,
   groundRegister,
   layerContentCount,
   type GlossyLayerFilter,
@@ -271,6 +272,31 @@ test('groundRegister: full table has no gaps — every kind × sheet combination
       );
     }
   }
+});
+
+test('ground labels and legends share one content-only selector across every sheet', () => {
+  const state = fixtureState('orchard');
+  for (const filter of ALL_SHEETS) {
+    const selected = groundContentRingsForSheet(state, EMPTY_REF, filter);
+    const expected = groundRegister('orchard', filter) === 'content' ? ['g1'] : [];
+    assert.deepEqual(
+      selected.map((ring) => ring.id),
+      expected,
+      `${filter}: traced orchard selection disagrees with groundRegister`,
+    );
+  }
+});
+
+test('dedicated house and driveway geometry prevents duplicate ground captions and legend rows', () => {
+  const house = fixtureState('house');
+  const driveway = fixtureState('driveway');
+  const coveredHouse = { ...EMPTY_REF, house: [[0, 0], [1, 0], [1, 1]] as Array<[number, number]> };
+  const coveredDriveway = { ...EMPTY_REF, driveway: [[0, 0], [1, 1]] as Array<[number, number]> };
+
+  assert.deepEqual(groundContentRingsForSheet(house, coveredHouse, 'all'), []);
+  assert.deepEqual(groundContentRingsForSheet(driveway, coveredDriveway, 'all'), []);
+  assert.equal(groundContentRingsForSheet(house, EMPTY_REF, 'all').length, 1);
+  assert.equal(groundContentRingsForSheet(driveway, EMPTY_REF, 'all').length, 1);
 });
 
 // ── layerContentCount: the CRITICAL visible consequence of the register — a design that is only
