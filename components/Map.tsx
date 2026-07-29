@@ -16,6 +16,12 @@ import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import {
+  ARCGIS_API_KEY,
+  ESRI_ATTRIBUTION,
+  ESRI_MAX_NATIVE_ZOOM,
+  ESRI_TILE_URL,
+} from '@/lib/basemap-imagery';
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
@@ -1951,15 +1957,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </Source>
         )}
 
-        {/* Esri World Imagery — alternative high-res satellite (often sharper than Maxar in rural areas) */}
-        {hdImagery && (
+        {/* Esri World Imagery — alternative high-res satellite (often sharper than Maxar in rural areas).
+            This used the OPEN server.arcgisonline.com endpoint from the repo's first commit. That
+            endpoint is ArcGIS Online content, licensed for "personal or noncommercial use" — where
+            noncommercial means the service is provided at no charge and generates no income.
+            ImbewuField invoices farmers and sells paid renders, so this was a live licence breach on
+            the main map, quietly, for months. It now uses the licensed ArcGIS Location Platform
+            endpoint and only renders when a key is configured; without one the toggle is hidden
+            entirely rather than silently drawing nothing. */}
+        {hdImagery && ARCGIS_API_KEY && (
           <Source
             id="esri-imagery"
             type="raster"
-            tiles={['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}']}
+            tiles={[`${ESRI_TILE_URL}/{z}/{y}/{x}?token=${encodeURIComponent(ARCGIS_API_KEY)}`]}
             tileSize={256}
-            maxzoom={18}
-            attribution="Imagery © Esri, Maxar, Earthstar Geographics"
+            maxzoom={ESRI_MAX_NATIVE_ZOOM}
+            attribution={ESRI_ATTRIBUTION}
           >
             <Layer id="esri-imagery-layer" type="raster" paint={{ 'raster-resampling': 'linear' }} />
           </Source>
@@ -2801,11 +2814,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {style === s && <Check size={13} strokeWidth={2.4} />}{[t('layerToggleSatellite'), t('layerToggleTopo')][i]}
               </button>
             ))}
-            <button onClick={() => setHdImagery(!hdImagery)}
-              title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
-              className="transition-all" style={chip(hdImagery)}>
-              {hdImagery && <Check size={13} strokeWidth={2.4} />}{t('layerToggleHD')}
-            </button>
+            {/* Hidden without a key: the layer cannot draw, and a toggle that visibly does nothing
+                is worse than no toggle. See the Source below for why the key is required. */}
+            {ARCGIS_API_KEY && (
+              <button onClick={() => setHdImagery(!hdImagery)}
+                title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
+                className="transition-all" style={chip(hdImagery)}>
+                {hdImagery && <Check size={13} strokeWidth={2.4} />}{t('layerToggleHD')}
+              </button>
+            )}
             <button onClick={() => setContours(!contours)} className="transition-all" style={chip(contours)}>
               {contours && <Check size={13} strokeWidth={2.4} />}{t('layerToggleContours')}
             </button>
