@@ -144,14 +144,16 @@ export function evaluateDesign(
   for (const item of state.items) {
     const def = defFor(defs, item);
     if (!def?.nearRoofM) continue;
-    const nearHouse = houseXY ? distM([item.x, item.y], houseXY, frame) <= def.nearRoofM : false;
+    const nearHouse = houseXY
+      ? distM([item.x, item.y], houseXY, frame) <= def.nearRoofM + 1e-9
+      : false;
     let nearAnyStructure = false;
     if (hasStructure) {
       for (const other of state.items) {
         if (other.id === item.id) continue;
         const otherDef = defFor(defs, other);
         if (otherDef?.category !== 'structure') continue;
-        if (distM([item.x, item.y], [other.x, other.y], frame) <= def.nearRoofM) {
+        if (distM([item.x, item.y], [other.x, other.y], frame) <= def.nearRoofM + 1e-9) {
           nearAnyStructure = true;
           break;
         }
@@ -353,7 +355,9 @@ export function evaluateDesign(
 
   // ── WINDBREAK ──
   if (site?.windFromSummer) {
-    const hasWindbreakLine = state.lines.some((line) => line.kind === 'windbreak');
+    const hasWindbreakLine = state.lines.some(
+      (line) => line.kind === 'windbreak' && line.points.length >= 2,
+    );
     const hasIndigenousRow = state.items.some((it) => defFor(defs, it)?.id === 'tree_indigenous');
     if (!hasWindbreakLine && !hasIndigenousRow) {
       tips.push({
