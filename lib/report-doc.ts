@@ -9,6 +9,10 @@ import type {
   WaterCalcSummary,
 } from '@/lib/design-studio';
 import type { SiteSurvey } from '@/lib/site-survey';
+import {
+  WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
 
 // Which map each report section links to ("View [X] map").
 export type MapRef = 'base' | 'water' | 'sector' | 'zone' | 'design' | 'implementation';
@@ -119,7 +123,7 @@ export interface DesignFeature {
   maintenance: string[];
 }
 export type PlantCategory =
-  | 'trees' | 'shrubs' | 'groundcovers' | 'climbers' | 'n-fixers' | 'windbreak' | 'pioneer';
+  | 'trees' | 'shrubs' | 'groundcovers' | 'climbers' | 'n-fixers' | 'windbreak' | 'pioneer' | 'to-select';
 export interface PlantingTable {
   category: PlantCategory;
   rows: { species: string; qty?: Valued; spacing: string; season: string; purpose: string }[];
@@ -199,6 +203,22 @@ function clean(arr: string[] | undefined, drop: string[] = []): string[] {
   return (arr ?? []).filter((x) => x && !drop.includes(x));
 }
 
+function finiteNumber(value: unknown): number | undefined {
+  return typeof value === 'number' && Number.isFinite(value)
+    ? value
+    : undefined;
+}
+
+function finiteNonNegative(value: unknown): number | undefined {
+  const finite = finiteNumber(value);
+  return finite !== undefined && finite >= 0 ? finite : undefined;
+}
+
+function finitePositive(value: unknown): number | undefined {
+  const finite = finiteNonNegative(value);
+  return finite !== undefined && finite > 0 ? finite : undefined;
+}
+
 // ── Instant LOCAL skeleton — no AI, renders in <1s ───────────────────────────
 export function buildSkeletonReportDoc(args: {
   id: string;
@@ -219,16 +239,25 @@ export function buildSkeletonReportDoc(args: {
   const bruNote = location.bru
     ? ` (BRU ${location.bru.brucode}, approx. ${location.bru.nearestBrg})`
     : '';
-  const rainMm = Math.round(location.rainfall?.annual ?? 0);
+  const annualRainfall = finitePositive(location.rainfall?.annual);
+  const rainMm = annualRainfall !== undefined ? Math.round(annualRainfall) : 0;
   const approved = layers.filter((l) => l.approved);
-  const totalM2 = approved
+  const areaOf = (layer: DesignLayer): number => finitePositive(layer.areaM2) ?? 0;
+  const boundaryM2 = approved
     .filter((l) => l.layerType === 'property_boundary')
-    .reduce((s, l) => s + (l.areaM2 || 0), 0) || approved.reduce((s, l) => s + (l.areaM2 || 0), 0);
+    .reduce((sum, layer) => sum + areaOf(layer), 0);
+  const totalM2 = boundaryM2 || approved.reduce((sum, layer) => sum + areaOf(layer), 0);
   const sizeHa = totalM2 > 0 ? +(totalM2 / 10000).toFixed(3) : undefined;
   const roof = approved.find((l) => l.layerType === 'roof');
   const garden = approved.find((l) => l.layerType === 'cultivation');
   const tree = approved.find((l) => l.layerType === 'tree_belt');
-  const harvestKL = wc?.roofHarvestAnnualKL ?? (roof ? Math.round((roof.areaM2 * rainMm * 0.8) / 1000) : null);
+  const roofAreaM2 = roof ? finitePositive(roof.areaM2) : undefined;
+  const gardenAreaM2 = garden ? finitePositive(garden.areaM2) : undefined;
+  const calculatedHarvestLitres = roofAreaM2 && rainMm
+    ? roofHarvestLitres(roofAreaM2, rainMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT)
+    : 0;
+  const harvestKL = finitePositive(wc?.roofHarvestAnnualKL)
+    ?? (calculatedHarvestLitres > 0 ? Math.round(calculatedHarvestLitres / 1000) : null);
 
   const crops = clean(survey?.existingCrops, ['nothing']).map((c) => CROP_LABELS[c] ?? c);
   const livestock = clean(survey?.livestock, ['none']).map((l) => LIVESTOCK_LABELS[l] ?? l);
@@ -237,18 +266,20 @@ export function buildSkeletonReportDoc(args: {
   // ── Executive ──
   const opportunities: string[] = [];
   if (harvestKL) opportunities.push(`Harvest ~${harvestKL.toLocaleString()} kL/year of rainwater off the roof — connect gutters to a tank.`);
-  if (garden) opportunities.push(`Intensify the existing ${Math.round(garden.areaM2)} m² vegetable garden with beds, compost and drip irrigation.`);
+  if (gardenAreaM2) opportunities.push(`Intensify the existing ${Math.round(gardenAreaM2)} m² vegetable garden with beds, compost and drip irrigation.`);
   opportunities.push('Establish a north-facing orchard / food forest on the open sunny ground.');
   if (tree) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
 
   const challenges = clean(survey?.challenges);
-  if ((location.climate?.minTemp ?? 99) < 5) challenges.push('Frost risk in the low-lying corner — keep tender crops off it.');
+  const minTemp = finiteNumber(location.climate?.minTemp);
+  const maxTemp = finiteNumber(location.climate?.maxTemp);
+  if (minTemp !== undefined && minTemp < 5) challenges.push('Frost risk in the low-lying corner — keep tender crops off it.');
   if (rainMm && rainMm < 500) challenges.push('Low/erratic rainfall — water capture and storage are the priority.');
   if (survey?.soilCondition === 'compacted') challenges.push('Compacted soil — needs aeration and organic-matter building.');
   if (!challenges.length) challenges.push('Building soil fertility and year-round food production.');
 
   const executive: ExecutiveSummary = {
-    farmOverview: `A ${sizeHa ? `${sizeHa} ha` : ''} site in the ${biome}${bruNote}${rainMm ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
+    farmOverview: `A ${sizeHa !== undefined ? `${sizeHa} ha ` : ''}site in the ${biome}${bruNote}${rainMm ? ` (~${rainMm} mm/yr)` : ''}.${goals.length ? ` The household's main goals are ${goals.join(', ')}.` : ''} This plan organises the land into permaculture zones from the house outward, captures water high in the landscape, and builds a layered, largely self-feeding system.`,
     topOpportunities: opportunities.slice(0, 5),
     topChallenges: challenges.slice(0, 5),
     priorityActions12mo: [
@@ -262,9 +293,9 @@ export function buildSkeletonReportDoc(args: {
 
   // ── Existing site ──
   const existingSite: ExistingSite = {
-    sizeHa: sizeHa ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
-    climateSummary: `${biome}${bruNote}. ~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall), ${location.climate ? `${Math.round(location.climate.minTemp)}–${Math.round(location.climate.maxTemp)} °C` : 'temperate'}.`,
-    currentLandUses: [garden ? 'vegetable garden' : '', tree ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
+    sizeHa: sizeHa !== undefined ? { value: sizeHa, unit: 'ha', provenance: 'measured', basis: 'traced property boundary' } : undefined,
+    climateSummary: `${biome}${bruNote}. ${rainMm ? `~${rainMm} mm/year (${location.rainfall?.pattern ?? 'seasonal'} rainfall)` : 'Rainfall unavailable'}, ${minTemp !== undefined && maxTemp !== undefined ? `${Math.round(minTemp)}–${Math.round(maxTemp)} °C` : 'temperature unavailable'}.`,
+    currentLandUses: [gardenAreaM2 ? 'vegetable garden' : '', tree ? 'trees / bush' : '', 'dwelling'].filter(Boolean),
     infrastructure: clean(survey?.otherInfra),
     existingCrops: crops,
     existingLivestock: livestock,
@@ -278,8 +309,8 @@ export function buildSkeletonReportDoc(args: {
     pattern: location.rainfall?.pattern ?? 'seasonal',
     sources: clean(survey?.waterSource),
     storageExisting: clean(survey?.waterStorage, ['none']),
-    runoffRisk: location.elevation?.slopeDeg && location.elevation.slopeDeg > 5 ? 'Moderate — slope drives runoff; slow it with swales.' : 'Low–moderate on gentle slopes.',
-    erosionRisk: location.elevation?.slopeDeg && location.elevation.slopeDeg > 10 ? 'Watch bare slopes — keep them covered.' : 'Low if ground stays covered.',
+    runoffRisk: (finiteNonNegative(location.elevation?.slopeDeg) ?? 0) > 5 ? 'Moderate — slope drives runoff; slow it with swales.' : 'Low–moderate on gentle slopes.',
+    erosionRisk: (finiteNonNegative(location.elevation?.slopeDeg) ?? 0) > 10 ? 'Watch bare slopes — keep them covered.' : 'Low if ground stays covered.',
     floodRisk: 'Observe the low corner after heavy rain (no detailed survey).',
     harvestingOpportunities: [
       harvestKL ? `Roof catchment ~${harvestKL.toLocaleString()} kL/yr to tanks.` : 'Connect roof gutters to a tank.',
@@ -289,47 +320,53 @@ export function buildSkeletonReportDoc(args: {
       { type: 'Swale', note: 'On contour, upslope of the garden.' },
       { type: 'Tank', note: roof ? `Sized to the roof harvest above.` : 'JoJo tank at the house.' },
     ],
-    estStorageCapacity: wc?.dryBufferLitres90Day
-      ? { value: Math.round(wc.dryBufferLitres90Day / 1000), unit: 'kL', provenance: 'calculated', basis: '90-day household dry-season buffer' }
+    estStorageCapacity: finitePositive(wc?.dryBufferLitres90Day)
+      ? { value: Math.round(finitePositive(wc?.dryBufferLitres90Day)! / 1000), unit: 'kL', provenance: 'calculated', basis: '90-day household dry-season buffer' }
       : undefined,
   };
 
   // ── Landscape & soil ──
   const el = location.elevation;
   const so = location.soil;
+  const slopeDeg = finiteNonNegative(el?.slopeDeg);
+  const ph = finitePositive(so?.ph);
+  const organicCarbon = finiteNonNegative(so?.organicCarbon);
   const landscapeSoil: LandscapeSoil = {
-    slope: el ? { value: el.slopeDeg, unit: '°', provenance: 'estimated', basis: 'coarse elevation grid — confirm on site' } : undefined,
+    slope: slopeDeg !== undefined ? { value: slopeDeg, unit: '°', provenance: 'estimated', basis: 'coarse elevation grid — confirm on site' } : undefined,
     aspect: el?.aspectLabel ?? 'unknown',
     soilTexture: so?.textureClass ?? 'unknown',
-    ph: so?.ph != null ? { value: so.ph, provenance: 'estimated', basis: 'SoilGrids model — confirm with a soil test' } : undefined,
-    organicMatter: so?.organicCarbon != null ? { value: so.organicCarbon, unit: '% OC', provenance: 'estimated', basis: 'SoilGrids model' } : undefined,
+    ph: ph !== undefined ? { value: ph, provenance: 'estimated', basis: 'SoilGrids model — confirm with a soil test' } : undefined,
+    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: 'estimated', basis: 'SoilGrids model' } : undefined,
     compaction: survey?.soilCondition === 'compacted' ? 'Reported compacted — aerate before planting.' : 'Assess by digging a test hole.',
     erosion: water.erosionRisk,
     improvementPlan: [
       { action: 'Add compost and mulch to build organic matter', timing: 'ongoing', provenance: 'estimated' },
-      { action: so?.ph != null && so.ph < 5.5 ? 'Lime to raise pH toward 6.5' : 'Maintain pH with compost', timing: 'before planting', provenance: 'estimated' },
+      { action: ph !== undefined && ph < 5.5 ? 'Lime to raise pH toward 6.5' : 'Maintain pH with compost', timing: 'before planting', provenance: 'estimated' },
     ],
     coverCrops: ['cowpea', 'sunn hemp', 'oats/vetch (winter)'],
   };
 
   // ── Sector ──
   const cl = location.climate;
-  const isSH = (location.lat ?? -29) < 0;
+  const validLatitude = finiteNonNegative(Math.abs(location.lat));
+  const isSH = validLatitude !== undefined ? location.lat < 0 : null;
+  const windDescription = (direction: string | undefined, fallback: string): string =>
+    direction && direction !== '—' ? direction : fallback;
   const sector: SectorAnalysis = {
-    sun: `Strongest sun from the ${isSH ? 'north' : 'south'} (${isSH ? 'Southern' : 'Northern'} Hemisphere) — face beds and orchard that way.`,
-    windSummer: cl?.windFromSummer ? `Summer wind from the ${cl.windFromSummer}.` : 'Note the prevailing summer wind.',
-    windWinter: cl?.windFromWinter ? `Winter wind from the ${cl.windFromWinter} — plant a windbreak on this edge.` : 'Note the cold winter wind direction.',
+    sun: isSH === null ? 'Hemisphere unavailable — confirm the sun-facing side on site.' : `Strongest sun from the ${isSH ? 'north' : 'south'} (${isSH ? 'Southern' : 'Northern'} Hemisphere) — face beds and orchard that way.`,
+    windSummer: cl?.windFromSummer && cl.windFromSummer !== '—' ? `Summer wind from the ${cl.windFromSummer}.` : windDescription(undefined, 'Note the prevailing summer wind.'),
+    windWinter: cl?.windFromWinter && cl.windFromWinter !== '—' ? `Winter wind from the ${cl.windFromWinter} — plant a windbreak on this edge.` : windDescription(undefined, 'Note the cold winter wind direction.'),
     fire: 'Keep fuel load down on the dry-wind edge; a green firebreak helps.',
     wildlife: tree ? 'The tree belt is a wildlife corridor — keep a wild buffer.' : 'Leave a wild edge for beneficial wildlife.',
     security: 'Position the house with clear sightlines to the gate and garden.',
     dust: 'Screen dust from the road/driveway with a hedge.',
-    frost: (cl?.minTemp ?? 99) < 5 ? 'Cold air drains to the low corner — keep tender crops above it.' : 'Low frost risk.',
+    frost: minTemp !== undefined && minTemp < 5 ? 'Cold air drains to the low corner — keep tender crops above it.' : minTemp !== undefined ? 'Low frost risk.' : 'Frost data unavailable — confirm the coldest low point on site.',
     neighbours: 'Screen overlooked edges; keep neighbourly access clear.',
     externalOpportunities: ['Roof + driveway runoff to harvest', 'Sun on the northern slope for the orchard'],
   };
 
   // ── Zones (from the generated plan if present) ──
-  const zone: ZoneEntry[] = (plan?.zoneMap ?? []).map((s, i) => ({
+  const plannedZones: ZoneEntry[] = (plan?.zoneMap ?? []).map((s, i) => ({
     zone: i,
     name: s.title,
     layerIds: s.layerIds ?? [],
@@ -338,6 +375,55 @@ export function buildSkeletonReportDoc(args: {
     dailyManagement: '',
     expectedBenefits: '',
   }));
+  const zone: ZoneEntry[] = plannedZones.length ? plannedZones : [{
+    zone: 0,
+    name: 'Zone plan pending',
+    layerIds: [],
+    purpose: 'Generate the design plan to place and describe management zones.',
+    elements: [],
+    dailyManagement: 'Confirm access frequency with the farmer.',
+    expectedBenefits: 'A zone plan keeps frequently used elements close to daily routes.',
+  }];
+
+  // ── Master design / planting placeholders ──
+  // These remain deliberately non-numeric until the farmer approves exact
+  // features, species and spacing. A visible pending row is safer than a
+  // section that silently disappears from an “11-section” report.
+  const masterDesign: DesignFeature[] = approved.length
+    ? approved.map((layer) => ({
+      key: layer.id,
+      name: layer.name || layer.layerType,
+      layerIds: [layer.id],
+      purpose: `Use the approved ${layer.layerType.replace(/_/g, ' ')} footprint shown on the design map.`,
+      dimensions: areaOf(layer) > 0 ? `${Math.round(areaOf(layer))} m² traced area` : undefined,
+      construction: ['Confirm materials and construction detail before work starts.'],
+      maintenance: ['Check this feature during the seasonal design review.'],
+    }))
+    : [{
+      key: 'design-pending',
+      name: 'Master design pending',
+      layerIds: [],
+      purpose: 'Approve traced site features before finalising the master design.',
+      construction: ['Confirm dimensions and construction detail on the design map.'],
+      maintenance: ['Review after the first site walk.'],
+    }];
+
+  const planting: PlantingTable[] = [{
+    category: 'to-select',
+    rows: crops.length
+      ? crops.map((crop) => ({
+        species: `Crop group: ${crop}`,
+        spacing: 'Confirm after species selection',
+        season: 'Confirm from the local planting calendar',
+        purpose: 'Retain and integrate what is already growing.',
+      }))
+      : [{
+        species: 'Species selection pending',
+        spacing: 'Confirm after species selection',
+        season: 'Confirm from the local planting calendar',
+        purpose: 'Choose plants only after climate, soil and farmer goals are confirmed.',
+      }],
+  }];
 
   // ── Implementation (default 3-phase ordering) ──
   const roofIds = roof ? [roof.id] : [];
@@ -368,6 +454,19 @@ export function buildSkeletonReportDoc(args: {
     },
   ];
 
+  const costLabour: CostLine[] = implementation.map((phase) => ({
+    phase: phase.phase,
+    item: `Get local material, labour and equipment quotes for ${phase.label}.`,
+    equipment: [],
+  }));
+
+  const monitoring: MonitoringMetric[] = [
+    { key: 'tree-survival', label: 'Tree survival', howToMeasure: 'Count living planted trees and record replacements.' },
+    { key: 'water-storage', label: 'Stored water', howToMeasure: 'Record tank or dam level at the same time each month.' },
+    { key: 'ground-cover', label: 'Ground cover', howToMeasure: 'Photograph the same marked ground points each season.' },
+    { key: 'yields', label: 'Harvest yields', howToMeasure: 'Weigh and log each harvest by crop.' },
+  ];
+
   const sectionsMeta: ReportSectionMeta[] = REPORT_SECTION_IDS.map((id) => ({
     id,
     title: SECTION_TITLES[id].title,
@@ -385,7 +484,7 @@ export function buildSkeletonReportDoc(args: {
     location,
     survey: survey ?? undefined,
     waterCalc: wc,
-    layerSnapshot: approved.map((l) => ({ id: l.id, name: l.name, layerType: l.layerType, areaM2: l.areaM2 })),
+    layerSnapshot: approved.map((l) => ({ id: l.id, name: l.name, layerType: l.layerType, areaM2: areaOf(l) })),
     sectionsMeta,
     sections: {
       executive,
@@ -394,7 +493,11 @@ export function buildSkeletonReportDoc(args: {
       'landscape-soil': landscapeSoil,
       sector,
       zone,
+      'master-design': masterDesign,
+      planting,
       implementation,
+      'cost-labour': costLabour,
+      monitoring,
     },
   };
 }
