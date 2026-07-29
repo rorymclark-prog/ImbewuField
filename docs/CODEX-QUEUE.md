@@ -795,6 +795,78 @@ longer need to, because ~250 of them are already on disk.
 
 ---
 
+## 35. Now that the flow reaches it: Full Treatment's polish prompt asks the model to EDIT, not repaint — `codex/full-treatment-stage-execution` merged as `dadf7f2` (PLAN_VERSION v92)
+
+Item 34 stopped short of touching the polish builder because the flow never reached it. It reaches
+it now. This item is the actual accuracy fix Rory has been asking for since "that image you posted
+is amazing just quite inaccurate sadly get it accurate" — read it in full before changing anything.
+
+**Where the polish prompt is chosen:** `components/design/DesignGlossy.tsx:9452-9453`:
+```js
+const prompt = fullSheetPolish
+  ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName)
+  : isModelChromeStyle(styleKey)
+  ...
+  : lockActive
+  ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
+  ...
+```
+`fullSheetPolish` (`lockedPolishStage === 'polish'`) is checked first, so Stage 3 always gets
+`buildFinishedSheetPolishPrompt` regardless of `lockActive`. That builder (`lib/producer-prompt.ts:1108`)
+asks the model to take the FINISHED HYBRID SHEET — labels, legend, north arrow, every drawn
+element already in place — and improve it. Nothing constrains the model to keep anything where it
+is. It relocates elements, invents new ones, and drops accuracy to zero: this is the exact
+"amazing but inaccurate" result Rory flagged, and the reason every prior Stage-3 attempt (drift-
+measured this session) either collapsed back to Hybrid or scattered the geometry.
+
+**The candidate fix, proven as a mockup, not yet as a real render:** feed Stage 2 the AI GROUND
+ONLY (no labels, no legend, no drawn elements — a bare illustrated satellite), and let the app draw
+every fact — boundary, canopy rings, beds, structures, driveway, labels, legend — on top
+deterministically, exactly as it already does for the exact/no-AI sheet. `mockup.mjs` (session
+scratchpad, not yet in the repo) demonstrated this by classifying a real exact-sheet composite into
+"drawn" (saturated yellow boundary, saturated green linework, near-white chrome — labels/legend/
+title) vs "photographed" pixels, and compositing the drawn 1.28% over a real paid ground-only
+render: crisp boundary, correct 7-strip bed structure, no seams, no patchwork. That is the target
+shape for Stage 3: **the model repaints 100% of the ground; the app owns every fact.**
+
+**Two existing builders already attempt "ground only," and they disagree with each other — resolve
+this with a fresh real render, not by trusting either claim blindly:**
+
+- `buildLockedBackgroundPrompt` (`lib/producer-prompt.ts:108`) — marked "superseded... kept for an
+  instant call-site rollback." Its own docstring (line 56-59) says it was tried and rejected:
+  "produced exactly what it asked for: a flat green patch clipped into an untouched satellite photo
+  — visibly worse than the deterministic sheet." **This session's own drift-measured test of this
+  exact function (Planting sheet, `precision_atlas` style, real paid render) did not see that
+  failure** — the output was a fully illustrated ground with real texture variation, the yellow
+  boundary ran nearly parallel to the authoritative geometry with only a small offset, the 7-strip
+  beds and three dark-roofed buildings registered well. Only large boundary-edge canopy rings and
+  the central house area (blurry satellite smear) were off. **This is a real contradiction — find
+  out why:** does the style preset matter (this session used `precision_atlas`, the rejection may
+  have been on a different default style), was the original rejection tested on a different sheet
+  type, or is there a scoring difference between "looks bad in one viewer" and "measures well against
+  saved geometry." Don't take either account on faith; render it yourself and measure.
+- `buildLockedIllustrationPrompt` (`lib/producer-prompt.ts:66`, already wired at line 9457 for
+  `lockActive`) takes a different stance: it DOES paint existing buildings/roofs ("every building as
+  its full roof seen from directly above") but invents nothing new, and its own docstring already
+  describes exactly the hybrid-finish pattern this item wants: "the app restores protected roof,
+  driveway, boundary and context pixels, then reinforces exact feature outlines... over your
+  artwork." This may already be the intended Stage-3 builder and simply needs the `fullSheetPolish`
+  branch reordered/merged with the `lockActive` branch rather than a new prompt written.
+
+**Your job:** decide which of these (or a new builder) Stage 3 should use, wire it into the
+`fullSheetPolish` branch, and validate with a REAL paid render (not a mockup) measured the same way
+this session did — overlay the saved boundary/canopy geometry on the output and measure registration,
+don't eyeball it. Acceptance: boundary and canopy rings land on the AI ground at least as well as
+this session's `precision_atlas` measurement, the sheet reads as fully illustrated (no raw satellite
+patch, no seam), and nothing that was invented is a species, count or position the farmer didn't
+place. The house-area blur is a known open problem — if you can't fix it in this pass, say so plainly
+rather than paper over it with a crop or blur filter.
+
+**Bump `PLAN_VERSION`** in the same commit if you land this — it changes what every AI sheet draws.
+Post the before/after (old polish-collapse vs new) and the registration measurement on issue #35.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
