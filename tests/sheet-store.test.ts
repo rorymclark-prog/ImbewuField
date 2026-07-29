@@ -23,7 +23,7 @@ function request<T>(result: T): Request<T> {
 }
 
 class FakeIndexedDb {
-  rows = new Map<string, StoredSheet>();
+  rows = new Map<string, unknown>();
   blocked = false;
   failOpen = false;
   failWrites = false;
@@ -133,10 +133,15 @@ class FakeStore {
   index() {
     return {
       getAll: (siteId: string) => {
-        const req = request<StoredSheet[]>([]);
+        const req = request<unknown[]>([]);
         setTimeout(() => {
           req.result = [...this.factory.rows.values()]
-            .filter((row) => row.siteId === siteId)
+            .filter((row): row is Record<'siteId', unknown> => (
+              typeof row === 'object'
+              && row !== null
+              && 'siteId' in row
+              && row.siteId === siteId
+            ))
             .map((row) => structuredClone(row));
           req.onsuccess?.();
         }, 0);
@@ -147,8 +152,14 @@ class FakeStore {
         this.transaction.begin();
         setTimeout(() => {
           req.result = [...this.factory.rows.values()]
-            .filter((row) => row.siteId === siteId)
-            .map((row) => row.id);
+            .filter((row): row is Record<'id' | 'siteId', unknown> => (
+              typeof row === 'object'
+              && row !== null
+              && 'siteId' in row
+              && row.siteId === siteId
+              && 'id' in row
+            ))
+            .map((row) => row.id as IDBValidKey);
           req.onsuccess?.();
           this.transaction.end(true);
         }, 0);
@@ -188,8 +199,8 @@ test('storage-disabled browsers degrade honestly without throwing', async () => 
   install(undefined);
   assert.deepEqual(await loadSheets('site-a'), []);
   assert.equal(await saveSheet(sheet('one', 'site-a', '2026-01-01')), false);
-  await deleteSheet('one');
-  await clearSheets('site-a');
+  assert.equal(await deleteSheet('one'), false);
+  assert.equal(await clearSheets('site-a'), false);
 });
 
 test('saved sheets round-trip with provenance and load oldest first', async () => {
@@ -217,7 +228,7 @@ test('site reads and clear-all never cross into another farmer design', async ()
   assert.deepEqual(await loadSheets('site-a'), [a]);
   assert.deepEqual(await loadSheets('site-b'), [b]);
 
-  await clearSheets('site-a');
+  assert.equal(await clearSheets('site-a'), true);
   assert.deepEqual(await loadSheets('site-a'), []);
   assert.deepEqual(await loadSheets('site-b'), [b]);
 });
@@ -226,7 +237,7 @@ test('awaiting delete means the durable row is actually gone', async () => {
   const factory = new FakeIndexedDb();
   install(factory);
   await saveSheet(sheet('one', 'site-a', '2026-01-01'));
-  await deleteSheet('one');
+  assert.equal(await deleteSheet('one'), true);
   assert.deepEqual(await loadSheets('site-a'), []);
 });
 
@@ -238,8 +249,54 @@ test('a failed write is reported as session-only and preserves the prior row', a
   factory.failWrites = true;
   assert.equal(await saveSheet(sheet('one', 'site-a', '2026-02-01')), false);
   assert.deepEqual(await loadSheets('site-a'), [original]);
-  await deleteSheet('one');
+  assert.equal(await deleteSheet('one'), false);
+  assert.equal(await clearSheets('site-a'), false);
   assert.deepEqual(await loadSheets('site-a'), [original]);
+});
+
+test('invalid records are rejected on write before they can replace a durable sheet', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const original = sheet('one', 'site-a', '2026-01-01');
+  assert.equal(await saveSheet(original), true);
+
+  const invalid: StoredSheet[] = [
+    sheet('', 'site-a', '2026-02-01'),
+    sheet('one', '', '2026-02-01'),
+    sheet('one', 'site-a', 'not-a-date'),
+    sheet('one', 'site-a', '2026-02-01', { image: 'not-an-image' }),
+    sheet('one', 'site-a', '2026-02-01', { thumb: 'data:text/plain;base64,AAAA' }),
+    sheet('one', 'site-a', '2026-02-01', { resultKind: 'invented' as StoredSheet['resultKind'] }),
+    sheet('one', 'site-a', '2026-02-01', { provider: 'invented' as StoredSheet['provider'] }),
+  ];
+  for (const row of invalid) assert.equal(await saveSheet(row), false);
+  assert.deepEqual(await loadSheets('site-a'), [original]);
+});
+
+test('loads quarantine malformed rows while preserving valid legacy rows', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const legacy = sheet('legacy', 'site-a', '2026-01-02');
+  delete legacy.resultKind;
+  delete legacy.provider;
+  delete legacy.geometryLock;
+  factory.rows.set('legacy', legacy);
+  factory.rows.set('bad-image', { ...sheet('bad-image', 'site-a', '2026-01-03'), image: 'broken' });
+  factory.rows.set('bad-date', { ...sheet('bad-date', 'site-a', 'yesterday') });
+  factory.rows.set('bad-provenance', { ...sheet('bad-provenance', 'site-a', '2026-01-04'), provider: 'vendor' });
+
+  assert.deepEqual(await loadSheets('site-a'), [legacy]);
+});
+
+test('load order follows instants rather than timestamp spelling', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const later = sheet('later', 'site-a', '2026-01-01T01:00:00+02:00');
+  const earlier = sheet('earlier', 'site-a', '2025-12-31T22:30:00Z');
+  factory.rows.set(later.id, later);
+  factory.rows.set(earlier.id, earlier);
+
+  assert.deepEqual(await loadSheets('site-a'), [earlier, later]);
 });
 
 test('open failures and blocked upgrades resolve instead of hanging', async () => {
@@ -263,6 +320,9 @@ test('base64 data URL size accounts for padding and rejects non-data text', () =
   assert.equal(dataUrlBytes('data:image/png;base64,AAAA'), 3);
   assert.equal(dataUrlBytes('data:image/png;base64,TWE='), 2);
   assert.equal(dataUrlBytes('data:image/png;base64,TQ=='), 1);
+  assert.equal(dataUrlBytes('data:text/plain;base64,AAAA'), 0);
+  assert.equal(dataUrlBytes('hello,AAAA'), 0);
+  assert.equal(dataUrlBytes('data:image/png;base64,%%%='), 0);
   assert.equal(dataUrlBytes('not-a-data-url'), 0);
   assert.equal(dataUrlBytes(''), 0);
 });

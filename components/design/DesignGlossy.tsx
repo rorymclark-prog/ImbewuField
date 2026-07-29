@@ -8317,8 +8317,27 @@ export default function DesignGlossy({
   const removeGallery = useCallback((id: string) => {
     setGallery((prev) => prev.filter((g) => g.id !== id));
     setGalleryViewId((cur) => (cur === id ? null : cur));
-    void deleteSheet(id);
+    void deleteSheet(id).then((ok) => {
+      if (!ok) {
+        setStorageWarning(
+          "The map was removed from this tab, but couldn't be removed from device storage. It may reappear when you reopen this design.",
+        );
+      }
+    });
   }, []);
+
+  const clearGallery = useCallback(() => {
+    setGallery([]);
+    setGalleryViewId(null);
+    clearGlossyCacheForSite(state.siteId);
+    void clearSheets(state.siteId).then((ok) => {
+      if (!ok) {
+        setStorageWarning(
+          "The gallery was cleared from this tab, but couldn't be cleared from device storage. Saved maps may reappear when you reopen this design.",
+        );
+      }
+    });
+  }, [state.siteId]);
 
   // Load the cached render for this site + chosen map. Runs on mount and whenever the map
   // changes, so each map keeps its own last render.
@@ -11242,7 +11261,7 @@ export default function DesignGlossy({
                       {storageWarning ?? t('designGlossySavedOnDevice')}
                     </p>
                     <button
-                      onClick={() => { setGallery([]); setGalleryViewId(null); void clearSheets(state.siteId); clearGlossyCacheForSite(state.siteId); }}
+                      onClick={clearGallery}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 9, background: '#FBEAEA', border: '1px solid #E8C4C4', color: '#B53A3A', fontWeight: 700, fontSize: 11, cursor: 'pointer', whiteSpace: 'nowrap' }}
                     >
                       <Trash2 size={12} /> {t('designClearAll')}
