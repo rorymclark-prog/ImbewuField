@@ -8,9 +8,28 @@ name: Deploy preview
 # here: main → prod stays in deploy.yml.
 # Live URL: imbewufield-preview.vercel.app
 
+# A PREVIEW IS ONLY WORTH A DEPLOYMENT IF SOMEONE WOULD OPEN IT.
+#
+# On 2026-07-29 production froze for the SECOND time in a day on a Vercel free-plan cap — this one
+# `api-deployments-free-per-day` (more than 100 deployments per 24h), a different limit from the
+# upload cap that `--archive=tgz` fixed that morning. The cause was this workflow: an overnight run
+# pushed roughly twenty branches, most of them named `codex/test-*` and containing nothing but new
+# test files, and every push spent a deployment nobody ever opened. Production then could not deploy
+# because branch previews had eaten the day's budget.
+#
+# So a push whose diff is only tests, docs or markdown does not deploy. Those branches have nothing
+# to look at by definition, and the whole point of a preview is looking at it. Anything touching
+# app/, components/, lib/, public/ or the workflows still previews exactly as before.
+#
+# `workflow_dispatch` remains, so a preview of a test-only branch is always one click away when
+# somebody genuinely wants one.
 on:
   push:
     branches-ignore: [main]
+    paths-ignore:
+      - 'tests/**'
+      - 'docs/**'
+      - '**/*.md'
   workflow_dispatch: {}
 
 concurrency:

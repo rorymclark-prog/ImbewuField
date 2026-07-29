@@ -83,6 +83,14 @@ cosmetic: the second change silently inherits the first's cache entries, so it i
 anyone who rendered in between. Equally, **do not bump it for a refactor** — a bump re-keys the
 gallery, and an AI sheet a farmer already paid for stops being found. Bump when the picture changes.
 
+**Deployments are a rationed resource — do not spend one per commit.** The Vercel free plan allows
+**100 deployments per 24h across the whole account**, and on 2026-07-29 an overnight run exhausted
+it and froze production for the second time in one day. Preview deploys now skip pushes whose diff
+is only `tests/**`, `docs/**` or markdown (see `.github/workflows/deploy-preview.yml`), but the
+budget is still shared with production: **push each branch once, when it is finished**, rather than
+after every commit on it. If you genuinely want a preview of a test-only branch, trigger it by hand
+with `workflow_dispatch`.
+
 **Do not stop after one item.** Push the branch, write the report, then take the next item straight
 away. Claude reviews and merges behind you; waiting for that review is what turns a long run into a
 short one. Only stop when the queue is empty or something is genuinely blocking you — and if it is
