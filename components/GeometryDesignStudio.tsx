@@ -48,6 +48,11 @@ import {
   type DesignCanvasState,
   type LineShape,
 } from '@/lib/design-canvas';
+import {
+  ESRI_PROVIDER,
+  SATELLITE_PROVIDER,
+  fetchEsriBasemapDataUrl,
+} from '@/lib/basemap-imagery';
 import { ELEMENTS_BY_ID, ZONE_COLORS, ZONE_KEY } from '@/lib/design-elements';
 import { reportId } from '@/lib/saved-reports';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
@@ -2685,18 +2690,36 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
   const [showStudioBuild, setShowStudioBuild] = useState(true);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // Fetch the Mapbox satellite tile for the design view and inline it as a base64
-  // data URL (so PNG/PDF export stays taint-free). Uses the SAME computeSatFit as
-  // GeometryPreview, so the photo and the overlay projector can never drift.
+  // Fetch the satellite photo for the design view and inline it as a base64 data URL (so PNG/PDF
+  // export stays taint-free). Uses the SAME computeSatFit as GeometryPreview, so the photo and the
+  // overlay projector can never drift.
+  //
+  // Which provider supplies that photo is decided in lib/basemap-imagery.ts, where the measurements
+  // behind the choice are recorded. Both paths return an image covering identical ground, so the
+  // projector below is unaffected either way.
   const satFit = computeSatFit(studio.layers, mapView);
-  const satKey = satFit.useSatellite ? satFit.url : '';
+  // The key doubles as the effect's dependency, so it has to capture everything that changes the
+  // image — and the effect reads its parameters back out of the key rather than closing over
+  // `satFit`, so the two can never disagree about which frame was requested.
+  const satKey = !satFit.useSatellite
+    ? ''
+    : SATELLITE_PROVIDER === ESRI_PROVIDER
+      ? `esri:${satFit.fit.centerLng},${satFit.fit.centerLat},${satFit.fit.zoom},${satFit.imgW},${satFit.imgH}`
+      : satFit.url;
   useEffect(() => {
     if (!satKey) {
       setSatDataUrl(null);
       return;
     }
     let cancelled = false;
-    fetchImageAsDataUrl(satKey)
+    let pending: Promise<string>;
+    if (satKey.startsWith('esri:')) {
+      const [lng, lat, z, w, h] = satKey.slice(5).split(',').map(Number);
+      pending = fetchEsriBasemapDataUrl(lng, lat, z, w, h);
+    } else {
+      pending = fetchImageAsDataUrl(satKey);
+    }
+    pending
       .then((d) => {
         if (!cancelled) setSatDataUrl(d);
       })
