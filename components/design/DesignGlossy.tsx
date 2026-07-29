@@ -7982,7 +7982,14 @@ interface SavedGlossy {
 //        transitively join a mango to two moringas far from each other, and the merged "×2" leader
 //        landed at the empty centroid between them. Species labels now re-cluster their own
 //        specimens — which is what producer-labels.ts's own comment said clustering was for.
-const PLAN_VERSION = 'v85';
+//   v86 — 2026-07-29: the fire sector is finally NAMED on the map. Sheet 02 labelled every energy
+//        on it except fire — the one with a safety consequence — which had a legend row and nothing
+//        readable on the plan. The label was never missing from the code; it was drawn and then
+//        painted over by the berg-wind arrow, because fire shares the berg bearing by construction
+//        and an earlier fix had moved the label INSIDE the wedge to dodge the berg LABEL, landing it
+//        under the berg ARROW instead. Now offset perpendicular to the shared ray. Measured, not
+//        eyeballed: the label colour went from 20 px to 1 743 px in the rendered sheet.
+const PLAN_VERSION = 'v86';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
