@@ -7890,7 +7890,10 @@ interface SavedGlossy {
 //        lat/lon rectangle, so site context can change on a sheet. The rectangle called Lesotho
 //        and Eswatini South African; the polygon carries the Lesotho enclave as a hole.
 //        (Arrived as v71 — fifth collision.)
-const PLAN_VERSION = 'v73';
+//   v74 — 2026-07-29: climate rainfall now rejects an incomplete series instead of reading a
+//        missing day as zero rain, so a site's monthly normals can change on a sheet.
+//        (Arrived reusing a taken number — sixth collision.)
+const PLAN_VERSION = 'v74';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
