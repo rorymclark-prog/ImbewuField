@@ -9,6 +9,7 @@ import {
   lngLatToWorldPx,
   planEsriTiles,
   tileCount,
+  tileDestRect,
 } from '../lib/basemap-imagery.ts';
 
 // The failure this file exists to prevent is not a crash. If the stitched photo covers even
@@ -103,6 +104,45 @@ test('fetchEsriBasemapDataUrl refuses to request tiles when no ArcGIS key is con
   // or canvas call, which is exactly what makes it testable here with no DOM available.
   assert.equal(ARCGIS_API_KEY, '', 'this test assumes no key is configured in the test environment');
   await assert.rejects(() => fetchEsriBasemapDataUrl(LON, LAT, ZOOM, IMG_W, IMG_H));
+});
+
+// THE SEAM. Drawing each tile at its raw fractional rect ruled a dark grid across the photo on all
+// eight sheets — canvas antialiases a fractional edge against the empty canvas, and the JPEG flatten
+// turns that soft edge black. Measured on sheet 02 before the fix: a full-width dark line at y≈322
+// and a full-height one at x≈1540. These assertions are the arithmetic that cannot produce one.
+test('adjacent tiles share an exact integer edge, so no seam can be antialiased or left blank', () => {
+  const plan = planEsriTiles(LON, LAT, ZOOM, IMG_W, IMG_H);
+  assert.ok(plan.tx1 > plan.tx0 && plan.ty1 > plan.ty0, 'need at least a 2x2 grid to have a seam');
+
+  for (let ty = plan.ty0; ty <= plan.ty1; ty++) {
+    for (let tx = plan.tx0; tx <= plan.tx1; tx++) {
+      const r = tileDestRect(plan, tx, ty);
+      for (const [name, v] of Object.entries(r)) {
+        assert.equal(Number.isInteger(v), true, `tile ${tx},${ty} ${name} is fractional: ${v}`);
+      }
+      assert.ok(r.dw > 0 && r.dh > 0, `tile ${tx},${ty} is degenerate`);
+
+      if (tx < plan.tx1) {
+        const right = tileDestRect(plan, tx + 1, ty);
+        assert.equal(r.dx + r.dw, right.dx, `horizontal seam between ${tx} and ${tx + 1}`);
+      }
+      if (ty < plan.ty1) {
+        const below = tileDestRect(plan, tx, ty + 1);
+        assert.equal(r.dy + r.dh, below.dy, `vertical seam between ${ty} and ${ty + 1}`);
+      }
+    }
+  }
+});
+
+test('the snapped tile grid still covers the whole output raster, to within a pixel', () => {
+  // Rounding edges must not shrink the mosaic away from the frame it is standing in for: a short
+  // grid would expose the grey backfill as a border, which is the seam again wearing a hat.
+  const plan = planEsriTiles(LON, LAT, ZOOM, IMG_W, IMG_H);
+  const first = tileDestRect(plan, plan.tx0, plan.ty0);
+  const last = tileDestRect(plan, plan.tx1, plan.ty1);
+  assert.ok(first.dx <= 0 && first.dy <= 0, 'grid starts inside the raster, leaving a bare edge');
+  assert.ok(last.dx + last.dw >= plan.outW, 'grid ends before the raster does');
+  assert.ok(last.dy + last.dh >= plan.outH, 'grid ends above the bottom of the raster');
 });
 
 test('a far-south and a far-north site both plan without wrapping', () => {

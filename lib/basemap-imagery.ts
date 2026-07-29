@@ -174,6 +174,45 @@ export function tileCount(plan: TilePlan): number {
   return (plan.tx1 - plan.tx0 + 1) * (plan.ty1 - plan.ty0 + 1);
 }
 
+export interface TileDestRect { dx: number; dy: number; dw: number; dh: number }
+
+/**
+ * Where one tile lands in the output raster, snapped so NEIGHBOURING TILES SHARE AN EXACT EDGE.
+ *
+ * THIS IS A SEAM FIX, and the seam was very visible. The first version drew each tile at its raw
+ * fractional position and size:
+ *
+ *     ctx.drawImage(img, (tx * 256 - x0) * scale, (ty * 256 - y0) * scale, 256 * scale, 256 * scale)
+ *
+ * At the design frame's numbers (zoom 19.5 sampled from z18) `256 * scale` is 1448.15 px, so every
+ * tile landed on fractional pixels. Canvas answers a fractional destination rect by ANTIALIASING the
+ * outer edge against whatever is beneath it — here a transparent canvas — and `toDataURL('image/
+ * jpeg')` then flattens transparent to BLACK. The result was a dark 2–3 px hairline at every
+ * internal tile boundary: measured on sheet 02 as a full-width line at y≈322 and a full-height line
+ * at x≈1540, ~20 RGB units below their neighbours, i.e. ~20× the surrounding row-to-row noise.
+ * It read as a grid ruled across the farmer's aerial photo, on all eight sheets at once.
+ * (Rory, seeing it: "why is there so many weird lines?")
+ *
+ * Rounding each EDGE — rather than rounding a position and adding a fractional width — is what
+ * makes the fix exact: tile i's right edge and tile i+1's left edge are the same rounded expression,
+ * so they are the same integer. No gap to show through, no overlap to double-darken, no fractional
+ * edge to antialias. The cost is that the photo can sit at most half a pixel from its ideal spot in
+ * a 1920 px raster (0.03%), which is nowhere near the ~5× enlargement the imagery is already drawn
+ * at, and it moves the PHOTO only — `makeMercatorProjector` is untouched, so no overlay shifts.
+ */
+export function tileDestRect(plan: TilePlan, tx: number, ty: number): TileDestRect {
+  const left = Math.round((tx * TILE_PX - plan.x0) * plan.scale);
+  const right = Math.round(((tx + 1) * TILE_PX - plan.x0) * plan.scale);
+  const top = Math.round((ty * TILE_PX - plan.y0) * plan.scale);
+  const bottom = Math.round(((ty + 1) * TILE_PX - plan.y0) * plan.scale);
+  return { dx: left, dy: top, dw: right - left, dh: bottom - top };
+}
+
+/** What an unloadable tile leaves behind. Neutral mid-grey, never transparent: this canvas is
+ *  flattened to JPEG, and transparent flattens to solid black — a missing corner should read as
+ *  "no photo here", not as a hole burnt in the plan. */
+export const BASEMAP_GAP_FILL = '#8A8A80';
+
 /** The frame fields any basemap provider needs. Structural, so both `CanvasFrame` and the design
  *  studio's own fit object satisfy it without importing each other. */
 export interface BasemapFrame {
@@ -240,6 +279,11 @@ export async function fetchEsriBasemapDataUrl(
   canvas.height = plan.outH;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Could not open a canvas for the basemap.');
+  // Opaque BEFORE any tile lands. The output is flattened to JPEG, which has no alpha channel, so
+  // anything still transparent at that point becomes black — see tileDestRect for the seam this
+  // caused. Painting first means the worst case is a grey patch, never a black one.
+  ctx.fillStyle = BASEMAP_GAP_FILL;
+  ctx.fillRect(0, 0, plan.outW, plan.outH);
 
   const load = (url: string) =>
     new Promise<HTMLImageElement | null>((resolve) => {
@@ -256,10 +300,8 @@ export async function fetchEsriBasemapDataUrl(
       jobs.push(
         load(esriTileUrl(plan.tileZoom, tx, ty, ARCGIS_API_KEY)).then((img) => {
           if (!img) return;
-          const dx = (tx * TILE_PX - plan.x0) * plan.scale;
-          const dy = (ty * TILE_PX - plan.y0) * plan.scale;
-          const d = TILE_PX * plan.scale;
-          ctx.drawImage(img, dx, dy, d, d);
+          const { dx, dy, dw, dh } = tileDestRect(plan, tx, ty);
+          ctx.drawImage(img, dx, dy, dw, dh);
         }),
       );
     }

@@ -263,10 +263,25 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
-  // Default to Mapbox satellite — consistent coverage everywhere. Esri ("HD") is sharper
-  // in some rural spots but has DATA GAPS that render an opaque "Map data not yet available"
-  // grey tile, so it's opt-in via the HD toggle, not the default.
-  const [hdImagery, setHdImagery] = useState(false);
+  // Default to Esri ("HD") wherever a licensed key is configured, and to Mapbox otherwise.
+  //
+  // This was opt-in, on the reasoning that Esri has DATA GAPS which render an opaque "Map data not
+  // yet available" grey tile — a farmer with no photo at all is worse off than one with a soft
+  // photo. That risk was real when written, but it lives at z19 and above: Esri serves an identical
+  // 2 521-byte placeholder there, and the Source below is clamped to `maxzoom={ESRI_MAX_NATIVE_ZOOM}`
+  // (18), so MapLibre overzooms a real z18 tile instead of ever requesting the placeholder. Re-tested
+  // 2026-07-29 at z18 across eight rural sites in seven provinces — Ubhejane (KZN), Mthatha, Polokwane,
+  // Upington, Bloemfontein, Nelspruit, Rustenburg, Ceres — all eight returned real imagery
+  // (13–18 kB); none returned the placeholder.
+  //
+  // Which leaves the reason to switch: Mapbox has no real detail at the zoom this map is used at
+  // over rural South Africa, which is the market. Its tile bytes FALL as zoom rises (z14 55.7 kB →
+  // z20 12.3 kB) — one coarse image enlarged repeatedly. Esri resolves individual trees, footpaths
+  // and fence lines on the same ground. A farmer tracing a boundary needs to SEE the fence.
+  //
+  // Eight sites is not all of South Africa, so the toggle stays and this stays reversible: anywhere
+  // Esri is worse, HD switches straight back to Mapbox.
+  const [hdImagery, setHdImagery] = useState(Boolean(ARCGIS_API_KEY));
   const [contours, setContours] = useState(true);
   // Fine (5m) contour geojson fetched from /api/contours once zoomed past FINE_CONTOUR_MIN_ZOOM.
   // null = not loaded yet / fetch failed → render falls back to the fixed-10m vector 'contours' source.

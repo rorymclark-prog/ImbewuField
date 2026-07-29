@@ -260,6 +260,11 @@ const BOUNDARY_BONE = '#EDE7D9';
 // base. Keep it recognisably asphalt while letting the designed systems read first.
 export const TAR = '#454842';
 
+/** Sheet 02 draws the house as a hairline over the photograph rather than as a filled shape — see
+ *  composeSectorSheet. Fully transparent rather than skipping the fill call, so the ring is still
+ *  traced exactly once and the stroke that follows cannot drift from the fill it replaces. */
+const SECTOR_CONTEXT_NO_FILL = 'rgba(0,0,0,0)';
+
 const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
@@ -6256,21 +6261,34 @@ async function composeSectorSheet(
   // 2. Orientation context ONLY — no zones/items/lines (analysis precedes design).
   // The benchmark leaves lawn, garden, paving and cleared-ground overlays out of this sheet:
   // they are base-map information, not sector energies. Keep the satellite quiet beneath the
-  // authoritative house, driveway, boundary, arrows and arcs below.
+  // authoritative house, boundary, arrows and arcs below.
+  //
+  // OUTLINES, NOT SLABS — and the driveway is not drawn here at all. This sheet used to paint the
+  // house AND the traced driveway as filled dark shapes at 55% alpha. On the demo farm that is two
+  // grey rectangles; on a farm where the drive was traced as a sprawling area it is a dark lattice
+  // laid over the one thing sheet 02 is meant to show — the photograph the energies are read
+  // against. Rory: "look at those polygons they mess up the image … if the underlying reproduction
+  // is good, maybe we just leave it without basemap polygons, maybe just the fence line?"
+  //
+  // He is right about the fill and the driveway; the house outline stays. A sector sheet's whole
+  // job is telling a farmer where the summer sun, the berg wind and the fire approach meet HIS
+  // BUILDINGS, and the reference sheets he benchmarks against all show the dwelling. So the house
+  // keeps its shape as a hairline with no fill, and the driveway keeps its meaning through the
+  // access arrow and legend row 7 (bearing — dust & noise), which is the only sector-relevant fact
+  // the tar carries. Neither change touches saved geometry: this is what gets PAINTED, not what is
+  // stored, and sheets 01 and 03–08 are untouched — the existing fabric is their subject.
   ctx.save();
-  ctx.globalAlpha = 0.55;
   for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
     drawBlueprintHouse(
       ctx,
       footprint,
       px,
       py,
-      'rgba(58,63,74,0.85)',
-      'rgba(255,255,255,0.85)',
-      2.5,
+      SECTOR_CONTEXT_NO_FILL,
+      'rgba(255,255,255,0.92)',
+      Math.max(2, W * 0.0016),
     );
   }
-  drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, false);
   ctx.restore();
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
 
@@ -7802,7 +7820,7 @@ interface SavedGlossy {
 //        they breathe and ours did not. SECTOR_ENERGY_TIP is the one rule both renderers now read.
 //        Bearings, half-widths and the sourced regional record are untouched — only where the
 //        shape ends.
-const PLAN_VERSION = 'v88';
+const PLAN_VERSION = 'v89';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

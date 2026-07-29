@@ -612,6 +612,61 @@ in your report.
 
 ---
 
+## 30. Sheet 02's labels are pill chips; the benchmark uses haloed text — `codex/sector-label-halos`
+
+Rory's reference sheets are the standard for sheet 02. Their direct labels (`HOT DRY BERG WIND / NW`,
+`SLOPE / TERRACE FALL`) are **text with a soft dark halo** sitting straight on the photograph. Ours
+are text inside an opaque rounded **pill chip**. On a busy aerial the chips read as stickers stuck
+over the site — six of them punch six rectangular holes in the very photo the sheet exists to show.
+
+`directLabelAt` and `labelAt` in `drawSectorAnalysis` (components/design/DesignGlossy.tsx) are the
+only two places this is decided. Replace the chip with a halo: draw the text several times in a dark
+translucent colour at small offsets (or `ctx.strokeText` with a wide `lineWidth` and
+`lineJoin: 'round'` under the fill), then the fill on top.
+
+Rules:
+- **Legibility is the point, not the chip.** Whatever you build must stay readable over both the
+  bright bare-earth and the dark-bush parts of the same photo. Prove it: render sheet 02, crop one
+  label over pale ground and one over dark bush at 1:1, and put both in your report.
+- Keep every label's colour, wording, position and leader exactly as they are. This is the chip only.
+- The legend panel's rows are on cream paper and are fine — do not touch them.
+- **Do not touch `PLAN_VERSION`.**
+
+## 31. The sheet-02 footer note is an unbroken wall of 8 pt italic — `codex/sector-notes-box`
+
+`analysis.noteText` renders as ~10 lines of tiny italic under the legend. It carries the honesty of
+the whole sheet — which bearings are computed and which are a regional assumption — and nobody will
+read it in that form. The reference puts its equivalent in a **bordered box with a short heading**.
+
+Give it a hairline border, internal padding, and a heading (`NOTES & PROVENANCE` or similar — match
+the legend's existing type treatment; do not invent a new typeface). The text itself is unchanged:
+**do not rewrite, shorten or re-order a single sentence of the provenance wording** — several of
+those sentences are the difference between "sourced" and "invented" and they are load-bearing.
+
+If the box will not fit the panel, say so with the measured numbers rather than shrinking the type
+below what is already there. **Do not touch `PLAN_VERSION`.**
+
+## 32. Every sector wedge draws two dashed edges that run off the sheet — `codex/sector-wedge-edges`
+
+`drawRegionalWedge` fills a translucent wedge and then strokes **both** its long edges with
+`setLineDash([10, 7])`. With three named winds plus fire that is eight dashed rays leaving the plot
+in different directions, and at the frame edge they read as unexplained diagonal dashes — Rory:
+"why is there so many weird lines?"
+
+The dashed-versus-solid distinction is a real contract and must survive: SECTOR-MODEL-SPEC §4 says
+computed geometry (sun arcs, contours, the driveway arrow) is **solid** and regional assumptions are
+**dashed**. So keep the dash, but carry it on ONE mark per energy rather than two: the arrow's
+centreline is the natural home for it, since every regional energy already draws one.
+
+- Read the §4 contract first and quote the line you are honouring in your report.
+- The wedge keeps its fill, its bearing and its half-width. Geometry does not move.
+- Check the legend still distinguishes the two registers (`style: 'dashline'` vs `'line'`) — if
+  removing the edges makes the legend's dashed swatch describe something no longer on the map, that
+  is a finding, and say so instead of quietly changing the legend.
+- **Do not touch `PLAN_VERSION`.**
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
