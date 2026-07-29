@@ -16,6 +16,7 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision } from '@/lib/render-difference';
+import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
@@ -8083,6 +8084,12 @@ export default function DesignGlossy({
   // Hybrid-only stops here, so this stays false for that flow.
   const polishAfterHybridRef = useRef(false);
   const polishAfterFlipRef = useRef(false);
+  /** WHAT THE FARMER ASKED FOR, kept for the audit trail rather than for the flow.
+   *  The flow already knows its next step from the pending flags; what nothing recorded was the
+   *  INTENT — and "I selected 3 steps and got 2" is a sentence you can only check against intent.
+   *  Without this field the audit can see a Hybrid that was kept and no polish, and still not know
+   *  whether a third layer was ever wanted. See lib/render-audit.ts. */
+  const requestedModeRef = useRef<SheetOutputMode>('exact');
   const polishStyleRef = useRef<StylePreset>(DEFAULT_PRODUCER_STYLE);
   // Full Treatment's polish stage feeds on the Hybrid stage's OWN finished sheet — not a rebuilt
   // exact sheet — so there is something actually painted for the model to polish. Set when the
@@ -10031,6 +10038,7 @@ export default function DesignGlossy({
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
+    requestedModeRef.current = targetMode;
     hybridResultRef.current = null;
     // Clear the last run's "the polish pass returned the same map" note. Leaving it up over a fresh
     // render would read as a verdict on THIS attempt before it has produced anything.
@@ -10158,7 +10166,27 @@ export default function DesignGlossy({
                   const diff = await measureRenderDifference(sourceImage, raw, protectMask);
                   const decision = paidRenderDecision(diff, 'hybrid');
                   console.info('[glossy] paid hybrid difference', sheet.key, diff);
+                  recordRenderAudit(auditFromReport(
+                    { at: new Date().toISOString(), sheetKey: sheet.key, stage: 'hybrid', outputMode: requestedModeRef.current, style: styleKey },
+                    diff,
+                    decision.keep,
+                  ));
                   if (!decision.keep) {
+                    // Record the CONSEQUENCE, not just the rejection. A Full Treatment that stops
+                    // here leaves the farmer on layer 2 with no polish entry at all, which is
+                    // indistinguishable from a flow that stalled — and telling those two apart is
+                    // the whole reason this trail exists.
+                    if (requestedModeRef.current === 'full') {
+                      recordRenderAudit({
+                        at: new Date().toISOString(),
+                        sheetKey: sheet.key,
+                        stage: 'polish',
+                        outputMode: 'full',
+                        style: styleKey,
+                        outcome: 'blocked',
+                        note: 'the Hybrid returned the map it was given, so there was nothing new to polish',
+                      });
+                    }
                     rejected.add(sheet.key);
                     setPolishNoChange(decision.message);
                     // Full Treatment must not advance to polish a Hybrid the gate just proved was
@@ -10171,8 +10199,18 @@ export default function DesignGlossy({
                   }
                 } catch (err) {
                   // Scoring is diagnostic, never a new failure mode. If pixels cannot be measured,
-                  // finish and keep the paid result exactly as before.
+                  // finish and keep the paid result exactly as before — but SAY that it went
+                  // unmeasured, so an unscored pass can never later be read as a proven one.
                   console.warn('[glossy] could not score the paid hybrid — keeping it', err);
+                  recordRenderAudit({
+                    at: new Date().toISOString(),
+                    sheetKey: sheet.key,
+                    stage: 'hybrid',
+                    outputMode: requestedModeRef.current,
+                    style: styleKey,
+                    outcome: 'unscored',
+                    note: 'the pixels could not be compared, so this pass was kept unmeasured',
+                  });
                 }
               }
               // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
@@ -10250,12 +10288,26 @@ export default function DesignGlossy({
                   const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
                   const decision = paidRenderDecision(diff, 'polish');
                   console.info('[glossy] paid polish difference', sheet.key, diff);
+                  recordRenderAudit(auditFromReport(
+                    { at: new Date().toISOString(), sheetKey: sheet.key, stage: 'polish', outputMode: requestedModeRef.current, style: styleKey },
+                    diff,
+                    decision.keep,
+                  ));
                   if (!decision.keep) {
                     polishRejected = true;
                     setPolishNoChange(decision.message);
                   }
                 } catch (err) {
                   console.warn('[glossy] could not score the paid polish — keeping it', err);
+                  recordRenderAudit({
+                    at: new Date().toISOString(),
+                    sheetKey: sheet.key,
+                    stage: 'polish',
+                    outputMode: requestedModeRef.current,
+                    style: styleKey,
+                    outcome: 'unscored',
+                    note: 'the pixels could not be compared, so this pass was kept unmeasured',
+                  });
                 }
                 polishInputRef.current = null;
               }
