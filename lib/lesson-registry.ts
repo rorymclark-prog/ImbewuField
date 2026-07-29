@@ -332,43 +332,58 @@ const OVERRIDES: Record<string, MicroLesson> = {
   },
 };
 
+function ownValue<T>(record: Record<string, T>, key: string): T | undefined {
+  return Object.prototype.hasOwnProperty.call(record, key) ? record[key] : undefined;
+}
+
 /** Total function: always returns a MicroLesson for any id. Unknown ids yield a safe generic. */
 export function getLesson(id: string): MicroLesson {
-  if (OVERRIDES[id]) return OVERRIDES[id];
+  // Lesson ids are passed around as strings, but old persisted/UI data can still
+  // violate that TypeScript contract. Keep the promised total function total.
+  const lessonId = typeof id === 'string' ? id : '';
+  const override = ownValue(OVERRIDES, lessonId);
+  if (override) return { ...override };
 
-  const sep = id.indexOf(':');
-  const ns = sep === -1 ? id : id.slice(0, sep);
-  const key = sep === -1 ? '' : id.slice(sep + 1);
+  const sep = lessonId.indexOf(':');
+  const ns = sep === -1 ? lessonId : lessonId.slice(0, sep);
+  const key = sep === -1 ? '' : lessonId.slice(sep + 1);
 
   switch (ns) {
     case 'step': {
-      const lesson = DESIGN_STEP_LESSONS[key as Exclude<WizardStep, 'glossy'>];
-      if (lesson) return { id, ...lesson }; // step lessons are real copy — not draft
+      const lesson = ownValue(
+        DESIGN_STEP_LESSONS as Record<string, StepLesson>,
+        key,
+      );
+      if (lesson) return { id: lessonId, ...lesson }; // step lessons are real copy — not draft
       break;
     }
     case 'element': {
-      const def = ELEMENTS_BY_ID[key];
+      const def = ownValue(ELEMENTS_BY_ID, key);
       if (def) return elementLesson(def);
       break;
     }
     case 'feature': {
-      if (key in GROUND_FEATURES) return featureLesson(key as GroundFeatureKind);
+      if (ownValue(
+        GROUND_FEATURES as Record<string, (typeof GROUND_FEATURES)[GroundFeatureKind]>,
+        key,
+      )) return featureLesson(key as GroundFeatureKind);
       break;
     }
     case 'zone': {
-      const z = Number(key);
-      if (Number.isFinite(z) && z >= 0 && z <= 5) return zoneLesson(z as 0 | 1 | 2 | 3 | 4 | 5);
+      // Exact grammar matters: Number('') and Number('  ') are both zero, and
+      // fractional zones fell through to Zone 0's description under a false title.
+      if (/^[0-5]$/.test(key)) return zoneLesson(Number(key) as 0 | 1 | 2 | 3 | 4 | 5);
       break;
     }
     case 'line': {
-      if (key in LINE_LORE) return lineLesson(key as LineShape['kind']);
+      if (ownValue(LINE_LORE, key)) return lineLesson(key as LineShape['kind']);
       break;
     }
   }
 
   // Safe generic — a link is never dead even if a caller passes an id we don't know yet.
   return {
-    id,
+    id: lessonId,
     title: 'About this',
     body: 'A short lesson for this part of your plan is on the way.',
     principle: 'Every choice on your land is a chance to learn.',
