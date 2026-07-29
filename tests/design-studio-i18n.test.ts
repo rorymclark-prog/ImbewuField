@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { readFileSync } from 'node:fs';
+import './design-studio.test';
 
 import {
   DESIGN_STEP_GUIDANCE_KEYS,
