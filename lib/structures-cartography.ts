@@ -167,7 +167,15 @@ export function structuresFeaturePresentationDimensions(
   naturalHeight: number,
   canvasWidth: number,
 ): StructuresPresentationDimensions {
-  if (!FEATURE_VISUALS[id]) {
+  if (
+    !Number.isFinite(naturalWidth)
+    || naturalWidth <= 0
+    || !Number.isFinite(naturalHeight)
+    || naturalHeight <= 0
+  ) {
+    return { width: 0, height: 0, scale: 1 };
+  }
+  if (!FEATURE_VISUALS[id] || !Number.isFinite(canvasWidth) || canvasWidth <= 0) {
     return { width: naturalWidth, height: naturalHeight, scale: 1 };
   }
   const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
@@ -180,9 +188,14 @@ export function structuresFeaturePresentationDimensions(
   );
   const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
   const scale = Math.max(1, cappedScale);
+  const width = naturalWidth * scale;
+  const height = naturalHeight * scale;
+  if (!Number.isFinite(width) || !Number.isFinite(height) || !Number.isFinite(scale)) {
+    return { width: naturalWidth, height: naturalHeight, scale: 1 };
+  }
   return {
-    width: naturalWidth * scale,
-    height: naturalHeight * scale,
+    width,
+    height,
     scale,
   };
 }
