@@ -7855,7 +7855,6 @@ interface SavedGlossy {
 //        elements at a similar height stop merging into one line that appears to point at the
 //        wrong icon. Found by rendering the exact sheet 07 for the Ubhejane demo and looking at
 //        it: "JOJO TANK 2500L" read as pointing at the compost bay.
-<<<<<<< HEAD
 //   v67 — 2026-07-29: a callout can no longer shrink to a quarter of its neighbours. Rendered
 //        water sheet 04 had SWALE full size, GREYWATER LINE middling and JOJO TANK 2500L a
 //        scratch — the margins went narrow when sheets started following the boundary (v57), and
