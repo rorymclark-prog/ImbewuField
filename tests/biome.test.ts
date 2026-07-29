@@ -8,6 +8,7 @@ import {
   isWithinSouthAfrica,
   koppenClassify,
 } from '../lib/biome.ts';
+import { SOUTH_AFRICA_POLYGONS } from '../lib/south-africa-boundary.ts';
 
 const summerRain = [100, 100, 100, 20, 10, 5, 5, 5, 20, 80, 100, 100];
 const winterRain = [5, 5, 10, 40, 80, 120, 120, 100, 50, 10, 5, 5];
@@ -161,5 +162,92 @@ test('Köppen output is finite for valid data and honest when inputs are invalid
       code: '?',
       description: 'Unknown',
     });
+  }
+});
+
+function signedRingArea(ring: readonly (readonly [number, number])[]): number {
+  let twiceArea = 0;
+  for (let index = 0; index < ring.length - 1; index += 1) {
+    const current = ring[index];
+    const next = ring[index + 1];
+    twiceArea += current[0] * next[1] - next[0] * current[1];
+  }
+  return twiceArea / 2;
+}
+
+function meanPoint(ring: readonly (readonly [number, number])[]): readonly [number, number] {
+  const unique = ring.slice(0, -1);
+  return [
+    unique.reduce((sum, point) => sum + point[0], 0) / unique.length,
+    unique.reduce((sum, point) => sum + point[1], 0) / unique.length,
+  ];
+}
+
+test('the national boundary source is closed, finite and geographically valid', () => {
+  assert.ok(SOUTH_AFRICA_POLYGONS.length > 0);
+  for (const [polygonIndex, polygon] of SOUTH_AFRICA_POLYGONS.entries()) {
+    assert.ok(polygon.length > 0, `polygon ${polygonIndex} has no outer ring`);
+    for (const [ringIndex, ring] of polygon.entries()) {
+      assert.ok(ring.length >= 4, `polygon ${polygonIndex} ring ${ringIndex} cannot enclose land`);
+      assert.deepEqual(ring.at(-1), ring[0], `polygon ${polygonIndex} ring ${ringIndex} is open`);
+      assert.notEqual(signedRingArea(ring), 0, `polygon ${polygonIndex} ring ${ringIndex} has no area`);
+      for (const [longitude, latitude] of ring) {
+        assert.ok(Number.isFinite(longitude) && longitude >= -180 && longitude <= 180);
+        assert.ok(Number.isFinite(latitude) && latitude >= -90 && latitude <= 90);
+      }
+    }
+  }
+});
+
+test('enclave rings wind opposite their outer land ring', () => {
+  for (const [polygonIndex, [outer, ...enclaves]] of SOUTH_AFRICA_POLYGONS.entries()) {
+    const outerSign = Math.sign(signedRingArea(outer));
+    assert.notEqual(outerSign, 0);
+    for (const enclave of enclaves) {
+      assert.equal(
+        Math.sign(signedRingArea(enclave)),
+        -outerSign,
+        `polygon ${polygonIndex} has an enclave with the outer ring’s winding`,
+      );
+    }
+  }
+});
+
+test('outer borders are included while enclave borders remain excluded', () => {
+  for (const [outer, ...enclaves] of SOUTH_AFRICA_POLYGONS) {
+    const stride = Math.max(1, Math.floor((outer.length - 1) / 20));
+    for (let index = 0; index < outer.length - 1; index += stride) {
+      const [longitude, latitude] = outer[index];
+      assert.equal(isWithinSouthAfrica(latitude, longitude), true);
+    }
+    for (const enclave of enclaves) {
+      const stride = Math.max(1, Math.floor((enclave.length - 1) / 10));
+      for (let index = 0; index < enclave.length - 1; index += stride) {
+        const [longitude, latitude] = enclave[index];
+        assert.equal(isWithinSouthAfrica(latitude, longitude), false);
+      }
+    }
+  }
+});
+
+test('each land polygon has an interior representative and every enclave remains outside', () => {
+  for (const [outer, ...enclaves] of SOUTH_AFRICA_POLYGONS) {
+    const [outerLon, outerLat] = meanPoint(outer);
+    assert.equal(isWithinSouthAfrica(outerLat, outerLon), true);
+    for (const enclave of enclaves) {
+      const [holeLon, holeLat] = meanPoint(enclave);
+      assert.equal(isWithinSouthAfrica(holeLat, holeLon), false);
+    }
+  }
+});
+
+test('authoritative boundary geometry is immutable at every nesting level', () => {
+  assert.equal(Object.isFrozen(SOUTH_AFRICA_POLYGONS), true);
+  for (const polygon of SOUTH_AFRICA_POLYGONS) {
+    assert.equal(Object.isFrozen(polygon), true);
+    for (const ring of polygon) {
+      assert.equal(Object.isFrozen(ring), true);
+      assert.ok(ring.every((coordinate) => Object.isFrozen(coordinate)));
+    }
   }
 });
