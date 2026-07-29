@@ -36,12 +36,55 @@ export const resolveColor = (p: { label?: PlaceLabel; color?: string }): string 
 const KEY = 'permamap_saved_places';
 const DELETED_KEY = `${KEY}_deleted`; // local deletion tombstones — see lib/local-tombstones.ts
 
+const PLACE_LABEL_VALUES = new Set<PlaceLabel>(PLACE_LABELS.map((label) => label.v));
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function isValidSavedPlace(value: unknown): value is SavedPlace {
+  if (!isRecord(value)) return false;
+  return typeof value.id === 'string' && value.id.trim().length > 0
+    && typeof value.name === 'string'
+    && typeof value.lat === 'number' && Number.isFinite(value.lat) && value.lat >= -90 && value.lat <= 90
+    && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
+    && typeof value.biome === 'string'
+    && typeof value.rainfall === 'number' && Number.isFinite(value.rainfall)
+    && typeof value.elevation === 'number' && Number.isFinite(value.elevation)
+    // Pre-sync local records used an empty timestamp. Keep them readable at timestamp zero;
+    // network shares apply the stricter ISO requirement at their own trust boundary.
+    && typeof value.savedAt === 'string'
+    && (value.savedAt === '' || Number.isFinite(Date.parse(value.savedAt)))
+    && (value.updatedAt === undefined
+      || (typeof value.updatedAt === 'number' && Number.isFinite(value.updatedAt) && value.updatedAt >= 0))
+    && (value.label === undefined || PLACE_LABEL_VALUES.has(value.label as PlaceLabel))
+    && (value.color === undefined || typeof value.color === 'string')
+    && (value.notes === undefined || typeof value.notes === 'string');
+}
+
+function placeTimestamp(place: SavedPlace): number {
+  const savedAt = Date.parse(place.savedAt);
+  return place.updatedAt ?? (Number.isFinite(savedAt) ? savedAt : 0);
+}
+
+export function normalisePlaces(value: unknown): SavedPlace[] {
+  if (!Array.isArray(value)) return [];
+  const byId = new Map<string, SavedPlace>();
+  for (const candidate of value) {
+    if (!isValidSavedPlace(candidate)) continue;
+    const current = byId.get(candidate.id);
+    if (!current || placeTimestamp(candidate) >= placeTimestamp(current)) {
+      byId.set(candidate.id, candidate);
+    }
+  }
+  return [...byId.values()];
+}
+
 export function loadPlaces(): SavedPlace[] {
-  if (isSampleMode()) return getSandboxPlaces();
+  if (isSampleMode()) return normalisePlaces(getSandboxPlaces());
   if (typeof window === 'undefined') return [];
   try {
-    const v = JSON.parse(localStorage.getItem(KEY) ?? '[]');
-    return Array.isArray(v) ? v : [];
+    return normalisePlaces(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
   } catch {
     return [];
   }
@@ -56,7 +99,8 @@ function currentUid(): string | undefined {
 }
 
 export function savePlace(place: SavedPlace): SavedPlace[] {
-  const stamped = { ...place, updatedAt: Date.now() };
+  if (!isValidSavedPlace(place)) throw new Error('Invalid saved place');
+  const stamped: SavedPlace = { ...place, updatedAt: Date.now() };
   if (isSampleMode()) {
     const updated = upsertSandboxPlace(stamped);
     notify();
@@ -73,17 +117,20 @@ export function savePlace(place: SavedPlace): SavedPlace[] {
 
 export function deletePlace(id: string): SavedPlace[] {
   if (isSampleMode()) {
+    const current = normalisePlaces(getSandboxPlaces());
+    if (!id || !current.some((place) => place.id === id)) return current;
     const updated = deleteSandboxPlace(id);
     notify();
     return updated;
   }
-  // Record the local tombstone BEFORE the array rewrite: closes the window where a concurrent
-  // remote snapshot (written before the async removePlace() transaction below lands) would
-  // otherwise resurrect this item on the very next merge. See lib/local-tombstones.ts.
+  const current = loadPlaces();
+  if (!id || !current.some((place) => place.id === id)) return current;
   const deletedAt = Date.now();
-  addTombstone(DELETED_KEY, id, deletedAt);
-  const updated = loadPlaces().filter(p => p.id !== id);
+  const updated = current.filter(p => p.id !== id);
+  // localStorage writes are synchronous: persist the visible deletion before its tombstone so
+  // a quota/security failure cannot leave a deletion marker for a place still present locally.
   localStorage.setItem(KEY, JSON.stringify(updated));
+  addTombstone(DELETED_KEY, id, deletedAt);
   notify();
   const uid = currentUid();
   // Thread the SAME timestamp into removePlace() as its `deletedAtMs` — not a fresh Date.now()
@@ -113,33 +160,49 @@ export function deletePlace(id: string): SavedPlace[] {
  */
 export function mergeIncomingPlaces(incoming: SavedPlace[]): SavedPlace[] {
   if (isSampleMode()) return getSandboxPlaces(); // sample mode never accepts external data (safety layer)
-  if (typeof window === 'undefined') return incoming;
+  const safeIncoming = normalisePlaces(incoming);
+  if (typeof window === 'undefined') return safeIncoming;
   const local = loadPlaces();
   const localDel = readTombstones(DELETED_KEY);
-  const { items } = mergeItems(incoming, local, {}, localDel, (p) => p.id, (p) => p.updatedAt ?? 0, Date.now());
+  const { items } = mergeItems(
+    safeIncoming,
+    local,
+    {},
+    localDel,
+    (p) => p.id,
+    placeTimestamp,
+    Date.now(),
+  );
   localStorage.setItem(KEY, JSON.stringify(items));
   notify();
   return items;
 }
 
 export function updatePlacePosition(id: string, lat: number, lon: number): SavedPlace[] {
+  if (!Number.isFinite(lat) || lat < -90 || lat > 90
+      || !Number.isFinite(lon) || lon < -180 || lon > 180) {
+    throw new Error('Invalid place position');
+  }
   if (isSampleMode()) {
-    const existing = getSandboxPlaces().find(p => p.id === id);
-    if (!existing) { notify(); return getSandboxPlaces(); }
+    const current = normalisePlaces(getSandboxPlaces());
+    const existing = current.find(p => p.id === id);
+    if (!existing || (existing.lat === lat && existing.lon === lon)) return current;
     const updated = upsertSandboxPlace({ ...existing, lat, lon, updatedAt: Date.now() });
     notify();
     return updated;
   }
-  let moved: SavedPlace | undefined;
-  const updated = loadPlaces().map(p => {
+  const current = loadPlaces();
+  const existing = current.find((place) => place.id === id);
+  if (!existing || (existing.lat === lat && existing.lon === lon)) return current;
+  const moved: SavedPlace = { ...existing, lat, lon, updatedAt: Date.now() };
+  const updated = current.map(p => {
     if (p.id !== id) return p;
-    moved = { ...p, lat, lon, updatedAt: Date.now() };
     return moved;
   });
   localStorage.setItem(KEY, JSON.stringify(updated));
   notify();
   const uid = currentUid();
-  if (uid && moved) upsertPlace(uid, moved).catch(() => {});
+  if (uid) upsertPlace(uid, moved).catch(() => {});
   return updated;
 }
 
