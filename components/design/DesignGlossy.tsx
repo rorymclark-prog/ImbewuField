@@ -5842,15 +5842,20 @@ function drawSectorAnalysis(
   // berg-wind bearing.
   if (model.fire) {
     drawRegionalWedge(model.fire.bearingDeg, model.fire.halfWidthDeg, 'fire');
-    // Fire's bearing EQUALS the berg wind's bearing by construction, so a fire arrow + label on
-    // that ray would overprint the berg arrow + label. Let the wedge carry the message and put the
-    // label INSIDE the wedge (the ring interior is empty on this sheet).
+    // Fire's bearing EQUALS the berg wind's bearing by construction. The legacy canvas keeps its
+    // interior label; on the composed sheet queue a final-layer label off the shared ray so the
+    // broad berg-wind arrow cannot paint over it.
     const lp = bearingToUnitVector(model.fire.bearingDeg);
     labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
     drawSectorMarker('fire', cx + lp[0] * R * 0.68, cy + lp[1] * R * 0.68, SECTOR_STYLES.fire.color);
     const fireTangentX = -lp[1];
-    // The fire sector shares the berg-wind ray. Its exact wording stays in the external legend;
-    // repeating it on the map caused both labels to print over the same upper-left arrow.
+    const fireTangentY = lp[0];
+    directLabelAt(
+      cx + lp[0] * R * 0.72 + fireTangentX * rowH * 2.2,
+      cy + lp[1] * R * 0.72 + fireTangentY * rowH * 2.2,
+      ['FIRE APPROACH', model.fire.fromLabel],
+      '#F0A58C',
+    );
   }
 
   // 5. SUN — TWO real arcs (summer + winter), each swept through the actual computed rise/set
