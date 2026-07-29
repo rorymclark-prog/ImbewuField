@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  canonicalSurveySiteId,
   loadSurvey,
   saveSurvey,
   surveyToPrompt,
@@ -10,8 +11,12 @@ import {
 
 class MemoryStorage {
   rows = new Map<string, string>();
+  failKey: string | null = null;
   getItem(key: string) { return this.rows.get(key) ?? null; }
-  setItem(key: string, value: string) { this.rows.set(String(key), String(value)); }
+  setItem(key: string, value: string) {
+    if (key === this.failKey) throw new Error('storage unavailable');
+    this.rows.set(String(key), String(value));
+  }
   removeItem(key: string) { this.rows.delete(key); }
 }
 
@@ -144,7 +149,8 @@ test('saving stamps, normalises and notifies after the new survey is readable', 
   target.addEventListener('imbewu-surveys-changed', () => {
     observed = loadSurvey('site:-29.00000,31.00000');
   });
-  saveSurvey(survey({ goals: [' food ', 'food'] }));
+  const result = saveSurvey(survey({ goals: [' food ', 'food'] }));
+  assert.ok(result);
   assert.ok(observed);
   const saved = observed as SiteSurvey;
   assert.deepEqual(saved.goals, ['food']);
@@ -155,9 +161,41 @@ test('invalid site ids do not create orphan survey keys or events', () => {
   const { local, target } = installBrowser();
   let changes = 0;
   target.addEventListener('imbewu-surveys-changed', () => { changes += 1; });
-  saveSurvey(survey({ siteId: '' }));
+  const invalidIds = [
+    '',
+    'site:bad',
+    'site:-29,31',
+    'site:-29.0000,31.00000',
+    'site:91.00000,31.00000',
+    'site:-29.00000,181.00000',
+    'site:-29.00000,31.00000:other',
+  ];
+  for (const siteId of invalidIds) {
+    assert.equal(canonicalSurveySiteId(siteId), null);
+    assert.equal(saveSurvey(survey({ siteId })), null);
+    assert.equal(loadSurvey(siteId), null);
+  }
   assert.equal(changes, 0);
   assert.equal(local.rows.size, 0);
+});
+
+test('a failed storage write is not announced or returned as a saved survey', () => {
+  const { local, target } = installBrowser();
+  let changes = 0;
+  target.addEventListener('imbewu-surveys-changed', () => { changes += 1; });
+  const input = survey();
+  local.failKey = `imbewu_site_survey_${input.siteId}`;
+
+  assert.equal(saveSurvey(input), null);
+  assert.equal(loadSurvey(input.siteId), null);
+  assert.equal(changes, 0);
+});
+
+test('array-shaped storage cannot masquerade as a survey record', () => {
+  const { local } = installBrowser();
+  const siteId = 'site:-29.00000,31.00000';
+  local.setItem(`imbewu_site_survey_${siteId}`, JSON.stringify([survey()]));
+  assert.equal(loadSurvey(siteId), null);
 });
 
 test('a legacy place-id survey migrates once to its coordinate site key', () => {
