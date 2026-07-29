@@ -264,6 +264,11 @@ const TANK_SIZES: Array<{ litres: number; key: string }> = [
   { litres: 10000, key: 'tank_10000' },
 ];
 
+/** Measured dimensions may be zero, but cannot be negative or non-finite. */
+function isValidMeasure(value: number): boolean {
+  return Number.isFinite(value) && value >= 0;
+}
+
 /** Pick the tank price-book key nearest to the requested litre volume. */
 function nearestTankKey(litres: number): string {
   let best = TANK_SIZES[0];
@@ -336,7 +341,8 @@ export function costForItem(
   if (!mapped) return null;
 
   if (mapped === '__tank__') {
-    const vol = typeof litres === 'number' && litres > 0 ? litres : 5000;
+    if (litres !== undefined && (!Number.isFinite(litres) || litres <= 0)) return null;
+    const vol = litres ?? 5000;
     const key = nearestTankKey(vol);
     const entry = PRICE_BOOK[key];
     return { zar: entry.zar, basis: `${entry.label} (nearest match to ${vol}L)`, unit: 'each' };
@@ -350,6 +356,7 @@ export function costForItem(
   }
 
   if (entry.unit === 'per_m2') {
+    if (!isValidMeasure(wM) || !isValidMeasure(hM)) return null;
     // Circular footprint types (e.g. pond, banana circle-like) use pi*(w/2)^2
     // when only a diameter (wM) is meaningful and hM is unset/equal to wM;
     // otherwise treat as a rectangle wM x hM.
@@ -364,6 +371,7 @@ export function costForItem(
   }
 
   // per_m fallback (shouldn't normally hit for item types, but handle gracefully)
+  if (!isValidMeasure(wM)) return null;
   const zar = Math.round(wM * entry.zar);
   return { zar, basis: `${entry.label}: ${wM.toFixed(1)} m × ${formatZar(entry.zar)}/m`, unit: 'm' };
 }
@@ -395,7 +403,7 @@ export function costForLine(
   if (FREE_LINE_KINDS.has(kind)) return null;
 
   const key = LINE_KIND_MAP[kind];
-  if (!key) return null;
+  if (!key || !isValidMeasure(lengthM)) return null;
 
   const entry = PRICE_BOOK[key];
   if (!entry) return null;
@@ -424,7 +432,7 @@ export function costForAreaLine(
   areaM2: number
 ): CostLine | null {
   const key = AREA_LINE_KIND_MAP[kind];
-  if (!key || areaM2 < 0) return null;
+  if (!key || !isValidMeasure(areaM2)) return null;
 
   const entry = PRICE_BOOK[key];
   if (!entry) return null;
@@ -452,8 +460,10 @@ export function totalZar(lines: readonly CostLine[]): number {
 /**
  * Format a number as a ZAR amount with space-separated thousands, no decimals.
  * e.g. formatZar(12500) -> 'R12 500'
+ * Non-finite inputs are shown as unavailable, never as a currency amount.
  */
 export function formatZar(n: number): string {
+  if (!Number.isFinite(n)) return '—';
   const rounded = Math.round(n);
   const sign = rounded < 0 ? '-' : '';
   const digits = Math.abs(rounded).toString();
