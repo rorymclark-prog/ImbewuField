@@ -1876,9 +1876,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     if (pendingElementTimer.current) clearTimeout(pendingElementTimer.current);
     setPendingDeleteElement((cur) => {
       if (cur === id) {
-        deleteSiteElement(siteIdForElements, id);
-        setSiteElements(loadSiteElements(siteIdForElements));
-        setElementEditing((e) => (e?.id === id ? null : e));
+        if (deleteSiteElement(siteIdForElements, id)) {
+          setSiteElements(loadSiteElements(siteIdForElements));
+          setElementEditing((e) => (e?.id === id ? null : e));
+        }
         return null;
       }
       pendingElementTimer.current = setTimeout(() => setPendingDeleteElement(null), 3500);
@@ -2469,10 +2470,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 lon: center.lng,
                 createdAt: new Date().toISOString(),
               };
-              saveSiteElement(siteIdForElements, newElement);
+              const saved = saveSiteElement(siteIdForElements, newElement);
+              if (!saved) return;
               setSiteElements(loadSiteElements(siteIdForElements));
               setDroppingElement(null);
-              setElementEditing(newElement);
+              setElementEditing(saved);
               setElName('');
               setElNote('');
               setElLitres(droppingElement === 'jojo_tank' ? 5000 : undefined);
@@ -3984,7 +3986,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     species: elementEditing.type === 'tree' ? (elSpecies.trim() || undefined) : elementEditing.species,
                     count: elementEditing.type === 'tree' ? elCount : elementEditing.count,
                   };
-                  saveSiteElement(siteIdForElements, updated);
+                  const saved = saveSiteElement(siteIdForElements, updated);
+                  if (!saved) return;
                   setSiteElements(loadSiteElements(siteIdForElements));
                   setElementEditing(null);
                   setPendingDeleteElement(null);
