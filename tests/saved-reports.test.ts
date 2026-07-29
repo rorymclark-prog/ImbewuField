@@ -1,0 +1,155 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA } from '../lib/demo-site.ts';
+import type { SavedReport } from '../lib/saved-reports.ts';
+
+const KEY = 'imbewu_saved_reports';
+
+class MemoryStorage {
+  readonly rows = new Map<string, string>();
+  throwOnWrite = false;
+  getItem(key: string): string | null { return this.rows.get(key) ?? null; }
+  setItem(key: string, value: string): void {
+    if (this.throwOnWrite) throw new Error('quota exceeded');
+    this.rows.set(key, value);
+  }
+  removeItem(key: string): void { this.rows.delete(key); }
+  clear(): void { this.rows.clear(); }
+}
+
+const local = new MemoryStorage();
+const session = new MemoryStorage();
+const browser = new EventTarget() as EventTarget & {
+  localStorage: MemoryStorage;
+  sessionStorage: MemoryStorage;
+};
+browser.localStorage = local;
+browser.sessionStorage = session;
+Object.defineProperty(globalThis, 'window', { configurable: true, value: browser });
+Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: local });
+Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
+
+const { deleteReport, loadReports, saveReport } = await import('../lib/saved-reports.ts');
+
+function report(id: string, overrides: Partial<SavedReport> = {}): SavedReport {
+  return {
+    id,
+    name: `Report ${id}`,
+    savedAt: new Date(Date.UTC(2026, 0, 1)).toISOString(),
+    lang: 'en',
+    report: `# ${id}`,
+    location: structuredClone(DEMO_LOCATION),
+    siteData: structuredClone(DEMO_SITE_DATA),
+    waterData: structuredClone(DEMO_WATER_DATA),
+    ...overrides,
+  };
+}
+
+function reset(): void {
+  local.rows.clear();
+  session.rows.clear();
+  local.throwOnWrite = false;
+}
+
+test('load filters malformed rows, keeps newest duplicate and bounds corrupt oversized storage', () => {
+  reset();
+  const many = Array.from({ length: 80 }, (_, index) => report(`r-${index}`));
+  local.setItem(KEY, JSON.stringify([
+    report('duplicate', { name: 'newest copy' }),
+    null,
+    42,
+    {},
+    report('bad-date', { savedAt: 'not a date' }),
+    { ...report('bad-location'), location: { lat: null } },
+    report('duplicate', { name: 'stale copy' }),
+    ...many,
+  ]));
+
+  const loaded = loadReports();
+  assert.ok(loaded.length > 0 && loaded.length < many.length, 'persisted report count must be bounded');
+  assert.equal(new Set(loaded.map((row) => row.id)).size, loaded.length);
+  assert.equal(loaded.find((row) => row.id === 'duplicate')?.name, 'newest copy');
+  assert.ok(loaded.every((row) => Number.isFinite(row.location.lat)));
+});
+
+test('a valid save is newest, replaces its own id, and emits exactly one event', () => {
+  reset();
+  local.setItem(KEY, JSON.stringify([report('a'), report('b')]));
+  let changes = 0;
+  const listener = () => { changes += 1; };
+  browser.addEventListener('imbewu-reports-changed', listener);
+
+  const replacement = report('b', { name: 'updated' });
+  const result = saveReport(replacement);
+
+  assert.equal(result.saved, true);
+  assert.deepEqual(result.reports.map((row) => row.id), ['b', 'a']);
+  assert.equal(result.reports[0].name, 'updated');
+  assert.equal(changes, 1);
+  browser.removeEventListener('imbewu-reports-changed', listener);
+});
+
+test('invalid reports cannot overwrite good storage or announce a false save', () => {
+  reset();
+  const good = report('good');
+  local.setItem(KEY, JSON.stringify([good]));
+  let changes = 0;
+  const listener = () => { changes += 1; };
+  browser.addEventListener('imbewu-reports-changed', listener);
+  const before = local.getItem(KEY);
+
+  const result = saveReport({ ...good, id: '', report: '' });
+
+  assert.equal(result.saved, false);
+  assert.deepEqual(result.reports, [good]);
+  assert.equal(local.getItem(KEY), before);
+  assert.equal(changes, 0);
+  browser.removeEventListener('imbewu-reports-changed', listener);
+});
+
+test('a failed write leaves save and delete results at persisted truth', () => {
+  reset();
+  const existing = report('existing');
+  local.setItem(KEY, JSON.stringify([existing]));
+  let changes = 0;
+  const listener = () => { changes += 1; };
+  browser.addEventListener('imbewu-reports-changed', listener);
+  local.throwOnWrite = true;
+
+  assert.deepEqual(saveReport(report('new')), { reports: [existing], saved: false });
+  assert.deepEqual(deleteReport('existing'), [existing]);
+  assert.equal(changes, 0);
+  assert.deepEqual(loadReports(), [existing]);
+
+  local.throwOnWrite = false;
+  browser.removeEventListener('imbewu-reports-changed', listener);
+});
+
+test('delete only announces a real change and missing ids are no-ops', () => {
+  reset();
+  local.setItem(KEY, JSON.stringify([report('a'), report('b')]));
+  let changes = 0;
+  const listener = () => { changes += 1; };
+  browser.addEventListener('imbewu-reports-changed', listener);
+
+  assert.deepEqual(deleteReport('missing').map((row) => row.id), ['a', 'b']);
+  assert.equal(changes, 0);
+  assert.deepEqual(deleteReport('a').map((row) => row.id), ['b']);
+  assert.equal(changes, 1);
+
+  browser.removeEventListener('imbewu-reports-changed', listener);
+});
+
+test('sample mode cannot read, save or delete the real report store', () => {
+  reset();
+  const real = report('real');
+  local.setItem(KEY, JSON.stringify([real]));
+  session.setItem('imbewu_sample_mode', '1');
+  const before = local.getItem(KEY);
+
+  assert.deepEqual(loadReports(), []);
+  assert.deepEqual(saveReport(report('demo')), { reports: [], saved: false });
+  assert.deepEqual(deleteReport('real'), []);
+  assert.equal(local.getItem(KEY), before);
+});
