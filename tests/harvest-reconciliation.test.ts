@@ -248,6 +248,7 @@ test('invalid design dimensions fall back to finite positive bed geometry', () =
     items: [
       { id: 'negative', type: 'bed', x: 0, y: 0, wM: -4, hM: 2, rotation: 0 },
       { id: 'nan', type: 'hugel', x: 0, y: 0, wM: Number.NaN, hM: 2, rotation: 0 },
+      { id: 'overflow', type: 'bed', x: 0, y: 0, wM: Number.MAX_VALUE, hM: Number.MAX_VALUE, rotation: 0 },
     ],
     lines: [],
     sectors: [],
@@ -263,6 +264,63 @@ test('invalid design dimensions fall back to finite positive bed geometry', () =
     assert.ok(Number.isFinite(bed.minDimM));
     assert.ok((bed.minDimM ?? 0) > 0);
   }
+});
+
+test('one persisted log id contributes once even when local and remote copies repeat it', () => {
+  const plantings = [planting('lettuce-a', 'lettuce', 'bed-a')];
+  const harvest = production('same-harvest', 'Lettuce', 7);
+  const sold = sale('same-sale', 'Lettuce', 2);
+  const result = buildReconciliation(
+    plantings,
+    BEDS,
+    [harvest, { ...harvest }, production('different-harvest', 'Lettuce', 3)],
+    [sold, { ...sold }, sale('different-sale', 'Lettuce', 1)],
+    'year',
+    NOW,
+  );
+
+  assert.equal(result.matched[0].harvestedKg, 10);
+  assert.equal(result.matched[0].soldKg, 3);
+});
+
+test('overflowing log totals and malformed crop labels remain finite and visible', () => {
+  const malformed = production('unnamed', 'placeholder', 4);
+  malformed.crop = null as unknown as string;
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [
+      production('huge-one', 'Lettuce', Number.MAX_VALUE),
+      production('huge-two', 'Lettuce', Number.MAX_VALUE),
+      malformed,
+    ],
+    [],
+    'year',
+    NOW,
+  );
+
+  assert.ok(Number.isFinite(result.matched[0].harvestedKg));
+  assert.equal(result.unplannedActivity[0].label, 'Unnamed');
+  assert.equal(result.unplannedActivity[0].harvestedKg, 4);
+  assert.ok(everyNumber(result).every(Number.isFinite));
+});
+
+test('an invalid clock cannot invent intended activity for an arbitrary season', () => {
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [production('harvest', 'Lettuce', 7)],
+    [],
+    'season',
+    new Date(Number.NaN),
+  );
+  assert.deepEqual(monthsForPeriod('season', new Date(Number.NaN)), []);
+  assert.deepEqual(result, {
+    matched: [],
+    notYetHarvested: [],
+    unmatchedPlanned: [],
+    unplannedActivity: [],
+  });
 });
 
 test('crop aliases match exactly, while ambiguous names are never guessed', () => {
