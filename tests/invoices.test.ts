@@ -17,8 +17,12 @@ import {
 
 class MemoryStorage {
   rows = new Map<string, string>();
+  failWrites = false;
   getItem(key: string) { return this.rows.get(key) ?? null; }
-  setItem(key: string, value: string) { this.rows.set(String(key), String(value)); }
+  setItem(key: string, value: string) {
+    if (this.failWrites) throw new Error('quota');
+    this.rows.set(String(key), String(value));
+  }
   removeItem(key: string) { this.rows.delete(key); }
 }
 
@@ -136,7 +140,73 @@ test('paid status records a finite timestamp and unpaid clears payment evidence'
   assert.equal(unpaid.paidAt, undefined);
 });
 
-test('delete is exact and invoice events fire only for real changes', () => {
+test('changing payment method never moves old paid income into the current month', () => {
+  installBrowser();
+  const oldPaidAt = '2025-02-03T04:05:06.000Z';
+  saveInvoice(invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' }));
+
+  const changed = setInvoiceStatus('invoice-1', 'paid', 'eft')[0];
+  assert.equal(changed.paymentMethod, 'eft');
+  assert.equal(changed.paidAt, oldPaidAt);
+});
+
+test('editing a paid invoice preserves payment evidence that the form did not change', () => {
+  installBrowser();
+  const oldPaidAt = '2025-02-03T04:05:06.000Z';
+  saveInvoice(invoice({ status: 'paid', paidAt: oldPaidAt, paymentMethod: 'cash' }));
+  const edited = saveInvoice(invoice({
+    billTo: 'Edited customer',
+    status: 'paid',
+    paidAt: oldPaidAt,
+    paymentMethod: undefined,
+  }));
+
+  assert.equal(edited.length, 1);
+  assert.equal(edited[0].billTo, 'Edited customer');
+  assert.equal(edited[0].paidAt, oldPaidAt);
+  assert.equal(edited[0].paymentMethod, 'cash');
+});
+
+test('unpaid or unverifiable paid records never retain payment evidence', () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_invoices', JSON.stringify([
+    invoice({ id: 'unpaid', status: 'unpaid', paidAt: '2026-01-03T00:00:00Z', paymentMethod: 'cash' }),
+    invoice({ id: 'missing-paid-at', no: 2, status: 'paid', paidAt: undefined, paymentMethod: 'eft' }),
+    invoice({ id: 'invalid-paid-at', no: 3, status: 'paid', paidAt: 'not-a-date', paymentMethod: 'card' }),
+  ]));
+
+  assert.deepEqual(loadInvoices().map(({ id, status, paidAt, paymentMethod }) => ({
+    id, status, paidAt, paymentMethod,
+  })), [
+    { id: 'unpaid', status: 'unpaid', paidAt: undefined, paymentMethod: undefined },
+    { id: 'missing-paid-at', status: 'unpaid', paidAt: undefined, paymentMethod: undefined },
+    { id: 'invalid-paid-at', status: 'unpaid', paidAt: undefined, paymentMethod: undefined },
+  ]);
+});
+
+test('trimmed invoice ids replace one record rather than returning a duplicate', () => {
+  installBrowser();
+  saveInvoice(invoice());
+  const rows = saveInvoice(invoice({ id: ' invoice-1 ', billTo: 'Updated' }));
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].id, 'invoice-1');
+  assert.equal(rows[0].billTo, 'Updated');
+});
+
+test('saving another invoice grows history without silently evicting an older accounting record', () => {
+  installBrowser();
+  let expectedLength = 0;
+  for (let index = 1; index <= 125; index += 1) {
+    const rows = saveInvoice(invoice({ id: `invoice-${index}`, no: index }));
+    expectedLength += 1;
+    assert.equal(rows.length, expectedLength);
+  }
+  const rows = loadInvoices();
+  assert.ok(rows.some((row) => row.id === 'invoice-1'));
+  assert.ok(rows.some((row) => row.id === 'invoice-125'));
+});
+
+test('delete and status events fire only for durable, real changes', () => {
   const { target } = installBrowser();
   let changes = 0;
   target.addEventListener('imbewu-invoices-changed', () => { changes += 1; });
@@ -145,6 +215,24 @@ test('delete is exact and invoice events fire only for real changes', () => {
   assert.equal(changes, 2);
   assert.deepEqual(deleteInvoice('invoice-1').map((row) => row.id), ['invoice-2']);
   assert.equal(changes, 3);
+  assert.deepEqual(deleteInvoice('missing').map((row) => row.id), ['invoice-2']);
+  assert.deepEqual(setInvoiceStatus('missing', 'paid').map((row) => row.id), ['invoice-2']);
+  assert.equal(changes, 3);
+});
+
+test('quota failures return the durable ledger and never emit a false saved event', () => {
+  const { local, target } = installBrowser();
+  saveInvoice(invoice());
+  const durable = loadInvoices();
+  let changes = 0;
+  target.addEventListener('imbewu-invoices-changed', () => { changes += 1; });
+  local.failWrites = true;
+
+  assert.deepEqual(saveInvoice(invoice({ id: 'invoice-2', no: 2 })), durable);
+  assert.deepEqual(deleteInvoice('invoice-1'), durable);
+  assert.equal(setInvoiceStatus('invoice-1', 'paid')[0].status, 'unpaid');
+  assert.equal(changes, 0);
+  assert.deepEqual(loadInvoices(), durable);
 });
 
 test('payment labels are total and generated ids remain non-empty and distinct', () => {
@@ -152,6 +240,7 @@ test('payment labels are total and generated ids remain non-empty and distinct',
     assert.ok(paymentMethodLabel(method));
   }
   assert.equal(paymentMethodLabel('bogus' as never), 'Other');
+  assert.equal(paymentMethodLabel('__proto__' as never), 'Other');
   const ids = new Set(Array.from({ length: 20 }, () => invoiceId()));
   assert.equal(ids.size, 20);
   assert.ok([...ids].every((id) => id.length > 5));
