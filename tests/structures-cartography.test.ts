@@ -100,6 +100,17 @@ test('visual treatments use the real catalog IDs and preserve literal feature id
   assert.equal(structuresFeatureVisualFor('greenhouse_tunnel'), null);
 });
 
+test('legacy structure IDs reach the same legend and visual lookup as current IDs', () => {
+  assert.equal(structuresLegendSectionForFeature('  SHADE---HOUSE  '), 'PROTECTED GROWING');
+  assert.equal(structuresFeatureSymbolFor('CHICKEN TRACTOR'), 'chicken-tractor');
+  assert.deepEqual(
+    structuresFeatureVisualFor('nursery---table'),
+    structuresFeatureVisualFor('nursery_table'),
+  );
+  assert.equal(structuresFeaturePresentationScale('TAP POINT'), 1.35);
+  assert.deepEqual(structuresRouteVisualFor('  PATH  '), { dash: [12, 8], width: 3.2 });
+});
+
 test('presentation emphasis is deterministic and does not rewrite geometry', () => {
   assert.equal(structuresFeaturePresentationScale('beehive'), 1.45);
   assert.equal(structuresFeaturePresentationScale('tap_point'), 1.35);

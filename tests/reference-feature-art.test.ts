@@ -45,6 +45,12 @@ test('artwork mapping never invents a visual identity for generic or unrelated f
   assert.equal(referenceFeatureArtworkFor('made_up_feature'), null);
 });
 
+test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
+  assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-tank-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree mango'), 'orchard-canopy-v1.png');
+  assert.equal(referenceFeatureArtworkFor('GREYWATER---BASIN'), 'greywater-basin-v1.png');
+});
+
 test('artwork URLs are stable public paths', () => {
   assert.equal(
     referenceFeatureArtworkUrl('tree_avocado'),

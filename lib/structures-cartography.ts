@@ -6,6 +6,8 @@
  * a finished sheet so small, real features remain legible at print size.
  */
 
+import { normaliseLookupKey } from '@/lib/key-normalisation';
+
 export type StructuresLegendSection =
   | 'SITE ACCESS & SERVICE'
   | 'COMPOST & NURSERY'
@@ -83,10 +85,11 @@ const SITE_ACCESS_AND_SERVICE_FEATURES = new Set([
  * sheets.
  */
 export function structuresLegendSectionForFeature(id: string): StructuresLegendSection | null {
-  if (PROTECTED_GROWING_FEATURES.has(id)) return 'PROTECTED GROWING';
-  if (COMPOST_AND_NURSERY_FEATURES.has(id)) return 'COMPOST & NURSERY';
-  if (LIVESTOCK_AND_APIARY_FEATURES.has(id)) return 'LIVESTOCK & APIARY';
-  if (SITE_ACCESS_AND_SERVICE_FEATURES.has(id)) return 'SITE ACCESS & SERVICE';
+  const key = normaliseLookupKey(id, '_');
+  if (PROTECTED_GROWING_FEATURES.has(key)) return 'PROTECTED GROWING';
+  if (COMPOST_AND_NURSERY_FEATURES.has(key)) return 'COMPOST & NURSERY';
+  if (LIVESTOCK_AND_APIARY_FEATURES.has(key)) return 'LIVESTOCK & APIARY';
+  if (SITE_ACCESS_AND_SERVICE_FEATURES.has(key)) return 'SITE ACCESS & SERVICE';
   return null;
 }
 
@@ -139,7 +142,7 @@ const FEATURE_VISUALS: Readonly<Record<string, StructuresFeatureVisual>> = {
 
 /** Returns the bounded visual treatment for a canonical catalog ID, or null for unknown IDs. */
 export function structuresFeatureVisualFor(id: string): StructuresFeatureVisual | null {
-  const visual = FEATURE_VISUALS[id];
+  const visual = FEATURE_VISUALS[normaliseLookupKey(id, '_')];
   return visual ? { ...visual } : null;
 }
 
@@ -148,7 +151,7 @@ export function structuresFeatureVisualFor(id: string): StructuresFeatureVisual 
  * centre, footprint, and rotation unchanged; this value is for presentation only.
  */
 export function structuresFeaturePresentationScale(id: string): number {
-  return FEATURE_VISUALS[id]?.presentationScale ?? 1;
+  return FEATURE_VISUALS[normaliseLookupKey(id, '_')]?.presentationScale ?? 1;
 }
 
 export interface StructuresPresentationDimensions {
@@ -167,6 +170,7 @@ export function structuresFeaturePresentationDimensions(
   naturalHeight: number,
   canvasWidth: number,
 ): StructuresPresentationDimensions {
+  const key = normaliseLookupKey(id, '_');
   if (
     !Number.isFinite(naturalWidth)
     || naturalWidth <= 0
@@ -175,7 +179,7 @@ export function structuresFeaturePresentationDimensions(
   ) {
     return { width: 0, height: 0, scale: 1 };
   }
-  if (!FEATURE_VISUALS[id] || !Number.isFinite(canvasWidth) || canvasWidth <= 0) {
+  if (!FEATURE_VISUALS[key] || !Number.isFinite(canvasWidth) || canvasWidth <= 0) {
     return { width: naturalWidth, height: naturalHeight, scale: 1 };
   }
   const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
@@ -183,7 +187,7 @@ export function structuresFeaturePresentationDimensions(
   const minimumShortSide = Math.max(22, canvasWidth * 0.0135);
   const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.05);
   const requestedScale = Math.max(
-    structuresFeaturePresentationScale(id),
+    structuresFeaturePresentationScale(key),
     minimumShortSide / shortSide,
   );
   const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
@@ -207,11 +211,12 @@ export interface StructuresRouteVisual {
 
 /** Paths read as walking routes, while post-and-wire fences remain solid. */
 export function structuresRouteVisualFor(kind: string): StructuresRouteVisual | null {
-  if (kind === 'path') return { dash: [12, 8], width: 3.2 };
-  if (kind === 'fence') return { dash: [], width: 3.5 };
+  const key = normaliseLookupKey(kind, '_');
+  if (key === 'path') return { dash: [12, 8], width: 3.2 };
+  if (key === 'fence') return { dash: [], width: 3.5 };
   return null;
 }
 
 export function structuresFeatureSymbolFor(id: string): StructuresFeatureSymbol | null {
-  return FEATURE_VISUALS[id]?.symbol ?? null;
+  return FEATURE_VISUALS[normaliseLookupKey(id, '_')]?.symbol ?? null;
 }

@@ -1,3 +1,5 @@
+import { normaliseLookupKey } from '@/lib/key-normalisation';
+
 export const REFERENCE_FEATURE_ART_ROOT = '/render-assets/reference-blueprint';
 
 export type ReferenceFeatureArtwork =
@@ -84,15 +86,16 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
  * unknown/custom item stays on the deterministic fallback instead of being visually invented.
  */
 export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwork | null {
-  if (JOJO_TANKS.has(defId)) return 'jojo-tank-v1.png';
-  if (defId === 'banana_circle') return 'banana-basin-v1.png';
-  if (ORCHARD_TREES.has(defId)) return 'orchard-canopy-v1.png';
-  if (PRODUCTION_BEDS.has(defId)) return 'production-bed-v1.png';
-  if (defId === 'pollinator_strip') return 'pollinator-strip-v1.png';
-  if (VETIVER_BANKS.has(defId)) return 'vetiver-bank-v1.png';
-  if (STRUCTURE_ART[defId]) return STRUCTURE_ART[defId];
-  if (WATER_HARDWARE_ART[defId]) return WATER_HARDWARE_ART[defId];
-  if (PLANTING_DETAIL_ART[defId]) return PLANTING_DETAIL_ART[defId];
+  const key = normaliseLookupKey(defId, '_');
+  if (JOJO_TANKS.has(key)) return 'jojo-tank-v1.png';
+  if (key === 'banana_circle') return 'banana-basin-v1.png';
+  if (ORCHARD_TREES.has(key)) return 'orchard-canopy-v1.png';
+  if (PRODUCTION_BEDS.has(key)) return 'production-bed-v1.png';
+  if (key === 'pollinator_strip') return 'pollinator-strip-v1.png';
+  if (VETIVER_BANKS.has(key)) return 'vetiver-bank-v1.png';
+  if (STRUCTURE_ART[key]) return STRUCTURE_ART[key];
+  if (WATER_HARDWARE_ART[key]) return WATER_HARDWARE_ART[key];
+  if (PLANTING_DETAIL_ART[key]) return PLANTING_DETAIL_ART[key];
   return null;
 }
 
