@@ -477,6 +477,35 @@ changes.
 
 ---
 
+## 26. Prove the hybrid composite lands where it should — `codex/hybrid-composite-registration`
+
+**Rory's north star includes "with the hybrid working too". This is the part of it that can be
+proven for free.**
+
+`lib/locked-polish-flow.ts` defines the three modes and `tests/sheet-render-route.test.ts` already
+covers the 24 sheet x mode combinations, so ROUTING is proven. What is not proven is REGISTRATION:
+that the exact overlay burned on top of the AI artwork lands on the same ground the AI painted. A
+hybrid whose overlay is offset is the worst failure this app has — the farmer gets a beautiful,
+confident, wrong plan, and nothing in the pipeline complains.
+
+You do not need a paid render to test this. Feed the compositor a SYNTHETIC "AI" image of the known
+frame — a solid field with a marker at an exact known lat/lon, or a checkerboard whose squares map
+to known ground coordinates — then composite the exact overlay and assert the overlay's boundary
+corners land on the expected pixels, within a tolerance you state and justify. That is the same
+trick `tests/basemap-imagery.test.ts` uses to prove the Esri stitch covers the same ground as the
+Mapbox still it replaces: assert the GROUND EXTENT, not the pretty picture.
+
+Cover at least: the masterplan and one layer sheet, both `hybrid` and `full`, and the case where the
+AI returns an image of a DIFFERENT aspect ratio to the one requested — that last one is where a
+silent letterbox or crop would shift everything, and it is the most likely real cause.
+
+`lib/render-difference.ts` already measures whether a paid stage changed anything; this is the
+companion question of whether it changed it in the right PLACE.
+
+**Do not touch PLAN_VERSION.** Say in your report whether the picture changes.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
