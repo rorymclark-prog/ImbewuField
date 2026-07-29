@@ -6,6 +6,10 @@ import {
   INDIGENOUS_EDIBLES,
   LIMA_TIPS,
   QUICK_NUMBERS,
+  evidenceStorageKeyBelongsToGroup,
+  isEvidenceGroupKey,
+  isEvidenceStorageKey,
+  isQuickNumberField,
 } from '../lib/evidence-catalogue.ts';
 import {
   getGroupCount,
@@ -90,8 +94,12 @@ test('group counts require the exact catalogue namespace, not a lookalike prefix
   installStorage({
     site: {
       items: {
-        water_tanks: [{ id: 'one', type: 'photo', takenAt: 1 }],
-        waterfall_photo: [{ id: 'wrong', type: 'photo', takenAt: 2 }],
+        water_rain_tanks: [
+          { id: 'one', type: 'photo', dataUrl: 'data:image/jpeg;base64,a', takenAt: 1 },
+        ],
+        water_invented: [
+          { id: 'wrong', type: 'photo', dataUrl: 'data:image/jpeg;base64,b', takenAt: 2 },
+        ],
       },
       quickNumbers: {},
     },
@@ -102,7 +110,74 @@ test('group counts require the exact catalogue namespace, not a lookalike prefix
   installStorage({
     site: {
       items: {
-        waterfall_photo: [{ id: 'wrong', type: 'photo', takenAt: 2 }],
+        water_invented: [
+          { id: 'wrong', type: 'photo', dataUrl: 'data:image/jpeg;base64,b', takenAt: 2 },
+        ],
+      },
+      quickNumbers: {},
+    },
+  });
+  assert.equal(getGroupCount('site', 'water'), 0);
+  assert.equal(getReportCompleteness('site'), 0);
+});
+
+test('catalogue namespace helpers accept only keys the evidence UI can produce', () => {
+  for (const group of EVIDENCE_CATALOGUE) {
+    assert.equal(isEvidenceGroupKey(group.key), true);
+    assert.equal(isEvidenceStorageKey(`${group.key}_site_photos`), true);
+    assert.equal(
+      evidenceStorageKeyBelongsToGroup(`${group.key}_site_photos`, group.key),
+      true,
+    );
+    for (const item of group.items) {
+      const storageKey = `${group.key}_${item.key}`;
+      assert.equal(isEvidenceStorageKey(storageKey), true);
+      assert.equal(evidenceStorageKeyBelongsToGroup(storageKey, group.key), true);
+      assert.ok(
+        EVIDENCE_CATALOGUE
+          .filter((candidate) => candidate.key !== group.key)
+          .every((candidate) => !evidenceStorageKeyBelongsToGroup(storageKey, candidate.key)),
+      );
+    }
+  }
+  assert.equal(isEvidenceGroupKey('waterfall'), false);
+  assert.equal(isEvidenceStorageKey('water_invented'), false);
+  assert.equal(evidenceStorageKeyBelongsToGroup('water_invented', 'water'), false);
+});
+
+test('only configured non-blank quick numbers can complete a report group', () => {
+  installStorage({
+    site: {
+      items: {},
+      quickNumbers: {
+        water: {
+          invented_measurement: '2500',
+          tank_capacity: '   ',
+        },
+      },
+    },
+  });
+  assert.equal(getReportCompleteness('site'), 0);
+  assert.equal(isQuickNumberField('water', 'tank_capacity'), true);
+  assert.equal(isQuickNumberField('water', 'invented_measurement'), false);
+
+  installStorage({
+    site: {
+      items: {},
+      quickNumbers: { water: { tank_capacity: '2500' } },
+    },
+  });
+  assert.ok(getReportCompleteness('site') > 0);
+});
+
+test('empty evidence records never count as report proof', () => {
+  installStorage({
+    site: {
+      items: {
+        water_rain_tanks: [
+          { id: 'empty-photo', type: 'photo', takenAt: 1 },
+          { id: 'empty-note', type: 'note', note: '', takenAt: 2 },
+        ],
       },
       quickNumbers: {},
     },
@@ -114,7 +189,12 @@ test('group counts require the exact catalogue namespace, not a lookalike prefix
 test('each catalogue group can contribute evidence completeness exactly once', () => {
   const items = Object.fromEntries(EVIDENCE_CATALOGUE.map((group, index) => [
     `${group.key}_${group.items[0].key}`,
-    [{ id: String(index), type: 'photo', takenAt: index }],
+    [{
+      id: String(index),
+      type: 'photo',
+      dataUrl: `data:image/jpeg;base64,${index}`,
+      takenAt: index,
+    }],
   ]));
   installStorage({ site: { items, quickNumbers: {} } });
   assert.equal(getReportCompleteness('site'), 100);

@@ -13,14 +13,19 @@ import {
   loadCropBoardTasks,
   resolveTaskDate,
   saveCompletedTaskIds,
+  setCompletedTaskState,
   taskBoardBeds,
   type BoardTask,
 } from '../lib/task-board.ts';
 
 class MemoryStorage {
   private rows = new Map<string, string>();
+  failWrites = false;
   getItem(key: string) { return this.rows.get(key) ?? null; }
-  setItem(key: string, value: string) { this.rows.set(String(key), String(value)); }
+  setItem(key: string, value: string) {
+    if (this.failWrites) throw new Error('quota');
+    this.rows.set(String(key), String(value));
+  }
   removeItem(key: string) { this.rows.delete(key); }
   clear() { this.rows.clear(); }
   key(index: number) { return [...this.rows.keys()][index] ?? null; }
@@ -265,9 +270,36 @@ test('invalid calendar arithmetic degrades to a finite current-month event', () 
 
 test('completed task storage deduplicates and rejects malformed ids', () => {
   const { local } = installBrowser();
-  local.setItem('imbewu_completed_tasks_v1', JSON.stringify(['a', 'a', '', 4, null]));
+  local.setItem('imbewu_completed_tasks_v1', JSON.stringify([' a ', 'a', '', 4, null]));
   assert.deepEqual([...loadCompletedTaskIds()], ['a']);
 
-  saveCompletedTaskIds(new Set(['a', '', '  ', 'b']));
+  assert.equal(saveCompletedTaskIds(new Set(['a', '', '  ', 'b'])), true);
   assert.deepEqual([...loadCompletedTaskIds()], ['a', 'b']);
+});
+
+test('toggling one visible task preserves completions owned by hidden producers', () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_completed_tasks_v1', JSON.stringify([
+    'survey:site-one',
+    'old-planting:harvest',
+  ]));
+
+  const completed = setCompletedTaskState('visible-planting:sow', true);
+  assert.deepEqual([...completed], [
+    'survey:site-one',
+    'old-planting:harvest',
+    'visible-planting:sow',
+  ]);
+  const unchecked = setCompletedTaskState('visible-planting:sow', false);
+  assert.deepEqual([...unchecked], ['survey:site-one', 'old-planting:harvest']);
+});
+
+test('a failed completion write returns durable state so the board cannot show a false tick', () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_completed_tasks_v1', JSON.stringify(['existing:task']));
+  local.failWrites = true;
+
+  assert.deepEqual([...setCompletedTaskState('new:task', true)], ['existing:task']);
+  assert.equal(saveCompletedTaskIds(new Set(['replacement:task'])), false);
+  assert.deepEqual([...loadCompletedTaskIds()], ['existing:task']);
 });

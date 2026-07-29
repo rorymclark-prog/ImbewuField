@@ -125,9 +125,20 @@ test('invalid transforms never manufacture non-finite persisted coordinates', ()
 });
 
 test('storage normalisation keeps valid geometry and quarantines corrupt BOQ inputs', () => {
-  const validItem: FacItem = { id: 'tank', type: 'tank', x: 10, y: 20, wM: 2, hM: 2, rotation: 0 };
+  const validItem: FacItem = {
+    id: 'tank',
+    type: 'tank',
+    x: 10,
+    y: 20,
+    wM: 2,
+    hM: 2,
+    rotation: 0,
+    litres: Number.POSITIVE_INFINITY,
+    count: Number.NaN,
+  };
   const source = {
     version: 1,
+    geomVersion: 99,
     items: [
       validItem,
       { ...validItem, id: 'free-area', wM: 0 },
@@ -143,6 +154,9 @@ test('storage normalisation keeps valid geometry and quarantines corrupt BOQ inp
     activeLayer: 'not-a-layer',
     hiddenLayers: ['water', 'water', 'not-a-layer'],
     bgRect: { x: 0, y: 0, w: Number.POSITIVE_INFINITY, h: 10 },
+    bgOpacity: 2,
+    bgSite: { lat: 91, lon: 20, name: 'Outside the globe' },
+    dismissedMapshapeIds: ['', 'mapshape-one', 'mapshape-one', 4],
     savedAt: Number.NaN,
   };
 
@@ -155,10 +169,73 @@ test('storage normalisation keeps valid geometry and quarantines corrupt BOQ inp
   assert.equal(normalised.activeLayer, 'base');
   assert.deepEqual(normalised.hiddenLayers, ['water']);
   assert.equal(normalised.bgRect, undefined);
+  assert.equal(normalised.bgOpacity, undefined);
+  assert.equal(normalised.bgSite, undefined);
+  assert.equal(normalised.geomVersion, undefined);
+  assert.equal(normalised.items[0].litres, undefined);
+  assert.equal(normalised.items[0].count, undefined);
+  assert.deepEqual(normalised.dismissedMapshapeIds, ['mapshape-one']);
   assert.equal(normalised.savedAt, 0);
   assert.doesNotMatch(JSON.stringify(normalised), /NaN|Infinity/);
   assert.equal(source.items.length, 3);
   assert.equal(source.lines.length, 3);
+});
+
+test('feature ids form one non-empty namespace across items, lines and sectors', () => {
+  const state = normaliseFacilitatorState({
+    version: 1,
+    items: [
+      { id: 'shared', type: 'tank', x: 1, y: 2, wM: 2, hM: 2, rotation: 0 },
+      { id: 'shared', type: 'bed', x: 3, y: 4, wM: 2, hM: 4, rotation: 0 },
+      { id: '  ', type: 'tree', x: 3, y: 4, wM: 2, hM: 2, rotation: 0 },
+    ],
+    lines: [
+      { id: 'shared', kind: 'path', points: [0, 0, 10, 10] },
+      { id: 'line', kind: 'path', points: [0, 0, 10, 10] },
+      { id: '', kind: 'path', points: [0, 0, 10, 10] },
+    ],
+    sectors: [
+      { id: 'line', kind: 'wind', x: 1, y: 2, rotation: 0, radiusM: 10, spanDeg: 45 },
+      { id: 'sector', kind: 'wind', x: 1, y: 2, rotation: 0, radiusM: 10, spanDeg: 45 },
+    ],
+    pxPerM: 5,
+    activeLayer: 'base',
+    hiddenLayers: [],
+    savedAt: 1,
+  });
+
+  assert.ok(state);
+  const ids = [
+    ...state.items.map((item) => item.id),
+    ...state.lines.map((line) => line.id),
+    ...state.sectors.map((sector) => sector.id),
+  ];
+  assert.deepEqual(ids, ['shared', 'line', 'sector']);
+  assert.equal(new Set(ids).size, ids.length);
+});
+
+test('metre-only v2 geometry survives while unusable lines are quarantined', () => {
+  const state = normaliseFacilitatorState({
+    version: 1,
+    geomVersion: 2,
+    items: [],
+    lines: [
+      { id: 'metre-path', kind: 'path', points: [], pointsM: [2, 3, 8, 9] },
+      { id: 'metre-patio', kind: 'patio', points: [], pointsM: [0, 0, 5, 0, 5, 5] },
+      { id: 'one-point', kind: 'path', points: [1, 2] },
+      { id: 'two-corner-patio', kind: 'patio', points: [0, 0, 4, 4] },
+    ],
+    sectors: [],
+    pxPerM: 5,
+    activeLayer: 'base',
+    hiddenLayers: [],
+    savedAt: 1,
+  });
+
+  assert.ok(state);
+  assert.deepEqual(state.lines.map((line) => line.id), ['metre-path', 'metre-patio']);
+  assert.deepEqual(state.lines[0].points, []);
+  assert.deepEqual(state.lines[0].pointsM, [2, 3, 8, 9]);
 });
 
 test('coach guidance never prints invalid arithmetic', () => {
@@ -190,6 +267,14 @@ test('well-formed storage state survives normalisation as a detached copy', () =
     pxPerM: 5,
     activeLayer: 'planting',
     hiddenLayers: ['water'],
+    washOn: true,
+    designId: 'design-one',
+    title: 'Farm plan',
+    bgSite: { lat: -29.86, lon: 31.02, name: 'Durban' },
+    bgDataUrl: 'data:image/jpeg;base64,a',
+    bgRect: { x: 1, y: 2, w: 300, h: 200 },
+    bgOpacity: 0.75,
+    dismissedMapshapeIds: ['mapshape-one'],
     savedAt: 123,
   };
   const normalised = normaliseFacilitatorState(state);

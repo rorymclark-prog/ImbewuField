@@ -38,7 +38,7 @@ import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import type { CompletionStepKey } from '@/lib/completion-score';
 import WeatherWidget from '@/components/WeatherWidget';
@@ -297,11 +297,14 @@ function HomeLandingInner() {
   const mainSite = resolveMainSite(places ?? []);
 
   function toggleTaskComplete(id: string) {
-    setBoardTasks((prev) => {
-      const next = prev.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task));
-      saveCompletedTaskIds(new Set(next.filter((task) => task.completed).map((task) => task.id)));
-      return next;
-    });
+    if (!boardTasks.some((task) => task.id === id)) return;
+    const durableBefore = loadCompletedTaskIds();
+    const durableAfter = setCompletedTaskState(id, !durableBefore.has(id));
+    // Keep React's updater pure: Strict Mode may invoke it more than once, but the storage write
+    // above must happen exactly once. Paint the state that actually survived localStorage.
+    setBoardTasks((prev) => prev.map((task) => (
+      task.id === id ? { ...task, completed: durableAfter.has(task.id) } : task
+    )));
   }
 
   const ROLES = [

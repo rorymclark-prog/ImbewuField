@@ -127,6 +127,43 @@ export const QUICK_NUMBERS: Record<string, { key: string; label: string; unit: s
   ],
 };
 
+const evidenceGroupsByKey = new Map(EVIDENCE_CATALOGUE.map((group) => [group.key, group]));
+const evidenceStorageKeys = new Set(EVIDENCE_CATALOGUE.flatMap((group) => [
+  `${group.key}_site_photos`,
+  ...group.items.map((item) => `${group.key}_${item.key}`),
+]));
+const quickNumberFields = new Map(Object.entries(QUICK_NUMBERS).map(([groupKey, fields]) => [
+  groupKey,
+  new Set(fields.map((field) => field.key)),
+]));
+
+/** True only for one of the catalogue's report sections. */
+export function isEvidenceGroupKey(value: string): boolean {
+  return evidenceGroupsByKey.has(value);
+}
+
+/**
+ * True only for a storage key produced by an evidence tile or a group's
+ * general site-photos sheet.
+ */
+export function isEvidenceStorageKey(value: string): boolean {
+  return evidenceStorageKeys.has(value);
+}
+
+/** Match a storage key to a group without relying on a shared string prefix. */
+export function evidenceStorageKeyBelongsToGroup(storageKey: string, groupKey: string): boolean {
+  if (!isEvidenceGroupKey(groupKey) || !isEvidenceStorageKey(storageKey)) return false;
+  return storageKey === `${groupKey}_site_photos`
+    || evidenceGroupsByKey.get(groupKey)!.items.some(
+      (item) => storageKey === `${groupKey}_${item.key}`,
+    );
+}
+
+/** True only for a quick-number field shown for the specified catalogue group. */
+export function isQuickNumberField(groupKey: string, fieldKey: string): boolean {
+  return quickNumberFields.get(groupKey)?.has(fieldKey) ?? false;
+}
+
 // Lima coaching tips per evidence group
 export const LIMA_TIPS: Record<string, string> = {
   water: '"Keep a clear photo of the municipal bill, then enter its litres in the quick numbers so the report can use the measured amount."',

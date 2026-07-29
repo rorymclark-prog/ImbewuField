@@ -90,7 +90,7 @@ function clampPct(n: number): number {
 // wrote it. Treating Infinity or a fractional count as progress lets one corrupt
 // record turn an untouched step into "done".
 function safeCount(n: number): number {
-  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+  return Number.isSafeInteger(n) && n > 0 ? n : 0;
 }
 
 /**

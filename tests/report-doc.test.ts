@@ -194,6 +194,63 @@ test('area and roof harvest obey their dimensional rules and shared coefficient 
   assert.doesNotMatch(source, /roof\.areaM2\s*\*\s*rainMm\s*\*\s*0\.\d+/);
 });
 
+test('site size is claimed only from approved property boundaries', () => {
+  const doc = build({
+    layers: [
+      layer('roof', 'roof', 100),
+      layer('garden', 'cultivation', 250),
+      layer('trees', 'tree_belt', 500),
+    ],
+  });
+
+  assert.equal(doc.sections['existing-site']?.sizeHa, undefined);
+  assert.doesNotMatch(doc.sections.executive?.farmOverview ?? '', /\bha site\b/);
+  assert.ok(
+    doc.layerSnapshot.some((snapshot) => snapshot.areaM2 > 0),
+    'feature areas remain available without masquerading as farm area',
+  );
+});
+
+test('all approved roofs and gardens contribute to their derived report facts', () => {
+  const firstRoof = layer('roof-one', 'roof', 40);
+  const secondRoof = layer('roof-two', 'roof', 60);
+  const firstGarden = layer('garden-one', 'cultivation', 80);
+  const secondGarden = layer('garden-two', 'cultivation', 120);
+  const ignoredRoof = { ...layer('unapproved-roof', 'roof', 900), approved: false };
+  const doc = build({
+    layers: [
+      layer('boundary', 'property_boundary', 10_000),
+      firstRoof,
+      secondRoof,
+      firstGarden,
+      secondGarden,
+      ignoredRoof,
+    ],
+  });
+
+  const harvest = roofHarvestLitres(
+    firstRoof.areaM2 + secondRoof.areaM2,
+    doc.location.rainfall.annual,
+    WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
+  );
+  assert.ok(doc.sections.water?.harvestingOpportunities.includes(
+    `Roof catchment ~${Math.round(harvest / 1_000).toLocaleString()} kL/yr to tanks.`,
+  ));
+  assert.ok(doc.sections.executive?.topOpportunities.some(
+    (text) => text.includes(`${firstGarden.areaM2 + secondGarden.areaM2} m² vegetable garden`),
+  ));
+
+  const steps = doc.sections.implementation?.flatMap((phase) => phase.steps) ?? [];
+  assert.deepEqual(
+    steps.find((step) => step.task.includes('roof gutters'))?.layerIds,
+    [firstRoof.id, secondRoof.id],
+  );
+  assert.deepEqual(
+    steps.find((step) => step.task.includes('kitchen-garden beds'))?.layerIds,
+    [firstGarden.id, secondGarden.id],
+  );
+});
+
 test('invalid and impossible numeric inputs never leak NaN or Infinity into report output', () => {
   const invalidLocation = location({
     lat: Number.NaN,
@@ -233,6 +290,14 @@ test('invalid and impossible numeric inputs never leak NaN or Infinity into repo
   assertFiniteNumbers(doc.sections);
   assertFiniteNumbers(doc.layerSnapshot);
   assertNoInvalidText({ name: doc.name, sections: doc.sections });
+});
+
+test('an impossible latitude never invents a hemisphere or sun-facing side', () => {
+  for (const lat of [-91, 91, Number.NaN, Number.POSITIVE_INFINITY]) {
+    const doc = build({ location: location({ lat }) });
+    assert.match(doc.sections.sector?.sun ?? '', /Hemisphere unavailable/);
+    assert.doesNotMatch(doc.sections.sector?.sun ?? '', /Northern|Southern/);
+  }
 });
 
 test('building a report never mutates saved layer or location data', () => {

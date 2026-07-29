@@ -73,20 +73,24 @@ export function boundaryPointCountNearCoords(c: Coords): number {
   for (const f of fc?.features ?? []) {
     if (f.properties?.featureType === 'water') continue;
     if (f.geometry?.type !== 'Polygon' && f.geometry?.type !== 'MultiPolygon') continue;
-    const ring = f.geometry.type === 'Polygon'
-      ? f.geometry.coordinates[0]
-      : f.geometry.coordinates[0]?.[0];
-    const pt = ring?.[0];
-    const near = Array.isArray(pt)
-      && Number.isFinite(pt[0]) && Number.isFinite(pt[1])
-      && Math.abs(pt[0] - c.lon) < 0.02
-      && Math.abs(pt[1] - c.lat) < 0.02;
-    if (!near || !ring) continue;
-    const points = ring.filter((point) =>
-      Array.isArray(point) && point.length >= 2
-      && Number.isFinite(point[0]) && Number.isFinite(point[1]));
-    const unique = new Set(points.map((point) => `${point[0]},${point[1]}`)).size;
-    if (unique >= 3) best = Math.max(best, unique);
+    const rings = f.geometry.type === 'Polygon'
+      ? [f.geometry.coordinates[0]]
+      : f.geometry.coordinates.map((polygon) => polygon?.[0]);
+    // A MultiPolygon represents several outer parcels. Looking only at its first parcel lets a
+    // distant parcel hide the one at this site, so inspect every outer ring independently.
+    for (const ring of rings) {
+      const pt = ring?.[0];
+      const near = Array.isArray(pt)
+        && Number.isFinite(pt[0]) && Number.isFinite(pt[1])
+        && Math.abs(pt[0] - c.lon) < 0.02
+        && Math.abs(pt[1] - c.lat) < 0.02;
+      if (!near || !ring) continue;
+      const points = ring.filter((point) =>
+        Array.isArray(point) && point.length >= 2
+        && Number.isFinite(point[0]) && Number.isFinite(point[1]));
+      const unique = new Set(points.map((point) => `${point[0]},${point[1]}`)).size;
+      if (unique >= 3) best = Math.max(best, unique);
+    }
   }
   return best;
 }
@@ -229,7 +233,9 @@ function normaliseGuidedState(value: unknown): GuidedModeState {
   return {
     enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : GUIDED_DEFAULT.enabled,
     dismissals,
-    retired: typeof parsed.retired === 'boolean' ? parsed.retired : false,
+    // Retirement is a consequence of the threshold, not an independent flag that corrupt or old
+    // storage may contradict. Settings resets both fields together when guidance is re-enabled.
+    retired: parsed.retired === true || dismissals >= DISMISS_RETIRE_AT,
   };
 }
 

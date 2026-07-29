@@ -133,17 +133,17 @@ test('quota failure reports false and preserves persisted truth', () => {
 
 test('remove and quick-number summaries reflect only persisted changes', () => {
   reset();
-  assert.equal(evidence.setQuickNumber('site', 'water', 'capacity', '2500'), true);
+  assert.equal(evidence.setQuickNumber('site', 'water', 'tank_capacity', '2500'), true);
   assert.equal(evidence.getReportCompleteness('site') > 0, true);
-  assert.deepEqual(evidence.getQuickNumbers('site', 'water'), { capacity: '2500' });
+  assert.deepEqual(evidence.getQuickNumbers('site', 'water'), { tank_capacity: '2500' });
 
-  assert.equal(evidence.addEvidenceItem('site', 'water_tank', {
+  assert.equal(evidence.addEvidenceItem('site', 'water_rain_tanks', {
     type: 'note',
     note: 'tank checked',
   }), true);
-  const [item] = evidence.getEvidenceItems('site', 'water_tank');
-  assert.equal(evidence.removeEvidenceItem('site', 'water_tank', 'missing'), false);
-  assert.equal(evidence.removeEvidenceItem('site', 'water_tank', item.id), true);
+  const [item] = evidence.getEvidenceItems('site', 'water_rain_tanks');
+  assert.equal(evidence.removeEvidenceItem('site', 'water_rain_tanks', 'missing'), false);
+  assert.equal(evidence.removeEvidenceItem('site', 'water_rain_tanks', item.id), true);
   assert.equal(evidence.getGroupCount('site', 'water'), 0);
   assert.equal(evidence.getReportCompleteness('site') > 0, true, 'quick number still covers water');
 });

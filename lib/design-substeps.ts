@@ -9,6 +9,7 @@
 // lib/design-lessons.ts / DesignWizard.tsx for the same convention).
 
 import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 // What tapping "Do this" arms in the palette. `null` = nothing to arm (e.g. a check-only task
@@ -41,17 +42,31 @@ export interface SubStep {
 function hasItem(s: DesignCanvasState, ids: string[]): boolean {
   const set = new Set(ids);
   return s.items.some((it) =>
-    set.has(it.defId) && Number.isFinite(it.x) && Number.isFinite(it.y));
+    set.has(it.defId)
+    && Number.isFinite(it.x) && it.x >= 0 && it.x <= 1
+    && Number.isFinite(it.y) && it.y >= 0 && it.y <= 1);
 }
 function hasItemCategory(s: DesignCanvasState, category: string): boolean {
   return s.items.some((it) =>
     ELEMENTS_BY_ID[it.defId]?.category === category
-    && Number.isFinite(it.x)
-    && Number.isFinite(it.y));
+    && Number.isFinite(it.x) && it.x >= 0 && it.x <= 1
+    && Number.isFinite(it.y) && it.y >= 0 && it.y <= 1);
 }
-function hasFinitePoints(points: Array<[number, number]>, minimum: number): boolean {
-  return points.length >= minimum
-    && points.every(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
+function hasFinitePoints(points: unknown, minimum: number): boolean {
+  if (!Array.isArray(points) || points.length < minimum) return false;
+  const unique = new Set<string>();
+  for (const point of points) {
+    if (!Array.isArray(point) || point.length !== 2) return false;
+    const [x, y] = point;
+    if (
+      typeof x !== 'number' || !Number.isFinite(x) || x < 0 || x > 1
+      || typeof y !== 'number' || !Number.isFinite(y) || y < 0 || y > 1
+    ) return false;
+    unique.add(`${x},${y}`);
+  }
+  // A repeated tap is not another vertex. Closed rings may repeat their first point, so count
+  // unique coordinates rather than requiring every stored array entry to differ.
+  return unique.size >= minimum;
 }
 function hasLine(s: DesignCanvasState, kinds: LineShape['kind'][]): boolean {
   const set = new Set(kinds);
@@ -79,7 +94,6 @@ const TREE_IDS = [
   'banana_clump', 'tree_indigenous', 'tree_other', 'banana_circle',
   'tree_apple', 'tree_pear', 'tree_plum', 'tree_peach', 'tree_fig', 'tree_pomegranate', 'tree_olive',
 ];
-const BED_IDS = ['veg_bed', 'raised_bed', 'keyhole_bed', 'herb_spiral'];
 
 // ── the catalog ─────────────────────────────────────────────────────────────────
 export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, SubStep[]> = {
@@ -246,7 +260,7 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
       instruction: 'Drop beds in full sun, within easy reach of a tap and the kitchen.',
       where: 'Open, sunny ground in Zone 1–2 — not under a tree canopy.',
       arm: { kind: 'place', defId: 'veg_bed' },
-      done: (s) => hasItem(s, BED_IDS),
+      done: (s) => hasItem(s, [...BED_DEF_IDS]),
     },
     {
       id: 'plant-support',

@@ -110,16 +110,27 @@ test('invalid persisted counts never create progress or non-finite output', () =
   }
 });
 
-test('fractional persisted counts cannot masquerade as additional records', () => {
-  const result = computeCompletionScore(inputs({
-    boundaryPointCount: 2.99,
-    surveyFilledFields: 0.99,
-    zoneCount: 0.99,
-    elementCount: 0.99,
-  }));
-  assert.ok(result.steps[1].pct < 100);
-  assert.equal(result.steps[2].pct, 0);
-  assert.equal(result.steps[3].pct, 0);
+test('fractional and unsafe persisted counts cannot masquerade as records', () => {
+  for (const badCount of [
+    0.99,
+    1.5,
+    2.99,
+    3.2,
+    Number.MAX_SAFE_INTEGER + 1,
+    Number.MAX_VALUE,
+  ]) {
+    const state = inputs({
+      boundaryPointCount: badCount,
+      surveyFilledFields: badCount,
+      surveyTotalFields: badCount,
+      zoneCount: badCount,
+      elementCount: badCount,
+    });
+    const result = computeCompletionScore(state);
+    assert.equal(result.overallPct, 0);
+    assert.ok(result.steps.every((step) => step.pct === 0 && !step.done));
+    assert.equal(deriveSiteStage(state), 'scout');
+  }
 });
 
 test('all returned percentages remain finite and bounded for extreme input', () => {

@@ -2,6 +2,13 @@
 // Photos stored as resized base64 thumbnails (≤ 400px, ~30-50KB each)
 // Max 4 items per key, 40 items total across all keys to stay within localStorage limits
 
+import {
+  EVIDENCE_CATALOGUE,
+  evidenceStorageKeyBelongsToGroup,
+  isEvidenceGroupKey,
+  isQuickNumberField,
+} from './evidence-catalogue';
+
 export interface EvidenceItem {
   id: string;
   type: 'photo' | 'pdf' | 'note';
@@ -218,17 +225,20 @@ export function setQuickNumber(siteId: string, groupKey: string, fieldKey: strin
 export function getReportCompleteness(siteId: string): number {
   const site = load()[siteId];
   const items = site?.items ?? {};
-  const MAIN_GROUPS = ['water', 'structures', 'soil', 'trees', 'animals', 'energy'];
-  const groupsWithItems = MAIN_GROUPS.filter((g) =>
-    Object.keys(items).some((k) => k.startsWith(`${g}_`) && (items[k]?.length ?? 0) > 0)
+  const groupKeys = EVIDENCE_CATALOGUE.map((group) => group.key);
+  const groupsWithItems = groupKeys.filter((groupKey) =>
+    Object.entries(items).some(([storageKey, rows]) =>
+      evidenceStorageKeyBelongsToGroup(storageKey, groupKey) && rows.some(hasPayload))
   );
   // Also count quick numbers as evidence
   const qn = site?.quickNumbers ?? {};
-  const groupsWithQn = MAIN_GROUPS.filter((g) => {
-    return qn[g] && Object.values(qn[g]).some(Boolean);
+  const groupsWithQn = groupKeys.filter((groupKey) => {
+    return qn[groupKey] && Object.entries(qn[groupKey]).some(
+      ([fieldKey, value]) => isQuickNumberField(groupKey, fieldKey) && value.trim().length > 0,
+    );
   });
   const covered = new Set([...groupsWithItems, ...groupsWithQn]);
-  return Math.round((covered.size / MAIN_GROUPS.length) * 100);
+  return Math.round((covered.size / groupKeys.length) * 100);
 }
 
 // Total count of evidence items across all keys for a site
@@ -240,12 +250,13 @@ export function getTotalEvidenceCount(siteId: string): number {
   );
 }
 
-// Group-level summary: how many items in any key that starts with groupKey
+// Group-level summary: payload-bearing items in the group's exact catalogue keys
 export function getGroupCount(siteId: string, groupKey: string): number {
+  if (!isEvidenceGroupKey(groupKey)) return 0;
   const items = load()[siteId]?.items ?? {};
   return Object.entries(items)
-    .filter(([k]) => k.startsWith(`${groupKey}_`))
-    .reduce((sum, [, arr]) => sum + arr.length, 0);
+    .filter(([storageKey]) => evidenceStorageKeyBelongsToGroup(storageKey, groupKey))
+    .reduce((sum, [, arr]) => sum + arr.filter(hasPayload).length, 0);
 }
 
 // Resize a File to a small thumbnail for storage
