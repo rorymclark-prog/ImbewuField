@@ -58,18 +58,33 @@ function openDb(): Promise<IDBDatabase | null> {
     } catch {
       return resolve(null);
     }
+    let settled = false;
+    const finish = (db: IDBDatabase | null) => {
+      // A blocked request can later succeed after we have already degraded to
+      // session-only. Close that late handle instead of leaking it.
+      if (settled) {
+        db?.close();
+        return;
+      }
+      settled = true;
+      resolve(db);
+    };
     req.onupgradeneeded = () => {
-      const db = req.result;
-      if (!db.objectStoreNames.contains(STORE)) {
-        const store = db.createObjectStore(STORE, { keyPath: 'id' });
-        // Sheets are always read per site, never globally.
-        store.createIndex('siteId', 'siteId', { unique: false });
+      try {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(STORE)) {
+          const store = db.createObjectStore(STORE, { keyPath: 'id' });
+          // Sheets are always read per site, never globally.
+          store.createIndex('siteId', 'siteId', { unique: false });
+        }
+      } catch {
+        finish(null);
       }
     };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => resolve(null);
+    req.onsuccess = () => finish(req.result);
+    req.onerror = () => finish(null);
     // A blocked upgrade (another tab holding an old version) must not hang the gallery forever.
-    req.onblocked = () => resolve(null);
+    req.onblocked = () => finish(null);
   });
 }
 
@@ -81,21 +96,23 @@ function tx(db: IDBDatabase, mode: IDBTransactionMode): IDBObjectStore {
 export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
   const db = await openDb();
   if (!db) return [];
-  return new Promise((resolve) => {
-    try {
-      const req = tx(db, 'readonly').index('siteId').getAll(siteId);
-      req.onsuccess = () => {
-        const rows = (req.result as StoredSheet[]) ?? [];
-        rows.sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0));
-        resolve(rows);
-      };
-      req.onerror = () => resolve([]);
-    } catch {
-      resolve([]);
-    } finally {
-      db.close();
-    }
-  });
+  try {
+    return await new Promise((resolve) => {
+      try {
+        const req = tx(db, 'readonly').index('siteId').getAll(siteId);
+        req.onsuccess = () => {
+          const rows = (req.result as StoredSheet[]) ?? [];
+          rows.sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0));
+          resolve(rows);
+        };
+        req.onerror = () => resolve([]);
+      } catch {
+        resolve([]);
+      }
+    });
+  } finally {
+    db.close();
+  }
 }
 
 /** Persist one sheet. Resolves false when storage was unavailable or full, so the caller can tell
@@ -103,26 +120,38 @@ export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
 export async function saveSheet(sheet: StoredSheet): Promise<boolean> {
   const db = await openDb();
   if (!db) return false;
-  return new Promise((resolve) => {
-    try {
-      const req = tx(db, 'readwrite').put(sheet);
-      req.onsuccess = () => resolve(true);
-      req.onerror = () => resolve(false); // QuotaExceeded lands here
-    } catch {
-      resolve(false);
-    } finally {
-      db.close();
-    }
-  });
+  try {
+    return await new Promise((resolve) => {
+      try {
+        const transaction = db.transaction(STORE, 'readwrite');
+        transaction.objectStore(STORE).put(sheet);
+        transaction.oncomplete = () => resolve(true);
+        transaction.onabort = () => resolve(false);
+        transaction.onerror = () => resolve(false); // QuotaExceeded lands here
+      } catch {
+        resolve(false);
+      }
+    });
+  } finally {
+    db.close();
+  }
 }
 
 export async function deleteSheet(id: string): Promise<void> {
   const db = await openDb();
   if (!db) return;
   try {
-    tx(db, 'readwrite').delete(id);
-  } catch {
-    /* nothing to do — the row stays, the UI already dropped it */
+    await new Promise<void>((resolve) => {
+      try {
+        const transaction = db.transaction(STORE, 'readwrite');
+        transaction.objectStore(STORE).delete(id);
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () => resolve();
+        transaction.onerror = () => resolve();
+      } catch {
+        resolve();
+      }
+    });
   } finally {
     db.close();
   }
@@ -134,13 +163,21 @@ export async function clearSheets(siteId: string): Promise<void> {
   const db = await openDb();
   if (!db) return;
   try {
-    const store = tx(db, 'readwrite');
-    const req = store.index('siteId').getAllKeys(siteId);
-    req.onsuccess = () => {
-      for (const key of req.result ?? []) store.delete(key as IDBValidKey);
-    };
-  } catch {
-    /* best effort */
+    await new Promise<void>((resolve) => {
+      try {
+        const transaction = db.transaction(STORE, 'readwrite');
+        const store = transaction.objectStore(STORE);
+        const req = store.index('siteId').getAllKeys(siteId);
+        req.onsuccess = () => {
+          for (const key of req.result ?? []) store.delete(key as IDBValidKey);
+        };
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () => resolve();
+        transaction.onerror = () => resolve();
+      } catch {
+        resolve();
+      }
+    });
   } finally {
     db.close();
   }
