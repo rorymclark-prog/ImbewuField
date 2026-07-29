@@ -1162,3 +1162,48 @@ test('Zones keep full zone names in the legend and only number badges on the map
   assert.match(legendRule, /Zone 1 — Daily use/);
   assert.match(legendRule, /Zone 3 — Orchard \/ food forest/);
 });
+
+// PHOTO PLAN — the two properties that are the entire point of this style.
+//
+// It exists because a paid Master Atlas render came back as an invented engraved landscape with the
+// farm nowhere in it. Master Atlas was obeying its own prompt; the problem was that repainting the
+// ground stopped being a good trade the moment real Esri imagery landed underneath. The reference
+// sheets Rory holds up as the standard all keep the photograph and illustrate only the design.
+//
+// So this style must (a) forbid touching the ground, and (b) forbid the model writing ANY text,
+// because our deterministic labels, counts and legend are burned on afterwards from the saved
+// design. A model that letters the sheet will collide with them and will be wrong — that is the
+// difference between this and satellite_overlay, which hands lettering to the model on purpose.
+
+test('photo_plan forbids restyling the ground the farmer actually has', () => {
+  const s = STYLE_LINES.photo_plan;
+  for (const forbidden of ['stylise', 'filter', 'wash', 'engrave', 'hatch', 'blur', 'relight', 're-colour']) {
+    assert.ok(s.includes(forbidden), `photo_plan must forbid "${forbidden}" on the ground`);
+  }
+  assert.match(s, /photograph IS the map/i);
+  assert.match(s, /do not extend or invent terrain/i);
+});
+
+test('photo_plan tells the model to write nothing, because we letter the sheet', () => {
+  const s = STYLE_LINES.photo_plan;
+  assert.match(s, /WRITE NOTHING/);
+  for (const chrome of ['No labels', 'no legend', 'no title', 'no scale bar', 'no north arrow']) {
+    assert.ok(s.includes(chrome), `photo_plan must exclude ${chrome}`);
+  }
+  // The load-bearing assertion: our chrome only survives if this is NOT a model-chrome style.
+  assert.equal(isModelChromeStyle('photo_plan'), false,
+    'photo_plan must keep the deterministic labels/legend — that is what separates it from satellite_overlay');
+  assert.equal(isModelChromeStyle('satellite_overlay'), true,
+    'satellite_overlay deliberately does hand lettering to the model');
+});
+
+test('both photographic styles take the photo anchor, and every other style does not', () => {
+  // Repainting styles get the painted plan-set anchor; the two that keep the photograph must not,
+  // or the model is told to paint the ground in the same breath as being told to preserve it.
+  const photographic: Array<keyof typeof STYLE_LINES> = ['photo_plan', 'satellite_overlay'];
+  for (const k of photographic) {
+    assert.match(STYLE_LINES[k], /photograph/i, `${k} should be built around the photograph`);
+  }
+  assert.ok(STYLE_LINES.master_atlas.includes('never a satellite filter'),
+    'master_atlas still deliberately replaces the photo — this is the style photo_plan answers');
+});

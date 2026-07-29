@@ -16,7 +16,8 @@ export type StylePreset =
   | 'extension_blueprint'
   | 'karoo_folk'
   | 'chatgpt_atlas'
-  | 'master_atlas';
+  | 'master_atlas'
+  | 'photo_plan';
 
 /**
  * Styles where the MODEL draws the labels and the legend, not the browser.
@@ -324,8 +325,32 @@ const PLAN_SET_ANCHOR_PHOTO =
 export const STYLE_LINES: Record<StylePreset, string> = {
   precision_atlas:
     'STYLE — Precision Atlas: premium flat orthographic landscape cartography with the lush hand-painted finish of a commissioned garden masterplan. Use layered transparent watercolor washes plus controlled gouache detail, fine dry-brush ground grain, disciplined ink edges and strong figure-ground clarity. Fixed palette: deep slate roofs, layered sage and olive land, cool blue-green accents, warm buff soil, charcoal linework and parchment cream. The result is richly illustrated and print-ready, never a dark satellite filter, never photorealistic, never oblique or isometric.' + PLAN_SET_ANCHOR,
-  // The only style that KEEPS the aerial photograph. Everything else here repaints it away, so this
-  // entry gets the photographic plan-set anchor, never the painted one.
+  // PHOTO PLAN — the reference-sheet formula, and the reason it exists.
+  //
+  // Rory spent a paid Master Atlas render on 2026-07-29 and it came back as an invented engraved
+  // landscape with his real farm nowhere in it. That style did exactly what its own prompt demands
+  // ("never a satellite filter") — and that was a reasonable trade while the basemap was Mapbox's
+  // unreadable brown smear over rural KZN, because repainting nothing is an improvement. It stopped
+  // being reasonable the moment the licensed Esri imagery landed: there is now a real photograph of
+  // the farm underneath, and repainting it trades truth for prettiness.
+  //
+  // The sheets he holds up as the standard all do the same thing — the aerial photo is UNTOUCHED
+  // (neighbouring roofs, real trees, the actual driveway, a parked car) and only the DESIGN is
+  // illustrated on top.
+  //
+  // satellite_overlay already keeps the photograph, so this is its sibling, not a rewrite. The one
+  // difference is the part that matters: satellite_overlay is a model-chrome style, so the MODEL
+  // letters the sheet and draws the legend — which is precisely where accuracy goes. This style is
+  // NOT model-chrome (see isModelChromeStyle), so our deterministic labels, counts and legend are
+  // burned on afterwards from the farmer's saved design. The model illustrates; it never writes.
+  photo_plan:
+    'STYLE — Photo Plan: the real aerial photograph IS the map and must survive intact. Every pixel that is not a design element stays the supplied satellite image — native grain, native colour, real roofs, real tree canopies, real shadows, real ground texture, neighbouring buildings and roads all photographic and sharp. Do not stylise, filter, wash, engrave, hatch, blur, relight or re-colour the ground under any circumstances; do not extend or invent terrain beyond what the photograph shows. The ONLY new artwork is the design itself, illustrated over the photo with soft realistic drop shadows so it sits ON the land rather than floating above it: vegetable beds as tidy planted rows, fruit trees as full painted canopies with visible trunk shadows, water tanks as solid cylinders, compost bays and structures as small semi-3D objects, paths and swales as real surfaces following exactly the routes given. Match the photograph\'s own light direction and time of day so the drawn shadows agree with the real ones. ' +
+    'WRITE NOTHING. No labels, no numbers, no legend, no title, no scale bar, no north arrow, no lettering of any kind anywhere on the image — those are drawn afterwards from the farmer\'s saved design and any text you add will collide with them and be wrong. Leave the margins clean. The result should read as a real photograph of a real farm with the planned design already built on it.' + PLAN_SET_ANCHOR_PHOTO,
+
+  // The other style that KEEPS the aerial photograph — but with the model in charge of the lettering
+  // and legend, which is the difference between it and photo_plan above. Everything else in this
+  // record repaints the ground away, so both photographic entries take the photo plan-set anchor,
+  // never the painted one.
   satellite_overlay:
     'STYLE — Satellite Overlay: the real aerial photograph stays the map, and a crisp printed graphic overlay is drawn on top of it. This is a known genre — the annotated satellite overlay used for irrigation schemes, park interpretive maps and resort site plans. The dark green satellite imagery, real roofs, real tree canopies, real shadows and real ground textures all remain photographic and sharp; the only drawn artwork is the overlay layer — small semi-3D pictorial icons with soft drop shadows, a bone-white post-and-wire boundary fence with small round posts, near-black tar surfaces, bright blue dotted irrigation runs, white ALL-CAPS labels on thin white leader lines with small arrowheads, and a cream legend panel with dark editorial type down the right side, all inside a dark rounded-corner sheet frame. Fixed palette over the photographic base: chartreuse #B4E000, tank blue #2F6FB5, water blue #2E9BFF, earth brown #7A5230, foliage green #4E8B3A, near-black tar #12140F, cream panel #F6F1E4, titling charcoal #1E2418, white lettering. Vector-clean linework and even drop shadows throughout: hard-edged flat vector graphics floating over raw lens imagery — every pixel that is not overlay is the satellite photograph exactly as supplied, native grain, native colour, straight from the sensor.' + PLAN_SET_ANCHOR_PHOTO,
   field_ledger:

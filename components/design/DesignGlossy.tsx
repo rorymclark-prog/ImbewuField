@@ -345,6 +345,10 @@ const STYLE_TITLE: Record<AnalysisStyle, string> = {
 const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; labelStyle: LabelStyle; swatch: string; recommended?: boolean }> = [
   // labelStyle is required by the type but unused here: this style always takes the showcase path,
   // which passes labels: [] because the MODEL letters the sheet itself.
+  // Photo Plan leads the list because it is the only style that keeps the farmer's real aerial
+  // photograph AND our exact labels, counts and legend. Every other AI style repaints the ground;
+  // Satellite Overlay keeps it but hands the lettering to the model.
+  { key: 'photo_plan',          label: 'Photo Plan',          blurb: 'your real aerial photo · design drawn on top · exact labels', labelStyle: 'reference', swatch: 'linear-gradient(135deg,#2B3A24 0%,#4E8B3A 50%,#B4E000 100%)', recommended: true },
   { key: 'satellite_overlay',   label: 'Satellite Overlay',   blurb: 'experimental · AI controls the labels and layout', labelStyle: 'clean', swatch: 'linear-gradient(135deg,#12140F 0%,#2F4A2A 55%,#B4E000 100%)' },
   { key: 'precision_atlas',      label: 'Reference Blueprint', blurb: 'benchmark look · exact geometry, labels and layout', labelStyle: 'reference', swatch: 'linear-gradient(135deg, #526B59 0%, #A9B58B 45%, #D9C89F 100%)', recommended: true },
   { key: 'field_ledger',        label: 'Field Ledger',        blurb: 'hand-inked surveyor plan',      labelStyle: 'ink',       swatch: '#E4D8B8' },
