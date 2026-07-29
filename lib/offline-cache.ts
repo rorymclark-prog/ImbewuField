@@ -16,6 +16,9 @@ export const COURSE_CACHE = 'imbewu-course-v1';
 /** How many fetches at once. Four keeps a weak connection busy without collapsing it. */
 const CONCURRENCY = 4;
 
+const safeBytes = (value: number): number =>
+  Number.isFinite(value) && value > 0 ? value : 0;
+
 export interface DownloadProgress {
   /** Files finished, successfully or not. */
   done: number;
@@ -26,6 +29,8 @@ export interface DownloadProgress {
 }
 
 export interface DownloadResult {
+  /** Bytes confirmed present after this attempt, including files already cached. */
+  bytes: number;
   stored: number;
   /**
    * URLs that did not make it.
@@ -66,7 +71,8 @@ function announceCacheChange(): void {
  * tell the farmer the module is theirs while the cache is empty.
  */
 export async function packStatus(pack: OfflinePack): Promise<DownloadProgress> {
-  const empty = { done: 0, total: pack.entries.length, bytes: 0, totalBytes: pack.bytes };
+  const totalBytes = safeBytes(pack.bytes);
+  const empty = { done: 0, total: pack.entries.length, bytes: 0, totalBytes };
   if (!offlineSupported()) return empty;
   try {
     const cache = await caches.open(COURSE_CACHE);
@@ -75,10 +81,10 @@ export async function packStatus(pack: OfflinePack): Promise<DownloadProgress> {
     for (const e of pack.entries) {
       if (await cache.match(e.url, { ignoreSearch: true })) {
         done += 1;
-        bytes += e.bytes;
+        bytes += safeBytes(e.bytes);
       }
     }
-    return { done, total: pack.entries.length, bytes, totalBytes: pack.bytes };
+    return { done, total: pack.entries.length, bytes, totalBytes };
   } catch {
     return empty;
   }
@@ -101,23 +107,44 @@ export async function downloadPack(
   onProgress?: (p: DownloadProgress) => void,
   signal?: AbortSignal,
 ): Promise<DownloadResult> {
-  if (!offlineSupported()) return { stored: 0, failed: pack.entries.map((e) => e.url), cancelled: false };
+  if (!offlineSupported()) return { bytes: 0, stored: 0, failed: pack.entries.map((e) => e.url), cancelled: false };
 
-  const cache = await caches.open(COURSE_CACHE);
+  let cache: Cache;
+  try {
+    cache = await caches.open(COURSE_CACHE);
+  } catch {
+    return {
+      bytes: 0,
+      stored: 0,
+      failed: signal?.aborted ? [] : pack.entries.map((e) => e.url),
+      cancelled: Boolean(signal?.aborted),
+    };
+  }
   const failed: string[] = [];
   let stored = 0;
   let done = 0;
   let bytes = 0;
 
-  const report = () => onProgress?.({ done, total: pack.entries.length, bytes, totalBytes: pack.bytes });
+  const report = () => onProgress?.({
+    done,
+    total: pack.entries.length,
+    bytes,
+    totalBytes: safeBytes(pack.bytes),
+  });
 
   // Count what is already present first, so a resumed download starts at its real position rather
   // than sliding from 0% back up over files it is not going to fetch.
   const todo: PackEntry[] = [];
   for (const entry of pack.entries) {
-    if (await cache.match(entry.url, { ignoreSearch: true })) {
+    let present = false;
+    try {
+      present = Boolean(await cache.match(entry.url, { ignoreSearch: true }));
+    } catch {
+      // A failed lookup is not proof that the lesson is on the phone. Retry it.
+    }
+    if (present) {
       done += 1;
-      bytes += entry.bytes;
+      bytes += safeBytes(entry.bytes);
       stored += 1;
     } else {
       todo.push(entry);
@@ -135,10 +162,10 @@ export async function downloadPack(
         const res = await fetch(entry.url, { cache: 'reload', signal });
         // Only a real 200 goes in. Caching a 404 page under an asset URL would make the module
         // look complete and then render a broken image offline, with nothing left to retry from.
-        if (res.ok) {
+        if (res.status === 200) {
           await cache.put(entry.url, res.clone());
           stored += 1;
-          bytes += entry.bytes;
+          bytes += safeBytes(entry.bytes);
         } else {
           failed.push(entry.url);
         }
@@ -152,16 +179,25 @@ export async function downloadPack(
 
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, Math.max(1, queue.length)) }, worker));
   announceCacheChange();
-  return { stored, failed, cancelled: Boolean(signal?.aborted) };
+  return { bytes, stored, failed, cancelled: Boolean(signal?.aborted) };
 }
 
 /** Give the space back. Only this pack's files — other downloaded modules are left alone. */
 export async function removePack(pack: OfflinePack): Promise<number> {
   if (!offlineSupported()) return 0;
-  const cache = await caches.open(COURSE_CACHE);
+  let cache: Cache;
+  try {
+    cache = await caches.open(COURSE_CACHE);
+  } catch {
+    return 0;
+  }
   let removed = 0;
   for (const e of pack.entries) {
-    if (await cache.delete(e.url, { ignoreSearch: true })) removed += 1;
+    try {
+      if (await cache.delete(e.url, { ignoreSearch: true })) removed += 1;
+    } catch {
+      // Keep removing the rest; one corrupt cache entry must not strand a pack.
+    }
   }
   announceCacheChange();
   return removed;
@@ -177,7 +213,7 @@ export async function storageEstimate(): Promise<{ usage: number; quota: number 
   if (typeof navigator === 'undefined' || !navigator.storage?.estimate) return null;
   try {
     const { usage = 0, quota = 0 } = await navigator.storage.estimate();
-    return { usage, quota };
+    return { usage: safeBytes(usage), quota: safeBytes(quota) };
   } catch {
     return null;
   }

@@ -107,7 +107,9 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
         setBytes(base + prog.bytes);
       }, controller.signal);
       allFailed.push(...r.failed);
-      base += p.bytes;
+      // Carry forward only bytes confirmed on the phone. Using p.bytes here
+      // made the next module's progress jump past files that had just failed.
+      base += r.bytes;
       baseFiles += p.entries.length;
       if (controller.signal.aborted) break;
     }
