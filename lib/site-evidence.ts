@@ -122,13 +122,12 @@ export function getReportCompleteness(siteId: string): number {
   const items = load()[siteId]?.items ?? {};
   const MAIN_GROUPS = ['water', 'structures', 'soil', 'trees', 'animals', 'energy'];
   const groupsWithItems = MAIN_GROUPS.filter((g) =>
-    Object.keys(items).some((k) => k.startsWith(g.split('_')[0]) && (items[k]?.length ?? 0) > 0)
+    Object.keys(items).some((k) => k.startsWith(`${g}_`) && (items[k]?.length ?? 0) > 0)
   );
   // Also count quick numbers as evidence
   const qn = load()[siteId]?.quickNumbers ?? {};
   const groupsWithQn = MAIN_GROUPS.filter((g) => {
-    const gKey = g.split('_')[0];
-    return qn[gKey] && Object.values(qn[gKey]).some(Boolean);
+    return qn[g] && Object.values(qn[g]).some(Boolean);
   });
   const covered = new Set([...groupsWithItems, ...groupsWithQn]);
   return Math.round((covered.size / MAIN_GROUPS.length) * 100);
@@ -144,7 +143,7 @@ export function getTotalEvidenceCount(siteId: string): number {
 export function getGroupCount(siteId: string, groupKey: string): number {
   const items = load()[siteId]?.items ?? {};
   return Object.entries(items)
-    .filter(([k]) => k.startsWith(groupKey))
+    .filter(([k]) => k.startsWith(`${groupKey}_`))
     .reduce((sum, [, arr]) => sum + arr.length, 0);
 }
 
