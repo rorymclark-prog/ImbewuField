@@ -22,6 +22,10 @@ function wrapMonth(m: number): number {
 // lookups must resolve against the same id or read as 0 for the whole plan.
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
+function positiveDimension(value: number): number {
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
 /**
  * Beds = design items of type 'bed'/'hugel', with the virtual-bed fallback
  * when none exist. Deliberately duplicated from app/facilitator/crops/
@@ -37,10 +41,14 @@ export function bedsFromDesign(state: FacilitatorDesignState | null): PlanBed[] 
   for (const it of state?.items ?? []) {
     if (it.type === 'bed') {
       bedN += 1;
-      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2: (it.wM || 1) * (it.hM || 1), minDimM: Math.min(it.wM || 1, it.hM || 1) });
+      const widthM = positiveDimension(it.wM);
+      const heightM = positiveDimension(it.hM);
+      beds.push({ id: it.id, label: `Bed ${bedN}`, areaM2: widthM * heightM, minDimM: Math.min(widthM, heightM) });
     } else if (it.type === 'hugel') {
       hugelN += 1;
-      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2: (it.wM || 1) * (it.hM || 1), minDimM: Math.min(it.wM || 1, it.hM || 1) });
+      const widthM = positiveDimension(it.wM);
+      const heightM = positiveDimension(it.hM);
+      beds.push({ id: it.id, label: `Hügel ${hugelN}`, areaM2: widthM * heightM, minDimM: Math.min(widthM, heightM) });
     }
   }
   return beds.length > 0 ? beds : [VIRTUAL_BED];
@@ -70,11 +78,25 @@ export function monthsForPeriod(period: Period, now: Date): number[] {
 function inPeriod(iso: string | null | undefined, period: Period, now: Date): boolean {
   if (!iso) return false;
   const d = new Date(iso);
-  if (isNaN(d.getTime())) return false;
+  if (isNaN(d.getTime()) || isNaN(now.getTime())) return false;
   if (period === 'year') return d.getFullYear() === now.getFullYear();
-  if (d.getFullYear() !== now.getFullYear()) return false;
-  if (period === 'month') return d.getMonth() === now.getMonth();
-  return saSeasonMonths0(now.getMonth()).includes(d.getMonth());
+  if (period === 'month') {
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }
+  const seasonMonths = saSeasonMonths0(now.getMonth());
+  if (!seasonMonths.includes(d.getMonth())) return false;
+  // Summer crosses New Year. Anchor it to the December that begins the
+  // season, so Jan 2026 includes Dec 2025 but never Jan 2025.
+  if (seasonMonths.includes(11)) {
+    const seasonStartYear = now.getMonth() <= 1
+      ? now.getFullYear() - 1
+      : now.getFullYear();
+    const expectedYear = d.getMonth() === 11
+      ? seasonStartYear
+      : seasonStartYear + 1;
+    return d.getFullYear() === expectedYear;
+  }
+  return d.getFullYear() === now.getFullYear();
 }
 
 /* ── Crop name matching: catalog key <-> free-text logged crop string ──── */
@@ -162,7 +184,11 @@ export function intendedKgByMonthPerCrop(plantings: Planting[], beds: PlanBed[])
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
-    const totalKg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
+    const rawTotalKg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
+    // A malformed legacy planting must not poison the whole crop's total.
+    // Invalid or non-positive contributions carry no defensible intended kg.
+    if (!Number.isFinite(rawTotalKg) || rawTotalKg <= 0) continue;
+    const totalKg = rawTotalKg;
     const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
     const freshSpan = crop.harvestWindowMonths ?? 0;
     const kgPerMonth = totalKg / (freshSpan + 1);
@@ -209,6 +235,12 @@ function isMeaningfulGap(actual: number, expected: number): boolean {
   const gap = expected - actual;
   if (gap <= 0) return false;
   return gap >= GAP_ABSOLUTE_FLOOR_KG && gap / expected >= GAP_RELATIVE_THRESHOLD;
+}
+
+function validLoggedKg(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0
+    ? value
+    : 0;
 }
 
 export interface CropRow {
@@ -291,8 +323,8 @@ export function buildReconciliation(
     harvestRows.forEach((r) => matchedProductionIds.add(r.id));
     saleRows.forEach((r) => matchedSalesIds.add(r.id));
 
-    const harvestedKg = harvestRows.reduce((s, r) => s + (r.kg ?? 0), 0);
-    const soldKg = saleRows.reduce((s, r) => s + (r.kg ?? 0), 0);
+    const harvestedKg = harvestRows.reduce((s, r) => s + validLoggedKg(r.kg), 0);
+    const soldKg = saleRows.reduce((s, r) => s + validLoggedKg(r.kg), 0);
 
     const row: CropRow = {
       cropKey, cropName: crop.name, icon: crop.icon,
@@ -321,21 +353,23 @@ export function buildReconciliation(
     if (matchedProductionIds.has(p.id)) continue;
     const key = bucketKey(p.crop);
     const row = unplannedMap.get(key) ?? emptyRow(p.crop);
-    row.harvestedKg += p.kg ?? 0;
+    row.harvestedKg += validLoggedKg(p.kg);
     unplannedMap.set(key, row);
   }
   for (const s of salesInPeriod) {
     if (matchedSalesIds.has(s.id)) continue;
     const key = bucketKey(s.crop);
     const row = unplannedMap.get(key) ?? emptyRow(s.crop);
-    row.soldKg += s.kg ?? 0;
+    row.soldKg += validLoggedKg(s.kg);
     unplannedMap.set(key, row);
   }
 
   matched.sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));
   notYetHarvested.sort((a, b) => b.intendedKg - a.intendedKg);
   unmatchedPlanned.sort((a, b) => b.intendedKg - a.intendedKg);
-  const unplannedActivity = [...unplannedMap.values()].sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));
+  const unplannedActivity = [...unplannedMap.values()]
+    .filter((row) => row.harvestedKg > 0 || row.soldKg > 0)
+    .sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));
 
   return { matched, notYetHarvested, unmatchedPlanned, unplannedActivity };
 }

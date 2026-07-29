@@ -19,6 +19,16 @@ export const ROOF_RUNOFF_COEFFICIENTS = Object.freeze({
 export const WATER_SHEET_ROOF_RUNOFF_COEFFICIENT = ROOF_RUNOFF_COEFFICIENTS.waterSheet;
 export const TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT = ROOF_RUNOFF_COEFFICIENTS.tankCalculator;
 
+// Legacy facilitator sheets explicitly model a roof MATERIAL, unlike the generic Design Studio
+// paths above. Keep the published values unchanged, but own them here so a fourth private runoff
+// table cannot appear unnoticed. `describeHarvest` still defaults to metal because its callers do
+// not yet collect material; that assumption is now visible and reportable rather than buried.
+export const ROOF_MATERIAL_RUNOFF_COEFFICIENTS = Object.freeze({
+  metal: 0.9,
+  tile: 0.85,
+  thatch: 0.6,
+} as const);
+
 /** Dimensional identity: 1 mm on 1 m² is 1 L before the bounded loss coefficient. */
 export function roofHarvestLitres(
   roofAreaM2: number,

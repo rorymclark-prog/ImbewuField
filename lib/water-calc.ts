@@ -18,11 +18,13 @@
  *    coast and semi-arid Karoo.
  */
 
-export const RUNOFF: Record<'metal' | 'tile' | 'thatch', number> = {
-  metal: 0.9,
-  tile: 0.85,
-  thatch: 0.6,
-};
+import {
+  ROOF_MATERIAL_RUNOFF_COEFFICIENTS,
+  roofHarvestLitres,
+} from '@/lib/roof-runoff';
+
+export const RUNOFF: Readonly<Record<'metal' | 'tile' | 'thatch', number>> =
+  ROOF_MATERIAL_RUNOFF_COEFFICIENTS;
 
 export interface RegionalRainfall {
   name: string;
@@ -64,7 +66,8 @@ export const REGIONAL_RAINFALL: RegionalRainfall[] = [
  * using simple squared-degree distance (adequate at country scale; no
  * need for haversine precision here).
  */
-export function nearestRainfall(lat: number, lon: number): RegionalRainfall {
+export function nearestRainfall(lat: number, lon: number): RegionalRainfall | null {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
   let best = REGIONAL_RAINFALL[0];
   let bestDist = (lat - best.lat) ** 2 + (lon - best.lon) ** 2;
   for (const region of REGIONAL_RAINFALL) {
@@ -85,12 +88,17 @@ export function nearestRainfall(lat: number, lon: number): RegionalRainfall {
 export function annualHarvestLitres(
   roofM2: number,
   annualMm: number,
-  runoff: number = 0.9
+  runoff: number = RUNOFF.metal,
 ): number {
-  return roofM2 * annualMm * runoff;
+  return roofHarvestLitres(roofM2, annualMm, runoff);
 }
 
 const TANK_STEP_SIZES = [2500, 5000, 10000, 15000, 20000];
+export const STORAGE_SHARE_BY_PATTERN: Readonly<Record<'summer' | 'winter' | 'all-year', number>> = {
+  winter: 0.35,
+  summer: 0.2,
+  'all-year': 0.15,
+};
 
 /**
  * Heuristic recommended storage size to bridge the dry season, based on
@@ -108,13 +116,9 @@ export function recommendedTankLitres(
   annualLitres: number,
   pattern: 'summer' | 'winter' | 'all-year'
 ): number {
-  const shareByPattern: Record<'summer' | 'winter' | 'all-year', number> = {
-    winter: 0.35,
-    summer: 0.2,
-    'all-year': 0.15,
-  };
-
-  const target = annualLitres * shareByPattern[pattern];
+  const share = STORAGE_SHARE_BY_PATTERN[pattern];
+  if (!Number.isFinite(annualLitres) || annualLitres <= 0 || !Number.isFinite(share)) return 0;
+  const target = annualLitres * share;
 
   for (const size of TANK_STEP_SIZES) {
     if (target <= size) return size;
@@ -149,8 +153,10 @@ export function describeHarvest(
   roofM2: number,
   lat: number,
   lon: number
-): HarvestDescription {
+): HarvestDescription | null {
+  if (!Number.isFinite(roofM2) || roofM2 <= 0) return null;
   const region = nearestRainfall(lat, lon);
+  if (!region) return null;
   // Maths uses the raw (unrounded) roofM2 — only display is rounded, below.
   const annualLitres = annualHarvestLitres(roofM2, region.annualMm);
   const recommendedTank = recommendedTankLitres(annualLitres, region.pattern);

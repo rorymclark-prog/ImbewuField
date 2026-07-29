@@ -7882,7 +7882,11 @@ interface SavedGlossy {
 //        Tank Calculator. Daily use is saved only when the farmer enters it; without that input the
 //        sheet says what is missing instead of inventing household demand.
 //        (Arrived as v69, which the legend-count change already owned — renumbered on merge.)
-const PLAN_VERSION = 'v71';
+//   v72 — 2026-07-29: invalid facilitator roof/location inputs no longer fabricate a Durban
+//        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
+//        (Arrived as v70 — the fourth version collision of this run. See AGENTS.md: read
+//        PLAN_VERSION from origin/main at the START of each item, not from the queue text.)
+const PLAN_VERSION = 'v72';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
