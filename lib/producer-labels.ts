@@ -232,7 +232,25 @@ export function producerLabels(
     }
   }
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
-  if (refLayers.driveway.length >= 2) {
+  //
+  // ONLY ON THE MASTERPLAN, and this is the same condition DesignGlossy already applies when it
+  // decides whether the driveway is one of a sheet's named parts: "Only the whole-design sheet
+  // lists the driveway. On a layer sheet it is context, and listing it there gave an access track
+  // a legend row and a label alongside the actual design work."
+  //
+  // Without the gate the two halves of a layer sheet disagreed. The Planting sheet's legend
+  // correctly omits the driveway — it is context there, and groundRegister's contract for context
+  // is "never captioned, never legended" — but this pill was emitted regardless, so sheets 05 and
+  // 06 of the Ubhejane render carried a leadered DRIVEWAY callout pointing at an access track with
+  // no row anywhere in the legend to say what it was. A farmer reading the legend to decode the
+  // map finds nothing; the one label on the sheet that is not part of the plan is the one label
+  // the legend cannot explain.
+  //
+  // The masterplan is unaffected: it still emits the pill here and drawBlueprintLabelPills' curated
+  // callout layer drops it (it earns a LEGEND row there instead, so a pill would be a duplicate).
+  // Gating here rather than in that curator also covers the paths that call producerLabels straight
+  // into drawBlueprintLabelPills with no curation at all — the Water and Planting sheets both do.
+  if (refLayers.driveway.length >= 2 && filter === 'all') {
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
     const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
     blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });

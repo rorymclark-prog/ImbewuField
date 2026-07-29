@@ -7920,7 +7920,14 @@ interface SavedGlossy {
 //        required "posts are circles, never ticks" — so the deterministic sheets contradicted the
 //        app's own rule. Posts are now round, drawn over the wire. (Rory, twice: "it must be wire
 //        and post, not these lines".)
-const PLAN_VERSION = 'v80';
+//   v81 — 2026-07-29: the DRIVEWAY callout is gone from the layer sheets. Sheets 05 and 06 of the
+//        Ubhejane render each carried a leadered DRIVEWAY pill while neither legend held a driveway
+//        row — correctly, since on a layer sheet the driveway is CONTEXT and context is "never
+//        captioned, never legended" (groundRegister). So the single label on the sheet that was not
+//        part of the plan was the single label the legend could not decode. DesignGlossy had
+//        already written the rule down where it names a sheet's parts; producerLabels just never
+//        applied it, and only the masterplan's curated callout layer filtered the pill back out.
+const PLAN_VERSION = 'v81';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

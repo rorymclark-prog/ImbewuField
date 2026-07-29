@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { buildDemoDesignCanvasState } from '../lib/demo-farm.ts';
+import { producerLabels } from '../lib/producer-labels.ts';
 import {
   EXACT_CONTEXT_ALPHA,
   EXACT_FULL_STRENGTH_ALPHA,
@@ -11,6 +12,7 @@ import {
   exactSheetElementLegendGroups,
   exactSheetElementRegister,
   type ExactPlanSheetKey,
+  type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
 
 const SHEETS: ExactPlanSheetKey[] = [
@@ -127,3 +129,51 @@ for (const fixture of FIXTURES) {
     }
   });
 }
+
+// A label the legend cannot explain is worse than no label. The Ubhejane render at v80 carried a
+// leadered DRIVEWAY callout on sheet 05 (Planting) and sheet 06 (Structures) while neither legend
+// held a driveway row — correctly, because on a layer sheet the driveway is CONTEXT, and
+// groundRegister's contract for context is "never captioned, never legended". So the one label on
+// the sheet that was not part of the plan was the one label the legend could not decode.
+//
+// DesignGlossy already stated the rule where it decides a sheet's named parts — "Only the
+// whole-design sheet lists the driveway. On a layer sheet it is context, and listing it there gave
+// an access track a legend row and a label alongside the actual design work" — but producerLabels
+// emitted the pill on every sheet regardless, and only the masterplan's curated callout layer
+// filtered it back out. Every layer sheet, and both paths that call producerLabels straight into
+// drawBlueprintLabelPills with no curation at all, kept it.
+
+const DRIVEWAY_FIXTURE_REF = {
+  boundary: [] as Array<[number, number]>,
+  house: [] as Array<[number, number]>,
+  // A traced access track: enough points for the >= 2 gate, with a real midpoint to label.
+  driveway: [[0.2, 0.2], [0.5, 0.25], [0.8, 0.3]] as Array<[number, number]>,
+  drivewayClosed: false,
+};
+
+const drivewayLabels = (filter: GlossyLayerFilter) =>
+  producerLabels(buildDemoDesignCanvasState(), DRIVEWAY_FIXTURE_REF, 2000, 1200, filter, false)
+    .filter((label) => /DRIVEWAY/.test(label.text));
+
+test('the driveway is only ever called out on the masterplan, where the legend lists it', () => {
+  // Layer sheets: context. Drawn so the plan orients, never named.
+  for (const filter of ['water', 'planting', 'structures', 'zones', 'sector', 'base'] as GlossyLayerFilter[]) {
+    assert.deepEqual(
+      drivewayLabels(filter).map((l) => l.text),
+      [],
+      `${filter}: a DRIVEWAY callout with no legend row to explain it`,
+    );
+  }
+  // Masterplan: the driveway IS content and earns a legend row, so the pill is produced here and
+  // the curated callout layer drops it as a duplicate. Producing it is what keeps that curation
+  // meaningful — assert it still exists rather than silently deleting the whole feature.
+  assert.equal(drivewayLabels('all').length, 1, 'the masterplan still knows about the driveway');
+});
+
+test('no driveway geometry means no driveway label on any sheet', () => {
+  const noDriveway = { ...DRIVEWAY_FIXTURE_REF, driveway: [] as Array<[number, number]> };
+  for (const filter of ['all', 'planting', 'water'] as GlossyLayerFilter[]) {
+    const labels = producerLabels(buildDemoDesignCanvasState(), noDriveway, 2000, 1200, filter, false);
+    assert.equal(labels.filter((l) => /DRIVEWAY/.test(l.text)).length, 0, filter);
+  }
+});
