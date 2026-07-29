@@ -14,7 +14,7 @@ a useful result, not a failure.
 
 **Three rules that have each cost a day:**
 
-- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v65`) in the same commit
+- **Bump `PLAN_VERSION`** (`components/design/DesignGlossy.tsx`, currently `v66`) in the same commit
   as *any* change to how a sheet is drawn, or nobody who has already rendered sees your fix.
   **A prompt change IS a sheet-drawing change.** Last run's item 4 reasoned "prompt-only, no
   deterministic sheet drawing change — no bump", but the prompt is the entire instruction set the
