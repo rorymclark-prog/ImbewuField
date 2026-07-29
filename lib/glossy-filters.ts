@@ -43,6 +43,7 @@ export type ExactPlanSheetKey =
   | 'implementation';
 
 export type ExactElementRegister = 'content' | 'context' | 'absent';
+export type SheetElementNaming = 'individual' | 'grouped';
 
 /** Full-strength is deliberately a hard boundary. Anything painted below this opacity is context
  * and must remain visually subordinate; if a future renderer raises it to 1, it also takes on the
@@ -54,6 +55,17 @@ export const EXACT_CONTEXT_ALPHA = {
   structures: 0.24,
   implementation: 0.88,
 } as const;
+
+/**
+ * One naming rule for both on-map callouts and legend inventory.
+ *
+ * Layer sheets teach a specific system, so each callout keeps the same element/species identity
+ * as its legend row. Only the integrated masterplan may trade that detail for grouped editorial
+ * callouts; its legend is grouped by the same whole-farm families below.
+ */
+export function sheetElementNaming(sheet: ExactPlanSheetKey): SheetElementNaming {
+  return sheet === 'all' ? 'grouped' : 'individual';
+}
 
 export function exactSheetElementRegister(
   def: Pick<DesignElementDef, 'category' | 'id' | 'name'>,
@@ -130,7 +142,7 @@ export function exactSheetElementLegendGroups(
     return Boolean(def && exactSheetElementRegister(def, sheet) === 'content');
   });
 
-  if (sheet === 'all') {
+  if (sheetElementNaming(sheet) === 'grouped') {
     const groups: ExactElementLegendGroup[] = [];
     for (const family of INTEGRATED_LEGEND_FAMILIES) {
       const matches = content.filter((item) => family.matches(ELEMENTS_BY_ID[item.defId]));
