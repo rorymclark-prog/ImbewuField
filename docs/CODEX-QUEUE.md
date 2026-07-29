@@ -543,6 +543,39 @@ compass prefix should apply to a counted group at all.
 
 ---
 
+## 28. The FIRE label is drawn and then painted over — `codex/fire-sector-label`
+
+**Sheet 02, v84. Measured, not guessed.**
+
+The sector sheet names every energy on it — SUMMER SUN, WINTER SUN, SUMMER COOLING WIND, COLD-FRONT
+WIND, HOT DRY BERG WIND, ACCESS · DUST · NOISE, SLOPE / TERRACE FALL. Every one except **fire**,
+which has legend row 6 ("Regional fire approach (NW)") and nothing readable on the map. For a
+smallholder in KwaZulu-Natal that is the one sector on the sheet with a safety consequence.
+
+It is not missing from the code. DesignGlossy `:5847` draws it:
+
+    labelAt(cx + lp[0] * R * 0.55, cy + lp[1] * R * 0.55, `FIRE — ${model.fire.fromLabel}`, '#F0A58C');
+
+Counting pixels in the rendered sheet at that exact colour, which is passed inline at that call site
+so nothing else on the sheet uses it:
+
+    fire WEDGE  #E7562D : 619 px   <- the wedge renders fine
+    fire LABEL  #F0A58C :  20 px   <- a text label at sheet scale should be thousands
+
+So it is drawn and then almost entirely overpainted. The cause is in the comment three lines above
+it: fire's bearing EQUALS the berg wind's bearing by construction, so the author moved the label
+INSIDE the wedge to dodge the berg LABEL — but the berg ARROW runs down that same ray and is drawn
+afterwards, on top. The dodge moved it from one collision into another.
+
+Fix so the farmer can read it. Options worth weighing, not a prescription: offset the fire label off
+the shared ray rather than along it; draw fire after the berg arrow; or give fire a leader into the
+margin like every other named thing on the sheet. Whatever you choose, **assert it by counting
+label pixels in a render**, not by reading the code — the code already looks correct.
+
+**Do not touch PLAN_VERSION.** This changes the picture; say so in your report.
+
+---
+
 ## NEVER RUN DRY — what to do when you reach the end
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
