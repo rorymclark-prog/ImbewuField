@@ -38,7 +38,7 @@ import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, saveCompletedTaskIds, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import type { CompletionStepKey } from '@/lib/completion-score';
 import WeatherWidget from '@/components/WeatherWidget';
@@ -282,15 +282,16 @@ function HomeLandingInner() {
 
   useEffect(() => {
     setLastSite(getLastSite());
-    const completedIds = loadCompletedTaskIds();
-    setBoardTasks(loadCropBoardTasks(completedIds));
-
-    const refreshPlaces = () => setPlaces(loadPlaces());
-    refreshPlaces();
+    const refresh = () => {
+      setPlaces(loadPlaces());
+      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds()));
+    };
+    refresh();
     // setMainSiteId() fires this same event, so the picker + weather block
-    // update immediately without a page reload.
-    window.addEventListener('permamap-places-changed', refreshPlaces);
-    return () => window.removeEventListener('permamap-places-changed', refreshPlaces);
+    // and its task source update immediately without a page reload. Crop-plan
+    // and canvas saves likewise refresh tasks while Home remains mounted.
+    TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.addEventListener(event, refresh));
+    return () => TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
   }, []);
 
   const mainSite = resolveMainSite(places ?? []);
