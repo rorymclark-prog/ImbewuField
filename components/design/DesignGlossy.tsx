@@ -7853,7 +7853,7 @@ interface SavedGlossy {
 //        sheet says what is missing instead of inventing household demand.
 //   v70 — 2026-07-29: invalid facilitator roof/location inputs no longer fabricate a Durban
 //        harvest card or print NaN/Infinity; valid harvest figures are unchanged.
-const PLAN_VERSION = 'v85'; // Base sheets now ignore degenerate boundary, roof, and driveway geometry.
+const PLAN_VERSION = 'v86'; // Map overlays now reject zero-area and self-crossing zone rings.
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(

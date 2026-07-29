@@ -10,7 +10,7 @@
 // (the same Web-Mercator maths the Static Images API + Mapbox GL tile grid use), so the
 // overlay lines up pixel-for-pixel with where it was drawn in the Studio.
 
-import { loadCanvasState, makeMercatorUnprojector, type LineShape } from '@/lib/design-canvas';
+import { loadCanvasState, makeMercatorUnprojector, ringAreaOf, type LineShape } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_COLORS, ZONE_DEFS } from '@/lib/design-elements';
 import { waterRouteStyleFor } from '@/lib/water-cartography';
 
@@ -74,6 +74,67 @@ function validNormPath(
   return new Set(value.map(([x, y]) => `${x},${y}`)).size >= minimumPoints;
 }
 
+function orientation(
+  [ax, ay]: [number, number],
+  [bx, by]: [number, number],
+  [cx, cy]: [number, number],
+): number {
+  return (bx - ax) * (cy - ay) - (by - ay) * (cx - ax);
+}
+
+function pointOnSegment(
+  [px, py]: [number, number],
+  [ax, ay]: [number, number],
+  [bx, by]: [number, number],
+): boolean {
+  return orientation([ax, ay], [bx, by], [px, py]) === 0
+    && px >= Math.min(ax, bx)
+    && px <= Math.max(ax, bx)
+    && py >= Math.min(ay, by)
+    && py <= Math.max(ay, by);
+}
+
+function segmentsIntersect(
+  a: [number, number],
+  b: [number, number],
+  c: [number, number],
+  d: [number, number],
+): boolean {
+  const o1 = orientation(a, b, c);
+  const o2 = orientation(a, b, d);
+  const o3 = orientation(c, d, a);
+  const o4 = orientation(c, d, b);
+  if ((o1 > 0) !== (o2 > 0) && (o3 > 0) !== (o4 > 0)) return true;
+  return (o1 === 0 && pointOnSegment(c, a, b))
+    || (o2 === 0 && pointOnSegment(d, a, b))
+    || (o3 === 0 && pointOnSegment(a, c, d))
+    || (o4 === 0 && pointOnSegment(b, c, d));
+}
+
+function validNormRing(value: unknown): value is Array<[number, number]> {
+  if (!validNormPath(value, 3)) return false;
+  const ring = value.length > 3
+    && value[0][0] === value[value.length - 1][0]
+    && value[0][1] === value[value.length - 1][1]
+      ? value.slice(0, -1)
+      : value;
+  if (ring.length < 3 || ringAreaOf(ring) <= 0) return false;
+  for (let i = 0; i < ring.length; i++) {
+    const a = ring[i];
+    const b = ring[(i + 1) % ring.length];
+    for (let j = i + 1; j < ring.length; j++) {
+      const adjacent = j === i
+        || j === (i + 1) % ring.length
+        || i === (j + 1) % ring.length;
+      if (adjacent) continue;
+      const c = ring[j];
+      const d = ring[(j + 1) % ring.length];
+      if (segmentsIntersect(a, b, c, d)) return false;
+    }
+  }
+  return true;
+}
+
 // Slightly darkened outline colour for filled areas so the edge reads on a bright fill.
 function darken(hex: string, amount = 0.35): string {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
@@ -131,7 +192,7 @@ export function buildDesignOverlay(siteId: string): DesignOverlay | null {
   // ground/built feature (house/patio/lawn/…); otherwise it's a permaculture effort-zone,
   // coloured by its 0..5 zone number.
   for (const z of zones) {
-    if (!validNormPath(z.points, 3)) continue;
+    if (!validNormRing(z.points)) continue;
     const ring = z.points.map((p) => unproject(p));
     if (ring.some(([lng, lat]) => !Number.isFinite(lng) || !Number.isFinite(lat))) continue;
     // GeoJSON polygon rings must be explicitly closed.
