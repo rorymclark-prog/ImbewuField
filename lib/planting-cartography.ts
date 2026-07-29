@@ -85,6 +85,31 @@ export interface PlantingPresentationDimensions {
   scale: number;
 }
 
+export interface PlantingCanopyPaintStyle {
+  artworkAlpha: number;
+  washAlpha: number;
+  detailAlphaMin: number;
+  detailAlphaMax: number;
+  edgeColor: string;
+  edgeAlpha: number;
+  edgeWidthScale: number;
+}
+
+/**
+ * Mature canopy paint is deliberately translucent, with a stronger footprint edge. The farmer's
+ * saved overlap is evidence about future spacing: the later-painted tree must not erase the
+ * neighbouring canopy, beds, paths or water lines beneath it.
+ */
+export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
+  artworkAlpha: 0.44,
+  washAlpha: 0.34,
+  detailAlphaMin: 0.1,
+  detailAlphaMax: 0.16,
+  edgeColor: '#24482D',
+  edgeAlpha: 0.94,
+  edgeWidthScale: 0.9,
+};
+
 /**
  * Bounded print emphasis for planting symbols. This preserves the saved centre, rotation and
  * aspect ratio while preventing small beds, tree basins and young-tree canopies from disappearing
