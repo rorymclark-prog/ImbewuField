@@ -63,9 +63,20 @@ const GROUP_MAX_ROWS = 6;
 // trees (a hedgerow IS one label) — which is the behaviour we want.
 const GROUP_PROXIMITY = 0.18;
 
+function isNormalisedPoint(point: [number, number]): boolean {
+  return Number.isFinite(point[0])
+    && Number.isFinite(point[1])
+    && point[0] >= 0
+    && point[0] <= 1
+    && point[1] >= 0
+    && point[1] <= 1;
+}
+
 /** Normalised bbox of the traced plot, falling back to the whole frame when untraced. */
 export function plotBox(boundary: Array<[number, number]>): { x0: number; y0: number; x1: number; y1: number } {
-  if (boundary.length < 3) return { x0: 0, y0: 0, x1: 1, y1: 1 };
+  if (boundary.length < 3 || !boundary.every(isNormalisedPoint)) {
+    return { x0: 0, y0: 0, x1: 1, y1: 1 };
+  }
   const xs = boundary.map((p) => p[0]);
   const ys = boundary.map((p) => p[1]);
   return { x0: Math.min(...xs), y0: Math.min(...ys), x1: Math.max(...xs), y1: Math.max(...ys) };
@@ -90,16 +101,21 @@ type LabelPt = { x: number; y: number; name: string; icon: string };
 /** Single-link clustering by proximity. `aspect` (W/H) makes the metric isotropic despite x and y
  *  both being normalised 0..1 over a non-square frame. Element counts are tens — O(n²) is fine. */
 export function clusterByProximity(pts: LabelPt[], aspect: number): LabelPt[][] {
-  const parent = pts.map((_, i) => i);
+  const validPts = pts.filter((point) => isNormalisedPoint([point.x, point.y]));
+  const safeAspect = Number.isFinite(aspect) && aspect > 0 ? aspect : 1;
+  const parent = validPts.map((_, i) => i);
   const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
-  for (let i = 0; i < pts.length; i++) {
-    for (let j = i + 1; j < pts.length; j++) {
-      const d = Math.hypot((pts[i].x - pts[j].x) * aspect, pts[i].y - pts[j].y);
+  for (let i = 0; i < validPts.length; i++) {
+    for (let j = i + 1; j < validPts.length; j++) {
+      const d = Math.hypot(
+        (validPts[i].x - validPts[j].x) * safeAspect,
+        validPts[i].y - validPts[j].y,
+      );
       if (d <= GROUP_PROXIMITY) parent[find(i)] = find(j);
     }
   }
   const by = new Map<number, LabelPt[]>();
-  pts.forEach((p, i) => {
+  validPts.forEach((p, i) => {
     const root = find(i);
     const arr = by.get(root) ?? [];
     arr.push(p);
@@ -118,6 +134,7 @@ export function producerLabels(
   filter: GlossyLayerFilter = 'all',
   includeToolGlyphs = true,
 ): ProducerLabel[] {
+  if (!Number.isFinite(W) || W <= 0 || !Number.isFinite(H) || H <= 0) return [];
   const fs = 26, padX = 14;
   // Pill-width ESTIMATE — only used to right-align the right-hand column (burnLabels measures the
   // real width for the pill itself). CAPS runs wider than mixed case, and bold headers wider
@@ -161,7 +178,11 @@ export function producerLabels(
   const families = new Map<LabelFamily, LabelPt[]>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
-    if (!def || !itemInFilter(def.category, filter, def.id)) continue;
+    if (
+      !def
+      || !itemInFilter(def.category, filter, def.id)
+      || !isNormalisedPoint([it.x, it.y])
+    ) continue;
     const key = labelFamily(def);
     const arr = families.get(key) ?? [];
     arr.push({ x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });
@@ -224,7 +245,7 @@ export function producerLabels(
   // own distinct region, so there is nothing to group — one pill each, as before.
   if (zonesInFilter(filter)) {
     for (const z of state.zones) {
-      if (z.feature || z.points.length < 3) continue;
+      if (z.feature || z.points.length < 3 || !z.points.every(isNormalisedPoint)) continue;
       const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
       const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
       const text = `${includeToolGlyphs ? `${z.zone}️⃣ ` : `ZONE ${z.zone} — `}${ZONE_DEFS[z.zone].label}`.toUpperCase();
@@ -234,8 +255,10 @@ export function producerLabels(
   // Driveway isn't a placed item — label it at the midpoint of the traced access line.
   if (refLayers.driveway.length >= 2) {
     const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
-    const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
-    blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
+    if (isNormalisedPoint(mid)) {
+      const text = `${includeToolGlyphs ? '🚗 ' : ''}DRIVEWAY`;
+      blocks.push({ cx: mid[0] * W, cy: mid[1] * H, head: null, members: [{ text, kind: 'item', leader: true, pw: pillWidth(text, false) }], hidden: 0 });
+    }
   }
 
   // DISAMBIGUATE IDENTICAL PILLS. Two clusters of the same lone element — tap points scattered far
