@@ -22,6 +22,8 @@ export interface ContourResult {
   status: 'ok' | 'too-flat' | 'unavailable';
 }
 
+export type ContourIntervalResult = Pick<ContourResult, 'intervalM' | 'tooFlat' | 'status'>;
+
 const unavailableResult = (): ContourResult => ({
   lines: [],
   intervalM: 0,
@@ -52,6 +54,62 @@ function hasUsableBoundary(boundary: Array<[number, number]>): boolean {
 }
 
 /**
+ * Choose the sheet interval without manufacturing contour geometry. The established rule targets
+ * roughly eight readable levels across the property and rounds to 1/2/5 × 10ⁿ metres. Real sheet
+ * contours use this interval only; their shapes come from Terrain-RGB marching squares.
+ */
+export function contourIntervalForFrame(
+  slopeDeg: number,
+  aspectDeg: number,
+  boundary: Array<[number, number]>,
+  mPerPx: number,
+  imgW: number,
+  imgH: number,
+): ContourIntervalResult {
+  if (
+    !Number.isFinite(slopeDeg)
+    || slopeDeg < 0
+    || slopeDeg >= 90
+    || !Number.isFinite(aspectDeg)
+    || !Number.isFinite(mPerPx)
+    || mPerPx <= 0
+    || !Number.isFinite(imgW)
+    || imgW <= 0
+    || !Number.isFinite(imgH)
+    || imgH <= 0
+    || !hasUsableBoundary(boundary)
+  ) {
+    return { intervalM: 0, tooFlat: false, status: 'unavailable' };
+  }
+  if (slopeDeg < 1.5) {
+    return { intervalM: 0, tooFlat: true, status: 'too-flat' };
+  }
+
+  const pts = boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
+  const xs = pts.map((p) => p[0]);
+  const ys = pts.map((p) => p[1]);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const canonicalAspectDeg = ((aspectDeg % 360) + 360) % 360;
+  const aspectRad = (canonicalAspectDeg * Math.PI) / 180;
+  const downhill: [number, number] = [Math.sin(aspectRad), -Math.cos(aspectRad)];
+  let projMin = Infinity;
+  let projMax = -Infinity;
+  for (const [px, py] of pts) {
+    const projection = (px - cx) * downhill[0] + (py - cy) * downhill[1];
+    projMin = Math.min(projMin, projection);
+    projMax = Math.max(projMax, projection);
+  }
+  const rangePx = projMax - projMin;
+  const rawIntervalM = (rangePx / 8) * mPerPx * Math.tan((slopeDeg * Math.PI) / 180);
+  const intervalM = niceInterval(rawIntervalM);
+  if (!Number.isFinite(intervalM) || intervalM <= 0) {
+    return { intervalM: 0, tooFlat: false, status: 'unavailable' };
+  }
+  return { intervalM, tooFlat: false, status: 'ok' };
+}
+
+/**
  * Build parallel contour lines across the property.
  * @param slopeDeg  slope steepness in degrees (from lib/elevation)
  * @param aspectDeg downhill bearing, clockwise from North (0=N, 90=E)
@@ -67,25 +125,8 @@ export function computeContourLines(
   imgW: number,
   imgH: number,
 ): ContourResult {
-  // Below ~1.5° the ground reads as flat — contours would be metres apart and meaningless.
-  if (
-    !Number.isFinite(slopeDeg)
-    || slopeDeg < 0
-    || slopeDeg >= 90
-    || !Number.isFinite(aspectDeg)
-    || !Number.isFinite(mPerPx)
-    || mPerPx <= 0
-    || !Number.isFinite(imgW)
-    || imgW <= 0
-    || !Number.isFinite(imgH)
-    || imgH <= 0
-    || !hasUsableBoundary(boundary)
-  ) {
-    return unavailableResult();
-  }
-  if (slopeDeg < 1.5) {
-    return { lines: [], intervalM: 0, tooFlat: true, status: 'too-flat' };
-  }
+  const interval = contourIntervalForFrame(slopeDeg, aspectDeg, boundary, mPerPx, imgW, imgH);
+  if (interval.status !== 'ok') return { lines: [], ...interval };
 
   // Work in logical px so metres↔px is a single mPerPx scale, then normalise at the end.
   const pts = boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
@@ -113,11 +154,8 @@ export function computeContourLines(
   }
   const rangePx = projMax - projMin;
 
-  // Aim for ~8 lines across the property; round the vertical interval to a friendly step.
   const slopeRad = (slopeDeg * Math.PI) / 180;
-  const targetLines = 8;
-  const rawIntervalM = (rangePx / targetLines) * mPerPx * Math.tan(slopeRad);
-  const intervalM = niceInterval(rawIntervalM);
+  const intervalM = interval.intervalM;
   const spacingPx = intervalM / mPerPx / Math.tan(slopeRad);
   if (!Number.isFinite(spacingPx) || spacingPx <= 0) return unavailableResult();
 

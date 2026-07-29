@@ -21,7 +21,7 @@ import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
 import { buildPhasePlan } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
-import { computeContourLines } from '@/lib/contours';
+import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
@@ -5416,6 +5416,7 @@ function drawSectorAnalysis(
   // handy (there is currently only one caller, and it always has state).
   state?: DesignCanvasState,
   externalLegend = false,
+  sheetContours?: SheetContourResult,
 ): SectorAnalysisComposition {
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
@@ -6071,50 +6072,51 @@ function drawSectorAnalysis(
       '#8FD0F0',
     );
 
-    // On-contour lines only when the slope is steep enough to be meaningful (>=1.5°).
-    if (!model.flat && bnd.length >= 3 && model.water.slopeDeg >= 1.5) {
-      const contour = computeContourLines(model.water.slopeDeg, model.water.downhillBearingDeg, bnd, frame.mPerPx, frame.imgW, frame.imgH);
-      if (!contour.tooFlat && contour.lines.length) {
-        contourIntervalM = contour.intervalM;
-        ctx.save();
-        // clip to the boundary so the parallel lines don't spill past the plot
-        blueprintRing(ctx, bnd, px, py);
-        ctx.clip();
-        ctx.strokeStyle = 'rgba(126,212,107,0.9)';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([7, 6]);
-        const displayedContourLines = externalLegend && contour.lines.length > 4
-          ? contour.lines.filter((_, index) =>
-              index === 0
-              || index === contour.lines.length - 1
-              || index === Math.floor(contour.lines.length / 3)
-              || index === Math.floor((contour.lines.length * 2) / 3))
-          : contour.lines;
-        ctx.globalAlpha = externalLegend ? 0.46 : 1;
-        for (const ln of displayedContourLines) {
-          ctx.beginPath();
-          ctx.moveTo(px(ln.a[0]), py(ln.a[1]));
-          ctx.lineTo(px(ln.b[0]), py(ln.b[1]));
-          ctx.stroke();
-        }
-        // Free wins already computed and previously discarded (SECTOR-MODEL-SPEC §5): each line's
-        // own elevM, labelled on alternate lines only so it stays legible.
-        ctx.font = `700 ${Math.round(rowH * 0.32)}px ${SHEET_BODY_FONT}`;
-        ctx.fillStyle = 'rgba(183,232,166,0.85)';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        contour.lines.forEach((ln, i) => {
-          if (externalLegend) return;
-          if (i % 2 !== 0) return;
-          const mx = (px(ln.a[0]) + px(ln.b[0])) / 2, my = (py(ln.a[1]) + py(ln.b[1])) / 2;
-          ctx.fillText(`${ln.elevM > 0 ? '+' : ''}${ln.elevM}m`, mx, my);
+    // Terrain-RGB marching-squares paths, fetched through the same API as the interactive map.
+    // The five-point SRTM plane above still supplies the explicitly indicative FALL arrow and the
+    // established adaptive interval; it supplies no contour endpoint.
+    if (
+      !model.flat
+      && bnd.length >= 3
+      && model.water.slopeDeg >= 1.5
+      && sheetContours?.status === 'ok'
+      && sheetContours.lines.length > 0
+    ) {
+      contourIntervalM = sheetContours.intervalM;
+      ctx.save();
+      // The API traces beyond the request edge so paths are not truncated; the property ring is
+      // the authoritative sheet crop.
+      blueprintRing(ctx, bnd, px, py);
+      ctx.clip();
+      ctx.strokeStyle = 'rgba(126,212,107,0.9)';
+      ctx.setLineDash([7, 6]);
+      ctx.globalAlpha = externalLegend ? 0.46 : 1;
+      for (const line of sheetContours.lines) {
+        ctx.lineWidth = line.major ? 3 : 2;
+        ctx.beginPath();
+        line.points.forEach(([x, y], index) => {
+          if (index === 0) ctx.moveTo(px(x), py(y));
+          else ctx.lineTo(px(x), py(y));
         });
-        ctx.restore();
-        const mid = contour.lines[Math.floor(contour.lines.length / 2)];
-        if (mid) {
-          labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2, 'ON CONTOUR — SWALES RUN THIS WAY', '#B7E8A6');
-          labelAt((px(mid.a[0]) + px(mid.b[0])) / 2, (py(mid.a[1]) + py(mid.b[1])) / 2 + rowH * 0.6, `CONTOUR INTERVAL ~${contour.intervalM} m`, '#B7E8A6');
-        }
+        ctx.stroke();
+      }
+      // Absolute elevations come from Terrain-RGB thresholds, not relative offsets on a plane.
+      ctx.font = `700 ${Math.round(rowH * 0.32)}px ${SHEET_BODY_FONT}`;
+      ctx.fillStyle = 'rgba(183,232,166,0.85)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      sheetContours.lines.forEach((line, index) => {
+        if (externalLegend) return;
+        if (index % 2 !== 0) return;
+        const midpoint = line.points[Math.floor(line.points.length / 2)];
+        ctx.fillText(`${line.elevM}m`, px(midpoint[0]), py(midpoint[1]));
+      });
+      ctx.restore();
+      const middleLine = sheetContours.lines[Math.floor(sheetContours.lines.length / 2)];
+      if (middleLine) {
+        const midpoint = middleLine.points[Math.floor(middleLine.points.length / 2)];
+        labelAt(px(midpoint[0]), py(midpoint[1]), 'REAL TERRAIN CONTOUR — SWALES FOLLOW THIS CURVE', '#B7E8A6');
+        labelAt(px(midpoint[0]), py(midpoint[1]) + rowH * 0.6, `CONTOUR INTERVAL ${sheetContours.intervalM} m`, '#B7E8A6');
       }
     }
   }
@@ -6316,8 +6318,8 @@ function drawSectorAnalysis(
   // comment above). 'line' not 'dashline' for the same reason: solid is this sheet's register for
   // computed geometry.
   if (model.driveway) rows.push({ color: DRIVEWAY_COLOR, label: `Driveway access — dust & noise — ${model.driveway.fromLabel}`, style: 'line', icon: markerIcon('driveway'), sectorIcon: 'driveway' });
-  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (local DEM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
-  if (model.water && !model.flat && model.water.slopeDeg >= 1.5 && bnd.length >= 3) rows.push({ color: '#7ED46B', label: `On-contour (swale line)${contourIntervalM != null ? ` — ${contourIntervalM} m interval` : ''}`, style: 'dashline', sectorIcon: 'water' });
+  if (model.water) rows.push({ color: '#3A8EC4', label: `Site slope estimate falls ${site?.elevation?.aspectLabel ?? 'downhill'} · ~${model.water.slopePct.toFixed(0)}% (five-point SRTM · indicative)`, style: model.water.indicative ? 'dashline' : 'line', icon: markerIcon('water'), sectorIcon: 'water' });
+  if (model.water && sheetContours?.status === 'ok' && contourIntervalM != null) rows.push({ color: '#7ED46B', label: `Terrain-RGB contour — ${contourIntervalM} m interval`, style: 'dashline', sectorIcon: 'water' });
   // Gated on drawTerraceFallAnnotations (above) having actually drawn at least one pair — never a
   // placeholder row for a design with no terraces (docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md
   // §4b). A different row from the whole-site "Terrace fall ~X% (uniform-fall model)" row above:
@@ -6339,9 +6341,19 @@ function drawSectorAnalysis(
   const siteWindEvidence = model.siteWindEvidence
     ? ` COORDINATE CLIMATE GRID — summer mean FROM ${model.siteWindEvidence.summerFromLabel ?? 'unavailable'}; winter mean FROM ${model.siteWindEvidence.winterFromLabel ?? 'unavailable'}${model.siteWindEvidence.annualMeanSpeedMps != null ? `; annual mean ${model.siteWindEvidence.annualMeanSpeedMps.toFixed(1)} m/s` : ''}. This is coarse climatology for these coordinates, not an on-site wind observation.`
     : '';
-  const noteText = model.namedWind.length > 0
+  const baseNoteText = model.namedWind.length > 0
     ? `${evidence.footer} ${REGIONAL_FOOTER}${siteWindEvidence}`
     : `${evidence.footer} ${model.dataNotes[0] ?? 'Read the site before you design it.'}${siteWindEvidence}`;
+  const contourEvidenceNote = !model.water
+    ? ''
+    : sheetContours?.status === 'ok'
+      ? ' CONTOURS — Mapbox Terrain-RGB marching-squares geometry. The slope arrow and percentage remain a separate five-point SRTM plane estimate and are indicative.'
+      : sheetContours?.status === 'too-flat' && sheetContours.source === 'mapbox-terrain-rgb'
+        ? ` TERRAIN-RGB CONTOURS — no ${sheetContours.intervalM} m contour crosses the traced property; no contour lines drawn.`
+        : sheetContours?.status === 'too-flat'
+          ? ' CONTOURS OMITTED — the five-point SRTM slope reads too flat for a useful interval.'
+          : ' REAL CONTOURS UNAVAILABLE — no contour lines drawn; the five-point SRTM slope arrow remains indicative.';
+  const noteText = `${baseNoteText}${contourEvidenceNote}`;
   if (!externalLegend) {
     const noteLines = Math.max(1, Math.ceil(noteText.length / 52));
     const lg = drawBlueprintLegendFrame(ctx, W, pad, rowH, Math.round(rowH * (rows.length + 1.6 + noteLines * 0.6)), 'SECTOR LEGEND');
@@ -6422,6 +6434,13 @@ async function composeSectorSheet(
   const renderState = presentation.state;
   const renderFrame = presentation.frame;
   const renderRefLayers = presentation.refLayers;
+  const elevation = site?.elevation;
+  const sheetContours = await fetchSheetContours(
+    renderFrame,
+    renderRefLayers.boundary,
+    elevation?.directionConfidence === 'unconfirmed' ? Number.NaN : elevation?.slopeDeg ?? Number.NaN,
+    elevation?.directionConfidence === 'unconfirmed' ? Number.NaN : elevation?.aspectDeg ?? Number.NaN,
+  );
   const W = renderFrame.imgW * SCALE;
   const H = renderFrame.imgH * SCALE;
   const canvas = document.createElement('canvas');
@@ -6486,6 +6505,7 @@ async function composeSectorSheet(
     baseImage !== null,
     renderState,
     true,
+    sheetContours,
   );
   // Keep sheet 02 focused on sector energies. The base fabric stays as quiet orientation, while
   // labels are reserved for sun, wind, fire, access, fall and the legend.

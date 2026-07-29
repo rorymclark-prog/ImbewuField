@@ -19,7 +19,21 @@ const MAX_TILE_SPAN = 6; // cap: at most 6x6 tiles (incl. 1-tile padding) per re
 const MAX_BBOX_DEG = 0.08; // ~9km at the equator — generous farm-site ceiling
 const MAX_THRESHOLDS = 400; // guard against pathological min/max elevation ranges
 
-type CacheEntry = { body: GeoJSON.FeatureCollection; expires: number };
+type ContourFeature = GeoJSON.Feature<GeoJSON.LineString, { ele: number; index: 0 | 1 }>;
+export type ContourFeatureCollection = GeoJSON.FeatureCollection<
+  GeoJSON.LineString,
+  { ele: number; index: 0 | 1 }
+> & {
+  contour: {
+    status: 'ok' | 'too-flat';
+    intervalM: number;
+    minElevationM: number;
+    maxElevationM: number;
+    source: 'mapbox-terrain-rgb';
+  };
+};
+
+type CacheEntry = { body: ContourFeatureCollection; expires: number };
 const CACHE = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 10 * 60 * 1000;
 const CACHE_MAX_ENTRIES = 50;
@@ -32,6 +46,16 @@ function latToTileY(lat: number, z: number): number {
   return Math.floor(
     ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * 2 ** z
   );
+}
+function lonToPixelX(lon: number, z: number): number {
+  return ((lon + 180) / 360) * TILE_SIZE * 2 ** z;
+}
+function latToPixelY(lat: number, z: number): number {
+  const latRad = (lat * Math.PI) / 180;
+  return (
+    (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI)
+    / 2
+  ) * TILE_SIZE * 2 ** z;
 }
 function pixelToLon(px: number, z: number): number {
   return (px / (TILE_SIZE * 2 ** z)) * 360 - 180;
@@ -74,6 +98,9 @@ export async function GET(req: NextRequest) {
   if ([minLon, minLat, maxLon, maxLat].some((v) => isNaN(v)) || minLon >= maxLon || minLat >= maxLat) {
     return NextResponse.json({ error: 'Invalid bbox — need minLon,minLat,maxLon,maxLat' }, { status: 400 });
   }
+  if (!Number.isFinite(interval) || interval <= 0 || !Number.isFinite(major) || major <= 0) {
+    return NextResponse.json({ error: 'interval and major must be positive finite metres' }, { status: 400 });
+  }
   if (maxLon - minLon > MAX_BBOX_DEG || maxLat - minLat > MAX_BBOX_DEG) {
     return NextResponse.json({ error: 'bbox too large for on-the-fly fine contours (site-scale only)' }, { status: 400 });
   }
@@ -81,7 +108,10 @@ export async function GET(req: NextRequest) {
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   if (!token) return NextResponse.json({ error: 'Mapbox token not configured' }, { status: 500 });
 
-  const cacheKey = `${minLon.toFixed(4)},${minLat.toFixed(4)},${maxLon.toFixed(4)},${maxLat.toFixed(4)},${interval},${major}`;
+  // A four-decimal key aliases sites roughly 11 m apart — large enough to put a neighbouring
+  // farm's contour through the wrong ground. Keep centimetre-scale coordinate identity while the
+  // bounded cache still prevents duplicate tile work for the exact same sheet frame.
+  const cacheKey = `${minLon.toFixed(7)},${minLat.toFixed(7)},${maxLon.toFixed(7)},${maxLat.toFixed(7)},${interval},${major}`;
   const cached = CACHE.get(cacheKey);
   if (cached && cached.expires > Date.now()) {
     return NextResponse.json(cached.body, { headers: { 'Cache-Control': 'public, max-age=300' } });
@@ -137,10 +167,19 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Min/max over the grid, rounded out to interval steps.
+  // Min/max over the REQUESTED FARM, not the one-tile padding. The padding exists only to let
+  // marching-squares trace a line cleanly across the request edge; including it in the elevation
+  // range made a smallholding inherit thresholds from kilometres of neighbouring terrain.
+  const originGlobalPx = tileXMin * TILE_SIZE;
+  const originGlobalPy = tileYMin * TILE_SIZE;
+  const requestColMin = Math.max(0, Math.floor(lonToPixelX(minLon, TILE_ZOOM) - originGlobalPx));
+  const requestColMax = Math.min(gridW - 1, Math.ceil(lonToPixelX(maxLon, TILE_ZOOM) - originGlobalPx));
+  const requestRowMin = Math.max(0, Math.floor(latToPixelY(maxLat, TILE_ZOOM) - originGlobalPy));
+  const requestRowMax = Math.min(gridH - 1, Math.ceil(latToPixelY(minLat, TILE_ZOOM) - originGlobalPy));
+
   let min = Infinity, max = -Infinity;
-  for (let r = 0; r < gridH; r++) {
-    for (let c = 0; c < gridW; c++) {
+  for (let r = requestRowMin; r <= requestRowMax; r++) {
+    for (let c = requestColMin; c <= requestColMax; c++) {
       const v = grid[r][c];
       if (v < min) min = v;
       if (v > max) max = v;
@@ -160,7 +199,7 @@ export async function GET(req: NextRequest) {
     return [pixelToLon(globalPx, TILE_ZOOM), pixelToLat(globalPy, TILE_ZOOM)];
   };
 
-  const features: GeoJSON.Feature<GeoJSON.LineString>[] = [];
+  const features: ContourFeature[] = [];
   for (const t of cappedThresholds) {
     // Snap to nearest multiple check with float-safe rounding.
     const isMajor = Math.abs(Math.round(t / major) * major - t) < 1e-6;
@@ -168,15 +207,40 @@ export async function GET(req: NextRequest) {
     for (const path of paths) {
       if (path.length < 2) continue;
       const coords = path.map(([px, py]) => toLonLat(px, py));
+      let pathMinLon = Infinity, pathMaxLon = -Infinity, pathMinLat = Infinity, pathMaxLat = -Infinity;
+      for (const [lon, lat] of coords) {
+        pathMinLon = Math.min(pathMinLon, lon);
+        pathMaxLon = Math.max(pathMaxLon, lon);
+        pathMinLat = Math.min(pathMinLat, lat);
+        pathMaxLat = Math.max(pathMaxLat, lat);
+      }
+      if (
+        pathMaxLon < minLon
+        || pathMinLon > maxLon
+        || pathMaxLat < minLat
+        || pathMinLat > maxLat
+      ) {
+        continue;
+      }
       features.push({
         type: 'Feature',
-        properties: { ele: Math.round(t), index: isMajor ? 1 : 0 },
+        properties: { ele: Math.round(t * 10) / 10, index: isMajor ? 1 : 0 },
         geometry: { type: 'LineString', coordinates: coords },
       });
     }
   }
 
-  const body: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features };
+  const body: ContourFeatureCollection = {
+    type: 'FeatureCollection',
+    features,
+    contour: {
+      status: features.length > 0 ? 'ok' : 'too-flat',
+      intervalM: interval,
+      minElevationM: Math.round(min * 10) / 10,
+      maxElevationM: Math.round(max * 10) / 10,
+      source: 'mapbox-terrain-rgb',
+    },
+  };
 
   if (CACHE.size >= CACHE_MAX_ENTRIES) {
     const oldestKey = CACHE.keys().next().value;

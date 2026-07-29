@@ -4,6 +4,9 @@ import { readFileSync } from 'node:fs';
 
 import { deriveSectorModel } from '../lib/sector.ts';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
+import { contourIntervalForFrame } from '../lib/contours.ts';
+import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
+import { fetchSheetContours } from '../lib/sheet-contours.ts';
 
 const DURBAN = {
   biome: 'Indian Ocean Coastal Belt',
@@ -177,6 +180,149 @@ test('converts sector presentation tokens into phone-readable drawing values', (
   assert.equal(Number(sectorStrokeWidth('driveway', 1595).toFixed(3)), 5.742);
   assert.equal(sectorFillColor('summer-cooling-wind'), '#25BFC024');
   assert.equal(sectorFillColor('fire'), '#E7562D1f');
+});
+
+test('plan-sheet contours preserve curved Terrain-RGB paths in the exact canvas frame', async () => {
+  const frame = {
+    centerLng: 31.96304,
+    centerLat: -27.72623,
+    zoom: 17,
+    imgW: 960,
+    imgH: 640,
+    mPerPx: 0.9,
+    satDataUrl: null,
+  };
+  const boundary: Array<[number, number]> = [
+    [0.15, 0.2],
+    [0.85, 0.2],
+    [0.85, 0.8],
+    [0.15, 0.8],
+  ];
+  const slopeDeg = 6;
+  const aspectDeg = 200;
+  const interval = contourIntervalForFrame(
+    slopeDeg,
+    aspectDeg,
+    boundary,
+    frame.mPerPx,
+    frame.imgW,
+    frame.imgH,
+  );
+  assert.equal(interval.status, 'ok');
+
+  const expectedPoints: Array<[number, number]> = [
+    [0.1, 0.24],
+    [0.45, 0.37],
+    [0.72, 0.61],
+    [0.9, 0.76],
+  ];
+  const unproject = makeMercatorUnprojector(
+    frame.centerLng,
+    frame.centerLat,
+    frame.zoom,
+    frame.imgW,
+    frame.imgH,
+  );
+  let requestedUrl = '';
+  const result = await fetchSheetContours(
+    frame,
+    boundary,
+    slopeDeg,
+    aspectDeg,
+    async (url) => {
+      requestedUrl = url;
+      return {
+        ok: true,
+        json: async () => ({
+          type: 'FeatureCollection',
+          contour: {
+            status: 'ok',
+            intervalM: interval.intervalM,
+            minElevationM: 410,
+            maxElevationM: 414,
+            source: 'mapbox-terrain-rgb',
+          },
+          features: [{
+            type: 'Feature',
+            properties: { ele: 412.5, index: 0 },
+            geometry: {
+              type: 'LineString',
+              coordinates: expectedPoints.map(unproject),
+            },
+          }],
+        }),
+      };
+    },
+  );
+
+  assert.equal(result.status, 'ok');
+  assert.equal(result.source, 'mapbox-terrain-rgb');
+  assert.equal(result.intervalM, interval.intervalM);
+  assert.equal(result.lines.length, 1);
+  assert.equal(result.lines[0].points.length, expectedPoints.length, 'curve vertices must not collapse to one straight chord');
+  result.lines[0].points.forEach((point, index) => {
+    assert.ok(Math.abs(point[0] - expectedPoints[index][0]) < 1e-9);
+    assert.ok(Math.abs(point[1] - expectedPoints[index][1]) < 1e-9);
+  });
+  const query = new URL(requestedUrl, 'http://sheet.test').searchParams;
+  assert.equal(Number(query.get('interval')), interval.intervalM);
+  assert.ok(Number(query.get('minLon')) < Number(query.get('maxLon')));
+  assert.ok(Number(query.get('minLat')) < Number(query.get('maxLat')));
+});
+
+test('plan-sheet contours distinguish flat terrain from unavailable evidence', async () => {
+  const frame = {
+    centerLng: 31,
+    centerLat: -29,
+    zoom: 17,
+    imgW: 960,
+    imgH: 640,
+    mPerPx: 0.8,
+    satDataUrl: null,
+  };
+  const boundary: Array<[number, number]> = [
+    [0.2, 0.2],
+    [0.8, 0.2],
+    [0.8, 0.8],
+    [0.2, 0.8],
+  ];
+  let fetched = false;
+  const flat = await fetchSheetContours(frame, boundary, 0, 180, async () => {
+    fetched = true;
+    throw new Error('flat ground must not request contours');
+  });
+  assert.equal(fetched, false);
+  assert.equal(flat.status, 'too-flat');
+  assert.equal(flat.tooFlat, true);
+  assert.equal(flat.source, null);
+
+  const unavailable = await fetchSheetContours(frame, boundary, 5, 180, async () => ({
+    ok: false,
+    json: async () => ({ error: 'DEM unavailable' }),
+  }));
+  assert.equal(unavailable.status, 'unavailable');
+  assert.equal(unavailable.tooFlat, false);
+  assert.equal(unavailable.source, null);
+
+  const interval = contourIntervalForFrame(5, 180, boundary, frame.mPerPx, frame.imgW, frame.imgH);
+  assert.equal(interval.status, 'ok');
+  const terrainFlat = await fetchSheetContours(frame, boundary, 5, 180, async () => ({
+    ok: true,
+    json: async () => ({
+      type: 'FeatureCollection',
+      features: [],
+      contour: {
+        status: 'too-flat',
+        intervalM: interval.intervalM,
+        minElevationM: 100,
+        maxElevationM: 100,
+        source: 'mapbox-terrain-rgb',
+      },
+    }),
+  }));
+  assert.equal(terrainFlat.status, 'too-flat');
+  assert.equal(terrainFlat.tooFlat, true);
+  assert.equal(terrainFlat.source, 'mapbox-terrain-rgb');
 });
 
 test('wires Sector jobs through authoritative houses and protected-pixel restoration', () => {
