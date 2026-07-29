@@ -612,7 +612,16 @@ in your report.
 
 ---
 
-## 30. Sheet 02's labels are pill chips; the benchmark uses haloed text — `codex/sector-label-halos`
+## 30. DONE — and the premise was WRONG — `codex/sector-label-halos` (merged)
+
+**Do not re-do this item.** The labels were already haloed text, not chips: `labelAt` and the
+composed painter both `strokeText` at `lineWidth 3.5` in `rgba(8,14,22,0.9)` and fill the colour
+over it, with no `rect`/`roundRect` in either. Codex verified before acting and added a guard test
+rather than "fixing" working code. Claude wrote the item below from a DOWNSCALED render, where a
+halo reads as a solid block — the lesson is that a picture inspected at the wrong magnification lies
+just like code does. Inspect crops at 1:1. The original wording is kept below for the record.
+
+### (original, incorrect, brief)
 
 Rory's reference sheets are the standard for sheet 02. Their direct labels (`HOT DRY BERG WIND / NW`,
 `SLOPE / TERRACE FALL`) are **text with a soft dark halo** sitting straight on the photograph. Ours
