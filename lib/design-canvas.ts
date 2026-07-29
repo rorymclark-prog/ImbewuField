@@ -171,7 +171,11 @@ export function preserveCanvasNavigation(
  *  localStorage blob) both read as 0 rather than throwing or poisoning comparisons with NaN.
  *  Single source of truth for the "missing rev = 0" rule — sync imports this too. */
 export function revOf(state: Pick<DesignCanvasState, 'rev'> | null | undefined): number {
-  return typeof state?.rev === 'number' && Number.isFinite(state.rev) ? state.rev : 0;
+  return typeof state?.rev === 'number'
+    && Number.isSafeInteger(state.rev)
+    && state.rev >= 0
+    ? state.rev
+    : 0;
 }
 
 /** How much design a state actually holds. Single source of truth for the "is there anything to
@@ -181,7 +185,10 @@ export function revOf(state: Pick<DesignCanvasState, 'rev'> | null | undefined):
 export function contentCountOf(
   state: Pick<DesignCanvasState, 'items' | 'zones' | 'lines'> | null | undefined,
 ): number {
-  return state ? state.items.length + state.zones.length + state.lines.length : 0;
+  if (!state) return 0;
+  return (Array.isArray(state.items) ? state.items.length : 0)
+    + (Array.isArray(state.zones) ? state.zones.length : 0)
+    + (Array.isArray(state.lines) ? state.lines.length : 0);
 }
 
 /** Single source of truth for PlacedItem.rot's storage convention (rounded integer degrees,

@@ -28,7 +28,7 @@ import {
 const COLL = 'user_map_data';
 const DOC = 'design_canvas';
 
-type Store = Record<string, DesignCanvasState>;
+type Store = Record<string, unknown>;
 
 const ts = (s: DesignCanvasState) => Date.parse(s.updatedAt) || 0;
 
@@ -81,7 +81,12 @@ export function pickWinner(mine: DesignCanvasState, theirs: DesignCanvasState): 
   return wouldDestroy(winner, loser) ? loser : winner;
 }
 
-function parseStore(json: unknown): Store {
+const STEPS = new Set<DesignCanvasState['step']>([
+  'base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy',
+]);
+
+/** Firestore carries this as one JSON string because nested coordinate arrays are not writable. */
+export function parseDesignCanvasStore(json: unknown): Store {
   if (typeof json !== 'string') return {};
   try {
     const v = JSON.parse(json);
@@ -89,6 +94,71 @@ function parseStore(json: unknown): Store {
   } catch {
     return {};
   }
+}
+
+export function stringifyDesignCanvasStore(store: Store): string {
+  return JSON.stringify(store);
+}
+
+function stateAt(store: Store, siteId: string): DesignCanvasState | null {
+  const value = store[siteId];
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const state = value as Partial<DesignCanvasState>;
+  if (state.siteId !== siteId
+    || !state.frame || typeof state.frame !== 'object'
+    || !Array.isArray(state.items)
+    || !Array.isArray(state.zones)
+    || !Array.isArray(state.lines)
+    || typeof state.updatedAt !== 'string'
+    || !state.step || !STEPS.has(state.step)) {
+    return null;
+  }
+  const frame = state.frame as DesignCanvasState['frame'];
+  if (![frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, frame.mPerPx].every(Number.isFinite)
+    || frame.imgW <= 0 || frame.imgH <= 0 || frame.mPerPx <= 0) {
+    return null;
+  }
+  const finitePoint = (point: unknown): boolean =>
+    Array.isArray(point) && point.length === 2 && point.every(Number.isFinite);
+  const optionalFinite = (value: unknown): boolean =>
+    value === undefined || (typeof value === 'number' && Number.isFinite(value));
+  const optionalPositive = (value: unknown): boolean =>
+    value === undefined || (typeof value === 'number' && Number.isFinite(value) && value > 0);
+  if (!state.items.every((item) =>
+    !!item && typeof item.id === 'string' && typeof item.defId === 'string'
+    && Number.isFinite(item.x) && Number.isFinite(item.y)
+    && optionalPositive(item.wM) && optionalPositive(item.hM) && optionalFinite(item.rot))
+    || !state.zones.every((zone) =>
+      !!zone && typeof zone.id === 'string' && Array.isArray(zone.points) && zone.points.every(finitePoint)
+      && optionalFinite(zone.labelDx) && optionalFinite(zone.labelDy)
+      && optionalFinite(zone.levelM) && optionalFinite(zone.measuredSlopePct))
+    || !state.lines.every((line) =>
+      !!line && typeof line.id === 'string' && Array.isArray(line.points) && line.points.every(finitePoint)
+      && optionalFinite(line.labelDx) && optionalFinite(line.labelDy))
+    || (state.customBase != null
+      && (!Number.isFinite(state.customBase.mPerPx) || state.customBase.mPerPx <= 0))
+    || (state.dailyWaterUseL !== undefined
+      && (!Number.isFinite(state.dailyWaterUseL) || state.dailyWaterUseL < 0))) {
+    return null;
+  }
+  return state as DesignCanvasState;
+}
+
+/**
+ * Pure read-modify-write used by reconcile and push. Invalid data in one slot
+ * cannot enter the canvas, while every other site slot is preserved verbatim.
+ */
+export function mergeDesignCanvasStore(
+  json: unknown,
+  siteId: string,
+  local: DesignCanvasState | null,
+): { winner: DesignCanvasState | null; designCanvasJson: string } {
+  const remoteStore = parseDesignCanvasStore(json);
+  const remoteEntry = stateAt(remoteStore, siteId);
+  const localEntry = local ? stateAt({ [siteId]: local }, siteId) : null;
+  const winner = !localEntry ? remoteEntry : !remoteEntry ? localEntry : pickWinner(localEntry, remoteEntry);
+  const mergedStore = winner ? { ...remoteStore, [siteId]: winner } : remoteStore;
+  return { winner, designCanvasJson: stringifyDesignCanvasStore(mergedStore) };
 }
 
 function currentUid(): string | null {
@@ -120,16 +190,17 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
     let winner: DesignCanvasState | null = local;
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
-      const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
-      const remoteEntry = remoteStore[siteId] ?? null;
-
-      winner = !local ? remoteEntry : !remoteEntry ? local : pickWinner(local, remoteEntry);
+      const merged = mergeDesignCanvasStore(
+        snap.exists() ? snap.data().designCanvasJson : '{}',
+        siteId,
+        local,
+      );
+      winner = merged.winner;
 
       // Only ever touch OUR OWN siteId's slot — every other site's entry already in the
       // cloud store is left exactly as-is, so this can never wipe another site's design.
       if (winner) {
-        const mergedStore: Store = { ...remoteStore, [siteId]: winner };
-        tx.set(ref, { designCanvasJson: JSON.stringify(mergedStore), updatedAt: serverTimestamp() });
+        tx.set(ref, { designCanvasJson: merged.designCanvasJson, updatedAt: serverTimestamp() });
       }
     });
     const displayedWinner = winner && winner !== local
@@ -156,11 +227,12 @@ export async function pushDesignCanvas(state: DesignCanvasState): Promise<void> 
   try {
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
-      const remoteStore = parseStore(snap.exists() ? snap.data().designCanvasJson : '{}');
-      const remoteEntry = remoteStore[state.siteId] ?? null;
-      const winner = remoteEntry ? pickWinner(state, remoteEntry) : state;
-      const mergedStore: Store = { ...remoteStore, [state.siteId]: winner };
-      tx.set(ref, { designCanvasJson: JSON.stringify(mergedStore), updatedAt: serverTimestamp() });
+      const merged = mergeDesignCanvasStore(
+        snap.exists() ? snap.data().designCanvasJson : '{}',
+        state.siteId,
+        state,
+      );
+      tx.set(ref, { designCanvasJson: merged.designCanvasJson, updatedAt: serverTimestamp() });
     });
   } catch (e) {
     console.error('[design-canvas-sync] push', e);
@@ -186,7 +258,7 @@ export function subscribeDesignCanvasLive(siteId: string): () => void {
       // is load-bearing, not redundant (our own echo ties on rev AND updatedAt, so `local` wins
       // the tie and we correctly do nothing).
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const remoteEntry = parseStore(snap.data().designCanvasJson)[siteId];
+      const remoteEntry = stateAt(parseDesignCanvasStore(snap.data().designCanvasJson), siteId);
       if (!remoteEntry) return;
       const local = loadCanvasState(siteId);
       // Same rule as reconcile/push — this listener is the one path that overwrites local with a
