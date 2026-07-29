@@ -2,7 +2,8 @@ import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/fires
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
 import { readTombstones, addTombstone } from './local-tombstones';
-import { isDeleteStale } from './user-sync';
+import { isDeleteStale, mergeItems } from './user-sync';
+import { canonicalCoordinateSiteId } from './site-id';
 
 export type SiteElementType =
   | 'jojo_tank'
@@ -33,6 +34,7 @@ export interface SiteElement {
 export const ELEMENT_TYPES: SiteElementType[] = [
   'jojo_tank', 'tap', 'borehole', 'pond_dam', 'compost', 'gate', 'beehive', 'nursery', 'tree',
 ];
+const ELEMENT_TYPE_VALUES = new Set<SiteElementType>(ELEMENT_TYPES);
 
 const ELEMENT_META: Record<SiteElementType, { icon: string; label: string; color: string }> = {
   jojo_tank: { icon: '🛢', label: 'JoJo / Water Tank',        color: '#2F7A4A' },
@@ -62,38 +64,93 @@ function currentUid(): string | undefined {
   return getFirebase()?.auth?.currentUser?.uid;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function isValidSiteElement(value: unknown): value is SiteElement {
+  if (!isRecord(value)) return false;
+  return typeof value.id === 'string' && value.id.trim().length > 0
+    && ELEMENT_TYPE_VALUES.has(value.type as SiteElementType)
+    && typeof value.lat === 'number' && Number.isFinite(value.lat) && value.lat >= -90 && value.lat <= 90
+    && typeof value.lon === 'number' && Number.isFinite(value.lon) && value.lon >= -180 && value.lon <= 180
+    && (value.label === undefined || typeof value.label === 'string')
+    && (value.note === undefined || typeof value.note === 'string')
+    && (value.litres === undefined
+      || (typeof value.litres === 'number' && Number.isFinite(value.litres) && value.litres >= 0))
+    && (value.species === undefined || typeof value.species === 'string')
+    && (value.count === undefined
+      || (typeof value.count === 'number' && Number.isFinite(value.count)
+        && Number.isInteger(value.count) && value.count >= 1))
+    && typeof value.createdAt === 'string' && Number.isFinite(Date.parse(value.createdAt))
+    && (value.updatedAt === undefined
+      || (typeof value.updatedAt === 'number' && Number.isFinite(value.updatedAt) && value.updatedAt >= 0));
+}
+
+const elementId = (element: SiteElement) => element.id;
+const elementTs = (element: SiteElement) => element.updatedAt ?? Date.parse(element.createdAt);
+
+export function normaliseSiteElements(value: unknown): SiteElement[] {
+  if (!Array.isArray(value)) return [];
+  const byId = new Map<string, SiteElement>();
+  for (const candidate of value) {
+    if (!isValidSiteElement(candidate)) continue;
+    const current = byId.get(candidate.id);
+    if (!current || elementTs(candidate) >= elementTs(current)) {
+      byId.set(candidate.id, candidate);
+    }
+  }
+  return [...byId.values()];
+}
+
 export function loadSiteElements(siteId: string): SiteElement[] {
-  if (typeof window === 'undefined') return [];
+  const canonicalSiteId = canonicalCoordinateSiteId(siteId);
+  if (typeof window === 'undefined' || !canonicalSiteId) return [];
   try {
-    const v = JSON.parse(localStorage.getItem(keyFor(siteId)) ?? '[]');
-    return Array.isArray(v) ? v : [];
+    return normaliseSiteElements(JSON.parse(localStorage.getItem(keyFor(canonicalSiteId)) ?? '[]'));
   } catch {
     return [];
   }
 }
 
-export function saveSiteElement(siteId: string, el: SiteElement): void {
+export function saveSiteElement(siteId: string, el: SiteElement): SiteElement | null {
+  const canonicalSiteId = canonicalCoordinateSiteId(siteId);
+  if (!canonicalSiteId || !isValidSiteElement(el)) return null;
   const stamped: SiteElement = { ...el, updatedAt: Date.now() };
-  const updated = [stamped, ...loadSiteElements(siteId).filter((e) => e.id !== stamped.id)];
-  localStorage.setItem(keyFor(siteId), JSON.stringify(updated));
+  const updated = [stamped, ...loadSiteElements(canonicalSiteId).filter((e) => e.id !== stamped.id)];
+  try {
+    localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(updated));
+  } catch {
+    return null;
+  }
   notify();
   const uid = currentUid();
-  if (uid) upsertSiteElement(uid, siteId, stamped).catch(() => {});
+  if (uid) upsertSiteElement(uid, canonicalSiteId, stamped).catch(() => {});
+  return stamped;
 }
 
-export function deleteSiteElement(siteId: string, id: string): void {
-  // Record the local tombstone BEFORE the array rewrite — see lib/local-tombstones.ts for why
-  // (closes the deletion-resurrection window against a concurrent remote snapshot).
+export function deleteSiteElement(siteId: string, id: string): boolean {
+  const canonicalSiteId = canonicalCoordinateSiteId(siteId);
+  if (!canonicalSiteId || !id) return false;
+  const current = loadSiteElements(canonicalSiteId);
+  if (!current.some((element) => element.id === id)) return false;
   const deletedAt = Date.now();
-  addTombstone(deletedKeyFor(siteId), id, deletedAt);
-  const updated = loadSiteElements(siteId).filter((e) => e.id !== id);
-  localStorage.setItem(keyFor(siteId), JSON.stringify(updated));
+  const updated = current.filter((element) => element.id !== id);
+  // The visible array write comes first: localStorage is synchronous, so the tombstone is still
+  // installed before control returns, while a quota failure cannot mark a still-visible item.
+  try {
+    localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(updated));
+  } catch {
+    return false;
+  }
+  addTombstone(deletedKeyFor(canonicalSiteId), id, deletedAt);
   notify();
   const uid = currentUid();
   // Thread the SAME timestamp into removeSiteElement() as its `deletedAtMs` — see
   // removePlace()/isDeleteStale() in lib/user-sync.ts for why a fresh Date.now() sampled at
   // transaction-commit time would let a delayed delete kill a genuinely newer remote edit.
-  if (uid) removeSiteElement(uid, siteId, id, deletedAt).catch(() => {});
+  if (uid) removeSiteElement(uid, canonicalSiteId, id, deletedAt).catch(() => {});
+  return true;
 }
 
 // ── Firebase sync (mirrors upsertWaterPoint/removeWaterPoint in user-sync.ts) ──
@@ -103,6 +160,17 @@ export function deleteSiteElement(siteId: string, id: string): void {
 // (a farm can have many sites, each with its own placed elements).
 
 type Tombstones = Record<string, number>; // id → deletedAt (ms)
+
+function normaliseTombstones(value: unknown): Tombstones {
+  if (!isRecord(value)) return {};
+  const clean: Tombstones = {};
+  for (const [id, timestamp] of Object.entries(value)) {
+    if (id && typeof timestamp === 'number' && Number.isFinite(timestamp) && timestamp >= 0) {
+      clean[id] = timestamp;
+    }
+  }
+  return clean;
+}
 
 // SAMPLE-MODE GATE (safety layer 2, lib/sample-mode.ts): null here = "signed out" to every
 // caller in this module, so site-element cloud sync is structurally off while sampling —
@@ -116,8 +184,8 @@ async function upsertSiteElement(uid: string, siteId: string, el: SiteElement): 
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
-      const remote: SiteElement[] = data.elements ?? [];
-      const deleted: Tombstones = { ...(data.deleted ?? {}) };
+      const remote = normaliseSiteElements(data.elements);
+      const deleted = normaliseTombstones(data.deleted);
       const tomb = deleted[el.id] ?? 0;
       const ts = el.updatedAt ?? 0;
       if (tomb > ts) {
@@ -142,12 +210,12 @@ async function removeSiteElement(uid: string, siteId: string, id: string, delete
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
-      const remote: SiteElement[] = data.elements ?? [];
+      const remote = normaliseSiteElements(data.elements);
       const remoteItem = remote.find((e) => e.id === id);
       if (isDeleteStale(remoteItem ? elementTs(remoteItem) : undefined, deletedAtMs)) {
         return; // remote item was edited (elsewhere) after this device's delete — newest-wins, no-op
       }
-      const deleted: Tombstones = { ...(data.deleted ?? {}), [id]: deletedAtMs };
+      const deleted: Tombstones = { ...normaliseTombstones(data.deleted), [id]: deletedAtMs };
       tx.set(ref, { elements: remote.filter((e) => e.id !== id), deleted, updatedAt: serverTimestamp() });
     });
   } catch (e) { console.error('[sync] removeSiteElement', e); }
@@ -161,9 +229,6 @@ async function removeSiteElement(uid: string, siteId: string, id: string, delete
 // on the same union-by-id/newest-updatedAt-wins/tombstone-aware merge). Call site (wiring):
 // Map.tsx, alongside its existing subscribeUserMapData effect, keyed by siteIdForElements.
 
-const elementId = (e: SiteElement) => e.id;
-const elementTs = (e: SiteElement) => e.updatedAt ?? (e.createdAt ? Date.parse(e.createdAt) || 0 : 0);
-
 // Union by id (newest updatedAt wins), then drop ids whose deletion tombstone is newer than the
 // surviving item's last edit. `localDel` comes from readTombstones(deletedKeyFor(siteId)) at the
 // call sites below — deleteSiteElement() records a local tombstone synchronously (see
@@ -171,22 +236,20 @@ const elementTs = (e: SiteElement) => e.updatedAt ?? (e.createdAt ? Date.parse(e
 // transaction commits can't resurrect an item this device just deleted. A deliberate re-add
 // after deletion still survives: its fresh updatedAt outranks the tombstone (see the filter
 // below and lib/local-tombstones.ts's semantics note).
-function mergeElements(
-  remote: SiteElement[], local: SiteElement[],
+export function mergeSiteElements(
+  remote: unknown, local: unknown,
   remoteDel: Tombstones, localDel: Tombstones,
+  now: number = Date.now(),
 ): { items: SiteElement[]; deleted: Tombstones } {
-  const deleted: Tombstones = { ...remoteDel };
-  for (const [id, ts] of Object.entries(localDel)) deleted[id] = Math.max(deleted[id] ?? 0, ts);
-  const byId = new Map<string, SiteElement>();
-  for (const it of [...remote, ...local]) {
-    const cur = byId.get(elementId(it));
-    if (!cur || elementTs(it) >= elementTs(cur)) byId.set(elementId(it), it);
-  }
-  const items = [...byId.values()].filter((it) => {
-    const tomb = deleted[elementId(it)];
-    return !(tomb && tomb > elementTs(it));
-  });
-  return { items, deleted };
+  return mergeItems(
+    normaliseSiteElements(remote),
+    normaliseSiteElements(local),
+    normaliseTombstones(remoteDel),
+    normaliseTombstones(localDel),
+    elementId,
+    elementTs,
+    now,
+  );
 }
 
 // One-shot reconcile for a single site — call on mount / site change (while signed in).
@@ -195,16 +258,23 @@ function mergeElements(
 // module already uses so existing listeners (Map.tsx, GeometryDesignStudio.tsx) pick it up
 // with no further changes on their end. No-ops when signed out or offline.
 export async function reconcileSiteElements(uid: string, siteId: string): Promise<void> {
+  const canonicalSiteId = canonicalCoordinateSiteId(siteId);
+  if (!uid || !canonicalSiteId) return;
   const d = db(); if (!d) return;
-  const ref = doc(d, 'user_map_data', uid, 'data', `site_elements_${siteId}`);
+  const ref = doc(d, 'user_map_data', uid, 'data', `site_elements_${canonicalSiteId}`);
   try {
     await runTransaction(d, async (tx) => {
       const snap = await tx.get(ref);
       const data = snap.exists() ? snap.data() : {};
-      const remote: SiteElement[] = data.elements ?? [];
+      const remote = normaliseSiteElements(data.elements);
       const remoteDel: Tombstones = data.deleted ?? {};
-      const { items, deleted } = mergeElements(remote, loadSiteElements(siteId), remoteDel, readTombstones(deletedKeyFor(siteId)));
-      localStorage.setItem(keyFor(siteId), JSON.stringify(items));
+      const { items, deleted } = mergeSiteElements(
+        remote,
+        loadSiteElements(canonicalSiteId),
+        remoteDel,
+        readTombstones(deletedKeyFor(canonicalSiteId)),
+      );
+      localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(items));
       tx.set(ref, { elements: items, deleted, updatedAt: serverTimestamp() });
     });
     notify();
@@ -216,18 +286,29 @@ export async function reconcileSiteElements(uid: string, siteId: string): Promis
 // unsynced local edit in flight isn't clobbered), and notifies. Returns an unsubscribe
 // function (no-op when signed out).
 export function subscribeSiteElementsLive(uid: string, siteId: string): () => void {
+  const canonicalSiteId = canonicalCoordinateSiteId(siteId);
+  if (!uid || !canonicalSiteId) return () => {};
   const d = db(); if (!d) return () => {};
-  const ref = doc(d, 'user_map_data', uid, 'data', `site_elements_${siteId}`);
+  const ref = doc(d, 'user_map_data', uid, 'data', `site_elements_${canonicalSiteId}`);
   return onSnapshot(
     ref,
     (snap) => {
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
       const data = snap.data();
-      const remote: SiteElement[] = data.elements ?? [];
+      const remote = normaliseSiteElements(data.elements);
       const remoteDel: Tombstones = data.deleted ?? {};
-      const { items } = mergeElements(remote, loadSiteElements(siteId), remoteDel, readTombstones(deletedKeyFor(siteId)));
-      localStorage.setItem(keyFor(siteId), JSON.stringify(items));
-      notify();
+      const { items } = mergeSiteElements(
+        remote,
+        loadSiteElements(canonicalSiteId),
+        remoteDel,
+        readTombstones(deletedKeyFor(canonicalSiteId)),
+      );
+      try {
+        localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(items));
+        notify();
+      } catch (e) {
+        console.error('[sync] site-elements local write', e);
+      }
     },
     (e) => console.error('[sync] site-elements listener', e),
   );

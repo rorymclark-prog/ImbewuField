@@ -1,6 +1,7 @@
 import { getFirebase } from './firebase/init';
 import { upsertSurvey } from './user-sync';
 import { loadPlaces } from './saved-places';
+import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 
 export interface SiteSurvey {
   siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
@@ -216,22 +217,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
 
 const key = (id: string) => `imbewu_site_survey_${id}`;
 
-// Matches designSiteIdFromLocation()'s exact output format (site-survey.ts can't import
-// lib/design-studio.ts — design-studio.ts already imports loadSurvey from here, and importing
-// back would be circular).
-const SITE_ID_RE = /^site:(-?\d+\.\d{5}),(-?\d+\.\d{5})$/;
-
-export function canonicalSurveySiteId(value: unknown): string | null {
-  if (typeof value !== 'string') return null;
-  const match = SITE_ID_RE.exec(value);
-  if (!match) return null;
-  const lat = Number(match[1]);
-  const lon = Number(match[2]);
-  return Number.isFinite(lat) && lat >= -90 && lat <= 90
-    && Number.isFinite(lon) && lon >= -180 && lon <= 180
-    ? value
-    : null;
-}
+export const canonicalSurveySiteId = canonicalCoordinateSiteId;
 
 // One-time read-repair: survey answers saved under the old placeId-keyed scheme (before the
 // storage key was switched to the lat/lon-derived siteId) would otherwise never be found by
@@ -242,14 +228,13 @@ function migrateLegacySurvey(siteId: string): SiteSurvey | null {
   if (typeof window === 'undefined') return null;
   const canonicalSiteId = canonicalSurveySiteId(siteId);
   if (!canonicalSiteId) return null;
-  const match = SITE_ID_RE.exec(canonicalSiteId);
-  if (!match) return null;
-  const [, latStr, lonStr] = match;
+  const parts = coordinateSiteIdParts(canonicalSiteId);
+  if (!parts) return null;
   const place = loadPlaces().find((p) =>
     Number.isFinite(p.lat)
     && Number.isFinite(p.lon)
-    && p.lat.toFixed(5) === latStr
-    && p.lon.toFixed(5) === lonStr);
+    && p.lat.toFixed(5) === parts.lat.toFixed(5)
+    && p.lon.toFixed(5) === parts.lon.toFixed(5));
   if (!place) return null;
 
   let legacy: SiteSurvey | null;
