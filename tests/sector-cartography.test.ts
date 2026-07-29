@@ -98,6 +98,72 @@ test('does not invent regional, fire, driveway, water, or frost presentation', (
   assert.deepEqual(entries.map((item) => item.key), ['summer-sun', 'winter-sun', 'midday-sun']);
 });
 
+test('malformed terrain never becomes a water or frost arrow', () => {
+  const invalidTerrain = [
+    { slopeDeg: Number.NaN, slopePct: 10, aspectDeg: 180 },
+    { slopeDeg: Number.POSITIVE_INFINITY, slopePct: 10, aspectDeg: 180 },
+    { slopeDeg: -1, slopePct: 10, aspectDeg: 180 },
+    { slopeDeg: 90, slopePct: 10, aspectDeg: 180 },
+    { slopeDeg: 5, slopePct: Number.NaN, aspectDeg: 180 },
+    { slopeDeg: 5, slopePct: Number.POSITIVE_INFINITY, aspectDeg: 180 },
+    { slopeDeg: 5, slopePct: -1, aspectDeg: 180 },
+    { slopeDeg: 5, slopePct: 10, aspectDeg: Number.NaN },
+    { slopeDeg: 5, slopePct: 10, aspectDeg: Number.POSITIVE_INFINITY },
+  ];
+
+  for (const terrain of invalidTerrain) {
+    const model = deriveSectorModel({
+      elevation: { ...terrain, aspectLabel: 'S' },
+      climate: { minTemp: 0 },
+    }, -29, 31);
+    assert.equal(model.water, null);
+    assert.equal(model.frost, null);
+    assert.ok(
+      presentSectorCartography(model).every((entry) =>
+        entry.bearings.every((bearing) => Number.isFinite(bearing))),
+    );
+  }
+});
+
+test('sector bearings are canonical and sampling baselines remain usable', () => {
+  for (const aspectDeg of [-721, 721]) {
+    const model = deriveSectorModel({
+      elevation: {
+        slopeDeg: 5,
+        slopePct: 9,
+        aspectDeg,
+        aspectLabel: 'N',
+        sampleBaselineM: Number.NaN,
+      },
+    }, -29, 31);
+    assert.ok(model.water);
+    assert.ok(model.water.downhillBearingDeg >= 0 && model.water.downhillBearingDeg < 360);
+    assert.ok(Number.isFinite(model.water.sampleBaselineM) && model.water.sampleBaselineM > 0);
+  }
+});
+
+test('impossible climate values do not masquerade as property evidence or frost risk', () => {
+  for (const windSpeed of [-1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    const model = deriveSectorModel({ climate: { windSpeed } }, -29, 31);
+    assert.equal(model.siteWindEvidence, null);
+
+    const directional = deriveSectorModel({
+      climate: { windSpeed, windFromSummer: 'N', windFromWinter: 'S' },
+    }, -29, 31);
+    assert.equal(directional.siteWindEvidence?.annualMeanSpeedMps, null);
+    assert.equal(directional.windSummer?.speed, undefined);
+    assert.equal(directional.windWinter?.speed, undefined);
+  }
+
+  for (const minTemp of [Number.NaN, Number.NEGATIVE_INFINITY]) {
+    const model = deriveSectorModel({
+      elevation: { slopeDeg: 5, slopePct: 9, aspectDeg: 180, aspectLabel: 'S' },
+      climate: { minTemp },
+    }, -29, 31);
+    assert.equal(model.frost, null);
+  }
+});
+
 test('preserves mixed midday truth as two exact cardinal bearings', () => {
   const model = deriveSectorModel({ biome: 'test' }, -22, 30);
   const midday = presentSectorCartography(model).find((item) => item.key === 'midday-sun');

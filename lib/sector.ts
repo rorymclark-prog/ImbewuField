@@ -137,6 +137,12 @@ export function deriveDrivewayAccess(
   drivewayPoints: Array<[number, number]>,
 ): SectorModel['driveway'] {
   if (drivewayPoints.length < 2) return null; // matches the sheet's own "no row for untraced geometry" gate
+  if (
+    siteCentroid.some((coordinate) => !Number.isFinite(coordinate))
+    || drivewayPoints.some((point) => point.some((coordinate) => !Number.isFinite(coordinate)))
+  ) {
+    return null;
+  }
   const n = drivewayPoints.length;
   const dcx = drivewayPoints.reduce((s, p) => s + p[0], 0) / n;
   const dcy = drivewayPoints.reduce((s, p) => s + p[1], 0) / n;
@@ -206,10 +212,20 @@ export function deriveSectorModel(
 
   const elev = site?.elevation;
   const slopeDeg = elev?.slopeDeg ?? 0;
-  const aspectDeg = elev?.aspectDeg;
+  const slopePct = elev?.slopePct;
+  const rawAspectDeg = elev?.aspectDeg;
+  const aspectDeg = rawAspectDeg != null && Number.isFinite(rawAspectDeg)
+    ? ((rawAspectDeg % 360) + 360) % 360
+    : null;
   const directionConfirmed = elev?.directionConfidence !== 'unconfirmed';
-  const slopeUsable = directionConfirmed && slopeDeg > 0.5 && aspectDeg != null && Number.isFinite(aspectDeg);
-  const flat = !(slopeDeg >= 1.5); // below 1.5° reads flat (no contour lines) — matches lib/contours
+  const validSlope = Number.isFinite(slopeDeg) && slopeDeg >= 0 && slopeDeg < 90;
+  const validSlopePct = slopePct != null && Number.isFinite(slopePct) && slopePct >= 0;
+  const slopeUsable = directionConfirmed
+    && validSlope
+    && slopeDeg > 0.5
+    && validSlopePct
+    && aspectDeg != null;
+  const flat = !validSlope || slopeDeg < 1.5; // below 1.5° reads flat (no contour lines) — matches lib/contours
   // DEM-derived direction remains indicative even on a visibly steep site. It is property-local
   // evidence, not a substitute for surveyed levels.
   const indicative = slopeUsable && elev?.directionConfidence === 'site-local-indicative';
@@ -226,17 +242,26 @@ export function deriveSectorModel(
   // in the gap between its two lobes, a direction the wind never blows from).
   const wsB = labelToBearing(site?.climate?.windFromSummer);
   const wwB = labelToBearing(site?.climate?.windFromWinter);
-  const windSummer = wsB != null ? { fromLabel: site!.climate!.windFromSummer!, bearingDeg: wsB, speed: site?.climate?.windSpeed } : null;
-  const windWinter = wwB != null ? { fromLabel: site!.climate!.windFromWinter!, bearingDeg: wwB, speed: site?.climate?.windSpeed } : null;
+  const windSpeed = site?.climate?.windSpeed;
+  const validWindSpeed = windSpeed != null && Number.isFinite(windSpeed) && windSpeed >= 0
+    ? windSpeed
+    : null;
+  const windSummer = wsB != null ? {
+    fromLabel: site!.climate!.windFromSummer!,
+    bearingDeg: wsB,
+    ...(validWindSpeed != null ? { speed: validWindSpeed } : {}),
+  } : null;
+  const windWinter = wwB != null ? {
+    fromLabel: site!.climate!.windFromWinter!,
+    bearingDeg: wwB,
+    ...(validWindSpeed != null ? { speed: validWindSpeed } : {}),
+  } : null;
   const siteWindEvidence: SectorModel['siteWindEvidence'] =
-    windSummer || windWinter || (site?.climate?.windSpeed != null && Number.isFinite(site.climate.windSpeed))
+    windSummer || windWinter || validWindSpeed != null
       ? {
           summerFromLabel: windSummer?.fromLabel ?? null,
           winterFromLabel: windWinter?.fromLabel ?? null,
-          annualMeanSpeedMps:
-            site?.climate?.windSpeed != null && Number.isFinite(site.climate.windSpeed)
-              ? site.climate.windSpeed
-              : null,
+          annualMeanSpeedMps: validWindSpeed,
           provenance: 'coordinate-climate-grid',
         }
       : null;
@@ -286,19 +311,24 @@ export function deriveSectorModel(
     ? {
         downhillBearingDeg: aspectDeg!,
         slopeDeg,
-        slopePct: elev!.slopePct,
+        slopePct: slopePct!,
         indicative,
         fallModel: 'uniform-plane',
-        sampleBaselineM: elev?.sampleBaselineM ?? 1000,
+        sampleBaselineM:
+          elev?.sampleBaselineM != null
+          && Number.isFinite(elev.sampleBaselineM)
+          && elev.sampleBaselineM > 0
+            ? elev.sampleBaselineM
+            : 1000,
       }
     : null;
 
   const minT = site?.climate?.minTemp;
   const frost: SectorModel['frost'] =
-    minT != null && minT < 5 && slopeUsable
+    minT != null && Number.isFinite(minT) && minT < 5 && slopeUsable
       ? { downhillBearingDeg: aspectDeg!, indicative, confidence: 'inferred-from-local-dem' }
       : null;
-  if (minT != null && minT < 5 && !slopeUsable) notes.push('Cold air settles in low spots on still, clear nights.');
+  if (minT != null && Number.isFinite(minT) && minT < 5 && !slopeUsable) notes.push('Cold air settles in low spots on still, clear nights.');
   if (elev?.directionConfidence === 'unconfirmed') {
     notes.push('Local DEM relief is too small to confirm a downhill direction — use neighbouring contours or measure the fall on site.');
   } else if (indicative) {
