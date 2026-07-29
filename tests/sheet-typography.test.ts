@@ -62,7 +62,16 @@ test('title fonts keep the shorthand shape the scrim measures them by', () => {
   const SIZE_BEFORE_PX = /(\d+(?:\.\d+)?)px/;
 
   const titleUses = SOURCE.split('\n').filter((l) => /SHEET_TITLE_FONT/.test(l) && /px/.test(l));
-  assert.ok(titleUses.length >= 4, 'the title face is used on every sheet');
+  // This was `>= 4` — a usage COUNT, not a rule, and it failed the moment sheet 08's cream-panel
+  // header moved off Georgia to match 01-07. That was the right fix: line 7490 and line 6881 draw
+  // the same thing (the sheet title in the cream legend panel) in two different faces, so one sheet
+  // of a printed set arrived in another typeface, with Georgia's oldstyle figures rendering the
+  // number as "o8". The on-map title blocks keep the serif deliberately.
+  //
+  // What this test protects is the SHAPE of the shorthand, so drawTitleBlockScrim's regex keeps
+  // finding the size. That holds however many places use the face — so assert it is still live
+  // rather than pinning how many uses there are.
+  assert.ok(titleUses.length > 0, 'the title face is orphaned — either use it or delete it');
 
   for (const line of titleUses) {
     assert.match(line, /\$\{[^}]*\}px \$\{SHEET_TITLE_FONT\}|\d+px \$\{SHEET_TITLE_FONT\}/);

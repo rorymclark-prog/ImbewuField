@@ -6878,7 +6878,12 @@ export async function buildImplementationMap(
   const fsBody = Math.round(lgW * 0.029);
   const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
-  const headerFont = `800 ${fsHeader}px ${SHEET_TITLE_FONT}`;
+  // Sheet 08's header used SHEET_TITLE_FONT (Georgia) while 01–07 set theirs in
+  // REFERENCE_LABEL_FONT, so one sheet of a printed plan set arrived in a different typeface. It
+  // also made the sheet number read as "o8": Georgia has oldstyle figures, so its zero sits at
+  // x-height next to a full-height 8. Nobody chose that — the phasing panel was written separately
+  // and reached for the nearest title constant.
+  const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
   const titleFont = `800 ${Math.round(lgW * 0.034)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -7887,7 +7892,10 @@ interface SavedGlossy {
 //        scratch — the margins went narrow when sheets started following the boundary (v57), and
 //        shrink-to-fit turned that into three type sizes on one page. It now stops at 72% of the
 //        sheet's size and overruns onto the map, where the existing halo keeps it readable.
-const PLAN_VERSION = 'v67';
+//   v68 — 2026-07-29: sheet 08's header joins the rest of the plan set. It was set in Georgia
+//        while 01-07 use the condensed face, so one sheet of a printed set arrived in a different
+//        typeface — and Georgia's oldstyle figures made the number read as "o8".
+const PLAN_VERSION = 'v68';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 const glossyKey = (siteId: string, mapKey: string = 'all') =>
   mapKey === 'all'
