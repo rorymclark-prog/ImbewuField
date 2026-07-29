@@ -313,6 +313,47 @@ If you finish 20, keep going with the same recipe on `lib/lesson-registry.ts` (3
 
 ---
 
+## NEVER RUN DRY — what to do when you reach the end
+
+**Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
+agent overnight is the single most expensive thing in this setup. When you run out of numbered
+items, take the standing work below, in this order, and keep going. Report each one the same way.
+
+**S1. Render a sheet and look at it.** This is the highest-value thing available and it is
+inexhaustible. Pick a sheet you have not audited (01–08), render the **exact, no-AI** version for the
+Ubhejane demo, export it at full resolution, and *actually look at it*. Not the code — the picture.
+
+The recipe, which works headlessly and costs nothing:
+
+```
+1. npx next dev -p 4343
+2. node --import ./tests/register-alias.mjs -e "…buildDemoStorageSeeds()…"  → public/__demo-seeds.json
+3. In the page: fetch it and localStorage.setItem each key, reload
+4. /design?lat=-27.72623&lon=31.96304 → Next: Glossy → "All sheets — exact, no AI"
+5. Read the image back out of localStorage (key `imbewu_design_glossy_<PLAN_VERSION>_<siteId>…`)
+   and write it to a PNG. Crop regions and inspect them at 1:1.
+```
+
+That is exactly how the crossed-leader bug in `415b8d5` was found, after it had survived every test
+in the suite and two rounds of review. **Delete `public/__demo-seeds.json` before you commit.**
+
+Things to check on every sheet, none of which a unit test can see: does every leader end on the
+element it names; is any label unreadable, clipped, or overlapping another; does the legend list
+what is drawn and only what is drawn; is any panel mostly empty; do the counts on the sheet agree
+with the counts in the legend; is anything drawn that the farmer never placed.
+
+**S2. Take the next untested module** from the list under item 20, by size, same recipe as items
+7–20.
+
+**S3. Pick the largest file in `lib/` that has tests but thin ones** and deepen them against the
+rules it promises.
+
+If S1 turns up nothing on a sheet, that is still a result worth one line in the report — it means
+that sheet is now audited, and you move to the next one. Say which sheets you have cleared so the
+next run does not repeat them.
+
+---
+
 ## Not for Codex
 
 Rory's own actions, listed here so nobody picks them up:
