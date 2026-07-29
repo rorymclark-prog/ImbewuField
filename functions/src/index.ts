@@ -27,6 +27,10 @@ import { setGlobalOptions, logger } from 'firebase-functions/v2';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
+import {
+  RENDER_SHEET_KEYS,
+  workerRenderJobContractError,
+} from './render-job-contract';
 
 initializeApp();
 const db = getFirestore();
@@ -44,7 +48,7 @@ const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has r
 // mask are built client-side; the model paints only the decorative map area; the schedule panel is
 // structurally excluded via a protect mask that covers it entirely. See composePhasingSheet and
 // buildPhasingRestylePrompt in DesignGlossy.tsx / lib/producer-prompt.ts.
-const ALLOWED_KEYS = new Set(['all', 'water', 'zones', 'planting', 'structures', 'sector', 'base', 'implementation']);
+const ALLOWED_KEYS = new Set<string>(RENDER_SHEET_KEYS);
 // ── SPEND GOVERNORS ──────────────────────────────────────────────────────────────────────────
 // Two independent ceilings, because a per-user cap alone bounds NOTHING: total spend was
 // (per-user cap) x (however many people sign up), with no automatic brake. Thirty sheets/user/day
@@ -283,6 +287,19 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
       return { proceed: false, reason: 'kill-switch off' };
     }
 
+    // Validate BEFORE touching either usage counter. Duplicate keys otherwise make
+    // two workers edit the same input/output path and call OpenAI twice, while
+    // unknown keys can consume the shared daily budget without rendering anything.
+    const contractError = workerRenderJobContractError(job);
+    if (contractError) {
+      tx.update(ref, {
+        status: 'error',
+        error: `Invalid render job: ${contractError}.`,
+        updatedAt: FieldValue.serverTimestamp(),
+      });
+      return { proceed: false, reason: `invalid: ${contractError}` };
+    }
+
     // Per-user daily quota — the enforceable spend cap (rules can't do cross-doc counters).
     // ALL READS FIRST: Firestore rejects a transaction that reads after it writes, and the global
     // counter below has to be read here rather than inside the branches.
@@ -370,7 +387,11 @@ export const runRenderJob = onDocumentCreated(
             if (!prompt) throw new Error('empty prompt');
             let maskB64: string | undefined;
             if (sheet.protectMaskPath && sheet.useProtectMaskForEdit !== false) {
-              const maskBuf = (await bucket.file(sheet.protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
+              // The client flag says whether a mask exists; the path itself is
+              // derived here just like inputPath. Never let an untrusted job doc
+              // turn the Admin SDK into a cross-user Storage reader.
+              const protectMaskPath = `renders/${job.uid}/${jobId}/mask-${sheet.key}.png`;
+              const maskBuf = (await bucket.file(protectMaskPath).download().catch(() => [Buffer.alloc(0)]))[0];
               if (maskBuf.length) maskB64 = maskBuf.toString('base64');
             }
             // Precision Atlas is the reversible, reference-guided path.
