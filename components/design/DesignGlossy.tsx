@@ -7900,7 +7900,10 @@ interface SavedGlossy {
 //   v76 — 2026-07-29: the phasing schedule names only work that is actually planned. A design
 //        with no pipes was still told to pressure-test the main line before backfilling, and
 //        one with no drip to check every emitter — hold points for work that does not exist.
-const PLAN_VERSION = 'v76';
+//   v77 — 2026-07-29: water symbols reject invalid geometry instead of drawing from it, and
+//        persisted symbol ids normalise whitespace/underscores/hyphens to one key — the same
+//        legacy-id class as the string zone numbers that once read 0 of 4 zones.
+const PLAN_VERSION = 'v77';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
