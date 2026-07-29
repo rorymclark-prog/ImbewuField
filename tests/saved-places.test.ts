@@ -6,10 +6,14 @@ import assert from 'node:assert/strict';
 // matching the codebase's browser-only style).
 class FakeStorage {
   #map = new Map<string, string>();
+  failKey: string | null = null;
   getItem(k: string): string | null { return this.#map.has(k) ? this.#map.get(k)! : null; }
-  setItem(k: string, v: string): void { this.#map.set(k, v); }
+  setItem(k: string, v: string): void {
+    if (k === this.failKey) throw new Error('storage unavailable');
+    this.#map.set(k, v);
+  }
   removeItem(k: string): void { this.#map.delete(k); }
-  clear(): void { this.#map.clear(); }
+  clear(): void { this.#map.clear(); this.failKey = null; }
 }
 
 (globalThis as unknown as { window: unknown }).window = globalThis;
@@ -21,10 +25,24 @@ const fakeLocalStorage = new FakeStorage();
 // mergeIncomingPlaces() (below) calls this module's notify(), which does
 // `window.dispatchEvent(new CustomEvent(...))` — plain globalThis isn't a real EventTarget, so
 // stub a no-op. CustomEvent itself is a real Node global (no polyfill needed).
-(globalThis as unknown as { dispatchEvent: unknown }).dispatchEvent = () => true;
+const events: string[] = [];
+(globalThis as unknown as { dispatchEvent: unknown }).dispatchEvent = (event: Event) => {
+  events.push(event.type);
+  return true;
+};
 
-const { findNearbyPlace, distanceMeters, mergeIncomingPlaces } = await import('../lib/saved-places.ts');
-const { addTombstone } = await import('../lib/local-tombstones.ts');
+const {
+  deletePlace,
+  distanceMeters,
+  findNearbyPlace,
+  isValidSavedPlace,
+  loadPlaces,
+  mergeIncomingPlaces,
+  normalisePlaces,
+  savePlace,
+  updatePlacePosition,
+} = await import('../lib/saved-places.ts');
+const { addTombstone, readTombstones } = await import('../lib/local-tombstones.ts');
 type SavedPlace = Awaited<ReturnType<typeof findNearbyPlace>>;
 
 const PLACES_KEY = 'permamap_saved_places';
@@ -41,6 +59,80 @@ function place(id: string, lat: number, lon: number): NonNullable<SavedPlace> {
 function seed(places: NonNullable<SavedPlace>[]): void {
   fakeLocalStorage.setItem(PLACES_KEY, JSON.stringify(places));
 }
+
+test('the local store filters malformed records and keeps one newest copy per id', () => {
+  fakeLocalStorage.clear();
+  const older = { ...place('same', -29.6, 30.4), name: 'old', updatedAt: 1000 };
+  const newer = { ...place('same', -29.7, 30.5), name: 'new', updatedAt: 2000 };
+  const malformed: unknown[] = [
+    null,
+    { ...place('', -29.6, 30.4), id: '' },
+    place('bad-lat', 91, 30.4),
+    place('bad-lon', -29.6, 181),
+    { ...place('bad-date', -29.6, 30.4), savedAt: 'not-a-date' },
+    { ...place('bad-update', -29.6, 30.4), updatedAt: Number.POSITIVE_INFINITY },
+    { ...place('bad-label', -29.6, 30.4), label: 'shop' },
+  ];
+  fakeLocalStorage.setItem(PLACES_KEY, JSON.stringify([older, ...malformed, newer]));
+
+  assert.deepEqual(loadPlaces(), [newer]);
+  assert.deepEqual(normalisePlaces([older, newer]), [newer]);
+  for (const value of malformed) assert.equal(isValidSavedPlace(value), false);
+});
+
+test('saving rejects malformed places before storage, notification or cloud sync', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const invalid = place('outside', 91, 30.4);
+
+  assert.throws(() => savePlace(invalid), /Invalid saved place/);
+  assert.equal(fakeLocalStorage.getItem(PLACES_KEY), null);
+  assert.deepEqual(events, []);
+});
+
+test('deleting a missing id is a truthful no-op with no tombstone or change event', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const kept = place('kept', -29.6, 30.4);
+  seed([kept]);
+
+  assert.deepEqual(deletePlace('missing'), [kept]);
+  assert.deepEqual(readTombstones(PLACES_DELETED_KEY), {});
+  assert.deepEqual(events, []);
+});
+
+test('a failed visible deletion never leaves a tombstone that can delete the still-present place', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const existing = place('kept', -29.6, 30.4);
+  seed([existing]);
+  fakeLocalStorage.failKey = PLACES_KEY;
+
+  assert.throws(() => deletePlace(existing.id), /storage unavailable/);
+  fakeLocalStorage.failKey = null;
+  assert.deepEqual(loadPlaces(), [existing]);
+  assert.deepEqual(readTombstones(PLACES_DELETED_KEY), {});
+  assert.deepEqual(events, []);
+});
+
+test('moving validates coordinates and reports only a real persisted movement', () => {
+  fakeLocalStorage.clear();
+  events.length = 0;
+  const existing = place('farm', -29.6, 30.4);
+  seed([existing]);
+
+  assert.throws(() => updatePlacePosition(existing.id, 91, 30.4), /Invalid place position/);
+  assert.deepEqual(updatePlacePosition('missing', -29.7, 30.5), [existing]);
+  assert.deepEqual(updatePlacePosition(existing.id, existing.lat, existing.lon), [existing]);
+  assert.deepEqual(events, []);
+
+  const moved = updatePlacePosition(existing.id, -29.7, 30.5);
+  assert.equal(moved[0]!.lat, -29.7);
+  assert.equal(moved[0]!.lon, 30.5);
+  assert.equal(typeof moved[0]!.updatedAt, 'number');
+  assert.deepEqual(loadPlaces(), moved);
+  assert.deepEqual(events, ['permamap-places-changed']);
+});
 
 test('findNearbyPlace returns the place when within the radius', () => {
   fakeLocalStorage.clear();
@@ -123,6 +215,20 @@ test('mergeIncomingPlaces: a shared place absent locally still arrives (the impo
   const items = mergeIncomingPlaces([shared]);
   assert.deepEqual(items, [shared]);
   assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(PLACES_KEY)!), [shared]);
+});
+
+test('shared imports cannot inject malformed or duplicate place records into local storage', () => {
+  fakeLocalStorage.clear();
+  const local = place('local', -29.6, 30.4);
+  seed([local]);
+  const older = { ...place('shared', -29.7, 30.5), name: 'old', updatedAt: 1000 };
+  const newer = { ...place('shared', -29.8, 30.6), name: 'new', updatedAt: 2000 };
+  const invalid = place('outside', 91, 30.4);
+
+  const items = mergeIncomingPlaces([older, invalid, newer]);
+
+  assert.deepEqual(items, [newer, local]);
+  assert.deepEqual(JSON.parse(fakeLocalStorage.getItem(PLACES_KEY)!), items);
 });
 
 test('mergeIncomingPlaces does NOT clobber a locally-added place absent from the shared batch (union, not overwrite)', () => {

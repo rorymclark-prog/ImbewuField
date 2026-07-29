@@ -1,7 +1,7 @@
 'use client'
 
 import type { FeatureCollection } from 'geojson'
-import type { SavedPlace as Place } from './saved-places'
+import { isValidSavedPlace, type SavedPlace as Place } from './saved-places'
 import { isValidWaterPoint, type WaterPoint } from './water-points'
 import { doc, getDoc, runTransaction, serverTimestamp } from 'firebase/firestore'
 import { getFirebase } from '@/lib/firebase/init'
@@ -95,19 +95,6 @@ function validFeatureCollection(value: unknown): value is FeatureCollection {
     ))
 }
 
-function validPlace(value: unknown): value is Place {
-  if (!record(value)) return false
-  return text(value.id) && value.id.length > 0 && text(value.name)
-    && finite(value.lat) && value.lat >= -90 && value.lat <= 90
-    && finite(value.lon) && value.lon >= -180 && value.lon <= 180
-    && text(value.biome) && finite(value.rainfall) && finite(value.elevation)
-    && text(value.savedAt) && Number.isFinite(Date.parse(value.savedAt))
-    && (value.updatedAt === undefined || (finite(value.updatedAt) && value.updatedAt >= 0))
-    && (value.label === undefined || ['home', 'field', 'water', 'other'].includes(String(value.label)))
-    && (value.color === undefined || text(value.color))
-    && (value.notes === undefined || text(value.notes))
-}
-
 export function normaliseSharedSiteData(value: unknown): SharedSiteData | null {
   let clean: unknown
   try {
@@ -116,7 +103,9 @@ export function normaliseSharedSiteData(value: unknown): SharedSiteData | null {
     return null
   }
   if (!record(clean) || !validFeatureCollection(clean.geojson)
-      || !Array.isArray(clean.places) || !clean.places.every(validPlace)
+      || !Array.isArray(clean.places) || !clean.places.every(
+        (place) => isValidSavedPlace(place) && Number.isFinite(Date.parse(place.savedAt)),
+      )
       || !Array.isArray(clean.waterPoints) || !clean.waterPoints.every(isValidWaterPoint)
       || !Array.isArray(clean.mapCenter) || clean.mapCenter.length !== 2
       || !finite(clean.mapCenter[0]) || clean.mapCenter[0] < -180 || clean.mapCenter[0] > 180
