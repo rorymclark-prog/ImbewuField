@@ -534,9 +534,16 @@ function HomeInner() {
                 aria-pressed={showDesign}
                 className="absolute z-20 flex items-center gap-1.5 rounded-full font-sans font-semibold transition-all active:scale-95"
                 style={{
-                  top: 12,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
+                  // STACKED UNDER THE LAYERS PILL, NOT CENTRED ACROSS IT. Centred, this sat at the
+                  // same height as Map.tsx's right-anchored layers pill (top:14) with a higher
+                  // z-index, so as soon as that pill grew — Labels + Shapes + Hatching + Parcels &
+                  // water + Places — the two overlapped and this button painted over the pill's
+                  // left end, hiding the "LABELS" header behind it. Right-anchored and one row
+                  // down, the two can never collide however wide either becomes, and it also
+                  // clears the left-hand tool panel. It reads as what it is: another map-layer
+                  // control, beside the rest of them.
+                  top: 62,
+                  right: 14,
                   height: 40,
                   padding: '0 16px',
                   fontSize: 13.5,

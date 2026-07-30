@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
 import { LanguageProvider } from '@/lib/i18n';
+import BackControlProvider from '@/components/BackControl';
 import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
@@ -81,7 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AuthProvider>
             <LanguageProvider>
               <AccountOnboardingGates />
-              {children}
+              <BackControlProvider>{children}</BackControlProvider>
               <ChatWidget />
               <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
               <SampleModeBanner />

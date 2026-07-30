@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import { useRegisterBackControl } from '@/components/BackControl';
 
 /**
  * A consistent "← Back" control for every sub-page header.
@@ -9,6 +10,9 @@ import { ChevronLeft } from 'lucide-react';
  */
 export default function BackButton({ fallback = '/' }: { fallback?: string }) {
   const router = useRouter();
+  // Tells the global fallback (BackControl) that this page already offers a way back, so the
+  // farmer never sees two back buttons on one screen.
+  useRegisterBackControl();
   const goBack = () => {
     if (typeof window !== 'undefined' && window.history.length > 1) router.back();
     else router.push(fallback);
