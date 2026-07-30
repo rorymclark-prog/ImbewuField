@@ -30,8 +30,6 @@ import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import NavDrawer from '@/components/NavDrawer';
-import Onboarding from '@/components/Onboarding';
-import PopiaConsent from '@/components/PopiaConsent';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -514,11 +512,5 @@ function HomeLandingInner() {
 }
 
 export default function HomeLanding() {
-  return (
-    <>
-      <Onboarding />
-      <PopiaConsent />
-      <HomeLandingInner />
-    </>
-  );
+  return <HomeLandingInner />;
 }

@@ -64,6 +64,20 @@ export function activeAccountLocalStorageKey(baseKey: string): string {
 }
 
 /**
+ * Retire an owner-unknown legacy row only after a real signed-in account has written its
+ * account-scoped replacement. Guest, sample and backend-unconfigured sessions keep their
+ * historical bare-key storage.
+ */
+export function removeSignedInLegacyLocalStorageKey(baseKey: string): void {
+  if (typeof window === 'undefined' || !activeAccountUid()) return;
+  try {
+    window.localStorage.removeItem(baseKey);
+  } catch {
+    // Storage may be unavailable in privacy/quota modes. The scoped replacement still stands.
+  }
+}
+
+/**
  * True only for a prefix-keyed row owned by `uid`.
  *
  * Bare rows are legacy/guest data. They remain readable while signed out (and in the

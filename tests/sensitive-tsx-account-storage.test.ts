@@ -21,9 +21,17 @@ function matches(text: string, pattern: RegExp): number {
 const contracts: SourceContract[] = [
   {
     file: 'components/PopiaConsent.tsx',
-    scopedExpression: /activeAccountLocalStorageKey\(POPIA_KEY\)/,
-    scopedUses: 3,
-    forbiddenBareArgument: /localStorage\.(?:getItem|setItem|removeItem)\(\s*POPIA_KEY\b/,
+    scopedExpression: /activeAccountLocalStorageKey\((?:POPIA_KEY|ONBOARD_KEY)\)/,
+    scopedUses: 5,
+    forbiddenBareArgument:
+      /localStorage\.(?:getItem|setItem|removeItem)\(\s*(?:POPIA_KEY|ONBOARD_KEY)\b/,
+  },
+  {
+    file: 'lib/i18n.tsx',
+    scopedExpression: /activeAccountLocalStorageKey\(ONBOARD_KEY\)/,
+    scopedUses: 2,
+    forbiddenBareArgument:
+      /localStorage\.(?:getItem|setItem|removeItem)\(\s*(?:ONBOARD_KEY|['"]permamap_onboarded['"])\b/,
   },
   {
     file: 'components/NextStepCoach.tsx',
@@ -69,7 +77,7 @@ test('sensitive TSX storage call sites pass every account-owned key through the 
     const text = source(contract.file);
     assert.match(
       text,
-      /import\s*\{\s*activeAccountLocalStorageKey\s*\}\s*from\s*['"]@\/lib\/account-local-storage['"]/,
+      /import\s*\{[^}]*\bactiveAccountLocalStorageKey\b[^}]*\}\s*from\s*['"]@\/lib\/account-local-storage['"]/,
       `${contract.file} must import the shared account-storage boundary`,
     );
     assert.equal(
@@ -82,6 +90,23 @@ test('sensitive TSX storage call sites pass every account-owned key through the 
       contract.forbiddenBareArgument,
       `${contract.file} must not access the reviewed sensitive key as a bare localStorage argument`,
     );
+  }
+});
+
+test('language and POPIA gates mount once above every returned app route', () => {
+  const layout = source('app/layout.tsx');
+  assert.match(layout, /<AccountOnboardingGates\s*\/>/);
+
+  const gates = source('components/AccountOnboardingGates.tsx');
+  assert.match(gates, /<Onboarding\s*\/>/);
+  assert.match(gates, /<PopiaConsent\s*\/>/);
+  assert.match(gates, /if \(sample\) return null/);
+  assert.match(gates, /isBackendConfigured\(\) && \(loading \|\| !user\)/);
+
+  for (const page of ['app/home/page.tsx', 'app/farmer/page.tsx']) {
+    const text = source(page);
+    assert.doesNotMatch(text, /<Onboarding\s*\/>/, `${page} must not duplicate the root gate`);
+    assert.doesNotMatch(text, /<PopiaConsent\s*\/>/, `${page} must not duplicate the root gate`);
   }
 });
 
@@ -153,6 +178,7 @@ hooks.deregister();
 
 const sensitiveKeys = [
   'imbewu_popia',
+  'permamap_onboarded',
   'imbewu-recent-searches',
   'imbewu_stepguide_skips_site:-29.00000,31.00000',
   'imbewu_facilitator_design_backup',

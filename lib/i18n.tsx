@@ -2,6 +2,12 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
+import {
+  activeAccountLocalStorageKey,
+  removeSignedInLegacyLocalStorageKey,
+} from '@/lib/account-local-storage';
+
+const ONBOARD_KEY = 'permamap_onboarded';
 
 export const APP_LANGS = [
   { code: 'en', label: 'English', native: 'English' },
@@ -8407,13 +8413,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('permamap_lang');
-    const done = localStorage.getItem('permamap_onboarded') === '1';
+    const done = localStorage.getItem(activeAccountLocalStorageKey(ONBOARD_KEY)) === '1';
     if (saved) setLangState(saved);
     setOnboarded(done);
 
-    // /farmer currently carries its own provider inside the root provider. Without a same-tab
-    // signal, changing its language updated only the inner tree; client navigation to Design
-    // Studio kept reading the root provider's old language until a full reload.
+    // Keep any deliberately nested preview/example provider in step with the root provider
+    // during same-tab language changes.
     return listenForLanguageChanges(window, setLangState);
   }, []);
 
@@ -8424,7 +8429,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
   const completeOnboarding = (code: string) => {
     setLang(code);
-    localStorage.setItem('permamap_onboarded', '1');
+    localStorage.setItem(activeAccountLocalStorageKey(ONBOARD_KEY), '1');
+    removeSignedInLegacyLocalStorageKey(ONBOARD_KEY);
     setOnboarded(true);
   };
   const t = (key: string) => T[lang]?.[key] ?? T.en[key] ?? key;

@@ -10,7 +10,6 @@ import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
-import Onboarding from '@/components/Onboarding';
 import LangSwitcher from '@/components/LangSwitcher';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
@@ -19,7 +18,7 @@ import ThemePanel from '@/components/ThemePanel';
 import NavDrawer from '@/components/NavDrawer';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
-import { LanguageProvider, useLanguage } from '@/lib/i18n';
+import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -38,12 +37,9 @@ const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
 
 export default function Home() {
   return (
-    <LanguageProvider>
-      <Onboarding />
-      <Suspense>
-        <HomeInner />
-      </Suspense>
-    </LanguageProvider>
+    <Suspense>
+      <HomeInner />
+    </Suspense>
   );
 }
 
