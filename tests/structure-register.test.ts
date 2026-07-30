@@ -5,6 +5,7 @@
 // phrasing, so a refactor cannot quietly turn a slab back into a building.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { structureRegisterText } from '../lib/structure-register.ts';
 import type { ZoneShape } from '../lib/design-canvas.ts';
 
@@ -95,4 +96,32 @@ test('the main-map house ring is listed once — skipped when a Studio ring is t
 
 test('an untouched site produces an empty register, not filler', () => {
   assert.equal(structureRegisterText({ zones: [] }, REF_EMPTY), '');
+});
+
+// THE GUARD THAT WAS MISSING. Everything above proves the register is BUILT correctly. Nothing
+// proved it was ever SENT — and it was not: structureRegisterText was exported, documented and
+// unit-tested, while all three buildFinishedSheetPolishPrompt call sites passed only three
+// arguments, so the STRUCTURE REGISTER paragraph never reached a single paid render. The model
+// went on guessing which rectangles were buildings, which is exactly what this file's own header
+// records happening (the concrete slab rendered as a corrugated gable roof, the driveway as a
+// third dark-roofed building) and what Rory reported again as "a deformed roof".
+//
+// A unit test on a pure function cannot see that its caller dropped an optional argument. This
+// reads the call sites.
+test('every paid polish prompt is actually GIVEN the structure register', async () => {
+  const source = await readFile(
+    new URL('../components/design/DesignGlossy.tsx', import.meta.url),
+    'utf8',
+  );
+  const calls = source.match(/buildFinishedSheetPolishPrompt\(([^;]*?)\)\s*$/gm)
+    ?? source.split('buildFinishedSheetPolishPrompt(').slice(1).map((tail) => tail.split('\n')[0]);
+  assert.ok(calls.length >= 3, `expected the known polish call sites, found ${calls.length}`);
+  for (const call of calls) {
+    if (call.includes('import') || call.includes('function ')) continue;
+    assert.ok(
+      call.includes('structureRegisterText'),
+      `a polish prompt is built without the structure register, so the model will guess which '
+      + 'shapes are buildings: ${call.trim().slice(0, 160)}`,
+    );
+  }
 });
