@@ -1,7 +1,171 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { countedLegendText, fitLegendFontSize, legendRowGap, MAX_GAP_TO_ROW_RHYTHM } from '../lib/sheet-legend-layout.ts';
+import {
+  balancedLegendColumnRanges,
+  COMPACT_LEGEND_MAX_ROWS,
+  countedLegendText,
+  FULL_HEIGHT_LEGEND_MIN_ROWS,
+  legendHeightFillRatio,
+  layoutLegendColumn,
+  legendRowFontSize,
+  legendRowGap,
+  MAX_GAP_TO_ROW_RHYTHM,
+} from '../lib/sheet-legend-layout.ts';
+
+test('a six-row Water legend reaches the notes block instead of abandoning most of a tall panel', () => {
+  // This is the production complaint, expressed as layout geometry rather than a screenshot pixel
+  // constant: two tanks + tap + buried main + drip laterals + swale make six countable rows. Once
+  // there are enough rows to establish a real column rhythm, the first and final row blocks must
+  // span all of the height the renderer reserved for them. The former universal rhythm cap left
+  // the final row above the panel midpoint on the saved 1927×1658 sheet.
+  const rowCount = 6;
+  const usedHeight = 360;
+  const availableHeight = 1_200;
+  const lineHeight = 24;
+  const gap = legendRowGap(availableHeight, usedHeight, rowCount, lineHeight);
+
+  assert.equal(
+    usedHeight + gap * (rowCount - 1),
+    availableHeight,
+    'a populated legend must not retain a second empty lower panel after its rows',
+  );
+});
+
+test('a sectioned Water legend uses one even rhythm instead of creating isolated section islands', () => {
+  // The measured row structure of the saved Water sheet: 2 Rainwater, 3 Irrigation, 1 Water
+  // Earthworks. Heights include each printed section heading, exactly as composeStyleSheet passes
+  // them to the layout authority.
+  const availableHeight = 1_289;
+  const rowRhythm = 20;
+  const rows = [
+    { height: 54 },
+    { height: 32 },
+    { height: 54 },
+    { height: 32 },
+    { height: 32 },
+    { height: 54 },
+  ];
+  const layout = layoutLegendColumn(availableHeight, rows, rowRhythm);
+
+  assert.equal(layout.overflow, false);
+  assert.equal(layout.offsets[0], 0, 'the first section begins directly under LEGEND');
+  assert.equal(layout.contentBottom, availableHeight, 'the last section reaches the notes block');
+
+  for (let index = 0; index < rows.length - 1; index += 1) {
+    const gap = layout.offsets[index + 1] - layout.offsets[index] - rows[index].height;
+    assert.ok(
+      Math.abs(gap - layout.rowGap) < 0.001,
+      'every factual row shares one visual rhythm',
+    );
+  }
+  rows.forEach((row, index) => {
+    assert.ok(layout.offsets[index] >= 0);
+    assert.ok(layout.offsets[index] + row.height <= availableHeight + 0.001);
+    if (index > 0) {
+      assert.ok(layout.offsets[index] >= layout.offsets[index - 1] + rows[index - 1].height);
+    }
+  });
+});
+
+test('three singleton sections remain a compact list instead of becoming three isolated islands', () => {
+  const availableHeight = 1_000;
+  const rowRhythm = 40;
+  const rows = Array.from({ length: 3 }, () => ({ height: 50 }));
+  const layout = layoutLegendColumn(availableHeight, rows, rowRhythm);
+
+  assert.equal(layout.overflow, false);
+  assert.ok(layout.contentBottom < availableHeight, 'a genuinely sparse legend keeps honest space below');
+  for (let index = 0; index < rows.length - 1; index += 1) {
+    const gap = layout.offsets[index + 1] - layout.offsets[index] - rows[index].height;
+    assert.ok(gap <= rowRhythm * MAX_GAP_TO_ROW_RHYTHM + 0.001);
+  }
+});
+
+test('four- and five-row layouts apportion expansion instead of crossing a hard threshold', () => {
+  const availableHeight = 1_000;
+  const rowHeight = 50;
+  const rowRhythm = 40;
+  const layouts = [3, 4, 5, 6].map((count) => layoutLegendColumn(
+    availableHeight,
+    Array.from({ length: count }, () => ({ height: rowHeight })),
+    rowRhythm,
+  ));
+
+  assert.equal(COMPACT_LEGEND_MAX_ROWS, 3);
+  assert.equal(FULL_HEIGHT_LEGEND_MIN_ROWS, 6);
+  assert.deepEqual([3, 4, 5, 6].map(legendHeightFillRatio), [0, 1 / 3, 2 / 3, 1]);
+  assert.ok(layouts[0].contentBottom < layouts[1].contentBottom);
+  assert.ok(layouts[1].contentBottom < layouts[2].contentBottom);
+  assert.equal(layouts[3].contentBottom, availableHeight);
+  assert.ok(layouts[1].contentBottom < availableHeight, 'four rows do not jump straight to full height');
+  assert.ok(layouts[2].contentBottom < availableHeight, 'five rows leave the final third for six rows');
+});
+
+test('a populated tall legend grows its facts while a sparse legend keeps the normal width scale', () => {
+  assert.equal(legendRowFontSize(445, 1_289, 3), 16);
+  assert.equal(legendRowFontSize(445, 1_289, 6), 23);
+  assert.equal(legendRowFontSize(445, 400, 6), 16, 'short panels do not force oversized type');
+});
+
+test('an overfull factual legend partitions into readable columns without losing or reordering rows', () => {
+  const layout = layoutLegendColumn(
+    400,
+    Array.from({ length: 10 }, () => ({ height: 60 })),
+    24,
+  );
+  assert.equal(layout.overflow, true);
+  const ranges = balancedLegendColumnRanges(Array.from({ length: 10 }, () => 60), 2);
+  assert.deepEqual(ranges, [{ start: 0, end: 5 }, { start: 5, end: 10 }]);
+  assert.deepEqual(
+    ranges.flatMap((range) => Array.from(
+      { length: range.end - range.start },
+      (_value, index) => range.start + index,
+    )),
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  );
+  for (const range of ranges) {
+    const usedHeight = (range.end - range.start) * 60;
+    assert.ok(usedHeight <= 400, 'each column fits without shrinking below the font floor');
+  }
+});
+
+test('column balancing is finite, contiguous, and rejects invalid geometry', () => {
+  assert.deepEqual(balancedLegendColumnRanges([100, 20, 20, 100], 2), [
+    { start: 0, end: 2 },
+    { start: 2, end: 4 },
+  ]);
+  assert.deepEqual(balancedLegendColumnRanges([10, 10], 3), [
+    { start: 0, end: 1 },
+    { start: 1, end: 2 },
+  ]);
+  assert.deepEqual(balancedLegendColumnRanges([], 2), []);
+  assert.deepEqual(balancedLegendColumnRanges([10, Number.NaN], 2), []);
+  assert.deepEqual(balancedLegendColumnRanges([10], 0), []);
+});
+
+test('column balancing scores the heading repeated at each real column start', () => {
+  const provisionalHeights = [40, 20, 20, 20, 20, 20];
+  assert.deepEqual(
+    balancedLegendColumnRanges(provisionalHeights, 3),
+    [{ start: 0, end: 1 }, { start: 1, end: 3 }, { start: 3, end: 6 }],
+    'a whole-list measurement charges the heading only once and chooses an uneven split',
+  );
+  assert.deepEqual(
+    balancedLegendColumnRanges(
+      provisionalHeights,
+      3,
+      (start, end) => 20 + (end - start) * 20,
+    ),
+    [{ start: 0, end: 2 }, { start: 2, end: 4 }, { start: 4, end: 6 }],
+    'exact slice costs charge the continued-section heading in every column',
+  );
+  assert.deepEqual(
+    balancedLegendColumnRanges(provisionalHeights, 3, () => Number.NaN),
+    [],
+    'an invalid renderer measurement cannot become a plausible partition',
+  );
+});
 
 test('legend rows consume the height the panel actually has instead of keeping a short-sheet cap', () => {
   const rowCount = 6;
@@ -12,8 +176,8 @@ test('legend rows consume the height the panel actually has instead of keeping a
   const tallGap = legendRowGap(tallAvailable, usedHeight, rowCount);
 
   assert.ok(tallGap > shortGap, 'a taller boundary must produce a taller row rhythm');
-  assert.equal(usedHeight + shortGap * rowCount, shortAvailable);
-  assert.equal(usedHeight + tallGap * rowCount, tallAvailable);
+  assert.equal(usedHeight + shortGap * (rowCount - 1), shortAvailable);
+  assert.equal(usedHeight + tallGap * (rowCount - 1), tallAvailable);
 });
 
 test('an overcrowded panel never invents negative space or shrinks type through the gap helper', () => {
@@ -28,8 +192,10 @@ test('legend gap geometry is finite, non-negative, and exactly consumes spare he
       for (const rowCount of [1, 2, 7, 100]) {
         const gap = legendRowGap(availableHeight, usedHeight, rowCount);
         assert.ok(Number.isFinite(gap) && gap >= 0);
-        if (availableHeight >= usedHeight) {
-          assert.equal(usedHeight + gap * rowCount, availableHeight);
+        if (availableHeight >= usedHeight && rowCount > 1) {
+          assert.equal(usedHeight + gap * (rowCount - 1), availableHeight);
+        } else if (rowCount === 1) {
+          assert.equal(gap, 0, 'one row has no between-row slot to spread');
         } else {
           assert.equal(gap, 0);
         }
@@ -67,7 +233,7 @@ test('every countable row states its count, including one', () => {
   assert.equal(countedLegendText('Buried water pipe', 1), 'Buried water pipe ×1');
 });
 
-test('a short legend stays a compact block instead of being justified down a tall panel', () => {
+test('a sparse legend stays compact while a populated legend uses the full reserved column', () => {
   // Rendered water sheet 04: three rows in a full-height cream panel. Sharing ALL the slack put a
   // visible hole between each row — the legend read as broken rather than full, and the panel was
   // still empty at the bottom because the same gap follows the last row too.
@@ -76,9 +242,10 @@ test('a short legend stays a compact block instead of being justified down a tal
   assert.ok(spread <= lineH * MAX_GAP_TO_ROW_RHYTHM + 0.001, `gap ${spread} dwarfs the row rhythm ${lineH}`);
 
   // A well-populated legend still spreads: with enough rows the shared slack is under the ceiling,
-  // so the cap never binds and the column fills as intended.
+  // so the sparse-list cap never applies and the final visible row reaches the reserved foot.
   const many = legendRowGap(1000, 880, 12, lineH);
-  assert.equal(many, (1000 - 880) / 12, 'the cap must not bite on a full legend');
+  assert.equal(many, (1000 - 880) / (12 - 1), 'a populated legend uses between-row slots only');
+  assert.equal(880 + many * (12 - 1), 1000);
   assert.ok(many < spread, 'a fuller legend has tighter gaps than a sparse one');
 });
 
@@ -103,49 +270,4 @@ test('invalid counts can never print as plausible legend facts', () => {
       /non-negative safe integer/i,
     );
   }
-});
-
-// A stand-in for the renderer's real measurement: each row is one line at 1.22× the size, and
-// rows wrap into a second line once the type passes `wrapAt` — so height is NOT linear in size,
-// which is the property that makes the search necessary.
-const measurer = (rowCount: number, wrapAt = Number.POSITIVE_INFINITY) => (fs: number) => {
-  const lineH = Math.max(11, Math.round(fs * 1.22));
-  const linesPerRow = fs > wrapAt ? 2 : 1;
-  return rowCount * linesPerRow * lineH;
-};
-
-test('legend type grows into a tall panel instead of keeping its width-derived start size', () => {
-  // THE BUG: sizing used to count DOWN from a width-derived start, so panel height never entered
-  // the decision — a sparse legend stayed small and left the column empty.
-  const sparse = measurer(4);
-  const tall = fitLegendFontSize(sparse, 1200, 30, 9);
-  const short = fitLegendFontSize(sparse, 120, 30, 9);
-  assert.equal(tall, 30, 'with room to spare the ceiling wins');
-  assert.ok(short < tall, `a shorter panel must take smaller type, got ${short} vs ${tall}`);
-  assert.ok(sparse(short) <= 120, 'and the chosen size actually fits');
-});
-
-test('a crowded legend shrinks but never below the print-legibility floor', () => {
-  const crowded = measurer(24);
-  assert.equal(fitLegendFontSize(crowded, 200, 30, 9), 9, 'too many rows: stop at the floor');
-  // Overflowing at the floor is a VISIBLE failure, deliberately preferred to unreadable type.
-  assert.ok(crowded(9) > 200);
-});
-
-test('the ceiling is never exceeded and wrapping is respected on the way down', () => {
-  // Rows double in height above 20px, so 21..30 all overflow and the answer must be exactly 20.
-  const wrapping = measurer(10, 20);
-  const fs = fitLegendFontSize(wrapping, 10 * Math.round(20 * 1.22), 30, 9);
-  assert.equal(fs, 20);
-});
-
-test('degenerate inputs fall back to the floor rather than a NaN font size', () => {
-  const m = measurer(3);
-  for (const bad of [Number.NaN, 0, -50, Number.POSITIVE_INFINITY]) {
-    const fs = fitLegendFontSize(m, bad as number, 30, 9);
-    assert.ok(Number.isSafeInteger(fs) && fs >= 9, `available=${bad} gave ${fs}`);
-  }
-  assert.equal(fitLegendFontSize(() => Number.NaN, 500, 30, 9), 9, 'unmeasurable rows: floor');
-  // A ceiling below the floor can never win.
-  assert.equal(fitLegendFontSize(m, 5000, 4, 9), 9);
 });
