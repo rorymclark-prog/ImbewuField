@@ -9,14 +9,16 @@ export type SheetOutputMode = 'exact' | 'hybrid' | 'full';
 
 /**
  * Full Treatment starts from the completed Hybrid sheet. Its second paid pass must be free to
- * improve the artwork and page design, while the few pixels that establish factual geometry are
- * restored afterwards. Protecting unmarked ground, routes, items or the complete sheet chrome here
- * makes the paid result visually collapse back to the Hybrid.
+ * improve the complete artwork and page design. Real production A/Bs showed that copying the
+ * Hybrid's satellite exterior, house or driveway back afterwards creates the ragged photographic
+ * keyholes the paid pass had already removed. Only the narrow boundary ring remains byte-locked;
+ * the saved Hybrid is still the rollback if the polish pass fails its difference gate.
  */
 export interface FullTreatmentProtectPolicy {
   protectOutside: boolean;
   protectBoundary: boolean;
   protectDriveway: boolean;
+  protectHouse: boolean;
   protectLines: boolean;
   protectItems: boolean;
   protectUnmarkedGround: boolean;
@@ -26,9 +28,10 @@ export interface FullTreatmentProtectPolicy {
 
 export function fullTreatmentProtectPolicy(): FullTreatmentProtectPolicy {
   return {
-    protectOutside: true,
+    protectOutside: false,
     protectBoundary: true,
-    protectDriveway: true,
+    protectDriveway: false,
+    protectHouse: false,
     protectLines: false,
     protectItems: false,
     protectUnmarkedGround: false,
