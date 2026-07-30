@@ -427,16 +427,25 @@ test('the guided flow preserves every explicitly selected visual style', () => {
   );
 });
 
-test('Full Treatment restores factual geometry without erasing the second paid polish', () => {
+test('Full Treatment restores only the boundary ring, never photographic keyholes', () => {
   const policy = fullTreatmentProtectPolicy();
 
-  assert.equal(policy.protectOutside, true);
+  // Two real Stage-3 outputs repainted the complete page accurately. Restoring these broad
+  // regions afterwards threw away the painted exterior and reintroduced the blurry satellite
+  // house/driveway patches that Full Treatment had successfully removed.
+  assert.equal(policy.protectOutside, false);
   assert.equal(policy.protectBoundary, true);
-  assert.equal(policy.protectDriveway, true);
+  assert.equal(policy.protectDriveway, false);
+  assert.equal(policy.protectHouse, false);
 
-  // These regions must remain editable during pass two or the completed Hybrid is simply copied
-  // back over nearly the entire paid result.
+  // These regions must remain editable or the completed Hybrid is copied back over the paid
+  // artwork. The exact saved Hybrid remains available as the rollback if the paid pass fails.
   assert.equal(policy.protectLines, false);
   assert.equal(policy.protectItems, false);
   assert.equal(policy.protectUnmarkedGround, false);
+  assert.match(
+    DESIGN_GLOSSY_SOURCE,
+    /if \(options\.protectHouse !== false\) \{\s*for \(const footprint of authoritativeHouseFootprints/,
+    'the mask builder must honour the policy instead of protecting house pixels unconditionally',
+  );
 });

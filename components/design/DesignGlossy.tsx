@@ -494,6 +494,7 @@ interface ProtectMaskOptions {
   protectItems?: boolean;
   protectBoundary?: boolean;
   protectDriveway?: boolean;
+  protectHouse?: boolean;
   protectUnmarkedGround?: boolean;
   editableItemScale?: number;
   houseHaloRatio?: number;
@@ -1061,35 +1062,40 @@ async function buildProtectMask(
   }
 
   // Whole authoritative house polygons protected, including Studio-traced feature zones.
-  for (const footprint of authoritativeHouseFootprints(state, refLayers)) {
-    ctx.beginPath();
-    footprint.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
-    ctx.closePath();
-    // Protect a polygon-shaped halo as well as the footprint. This clears any AI roof that
-    // spills just beyond the traced outline without restoring a conspicuous rectangular block
-    // of raw satellite around the house. A soft outer fringe blends the restored ground back
-    // into the painted ground; the footprint and inner halo stay fully opaque/pixel-exact.
-    const houseHaloRadius = Math.max(
-      4 * SCALE,
-      Math.round((options.houseHaloRatio ?? 0.018) * Math.max(imgW, imgH)),
-    );
-    const houseFeather = Math.max(
-      2 * SCALE,
-      Math.round((options.houseFeatherRatio ?? 0.005) * Math.max(imgW, imgH)),
-    );
-    ctx.save();
-    ctx.filter = `blur(${houseFeather}px)`;
-    ctx.globalAlpha = 0.78;
-    ctx.lineWidth = (houseHaloRadius + houseFeather) * 2;
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
-    ctx.fill();
-    ctx.lineWidth = houseHaloRadius * 2;
-    ctx.stroke();
+  // Full Treatment deliberately opts out: two real second-pass outputs rendered the traced roofs
+  // correctly, while copying the Hybrid source pixels back here recreated the blurry rectangular
+  // roof patches the polish had removed.
+  if (options.protectHouse !== false) {
+    for (const footprint of authoritativeHouseFootprints(state, refLayers)) {
+      ctx.beginPath();
+      footprint.forEach(([x, y], i) => {
+        const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
+        fn.call(ctx, px(x), py(y));
+      });
+      ctx.closePath();
+      // Protect a polygon-shaped halo as well as the footprint. This clears any AI roof that
+      // spills just beyond the traced outline without restoring a conspicuous rectangular block
+      // of raw satellite around the house. A soft outer fringe blends the restored ground back
+      // into the painted ground; the footprint and inner halo stay fully opaque/pixel-exact.
+      const houseHaloRadius = Math.max(
+        4 * SCALE,
+        Math.round((options.houseHaloRatio ?? 0.018) * Math.max(imgW, imgH)),
+      );
+      const houseFeather = Math.max(
+        2 * SCALE,
+        Math.round((options.houseFeatherRatio ?? 0.005) * Math.max(imgW, imgH)),
+      );
+      ctx.save();
+      ctx.filter = `blur(${houseFeather}px)`;
+      ctx.globalAlpha = 0.78;
+      ctx.lineWidth = (houseHaloRadius + houseFeather) * 2;
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.fill();
+      ctx.lineWidth = houseHaloRadius * 2;
+      ctx.stroke();
+    }
   }
 
   // Strict sheets protect ALL land OUTSIDE the property boundary. Showcase sheets leave the page
@@ -9081,11 +9087,10 @@ export default function DesignGlossy({
         return sheetImage;
       }
 
-      // Full Treatment's second paid pass receives the complete finished Hybrid page. Restore only
-      // the factual pixels in its sheet-sized mask. The remaining page is intentionally left to
-      // the second pass so Full Treatment looks richer than Hybrid instead of being copied back to
-      // it almost wholesale. Never ship the model page raw: houses, access and site edges remain
-      // protected because a prompt alone is not a geometry guarantee.
+      // Full Treatment's second paid pass receives the complete finished Hybrid page. Its
+      // sheet-sized mask now restores only the narrow boundary ring. Broad source-pixel restoration
+      // (outside, roof and driveway) was measured in production and visibly recreated the ragged
+      // satellite keyholes the paid pass had already removed.
       if (showcase && !locked && protectMask && sourceImage) {
         try {
           return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
@@ -9428,9 +9433,9 @@ export default function DesignGlossy({
       // OpenAI edit mask. That preserves the style reference and still restores protected pixels.
       let protectMaskDataUrl: string | undefined;
       if (fullSheetPolish) {
-        // The second pass may improve the complete map artwork and sheet design. Restore only
-        // genuinely factual geometry afterwards; protecting the Hybrid's unmarked ground, routes
-        // and chrome made the paid result visually indistinguishable from Hybrid.
+        // The second pass improves the complete map artwork and sheet design. Restore only the
+        // narrow boundary ring afterwards; broader Hybrid source restoration creates photographic
+        // seams and blurred roof/driveway keyholes in otherwise unified artwork.
         const mapMask = await buildProtectMask(
           renderState,
           renderFrame,

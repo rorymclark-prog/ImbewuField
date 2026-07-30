@@ -850,6 +850,16 @@ test('the paid second pass is told it received a DRAFT, and that copying it is a
   // 5. Geometry still may not move — the point was never to let it redesign the farm.
   assert.match(p, /move none of them|WHAT MUST NOT MOVE/);
   assert.match(p, /Invent nothing/i);
+  assert.match(
+    p,
+    /map and legend together are authoritative|source map and legend.*authoritative/i,
+    'the supplied map and legend must be treated as the exhaustive factual inventory',
+  );
+  assert.match(
+    p,
+    /do not turn.*roof.*driveway.*tank|never reinterpret.*roof.*driveway.*tank/i,
+    'dark roof and access pixels must not be hallucinated into new tanks or structures',
+  );
 
   // 6. Preservation must not swamp the ask. The old prompt was five parts preservation to one part
   //    instruction; that ratio is what made a copy compliant.
