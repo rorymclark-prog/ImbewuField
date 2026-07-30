@@ -89,7 +89,13 @@ interface ActiveLayers {
   access: boolean; // paths/gates/driveway only
   animals: boolean;
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
-  baseMap: boolean; // satellite reference underlay (boundary + auto-detected roof/driveway/…)
+  baseMap: boolean; // satellite reference underlay (auto-detected roof/driveway/… + the boundary)
+  // The property fence, on its own switch. It used to ride on baseMap alone, so a farmer who
+  // wanted the fence off the drawing had to turn the satellite photo off with it — and when the
+  // boundary comes from a ring traced on the main map (the usual case) there was no other control
+  // for it anywhere in the Studio (Rory: "i need to be able to get rid of this fence"). Still
+  // nested under baseMap: "Base map off" keeps meaning "all reference context off".
+  boundary: boolean;
   labels: boolean; // the text name pills on every feature — off = declutter the map
   symbols: boolean; // centred item icon discs — off = cleaner dense drafting view
   contours: boolean; // approximate on-contour guide lines (from slope + aspect)
@@ -1957,7 +1963,7 @@ export default function DesignCanvas({
             shape are now rendered below as tappable `tracedLayers` (adoptable in one tap),
             so they're no longer drawn here as dead non-interactive outlines. The boundary
             stays special: fence styling, never adopted as a zone. */}
-        {refShown && refLayers.boundary.length >= 3 && (() => {
+        {refShown && activeLayers.boundary && refLayers.boundary.length >= 3 && (() => {
           const boundaryPx = refLayers.boundary.map(([x, y]) => [x * imgW, y * imgH] as [number, number]);
           const boundaryPts = ringToPx(refLayers.boundary, imgW, imgH);
           const posts = boundaryFencePosts(boundaryPx, 26);

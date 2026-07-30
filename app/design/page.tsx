@@ -615,6 +615,7 @@ function DesignStudioInner() {
     animals: true,
     ground: true,
     baseMap: true,
+    boundary: true, // the property fence — on by default, but now removable on its own
     labels: true,
     symbols: true,
     contours: false, // opt-in overlay (approximate, from slope + aspect)
@@ -623,9 +624,15 @@ function DesignStudioInner() {
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
+  //
+  // `boundary` is preserved rather than reset, alongside contours and sector. What the reset
+  // protects against is an ELEMENT layer being off: those also filter the palette, so a hidden
+  // one takes the farmer's tools away and leaves them hunting. The fence is a pure reference
+  // overlay with no palette effect, so turning it off is a deliberate presentation choice —
+  // and switching modes putting it back is just the fence returning uninvited.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
     }
   }, [designMode]);
 
@@ -2198,16 +2205,25 @@ function DesignStudioInner() {
               </button>
             </div>
           ) : (
+            /* Was a dashed, small-text row sitting in a stack of similar-looking dashed hint rows,
+               so it read as a tip rather than a control — Rory asked for a way to import a drone
+               photo while looking straight at the button for it. Solid fill, a real label, and
+               the question moved to a subtitle. The copy now names Google Earth as well as a
+               drone: rural-SA Mapbox/Esri imagery is often blurry (which is what sends a farmer
+               looking for a better base in the first place), and nothing here cares where the
+               aerial came from. Hardcoded English matches the rest of this row today; the whole
+               row still needs an i18n key. */
             <button
               type="button"
               onClick={() => setShowPhotoImport(true)}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(192,122,30,0.4)', background: 'transparent', color: OCHRE, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '8px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.12)', color: OCHRE, cursor: 'pointer', textAlign: 'left' }}
             >
-              <ImageIcon size={15} style={{ flexShrink: 0 }} />
-              <span style={{ flex: 1 }}>
-                <span style={{ fontWeight: 800 }}>Have a drone photo of your land?</span> Import it and draw on top instead of the satellite view.
+              <ImageIcon size={18} style={{ flexShrink: 0 }} />
+              <span style={{ flex: 1, lineHeight: 1.3 }}>
+                <span style={{ display: 'block', fontWeight: 800, fontSize: 14 }}>Use your own aerial photo</span>
+                <span style={{ display: 'block', fontSize: 12, opacity: 0.85 }}>A drone shot or a Google Earth capture — sharper than this satellite view. Line it up and set the scale.</span>
               </span>
-              <ChevronRight size={16} style={{ flexShrink: 0 }} />
+              <ChevronRight size={18} style={{ flexShrink: 0 }} />
             </button>
           )}
         </div>
