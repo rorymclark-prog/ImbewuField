@@ -9,6 +9,7 @@
 import type { Geometry, Position } from 'geojson';
 import type { DesignLayer } from '@/lib/design-studio';
 import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
+import { resolveBaseAlign } from '@/lib/base-photo-align';
 import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
@@ -143,13 +144,22 @@ export interface CustomBaseImage {
    * (Rory: "i should be able to do some micro refinements once placed"). This is that
    * adjustment, and it is deliberately the weakest possible kind: pure translation.
    *
-   * NOT scale, and NOT rotation. mPerPx comes from the farmer's own two-point calibration on
-   * these pixels, and every measurement in the app is derived from it; a scale handle here would
-   * silently restate every area and every yield on the plan. Rotation stays baked for the reason
-   * given above. Alignment that cannot lie about distance is worth more than a free transform.
+   * NOT scale. mPerPx comes from the farmer's own two-point calibration on these pixels, and
+   * every measurement in the app is derived from it; a scale handle here would silently restate
+   * every area and every yield on the plan. Alignment that cannot lie about distance is worth
+   * more than a free transform.
    */
   dx?: number;
   dy?: number;
+  /**
+   * In-place rotation refinement, clockwise degrees, on top of whatever was baked at import.
+   *
+   * Rotation is offered here — while scale never will be — because turning an image does not
+   * change how many metres one of its pixels is worth. A drone flown on any heading lands a few
+   * degrees off the satellite's north, and until now the only cure was re-importing the photo
+   * and re-doing the whole alignment (Rory: "this is good we just need a angle adjuster").
+   */
+  rotationDeg?: number;
   /** How opaque the photo sits over the satellite while aligning it. Undefined = fully opaque,
    *  which is the normal working state; the slider only matters while lining the two up. */
   opacity?: number;
@@ -167,9 +177,52 @@ export function clampBaseNudge(v: unknown): number {
     : 0;
 }
 
+/**
+ * In-place rotation bound, degrees. This control REFINES an already-aligned photo — squaring a
+ * drone shot to the satellite is a few degrees of work. Gross heading belongs in the import
+ * aligner, where the photo can be re-framed to fill the page after turning; here it cannot,
+ * because covering the exposed corners would mean scaling, and scaling would restate every
+ * measurement on the plan.
+ */
+export const MAX_BASE_ROTATION = 20;
+
+/** Coerce a persisted/typed rotation into the refinement range. Non-finite reads as no rotation. */
+export function clampBaseRotation(v: unknown): number {
+  return typeof v === 'number' && Number.isFinite(v)
+    ? Math.min(MAX_BASE_ROTATION, Math.max(-MAX_BASE_ROTATION, v))
+    : 0;
+}
+
 /** Opacity for painting the custom base over the satellite. Undefined/!finite = fully opaque. */
 export function clampBaseOpacity(v: unknown): number {
   return typeof v === 'number' && Number.isFinite(v) ? Math.min(1, Math.max(0.1, v)) : 1;
+}
+
+/** Which base-image controls the Base step must offer, given the saved state. */
+export interface BasePhotoControls {
+  /** Both directions are reachable — the photo can be switched off AND back on. */
+  canToggle: boolean;
+  /** The farmer's photo is the base being drawn on right now. */
+  showingPhoto: boolean;
+}
+
+/**
+ * THE ONE-WAY DOOR THIS EXISTS TO PREVENT. `revertToSatellite` is deliberately non-destructive:
+ * it flips `useCustomBase` off and KEEPS `customBase`, precisely so the photo can come back with
+ * no re-upload and no re-calibration. But the Base-step UI branched on
+ * `useCustomBase && customBase`, so the moment the flag went off the only control left was a
+ * from-scratch import — the photo was saved, intact, and unreachable, and coming back meant
+ * re-picking the file, re-aligning it and re-measuring the scale (Rory: "i still cant toggle on
+ * satelite or drone once the dorne is added").
+ *
+ * The rule is therefore about the PHOTO EXISTING, never about which base is active: a saved photo
+ * means a two-way toggle, in both flag states.
+ */
+export function basePhotoControls(
+  state: Pick<DesignCanvasState, 'useCustomBase' | 'customBase'> | null | undefined,
+): BasePhotoControls {
+  const hasPhoto = !!state?.customBase;
+  return { canToggle: hasPhoto, showingPhoto: hasPhoto && state?.useCustomBase === true };
 }
 
 export interface DesignCanvasState {
@@ -489,6 +542,58 @@ export function migrateStateToFrame(
   const lines = state.lines.map((l) => ({ ...l, points: l.points.map(remap) }));
 
   return { ...state, frame: newFrame, items, zones, lines };
+}
+
+/**
+ * Burn the farmer's in-place alignment (nudge + rotation) into the base image itself.
+ *
+ * WHY BAKE INSTEAD OF PAINTING. The nudge started life as a live transform on the Studio's
+ * <image> element, which made it Studio-only: every plan sheet, every print composition and
+ * every AI render reads `frame.satDataUrl` and paints it raw, so a farmer who lined their photo
+ * up on screen got an UN-aligned photo on all eight delivered sheets, silently. That is the same
+ * shape of defect as a shape drawn on a layer its own step switches off — the work is real,
+ * saved, and invisible where it matters. Rotation would have inherited the identical bug.
+ *
+ * Baking is what makes it one truth: the aligned pixels ARE the base image, so every renderer
+ * downstream is correct without knowing this feature exists.
+ *
+ * Rotation is applied about the frame centre and is NOT cover-scaled — see resolveBaseAlign in
+ * lib/base-photo-align.ts for why scaling to hide the exposed corners is the one thing this must
+ * never do. The corners are left transparent so the satellite underlay shows through.
+ */
+export async function bakeBaseAlignment(
+  sourceDataUrl: string,
+  align: { dx?: number; dy?: number; rotationDeg?: number } | null | undefined,
+  frameW: number,
+  frameH: number,
+): Promise<string> {
+  const dx = clampBaseNudge(align?.dx);
+  const dy = clampBaseNudge(align?.dy);
+  const rotationDeg = clampBaseRotation(align?.rotationDeg);
+  // Nothing to bake — hand back the original bytes rather than round-tripping them through a
+  // canvas re-encode, which costs time and loses nothing but quality.
+  if (dx === 0 && dy === 0 && rotationDeg === 0) return sourceDataUrl;
+
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image();
+    el.onload = () => resolve(el);
+    el.onerror = () => reject(new Error('Could not read your photo.'));
+    el.src = sourceDataUrl;
+  });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = frameW;
+  canvas.height = frameH;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return sourceDataUrl;
+
+  const { tx, ty, rad, cx, cy } = resolveBaseAlign({ dx, dy, rotationDeg }, frameW, frameH);
+  ctx.translate(cx + tx, cy + ty);
+  ctx.rotate(rad);
+  // Drawn at frame size from the rotation centre — the same "slice" fit the untransformed image
+  // element uses, so a zero alignment and a baked alignment agree pixel-for-pixel.
+  ctx.drawImage(img, -cx, -cy, frameW, frameH);
+  return canvas.toDataURL('image/png');
 }
 
 export async function fetchImageAsDataUrl(url: string): Promise<string> {

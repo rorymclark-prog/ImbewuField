@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseNudge, clampBaseOpacity } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
@@ -124,9 +124,12 @@ export interface DesignCanvasProps {
   activeLayers: ActiveLayers;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
-  /** Paint-time alignment of the farmer's own base photo over the satellite. Display only —
-   *  it never moves an item, a zone, a line or a metre. */
-  baseAlign?: { dx?: number; dy?: number; opacity?: number } | null;
+  /** See-through level for the farmer's own base photo while lining it up against the satellite
+   *  underneath. Display only, and deliberately the ONLY part of the alignment left as a live
+   *  paint: the nudge and the angle are baked into the image itself (bakeBaseAlignment in
+   *  lib/design-canvas.ts) so the plan sheets paint the same aligned pixels this canvas does,
+   *  whereas a half-transparent photo is a working state no delivered sheet should inherit. */
+  baseAlign?: { opacity?: number } | null;
   /** Non-null ARMS block placement: tap a corner, swing to aim, tap again to commit. The page
    *  owns the spec (the farmer's typed bed length/width/path/count) and the commit; the canvas
    *  owns only the gesture and the ghost. Arming also sets tool to a placement mode, which is
@@ -577,10 +580,8 @@ export default function DesignCanvas({
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
   const underlayDataUrl = frame.underlayDataUrl ?? null;
-  // Clamped on READ, never trusted from storage: a corrupt nudge should paint the photo slightly
-  // off, not reject the farmer's whole design on load.
-  const baseDx = clampBaseNudge(baseAlign?.dx);
-  const baseDy = clampBaseNudge(baseAlign?.dy);
+  // Clamped on READ, never trusted from storage: a corrupt value should paint the photo slightly
+  // wrong, not reject the farmer's whole design on load.
   const baseOpacity = clampBaseOpacity(baseAlign?.opacity);
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
@@ -2021,11 +2022,15 @@ export default function DesignCanvas({
         {underlayDataUrl && (
           <image href={underlayDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
         )}
+        {/* The base is painted UNTRANSFORMED. The farmer's nudge and angle are already in these
+            pixels — baked by bakeBaseAlignment so the eight plan sheets, the print set and every
+            AI render (all of which read frame.satDataUrl and paint it raw) show the same aligned
+            photo this canvas does. Re-applying the transform here would double it. */}
         {satDataUrl ? (
           <image
             href={satDataUrl}
-            x={baseDx * imgW}
-            y={baseDy * imgH}
+            x={0}
+            y={0}
             width={imgW}
             height={imgH}
             opacity={baseOpacity}

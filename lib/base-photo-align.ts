@@ -108,6 +108,59 @@ export function calibratedMPerPx(
 }
 
 /**
+ * How the farmer's photo is placed over the satellite AFTER it was imported: the in-place
+ * refinement, not the import transform above.
+ *
+ * Translation and rotation only, and deliberately so. mPerPx came from the farmer's own
+ * two-point calibration on these pixels, and every area, spacing and yield on the plan is
+ * derived from it — so a scale handle here would silently restate all of them. Rotation is
+ * safe in a way scale is not: turning an image does not change how many metres a pixel is
+ * worth, so a farmer can square their drone shot to the satellite without touching a single
+ * measurement.
+ */
+export interface BaseAlignment {
+  dx?: number;
+  dy?: number;
+  rotationDeg?: number;
+}
+
+/** The alignment resolved into paintable numbers, in frame pixels. */
+export interface ResolvedBaseAlign {
+  tx: number;
+  ty: number;
+  rad: number;
+  /** Rotation centre — the frame's middle, so turning the photo doesn't also walk it sideways. */
+  cx: number;
+  cy: number;
+  rotationDeg: number;
+}
+
+/**
+ * ROTATION IS NOT COVER-SCALED, on purpose. Turning an image inside a fixed frame exposes its
+ * corners, and the obvious reflex — scale up until it covers again — is exactly the forbidden
+ * operation: it would change metres-per-pixel, and every number on the plan with it. The
+ * corners are left to show the satellite underlay through, which is honest (that IS what is
+ * under there) and self-limiting, since the angles that square a drone shot to a satellite tile
+ * are a few degrees.
+ */
+export function resolveBaseAlign(
+  align: BaseAlignment | null | undefined,
+  frameW: number,
+  frameH: number,
+): ResolvedBaseAlign {
+  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0);
+  const rotationDeg = num(align?.rotationDeg);
+  return {
+    tx: num(align?.dx) * frameW,
+    ty: num(align?.dy) * frameH,
+    rad: (rotationDeg * Math.PI) / 180,
+    cx: frameW / 2,
+    cy: frameH / 2,
+    rotationDeg,
+  };
+}
+
+/**
  * Carry an EXISTING calibrated scale through a re-adjustment, without re-measuring.
  *
  * When the aligner reopens on the previously-baked photo (natural size == frame size, so the

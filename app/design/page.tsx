@@ -51,7 +51,12 @@ import {
   MAX_SCALE_FACTOR,
   clampBaseNudge,
   clampBaseOpacity,
+  clampBaseRotation,
+  basePhotoControls,
+  bakeBaseAlignment,
+  MAX_BASE_ROTATION,
 } from '@/lib/design-canvas';
+import { resolveBaseAlign, type BaseAlignment } from '@/lib/base-photo-align';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { type SnapRingKind } from '@/lib/snap-edges';
@@ -91,6 +96,11 @@ import { usePhoneViewport } from '@/lib/use-phone-viewport';
 // few-metre georeferencing gap, and a farmer who wants to move the photo further should
 // re-import it rather than walk it across the map a step at a time.
 const BASE_NUDGE_STEP = 0.002;
+
+// One turn step, degrees. Half a degree is about the finest a farmer can judge by eye against
+// satellite features, and it keeps the whole ±MAX_BASE_ROTATION range reachable in a sane number
+// of taps.
+const BASE_ROTATE_STEP = 0.5;
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
@@ -515,6 +525,11 @@ function DesignStudioInner() {
   // Tracked separately from the photo: the underlay is keyed on the frame the satellite was
   // fetched FOR, so panning to a new frame refetches it while re-importing the same photo does not.
   const loadedUnderlayKeyRef = useRef<string | null>(null);
+  // The farmer's photo as it was imported, BEFORE any in-place alignment. Alignment is baked into
+  // frame.satDataUrl (bakeBaseAlignment) so every plan sheet paints the same aligned pixels the
+  // Studio does — which means each nudge or rotation must re-bake from this pristine copy, never
+  // from the previously-baked image, or the transforms would stack and the photo would walk away.
+  const customBaseSourceRef = useRef<{ url: string; dataUrl: string } | null>(null);
   const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [saved, setSaved] = useState(true);
 
@@ -957,9 +972,14 @@ function DesignStudioInner() {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
         fetchImageAsDataUrl(customBase.url)
-          .then((dataUrl) => {
+          .then(async (dataUrl) => {
+            // Keep the UNALIGNED original: every later nudge or rotation re-bakes from this, so
+            // adjusting is a local redraw rather than a download, and repeated adjustments can
+            // never compound one bake on top of the last.
+            customBaseSourceRef.current = { url: customBase.url, dataUrl };
+            const baked = await bakeBaseAlignment(dataUrl, customBase, targetFrame.imgW, targetFrame.imgH);
             loadedCustomBaseUrlRef.current = customBase.url;
-            setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBase.mPerPx } : prev));
+            setFrame((prev) => (prev ? { ...prev, satDataUrl: baked, mPerPx: customBase.mPerPx } : prev));
           })
           .catch(() => setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev)));
       };
@@ -1216,10 +1236,20 @@ function DesignStudioInner() {
     (result: BasePhotoApplyResult) => {
       loadedCustomBaseUrlRef.current = result.url;
       loadedUnderlayKeyRef.current = null; // refetch the satellite to line the new photo up against
+      // A freshly-imported photo arrives already aligned by the aligner itself, so its in-place
+      // alignment starts at zero — and the preview IS the pristine original the re-bakes work from.
+      customBaseSourceRef.current = { url: result.url, dataUrl: result.previewDataUrl };
       handleChange((prev) => ({
         ...prev,
         useCustomBase: true,
-        customBase: { url: result.url, mPerPx: result.mPerPx, uploadedAt: new Date().toISOString() },
+        customBase: {
+          url: result.url,
+          mPerPx: result.mPerPx,
+          uploadedAt: new Date().toISOString(),
+          dx: 0,
+          dy: 0,
+          rotationDeg: 0,
+        },
       }));
       setFrame((prev) => (prev ? { ...prev, mPerPx: result.mPerPx, satDataUrl: result.previewDataUrl } : prev));
       setShowPhotoImport(false);
@@ -1230,19 +1260,54 @@ function DesignStudioInner() {
   // Paint-time alignment of the farmer's photo over the satellite. These write ONLY the display
   // fields on customBase — no item, zone, line or metre moves, which is what makes it safe to
   // offer as a free-hand nudge at all (see CustomBaseImage in lib/design-canvas.ts).
-  const nudgeBase = useCallback((ddx: number, ddy: number) => {
-    handleChange((prev) => (prev.customBase
-      ? {
-        ...prev,
-        customBase: {
-          ...prev.customBase,
-          dx: clampBaseNudge((prev.customBase.dx ?? 0) + ddx),
-          dy: clampBaseNudge((prev.customBase.dy ?? 0) + ddy),
-        },
-      }
-      : prev));
-  }, [handleChange]);
+  // Re-burn the alignment into the base image from the pristine original. Every adjustment goes
+  // through here, so the Studio and all eight plan sheets are looking at the same pixels — see
+  // bakeBaseAlignment (lib/design-canvas.ts) for why a live transform was not enough.
+  const rebakeBase = useCallback((align: BaseAlignment) => {
+    const source = customBaseSourceRef.current;
+    if (!source || !frame) return;
+    bakeBaseAlignment(source.dataUrl, align, frame.imgW, frame.imgH)
+      .then((baked) => setFrame((prev) => (prev ? { ...prev, satDataUrl: baked } : prev)))
+      // A failed re-bake leaves the previous aligned image on screen, which is the last state the
+      // farmer approved — strictly better than blanking their base over a redraw.
+      .catch(() => {});
+  }, [frame]);
 
+  // One writer for all three in-place controls: it clamps, persists, and re-bakes together, so a
+  // saved alignment and the painted image cannot describe different things.
+  // The next alignment is computed HERE, from the rendered state, and not read back out of the
+  // setState updater. A React updater body runs during the re-render, not when setState is
+  // called, so a value captured inside one is still unset on the line after — which is precisely
+  // how the first cut of this silently never re-baked: the alignment saved and the image never
+  // changed. Deriving it up front also means the exact same object is persisted and painted.
+  const adjustBase = useCallback((patch: (b: NonNullable<DesignCanvasState['customBase']>) => BaseAlignment) => {
+    const current = canvasState?.customBase;
+    if (!current) return;
+    const p = patch(current);
+    const next: BaseAlignment = {
+      dx: clampBaseNudge(p.dx),
+      dy: clampBaseNudge(p.dy),
+      rotationDeg: clampBaseRotation(p.rotationDeg),
+    };
+    handleChange((prev) => (prev.customBase
+      ? { ...prev, customBase: { ...prev.customBase, ...next } }
+      : prev));
+    rebakeBase(next);
+  }, [canvasState?.customBase, handleChange, rebakeBase]);
+
+  const nudgeBase = useCallback((ddx: number, ddy: number) => {
+    adjustBase((b) => ({ dx: (b.dx ?? 0) + ddx, dy: (b.dy ?? 0) + ddy, rotationDeg: b.rotationDeg ?? 0 }));
+  }, [adjustBase]);
+
+  // Turning the photo, in place, without touching a single measurement — rotation preserves
+  // distance, which is exactly why this control can exist where a scale handle never will.
+  const rotateBase = useCallback((ddeg: number) => {
+    adjustBase((b) => ({ dx: b.dx ?? 0, dy: b.dy ?? 0, rotationDeg: (b.rotationDeg ?? 0) + ddeg }));
+  }, [adjustBase]);
+
+  // Opacity is the one adjustment that stays a live paint rather than being baked: it exists to
+  // see the satellite THROUGH the photo while lining the two up, and a half-transparent photo is
+  // a working state, never something a delivered sheet should inherit.
   const setBaseOpacity = useCallback((v: number) => {
     handleChange((prev) => (prev.customBase
       ? { ...prev, customBase: { ...prev.customBase, opacity: clampBaseOpacity(v) } }
@@ -1251,9 +1316,10 @@ function DesignStudioInner() {
 
   const resetBaseAlign = useCallback(() => {
     handleChange((prev) => (prev.customBase
-      ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, opacity: 1 } }
+      ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, rotationDeg: 0, opacity: 1 } }
       : prev));
-  }, [handleChange]);
+    rebakeBase({ dx: 0, dy: 0, rotationDeg: 0 });
+  }, [handleChange, rebakeBase]);
 
   // Switch back to the real satellite view — the farmer's uploaded photo stays saved
   // (customBase is left untouched; only the useCustomBase flag flips), so switching back to
@@ -1286,6 +1352,39 @@ function DesignStudioInner() {
         });
     }
   }, [handleChange, layers, lat, lon, canvasState?.scaleFactor]);
+
+  // The other half of revertToSatellite, which never existed. Reverting keeps `customBase` on
+  // purpose — the whole point is that the photo comes back without a re-upload or a
+  // re-calibration — but nothing in the UI could turn it back on, so "Switch to satellite view"
+  // was a one-way door and the only route back was a from-scratch import: re-pick the file,
+  // re-align it, re-measure the wall (Rory: "i still cant toggle on satelite or drone once the
+  // dorne is added"). See basePhotoControls in lib/design-canvas.ts for the invariant.
+  //
+  // Toggling normally costs no download: the satellite currently painted as the base IS the
+  // underlay the photo wants behind it, so it moves across in memory instead of being refetched.
+  const restoreCustomBase = useCallback(() => {
+    const saved = canvasState?.customBase;
+    if (!saved) return;
+    handleChange((prev) => ({ ...prev, useCustomBase: true }));
+    loadedCustomBaseUrlRef.current = null;
+    setFrame((prev) => (prev
+      ? { ...prev, mPerPx: saved.mPerPx, underlayDataUrl: prev.underlayDataUrl ?? prev.satDataUrl ?? null }
+      : prev));
+    fetchImageAsDataUrl(saved.url)
+      .then(async (dataUrl) => {
+        customBaseSourceRef.current = { url: saved.url, dataUrl };
+        // Through the same bake as every other path — a photo that comes back must come back
+        // aligned exactly as the farmer left it, not reset to how it was uploaded.
+        const baked = await bakeBaseAlignment(dataUrl, saved, frame?.imgW ?? 0, frame?.imgH ?? 0);
+        loadedCustomBaseUrlRef.current = saved.url;
+        setFrame((prev) => (prev ? { ...prev, satDataUrl: baked, mPerPx: saved.mPerPx } : prev));
+      })
+      // A photo that will not load must not leave the farmer on a satellite image being MEASURED
+      // with the photo's metres-per-pixel — that is a silently wrong scale on every area and
+      // yield. Going all the way back is the only consistent state, and revertToSatellite already
+      // restores the projection metres and the right imagery provider.
+      .catch(() => revertToSatellite());
+  }, [canvasState?.customBase, frame?.imgW, frame?.imgH, handleChange, revertToSatellite]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -2374,7 +2473,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           components/design/BasePhotoImport.tsx and CustomBaseImage (lib/design-canvas.ts). */}
       {canvasState && canvasState.step === 'base' && (
         <div style={{ padding: '6px 12px 0' }}>
-          {canvasState.useCustomBase && canvasState.customBase ? (
+          {basePhotoControls(canvasState).canToggle ? (
             <div
               style={{
                 display: 'flex',
@@ -2391,58 +2490,119 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               }}
             >
               <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
-              <span>Your own photo, over the satellite.</span>
-              {/* MICRO-ADJUSTMENT, in place, on the real map — not in a dialog. A drone shot and a
-                  satellite tile disagree by a few metres more often than not (different day,
-                  different georeferencing), and that only shows up later, at full size, with the
-                  design already drawn on top. Translation only: mPerPx came from the farmer's own
-                  two-point calibration on these pixels, so a scale handle here would quietly
-                  restate every area and every yield on the plan. */}
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
-                {([
-                  ['◀', -BASE_NUDGE_STEP, 0, 'Nudge photo west'],
-                  ['▲', 0, -BASE_NUDGE_STEP, 'Nudge photo north'],
-                  ['▼', 0, BASE_NUDGE_STEP, 'Nudge photo south'],
-                  ['▶', BASE_NUDGE_STEP, 0, 'Nudge photo east'],
-                ] as const).map(([glyph, ddx, ddy, label]) => (
-                  <button
-                    key={glyph}
-                    type="button"
-                    title={label}
-                    aria-label={label}
-                    onClick={() => nudgeBase(ddx, ddy)}
-                    style={{
-                      minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
-                      borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
-                      fontSize: 10, lineHeight: 1, padding: 0,
-                    }}
-                  >
-                    {glyph}
-                  </button>
-                ))}
+              {/* A REAL TWO-WAY TOGGLE. "Switch to satellite view" always kept the photo — the
+                  whole point of keeping it was that it could come back — but the only control on
+                  offer once the flag was off was a from-scratch import, so the photo was saved
+                  and unreachable and coming back meant re-picking the file, re-aligning and
+                  re-measuring the wall (Rory: "i still cant toggle on satelite or drone once the
+                  dorne is added"). The toggle now shows whenever a photo EXISTS, in both states —
+                  see basePhotoControls in lib/design-canvas.ts, which is where that rule is
+                  tested. */}
+              <span style={{ display: 'inline-flex', borderRadius: 9, overflow: 'hidden', border: `1px solid ${OCHRE}`, flexShrink: 0 }}>
+                {([['Satellite', false], ['My photo', true]] as const).map(([label, wantsPhoto]) => {
+                  const on = basePhotoControls(canvasState).showingPhoto === wantsPhoto;
+                  return (
+                    <button
+                      key={label}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => (wantsPhoto ? restoreCustomBase() : revertToSatellite())}
+                      style={{
+                        minHeight: 30, padding: '4px 11px', border: 'none', cursor: 'pointer',
+                        fontSize: 12.5, fontWeight: 700,
+                        background: on ? OCHRE : PAPER, color: on ? PAPER : OCHRE,
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </span>
-              <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title="Fade your photo to see the satellite underneath while you line them up">
-                <span style={{ fontSize: 11, opacity: 0.75 }}>See through</span>
-                <input
-                  type="range"
-                  min={0.1}
-                  max={1}
-                  step={0.05}
-                  value={canvasState.customBase.opacity ?? 1}
-                  onChange={(e) => setBaseOpacity(Number(e.target.value))}
-                  style={{ width: 74 }}
-                />
-              </label>
-              {(canvasState.customBase.dx || canvasState.customBase.dy
-                || (canvasState.customBase.opacity ?? 1) !== 1) && (
-                <button
-                  type="button"
-                  onClick={resetBaseAlign}
-                  title="Put the photo back where it was imported, fully opaque"
-                  style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 11.5, padding: '4px 4px' }}
-                >
-                  Reset
-                </button>
+              {/* MICRO-ADJUSTMENT, in place, on the real map — not in a dialog. A drone shot and a
+                  satellite tile disagree by a few metres and a few degrees more often than not
+                  (different day, different heading, different georeferencing), and that only shows
+                  up later, at full size, with the design already drawn on top. Move and TURN, never
+                  resize: mPerPx came from the farmer's own two-point calibration on these pixels,
+                  so a scale handle here would quietly restate every area and every yield on the
+                  plan, while rotation cannot — turning an image does not change what a pixel is
+                  worth on the ground. */}
+              {basePhotoControls(canvasState).showingPhoto && canvasState.customBase && (
+                <>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
+                    {([
+                      ['◀', -BASE_NUDGE_STEP, 0, 'Nudge photo west'],
+                      ['▲', 0, -BASE_NUDGE_STEP, 'Nudge photo north'],
+                      ['▼', 0, BASE_NUDGE_STEP, 'Nudge photo south'],
+                      ['▶', BASE_NUDGE_STEP, 0, 'Nudge photo east'],
+                    ] as const).map(([glyph, ddx, ddy, label]) => (
+                      <button
+                        key={glyph}
+                        type="button"
+                        title={label}
+                        aria-label={label}
+                        onClick={() => nudgeBase(ddx, ddy)}
+                        style={{
+                          minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
+                          borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
+                          fontSize: 10, lineHeight: 1, padding: 0,
+                        }}
+                      >
+                        {glyph}
+                      </button>
+                    ))}
+                  </span>
+                  {/* THE ANGLE ADJUSTER (Rory: "this is good we just need a angle adjuster"). The
+                      running total is shown because a farmer squaring a photo by eye needs to know
+                      how far they have turned it and how to get back to square. */}
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }} title={`Turn your photo to square it with the satellite (±${MAX_BASE_ROTATION}°)`}>
+                    {([
+                      ['↺', -BASE_ROTATE_STEP, 'Turn photo anticlockwise'],
+                      ['↻', BASE_ROTATE_STEP, 'Turn photo clockwise'],
+                    ] as const).map(([glyph, ddeg, label]) => (
+                      <button
+                        key={glyph}
+                        type="button"
+                        title={label}
+                        aria-label={label}
+                        onClick={() => rotateBase(ddeg)}
+                        style={{
+                          minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
+                          borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
+                          fontSize: 13, lineHeight: 1, padding: 0,
+                        }}
+                      >
+                        {glyph}
+                      </button>
+                    ))}
+                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                      {(canvasState.customBase.rotationDeg ?? 0).toFixed(1)}°
+                    </span>
+                  </span>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title="Fade your photo to see the satellite underneath while you line them up">
+                    <span style={{ fontSize: 11, opacity: 0.75 }}>See through</span>
+                    <input
+                      type="range"
+                      min={0.1}
+                      max={1}
+                      step={0.05}
+                      value={canvasState.customBase.opacity ?? 1}
+                      onChange={(e) => setBaseOpacity(Number(e.target.value))}
+                      style={{ width: 74 }}
+                    />
+                  </label>
+                  {(canvasState.customBase.dx || canvasState.customBase.dy
+                    || canvasState.customBase.rotationDeg
+                    || (canvasState.customBase.opacity ?? 1) !== 1) && (
+                    <button
+                      type="button"
+                      onClick={resetBaseAlign}
+                      title="Put the photo back where it was imported — square, in place, fully opaque"
+                      style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 11.5, padding: '4px 4px' }}
+                    >
+                      Reset
+                    </button>
+                  )}
+                </>
               )}
               <span style={{ flex: 1, minWidth: 0 }} />
               {/* Adjusting used to mean living with whatever the first pass produced. This reopens
@@ -2453,14 +2613,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 onClick={() => setShowPhotoImport(true)}
                 style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
-                Adjust photo
-              </button>
-              <button
-                type="button"
-                onClick={revertToSatellite}
-                style={{ border: 'none', background: 'transparent', color: GREEN, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
-              >
-                Switch to satellite view
+                {basePhotoControls(canvasState).showingPhoto ? 'Adjust photo' : 'Use a different photo'}
               </button>
             </div>
           ) : (
