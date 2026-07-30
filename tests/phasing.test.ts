@@ -3,8 +3,15 @@ import test from 'node:test';
 
 import type { DesignCanvasState, LineShape, PlacedItem } from '@/lib/design-canvas';
 import { BIOMES } from '@/lib/biome';
+import { buildDemoDesignCanvasState } from '@/lib/demo-farm';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { buildPhasePlan, type PhasingRefLayers } from '@/lib/phasing';
+import {
+  buildPhasePinPositions,
+  buildPhasePlan,
+  layoutPhasePinPositions,
+  type PhaseKey,
+  type PhasingRefLayers,
+} from '@/lib/phasing';
 
 const FRAME = {
   centerLng: 31.963,
@@ -265,4 +272,391 @@ test('commissioning-only closeout never talks about animals that are not planned
   assert.equal(closeout?.itemIds.length, 0);
   assert.doesNotMatch(closeout?.tasks.join(' ') ?? '', /animal|stock|trough|hive/i);
   assert.match(closeout?.holdPoint ?? '', /as-built record/i);
+});
+
+const pinPhase = (key: PhaseKey, itemIds: string[]) => ({ key, itemIds });
+
+test('implementation pins mark separated work clusters instead of one empty global centroid', () => {
+  const design = state(
+    [{ ...item('tank', 'jojo_1000'), x: 0.14, y: 0.18 }],
+    [
+      { id: 'main', kind: 'pipe', points: [[0.70, 0.68], [0.76, 0.68]] },
+      { id: 'greywater', kind: 'greywater', points: [[0.72, 0.72], [0.78, 0.72]] },
+    ],
+  );
+
+  const pins = buildPhasePinPositions(
+    pinPhase('access_water', ['greywater', 'tank', 'main']),
+    design,
+    NO_REFS,
+    1.5,
+  );
+
+  assert.equal(pins.length, 2);
+  assert.deepEqual(
+    pins.map((pin) => [...pin.itemIds].sort()),
+    [['tank'], ['greywater', 'main']],
+  );
+
+  // A pin must sit on one of the work representatives, not midway through unrelated empty ground.
+  const workRepresentatives = [[0.14, 0.18], [0.73, 0.68], [0.75, 0.72]];
+  assert.ok(
+    pins.every((pin) => workRepresentatives.some(([x, y]) => pin.x === x && pin.y === y)),
+  );
+  assert.equal(
+    pins.some((pin) => Math.abs(pin.x - 0.52) < 0.04 && Math.abs(pin.y - 0.53) < 0.04),
+    false,
+    'the old all-work centroid floats between the tank and routes',
+  );
+});
+
+test('nearby bed rows share a pin while spatially separate infrastructure gets its own', () => {
+  const design = state([
+    { ...item('bed-a', 'veg_bed'), x: 0.24, y: 0.26 },
+    { ...item('bed-b', 'veg_bed'), x: 0.29, y: 0.26 },
+    { ...item('bed-c', 'veg_bed'), x: 0.24, y: 0.33 },
+    { ...item('compost', 'compost_bay'), x: 0.76, y: 0.72 },
+  ]);
+
+  const pins = buildPhasePinPositions(
+    pinPhase('beds', ['bed-c', 'compost', 'bed-a', 'bed-b']),
+    design,
+    NO_REFS,
+    1.5,
+  );
+
+  assert.equal(pins.length, 2);
+  assert.deepEqual(
+    pins.map((pin) => [...pin.itemIds].sort()),
+    [['bed-a', 'bed-b', 'bed-c'], ['compost']],
+  );
+});
+
+test('a connected two-row bed block stays one work area without swallowing remote infrastructure', () => {
+  const design = state([
+    { ...item('bed-a', 'veg_bed'), x: 0.20, y: 0.50 },
+    { ...item('bed-b', 'veg_bed'), x: 0.25, y: 0.50 },
+    { ...item('bed-c', 'veg_bed'), x: 0.30, y: 0.50 },
+    { ...item('bed-d', 'veg_bed'), x: 0.20, y: 0.65 },
+    { ...item('bed-e', 'veg_bed'), x: 0.25, y: 0.65 },
+    { ...item('bed-f', 'veg_bed'), x: 0.30, y: 0.65 },
+    { ...item('compost', 'compost_bay'), x: 0.50, y: 0.20 },
+  ]);
+  const bedIds = ['bed-a', 'bed-b', 'bed-c', 'bed-d', 'bed-e', 'bed-f'];
+
+  const pins = buildPhasePinPositions(
+    pinPhase('beds', ['compost', ...bedIds]),
+    design,
+    NO_REFS,
+    1.53,
+  );
+
+  assert.equal(pins.length, 2);
+  assert.deepEqual(
+    pins.map((pin) => pin.itemIds),
+    [[...bedIds].sort(), ['compost']],
+  );
+});
+
+test('pin clustering measures rendered distance with the map aspect ratio', () => {
+  const design = state([
+    { ...item('left', 'veg_bed'), x: 0.40, y: 0.40 },
+    { ...item('right', 'veg_bed'), x: 0.52, y: 0.40 },
+  ]);
+  const phase = pinPhase('beds', ['left', 'right']);
+
+  assert.equal(buildPhasePinPositions(phase, design, NO_REFS, 1).length, 1);
+  assert.equal(buildPhasePinPositions(phase, design, NO_REFS, 2).length, 2);
+});
+
+test('pin layout is insertion-order independent, malformed-safe and leaves state untouched', () => {
+  const malformed = { ...item('bad', 'veg_bed'), x: Number.NaN };
+  const design = state(
+    [
+      { ...item('near-b', 'veg_bed'), x: 0.32, y: 0.28 },
+      malformed,
+      { ...item('far', 'compost_bay'), x: 0.82, y: 0.76 },
+      { ...item('near-a', 'veg_bed'), x: 0.26, y: 0.28 },
+    ],
+    [{ id: 'bad-line', kind: 'drip', points: [[0.3, 0.3], [Number.NaN, 0.4]] }],
+  );
+  const reversed: DesignCanvasState = {
+    ...structuredClone(design),
+    items: [...design.items].reverse(),
+    lines: [...design.lines].reverse(),
+  };
+  const before = structuredClone(design);
+  const ids = ['bad-line', 'far', 'near-a', 'bad', 'near-b'];
+
+  const first = buildPhasePinPositions(pinPhase('beds', ids), design, NO_REFS, 1.5);
+  const second = buildPhasePinPositions(pinPhase('beds', [...ids].reverse()), reversed, NO_REFS, 1.5);
+
+  assert.deepEqual(second, first);
+  assert.deepEqual(design, before);
+  assert.deepEqual(first.flatMap((pin) => pin.itemIds).sort(), ['far', 'near-a', 'near-b']);
+});
+
+test('bookend pins use traced gate and house anchors with distinct honest fallbacks', () => {
+  const refs: PhasingRefLayers = {
+    boundary: [[0.1, 0.1], [0.9, 0.1], [0.9, 0.9], [0.1, 0.9]],
+    driveway: [[0.2, 0.12], [0.4, 0.3]],
+    house: [[0.4, 0.4], [0.6, 0.4], [0.6, 0.6], [0.4, 0.6]],
+  };
+  const design = state([item('bed', 'veg_bed')]);
+
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('setout', []), design, refs, 1.5),
+    [{ x: 0.2, y: 0.12, itemIds: [] }],
+  );
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', []), design, refs, 1.5),
+    [{ x: 0.5, y: 0.5, itemIds: [] }],
+  );
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('setout', []), design, NO_REFS, 1.5),
+    [{ x: 0.4, y: 0.4, itemIds: [] }],
+  );
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', []), design, NO_REFS, 1.5),
+    [{ x: 0.6, y: 0.6, itemIds: [] }],
+  );
+});
+
+test('demo implementation pins repeat phase numbers at its genuinely separate work areas', () => {
+  const design = buildDemoDesignCanvasState();
+  const plan = buildPhasePlan(design, NO_REFS);
+  const pins = Object.fromEntries(
+    plan.phases.map((phase) => [
+      phase.key,
+      buildPhasePinPositions(phase, design, NO_REFS, 1.53),
+    ]),
+  );
+
+  assert.equal(pins.access_water.length, 2, 'tank and route work are separate');
+  assert.deepEqual(
+    pins.access_water.map((pin) => pin.itemIds),
+    [['demo-di-tank'], ['demo-dl-greywater', 'demo-dl-path']],
+  );
+  assert.equal(pins.beds.length, 2, 'the bed block stays together and compost remains separate');
+  assert.equal(pins.perennials.length, 3, 'the orchard row gets repeated, readable phase markers');
+
+  for (const phase of plan.phases) {
+    assert.deepEqual(
+      pins[phase.key].flatMap((pin) => pin.itemIds).sort(),
+      [...phase.itemIds].sort(),
+      `${phase.key} work is represented exactly once`,
+    );
+  }
+});
+
+test('route pins use arc-length midpoints and do not drift when a straight route is resampled', () => {
+  const sparse = state([], [{ id: 'route', kind: 'pipe', points: [[0.1, 0.5], [0.9, 0.5]] }]);
+  const dense = state([], [{
+    id: 'route',
+    kind: 'pipe',
+    points: [[0.1, 0.5], [0.2, 0.5], [0.3, 0.5], [0.9, 0.5]],
+  }]);
+  const phase = pinPhase('access_water', ['route']);
+
+  assert.deepEqual(buildPhasePinPositions(phase, sparse, NO_REFS, 1.5), [
+    { x: 0.5, y: 0.5, itemIds: ['route'] },
+  ]);
+  assert.deepEqual(buildPhasePinPositions(phase, dense, NO_REFS, 1.5), [
+    { x: 0.5, y: 0.5, itemIds: ['route'] },
+  ]);
+});
+
+test('presentation-cropped routes retain a pin on their visible clipped geometry', () => {
+  // boundaryPresentationContext can produce exactly these coordinates when a raw route crosses a
+  // compact traced boundary: the canvas still draws the middle and clips both off-frame ends.
+  const crossing = state([], [{
+    id: 'crossing',
+    kind: 'path',
+    points: [[-0.7097, 0.5], [1.7097, 0.5]],
+  }]);
+  const outside = state([], [{
+    id: 'outside',
+    kind: 'path',
+    points: [[-0.8, 0.4], [-0.2, 0.6]],
+  }]);
+
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('access_water', ['crossing']), crossing, NO_REFS, 1.5),
+    [{ x: 0.5, y: 0.5, itemIds: ['crossing'] }],
+  );
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('access_water', ['outside']), outside, NO_REFS, 1.5),
+    [],
+    'a route with no visible segment must not invent an in-frame pin',
+  );
+});
+
+test('badge layout offsets pins from exact work and prevents cross-phase erasure', () => {
+  const anchors = [
+    {
+      x: 0.5,
+      y: 0.5,
+      phaseKey: 'earthworks' as const,
+      phaseNumber: 3,
+      itemIds: ['swale'],
+    },
+    {
+      x: 0.5,
+      y: 0.5,
+      phaseKey: 'perennials' as const,
+      phaseNumber: 5,
+      itemIds: ['tree'],
+    },
+    {
+      x: 0.02,
+      y: 0.02,
+      phaseKey: 'access_water' as const,
+      phaseNumber: 2,
+      itemIds: ['tank'],
+    },
+  ];
+  const aspect = 1.5;
+  const radius = 0.025;
+  const first = layoutPhasePinPositions(anchors, aspect, radius);
+  const reversed = layoutPhasePinPositions([...anchors].reverse(), aspect, radius);
+  const renderedDistance = (
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+  ) => Math.hypot((a.x - b.x) * aspect, a.y - b.y);
+
+  assert.deepEqual(reversed, first, 'layout must not depend on phase traversal order');
+  assert.equal(first.length, 3);
+  for (const pin of first) {
+    assert.ok(
+      renderedDistance(pin, { x: pin.anchorX, y: pin.anchorY }) >= radius * 1.55,
+      `${pin.phaseKey} badge still obscures its own exact anchor`,
+    );
+    assert.ok(pin.x >= radius / aspect && pin.x <= 1 - radius / aspect);
+    assert.ok(pin.y >= radius && pin.y <= 1 - radius);
+  }
+  for (let left = 0; left < first.length; left++) {
+    for (let right = left + 1; right < first.length; right++) {
+      assert.ok(
+        renderedDistance(first[left], first[right]) >= radius * 2.2,
+        `${first[left].phaseKey} and ${first[right].phaseKey} badges overlap`,
+      );
+    }
+  }
+});
+
+test('all six phases can share a map corner without clamped badges overlapping', () => {
+  const keys: PhaseKey[] = [
+    'setout',
+    'access_water',
+    'earthworks',
+    'beds',
+    'perennials',
+    'livestock',
+  ];
+  const aspect = 1.5;
+  const radius = 0.025;
+  const pins = layoutPhasePinPositions(
+    keys.map((phaseKey, index) => ({
+      x: 0,
+      y: 0,
+      phaseKey,
+      phaseNumber: index + 1,
+      itemIds: [`work-${index + 1}`],
+    })),
+    aspect,
+    radius,
+  );
+
+  assert.equal(pins.length, keys.length);
+  for (let left = 0; left < pins.length; left++) {
+    for (let right = left + 1; right < pins.length; right++) {
+      const separation = Math.hypot(
+        (pins[left].x - pins[right].x) * aspect,
+        pins[left].y - pins[right].y,
+      );
+      assert.ok(
+        separation >= radius * 2.2,
+        `${pins[left].phaseKey} and ${pins[right].phaseKey} overlap at the clipped corner`,
+      );
+    }
+  }
+});
+
+test('closed rings do not bias bookend anchors and malformed reference traces cannot stack them', () => {
+  const design = state([item('bed', 'veg_bed')]);
+  const openHouse: PhasingRefLayers = {
+    boundary: [],
+    driveway: [],
+    house: [[0.4, 0.4], [0.6, 0.4], [0.6, 0.6], [0.4, 0.6]],
+  };
+  const closedHouse: PhasingRefLayers = {
+    ...openHouse,
+    house: [...openHouse.house, openHouse.house[0]],
+  };
+
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', []), design, closedHouse, 1.5),
+    buildPhasePinPositions(pinPhase('livestock', []), design, openHouse, 1.5),
+  );
+
+  const malformed: PhasingRefLayers = {
+    boundary: [[0.2, 0.2], [Number.NaN, 0.4], [0.2, 0.8]],
+    house: [[0.2, 0.2], [Number.NaN, 0.4], [0.2, 0.8]],
+    driveway: [[0.2, 0.2], [Number.NaN, 0.4]],
+  };
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('setout', []), design, malformed, 1.5),
+    [{ x: 0.4, y: 0.4, itemIds: [] }],
+  );
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', []), design, malformed, 1.5),
+    [{ x: 0.6, y: 0.6, itemIds: [] }],
+  );
+});
+
+test('ambiguous duplicate object ids are omitted instead of changing pins with array order', () => {
+  const first = state([
+    { ...item('duplicate', 'veg_bed'), x: 0.2, y: 0.2 },
+    { ...item('duplicate', 'compost_bay'), x: 0.8, y: 0.8 },
+  ]);
+  const reversed: DesignCanvasState = { ...first, items: [...first.items].reverse() };
+  const phase = pinPhase('beds', ['duplicate']);
+
+  assert.deepEqual(buildPhasePinPositions(phase, first, NO_REFS, 1.5), []);
+  assert.deepEqual(buildPhasePinPositions(phase, reversed, NO_REFS, 1.5), []);
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', ['duplicate']), first, ALL_REFS, 1.5),
+    [],
+    'an unresolved livestock object must not be disguised as a commissioning pin at the house',
+  );
+});
+
+test('real livestock work is pinned to that work instead of the house bookend fallback', () => {
+  const design = state([{ ...item('coop', 'chicken_coop'), x: 0.18, y: 0.78 }]);
+
+  assert.deepEqual(
+    buildPhasePinPositions(pinPhase('livestock', ['coop']), design, ALL_REFS, 1.5),
+    [{ x: 0.18, y: 0.78, itemIds: ['coop'] }],
+  );
+});
+
+test('dense perennial phases stay interactive instead of doing cubic cluster work', () => {
+  const items = Array.from({ length: 300 }, (_, index) => ({
+    ...item(`tree-${String(index).padStart(3, '0')}`, 'tree_citrus'),
+    x: 0.45 + (index % 20) * 0.0005,
+    y: 0.45 + Math.floor(index / 20) * 0.0005,
+  }));
+  const design = state(items);
+  const startedAt = Date.now();
+
+  const pins = buildPhasePinPositions(
+    pinPhase('perennials', items.map(({ id }) => id)),
+    design,
+    NO_REFS,
+    1.5,
+  );
+  const elapsedMs = Date.now() - startedAt;
+
+  assert.equal(pins.length, 1);
+  assert.ok(elapsedMs < 1_000, `300 compact objects took ${elapsedMs} ms to cluster`);
 });

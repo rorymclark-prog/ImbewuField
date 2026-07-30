@@ -80,6 +80,418 @@ export interface PhasePlan {
   siteRules: string[];
 }
 
+/** One exact, app-owned numbered pin on the implementation map.
+ *
+ * `itemIds` records the work represented by the pin. It is deliberately part of the pure result:
+ * tests can prove that every buildable object is represented exactly once without inspecting
+ * pixels, while the renderer only needs `x` and `y`.
+ */
+export interface PhasePinPosition {
+  x: number;
+  y: number;
+  itemIds: string[];
+}
+
+/** A truthful work anchor paired with the phase number that will be printed beside it. */
+export interface NumberedPhasePinAnchor extends PhasePinPosition {
+  phaseKey: PhaseKey;
+  phaseNumber: number;
+}
+
+/** A display-safe numbered pin. `anchorX/Y` remain the exact work location; `x/y` are the
+ * nearby badge centre, offset so the badge does not erase the feature it is explaining. */
+export interface PlacedPhasePin extends NumberedPhasePinAnchor {
+  anchorX: number;
+  anchorY: number;
+}
+
+/** Resolve a phase to exact map-pin positions.
+ *
+ * Kept in the rules module rather than buried in the canvas renderer so the implementation-map
+ * placement contract is deterministic and testable without a browser. `mapAspect` is the rendered
+ * map width / height: normalised x and y are not equal screen distances on a landscape sheet.
+ *
+ * A phase can contain work in several disconnected places (a tank at the building and a path at
+ * the beds, for example). One global centroid can therefore land on nothing at all. We instead
+ * cluster nearby work (connected areas for bed blocks; diameter-limited groups elsewhere) and
+ * put one pin on each cluster's MEDOID — an actual item or route midpoint — so a marker never
+ * floats in the empty average between unrelated work.
+ */
+export function buildPhasePinPositions(
+  phase: Pick<Phase, 'key' | 'itemIds'>,
+  state: Pick<DesignCanvasState, 'items' | 'lines'>,
+  refLayers: PhasingRefLayers,
+  mapAspect: number,
+): PhasePinPosition[] {
+  interface WorkPoint {
+    id: string;
+    x: number;
+    y: number;
+  }
+
+  // In units of the rendered map's height. At the standard 3:2 map aspect this is roughly
+  // 16% of the short edge: close bed rows read as one work area, while tank/route, orchard and
+  // infrastructure groups on opposite terraces remain visibly distinct.
+  const clusterSpan = 0.16;
+  const aspect = Number.isFinite(mapAspect) && mapAspect > 0 ? mapAspect : 1;
+  const clusterSpanInHeightUnits = clusterSpan * Math.min(1, aspect);
+  const pointKey = (point: WorkPoint) =>
+    `${point.id}\u0000${point.x.toFixed(12)}\u0000${point.y.toFixed(12)}`;
+  const comparePoints = (a: WorkPoint, b: WorkPoint) =>
+    a.x - b.x || a.y - b.y || pointKey(a).localeCompare(pointKey(b));
+  const distance = (a: WorkPoint, b: WorkPoint) =>
+    Math.hypot((a.x - b.x) * aspect, a.y - b.y);
+
+  const centroid = (points: Array<[number, number]>): [number, number] | null => {
+    if (!points.length) return null;
+    return [
+      points.reduce((sum, [x]) => sum + x, 0) / points.length,
+      points.reduce((sum, [, y]) => sum + y, 0) / points.length,
+    ];
+  };
+  const isFinitePoint = (point: [number, number]) =>
+    Number.isFinite(point[0]) && Number.isFinite(point[1]);
+  const clipSegmentToMap = (
+    start: [number, number],
+    end: [number, number],
+  ): [[number, number], [number, number]] | null => {
+    const dx = end[0] - start[0];
+    const dy = end[1] - start[1];
+    let enter = 0;
+    let leave = 1;
+    const clip = (p: number, q: number): boolean => {
+      if (Math.abs(p) <= Number.EPSILON) return q >= 0;
+      const ratio = q / p;
+      if (p < 0) {
+        if (ratio > leave) return false;
+        enter = Math.max(enter, ratio);
+      } else {
+        if (ratio < enter) return false;
+        leave = Math.min(leave, ratio);
+      }
+      return enter <= leave;
+    };
+    if (
+      !clip(-dx, start[0])
+      || !clip(dx, 1 - start[0])
+      || !clip(-dy, start[1])
+      || !clip(dy, 1 - start[1])
+    ) return null;
+    return [
+      [start[0] + dx * enter, start[1] + dy * enter],
+      [start[0] + dx * leave, start[1] + dy * leave],
+    ];
+  };
+  const routeMidpoint = (points: Array<[number, number]>): [number, number] | null => {
+    // Boundary-presentation cropping intentionally maps geometry outside the unit square. The
+    // canvas clips those portions, so measure the midpoint of the VISIBLE route rather than
+    // rejecting the whole factual line because its transformed endpoints sit beyond the frame.
+    if (points.length < 2 || !points.every(isFinitePoint)) return null;
+    const visibleSegments: Array<{
+      start: [number, number];
+      end: [number, number];
+      length: number;
+    }> = [];
+    let total = 0;
+    for (let index = 1; index < points.length; index++) {
+      const clipped = clipSegmentToMap(points[index - 1], points[index]);
+      if (!clipped) continue;
+      const length = Math.hypot(
+        (clipped[1][0] - clipped[0][0]) * aspect,
+        clipped[1][1] - clipped[0][1],
+      );
+      if (!(length > 0)) continue;
+      visibleSegments.push({ start: clipped[0], end: clipped[1], length });
+      total += length;
+    }
+    if (!(total > 0)) return null;
+    let remaining = total / 2;
+    for (const segment of visibleSegments) {
+      if (remaining <= segment.length) {
+        const t = remaining / segment.length;
+        return [
+          segment.start[0] + (segment.end[0] - segment.start[0]) * t,
+          segment.start[1] + (segment.end[1] - segment.start[1]) * t,
+        ];
+      }
+      remaining -= segment.length;
+    }
+    return visibleSegments.at(-1)?.end ?? null;
+  };
+
+  const requestedIds = new Set(phase.itemIds);
+  const candidatesById = new Map<string, WorkPoint[]>();
+  const addCandidate = (candidate: WorkPoint) => {
+    const existing = candidatesById.get(candidate.id);
+    if (existing) existing.push(candidate);
+    else candidatesById.set(candidate.id, [candidate]);
+  };
+  for (const item of state.items) {
+    if (!requestedIds.has(item.id) || !isBuildableItem(item)) continue;
+    addCandidate({ id: item.id, x: item.x, y: item.y });
+  }
+  for (const line of state.lines) {
+    if (!requestedIds.has(line.id)) continue;
+    const point = routeMidpoint(line.points);
+    if (point) addCandidate({ id: line.id, x: point[0], y: point[1] });
+  }
+
+  const work: WorkPoint[] = [];
+  for (const id of [...new Set(phase.itemIds)].sort()) {
+    const candidates = candidatesById.get(id) ?? [];
+    // Items and lines share one id space. More than one match is corrupt/ambiguous saved state:
+    // omitting it is safer and deterministic; Map last-write-wins would move a factual phase pin
+    // merely because an array happened to be loaded in a different order.
+    if (candidates.length === 1) work.push(candidates[0]);
+  }
+  work.sort(comparePoints);
+
+  if (work.length) {
+    // Beds are a built AREA: adjacent rows in a two-dimensional block should remain one phase
+    // marker even when the block's opposite corners are farther apart than the link radius. Other
+    // phases use a deterministic diameter limit (maximum pairwise distance), which prevents the
+    // classic chain where five trees spaced along a whole boundary collapse into one marker merely
+    // because each tree is close to its immediate neighbour.
+    let clusters: WorkPoint[][];
+    const clusterKey = (cluster: WorkPoint[]) =>
+      cluster.map(pointKey).sort().join('\u0001');
+
+    if (phase.key === 'beds') {
+      const remaining = new Set(work.map((_, index) => index));
+      clusters = [];
+      for (let start = 0; start < work.length; start++) {
+        if (!remaining.has(start)) continue;
+        const memberIndexes: number[] = [];
+        const queue = [start];
+        remaining.delete(start);
+        while (queue.length) {
+          const current = queue.shift();
+          if (current === undefined) break;
+          memberIndexes.push(current);
+          for (const candidate of [...remaining].sort((a, b) => a - b)) {
+            if (distance(work[current], work[candidate]) > clusterSpanInHeightUnits) continue;
+            remaining.delete(candidate);
+            queue.push(candidate);
+          }
+        }
+        clusters.push(memberIndexes.map((index) => work[index]).sort(comparePoints));
+      }
+    } else {
+      // Greedy diameter-limited insertion is O(n²): for each point, all existing members are
+      // visited at most once. The prior repeatedly-merged complete-link implementation was O(n³)
+      // and froze the sheet for 5–25 seconds on dense orchard designs.
+      clusters = [];
+      for (const point of work) {
+        let bestIndex = -1;
+        let bestMaximum = Number.POSITIVE_INFINITY;
+        let bestKey = '';
+        for (let index = 0; index < clusters.length; index++) {
+          let maximum = 0;
+          let eligible = true;
+          for (const peer of clusters[index]) {
+            maximum = Math.max(maximum, distance(point, peer));
+            if (maximum > clusterSpanInHeightUnits) {
+              eligible = false;
+              break;
+            }
+          }
+          if (!eligible) continue;
+          const key = clusterKey(clusters[index]);
+          if (
+            maximum < bestMaximum - 1e-12
+            || (Math.abs(maximum - bestMaximum) <= 1e-12 && key < bestKey)
+          ) {
+            bestIndex = index;
+            bestMaximum = maximum;
+            bestKey = key;
+          }
+        }
+        if (bestIndex === -1) {
+          clusters.push([point]);
+        } else {
+          clusters[bestIndex].push(point);
+          clusters[bestIndex].sort(comparePoints);
+        }
+        clusters.sort((a, b) => clusterKey(a).localeCompare(clusterKey(b)));
+      }
+    }
+
+    const pins = clusters.map((cluster): PhasePinPosition => {
+      // Medoid = member with the smallest total squared distance to its cluster peers. Unlike a
+      // centroid, this is guaranteed to be an actual, labelled piece of work.
+      const medoid = [...cluster].sort((a, b) => {
+        const cost = (candidate: WorkPoint) =>
+          cluster.reduce((sum, peer) => {
+            const d = distance(candidate, peer);
+            return sum + d * d;
+          }, 0);
+        return cost(a) - cost(b) || pointKey(a).localeCompare(pointKey(b));
+      })[0];
+      return {
+        x: medoid.x,
+        y: medoid.y,
+        itemIds: cluster.map(({ id }) => id).sort(),
+      };
+    });
+    return pins.sort((a, b) =>
+      a.x - b.x || a.y - b.y || a.itemIds.join('\u0000').localeCompare(b.itemIds.join('\u0000')),
+    );
+  }
+
+  const usableRing = (points: Array<[number, number]>): Array<[number, number]> => {
+    if (points.length < 3 || !points.every(isNormalisedPoint)) return [];
+    const open = [...points];
+    const first = open[0];
+    const last = open.at(-1);
+    if (last && first[0] === last[0] && first[1] === last[1]) open.pop();
+    if (new Set(open.map(([x, y]) => `${x}\u0000${y}`)).size < 3) return [];
+    const twiceArea = open.reduce((sum, [x, y], index) => {
+      const [nextX, nextY] = open[(index + 1) % open.length];
+      return sum + x * nextY - nextX * y;
+    }, 0);
+    return Math.abs(twiceArea) > 1e-12 ? open : [];
+  };
+  const usableRoute = (points: Array<[number, number]>): Array<[number, number]> => {
+    if (points.length < 2 || !points.every(isNormalisedPoint)) return [];
+    const [x0, y0] = points[0];
+    return points.some(([x, y]) => x !== x0 || y !== y0) ? points : [];
+  };
+  const houseRing = usableRing(refLayers.house);
+  const house = centroid(houseRing);
+  const driveway = usableRoute(refLayers.driveway);
+  const gate = driveway[0] ?? null;
+  const boundary = usableRing(refLayers.boundary);
+  const box = boundary.length
+    ? {
+        x0: Math.min(...boundary.map(([x]) => x)),
+        y0: Math.min(...boundary.map(([, y]) => y)),
+        x1: Math.max(...boundary.map(([x]) => x)),
+        y1: Math.max(...boundary.map(([, y]) => y)),
+      }
+    : null;
+  const northwest: [number, number] = box
+    ? [box.x0 + (box.x1 - box.x0) * 0.28, box.y0 + (box.y1 - box.y0) * 0.28]
+    : [0.4, 0.4];
+  const southeast: [number, number] = box
+    ? [box.x0 + (box.x1 - box.x0) * 0.72, box.y0 + (box.y1 - box.y0) * 0.72]
+    : [0.6, 0.6];
+  // Fallbacks represent the two genuine no-object bookend gates only. If a content phase named
+  // object ids but none resolved safely (corrupt duplicate/malformed geometry), inventing a pin at
+  // the house would hide that failure and falsely mark unrelated ground.
+  if (phase.itemIds.length > 0) return [];
+  if (phase.key !== 'setout' && phase.key !== 'livestock') return [];
+  const fallback = phase.key === 'setout' ? gate ?? northwest : house ?? southeast;
+  return [{ x: fallback[0], y: fallback[1], itemIds: [] }];
+}
+
+/** Offset numbered badges from their exact anchors and resolve cross-phase collisions.
+ *
+ * The short leader preserves factual location while keeping small tanks, compost bays and route
+ * fittings visible. Layout is global across phases: resolving each phase independently can put two
+ * same-sized discs on the same coordinate and let the later phase erase the earlier one.
+ */
+export function layoutPhasePinPositions(
+  anchors: NumberedPhasePinAnchor[],
+  mapAspect: number,
+  pinRadiusInHeightUnits: number,
+): PlacedPhasePin[] {
+  const aspect = Number.isFinite(mapAspect) && mapAspect > 0 ? mapAspect : 1;
+  const radius = Number.isFinite(pinRadiusInHeightUnits) && pinRadiusInHeightUnits > 0
+    ? pinRadiusInHeightUnits
+    : 0.02;
+  const radiusX = radius / aspect;
+  const marginX = radiusX + 0.002 / aspect;
+  const marginY = radius + 0.002;
+  const distance = (a: { x: number; y: number }, b: { x: number; y: number }) =>
+    Math.hypot((a.x - b.x) * aspect, a.y - b.y);
+  const key = (anchor: NumberedPhasePinAnchor) =>
+    [
+      anchor.x.toFixed(12),
+      anchor.y.toFixed(12),
+      String(anchor.phaseNumber).padStart(3, '0'),
+      anchor.phaseKey,
+      [...anchor.itemIds].sort().join('\u0000'),
+    ].join('\u0001');
+  const ordered = anchors
+    .filter((anchor) => isNormalisedPoint([anchor.x, anchor.y]))
+    .map((anchor) => ({ ...anchor, itemIds: [...anchor.itemIds].sort() }))
+    .sort((a, b) => key(a).localeCompare(key(b)));
+  const placed: PlacedPhasePin[] = [];
+  const directions: Array<[number, number]> = [
+    [Math.SQRT1_2, -Math.SQRT1_2],
+    [-Math.SQRT1_2, -Math.SQRT1_2],
+    [Math.SQRT1_2, Math.SQRT1_2],
+    [-Math.SQRT1_2, Math.SQRT1_2],
+    [1, 0],
+    [-1, 0],
+    [0, -1],
+    [0, 1],
+    [Math.cos(Math.PI / 8), -Math.sin(Math.PI / 8)],
+    [-Math.cos(Math.PI / 8), -Math.sin(Math.PI / 8)],
+    [Math.cos(Math.PI / 8), Math.sin(Math.PI / 8)],
+    [-Math.cos(Math.PI / 8), Math.sin(Math.PI / 8)],
+    [Math.sin(Math.PI / 8), -Math.cos(Math.PI / 8)],
+    [-Math.sin(Math.PI / 8), -Math.cos(Math.PI / 8)],
+    [Math.sin(Math.PI / 8), Math.cos(Math.PI / 8)],
+    [-Math.sin(Math.PI / 8), Math.cos(Math.PI / 8)],
+  ];
+  // Ring spacing itself exceeds one badge diameter. This matters at a map corner, where clamping
+  // collapses several outward-facing directions onto the same edge and six emitted phases can
+  // otherwise exhaust the near ring.
+  const rings = [2.45, 4.9, 7.35, 9.8, 12.25];
+
+  for (const anchor of ordered) {
+    let chosen: { x: number; y: number } | null = null;
+    let fallback: { x: number; y: number; score: number; order: number } | null = null;
+    const seenCandidates = new Set<string>();
+    let order = 0;
+    for (const ring of rings) {
+      for (const [dx, dy] of directions) {
+        const candidate = {
+          x: Math.min(1 - marginX, Math.max(marginX, anchor.x + dx * ring * radius / aspect)),
+          y: Math.min(1 - marginY, Math.max(marginY, anchor.y + dy * ring * radius)),
+        };
+        const candidateKey = `${candidate.x.toFixed(12)}\u0000${candidate.y.toFixed(12)}`;
+        if (seenCandidates.has(candidateKey)) continue;
+        seenCandidates.add(candidateKey);
+        const anchorClearance = Math.min(
+          ...ordered.map((other) => distance(candidate, other)),
+        );
+        const badgeClearance = placed.length
+          ? Math.min(...placed.map((other) => distance(candidate, other)))
+          : Number.POSITIVE_INFINITY;
+        const clearsTargets = anchorClearance >= radius * 1.55;
+        const clearsBadges = badgeClearance >= radius * 2.2;
+        if (clearsTargets && clearsBadges) {
+          chosen = candidate;
+          break;
+        }
+        const score =
+          Math.max(0, radius * 1.55 - anchorClearance) * 10
+          + Math.max(0, radius * 2.2 - badgeClearance)
+          + ring * radius * 0.001;
+        if (
+          fallback === null
+          || score < fallback.score - 1e-12
+          || (Math.abs(score - fallback.score) <= 1e-12 && order < fallback.order)
+        ) fallback = { ...candidate, score, order };
+        order += 1;
+      }
+      if (chosen) break;
+    }
+    const position = chosen ?? fallback ?? { x: anchor.x, y: anchor.y };
+    placed.push({
+      ...anchor,
+      anchorX: anchor.x,
+      anchorY: anchor.y,
+      x: position.x,
+      y: position.y,
+    });
+  }
+
+  return placed;
+}
+
 // Distinct on the dark blueprint scrim, and borrowed from the palette the other sheets already
 // use, so a phase colour never fights the house style: chalk (survey string), water blue, soil
 // ochre, drip green, canopy green, and one magenta that appears nowhere else on the plan set.

@@ -18,7 +18,7 @@ import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, 
 import { paidRenderDecision } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
-import { buildPhasePlan } from '@/lib/phasing';
+import { buildPhasePinPositions, buildPhasePlan, layoutPhasePinPositions } from '@/lib/phasing';
 import { deriveSectorModel, bearingToUnitVector, type SectorSite, type SectorModel } from '@/lib/sector';
 import type { SolarModel } from '@/lib/solar';
 import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contours';
@@ -6468,45 +6468,60 @@ async function drawPhasingExactContent(
   }
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
 
-  // Phase pin positions: centroid of each phase's built objects, with distinct NW/SE fallback
-  // anchors for the two bookend phases so set-out and commissioning never stack when neither a
-  // driveway nor a house is traced.
-  const centroidOfPts = (pts: Array<[number, number]>): [number, number] | null => {
-    if (!pts.length) return null;
-    const n = pts.length;
-    return [pts.reduce((s, p) => s + p[0], 0) / n, pts.reduce((s, p) => s + p[1], 0) / n];
-  };
-  const itemById = new Map(state.items.map((it) => [it.id, it]));
-  const lineById = new Map(state.lines.map((l) => [l.id, l]));
-  const houseC = centroidOfPts(refLayers.house);
-  const gateC: [number, number] | null = refLayers.driveway.length >= 1 ? refLayers.driveway[0] : null;
-  const bpts = refLayers.boundary;
-  const bb = bpts.length
-    ? { x0: Math.min(...bpts.map((p) => p[0])), y0: Math.min(...bpts.map((p) => p[1])), x1: Math.max(...bpts.map((p) => p[0])), y1: Math.max(...bpts.map((p) => p[1])) }
-    : null;
-  const nwAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.28, bb.y0 + (bb.y1 - bb.y0) * 0.28] : [0.4, 0.4];
-  const seAnchor: [number, number] = bb ? [bb.x0 + (bb.x1 - bb.x0) * 0.72, bb.y0 + (bb.y1 - bb.y0) * 0.72] : [0.6, 0.6];
-  const pinPos = (phase: (typeof plan.phases)[number]): [number, number] => {
-    const pts: Array<[number, number]> = [];
-    for (const id of phase.itemIds) {
-      const it = itemById.get(id);
-      if (it) { pts.push([it.x, it.y]); continue; }
-      const ln = lineById.get(id);
-      if (ln) { const c = centroidOfPts(ln.points); if (c) pts.push(c); }
-    }
-    const c = centroidOfPts(pts);
-    if (c) return c;
-    if (phase.key === 'setout') return gateC ?? nwAnchor;
-    return houseC ?? seAnchor;
-  };
-
-  // Pins are drawn BEFORE the panel (by the caller, afterward): one whose centroid falls under the
-  // right-hand panel is hidden rather than floating over the legend — still fully described in the
-  // panel by the same number and colour, so nothing is lost.
+  // Pins are drawn BEFORE the panel (by the caller, afterward). Resolve every phase together:
+  // otherwise two phases at the same feature produce identical discs and the later one erases the
+  // earlier. Badges sit beside their factual anchor with a short leader so the tank/bed/compost
+  // they explain remains visible rather than disappearing under the number.
   const pinR = Math.max(15, W * 0.015);
-  for (const phase of plan.phases) {
-    const [nx, ny] = pinPos(phase);
-    const cx = px(nx), cy = py(ny);
+  const phaseByKey = new Map(plan.phases.map((phase) => [phase.key, phase]));
+  const pinAnchors = plan.phases.flatMap((phase) =>
+    buildPhasePinPositions(phase, state, refLayers, W / H).map((pin) => ({
+      ...pin,
+      phaseKey: phase.key,
+      phaseNumber: phase.n,
+    })));
+  const pins = layoutPhasePinPositions(pinAnchors, W / H, pinR / H);
+
+  // Leaders first, badges second. The white casing keeps the factual attachment readable on both
+  // dark satellite and pale ground textures; the coloured core matches the schedule phase.
+  for (const pin of pins) {
+    const phase = phaseByKey.get(pin.phaseKey);
+    if (!phase) continue;
+    const anchorX = px(pin.anchorX), anchorY = py(pin.anchorY);
+    const cx = px(pin.x), cy = py(pin.y);
+    const dx = cx - anchorX;
+    const dy = cy - anchorY;
+    const length = Math.hypot(dx, dy);
+    if (!(length > pinR)) continue;
+    const endX = cx - (dx / length) * (pinR + 2);
+    const endY = cy - (dy / length) * (pinR + 2);
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(anchorX, anchorY);
+    ctx.lineTo(endX, endY);
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = 'rgba(255,255,255,0.92)';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(anchorX, anchorY);
+    ctx.lineTo(endX, endY);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = phase.colour;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(anchorX, anchorY, 4, 0, Math.PI * 2);
+    ctx.fillStyle = phase.colour;
+    ctx.fill();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.stroke();
+    ctx.restore();
+  }
+  for (const pin of pins) {
+    const phase = phaseByKey.get(pin.phaseKey);
+    if (!phase) continue;
+    const cx = px(pin.x), cy = py(pin.y);
     ctx.save();
     ctx.shadowColor = 'rgba(0,0,0,0.55)';
     ctx.shadowBlur = 9;
@@ -6524,7 +6539,7 @@ async function drawPhasingExactContent(
     ctx.font = `bold ${Math.round(pinR * 1.15)}px ${SHEET_BODY_FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(String(phase.n), cx, cy);
+    ctx.fillText(String(pin.phaseNumber), cx, cy);
   }
 }
 
