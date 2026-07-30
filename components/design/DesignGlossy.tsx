@@ -7888,7 +7888,13 @@ interface SavedGlossy {
 //        they breathe and ours did not. SECTOR_ENERGY_TIP is the one rule both renderers now read.
 //        Bearings, half-widths and the sourced regional record are untouched — only where the
 //        shape ends.
-const PLAN_VERSION = 'v92';
+//   v93 — 2026-07-30: Full Treatment stops copying the Hybrid's house, driveway and exterior
+//        pixels back over the paid second pass (that restoration was the ghost-roof and blurred
+//        satellite-keyhole source; only the boundary ring stays byte-locked, saved Hybrid remains
+//        the rollback), and the polish prompt gains the SOURCE INVENTORY rule: never reinterpret
+//        roof/driveway/paving pixels as tanks or new structures. Measured before merge: the two
+//        invented tanks disappear, 90.8% of real edges kept.
+const PLAN_VERSION = 'v93';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
