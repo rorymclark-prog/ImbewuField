@@ -10,6 +10,7 @@ import TabBar from '@/components/TabBar';
 import {
   loadCustomers, addCustomer, loadProducts, addProduct,
   loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
+  loadNextInvoiceNumber, saveNextInvoiceNumber,
   paymentMethodLabel, type SavedInvoice, type PaymentMethod,
 } from '@/lib/invoices';
 import LessonLink from '@/components/design/LessonLink';
@@ -18,7 +19,6 @@ interface LineItem { id: number; desc: string; qty: number; unit: string; price:
 
 const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
-const SEQ_KEY = 'imbewu_invoice_seq';
 
 function todayLong() {
   return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -43,15 +43,14 @@ export default function InvoicePage() {
   const [showSaved, setShowSaved] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(SEQ_KEY);
-      if (raw) { const n = parseInt(raw, 10) || 44; setSeq(n); setCurrentNo(n); }
-    } catch { /* ignore */ }
+    const nextNumber = loadNextInvoiceNumber();
+    setSeq(nextNumber);
+    setCurrentNo(nextNumber);
     const refresh = () => { setCustomers(loadCustomers()); setProducts(loadProducts()); setSaved(loadInvoices()); };
     refresh();
     window.addEventListener('imbewu-invoices-changed', refresh);
     return () => window.removeEventListener('imbewu-invoices-changed', refresh);
-  }, []);
+  }, [user?.uid]);
 
   const sellerName = profile?.full_name ?? user?.displayName ?? 'Your name';
   const sellerPhone = profile?.phone ?? '';
@@ -95,7 +94,7 @@ export default function InvoicePage() {
     if (currentId === null) {
       const nextSeq = currentNo + 1;
       setSeq(nextSeq);
-      try { localStorage.setItem(SEQ_KEY, String(nextSeq)); } catch { /* ignore */ }
+      saveNextInvoiceNumber(nextSeq);
     }
     setCurrentId(id);
     return id;

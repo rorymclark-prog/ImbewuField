@@ -1,4 +1,5 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 import { isValidLocationData, isValidSiteData, isValidWaterData } from './last-site';
 
@@ -48,7 +49,9 @@ export function loadReports(): SavedReport[] {
   if (isSampleMode()) return []; // never surface the real signed-in user's own saved reports inside a demo
   if (typeof window === 'undefined') return [];
   try {
-    const value = JSON.parse(window.localStorage.getItem(KEY) ?? '[]');
+    const value = JSON.parse(
+      window.localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]',
+    );
     if (!Array.isArray(value)) return [];
     const seen = new Set<string>();
     const reports: SavedReport[] = [];
@@ -77,7 +80,7 @@ export function saveReport(r: SavedReport): { reports: SavedReport[]; saved: boo
   const others = current.filter((x) => x.id !== safe.id);
   const updated = [safe, ...others].slice(0, MAX_REPORTS);
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(updated));
+    window.localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   } catch {
     return { reports: current, saved: false };
   }
@@ -91,7 +94,7 @@ export function deleteReport(id: string): SavedReport[] {
   const updated = current.filter((x) => x.id !== id);
   if (typeof window === 'undefined' || updated.length === current.length) return current;
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(updated));
+    window.localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   } catch {
     return current;
   }

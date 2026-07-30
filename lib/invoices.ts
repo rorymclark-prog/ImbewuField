@@ -8,6 +8,7 @@ import {
   getSandboxProducts, setSandboxProducts,
   getSandboxInvoices, setSandboxInvoices,
 } from './sample-mode';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export interface InvoiceItem { desc: string; qty: number; unit: string; price: number }
 export interface Product { desc: string; unit: string; price: number }
@@ -36,15 +37,26 @@ export function paymentMethodLabel(m: PaymentMethod): string {
 const C_KEY = 'imbewu_invoice_customers';
 const P_KEY = 'imbewu_invoice_products';
 const I_KEY = 'imbewu_invoices';
+const SEQ_KEY = 'imbewu_invoice_seq';
 
-function read<T>(key: string): T[] {
+function read<T>(baseKey: string): T[] {
   if (typeof window === 'undefined') return [];
-  try { const v = JSON.parse(localStorage.getItem(key) ?? '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+  try {
+    const v = JSON.parse(
+      localStorage.getItem(activeAccountLocalStorageKey(baseKey)) ?? '[]',
+    );
+    return Array.isArray(v) ? v : [];
+  } catch {
+    return [];
+  }
 }
-function write<T>(key: string, v: T[]): boolean {
+function write<T>(baseKey: string, v: T[]): boolean {
   if (typeof window === 'undefined') return false;
   try {
-    localStorage.setItem(key, JSON.stringify(v));
+    localStorage.setItem(
+      activeAccountLocalStorageKey(baseKey),
+      JSON.stringify(v),
+    );
     return true;
   } catch {
     return false;
@@ -291,4 +303,35 @@ export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMetho
 }
 export function invoiceId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+// The next invoice number is part of the same accounting ledger as the invoices
+// themselves. Keeping it behind the same account-key boundary prevents farmer B
+// inheriting farmer A's numbering sequence on a shared device.
+export function loadNextInvoiceNumber(fallback = 44): number {
+  const safeFallback = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
+  if (typeof window === 'undefined') return safeFallback;
+  try {
+    const raw = localStorage.getItem(activeAccountLocalStorageKey(SEQ_KEY));
+    if (!raw) return safeFallback;
+    const value = Number.parseInt(raw, 10);
+    return Number.isSafeInteger(value) && value > 0 ? value : safeFallback;
+  } catch {
+    return safeFallback;
+  }
+}
+
+export function saveNextInvoiceNumber(value: number): boolean {
+  if (typeof window === 'undefined' || !Number.isSafeInteger(value) || value <= 0) {
+    return false;
+  }
+  try {
+    localStorage.setItem(
+      activeAccountLocalStorageKey(SEQ_KEY),
+      String(value),
+    );
+    return true;
+  } catch {
+    return false;
+  }
 }

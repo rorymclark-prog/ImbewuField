@@ -7,6 +7,7 @@
 // coach guides the farmer from one to the next.
 
 import { isSampleMode, getSandboxFacilitatorState, setSandboxFacilitatorState, clearSandboxFacilitatorState } from './sample-mode';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export type ElType =
   | 'tank' | 'pond' | 'well' | 'reedbed'
@@ -561,12 +562,13 @@ export function normaliseFacilitatorState(value: unknown): FacilitatorDesignStat
 
 export function saveFacilitatorState(s: FacilitatorDesignState): void {
   if (isSampleMode()) { setSandboxFacilitatorState(s); return; }
+  const storageKey = activeAccountLocalStorageKey(STORE_KEY);
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(s));
+    localStorage.setItem(storageKey, JSON.stringify(s));
   } catch {
     // Quota — retry without the embedded image.
     try {
-      localStorage.setItem(STORE_KEY, JSON.stringify({ ...s, bgDataUrl: undefined }));
+      localStorage.setItem(storageKey, JSON.stringify({ ...s, bgDataUrl: undefined }));
     } catch { /* give up quietly */ }
   }
 }
@@ -574,7 +576,7 @@ export function saveFacilitatorState(s: FacilitatorDesignState): void {
 export function loadFacilitatorState(): FacilitatorDesignState | null {
   if (isSampleMode()) return normaliseFacilitatorState(getSandboxFacilitatorState());
   try {
-    const raw = localStorage.getItem(STORE_KEY);
+    const raw = localStorage.getItem(activeAccountLocalStorageKey(STORE_KEY));
     if (!raw) return null;
     return normaliseFacilitatorState(JSON.parse(raw));
   } catch {
@@ -584,5 +586,5 @@ export function loadFacilitatorState(): FacilitatorDesignState | null {
 
 export function clearFacilitatorState(): void {
   if (isSampleMode()) { clearSandboxFacilitatorState(); return; }
-  try { localStorage.removeItem(STORE_KEY); } catch { /* noop */ }
+  try { localStorage.removeItem(activeAccountLocalStorageKey(STORE_KEY)); } catch { /* noop */ }
 }

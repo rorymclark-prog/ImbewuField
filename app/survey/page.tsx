@@ -15,6 +15,7 @@ import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import LessonLink from '@/components/design/LessonLink';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
 function surveyKey(placeId: string | null) {
@@ -112,7 +113,7 @@ function SurveyInner() {
   const crops = useMemo(() => {
     let pool: string[] = [];
     try {
-      const raw = localStorage.getItem(PLANNER_KEY);
+      const raw = localStorage.getItem(activeAccountLocalStorageKey(PLANNER_KEY));
       if (raw) pool = JSON.parse(raw) as string[];
     } catch { /* ignore */ }
     if (!pool.length) pool = seasonCrops(month);
@@ -127,7 +128,20 @@ function SurveyInner() {
 
   function save() {
     const data = { ha: known.ha, rainL: known.rainL, sun, slope, resources, tanks, goal, beds, bedCrops, placeId: selectedPlaceId, savedAt: new Date().toISOString() };
-    try { localStorage.setItem(surveyKey(selectedPlaceId), JSON.stringify(data)); } catch { /* ignore */ }
+    try {
+      const serialized = JSON.stringify(data);
+      localStorage.setItem(
+        activeAccountLocalStorageKey(surveyKey(selectedPlaceId)),
+        serialized,
+      );
+      // Crop Plan historically reads the singular key as "the latest survey".
+      // Keep that cross-page contract while the per-place row remains the
+      // authoritative copy for returning to a specific farm.
+      localStorage.setItem(
+        activeAccountLocalStorageKey(BASE_SURVEY_KEY),
+        serialized,
+      );
+    } catch { /* ignore */ }
     setSaved(true);
     setTimeout(() => setSaved(false), 2200);
   }

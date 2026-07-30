@@ -2,6 +2,7 @@ import { getFirebase } from './firebase/init';
 import { upsertSurvey } from './user-sync';
 import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export interface SiteSurvey {
   siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
@@ -215,7 +216,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   return lines.join('\n');
 }
 
-const key = (id: string) => `imbewu_site_survey_${id}`;
+const key = (id: string) => activeAccountLocalStorageKey(`imbewu_site_survey_${id}`);
 
 export const canonicalSurveySiteId = canonicalCoordinateSiteId;
 

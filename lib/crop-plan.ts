@@ -9,6 +9,7 @@ import {
   getSandboxAllowBedSharing, setSandboxAllowBedSharing,
   getSandboxCashflowSettings, setSandboxCashflowSettings,
 } from './sample-mode';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export interface PlanBed {
   id: string;
@@ -56,7 +57,7 @@ export function loadCropPlan(): CropPlanState {
     return emptyPlan();
   }
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(STORAGE_KEY));
     if (!raw) return emptyPlan();
     const parsed = JSON.parse(raw) as Partial<CropPlanState> | null;
     if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
@@ -78,7 +79,7 @@ export function saveCropPlan(s: CropPlanState): void {
   }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(s));
     window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
   } catch {
     // Quota exceeded or storage unavailable — fail silently, plan just won't persist.
@@ -96,7 +97,7 @@ export function loadFavouriteCropKeys(): Set<string> {
   if (isSampleMode()) return getSandboxFavouriteCropKeys();
   if (typeof window === 'undefined' || !window.localStorage) return new Set();
   try {
-    const raw = window.localStorage.getItem(FAVOURITES_KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(FAVOURITES_KEY));
     if (!raw) return new Set();
     const parsed = JSON.parse(raw);
     return new Set(Array.isArray(parsed) ? parsed.filter((k) => typeof k === 'string') : []);
@@ -109,7 +110,10 @@ export function saveFavouriteCropKeys(keys: Set<string>): void {
   if (isSampleMode()) { setSandboxFavouriteCropKeys(keys); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
-    window.localStorage.setItem(FAVOURITES_KEY, JSON.stringify([...keys]));
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(FAVOURITES_KEY),
+      JSON.stringify([...keys]),
+    );
   } catch {
     // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
   }
@@ -349,7 +353,9 @@ export function loadAllowBedSharing(): boolean {
   if (isSampleMode()) return getSandboxAllowBedSharing();
   if (typeof window === 'undefined' || !window.localStorage) return false;
   try {
-    return window.localStorage.getItem(ALLOW_BED_SHARING_KEY) === '1';
+    return window.localStorage.getItem(
+      activeAccountLocalStorageKey(ALLOW_BED_SHARING_KEY),
+    ) === '1';
   } catch {
     return false;
   }
@@ -359,7 +365,10 @@ export function saveAllowBedSharing(allow: boolean): void {
   if (isSampleMode()) { setSandboxAllowBedSharing(allow); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
-    window.localStorage.setItem(ALLOW_BED_SHARING_KEY, allow ? '1' : '0');
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(ALLOW_BED_SHARING_KEY),
+      allow ? '1' : '0',
+    );
   } catch {
     // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
   }
@@ -742,7 +751,7 @@ export function loadCashflowSettings(): CashflowSettings {
   if (isSampleMode()) return getSandboxCashflowSettings();
   if (typeof window === 'undefined' || !window.localStorage) return DEFAULT_CASHFLOW_SETTINGS;
   try {
-    const raw = window.localStorage.getItem(CASHFLOW_SETTINGS_KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(CASHFLOW_SETTINGS_KEY));
     if (!raw) return DEFAULT_CASHFLOW_SETTINGS;
     const parsed = JSON.parse(raw);
     return {
@@ -758,7 +767,10 @@ export function saveCashflowSettings(settings: CashflowSettings): void {
   if (isSampleMode()) { setSandboxCashflowSettings(settings); return; }
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
-    window.localStorage.setItem(CASHFLOW_SETTINGS_KEY, JSON.stringify(settings));
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(CASHFLOW_SETTINGS_KEY),
+      JSON.stringify(settings),
+    );
   } catch {
     // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
   }

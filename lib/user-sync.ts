@@ -4,6 +4,10 @@ import { doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp } from
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
 import { readTombstones, LOCAL_TOMBSTONE_TTL_MS } from './local-tombstones';
+import {
+  accountLocalStorageKey,
+  accountLocalStorageKeyMatchesPrefix,
+} from './account-local-storage';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 
@@ -47,12 +51,12 @@ const surveyTs = (s: SurveyLike) =>
 // Read every per-site survey out of localStorage into a {siteId: survey} map. Legacy blobs
 // saved before the siteId field existed are keyed by placeId instead — fall back to that so
 // they still round-trip until they get migrated (see lib/site-survey.ts migrateLegacySurvey).
-function readLocalSurveys(): SurveyMap {
+function readLocalSurveys(uid: string): SurveyMap {
   const out: SurveyMap = {};
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && k.startsWith(SURVEY_PREFIX)) {
+      if (k && accountLocalStorageKeyMatchesPrefix(k, SURVEY_PREFIX, uid)) {
         try {
           const s = JSON.parse(localStorage.getItem(k) ?? 'null');
           const id = s?.siteId ?? s?.placeId;
@@ -64,9 +68,11 @@ function readLocalSurveys(): SurveyMap {
   return out;
 }
 
-function writeLocalSurveys(surveys: SurveyMap): void {
+function writeLocalSurveys(surveys: SurveyMap, uid: string): void {
   for (const [pid, s] of Object.entries(surveys)) {
-    try { localStorage.setItem(SURVEY_PREFIX + pid, JSON.stringify(s)); } catch {}
+    try {
+      localStorage.setItem(accountLocalStorageKey(SURVEY_PREFIX + pid, uid), JSON.stringify(s));
+    } catch {}
   }
 }
 
@@ -93,12 +99,12 @@ type DesignStore = Record<string, DesignStateLike>;
 const designTs = (s: DesignStateLike) =>
   timestampOrZero(s.updatedAt ? Date.parse(s.updatedAt) : 0);
 
-function readLocalDesign(): DesignStore {
-  try { const v = JSON.parse(localStorage.getItem(DESIGN_STUDIO_KEY) ?? '{}'); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
+function readLocalDesign(storageKey: string): DesignStore {
+  try { const v = JSON.parse(localStorage.getItem(storageKey) ?? '{}'); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
   catch { return {}; }
 }
-function writeLocalDesign(store: DesignStore) {
-  try { localStorage.setItem(DESIGN_STUDIO_KEY, JSON.stringify(store)); } catch {}
+function writeLocalDesign(storageKey: string, store: DesignStore) {
+  try { localStorage.setItem(storageKey, JSON.stringify(store)); } catch {}
 }
 function parseDesign(json: unknown): DesignStore {
   if (typeof json !== 'string') return {};
@@ -234,6 +240,17 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
   const d = db();
   if (!d) { handlers.onMergeDone?.(); return () => {}; }
 
+  // Bind every browser cache access to the uid passed into this subscription. Reading the
+  // mutable auth.currentUser inside async reconciliation would let an old account's work switch
+  // namespaces halfway through an A→B transition. Bare legacy rows have no trustworthy owner,
+  // so a signed-in account must never read or silently claim them.
+  const farmKey          = accountLocalStorageKey(FARM_KEY, uid);
+  const placesKey        = accountLocalStorageKey(PLACES_KEY, uid);
+  const placesDeletedKey = accountLocalStorageKey(PLACES_DELETED_KEY, uid);
+  const waterKey         = accountLocalStorageKey(WATER_KEY, uid);
+  const waterDeletedKey  = accountLocalStorageKey(WATER_DELETED_KEY, uid);
+  const designKey        = accountLocalStorageKey(DESIGN_STUDIO_KEY, uid);
+
   const shapesRef  = doc(d, COLL, uid, 'data', 'shapes');
   const placesRef  = doc(d, COLL, uid, 'data', 'places');
   const waterRef   = doc(d, COLL, uid, 'data', 'water');
@@ -242,6 +259,8 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
 
   const unsubs: Array<() => void> = [];
   let disposed = false;
+  const isCurrentSubscription = () =>
+    !disposed && getFirebase()?.auth?.currentUser?.uid === uid;
 
   (async () => {
     const now = Date.now();
@@ -250,25 +269,29 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       // Places
       await runTransaction(d, async (tx) => {
         const snap = await tx.get(placesRef);
+        if (!isCurrentSubscription()) return;
         const data = snap.exists() ? snap.data() : {};
         const remote: SavedPlace[] = data.places ?? [];
         const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(PLACES_KEY), remoteDel, readTombstones(PLACES_DELETED_KEY), placeId, placeTs, now);
-        localStorage.setItem(PLACES_KEY, JSON.stringify(items));
+        const { items, deleted } = mergeItems(remote, readLocal<SavedPlace>(placesKey), remoteDel, readTombstones(placesDeletedKey), placeId, placeTs, now);
+        localStorage.setItem(placesKey, JSON.stringify(items));
         tx.set(placesRef, { places: items, deleted, updatedAt: serverTimestamp() });
       });
+      if (!isCurrentSubscription()) return;
       handlers.onPlaces?.();
 
       // Water
       await runTransaction(d, async (tx) => {
         const snap = await tx.get(waterRef);
+        if (!isCurrentSubscription()) return;
         const data = snap.exists() ? snap.data() : {};
         const remote: WaterPoint[] = data.points ?? [];
         const remoteDel: Tombstones = data.deleted ?? {};
-        const { items, deleted } = mergeItems(remote, readLocal<WaterPoint>(WATER_KEY), remoteDel, readTombstones(WATER_DELETED_KEY), waterId, waterTs, now);
-        localStorage.setItem(WATER_KEY, JSON.stringify(items));
+        const { items, deleted } = mergeItems(remote, readLocal<WaterPoint>(waterKey), remoteDel, readTombstones(waterDeletedKey), waterId, waterTs, now);
+        localStorage.setItem(waterKey, JSON.stringify(items));
         tx.set(waterRef, { points: items, deleted, updatedAt: serverTimestamp() });
       });
+      if (!isCurrentSubscription()) return;
       handlers.onWater?.();
 
       // Shapes: the drawn collection is edited as a whole (and the reticle editor
@@ -280,16 +303,18 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       // no remote doc has ever been written, which recovers a device's pre-sync drawing.
       {
         const sSnap = await getDoc(shapesRef);
+        if (!isCurrentSubscription()) return;
         const hasRemoteDoc = sSnap.exists() && sSnap.data().shapesJson !== undefined;
         if (hasRemoteDoc) {
           const remoteFC = parseShapes(sSnap.data().shapesJson) ?? { type: 'FeatureCollection', features: [] };
-          localStorage.setItem(FARM_KEY, JSON.stringify(remoteFC));
+          localStorage.setItem(farmKey, JSON.stringify(remoteFC));
           handlers.onShapes?.();
         } else {
           let localFC: ShapeFC | null = null;
-          try { const raw = localStorage.getItem(FARM_KEY); localFC = raw ? JSON.parse(raw) : null; } catch {}
+          try { const raw = localStorage.getItem(farmKey); localFC = raw ? JSON.parse(raw) : null; } catch {}
           if (localFC?.features?.length) {
             await setDoc(shapesRef, { shapesJson: JSON.stringify(localFC), updatedAt: serverTimestamp() });
+            if (!isCurrentSubscription()) return;
           }
           handlers.onShapes?.();
         }
@@ -298,67 +323,91 @@ export function subscribeUserMapData(uid: string, handlers: SyncHandlers): () =>
       // Site surveys: per-site survey objects collected in one doc keyed by siteId.
       await runTransaction(d, async (tx) => {
         const snap = await tx.get(surveysRef);
+        if (!isCurrentSubscription()) return;
         const remote: SurveyMap = (snap.exists() ? snap.data().surveys : {}) ?? {};
-        const merged = mergeSurveys(remote, readLocalSurveys());
-        writeLocalSurveys(merged);
+        const merged = mergeSurveys(remote, readLocalSurveys(uid));
+        writeLocalSurveys(merged, uid);
         tx.set(surveysRef, { surveys: merged, updatedAt: serverTimestamp() });
       });
+      if (!isCurrentSubscription()) return;
       notifySurveys();
 
       // Design studio: one blob (per-site states) stored as a JSON string (nested geometry).
       await runTransaction(d, async (tx) => {
         const snap = await tx.get(designRef);
+        if (!isCurrentSubscription()) return;
         const remote = parseDesign(snap.exists() ? snap.data().designJson : '{}');
-        const merged = mergeDesign(remote, readLocalDesign());
-        writeLocalDesign(merged);
+        const merged = mergeDesign(remote, readLocalDesign(designKey));
+        writeLocalDesign(designKey, merged);
         tx.set(designRef, { designJson: JSON.stringify(merged), updatedAt: serverTimestamp() });
       });
+      if (!isCurrentSubscription()) return;
       notifyDesign();
 
     } catch (e) {
       console.error('[sync] reconcile error (likely offline) — keeping local data', e);
+      return;
     }
 
-    if (disposed) return;
+    if (!isCurrentSubscription()) return;
     handlers.onMergeDone?.();
+    // A merge-done handler can synchronously tear this subscription down (for example because
+    // auth switched while React was committing). Never attach live listeners after that.
+    if (!isCurrentSubscription()) return;
 
     // ── Phase 2: realtime listeners ──
     // MERGE remote into local (newest-wins + remote deletion tombstones) rather than blindly
     // overwriting, so a local create/edit that hasn't round-tripped yet isn't clobbered by an
     // unrelated remote change. Remote tombstones still propagate deletions.
-    unsubs.push(onSnapshot(placesRef, (snap) => {
+    const addLiveListener = (start: () => () => void): boolean => {
+      if (!isCurrentSubscription()) return false;
+      const unsubscribe = start();
+      if (!isCurrentSubscription()) {
+        unsubscribe();
+        return false;
+      }
+      unsubs.push(unsubscribe);
+      return true;
+    };
+
+    if (!addLiveListener(() => onSnapshot(placesRef, (snap) => {
+      if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(PLACES_KEY), snap.data().deleted ?? {}, readTombstones(PLACES_DELETED_KEY), placeId, placeTs, Date.now());
-      localStorage.setItem(PLACES_KEY, JSON.stringify(items));
+      const { items } = mergeItems(snap.data().places ?? [], readLocal<SavedPlace>(placesKey), snap.data().deleted ?? {}, readTombstones(placesDeletedKey), placeId, placeTs, Date.now());
+      localStorage.setItem(placesKey, JSON.stringify(items));
       handlers.onPlaces?.();
-    }, (e) => console.error('[sync] places listener', e)));
+    }, (e) => console.error('[sync] places listener', e)))) return;
 
-    unsubs.push(onSnapshot(waterRef, (snap) => {
+    if (!addLiveListener(() => onSnapshot(waterRef, (snap) => {
+      if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(WATER_KEY), snap.data().deleted ?? {}, readTombstones(WATER_DELETED_KEY), waterId, waterTs, Date.now());
-      localStorage.setItem(WATER_KEY, JSON.stringify(items));
+      const { items } = mergeItems(snap.data().points ?? [], readLocal<WaterPoint>(waterKey), snap.data().deleted ?? {}, readTombstones(waterDeletedKey), waterId, waterTs, Date.now());
+      localStorage.setItem(waterKey, JSON.stringify(items));
       handlers.onWater?.();
-    }, (e) => console.error('[sync] water listener', e)));
+    }, (e) => console.error('[sync] water listener', e)))) return;
 
-    unsubs.push(onSnapshot(shapesRef, (snap) => {
+    if (!addLiveListener(() => onSnapshot(shapesRef, (snap) => {
+      if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
       const fc = parseShapes(snap.data().shapesJson);
       if (!fc) return;
-      localStorage.setItem(FARM_KEY, JSON.stringify(fc));
+      localStorage.setItem(farmKey, JSON.stringify(fc));
       handlers.onShapes?.();
-    }, (e) => console.error('[sync] shapes listener', e)));
+    }, (e) => console.error('[sync] shapes listener', e)))) return;
 
-    unsubs.push(onSnapshot(surveysRef, (snap) => {
+    if (!addLiveListener(() => onSnapshot(surveysRef, (snap) => {
+      if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const merged = mergeSurveys(snap.data().surveys ?? {}, readLocalSurveys());
-      writeLocalSurveys(merged);
+      const merged = mergeSurveys(snap.data().surveys ?? {}, readLocalSurveys(uid));
+      writeLocalSurveys(merged, uid);
       notifySurveys();
-    }, (e) => console.error('[sync] surveys listener', e)));
+    }, (e) => console.error('[sync] surveys listener', e)))) return;
 
-    unsubs.push(onSnapshot(designRef, (snap) => {
+    addLiveListener(() => onSnapshot(designRef, (snap) => {
+      if (!isCurrentSubscription()) return;
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const merged = mergeDesign(parseDesign(snap.data().designJson), readLocalDesign());
-      writeLocalDesign(merged);
+      const merged = mergeDesign(parseDesign(snap.data().designJson), readLocalDesign(designKey));
+      writeLocalDesign(designKey, merged);
       notifyDesign();
     }, (e) => console.error('[sync] design listener', e)));
   })();

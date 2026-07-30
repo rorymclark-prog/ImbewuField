@@ -9,6 +9,11 @@
 import type { Geometry, Position } from 'geojson';
 import type { DesignLayer } from '@/lib/design-studio';
 import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
+import {
+  accountLocalStorageKey,
+  activeAccountLocalStorageKey,
+  activeAccountUid,
+} from '@/lib/account-local-storage';
 
 // ── Shared types (verbatim contract) ──────────────────────────────────────────
 
@@ -490,7 +495,13 @@ export function computeCanvasFrame(
 
 export const DESIGN_CANVAS_CHANGED_EVENT = 'imbewu-design-canvas-changed';
 
-const keyFor = (siteId: string) => `imbewu_design_canvas_${siteId}`;
+const baseKeyFor = (siteId: string) => `imbewu_design_canvas_${siteId}`;
+const keyFor = (
+  siteId: string,
+  ownerUid?: string | null,
+) => ownerUid === undefined
+  ? activeAccountLocalStorageKey(baseKeyFor(siteId))
+  : accountLocalStorageKey(baseKeyFor(siteId), ownerUid);
 const CANVAS_STEPS = new Set<WizardStep>([
   'base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy',
 ]);
@@ -714,10 +725,13 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
   return state.rev === rev ? state : { ...state, rev };
 }
 
-export function loadCanvasState(siteId: string): DesignCanvasState | null {
+export function loadCanvasState(
+  siteId: string,
+  ownerUid?: string | null,
+): DesignCanvasState | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = localStorage.getItem(keyFor(siteId));
+    const raw = localStorage.getItem(keyFor(siteId, ownerUid));
     if (!raw) return null;
     return normaliseCanvasState(JSON.parse(raw), siteId);
   } catch {
@@ -764,7 +778,9 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
     rev: revOf(clean) + 1,
   };
   if (typeof window === 'undefined') return stamped;
-  const write = () => localStorage.setItem(keyFor(clean.siteId), JSON.stringify(stamped));
+  const ownerUid = activeAccountUid();
+  const storageKey = activeAccountLocalStorageKey(baseKeyFor(clean.siteId));
+  const write = () => localStorage.setItem(storageKey, JSON.stringify(stamped));
   try {
     write();
   } catch {
@@ -777,7 +793,9 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
       throw new CanvasSaveError('Could not save your design — this device’s storage is full.');
     }
   }
-  window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+  if (activeAccountUid() === ownerUid) {
+    window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+  }
   return stamped;
 }
 
@@ -785,11 +803,15 @@ export function saveCanvasState(state: DesignCanvasState): DesignCanvasState {
 // dispatches the change event either way. Shared by the two callers that must move a state around
 // WITHOUT claiming it as a new local edit; the difference between them is intent, not mechanics,
 // so they share the mechanics and document the intent separately.
-function writeCanvasStateVerbatim(state: DesignCanvasState): void {
+function writeCanvasStateVerbatim(
+  state: DesignCanvasState,
+  ownerUid?: string | null,
+): void {
   if (typeof window === 'undefined') return;
   const clean = normaliseCanvasState(state, state?.siteId);
   if (!clean) return;
-  const write = () => localStorage.setItem(keyFor(clean.siteId), JSON.stringify(clean));
+  const eventOwnerUid = ownerUid === undefined ? activeAccountUid() : ownerUid;
+  const write = () => localStorage.setItem(keyFor(clean.siteId, ownerUid), JSON.stringify(clean));
   try {
     write();
   } catch {
@@ -802,7 +824,9 @@ function writeCanvasStateVerbatim(state: DesignCanvasState): void {
          quota-starved device (it just kept showing the stale, zone-less snapshot). */
     }
   }
-  window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+  if (activeAccountUid() === eventOwnerUid) {
+    window.dispatchEvent(new CustomEvent(DESIGN_CANVAS_CHANGED_EVENT));
+  }
 }
 
 // Applies a state that a cloud merge (lib/design-canvas-sync.ts) already decided is newest —
@@ -811,8 +835,11 @@ function writeCanvasStateVerbatim(state: DesignCanvasState): void {
 // this device just edited it, and would inflate rev on every hop between devices until the
 // counter meant nothing). Still dispatches the change event so the page's normal refresh() path
 // picks it up like any external change.
-export function applyRemoteCanvasState(state: DesignCanvasState): void {
-  writeCanvasStateVerbatim(normalizeZoneNumbers(state));
+export function applyRemoteCanvasState(
+  state: DesignCanvasState,
+  ownerUid?: string | null,
+): void {
+  writeCanvasStateVerbatim(normalizeZoneNumbers(state), ownerUid);
 }
 
 /** Persists a NAVIGATION-ONLY change — today that means `step`, where the farmer is in the wizard

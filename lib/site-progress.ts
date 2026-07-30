@@ -27,6 +27,7 @@ import {
   type CompletionStepKey,
 } from '@/lib/completion-score';
 import type { LocationData } from '@/lib/types';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 export interface Coords { lat: number; lon: number }
 
@@ -242,7 +243,7 @@ function normaliseGuidedState(value: unknown): GuidedModeState {
 export function getGuidedState(): GuidedModeState {
   if (typeof window === 'undefined') return guidedDefault();
   try {
-    const raw = window.localStorage.getItem(GUIDED_MODE_KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(GUIDED_MODE_KEY));
     if (!raw) return guidedDefault();
     const parsed = JSON.parse(raw);
     return normaliseGuidedState(parsed);
@@ -255,7 +256,10 @@ export function setGuidedState(patch: Partial<GuidedModeState>): void {
   if (typeof window === 'undefined') return;
   const next = normaliseGuidedState({ ...getGuidedState(), ...patch });
   try {
-    window.localStorage.setItem(GUIDED_MODE_KEY, JSON.stringify(next));
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(GUIDED_MODE_KEY),
+      JSON.stringify(next),
+    );
     window.dispatchEvent(new CustomEvent(GUIDED_CHANGED_EVENT));
   } catch {
     /* quota / private mode — guidance is best-effort */

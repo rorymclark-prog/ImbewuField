@@ -12,6 +12,7 @@ import { bedsFromDesignCanvas } from './design-beds-bridge';
 import { loadPlaces, resolveMainSite } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 // Months throughout lib/crop-plan.ts are 1-12 (Jan-Dec), wrapping via the
 // same rule as that module's internal wrapMonth — kept in sync here since
@@ -228,7 +229,9 @@ const COMPLETED_TASKS_KEY = 'imbewu_completed_tasks_v1';
 export function loadCompletedTaskIds(): Set<string> {
   if (typeof window === 'undefined' || !window.localStorage) return new Set();
   try {
-    const raw = window.localStorage.getItem(COMPLETED_TASKS_KEY);
+    const raw = window.localStorage.getItem(
+      activeAccountLocalStorageKey(COMPLETED_TASKS_KEY),
+    );
     if (!raw) return new Set();
     const parsed = JSON.parse(raw);
     return new Set(Array.isArray(parsed)
@@ -247,7 +250,10 @@ export function saveCompletedTaskIds(ids: Set<string>): boolean {
     const clean = new Set([...ids]
       .filter((id) => typeof id === 'string' && id.trim().length > 0)
       .map((id) => id.trim()));
-    window.localStorage.setItem(COMPLETED_TASKS_KEY, JSON.stringify([...clean]));
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(COMPLETED_TASKS_KEY),
+      JSON.stringify([...clean]),
+    );
     return true;
   } catch {
     return false;

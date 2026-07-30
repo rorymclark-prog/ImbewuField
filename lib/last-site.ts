@@ -1,4 +1,5 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 // Remembers the farmer's most recently analysed site so the global chat
 // assistant stays site-aware on every page (not just the map).
@@ -96,7 +97,7 @@ export function setLastSite(s: LastSite): boolean {
   const safe = normaliseLastSite(s);
   if (!safe) return false;
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(safe));
+    window.localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(safe));
     return true;
   } catch {
     return false;
@@ -106,7 +107,7 @@ export function setLastSite(s: LastSite): boolean {
 export function getLastSite(): LastSite | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(KEY));
     return raw ? normaliseLastSite(JSON.parse(raw)) : null;
   } catch {
     return null;

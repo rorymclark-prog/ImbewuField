@@ -27,6 +27,8 @@
 //   found the same 2-3x order of magnitude. Used ONLY to estimate retail
 //   for crops where no direct retail figure could be found; never applied
 //   where a real, direct retail figure exists.
+import { activeAccountLocalStorageKey } from './account-local-storage';
+
 export interface CropPrice {
   retailPerKg: number;
   wholesalePerKg: number;
@@ -88,7 +90,9 @@ const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
 export function loadCropPriceOverrides(): Record<string, CropPrice> {
   if (typeof window === 'undefined' || !window.localStorage) return {};
   try {
-    const raw = window.localStorage.getItem(PRICE_OVERRIDES_KEY);
+    const raw = window.localStorage.getItem(
+      activeAccountLocalStorageKey(PRICE_OVERRIDES_KEY),
+    );
     if (!raw) return {};
     const parsed = JSON.parse(raw);
     return typeof parsed === 'object' && parsed !== null ? parsed : {};
@@ -100,7 +104,10 @@ export function loadCropPriceOverrides(): Record<string, CropPrice> {
 export function saveCropPriceOverrides(overrides: Record<string, CropPrice>): void {
   if (typeof window === 'undefined' || !window.localStorage) return;
   try {
-    window.localStorage.setItem(PRICE_OVERRIDES_KEY, JSON.stringify(overrides));
+    window.localStorage.setItem(
+      activeAccountLocalStorageKey(PRICE_OVERRIDES_KEY),
+      JSON.stringify(overrides),
+    );
   } catch {
     // Quota exceeded or storage unavailable — fail silently, same as saveCropPlan.
   }

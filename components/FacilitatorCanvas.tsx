@@ -23,6 +23,7 @@ import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, DISCLAIME
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 // The four researched producer styles (see /api/image-producer STYLE_LINES).
 const PRODUCER_STYLES: { key: string; name: string; blurb: string; label: LabelStyle }[] = [
@@ -893,7 +894,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // design" button. Checked once on mount; kept in sync by backupCurrentDesign.
   const [hasBackup, setHasBackup] = useState(false);
   useEffect(() => {
-    try { setHasBackup(!!localStorage.getItem(BACKUP_KEY)); } catch { /* unavailable */ }
+    try {
+      setHasBackup(!!localStorage.getItem(activeAccountLocalStorageKey(BACKUP_KEY)));
+    } catch { /* unavailable */ }
   }, []);
 
   // Cloud save/load — designId binds this canvas to a Firestore doc once saved.
@@ -1266,7 +1269,9 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   // restore (see resolveAndSet there).
   async function restoreBackedUpDesign() {
     let raw: string | null = null;
-    try { raw = localStorage.getItem(BACKUP_KEY); } catch { raw = null; }
+    try {
+      raw = localStorage.getItem(activeAccountLocalStorageKey(BACKUP_KEY));
+    } catch { raw = null; }
     if (!raw) return;
     if (!window.confirm('Restore the backed-up design? It swaps places with what you see now — nothing is lost.')) return;
 
@@ -1278,7 +1283,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
     // Swap, don't overwrite: the design currently on screen becomes the new backup.
     try {
       const payload: BackupPayload = { ...buildLocalStatePayload(), backedUpAt: Date.now() };
-      localStorage.setItem(BACKUP_KEY, JSON.stringify(payload));
+      localStorage.setItem(
+        activeAccountLocalStorageKey(BACKUP_KEY),
+        JSON.stringify(payload),
+      );
     } catch { /* best effort — still proceed with the restore itself */ }
 
     const isV2 = backup.geomVersion === 2;
@@ -1832,7 +1840,10 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   const backupCurrentDesign = useCallback(() => {
     try {
       const payload: BackupPayload = { ...buildLocalStatePayload(), backedUpAt: Date.now() };
-      localStorage.setItem(BACKUP_KEY, JSON.stringify(payload));
+      localStorage.setItem(
+        activeAccountLocalStorageKey(BACKUP_KEY),
+        JSON.stringify(payload),
+      );
       setHasBackup(true);
     } catch {
       // Quota or unavailable — best effort; never blocks the switch/clear it guards.

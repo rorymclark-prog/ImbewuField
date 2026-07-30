@@ -11,6 +11,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 
@@ -33,15 +34,29 @@ const DEFAULT_BEDS: Bed[] = [
   { letter: 'A', crop: 'Spinach' }, { letter: 'B', crop: 'Tomatoes' },
   { letter: 'C', crop: 'Maize' },   { letter: 'D', crop: 'Beans' },
 ];
+const LATEST_SURVEY_KEY = 'imbewu_garden_survey';
+const DEFAULT_SURVEY_KEY = 'imbewu_garden_survey_default';
+const PLANNER_CROPS_KEY = 'imbewu_planner_crops';
 
 function loadBeds(): Bed[] {
   if (typeof window === 'undefined') return DEFAULT_BEDS;
+  for (const baseKey of [LATEST_SURVEY_KEY, DEFAULT_SURVEY_KEY]) {
+    try {
+      const s = JSON.parse(
+        localStorage.getItem(activeAccountLocalStorageKey(baseKey)) || 'null',
+      );
+      if (s?.bedCrops?.length) {
+        return s.bedCrops.map((c: string, i: number) => ({
+          letter: String.fromCharCode(65 + i),
+          crop: c,
+        }));
+      }
+    } catch { /* try the next account-local source */ }
+  }
   try {
-    const s = JSON.parse(localStorage.getItem('imbewu_garden_survey') || 'null');
-    if (s?.bedCrops?.length) return s.bedCrops.map((c: string, i: number) => ({ letter: String.fromCharCode(65 + i), crop: c }));
-  } catch { /* ignore */ }
-  try {
-    const p = JSON.parse(localStorage.getItem('imbewu_planner_crops') || 'null');
+    const p = JSON.parse(
+      localStorage.getItem(activeAccountLocalStorageKey(PLANNER_CROPS_KEY)) || 'null',
+    );
     if (Array.isArray(p) && p.length) return p.slice(0, 6).map((c: string, i: number) => ({ letter: String.fromCharCode(65 + i), crop: c }));
   } catch { /* ignore */ }
   return DEFAULT_BEDS;

@@ -4,6 +4,11 @@ import { isSampleMode } from './sample-mode';
 import { readTombstones, addTombstone } from './local-tombstones';
 import { isDeleteStale, mergeItems } from './user-sync';
 import { canonicalCoordinateSiteId } from './site-id';
+import {
+  accountLocalStorageKey,
+  activeAccountLocalStorageKey,
+  activeAccountUid,
+} from './account-local-storage';
 
 export type SiteElementType =
   | 'jojo_tank'
@@ -52,16 +57,23 @@ export function getElementMeta(type: SiteElementType): { icon: string; label: st
   return ELEMENT_META[type];
 }
 
-const keyFor = (siteId: string) => `imbewu_site_elements_${siteId}`;
+const baseKeyFor = (siteId: string) => `imbewu_site_elements_${siteId}`;
+const keyFor = (
+  siteId: string,
+  ownerUid?: string | null,
+) => ownerUid === undefined
+  ? activeAccountLocalStorageKey(baseKeyFor(siteId))
+  : accountLocalStorageKey(baseKeyFor(siteId), ownerUid);
 // Local deletion tombstones for this site's elements — see lib/local-tombstones.ts.
-const deletedKeyFor = (siteId: string) => `${keyFor(siteId)}_deleted`;
+const deletedKeyFor = (
+  siteId: string,
+  ownerUid?: string | null,
+) => ownerUid === undefined
+  ? activeAccountLocalStorageKey(`${baseKeyFor(siteId)}_deleted`)
+  : accountLocalStorageKey(`${baseKeyFor(siteId)}_deleted`, ownerUid);
 
 function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-site-elements-changed'));
-}
-
-function currentUid(): string | undefined {
-  return getFirebase()?.auth?.currentUser?.uid;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -103,11 +115,16 @@ export function normaliseSiteElements(value: unknown): SiteElement[] {
   return [...byId.values()];
 }
 
-export function loadSiteElements(siteId: string): SiteElement[] {
+export function loadSiteElements(
+  siteId: string,
+  ownerUid?: string | null,
+): SiteElement[] {
   const canonicalSiteId = canonicalCoordinateSiteId(siteId);
   if (typeof window === 'undefined' || !canonicalSiteId) return [];
   try {
-    return normaliseSiteElements(JSON.parse(localStorage.getItem(keyFor(canonicalSiteId)) ?? '[]'));
+    return normaliseSiteElements(
+      JSON.parse(localStorage.getItem(keyFor(canonicalSiteId, ownerUid)) ?? '[]'),
+    );
   } catch {
     return [];
   }
@@ -116,22 +133,29 @@ export function loadSiteElements(siteId: string): SiteElement[] {
 export function saveSiteElement(siteId: string, el: SiteElement): SiteElement | null {
   const canonicalSiteId = canonicalCoordinateSiteId(siteId);
   if (!canonicalSiteId || !isValidSiteElement(el)) return null;
+  const ownerUid = activeAccountUid();
+  const storageKey = activeAccountLocalStorageKey(baseKeyFor(canonicalSiteId));
   const stamped: SiteElement = { ...el, updatedAt: Date.now() };
-  const updated = [stamped, ...loadSiteElements(canonicalSiteId).filter((e) => e.id !== stamped.id)];
+  const updated = [
+    stamped,
+    ...loadSiteElements(canonicalSiteId).filter((e) => e.id !== stamped.id),
+  ];
   try {
-    localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(updated));
+    localStorage.setItem(storageKey, JSON.stringify(updated));
   } catch {
     return null;
   }
   notify();
-  const uid = currentUid();
-  if (uid) upsertSiteElement(uid, canonicalSiteId, stamped).catch(() => {});
+  if (ownerUid) upsertSiteElement(ownerUid, canonicalSiteId, stamped).catch(() => {});
   return stamped;
 }
 
 export function deleteSiteElement(siteId: string, id: string): boolean {
   const canonicalSiteId = canonicalCoordinateSiteId(siteId);
   if (!canonicalSiteId || !id) return false;
+  const ownerUid = activeAccountUid();
+  const storageKey = activeAccountLocalStorageKey(baseKeyFor(canonicalSiteId));
+  const deletedStorageKey = activeAccountLocalStorageKey(`${baseKeyFor(canonicalSiteId)}_deleted`);
   const current = loadSiteElements(canonicalSiteId);
   if (!current.some((element) => element.id === id)) return false;
   const deletedAt = Date.now();
@@ -139,17 +163,16 @@ export function deleteSiteElement(siteId: string, id: string): boolean {
   // The visible array write comes first: localStorage is synchronous, so the tombstone is still
   // installed before control returns, while a quota failure cannot mark a still-visible item.
   try {
-    localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(updated));
+    localStorage.setItem(storageKey, JSON.stringify(updated));
   } catch {
     return false;
   }
-  addTombstone(deletedKeyFor(canonicalSiteId), id, deletedAt);
+  addTombstone(deletedStorageKey, id, deletedAt);
   notify();
-  const uid = currentUid();
   // Thread the SAME timestamp into removeSiteElement() as its `deletedAtMs` — see
   // removePlace()/isDeleteStale() in lib/user-sync.ts for why a fresh Date.now() sampled at
   // transaction-commit time would let a delayed delete kill a genuinely newer remote edit.
-  if (uid) removeSiteElement(uid, canonicalSiteId, id, deletedAt).catch(() => {});
+  if (ownerUid) removeSiteElement(ownerUid, canonicalSiteId, id, deletedAt).catch(() => {});
   return true;
 }
 
@@ -270,14 +293,17 @@ export async function reconcileSiteElements(uid: string, siteId: string): Promis
       const remoteDel: Tombstones = data.deleted ?? {};
       const { items, deleted } = mergeSiteElements(
         remote,
-        loadSiteElements(canonicalSiteId),
+        loadSiteElements(canonicalSiteId, uid),
         remoteDel,
-        readTombstones(deletedKeyFor(canonicalSiteId)),
+        readTombstones(deletedKeyFor(canonicalSiteId, uid)),
       );
-      localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(items));
+      localStorage.setItem(keyFor(canonicalSiteId, uid), JSON.stringify(items));
       tx.set(ref, { elements: items, deleted, updatedAt: serverTimestamp() });
     });
-    notify();
+    // A direct A → B switch does not necessarily tear down an already-queued callback
+    // immediately. The completed reconcile may keep A's cache warm, but it must never make
+    // B's open UI refresh as though A's rows belonged to the active account.
+    if (activeAccountUid() === uid) notify();
   } catch (e) { console.error('[sync] reconcileSiteElements', e); }
 }
 
@@ -299,13 +325,13 @@ export function subscribeSiteElementsLive(uid: string, siteId: string): () => vo
       const remoteDel: Tombstones = data.deleted ?? {};
       const { items } = mergeSiteElements(
         remote,
-        loadSiteElements(canonicalSiteId),
+        loadSiteElements(canonicalSiteId, uid),
         remoteDel,
-        readTombstones(deletedKeyFor(canonicalSiteId)),
+        readTombstones(deletedKeyFor(canonicalSiteId, uid)),
       );
       try {
-        localStorage.setItem(keyFor(canonicalSiteId), JSON.stringify(items));
-        notify();
+        localStorage.setItem(keyFor(canonicalSiteId, uid), JSON.stringify(items));
+        if (activeAccountUid() === uid) notify();
       } catch (e) {
         console.error('[sync] site-elements local write', e);
       }

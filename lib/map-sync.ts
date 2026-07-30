@@ -7,6 +7,7 @@
 
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
 import { upsertDesignStudio } from '@/lib/user-sync';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 export const MAP_STATE_EVENT = 'imbewu-map-state-changed';
 
@@ -101,7 +102,9 @@ function emit(name: string) {
 export function readLocalFarmShapes(): FeatureCollection | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = JSON.parse(window.localStorage.getItem(SHAPES_KEY) ?? 'null');
+    const raw = JSON.parse(
+      window.localStorage.getItem(activeAccountLocalStorageKey(SHAPES_KEY)) ?? 'null',
+    );
     return normaliseFarmShapeCollection(raw);
   } catch {
     return null;
@@ -114,7 +117,7 @@ export function markLocalStorageKeyUpdated(key: string): void {
   if (typeof window === 'undefined') return;
   if (key === DESIGN_STUDIO_KEY) {
     try {
-      const raw = window.localStorage.getItem(DESIGN_STUDIO_KEY);
+      const raw = window.localStorage.getItem(activeAccountLocalStorageKey(DESIGN_STUDIO_KEY));
       if (raw) upsertDesignStudio(raw).catch(() => {});
     } catch { /* ignore */ }
   }

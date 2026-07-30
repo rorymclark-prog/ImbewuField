@@ -2,6 +2,7 @@ import { upsertPlace, removePlace, mergeItems } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { isSampleMode, getSandboxPlaces, upsertSandboxPlace, deleteSandboxPlace } from './sample-mode';
 import { addTombstone, readTombstones } from './local-tombstones';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
@@ -84,7 +85,7 @@ export function loadPlaces(): SavedPlace[] {
   if (isSampleMode()) return normalisePlaces(getSandboxPlaces());
   if (typeof window === 'undefined') return [];
   try {
-    return normalisePlaces(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
+    return normalisePlaces(JSON.parse(localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]'));
   } catch {
     return [];
   }
@@ -108,7 +109,7 @@ export function savePlace(place: SavedPlace): SavedPlace[] {
   }
   const places = loadPlaces().filter(p => p.id !== stamped.id);
   const updated = [stamped, ...places];
-  localStorage.setItem(KEY, JSON.stringify(updated));
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   notify();
   const uid = currentUid();
   if (uid) upsertPlace(uid, stamped).catch(() => {});
@@ -129,8 +130,8 @@ export function deletePlace(id: string): SavedPlace[] {
   const updated = current.filter(p => p.id !== id);
   // localStorage writes are synchronous: persist the visible deletion before its tombstone so
   // a quota/security failure cannot leave a deletion marker for a place still present locally.
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  addTombstone(DELETED_KEY, id, deletedAt);
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
+  addTombstone(activeAccountLocalStorageKey(DELETED_KEY), id, deletedAt);
   notify();
   const uid = currentUid();
   // Thread the SAME timestamp into removePlace() as its `deletedAtMs` — not a fresh Date.now()
@@ -163,7 +164,7 @@ export function mergeIncomingPlaces(incoming: SavedPlace[]): SavedPlace[] {
   const safeIncoming = normalisePlaces(incoming);
   if (typeof window === 'undefined') return safeIncoming;
   const local = loadPlaces();
-  const localDel = readTombstones(DELETED_KEY);
+  const localDel = readTombstones(activeAccountLocalStorageKey(DELETED_KEY));
   const { items } = mergeItems(
     safeIncoming,
     local,
@@ -173,7 +174,7 @@ export function mergeIncomingPlaces(incoming: SavedPlace[]): SavedPlace[] {
     placeTimestamp,
     Date.now(),
   );
-  localStorage.setItem(KEY, JSON.stringify(items));
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(items));
   notify();
   return items;
 }
@@ -199,7 +200,7 @@ export function updatePlacePosition(id: string, lat: number, lon: number): Saved
     if (p.id !== id) return p;
     return moved;
   });
-  localStorage.setItem(KEY, JSON.stringify(updated));
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   notify();
   const uid = currentUid();
   if (uid) upsertPlace(uid, moved).catch(() => {});
@@ -271,12 +272,12 @@ const MAIN_KEY = 'imbewu_main_site_id';
 
 export function getMainSiteId(): string | null {
   if (typeof window === 'undefined') return null;
-  return localStorage.getItem(MAIN_KEY);
+  return localStorage.getItem(activeAccountLocalStorageKey(MAIN_KEY));
 }
 
 export function setMainSiteId(id: string): void {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(MAIN_KEY, id);
+  localStorage.setItem(activeAccountLocalStorageKey(MAIN_KEY), id);
   notify(); // reuse the same 'permamap-places-changed' event listeners already subscribe to
 }
 

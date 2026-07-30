@@ -59,6 +59,7 @@ const {
 } = await import('../lib/site-elements.ts');
 const { canonicalCoordinateSiteId } = await import('../lib/site-id.ts');
 const { readTombstones } = await import('../lib/local-tombstones.ts');
+const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 
 type SiteElement = ReturnType<typeof loadSiteElements>[number];
 
@@ -140,6 +141,28 @@ test('saving is site-scoped and announces only a successful persisted write', ()
   localStorage.failKey = keyFor(SITE_ID);
   assert.equal(saveSiteElement(SITE_ID, element('blocked')), null);
   assert.deepEqual(events, []);
+});
+
+test('one site on a shared device keeps each farmer and the signed-out cache separate', () => {
+  localStorage.clear();
+  const legacyGuest = element('guest', { updatedAt: 1_000 });
+  const farmerA = element('farmer-a', { updatedAt: 2_000 });
+  const farmerB = element('farmer-b', { updatedAt: 3_000 });
+
+  localStorage.setItem(keyFor(SITE_ID), JSON.stringify([legacyGuest]));
+  localStorage.setItem(
+    accountLocalStorageKey(keyFor(SITE_ID), 'farmer-a'),
+    JSON.stringify([farmerA]),
+  );
+  localStorage.setItem(
+    accountLocalStorageKey(keyFor(SITE_ID), 'farmer-b'),
+    JSON.stringify([farmerB]),
+  );
+
+  assert.deepEqual(loadSiteElements(SITE_ID), [legacyGuest]);
+  assert.deepEqual(loadSiteElements(SITE_ID, 'farmer-a'), [farmerA]);
+  assert.deepEqual(loadSiteElements(SITE_ID, 'farmer-b'), [farmerB]);
+  assert.deepEqual(loadSiteElements(SITE_ID, 'new-farmer'), []);
 });
 
 test('missing and failed deletes create no tombstone or false change event', () => {

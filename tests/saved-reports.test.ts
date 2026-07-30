@@ -1,10 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { registerHooks } from 'node:module';
 
 import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA } from '../lib/demo-site.ts';
 import type { SavedReport } from '../lib/saved-reports.ts';
 
 const KEY = 'imbewu_saved_reports';
+
+const accountHarness: { currentUid: string | null } = { currentUid: null };
+Object.assign(globalThis, { __imbewuSavedReportsAccountHarness: accountHarness });
+const fakeFirebaseInit = `data:text/javascript,${encodeURIComponent(`
+const harness = globalThis.__imbewuSavedReportsAccountHarness;
+export const getFirebase = () => ({
+  auth: { currentUser: harness.currentUid ? { uid: harness.currentUid } : null },
+});
+export const isBackendConfigured = () => Boolean(harness.currentUid);
+`)}`;
+const hooks = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (context.parentURL?.includes('/lib/account-local-storage.ts')
+        && specifier === './firebase/init') {
+      return { url: fakeFirebaseInit, shortCircuit: true };
+    }
+    return nextResolve(specifier, context);
+  },
+});
 
 class MemoryStorage {
   readonly rows = new Map<string, string>();
@@ -31,6 +51,8 @@ Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: l
 Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
 
 const { deleteReport, loadReports, saveReport } = await import('../lib/saved-reports.ts');
+const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
+hooks.deregister();
 
 function report(id: string, overrides: Partial<SavedReport> = {}): SavedReport {
   return {
@@ -50,6 +72,7 @@ function reset(): void {
   local.rows.clear();
   session.rows.clear();
   local.throwOnWrite = false;
+  accountHarness.currentUid = null;
 }
 
 test('load filters malformed rows, keeps newest duplicate and bounds corrupt oversized storage', () => {
@@ -152,4 +175,22 @@ test('sample mode cannot read, save or delete the real report store', () => {
   assert.deepEqual(saveReport(report('demo')), { reports: [], saved: false });
   assert.deepEqual(deleteReport('real'), []);
   assert.equal(local.getItem(KEY), before);
+});
+
+test("one shared device never exposes farmer A's saved reports to farmer B", () => {
+  reset();
+  local.setItem(KEY, JSON.stringify([report('legacy', { name: 'Unknown legacy owner' })]));
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.equal(saveReport(report('farmer-a')).saved, true);
+
+  accountHarness.currentUid = 'farmer-b';
+  assert.deepEqual(loadReports(), []);
+  assert.equal(saveReport(report('farmer-b')).saved, true);
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.deepEqual(loadReports().map((row) => row.id), ['farmer-a']);
+  assert.ok(local.getItem(accountLocalStorageKey(KEY, 'farmer-a')));
+  assert.ok(local.getItem(accountLocalStorageKey(KEY, 'farmer-b')));
+  assert.ok(local.getItem(KEY), 'unowned legacy reports remain quarantined');
 });

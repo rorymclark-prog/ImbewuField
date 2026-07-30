@@ -6,6 +6,9 @@ import {
   useEffect,
   useState,
   useCallback,
+  useLayoutEffect,
+  useRef,
+  Fragment,
   type ReactNode,
 } from 'react';
 import {
@@ -27,6 +30,7 @@ import {
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
+import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -66,21 +70,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState<boolean>(isBackendConfigured());
+  const [storageReadyEpoch, setStorageReadyEpoch] = useState<number | null>(null);
+  const authEpochRef = useRef(0);
+  const activeUidRef = useRef<string | null>(null);
 
   // Load/refresh profile whenever the Firebase user changes.
   const syncProfile = useCallback(async (firebaseUser: User | null) => {
     if (!firebaseUser) {
-      setProfile(null);
+      if (!getFirebase()?.auth.currentUser) setProfile(null);
       return;
     }
     const p = await getMyProfile();
-    setProfile(p);
+    // A profile request can outlive an A → B account switch. Never let an old
+    // completion overwrite the identity the Firebase Auth singleton now exposes.
+    if (getFirebase()?.auth.currentUser?.uid === firebaseUser.uid) setProfile(p);
   }, []);
 
   useEffect(() => {
     const fb = getFirebase();
     if (!fb) {
       // Backend not wired up yet — stay in guest/sample mode.
+      bindMountedAccountLocalStorageUid(null);
       setLoading(false);
       return;
     }
@@ -90,27 +100,64 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     getRedirectResult(fb.auth)
       .then(async (result) => {
         if (!result?.user) return;
+        const redirectUid = result.user.uid;
+        if (fb.auth.currentUser?.uid !== redirectUid) return;
         const existing = await getMyProfile();
+        if (fb.auth.currentUser?.uid !== redirectUid) return;
         if (!existing) {
           await updateMyProfile({ full_name: result.user.displayName ?? '', role: 'farmer', language: 'en' });
         }
       })
       .catch((err) => console.error('Google redirect sign-in failed:', err));
 
+    let alive = true;
     const unsub = onAuthStateChanged(fb.auth, async (firebaseUser) => {
+      const epoch = ++authEpochRef.current;
+      const nextUid = firebaseUser?.uid ?? null;
+      activeUidRef.current = nextUid;
+      const isStillCurrent = () =>
+        alive
+        && epoch === authEpochRef.current
+        && activeUidRef.current === nextUid
+        && (fb.auth.currentUser?.uid ?? null) === nextUid;
+
+      // Keep account-bound children unmounted while their identity changes. In
+      // particular, this prevents a still-mounted Map from pushing farmer A's
+      // in-memory draw collection after Firebase has already switched to farmer B.
+      setLoading(true);
+      setStorageReadyEpoch(null);
+      setProfile(null);
       setUser(firebaseUser);
+
       try {
-        await syncProfile(firebaseUser);
+        const nextProfile = firebaseUser ? await getMyProfile() : null;
+        if (!isStillCurrent()) return;
+        setProfile(nextProfile);
       } catch (err) {
         console.error('syncProfile failed:', err);
-        setProfile(null);
+        if (isStillCurrent()) setProfile(null);
       } finally {
-        setLoading(false);
+        if (isStillCurrent()) setStorageReadyEpoch(epoch);
       }
     });
 
-    return unsub;
-  }, [syncProfile]);
+    return () => {
+      alive = false;
+      authEpochRef.current += 1;
+      unsub();
+    };
+  }, []);
+
+  // The old account subtree has been removed in this committed loading render.
+  // Rotate the browser-storage namespace now, then release the new subtree. A
+  // delayed callback from the old tree can never see the new owner while that
+  // old tree is still mounted.
+  useLayoutEffect(() => {
+    if (!loading || storageReadyEpoch === null) return;
+    if (storageReadyEpoch !== authEpochRef.current) return;
+    bindMountedAccountLocalStorageUid(user?.uid ?? null);
+    setLoading(false);
+  }, [loading, storageReadyEpoch, user]);
 
   // ── signIn ──────────────────────────────────────────────────────────────
   const signIn = useCallback(async (email: string, password: string): Promise<string | null> => {
@@ -135,8 +182,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!fb) return 'Firebase is not configured yet — running in sample mode.';
     try {
       const cred = await createUserWithEmailAndPassword(fb.auth, email, password);
+      const signupUid = cred.user.uid;
+      if (fb.auth.currentUser?.uid !== signupUid) return null;
       await updateProfile(cred.user, { displayName: fullName });
+      if (fb.auth.currentUser?.uid !== signupUid) return null;
       await updateMyProfile({ full_name: fullName, role, language: 'en' });
+      if (fb.auth.currentUser?.uid !== signupUid) return null;
       await syncProfile(cred.user);
       return null;
     } catch (err) {
@@ -161,9 +212,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return null; // navigates away; nothing more to do here
       }
       const cred = await signInWithPopup(fb.auth, provider);
+      const popupUid = cred.user.uid;
+      if (fb.auth.currentUser?.uid !== popupUid) return null;
       const existing = await getMyProfile();
+      if (fb.auth.currentUser?.uid !== popupUid) return null;
       if (!existing) {
         await updateMyProfile({ full_name: cred.user.displayName ?? '', role: 'farmer', language: 'en' });
+        if (fb.auth.currentUser?.uid !== popupUid) return null;
       }
       await syncProfile(cred.user);
       return null;
@@ -216,19 +271,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOutUser = useCallback(async (): Promise<void> => {
     const fb = getFirebase();
     if (!fb) return;
-    await signOut(fb.auth);
-    setUser(null);
-    setProfile(null);
+    setLoading(true);
+    try {
+      await signOut(fb.auth);
+      // onAuthStateChanged is the one identity authority; it clears user/profile,
+      // rotates the account-local view, and releases loading after the transition.
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
   }, []);
 
   const role: UserRole | null = profile?.role ?? null;
+  const suspendAccountTree = isBackendConfigured() && loading;
+  const accountTreeKey = user?.uid ?? 'signed-out';
 
   return (
     <AuthContext.Provider value={{
       user, profile, role, loading,
       signIn, signUp, signInWithGoogle, resetPassword, changePassword, refreshProfile, signOutUser,
     }}>
-      {children}
+      {suspendAccountTree ? null : (
+        <Fragment key={accountTreeKey}>{children}</Fragment>
+      )}
     </AuthContext.Provider>
   );
 }

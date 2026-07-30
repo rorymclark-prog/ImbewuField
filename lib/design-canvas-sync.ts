@@ -16,6 +16,7 @@
 import { doc, onSnapshot, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { getFirebase } from './firebase/init';
 import { isSampleMode } from './sample-mode';
+import { activeAccountUid } from './account-local-storage';
 import {
   applyRemoteCanvasState,
   contentCountOf,
@@ -119,7 +120,7 @@ export function mergeDesignCanvasStore(
 }
 
 function currentUid(): string | null {
-  return getFirebase()?.auth?.currentUser?.uid ?? null;
+  return activeAccountUid();
 }
 
 // SAMPLE-MODE GATE (safety layer 2 — see lib/sample-mode.ts): same choke-point trick as
@@ -139,7 +140,10 @@ function db() {
 export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanvasState | null> {
   const uid = currentUid();
   const d = db();
-  const local = loadCanvasState(siteId);
+  // An explicit null owner means the historical bare key. Signed-out production
+  // instead belongs to the dedicated guest namespace, so only pass an explicit
+  // owner once an authenticated uid was actually captured.
+  const local = uid ? loadCanvasState(siteId, uid) : loadCanvasState(siteId);
   if (!uid || !d) return local;
 
   const ref = doc(d, COLL, uid, 'data', DOC);
@@ -160,14 +164,20 @@ export async function reconcileDesignCanvas(siteId: string): Promise<DesignCanva
         tx.set(ref, { designCanvasJson: merged.designCanvasJson, updatedAt: serverTimestamp() });
       }
     });
+    // A reconcile can outlive the auth state that started it. Its Firestore transaction and
+    // cache belong to the captured uid, but returning/applying that winner after A → B would
+    // place A's canvas into B's open React tree.
+    if (currentUid() !== uid) return null;
     const displayedWinner = winner && winner !== local
       ? preserveCanvasNavigation(winner, local)
       : winner;
-    if (displayedWinner && displayedWinner !== local) applyRemoteCanvasState(displayedWinner);
+    if (displayedWinner && displayedWinner !== local) {
+      applyRemoteCanvasState(displayedWinner, uid);
+    }
     return displayedWinner;
   } catch (e) {
     console.error('[design-canvas-sync] reconcile', e);
-    return local;
+    return currentUid() === uid ? local : null;
   }
 }
 
@@ -215,16 +225,19 @@ export function subscribeDesignCanvasLive(siteId: string): () => void {
       // is load-bearing, not redundant (our own echo ties on rev AND updatedAt, so `local` wins
       // the tie and we correctly do nothing).
       if (snap.metadata.hasPendingWrites || !snap.exists()) return;
+      // React cleanup follows the auth render, but an already-queued Firestore callback can run
+      // first. Never let an A listener read or apply anything once B is the active account.
+      if (currentUid() !== uid) return;
       const remoteEntry = stateAt(parseDesignCanvasStore(snap.data().designCanvasJson), siteId);
       if (!remoteEntry) return;
-      const local = loadCanvasState(siteId);
+      const local = loadCanvasState(siteId, uid);
       // Same rule as reconcile/push — this listener is the one path that overwrites local with a
       // remote copy, so it must not use a weaker test than the paths that chose that copy. On
       // wall-clock alone it both missed rescues (a good low-updatedAt cloud copy could never
       // reach a starved device whose stale local was restamped NOW) and could destroy (an empty
       // but newer remote overwrote a populated local).
       if (local && pickWinner(local, remoteEntry) !== remoteEntry) return;
-      applyRemoteCanvasState(preserveCanvasNavigation(remoteEntry, local));
+      applyRemoteCanvasState(preserveCanvasNavigation(remoteEntry, local), uid);
     },
     (e) => console.error('[design-canvas-sync] listener', e),
   );

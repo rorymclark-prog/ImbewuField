@@ -6,6 +6,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -370,7 +371,9 @@ export default function CalendarPage() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem('imbewu_planner_crops');
+      const raw = localStorage.getItem(
+        activeAccountLocalStorageKey('imbewu_planner_crops'),
+      );
       if (raw) setMyPlannerCrops(JSON.parse(raw) as string[]);
     } catch { /* ignore */ }
   }, []);

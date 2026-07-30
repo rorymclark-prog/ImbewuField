@@ -8,6 +8,7 @@ import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
 import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarCheck } from 'lucide-react';
 import LessonLink from '@/components/design/LessonLink';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
 type Suitability = 'best' | 'soon' | 'off';
@@ -88,7 +89,7 @@ const LS_QTY = 'imbewu_planner_qty';
 function loadCrops(): string[] {
   if (typeof window === 'undefined') return DEFAULT_CROPS;
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = localStorage.getItem(activeAccountLocalStorageKey(LS_KEY));
     if (raw) return JSON.parse(raw) as string[];
   } catch { /* ignore */ }
   return DEFAULT_CROPS;
@@ -97,7 +98,7 @@ function loadCrops(): string[] {
 function loadQty(): Record<string, number> {
   if (typeof window === 'undefined') return {};
   try {
-    const raw = localStorage.getItem(LS_QTY);
+    const raw = localStorage.getItem(activeAccountLocalStorageKey(LS_QTY));
     if (raw) return JSON.parse(raw) as Record<string, number>;
   } catch { /* ignore */ }
   return {};
@@ -115,8 +116,14 @@ export default function PlanPage() {
   const bedsFor = (crop: string) => qty[crop] ?? 1;
 
   function persist(nextCrops: string[], nextQty: Record<string, number>) {
-    localStorage.setItem(LS_KEY, JSON.stringify(nextCrops));
-    localStorage.setItem(LS_QTY, JSON.stringify(nextQty));
+    localStorage.setItem(
+      activeAccountLocalStorageKey(LS_KEY),
+      JSON.stringify(nextCrops),
+    );
+    localStorage.setItem(
+      activeAccountLocalStorageKey(LS_QTY),
+      JSON.stringify(nextQty),
+    );
   }
 
   function addCrop() {

@@ -233,6 +233,73 @@ test('site reads and clear-all never cross into another farmer design', async ()
   assert.deepEqual(await loadSheets('site-b'), [b]);
 });
 
+test('the same site and sheet ids stay isolated between accounts on one device', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const farmerA = sheet('same-sheet', 'same-site', '2026-01-01', {
+    label: 'FARMER A ONLY',
+  });
+  const farmerB = sheet('same-sheet', 'same-site', '2026-02-01', {
+    label: 'FARMER B ONLY',
+  });
+
+  assert.equal(await saveSheet(farmerA, 'farmer-a'), true);
+  assert.equal(await saveSheet(farmerB, 'farmer-b'), true);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-a'), [farmerA]);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-b'), [farmerB]);
+  assert.equal(await loadSheets('same-site', 'fresh-farmer').then((rows) => rows.length), 0);
+
+  assert.equal(await deleteSheet('same-sheet', 'farmer-b'), true);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-b'), []);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-a'), [farmerA]);
+
+  assert.equal(await saveSheet(farmerB, 'farmer-b'), true);
+  assert.equal(await clearSheets('same-site', 'farmer-b'), true);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-b'), []);
+  assert.deepEqual(await loadSheets('same-site', 'farmer-a'), [farmerA]);
+});
+
+test('sample mode cannot read, overwrite or clear real bare IndexedDB sheets', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const real = sheet('same-sheet', 'same-site', '2026-01-01', {
+    label: 'REAL LEGACY FARMER SHEET',
+  });
+  const sample = sheet('same-sheet', 'same-site', '2026-02-01', {
+    label: 'SAMPLE SHEET',
+  });
+
+  // Explicit null deliberately seeds the historical bare namespace.
+  assert.equal(await saveSheet(real, null), true);
+
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const sampleSession = {
+    getItem: (key: string) => (key === 'imbewu_sample_mode' ? '1' : null),
+  };
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: { sessionStorage: sampleSession },
+  });
+  try {
+    assert.deepEqual(await loadSheets('same-site'), []);
+    assert.equal(await saveSheet(sample), true);
+    assert.deepEqual(await loadSheets('same-site'), [sample]);
+    assert.equal(await clearSheets('same-site'), true);
+    assert.deepEqual(await loadSheets('same-site'), []);
+    assert.deepEqual(
+      await loadSheets('same-site', null),
+      [real],
+      'sample clear must leave the real bare row untouched',
+    );
+  } finally {
+    if (originalWindow) {
+      Object.defineProperty(globalThis, 'window', originalWindow);
+    } else {
+      Reflect.deleteProperty(globalThis, 'window');
+    }
+  }
+});
+
 test('awaiting delete means the durable row is actually gone', async () => {
   const factory = new FakeIndexedDb();
   install(factory);

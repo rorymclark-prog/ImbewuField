@@ -930,12 +930,13 @@ What the live verification used; reusable for any render-flow work:
 
 ---
 
-## 37. PRIORITY — one farmer's saved farm can silently write into another farmer's account on a shared device
+## 37. IMPORTANT, PRE-LAUNCH — one farmer's saved farm can silently write into another farmer's account on a shared device
 
-Found live during a fresh-signup walkthrough (30 July, emulator). This jumps ahead of items 35/36
-in urgency — it is a real cross-account data-integrity bug, proven with a clean repro, not a
-quality issue. Read this before continuing 35 if you have a natural stopping point; if you're
-mid-render on 35, finish that pass first (don't waste spent money mid-flight) and take this next.
+Found live during a fresh-signup walkthrough (30 July, emulator). It is a real cross-account
+data-integrity bug, proven with a clean repro, not a hypothetical. **Priority correction from Rory,
+30 July:** the app has not been deployed to any users yet, so there are currently zero exposed
+shared devices. Close the proven main contamination path, document residual races, and return to
+item 35; render quality is the launch gate.
 
 **Proof (reproducible in 2 minutes on the emulator):**
 1. Sign out of any account (or just have a browser that's ever had a farmer's data in it — see
@@ -986,6 +987,21 @@ sign-out-then-sign-in, if the UI has one) does — it may not go through the sam
 
 **Do not touch**: this doesn't overlap `DesignGlossy.tsx`/`lib/producer-prompt.ts` (item 35's
 files) — safe to pick up in parallel or right after.
+
+**Known residual races — documented for post-launch-hardening work, not item 35 time:**
+- During Firebase's pre-observer A→B interval, `auth.currentUser` can already be B while the
+  account-local storage namespace is still deliberately bound to mounted A. Synchronous
+  write-through helpers in `saved-places.ts`, `water-points.ts`, `site-survey.ts` and
+  `map-sync.ts` currently choose those two owners independently; they must eventually capture one
+  owner and refuse the cloud write when Firebase no longer matches it.
+- Network/image work started by A can finish after AuthProvider has unmounted A and mounted B.
+  Audited examples are EvidenceSheet photo resizing, Map shared-site/geocoder callbacks,
+  GeometryDesignStudio render/touch-up caching, and DesignGlossy's thumbnail/queued-render
+  callbacks. Those operations need a captured owner plus cancellation/current-owner checks at
+  every durable-write boundary.
+- DesignGlossy's bare queued-job/glossy-cache keys and broad glossy-cache eviction remain outside
+  this item by the explicit no-touch boundary above. Treat them as part of the same later
+  hardening pass rather than claiming all browser persistence is now race-free.
 
 ---
 

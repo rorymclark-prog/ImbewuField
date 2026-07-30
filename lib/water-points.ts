@@ -1,6 +1,7 @@
 import { upsertWaterPoint, removeWaterPoint, mergeItems } from './user-sync';
 import { getFirebase } from './firebase/init';
 import { addTombstone, readTombstones } from './local-tombstones';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export type WaterPointCategory = 'Dam' | 'Borehole' | 'Spring' | 'Well' | 'Pond' | 'Tank' | 'Other';
 
@@ -79,7 +80,9 @@ export function normaliseWaterPoints(value: unknown): WaterPoint[] {
 export function loadWaterPoints(): WaterPoint[] {
   if (typeof window === 'undefined') return [];
   try {
-    return normaliseWaterPoints(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
+    return normaliseWaterPoints(JSON.parse(
+      localStorage.getItem(activeAccountLocalStorageKey(KEY)) ?? '[]',
+    ));
   } catch {
     return [];
   }
@@ -89,7 +92,7 @@ export function saveWaterPoint(pt: WaterPoint): WaterPoint[] {
   if (!isValidWaterPoint(pt)) throw new Error('Invalid water point');
   const stamped: WaterPoint = { ...pt, updatedAt: Date.now() };
   const updated = [stamped, ...loadWaterPoints().filter((p) => p.id !== stamped.id)];
-  localStorage.setItem(KEY, JSON.stringify(updated));
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   notify();
   const uid = currentUid();
   if (uid) upsertWaterPoint(uid, stamped).catch(() => {});
@@ -104,8 +107,8 @@ export function deleteWaterPoint(id: string): WaterPoint[] {
   // localStorage writes are synchronous: no snapshot callback can interleave these statements.
   // Persist the visible deletion first so a quota/security failure cannot leave a tombstone for
   // a point that is still present. The tombstone is then in place before control returns.
-  localStorage.setItem(KEY, JSON.stringify(updated));
-  addTombstone(DELETED_KEY, id, deletedAt);
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
+  addTombstone(activeAccountLocalStorageKey(DELETED_KEY), id, deletedAt);
   notify();
   const uid = currentUid();
   // Thread the SAME timestamp into removeWaterPoint() as its `deletedAtMs` — see
@@ -130,7 +133,7 @@ export function mergeIncomingWaterPoints(incoming: WaterPoint[]): WaterPoint[] {
   const safeIncoming = normaliseWaterPoints(incoming);
   if (typeof window === 'undefined') return safeIncoming;
   const local = loadWaterPoints();
-  const localDel = readTombstones(DELETED_KEY);
+  const localDel = readTombstones(activeAccountLocalStorageKey(DELETED_KEY));
   const { items } = mergeItems(
     safeIncoming,
     local,
@@ -140,7 +143,7 @@ export function mergeIncomingWaterPoints(incoming: WaterPoint[]): WaterPoint[] {
     waterPointTimestamp,
     Date.now(),
   );
-  localStorage.setItem(KEY, JSON.stringify(items));
+  localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(items));
   notify();
   return items;
 }

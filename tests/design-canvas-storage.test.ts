@@ -48,6 +48,7 @@ const {
   saveCanvasNavigation,
   saveCanvasState,
 } = await import('../lib/design-canvas.ts');
+const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 type DesignCanvasState = NonNullable<ReturnType<typeof loadCanvasState>>;
 
 const SITE_ID = 'farm';
@@ -124,6 +125,28 @@ test('legacy zone numbers repair on read without mutating the decoded source', (
 
   assert.equal(loaded?.zones[0].zone, 2);
   assert.deepEqual(legacy, before);
+});
+
+test('one canvas site on a shared device stays isolated per farmer', () => {
+  localStorage.clear();
+  const guest = state({ rev: 1, step: 'base' });
+  const farmerA = state({ rev: 2, step: 'water' });
+  const farmerB = state({ rev: 3, step: 'planting' });
+
+  localStorage.setItem(KEY, JSON.stringify(guest));
+  localStorage.setItem(accountLocalStorageKey(KEY, 'farmer-a'), JSON.stringify(farmerA));
+  localStorage.setItem(accountLocalStorageKey(KEY, 'farmer-b'), JSON.stringify(farmerB));
+
+  assert.deepEqual(loadCanvasState(SITE_ID), guest);
+  assert.deepEqual(loadCanvasState(SITE_ID, 'farmer-a'), farmerA);
+  assert.deepEqual(loadCanvasState(SITE_ID, 'farmer-b'), farmerB);
+  assert.equal(loadCanvasState(SITE_ID, 'new-farmer'), null);
+
+  const newerA = state({ rev: 4, step: 'review' });
+  applyRemoteCanvasState(newerA, 'farmer-a');
+  assert.deepEqual(loadCanvasState(SITE_ID, 'farmer-a'), newerA);
+  assert.deepEqual(loadCanvasState(SITE_ID, 'farmer-b'), farmerB);
+  assert.deepEqual(loadCanvasState(SITE_ID), guest);
 });
 
 test('a real local save increments the caller revision, persists first, and never mutates geometry', () => {

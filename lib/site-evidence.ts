@@ -8,6 +8,7 @@ import {
   isEvidenceGroupKey,
   isQuickNumberField,
 } from './evidence-catalogue';
+import { activeAccountLocalStorageKey } from './account-local-storage';
 
 export interface EvidenceItem {
   id: string;
@@ -97,7 +98,7 @@ function load(): SiteEvidenceStore {
   const storage = browserStorage();
   if (!storage) return {};
   try {
-    const raw = storage.getItem(STORE_KEY);
+    const raw = storage.getItem(activeAccountLocalStorageKey(STORE_KEY));
     return normaliseStore(raw ? JSON.parse(raw) : {});
   } catch {
     return {};
@@ -118,7 +119,7 @@ function save(store: SiteEvidenceStore): boolean {
   const storage = browserStorage();
   if (!storage) return false;
   try {
-    storage.setItem(STORE_KEY, JSON.stringify(store));
+    storage.setItem(activeAccountLocalStorageKey(STORE_KEY), JSON.stringify(store));
     return true;
   } catch {
     return false;

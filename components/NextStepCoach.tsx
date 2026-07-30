@@ -42,6 +42,7 @@ import {
   type CompletionScoreInputs,
   type CompletionStepKey,
 } from '@/lib/completion-score';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const POPIA_KEY = 'imbewu_popia';
 
@@ -74,7 +75,7 @@ const GUIDED_DEFAULT: GuidedModeState = { enabled: true, dismissals: 0, retired:
 function readPopiaGoal(): Goal | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.localStorage.getItem(POPIA_KEY);
+    const raw = window.localStorage.getItem(activeAccountLocalStorageKey(POPIA_KEY));
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     const g = parsed?.goal;

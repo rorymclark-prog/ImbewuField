@@ -55,6 +55,7 @@ import {
 } from '@/lib/basemap-imagery';
 import { ELEMENTS_BY_ID, ZONE_COLORS, ZONE_KEY } from '@/lib/design-elements';
 import { reportId } from '@/lib/saved-reports';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
 import ReportDocView from '@/components/ReportDocView';
 import HybridRender from '@/components/HybridRender';
@@ -2676,7 +2677,9 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     // Warm the cache from localStorage on first mount (keyed by siteId so farms don't share)
     try {
       const sid = designSiteIdFromLocation(locationData);
-      const raw = localStorage.getItem(`imbewu_airender_${sid}`);
+      const raw = localStorage.getItem(
+        activeAccountLocalStorageKey(`imbewu_airender_${sid}`),
+      );
       return raw ? JSON.parse(raw) : {};
     } catch { return {}; }
   });
@@ -2739,7 +2742,9 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
     setAiRender(null);
     try {
       const sid = designSiteIdFromLocation(locationData);
-      const raw = localStorage.getItem(`imbewu_airender_${sid}`);
+      const raw = localStorage.getItem(
+        activeAccountLocalStorageKey(`imbewu_airender_${sid}`),
+      );
       setAiRenderCache(raw ? JSON.parse(raw) : {});
     } catch {
       setAiRenderCache({});
@@ -3148,7 +3153,10 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
         const next = { ...prev, [layer]: img };
         try {
           const sid = designSiteIdFromLocation(locationData);
-          localStorage.setItem(`imbewu_airender_${sid}`, JSON.stringify(next));
+          localStorage.setItem(
+            activeAccountLocalStorageKey(`imbewu_airender_${sid}`),
+            JSON.stringify(next),
+          );
         } catch {}
         return next;
       });
@@ -3235,7 +3243,10 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
       const next = { ...prev, [renderLayer]: finalImg };
       try {
         const sid = designSiteIdFromLocation(locationData);
-        localStorage.setItem(`imbewu_airender_${sid}`, JSON.stringify(next));
+        localStorage.setItem(
+          activeAccountLocalStorageKey(`imbewu_airender_${sid}`),
+          JSON.stringify(next),
+        );
       } catch {}
       return next;
     });

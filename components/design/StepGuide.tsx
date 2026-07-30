@@ -23,6 +23,7 @@ import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
 import SectorSummary from './SectorSummary';
 import type { DesignMode } from './DesignPalette';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -44,7 +45,8 @@ const STEP_ACCENT: Record<WizardStep, string> = {
 };
 
 const COLLAPSE_KEY = 'imbewu_stepguide_collapsed_v1';
-const skipsKey = (siteId: string) => `imbewu_stepguide_skips_${siteId}`;
+const skipsKey = (siteId: string) =>
+  activeAccountLocalStorageKey(`imbewu_stepguide_skips_${siteId}`);
 
 function loadSkips(siteId: string): Record<string, string[]> {
   try {

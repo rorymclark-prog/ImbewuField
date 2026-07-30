@@ -1,19 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { registerHooks } from 'node:module';
 
-import {
+import type { SavedInvoice } from '../lib/invoices.ts';
+
+const accountHarness: { currentUid: string | null } = { currentUid: null };
+Object.assign(globalThis, { __imbewuInvoiceAccountHarness: accountHarness });
+const fakeFirebaseInit = `data:text/javascript,${encodeURIComponent(`
+const harness = globalThis.__imbewuInvoiceAccountHarness;
+export const getFirebase = () => ({
+  auth: { currentUser: harness.currentUid ? { uid: harness.currentUid } : null },
+});
+export const isBackendConfigured = () => Boolean(harness.currentUid);
+`)}`;
+const hooks = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (
+      context.parentURL?.includes('/lib/account-local-storage.ts')
+      && specifier === './firebase/init'
+    ) {
+      return { url: fakeFirebaseInit, shortCircuit: true };
+    }
+    return nextResolve(specifier, context);
+  },
+});
+
+const {
   addCustomer,
   addProduct,
   deleteInvoice,
   invoiceId,
   loadCustomers,
   loadInvoices,
+  loadNextInvoiceNumber,
   loadProducts,
   paymentMethodLabel,
   saveInvoice,
+  saveNextInvoiceNumber,
   setInvoiceStatus,
-  type SavedInvoice,
-} from '../lib/invoices.ts';
+} = await import('../lib/invoices.ts');
+const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
+hooks.deregister();
 
 class MemoryStorage {
   rows = new Map<string, string>();
@@ -27,6 +54,7 @@ class MemoryStorage {
 }
 
 function installBrowser() {
+  accountHarness.currentUid = null;
   const local = new MemoryStorage();
   const session = new MemoryStorage();
   const target = new EventTarget() as EventTarget & {
@@ -233,6 +261,69 @@ test('quota failures return the durable ledger and never emit a false saved even
   assert.equal(setInvoiceStatus('invoice-1', 'paid')[0].status, 'unpaid');
   assert.equal(changes, 0);
   assert.deepEqual(loadInvoices(), durable);
+});
+
+test("one shared device keeps each farmer's invoice ledger and sequence separate", () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_invoice_customers', JSON.stringify(['Unknown legacy customer']));
+  local.setItem('imbewu_invoice_products', JSON.stringify([
+    { desc: 'Unknown legacy crop', unit: 'kg', price: 9 },
+  ]));
+  local.setItem('imbewu_invoices', JSON.stringify([
+    invoice({ id: 'legacy', billTo: 'Unknown legacy customer' }),
+  ]));
+  local.setItem('imbewu_invoice_seq', '900');
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.deepEqual(loadCustomers(), []);
+  assert.deepEqual(loadProducts(), []);
+  assert.deepEqual(loadInvoices(), []);
+  assert.equal(loadNextInvoiceNumber(), 44);
+  addCustomer('Farmer A customer');
+  addProduct({ desc: 'Farmer A spinach', unit: 'bunches', price: 15 });
+  saveInvoice(invoice({ id: 'farmer-a-invoice', billTo: 'Farmer A customer' }));
+  assert.equal(saveNextInvoiceNumber(45), true);
+
+  accountHarness.currentUid = 'farmer-b';
+  assert.deepEqual(loadCustomers(), []);
+  assert.deepEqual(loadProducts(), []);
+  assert.deepEqual(loadInvoices(), []);
+  assert.equal(loadNextInvoiceNumber(), 44);
+  addCustomer('Farmer B customer');
+  addProduct({ desc: 'Farmer B maize', unit: 'bags', price: 25 });
+  saveInvoice(invoice({
+    id: 'farmer-b-invoice',
+    no: 7,
+    billTo: 'Farmer B customer',
+  }));
+  assert.equal(saveNextInvoiceNumber(8), true);
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.deepEqual(loadCustomers(), ['Farmer A customer']);
+  assert.deepEqual(loadProducts().map((product) => product.desc), ['Farmer A spinach']);
+  assert.deepEqual(loadInvoices().map((row) => row.id), ['farmer-a-invoice']);
+  assert.equal(loadNextInvoiceNumber(), 45);
+
+  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoices', 'farmer-a')));
+  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoices', 'farmer-b')));
+  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoice_seq', 'farmer-a')));
+  assert.ok(local.getItem(accountLocalStorageKey('imbewu_invoice_seq', 'farmer-b')));
+  assert.ok(local.getItem('imbewu_invoices'), 'unowned legacy ledger remains quarantined');
+  assert.equal(local.getItem('imbewu_invoice_seq'), '900');
+  accountHarness.currentUid = null;
+});
+
+test('invoice sequence rejects corrupt counters and reports failed persistence', () => {
+  const { local } = installBrowser();
+  local.setItem('imbewu_invoice_seq', 'not-a-number');
+  assert.equal(loadNextInvoiceNumber(12), 12);
+  assert.equal(saveNextInvoiceNumber(0), false);
+  assert.equal(saveNextInvoiceNumber(Number.NaN), false);
+
+  local.failWrites = true;
+  assert.equal(saveNextInvoiceNumber(13), false);
+  local.failWrites = false;
+  assert.equal(loadNextInvoiceNumber(12), 12);
 });
 
 test('payment labels are total and generated ids remain non-empty and distinct', () => {

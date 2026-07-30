@@ -1,7 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { registerHooks } from 'node:module';
 
 const KEY = 'imbewu_evidence_v1';
+
+const accountHarness: { currentUid: string | null } = { currentUid: null };
+Object.assign(globalThis, { __imbewuSiteEvidenceAccountHarness: accountHarness });
+const fakeFirebaseInit = `data:text/javascript,${encodeURIComponent(`
+const harness = globalThis.__imbewuSiteEvidenceAccountHarness;
+export const getFirebase = () => ({
+  auth: { currentUser: harness.currentUid ? { uid: harness.currentUid } : null },
+});
+export const isBackendConfigured = () => Boolean(harness.currentUid);
+`)}`;
+const hooks = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (context.parentURL?.includes('/lib/account-local-storage.ts')
+        && specifier === './firebase/init') {
+      return { url: fakeFirebaseInit, shortCircuit: true };
+    }
+    return nextResolve(specifier, context);
+  },
+});
 
 class MemoryStorage {
   readonly rows = new Map<string, string>();
@@ -19,10 +39,13 @@ Object.defineProperty(globalThis, 'window', {
   value: { localStorage: storage },
 });
 const evidence = await import('../lib/site-evidence.ts');
+const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
+hooks.deregister();
 
 function reset(): void {
   storage.rows.clear();
   storage.failWrites = false;
+  accountHarness.currentUid = null;
 }
 
 test('malformed persisted sites, keys and rows are filtered into a safe store', () => {
@@ -146,4 +169,36 @@ test('remove and quick-number summaries reflect only persisted changes', () => {
   assert.equal(evidence.removeEvidenceItem('site', 'water_rain_tanks', item.id), true);
   assert.equal(evidence.getGroupCount('site', 'water'), 0);
   assert.equal(evidence.getReportCompleteness('site') > 0, true, 'quick number still covers water');
+});
+
+test("one shared device never exposes farmer A's evidence to farmer B", () => {
+  reset();
+  storage.setItem(KEY, JSON.stringify({
+    site: {
+      items: { soil_note: [{ id: 'legacy', type: 'note', note: 'unknown owner', takenAt: 1 }] },
+      quickNumbers: {},
+    },
+  }));
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.equal(evidence.addEvidenceItem('site', 'soil_note', {
+    type: 'note',
+    note: 'farmer A only',
+  }), true);
+
+  accountHarness.currentUid = 'farmer-b';
+  assert.deepEqual(evidence.getEvidenceItems('site', 'soil_note'), []);
+  assert.equal(evidence.addEvidenceItem('site', 'soil_note', {
+    type: 'note',
+    note: 'farmer B only',
+  }), true);
+
+  accountHarness.currentUid = 'farmer-a';
+  assert.deepEqual(
+    evidence.getEvidenceItems('site', 'soil_note').map((item) => item.note),
+    ['farmer A only'],
+  );
+  assert.ok(storage.getItem(accountLocalStorageKey(KEY, 'farmer-a')));
+  assert.ok(storage.getItem(accountLocalStorageKey(KEY, 'farmer-b')));
+  assert.ok(storage.getItem(KEY), 'unowned legacy evidence remains quarantined');
 });

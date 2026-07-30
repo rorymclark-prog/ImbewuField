@@ -14,6 +14,7 @@ import {
 import type { LocationData } from '@/lib/types';
 import { loadSurvey } from '@/lib/site-survey';
 import type { SiteSurvey } from '@/lib/site-survey';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 export const DESIGN_STUDIO_KEY = 'imbewu_design_studio_v1';
 
@@ -299,7 +300,9 @@ export function normaliseDesignStudioState(value: unknown, siteId: string): Desi
 function readStore(): StoredDesignState {
   if (typeof window === 'undefined') return {};
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(DESIGN_STUDIO_KEY) ?? '{}');
+    const parsed = JSON.parse(
+      window.localStorage.getItem(activeAccountLocalStorageKey(DESIGN_STUDIO_KEY)) ?? '{}',
+    );
     if (!studioRecord(parsed)) return {};
     const store: StoredDesignState = {};
     for (const [siteId, value] of Object.entries(parsed)) {
@@ -314,7 +317,7 @@ function readStore(): StoredDesignState {
 
 function writeStore(store: StoredDesignState, notify: boolean): void {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(DESIGN_STUDIO_KEY, JSON.stringify(store));
+  window.localStorage.setItem(activeAccountLocalStorageKey(DESIGN_STUDIO_KEY), JSON.stringify(store));
   if (notify) markLocalStorageKeyUpdated(DESIGN_STUDIO_KEY);
 }
 

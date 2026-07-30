@@ -30,6 +30,7 @@ import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -327,12 +328,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [recents, setRecents] = useState<Place[]>([]);
   const [showRecents, setShowRecents] = useState(false);
   useEffect(() => {
-    try { const r = JSON.parse(localStorage.getItem('imbewu-recent-searches') ?? '[]'); if (Array.isArray(r)) setRecents(r); } catch {}
+    try {
+      const r = JSON.parse(
+        localStorage.getItem(activeAccountLocalStorageKey('imbewu-recent-searches')) ?? '[]',
+      );
+      if (Array.isArray(r)) setRecents(r);
+    } catch {}
   }, []);
   const pushRecent = useCallback((p: Place) => {
     setRecents((prev) => {
       const next = [p, ...prev.filter((q) => q.name !== p.name)].slice(0, 6);
-      try { localStorage.setItem('imbewu-recent-searches', JSON.stringify(next)); } catch {}
+      try {
+        localStorage.setItem(
+          activeAccountLocalStorageKey('imbewu-recent-searches'),
+          JSON.stringify(next),
+        );
+      } catch {}
       return next;
     });
   }, []);
@@ -390,7 +401,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     refresh();
     window.addEventListener('permamap-places-changed', refresh);
     return () => window.removeEventListener('permamap-places-changed', refresh);
-  }, []);
+  }, [user?.uid]);
 
   // Water infrastructure points: load + keep in sync
   useEffect(() => {
@@ -398,7 +409,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     refresh();
     window.addEventListener('imbewu-water-points-changed', refresh);
     return () => window.removeEventListener('imbewu-water-points-changed', refresh);
-  }, []);
+  }, [user?.uid]);
 
   // Site elements (JoJo tanks, taps, beehives, etc): load + keep in sync, keyed per site
   const siteIdForElements = useMemo(() => designSiteIdFromLocation(locationData ?? null), [locationData]);
@@ -407,7 +418,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     refresh();
     window.addEventListener('imbewu-site-elements-changed', refresh);
     return () => window.removeEventListener('imbewu-site-elements-changed', refresh);
-  }, [siteIdForElements]);
+  }, [siteIdForElements, user?.uid]);
 
   // Cross-device sync for site elements. site-elements.ts used to be push-only (no pull
   // path), so a JoJo tank/beehive added on one device never reached another. Reconcile
@@ -445,7 +456,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
       window.removeEventListener('storage', refresh);
     };
-  }, [siteIdForElements]);
+  }, [siteIdForElements, user?.uid]);
 
   const designPresent = !!designOverlay;
   useEffect(() => { onDesignPresenceChange?.(designPresent); }, [designPresent, onDesignPresenceChange]);
@@ -535,10 +546,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // applyingRemoteRef: true while we paint a Firestore-sourced shape onto the map.
     // Skip persist+push then, or we'd echo the remote write straight back and loop.
     if (!tearingDownRef.current && restoredRef.current && !applyingRemoteRef.current) {
-      try { localStorage.setItem(FARM_KEY, JSON.stringify(all)); } catch { /* quota / private mode */ }
+      const renderedUid = user?.uid ?? null;
+      const firebaseUid = getFirebase()?.auth?.currentUser?.uid ?? null;
+      // Firebase changes currentUser before React publishes the matching context update.
+      // During that narrow A → B window this closure still owns A's in-memory draw store:
+      // fail closed rather than writing it into the namespace selected for B.
+      if (firebaseUid !== renderedUid) return;
+      try {
+        localStorage.setItem(activeAccountLocalStorageKey(FARM_KEY), JSON.stringify(all));
+      } catch { /* quota / private mode */ }
       // Push only after the initial reconcile, so a local draw can't clobber the merge.
-      const uid = getFirebase()?.auth?.currentUser?.uid;
-      if (uid && mergeReadyRef.current) pushShapes(uid, all).catch(() => {});
+      if (renderedUid && mergeReadyRef.current) pushShapes(renderedUid, all).catch(() => {});
     }
     const polygons = all.features.filter(
       (f: GeoJSON.Feature) => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
@@ -593,7 +611,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       setWaterStats(null);
       onWaterDrawn?.(null);
     }
-  }, [onSiteDrawn, onWaterDrawn]);
+  }, [onSiteDrawn, onWaterDrawn, user?.uid]);
 
   // Lazily create the single MapboxDraw instance (handles both feature types via featureType prop)
   const ensureDraw = useCallback((): MapboxDraw | null => {
@@ -749,7 +767,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const draw = ensureDraw();
     if (!draw) return;
     try {
-      const raw = localStorage.getItem(FARM_KEY);
+      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
       if (raw) {
         const fc = JSON.parse(raw);
         if (fc?.features?.length) { draw.set(fc); recompute(); }
@@ -774,7 +792,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       return;
     }
     try {
-      const raw = localStorage.getItem(FARM_KEY);
+      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
       const fc = raw ? JSON.parse(raw) : null;
       applyingRemoteRef.current = true;
       draw.set(fc?.features ? fc : { type: 'FeatureCollection', features: [] });
@@ -796,6 +814,38 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   // uid alone and not re-subscribe (re-reconcile) every time the callback identity changes.
   const redrawRef = useRef(redrawShapesFromStorage);
   redrawRef.current = redrawShapesFromStorage;
+
+  // A direct A → B sign-in can keep this component instance alive briefly. Reset the
+  // draw store from the newly selected namespace immediately, bypassing the normal
+  // "defer while editing" rule: an edit session itself belongs to the old account and
+  // must not keep its geometry resident after the owner changes.
+  useEffect(() => {
+    mergeReadyRef.current = false;
+    pendingRemoteRedrawRef.current = false;
+    setEditingFeatureId(null);
+    setPinDraw(null);
+    setEditPin(null);
+    const draw = ensureDraw();
+    if (!draw) {
+      restoredRef.current = false;
+      return;
+    }
+    try {
+      const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
+      const fc = raw ? JSON.parse(raw) : null;
+      applyingRemoteRef.current = true;
+      draw.set(fc?.features ? fc : { type: 'FeatureCollection', features: [] });
+      restoredRef.current = true;
+      recompute();
+    } catch {
+      applyingRemoteRef.current = true;
+      draw.set({ type: 'FeatureCollection', features: [] });
+      restoredRef.current = true;
+      recompute();
+    } finally {
+      applyingRemoteRef.current = false;
+    }
+  }, [user?.uid, ensureDraw, recompute]);
 
   // Poll for the map being ready, then restore saved shapes once. More reliable than
   // onLoad (which can miss when the style is cached or the page bounces during nav).
@@ -883,7 +933,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         // Flush from the reconciled localStorage set, NOT draw.getAll() — a deferred
         // mid-edit redraw means the draw store may still hold un-merged in-memory shapes.
         try {
-          const raw = localStorage.getItem(FARM_KEY);
+          const raw = localStorage.getItem(activeAccountLocalStorageKey(FARM_KEY));
           const fc = raw ? JSON.parse(raw) : null;
           if (fc?.features?.length) pushShapes(uid, fc).catch(() => {});
         } catch { /* ignore */ }

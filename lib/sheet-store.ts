@@ -16,9 +16,17 @@
 // private mode on some engines) must still be able to render and view sheets for the session. The
 // gallery is a convenience layer over work that is never lost from the screen.
 
+import {
+  ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR,
+  accountLocalStorageKey,
+  activeAccountLocalStorageKey,
+} from './account-local-storage';
+
 const DB_NAME = 'imbewu-sheets';
 const DB_VERSION = 1;
 const STORE = 'sheets';
+const SAMPLE_MODE_FLAG = 'imbewu_sample_mode';
+const SAMPLE_OWNER = 'sample';
 
 export type SheetResultKind = 'exact' | 'hybrid' | 'ai-polished' | 'ai-illustrated' | 'legacy';
 export type SheetProvider = 'exact' | 'openai' | 'gemini' | 'unknown';
@@ -112,6 +120,66 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
   };
 }
 
+type PersistedStoredSheet = StoredSheet & {
+  logicalId: string;
+  logicalSiteId: string;
+};
+
+const ownedKey = (
+  logicalKey: string,
+  ownerUid?: string | null,
+) => {
+  if (ownerUid !== undefined) return accountLocalStorageKey(logicalKey, ownerUid);
+  // Sample mode's safety shim intercepts localStorage only. IndexedDB remains the
+  // browser's real durable database, so bare sheet IDs would expose or overwrite a
+  // farmer's pre-isolation sheets while viewing the demo. Give implicit sample calls
+  // their own non-uid namespace; explicit owners used by sync/tests still win.
+  try {
+    if (
+      typeof window !== 'undefined'
+      && window.sessionStorage.getItem(SAMPLE_MODE_FLAG) === '1'
+    ) {
+      return `${logicalKey}${ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR}${SAMPLE_OWNER}`;
+    }
+  } catch {
+    // If sessionStorage is unavailable, sample mode cannot have been entered safely.
+  }
+  return activeAccountLocalStorageKey(logicalKey);
+};
+
+function persistedSheet(
+  sheet: StoredSheet,
+  ownerUid?: string | null,
+): PersistedStoredSheet {
+  return {
+    ...sheet,
+    id: ownedKey(sheet.id, ownerUid),
+    siteId: ownedKey(sheet.siteId, ownerUid),
+    logicalId: sheet.id,
+    logicalSiteId: sheet.siteId,
+  };
+}
+
+function logicalSheet(value: unknown, expectedSiteId: string): StoredSheet | null {
+  const physical = normaliseStoredSheet(value);
+  if (!physical || typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return null;
+  }
+  const row = value as Record<string, unknown>;
+  // Rows written before account isolation have no logical fields. They remain
+  // available only when the physical query itself is bare (local-only builds);
+  // sample, signed-in and configured-guest queries use suffixed site ids and
+  // therefore never silently claim those ownerless legacy rows.
+  const logicalId = row.logicalId === undefined ? physical.id : row.logicalId;
+  const logicalSiteId = row.logicalSiteId === undefined ? physical.siteId : row.logicalSiteId;
+  if (!nonEmptyString(logicalId) || logicalSiteId !== expectedSiteId) return null;
+  return {
+    ...physical,
+    id: logicalId,
+    siteId: expectedSiteId,
+  };
+}
+
 function openDb(): Promise<IDBDatabase | null> {
   return new Promise((resolve) => {
     if (typeof indexedDB === 'undefined') return resolve(null);
@@ -156,18 +224,22 @@ function tx(db: IDBDatabase, mode: IDBTransactionMode): IDBObjectStore {
 }
 
 /** Every sheet saved for this site, oldest first. Returns [] on any failure — never throws. */
-export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
+export async function loadSheets(
+  siteId: string,
+  ownerUid?: string | null,
+): Promise<StoredSheet[]> {
   if (!nonEmptyString(siteId)) return [];
+  const physicalSiteId = ownedKey(siteId, ownerUid);
   const db = await openDb();
   if (!db) return [];
   try {
     return await new Promise((resolve) => {
       try {
-        const req = tx(db, 'readonly').index('siteId').getAll(siteId);
+        const req = tx(db, 'readonly').index('siteId').getAll(physicalSiteId);
         req.onsuccess = () => {
           const rows = ((req.result as unknown[]) ?? [])
-            .map(normaliseStoredSheet)
-            .filter((row): row is StoredSheet => row !== null && row.siteId === siteId);
+            .map((row) => logicalSheet(row, siteId))
+            .filter((row): row is StoredSheet => row !== null);
           rows.sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
           resolve(rows);
         };
@@ -183,16 +255,20 @@ export async function loadSheets(siteId: string): Promise<StoredSheet[]> {
 
 /** Persist one sheet. Resolves false when storage was unavailable or full, so the caller can tell
  *  the farmer their sheet is session-only rather than silently implying it is safe. */
-export async function saveSheet(sheet: StoredSheet): Promise<boolean> {
+export async function saveSheet(
+  sheet: StoredSheet,
+  ownerUid?: string | null,
+): Promise<boolean> {
   const row = normaliseStoredSheet(sheet);
   if (!row) return false;
+  const physicalRow = persistedSheet(row, ownerUid);
   const db = await openDb();
   if (!db) return false;
   try {
     return await new Promise((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
-        transaction.objectStore(STORE).put(row);
+        transaction.objectStore(STORE).put(physicalRow);
         transaction.oncomplete = () => resolve(true);
         transaction.onabort = () => resolve(false);
         transaction.onerror = () => resolve(false); // QuotaExceeded lands here
@@ -205,15 +281,19 @@ export async function saveSheet(sheet: StoredSheet): Promise<boolean> {
   }
 }
 
-export async function deleteSheet(id: string): Promise<boolean> {
+export async function deleteSheet(
+  id: string,
+  ownerUid?: string | null,
+): Promise<boolean> {
   if (!nonEmptyString(id)) return false;
+  const physicalId = ownedKey(id, ownerUid);
   const db = await openDb();
   if (!db) return false;
   try {
     return await new Promise<boolean>((resolve) => {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
-        transaction.objectStore(STORE).delete(id);
+        transaction.objectStore(STORE).delete(physicalId);
         transaction.oncomplete = () => resolve(true);
         transaction.onabort = () => resolve(false);
         transaction.onerror = () => resolve(false);
@@ -228,8 +308,12 @@ export async function deleteSheet(id: string): Promise<boolean> {
 
 /** Drop every sheet for one site (the gallery's "clear all"). Scoped to the site on purpose: a
  *  farmer clearing one design's maps must not lose another design's. */
-export async function clearSheets(siteId: string): Promise<boolean> {
+export async function clearSheets(
+  siteId: string,
+  ownerUid?: string | null,
+): Promise<boolean> {
   if (!nonEmptyString(siteId)) return false;
+  const physicalSiteId = ownedKey(siteId, ownerUid);
   const db = await openDb();
   if (!db) return false;
   try {
@@ -237,7 +321,7 @@ export async function clearSheets(siteId: string): Promise<boolean> {
       try {
         const transaction = db.transaction(STORE, 'readwrite');
         const store = transaction.objectStore(STORE);
-        const req = store.index('siteId').getAllKeys(siteId);
+        const req = store.index('siteId').getAllKeys(physicalSiteId);
         req.onsuccess = () => {
           for (const key of req.result ?? []) store.delete(key as IDBValidKey);
         };
