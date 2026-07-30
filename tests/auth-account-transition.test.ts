@@ -238,6 +238,15 @@ test('a direct A to B switch unmounts account state and rejects a delayed A prof
     );
   }
 
+  // Suspension no longer renders bare null: the provider shows a holding splash
+  // (aria-busy div) while the account tree is unmounted. What matters here is that
+  // the CHILDREN are gone — the probe span must not exist.
+  const assertSuspended = (r: ReactTestRenderer, message: string) => {
+    const tree = r.toJSON();
+    assert.ok(tree && !Array.isArray(tree) && tree.type === 'div' && tree.props['aria-busy'] === 'true', message);
+    assert.equal(r.root.findAllByType(AccountProbe).length, 0, message);
+  };
+
   let renderer!: ReactTestRenderer;
   await act(async () => {
     renderer = create(createElement(
@@ -247,10 +256,10 @@ test('a direct A to B switch unmounts account state and rejects a delayed A prof
     ));
     await Promise.resolve();
   });
-  assert.equal(renderer.toJSON(), null, 'account children stay suspended until the first profile is ready');
+  assertSuspended(renderer, 'account children stay suspended until the first profile is ready');
 
   await emitAuthUser(userA);
-  assert.equal(renderer.toJSON(), null, 'A must not mount while A profile loading is pending');
+  assertSuspended(renderer, 'A must not mount while A profile loading is pending');
   await resolveProfile(takePendingProfile(userA.uid), profileFor(userA));
   assert.equal(renderedText(renderer), 'farmer-a|Farmer A|1|fresh');
   assert.equal(
@@ -278,9 +287,8 @@ test('a direct A to B switch unmounts account state and rejects a delayed A prof
   );
 
   await emitAuthUser(userB);
-  assert.equal(
-    renderer.toJSON(),
-    null,
+  assertSuspended(
+    renderer,
     'the A subtree must be gone for the entire interval in which B profile loading is pending',
   );
   assert.deepEqual(lifecycle, [
