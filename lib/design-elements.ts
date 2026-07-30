@@ -60,13 +60,24 @@ export const ZONE_COLORS: Record<0 | 1 | 2 | 3 | 4 | 5, string> = {
   5: '#1A6B58',
 };
 
+// LABELS THAT FIT A CRÈCHE, A SCHOOL OR A COMMUNITY CENTRE, NOT JUST A FARMHOUSE.
+//
+// "House" was wrong for most of the sites this app is actually used on — Ubhejane is a crèche
+// with a classroom, a storeroom and a slab, and its Zone 0 is an operations hub, not a dwelling
+// (the same reason GROUND_FEATURES.house reads "House / Building"). Rory brought a fuller
+// universal set to condense: the LABEL is what fits a picker chip, and `desc` carries the whole
+// meaning wherever there is room for a line of text.
+//
+// The zone is set by HOW OFTEN PEOPLE VISIT AND MANAGE the ground, not by what happens to grow
+// there — that principle is why these names describe intensity of use rather than crops, and
+// each desc says it in the site's own terms. A site does not need every zone.
 export const ZONE_KEY: Array<{ z: 0 | 1 | 2 | 3 | 4 | 5; label: string; desc: string }> = [
-  { z: 0, label: 'House', desc: 'Dwelling & immediate surroundings' },
-  { z: 1, label: 'Daily use', desc: 'Herbs, kitchen garden, chickens' },
-  { z: 2, label: 'Intensive', desc: 'Veggie beds, small animals' },
-  { z: 3, label: 'Orchard / food forest', desc: 'Trees, perennials, larger plots' },
-  { z: 4, label: 'Low-care', desc: 'Grazing, woodlot, fodder' },
-  { z: 5, label: 'Conservation / buffer', desc: 'Wild, tree belts, boundary' },
+  { z: 0, label: 'Home & hub', desc: 'Home, centre or operations hub — house, classroom, office or training space' },
+  { z: 1, label: 'Daily garden', desc: 'Intensive daily-use garden and nursery — tended every day, steps from the door' },
+  { z: 2, label: 'Garden & orchard', desc: 'Market garden, orchard and perennial systems — visited several times a week' },
+  { z: 3, label: 'Field crops', desc: 'Field and staple crops, extensive production — worked in seasons, not daily' },
+  { z: 4, label: 'Woodland & grazing', desc: 'Managed woodland, grazing and biomass — harvested and checked now and then' },
+  { z: 5, label: 'Natural habitat', desc: 'Natural habitat and conservation — left wild, observed rather than managed' },
 ];
 
 // Which WIZARD STEP an element category is placed/edited from. Deliberately NOT the same
