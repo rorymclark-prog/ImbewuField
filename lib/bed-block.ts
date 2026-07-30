@@ -138,3 +138,58 @@ export function bedBlockFootprintM(spec: BedBlockSpec): { alongM: number; across
     acrossM: s.count * s.bedWidthM + Math.max(0, s.count - 1) * s.pathWidthM,
   };
 }
+
+/**
+ * The walking paths BETWEEN the beds, as centre-lines ready to become LineShapes of kind 'path'.
+ *
+ * Typing a path width used to do nothing but push the beds apart, so the plan showed a block of
+ * beds floating in unexplained gaps: no path on the map, nothing in the legend, nothing to build
+ * from (Rory, after placing a block: "it didnt add paths when inserted"). A farmer who says the
+ * paths are half a metre is specifying part of the layout, not just a spacing hint.
+ *
+ * n beds have n-1 paths, the same count the footprint maths uses — an outer path on each edge
+ * would belong to whatever is next to the block, which this function cannot know.
+ *
+ * Returns nothing when the path width is 0: touching beds are one continuous bed, and a
+ * zero-width path drawn down the seam would be a line claiming to be somewhere you can walk.
+ */
+export function bedBlockPaths(
+  spec: BedBlockSpec,
+  anchor: [number, number],
+  angleDeg: number,
+  mPerPx: number,
+  imgW: number,
+  imgH: number,
+): Array<Array<[number, number]>> {
+  const s = normaliseBedBlockSpec(spec);
+  if (s.pathWidthM <= 0 || s.count < 2) return [];
+  if (!Number.isFinite(mPerPx) || mPerPx <= 0) return [];
+  if (!Number.isFinite(imgW) || !Number.isFinite(imgH) || imgW <= 0 || imgH <= 0) return [];
+  if (!Number.isFinite(anchor[0]) || !Number.isFinite(anchor[1])) return [];
+  const angle = Number.isFinite(angleDeg) ? angleDeg : 0;
+
+  const pxPerM = 1 / mPerPx;
+  const rad = (angle * Math.PI) / 180;
+  const ux = Math.cos(rad);
+  const uy = Math.sin(rad);
+  const vx = -Math.sin(rad);
+  const vy = Math.cos(rad);
+  const ax = anchor[0] * imgW;
+  const ay = anchor[1] * imgH;
+  const lengthPx = s.bedLengthM * pxPerM;
+  const widthPx = s.bedWidthM * pxPerM;
+  const pathPx = s.pathWidthM * pxPerM;
+
+  const out: Array<Array<[number, number]>> = [];
+  for (let i = 0; i < s.count - 1; i++) {
+    // Centre of the gap after bed i: past i+1 beds and i paths, then half a path in.
+    const across = (i + 1) * widthPx + i * pathPx + pathPx / 2;
+    const sx = ax + vx * across;
+    const sy = ay + vy * across;
+    out.push([
+      [sx / imgW, sy / imgH],
+      [(sx + ux * lengthPx) / imgW, (sy + uy * lengthPx) / imgH],
+    ]);
+  }
+  return out;
+}

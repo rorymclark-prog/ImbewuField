@@ -1336,10 +1336,19 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Commit a whole block in ONE handleChange, so seven beds cost one undo, not seven — the same
   // single-commit rule the group angle and group size controls follow.
-  const onPlaceBedBlock = useCallback((placements: BedBlockPlacement[]) => {
+  const onPlaceBedBlock = useCallback((
+    placements: BedBlockPlacement[],
+    paths: Array<Array<[number, number]>> = [],
+  ) => {
     if (!placements.length) return;
     handleChange((prev) => ({
       ...prev,
+      // The paths ride in the SAME commit as the beds. Splitting them would make undo take the
+      // beds and leave their paths behind, which is worse than either half.
+      lines: [
+        ...prev.lines,
+        ...paths.map((points) => ({ id: newId(), kind: 'path' as const, points })),
+      ],
       items: [
         ...prev.items,
         ...placements.map((b) => ({

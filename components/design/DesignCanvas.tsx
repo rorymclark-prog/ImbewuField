@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
-import { layoutBedBlock, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
+import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
@@ -129,9 +129,10 @@ export interface DesignCanvasProps {
    *  what disables every drag/edit handler for the duration — each already bails on
    *  `tool !== 'select'`, so nothing else had to learn about this mode. */
   bedBlock?: { spec: BedBlockSpec; defId: string } | null;
-  /** Called with the laid-out beds on the confirming tap. The page commits them in ONE onChange
-   *  so a block of seven is one undo entry, not seven. */
-  onPlaceBedBlock?: (placements: BedBlockPlacement[]) => void;
+  /** Called with the laid-out beds AND the walking paths between them on the confirming tap.
+   *  The page commits both in ONE onChange, so a block of seven beds and its six paths is one
+   *  undo entry rather than thirteen. */
+  onPlaceBedBlock?: (placements: BedBlockPlacement[], paths: Array<Array<[number, number]>>) => void;
   // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
@@ -683,6 +684,9 @@ export default function DesignCanvas({
   const blockGhost = bedBlock && blockAnchor
     ? layoutBedBlock(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH)
     : [];
+  const blockPathGhost = bedBlock && blockAnchor
+    ? bedBlockPaths(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH)
+    : [];
   const [measureOn, setMeasureOn] = useState(false);
   const [measurePts, setMeasurePts] = useState<Array<[number, number]>>([]);
 
@@ -1003,11 +1007,12 @@ export default function DesignCanvas({
         return;
       }
       const placements = layoutBedBlock(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH);
+      const paths = bedBlockPaths(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH);
       setBlockAnchor(null);
       setBlockAim(null);
       // An empty layout means the scale or frame was unusable. Commit nothing rather than a
       // block of NaN-positioned beds that render as an empty map.
-      if (placements.length) onPlaceBedBlock?.(placements);
+      if (placements.length) onPlaceBedBlock?.(placements, paths);
       return;
     }
 
@@ -2895,6 +2900,18 @@ export default function DesignCanvas({
                   />
                 );
               })}
+              {blockPathGhost.map((p, i) => (
+                <line
+                  key={`ghost-path-${i}`}
+                  x1={p[0][0] * imgW}
+                  y1={p[0][1] * imgH}
+                  x2={p[1][0] * imgW}
+                  y2={p[1][1] * imgH}
+                  stroke={GOLD}
+                  strokeWidth={chrome(1.5)}
+                  strokeDasharray={chromeDash('5 4')}
+                />
+              ))}
               {/* The tapped corner stays marked while the block swings around it. */}
               <circle cx={blockAnchor[0] * imgW} cy={blockAnchor[1] * imgH} r={worldPx(5)} fill={GOLD} />
               <text

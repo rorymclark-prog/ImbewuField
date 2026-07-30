@@ -257,10 +257,13 @@ function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | '
 // tapping); Pro stays at the standard 44px minimum so the whole catalog is scannable
 // without excess scrolling.
 function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties {
+  // Pro trims to a 36px target — a returning farmer on a laptop scanning a dense drafting view
+  // gets the screen back. Guided stays at the 44px comfortable-touch minimum, which is not a
+  // number to shave for layout.
   return {
-    minHeight: guided ? 52 : 44,
-    minWidth: guided ? 52 : 44,
-    padding: guided ? '0 16px' : '0 12px',
+    minHeight: guided ? 48 : 36,
+    minWidth: guided ? 48 : 36,
+    padding: guided ? '0 14px' : '0 10px',
     borderRadius: 10,
     border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
     background: active ? GREEN : PAPER,
@@ -932,8 +935,17 @@ export default function DesignPalette({
               : t('designPaletteProLayers')}
           </div>
         )}
+        {/* One line, and only one — this note explains a filter the farmer did not ask for, so it
+            has to be present but must not spend two lines of a panel competing with the map. The
+            full sentence stays available on hover/long-press rather than being cut from the app. */}
         {climateFilterActive && (
-          <div style={{ fontSize: 11.5, color: '#6B6355' }}>
+          <div
+            title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
+            style={{
+              fontSize: 10.5, color: '#6B6355', whiteSpace: 'nowrap',
+              overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%',
+            }}
+          >
             {t('designPaletteClimate')}
             {siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}
             {t('designPaletteClimateHidden')}
@@ -953,27 +965,32 @@ export default function DesignPalette({
                 type="button"
                 onClick={() => pickElement(def)}
                 title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+                // ONE ROW, not three stacked lines. Emoji over name over size made every card as
+                // tall as three lines of type, and this strip sits in a panel already carrying a
+                // status row, a tool row, a hint and the bed-block controls — the map was losing
+                // close to half the screen to chrome (Rory: "the element button are to big this
+                // bottom modal needs to be smalle you need to conserv space someow"). Guided keeps
+                // a 44px target: shrinking a first-time farmer's tap area to save pixels trades
+                // the wrong thing.
                 style={{
                   position: 'relative',
-                  minHeight: guided ? 50 : 40,
-                  padding: guided ? '5px 10px' : '4px 8px',
+                  minHeight: guided ? 44 : 34,
+                  padding: guided ? '4px 10px' : '3px 8px',
                   borderRadius: 9,
                   border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
                   background: active ? GREEN : PAPER,
                   color: active ? PAPER : DARK,
                   display: 'flex',
-                  flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 0,
+                  gap: 5,
                   flexShrink: 0,
-                  minWidth: guided ? 66 : 54,
                   cursor: 'pointer',
                   opacity: suited ? 1 : 0.45,
                 }}
               >
-                <span style={{ fontSize: guided ? 19 : 15, lineHeight: 1.1 }}>{def.icon}</span>
-                <span style={{ fontSize: guided ? 11 : 9.5, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-                <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.7 }}>
+                <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+                <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
+                <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                   {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
                 </span>
               </button>

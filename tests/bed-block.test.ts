@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   bedBlockFootprintM,
+  bedBlockPaths,
   layoutBedBlock,
   normaliseBedBlockSpec,
   MAX_BED_COUNT,
@@ -136,4 +137,48 @@ test('the spec normaliser clamps rather than trusts a typed number', () => {
 test('the count ceiling holds, so one slip cannot commit thousands of items in a single undo', () => {
   const beds = layoutBedBlock({ ...SPEC, count: 100_000 }, [0.1, 0.1], 0, M_PER_PX, IMG_W, IMG_H);
   assert.equal(beds.length, MAX_BED_COUNT);
+});
+
+// ── the paths between the beds ────────────────────────────────────────────────
+// Typing a path width used to only push the beds apart: the plan showed beds floating in
+// unexplained gaps, with no path on the map, in the legend, or in anything to build from.
+
+test('a path runs down the centre of every gap, at the same angle as the beds', () => {
+  const paths = bedBlockPaths(SPEC, [0.2, 0.2], 0, M_PER_PX, IMG_W, IMG_H);
+  const beds = layoutBedBlock(SPEC, [0.2, 0.2], 0, M_PER_PX, IMG_W, IMG_H);
+  assert.equal(paths.length, 2, '3 beds have 2 paths between them');
+  for (let i = 0; i < paths.length; i++) {
+    const mid = { x: (paths[i][0][0] + paths[i][1][0]) / 2, y: (paths[i][0][1] + paths[i][1][1]) / 2 };
+    // Exactly halfway between the two beds it separates — 0.75 m from each centre
+    // (half a 1 m bed + half a 0.5 m path).
+    assert.ok(Math.abs(metresBetween(mid, beds[i]) - 0.75) < 1e-9, `path ${i} to bed ${i}`);
+    assert.ok(Math.abs(metresBetween(mid, beds[i + 1]) - 0.75) < 1e-9, `path ${i} to bed ${i + 1}`);
+  }
+});
+
+test('a path is exactly as long as the beds it runs between', () => {
+  for (const angle of [0, 37, 90, 210]) {
+    const paths = bedBlockPaths(SPEC, [0.3, 0.3], angle, M_PER_PX, IMG_W, IMG_H);
+    for (const p of paths) {
+      const len = metresBetween({ x: p[0][0], y: p[0][1] }, { x: p[1][0], y: p[1][1] });
+      assert.ok(Math.abs(len - SPEC.bedLengthM) < 1e-9, `angle ${angle} length ${len}`);
+    }
+  }
+});
+
+test('no path is drawn when the beds touch, and none for a single bed', () => {
+  // A zero-width path down the seam would be a line claiming to be somewhere you can walk.
+  assert.deepEqual(bedBlockPaths({ ...SPEC, pathWidthM: 0 }, [0.3, 0.3], 0, M_PER_PX, IMG_W, IMG_H), []);
+  assert.deepEqual(bedBlockPaths({ ...SPEC, count: 1 }, [0.3, 0.3], 0, M_PER_PX, IMG_W, IMG_H), []);
+});
+
+test('paths stay inside the block — never on its outer edges', () => {
+  // An outer path would belong to whatever sits next to the block, which this cannot know.
+  const paths = bedBlockPaths({ ...SPEC, count: 8 }, [0.1, 0.1], 0, M_PER_PX, IMG_W, IMG_H);
+  assert.equal(paths.length, 7);
+});
+
+test('a broken scale yields no paths rather than paths at NaN', () => {
+  assert.deepEqual(bedBlockPaths(SPEC, [0.5, 0.5], 0, 0, IMG_W, IMG_H), []);
+  assert.deepEqual(bedBlockPaths(SPEC, [Number.NaN, 0.5], 0, M_PER_PX, IMG_W, IMG_H), []);
 });
