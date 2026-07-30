@@ -1716,6 +1716,7 @@ function GeometryPreview({
                 swale: { color: '#4EA6D8', dash: '6,4', width: 2.5 },
                 fence: { color: '#8A7860', dash: '3,3', width: 1.6 },
                 path: { color: '#C8B890', dash: '4,3', width: 2 },
+                bedpath: { color: '#C8B890', dash: '4,3', width: 2 },
                 pipe: { color: '#3A8EC4', width: 2 },
                 drip: { color: '#3A8EC4', dash: '2,3', width: 1.6 },
                 windbreak: { color: '#2F7A4A', dash: '8,3', width: 2.5 },

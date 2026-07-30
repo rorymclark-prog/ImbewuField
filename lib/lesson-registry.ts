@@ -104,6 +104,16 @@ function zoneLesson(z: 0 | 1 | 2 | 3 | 4 | 5): MicroLesson {
   };
 }
 
+// The walking-path lesson, named so the bed-path kind can carry it VERBATIM. A bed path is a
+// walking path at bed scale; giving it a second, subtly different account of the same practice
+// would be authoring new agronomic guidance where none is needed.
+const LINE_LESSONS_PATH: Omit<MicroLesson, 'id' | 'draft'> = {
+  title: 'Path — how you move through it all',
+  body: 'Paths decide how easily you work the land. Put them where your feet already go, wide enough for a wheelbarrow, and they save effort on every single trip.',
+  principle: 'Design from patterns to details — the paths come before the beds.',
+  tip: 'Walk your daily round first, then draw the paths along the lines you naturally take.',
+};
+
 // Short lore for each kind of line the farmer can draw.
 const LINE_LORE: Record<LineShape['kind'], Omit<MicroLesson, 'id' | 'draft'>> = {
   greywater: {
@@ -140,12 +150,10 @@ const LINE_LORE: Record<LineShape['kind'], Omit<MicroLesson, 'id' | 'draft'>> = 
     principle: 'Use edges — a boundary is also a resource if you plant it.',
     tip: 'Fence the areas animals must stay out of first — a single browsing goat can undo a season overnight.',
   },
-  path: {
-    title: 'Path — how you move through it all',
-    body: 'Paths decide how easily you work the land. Put them where your feet already go, wide enough for a wheelbarrow, and they save effort on every single trip.',
-    principle: 'Design from patterns to details — the paths come before the beds.',
-    tip: 'Walk your daily round first, then draw the paths along the lines you naturally take.',
-  },
+  path: { ...LINE_LESSONS_PATH },
+  // A bed path is a walking path at bed scale, so it carries the walking-path
+  // lesson verbatim rather than a second, subtly different account of the same thing.
+  bedpath: { ...LINE_LESSONS_PATH },
   windbreak: {
     title: 'Windbreak — a living shield',
     body: 'A row of tough trees or shrubs slows the wind, cutting the drying and damage it does to everything downwind. A good windbreak lifts yields across the whole area it shelters.',

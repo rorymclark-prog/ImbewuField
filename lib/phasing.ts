@@ -159,6 +159,7 @@ const PHASE_BY_LINE_KIND: Record<LineShape['kind'], PhaseKey> = {
   greywater: 'access_water',
   swale: 'earthworks',
   drip: 'beds',
+  bedpath: 'beds', // dug when the beds it separates are dug
   fence: 'beds',
   windbreak: 'perennials',
 };

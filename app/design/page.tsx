@@ -49,6 +49,8 @@ import {
   zoneOfSelection,
   MIN_SCALE_FACTOR,
   MAX_SCALE_FACTOR,
+  clampBaseNudge,
+  clampBaseOpacity,
 } from '@/lib/design-canvas';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
@@ -84,6 +86,11 @@ import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/desi
 import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+
+// One nudge step, as a fraction of the frame. Small on purpose: this is for closing a
+// few-metre georeferencing gap, and a farmer who wants to move the photo further should
+// re-import it rather than walk it across the map a step at a time.
+const BASE_NUDGE_STEP = 0.002;
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
@@ -505,6 +512,9 @@ function DesignStudioInner() {
   // frame.satDataUrl, so the effects below never refetch a custom photo they've already fetched,
   // and never confuse it with the satellite tile's own data URL (which has no URL to compare).
   const loadedCustomBaseUrlRef = useRef<string | null>(null);
+  // Tracked separately from the photo: the underlay is keyed on the frame the satellite was
+  // fetched FOR, so panning to a new frame refetches it while re-importing the same photo does not.
+  const loadedUnderlayKeyRef = useRef<string | null>(null);
   const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [saved, setSaved] = useState(true);
 
@@ -953,6 +963,25 @@ function DesignStudioInner() {
           })
           .catch(() => setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev)));
       };
+      // The satellite is fetched EVEN WHEN the farmer is on their own photo, and kept beside it as
+      // the underlay. That is what gives a nudge something to be relative to: previously the photo
+      // REPLACED the satellite, so "switch to satellite" read as "throw my photo away" and there
+      // was no second image to line the first one up against.
+      // Through fetchBasemapForFrame for the same reason the main path uses it — a provider branch
+      // that skips it serves the wrong imagery silently.
+      const loadUnderlay = (targetFrame: typeof frameNoImg) => {
+        if (!customBase || !url) return;
+        const key = `${targetFrame.centerLng},${targetFrame.centerLat},${targetFrame.zoom}`;
+        if (loadedUnderlayKeyRef.current === key) return;
+        fetchBasemapForFrame(targetFrame, url, fetchImageAsDataUrl)
+          .then((dataUrl) => {
+            loadedUnderlayKeyRef.current = key;
+            setFrame((prev) => (prev ? { ...prev, underlayDataUrl: dataUrl } : prev));
+          })
+          // An underlay is an alignment aid, not a requirement: if it fails the photo still works
+          // exactly as it did before, so this must never surface as an error to the farmer.
+          .catch(() => {});
+      };
 
       // Only touch the satellite (clear + refetch) when the frame centre/zoom actually
       // changed — otherwise keep whatever is already loaded and just update the non-image
@@ -967,8 +996,14 @@ function DesignStudioInner() {
       if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         if (customBase) {
-          setFrame((prev) => ({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
+          setFrame((prev) => ({
+            ...frameNoImg,
+            mPerPx: customBase.mPerPx,
+            satDataUrl: prev?.satDataUrl ?? null,
+            underlayDataUrl: prev?.underlayDataUrl ?? null,
+          }));
           loadCustomBase(frameNoImg);
+          loadUnderlay(frameNoImg);
         } else {
           setFrame(withScale({ ...frameNoImg, satDataUrl: null }));
           if (url) {
@@ -985,8 +1020,10 @@ function DesignStudioInner() {
           ...frameNoImg,
           mPerPx: baseMPerPx(frameNoImg),
           satDataUrl: prev?.satDataUrl ?? null,
+          underlayDataUrl: prev?.underlayDataUrl ?? null,
         }));
         loadCustomBase(frameNoImg);
+        loadUnderlay(frameNoImg);
       }
 
       // A frame migration is DERIVED, not authored: it fires on its own whenever the satellite
@@ -1169,6 +1206,7 @@ function DesignStudioInner() {
   const applyCustomBase = useCallback(
     (result: BasePhotoApplyResult) => {
       loadedCustomBaseUrlRef.current = result.url;
+      loadedUnderlayKeyRef.current = null; // refetch the satellite to line the new photo up against
       handleChange((prev) => ({
         ...prev,
         useCustomBase: true,
@@ -1179,6 +1217,34 @@ function DesignStudioInner() {
     },
     [handleChange],
   );
+
+  // Paint-time alignment of the farmer's photo over the satellite. These write ONLY the display
+  // fields on customBase — no item, zone, line or metre moves, which is what makes it safe to
+  // offer as a free-hand nudge at all (see CustomBaseImage in lib/design-canvas.ts).
+  const nudgeBase = useCallback((ddx: number, ddy: number) => {
+    handleChange((prev) => (prev.customBase
+      ? {
+        ...prev,
+        customBase: {
+          ...prev.customBase,
+          dx: clampBaseNudge((prev.customBase.dx ?? 0) + ddx),
+          dy: clampBaseNudge((prev.customBase.dy ?? 0) + ddy),
+        },
+      }
+      : prev));
+  }, [handleChange]);
+
+  const setBaseOpacity = useCallback((v: number) => {
+    handleChange((prev) => (prev.customBase
+      ? { ...prev, customBase: { ...prev.customBase, opacity: clampBaseOpacity(v) } }
+      : prev));
+  }, [handleChange]);
+
+  const resetBaseAlign = useCallback(() => {
+    handleChange((prev) => (prev.customBase
+      ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, opacity: 1 } }
+      : prev));
+  }, [handleChange]);
 
   // Switch back to the real satellite view — the farmer's uploaded photo stays saved
   // (customBase is left untouched; only the useCustomBase flag flips), so switching back to
@@ -1192,7 +1258,7 @@ function DesignStudioInner() {
     // (Rory: "when i asked to revert it gave the previous models satlite"). Every other place
     // that rebuilds the frame already re-applies this; this one was the gap.
     const revertMPerPx = scaledMPerPx(freshFrame.mPerPx, canvasState?.scaleFactor);
-    setFrame((prev) => (prev ? { ...prev, mPerPx: revertMPerPx, satDataUrl: null } : prev));
+    setFrame((prev) => (prev ? { ...prev, mPerPx: revertMPerPx, satDataUrl: null, underlayDataUrl: null } : prev));
     if (satUrl) {
       // THROUGH fetchBasemapForFrame, never fetchImageAsDataUrl directly. That function is the one
       // place that decides who serves the photo, and its own doc warns that a second provider
@@ -1347,7 +1413,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       // beds and leave their paths behind, which is worse than either half.
       lines: [
         ...prev.lines,
-        ...paths.map((points) => ({ id: newId(), kind: 'path' as const, points })),
+        ...paths.map((points) => ({ id: newId(), kind: 'bedpath' as const, points })),
       ],
       items: [
         ...prev.items,
@@ -2193,6 +2259,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               lineKind={lineKind}
               activeLayers={activeLayers}
               mapTextScale={mapTextScale}
+              baseAlign={canvasState?.useCustomBase ? (canvasState.customBase ?? null) : null}
               bedBlock={bedBlockArmed ? { spec: bedBlockSpec, defId: BED_BLOCK_DEF_ID } : null}
               onPlaceBedBlock={onPlaceBedBlock}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
@@ -2287,6 +2354,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               style={{
                 display: 'flex',
                 alignItems: 'center',
+                flexWrap: 'wrap',
                 gap: 8,
                 minHeight: 40,
                 padding: '6px 12px',
@@ -2298,7 +2366,60 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               }}
             >
               <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
-              <span style={{ flex: 1 }}>Using your own photo as the base.</span>
+              <span>Your own photo, over the satellite.</span>
+              {/* MICRO-ADJUSTMENT, in place, on the real map — not in a dialog. A drone shot and a
+                  satellite tile disagree by a few metres more often than not (different day,
+                  different georeferencing), and that only shows up later, at full size, with the
+                  design already drawn on top. Translation only: mPerPx came from the farmer's own
+                  two-point calibration on these pixels, so a scale handle here would quietly
+                  restate every area and every yield on the plan. */}
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
+                {([
+                  ['◀', -BASE_NUDGE_STEP, 0, 'Nudge photo west'],
+                  ['▲', 0, -BASE_NUDGE_STEP, 'Nudge photo north'],
+                  ['▼', 0, BASE_NUDGE_STEP, 'Nudge photo south'],
+                  ['▶', BASE_NUDGE_STEP, 0, 'Nudge photo east'],
+                ] as const).map(([glyph, ddx, ddy, label]) => (
+                  <button
+                    key={glyph}
+                    type="button"
+                    title={label}
+                    aria-label={label}
+                    onClick={() => nudgeBase(ddx, ddy)}
+                    style={{
+                      minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
+                      borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
+                      fontSize: 10, lineHeight: 1, padding: 0,
+                    }}
+                  >
+                    {glyph}
+                  </button>
+                ))}
+              </span>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title="Fade your photo to see the satellite underneath while you line them up">
+                <span style={{ fontSize: 11, opacity: 0.75 }}>See through</span>
+                <input
+                  type="range"
+                  min={0.1}
+                  max={1}
+                  step={0.05}
+                  value={canvasState.customBase.opacity ?? 1}
+                  onChange={(e) => setBaseOpacity(Number(e.target.value))}
+                  style={{ width: 74 }}
+                />
+              </label>
+              {(canvasState.customBase.dx || canvasState.customBase.dy
+                || (canvasState.customBase.opacity ?? 1) !== 1) && (
+                <button
+                  type="button"
+                  onClick={resetBaseAlign}
+                  title="Put the photo back where it was imported, fully opaque"
+                  style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 11.5, padding: '4px 4px' }}
+                >
+                  Reset
+                </button>
+              )}
+              <span style={{ flex: 1, minWidth: 0 }} />
               {/* Adjusting used to mean living with whatever the first pass produced. This reopens
                   the aligner, where the photo can be moved, resized and faded against the
                   satellite before being re-applied. */}

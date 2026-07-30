@@ -24,7 +24,16 @@ export interface CanvasFrame {
   imgW: number;
   imgH: number; // logical px of the satellite image (e.g. 960x640)
   mPerPx: number; // metres per logical pixel at this zoom+lat
-  satDataUrl: string | null; // inlined satellite image
+  satDataUrl: string | null; // inlined base image — the SATELLITE, or the farmer's photo when one
+  // is in use. Everything downstream (sheets, AI composites, exports) reads this one field, which
+  // is why the custom base is swapped INTO it rather than carried beside it.
+  /**
+   * The true satellite tile, kept alongside satDataUrl ONLY while a custom base is in use, so the
+   * Design Studio can paint the farmer's photo over the satellite and let them line the two up.
+   * Deliberately additive: nothing but the Studio's alignment view reads it, so no sheet, export
+   * or composite changes behaviour because it exists.
+   */
+  underlayDataUrl?: string | null;
 }
 
 export interface PlacedItem {
@@ -87,7 +96,14 @@ export interface LineShape {
   // for a violet greywater line that a farmer had no tool to draw, and the only way the model
   // could satisfy that was to invent one. Purple/violet follows the reclaimed-water pipe
   // convention, and is deliberately more saturated than the fence lilac.
-  kind: 'swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' | 'greywater';
+  // 'bedpath' is the walking path BETWEEN beds in a bed block, and is deliberately its own kind
+  // rather than a 'path'. A 'path' belongs to the farm's ACCESS network (driveway, gates), and
+  // the Studio focuses one layer per step — so on the Planting step, where blocks are actually
+  // laid out, access is switched off and every path the farmer had just asked for was created,
+  // saved, and never drawn (Rory, twice: "it didnt add paths when inserted" / "no path still!").
+  // A path between two veg beds is part of the veg garden, not part of the driveway, so it now
+  // follows the beds onto the planting layer and is visible exactly when they are.
+  kind: 'swale' | 'fence' | 'path' | 'bedpath' | 'pipe' | 'drip' | 'windbreak' | 'greywater';
   points: Array<[number, number]>;
   // Optional custom name shown on the on-canvas label pill (tap the label to rename); falls back
   // to the kind's default name (LINE_KIND_LABEL, components/design/DesignCanvas.tsx) when unset.
@@ -116,6 +132,44 @@ export interface CustomBaseImage {
   url: string; // Firebase Storage download URL (uploadPhoto in lib/db/queries.ts)
   mPerPx: number; // calibrated metres-per-pixel, from the farmer's two-point tap + entered distance
   uploadedAt: string; // ISO timestamp, for display only
+  /**
+   * PAINT-TIME alignment nudge, as a fraction of the frame. Purely how the photo is DRAWN over
+   * the satellite — it never moves an item, a zone, a line or a metre.
+   *
+   * Baking the transform at upload (see above) made the photo opaque the moment it landed: the
+   * farmer could line it up once, in a small dialog, and never again. In practice the drone shot
+   * and the satellite disagree by a few metres — different day, different georeferencing — and
+   * that only becomes visible later, on the real map, with the design already drawn on it
+   * (Rory: "i should be able to do some micro refinements once placed"). This is that
+   * adjustment, and it is deliberately the weakest possible kind: pure translation.
+   *
+   * NOT scale, and NOT rotation. mPerPx comes from the farmer's own two-point calibration on
+   * these pixels, and every measurement in the app is derived from it; a scale handle here would
+   * silently restate every area and every yield on the plan. Rotation stays baked for the reason
+   * given above. Alignment that cannot lie about distance is worth more than a free transform.
+   */
+  dx?: number;
+  dy?: number;
+  /** How opaque the photo sits over the satellite while aligning it. Undefined = fully opaque,
+   *  which is the normal working state; the slider only matters while lining the two up. */
+  opacity?: number;
+}
+
+/** Alignment nudge bounds, as a fraction of the frame. A tenth of the frame each way is far more
+ *  than any real georeferencing disagreement, and keeps a slip from flinging the photo off-map. */
+export const MAX_BASE_NUDGE = 0.1;
+
+/** Coerce a persisted/typed nudge into something that cannot put the photo somewhere unrecoverable.
+ *  Non-finite reads as "no nudge" rather than propagating NaN into a transform. */
+export function clampBaseNudge(v: unknown): number {
+  return typeof v === 'number' && Number.isFinite(v)
+    ? Math.min(MAX_BASE_NUDGE, Math.max(-MAX_BASE_NUDGE, v))
+    : 0;
+}
+
+/** Opacity for painting the custom base over the satellite. Undefined/!finite = fully opaque. */
+export function clampBaseOpacity(v: unknown): number {
+  return typeof v === 'number' && Number.isFinite(v) ? Math.min(1, Math.max(0.1, v)) : 1;
 }
 
 export interface DesignCanvasState {

@@ -213,6 +213,8 @@ export interface StructuresRouteVisual {
 export function structuresRouteVisualFor(kind: string): StructuresRouteVisual | null {
   const key = normaliseLookupKey(kind, '_');
   if (key === 'path') return { dash: [12, 8], width: 3.2 };
+  // Bed paths are the same thing at bed scale — tighter dash, thinner line.
+  if (key === 'bedpath') return { dash: [7, 5], width: 2.4 };
   if (key === 'fence') return { dash: [], width: 3.5 };
   return null;
 }

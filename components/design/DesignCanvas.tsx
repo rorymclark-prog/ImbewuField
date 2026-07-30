@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseNudge, clampBaseOpacity } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
@@ -124,6 +124,9 @@ export interface DesignCanvasProps {
   activeLayers: ActiveLayers;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
+  /** Paint-time alignment of the farmer's own base photo over the satellite. Display only —
+   *  it never moves an item, a zone, a line or a metre. */
+  baseAlign?: { dx?: number; dy?: number; opacity?: number } | null;
   /** Non-null ARMS block placement: tap a corner, swing to aim, tap again to commit. The page
    *  owns the spec (the farmer's typed bed length/width/path/count) and the commit; the canvas
    *  owns only the gesture and the ghost. Arming also sets tool to a placement mode, which is
@@ -272,6 +275,8 @@ const LINE_LAYER: Record<LineShape['kind'], keyof ActiveLayers> = {
   greywater: 'water',
   fence: 'structures',
   path: 'access',
+  // Follows the BEDS, not the driveway — see LineShape.kind in lib/design-canvas.ts.
+  bedpath: 'planting',
   windbreak: 'planting',
 };
 
@@ -284,6 +289,7 @@ const LINE_KIND_LABEL: Record<LineShape['kind'], string> = {
   swale: 'Swale',
   fence: 'Fence line',
   path: 'Walking path',
+  bedpath: 'Bed path',
   pipe: 'Buried water pipe',
   drip: 'Drip irrigation line',
   windbreak: 'Windbreak hedge',
@@ -323,6 +329,10 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
       return { stroke: '#8E7CC3', width: 2 };
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dash: '4 5' };
+    case 'bedpath':
+      // Same family as a walking path — it IS one — but tighter and a touch stronger, because it
+      // is read at bed scale between two beds rather than across the whole farm.
+      return { stroke: '#E8D9B8', width: 2, dash: '3 3' };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, opacity: 0.5 };
     default:
@@ -532,6 +542,7 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   mapTextScale: mapTextScaleRaw = 1,
+  baseAlign = null,
   bedBlock = null,
   onPlaceBedBlock,
   onToggleBaseMap,
@@ -565,6 +576,12 @@ export default function DesignCanvas({
   const { t } = useLanguage();
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
+  const underlayDataUrl = frame.underlayDataUrl ?? null;
+  // Clamped on READ, never trusted from storage: a corrupt nudge should paint the photo slightly
+  // off, not reject the farmer's whole design on load.
+  const baseDx = clampBaseNudge(baseAlign?.dx);
+  const baseDy = clampBaseNudge(baseAlign?.dy);
+  const baseOpacity = clampBaseOpacity(baseAlign?.opacity);
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
@@ -1996,9 +2013,25 @@ export default function DesignCanvas({
         </defs>
         <g transform={`translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k})`}>
         {/* Satellite underlay */}
+        {/* When the farmer is working on their own drone photo, the SATELLITE goes down first and
+            the photo sits over it — that is what makes lining the two up possible at all. Before
+            this, the photo replaced the satellite outright: switching to satellite view looked
+            like the photo had been thrown away, and there was nothing for a nudge to be relative
+            to (Rory: "i should be able to do some micro refinements once placed"). */}
+        {underlayDataUrl && (
+          <image href={underlayDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
+        )}
         {satDataUrl ? (
-          <image href={satDataUrl} x={0} y={0} width={imgW} height={imgH} preserveAspectRatio="xMidYMid slice" />
-        ) : (
+          <image
+            href={satDataUrl}
+            x={baseDx * imgW}
+            y={baseDy * imgH}
+            width={imgW}
+            height={imgH}
+            opacity={baseOpacity}
+            preserveAspectRatio="xMidYMid slice"
+          />
+        ) : underlayDataUrl ? null : (
           <rect x={0} y={0} width={imgW} height={imgH} fill="#FFFEFA" />
         )}
 

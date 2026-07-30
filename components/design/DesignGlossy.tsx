@@ -804,7 +804,7 @@ export function drawMarks(
     });
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
     ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
-    if (line.kind === 'swale' || line.kind === 'path') ctx.setLineDash([6, 4]);
+    if (line.kind === 'swale' || line.kind === 'path' || line.kind === 'bedpath') ctx.setLineDash([6, 4]);
     else ctx.setLineDash([]); // fence is SOLID (dashed reads as underground/proposed) — posts mark it
     ctx.stroke();
     ctx.setLineDash([]);
@@ -1652,7 +1652,7 @@ function producerElementsText(
   // circular drive), kept clear with no plantings on it".) How to DRAW each feature belongs in the
   // prompt body — FEATURE_LEGEND for the painted styles, the icon vocabulary for Satellite Overlay.
   const LINE_NAME: Record<string, string> = {
-    swale: 'Swale', fence: 'Fence line', path: 'Walking path',
+    swale: 'Swale', fence: 'Fence line', path: 'Walking path', bedpath: 'Bed path',
     pipe: 'Buried water pipe', drip: 'Drip irrigation line', greywater: 'Greywater line', windbreak: 'Windbreak hedge',
   };
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
@@ -4817,6 +4817,7 @@ export async function buildBlueprintStructuresMapLegacy(
   // painted area with no key entry is the phantom-legend defect in reverse.
   const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers, 'structures')];
   if (kinds.has('path')) fixed.push({ color: '#C9A227', label: 'Path', style: 'line' });
+  if (kinds.has('bedpath')) fixed.push({ color: '#C9A227', label: 'Bed path', style: 'line' });
   // Windbreak is NOT legended here — lineInFilter files it under Planting (sheet 05), which is
   // now where it is drawn; a row here would advertise a line this sheet's own filter excludes.
   // Swatch must match the line now drawn: solid violet with posts, not a grey dash.

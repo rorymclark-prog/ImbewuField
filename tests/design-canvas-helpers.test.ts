@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  clampBaseNudge,
+  clampBaseOpacity,
+  MAX_BASE_NUDGE,
   computeCanvasFrame,
   distM,
   getBounds,
@@ -405,4 +408,35 @@ test('reverting to satellite re-applies the ruler calibration instead of handing
   assert.notEqual(reverted, projectionMPerPx);
   // And a farmer who never calibrated gets exactly the projection's own number back.
   assert.equal(scaledMPerPx(projectionMPerPx, undefined), projectionMPerPx);
+});
+
+// ── Base-photo alignment ──────────────────────────────────────────────────────
+// The farmer's own drone photo is nudged over the satellite to close a few-metre georeferencing
+// gap. These values are PAINT-ONLY, so the contract that matters is that a bad one degrades the
+// picture instead of rejecting the design.
+
+test('a nudge is clamped rather than trusted, and a corrupt one reads as no nudge', () => {
+  assert.equal(clampBaseNudge(0.01), 0.01);
+  assert.equal(clampBaseNudge(999), MAX_BASE_NUDGE);
+  assert.equal(clampBaseNudge(-999), -MAX_BASE_NUDGE);
+  // Anything non-numeric must land on 0, not NaN: a NaN in an SVG x attribute drops the image
+  // entirely, so the farmer would see their photo VANISH rather than sit slightly off.
+  for (const bad of [Number.NaN, Number.POSITIVE_INFINITY, undefined, null, '0.01', {}]) {
+    assert.equal(clampBaseNudge(bad), 0, `${String(bad)}`);
+  }
+});
+
+test('opacity never reaches zero — a fully invisible base photo reads as a lost upload', () => {
+  assert.equal(clampBaseOpacity(0.5), 0.5);
+  assert.equal(clampBaseOpacity(0), 0.1);
+  assert.equal(clampBaseOpacity(5), 1);
+  // Undefined is the normal working state (fully opaque), not a missing value to fall back from.
+  assert.equal(clampBaseOpacity(undefined), 1);
+  assert.equal(clampBaseOpacity(Number.NaN), 1);
+});
+
+test('nudging is bounded by construction — repeated steps cannot walk the photo off the map', () => {
+  let dx = 0;
+  for (let i = 0; i < 500; i++) dx = clampBaseNudge(dx + 0.002);
+  assert.equal(dx, MAX_BASE_NUDGE);
 });
