@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--", "-p", "4343"],
       "port": 4343
+    },
+    {
+      "name": "ImbewuField Emulator",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:emulator"],
+      "port": 4243
     }
   ]
 }
