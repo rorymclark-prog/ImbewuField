@@ -1274,6 +1274,37 @@ function DesignStudioInner() {
         }
       : null;
 
+  // Size control (palette) — scale EVERY selected placed item about its own centre. Born from a
+  // live editing session (Rory: "i want to be able to resize all these beds all at once but i
+  // cant"): the drag grips resize one item, so a row of seven duplicated beds meant seven
+  // identical drags. Positions never move — each bed grows or shrinks in place, so the row's
+  // spacing (the layout work he was mid-way through) survives. Same 0.3–40 m bounds as the
+  // drag-resize path (DesignCanvas startDragResize), same handleChange funnel, so one tap is
+  // exactly one undo entry. Zones/lines riding along in the selection are left untouched — a
+  // ring's size is its traced points, and "10% bigger" on a traced shape is a different feature.
+  const selectedItemIdSet = canvasState
+    ? new Set(selectedIds.filter((id) => canvasState.items.some((it) => it.id === id)))
+    : new Set<string>();
+  const sizeControl = selectedItemIdSet.size
+    ? {
+        onScale: (factor: number) => {
+          handleChange((prev) => ({
+            ...prev,
+            items: prev.items.map((it) => {
+              if (!selectedItemIdSet.has(it.id)) return it;
+              const def = ELEMENTS_BY_ID[it.defId];
+              const wM = it.wM ?? def?.wM;
+              const hM = it.hM ?? def?.hM;
+              if (!Number.isFinite(wM) || !Number.isFinite(hM)) return it;
+              const scaled = (v: number) => Math.min(40, Math.max(0.3, v * factor));
+              return { ...it, wM: scaled(wM as number), hM: scaled(hM as number) };
+            }),
+            updatedAt: new Date().toISOString(),
+          }));
+        },
+      }
+    : null;
+
   // Wind control (palette, Sector step) — the farmer's confirm/override for the regional wind
   // used to phrase the "prevailing wind" question (lib/local-wind.ts's own policy note on why
   // summer_cooling, not the fire/berg wind, is what "prevailing" asks about). Independent of
@@ -2306,6 +2337,7 @@ function DesignStudioInner() {
           onSnapSelected={onSnapSelected}
           onCleanupSelected={onCleanupSelected}
           angleControl={angleControl}
+          sizeControl={sizeControl}
           windControl={windControl}
           siteBiome={site?.biome}
         />

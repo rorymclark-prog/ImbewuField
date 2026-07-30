@@ -121,6 +121,11 @@ export interface DesignPaletteProps {
   // — the parent normalises via normaliseRotation and commits through the same onChange/undo path
   // the drag-rotate handle uses, so both commit paths land exactly one undo entry.
   angleControl: { deg: number; onRotate: (deg: number) => void } | null;
+  /** Scale every selected placed ITEM about its own centre (null hides the control). Born from a
+   *  live editing session (Rory: "i want to be able to resize all these beds all at once but i
+   *  cant") — the drag grips resize one item, so a row of seven duplicated beds meant seven
+   *  identical drags. Each tap is one commit, so one undo entry, exactly like the Angle field. */
+  sizeControl: { onScale: (factor: number) => void } | null;
   // Sector step: confirm/override control for the farmer's on-site wind observation
   // (lib/local-wind.ts LocalWindObservation) — the local counterpart to ZoneShape.measuredSlopePct.
   // null hides the whole control, same "nothing to act on" convention as onDuplicateSelected going
@@ -291,6 +296,7 @@ export default function DesignPalette({
   onSnapSelected,
   onCleanupSelected,
   angleControl,
+  sizeControl,
   windControl,
   siteBiome,
 }: DesignPaletteProps) {
@@ -628,6 +634,54 @@ export default function DesignPalette({
                 }}
               />
               <span style={{ fontSize: guided ? 13 : 11.5 }}>°</span>
+            </div>
+          )}
+          {/* Size — grows/shrinks EVERY selected item in place (multi-select friendly, unlike the
+              per-item drag grips). ±10% per tap; the parent clamps to the same 0.3–40 m bounds as
+              drag-resize, so mashing a button can never zero an item or blow it past the plot. */}
+          {sizeControl && (
+            <div
+              style={{
+                minHeight: guided ? 52 : 44,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                flexShrink: 0,
+                padding: guided ? '0 12px' : '0 10px',
+                borderRadius: 10,
+                border: '1px solid rgba(0,0,0,0.15)',
+                background: PAPER,
+                color: DARK,
+                fontWeight: 600,
+                fontSize: guided ? 14.5 : 13,
+              }}
+            >
+              <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>
+                ⤢
+              </span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteSize')}</span>
+              {([['−', 0.9, t('designPaletteSizeDown')], ['+', 1.1, t('designPaletteSizeUp')]] as const).map(([glyph, factor, title]) => (
+                <button
+                  key={glyph}
+                  type="button"
+                  title={title}
+                  aria-label={title}
+                  onClick={() => sizeControl.onScale(factor)}
+                  style={{
+                    width: guided ? 38 : 32,
+                    minHeight: guided ? 34 : 28,
+                    border: '1px solid rgba(0,0,0,0.18)',
+                    borderRadius: 7,
+                    background: PAPER,
+                    color: DARK,
+                    fontSize: guided ? 16 : 14,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {glyph}
+                </button>
+              ))}
             </div>
           )}
           <button
