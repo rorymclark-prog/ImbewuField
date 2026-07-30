@@ -1005,7 +1005,32 @@ files) — safe to pick up in parallel or right after.
 
 ---
 
-## NEVER RUN DRY — what to do when you reach the end
+## 38. Consent + onboarding gates still honor LEGACY BARE rows for signed-in accounts (POPIA per-person gap) — found live on the emulator, 2026-07-30
+
+**NOT NOW — after item 35.** Filed while verifying item 37 live, so it isn't lost. Severity is
+real but latent pre-launch (needs two accounts on one device); do not let it interrupt 35.
+
+Live repro (emulator, post-merge build 8c5d5dc): device previously used by account A (consent
+accepted, goal chosen). Create brand-new account B → tap "Find my land" → **B goes straight to
+the map. No POPIA consent screen, no goal question.** B's localStorage at that moment:
+
+```
+imbewu_popia::imbewu-owner::uid:<A's uid>   ← A's consent, correctly namespaced
+imbewu_popia                                ← legacy bare row
+permamap_onboarded                          ← legacy bare row
+```
+
+The namespacing itself works (A's row is suffixed). The gap: whatever READS the consent/onboarded
+gate treats the bare legacy row as "this person already consented". Item 37's own principle says
+bare rows have no trustworthy owner and must never be claimed by a signed-in account — for POPIA
+consent that matters legally: consent is per-person, so account B must be asked again.
+
+Fix sketch: the gate components (PopiaConsent, the goal/onboarding gate that writes
+`permamap_onboarded`) must read through `activeAccountLocalStorageKey` with NO bare-key fallback
+while signed in (bare fallback stays fine for guest/backend-unconfigured). Migration nicety: on
+first signed-in consent, delete the bare row so the device converges. Add a test beside
+`sensitive-tsx-account-storage.test.ts` asserting a signed-in read of these gates never touches
+the bare key.
 
 **Do not stop and wait.** Reaching the bottom of this list is not the end of the work, and an idle
 agent overnight is the single most expensive thing in this setup. When you run out of numbered
