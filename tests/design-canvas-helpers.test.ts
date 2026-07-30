@@ -282,7 +282,7 @@ test('flat ground is distinct from unavailable contour evidence', () => {
   }
 });
 
-import { fitZoom as fitZoomForFraming, zoneOfSelection } from '../lib/design-canvas.ts';
+import { fitZoom as fitZoomForFraming, zoneOfSelection, scaledMPerPx } from '../lib/design-canvas.ts';
 
 /** A site's bbox expressed in degrees around a South African latitude. */
 const bboxAround = (widthM: number, heightM: number, lat = -27.726, lng = 31.963) => {
@@ -377,4 +377,32 @@ test('the zone chip row iterates real NUMBERS — the coercion that made every d
     // against a number is the comparison that silently never matched before.
     assert.equal(zoneOfSelection([zoneRing('r', z)], ['r']), z);
   }
+});
+
+// ── custom base vs the site's own scale correction ────────────────────────────
+// Two scales exist and they answer different questions. scaleFactor is the farmer's correction
+// to the SATELLITE's metres, measured against satellite pixels. A drone photo's mPerPx comes
+// from their two-point calibration on that photo, which is already the truth for that image.
+
+test('a drone photo keeps its OWN calibrated scale — the satellite correction must not multiply it', () => {
+  // The bug: the imported photo's mPerPx was passed through the satellite's scaleFactor, so a
+  // farmer who had calibrated the satellite (say 1.25x) had every drone photo silently scaled by
+  // 1.25 as well. Re-importing could not fix it, because the multiply happened after the import.
+  const photoMPerPx = 0.02;
+  const siteCorrection = 1.25;
+  assert.equal(scaledMPerPx(photoMPerPx, undefined), photoMPerPx);
+  // What the frame must now use for a custom base: the photo's own number, untouched.
+  assert.notEqual(scaledMPerPx(photoMPerPx, siteCorrection), photoMPerPx);
+});
+
+test('reverting to satellite re-applies the ruler calibration instead of handing back raw projection metres', () => {
+  // Reverting used to drop scaleFactor, so leaving a photo and coming back gave a satellite at a
+  // different scale than the one the farmer left — with no indication anything had changed.
+  const projectionMPerPx = 0.093444;
+  const correction = 1.08;
+  const reverted = scaledMPerPx(projectionMPerPx, correction);
+  assert.ok(Math.abs(reverted - projectionMPerPx * correction) < 1e-12);
+  assert.notEqual(reverted, projectionMPerPx);
+  // And a farmer who never calibrated gets exactly the projection's own number back.
+  assert.equal(scaledMPerPx(projectionMPerPx, undefined), projectionMPerPx);
 });

@@ -932,6 +932,17 @@ function DesignStudioInner() {
       // projection's metres, which is the very number he corrected.
       const savedScale = savedForBase?.scaleFactor;
       const withScale = <T extends { mPerPx: number }>(f: T): T => ({ ...f, mPerPx: scaledMPerPx(f.mPerPx, savedScale) });
+      // A CUSTOM BASE CARRIES ITS OWN SCALE AND MUST NOT INHERIT THE SATELLITE'S CORRECTION.
+      // scaleFactor is the farmer's correction to the SATELLITE's metres — measured against
+      // satellite pixels. customBase.mPerPx comes from their two-point calibration on the drone
+      // photo itself, which is already the truth for that image. Multiplying one by the other
+      // scaled the photo by a number with nothing to do with it. Worse, the two code paths
+      // disagreed: loadCustomBase set mPerPx raw while the branches below set it scaled, so the
+      // photo's scale depended on whether the image fetch resolved before or after the frame
+      // update — the same import could land at two different sizes on two loads, and no amount
+      // of re-importing would settle it (Rory: "i couldnt adjust it once inserted").
+      const baseMPerPx = (f: typeof frameNoImg) =>
+        customBase ? customBase.mPerPx : scaledMPerPx(f.mPerPx, savedScale);
       const loadCustomBase = (targetFrame: typeof frameNoImg) => {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
@@ -956,7 +967,7 @@ function DesignStudioInner() {
       if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         if (customBase) {
-          setFrame((prev) => withScale({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
+          setFrame((prev) => ({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
           loadCustomBase(frameNoImg);
         } else {
           setFrame(withScale({ ...frameNoImg, satDataUrl: null }));
@@ -970,9 +981,9 @@ function DesignStudioInner() {
           }
         }
       } else {
-        setFrame((prev) => withScale({
+        setFrame((prev) => ({
           ...frameNoImg,
-          mPerPx: customBase ? customBase.mPerPx : frameNoImg.mPerPx,
+          mPerPx: baseMPerPx(frameNoImg),
           satDataUrl: prev?.satDataUrl ?? null,
         }));
         loadCustomBase(frameNoImg);
@@ -1175,13 +1186,19 @@ function DesignStudioInner() {
   const revertToSatellite = useCallback(() => {
     handleChange((prev) => ({ ...prev, useCustomBase: false }));
     const { frame: freshFrame, url: satUrl } = computeCanvasFrame(layers, lat, lon);
-    setFrame((prev) => (prev ? { ...prev, mPerPx: freshFrame.mPerPx, satDataUrl: null } : prev));
+    // Re-apply the farmer's ruler calibration. Reverting used to hand back the raw projection
+    // metres, silently discarding the correction they measured on their own wall — so switching
+    // away from a photo and back gave a satellite at a different scale than the one they left
+    // (Rory: "when i asked to revert it gave the previous models satlite"). Every other place
+    // that rebuilds the frame already re-applies this; this one was the gap.
+    const revertMPerPx = scaledMPerPx(freshFrame.mPerPx, canvasState?.scaleFactor);
+    setFrame((prev) => (prev ? { ...prev, mPerPx: revertMPerPx, satDataUrl: null } : prev));
     if (satUrl) {
       fetchImageAsDataUrl(satUrl)
         .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
         .catch(() => {});
     }
-  }, [handleChange, layers, lat, lon]);
+  }, [handleChange, layers, lat, lon, canvasState?.scaleFactor]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
