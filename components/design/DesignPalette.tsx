@@ -125,7 +125,14 @@ export interface DesignPaletteProps {
    *  live editing session (Rory: "i want to be able to resize all these beds all at once but i
    *  cant") — the drag grips resize one item, so a row of seven duplicated beds meant seven
    *  identical drags. Each tap is one commit, so one undo entry, exactly like the Angle field. */
-  sizeControl: { onScale: (factor: number) => void } | null;
+  sizeControl: {
+    onScale: (factor: number) => void;
+    /** Set one dimension in metres on every selected item (circles take it as their diameter). */
+    onSetDim: (dim: 'wM' | 'hM', value: number) => void;
+    /** Common committed value across the selection, or null when members differ ('—' placeholder). */
+    wM: number | null;
+    hM: number | null;
+  } | null;
   // Sector step: confirm/override control for the farmer's on-site wind observation
   // (lib/local-wind.ts LocalWindObservation) — the local counterpart to ZoneShape.measuredSlopePct.
   // null hides the whole control, same "nothing to act on" convention as onDuplicateSelected going
@@ -682,6 +689,58 @@ export default function DesignPalette({
                   {glyph}
                 </button>
               ))}
+              {/* Exact dimensions — "with beds we need to be specific". Shows the selection's
+                  common value, or a '—' placeholder when members differ; typing a number sets
+                  that dimension on every selected item (a circle takes it as its diameter). */}
+              {([
+                ['wM', sizeControl.wM, t('designPaletteSizeWidth'), t('designPaletteSizeWidthTitle')],
+                ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
+              ] as const).map(([dim, committed, label, title]) => (
+                <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                  <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{label}</span>
+                  <input
+                    key={`${dim}:${committed ?? 'mixed'}`}
+                    defaultValue={committed != null ? String(+committed.toFixed(2)) : ''}
+                    placeholder="—"
+                    title={title}
+                    aria-label={title}
+                    type="number"
+                    inputMode="decimal"
+                    min={0.3}
+                    max={40}
+                    step={0.1}
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') e.currentTarget.blur();
+                    }}
+                    onBlur={(e) => {
+                      const reset = () => {
+                        e.currentTarget.value = committed != null ? String(+committed.toFixed(2)) : '';
+                      };
+                      const raw = e.target.value.trim();
+                      if (!raw) return reset();
+                      const v = Number(raw);
+                      // No-op commits are skipped so blurring an untouched field never spends
+                      // an undo entry.
+                      if (!Number.isFinite(v) || (committed != null && Math.abs(v - committed) < 0.005)) return reset();
+                      sizeControl.onSetDim(dim, v);
+                    }}
+                    style={{
+                      width: 52,
+                      minHeight: guided ? 34 : 28,
+                      border: '1px solid rgba(0,0,0,0.18)',
+                      borderRadius: 7,
+                      background: PAPER,
+                      color: DARK,
+                      fontSize: guided ? 13.5 : 12,
+                      fontWeight: 700,
+                      textAlign: 'center',
+                      padding: '2px 2px',
+                    }}
+                  />
+                </span>
+              ))}
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>m</span>
             </div>
           )}
           <button

@@ -1258,21 +1258,28 @@ function DesignStudioInner() {
   // convention. Commits through handleChange, the SAME onChange/undo path the canvas's own
   // drag-rotate handle (endDragRotate in DesignCanvas.tsx) uses, so typing an angle and dragging
   // the rotate knob are two doors into one commit — one undo entry either way.
-  const selectedItemForAngle = selectedId ? canvasState?.items.find((it) => it.id === selectedId) ?? null : null;
-  const angleControl =
-    selectedItemForAngle && ELEMENTS_BY_ID[selectedItemForAngle.defId]?.shape === 'rect'
-      ? {
-          deg: selectedItemForAngle.rot ?? 0,
-          onRotate: (deg: number) => {
-            const id = selectedItemForAngle.id;
-            handleChange((prev) => ({
-              ...prev,
-              items: prev.items.map((it) => (it.id === id ? { ...it, rot: normaliseRotation(deg) } : it)),
-              updatedAt: new Date().toISOString(),
-            }));
-          },
-        }
-      : null;
+  // Now a GROUP control (Rory: "perhaps we can have a group angle and a group width/height?"):
+  // applies to EVERY selected rect-shaped item, so a marquee'd row of beds turns together —
+  // single selection is just the one-member case. Circles stay excluded (rotation-invariant).
+  // Shows the first member's angle; committing aligns the whole group, which is the point.
+  const selectedRectItems = canvasState
+    ? canvasState.items.filter(
+        (it) => (selectedIds.includes(it.id) || it.id === selectedId) && ELEMENTS_BY_ID[it.defId]?.shape === 'rect',
+      )
+    : [];
+  const angleControl = selectedRectItems.length
+    ? {
+        deg: selectedRectItems[0].rot ?? 0,
+        onRotate: (deg: number) => {
+          const ids = new Set(selectedRectItems.map((it) => it.id));
+          handleChange((prev) => ({
+            ...prev,
+            items: prev.items.map((it) => (ids.has(it.id) ? { ...it, rot: normaliseRotation(deg) } : it)),
+            updatedAt: new Date().toISOString(),
+          }));
+        },
+      }
+    : null;
 
   // Size control (palette) — scale EVERY selected placed item about its own centre. Born from a
   // live editing session (Rory: "i want to be able to resize all these beds all at once but i
@@ -1285,6 +1292,16 @@ function DesignStudioInner() {
   const selectedItemIdSet = canvasState
     ? new Set(selectedIds.filter((id) => canvasState.items.some((it) => it.id === id)))
     : new Set<string>();
+  const selectedItems = canvasState ? canvasState.items.filter((it) => selectedItemIdSet.has(it.id)) : [];
+  // Common committed value across the selection, or null when mixed — the palette field then
+  // shows a '—' placeholder and only overwrites when the farmer actually types a number.
+  const commonDim = (dim: 'wM' | 'hM'): number | null => {
+    const vals = selectedItems
+      .map((it) => it[dim] ?? ELEMENTS_BY_ID[it.defId]?.[dim])
+      .filter((v): v is number => Number.isFinite(v));
+    if (!vals.length) return null;
+    return vals.every((v) => Math.abs(v - vals[0]) < 0.005) ? vals[0] : null;
+  };
   const sizeControl = selectedItemIdSet.size
     ? {
         onScale: (factor: number) => {
@@ -1302,6 +1319,26 @@ function DesignStudioInner() {
             updatedAt: new Date().toISOString(),
           }));
         },
+        // Exact W/H in metres for the whole selection (Rory, after ± landed: "it rezises one way
+        // how do we do the width now? … with beds we need to be specific" → "perhaps we can have
+        // a group angle and a group width/height?"). A circle has one size, so either field sets
+        // its diameter; rects take the dimension typed. Same bounds and undo funnel as ±.
+        onSetDim: (dim: 'wM' | 'hM', value: number) => {
+          if (!Number.isFinite(value)) return;
+          const v = Math.min(40, Math.max(0.3, value));
+          handleChange((prev) => ({
+            ...prev,
+            items: prev.items.map((it) => {
+              if (!selectedItemIdSet.has(it.id)) return it;
+              const def = ELEMENTS_BY_ID[it.defId];
+              if (def?.shape === 'circle') return { ...it, wM: v, hM: v };
+              return { ...it, [dim]: v };
+            }),
+            updatedAt: new Date().toISOString(),
+          }));
+        },
+        wM: commonDim('wM'),
+        hM: commonDim('hM'),
       }
     : null;
 
