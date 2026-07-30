@@ -32,6 +32,11 @@ export interface CanvasLabelInput {
    *  the plant below, hiding that plant's icon behind a label belonging to something else — a
    *  worse misread than the overlap it was solving. */
   iconR: number;
+  /** This entry contributes its icon disc as an obstacle but draws NO pill — its label rides on a
+   *  neighbour's grouped pill (see groupSameLabelPills). It must still be passed in, not filtered
+   *  out by the caller: dropping it from the input would drop its disc from the obstacle set, and
+   *  a surviving pill could then be pushed squarely onto the unlabeled item's icon. */
+  suppressPill?: boolean;
 }
 
 export interface CanvasLabelOut {
@@ -68,7 +73,11 @@ const LEADER_AFTER = 3;
 export function layoutCanvasLabels(inputs: CanvasLabelInput[]): CanvasLabelOut[] {
   const usable = inputs.filter(isUsableCanvasLabelInput);
   const natural = usable.map((i) => ({ ...i, y: i.cy + i.gap }));
-  const order = [...natural].sort((a, b) => a.y - b.y || a.cx - b.cx || (a.id < b.id ? -1 : 1));
+  // Suppressed entries never place a pill (and never appear in the output), but they stay in
+  // `natural` above so their icon discs still seed the obstacle set below.
+  const order = [...natural]
+    .filter((i) => !i.suppressPill)
+    .sort((a, b) => a.y - b.y || a.cx - b.cx || (a.id < b.id ? -1 : 1));
 
   // Seed the occupied set with every icon disc, so pills route AROUND plants rather than over
   // them. A pill's own disc is skipped — a pill must be free to sit at its natural gap, which by
@@ -103,8 +112,71 @@ export function layoutCanvasLabels(inputs: CanvasLabelInput[]): CanvasLabelOut[]
     out.set(p.id, { id: p.id, x: p.cx, y, moved: Math.abs(y - p.y) > LEADER_AFTER });
   }
 
-  // Return in the caller's original order so React keys and draw order stay stable.
-  return usable.map((i) => out.get(i.id)!);
+  // Return in the caller's original order so React keys and draw order stay stable. One row per
+  // PILL, so a caller zips the result against its own suppressPill-filtered list.
+  return usable.filter((i) => !i.suppressPill).map((i) => out.get(i.id)!);
+}
+
+export interface PillGroupInput {
+  id: string;
+  text: string;
+  /** Anchor centre, same units as the layout engine. */
+  cx: number;
+  cy: number;
+}
+
+/**
+ * Collapse identical label texts into ONE pill each: seven "Vegetable Bed" pills become a single
+ * "Vegetable Bed ×7". (Rory, reading the Ubhejane map: "we need a way to tidy up these labels -
+ * one example i think is if we have multip raised veg beds is to give one lable for them all".)
+ *
+ * Measured on that map, 45 pills fell to ~20 — most of the long-leader label columns were the
+ * SAME name repeated: Vegetable Bed ×7, Tap Point ×6, Mango/Pawpaw/Citrus ×4 each. The icons
+ * still mark every individual item; the one pill teaches what the icon means and carries the
+ * count, which is exactly how the exported sheets already caption repeated elements ("give the
+ * whole group ONE label" — buildSatelliteOverlayPrompt rule 10).
+ *
+ * The returned map holds the pill each id should draw; an id absent from the map draws NO pill
+ * (pass it to layoutCanvasLabels with suppressPill so its icon disc stays an obstacle). The
+ * representative is the member nearest the group's spatial centre — the most honest single anchor
+ * for a leader line, and deterministic: distance ties keep the earliest member in caller order,
+ * so two identical designs pick the same pill. Grouping is by EXACT text: a custom-named item
+ * ("Mielie bed") or one with a note never merges into the generic group. Empty texts pass
+ * through one-to-one — an empty pill is the caller's existing behaviour, not this function's
+ * business to change.
+ */
+export function groupSameLabelPills(pills: PillGroupInput[]): Map<string, { text: string; count: number }> {
+  const out = new Map<string, { text: string; count: number }>();
+  const byText = new Map<string, PillGroupInput[]>();
+  for (const p of pills) {
+    const key = p.text.trim();
+    if (!key) {
+      out.set(p.id, { text: p.text, count: 1 });
+      continue;
+    }
+    const bucket = byText.get(key);
+    if (bucket) bucket.push(p);
+    else byText.set(key, [p]);
+  }
+  for (const [text, members] of byText) {
+    if (members.length === 1) {
+      out.set(members[0].id, { text: members[0].text, count: 1 });
+      continue;
+    }
+    const cx = members.reduce((s, m) => s + m.cx, 0) / members.length;
+    const cy = members.reduce((s, m) => s + m.cy, 0) / members.length;
+    let rep = members[0];
+    let best = Infinity;
+    for (const m of members) {
+      const d = (m.cx - cx) ** 2 + (m.cy - cy) ** 2;
+      if (d < best) {
+        best = d;
+        rep = m;
+      }
+    }
+    out.set(rep.id, { text: `${text} ×${members.length}`, count: members.length });
+  }
+  return out;
 }
 
 /**

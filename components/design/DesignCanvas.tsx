@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation } from '@/lib/design-canvas';
-import { layoutCanvasLabels, estimatePillWidth, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
+import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
@@ -2935,11 +2935,26 @@ export default function DesignCanvas({
             })
             .filter((v): v is NonNullable<typeof v> => !!v && isUsableCanvasLabelInput(v));
           if (!shown.length) return null;
-          const laid = layoutCanvasLabels(shown);
+          // ONE pill per distinct label text (Rory: "if we have multip raised veg beds is to give
+          // one lable for them all"): seven identical "Vegetable Bed" pills collapse into a single
+          // "Vegetable Bed ×7" anchored on the most central bed. Every item keeps its icon; the
+          // suppressed members stay in the layout input so their discs remain obstacles no pill
+          // may land on. Custom names and notes differ textually, so they never merge.
+          const grouped = groupSameLabelPills(shown);
+          const inputs = shown.map((s) => {
+            const g = grouped.get(s.id);
+            if (!g) return { ...s, suppressPill: true };
+            return g.text === s.text
+              ? { ...s, suppressPill: false }
+              : { ...s, suppressPill: false, text: g.text, w: estimatePillWidth(g.text, PILL_FS, PILL_PADX, PILL_MAX) / view.k };
+          });
+          const pillOwners = inputs.filter((s) => !s.suppressPill);
+          if (!pillOwners.length) return null;
+          const laid = layoutCanvasLabels(inputs);
           return (
             <g pointerEvents="none">
               {laid.map((pos, i) => {
-                const s = shown[i];
+                const s = pillOwners[i];
                 return (
                   <g key={s.id}>
                     {/* Leader only when de-collision actually moved the pill — an un-moved pill is

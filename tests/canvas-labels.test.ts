@@ -216,3 +216,40 @@ test('a boundary ring is never cut into by the areas inside it', () => {
   // The lawn is cut by nothing smaller, so it stays one ring.
   assert.equal(groundFillPolys(zones, zones[1]).flat().length, 1);
 });
+
+import { groupSameLabelPills } from '../lib/canvas-labels.ts';
+
+test('seven identical bed pills become ONE "×7" pill anchored on the most central bed', () => {
+  // The Ubhejane row that prompted this (Rory: "if we have multip raised veg beds is to give one
+  // lable for them all"): identical texts in a vertical run.
+  const beds = Array.from({ length: 7 }, (_, i) => ({ id: `bed-${i}`, text: 'Vegetable Bed', cx: 100, cy: 60 + i * 30 }));
+  const g = groupSameLabelPills(beds);
+  assert.equal(g.size, 1);
+  assert.deepEqual(g.get('bed-3'), { text: 'Vegetable Bed ×7', count: 7 });
+});
+
+test('custom names, noted items, singletons and empty texts never merge', () => {
+  const g = groupSameLabelPills([
+    { id: 'a', text: 'Mango Tree', cx: 0, cy: 0 },
+    { id: 'b', text: 'Mango Tree · shade the crèche', cx: 10, cy: 0 },
+    { id: 'c', text: 'Mielie bed', cx: 20, cy: 0 },
+    { id: 'd', text: '', cx: 30, cy: 0 },
+  ]);
+  assert.equal(g.size, 4);
+  // A singleton keeps its own text untouched — never a "×1".
+  assert.deepEqual(g.get('a'), { text: 'Mango Tree', count: 1 });
+  assert.deepEqual(g.get('d'), { text: '', count: 1 });
+});
+
+test('a suppressed entry emits no pill but its icon disc still blocks other pills', () => {
+  // 'a' naturally lands at y=130, overlapping ghost's disc (y 126..154). Suppressed-but-present,
+  // the ghost must push the pill clear; dropped from the input entirely it could not.
+  const ghost: CanvasLabelInput = { id: 'ghost', cx: 100, cy: 140, gap: 12, w: 60, h: 16, iconR: 14, suppressPill: true };
+  const a: CanvasLabelInput = { id: 'a', cx: 100, cy: 100, gap: 30, w: 60, h: 16, iconR: 10 };
+  const withGhost = layoutCanvasLabels([a, ghost]);
+  assert.equal(withGhost.length, 1, 'one row per PILL — the suppressed entry emits none');
+  assert.equal(withGhost[0].id, 'a');
+  assert.ok(withGhost[0].y >= 154 + 2, `pushed below the suppressed disc, got y=${withGhost[0].y}`);
+  const without = layoutCanvasLabels([a]);
+  assert.equal(without[0].y, 130, 'sanity: alone, the pill sits at its natural spot');
+});
