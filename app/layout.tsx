@@ -7,6 +7,7 @@ import { LanguageProvider } from '@/lib/i18n';
 import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
+import AccountOnboardingGates from '@/components/AccountOnboardingGates';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>
+              <AccountOnboardingGates />
               {children}
               <ChatWidget />
               <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />

@@ -82,6 +82,7 @@ const {
   accountLocalStorageKeyMatchesPrefix,
   activeAccountLocalStorageKey,
   activeAccountUid,
+  removeSignedInLegacyLocalStorageKey,
 } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
 
@@ -126,6 +127,26 @@ test('sample mode and backend-unconfigured local-only mode retain historical bar
   harness.configured = false;
   harness.currentUid = null;
   assert.equal(activeAccountLocalStorageKey('farmer-data'), 'farmer-data');
+});
+
+test('only a mounted signed-in account may retire an unowned legacy row', () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  harness.configured = true;
+  harness.currentUid = 'farmer-a';
+  localStorage.setItem('legacy-gate', 'account-unknown');
+
+  removeSignedInLegacyLocalStorageKey('legacy-gate');
+  assert.equal(localStorage.getItem('legacy-gate'), null);
+
+  harness.currentUid = null;
+  localStorage.setItem('legacy-gate', 'guest-local');
+  removeSignedInLegacyLocalStorageKey('legacy-gate');
+  assert.equal(localStorage.getItem('legacy-gate'), 'guest-local');
+
+  harness.configured = false;
+  removeSignedInLegacyLocalStorageKey('legacy-gate');
+  assert.equal(localStorage.getItem('legacy-gate'), 'guest-local');
 });
 
 test('prefix enumeration rejects bare legacy rows and every other signed-in owner', () => {

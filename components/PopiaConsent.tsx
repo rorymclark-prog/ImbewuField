@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import {
+  activeAccountLocalStorageKey,
+  removeSignedInLegacyLocalStorageKey,
+} from '@/lib/account-local-storage';
 
 const POPIA_KEY = 'imbewu_popia';
 const ONBOARD_KEY = 'permamap_onboarded';
@@ -74,7 +77,7 @@ export default function PopiaConsent() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     // Only show after language onboarding is complete
-    const languageDone = !!localStorage.getItem(ONBOARD_KEY);
+    const languageDone = !!localStorage.getItem(activeAccountLocalStorageKey(ONBOARD_KEY));
     const popiaAlready = !!localStorage.getItem(activeAccountLocalStorageKey(POPIA_KEY));
     if (languageDone && !popiaAlready) {
       setReady(true);
@@ -86,7 +89,7 @@ export default function PopiaConsent() {
     if (typeof window === 'undefined') return;
     if (ready || done) return;
     const id = setInterval(() => {
-      const languageDone = !!localStorage.getItem(ONBOARD_KEY);
+      const languageDone = !!localStorage.getItem(activeAccountLocalStorageKey(ONBOARD_KEY));
       const popiaAlready = !!localStorage.getItem(activeAccountLocalStorageKey(POPIA_KEY));
       if (languageDone && !popiaAlready) {
         setReady(true);
@@ -106,6 +109,7 @@ export default function PopiaConsent() {
     };
     try {
       localStorage.setItem(activeAccountLocalStorageKey(POPIA_KEY), JSON.stringify(record));
+      removeSignedInLegacyLocalStorageKey(POPIA_KEY);
     } catch { /* ignore quota errors */ }
     setDone(true);
   }
