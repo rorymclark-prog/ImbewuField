@@ -860,6 +860,16 @@ test('the paid second pass is told it received a DRAFT, and that copying it is a
     /do not turn.*roof.*driveway.*tank|never reinterpret.*roof.*driveway.*tank/i,
     'dark roof and access pixels must not be hallucinated into new tanks or structures',
   );
+  assert.match(
+    p,
+    /growing bed, not bare soil|visibly planted/i,
+    'marked vegetable beds must render as planted crops, never empty soil (Rory, judging the first v93 render)',
+  );
+  assert.match(
+    p,
+    /without adding or naming any species/i,
+    'planted-bed detail may not introduce species the legend does not name (NEMBA)',
+  );
 
   // 6. Preservation must not swamp the ask. The old prompt was five parts preservation to one part
   //    instruction; that ratio is what made a copy compliant.
