@@ -1707,6 +1707,61 @@ export default function DesignCanvas({
     return out;
   }, [state.zones, activeLayers.labels, imgW, imgH, labelMovedByUser]);
 
+  // LINE LABEL GROUPING — the same tidy the item pills got, for lines (Rory, on seeing the item
+  // grouping land: "very nice but look at all the drip irrigation labels now?"). Identical
+  // display texts collapse to ONE pill — "Drip irrigation line ×7" — on a representative line;
+  // ids absent from the plan draw no pill at all. Selected, highlighted or mid-rename lines are
+  // exempt and always draw their OWN pill: the pill is also the tap-to-rename affordance, so a
+  // line the farmer is working with must never hide it (their pill shows the plain name; the
+  // group pill's count covers only the collapsed members). The representative prefers a member
+  // whose label has been DRAGGED (that drag said "the group's pill lives here"), then the member
+  // nearest the group's anchor centroid; ties keep first-in-array so identical designs draw
+  // identically.
+  const lineLabelPlan = (() => {
+    const plan = new Map<string, string>();
+    if (!activeLayers.labels) return plan;
+    type Cand = { id: string; ax: number; ay: number; moved: boolean };
+    const groups = new Map<string, Cand[]>();
+    for (const l of state.lines) {
+      if (!activeLayers[LINE_LAYER[l.kind]]) continue;
+      if (selectedId === l.id || selectedIds.includes(l.id)) continue;
+      if (editingLabelId === l.id && editingLabelKind === 'line') continue;
+      const mid = l.points[Math.floor(l.points.length / 2)] ?? l.points[0];
+      if (!mid) continue;
+      const text = (l.name ?? LINE_KIND_LABEL[l.kind]).trim();
+      if (!text) continue;
+      const cand: Cand = {
+        id: l.id,
+        ax: mid[0] + (l.labelDx ?? 0),
+        ay: mid[1] + (l.labelDy ?? 0),
+        moved: Math.abs(l.labelDx ?? 0) > 0.003 || Math.abs(l.labelDy ?? 0) > 0.003,
+      };
+      const bucket = groups.get(text);
+      if (bucket) bucket.push(cand);
+      else groups.set(text, [cand]);
+    }
+    for (const [text, members] of groups) {
+      if (members.length === 1) {
+        plan.set(members[0].id, text);
+        continue;
+      }
+      const ax = members.reduce((s, m) => s + m.ax, 0) / members.length;
+      const ay = members.reduce((s, m) => s + m.ay, 0) / members.length;
+      const pool = members.some((m) => m.moved) ? members.filter((m) => m.moved) : members;
+      let rep = pool[0];
+      let best = Infinity;
+      for (const m of pool) {
+        const d = (m.ax - ax) ** 2 + (m.ay - ay) ** 2;
+        if (d < best) {
+          best = d;
+          rep = m;
+        }
+      }
+      plan.set(rep.id, `${text} ×${members.length}`);
+    }
+    return plan;
+  })();
+
   // Handle sizing — phone-first. A radius written in WORLD (viewBox) units, like the old
   // fixed r={14}, balloons on screen exactly when a farmer pinch-zooms in for precision —
   // the very thing a small phone forces them to do — AND scales again with how wide the
@@ -1954,8 +2009,8 @@ export default function DesignCanvas({
                     fill={layer.color}
                     fillOpacity={isActive ? 0.16 : 0.08}
                     stroke={layer.color}
-                    strokeWidth={isActive ? 2.5 : 1.75}
-                    strokeDasharray="2 4"
+                    strokeWidth={chrome(isActive ? 2.5 : 1.75)}
+                    strokeDasharray={chromeDash('2 4')}
                     strokeLinecap="round"
                     pointerEvents="none"
                   />
@@ -1974,8 +2029,8 @@ export default function DesignCanvas({
                     points={polylinePoints(layer.points, imgW, imgH)}
                     fill="none"
                     stroke={layer.color}
-                    strokeWidth={isActive ? 3 : 2}
-                    strokeDasharray="2 4"
+                    strokeWidth={chrome(isActive ? 3 : 2)}
+                    strokeDasharray={chromeDash('2 4')}
                     strokeLinecap="round"
                     pointerEvents="none"
                   />
@@ -1986,6 +2041,9 @@ export default function DesignCanvas({
                   Hidden when the Labels layer is off (declutter). */}
               {!isActive && activeLayers.labels && (
                 <g transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`} pointerEvents="none">
+                  {/* Counter-scaled like the item pills: a name tag is chrome, not geometry, so
+                      it keeps one screen size at every zoom instead of ballooning with the map. */}
+                  <g transform={`scale(${(1 / view.k).toFixed(3)})`}>
                   <foreignObject x={-56} y={-10} width={112} height={20} style={{ overflow: 'visible' }}>
                     <div
                       style={{
@@ -2011,6 +2069,7 @@ export default function DesignCanvas({
                       {adopted ? `✓ ${layer.name}` : layer.name}
                     </div>
                   </foreignObject>
+                  </g>
                 </g>
               )}
               {isActive && (
@@ -2171,6 +2230,10 @@ export default function DesignCanvas({
                   onPointerDown={(e) => startDragLabel(e, z.id)}
                   style={{ cursor: interactive ? 'move' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                 >
+                  {/* Counter-scaled: the name pill, the editor and the zone badge are chrome, not
+                      geometry — one screen size at every zoom. Drag/edit handlers live on the
+                      OUTER group and work in world units, so behaviour is untouched. */}
+                  <g transform={`scale(${(1 / view.k).toFixed(3)})`}>
                   {feat ? (
                     editingLabelId === z.id ? (
                       (() => {
@@ -2280,13 +2343,16 @@ export default function DesignCanvas({
                       </div>
                     </foreignObject>
                     ) : null
-                  ) : activeLayers.labels ? (
+                  ) : activeLayers.labels && activeLayers.symbols ? (
                     // Rory: "theres a bug when i toggle labels on and off it doesnt work" — this
                     // branch (a plain effort-zone ring's number badge) used to render
                     // UNCONDITIONALLY, never reading activeLayers.labels at all. On the Zones
                     // step every visible ring is exactly this case (ground features' word-pills
                     // are separately forced off there — see featureLabelsOn above), so 100% of
                     // what the toggle could affect on that step ignored it. Now it does.
+                    // It ALSO obeys the Icons toggle (Rory: "the zone icons also need to switch
+                    // off when icons are toggled off") — the badge is a round glyph, and a farmer
+                    // who turns icons off is asking for bare geometry.
                     <>
                       <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
                       <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
@@ -2294,6 +2360,7 @@ export default function DesignCanvas({
                       </text>
                     </>
                   ) : null}
+                  </g>
                 </g>
                 {/* Editing handles show only in Select mode — while a draw tool is armed
                     they'd sit on top of the drawing surface and a stray tap on the ✕ (or a
@@ -2305,8 +2372,8 @@ export default function DesignCanvas({
                       points={ringToPx(effectivePoints, imgW, imgH)}
                       fill="none"
                       stroke={GOLD}
-                      strokeWidth={2.5}
-                      strokeDasharray="4 3"
+                      strokeWidth={chrome(2.5)}
+                      strokeDasharray={chromeDash('4 3')}
                     />
                     {/* Edge-midpoint "+" handles — tap to insert a new corner on that edge. */}
                     {effectivePoints.map(([x, y], i) => {
@@ -2461,6 +2528,13 @@ export default function DesignCanvas({
                   const labelCy = mid[1] + ldy;
                   const labelMoved = Math.abs(ldx) > 0.003 || Math.abs(ldy) > 0.003;
                   const isEditingThis = editingLabelId === line.id && editingLabelKind === 'line';
+                  // Grouped away? An exempt line (selected/highlighted/mid-rename) always keeps
+                  // its OWN plain-named pill; everyone else defers to lineLabelPlan — the
+                  // representative carries "Drip irrigation line ×7" and the rest draw nothing.
+                  const pillText = isSelected || isHighlighted || isEditingThis
+                    ? line.name ?? LINE_KIND_LABEL[line.kind]
+                    : lineLabelPlan.get(line.id);
+                  if (!pillText) return null;
                   return (
                     <>
                       {labelMoved && (
@@ -2470,8 +2544,8 @@ export default function DesignCanvas({
                           x2={(labelCx * imgW).toFixed(1)}
                           y2={(labelCy * imgH).toFixed(1)}
                           stroke={style.stroke}
-                          strokeWidth={1}
-                          strokeDasharray="2 2"
+                          strokeWidth={chrome(1)}
+                          strokeDasharray={chromeDash('2 2')}
                           opacity={0.75}
                           pointerEvents="none"
                         />
@@ -2481,6 +2555,8 @@ export default function DesignCanvas({
                         onPointerDown={(e) => startDragLabel(e, line.id, 'line')}
                         style={{ cursor: interactive ? 'move' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                       >
+                      {/* Counter-scaled — pill and editor are chrome, constant screen size. */}
+                      <g transform={`scale(${(1 / view.k).toFixed(3)})`}>
                         {isEditingThis ? (
                           // Lighter than the zone/feature editor: a line only ever needs its name —
                           // no level/slope fields apply to fences, paths, pipes, swales, etc.
@@ -2549,10 +2625,11 @@ export default function DesignCanvas({
                                 textOverflow: 'ellipsis',
                               }}
                             >
-                              {line.name ?? LINE_KIND_LABEL[line.kind]}
+                              {pillText}
                             </div>
                           </foreignObject>
                         )}
+                      </g>
                       </g>
                     </>
                   );
@@ -2634,8 +2711,8 @@ export default function DesignCanvas({
                         }}
                         style={{ cursor: 'pointer' }}
                       >
-                        <circle r={9} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
-                        <text textAnchor="middle" dominantBaseline="central" fontSize={11} fill="#FBF6EC">
+                        <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
+                        <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fill="#FBF6EC">
                           ✕
                         </text>
                       </g>
@@ -2715,7 +2792,10 @@ export default function DesignCanvas({
           // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
           const owned = ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId });
           const interactive = tool === 'select' && owned;
-          const iconDiscR = clamp(6, Math.min(wPx, hPx) * 0.28, 11);
+          // The icon disc is a map SYMBOL, not geometry: chrome() holds it at one screen size at
+          // every zoom (identical at k=1). Zoomed in it used to balloon with the footprint until
+          // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
+          const iconDiscR = chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11));
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
@@ -2767,7 +2847,7 @@ export default function DesignCanvas({
                   when every small placed item carries a full emoji badge. */}
               {activeLayers.symbols && (
                 <>
-                  <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={Math.max(1, iconDiscR * 0.16)} />
+                  <circle r={iconDiscR} fill={def.color} stroke="#FFFFFF" strokeWidth={Math.max(chrome(1), iconDiscR * 0.16)} />
                   <text textAnchor="middle" dominantBaseline="central" fontSize={fontSize}>
                     {def.icon}
                   </text>
@@ -2877,7 +2957,7 @@ export default function DesignCanvas({
               )}
               {/* Upright drag readout — resize shows metres, rotate shows degrees */}
               {isSelected && (isResizingThis || isRotatingThis) && (
-                <g transform={`translate(0, ${(-hPx / 2 - 34).toFixed(1)})`} pointerEvents="none">
+                <g transform={`translate(0, ${(-hPx / 2 - worldPx(34)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`} pointerEvents="none">
                   <rect x={-34} y={-9} width={68} height={18} rx={9} fill="rgba(11,18,11,0.9)" stroke={GOLD} strokeWidth={1} />
                   <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
                     {isRotatingThis
@@ -2919,12 +2999,12 @@ export default function DesignCanvas({
               // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
               // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights
               // converged into one band while their icons stayed spread out.
-              const iconDiscR = activeLayers.symbols ? clamp(6, Math.min(wPx, hPx) * 0.28, 11) : 0;
+              const iconDiscR = activeLayers.symbols ? chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) : 0;
               return {
                 id: item.id,
                 cx: nx * imgW,
                 cy: ny * imgH,
-                gap: iconDiscR + 9,
+                gap: iconDiscR + chrome(9),
                 iconR: iconDiscR,
                 // Counter-scaled by view.k so a pill is a fixed SCREEN size: zooming in spreads the
                 // icons while the pills stay put, which is what makes a dense orchard readable.
@@ -3020,10 +3100,10 @@ export default function DesignCanvas({
                     fill={zoneDef.color}
                     fillOpacity={0.16}
                     stroke={zoneDef.color}
-                    strokeWidth={2}
-                    strokeDasharray="5 4"
+                    strokeWidth={chrome(2)}
+                    strokeDasharray={chromeDash('5 4')}
                   />
-                  <g transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)})`}>
+                  <g transform={`translate(${(centroid[0] * imgW).toFixed(1)},${(centroid[1] * imgH).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
                     <rect x={-18} y={-9} width={36} height={18} rx={9} fill="rgba(11,18,11,0.85)" stroke={zoneDef.color} strokeWidth={1} />
                     <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={zoneDef.color}>
                       Z{s.zone}?
@@ -3048,10 +3128,10 @@ export default function DesignCanvas({
                     r={Math.max((s.sizeM ?? 2) / mPerPx / 2, 4)}
                     fill="none"
                     stroke={CYAN}
-                    strokeWidth={2}
-                    strokeDasharray="5 4"
+                    strokeWidth={chrome(2)}
+                    strokeDasharray={chromeDash('5 4')}
                   />
-                  <g transform={`translate(${(px * imgW).toFixed(1)},${(py * imgH - 12).toFixed(1)})`}>
+                  <g transform={`translate(${(px * imgW).toFixed(1)},${(py * imgH - worldPx(12)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
                     <rect x={-16} y={-9} width={32} height={16} rx={8} fill="rgba(11,18,11,0.85)" stroke={CYAN} strokeWidth={1} />
                     <text textAnchor="middle" dominantBaseline="central" fontSize={9} fontWeight={700} fill={CYAN}>
                       AI?
@@ -3075,8 +3155,8 @@ export default function DesignCanvas({
                     r={Math.max((s.sizeM ?? 3) / mPerPx / 2, 4)}
                     fill="none"
                     stroke={CYAN}
-                    strokeWidth={2}
-                    strokeDasharray="5 4"
+                    strokeWidth={chrome(2)}
+                    strokeDasharray={chromeDash('5 4')}
                   />
                 )}
                 {isArea && (
@@ -3085,8 +3165,8 @@ export default function DesignCanvas({
                     fill={CYAN}
                     fillOpacity={0.1}
                     stroke={CYAN}
-                    strokeWidth={2}
-                    strokeDasharray="5 4"
+                    strokeWidth={chrome(2)}
+                    strokeDasharray={chromeDash('5 4')}
                   />
                 )}
                 {isLine && (
@@ -3094,12 +3174,12 @@ export default function DesignCanvas({
                     points={polylinePoints(s.points, imgW, imgH)}
                     fill="none"
                     stroke={CYAN}
-                    strokeWidth={2.5}
-                    strokeDasharray="5 4"
+                    strokeWidth={chrome(2.5)}
+                    strokeDasharray={chromeDash('5 4')}
                   />
                 )}
                 {labelPt && (
-                  <g transform={`translate(${(labelPt[0] * imgW).toFixed(1)},${(labelPt[1] * imgH - 12).toFixed(1)})`}>
+                  <g transform={`translate(${(labelPt[0] * imgW).toFixed(1)},${(labelPt[1] * imgH - worldPx(12)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
                     <rect x={-16} y={-9} width={32} height={16} rx={8} fill="rgba(11,18,11,0.85)" stroke={CYAN} strokeWidth={1} />
                     <text textAnchor="middle" dominantBaseline="central" fontSize={9} fontWeight={700} fill={CYAN}>
                       AI?
