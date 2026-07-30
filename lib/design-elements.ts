@@ -43,11 +43,19 @@ export interface DesignElementDef {
   alsoSteps?: Array<'water' | 'planting' | 'structures'>;
 }
 
+// A HEAT MAP, READ FROM THE CENTRE OUT (Rory: "zone colours are messed up — 0 should be red?
+// then orange and so on"). Permaculture literature fixes no exact hexes, but every zone diagram
+// is drawn as rings of decaying intensity — so the ramp must READ as one: hottest colour where
+// the visits are (Zone 0, the house), cooling steadily to the wild edge. The old ramp broke that
+// story at its very first step: 0 was charcoal, so the centre of the heat map was its coldest-
+// looking ring and red arrived at 1. Same muted app tones as before, shifted one ring inward;
+// only 3's yellow-green is a new tone (in-family, between 2's amber and 4's green). The numeral
+// badge always rides on the ring, so identity never rests on colour alone.
 export const ZONE_COLORS: Record<0 | 1 | 2 | 3 | 4 | 5, string> = {
-  0: '#3A352C',
-  1: '#B53A3A',
-  2: '#C66A1C',
-  3: '#9B8B1E',
+  0: '#B53A3A',
+  1: '#C66A1C',
+  2: '#9B8B1E',
+  3: '#6E8A2E',
   4: '#2F7A4A',
   5: '#1A6B58',
 };
@@ -92,9 +100,9 @@ export const CATEGORY_META: Record<ElementCategory, { label: string; icon: strin
   access: { label: 'Access', icon: '🚪' },
 };
 
-// Reuse the app's existing zone palette (see components/GeometryDesignStudio.tsx ZONE_COLORS /
-// ZONE_KEY): 0 charcoal House, 1 red Daily use, 2 orange Intensive, 3 amber Orchard/food forest,
-// 4 pale-green Low-care, 5 teal Conservation/buffer.
+// Reuse the app's zone palette (ZONE_COLORS above — the single source every surface imports):
+// 0 red House, 1 orange Daily use, 2 amber Intensive, 3 yellow-green Orchard/food forest,
+// 4 green Low-care, 5 teal Conservation/buffer.
 export const ZONE_DEFS: Record<0 | 1 | 2 | 3 | 4 | 5, { label: string; color: string }> = {
   0: { label: ZONE_KEY[0].label, color: ZONE_COLORS[0] },
   1: { label: ZONE_KEY[1].label, color: ZONE_COLORS[1] },
