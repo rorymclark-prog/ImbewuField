@@ -1297,6 +1297,25 @@ function DesignStudioInner() {
       // A freshly-imported photo arrives already aligned by the aligner itself, so its in-place
       // alignment starts at zero — and the preview IS the pristine original the re-bakes work from.
       customBaseSourceRef.current = { url: result.url, dataUrl: result.previewDataUrl };
+      // FIT THE PHOTO TO THE DESIGN'S GROUND SCALE, don't redefine the ground scale from the photo.
+      //
+      // The two-point calibration says how many metres one baked pixel of THIS photo is worth. It
+      // used to be written straight into the frame's metres-per-pixel — which silently redefined
+      // what the whole frame measures. The design is stored in normalised 0..1 frame coordinates,
+      // so it kept its pixels and changed its METRES: import a photo framed wider than the
+      // satellite and the farm suddenly sat as a small patch in the middle of it (Rory, twice:
+      // "still a problem inserting a photo out of scale!").
+      //
+      // The frame's ground meaning belongs to the satellite — Web-Mercator ground resolution,
+      // times whatever correction the farmer measured with the ruler. So the calibration is used
+      // to work out how much to ENLARGE the photo so its features match that scale, and the
+      // frame's metres never move. The design keeps its ground correspondence, and the photo
+      // arrives the right size against it.
+      const { frame: satelliteFrame } = computeCanvasFrame(layers, lat, lon);
+      const referenceMPerPx = scaledMPerPx(satelliteFrame.mPerPx, canvasState?.scaleFactor);
+      const fitScale = Number.isFinite(referenceMPerPx) && referenceMPerPx > 0
+        ? clampBaseScale(result.mPerPx / referenceMPerPx)
+        : 1;
       handleChange((prev) => ({
         ...prev,
         useCustomBase: true,
@@ -1307,12 +1326,21 @@ function DesignStudioInner() {
           dx: 0,
           dy: 0,
           rotationDeg: 0,
+          scale: fitScale,
         },
       }));
-      setFrame((prev) => (prev ? { ...prev, mPerPx: result.mPerPx, satDataUrl: result.previewDataUrl } : prev));
+      // The frame keeps the ground scale the design was drawn against — customBaseMPerPx folds
+      // the fit back out, so this equals referenceMPerPx whenever the fit was not clamped.
+      setFrame((prev) => (prev
+        ? {
+          ...prev,
+          mPerPx: customBaseMPerPx({ mPerPx: result.mPerPx, scale: fitScale }),
+          satDataUrl: result.previewDataUrl,
+        }
+        : prev));
       setShowPhotoImport(false);
     },
-    [handleChange],
+    [handleChange, layers, lat, lon, canvasState?.scaleFactor],
   );
 
   // Paint-time alignment of the farmer's photo over the satellite. These write ONLY the display

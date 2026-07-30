@@ -126,6 +126,48 @@ test('the frame\'s metres follow the photo\'s size, exactly and in the right dir
   }
 });
 
+// IMPORTING A PHOTO MUST NOT RESIZE THE FARM. Reported three times.
+//
+// The design is stored in normalised 0..1 FRAME coordinates, so what a frame pixel is worth on
+// the ground is the only thing that gives it a real-world size. Writing an imported photo's own
+// calibration straight into the frame therefore kept the design's pixels and changed its METRES:
+// a photo framed wider than the satellite left the farm as a small patch in the middle of it.
+//
+// The fix inverts it — the calibration sizes the PHOTO to the frame, and the frame's metres (the
+// satellite's Web-Mercator resolution, times the farmer's own ruler correction) never move.
+test('an imported photo is fitted to the design\'s ground scale, whatever it was shot at', () => {
+  const referenceMPerPx = 0.05; // what the frame already measures
+  const fitFor = (calibrated: number) => clampBaseScale(calibrated / referenceMPerPx);
+  // Metres, so a tolerance is honest here: these are ratios of decimal fractions and binary
+  // floating point cannot represent 0.15/0.05 as exactly 3. A tenth of a millimetre per pixel is
+  // far below anything a farmer or a plan sheet can express.
+  const close = (actual: number, expected: number, why: string) =>
+    assert.ok(Math.abs(actual - expected) < 1e-9, `${why}: ${actual} vs ${expected}`);
+
+  // A photo framed THREE TIMES wider than the satellite: each baked pixel is worth 3x the ground.
+  const wide = 0.15;
+  const wideFit = fitFor(wide);
+  close(wideFit, 3, 'a 3x-wider photo is drawn 3x larger');
+  // Drawn 3x larger it shows a third of the ground — and the frame still measures what it did,
+  // so not one area, spacing or yield in the saved design moved.
+  close(customBaseMPerPx({ mPerPx: wide, scale: wideFit }), referenceMPerPx, 'frame metres unmoved');
+
+  // A tighter photo is fitted the other way, by the same rule.
+  const tight = 0.025;
+  close(customBaseMPerPx({ mPerPx: tight, scale: fitFor(tight) }), referenceMPerPx, 'tight photo fitted');
+
+  // A photo already shot at the frame's scale is left completely alone.
+  assert.equal(fitFor(referenceMPerPx), 1);
+  assert.equal(customBaseMPerPx({ mPerPx: referenceMPerPx, scale: 1 }), referenceMPerPx);
+});
+
+test('a photo too far off to fit clamps rather than flinging the farm off the map', () => {
+  // 40x out is not a calibration anyone measured; the fit stops at the bound and the farmer
+  // finishes with the size buttons rather than the app silently accepting an absurd scale.
+  assert.equal(clampBaseScale(0.05 * 40 / 0.05), MAX_BASE_SCALE);
+  assert.equal(clampBaseScale(0.05 / 40 / 0.05), MIN_BASE_SCALE);
+});
+
 test('size is bounded, and the calibrated mPerPx is never overwritten by resizing', () => {
   assert.equal(clampBaseScale(MAX_BASE_SCALE * 10), MAX_BASE_SCALE);
   assert.equal(clampBaseScale(MIN_BASE_SCALE / 10), MIN_BASE_SCALE);
