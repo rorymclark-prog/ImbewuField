@@ -136,10 +136,24 @@ export function planEsriTiles(
   pixelRatio = 2,
   maxNativeZoom = ESRI_MAX_NATIVE_ZOOM,
 ): TilePlan {
-  const tileZoom = Math.max(0, Math.min(maxNativeZoom, Math.round(zoom)));
+  // TWO TILE CONVENTIONS MEET HERE, AND THEY ARE A FACTOR OF TWO APART.
+  //
+  // The design frame's `zoom` is Mapbox GL's: a 512-pixel world tile (lib/design-canvas TILE=512),
+  // which is what frame.mPerPx and every traced point are computed against. Esri's tiles are the
+  // classic 256-pixel kind, and at the SAME zoom number a 256-px world is half the size of a
+  // 512-px one. This planner used the frame's zoom directly in a 256-px world, so it laid the
+  // frame over twice the ground it was asked for and the returned photograph came back at half
+  // scale — the farm drawn on top no longer matched the land underneath. (Rory: "when you changed
+  // to esri everything shrank by a facto of half".)
+  //
+  // Converting once, here, keeps the rest of the file in Esri's own convention (tile indices,
+  // the native-zoom ceiling and the tile URLs are all 256-px levels) while callers keep passing
+  // the frame zoom they already hold.
+  const zoom256 = zoom + 1;
+  const tileZoom = Math.max(0, Math.min(maxNativeZoom, Math.round(zoom256)));
   // Frame extent in the REQUESTED zoom's world pixels, then rescaled to the tile zoom.
-  const [cx, cy] = lngLatToWorldPx(centerLng, centerLat, zoom);
-  const k = Math.pow(2, tileZoom - zoom);
+  const [cx, cy] = lngLatToWorldPx(centerLng, centerLat, zoom256);
+  const k = Math.pow(2, tileZoom - zoom256);
   const x0 = (cx - imgW / 2) * k;
   const x1 = (cx + imgW / 2) * k;
   const y0 = (cy - imgH / 2) * k;

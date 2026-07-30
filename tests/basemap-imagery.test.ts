@@ -35,10 +35,16 @@ function worldPxToLngLat(x: number, y: number, zoom: number): [number, number] {
 test('the stitched frame covers exactly the ground the Mapbox still covered', () => {
   const plan = planEsriTiles(LON, LAT, ZOOM, IMG_W, IMG_H);
 
-  // What Mapbox would have covered: imgW × imgH world pixels at the REQUESTED zoom.
-  const [cx, cy] = lngLatToWorldPx(LON, LAT, ZOOM);
-  const [wantW, wantN] = worldPxToLngLat(cx - IMG_W / 2, cy - IMG_H / 2, ZOOM);
-  const [wantE, wantS] = worldPxToLngLat(cx + IMG_W / 2, cy + IMG_H / 2, ZOOM);
+  // THIS TEST USED TO ENCODE THE BUG IT WAS WRITTEN TO PREVENT. It modelled the Mapbox still as
+  // imgW world pixels at the frame zoom in a 256-px world — but the frame zoom is Mapbox GL's
+  // 512-px-tile convention, so the still actually covers imgW pixels at 256-convention zoom+1,
+  // i.e. HALF that ground. Plan and expectation shared the same mistake, so the extents matched
+  // and the suite stayed green while the shipped photo came back at half scale.
+  //
+  // The +1 is the conversion, stated once here and once in planEsriTiles.
+  const [cx, cy] = lngLatToWorldPx(LON, LAT, ZOOM + 1);
+  const [wantW, wantN] = worldPxToLngLat(cx - IMG_W / 2, cy - IMG_H / 2, ZOOM + 1);
+  const [wantE, wantS] = worldPxToLngLat(cx + IMG_W / 2, cy + IMG_H / 2, ZOOM + 1);
 
   // What the plan will actually crop, expressed at its own tile zoom.
   const [gotW, gotN] = worldPxToLngLat(plan.x0, plan.y0, plan.tileZoom);
@@ -61,8 +67,10 @@ test('tiles are never sampled above the zoom Esri actually holds imagery for', (
     const plan = planEsriTiles(LON, LAT, z, IMG_W, IMG_H);
     assert.ok(plan.tileZoom <= ESRI_MAX_NATIVE_ZOOM, `zoom ${z} sampled at ${plan.tileZoom}`);
   }
-  // Below the ceiling it still tracks the request rather than pinning to the ceiling.
-  assert.equal(planEsriTiles(LON, LAT, 15, IMG_W, IMG_H).tileZoom, 15);
+  // Below the ceiling it still tracks the request rather than pinning to the ceiling — at the
+  // Esri level that matches the frame's own ground scale, which is one above the frame zoom
+  // (512-px frame tiles vs Esri's 256-px ones).
+  assert.equal(planEsriTiles(LON, LAT, 15, IMG_W, IMG_H).tileZoom, 16);
 });
 
 test('the output raster is the @2x size the caller already expects', () => {
@@ -151,5 +159,41 @@ test('a far-south and a far-north site both plan without wrapping', () => {
     const plan = planEsriTiles(lng, lat, ZOOM, IMG_W, IMG_H);
     assert.ok(plan.tx1 >= plan.tx0 && plan.ty1 >= plan.ty0, `${lng},${lat} produced an empty range`);
     assert.ok(Number.isFinite(plan.scale) && plan.scale > 0);
+  }
+});
+
+test('the stitched photo covers the ground the DESIGN FRAME asked for, not twice it', () => {
+  // THE BUG THIS PINS. The frame's zoom is Mapbox GL's 512-pixel-tile convention (design-canvas
+  // TILE=512) — the same convention frame.mPerPx and every traced point live in. This planner
+  // works in Esri's 256-pixel tiles, where the same zoom NUMBER means half the world. Using the
+  // frame zoom raw therefore laid the frame over exactly twice the ground, and the returned photo
+  // came back at half scale under a farm drawn at full scale. Rory saw it immediately: "when you
+  // changed to esri everything shrank by a facto of half".
+  //
+  // Asserted as GROUND METRES, not as a zoom number, because that is the thing that was wrong and
+  // a convention slip anywhere in the chain still fails this.
+  const plan = planEsriTiles(LON, LAT, ZOOM, IMG_W, IMG_H);
+  // What the design frame means by this zoom: 512-px tiles → m/px = 156543.03392·cos(lat)/2^(z+1).
+  const frameMPerPx = (156543.03392 * Math.cos((LAT * Math.PI) / 180)) / Math.pow(2, ZOOM + 1);
+  const expectedGroundW = IMG_W * frameMPerPx;
+
+  // The plan's crop window, converted back to ground metres at its own tile zoom (256-px tiles).
+  const tileMPerPx = (156543.03392 * Math.cos((LAT * Math.PI) / 180)) / Math.pow(2, plan.tileZoom);
+  const actualGroundW = (plan.x1 - plan.x0) * tileMPerPx;
+
+  const ratio = actualGroundW / expectedGroundW;
+  assert.ok(
+    Math.abs(ratio - 1) < 0.01,
+    `stitched photo must cover the frame's own ground extent; covered ${ratio.toFixed(3)}× of it`,
+  );
+});
+
+test('a deep frame zoom still samples tiles Esri actually holds', () => {
+  // The conversion above raises the effective level by one, so the native ceiling has to be
+  // respected in the converted convention or a deep frame silently asks for placeholder tiles.
+  for (const z of [17, 18, 19, 19.5, 20.3, 21, 22]) {
+    const plan = planEsriTiles(LON, LAT, z, IMG_W, IMG_H);
+    assert.ok(plan.tileZoom <= ESRI_MAX_NATIVE_ZOOM, `frame zoom ${z} sampled at ${plan.tileZoom}`);
+    assert.ok(plan.outW > 0 && plan.outH > 0 && Number.isFinite(plan.scale) && plan.scale > 0);
   }
 });
