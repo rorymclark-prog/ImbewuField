@@ -20,6 +20,7 @@ import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, ty
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
+import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR } from '@/lib/contour-cartography';
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
 import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
@@ -2005,19 +2006,28 @@ export default function DesignCanvas({
             the property. Off by default; toggled via the Contours layer. */}
         {activeLayers.contours && contours.lines.length > 0 && (
           <g clipPath="url(#contour-clip)" pointerEvents="none">
-            {contours.lines.map((ln, i) => (
-              <line
-                key={i}
-                x1={ln.a[0] * imgW}
-                y1={ln.a[1] * imgH}
-                x2={ln.b[0] * imgW}
-                y2={ln.b[1] * imgH}
-                stroke="#8B5A2B"
-                strokeWidth={ln.elevM === 0 ? 2 : 1}
-                strokeOpacity={0.55}
-                strokeDasharray={ln.elevM === 0 ? undefined : '5 4'}
-              />
-            ))}
+            {/* Drawn as a CASED line — dark casing first, bright core over it. The old single
+                #8B5A2B stroke measured 1.00:1 against red-brown South African soil: not subtle,
+                literally the same brightness as the ground. No flat colour can fix that (farm
+                imagery runs from canopy shadow to bright roof, so something always matches);
+                the casing is what guarantees the line survives whatever it crosses. Full audit
+                in lib/contour-cartography.ts. */}
+            {([CONTOUR_CASING, CONTOUR_CORE] as const).map((stroke, pass) =>
+              contours.lines.map((ln, i) => (
+                <line
+                  key={`${pass}-${i}`}
+                  x1={ln.a[0] * imgW}
+                  y1={ln.a[1] * imgH}
+                  x2={ln.b[0] * imgW}
+                  y2={ln.b[1] * imgH}
+                  stroke={pass === 1 && ln.elevM === 0 ? CONTOUR_CORE_MAJOR : stroke}
+                  strokeWidth={(ln.elevM === 0 ? 2 : 1.2) + (pass === 0 ? CONTOUR_CASING_EXTRA : 0)}
+                  strokeOpacity={pass === 0 ? 0.5 : 0.95}
+                  strokeLinecap="round"
+                  strokeDasharray={ln.elevM === 0 ? undefined : '5 4'}
+                />
+              )),
+            )}
           </g>
         )}
 

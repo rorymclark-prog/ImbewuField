@@ -25,6 +25,7 @@ import {
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
 import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
+import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR, CONTOUR_LABEL, CONTOUR_LABEL_HALO } from '@/lib/contour-cartography';
 import SpeakButton from './SpeakButton';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -97,14 +98,36 @@ const TOUCH_FS = IS_COARSE ? 18 : 15; // button font-size
 
 const terrainSource = { type: 'raster-dem' as const, url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 };
 
+// Contours are drawn as CASED lines: a dark casing layer beneath a bright core. The old green
+// (#7aaa50 / #b8d470) measured 1.02:1 and 1.07:1 worst-case against real farm imagery — green
+// linework on green land. Mapbox has no per-layer casing, so each core gets a wider dark twin
+// mounted directly beneath it. Palette and the full audit live in lib/contour-cartography.ts.
+const contourMinorCasing: LayerProps = {
+  id: 'contour-minor-casing', type: 'line', source: 'contours', 'source-layer': 'contour',
+  filter: ['==', ['get', 'index'], 0],
+  paint: {
+    'line-color': CONTOUR_CASING,
+    'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5 + CONTOUR_CASING_EXTRA, 15, 1.2 + CONTOUR_CASING_EXTRA],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 13, 0.35, 15, 0.5],
+  },
+};
 // Minor contours (10m interval) — fade in at zoom 12, fully visible at 14
 const contourMinor: LayerProps = {
   id: 'contour-minor', type: 'line', source: 'contours', 'source-layer': 'contour',
   filter: ['==', ['get', 'index'], 0],
   paint: {
-    'line-color': '#7aaa50',
+    'line-color': CONTOUR_CORE,
     'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 15, 1.2],
     'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 13, 0.6, 15, 0.85],
+  },
+};
+const contourMajorCasing: LayerProps = {
+  id: 'contour-major-casing', type: 'line', source: 'contours', 'source-layer': 'contour',
+  filter: ['==', ['get', 'index'], 1],
+  paint: {
+    'line-color': CONTOUR_CASING,
+    'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.8 + CONTOUR_CASING_EXTRA, 15, 2 + CONTOUR_CASING_EXTRA],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 10, 0.4, 15, 0.55],
   },
 };
 // Major contours (50m/100m interval)
@@ -112,7 +135,7 @@ const contourMajor: LayerProps = {
   id: 'contour-major', type: 'line', source: 'contours', 'source-layer': 'contour',
   filter: ['==', ['get', 'index'], 1],
   paint: {
-    'line-color': '#b8d470',
+    'line-color': CONTOUR_CORE_MAJOR,
     'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 15, 2],
     'line-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 10, 0.7, 15, 1],
   },
@@ -129,7 +152,7 @@ const contourLabel: LayerProps = {
     'text-letter-spacing': 0.05,
     'symbol-spacing': 300,
   },
-  paint: { 'text-color': '#d4e8a0', 'text-halo-color': '#0a150a', 'text-halo-width': 2 },
+  paint: { 'text-color': CONTOUR_LABEL, 'text-halo-color': CONTOUR_LABEL_HALO, 'text-halo-width': 2 },
 };
 // Minor contour labels at high zoom
 const contourLabelMinor: LayerProps = {
@@ -143,7 +166,7 @@ const contourLabelMinor: LayerProps = {
     'text-letter-spacing': 0.03,
     'symbol-spacing': 400,
   },
-  paint: { 'text-color': '#8ab860', 'text-halo-color': '#0a150a', 'text-halo-width': 1.5 },
+  paint: { 'text-color': CONTOUR_LABEL, 'text-halo-color': CONTOUR_LABEL_HALO, 'text-halo-width': 1.5 },
 };
 
 // ── Fine (5m minor / 25m major) contours — server-generated geojson isolines from
@@ -151,20 +174,38 @@ const contourLabelMinor: LayerProps = {
 // Mapbox vector tileset above. Same styling, no `source-layer` (geojson sources don't
 // have one) and reading from the 'contours-fine' source instead of 'contours'.
 const FINE_CONTOUR_MIN_ZOOM = 15;
+const contourFineMinorCasing: LayerProps = {
+  id: 'contour-fine-minor-casing', type: 'line', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 0],
+  paint: {
+    'line-color': CONTOUR_CASING,
+    'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5 + CONTOUR_CASING_EXTRA, 15, 1.2 + CONTOUR_CASING_EXTRA],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 13, 0.35, 15, 0.5],
+  },
+};
 const contourFineMinor: LayerProps = {
   id: 'contour-fine-minor', type: 'line', source: 'contours-fine',
   filter: ['==', ['get', 'index'], 0],
   paint: {
-    'line-color': '#7aaa50',
+    'line-color': CONTOUR_CORE,
     'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 15, 1.2],
     'line-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 13, 0.6, 15, 0.85],
+  },
+};
+const contourFineMajorCasing: LayerProps = {
+  id: 'contour-fine-major-casing', type: 'line', source: 'contours-fine',
+  filter: ['==', ['get', 'index'], 1],
+  paint: {
+    'line-color': CONTOUR_CASING,
+    'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.8 + CONTOUR_CASING_EXTRA, 15, 2 + CONTOUR_CASING_EXTRA],
+    'line-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 10, 0.4, 15, 0.55],
   },
 };
 const contourFineMajor: LayerProps = {
   id: 'contour-fine-major', type: 'line', source: 'contours-fine',
   filter: ['==', ['get', 'index'], 1],
   paint: {
-    'line-color': '#b8d470',
+    'line-color': CONTOUR_CORE_MAJOR,
     'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.8, 15, 2],
     'line-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 10, 0.7, 15, 1],
   },
@@ -180,7 +221,7 @@ const contourFineLabel: LayerProps = {
     'text-letter-spacing': 0.05,
     'symbol-spacing': 300,
   },
-  paint: { 'text-color': '#d4e8a0', 'text-halo-color': '#0a150a', 'text-halo-width': 2 },
+  paint: { 'text-color': CONTOUR_LABEL, 'text-halo-color': CONTOUR_LABEL_HALO, 'text-halo-width': 2 },
 };
 const contourFineLabelMinor: LayerProps = {
   id: 'contour-fine-label-minor', type: 'symbol', source: 'contours-fine',
@@ -193,7 +234,7 @@ const contourFineLabelMinor: LayerProps = {
     'text-letter-spacing': 0.03,
     'symbol-spacing': 400,
   },
-  paint: { 'text-color': '#8ab860', 'text-halo-color': '#0a150a', 'text-halo-width': 1.5 },
+  paint: { 'text-color': CONTOUR_LABEL, 'text-halo-color': CONTOUR_LABEL_HALO, 'text-halo-width': 1.5 },
 };
 
 // ── Design-on-map overlay layers (read-only). Data-driven colours/widths come from each
@@ -2079,6 +2120,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             contours as the always-available fallback. */}
         {contours && (zoom < FINE_CONTOUR_MIN_ZOOM || !fineContours) && (
           <Source id="contours" type="vector" url="mapbox://mapbox.mapbox-terrain-v2">
+            {/* Casings mount FIRST — Mapbox paints in mount order, so these sit beneath. */}
+            <Layer {...contourMinorCasing} />
+            <Layer {...contourMajorCasing} />
             <Layer {...contourMinor} />
             <Layer {...contourMajor} />
             <Layer {...contourLabel} />
@@ -2090,6 +2134,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             terrain-RGB DEM. Swapped in above FINE_CONTOUR_MIN_ZOOM once the fetch succeeds. */}
         {contours && zoom >= FINE_CONTOUR_MIN_ZOOM && fineContours && (
           <Source id="contours-fine" type="geojson" data={fineContours}>
+            <Layer {...contourFineMinorCasing} />
+            <Layer {...contourFineMajorCasing} />
             <Layer {...contourFineMinor} />
             <Layer {...contourFineMajor} />
             <Layer {...contourFineLabel} />

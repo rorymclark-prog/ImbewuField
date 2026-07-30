@@ -962,27 +962,27 @@ export default function DesignPalette({
               : t('designPaletteProLayers')}
           </div>
         )}
-        {/* One line, and only one — this note explains a filter the farmer did not ask for, so it
-            has to be present but must not spend two lines of a panel competing with the map. The
-            full sentence stays available on hover/long-press rather than being cut from the app. */}
-        {climateFilterActive && (
-          <div
-            title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
-            style={{
-              fontSize: 10.5, color: '#6B6355', whiteSpace: 'nowrap',
-              overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%',
-            }}
-          >
-            {t('designPaletteClimate')}
-            {siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}
-            {t('designPaletteClimateHidden')}
-          </div>
-        )}
+        {/* The climate note used to own a whole LINE of this panel to explain a filter the farmer
+            never asked for — a sentence you read once, charged against the map forever. It is now
+            the ⓘ chip at the head of the strip below: same words on hover/long-press, zero rows. */}
         {/* Wrapped so the "there is more to the right" fade can sit over the strip's right edge.
             Without it a 22-element catalog looks like a 16-element one: the scrollbar is a few
             faint pixels and nothing else says the row continues. */}
         <div style={{ position: 'relative', minWidth: 0 }}>
         <div ref={stripRef} onScroll={syncStripEnd} style={scrollStripStyle(guided ? 10 : 6)}>
+          {climateFilterActive && (
+            <span
+              title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
+              style={{
+                display: 'inline-flex', alignItems: 'center', flexShrink: 0,
+                minHeight: guided ? 44 : 34, padding: '0 8px', borderRadius: 9,
+                border: '1px dashed rgba(0,0,0,0.18)', color: '#6B6355',
+                fontSize: guided ? 12 : 11, cursor: 'help',
+              }}
+            >
+              ⓘ
+            </span>
+          )}
           {orderedCatalog.map((def) => {
             const active = placeDefId === def.id && tool === 'place';
             const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
@@ -1020,6 +1020,34 @@ export default function DesignPalette({
                 <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                   {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
                 </span>
+              </button>
+            );
+          })}
+          {/* Line kinds ride in the SAME strip as the elements. On the Planting step there is
+              exactly one of them (windbreak), and it was being given a full row of its own —
+              ~60px of the farmer's map spent on a single chip. They are the same gesture to the
+              farmer anyway: pick a thing, put it on the land. renderLineChips() below still owns
+              the steps that have no element catalog to ride in. */}
+          {showLineChips && lineChipsForStep.map((lk) => {
+            const active = lineKind === lk.id && tool === 'line';
+            return (
+              <button
+                key={`line-${lk.id}`}
+                type="button"
+                onClick={() => pickLine(lk.id)}
+                style={{
+                  minHeight: guided ? 44 : 34,
+                  padding: guided ? '4px 10px' : '3px 8px',
+                  borderRadius: 9,
+                  border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                  background: active ? GREEN : PAPER,
+                  color: active ? PAPER : DARK,
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  flexShrink: 0, cursor: 'pointer',
+                }}
+              >
+                <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{lk.icon}</span>
+                <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
               </button>
             );
           })}
@@ -1268,6 +1296,9 @@ export default function DesignPalette({
 
   function renderLineChips() {
     if (!showLineChips) return null;
+    // When there is an element catalog these chips already ride in its strip, so rendering them
+    // again here would both duplicate them and re-spend the row the merge just bought back.
+    if (showElementCatalog) return null;
     return (
       /* Water/Structures step: compact line-kind chips row */
       <div style={scrollStripStyle(guided ? 10 : 6)}>
@@ -1378,7 +1409,7 @@ export default function DesignPalette({
           // can never sit there looking committed.
           onBlur={() => setDraft((d) => ({ ...d, [key]: undefined }))}
           style={{
-            width: 52, minHeight: guided ? 44 : 38, padding: '4px 6px', borderRadius: 8,
+            width: 46, minHeight: guided ? 40 : 34, padding: '3px 5px', borderRadius: 8,
             border: '1px solid rgba(0,0,0,0.2)', background: PAPER, color: DARK,
             fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
           }}
@@ -1399,7 +1430,9 @@ export default function DesignPalette({
           onClick={armed ? onCancel : onArm}
           aria-pressed={armed}
           style={{
-            minHeight: guided ? 52 : 44, padding: '0 16px', borderRadius: 10, flexShrink: 0,
+            // Matches the element chips beside it. At 52 this button was the tallest thing in the
+            // panel and dragged the whole row's height up with it for no extra reachability.
+            minHeight: guided ? 44 : 36, padding: '0 14px', borderRadius: 10, flexShrink: 0,
             border: armed ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
             background: armed ? GREEN : 'transparent',
             color: armed ? PAPER : GREEN,
