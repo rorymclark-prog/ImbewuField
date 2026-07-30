@@ -5,7 +5,7 @@
 // AI "glossy" render of exactly what they built. NEW file only — does not modify any
 // existing route or component.
 
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
@@ -52,9 +52,13 @@ import {
   clampBaseNudge,
   clampBaseOpacity,
   clampBaseRotation,
+  clampBaseScale,
+  customBaseMPerPx,
   basePhotoControls,
   bakeBaseAlignment,
   MAX_BASE_ROTATION,
+  MIN_BASE_SCALE,
+  MAX_BASE_SCALE,
 } from '@/lib/design-canvas';
 import { type BaseAlignment } from '@/lib/base-photo-align';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
@@ -101,6 +105,36 @@ const BASE_NUDGE_STEP = 0.002;
 // satellite features, and it keeps the whole ±MAX_BASE_ROTATION range reachable in a sane number
 // of taps.
 const BASE_ROTATE_STEP = 0.5;
+
+// One size step, as a multiplier. Compounding rather than adding keeps a tap the same PERCEIVED
+// change whether the photo is currently large or small.
+const BASE_SCALE_STEP = 1.01;
+
+// PRESS AND HOLD on any of these controls to keep adjusting, accelerating as you go (Rory: "when
+// i hold down with the mouse on these arrows it must go without having to click repeatedly for
+// rapid adjustment also quicker than normal"). Tuned so a single held press can cross the whole
+// useful range in a couple of seconds while a short press is still exactly one step.
+const HOLD_FIRST_DELAY_MS = 380;
+const HOLD_START_INTERVAL_MS = 110;
+const HOLD_MIN_INTERVAL_MS = 28;
+const HOLD_RAMP_MS = 1200;
+
+// Shared look for every one-step control in the base-photo bar. `touchAction: none` is what lets
+// a press-and-hold on a phone repeat instead of being stolen by the page scroller.
+const STEP_BTN: CSSProperties = {
+  minWidth: 26,
+  minHeight: 26,
+  border: '1px solid rgba(192,122,30,0.4)',
+  borderRadius: 6,
+  background: '#FFFDF7',
+  color: '#C07A1E',
+  cursor: 'pointer',
+  fontSize: 10,
+  lineHeight: 1,
+  padding: 0,
+  touchAction: 'none',
+  userSelect: 'none',
+};
 
 const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
@@ -981,7 +1015,7 @@ function DesignStudioInner() {
       // update — the same import could land at two different sizes on two loads, and no amount
       // of re-importing would settle it (Rory: "i couldnt adjust it once inserted").
       const baseMPerPx = (f: typeof frameNoImg) =>
-        customBase ? customBase.mPerPx : scaledMPerPx(f.mPerPx, savedScale);
+        customBase ? customBaseMPerPx(customBase) : scaledMPerPx(f.mPerPx, savedScale);
       const loadCustomBase = (targetFrame: typeof frameNoImg) => {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
@@ -1000,7 +1034,7 @@ function DesignStudioInner() {
             loadedCustomBaseUrlRef.current = customBase.url;
             // mPerPx and the pixels are written TOGETHER, always. Splitting them is how a base
             // ends up measured by the other base's scale.
-            setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBase.mPerPx } : prev));
+            setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBaseMPerPx(customBase) } : prev));
           })
           .catch(() => {
             if (baseRequestRef.current !== token) return;
@@ -1051,7 +1085,7 @@ function DesignStudioInner() {
         if (customBase) {
           setFrame((prev) => ({
             ...frameNoImg,
-            mPerPx: customBase.mPerPx,
+            mPerPx: customBaseMPerPx(customBase),
             satDataUrl: prev?.satDataUrl ?? null,
             underlayDataUrl: prev?.underlayDataUrl ?? null,
           }));
@@ -1297,6 +1331,8 @@ function DesignStudioInner() {
   //     that silently no-opped, and the late download then painted the OLD angle over it.
   // Keying an effect on the alignment itself makes all of that unrepresentable: whatever the
   // state says, the pixels follow, no matter who changed it.
+  const [holdAlign, setHoldAlign] = useState<BaseAlignment | null>(null);
+  const holdAlignRef = useRef<BaseAlignment | null>(null);
   const bakeTokenRef = useRef(0);
   useEffect(() => {
     const photo = canvasState?.useCustomBase ? canvasState.customBase : null;
@@ -1312,7 +1348,10 @@ function DesignStudioInner() {
     // farmer already corrected.
     const token = bakeTokenRef.current + 1;
     bakeTokenRef.current = token;
-    bakeBaseAlignment(source.dataUrl, photo, frame.imgW, frame.imgH, frame.underlayDataUrl)
+    // While a button is held, the transient value is the one the farmer is watching — it has not
+    // been persisted yet (see holdAlign), but it must still be what they SEE.
+    const align = holdAlign ?? photo;
+    bakeBaseAlignment(source.dataUrl, align, frame.imgW, frame.imgH, frame.underlayDataUrl)
       .then((baked) => {
         if (bakeTokenRef.current !== token) return;
         setFrame((prev) => (prev ? { ...prev, satDataUrl: baked } : prev));
@@ -1323,6 +1362,7 @@ function DesignStudioInner() {
   }, [
     canvasState?.useCustomBase,
     canvasState?.customBase,
+    holdAlign,
     customBaseSourceRev,
     frame?.imgW,
     frame?.imgH,
@@ -1330,38 +1370,130 @@ function DesignStudioInner() {
     frame,
   ]);
 
-  // One writer for all three in-place controls. It only PERSISTS — the effect above owns the
-  // repaint, so there is exactly one path from a saved alignment to painted pixels.
-  //
-  // The next alignment is computed HERE, from the rendered state, and not read back out of the
-  // setState updater: a React updater body runs during the re-render, not when setState is
-  // called, so a value captured inside one is still unset on the line after.
-  const adjustBase = useCallback((patch: (b: NonNullable<DesignCanvasState['customBase']>) => BaseAlignment) => {
-    const current = canvasState?.customBase;
-    if (!current) return;
-    const p = patch(current);
+  // The frame's metres must follow the SIZE the farmer is currently looking at, mid-gesture
+  // included — otherwise the scale bar and every measurement lag a held resize by a whole
+  // gesture and read as broken.
+  useEffect(() => {
+    const photo = canvasState?.useCustomBase ? canvasState.customBase : null;
+    if (!photo || !holdAlign) return;
+    const live = customBaseMPerPx({ mPerPx: photo.mPerPx, scale: holdAlign.scale });
+    setFrame((prev) => (prev && prev.mPerPx !== live ? { ...prev, mPerPx: live } : prev));
+  }, [canvasState?.useCustomBase, canvasState?.customBase, holdAlign]);
+
+  // THE LIVE VALUE WHILE A BUTTON IS HELD DOWN. A held arrow fires many times a second, and
+  // every one of those ticks going through handleChange would mean a localStorage write, a cloud
+  // push and an UNDO ENTRY each — a two-second press would bury the farmer's real edit history
+  // under fifty nudges and leave Undo useless. So a gesture accumulates here, un-persisted, and
+  // commits exactly once when the button is released: one adjustment, one undo entry.
+
+  const committedAlign = useCallback((): BaseAlignment => {
+    const b = canvasState?.customBase;
+    return {
+      dx: b?.dx ?? 0,
+      dy: b?.dy ?? 0,
+      rotationDeg: b?.rotationDeg ?? 0,
+      scale: b?.scale ?? 1,
+    };
+  }, [canvasState?.customBase]);
+
+  // One step of any in-place control. Clamps, then updates only the transient value — the bake
+  // effect repaints from it, so the farmer sees each step land without a single write to disk.
+  const stepAlign = useCallback((patch: (a: BaseAlignment) => BaseAlignment) => {
+    if (!canvasState?.customBase) return;
+    const next = patch(holdAlignRef.current ?? committedAlign());
+    const clamped: BaseAlignment = {
+      dx: clampBaseNudge(next.dx),
+      dy: clampBaseNudge(next.dy),
+      rotationDeg: clampBaseRotation(next.rotationDeg),
+      scale: clampBaseScale(next.scale),
+    };
+    holdAlignRef.current = clamped;
+    setHoldAlign(clamped);
+  }, [canvasState?.customBase, committedAlign]);
+
+  // End of gesture: persist what the farmer arrived at, as a single edit.
+  const commitAlign = useCallback(() => {
+    const final = holdAlignRef.current;
+    if (!final) return;
+    holdAlignRef.current = null;
+    setHoldAlign(null);
     handleChange((prev) => (prev.customBase
-      ? {
-        ...prev,
-        customBase: {
-          ...prev.customBase,
-          dx: clampBaseNudge(p.dx),
-          dy: clampBaseNudge(p.dy),
-          rotationDeg: clampBaseRotation(p.rotationDeg),
-        },
-      }
+      ? { ...prev, customBase: { ...prev.customBase, ...final } }
       : prev));
-  }, [canvasState?.customBase, handleChange]);
+  }, [handleChange]);
 
   const nudgeBase = useCallback((ddx: number, ddy: number) => {
-    adjustBase((b) => ({ dx: (b.dx ?? 0) + ddx, dy: (b.dy ?? 0) + ddy, rotationDeg: b.rotationDeg ?? 0 }));
-  }, [adjustBase]);
+    stepAlign((a) => ({ ...a, dx: (a.dx ?? 0) + ddx, dy: (a.dy ?? 0) + ddy }));
+  }, [stepAlign]);
+
+  // Resizing the photo IS a scale correction, so it deliberately moves the metres with it —
+  // customBaseMPerPx folds `scale` into the frame's metres-per-pixel, which is what stops the
+  // app measuring a picture at a size it is not being drawn at. A farmer whose calibration came
+  // out too small can shrink the photo until its features sit on the satellite underneath, and
+  // the areas and yields follow the correction instead of contradicting it.
+  const scaleBase = useCallback((factor: number) => {
+    stepAlign((a) => ({ ...a, scale: (a.scale ?? 1) * factor }));
+  }, [stepAlign]);
 
   // Turning the photo, in place, without touching a single measurement — rotation preserves
   // distance, which is exactly why this control can exist where a scale handle never will.
   const rotateBase = useCallback((ddeg: number) => {
-    adjustBase((b) => ({ dx: b.dx ?? 0, dy: b.dy ?? 0, rotationDeg: (b.rotationDeg ?? 0) + ddeg }));
-  }, [adjustBase]);
+    stepAlign((a) => ({ ...a, rotationDeg: (a.rotationDeg ?? 0) + ddeg }));
+  }, [stepAlign]);
+
+  // PRESS AND HOLD. One tap is one step (the tick fires immediately); keeping the button down
+  // starts repeating after a short delay and accelerates, so crossing the whole useful range is
+  // a press rather than fifty clicks.
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stopHold = useCallback(() => {
+    if (holdTimerRef.current !== null) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    commitAlign();
+  }, [commitAlign]);
+
+  const startHold = useCallback((tick: () => void) => {
+    if (holdTimerRef.current !== null) clearTimeout(holdTimerRef.current);
+    tick();
+    const startedAt = performance.now();
+    const schedule = (delay: number) => {
+      holdTimerRef.current = setTimeout(() => {
+        tick();
+        const held = performance.now() - startedAt - HOLD_FIRST_DELAY_MS;
+        const ramp = Math.min(1, Math.max(0, held / HOLD_RAMP_MS));
+        schedule(HOLD_START_INTERVAL_MS + (HOLD_MIN_INTERVAL_MS - HOLD_START_INTERVAL_MS) * ramp);
+      }, delay);
+    };
+    schedule(HOLD_FIRST_DELAY_MS);
+  }, []);
+
+  // A pointer released outside the button, a cancelled gesture, or an unmount must still stop the
+  // repeat and save — otherwise the timer runs on against a control the farmer has let go of.
+  useEffect(() => () => {
+    if (holdTimerRef.current !== null) clearTimeout(holdTimerRef.current);
+  }, []);
+
+  // Bound to pointer events rather than onClick: onClick only fires on release, so a held button
+  // would sit dead until let go. Leaving and cancelling both end the gesture, so dragging off a
+  // button stops it rather than leaving it running.
+  const holdProps = useCallback((tick: () => void) => ({
+    onPointerDown: (e: React.PointerEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      // Capture keeps the repeat alive if the finger slides slightly off the button, but it
+      // THROWS for a pointer id the browser doesn't consider active. Letting that escape would
+      // abort the handler before the repeat ever starts — the control would look dead.
+      try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch { /* not capturable */ }
+      startHold(tick);
+    },
+    onPointerUp: stopHold,
+    onPointerLeave: stopHold,
+    onPointerCancel: stopHold,
+  }), [startHold, stopHold]);
+
+  // What the controls READ OUT. Mid-gesture this is the un-persisted value, so the degrees and
+  // the percentage track the photo while a button is held instead of lagging a whole gesture.
+  const liveAlign: BaseAlignment = holdAlign ?? committedAlign();
 
   // Opacity is the one adjustment that stays a live paint rather than being baked: it exists to
   // see the satellite THROUGH the photo while lining the two up, and a half-transparent photo is
@@ -1374,7 +1506,7 @@ function DesignStudioInner() {
 
   const resetBaseAlign = useCallback(() => {
     handleChange((prev) => (prev.customBase
-      ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, rotationDeg: 0, opacity: 1 } }
+      ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, rotationDeg: 0, scale: 1, opacity: 1 } }
       : prev));
   }, [handleChange]);
 
@@ -1448,7 +1580,7 @@ function DesignStudioInner() {
     setFrame((prev) => {
       const carried = prev?.underlayDataUrl ?? prev?.satDataUrl ?? null;
       if (!carried) loadedUnderlayKeyRef.current = null;
-      return prev ? { ...prev, mPerPx: saved.mPerPx, underlayDataUrl: carried } : prev;
+      return prev ? { ...prev, mPerPx: customBaseMPerPx(saved), underlayDataUrl: carried } : prev;
     });
     fetchImageAsDataUrl(saved.url)
       .then((dataUrl) => {
@@ -1458,7 +1590,7 @@ function DesignStudioInner() {
         customBaseSourceRef.current = { url: saved.url, dataUrl };
         setCustomBaseSourceRev((r) => r + 1);
         loadedCustomBaseUrlRef.current = saved.url;
-        setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: saved.mPerPx } : prev));
+        setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBaseMPerPx(saved) } : prev));
       })
       // A photo that will not load must not leave the farmer on a satellite image being MEASURED
       // with the photo's metres-per-pixel — that is a silently wrong scale on every area and
@@ -2619,17 +2751,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       ['▼', 0, BASE_NUDGE_STEP, 'Nudge photo south'],
                       ['▶', BASE_NUDGE_STEP, 0, 'Nudge photo east'],
                     ] as const).map(([glyph, ddx, ddy, label]) => (
-                      <button
-                        key={glyph}
-                        type="button"
-                        title={label}
-                        aria-label={label}
-                        onClick={() => nudgeBase(ddx, ddy)}
-                        style={{
-                          minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
-                          borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
-                          fontSize: 10, lineHeight: 1, padding: 0,
-                        }}
+                      <button key={glyph} type="button" title={`${label} — hold to keep going`} aria-label={label}
+                        {...holdProps(() => nudgeBase(ddx, ddy))} style={STEP_BTN}
                       >
                         {glyph}
                       </button>
@@ -2643,23 +2766,36 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       ['↺', -BASE_ROTATE_STEP, 'Turn photo anticlockwise'],
                       ['↻', BASE_ROTATE_STEP, 'Turn photo clockwise'],
                     ] as const).map(([glyph, ddeg, label]) => (
-                      <button
-                        key={glyph}
-                        type="button"
-                        title={label}
-                        aria-label={label}
-                        onClick={() => rotateBase(ddeg)}
-                        style={{
-                          minWidth: 26, minHeight: 26, border: '1px solid rgba(192,122,30,0.4)',
-                          borderRadius: 6, background: PAPER, color: OCHRE, cursor: 'pointer',
-                          fontSize: 13, lineHeight: 1, padding: 0,
-                        }}
+                      <button key={glyph} type="button" title={`${label} — hold to keep turning`} aria-label={label}
+                        {...holdProps(() => rotateBase(ddeg))} style={{ ...STEP_BTN, fontSize: 13 }}
                       >
                         {glyph}
                       </button>
                     ))}
                     <span style={{ fontSize: 11, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
-                      {(canvasState.customBase.rotationDeg ?? 0).toFixed(1)}°
+                      {(liveAlign.rotationDeg ?? 0).toFixed(1)}°
+                    </span>
+                  </span>
+                  {/* THE SIZE ADJUSTER (Rory: "i want to be able to adjust the size for micro
+                      adjustments once inserted but we have to get the scaling right"). Unlike the
+                      nudge and the angle, this one DOES move the metres — resizing a photo until
+                      its features sit on the satellite underneath is a scale correction, and the
+                      frame's metres-per-pixel is derived from it (customBaseMPerPx) so the app can
+                      never measure the picture at a size it is not drawn at. Fade the photo with
+                      See through while doing it and the two can be matched feature by feature. */}
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }} title="Resize your photo to match the satellite underneath. This is a SCALE correction — your measurements follow it.">
+                    {([
+                      ['−', 1 / BASE_SCALE_STEP, 'Make photo smaller'],
+                      ['+', BASE_SCALE_STEP, 'Make photo bigger'],
+                    ] as const).map(([glyph, factor, label]) => (
+                      <button key={glyph} type="button" title={`${label} — hold to keep resizing`} aria-label={label}
+                        {...holdProps(() => scaleBase(factor))} style={{ ...STEP_BTN, fontSize: 13 }}
+                      >
+                        {glyph}
+                      </button>
+                    ))}
+                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                      {Math.round((liveAlign.scale ?? 1) * 100)}%
                     </span>
                   </span>
                   <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title="Fade your photo to see the satellite underneath while you line them up">

@@ -122,6 +122,10 @@ export interface BaseAlignment {
   dx?: number;
   dy?: number;
   rotationDeg?: number;
+  /** Size multiplier on how large the photo is DRAWN. Unlike the others this one is a genuine
+   *  scale correction, so the frame's metres-per-pixel is derived from it — see customBaseMPerPx
+   *  in lib/design-canvas.ts, which is the only place that fold happens. */
+  scale?: number;
 }
 
 /** The alignment resolved into paintable numbers, in frame pixels. */
@@ -129,10 +133,12 @@ export interface ResolvedBaseAlign {
   tx: number;
   ty: number;
   rad: number;
-  /** Rotation centre — the frame's middle, so turning the photo doesn't also walk it sideways. */
+  /** Rotation/scale centre — the frame's middle, so turning or resizing the photo doesn't also
+   *  walk it sideways. */
   cx: number;
   cy: number;
   rotationDeg: number;
+  scale: number;
 }
 
 /**
@@ -150,6 +156,8 @@ export function resolveBaseAlign(
 ): ResolvedBaseAlign {
   const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0);
   const rotationDeg = num(align?.rotationDeg);
+  const rawScale = align?.scale;
+  const scale = typeof rawScale === 'number' && Number.isFinite(rawScale) && rawScale > 0 ? rawScale : 1;
   return {
     tx: num(align?.dx) * frameW,
     ty: num(align?.dy) * frameH,
@@ -157,6 +165,7 @@ export function resolveBaseAlign(
     cx: frameW / 2,
     cy: frameH / 2,
     rotationDeg,
+    scale,
   };
 }
 

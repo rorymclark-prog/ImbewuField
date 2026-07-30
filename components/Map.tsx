@@ -488,6 +488,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const activeSiteIdRef = useRef(siteIdForElements);
   useEffect(() => { activeSiteIdRef.current = siteIdForElements; }, [siteIdForElements]);
 
+  // Same pattern, same reason, for the open PLACE. featuresForPlace already filters the panel by
+  // placeId — but nothing ever STAMPED one at creation, so every parcel a farmer drew came out
+  // with placeId undefined, and an undefined placeId deliberately shows under every place (so a
+  // farmer's own land can never appear to vanish). The filter was therefore doing nothing for
+  // real data: Ubhejane Crèche listed the parcels drawn at Carl and Sandy's and vice versa
+  // (Rory: "still the labeled place doesnt show the connected parcels they jus all bundled
+  // together with other places"). Stamping at creation is what makes the existing filter bite.
+  const activePlaceIdRef = useRef(activePlaceId);
+  useEffect(() => { activePlaceIdRef.current = activePlaceId; }, [activePlaceId]);
+
   // ── Design-on-map overlay (read-only) ──────────────────────────────────────────
   // The current site's saved Design Studio design, projected onto the live map. Keyed per
   // site (same siteId as site elements) and refreshed on the same change event the Studio
@@ -751,6 +761,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           ).length;
           draw.setFeatureProperty(fid, 'hatchIdx', existingCount);
           draw.setFeatureProperty(fid, 'siteId', activeSiteIdRef.current);
+          // Belongs to the place the farmer has open — see activePlaceIdRef.
+          if (activePlaceIdRef.current) draw.setFeatureProperty(fid, 'placeId', activePlaceIdRef.current);
           createdId = fid;
         }
       });
@@ -1139,6 +1151,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       ).length;
       draw.setFeatureProperty(id, 'hatchIdx', existingCount);
       draw.setFeatureProperty(id, 'siteId', activeSiteIdRef.current);
+      // Belongs to the place the farmer has open — see activePlaceIdRef.
+      if (activePlaceIdRef.current) draw.setFeatureProperty(id, 'placeId', activePlaceIdRef.current);
     }
     setPinDraw(null);
     setDraftPoints([]);
@@ -1969,7 +1983,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     const f = draw?.get(id);
     setShapeName(overrideName !== undefined ? overrideName : (f?.properties?.name as string) ?? '');
     setShapeCategory(overrideCat !== undefined ? overrideCat : (f?.properties?.category as string) ?? '');
-    setShapeNamePlaceId((f?.properties?.placeId as string) ?? null);
+    // Default to the open place, so a farmer who types a name and saves without noticing the
+    // "Link to place" chips still gets a correctly-linked parcel. The chips become a correction,
+    // not the only route to one.
+    setShapeNamePlaceId((f?.properties?.placeId as string) ?? activePlaceIdRef.current ?? null);
     setShapeNaming({ id, type });
   }, []);
   const confirmShapeNaming = useCallback(() => {

@@ -160,6 +160,20 @@ export interface CustomBaseImage {
    * and re-doing the whole alignment (Rory: "this is good we just need a angle adjuster").
    */
   rotationDeg?: number;
+  /**
+   * In-place SIZE refinement, as a multiplier on how large the photo is drawn in the frame.
+   * 1 = exactly as imported.
+   *
+   * THIS ONE DOES MOVE THE METRES, and that is the point. A drone photo whose calibration came
+   * out too small makes the whole design look tiny on it (Rory: "it remains too big for the
+   * actual drawing and satellite ... i want to be able to adjust the size for micro adjustments
+   * once inserted but we have to get the scaling right"). Resizing the photo until its features
+   * match the satellite underneath IS a scale correction, so the frame's metres-per-pixel is
+   * derived as `mPerPx / scale` (customBaseMPerPx) rather than left to disagree with the picture.
+   * mPerPx itself keeps meaning "metres per frame pixel at scale 1", so the farmer's original
+   * two-point calibration is never overwritten and Reset always returns to it.
+   */
+  scale?: number;
   /** How opaque the photo sits over the satellite while aligning it. Undefined = fully opaque,
    *  which is the normal working state; the slider only matters while lining the two up. */
   opacity?: number;
@@ -191,6 +205,28 @@ export function clampBaseRotation(v: unknown): number {
   return typeof v === 'number' && Number.isFinite(v)
     ? Math.min(MAX_BASE_ROTATION, Math.max(-MAX_BASE_ROTATION, v))
     : 0;
+}
+
+/** In-place size bounds. Wide enough for a calibration that came out badly wrong (a factor of
+ *  four either way), tight enough that a slip cannot turn a smallholding into a province. */
+export const MIN_BASE_SCALE = 0.25;
+export const MAX_BASE_SCALE = 4;
+
+/** Coerce a persisted/typed size into the refinement range. Non-finite reads as "as imported". */
+export function clampBaseScale(v: unknown): number {
+  return typeof v === 'number' && Number.isFinite(v) && v > 0
+    ? Math.min(MAX_BASE_SCALE, Math.max(MIN_BASE_SCALE, v))
+    : 1;
+}
+
+/**
+ * The frame's metres-per-pixel for a custom base — the ONE place the size refinement is folded
+ * into the calibrated scale, so no caller can paint the photo at one size and measure it at
+ * another. Drawing the photo `scale` times larger means each frame pixel covers `scale` times
+ * less ground, hence the division.
+ */
+export function customBaseMPerPx(base: Pick<CustomBaseImage, 'mPerPx' | 'scale'>): number {
+  return base.mPerPx / clampBaseScale(base.scale);
 }
 
 /** Opacity for painting the custom base over the satellite. Undefined/!finite = fully opaque. */
@@ -573,7 +609,7 @@ export function migrateStateToFrame(
  */
 export async function bakeBaseAlignment(
   sourceDataUrl: string,
-  align: { dx?: number; dy?: number; rotationDeg?: number } | null | undefined,
+  align: { dx?: number; dy?: number; rotationDeg?: number; scale?: number } | null | undefined,
   frameW: number,
   frameH: number,
   underlayDataUrl?: string | null,
@@ -581,10 +617,11 @@ export async function bakeBaseAlignment(
   const dx = clampBaseNudge(align?.dx);
   const dy = clampBaseNudge(align?.dy);
   const rotationDeg = clampBaseRotation(align?.rotationDeg);
+  const scale = clampBaseScale(align?.scale);
   // Nothing to bake — hand back the original bytes rather than round-tripping them through a
   // canvas re-encode, which costs time and loses nothing but quality. A zero alignment covers
   // the frame exactly, so there is no uncovered area to fill either.
-  if (dx === 0 && dy === 0 && rotationDeg === 0) return sourceDataUrl;
+  if (dx === 0 && dy === 0 && rotationDeg === 0 && scale === 1) return sourceDataUrl;
   // A frame we cannot size is a frame we cannot bake into: a 0×0 canvas exports a blank string
   // and would read to the farmer as "my photo vanished". The unaligned original is always a
   // better answer than nothing.
@@ -623,9 +660,13 @@ export async function bakeBaseAlignment(
   }
 
   ctx.save();
-  const { tx, ty, rad, cx, cy } = resolveBaseAlign({ dx, dy, rotationDeg }, frameW, frameH);
+  const { tx, ty, rad, cx, cy, scale: s } = resolveBaseAlign({ dx, dy, rotationDeg, scale }, frameW, frameH);
   ctx.translate(cx + tx, cy + ty);
   ctx.rotate(rad);
+  // About the frame centre, so resizing doesn't also walk the photo off to one side. Shrinking
+  // uncovers frame area exactly like rotation does — which is why the backdrop above is painted
+  // unconditionally rather than only for rotation.
+  ctx.scale(s, s);
   // Drawn at frame size from the rotation centre — the same "slice" fit the untransformed image
   // element uses, so a zero alignment and a baked alignment agree pixel-for-pixel.
   ctx.drawImage(img, -cx, -cy, frameW, frameH);

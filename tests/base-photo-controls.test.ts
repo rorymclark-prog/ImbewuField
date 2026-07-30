@@ -1,7 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { basePhotoControls, clampBaseRotation, MAX_BASE_ROTATION } from '@/lib/design-canvas';
+import {
+  basePhotoControls,
+  clampBaseRotation,
+  clampBaseScale,
+  customBaseMPerPx,
+  MAX_BASE_ROTATION,
+  MIN_BASE_SCALE,
+  MAX_BASE_SCALE,
+} from '@/lib/design-canvas';
 import { resolveBaseAlign } from '@/lib/base-photo-align';
 
 // THE BUG CLASS THIS GUARDS: a control that exists in one direction only. "Switch to satellite
@@ -51,7 +59,7 @@ test('rotation is bounded and non-finite input reads as square', () => {
 
 test('an unrotated, un-nudged alignment is the identity — nothing is re-encoded for nothing', () => {
   const a = resolveBaseAlign({ dx: 0, dy: 0, rotationDeg: 0 }, 960, 640);
-  assert.deepEqual(a, { tx: 0, ty: 0, rad: 0, cx: 480, cy: 320, rotationDeg: 0 });
+  assert.deepEqual(a, { tx: 0, ty: 0, rad: 0, cx: 480, cy: 320, rotationDeg: 0, scale: 1 });
   // Missing/garbage fields must degrade to the identity rather than to NaN, which would paint
   // nothing at all and read to a farmer as "my photo disappeared".
   assert.deepEqual(resolveBaseAlign(null, 960, 640), resolveBaseAlign({}, 960, 640));
@@ -98,6 +106,36 @@ test('an alignment that uncovers the frame is one the bake must fill behind', ()
   assert.equal(uncovers({}), false);
 });
 
+// SIZE IS THE ONE ADJUSTMENT THAT MOVES THE METRES — and it must move them EXACTLY.
+//
+// A farmer resizing their photo until its features sit on the satellite underneath is making a
+// scale correction, so the frame's metres-per-pixel is derived from the size rather than left to
+// contradict the picture. Drawing the photo `scale` times larger means each frame pixel covers
+// `scale` times less ground.
+test('the frame\'s metres follow the photo\'s size, exactly and in the right direction', () => {
+  const base = { mPerPx: 0.05 };
+  assert.equal(customBaseMPerPx({ ...base, scale: 1 }), 0.05);
+  // Bigger photo → each frame pixel covers LESS ground.
+  assert.equal(customBaseMPerPx({ ...base, scale: 2 }), 0.025);
+  // Smaller photo → each frame pixel covers MORE ground.
+  assert.equal(customBaseMPerPx({ ...base, scale: 0.5 }), 0.1);
+  // Absent/corrupt size must read as "as imported", never as NaN or Infinity metres — a
+  // non-finite scale would poison every area, yield and price derived from it.
+  for (const bad of [undefined, NaN, Infinity, 0, -2, '2' as unknown as number]) {
+    assert.equal(customBaseMPerPx({ ...base, scale: bad as number }), 0.05);
+  }
+});
+
+test('size is bounded, and the calibrated mPerPx is never overwritten by resizing', () => {
+  assert.equal(clampBaseScale(MAX_BASE_SCALE * 10), MAX_BASE_SCALE);
+  assert.equal(clampBaseScale(MIN_BASE_SCALE / 10), MIN_BASE_SCALE);
+  assert.equal(clampBaseScale(1.25), 1.25);
+  // Reset must return the farmer to their own two-point calibration, which is only possible
+  // because `scale` is a separate multiplier rather than something folded INTO mPerPx.
+  const calibrated = { mPerPx: 0.037, scale: 3.1 };
+  assert.equal(customBaseMPerPx({ ...calibrated, scale: 1 }), 0.037);
+});
+
 // ROTATION MUST NOT RESTATE A SINGLE MEASUREMENT. This is the whole reason an angle adjuster can
 // be offered where a scale handle never will be: turning an image preserves distance, so mPerPx —
 // and every area, spacing and yield derived from it — is untouched. resolveBaseAlign therefore
@@ -105,8 +143,16 @@ test('an alignment that uncovers the frame is one the bake must fill behind', ()
 test('no rotation angle introduces a scale factor', () => {
   for (const deg of [-20, -7.5, -0.5, 0, 0.5, 7.5, 20]) {
     const a = resolveBaseAlign({ dx: 0, dy: 0, rotationDeg: deg }, 960, 640);
-    assert.deepEqual(Object.keys(a).sort(), ['cx', 'cy', 'rad', 'rotationDeg', 'tx', 'ty']);
+    // Turning the photo must leave the size alone. Size is its own control precisely BECAUSE it
+    // moves the metres — rotation is offered freely only as long as it never does.
+    assert.equal(a.scale, 1, `rotating ${deg}° must not resize`);
     assert.equal(a.tx, 0);
     assert.equal(a.ty, 0);
+  }
+});
+
+test('nudging never resizes either — only the size control changes the metres', () => {
+  for (const dx of [-0.1, -0.002, 0, 0.002, 0.1]) {
+    assert.equal(resolveBaseAlign({ dx, dy: -dx, rotationDeg: 0 }, 960, 640).scale, 1);
   }
 });
