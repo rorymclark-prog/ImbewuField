@@ -291,7 +291,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user, profile, role, loading,
       signIn, signUp, signInWithGoogle, resetPassword, changePassword, refreshProfile, signOutUser,
     }}>
-      {suspendAccountTree ? null : (
+      {suspendAccountTree ? (
+        // Account-transition holding screen: the tree must stay unmounted while the
+        // storage namespace rotates, but a cold load on a slow connection can sit here
+        // for seconds — show something rather than a blank page.
+        <div className="flex h-screen w-full items-center justify-center" aria-busy="true">
+          <span className="h-3 w-3 animate-pulse rounded-full bg-ink/40" aria-label="Loading" />
+        </div>
+      ) : (
         <Fragment key={accountTreeKey}>{children}</Fragment>
       )}
     </AuthContext.Provider>
