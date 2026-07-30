@@ -61,7 +61,12 @@ import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePr
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
-import { countedLegendText, legendRowGap } from '@/lib/sheet-legend-layout';
+import {
+  balancedLegendColumnRanges,
+  countedLegendText,
+  layoutLegendColumn,
+  legendRowFontSize,
+} from '@/lib/sheet-legend-layout';
 import { overlayElementsText } from '@/lib/overlay-elements';
 import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
@@ -7379,25 +7384,6 @@ async function composeStyleSheet(
 
   const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const legendTop = y + Math.round(legendW * 0.03);
-  const sw = Math.round(legendW * 0.064);
-  const tx = lx + sw + Math.round(legendW * 0.03);
-  const textW = maxX - tx;
-  const wrapLegendText = (value: string, fontSize: number): string[] => {
-    ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
-    const lines: string[] = [];
-    let current = '';
-    for (const word of value.split(/\s+/)) {
-      const next = current ? `${current} ${word}` : word;
-      if (current && ctx.measureText(next).width > textW) {
-        lines.push(current);
-        current = word;
-      } else {
-        current = next;
-      }
-    }
-    if (current) lines.push(current);
-    return lines.length ? lines : [value];
-  };
   const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
@@ -7436,52 +7422,205 @@ async function composeStyleSheet(
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
-  const layoutRows = (fontSize: number) => {
+  const contentW = maxX - lx;
+  const desiredFs = legendRowFontSize(legendW, availableRowsH, rows.length);
+  const baseSw = Math.round(legendW * 0.064);
+  const columnGap = Math.max(10, Math.round(legendW * 0.025));
+  const singleColumnTextGap = Math.round(legendW * 0.03);
+  const compactColumnTextGap = Math.max(8, Math.round(legendW * 0.018));
+  const wrapLegendText = (value: string, fontSize: number, textWidth: number): string[] => {
+    ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
+    const lines: string[] = [];
+    let current = '';
+    for (const word of value.split(/\s+/)) {
+      const next = current ? `${current} ${word}` : word;
+      if (current && ctx.measureText(next).width > textWidth) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = next;
+      }
+    }
+    if (current) lines.push(current);
+    return lines.length ? lines : [value];
+  };
+  const wrapSectionHeading = (value: string, fontSize: number, columnWidth: number): string[] => {
+    ctx.font = `800 ${fontSize}px ${REFERENCE_LABEL_FONT}`;
+    const lines: string[] = [];
+    let current = '';
+    for (const word of value.split(/\s+/)) {
+      const next = current ? `${current} ${word}` : word;
+      if (current && ctx.measureText(next).width > columnWidth) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = next;
+      }
+    }
+    if (current) lines.push(current);
+    return lines.length ? lines : [value];
+  };
+  const symbolSizeFor = (fontSize: number, columnWidth: number, columnCount: number) =>
+    columnCount === 1
+      ? Math.max(baseSw, Math.round(fontSize * 1.45))
+      : Math.min(
+          baseSw,
+          Math.max(16, Math.round(fontSize * 1.45), Math.round(columnWidth * 0.12)),
+        );
+  const layoutRows = (
+    sourceRows: StyleLegendRow[],
+    fontSize: number,
+    columnWidth: number,
+    symbolSize: number,
+    rowTextGap: number,
+  ) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
     const sectionFs = Math.max(9, Math.round(fontSize * 0.82));
+    const sectionLineH = Math.max(10, Math.round(sectionFs * 1.15));
+    const textWidth = Math.max(1, columnWidth - symbolSize - rowTextGap);
     let previousSection: string | undefined;
-    return rows.map((row) => {
-      const lines = wrapLegendText(row.text, fontSize);
-      const contentHeight = Math.max(sw, lines.length * lineH) + Math.max(2, Math.round(fontSize * 0.22));
+    return sourceRows.map((row) => {
+      const lines = wrapLegendText(row.text, fontSize, textWidth);
+      const contentHeight = Math.max(symbolSize, lines.length * lineH)
+        + Math.max(2, Math.round(fontSize * 0.22));
       const startsSection = Boolean(row.section && row.section !== previousSection);
-      const headingHeight = startsSection ? Math.round(sectionFs * 1.7) : 0;
+      const headingLines = startsSection && row.section
+        ? wrapSectionHeading(row.section, sectionFs, columnWidth)
+        : [];
+      // One-line headings keep the previous 1.7× block exactly; wrapped headings add one normal
+      // heading line at a time and are remeasured by the same column-fit pass as factual rows.
+      const headingHeight = startsSection
+        ? sectionLineH * headingLines.length + Math.round(sectionFs * 0.55)
+        : 0;
       previousSection = row.section;
-      return { row, lines, contentHeight, headingHeight, height: contentHeight + headingHeight };
+      return {
+        row,
+        lines,
+        contentHeight,
+        headingHeight,
+        headingLines,
+        sectionLineH,
+        height: contentHeight + headingHeight,
+      };
     });
   };
-  let fs = Math.max(14, Math.round(legendW * 0.036));
-  let rowLayout = layoutRows(fs);
-  while (rowLayout.reduce((sum, row) => sum + row.height, 0) > availableRowsH && fs > 9) {
-    fs -= 1;
-    rowLayout = layoutRows(fs);
-  }
-  const usedRowsH = rowLayout.reduce((sum, row) => sum + row.height, 0);
-  const lineH = Math.max(11, Math.round(fs * 1.22));
-  // Pass the row rhythm so a three-row legend on a full-height panel stays a compact block instead
-  // of being justified down the column with a hole between every row. See MAX_GAP_TO_ROW_RHYTHM.
-  const rowGap = legendRowGap(availableRowsH, usedRowsH, rowLayout.length, lineH);
-  const sectionFs = Math.max(9, Math.round(fs * 0.82));
-  y = legendTop;
-  for (const { row, lines, contentHeight, headingHeight } of rowLayout) {
-    if (headingHeight && row.section) {
-      ctx.textBaseline = 'alphabetic';
-      ctx.fillStyle = '#1F4D2B';
-      ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
-      ctx.fillText(row.section, lx, y + sectionFs);
-      y += headingHeight;
+
+  type LegendColumnPlan = {
+    x: number;
+    fontSize: number;
+    symbolSize: number;
+    textX: number;
+    rowLayout: ReturnType<typeof layoutRows>;
+    columnLayout: ReturnType<typeof layoutLegendColumn>;
+  };
+  const planColumns = (columnCount: number, fontSize: number): LegendColumnPlan[] => {
+    const columnWidth = (contentW - columnGap * (columnCount - 1)) / columnCount;
+    const rowTextGap = columnCount === 1 ? singleColumnTextGap : compactColumnTextGap;
+    const symbolSize = symbolSizeFor(fontSize, columnWidth, columnCount);
+    const provisionalRows = layoutRows(rows, fontSize, columnWidth, symbolSize, rowTextGap);
+    const measuredSlices = new Map<string, ReturnType<typeof layoutRows>>();
+    const measuredSlice = (start: number, end: number) => {
+      const key = `${start}:${end}`;
+      const cached = measuredSlices.get(key);
+      if (cached) return cached;
+      const measured = layoutRows(
+        rows.slice(start, end),
+        fontSize,
+        columnWidth,
+        symbolSize,
+        rowTextGap,
+      );
+      measuredSlices.set(key, measured);
+      return measured;
+    };
+    const ranges = balancedLegendColumnRanges(
+      provisionalRows.map((row) => row.height),
+      columnCount,
+      (start, end) => measuredSlice(start, end).reduce((sum, row) => sum + row.height, 0),
+    );
+    const lineH = Math.max(11, Math.round(fontSize * 1.22));
+    return ranges.map((range, columnIndex) => {
+      const rowLayout = measuredSlice(range.start, range.end);
+      return {
+        x: lx + columnIndex * (columnWidth + columnGap),
+        fontSize,
+        symbolSize,
+        textX: symbolSize + rowTextGap,
+        rowLayout,
+        columnLayout: layoutLegendColumn(
+          availableRowsH,
+          rowLayout.map((row) => ({ height: row.height })),
+          lineH,
+        ),
+      };
+    });
+  };
+
+  let columnPlans: LegendColumnPlan[] = [];
+  if (rows.length) {
+    // Preserve legibility before compactness: a two-column 16px inventory is preferable to a
+    // one-column 9px inventory. At a shared font size, the fewest columns still wins.
+    outer: for (let fontSize = desiredFs; fontSize >= 9; fontSize -= 1) {
+      for (let columnCount = 1; columnCount <= Math.min(3, rows.length); columnCount += 1) {
+        const candidate = planColumns(columnCount, fontSize);
+        if (candidate.length && candidate.every((column) => !column.columnLayout.overflow)) {
+          columnPlans = candidate;
+          break outer;
+        }
+      }
     }
-    const symbolY = y + contentHeight / 2;
-    drawStyleLegendSymbol(ctx, row, lx, symbolY, sw, Math.min(sw, contentHeight * 0.82));
-    ctx.fillStyle = '#241E12';
-    ctx.font = `600 ${fs}px ${SHEET_BODY_FONT}`;
-    ctx.textBaseline = 'middle';
-    const textTop = symbolY - ((lines.length - 1) * lineH) / 2;
-    lines.forEach((line, index) => ctx.fillText(line, tx, textTop + index * lineH));
-    y += contentHeight + rowGap;
+    if (!columnPlans.length) {
+      throw new Error('Legend facts cannot fit the finished sheet at the 9px readability floor.');
+    }
   }
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(lx, legendTop, maxX - lx, availableRowsH);
+  ctx.clip();
+  for (const column of columnPlans) {
+    const lineH = Math.max(11, Math.round(column.fontSize * 1.22));
+    const sectionFs = Math.max(9, Math.round(column.fontSize * 0.82));
+    ctx.save();
+    ctx.translate(column.x, legendTop);
+    for (const [
+      index,
+      { row, lines, contentHeight, headingHeight, headingLines, sectionLineH },
+    ] of column.rowLayout.entries()) {
+      y = column.columnLayout.offsets[index] ?? 0;
+      if (headingHeight && row.section) {
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = '#1F4D2B';
+        ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
+        headingLines.forEach((line, headingIndex) => {
+          ctx.fillText(line, 0, y + sectionFs + headingIndex * sectionLineH);
+        });
+        y += headingHeight;
+      }
+      const symbolY = y + contentHeight / 2;
+      drawStyleLegendSymbol(
+        ctx,
+        row,
+        0,
+        symbolY,
+        column.symbolSize,
+        Math.min(column.symbolSize, contentHeight * 0.82),
+      );
+      ctx.fillStyle = '#241E12';
+      ctx.font = `600 ${column.fontSize}px ${SHEET_BODY_FONT}`;
+      ctx.textBaseline = 'middle';
+      const textTop = symbolY - ((lines.length - 1) * lineH) / 2;
+      lines.forEach((line, lineIndex) => {
+        ctx.fillText(line, column.textX, textTop + lineIndex * lineH);
+      });
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+  y = legendTop + Math.max(0, ...columnPlans.map((column) => column.columnLayout.contentBottom));
   if (!rows.length) {
     ctx.fillStyle = '#6B6355';
-    ctx.font = `italic 500 ${fs}px ${SHEET_BODY_FONT}`;
+    ctx.font = `italic 500 ${desiredFs}px ${SHEET_BODY_FONT}`;
     ctx.fillText('Nothing placed on this layer.', lx, y);
   }
   // Footer contract. Exact sheets state their provenance plainly; AI texture sheets retain the
