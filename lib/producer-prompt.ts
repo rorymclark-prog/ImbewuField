@@ -912,18 +912,37 @@ export function buildSatelliteOverlayPrompt(args: {
   // Labels on the MAP never carry the section machinery — only the element names.
   const mapNames = elementNames.replace(/\s*\|\s*/g, ', ').replace(/[A-Z ]+\u00bb\s*/g, '').trim();
 
+  // A model can paint a generic tank, but it cannot safely bind a capacity to one of two
+  // identical markers. Capacity text is therefore preprinted by the app from each item's own
+  // defId/coordinate and restored from the queued source after generation. Keep the exact names in
+  // Rule 7 and the legend so the inventory remains truthful, but remove them from the model's
+  // allowed map-label spellings.
+  const isTankCapacityName = (name: string): boolean =>
+    /^JoJo Tank\s+\d[\d ]*\s*L(?:\s*\u00d7\s*\d+)?$/i.test(name.trim());
+  const tankCapacityNames = [
+    ...new Set(mapNames.split(',').map((name) => name.trim()).filter(isTankCapacityName)),
+  ];
+  const modelMapNames = mapNames
+    .split(',')
+    .map((name) => name.trim())
+    .filter((name) => !isTankCapacityName(name))
+    .join(', ');
+
   /** The same list with every quantity removed — the only spellings allowed in a drawn map label. */
   const labelNames = [
     ...new Set(
-      mapNames
+      modelMapNames
         .split(',')
         .map((n) => n.replace(/\s*\u00d7\s*\d+\s*$/, '').trim())
         .filter(Boolean),
     ),
   ].join(', ');
+  const tankCapacityChromeRule = tankCapacityNames.length
+    ? `\n\nTANK CAPACITY CALLOUTS — these are app-owned preprinted chrome, bound to each saved tank marker before this image is sent. Preserve the exact callouts already present in the supplied image, including their positions and leaders. Do not add, move, replace, rewrite or infer any tank capacity on the map; the app restores these pixels after generation. The exact capacity names remain inventory/legend facts only: ${tankCapacityNames.join(', ')}.`
+    : '';
   const labelRule = sheetKind === 'zones'
     ? '10. LABELS — NO ELEMENT LABELS. This sheet has zone bands, not element markers. Put only the saved zone numeral inside each round zone badge. Do not write a zone name, zone description, item name or count anywhere on the map; the complete zone names belong in the legend panel only.'
-    : `10. LABELS — YOU DRAW THEM. Label every marked element in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, give the whole group ONE label — its plain name, with no number and no count — and run a leader from that single label to the group. Where the same element type appears in separate parts of the site, label each part with that same plain name and let its leader line show which it is. Repeating a name is correct; numbering it is not. THESE ARE THE ONLY SPELLINGS, and a label is exactly one of them in caps, with nothing added: ${labelNames}. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.`;
+    : `10. LABELS — YOU DRAW THEM. Label every marked element except the app-owned tank-capacity callouts already printed in the supplied image, in small white uppercase sans-serif, even in size, horizontal, sitting on open photographic ground clear of the icons, joined to its icon by a hairline white leader line ending in a small filled white arrowhead. Where several identical items sit together, give the whole group ONE label — its plain name, with no number and no count — and run a leader from that single label to the group. Where the same element type appears in separate parts of the site, label each part with that same plain name and let its leader line show which it is. Repeating a name is correct; numbering it is not. THESE ARE THE ONLY SPELLINGS, and a label is exactly one of them in caps, with nothing added: ${labelNames || '(none — add no new map labels)'}. LABEL THE DESIGN, NOT THE SITE: the only things that get a label are the elements named in the list above — the things the farmer has DESIGNED. Everything that was already on the land carries no label at all: no caption on the house or any roof, none on the driveway, paving, patio, yard, lawn or existing planting, none on the boundary fence, and none on any neighbouring property. A plan sheet is read by looking for what is new; captioning the things a farmer walks past every day buries it.`;
   const wordsRule = sheetKind === 'zones'
     ? '14. WORDS ON THE SHEET: the only lettering anywhere is the zone number badges, the zone legend rows, the title, the subtitle, "N" and "20 m". Zone names and descriptions appear in the legend only, never as map labels. All lettering is horizontal and print-legible.'
     : `14. WORDS ON THE SHEET: the only lettering anywhere is the element labels, the driveway caption, the legend rows, the title, the subtitle, "N"${fabricIsContent && siteFabric ? ', the existing-fabric captions' : ''} and "20 m". All spelled exactly as given, all horizontal, all print-legible.`;
@@ -962,6 +981,8 @@ ${iconRule}
 8. THE ROOF AND THE ACCESS TRACK ARE DIFFERENT THINGS, AND THEY ARE DIFFERENT COLOURS. Slate grey #3C4247 is ROOF; near-black #12140F is TAR ON THE GROUND. Never draw one in the other's colour and never give the near-black shape a ridge, a hip, a pitched plane or a shadow. The bright white outline encloses the ROOF of the house, and the photograph inside that outline IS the real roof, shot from above — draw it as a building with ridges, hips and pitched planes casting a shadow, keeping every edge and every wing exactly as the photograph shows them. Nothing covers that roof: if it looks like a flat grey rectangle you are looking at the wrong thing. It is a building, and no part of it is ever paved, darkened or turned into road surface. The access track is separate, flat, at ground level, and lies where the photograph already shows it. They never merge and they never swap.
 
 9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule}${routeRule}${waterSystems}${zoneBands}${siteFabric}${structuresBlock}${servedClause}
+
+${tankCapacityChromeRule}
 
 ${labelRule}
 

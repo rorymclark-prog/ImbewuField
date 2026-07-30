@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { clusterByProximity, compareLabelRows, plotBox, producerLabels } from '../lib/producer-labels.ts';
+import { clusterByProximity, compareLabelRows, plotBox, producerLabels, satelliteTankCapacityLabelBindings, satelliteTankCapacityLabels } from '../lib/producer-labels.ts';
 import type { LabelRefLayers } from '../lib/producer-labels.ts';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { fitMeasuredPillX, type ProducerLabel } from '../lib/image-producer.ts';
@@ -305,4 +305,31 @@ test('exported geometry helpers return finite fallbacks and retain only usable p
     { x: 2, y: 0.5, name: 'Outside', icon: '' },
   ], Number.NaN);
   assert.deepEqual(clusters, [[valid]]);
+});
+
+test('Satellite tank capacity chrome keeps each catalog capacity bound to its saved marker', () => {
+  const state = waterSheetState();
+  // Deliberately reverse the array order and lie in the instance labels: neither index nor a
+  // farmer-entered nickname is allowed to decide which capacity is printed at which marker.
+  state.items = [
+    { id: 'tank-central-2500', defId: 'jojo_2500', x: 0.481307, y: 0.518217, label: '5000L' },
+    { id: 'tank-north-5000', defId: 'jojo_5000', x: 0.445795, y: 0.387785, label: '2500L' },
+  ];
+  const bindings = satelliteTankCapacityLabelBindings(state);
+  assert.deepEqual(
+    bindings.map(({ itemId, defId, text, icon, x, y }) => ({ itemId, defId, text, icon, x, y })),
+    [
+      { itemId: 'tank-central-2500', defId: 'jojo_2500', text: 'JoJo Tank 2500L', icon: '🛢️', x: 0.481307, y: 0.518217 },
+      { itemId: 'tank-north-5000', defId: 'jojo_5000', text: 'JoJo Tank 5000L', icon: '🫙', x: 0.445795, y: 0.387785 },
+    ],
+  );
+  const labels = satelliteTankCapacityLabels(state, waterSheetRefLayers(), W, H);
+  assert.deepEqual(
+    labels.map(({ id, text, cx, cy }) => ({ id, text, cx, cy })),
+    [
+      { id: 'tank-north-5000', text: 'JOJO TANK 5000L', cx: 0.445795 * W, cy: 0.387785 * H },
+      { id: 'tank-central-2500', text: 'JOJO TANK 2500L', cx: 0.481307 * W, cy: 0.518217 * H },
+    ],
+  );
+  assert.deepEqual(state.items.map((item) => item.label), ['5000L', '2500L']);
 });

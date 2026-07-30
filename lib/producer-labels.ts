@@ -9,6 +9,8 @@ import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import type { DesignElementDef, ElementCategory } from '@/lib/design-elements';
 import type { DesignCanvasState } from '@/lib/design-canvas';
 import type { ProducerLabel } from '@/lib/image-producer';
+import { stackLeaderRows } from '@/lib/leader-labels';
+import { statedTankCapacityLitres, TANK_IDS } from '@/lib/water-system';
 import {
   itemInFilter,
   sheetElementNaming,
@@ -456,5 +458,86 @@ export function producerLabels(
       });
     });
   });
+  return out;
+}
+
+/**
+ * A Satellite Overlay may ask the model to paint a tank, but it may not decide which saved tank
+ * capacity belongs to which marker. These bindings are deliberately per-item and catalog-derived:
+ * instance labels and array order are presentation hints, not physical identity.
+ */
+export interface SatelliteTankCapacityLabelBinding {
+  itemId: string;
+  defId: string;
+  text: string;
+  icon: string;
+  x: number;
+  y: number;
+}
+
+export function satelliteTankCapacityLabelBindings(
+  state: DesignCanvasState,
+): SatelliteTankCapacityLabelBinding[] {
+  return state.items
+    .flatMap((item) => {
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def || !TANK_IDS.has(def.id) || statedTankCapacityLitres(def) === null) return [];
+      if (!isNormalisedPoint([item.x, item.y])) return [];
+      return [{
+        itemId: item.id,
+        defId: def.id,
+        text: def.name,
+        icon: def.icon,
+        x: item.x,
+        y: item.y,
+      }];
+    });
+}
+
+/** Exact, one-callout-per-tank layout used as protected Satellite map chrome. */
+export function satelliteTankCapacityLabels(
+  state: DesignCanvasState,
+  refLayers: LabelRefLayers,
+  W: number,
+  H: number,
+): ProducerLabel[] {
+  if (!Number.isFinite(W) || W <= 0 || !Number.isFinite(H) || H <= 0) return [];
+  const bindings = satelliteTankCapacityLabelBindings(state);
+  if (!bindings.length) return [];
+  const box = plotBox(refLayers.boundary);
+  const centreX = ((box.x0 + box.x1) / 2) * W;
+  const fs = 26;
+  const pillH = fs + 14;
+  const rowGap = Math.max(34, Math.round(fs * 1.7));
+  const top = Math.round(H * 0.12);
+  const leftBottom = H - Math.max(110, Math.round(H * 0.11));
+  const rightBottom = Math.round(H * 0.86);
+  const pillWidth = (text: string) => 28 + text.length * fs * 0.62;
+  const out: ProducerLabel[] = [];
+
+  for (const side of ['left', 'right'] as const) {
+    const column = bindings
+      .filter((binding) => (binding.x * W < centreX ? 'left' : 'right') === side)
+      .sort((a, b) => a.y - b.y || a.x - b.x || a.itemId.localeCompare(b.itemId));
+    if (!column.length) continue;
+    const bottom = side === 'left' ? leftBottom : rightBottom;
+    const rows = stackLeaderRows(column.map((binding) => binding.y * H), top, bottom, rowGap);
+    column.forEach((binding, index) => {
+      const text = binding.text.toUpperCase();
+      const pw = pillWidth(text);
+      const ax = side === 'left' ? 16 : Math.max(16, W - pw - 16);
+      out.push({
+        id: binding.itemId,
+        cx: binding.x * W,
+        cy: binding.y * H,
+        ax,
+        ay: rows[index],
+        lx: side === 'left' ? ax + pw : ax,
+        text,
+        kind: 'item',
+        leader: true,
+      });
+    });
+  }
   return out;
 }

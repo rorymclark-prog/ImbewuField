@@ -53,7 +53,7 @@ import {
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
-import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
+import { compareLabelRows, producerLabels, plotBox, satelliteTankCapacityLabels } from '@/lib/producer-labels';
 import { structureRegisterText } from '@/lib/structure-register';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
@@ -3178,6 +3178,29 @@ function drawBlueprintLabelPills(
     }
     drawReferenceMapText(ctx, l.text, textX, l.ay + 1, fs, weight, align);
   }
+}
+
+/**
+ * Satellite Overlay's model may paint the tank body, but capacity is factual chrome. Keep this
+ * overlay map-sized so the same alpha pixels can be carried into the queued protect mask and
+ * restored after the model returns a sheet-sized image.
+ */
+function buildSatelliteTankCapacityChrome(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): string | undefined {
+  const labels = satelliteTankCapacityLabels(state, refLayers, W, H);
+  if (!labels.length) return undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return undefined;
+  ctx.clearRect(0, 0, W, H);
+  drawBlueprintLabelPills(ctx, labels);
+  return canvas.toDataURL('image/png');
 }
 
 function referenceBlueprintLabels(
@@ -9317,6 +9340,10 @@ export default function DesignGlossy({
               ? polishModelInputMarks(f)
               : undefined,
         );
+        const capacityChrome = isModelChromeStyle(styleKey) && (f === 'water' || f === 'all')
+          ? buildSatelliteTankCapacityChrome(renderState, renderRefLayers, mapW, mapH)
+          : undefined;
+        const modelInput = await stackOverlayImages(composite, capacityChrome, mapW, mapH) ?? composite;
         const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
           ? overlayElementsText(renderState, renderRefLayers, f)
           : { elements: producerElementsText(renderState, renderRefLayers, f, !lockActive), fabric: '' };
@@ -9324,13 +9351,13 @@ export default function DesignGlossy({
         // Satellite Overlay is handed a sheet-shaped canvas (map + blank cream panel) so the photo
         // never has to be moved to make room for the legend. See extendWithLegendPanel.
         const sheetInput = isModelChromeStyle(styleKey)
-          ? (await extendWithLegendPanel(composite, mapW, mapH)).dataUrl
-          : composite;
+          ? (await extendWithLegendPanel(modelInput, mapW, mapH)).dataUrl
+          : modelInput;
         // Carry the structural mask through the queue for deterministic post-generation restore.
         // It is deliberately NOT sent to the edits endpoint: GPT Image keeps the Precision Atlas
         // style reference, then the browser restores house/driveway/boundary/outside pixels and
         // verifies the opaque mask pixels byte-for-byte.
-        const protectMaskDataUrl = lockActive
+        const structuralProtectMask = lockActive
           ? await buildProtectMask(
               renderState,
               renderFrame,
@@ -9338,6 +9365,12 @@ export default function DesignGlossy({
               f,
               lockedProtectMaskOptions(f),
             )
+          : undefined;
+        const protectMaskMap = await stackOverlayImages(structuralProtectMask, capacityChrome, mapW, mapH);
+        const protectMaskDataUrl = protectMaskMap
+          ? isModelChromeStyle(styleKey)
+            ? await extendMaskWithPanel(protectMaskMap, mapW, mapH)
+            : protectMaskMap
           : undefined;
         const prompt = isModelChromeStyle(styleKey)
           ? buildSatelliteOverlayPrompt({
@@ -9457,11 +9490,15 @@ export default function DesignGlossy({
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(renderState, renderRefLayers, filter)
         : { elements: producerElementsText(renderState, renderRefLayers, filter, !lockActive), fabric: '' };
+      const capacityChrome = !fullSheetPolish && isModelChromeStyle(styleKey) && (filter === 'water' || filter === 'all')
+        ? buildSatelliteTankCapacityChrome(renderState, renderRefLayers, mapW, mapH)
+        : undefined;
+      const modelInput = await stackOverlayImages(composite, capacityChrome, mapW, mapH) ?? composite;
       const sheetInput = fullSheetPolish
         ? composite
         : isModelChromeStyle(styleKey)
-        ? (await extendWithLegendPanel(composite, mapW, mapH)).dataUrl
-        : composite;
+        ? (await extendWithLegendPanel(modelInput, mapW, mapH)).dataUrl
+        : modelInput;
       const designBrief = buildDesignBrief(renderState, renderRefLayers, placeName, site);
       const renderStage = fullSheetPolish ? 'full' : 'hybrid';
       const route = sheetRenderRoute({ filter }, renderStage, styleKey);
@@ -9493,14 +9530,22 @@ export default function DesignGlossy({
           fullTreatmentProtectPolicy(),
         );
         protectMaskDataUrl = await extendProtectMaskToStyleSheet(mapMask, mapW, mapH, false);
-      } else if (authorityFlags.geometryLock) {
-        protectMaskDataUrl = await buildProtectMask(
-          renderState,
-          renderFrame,
-          renderRefLayers,
-          filter,
-          lockedProtectMaskOptions(filter),
-        );
+      } else {
+        const structuralProtectMask = authorityFlags.geometryLock
+          ? await buildProtectMask(
+              renderState,
+              renderFrame,
+              renderRefLayers,
+              filter,
+              lockedProtectMaskOptions(filter),
+            )
+          : undefined;
+        const protectMaskMap = await stackOverlayImages(structuralProtectMask, capacityChrome, mapW, mapH);
+        protectMaskDataUrl = protectMaskMap
+          ? isModelChromeStyle(styleKey)
+            ? await extendMaskWithPanel(protectMaskMap, mapW, mapH)
+            : protectMaskMap
+          : undefined;
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
       const prompt = fullSheetPolish

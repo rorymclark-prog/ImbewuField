@@ -1184,7 +1184,23 @@ test('the map-label list is the element list with every quantity stripped', () =
   const rule10 = p.split('THESE ARE THE ONLY SPELLINGS')[1].split('\n')[0];
   assert.match(rule10, /Vegetable Bed/i);
   assert.match(rule10, /Tap Point/i);
+  assert.doesNotMatch(rule10, /JoJo Tank 2500L|JoJo Tank 5000L/i, 'tank capacities must be app-owned chrome, not model lettering');
   assert.doesNotMatch(rule10, /×\s*\d/, 'a quantity reached the list of allowed label spellings');
+});
+
+test('Satellite keeps tank capacities in the legend but declares their map callouts app-owned', () => {
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Water',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'JoJo Tank 2500L, JoJo Tank 5000L',
+    sheetKind: 'water',
+  });
+  const labelRule = p.split('10. LABELS')[1].split(/\n\d{2}\./)[0];
+  const legendRule = p.split('11. LEGEND PANEL')[1].split('12. SHEET FURNITURE')[0];
+  assert.match(p, /app-owned|app adds|preprinted/i);
+  assert.doesNotMatch(labelRule, /JoJo Tank 2500L|JoJo Tank 5000L/i);
+  assert.match(legendRule, /JoJo Tank 2500L/i);
+  assert.match(legendRule, /JoJo Tank 5000L/i);
 });
 
 test('nothing in the prompt shows a count being lettered onto the sheet', () => {
