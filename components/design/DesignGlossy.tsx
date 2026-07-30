@@ -54,6 +54,7 @@ import {
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
 import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
+import { structureRegisterText } from '@/lib/structure-register';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
@@ -9461,7 +9462,7 @@ export default function DesignGlossy({
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
       const prompt = fullSheetPolish
-        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName)
+        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers))
         : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2 })
         : lockActive
@@ -9677,7 +9678,7 @@ export default function DesignGlossy({
       const prompt = polishStage
         ? kind === 'sector'
           ? buildSectorSheetPolishPrompt(styleKey, placeName)
-          : buildFinishedSheetPolishPrompt('Existing Site', styleKey, placeName)
+          : buildFinishedSheetPolishPrompt('Existing Site', styleKey, placeName, structureRegisterText(state, refLayers))
         : buildSectorRestylePrompt(styleKey, placeName);
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
@@ -9777,7 +9778,7 @@ export default function DesignGlossy({
       const protectMaskDataUrl = polishStage ? undefined : buildPhasingProtectMask(frame, refLayers);
 
       const prompt = polishStage
-        ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName)
+        ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName, structureRegisterText(state, refLayers))
         : buildPhasingRestylePrompt(styleKey, placeName);
 
       const jobId = await enqueueRenderJob({

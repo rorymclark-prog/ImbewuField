@@ -881,6 +881,32 @@ test('the paid second pass is told it received a DRAFT, and that copying it is a
   assert.match(p, /polished editorial cartography/i);
 });
 
+test('the polish pass structure register separates roofed buildings from flat ground', () => {
+  const register =
+    '"Classroom" (western part of the site) is the largest roofed building on the site — draw exactly one roof on its exact footprint. "Concrete Slab" (central part of the site) is flat paving at ground level — bare concrete open to the sky, with NO roof and NO walls.';
+  const p = buildFinishedSheetPolishPrompt('Planting & Agroforestry', 'chatgpt_atlas', 'Some Farm', register);
+
+  assert.match(p, /STRUCTURE REGISTER/);
+  assert.ok(p.includes(register), 'the computed register must be embedded verbatim');
+  assert.match(
+    p,
+    /never merge neighbouring structures under one shared roof/i,
+    'the giant shared roof over slab + buildings was the exact production failure',
+  );
+  assert.match(
+    p,
+    /stays fully open to the sky/i,
+    'flat surfaces must be told to stay unroofed, not merely unmoved',
+  );
+});
+
+test('the polish prompt without a register carries no empty STRUCTURE REGISTER section', () => {
+  for (const register of [undefined, '', '   ']) {
+    const p = buildFinishedSheetPolishPrompt('Water', 'chatgpt_atlas', 'Some Farm', register);
+    assert.ok(!p.includes('STRUCTURE REGISTER'), `register=${JSON.stringify(register)}`);
+  }
+});
+
 test('the access track is described as flat ground, never a slab or a roof', () => {
   // It came back drawn as a raised, roof-like plane beside the house (Rory: "makes the driveway
   // like a roof"). "At ground level" was not enough — the model needed the negatives.
