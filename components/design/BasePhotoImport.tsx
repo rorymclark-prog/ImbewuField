@@ -65,6 +65,12 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
   // the farmer can see the part of the map they are matching against, and so a short viewport
   // cannot park a control out of reach (Rory: "i cant reach the scale make its so we can move the
   // modal"). Distinct from `pan`, which moves the PHOTO inside the canvas.
+  // Placing a scale point is its own MODE, not a gesture guess. Sharing the canvas between
+  // "drag to move" and "tap to place" sounded clean and is wrong in the hand: aiming a point
+  // precisely means resting a finger and nudging, and a nudge is a drag — so the photo slid out
+  // from under the point the farmer was trying to set (Rory: "theres no easy way to add the scale
+  // point there must be a button and a undo bitton").
+  const [pointMode, setPointMode] = useState(false);
   const [sheetOffset, setSheetOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const sheetDragRef = useRef<{ x: number; y: number; offX: number; offY: number } | null>(null);
   const [points, setPoints] = useState<Point[]>([]);
@@ -201,7 +207,14 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
     const scaleY = DEFAULT_IMG_H / rect.height;
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
-    setPoints((prev) => (prev.length >= 2 ? [{ x, y }] : [...prev, { x, y }]));
+    setPoints((prev) => {
+      if (prev.length >= 2) return prev; // full — Undo is how you change one, not a silent reset
+      const next = [...prev, { x, y }];
+      // Disarm once both are down, so the farmer is immediately back to adjusting the photo
+      // without having to notice a mode is still on.
+      if (next.length === 2) setPointMode(false);
+      return next;
+    });
   }
 
   const metresNum = parseFloat(metres);
@@ -352,7 +365,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
                 // gestures are already distinct, and making the farmer choose between "move" and
                 // "measure" would be a toggle they have to find before the screen works.
                 onPointerDown={(e) => {
-                  if (!img) return;
+                  if (!img || pointMode) return; // in point mode the photo must not move at all
                   (e.target as Element).setPointerCapture?.(e.pointerId);
                   dragRef.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y, moved: false };
                 }}
@@ -373,8 +386,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
                 onPointerUp={() => { dragRef.current = null; }}
                 onPointerCancel={() => { dragRef.current = null; }}
                 onClick={(e) => {
-                  // A drag ends in a click event too; only a click that never moved is a tap.
-                  if (dragRef.current?.moved) return;
+                  // Only ever places a point while the mode is armed, so an ordinary tap to
+                  // reposition the photo can never drop a stray calibration marker.
+                  if (!pointMode) return;
                   onCanvasClick(e);
                 }}
                 style={{
@@ -388,7 +402,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
                   aspectRatio: `${DEFAULT_IMG_W} / ${DEFAULT_IMG_H}`,
                   borderRadius: 12,
                   border: `1px solid ${GOLD}`,
-                  cursor: img ? 'grab' : 'crosshair',
+                  cursor: !img ? 'default' : pointMode ? 'crosshair' : 'grab',
                   display: 'block',
                   touchAction: 'none', // or the browser pans the sheet instead of the photo
                 }}
@@ -420,7 +434,44 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
                     </span>
                   </label>
                   <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
-                    Drag the photo to move it. Fade it down to match it against the satellite underneath.
+                    {pointMode
+                      ? `Tap point ${points.length + 1} of 2 on the photo. The photo will not move while you do.`
+                      : 'Drag the photo to move it. Fade it down to match it against the satellite underneath.'}
+                  </div>
+                  {/* The scale step gets real buttons instead of an unwritten rule about which
+                      gesture means what. Undo is per-point: a farmer who mis-taps the second
+                      corner should not have to redo the first. */}
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      onClick={() => setPointMode((v) => !v)}
+                      aria-pressed={pointMode}
+                      disabled={points.length >= 2}
+                      style={{
+                        flex: 1, minWidth: 140, minHeight: 44, borderRadius: 10, cursor: points.length >= 2 ? 'default' : 'pointer',
+                        border: pointMode ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
+                        background: pointMode ? GREEN : 'transparent',
+                        color: pointMode ? PAPER : GREEN,
+                        fontWeight: 800, fontSize: 12.5,
+                        opacity: points.length >= 2 ? 0.45 : 1,
+                      }}
+                    >
+                      {pointMode ? '📍 Tapping…' : `📍 Add scale point (${points.length}/2)`}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setPoints((prev) => prev.slice(0, -1)); setPointMode(false); }}
+                      disabled={points.length === 0}
+                      style={{
+                        minHeight: 44, padding: '0 14px', borderRadius: 10,
+                        border: '1px solid rgba(0,0,0,0.2)', background: 'transparent', color: DARK,
+                        fontWeight: 700, fontSize: 12.5,
+                        cursor: points.length ? 'pointer' : 'default',
+                        opacity: points.length ? 1 : 0.4,
+                      }}
+                    >
+                      ↩ Undo point
+                    </button>
                   </div>
                 </div>
               )}

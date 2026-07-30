@@ -256,6 +256,18 @@ function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | '
 // Guided gets larger touch targets throughout (first-time/gogo farmer, less precise
 // tapping); Pro stays at the standard 44px minimum so the whole catalog is scannable
 // without excess scrolling.
+// Screen space is the scarcest thing in this panel — it sits under the map and every row it
+// takes is map the farmer cannot see (Rory: "we need more realestat shorten the text do what you
+// need to!"). Every tool label is "<emoji> <word>" in all eleven locales, so showing the glyph
+// alone and moving the word to title + aria-label buys back most of a row's width while the name
+// stays available to a pointer and to a screen reader. A locale that ever translates WITHOUT a
+// leading pictograph keeps its whole word rather than being cut to its first letter.
+function toolGlyph(label: string): { glyph: string; full: string } {
+  const full = label.trim();
+  const m = full.match(/^([\p{Extended_Pictographic}\uFE0F\u200D]+)\s*(.+)$/u);
+  return { glyph: m ? m[1] : full, full: m ? m[2] : full };
+}
+
 function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties {
   // Pro trims to a 36px target — a returning farmer on a laptop scanning a dense drafting view
   // gets the screen back. Guided stays at the 44px comfortable-touch minimum, which is not a
@@ -341,6 +353,9 @@ export default function DesignPalette({
   const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Raw text for the bed-block number fields while they are being edited. Held as strings so a
+  // comma decimal, a trailing separator or an empty box survives long enough to finish typing.
+  const [draft, setDraft] = useState<Partial<Record<'bedLengthM' | 'bedWidthM' | 'pathWidthM' | 'count', string>>>({});
   // Local UI-only toggle for the wind control's direction picker — never persisted, just whether
   // the 16-point list is currently open. Reset whenever the control's identity changes (observation
   // set/cleared) so re-opening the Sector step never leaves a stale picker expanded.
@@ -518,32 +533,39 @@ export default function DesignPalette({
           <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}>
           <button
             type="button"
+            title={toolGlyph(t('designPaletteSelect')).full}
+            aria-label={toolGlyph(t('designPaletteSelect')).full}
             style={toolButtonStyle(tool === 'select', guided)}
             onClick={() => {
               setTool('select');
               setHintDefId(null);
             }}
           >
-            {t('designPaletteSelect')}
+            {toolGlyph(t('designPaletteSelect')).glyph}
           </button>
           <button
             type="button"
             style={{ ...toolButtonStyle(false, guided), opacity: canUndo ? 1 : 0.4, cursor: canUndo ? 'pointer' : 'default' }}
             onClick={onUndo}
             disabled={!canUndo}
-          >
-            {t('designPaletteUndo')}
+          
+            title={toolGlyph(t('designPaletteUndo')).full}
+            aria-label={toolGlyph(t('designPaletteUndo')).full}>
+            {toolGlyph(t('designPaletteUndo')).glyph}
           </button>
           <button
             type="button"
             style={{ ...toolButtonStyle(false, guided), opacity: canRedo ? 1 : 0.4, cursor: canRedo ? 'pointer' : 'default' }}
             onClick={onRedo}
             disabled={!canRedo}
-          >
-            {t('designPaletteRedo')}
+          
+            title={toolGlyph(t('designPaletteRedo')).full}
+            aria-label={toolGlyph(t('designPaletteRedo')).full}>
+            {toolGlyph(t('designPaletteRedo')).glyph}
           </button>
           <button
             type="button"
+            aria-label={toolGlyph(t('designPaletteDuplicate')).full}
             style={{
               ...toolButtonStyle(false, guided),
               opacity: onDuplicateSelected ? 1 : 0.4,
@@ -553,7 +575,7 @@ export default function DesignPalette({
             disabled={!onDuplicateSelected}
             title={t('designPaletteDuplicateTitle')}
           >
-            {t('designPaletteDuplicate')}
+            {toolGlyph(t('designPaletteDuplicate')).glyph}
           </button>
           {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
               has no ring/polyline to simplify, and a multi-selection has no single shape to preview
@@ -561,6 +583,7 @@ export default function DesignPalette({
               preview on the canvas; it never itself edits the design. */}
           <button
             type="button"
+            aria-label={toolGlyph(t('designPaletteTidy')).full}
             style={{
               ...toolButtonStyle(false, guided),
               opacity: onTidySelected ? 1 : 0.4,
@@ -570,12 +593,13 @@ export default function DesignPalette({
             disabled={!onTidySelected}
             title={t('designPaletteTidyTitle')}
           >
-            {t('designPaletteTidy')}
+            {toolGlyph(t('designPaletteTidy')).glyph}
           </button>
           {/* Snap to neighbour — offered for one or more selected rings, provided at least one can
               move. A selected boundary stays unchanged and is called out in the preview. */}
           <button
             type="button"
+            aria-label={toolGlyph(t('designPaletteSnap')).full}
             style={{
               ...toolButtonStyle(false, guided),
               opacity: onSnapSelected ? 1 : 0.4,
@@ -585,13 +609,14 @@ export default function DesignPalette({
             disabled={!onSnapSelected}
             title={t('designPaletteSnapTitle')}
           >
-            {t('designPaletteSnap')}
+            {toolGlyph(t('designPaletteSnap')).glyph}
           </button>
           {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected. See
               onCleanupSelected's doc comment in DesignPaletteProps. Tapping this only OPENS the
               preview on the canvas; it never itself edits the design. */}
           <button
             type="button"
+            aria-label={toolGlyph(t('designPaletteCleanup')).full}
             style={{
               ...toolButtonStyle(false, guided),
               opacity: onCleanupSelected ? 1 : 0.4,
@@ -601,7 +626,7 @@ export default function DesignPalette({
             disabled={!onCleanupSelected}
             title={t('designPaletteCleanupTitle')}
           >
-            {t('designPaletteCleanup')}
+            {toolGlyph(t('designPaletteCleanup')).glyph}
           </button>
           {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
               polyline deliberately has NO angle control here: a polyline has no single angle, and
@@ -776,6 +801,8 @@ export default function DesignPalette({
           )}
           <button
             type="button"
+            title={toolGlyph(t('designPaletteDelete')).full}
+            aria-label={toolGlyph(t('designPaletteDelete')).full}
             style={{
               ...toolButtonStyle(false, guided),
               opacity: onDeleteSelected ? 1 : 0.4,
@@ -786,7 +813,7 @@ export default function DesignPalette({
             onClick={() => onDeleteSelected?.()}
             disabled={!onDeleteSelected}
           >
-            {t('designPaletteDelete')}
+            {toolGlyph(t('designPaletteDelete')).glyph}
           </button>
           </div>
           {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
@@ -1328,14 +1355,28 @@ export default function DesignPalette({
       <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10.5, color: DARK, flexShrink: 0 }}>
         <span style={{ opacity: 0.7, whiteSpace: 'nowrap' }}>{label}</span>
         <input
-          type="number"
-          value={value}
-          step={opts.step}
-          min={opts.min}
-          max={opts.max}
-          // Commit on every keystroke is fine here: nothing is written to the design until the
-          // farmer taps the canvas, so the only thing a partial number changes is the ghost.
-          onChange={(e) => onSpecChange({ [key]: Number(e.target.value) })}
+          // TEXT, not number, and parsed by hand. A type="number" input in a comma-decimal
+          // locale — which is what a South African browser is — hands back an EMPTY STRING for a
+          // value the farmer can plainly read in the box ("0,5"). Number("") is 0, and 0 is
+          // finite, so every guard downstream accepted it: the spec arrived with a path width of
+          // zero, the beds were laid out touching, and bedBlockPaths correctly drew nothing for a
+          // zero-width path. The maths was right the whole way down and the input threw the value
+          // away before any of it ran (Rory: "no path still! between beds").
+          type="text"
+          inputMode="decimal"
+          value={draft[key] ?? String(value)}
+          onChange={(e) => {
+            const raw = e.target.value;
+            // Keep whatever was typed on screen, including mid-edit states like "" or "0," that
+            // are not yet a number — snapping the box back under the farmer's fingers is how a
+            // field becomes impossible to edit.
+            setDraft((d) => ({ ...d, [key]: raw }));
+            const parsed = Number(raw.replace(',', '.').trim());
+            if (raw.trim() !== '' && Number.isFinite(parsed)) onSpecChange({ [key]: parsed });
+          }}
+          // On blur the box shows the value that is actually in the spec, so a half-typed entry
+          // can never sit there looking committed.
+          onBlur={() => setDraft((d) => ({ ...d, [key]: undefined }))}
           style={{
             width: 52, minHeight: guided ? 44 : 38, padding: '4px 6px', borderRadius: 8,
             border: '1px solid rgba(0,0,0,0.2)', background: PAPER, color: DARK,
