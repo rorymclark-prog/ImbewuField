@@ -633,6 +633,15 @@ export default function DesignCanvas({
   // points already live in), so the rect can be hit-tested against state with no extra transform.
   const marqueeState = useRef<{ pointerId: number; startClientX: number; startClientY: number; additive: boolean } | null>(null);
   const [marqueeRect, setMarqueeRect] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
+  // MEASURE MODE — tap two points, read the ground distance between them. Rory, mid-layout:
+  // "it seems the maps not the right size the scale how do i check". He had no way to: the map
+  // scale is computed from the Web Mercator projection (lib/design-canvas buildFrame) and the
+  // scale bar states it, but nothing let him TEST it against something he can pace out on site.
+  // A ruler turns "the scale feels wrong" into a number he can check against a real wall.
+  // Deliberately local, transient state: measuring never touches saved geometry, never
+  // participates in undo, and clears when the farmer turns it off.
+  const [measureOn, setMeasureOn] = useState(false);
+  const [measurePts, setMeasurePts] = useState<Array<[number, number]>>([]);
 
   // Drag state for a zone/feature/line NAME LABEL — moves just the label (a normalised offset from
   // the shape's anchor point — ring centroid for zones, midpoint for lines), not the shape itself,
@@ -857,6 +866,19 @@ export default function DesignCanvas({
         isMiddleButton: true,
       };
       return;
+    }
+
+    // MEASURING beats every other single-pointer background behaviour — but only after the
+    // middle-button pan above, and it never blocks the two-finger pinch below: a farmer measures
+    // by zooming in first, so stealing the second finger would make the tool unusable on a phone.
+    if (measureOn && activePointers.current.size === 0) {
+      const pt = clientToNorm(e.clientX, e.clientY);
+      if (pt) {
+        // Third tap starts a fresh measurement rather than growing a polyline — two points is
+        // the whole question ("how far is that?"), and a stale first leg is just confusing.
+        setMeasurePts((prev) => (prev.length >= 2 ? [pt] : [...prev, pt]));
+        return;
+      }
     }
 
     // Track every active pointer on the background for pinch-zoom, regardless of tool.
@@ -2723,6 +2745,55 @@ export default function DesignCanvas({
             );
           })}
 
+        {/* MEASURE overlay — endpoints, the leg between them, and the ground distance. Drawn in
+            the world group so it stays pinned to the land while panning/zooming; all chrome is
+            counter-scaled so the ruler reads the same at every zoom. */}
+        {measureOn && measurePts.length > 0 && (
+          <g pointerEvents="none">
+            {measurePts.map(([x, y], i) => (
+              <circle
+                key={`m-${i}`}
+                cx={x * imgW}
+                cy={y * imgH}
+                r={chrome(5)}
+                fill="#FBF6EC"
+                stroke={GOLD}
+                strokeWidth={chrome(2)}
+              />
+            ))}
+            {measurePts.length === 2 && (() => {
+              const [a, b] = measurePts;
+              // Same arithmetic as lib/design-canvas distanceM: normalised → image pixels →
+              // metres through the frame's own mPerPx, so the ruler can never disagree with the
+              // scale bar or with a placed item's stated size.
+              const dxM = (a[0] - b[0]) * imgW * mPerPx;
+              const dyM = (a[1] - b[1]) * imgH * mPerPx;
+              const distM = Math.hypot(dxM, dyM);
+              const midX = ((a[0] + b[0]) / 2) * imgW;
+              const midY = ((a[1] + b[1]) / 2) * imgH;
+              return (
+                <>
+                  <line
+                    x1={a[0] * imgW}
+                    y1={a[1] * imgH}
+                    x2={b[0] * imgW}
+                    y2={b[1] * imgH}
+                    stroke={GOLD}
+                    strokeWidth={chrome(2)}
+                    strokeDasharray={chromeDash('6 4')}
+                  />
+                  <g transform={`translate(${midX.toFixed(1)},${(midY - worldPx(16)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
+                    <rect x={-38} y={-11} width={76} height={22} rx={11} fill="rgba(11,18,11,0.92)" stroke={GOLD} strokeWidth={1} />
+                    <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={800} fill={GOLD}>
+                      {distM < 10 ? `${distM.toFixed(2)} m` : `${distM.toFixed(1)} m`}
+                    </text>
+                  </g>
+                </>
+              );
+            })()}
+          </g>
+        )}
+
         {/* Draft (in-progress) zone/line while drawing */}
         {tool === 'zone' && draftPoints.length > 0 && (() => {
           const draftColor = areaFeature ? GROUND_FEATURES[areaFeature].color : ZONE_DEFS[zoneDraw].color;
@@ -3502,6 +3573,60 @@ export default function DesignCanvas({
       {/* Multi-select toggle (top-left, below the sector button). On phones there's no Shift/Cmd,
           so this makes a plain tap ADD to the selection; tap it off to go back to single-select.
           A count pill appears when 2+ are selected — Delete (palette/keyboard) removes them all. */}
+      {/* Measure (top-left, below multi-select) — the answer to "is this map the right scale?".
+          Self-contained: it reads the frame's metres-per-pixel and writes nothing. */}
+      <button
+        type="button"
+        aria-pressed={measureOn}
+        aria-label={t(measureOn ? 'designCanvasMeasureOn' : 'designCanvasMeasure')}
+        title={t('designCanvasMeasureHint')}
+        onClick={() => {
+          setMeasureOn((v) => !v);
+          setMeasurePts([]);
+        }}
+        style={{
+          position: 'absolute',
+          top: onToggleAdditive && tool === 'select' ? 156 : 108,
+          left: 12,
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          border: measureOn ? `2px solid ${GOLD}` : 'none',
+          background: measureOn ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
+          color: measureOn ? GOLD : '#FBF6EC',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          cursor: 'pointer',
+          fontSize: 17,
+        }}
+      >
+        <span aria-hidden>📏</span>
+      </button>
+      {/* One-line coaching while measuring — without it the tool looks broken until the second
+          tap, and the whole point is checking the scale against something real on the ground. */}
+      {measureOn && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 12,
+            left: 60,
+            maxWidth: 300,
+            padding: '7px 11px',
+            borderRadius: 10,
+            background: 'rgba(11,18,11,0.86)',
+            color: '#FBF6EC',
+            fontSize: 11.5,
+            fontWeight: 600,
+            lineHeight: 1.35,
+            pointerEvents: 'none',
+          }}
+        >
+          {measurePts.length === 2 ? t('designCanvasMeasureAgain') : t('designCanvasMeasureHint')}
+        </div>
+      )}
+
       {onToggleAdditive && tool === 'select' && (
         <button
           type="button"

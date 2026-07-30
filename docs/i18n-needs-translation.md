@@ -72,7 +72,9 @@ Interactive canvas:
 `designCanvasSectorHidden`, `designCanvasMultiOn`, `designCanvasSelectMultiple`,
 `designCanvasSelectingMultiple`, `designCanvasCancel`, `designCanvasPoint`,
 `designCanvasFinish`, `designCanvasLine`, `designCanvasZone`, `designCanvasClose`,
-`designCanvasTidy`, `designCanvasSnap`, `designCanvasCleanup`.
+`designCanvasTidy`, `designCanvasSnap`, `designCanvasCleanup`,
+`designCanvasMeasure`, `designCanvasMeasureOn`, `designCanvasMeasureHint`,
+`designCanvasMeasureAgain`.
 
 Palette:
 `designPaletteSelect`, `designPaletteUndo`, `designPaletteRedo`, `designPaletteDuplicate`,

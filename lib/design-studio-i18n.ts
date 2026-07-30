@@ -124,6 +124,11 @@ export const DESIGN_STUDIO_REST_KEYS = {
   canvasSnap: 'designCanvasSnap',
   canvasCleanup: 'designCanvasCleanup',
 
+  canvasMeasure: 'designCanvasMeasure',
+  canvasMeasureOn: 'designCanvasMeasureOn',
+  canvasMeasureHint: 'designCanvasMeasureHint',
+  canvasMeasureAgain: 'designCanvasMeasureAgain',
+
   paletteSelect: 'designPaletteSelect',
   paletteUndo: 'designPaletteUndo',
   paletteRedo: 'designPaletteRedo',
