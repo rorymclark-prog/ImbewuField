@@ -61,6 +61,12 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); // canvas-space pixels
   const [satImg, setSatImg] = useState<HTMLImageElement | null>(null);
   const dragRef = useRef<{ x: number; y: number; panX: number; panY: number; moved: boolean } | null>(null);
+  // The SHEET's own position. It opens docked to the bottom; dragging the title bar lifts it so
+  // the farmer can see the part of the map they are matching against, and so a short viewport
+  // cannot park a control out of reach (Rory: "i cant reach the scale make its so we can move the
+  // modal"). Distinct from `pan`, which moves the PHOTO inside the canvas.
+  const [sheetOffset, setSheetOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const sheetDragRef = useRef<{ x: number; y: number; offX: number; offY: number } | null>(null);
   const [points, setPoints] = useState<Point[]>([]);
   const [metres, setMetres] = useState('');
   const [error, setError] = useState('');
@@ -257,13 +263,40 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
           borderRadius: '20px 20px 0 0',
           padding: '16px 16px 20px',
           boxShadow: '0 -4px 24px rgba(0,0,0,0.3)',
+          transform: `translate(${sheetOffset.x}px, ${sheetOffset.y}px)`,
+          touchAction: 'pan-y',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-          <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>{t('designPhotoTitle')}</div>
+        <div
+          // The title bar is the handle. Dragging it moves the sheet; the close button inside it
+          // stops propagation so a tap on ✕ is never read as the start of a drag.
+          onPointerDown={(e) => {
+            (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+            sheetDragRef.current = { x: e.clientX, y: e.clientY, offX: sheetOffset.x, offY: sheetOffset.y };
+          }}
+          onPointerMove={(e) => {
+            const d = sheetDragRef.current;
+            if (!d) return;
+            // Clamped so the sheet can never be dragged entirely off screen and stranded — the
+            // handle always stays reachable, which is the whole point of being able to move it.
+            const maxUp = Math.max(0, window.innerHeight - 120);
+            setSheetOffset({
+              x: d.offX + (e.clientX - d.x),
+              y: Math.min(120, Math.max(-maxUp, d.offY + (e.clientY - d.y))),
+            });
+          }}
+          onPointerUp={() => { sheetDragRef.current = null; }}
+          onPointerCancel={() => { sheetDragRef.current = null; }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, cursor: 'grab', touchAction: 'none' }}
+        >
+          <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>
+            {t('designPhotoTitle')}
+            <span style={{ fontWeight: 600, fontSize: 11, color: '#6B6355', marginLeft: 8 }}>⠿ drag to move</span>
+          </div>
           <button
             type="button"
             aria-label={t('designClose')}
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={onClose}
             style={{ border: 'none', background: 'transparent', color: '#6B6355', cursor: 'pointer', padding: 4 }}
           >
@@ -347,6 +380,11 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
                 style={{
                   width: '100%',
                   height: 'auto',
+                  // Capped so the photo cannot push "Set the scale" past the bottom of a short
+                  // viewport. The sheet scrolls, but a farmer who cannot SEE a control does not
+                  // go looking for it — and the whole screen is useless without the scale step.
+                  maxHeight: '42dvh',
+                  objectFit: 'contain',
                   aspectRatio: `${DEFAULT_IMG_W} / ${DEFAULT_IMG_H}`,
                   borderRadius: 12,
                   border: `1px solid ${GOLD}`,
