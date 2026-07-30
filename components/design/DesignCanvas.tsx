@@ -1897,10 +1897,10 @@ export default function DesignCanvas({
                   key={`bpost-${i}`}
                   cx={cx}
                   cy={cy}
-                  r={3.5}
+                  r={chrome(3.5)}
                   fill={BOUNDARY_BONE}
                   stroke="rgba(24,28,22,0.55)"
-                  strokeWidth={1}
+                  strokeWidth={chrome(1)}
                 />
               ))}
             </g>
@@ -2655,8 +2655,8 @@ export default function DesignCanvas({
               fill={hatchFill(draftColor)}
               fillOpacity={0.18}
               stroke={draftColor}
-              strokeWidth={2}
-              strokeDasharray="4 3"
+              strokeWidth={chrome(2)}
+              strokeDasharray={chromeDash('4 3')}
             />
           );
         })()}
@@ -2665,8 +2665,8 @@ export default function DesignCanvas({
             points={polylinePoints(draftPoints, imgW, imgH)}
             fill="none"
             stroke={lineStroke(lineKind).stroke}
-            strokeWidth={2.5}
-            strokeDasharray="3 3"
+            strokeWidth={chrome(2.5)}
+            strokeDasharray={chromeDash('3 3')}
           />
         )}
         {/* Draft vertex handles — grabbable mid-draw (before the shape is closed/accepted),
@@ -2740,27 +2740,27 @@ export default function DesignCanvas({
                 {isHighlighted && (
                   <>
                     {def.shape === 'circle' ? (
-                      <circle r={Math.max(wPx, hPx) / 2 + 4} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" />
+                      <circle r={Math.max(wPx, hPx) / 2 + chrome(4)} fill="none" stroke={GOLD} strokeWidth={chrome(2.5)} strokeDasharray={chromeDash('4 3')} />
                     ) : (
                       <rect
-                        x={-wPx / 2 - 4}
-                        y={-hPx / 2 - 4}
-                        width={wPx + 8}
-                        height={hPx + 8}
+                        x={-wPx / 2 - chrome(4)}
+                        y={-hPx / 2 - chrome(4)}
+                        width={wPx + chrome(8)}
+                        height={hPx + chrome(8)}
                         fill="none"
                         stroke={GOLD}
-                        strokeWidth={2.5}
-                        strokeDasharray="4 3"
-                        rx={4}
+                        strokeWidth={chrome(2.5)}
+                        strokeDasharray={chromeDash('4 3')}
+                        rx={chrome(4)}
                       />
                     )}
                   </>
                 )}
                 {/* True-scale footprint (soft fill + stroke) */}
                 {def.shape === 'circle' ? (
-                  <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
+                  <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={chrome(1.5)} />
                 ) : (
-                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={1.5} />
+                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={chrome(1.5)} />
                 )}
               </g>
               {/* Centred icon disc: optional, because dense water/planting edits become unreadable
