@@ -468,6 +468,32 @@ test('Satellite Overlay gives a Planting-sheet Vetiver Bank its exact marker voc
   assert.match(icons, /never a band running along the fence/);
 });
 
+test('Satellite Overlay hybrid carries the structure register — structures are painted right the first pass', () => {
+  const register = '"Classroom" (western part of the site) is the largest roofed building on the site. "Concrete Slab" (central part of the site) is flat paving at ground level — bare concrete open to the sky, with NO roof and NO walls.';
+  const p = buildSatelliteOverlayPrompt({
+    layerLabel: 'Structures', stylePreset: 'satellite_overlay',
+    elementsText: 'Shade House', sheetKind: 'structures',
+    structureRegister: register,
+  });
+  // The register text is embedded verbatim: the model reads what each traced rectangle IS.
+  assert.ok(p.includes(register));
+  // The three disciplines that failed on real renders: merged roofs, roofed slabs, and real
+  // photographed buildings amplified into landmarks.
+  assert.match(p, /NEVER merge two neighbouring structures/);
+  assert.match(p, /stays fully open to the sky/);
+  assert.match(p, /exactly where and exactly as large as the photograph shows it/);
+
+  // No register → no STRUCTURE REGISTER section, and no orphaned heading.
+  for (const structureRegister of [undefined, '', '   ']) {
+    const bare = buildSatelliteOverlayPrompt({
+      layerLabel: 'Structures', stylePreset: 'satellite_overlay',
+      elementsText: 'Shade House', sheetKind: 'structures',
+      structureRegister,
+    });
+    assert.ok(!bare.includes('STRUCTURE REGISTER'), 'no register given, no register section');
+  }
+});
+
 test('legacy prompt remains available for rollback and A/B comparison', () => {
   const legacyProducer = buildProducerPromptLegacy(
     'Zones',

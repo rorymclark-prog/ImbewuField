@@ -7895,7 +7895,13 @@ interface SavedGlossy {
 //        the rollback), and the polish prompt gains the SOURCE INVENTORY rule: never reinterpret
 //        roof/driveway/paving pixels as tanks or new structures. Measured before merge: the two
 //        invented tanks disappear, 90.8% of real edges kept.
-const PLAN_VERSION = 'v93';
+//   v94 — 2026-07-30: the STRUCTURE REGISTER reaches the HYBRID pass (buildSatelliteOverlayPrompt),
+//        not just the polish. v93's register-in-polish-only could not work: the hybrid had already
+//        painted the classroom, storeroom and slab as one merged roof complex, and the polish pass
+//        edits that image — a fait accompli no prompt can unmerge. Bumped so every cached hybrid
+//        painted without the register is invalidated; the next render rebuilds the hybrid with the
+//        register in force.
+const PLAN_VERSION = 'v94';
 const WATER_REFERENCE_NOTES = 'Use plant-compatible cleaning products. Keep greywater below mulch and off edible leaves. Confirm pipe sizes, soil infiltration and local requirements on site.';
 
 function waterReferenceFooterText(
@@ -9464,7 +9470,7 @@ export default function DesignGlossy({
       const prompt = fullSheetPolish
         ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers))
         : isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2 })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, structureRegister: structureRegisterText(renderState, renderRefLayers) })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
         : useShowcase

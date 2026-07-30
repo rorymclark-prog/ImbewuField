@@ -688,8 +688,10 @@ export function buildSatelliteOverlayPrompt(args: {
   sheetKind: ShowcaseSheetKind;
   /** Whether a driveway was actually traced — gates the 'all' sheet's "TARRED DRIVEWAY" caption. */
   hasDriveway?: boolean;
+  /** structureRegisterText() output — the computed truth about what each traced structure IS. */
+  structureRegister?: string;
 }): string {
-  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind, hasDriveway = false } = args;
+  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind, hasDriveway = false, structureRegister = '' } = args;
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
@@ -822,6 +824,16 @@ export function buildSatelliteOverlayPrompt(args: {
     ? `\n\nWHAT THIS SYSTEM SERVES — NAMED, BUT NOT PART OF IT. Small faint outlines are already marked on the photograph for the beds and basins this layer waters: ${served}. Every one of them is ALREADY THERE — redraw exactly what is marked, one for one, at the marked size, and ADD NONE. The marker count is the count: no extra bed, basin, tree, canopy, palm or shrub appears anywhere on this sheet, and the open lawn between them stays open lawn. Give each a small white caption using only these plain names, with no number or count added: ${servedLabelNames}. Give the plain names one legend row each under a heading reading EXISTING. They are what this system waters, not part of the system itself, so they are what this layer connects to, never part of it, and they never take one of this sheet's own system headings.`
     : '';
 
+  // STRUCTURE REGISTER — computed by lib/structure-register from the farmer's saved rings. The
+  // polish pass has carried this since v93; it was not enough, because polish edits an image in
+  // which THIS pass has already painted the buildings — a hybrid that merges the classroom, the
+  // storeroom and the slab into one grand roof complex hands the polish a fait accompli no prompt
+  // can unmerge. The truth about structures has to reach the pass that paints them first. (Rory,
+  // on the render that forced this: "the houses and slab are wierd and off still".)
+  const structuresBlock = structureRegister.trim()
+    ? `\n\nSTRUCTURE REGISTER — WHAT EACH TRACED STRUCTURE IS. ${structureRegister.trim()} Roof ONLY the buildings this register calls roofed — one roof per building, drawn on its exact traced footprint at its listed relative size, and NEVER merge two neighbouring structures into one building or under one shared roof: where two roofed buildings stand near each other, open ground stays visible between their two separate roofs. Everything the register calls flat, ground-level or a track stays fully open to the sky — bare concrete reads as bare concrete and never grows a roof, walls or shadow-casting height. A building already visible in the photograph keeps its own roof exactly where and exactly as large as the photograph shows it — never enlarged, never extended, never merged with any traced structure.`
+    : '';
+
   // Generalises the zoneBands-only exemption below into a list naming whichever translucent-area
   // classes are actually present on THIS sheet. A single zoneBands-keyed ternary would silently miss
   // fabric on sheets (water, structures) where zoneBands is empty, and vice versa.
@@ -949,7 +961,7 @@ ${iconRule}
 
 8. THE ROOF AND THE ACCESS TRACK ARE DIFFERENT THINGS, AND THEY ARE DIFFERENT COLOURS. Slate grey #3C4247 is ROOF; near-black #12140F is TAR ON THE GROUND. Never draw one in the other's colour and never give the near-black shape a ridge, a hip, a pitched plane or a shadow. The bright white outline encloses the ROOF of the house, and the photograph inside that outline IS the real roof, shot from above — draw it as a building with ridges, hips and pitched planes casting a shadow, keeping every edge and every wing exactly as the photograph shows them. Nothing covers that roof: if it looks like a flat grey rectangle you are looking at the wrong thing. It is a building, and no part of it is ever paved, darkened or turned into road surface. The access track is separate, flat, at ground level, and lies where the photograph already shows it. They never merge and they never swap.
 
-9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule}${routeRule}${waterSystems}${zoneBands}${siteFabric}${servedClause}
+9. LINES DRAWN OVER THE PHOTO. Property boundary: the bright chartreuse #B4E000 ring around the plot is the PROPERTY BOUNDARY — a surveyed fence line, never a hedge, windbreak, planted row or band of vegetation, and nothing is planted along it that does not have its own marker. Redraw it as a real post-and-wire farm fence: a thin taut bone-white #EDE7D9 wire with small round bone posts set at regular intervals along its full length. Posts are circles, never ticks, dashes or leaves, and nothing grows on the wire. ${drivewayRule}${routeRule}${waterSystems}${zoneBands}${siteFabric}${structuresBlock}${servedClause}
 
 ${labelRule}
 
