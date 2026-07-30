@@ -46,6 +46,7 @@ import {
   type WizardStep,
   type ZoneShape,
   scaledMPerPx,
+  zoneOfSelection,
   MIN_SCALE_FACTOR,
   MAX_SCALE_FACTOR,
 } from '@/lib/design-canvas';
@@ -1270,6 +1271,14 @@ function DesignStudioInner() {
   // applies to EVERY selected rect-shaped item, so a marquee'd row of beds turns together —
   // single selection is just the one-member case. Circles stay excluded (rotation-invariant).
   // Shows the first member's angle; committing aligns the whole group, which is the point.
+  // Which zone the current selection IS, so the chip row shows what the farmer is holding
+  // and not only what the draw tool will paint next. Rules (and the reasons each null is a
+  // null) live with the helper in lib/design-canvas.ts, where they're unit-tested.
+  const selectedZone = useMemo(
+    () => (canvasState ? zoneOfSelection(canvasState.zones, selectedIds) : null),
+    [canvasState, selectedIds],
+  );
+
   const selectedRectItems = canvasState
     ? canvasState.items.filter(
         (it) => (selectedIds.includes(it.id) || it.id === selectedId) && ELEMENTS_BY_ID[it.defId]?.shape === 'rect',
@@ -2387,6 +2396,7 @@ function DesignStudioInner() {
           setPlaceDefId={setPlaceDefId}
           zoneDraw={zoneDraw}
           setZoneDraw={setZoneDraw}
+          selectedZone={selectedZone}
           areaFeature={areaFeature}
           setAreaFeature={setAreaFeature}
           lineKind={lineKind}

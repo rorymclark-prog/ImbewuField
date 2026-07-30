@@ -962,3 +962,35 @@ export interface DetectSuggestion {
   note?: string;
   status: 'pending' | 'accepted' | 'rejected';
 }
+
+/**
+ * The zone number a selection IS, for the chip row at the bottom of the Zones step.
+ *
+ * Until this existed a chip only lit while the zone DRAW tool was armed, so tapping an
+ * existing Zone 4 ring left all six chips dark: the row answered "what will I paint next?"
+ * while the farmer was asking "what am I holding?" (Rory, mid-layout: "when i select
+ * something like in this case a zone it must light up the option the selctor option at the
+ * bottom").
+ *
+ * Three deliberate nulls, each of which would otherwise light a chip that lies:
+ *  - a MIXED selection has no single answer, so no chip lights rather than an arbitrary one;
+ *  - rings carrying a `feature` are ground/built features whose `zone` "rides along as an
+ *    inert value" (see ZoneShape), so reading it would assert a zone nobody chose;
+ *  - anything outside 0–5 after coercion.
+ *
+ * Number() is not defensive padding: legacy states persisted `zone` as a STRING, which is
+ * the same coercion bug that once made the Zones step read 0 of 4 rings while they rendered
+ * perfectly. Strict === against a numeric chip key would silently never match those.
+ */
+export function zoneOfSelection(
+  zones: ZoneShape[],
+  selectedIds: readonly string[],
+): 0 | 1 | 2 | 3 | 4 | 5 | null {
+  if (selectedIds.length === 0) return null;
+  const ids = new Set(selectedIds);
+  const zs = zones.filter((z) => ids.has(z.id) && z.feature == null).map((z) => Number(z.zone));
+  if (zs.length === 0) return null;
+  const first = zs[0];
+  if (!zs.every((z) => z === first)) return null;
+  return Number.isInteger(first) && first >= 0 && first <= 5 ? (first as 0 | 1 | 2 | 3 | 4 | 5) : null;
+}

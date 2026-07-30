@@ -75,6 +75,12 @@ export interface DesignPaletteProps {
   setPlaceDefId: (id: string | null) => void;
   zoneDraw: 0 | 1 | 2 | 3 | 4 | 5;
   setZoneDraw: (z: 0 | 1 | 2 | 3 | 4 | 5) => void;
+  /** The zone number the current SELECTION is, or null when the selection isn't a single
+   *  zone (nothing selected, a mixed selection, a placed item, a ground feature). Distinct
+   *  from zoneDraw, which is what the draw tool will paint NEXT: the chip row has to answer
+   *  both "what am I holding?" and "what will I paint?", and before this it only answered
+   *  the second. Computed in app/design/page.tsx, which owns selection state. */
+  selectedZone: 0 | 1 | 2 | 3 | 4 | 5 | null;
   areaFeature: GroundFeatureKind | null;
   setAreaFeature: (f: GroundFeatureKind | null) => void;
   lineKind: LineShape['kind'];
@@ -286,6 +292,7 @@ export default function DesignPalette({
   placeDefId,
   setPlaceDefId,
   zoneDraw,
+  selectedZone,
   setZoneDraw,
   areaFeature,
   setAreaFeature,
@@ -1123,19 +1130,35 @@ export default function DesignPalette({
     return (
       /* Zones step: always show the zone 0-5 colour chips row */
       <div style={scrollStripStyle(guided ? 10 : 6)}>
-        {(Object.keys(ZONE_DEFS) as unknown as Array<0 | 1 | 2 | 3 | 4 | 5>).map((z) => {
+        {/* .map(Number) is load-bearing, not tidying. Object.keys returns STRINGS, and the old
+            `as unknown as Array<0|1|2|3|4|5>` cast asserted otherwise without changing anything,
+            so `z` was '3' at runtime. That stayed invisible because it was self-consistent:
+            pickZone('3') put the string into zoneDraw and `zoneDraw === z` compared '3' === '3'.
+            Two things it did break — the chip never matched a numeric selectedZone (0 chips lit
+            when a zone was selected), and DesignCanvas writes zoneDraw straight into
+            ZoneShape.zone, so every zone drawn after a chip tap PERSISTED zone:'3'. Loading
+            normalises it back to a number, which is why the map always looked right; it is the
+            same string-vs-number coercion that once made the Zones step read 0 of 4 rings. */}
+        {(Object.keys(ZONE_DEFS).map(Number) as Array<0 | 1 | 2 | 3 | 4 | 5>).map((z) => {
           const def = ZONE_DEFS[z];
-          const active = zoneDraw === z && tool === 'zone';
+          const armed = zoneDraw === z && tool === 'zone';
+          // Selecting a zone lights its chip too. Same gold ring as the armed state — to the
+          // farmer both mean "this is the zone in play"; which of the two put it there is our
+          // business, not theirs. The extra glow is what keeps a lit chip readable against its
+          // own fill on the darker zones (4 and 5) where a gold hairline alone all but vanishes.
+          const active = armed || selectedZone === z;
           return (
             <button
               key={z}
               type="button"
+              aria-pressed={active}
               onClick={() => pickZone(z)}
               style={{
                 minHeight: guided ? 52 : 44,
                 padding: guided ? '8px 16px' : '6px 12px',
                 borderRadius: 10,
                 border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                boxShadow: active ? `0 0 0 3px ${GOLD}33` : 'none',
                 background: def.color,
                 color: PAPER,
                 display: 'flex',

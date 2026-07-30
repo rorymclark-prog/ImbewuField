@@ -282,7 +282,7 @@ test('flat ground is distinct from unavailable contour evidence', () => {
   }
 });
 
-import { fitZoom as fitZoomForFraming } from '../lib/design-canvas.ts';
+import { fitZoom as fitZoomForFraming, zoneOfSelection } from '../lib/design-canvas.ts';
 
 /** A site's bbox expressed in degrees around a South African latitude. */
 const bboxAround = (widthM: number, heightM: number, lat = -27.726, lng = 31.963) => {
@@ -315,4 +315,66 @@ test('framing never asks for a zoom the Static Images API refuses', () => {
   // And a whole-country bbox must not fall through the bottom.
   const { zoom: wide } = fitZoomForFraming({ minX: 16, maxX: 33, minY: -35, maxY: -22 }, 960, 640);
   assert.ok(wide >= 1, `must stay in range, got ${wide}`);
+});
+
+// ── zoneOfSelection ───────────────────────────────────────────────────────────
+// The Zones chip row used to light a chip only while the DRAW tool was armed, so selecting
+// an existing Zone 4 ring left every chip dark — the row answered "what will I paint next?"
+// when the farmer was asking "what am I holding?".
+
+const zoneRing = (id: string, zone: unknown, feature?: string) =>
+  ({ id, zone, points: [[0, 0], [1, 0], [1, 1]], ...(feature ? { feature } : {}) }) as unknown as Parameters<typeof zoneOfSelection>[0][number];
+
+test('zoneOfSelection reports the zone of a single selected ring', () => {
+  const zones = [zoneRing('a', 4), zoneRing('b', 1)];
+  assert.equal(zoneOfSelection(zones, ['a']), 4);
+  assert.equal(zoneOfSelection(zones, ['b']), 1);
+});
+
+test('zoneOfSelection lights one chip for a group that agrees, and none for a mixed group', () => {
+  const zones = [zoneRing('a', 2), zoneRing('b', 2), zoneRing('c', 5)];
+  assert.equal(zoneOfSelection(zones, ['a', 'b']), 2);
+  assert.equal(zoneOfSelection(zones, ['a', 'c']), null); // no single truthful answer
+});
+
+test('zoneOfSelection ignores ground-feature rings, whose zone rides along as an inert value', () => {
+  // A lawn or house footprint carries a `zone` that nobody chose (see ZoneShape). Reading it
+  // would light a chip asserting a zone the farmer never set.
+  const zones = [zoneRing('lawn', 3, 'lawn')];
+  assert.equal(zoneOfSelection(zones, ['lawn']), null);
+});
+
+test('zoneOfSelection matches a legacy STRING zone — the coercion bug that made the step read 0 of 4', () => {
+  // Older persisted states stored zone as '4' rather than 4. Strict === against a numeric chip
+  // key silently never matches, and the rings still render perfectly, so nothing looks broken.
+  assert.equal(zoneOfSelection([zoneRing('a', '4')], ['a']), 4);
+  assert.equal(zoneOfSelection([zoneRing('a', '0')], ['a']), 0); // zone 0 must not read as falsy-null
+});
+
+test('zoneOfSelection returns null for an empty selection, a selection of non-zones, and out-of-range values', () => {
+  assert.equal(zoneOfSelection([zoneRing('a', 4)], []), null);
+  assert.equal(zoneOfSelection([zoneRing('a', 4)], ['some-item-id']), null); // items/lines aren't zones
+  assert.equal(zoneOfSelection([zoneRing('a', 9)], ['a']), null);
+  assert.equal(zoneOfSelection([zoneRing('a', -1)], ['a']), null);
+  assert.equal(zoneOfSelection([zoneRing('a', 'not-a-number')], ['a']), null);
+});
+
+test('the zone chip row iterates real NUMBERS — the coercion that made every drawn zone persist zone:"3"', async () => {
+  // DesignPalette renders one chip per ZONE_DEFS key. Object.keys returns strings, and the old
+  // `as unknown as Array<0|1|2|3|4|5>` cast asserted numbers without producing any, so `z` was
+  // '3'. Self-consistent enough to hide: pickZone('3') set zoneDraw='3' and `zoneDraw === z`
+  // compared '3' === '3'. But DesignCanvas writes zoneDraw straight into ZoneShape.zone, so
+  // every zone drawn after a chip tap was persisted with a STRING zone, and a numeric
+  // selectedZone could never match a chip. Pin the contract the .map(Number) restores.
+  const { ZONE_DEFS } = await import('../lib/design-elements.ts');
+  const keys = Object.keys(ZONE_DEFS);
+  assert.deepEqual(keys, ['0', '1', '2', '3', '4', '5'], 'raw keys are strings — this is the trap');
+  const zoneNumbers = keys.map(Number);
+  assert.deepEqual(zoneNumbers, [0, 1, 2, 3, 4, 5]);
+  for (const z of zoneNumbers) {
+    assert.equal(typeof z, 'number');
+    // What a chip is asked at render time: does this chip equal the selected zone? Strict ===
+    // against a number is the comparison that silently never matched before.
+    assert.equal(zoneOfSelection([zoneRing('r', z)], ['r']), z);
+  }
 });
