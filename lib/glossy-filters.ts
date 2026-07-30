@@ -213,7 +213,7 @@ export function exactSheetLineLegendGroups(
   }
 
   const groups: ExactLineLegendGroup[] = [];
-  for (const kind of ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const) {
+  for (const kind of ['swale', 'fence', 'path', 'bedpath', 'pipe', 'drip', 'windbreak', 'greywater'] as const) {
     if (!lineInFilter(kind, sheet)) continue;
     const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
     if (!count) continue;
@@ -369,7 +369,12 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
     case 'water':
       return kind === 'swale' || kind === 'pipe' || kind === 'drip' || kind === 'greywater';
     case 'planting':
-      return kind === 'windbreak'; // a windbreak is a planted row → Planting sheet, not Structures
+      // A bed path is part of the veg garden it separates — same reasoning that put the KIND on
+      // the planting LAYER (lib/design-canvas.ts). Missing here, every bed path a farmer placed
+      // rendered permanently at LOCKED_OPACITY and could never be selected: lineInFilter takes a
+      // plain string, so the Record<LineShape['kind'],…> pattern that names every other map for
+      // a new kind is blind to this one. tests/line-kind-coverage.test.ts now guards it instead.
+      return kind === 'windbreak' || kind === 'bedpath'; // a windbreak is a planted row → Planting sheet, not Structures
     case 'structures':
       return kind === 'fence' || kind === 'path';
     default:

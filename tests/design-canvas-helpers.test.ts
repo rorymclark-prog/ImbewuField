@@ -459,7 +459,9 @@ test('a custom-base design is NEVER geographically re-projected — the photo is
     useCustomBase: true,
     customBase: { url: 'https://x/photo.jpg', mPerPx: 0.05, uploadedAt: new Date().toISOString() },
   };
-  const project = makeMercatorProjector(newFrame.centerLng, newFrame.centerLat, newFrame.zoom, newFrame.imgW, newFrame.imgH);
+  // Any projector at all must be irrelevant on a custom base — this one moves every point,
+  // which is exactly what the gate must prevent from ever being applied.
+  const project = (lngLat: [number, number]): [number, number] => [lngLat[0] * 0 + 0.5, 0.5];
   const migrated = migrateStateToFrame(state, newFrame, project);
   // Frame stamp updates (so the next call hits the cheap no-op path)…
   assert.equal(migrated.frame, newFrame);

@@ -163,15 +163,23 @@ export interface PlantingRouteStyle {
 }
 
 /** Styling metadata for the optional planted windbreak line; no route is created by this module. */
-export const PLANTING_ROUTE_STYLE: Readonly<{ windbreak: PlantingRouteStyle }> = {
+export const PLANTING_ROUTE_STYLE: Readonly<{ windbreak: PlantingRouteStyle; bedpath: PlantingRouteStyle }> = {
   windbreak: {
     color: '#3A7A30',
     dash: [],
     width: 5.2,
     label: 'Windbreak hedge',
   },
+  // The walking path between the beds of a bed block — planting-sheet geometry because the beds
+  // are (see lineInFilter). Tan with a tight dash, matching the canvas's bedpath stroke family.
+  bedpath: {
+    color: '#C9A227',
+    dash: [7, 5],
+    width: 2.4,
+    label: 'Bed path',
+  },
 };
 
 export function plantingRouteStyleFor(kind: string): PlantingRouteStyle | undefined {
-  return kind === 'windbreak' ? PLANTING_ROUTE_STYLE.windbreak : undefined;
+  return kind === 'windbreak' || kind === 'bedpath' ? PLANTING_ROUTE_STYLE[kind] : undefined;
 }

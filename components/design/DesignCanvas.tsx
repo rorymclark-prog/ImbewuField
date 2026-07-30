@@ -2643,6 +2643,22 @@ export default function DesignCanvas({
                   style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'stroke' : 'none' }}
                   onPointerDown={(e) => startDragShape(e, line.id, 'line')}
                 />
+                {/* Bed paths get the contours' casing treatment: cream #E8D9B8 over bright sand or
+                    a pale bed fill measures near 1:1 bare, and a bed block can put 59 of these on
+                    the map at once. The casing also tells a bedpath from a walking path at a
+                    glance — same family, one is cased, one is not. */}
+                {line.kind === 'bedpath' && (
+                  <polyline
+                    points={polylinePoints(effectivePoints, imgW, imgH)}
+                    fill="none"
+                    stroke={CONTOUR_CASING}
+                    strokeWidth={chrome(style.width + 2)}
+                    strokeDasharray={chromeDash(style.dash)}
+                    opacity={0.45}
+                    strokeLinecap="round"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                )}
                 <polyline
                   points={polylinePoints(effectivePoints, imgW, imgH)}
                   fill="none"
