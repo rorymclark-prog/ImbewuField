@@ -138,6 +138,22 @@ test('decoded data URL size handles base64 padding exactly and enforces the uplo
   })]) ?? '', /too large/);
 });
 
+test('render rollback may delete an owner-scoped upload without reading null request.resource', () => {
+  const storageRules = readFileSync(new URL('../storage.rules', import.meta.url), 'utf8');
+  const renderRule = storageRules.slice(storageRules.indexOf('match /renders/{uid}/{allPaths=**}'));
+
+  assert.match(
+    renderRule,
+    /allow create, update:\s*if request\.auth != null && request\.auth\.uid == uid[\s\S]*?request\.resource\.size < 12 \* 1024 \* 1024[\s\S]*?request\.resource\.contentType\.matches\('image\/\.\*'\);/,
+    'render creates and updates must retain the image size/type guards',
+  );
+  assert.match(
+    renderRule,
+    /allow delete:\s*if request\.auth != null && request\.auth\.uid == uid;/,
+    'rollback deletes must be authorised from owner identity alone because request.resource is null',
+  );
+});
+
 test('malformed images and conflicting rendering authorities fail before any job exists', () => {
   assert.match(renderJobRequestError([sheet('water', { compositeDataUrl: 'not an image' })]) ?? '', /valid image/);
   assert.match(renderJobRequestError([sheet('water', { compositeDataUrl: 'data:image/png;base64,A' })]) ?? '', /valid image/);
