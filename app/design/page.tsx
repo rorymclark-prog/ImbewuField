@@ -621,6 +621,9 @@ function DesignStudioInner() {
     contours: false, // opt-in overlay (approximate, from slope + aspect)
     sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
+  // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
+  // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
+  const [mapTextScale, setMapTextScale] = useState(1);
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
@@ -2092,6 +2095,7 @@ function DesignStudioInner() {
               areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
+              mapTextScale={mapTextScale}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
               slopeDeg={locationData?.elevation?.slopeDeg}
@@ -2418,6 +2422,7 @@ function DesignStudioInner() {
           lineKind={lineKind}
           setLineKind={setLineKind}
           activeLayers={activeLayers}
+          textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}

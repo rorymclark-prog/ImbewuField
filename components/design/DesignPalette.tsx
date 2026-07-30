@@ -38,7 +38,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { normaliseRotation } from '@/lib/design-canvas';
+import { normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
@@ -88,6 +88,9 @@ export interface DesignPaletteProps {
   setLineKind: (k: LineShape['kind']) => void;
   activeLayers: ActiveLayers;
   setActiveLayers: (layers: ActiveLayers) => void;
+  /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
+   *  it entirely, same "nothing to act on" convention the other optional controls use. */
+  textScaleControl: { value: number; onChange: (v: number) => void } | null;
   onUndo: () => void;
   canUndo: boolean;
   onRedo: () => void;
@@ -306,6 +309,7 @@ export default function DesignPalette({
   setLineKind,
   activeLayers,
   setActiveLayers,
+  textScaleControl,
   onUndo,
   canUndo,
   onRedo,
@@ -875,6 +879,28 @@ export default function DesignPalette({
                     </button>
                   );
                 })}
+                {/* Icon + label size. Lives with Labels and Icons because it is the same
+                    question — how loud should the annotation be — and a farmer who has just
+                    turned Labels on to read them wants the size control in the same place.
+                    One slider drives both: an icon and its name read as a single mark. */}
+                {textScaleControl && (
+                  <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '6px 2px 0' }}>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🔍 {t('designPaletteSymbolSize')}</span>
+                    <input
+                      type="range"
+                      min={MIN_MAP_TEXT_SCALE}
+                      max={MAX_MAP_TEXT_SCALE}
+                      step={0.1}
+                      value={textScaleControl.value}
+                      onChange={(e) => textScaleControl.onChange(Number(e.target.value))}
+                      aria-label={t('designPaletteSymbolSize')}
+                      style={{ flex: 1, minWidth: 90, accentColor: GREEN, cursor: 'pointer' }}
+                    />
+                    <span style={{ fontSize: 11, fontWeight: 700, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                      {Math.round(textScaleControl.value * 100)}%
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>

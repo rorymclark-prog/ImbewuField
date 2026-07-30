@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
@@ -120,6 +120,8 @@ export interface DesignCanvasProps {
   areaFeature?: GroundFeatureKind | null;
   lineKind: LineShape['kind'];
   activeLayers: ActiveLayers;
+  /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
+  mapTextScale?: number;
   // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
@@ -517,6 +519,7 @@ export default function DesignCanvas({
   areaFeature,
   lineKind,
   activeLayers,
+  mapTextScale: mapTextScaleRaw = 1,
   onToggleBaseMap,
   onToggleSector,
   slopeDeg,
@@ -1825,6 +1828,11 @@ export default function DesignCanvas({
   // "x for deletion is annoyingly big"). Invisible HIT strokes deliberately stay world-sized —
   // generous grab areas are the point. Editor badges (✕/−) use the worldPx family instead so
   // they match the vertex dots' constant screen size.
+  // Clamped here rather than trusted: a NaN or a 0 arriving from a persisted slider value would
+  // collapse every icon and pill to nothing, and the map would look empty rather than broken.
+  const mapTextScale = Number.isFinite(mapTextScaleRaw)
+    ? clamp(mapTextScaleRaw, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE)
+    : 1;
   const chrome = (w: number) => w / view.k;
   const chromeDash = (dash?: string) =>
     dash?.split(/[ ,]+/).map((n) => String(Number(n) / view.k)).join(' ');
@@ -2875,7 +2883,7 @@ export default function DesignCanvas({
           // The icon disc is a map SYMBOL, not geometry: chrome() holds it at one screen size at
           // every zoom (identical at k=1). Zoomed in it used to balloon with the footprint until
           // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
-          const iconDiscR = chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11));
+          const iconDiscR = chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) * mapTextScale;
           const fontSize = iconDiscR * 1.05;
           const labelText = item.label ?? def.name;
           const labelFull = item.note ? `${labelText} · ${item.note}` : labelText;
@@ -3060,7 +3068,12 @@ export default function DesignCanvas({
             FOUR of seven pills sat closer to a neighbour's icon than to their own, which is why
             the map appeared to name the wrong plant. */}
         {activeLayers.labels && (() => {
-          const PILL_FS = 9, PILL_PADX = 5, PILL_H = 16, PILL_MAX = 120;
+          // Every pill dimension scales together off the farmer's Size slider, so the text, its
+          // padding, its height and its wrap width stay in proportion — scaling the font alone
+          // would push type out of a fixed-height pill. The de-collision engine reads these same
+          // numbers, so bigger labels also claim more room and re-flow instead of overlapping.
+          const PILL_FS = 9 * mapTextScale, PILL_PADX = 5 * mapTextScale,
+                PILL_H = 16 * mapTextScale, PILL_MAX = 120 * mapTextScale;
           const shown = state.items
             .map((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
@@ -3079,7 +3092,7 @@ export default function DesignCanvas({
               // half of THIS plant's own canopy — so a 9 m macadamia's pill sat ~29 units below its
               // icon while a 2.5 m pawpaw's sat ~9 below, and pills from icons at different heights
               // converged into one band while their icons stayed spread out.
-              const iconDiscR = activeLayers.symbols ? chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) : 0;
+              const iconDiscR = activeLayers.symbols ? chrome(clamp(6, Math.min(wPx, hPx) * 0.28, 11)) * mapTextScale : 0;
               return {
                 id: item.id,
                 cx: nx * imgW,

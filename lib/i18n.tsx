@@ -193,6 +193,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteLineWindbreak: 'Windbreak',
   designPaletteLayerBase: 'Base map',
   designPaletteLayerBoundary: 'Boundary',
+  designPaletteSymbolSize: 'Size',
   designPaletteLayerExisting: 'Existing',
   designPaletteLayerWater: 'Water',
   designPaletteLayerEarthworks: 'Earthworks',

@@ -186,6 +186,7 @@ export const DESIGN_STUDIO_REST_KEYS = {
   paletteLineWindbreak: 'designPaletteLineWindbreak',
   paletteLayerBase: 'designPaletteLayerBase',
   paletteLayerBoundary: 'designPaletteLayerBoundary',
+  paletteSymbolSize: 'designPaletteSymbolSize',
   paletteLayerExisting: 'designPaletteLayerExisting',
   paletteLayerWater: 'designPaletteLayerWater',
   paletteLayerEarthworks: 'designPaletteLayerEarthworks',

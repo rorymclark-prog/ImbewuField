@@ -451,6 +451,15 @@ const METRES_PER_DEGREE_LAT = 111.32;
 /** Bounds on a hand-calibrated scale correction (DesignCanvasState.scaleFactor). Wide enough for
  *  the real cases — a farmer who finds the imagery half or double — and tight enough that a
  *  corrupted number cannot turn a smallholding into a province. */
+/** Multiplier on icon discs and label pills, driven by the Size slider in the Layers panel
+ *  (Rory: "a little slider to incres icon and lable size"). One control for both, because an
+ *  icon and the name under it are read as a single mark — drifting them apart only produces a
+ *  map that needs two sliders to look right. Purely presentational: it changes how large a
+ *  symbol is DRAWN, never what is stored, so no geometry moves. Lives here rather than in the
+ *  canvas component so the palette can bound its slider without importing a component. */
+export const MIN_MAP_TEXT_SCALE = 0.6;
+export const MAX_MAP_TEXT_SCALE = 2.5;
+
 export const MIN_SCALE_FACTOR = 0.05;
 export const MAX_SCALE_FACTOR = 20;
 
