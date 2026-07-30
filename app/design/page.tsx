@@ -1382,11 +1382,19 @@ function DesignStudioInner() {
     bakeBaseAlignment(source.dataUrl, align, frame.imgW, frame.imgH, frame.underlayDataUrl)
       .then((baked) => {
         if (bakeTokenRef.current !== token) return;
-        setFrame((prev) => (prev ? { ...prev, satDataUrl: baked } : prev));
+        // RETURNING `prev` UNCHANGED IS LOAD-BEARING, not an optimisation. React bails out of a
+        // state update that returns the identical object; handing back a fresh one every time
+        // would re-fire this very effect, which would bake again — a loop that encodes a
+        // full-frame PNG on every pass until the tab runs out of memory. That is exactly what
+        // happened: Chrome killed the page with RESULT_CODE_HUNG.
+        setFrame((prev) => (prev && prev.satDataUrl !== baked ? { ...prev, satDataUrl: baked } : prev));
       })
       // A failed bake leaves the previous image on screen, which is the last state the farmer
       // approved — strictly better than blanking their base over a redraw.
       .catch(() => {});
+    // DEPEND ON THE FIELDS THIS BAKE READS, NEVER ON `frame` ITSELF. The effect writes to frame,
+    // so depending on the whole object makes it its own trigger — the second half of the loop
+    // above. Every field the bake actually uses is listed individually.
   }, [
     canvasState?.useCustomBase,
     canvasState?.customBase,
@@ -1395,7 +1403,6 @@ function DesignStudioInner() {
     frame?.imgW,
     frame?.imgH,
     frame?.underlayDataUrl,
-    frame,
   ]);
 
   // The frame's metres must follow the SIZE the farmer is currently looking at, mid-gesture
@@ -1629,6 +1636,22 @@ function DesignStudioInner() {
         revertToSatellite();
       });
   }, [canvasState?.customBase, handleChange, revertToSatellite]);
+
+  // Remove the photo from the design and go back to the satellite for good (Rory: "i just need a
+  // delete drone photo button now"). Distinct from the Satellite toggle, which deliberately KEEPS
+  // the photo so it can come back — this is the way to say "I am finished with that photo".
+  //
+  // It forgets the reference, not the uploaded file: the image stays in Storage, where it costs
+  // nothing and cannot be lost by a mis-tap. Nothing about the DESIGN is touched — no item, zone,
+  // line or metre — because the frame's ground scale never belonged to the photo in the first
+  // place (see applyCustomBase), so the farm keeps its size on the satellite exactly as drawn.
+  const deleteCustomBase = useCallback(() => {
+    if (typeof window !== 'undefined'
+      && !window.confirm('Remove your photo and go back to the satellite view?\n\nYour design is not affected.')) return;
+    customBaseSourceRef.current = null;
+    revertToSatellite();
+    handleChange((prev) => ({ ...prev, customBase: null }));
+  }, [handleChange, revertToSatellite]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -2862,6 +2885,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
                 {basePhotoControls(canvasState).showingPhoto ? 'Adjust photo' : 'Use a different photo'}
+              </button>
+              {/* Destructive, so it is quiet, last in the row, and asks first. */}
+              <button
+                type="button"
+                onClick={deleteCustomBase}
+                title="Remove your photo and go back to the satellite. Your design is not affected."
+                style={{ border: 'none', background: 'transparent', color: '#B53A3A', fontWeight: 600, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+              >
+                Remove photo
               </button>
             </div>
           ) : (
