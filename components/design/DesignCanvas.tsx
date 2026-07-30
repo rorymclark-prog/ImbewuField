@@ -1733,6 +1733,15 @@ export default function DesignCanvas({
   const itemActionStrokeW = worldPx(1.5);
   const itemActionFont = worldPx(12);
   const itemActionGap = worldPx(4);
+  // Zoom-only compensation for VISIBLE map chrome (ring outlines, dashes, leaders, fence posts):
+  // at k=1 nothing changes on any device; zoomed in, strokes keep their on-screen weight instead
+  // of ballooning with the map (Rory, tracing at max zoom: "the lines need to change thickness",
+  // "x for deletion is annoyingly big"). Invisible HIT strokes deliberately stay world-sized —
+  // generous grab areas are the point. Editor badges (✕/−) use the worldPx family instead so
+  // they match the vertex dots' constant screen size.
+  const chrome = (w: number) => w / view.k;
+  const chromeDash = (dash?: string) =>
+    dash?.split(/[ ,]+/).map((n) => String(Number(n) / view.k)).join(' ');
   // 20 (not 18) to match the ~40px comfortable-touch-target radius this file already uses
   // elsewhere for vertexHitR and itemActionHitR — the resize grips (corner + both edges, below)
   // were the one outlier still sized under that baseline. +2px per side; the visible glyphs
@@ -1881,8 +1890,8 @@ export default function DesignCanvas({
                   something along the fence — Rory: "boundary is still showing with that ugly fence
                   one do it with poles and wire!"). Dark casing underneath keeps the pale wire legible
                   over any satellite photo or AI-rendered background. */}
-              <polygon points={boundaryPts} fill="none" stroke="rgba(24,28,22,0.45)" strokeWidth={3.5} strokeLinejoin="round" />
-              <polygon points={boundaryPts} fill="none" stroke={BOUNDARY_BONE} strokeWidth={1.6} strokeLinejoin="round" />
+              <polygon points={boundaryPts} fill="none" stroke="rgba(24,28,22,0.45)" strokeWidth={chrome(3.5)} strokeLinejoin="round" />
+              <polygon points={boundaryPts} fill="none" stroke={BOUNDARY_BONE} strokeWidth={chrome(1.6)} strokeLinejoin="round" />
               {posts.map(([cx, cy], i) => (
                 <circle
                   key={`bpost-${i}`}
@@ -1988,7 +1997,11 @@ export default function DesignCanvas({
                         border: `1px solid ${layer.color}`,
                         borderRadius: 8,
                         padding: '1px 6px',
-                        display: 'inline-block',
+                        // display:table shrink-wraps like inline-block but lets margin auto centre
+                        // the pill on the anchor — inline-block left-aligned short names inside the
+                        // 112px foreignObject, so the leader pointed at empty air beside the pill.
+                        display: 'table',
+                        margin: '0 auto',
                         maxWidth: 112,
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -2133,12 +2146,12 @@ export default function DesignCanvas({
                   points={ringToPx(effectivePoints, imgW, imgH)}
                   fill="none"
                   stroke={color}
-                  strokeWidth={feat ? 2 : 1.5}
-                  strokeDasharray={feat ? undefined : '6 4'}
+                  strokeWidth={chrome(feat ? 2 : 1.5)}
+                  strokeDasharray={feat ? undefined : chromeDash('6 4')}
                   pointerEvents="none"
                 />
                 {isHighlighted && (
-                  <polygon points={ringToPx(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={2.5} strokeDasharray="4 3" pointerEvents="none" />
+                  <polygon points={ringToPx(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={chrome(2.5)} strokeDasharray={chromeDash('4 3')} pointerEvents="none" />
                 )}
                 {labelMoved && labelVisible && (
                   <line
@@ -2147,8 +2160,8 @@ export default function DesignCanvas({
                     x2={(labelCx * imgW).toFixed(1)}
                     y2={(labelCy * imgH).toFixed(1)}
                     stroke={color}
-                    strokeWidth={1}
-                    strokeDasharray="2 2"
+                    strokeWidth={chrome(1.4)}
+                    strokeDasharray={chromeDash('2 2')}
                     opacity={0.75}
                     pointerEvents="none"
                   />
@@ -2253,7 +2266,10 @@ export default function DesignCanvas({
                           border: `1px solid ${color}`,
                           borderRadius: 9,
                           padding: '1px 7px',
-                          display: 'inline-block',
+                          // See the traced-layer pill above: table + auto margins centre the pill
+                          // on its anchor so the label leader actually meets it.
+                          display: 'table',
+                          margin: '0 auto',
                           maxWidth: 112,
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
@@ -2344,7 +2360,7 @@ export default function DesignCanvas({
                         than the 3 points a polygon needs, so it can never be made degenerate. */}
                     {effectivePoints.length > 3 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g key={`del-${i}`} transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}>
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(13)).toFixed(1)},${(y * imgH - worldPx(13)).toFixed(1)})`}>
                           {/* Invisible enlarged hit circle — the visible badge alone (used to be
                               its only tap target) is well under the ~40px mobile touch-target
                               floor once it's allowed to shrink for visibility (see worldPx). */}
@@ -2364,15 +2380,15 @@ export default function DesignCanvas({
                         </g>
                       ))}
                     <g
-                      transform={`translate(${(centroid[0] * imgW + 16).toFixed(1)},${(centroid[1] * imgH - 16).toFixed(1)})`}
+                      transform={`translate(${(centroid[0] * imgW + worldPx(16)).toFixed(1)},${(centroid[1] * imgH - worldPx(16)).toFixed(1)})`}
                       onPointerDown={(e) => {
                         e.stopPropagation();
                         deleteZone(z.id);
                       }}
                       style={{ cursor: 'pointer' }}
                     >
-                      <circle r={9} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={1.2} />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={11} fill="#FBF6EC">
+                      <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fill="#FBF6EC">
                         ✕
                       </text>
                     </g>
@@ -2420,17 +2436,17 @@ export default function DesignCanvas({
                   points={polylinePoints(effectivePoints, imgW, imgH)}
                   fill="none"
                   stroke={style.stroke}
-                  strokeWidth={style.width}
-                  strokeDasharray={style.dash}
+                  strokeWidth={chrome(style.width)}
+                  strokeDasharray={chromeDash(style.dash)}
                   opacity={style.opacity ?? 1}
                   strokeLinecap="round"
                   style={{ pointerEvents: 'none' }}
                 />
                 {line.kind === 'fence' && fencePosts(effectivePoints, imgW, imgH).map(([cx, cy], i) => (
-                  <circle key={`post-${i}`} cx={cx} cy={cy} r={3} fill={style.stroke} stroke="#FFFEFA" strokeWidth={1} pointerEvents="none" />
+                  <circle key={`post-${i}`} cx={cx} cy={cy} r={chrome(3)} fill={style.stroke} stroke="#FFFEFA" strokeWidth={chrome(1)} pointerEvents="none" />
                 ))}
                 {isHighlighted && (
-                  <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={3} strokeDasharray="4 3" strokeLinecap="round" pointerEvents="none" />
+                  <polyline points={polylinePoints(effectivePoints, imgW, imgH)} fill="none" stroke={GOLD} strokeWidth={chrome(3)} strokeDasharray={chromeDash('4 3')} strokeLinecap="round" pointerEvents="none" />
                 )}
                 {/* Name-pill label at the line's midpoint (or wherever it's been dragged to) —
                     the SAME pattern as the ground-feature label pill above, generalised to lines.
@@ -2523,7 +2539,10 @@ export default function DesignCanvas({
                                 border: `1px solid ${style.stroke}`,
                                 borderRadius: 9,
                                 padding: '1px 7px',
-                                display: 'inline-block',
+                                // See the traced-layer pill above: table + auto margins centre the
+                                // pill on its anchor so the label leader actually meets it.
+                                display: 'table',
+                                margin: '0 auto',
                                 maxWidth: 112,
                                 whiteSpace: 'nowrap',
                                 overflow: 'hidden',
@@ -2590,7 +2609,7 @@ export default function DesignCanvas({
                         minimum a line needs to stay a line. */}
                     {effectivePoints.length > 2 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g key={`del-${i}`} transform={`translate(${(x * imgW + 13).toFixed(1)},${(y * imgH - 13).toFixed(1)})`}>
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(13)).toFixed(1)},${(y * imgH - worldPx(13)).toFixed(1)})`}>
                           <circle
                             r={deleteHitR}
                             fill="transparent"
@@ -2608,7 +2627,7 @@ export default function DesignCanvas({
                       ))}
                     {mid && (
                       <g
-                        transform={`translate(${(mid[0] * imgW + 12).toFixed(1)},${(mid[1] * imgH - 12).toFixed(1)})`}
+                        transform={`translate(${(mid[0] * imgW + worldPx(12)).toFixed(1)},${(mid[1] * imgH - worldPx(12)).toFixed(1)})`}
                         onPointerDown={(e) => {
                           e.stopPropagation();
                           deleteLine(line.id);
