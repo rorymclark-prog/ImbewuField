@@ -13,6 +13,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
+import { layoutBedBlock, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
@@ -122,6 +123,15 @@ export interface DesignCanvasProps {
   activeLayers: ActiveLayers;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
+  /** Non-null ARMS block placement: tap a corner, swing to aim, tap again to commit. The page
+   *  owns the spec (the farmer's typed bed length/width/path/count) and the commit; the canvas
+   *  owns only the gesture and the ghost. Arming also sets tool to a placement mode, which is
+   *  what disables every drag/edit handler for the duration — each already bails on
+   *  `tool !== 'select'`, so nothing else had to learn about this mode. */
+  bedBlock?: { spec: BedBlockSpec; defId: string } | null;
+  /** Called with the laid-out beds on the confirming tap. The page commits them in ONE onChange
+   *  so a block of seven is one undo entry, not seven. */
+  onPlaceBedBlock?: (placements: BedBlockPlacement[]) => void;
   // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
   onToggleBaseMap?: () => void;
@@ -520,6 +530,8 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   mapTextScale: mapTextScaleRaw = 1,
+  bedBlock = null,
+  onPlaceBedBlock,
   onToggleBaseMap,
   onToggleSector,
   slopeDeg,
@@ -652,6 +664,25 @@ export default function DesignCanvas({
   // A ruler turns "the scale feels wrong" into a number he can check against a real wall.
   // Deliberately local, transient state: measuring never touches saved geometry, never
   // participates in undo, and clears when the farmer turns it off.
+  // Block placement, two taps. `anchor` is the corner the farmer dropped; `aim` is wherever the
+  // pointer/finger is now, which is what turns the block. Holding the aim separately (rather than
+  // an angle) keeps the ghost honest on a phone, where the finger IS the aim and there is no
+  // hover to fall back on.
+  const [blockAnchor, setBlockAnchor] = useState<[number, number] | null>(null);
+  const [blockAim, setBlockAim] = useState<[number, number] | null>(null);
+  // Aim angle from anchor to pointer, in PIXEL space. Computing it from normalised coordinates
+  // would fold the frame's aspect ratio into the angle, so the block would follow the finger on
+  // a square frame and lag it on every other one.
+  const blockAimDeg = (() => {
+    if (!blockAnchor || !blockAim) return 0;
+    const dx = (blockAim[0] - blockAnchor[0]) * imgW;
+    const dy = (blockAim[1] - blockAnchor[1]) * imgH;
+    if (dx === 0 && dy === 0) return 0;
+    return (Math.atan2(dy, dx) * 180) / Math.PI;
+  })();
+  const blockGhost = bedBlock && blockAnchor
+    ? layoutBedBlock(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH)
+    : [];
   const [measureOn, setMeasureOn] = useState(false);
   const [measurePts, setMeasurePts] = useState<Array<[number, number]>>([]);
 
@@ -962,6 +993,24 @@ export default function DesignCanvas({
     const pt = clientToNorm(e.clientX, e.clientY);
     if (!pt) return;
 
+    // Block placement runs BEFORE the ordinary place branch and is reached with placeDefId null,
+    // so the two can never both fire. Tap one drops the corner; tap two commits at whatever angle
+    // the block is currently showing — the farmer confirms what they can already see.
+    if (bedBlock) {
+      if (!blockAnchor) {
+        setBlockAnchor(pt);
+        setBlockAim(pt);
+        return;
+      }
+      const placements = layoutBedBlock(bedBlock.spec, blockAnchor, blockAimDeg, mPerPx, imgW, imgH);
+      setBlockAnchor(null);
+      setBlockAim(null);
+      // An empty layout means the scale or frame was unusable. Commit nothing rather than a
+      // block of NaN-positioned beds that render as an empty map.
+      if (placements.length) onPlaceBedBlock?.(placements);
+      return;
+    }
+
     if (tool === 'place' && placeDefId) {
       const def = ELEMENTS_BY_ID[placeDefId];
       if (!def) return;
@@ -979,6 +1028,14 @@ export default function DesignCanvas({
   function handleBackgroundPointerMove(e: React.PointerEvent<SVGSVGElement>) {
     if (activePointers.current.has(e.pointerId)) {
       activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    // Swing the block toward wherever the pointer is. This fires on hover on a desktop (the
+    // "hanging on our mouse" feel) and on drag on a phone, from the one handler — a finger
+    // moving across the glass and a mouse moving across it are the same event here.
+    if (bedBlock && blockAnchor && activePointers.current.size < 2) {
+      const pt = clientToNorm(e.clientX, e.clientY);
+      if (pt) setBlockAim(pt);
     }
 
     if (pinchState.current && activePointers.current.size >= 2) {
@@ -2812,6 +2869,48 @@ export default function DesignCanvas({
         )}
 
         {/* Draft (in-progress) zone/line while drawing */}
+        {/* Block ghost — what will be committed, at the angle it will be committed at, so the
+            confirming tap is a confirmation and not a guess. Drawn in the same gold the draft
+            outlines use, non-interactive so it can never swallow the confirming tap. */}
+        {blockGhost.length > 0 && blockAnchor && (() => {
+          const foot = bedBlockFootprintM(bedBlock!.spec);
+          return (
+            <g pointerEvents="none">
+              {blockGhost.map((b2, i) => {
+                const wPx = (b2.wM / mPerPx);
+                const hPx = (b2.hM / mPerPx);
+                const cx = b2.x * imgW;
+                const cy = b2.y * imgH;
+                return (
+                  <rect
+                    key={`ghost-bed-${i}`}
+                    x={cx - wPx / 2}
+                    y={cy - hPx / 2}
+                    width={wPx}
+                    height={hPx}
+                    transform={`rotate(${b2.rot ?? 0} ${cx} ${cy})`}
+                    fill="rgba(247,201,126,0.22)"
+                    stroke={GOLD}
+                    strokeWidth={chrome(1.5)}
+                  />
+                );
+              })}
+              {/* The tapped corner stays marked while the block swings around it. */}
+              <circle cx={blockAnchor[0] * imgW} cy={blockAnchor[1] * imgH} r={worldPx(5)} fill={GOLD} />
+              <text
+                x={blockAnchor[0] * imgW}
+                y={blockAnchor[1] * imgH - worldPx(12)}
+                textAnchor="middle"
+                fontSize={worldPx(11)}
+                fontWeight={700}
+                fill={GOLD}
+              >
+                {`${blockGhost.length} beds · ${foot.alongM}\u00A0m \u00D7 ${Math.round(foot.acrossM * 10) / 10}\u00A0m`}
+              </text>
+            </g>
+          );
+        })()}
+
         {tool === 'zone' && draftPoints.length > 0 && (() => {
           const draftColor = areaFeature ? GROUND_FEATURES[areaFeature].color : ZONE_DEFS[zoneDraw].color;
           return (

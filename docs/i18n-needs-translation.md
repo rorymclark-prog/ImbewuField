@@ -100,7 +100,10 @@ Palette:
 `designPaletteLayerEarthworks`, `designPaletteLayerZones`, `designPaletteLayerPlanting`,
 `designPaletteLayerStructures`, `designPaletteLayerAccess`, `designPaletteLayerAnimals`,
 `designPaletteLayerLabels`, `designPaletteLayerIcons`, `designPaletteLayerContours`,
-`designPaletteLayerSector`, `designPaletteSymbolSize`.
+`designPaletteLayerSector`, `designPaletteSymbolSize`,
+`designPaletteBedBlock`, `designPaletteBedLength`, `designPaletteBedWidth`,
+`designPaletteBedPath`, `designPaletteBedCount`, `designPaletteBedBlockPlace`,
+`designPaletteBedBlockCancel`.
 
 Print/export chrome:
 `designPrintTitle`, `designPrintSubtitle`, `designPrintSheets`, `designPrintNothingDrawn`,

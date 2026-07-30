@@ -50,6 +50,7 @@ import {
   MIN_SCALE_FACTOR,
   MAX_SCALE_FACTOR,
 } from '@/lib/design-canvas';
+import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { type SnapRingKind } from '@/lib/snap-edges';
 import {
@@ -591,6 +592,10 @@ function DesignStudioInner() {
   // the selection, so the just-drawn shape stays immediately editable.
   const handleSetTool = useCallback((t: 'select' | 'place' | 'zone' | 'line') => {
     setTool(t);
+    // Picking any tool cancels a pending block — including the placement tool, since arming the
+    // block re-arms it explicitly straight after. Without this the block would stay live under
+    // an unrelated tool and steal the next tap.
+    setBedBlockArmed(false);
     if (t !== 'select') {
       setSelectedIds([]);
       setMultiSelectMode(false);
@@ -624,6 +629,13 @@ function DesignStudioInner() {
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
   const [mapTextScale, setMapTextScale] = useState(1);
+  // Bed-block placement. The spec is what the farmer typed; `armed` is whether the next canvas
+  // tap drops the block's corner. Defaults are a standard market-garden bed: 3 m long, 1.2 m
+  // across (reachable from either side), 0.5 m paths.
+  const [bedBlockSpec, setBedBlockSpec] = useState<BedBlockSpec>(
+    () => normaliseBedBlockSpec({ bedLengthM: 3, bedWidthM: 1.2, pathWidthM: 0.5, count: 4 }),
+  );
+  const [bedBlockArmed, setBedBlockArmed] = useState(false);
   // Switching INTO guided restores every layer — a first-timer should never land in guided
   // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
   // still the safe default on mode switch.
@@ -1242,7 +1254,11 @@ function DesignStudioInner() {
   // on every step change, and the canvas' own pointer-level guards refuse to select a foreign-step
   // shape in the first place — see ownedByCurrentStep), so no separate ownership re-check is
   // needed here; the Duplicate button is enabled/disabled purely off selectedIds, same as Delete.
-  const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses below
+  // What a bed block is made of. veg_bed is the standard growing bed in the catalog (1.2 x 3 m),
+// and the block overrides wM/hM per item anyway — this just picks the icon, colour, name and
+// agronomy rules every placed bed inherits.
+const BED_BLOCK_DEF_ID = 'veg_bed';
+const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses below
   const onDuplicateSelected = selectedIds.length && canvasState
     ? () => {
         const ids = new Set(selectedIds);
@@ -1287,6 +1303,49 @@ function DesignStudioInner() {
   const selectedZone = useMemo(
     () => (canvasState ? zoneOfSelection(canvasState.zones, selectedIds) : null),
     [canvasState, selectedIds],
+  );
+
+  // Commit a whole block in ONE handleChange, so seven beds cost one undo, not seven — the same
+  // single-commit rule the group angle and group size controls follow.
+  const onPlaceBedBlock = useCallback((placements: BedBlockPlacement[]) => {
+    if (!placements.length) return;
+    handleChange((prev) => ({
+      ...prev,
+      items: [
+        ...prev.items,
+        ...placements.map((b) => ({
+          id: newId(),
+          defId: BED_BLOCK_DEF_ID,
+          x: b.x,
+          y: b.y,
+          wM: b.wM,
+          hM: b.hM,
+          // Spread rather than assign: rot is deliberately absent at natural orientation, and
+          // writing `rot: undefined` would put an explicit undefined into the saved JSON.
+          ...(b.rot != null ? { rot: b.rot } : {}),
+        })),
+      ],
+    }));
+    setBedBlockArmed(false);
+  }, [handleChange]);
+
+  const bedBlockControl = useMemo(
+    () => ({
+      spec: bedBlockSpec,
+      armed: bedBlockArmed,
+      onSpecChange: (next: Partial<BedBlockSpec>) =>
+        setBedBlockSpec((prev) => normaliseBedBlockSpec({ ...prev, ...next })),
+      onArm: () => {
+        // Arm as a PLACEMENT tool with no element chosen: every drag/edit handler in the canvas
+        // already bails on `tool !== 'select'`, so this one line disables item dragging, vertex
+        // editing and the marquee for the duration without any of them knowing this mode exists.
+        handleSetTool('place');
+        setPlaceDefId(null);
+        setBedBlockArmed(true);
+      },
+      onCancel: () => setBedBlockArmed(false),
+    }),
+    [bedBlockSpec, bedBlockArmed, handleSetTool],
   );
 
   const selectedRectItems = canvasState
@@ -2096,6 +2155,8 @@ function DesignStudioInner() {
               lineKind={lineKind}
               activeLayers={activeLayers}
               mapTextScale={mapTextScale}
+              bedBlock={bedBlockArmed ? { spec: bedBlockSpec, defId: BED_BLOCK_DEF_ID } : null}
+              onPlaceBedBlock={onPlaceBedBlock}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
               slopeDeg={locationData?.elevation?.slopeDeg}
@@ -2423,6 +2484,7 @@ function DesignStudioInner() {
           setLineKind={setLineKind}
           activeLayers={activeLayers}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
+          bedBlockControl={bedBlockControl}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}

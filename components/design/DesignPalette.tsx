@@ -39,6 +39,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
 import { normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
+import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
@@ -91,6 +92,15 @@ export interface DesignPaletteProps {
   /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
+  /** Bed-block inserter: type the bed length, bed width, path width and count, then arm it and
+   *  tap a corner on the canvas. null hides the whole control. */
+  bedBlockControl: {
+    spec: { bedLengthM: number; bedWidthM: number; pathWidthM: number; count: number };
+    armed: boolean;
+    onSpecChange: (next: Partial<{ bedLengthM: number; bedWidthM: number; pathWidthM: number; count: number }>) => void;
+    onArm: () => void;
+    onCancel: () => void;
+  } | null;
   onUndo: () => void;
   canUndo: boolean;
   onRedo: () => void;
@@ -310,6 +320,7 @@ export default function DesignPalette({
   activeLayers,
   setActiveLayers,
   textScaleControl,
+  bedBlockControl,
   onUndo,
   canUndo,
   onRedo,
@@ -1279,9 +1290,70 @@ export default function DesignPalette({
     );
   }
 
+  // A whole block of beds in one action, on the step where beds live. Four numbers, then arm it
+  // and tap a corner on the canvas — the block swings around that corner until the second tap.
+  // Sits above the element catalog rather than inside it because it is not one more thing to
+  // place: it places many, with its own gesture.
+  function renderBedBlock() {
+    if (!bedBlockControl || step !== 'planting') return null;
+    const { spec, armed, onSpecChange, onArm, onCancel } = bedBlockControl;
+    const field = (
+      label: string,
+      value: number,
+      key: 'bedLengthM' | 'bedWidthM' | 'pathWidthM' | 'count',
+      opts: { step: number; min: number; max: number },
+    ) => (
+      <label style={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: 10.5, color: DARK, opacity: 0.75 }}>
+        {label}
+        <input
+          type="number"
+          value={value}
+          step={opts.step}
+          min={opts.min}
+          max={opts.max}
+          // Commit on every keystroke is fine here: nothing is written to the design until the
+          // farmer taps the canvas, so the only thing a partial number changes is the ghost.
+          onChange={(e) => onSpecChange({ [key]: Number(e.target.value) })}
+          style={{
+            width: 62, minHeight: 34, padding: '4px 6px', borderRadius: 8,
+            border: '1px solid rgba(0,0,0,0.2)', background: PAPER, color: DARK,
+            fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
+          }}
+        />
+      </label>
+    );
+    return (
+      <div style={scrollStripStyle(guided ? 10 : 6)}>
+        <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
+          🛏️ {t('designPaletteBedBlock')}
+        </span>
+        {field(t('designPaletteBedLength'), spec.bedLengthM, 'bedLengthM', { step: 0.5, min: 0.2, max: 200 })}
+        {field(t('designPaletteBedWidth'), spec.bedWidthM, 'bedWidthM', { step: 0.1, min: 0.2, max: 200 })}
+        {field(t('designPaletteBedPath'), spec.pathWidthM, 'pathWidthM', { step: 0.1, min: 0, max: 50 })}
+        {field(t('designPaletteBedCount'), spec.count, 'count', { step: 1, min: MIN_BED_COUNT, max: MAX_BED_COUNT })}
+        <button
+          type="button"
+          onClick={armed ? onCancel : onArm}
+          aria-pressed={armed}
+          style={{
+            minHeight: guided ? 52 : 44, padding: '0 16px', borderRadius: 10, flexShrink: 0,
+            alignSelf: 'flex-end',
+            border: armed ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
+            background: armed ? GREEN : 'transparent',
+            color: armed ? PAPER : GREEN,
+            fontWeight: 800, fontSize: 12.5, cursor: 'pointer',
+          }}
+        >
+          {armed ? t('designPaletteBedBlockCancel') : t('designPaletteBedBlockPlace')}
+        </button>
+      </div>
+    );
+  }
+
   function renderBodyRows() {
     return (
       <>
+        {renderBedBlock()}
         {renderElementCatalog()}
         {renderAreaChips()}
         {renderSectorWind()}
