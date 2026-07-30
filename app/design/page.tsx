@@ -56,7 +56,7 @@ import {
   bakeBaseAlignment,
   MAX_BASE_ROTATION,
 } from '@/lib/design-canvas';
-import { resolveBaseAlign, type BaseAlignment } from '@/lib/base-photo-align';
+import { type BaseAlignment } from '@/lib/base-photo-align';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { type SnapRingKind } from '@/lib/snap-edges';
@@ -525,11 +525,25 @@ function DesignStudioInner() {
   // Tracked separately from the photo: the underlay is keyed on the frame the satellite was
   // fetched FOR, so panning to a new frame refetches it while re-importing the same photo does not.
   const loadedUnderlayKeyRef = useRef<string | null>(null);
+  // WHICH BASE THE FARMER CURRENTLY WANTS, as a generation counter. The satellite and the photo
+  // are fetched independently and neither cancels the other, so on a slow rural connection a
+  // farmer tapping Satellite → My photo (the toggle exists to be flipped) could have the loser's
+  // response land LAST and write its image over the winner's — leaving satellite pixels being
+  // measured with the drone photo's metres-per-pixel. Every area, spacing, tank size, yield and
+  // price on the canvas and on all eight sheets would then be silently wrong, and it survives a
+  // refresh. Every async write of the base image captures this and refuses to write if it moved.
+  const baseRequestRef = useRef(0);
   // The farmer's photo as it was imported, BEFORE any in-place alignment. Alignment is baked into
   // frame.satDataUrl (bakeBaseAlignment) so every plan sheet paints the same aligned pixels the
   // Studio does — which means each nudge or rotation must re-bake from this pristine copy, never
   // from the previously-baked image, or the transforms would stack and the photo would walk away.
   const customBaseSourceRef = useRef<{ url: string; dataUrl: string } | null>(null);
+  // Bumped whenever the ref above is filled. The bytes stay in a ref (they are large, and putting
+  // them in state would re-render the whole Studio on every load), but the bake effect has to
+  // know they ARRIVED — a ref assignment is invisible to a dependency array, so without this
+  // counter a farmer who taps the angle button before the download lands gets an alignment that
+  // saves and never paints.
+  const [customBaseSourceRev, setCustomBaseSourceRev] = useState(0);
   const [showPhotoImport, setShowPhotoImport] = useState(false);
   const [saved, setSaved] = useState(true);
 
@@ -971,17 +985,27 @@ function DesignStudioInner() {
       const loadCustomBase = (targetFrame: typeof frameNoImg) => {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
+        const token = baseRequestRef.current;
         fetchImageAsDataUrl(customBase.url)
-          .then(async (dataUrl) => {
+          .then((dataUrl) => {
+            // The farmer switched base while this was in flight. Writing now would put these
+            // pixels under the OTHER base's metres-per-pixel — see baseRequestRef.
+            if (baseRequestRef.current !== token) return;
             // Keep the UNALIGNED original: every later nudge or rotation re-bakes from this, so
             // adjusting is a local redraw rather than a download, and repeated adjustments can
-            // never compound one bake on top of the last.
+            // never compound one bake on top of the last. The alignment itself is applied by the
+            // bake effect, which this bump wakes.
             customBaseSourceRef.current = { url: customBase.url, dataUrl };
-            const baked = await bakeBaseAlignment(dataUrl, customBase, targetFrame.imgW, targetFrame.imgH);
+            setCustomBaseSourceRev((r) => r + 1);
             loadedCustomBaseUrlRef.current = customBase.url;
-            setFrame((prev) => (prev ? { ...prev, satDataUrl: baked, mPerPx: customBase.mPerPx } : prev));
+            // mPerPx and the pixels are written TOGETHER, always. Splitting them is how a base
+            // ends up measured by the other base's scale.
+            setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: customBase.mPerPx } : prev));
           })
-          .catch(() => setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev)));
+          .catch(() => {
+            if (baseRequestRef.current !== token) return;
+            setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev));
+          });
       };
       // The satellite is fetched EVEN WHEN the farmer is on their own photo, and kept beside it as
       // the underlay. That is what gives a nudge something to be relative to: previously the photo
@@ -1260,40 +1284,74 @@ function DesignStudioInner() {
   // Paint-time alignment of the farmer's photo over the satellite. These write ONLY the display
   // fields on customBase — no item, zone, line or metre moves, which is what makes it safe to
   // offer as a free-hand nudge at all (see CustomBaseImage in lib/design-canvas.ts).
-  // Re-burn the alignment into the base image from the pristine original. Every adjustment goes
-  // through here, so the Studio and all eight plan sheets are looking at the same pixels — see
-  // bakeBaseAlignment (lib/design-canvas.ts) for why a live transform was not enough.
-  const rebakeBase = useCallback((align: BaseAlignment) => {
+  //
+  // THE BAKE IS DERIVED FROM THE SAVED ALIGNMENT, NEVER FIRED AT IT. The first cut re-baked
+  // imperatively from the click handlers, which quietly made the handlers the only route to a
+  // correct image — so every OTHER way the alignment can change left the saved value and the
+  // painted pixels describing different things, with the eight plan sheets shipping whatever the
+  // last imperative bake happened to leave behind:
+  //   · undo/redo restored a different alignment and never repainted (before the bake existed,
+  //     undo worked, because the canvas painted straight off customBase);
+  //   · a cloud reconcile applying another device's alignment did the same;
+  //   · a tap made before the photo finished downloading persisted the new angle against a bake
+  //     that silently no-opped, and the late download then painted the OLD angle over it.
+  // Keying an effect on the alignment itself makes all of that unrepresentable: whatever the
+  // state says, the pixels follow, no matter who changed it.
+  const bakeTokenRef = useRef(0);
+  useEffect(() => {
+    const photo = canvasState?.useCustomBase ? canvasState.customBase : null;
+    if (!photo || !frame) return;
     const source = customBaseSourceRef.current;
-    if (!source || !frame) return;
-    bakeBaseAlignment(source.dataUrl, align, frame.imgW, frame.imgH)
-      .then((baked) => setFrame((prev) => (prev ? { ...prev, satDataUrl: baked } : prev)))
-      // A failed re-bake leaves the previous aligned image on screen, which is the last state the
-      // farmer approved — strictly better than blanking their base over a redraw.
+    // The pristine original has not arrived yet. Whoever fetches it bumps customBaseSourceRev,
+    // which re-runs this effect — baking from anything other than the original would stack one
+    // transform on the last and walk the photo off the map.
+    if (!source || source.url !== photo.url) return;
+    // Bakes of different alignments take wildly different times: a zero alignment returns on the
+    // next microtask while a rotation decodes and re-encodes a full-frame PNG. Without a
+    // generation guard, "nudge too far, nudge back" lands the OUT bake last and ships pixels the
+    // farmer already corrected.
+    const token = bakeTokenRef.current + 1;
+    bakeTokenRef.current = token;
+    bakeBaseAlignment(source.dataUrl, photo, frame.imgW, frame.imgH, frame.underlayDataUrl)
+      .then((baked) => {
+        if (bakeTokenRef.current !== token) return;
+        setFrame((prev) => (prev ? { ...prev, satDataUrl: baked } : prev));
+      })
+      // A failed bake leaves the previous image on screen, which is the last state the farmer
+      // approved — strictly better than blanking their base over a redraw.
       .catch(() => {});
-  }, [frame]);
+  }, [
+    canvasState?.useCustomBase,
+    canvasState?.customBase,
+    customBaseSourceRev,
+    frame?.imgW,
+    frame?.imgH,
+    frame?.underlayDataUrl,
+    frame,
+  ]);
 
-  // One writer for all three in-place controls: it clamps, persists, and re-bakes together, so a
-  // saved alignment and the painted image cannot describe different things.
+  // One writer for all three in-place controls. It only PERSISTS — the effect above owns the
+  // repaint, so there is exactly one path from a saved alignment to painted pixels.
+  //
   // The next alignment is computed HERE, from the rendered state, and not read back out of the
-  // setState updater. A React updater body runs during the re-render, not when setState is
-  // called, so a value captured inside one is still unset on the line after — which is precisely
-  // how the first cut of this silently never re-baked: the alignment saved and the image never
-  // changed. Deriving it up front also means the exact same object is persisted and painted.
+  // setState updater: a React updater body runs during the re-render, not when setState is
+  // called, so a value captured inside one is still unset on the line after.
   const adjustBase = useCallback((patch: (b: NonNullable<DesignCanvasState['customBase']>) => BaseAlignment) => {
     const current = canvasState?.customBase;
     if (!current) return;
     const p = patch(current);
-    const next: BaseAlignment = {
-      dx: clampBaseNudge(p.dx),
-      dy: clampBaseNudge(p.dy),
-      rotationDeg: clampBaseRotation(p.rotationDeg),
-    };
     handleChange((prev) => (prev.customBase
-      ? { ...prev, customBase: { ...prev.customBase, ...next } }
+      ? {
+        ...prev,
+        customBase: {
+          ...prev.customBase,
+          dx: clampBaseNudge(p.dx),
+          dy: clampBaseNudge(p.dy),
+          rotationDeg: clampBaseRotation(p.rotationDeg),
+        },
+      }
       : prev));
-    rebakeBase(next);
-  }, [canvasState?.customBase, handleChange, rebakeBase]);
+  }, [canvasState?.customBase, handleChange]);
 
   const nudgeBase = useCallback((ddx: number, ddy: number) => {
     adjustBase((b) => ({ dx: (b.dx ?? 0) + ddx, dy: (b.dy ?? 0) + ddy, rotationDeg: b.rotationDeg ?? 0 }));
@@ -1318,13 +1376,19 @@ function DesignStudioInner() {
     handleChange((prev) => (prev.customBase
       ? { ...prev, customBase: { ...prev.customBase, dx: 0, dy: 0, rotationDeg: 0, opacity: 1 } }
       : prev));
-    rebakeBase({ dx: 0, dy: 0, rotationDeg: 0 });
-  }, [handleChange, rebakeBase]);
+  }, [handleChange]);
 
   // Switch back to the real satellite view — the farmer's uploaded photo stays saved
   // (customBase is left untouched; only the useCustomBase flag flips), so switching back to
   // "your photo" later needs no re-upload or re-calibration.
   const revertToSatellite = useCallback(() => {
+    // Claim the base: any photo fetch already in flight now belongs to a base the farmer has
+    // moved on from, and must not write its image (or its scale) when it lands.
+    const token = baseRequestRef.current + 1;
+    baseRequestRef.current = token;
+    // The photo is no longer painted, so the loaded-photo marker must not claim it is — otherwise
+    // switching back finds the fetch "already done" and never repaints.
+    loadedCustomBaseUrlRef.current = null;
     handleChange((prev) => ({ ...prev, useCustomBase: false }));
     const { frame: freshFrame, url: satUrl } = computeCanvasFrame(layers, lat, lon);
     // Re-apply the farmer's ruler calibration. Reverting used to hand back the raw projection
@@ -1341,13 +1405,20 @@ function DesignStudioInner() {
       // reverting always fetched the Mapbox still regardless of the configured provider, so a
       // farmer on Esri who switched away from their drone photo and back got Mapbox imagery and no
       // indication why (Rory: "it gave the previous models satlite not even esris new one").
+      // Both writes below carry the satellite's own metres, so a late arrival can never leave one
+      // base's pixels under the other's scale — and both bail entirely if the farmer has since
+      // switched back to their photo.
+      const applySatellite = (dataUrl: string) => {
+        if (baseRequestRef.current !== token) return;
+        setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: revertMPerPx } : prev));
+      };
       fetchBasemapForFrame(freshFrame, satUrl, fetchImageAsDataUrl)
-        .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
+        .then(applySatellite)
         // Esri can legitimately refuse (no ArcGIS key configured). Falling back to the Mapbox
         // still keeps a revert working rather than leaving the farmer on a blank canvas.
         .catch(() => {
           fetchImageAsDataUrl(satUrl)
-            .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
+            .then(applySatellite)
             .catch(() => {});
         });
     }
@@ -1365,26 +1436,39 @@ function DesignStudioInner() {
   const restoreCustomBase = useCallback(() => {
     const saved = canvasState?.customBase;
     if (!saved) return;
+    // Claim the base, so a satellite fetch still in flight from a just-tapped "Satellite" cannot
+    // land afterwards and paint the tile while these photo metres are in force.
+    const token = baseRequestRef.current + 1;
+    baseRequestRef.current = token;
     handleChange((prev) => ({ ...prev, useCustomBase: true }));
     loadedCustomBaseUrlRef.current = null;
-    setFrame((prev) => (prev
-      ? { ...prev, mPerPx: saved.mPerPx, underlayDataUrl: prev.underlayDataUrl ?? prev.satDataUrl ?? null }
-      : prev));
+    // Reverting cleared the underlay; if the toggle was flipped before its refetch landed there
+    // is nothing to hand across, and the key must be cleared or loadUnderlay decides it already
+    // fetched this frame and never runs — leaving the farmer aligning against a blank backdrop.
+    setFrame((prev) => {
+      const carried = prev?.underlayDataUrl ?? prev?.satDataUrl ?? null;
+      if (!carried) loadedUnderlayKeyRef.current = null;
+      return prev ? { ...prev, mPerPx: saved.mPerPx, underlayDataUrl: carried } : prev;
+    });
     fetchImageAsDataUrl(saved.url)
-      .then(async (dataUrl) => {
+      .then((dataUrl) => {
+        if (baseRequestRef.current !== token) return;
+        // The pristine original goes in the ref; the bake effect applies the farmer's saved
+        // alignment, so a photo that comes back comes back exactly as they left it.
         customBaseSourceRef.current = { url: saved.url, dataUrl };
-        // Through the same bake as every other path — a photo that comes back must come back
-        // aligned exactly as the farmer left it, not reset to how it was uploaded.
-        const baked = await bakeBaseAlignment(dataUrl, saved, frame?.imgW ?? 0, frame?.imgH ?? 0);
+        setCustomBaseSourceRev((r) => r + 1);
         loadedCustomBaseUrlRef.current = saved.url;
-        setFrame((prev) => (prev ? { ...prev, satDataUrl: baked, mPerPx: saved.mPerPx } : prev));
+        setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl, mPerPx: saved.mPerPx } : prev));
       })
       // A photo that will not load must not leave the farmer on a satellite image being MEASURED
       // with the photo's metres-per-pixel — that is a silently wrong scale on every area and
       // yield. Going all the way back is the only consistent state, and revertToSatellite already
       // restores the projection metres and the right imagery provider.
-      .catch(() => revertToSatellite());
-  }, [canvasState?.customBase, frame?.imgW, frame?.imgH, handleChange, revertToSatellite]);
+      .catch(() => {
+        if (baseRequestRef.current !== token) return;
+        revertToSatellite();
+      });
+  }, [canvasState?.customBase, handleChange, revertToSatellite]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -2650,9 +2734,20 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           // "line your photo up against your photo" (Rory: "theres no satelite underlay"). The
           // real satellite rides in frame.underlayDataUrl while a custom base is active.
           satDataUrl={canvasState?.useCustomBase ? frame?.underlayDataUrl ?? null : frame?.satDataUrl ?? null}
-          // Adjusting reopens ON the current bake with its calibrated scale carried, instead of
+          // Adjusting reopens ON the farmer's photo with its calibrated scale carried, instead of
           // on a file picker (Rory: "i click adjust photo and it goes to add a new photo").
-          initialPhotoDataUrl={canvasState?.useCustomBase ? frame?.satDataUrl ?? null : null}
+          //
+          // THE PRISTINE ORIGINAL, never frame.satDataUrl. satDataUrl is the BAKED image: it has
+          // the nudge and the angle already burned in, and (until the backdrop fill) transparent
+          // gaps where the photo no longer covered the frame. Handing that back to the aligner
+          // re-applied the alignment on top of itself on the next Use, and the aligner exports
+          // JPEG — a format with no alpha — so those gaps would have been composited to solid
+          // BLACK and uploaded to Storage as the farmer's new permanent base photo.
+          initialPhotoDataUrl={canvasState?.useCustomBase
+            ? (customBaseSourceRef.current?.url === canvasState.customBase?.url
+              ? customBaseSourceRef.current?.dataUrl ?? null
+              : null)
+            : null}
           initialMPerPx={canvasState?.useCustomBase ? canvasState.customBase?.mPerPx ?? null : null}
         />
       )}

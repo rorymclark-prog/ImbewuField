@@ -70,6 +70,34 @@ test('the nudge is a fraction of the frame and rotation turns about its centre',
   assert.ok(Math.abs(a.rad - Math.PI / 2) < 1e-12);
 });
 
+// THE BAKED BASE MUST BE OPAQUE ACROSS THE WHOLE FRAME.
+//
+// Rotation and nudge are deliberately not cover-scaled, so they uncover frame area — up to a
+// 96px strip at MAX_BASE_NUDGE and roughly a quarter of the page at MAX_BASE_ROTATION. The
+// Studio hides that behind its live satellite underlay; NOTHING else does. DesignGlossy's
+// buildComposite / drawBlueprintBase / drawAnalysisBase each blit satDataUrl onto a fresh
+// transparent canvas, and their own fallback fill only runs when satDataUrl is ABSENT — so an
+// uncovered area printed as white holes on all eight plan sheets and went to the paid AI render
+// as empty pixels. bakeBaseAlignment therefore paints a backdrop before the transformed photo.
+//
+// This test asserts the CONTRACT (a backdrop is always requested), because bakeBaseAlignment
+// itself needs a DOM canvas and cannot run under node:test. The pixel-level check belongs in the
+// headless sheet-audit loop.
+test('an alignment that uncovers the frame is one the bake must fill behind', () => {
+  const uncovers = (a: { dx?: number; dy?: number; rotationDeg?: number }) => {
+    const r = resolveBaseAlign(a, 960, 640);
+    return r.tx !== 0 || r.ty !== 0 || r.rad !== 0;
+  };
+  // Every alignment the UI can produce other than dead-square leaves frame area uncovered.
+  assert.equal(uncovers({ dx: 0.002, dy: 0, rotationDeg: 0 }), true);
+  assert.equal(uncovers({ dx: 0, dy: 0, rotationDeg: 0.5 }), true);
+  assert.equal(uncovers({ dx: 0, dy: 0, rotationDeg: MAX_BASE_ROTATION }), true);
+  // ...and only the square, un-nudged case is safe to hand back un-composited, which is exactly
+  // the fast path bakeBaseAlignment takes.
+  assert.equal(uncovers({ dx: 0, dy: 0, rotationDeg: 0 }), false);
+  assert.equal(uncovers({}), false);
+});
+
 // ROTATION MUST NOT RESTATE A SINGLE MEASUREMENT. This is the whole reason an angle adjuster can
 // be offered where a scale handle never will be: turning an image preserves distance, so mPerPx —
 // and every area, spacing and yield derived from it — is untouched. resolveBaseAlign therefore

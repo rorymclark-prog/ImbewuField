@@ -559,27 +559,47 @@ export function migrateStateToFrame(
  *
  * Rotation is applied about the frame centre and is NOT cover-scaled — see resolveBaseAlign in
  * lib/base-photo-align.ts for why scaling to hide the exposed corners is the one thing this must
- * never do. The corners are left transparent so the satellite underlay shows through.
+ * never do.
+ *
+ * THE BAKED IMAGE MUST THEREFORE BE OPAQUE ACROSS THE WHOLE FRAME. Moving or turning the photo
+ * uncovers frame area — up to a 96px strip at MAX_BASE_NUDGE, and roughly a quarter of the page
+ * at MAX_BASE_ROTATION. The Studio hides that because DesignCanvas paints frame.underlayDataUrl
+ * beneath the base, but NOTHING else does: DesignGlossy's buildComposite, drawBlueprintBase and
+ * drawAnalysisBase each blit satDataUrl onto a fresh transparent canvas, and their own fallback
+ * fill only runs when satDataUrl is absent. Left transparent, the uncovered area printed as
+ * white holes on all eight plan sheets and in the PDF, and went to the AI render as empty pixels
+ * — the exact Studio-vs-sheets divergence this whole bake exists to end, in a new costume.
+ * Baking the backdrop in is what keeps "the aligned pixels ARE the base image" true.
  */
 export async function bakeBaseAlignment(
   sourceDataUrl: string,
   align: { dx?: number; dy?: number; rotationDeg?: number } | null | undefined,
   frameW: number,
   frameH: number,
+  underlayDataUrl?: string | null,
 ): Promise<string> {
   const dx = clampBaseNudge(align?.dx);
   const dy = clampBaseNudge(align?.dy);
   const rotationDeg = clampBaseRotation(align?.rotationDeg);
   // Nothing to bake — hand back the original bytes rather than round-tripping them through a
-  // canvas re-encode, which costs time and loses nothing but quality.
+  // canvas re-encode, which costs time and loses nothing but quality. A zero alignment covers
+  // the frame exactly, so there is no uncovered area to fill either.
   if (dx === 0 && dy === 0 && rotationDeg === 0) return sourceDataUrl;
+  // A frame we cannot size is a frame we cannot bake into: a 0×0 canvas exports a blank string
+  // and would read to the farmer as "my photo vanished". The unaligned original is always a
+  // better answer than nothing.
+  if (!Number.isFinite(frameW) || !Number.isFinite(frameH) || frameW <= 0 || frameH <= 0) {
+    return sourceDataUrl;
+  }
 
-  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+  const loadImageEl = (src: string) => new Promise<HTMLImageElement>((resolve, reject) => {
     const el = new Image();
     el.onload = () => resolve(el);
     el.onerror = () => reject(new Error('Could not read your photo.'));
-    el.src = sourceDataUrl;
+    el.src = src;
   });
+
+  const img = await loadImageEl(sourceDataUrl);
 
   const canvas = document.createElement('canvas');
   canvas.width = frameW;
@@ -587,12 +607,29 @@ export async function bakeBaseAlignment(
   const ctx = canvas.getContext('2d');
   if (!ctx) return sourceDataUrl;
 
+  // Backdrop first, untransformed. The satellite is what is genuinely under the photo, so it is
+  // the honest thing to show where the photo no longer reaches; the flat tone is only for the
+  // case where no underlay has loaded, and matches buildComposite's own no-imagery colour.
+  if (underlayDataUrl) {
+    try {
+      ctx.drawImage(await loadImageEl(underlayDataUrl), 0, 0, frameW, frameH);
+    } catch {
+      ctx.fillStyle = '#CBB98A';
+      ctx.fillRect(0, 0, frameW, frameH);
+    }
+  } else {
+    ctx.fillStyle = '#CBB98A';
+    ctx.fillRect(0, 0, frameW, frameH);
+  }
+
+  ctx.save();
   const { tx, ty, rad, cx, cy } = resolveBaseAlign({ dx, dy, rotationDeg }, frameW, frameH);
   ctx.translate(cx + tx, cy + ty);
   ctx.rotate(rad);
   // Drawn at frame size from the rotation centre — the same "slice" fit the untransformed image
   // element uses, so a zero alignment and a baked alignment agree pixel-for-pixel.
   ctx.drawImage(img, -cx, -cy, frameW, frameH);
+  ctx.restore();
   return canvas.toDataURL('image/png');
 }
 
