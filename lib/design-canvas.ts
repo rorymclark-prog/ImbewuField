@@ -269,7 +269,21 @@ export function fitZoom(
   const zoomX = Math.log2((imgW * padFrac) / spanX);
   const zoomY = Math.log2((imgH * padFrac) / spanY);
   let zoom = Math.min(zoomX, zoomY);
-  zoom = Math.max(1, Math.min(zoom, 19.5)); // clamp into a sane satellite range
+  // THE CEILING IS THE API'S, NOT A GUESS. It used to be 19.5, which is nearly a full zoom level
+  // below what Mapbox actually serves — so any site small enough to need more simply did not get
+  // it, and the design sat in a corner of a frame far wider than it asked for. Measured on the
+  // Ubhejane crèche: `padFrac` asks for the design to fill 76% of the frame, and it filled 41.8%,
+  // because fitZoom wanted ~20.4 and was handed 19.5. That is what Rory saw: "its half the size
+  // it should be too small!" — not a scale error (mPerPx matches the Web Mercator ground
+  // resolution at this latitude to 1 part in 100,000), a framing one.
+  //
+  // 22 is verified, not assumed: the Static Images API returns 200 at 22 and 422 at 22.5.
+  // Sites small enough to reach the top of that range get upsampled, softer imagery — a coverage
+  // limit of the satellite source, not of this projection, and a plainly better trade than a plan
+  // whose subject occupies two fifths of the page. Geometry is unaffected either way: the frame is
+  // stored with the design and migrateStateToFrame re-projects saved points through lng/lat, so a
+  // recomputed frame moves nothing on the ground.
+  zoom = Math.max(1, Math.min(zoom, 22));
   return { zoom, centerLng, centerLat };
 }
 

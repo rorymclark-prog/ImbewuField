@@ -281,3 +281,38 @@ test('flat ground is distinct from unavailable contour evidence', () => {
     assert.equal(unavailable.intervalM, 0);
   }
 });
+
+import { fitZoom as fitZoomForFraming } from '../lib/design-canvas.ts';
+
+/** A site's bbox expressed in degrees around a South African latitude. */
+const bboxAround = (widthM: number, heightM: number, lat = -27.726, lng = 31.963) => {
+  const degLat = heightM / 111320;
+  const degLng = widthM / (111320 * Math.cos((lat * Math.PI) / 180));
+  return { minX: lng - degLng / 2, maxX: lng + degLng / 2, minY: lat - degLat / 2, maxY: lat + degLat / 2 };
+};
+
+test('a small site is framed at the size it asked for, not left at a self-imposed ceiling', () => {
+  // THE BUG: the ceiling was 19.5, nearly a zoom level below what Mapbox serves, so the Ubhejane
+  // crèche (37.5m × 25.5m) filled 41.8% of its frame where padFrac asks for 76% — Rory: "its half
+  // the size it should be too small!". Measured here the same way the renderer measures it.
+  const IMG_W = 960, IMG_H = 640, PAD = 0.76;
+  const site = bboxAround(37.5, 25.5);
+  const { zoom } = fitZoomForFraming(site, IMG_W, IMG_H);
+  assert.ok(zoom > 19.5, `needs more than the old ceiling, got ${zoom}`);
+
+  // The design must now occupy close to padFrac of the frame in its limiting dimension.
+  const world = 512 * Math.pow(2, zoom);
+  const xOf = (lng: number) => ((lng + 180) / 360) * world;
+  const spanPx = xOf(site.maxX) - xOf(site.minX);
+  assert.ok(spanPx / IMG_W > 0.7, `design should fill ~${PAD} of the frame, filled ${(spanPx / IMG_W).toFixed(3)}`);
+});
+
+test('framing never asks for a zoom the Static Images API refuses', () => {
+  // Verified against the live API while fixing this: 22 returns 200, 22.5 returns 422. A tiny
+  // site must saturate at 22 rather than request an image that comes back as an error.
+  const { zoom } = fitZoomForFraming(bboxAround(2, 2), 960, 640);
+  assert.ok(zoom <= 22, `must not exceed the API ceiling, got ${zoom}`);
+  // And a whole-country bbox must not fall through the bottom.
+  const { zoom: wide } = fitZoomForFraming({ minX: 16, maxX: 33, minY: -35, maxY: -22 }, 960, 640);
+  assert.ok(wide >= 1, `must stay in range, got ${wide}`);
+});

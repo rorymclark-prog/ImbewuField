@@ -55,8 +55,9 @@ test('the stitched frame covers exactly the ground the Mapbox still covered', ()
 
 test('tiles are never sampled above the zoom Esri actually holds imagery for', () => {
   // Above z18 the service returns a fixed placeholder tile, so asking deeper trades a real photo
-  // for a blank one. The design frame clamps at 19.5, so this is the live case, not a hypothetical.
-  for (const z of [17, 18, 19, 19.5, 21]) {
+  // for a blank one. The design frame clamps at 22 (the Static Images API's own ceiling), so the
+  // deepest values here are the live case, not a hypothetical.
+  for (const z of [17, 18, 19, 19.5, 21, 22]) {
     const plan = planEsriTiles(LON, LAT, z, IMG_W, IMG_H);
     assert.ok(plan.tileZoom <= ESRI_MAX_NATIVE_ZOOM, `zoom ${z} sampled at ${plan.tileZoom}`);
   }
