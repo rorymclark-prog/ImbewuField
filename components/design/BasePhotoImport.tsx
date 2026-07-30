@@ -18,6 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Loader2, RotateCcw, RotateCw, X } from 'lucide-react';
 import { DEFAULT_IMG_W, DEFAULT_IMG_H } from '@/lib/design-canvas';
+import { calibratedMPerPx, canvasToPhoto, carriedMPerPx, photoToCanvas, type PhotoPoint, type PhotoTransform } from '@/lib/base-photo-align';
 import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -42,15 +43,25 @@ interface Props {
    *  it was meant to be registered to, so the farmer was matching it from memory
    *  (Rory: "we should be able to make the drons image translucent while we line it up"). */
   satDataUrl?: string | null;
+  /** The CURRENT baked photo, when the farmer is adjusting rather than importing. Loading it in
+   *  is what makes "Adjust photo" mean adjust: without it the dialog opened on a file picker, so
+   *  every adjustment was a from-scratch re-import that re-cropped the photo and re-derived the
+   *  scale (Rory: "i click adjust photo and it goes to add a new photo"). */
+  initialPhotoDataUrl?: string | null;
+  /** The calibrated scale that photo already carries, so re-applying without re-measuring keeps
+   *  it — corrected for any zoom/rotation applied before the re-bake (see carriedMPerPx). */
+  initialMPerPx?: number | null;
 }
 
-type Point = { x: number; y: number }; // in canvas-intrinsic pixel space (0..DEFAULT_IMG_W/H)
+// Calibration points are stored in the PHOTO'S OWN pixel grid, not the canvas's. The old
+// canvas-space points looked identical until the farmer zoomed or panned AFTER tapping them:
+// the taps stayed where the finger touched the glass while the photo slid underneath, so the
+// baked image and the metres-per-pixel shipped with it silently disagreed — which is a farm
+// plan at the wrong size (Rory: "it shrunk all my design"). A photo-space point IS the building
+// corner it was tapped on, at every zoom. All projection math lives, tested, in
+// lib/base-photo-align.ts.
 
-function distancePx(a: Point, b: Point): number {
-  return Math.hypot(a.x - b.x, a.y - b.y);
-}
-
-export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }: Props) {
+export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, initialPhotoDataUrl = null, initialMPerPx = null }: Props) {
   const { t } = useLanguage();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const [rotationDeg, setRotationDeg] = useState(0); // 0-359, 0 = assume already north-up
@@ -73,12 +84,29 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
   const [pointMode, setPointMode] = useState(false);
   const [sheetOffset, setSheetOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const sheetDragRef = useRef<{ x: number; y: number; offX: number; offY: number } | null>(null);
-  const [points, setPoints] = useState<Point[]>([]);
+  const [points, setPoints] = useState<PhotoPoint[]>([]);
+  // True once a NEW file is picked this session — a fresh import has no scale to carry, so
+  // calibration becomes mandatory again exactly as it always was for first-time imports.
+  const [freshImport, setFreshImport] = useState(false);
   const [metres, setMetres] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Adjusting starts from the CURRENT bake, not from a file picker. Guarded so a file the
+  // farmer has already picked is never clobbered by a slow-arriving prop.
+  useEffect(() => {
+    if (!initialPhotoDataUrl) return;
+    let cancelled = false;
+    const image = new Image();
+    image.onload = () => {
+      if (cancelled) return;
+      setImg((prev) => prev ?? image);
+    };
+    image.src = initialPhotoDataUrl;
+    return () => { cancelled = true; };
+  }, [initialPhotoDataUrl]);
 
   // The satellite the design currently sits on, decoded once so draw() can paint it behind the
   // photo. Failure is not an error state: without it the aligner simply has no backdrop, which is
@@ -99,6 +127,21 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
   // gold calibration dots and the line between them were being burnt in on every single import
   // (calibrationReady requires two points, so they were ALWAYS present at bake time) and then
   // reprinted on every plan sheet.
+  // The one transform both the painter and the calibration math read. draw() and the
+  // projection helpers MUST agree on this or the markers drift off the pixels they mark.
+  const transform: PhotoTransform | null = img
+    ? {
+        naturalW: img.naturalWidth,
+        naturalH: img.naturalHeight,
+        frameW: DEFAULT_IMG_W,
+        frameH: DEFAULT_IMG_H,
+        rotationDeg,
+        zoom,
+        panX: pan.x,
+        panY: pan.y,
+      }
+    : null;
+
   const draw = useCallback((forExport = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -145,20 +188,29 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
 
     if (forExport) return;
 
-    // Calibration markers on top, in un-rotated canvas space (screen space), so they always sit
-    // exactly where the farmer tapped regardless of the photo's rotation.
+    // Calibration markers on top. Projected from PHOTO space through the current transform, so
+    // they ride the photo: zoom, pan or rotate after tapping and each marker stays glued to the
+    // building corner it was tapped on. (They used to live in canvas space "so they always sit
+    // exactly where the farmer tapped" — true, and exactly the bug: the photo moved and the taps
+    // did not, so the shipped scale described a distance between two points on the GLASS.)
     if (points.length) {
+      const t = {
+        naturalW: img.naturalWidth, naturalH: img.naturalHeight,
+        frameW: DEFAULT_IMG_W, frameH: DEFAULT_IMG_H,
+        rotationDeg, zoom, panX: pan.x, panY: pan.y,
+      };
+      const onCanvas = points.map((p) => photoToCanvas(t, p));
       ctx.save();
       ctx.lineWidth = 2.5;
       ctx.strokeStyle = GOLD;
       ctx.fillStyle = GOLD;
-      if (points.length === 2) {
+      if (onCanvas.length === 2) {
         ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
-        ctx.lineTo(points[1].x, points[1].y);
+        ctx.moveTo(onCanvas[0].x, onCanvas[0].y);
+        ctx.lineTo(onCanvas[1].x, onCanvas[1].y);
         ctx.stroke();
       }
-      for (const p of points) {
+      for (const p of onCanvas) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
         ctx.fill();
@@ -192,6 +244,10 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
         setRotationDeg(0);
         setPoints([]);
         setMetres('');
+        // A new file carries no previous calibration — measuring becomes mandatory again.
+        setFreshImport(true);
+        setZoom(1);
+        setPan({ x: 0, y: 0 });
       };
       image.src = e.target!.result as string;
     };
@@ -207,9 +263,12 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
     const scaleY = DEFAULT_IMG_H / rect.height;
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
+    if (!transform) return;
+    // Store the photo pixel under the finger, not the finger itself.
+    const photoPt = canvasToPhoto(transform, { x, y });
     setPoints((prev) => {
       if (prev.length >= 2) return prev; // full — Undo is how you change one, not a silent reset
-      const next = [...prev, { x, y }];
+      const next = [...prev, photoPt];
       // Disarm once both are down, so the farmer is immediately back to adjusting the photo
       // without having to notice a mode is still on.
       if (next.length === 2) setPointMode(false);
@@ -217,10 +276,21 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
     });
   }
 
-  const metresNum = parseFloat(metres);
-  const pxDist = points.length === 2 ? distancePx(points[0], points[1]) : 0;
-  const calibrationReady = points.length === 2 && Number.isFinite(metresNum) && metresNum > 0 && pxDist > 1;
-  const mPerPx = calibrationReady ? metresNum / pxDist : null;
+  // Comma-decimal safe for the same reason the bed-block fields are: a South African browser
+  // formats decimals with commas, and parseFloat("8,26") is 8.
+  const metresNum = parseFloat(metres.replace(',', '.'));
+  // Fresh measurement wins when the farmer has made one; otherwise an existing calibrated scale
+  // is CARRIED through the re-bake, compensated for any zoom/rotation dialled in since it was
+  // measured (lib/base-photo-align.ts, carriedMPerPx). A fresh import with no measurement has
+  // no scale at all — exactly the old gate.
+  const measured = transform && points.length === 2 && Number.isFinite(metresNum) && metresNum > 0
+    ? calibratedMPerPx(transform, points[0], points[1], metresNum)
+    : null;
+  const carried = !freshImport && transform && initialMPerPx != null
+    ? carriedMPerPx(initialMPerPx, transform)
+    : null;
+  const mPerPx = measured ?? carried;
+  const calibrationReady = mPerPx != null;
 
   async function handleUse() {
     if (!img || !calibrationReady || !mPerPx) return;
@@ -521,6 +591,11 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
               <div style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 4 }}>
                 {t('designPhotoSetScale')}
               </div>
+              {carried != null && points.length === 0 && (
+                <div style={{ fontSize: 11.5, color: GREEN, fontWeight: 700, marginBottom: 6 }}>
+                  ✓ Keeping your existing scale — re-measure only if it looks wrong.
+                </div>
+              )}
               <div style={{ fontSize: 11.5, color: '#5C5040', marginBottom: 6 }}>
                 {t('designPhotoScaleHelp')} {points.length === 0 && t('designPhotoFirstPoint')}
                 {points.length === 1 && t('designPhotoSecondPoint')}
@@ -529,10 +604,10 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
               {points.length === 2 && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <input
-                    type="number"
+                    // TEXT parsed by hand — a type="number" input in a comma-decimal locale
+                    // returns "" for a visible "8,26", and this box calibrates a whole farm.
+                    type="text"
                     inputMode="decimal"
-                    min={0}
-                    step="0.1"
                     placeholder={t('designPhotoDistanceExample')}
                     value={metres}
                     onChange={(e) => setMetres(e.target.value)}
@@ -561,7 +636,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }:
             <div style={{ display: 'flex', gap: 8 }}>
               <button
                 type="button"
-                onClick={() => { setImg(null); setPoints([]); setMetres(''); setRotationDeg(0); }}
+                onClick={() => { setImg(null); setPoints([]); setMetres(''); setRotationDeg(0); setZoom(1); setPan({ x: 0, y: 0 }); }}
                 style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: '1px solid #E2D8C4', background: PAPER, color: '#5C5040', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
               >
                 {t('designPhotoChooseDifferent')}

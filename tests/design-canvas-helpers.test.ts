@@ -440,3 +440,37 @@ test('nudging is bounded by construction — repeated steps cannot walk the phot
   for (let i = 0; i < 500; i++) dx = clampBaseNudge(dx + 0.002);
   assert.equal(dx, MAX_BASE_NUDGE);
 });
+
+test('a custom-base design is NEVER geographically re-projected — the photo is not the earth', () => {
+  // The farmer's beds are anchored to pixels of their own drone photo, which has no
+  // georeferencing. A recomputed satellite frame (a re-traced boundary is enough) used to
+  // re-project every point through Web-Mercator anyway, sliding the whole design off the photo
+  // it was drawn on. On a custom base the points must survive a frame change verbatim.
+  const oldFrame = { centerLng: 30.1, centerLat: -29.5, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.2 };
+  const newFrame = { centerLng: 30.1005, centerLat: -29.5002, zoom: 17, imgW: 960, imgH: 640, mPerPx: 0.4 };
+  const state = {
+    siteId: 's1',
+    frame: oldFrame,
+    items: [{ id: 'i1', defId: 'veg_bed', x: 0.25, y: 0.75 }],
+    zones: [{ id: 'z1', zone: 1 as const, points: [[0.1, 0.1], [0.9, 0.1], [0.9, 0.9]] as Array<[number, number]> }],
+    lines: [{ id: 'l1', kind: 'bedpath' as const, points: [[0.2, 0.2], [0.8, 0.8]] as Array<[number, number]> }],
+    step: 'planting' as const,
+    updatedAt: new Date().toISOString(),
+    useCustomBase: true,
+    customBase: { url: 'https://x/photo.jpg', mPerPx: 0.05, uploadedAt: new Date().toISOString() },
+  };
+  const project = makeMercatorProjector(newFrame.centerLng, newFrame.centerLat, newFrame.zoom, newFrame.imgW, newFrame.imgH);
+  const migrated = migrateStateToFrame(state, newFrame, project);
+  // Frame stamp updates (so the next call hits the cheap no-op path)…
+  assert.equal(migrated.frame, newFrame);
+  // …but every coordinate survives untouched.
+  assert.equal(migrated.items[0].x, 0.25);
+  assert.equal(migrated.items[0].y, 0.75);
+  assert.deepEqual(migrated.zones[0].points, state.zones[0].points);
+  assert.deepEqual(migrated.lines[0].points, state.lines[0].points);
+  // A satellite-based design with the same frame change IS still re-projected — the gate is
+  // the custom base, not a blanket freeze.
+  const satState = { ...state, useCustomBase: false as const, customBase: undefined };
+  const satMigrated = migrateStateToFrame(satState, newFrame, project);
+  assert.notEqual(satMigrated.items[0].x, 0.25);
+});

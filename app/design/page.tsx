@@ -978,9 +978,18 @@ function DesignStudioInner() {
             loadedUnderlayKeyRef.current = key;
             setFrame((prev) => (prev ? { ...prev, underlayDataUrl: dataUrl } : prev));
           })
-          // An underlay is an alignment aid, not a requirement: if it fails the photo still works
-          // exactly as it did before, so this must never surface as an error to the farmer.
-          .catch(() => {});
+          // Esri can legitimately refuse (no ArcGIS key). Fall back to the Mapbox still — the
+          // same two-step revertToSatellite uses — because an aligner with no backdrop is the
+          // "no satellite underlay" complaint verbatim. Only the final failure stays silent:
+          // the photo still works exactly as before, so it must not surface as a farmer error.
+          .catch(() => {
+            fetchImageAsDataUrl(url)
+              .then((dataUrl) => {
+                loadedUnderlayKeyRef.current = key;
+                setFrame((prev) => (prev ? { ...prev, underlayDataUrl: dataUrl } : prev));
+              })
+              .catch(() => {});
+          });
       };
 
       // Only touch the satellite (clear + refetch) when the frame centre/zoom actually
@@ -1544,6 +1553,22 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       if (!Number.isFinite(measuredM) || !Number.isFinite(trueM) || measuredM <= 0 || trueM <= 0) return;
       const factor = trueM / measuredM;
       handleChange((prev) => {
+        // ON A CUSTOM BASE the correction belongs to the PHOTO's own calibration, not to
+        // scaleFactor — scaleFactor is the satellite's correction and the custom-base frame
+        // path ignores it BY DESIGN. Writing it here anyway produced the cruellest possible
+        // behaviour: setFrame below patched the display instantly (looked fixed), then this
+        // very save re-ran the frame effect, which recomputed mPerPx from the untouched
+        // customBase.mPerPx — the act of saving the correction reverted it on screen
+        // (Rory: "look what it did to the scale i inserted at the right scale").
+        if (prev.useCustomBase && prev.customBase) {
+          const corrected = prev.customBase.mPerPx * factor;
+          if (!Number.isFinite(corrected) || corrected <= 0) return prev;
+          return {
+            ...prev,
+            customBase: { ...prev.customBase, mPerPx: corrected },
+            updatedAt: new Date().toISOString(),
+          };
+        }
         const next = Math.min(MAX_SCALE_FACTOR, Math.max(MIN_SCALE_FACTOR, (prev.scaleFactor ?? 1) * factor));
         return { ...prev, scaleFactor: next, updatedAt: new Date().toISOString() };
       });
@@ -2467,9 +2492,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <BasePhotoImport
           onApply={applyCustomBase}
           onClose={() => setShowPhotoImport(false)}
-          // The satellite currently under the design. Without it the aligner had nothing to line
-          // the photo up against — it replaced the very view it was meant to be registered to.
-          satDataUrl={frame?.satDataUrl ?? null}
+          // The TRUE satellite as the backdrop. On a custom base frame.satDataUrl IS the farmer's
+          // photo, so passing it here made the aligner show the photo as its own reference —
+          // "line your photo up against your photo" (Rory: "theres no satelite underlay"). The
+          // real satellite rides in frame.underlayDataUrl while a custom base is active.
+          satDataUrl={canvasState?.useCustomBase ? frame?.underlayDataUrl ?? null : frame?.satDataUrl ?? null}
+          // Adjusting reopens ON the current bake with its calibrated scale carried, instead of
+          // on a file picker (Rory: "i click adjust photo and it goes to add a new photo").
+          initialPhotoDataUrl={canvasState?.useCustomBase ? frame?.satDataUrl ?? null : null}
+          initialMPerPx={canvasState?.useCustomBase ? canvasState.customBase?.mPerPx ?? null : null}
         />
       )}
 

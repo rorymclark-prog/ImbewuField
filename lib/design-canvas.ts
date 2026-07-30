@@ -463,6 +463,16 @@ export function migrateStateToFrame(
     f.imgH === newFrame.imgH;
   if (sameFrame) return state;
 
+  // ON A CUSTOM BASE, GEOMETRY IS ANCHORED TO THE PHOTO, NOT TO THE EARTH. The farmer placed
+  // every bed against pixels of their own drone shot, which carries no georeferencing at all —
+  // so re-projecting those points through Web-Mercator because the SATELLITE frame recomputed
+  // (a re-traced boundary is enough to trigger that) would slide the whole design off the
+  // photo it was drawn on. The frame stamp still updates so the no-op fast path above works on
+  // the next call; the points stay exactly where the farmer put them.
+  if (state.useCustomBase && state.customBase) {
+    return { ...state, frame: newFrame };
+  }
+
   const unprojectOld = makeMercatorUnprojector(f.centerLng, f.centerLat, f.zoom, f.imgW, f.imgH);
   const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
   const remap = (pt: [number, number]): [number, number] => {
