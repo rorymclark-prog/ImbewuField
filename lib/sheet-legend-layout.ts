@@ -40,6 +40,40 @@ export function legendRowGap(
   return Math.min(shared, ceiling);
 }
 
+/**
+ * Largest legend type size whose rows still fit the panel's available height.
+ *
+ * WHY THIS IS A FUNCTION AND NOT A LOOP IN THE RENDERER: it was a loop in the renderer, and the
+ * loop only ever counted DOWN from a start size derived from the panel's WIDTH — so the panel's
+ * HEIGHT never entered the decision. One defect, two visible symptoms: a sparse legend kept its
+ * small width-derived type and left the rest of the column empty (a measured render used 498 of
+ * 1,200 reserved pixels), while a crowded planting legend shrank toward the floor. Rory saw both
+ * on one sheet: "look how bad the legend is how small the text is".
+ *
+ * `heightAt` is the caller's real measured layout height at a given size — wrapping, section
+ * headings, symbol minimums and all. It must be passed, never estimated: bigger type wraps into
+ * more lines, so height is not a linear function of size and only the caller can measure it.
+ *
+ * Searching down from a ceiling (rather than up from a floor) is deliberate: the first fitting
+ * size is the answer, and a legend that cannot fit even at `minFs` returns `minFs` — an
+ * overflowing legend at a legible size, which the caller can see, rather than type nobody can read.
+ */
+export function fitLegendFontSize(
+  heightAt: (fontSize: number) => number,
+  availableHeight: number,
+  maxFs: number,
+  minFs: number,
+): number {
+  const floor = Number.isFinite(minFs) ? Math.max(1, Math.round(minFs)) : 1;
+  const ceiling = Number.isFinite(maxFs) ? Math.max(floor, Math.round(maxFs)) : floor;
+  if (!Number.isFinite(availableHeight) || availableHeight <= 0) return floor;
+  for (let fs = ceiling; fs > floor; fs--) {
+    const h = heightAt(fs);
+    if (Number.isFinite(h) && h <= availableHeight) return fs;
+  }
+  return floor;
+}
+
 /** Countable map content always says how many markers/routes the row represents. An omitted count
  * used to mean either "one" or "not counted", which a farmer could not distinguish. */
 export function countedLegendText(label: string, count: number): string {

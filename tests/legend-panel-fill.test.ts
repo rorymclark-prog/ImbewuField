@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { countedLegendText, legendRowGap, MAX_GAP_TO_ROW_RHYTHM } from '../lib/sheet-legend-layout.ts';
+import { countedLegendText, fitLegendFontSize, legendRowGap, MAX_GAP_TO_ROW_RHYTHM } from '../lib/sheet-legend-layout.ts';
 
 test('legend rows consume the height the panel actually has instead of keeping a short-sheet cap', () => {
   const rowCount = 6;
@@ -103,4 +103,49 @@ test('invalid counts can never print as plausible legend facts', () => {
       /non-negative safe integer/i,
     );
   }
+});
+
+// A stand-in for the renderer's real measurement: each row is one line at 1.22× the size, and
+// rows wrap into a second line once the type passes `wrapAt` — so height is NOT linear in size,
+// which is the property that makes the search necessary.
+const measurer = (rowCount: number, wrapAt = Number.POSITIVE_INFINITY) => (fs: number) => {
+  const lineH = Math.max(11, Math.round(fs * 1.22));
+  const linesPerRow = fs > wrapAt ? 2 : 1;
+  return rowCount * linesPerRow * lineH;
+};
+
+test('legend type grows into a tall panel instead of keeping its width-derived start size', () => {
+  // THE BUG: sizing used to count DOWN from a width-derived start, so panel height never entered
+  // the decision — a sparse legend stayed small and left the column empty.
+  const sparse = measurer(4);
+  const tall = fitLegendFontSize(sparse, 1200, 30, 9);
+  const short = fitLegendFontSize(sparse, 120, 30, 9);
+  assert.equal(tall, 30, 'with room to spare the ceiling wins');
+  assert.ok(short < tall, `a shorter panel must take smaller type, got ${short} vs ${tall}`);
+  assert.ok(sparse(short) <= 120, 'and the chosen size actually fits');
+});
+
+test('a crowded legend shrinks but never below the print-legibility floor', () => {
+  const crowded = measurer(24);
+  assert.equal(fitLegendFontSize(crowded, 200, 30, 9), 9, 'too many rows: stop at the floor');
+  // Overflowing at the floor is a VISIBLE failure, deliberately preferred to unreadable type.
+  assert.ok(crowded(9) > 200);
+});
+
+test('the ceiling is never exceeded and wrapping is respected on the way down', () => {
+  // Rows double in height above 20px, so 21..30 all overflow and the answer must be exactly 20.
+  const wrapping = measurer(10, 20);
+  const fs = fitLegendFontSize(wrapping, 10 * Math.round(20 * 1.22), 30, 9);
+  assert.equal(fs, 20);
+});
+
+test('degenerate inputs fall back to the floor rather than a NaN font size', () => {
+  const m = measurer(3);
+  for (const bad of [Number.NaN, 0, -50, Number.POSITIVE_INFINITY]) {
+    const fs = fitLegendFontSize(m, bad as number, 30, 9);
+    assert.ok(Number.isSafeInteger(fs) && fs >= 9, `available=${bad} gave ${fs}`);
+  }
+  assert.equal(fitLegendFontSize(() => Number.NaN, 500, 30, 9), 9, 'unmeasurable rows: floor');
+  // A ceiling below the floor can never win.
+  assert.equal(fitLegendFontSize(m, 5000, 4, 9), 9);
 });

@@ -62,7 +62,7 @@ import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePr
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
-import { countedLegendText, legendRowGap } from '@/lib/sheet-legend-layout';
+import { countedLegendText, fitLegendFontSize, legendRowGap } from '@/lib/sheet-legend-layout';
 import { overlayElementsText } from '@/lib/overlay-elements';
 import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
@@ -7450,12 +7450,33 @@ async function composeStyleSheet(
       return { row, lines, contentHeight, headingHeight, height: contentHeight + headingHeight };
     });
   };
-  let fs = Math.max(14, Math.round(legendW * 0.036));
-  let rowLayout = layoutRows(fs);
-  while (rowLayout.reduce((sum, row) => sum + row.height, 0) > availableRowsH && fs > 9) {
-    fs -= 1;
-    rowLayout = layoutRows(fs);
-  }
+  // TYPE FILLS THE PANEL IT WAS GIVEN — IN BOTH DIRECTIONS.
+  //
+  // This used to start at a fraction of the panel's WIDTH and only ever shrink from there, so the
+  // panel's HEIGHT never entered the sizing decision at all. That is one defect producing both of
+  // the complaints: on a tall sheet with a handful of rows the type stayed at its width-derived
+  // start size — small — and the leftover height became a hole (Codex measured a real render using
+  // 498 of 1,200 reserved pixels), while a crowded planting legend still shrank toward the floor.
+  // (Rory, on the Ubhejane planting sheet: "look how bad the legend is how small the text is etc".)
+  //
+  // So: search DOWN from a genuine ceiling for the largest size whose rows still fit. Growth is
+  // self-limiting — bigger type wraps into more lines, so `layoutRows` reports the real height at
+  // every candidate and the same comparison ends the search. The ceiling stays width-derived
+  // because a legend row must not wrap after two words to fill a tall column; the floor stays 9,
+  // the honest print-legibility stop. A one-row legend is capped by the ceiling, not stretched to
+  // the panel — this fills space with READABLE type, it does not justify a list into a poster.
+  // Ceiling sits just above the subtitle (legendW × 0.045) and well under the title (× 0.067), so
+  // the panel keeps its hierarchy no matter how sparse the legend: rows may become the same weight
+  // as the subtitle line, never louder than the sheet's own name.
+  const MIN_LEGEND_FS = 9;
+  const maxFs = Math.max(16, Math.round(legendW * 0.048));
+  const fs = fitLegendFontSize(
+    (size) => layoutRows(size).reduce((sum, row) => sum + row.height, 0),
+    availableRowsH,
+    maxFs,
+    MIN_LEGEND_FS,
+  );
+  const rowLayout = layoutRows(fs);
   const usedRowsH = rowLayout.reduce((sum, row) => sum + row.height, 0);
   const lineH = Math.max(11, Math.round(fs * 1.22));
   // Pass the row rhythm so a three-row legend on a full-height panel stays a compact block instead
