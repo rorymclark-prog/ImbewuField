@@ -139,6 +139,8 @@ export interface DesignCanvasProps {
   // key). The toggle button + the desktop Shift/Cmd+tap both feed the same additive path.
   additiveSelect?: boolean;
   onToggleAdditive?: () => void;
+  /** Correct this site's ground scale from a measured length the farmer knows (see the ruler). */
+  onCalibrateScale?: (measuredM: number, trueM: number) => void;
   suggestions?: DetectSuggestion[];
   onEditItem?: (id: string) => void;
   // Called with 'select' right after a zone/line is committed, so the very next tap on
@@ -520,6 +522,7 @@ export default function DesignCanvas({
   selectedIds,
   additiveSelect,
   onToggleAdditive,
+  onCalibrateScale,
   onSelect,
   onSelectMany,
   suggestions,
@@ -3605,14 +3608,18 @@ export default function DesignCanvas({
         <span aria-hidden>📏</span>
       </button>
       {/* One-line coaching while measuring — without it the tool looks broken until the second
-          tap, and the whole point is checking the scale against something real on the ground. */}
+          tap, and the whole point is checking the scale against something real on the ground.
+          Once a leg exists this same bar becomes the CALIBRATOR: the farmer states what that
+          length really is, and the app's metres follow his measurement rather than the
+          projection's. That belongs here, on the measurement itself, not in a settings screen —
+          it is only ever a correction to a number he is looking at. */}
       {measureOn && (
         <div
           style={{
             position: 'absolute',
             top: 12,
             left: 60,
-            maxWidth: 300,
+            maxWidth: 360,
             padding: '7px 11px',
             borderRadius: 10,
             background: 'rgba(11,18,11,0.86)',
@@ -3620,10 +3627,57 @@ export default function DesignCanvas({
             fontSize: 11.5,
             fontWeight: 600,
             lineHeight: 1.35,
-            pointerEvents: 'none',
+            pointerEvents: measurePts.length === 2 && onCalibrateScale ? 'auto' : 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            flexWrap: 'wrap',
           }}
         >
-          {measurePts.length === 2 ? t('designCanvasMeasureAgain') : t('designCanvasMeasureHint')}
+          <span>{measurePts.length === 2 ? t('designCanvasMeasureAgain') : t('designCanvasMeasureHint')}</span>
+          {measurePts.length === 2 && onCalibrateScale && (() => {
+            const [a, b] = measurePts;
+            const measuredM = Math.hypot((a[0] - b[0]) * imgW * mPerPx, (a[1] - b[1]) * imgH * mPerPx);
+            if (!(measuredM > 0)) return null;
+            return (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                <span style={{ opacity: 0.85 }}>{t('designCanvasMeasureActually')}</span>
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  min={0.1}
+                  step={0.1}
+                  placeholder={measuredM.toFixed(2)}
+                  aria-label={t('designCanvasMeasureActually')}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') e.currentTarget.blur();
+                  }}
+                  onBlur={(e) => {
+                    const trueM = Number(e.target.value.trim());
+                    e.currentTarget.value = '';
+                    // A no-op restatement must not spend an edit: only a real disagreement
+                    // (>1cm) rescales the site.
+                    if (!Number.isFinite(trueM) || trueM <= 0 || Math.abs(trueM - measuredM) < 0.01) return;
+                    onCalibrateScale(measuredM, trueM);
+                    setMeasurePts([]);
+                  }}
+                  style={{
+                    width: 62,
+                    padding: '3px 5px',
+                    borderRadius: 6,
+                    border: `1px solid ${GOLD}`,
+                    background: '#20190F',
+                    color: '#FBF6EC',
+                    fontSize: 11.5,
+                    fontWeight: 700,
+                    textAlign: 'center',
+                  }}
+                />
+                <span style={{ opacity: 0.85 }}>m</span>
+              </span>
+            );
+          })()}
         </div>
       )}
 

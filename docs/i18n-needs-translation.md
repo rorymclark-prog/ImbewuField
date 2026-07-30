@@ -74,7 +74,7 @@ Interactive canvas:
 `designCanvasFinish`, `designCanvasLine`, `designCanvasZone`, `designCanvasClose`,
 `designCanvasTidy`, `designCanvasSnap`, `designCanvasCleanup`,
 `designCanvasMeasure`, `designCanvasMeasureOn`, `designCanvasMeasureHint`,
-`designCanvasMeasureAgain`.
+`designCanvasMeasureAgain`, `designCanvasMeasureActually`.
 
 Palette:
 `designPaletteSelect`, `designPaletteUndo`, `designPaletteRedo`, `designPaletteDuplicate`,

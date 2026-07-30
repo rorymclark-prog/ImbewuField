@@ -136,6 +136,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designCanvasMeasureOn: 'Measuring — tap two points',
   designCanvasMeasureHint: 'Tap two points to measure the real distance between them.',
   designCanvasMeasureAgain: 'Tap again to start a new measurement.',
+  designCanvasMeasureActually: 'Actually',
   designPaletteSelect: '↖️ Select',
   designPaletteUndo: '↩️ Undo',
   designPaletteRedo: '↪️ Redo',

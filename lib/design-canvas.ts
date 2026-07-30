@@ -135,6 +135,26 @@ export interface DesignCanvasState {
   // the real satellite view at any time without losing anything.
   useCustomBase?: boolean;
   customBase?: CustomBaseImage | null;
+  /**
+   * The farmer's own correction to this site's ground scale, as a multiplier on frame.mPerPx.
+   *
+   * WHY THIS EXISTS. The satellite frame's metres-per-pixel is not a guess — it is the Web
+   * Mercator ground resolution at the site's latitude, and it has been verified to match that
+   * definition to one part in 100,000. But it is only as true as the imagery's own
+   * georeferencing, and a farmer standing on his land measuring a wall he built has better
+   * evidence than any projection I can compute for him. (Rory, having measured a building he
+   * knows: "yeah but still hallf size".) So this is the override: measure a known length with
+   * the canvas ruler, state what it really is, and every metre in the app follows.
+   *
+   * It multiplies rather than replaces so it composes with BOTH bases — the satellite frame and
+   * an uploaded photo's own calibrated mPerPx — and so "undo the correction" is exactly 1.
+   *
+   * IT CHANGES NO GEOMETRY. Saved points are normalised to the frame and are untouched; what
+   * changes is how many metres one frame-pixel is worth, which is precisely the thing in dispute.
+   * Everything derived (item footprints, areas, spacings, tank sizing, every plan sheet) reads
+   * through mPerPx, so correcting it here corrects all of them at once.
+   */
+  scaleFactor?: number;
   // Monotonic edit counter for this site's design lineage. Bumped by saveCanvasState on every
   // real local save, and NEVER by applyRemoteCanvasState (receiving someone else's edit is not
   // editing). Cloud sync (lib/design-canvas-sync.ts) ranks by rev FIRST and only falls back to
@@ -428,6 +448,21 @@ export const DEFAULT_IMG_W = 960;
 export const DEFAULT_IMG_H = 640;
 const METRES_PER_DEGREE_LAT = 111.32;
 
+/** Bounds on a hand-calibrated scale correction (DesignCanvasState.scaleFactor). Wide enough for
+ *  the real cases — a farmer who finds the imagery half or double — and tight enough that a
+ *  corrupted number cannot turn a smallholding into a province. */
+export const MIN_SCALE_FACTOR = 0.05;
+export const MAX_SCALE_FACTOR = 20;
+
+/** The corrected metres-per-pixel for a frame, given a saved calibration. The one place this
+ *  multiplication happens, so a caller cannot apply it twice or forget it. */
+export function scaledMPerPx(mPerPx: number, scaleFactor?: number): number {
+  if (!Number.isFinite(mPerPx) || mPerPx <= 0) return mPerPx;
+  if (scaleFactor === undefined || !Number.isFinite(scaleFactor)) return mPerPx;
+  const f = Math.min(MAX_SCALE_FACTOR, Math.max(MIN_SCALE_FACTOR, scaleFactor));
+  return mPerPx * f;
+}
+
 // Builds the CanvasFrame (minus the inlined image) + the satellite URL to fetch + a
 // project() helper that maps [lng,lat] → normalised [0..1] canvas coordinates.
 //
@@ -712,6 +747,15 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
   })) return null;
 
   if (value.useCustomBase !== undefined && typeof value.useCustomBase !== 'boolean') return null;
+  // A corrupt or absurd factor must not silently rescale a farm. Out-of-range is rejected as
+  // invalid state rather than clamped: a stored 0 or a 500× is not a scale anyone measured, and
+  // quietly "fixing" it to a bound would hide the corruption behind plausible-looking metres.
+  if (value.scaleFactor !== undefined) {
+    if (typeof value.scaleFactor !== 'number'
+      || !Number.isFinite(value.scaleFactor)
+      || value.scaleFactor < MIN_SCALE_FACTOR
+      || value.scaleFactor > MAX_SCALE_FACTOR) return null;
+  }
   if (value.customBase !== undefined && value.customBase !== null) {
     if (!canvasRecord(value.customBase)
         || typeof value.customBase.url !== 'string' || !value.customBase.url

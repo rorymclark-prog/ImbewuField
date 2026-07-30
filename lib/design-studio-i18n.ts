@@ -128,6 +128,7 @@ export const DESIGN_STUDIO_REST_KEYS = {
   canvasMeasureOn: 'designCanvasMeasureOn',
   canvasMeasureHint: 'designCanvasMeasureHint',
   canvasMeasureAgain: 'designCanvasMeasureAgain',
+  canvasMeasureActually: 'designCanvasMeasureActually',
 
   paletteSelect: 'designPaletteSelect',
   paletteUndo: 'designPaletteUndo',

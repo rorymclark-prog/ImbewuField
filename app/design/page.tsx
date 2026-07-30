@@ -45,6 +45,9 @@ import {
   type PlacedItem,
   type WizardStep,
   type ZoneShape,
+  scaledMPerPx,
+  MIN_SCALE_FACTOR,
+  MAX_SCALE_FACTOR,
 } from '@/lib/design-canvas';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { type SnapRingKind } from '@/lib/snap-edges';
@@ -901,6 +904,11 @@ function DesignStudioInner() {
       // every branch below behaves exactly as it did before this feature existed.
       const savedForBase = loadCanvasState(siteId);
       const customBase = savedForBase?.useCustomBase ? (savedForBase.customBase ?? null) : null;
+      // The farmer's own scale correction rides on top of whichever base is in play, so it must be
+      // re-applied every time the frame is rebuilt — otherwise a reload silently reverts him to the
+      // projection's metres, which is the very number he corrected.
+      const savedScale = savedForBase?.scaleFactor;
+      const withScale = <T extends { mPerPx: number }>(f: T): T => ({ ...f, mPerPx: scaledMPerPx(f.mPerPx, savedScale) });
       const loadCustomBase = (targetFrame: typeof frameNoImg) => {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
@@ -925,21 +933,21 @@ function DesignStudioInner() {
       if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         if (customBase) {
-          setFrame((prev) => ({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
+          setFrame((prev) => withScale({ ...frameNoImg, mPerPx: customBase.mPerPx, satDataUrl: prev?.satDataUrl ?? null }));
           loadCustomBase(frameNoImg);
         } else {
-          setFrame({ ...frameNoImg, satDataUrl: null });
+          setFrame(withScale({ ...frameNoImg, satDataUrl: null }));
           if (url) {
             // Through fetchBasemapForFrame, not fetchImageAsDataUrl directly — see that function
             // for why. This is the surface the farmer actually uses; a provider branch that skips
             // it is a provider branch that does nothing.
             fetchBasemapForFrame(frameNoImg, url, fetchImageAsDataUrl)
-              .then((dataUrl) => setFrame({ ...frameNoImg, satDataUrl: dataUrl }))
-              .catch(() => setFrame({ ...frameNoImg, satDataUrl: null }));
+              .then((dataUrl) => setFrame(withScale({ ...frameNoImg, satDataUrl: dataUrl })))
+              .catch(() => setFrame(withScale({ ...frameNoImg, satDataUrl: null })));
           }
         }
       } else {
-        setFrame((prev) => ({
+        setFrame((prev) => withScale({
           ...frameNoImg,
           mPerPx: customBase ? customBase.mPerPx : frameNoImg.mPerPx,
           satDataUrl: prev?.satDataUrl ?? null,
@@ -1341,6 +1349,26 @@ function DesignStudioInner() {
         hM: commonDim('hM'),
       }
     : null;
+
+  // SCALE CALIBRATION — the farmer's ground truth beats the projection. He measures a length he
+  // knows with the canvas ruler, states what it really is, and every metre in the app follows:
+  // item footprints, areas, spacings, tank sizing and every plan sheet all read through mPerPx.
+  // Applied to the live frame immediately (no reload round-trip, exactly like applyCustomBase)
+  // AND persisted as a multiplier so it survives reloads and follows to his other devices.
+  // Geometry is untouched — saved points are normalised to the frame; only the metres they are
+  // worth change, which is the thing in dispute.
+  const onCalibrateScale = useCallback(
+    (measuredM: number, trueM: number) => {
+      if (!Number.isFinite(measuredM) || !Number.isFinite(trueM) || measuredM <= 0 || trueM <= 0) return;
+      const factor = trueM / measuredM;
+      handleChange((prev) => {
+        const next = Math.min(MAX_SCALE_FACTOR, Math.max(MIN_SCALE_FACTOR, (prev.scaleFactor ?? 1) * factor));
+        return { ...prev, scaleFactor: next, updatedAt: new Date().toISOString() };
+      });
+      setFrame((prev) => (prev ? { ...prev, mPerPx: scaledMPerPx(prev.mPerPx, factor) } : prev));
+    },
+    [handleChange],
+  );
 
   // Wind control (palette, Sector step) — the farmer's confirm/override for the regional wind
   // used to phrase the "prevailing wind" question (lib/local-wind.ts's own policy note on why
@@ -2061,6 +2089,7 @@ function DesignStudioInner() {
               onSelectMany={handleSelectMany}
               additiveSelect={multiSelectMode}
               onToggleAdditive={() => setMultiSelectMode((m) => !m)}
+              onCalibrateScale={onCalibrateScale}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
               tracedLayers={tracedLayers}
