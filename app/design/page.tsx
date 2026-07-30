@@ -2290,6 +2290,16 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             >
               <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
               <span style={{ flex: 1 }}>Using your own photo as the base.</span>
+              {/* Adjusting used to mean living with whatever the first pass produced. This reopens
+                  the aligner, where the photo can be moved, resized and faded against the
+                  satellite before being re-applied. */}
+              <button
+                type="button"
+                onClick={() => setShowPhotoImport(true)}
+                style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+              >
+                Adjust photo
+              </button>
               <button
                 type="button"
                 onClick={revertToSatellite}
@@ -2324,7 +2334,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       )}
 
       {showPhotoImport && (
-        <BasePhotoImport onApply={applyCustomBase} onClose={() => setShowPhotoImport(false)} />
+        <BasePhotoImport
+          onApply={applyCustomBase}
+          onClose={() => setShowPhotoImport(false)}
+          // The satellite currently under the design. Without it the aligner had nothing to line
+          // the photo up against — it replaced the very view it was meant to be registered to.
+          satDataUrl={frame?.satDataUrl ?? null}
+        />
       )}
 
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture

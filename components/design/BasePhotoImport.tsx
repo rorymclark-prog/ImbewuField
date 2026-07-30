@@ -37,6 +37,11 @@ export interface BasePhotoApplyResult {
 interface Props {
   onApply: (result: BasePhotoApplyResult) => void;
   onClose: () => void;
+  /** The satellite currently under the design, shown BEHIND the photo while it is being lined
+   *  up. Without it "line it up" had nothing to line up against — the photo replaced the view
+   *  it was meant to be registered to, so the farmer was matching it from memory
+   *  (Rory: "we should be able to make the drons image translucent while we line it up"). */
+  satDataUrl?: string | null;
 }
 
 type Point = { x: number; y: number }; // in canvas-intrinsic pixel space (0..DEFAULT_IMG_W/H)
@@ -45,10 +50,17 @@ function distancePx(a: Point, b: Point): number {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
-export default function BasePhotoImport({ onApply, onClose }: Props) {
+export default function BasePhotoImport({ onApply, onClose, satDataUrl = null }: Props) {
   const { t } = useLanguage();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const [rotationDeg, setRotationDeg] = useState(0); // 0-359, 0 = assume already north-up
+  // Alignment controls. Opacity defaults part-way so the satellite shows through the moment the
+  // photo lands — the farmer should not have to discover the slider to see what they are aiming at.
+  const [photoOpacity, setPhotoOpacity] = useState(0.65);
+  const [zoom, setZoom] = useState(1); // multiplier on the cover-fit scale
+  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); // canvas-space pixels
+  const [satImg, setSatImg] = useState<HTMLImageElement | null>(null);
+  const dragRef = useRef<{ x: number; y: number; panX: number; panY: number; moved: boolean } | null>(null);
   const [points, setPoints] = useState<Point[]>([]);
   const [metres, setMetres] = useState('');
   const [error, setError] = useState('');
@@ -56,14 +68,44 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // The satellite the design currently sits on, decoded once so draw() can paint it behind the
+  // photo. Failure is not an error state: without it the aligner simply has no backdrop, which is
+  // exactly how this screen behaved before.
+  useEffect(() => {
+    if (!satDataUrl) { setSatImg(null); return; }
+    const image = new Image();
+    image.onload = () => setSatImg(image);
+    image.onerror = () => setSatImg(null);
+    image.src = satDataUrl;
+  }, [satDataUrl]);
+
   // Redraw the baked (rotated + cover-fit) photo plus any calibration markers whenever the
   // source image, rotation, or tapped points change.
-  const draw = useCallback(() => {
+  // `forExport` is not a nicety — it is what keeps the SAVED image clean. handleUse bakes this
+  // very canvas straight to JPEG, so anything drawn for the farmer's benefit is drawn into their
+  // permanent base: the satellite backdrop would ghost through their photo forever, and the two
+  // gold calibration dots and the line between them were being burnt in on every single import
+  // (calibrationReady requires two points, so they were ALWAYS present at bake time) and then
+  // reprinted on every plan sheet.
+  const draw = useCallback((forExport = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, DEFAULT_IMG_W, DEFAULT_IMG_H);
+
+    // Backdrop: the satellite the design is registered to, so "line it up" has something to line
+    // up against. Screen only.
+    if (!forExport && satImg) {
+      const sw = satImg.naturalWidth || DEFAULT_IMG_W;
+      const sh = satImg.naturalHeight || DEFAULT_IMG_H;
+      const sScale = Math.max(DEFAULT_IMG_W / sw, DEFAULT_IMG_H / sh);
+      ctx.save();
+      ctx.translate(DEFAULT_IMG_W / 2, DEFAULT_IMG_H / 2);
+      ctx.scale(sScale, sScale);
+      ctx.drawImage(satImg, -sw / 2, -sh / 2, sw, sh);
+      ctx.restore();
+    }
     if (!img) return;
 
     const rad = (rotationDeg * Math.PI) / 180;
@@ -75,15 +117,21 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
     const rotatedH = w * sin + h * cos;
     // "Cover" fit — same idea as the SVG satellite <image>'s preserveAspectRatio="xMidYMid
     // slice": scale up until the rotated photo fully covers the frame, centred, cropping
-    // whatever spills over the edges.
-    const scale = Math.max(DEFAULT_IMG_W / rotatedW, DEFAULT_IMG_H / rotatedH);
+    // whatever spills over the edges. The farmer's zoom rides on top of it as a multiplier, so
+    // 1 is always "exactly covers" whatever the photo's own proportions are.
+    const scale = Math.max(DEFAULT_IMG_W / rotatedW, DEFAULT_IMG_H / rotatedH) * zoom;
 
     ctx.save();
-    ctx.translate(DEFAULT_IMG_W / 2, DEFAULT_IMG_H / 2);
+    // Translucent while aligning, fully opaque in the saved pixels — the farmer is adjusting how
+    // they SEE it, never what gets stored.
+    if (!forExport) ctx.globalAlpha = photoOpacity;
+    ctx.translate(DEFAULT_IMG_W / 2 + pan.x, DEFAULT_IMG_H / 2 + pan.y);
     ctx.rotate(rad);
     ctx.scale(scale, scale);
     ctx.drawImage(img, -w / 2, -h / 2, w, h);
     ctx.restore();
+
+    if (forExport) return;
 
     // Calibration markers on top, in un-rotated canvas space (screen space), so they always sit
     // exactly where the farmer tapped regardless of the photo's rotation.
@@ -110,7 +158,7 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
       }
       ctx.restore();
     }
-  }, [img, rotationDeg, points]);
+  }, [img, rotationDeg, points, satImg, photoOpacity, zoom, pan]);
 
   useEffect(() => {
     draw();
@@ -162,8 +210,15 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
     setBusy(true);
     setError('');
     try {
+      // Repaint WITHOUT the backdrop, the translucency or the calibration markers before the
+      // canvas is read. Both reads below take this same canvas, so anything on it at this instant
+      // is what the farmer is stuck with on every plan sheet from now on.
+      draw(true);
       const previewDataUrl = canvas.toDataURL('image/jpeg', 0.88);
       const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88));
+      // Put the working view back, so a failed upload leaves the farmer where they were rather
+      // than staring at an opaque photo with their alignment markers gone.
+      draw();
       if (!blob) throw new Error(t('designPhotoPrepareError'));
       const file = new File([blob], `site-photo-${Date.now()}.jpg`, { type: 'image/jpeg' });
       const url = await uploadPhoto(file, 'design-base');
@@ -260,17 +315,77 @@ export default function BasePhotoImport({ onApply, onClose }: Props) {
                 ref={canvasRef}
                 width={DEFAULT_IMG_W}
                 height={DEFAULT_IMG_H}
-                onClick={onCanvasClick}
+                // Drag moves the photo, a tap places a calibration point. No mode switch: the two
+                // gestures are already distinct, and making the farmer choose between "move" and
+                // "measure" would be a toggle they have to find before the screen works.
+                onPointerDown={(e) => {
+                  if (!img) return;
+                  (e.target as Element).setPointerCapture?.(e.pointerId);
+                  dragRef.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y, moved: false };
+                }}
+                onPointerMove={(e) => {
+                  const d = dragRef.current;
+                  if (!d) return;
+                  const canvas = canvasRef.current;
+                  if (!canvas) return;
+                  // Client pixels are not canvas pixels — the canvas is laid out at 100% width and
+                  // its intrinsic size is fixed, so a drag must be scaled or the photo races the
+                  // finger on a wide screen and lags it on a phone.
+                  const k = DEFAULT_IMG_W / canvas.getBoundingClientRect().width;
+                  const dx = (e.clientX - d.x) * k;
+                  const dy = (e.clientY - d.y) * k;
+                  if (Math.abs(dx) + Math.abs(dy) > 3) d.moved = true;
+                  setPan({ x: d.panX + dx, y: d.panY + dy });
+                }}
+                onPointerUp={() => { dragRef.current = null; }}
+                onPointerCancel={() => { dragRef.current = null; }}
+                onClick={(e) => {
+                  // A drag ends in a click event too; only a click that never moved is a tap.
+                  if (dragRef.current?.moved) return;
+                  onCanvasClick(e);
+                }}
                 style={{
                   width: '100%',
                   height: 'auto',
                   aspectRatio: `${DEFAULT_IMG_W} / ${DEFAULT_IMG_H}`,
                   borderRadius: 12,
                   border: `1px solid ${GOLD}`,
-                  cursor: 'crosshair',
+                  cursor: img ? 'grab' : 'crosshair',
                   display: 'block',
+                  touchAction: 'none', // or the browser pans the sheet instead of the photo
                 }}
               />
+              {img && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
+                    <span style={{ minWidth: 76 }}>See through</span>
+                    <input
+                      type="range" min={0.15} max={1} step={0.05}
+                      value={photoOpacity}
+                      onChange={(e) => setPhotoOpacity(Number(e.target.value))}
+                      style={{ flex: 1, accentColor: GREEN }}
+                    />
+                    <span style={{ minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                      {Math.round(photoOpacity * 100)}%
+                    </span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
+                    <span style={{ minWidth: 76 }}>Size</span>
+                    <input
+                      type="range" min={0.25} max={4} step={0.05}
+                      value={zoom}
+                      onChange={(e) => setZoom(Number(e.target.value))}
+                      style={{ flex: 1, accentColor: GREEN }}
+                    />
+                    <span style={{ minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                      {Math.round(zoom * 100)}%
+                    </span>
+                  </label>
+                  <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
+                    Drag the photo to move it. Fade it down to match it against the satellite underneath.
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Rotation */}

@@ -1297,14 +1297,19 @@ export default function DesignPalette({
   function renderBedBlock() {
     if (!bedBlockControl || step !== 'planting') return null;
     const { spec, armed, onSpecChange, onArm, onCancel } = bedBlockControl;
+    // Label BESIDE the input, not above it. Stacked, this row stood taller than every other chip
+    // strip and the parent clipped its bottom edge — the number boxes were cut in half and the
+    // button floated out of line (Rory: "things are cramped here"). One line keeps it the same
+    // height as the element and zone strips it sits among, which is what makes it read as one of
+    // them rather than as a panel that broke.
     const field = (
       label: string,
       value: number,
       key: 'bedLengthM' | 'bedWidthM' | 'pathWidthM' | 'count',
       opts: { step: number; min: number; max: number },
     ) => (
-      <label style={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: 10.5, color: DARK, opacity: 0.75 }}>
-        {label}
+      <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10.5, color: DARK, flexShrink: 0 }}>
+        <span style={{ opacity: 0.7, whiteSpace: 'nowrap' }}>{label}</span>
         <input
           type="number"
           value={value}
@@ -1315,7 +1320,7 @@ export default function DesignPalette({
           // farmer taps the canvas, so the only thing a partial number changes is the ghost.
           onChange={(e) => onSpecChange({ [key]: Number(e.target.value) })}
           style={{
-            width: 62, minHeight: 34, padding: '4px 6px', borderRadius: 8,
+            width: 52, minHeight: guided ? 44 : 38, padding: '4px 6px', borderRadius: 8,
             border: '1px solid rgba(0,0,0,0.2)', background: PAPER, color: DARK,
             fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
           }}
@@ -1323,7 +1328,7 @@ export default function DesignPalette({
       </label>
     );
     return (
-      <div style={scrollStripStyle(guided ? 10 : 6)}>
+      <div style={{ ...scrollStripStyle(guided ? 10 : 6), alignItems: 'center' }}>
         <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
           🛏️ {t('designPaletteBedBlock')}
         </span>
@@ -1337,7 +1342,6 @@ export default function DesignPalette({
           aria-pressed={armed}
           style={{
             minHeight: guided ? 52 : 44, padding: '0 16px', borderRadius: 10, flexShrink: 0,
-            alignSelf: 'flex-end',
             border: armed ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
             background: armed ? GREEN : 'transparent',
             color: armed ? PAPER : GREEN,
